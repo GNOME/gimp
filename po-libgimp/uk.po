@@ -5,17 +5,37 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.4.3\n"
+"Project-Id-Version: GIMP 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-02 22:50+0200\n"
-"PO-Revision-Date: 2005-02-23 16:53+0200\n"
+"POT-Creation-Date: 2010-04-02 18:01+0300\n"
+"PO-Revision-Date: 2010-04-02 16:53+0200\n"
 "Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
-"Language-Team: Ukrainian <uk@li.org>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1045
+msgid "success"
+msgstr "успішно"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1049
+msgid "execution error"
+msgstr "помилка при виконанні"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1053
+msgid "calling error"
+msgstr "помилка виклику"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1057
+msgid "cancelled"
+msgstr "скасовано"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -315,15 +335,15 @@ msgstr "Значення, що повертаються"
 msgid "Additional Information"
 msgstr "Додаткова інформація"
 
-#: ../libgimp/gimpprocview.c:210
+#: ../libgimp/gimpprocview.c:209
 msgid "Author:"
 msgstr "Автор:"
 
-#: ../libgimp/gimpprocview.c:222
+#: ../libgimp/gimpprocview.c:221
 msgid "Date:"
 msgstr "Дата:"
 
-#: ../libgimp/gimpprocview.c:234
+#: ../libgimp/gimpprocview.c:233
 msgid "Copyright:"
 msgstr "Авторські права:"
 
@@ -331,434 +351,406 @@ msgstr "Авторські права:"
 msgid "percent"
 msgstr "відсоток"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:28
 msgid "_White (full opacity)"
 msgstr "_Білий колір (повна непрозорість)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:29
 msgid "_Black (full transparency)"
 msgstr "_Чорний колір (повна прозорість)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:30
 msgid "Layer's _alpha channel"
 msgstr "_Альфа-канал шару"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Transfer layer's alpha channel"
 msgstr "_Передати альфа-канал шару"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Selection"
 msgstr "_Виділена область"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libgimpbase/gimpbaseenums.c:33
 msgid "_Grayscale copy of layer"
 msgstr "_Копія шару у градаціях сірого"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libgimpbase/gimpbaseenums.c:34
 msgid "C_hannel"
 msgstr "_Канал"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (RGB)"
 msgstr "Передній план до тла (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to BG (HSV)"
 msgstr "Передній план до тла (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libgimpbase/gimpbaseenums.c:66
 msgid "FG to transparent"
 msgstr "Передній план до прозорості"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libgimpbase/gimpbaseenums.c:67
 msgid "Custom gradient"
 msgstr "Власний градієнт"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:96
 msgid "FG color fill"
 msgstr "Заповнення переднього плану"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:97
 msgid "BG color fill"
 msgstr "Заповнення тла"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:98
 msgid "Pattern fill"
 msgstr "Заповнення текстурою"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:128
 msgid "Add to the current selection"
 msgstr "Додати до поточної виділеної області"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:129
 msgid "Subtract from the current selection"
 msgstr "Відняти від поточної виділеної області"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:130
 msgid "Replace the current selection"
 msgstr "Замінити поточну виділену область"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libgimpbase/gimpbaseenums.c:131
 msgid "Intersect with the current selection"
 msgstr "Створити виділену область з перетину з поточною"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Червоний"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Зелений"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Синій"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpbase/gimpbaseenums.c:166
 msgid "Gray"
 msgstr "Сірий"
 
-#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpbase/gimpbaseenums.c:532
 msgid "Indexed"
 msgstr "Індексований"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:168 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:197
 msgid "Small"
 msgstr "Маленький"
 
-#: ../libgimpbase/gimpbaseenums.c:197
+#: ../libgimpbase/gimpbaseenums.c:198
 msgid "Medium"
 msgstr "Середній"
 
-#: ../libgimpbase/gimpbaseenums.c:198
+#: ../libgimpbase/gimpbaseenums.c:199
 msgid "Large"
 msgstr "Великий"
 
-#: ../libgimpbase/gimpbaseenums.c:230
+#: ../libgimpbase/gimpbaseenums.c:231
 msgid "Light checks"
 msgstr "Білі клітинки"
 
-#: ../libgimpbase/gimpbaseenums.c:231
+#: ../libgimpbase/gimpbaseenums.c:232
 msgid "Mid-tone checks"
 msgstr "Сірі клітинки"
 
-#: ../libgimpbase/gimpbaseenums.c:232
+#: ../libgimpbase/gimpbaseenums.c:233
 msgid "Dark checks"
 msgstr "Чорні клітинки"
 
-#: ../libgimpbase/gimpbaseenums.c:233
+#: ../libgimpbase/gimpbaseenums.c:234
 msgid "White only"
 msgstr "Лише білий"
 
-#: ../libgimpbase/gimpbaseenums.c:234
+#: ../libgimpbase/gimpbaseenums.c:235
 msgid "Gray only"
 msgstr "Лише сірий"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libgimpbase/gimpbaseenums.c:236
 msgid "Black only"
 msgstr "Лише чорний"
 
-#: ../libgimpbase/gimpbaseenums.c:263
+#: ../libgimpbase/gimpbaseenums.c:264
 msgid "Image"
 msgstr "Зображення"
 
-#: ../libgimpbase/gimpbaseenums.c:264
+#: ../libgimpbase/gimpbaseenums.c:265
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:294
 msgid "Lightness"
 msgstr "Освітлення"
 
-#: ../libgimpbase/gimpbaseenums.c:294
+#: ../libgimpbase/gimpbaseenums.c:295
 msgid "Luminosity"
 msgstr "Яскравість"
 
-#: ../libgimpbase/gimpbaseenums.c:295
+#: ../libgimpbase/gimpbaseenums.c:296
 msgid "Average"
 msgstr "Середнє"
 
-#: ../libgimpbase/gimpbaseenums.c:323
+#: ../libgimpbase/gimpbaseenums.c:324
 msgid "Dodge"
 msgstr "Освітлити"
 
-#: ../libgimpbase/gimpbaseenums.c:324
+#: ../libgimpbase/gimpbaseenums.c:325
 msgid "Burn"
 msgstr "Затемнити"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:389
 msgid "gradient|Linear"
 msgstr "Лінійна"
 
-#: ../libgimpbase/gimpbaseenums.c:389
+#: ../libgimpbase/gimpbaseenums.c:390
 msgid "Bi-linear"
 msgstr "Білінійна"
 
-#: ../libgimpbase/gimpbaseenums.c:390
+#: ../libgimpbase/gimpbaseenums.c:391
 msgid "Radial"
 msgstr "Радіальна"
 
-#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libgimpbase/gimpbaseenums.c:392 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Кругова"
 
-#: ../libgimpbase/gimpbaseenums.c:392
+#: ../libgimpbase/gimpbaseenums.c:393
 msgid "Conical (sym)"
 msgstr "Конічна (сим.)"
 
-#: ../libgimpbase/gimpbaseenums.c:393
+#: ../libgimpbase/gimpbaseenums.c:394
 msgid "Conical (asym)"
 msgstr "Конічна (асим.)"
 
-#: ../libgimpbase/gimpbaseenums.c:394
+#: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (angular)"
 msgstr "Контур (кутова)"
 
-#: ../libgimpbase/gimpbaseenums.c:395
+#: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (spherical)"
 msgstr "Контур (сфера)"
 
-#: ../libgimpbase/gimpbaseenums.c:396
+#: ../libgimpbase/gimpbaseenums.c:397
 msgid "Shaped (dimpled)"
 msgstr "Контур (брижі)"
 
-#: ../libgimpbase/gimpbaseenums.c:397
+#: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (cw)"
 msgstr "Спіраль (cw)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:399
 msgid "Spiral (ccw)"
 msgstr "Спіраль (ccw)"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (dots)"
 msgstr "Перетин (точки)"
 
-#: ../libgimpbase/gimpbaseenums.c:430
+#: ../libgimpbase/gimpbaseenums.c:431
 msgid "Intersections (crosshairs)"
 msgstr "Перетин (перехрестя)"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:432
 msgid "Dashed"
 msgstr "Пунктиром"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:433
 msgid "Double dashed"
 msgstr "Подвійним пунктиром"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:434
 msgid "Solid"
 msgstr "Суцільною лінією"
 
-#: ../libgimpbase/gimpbaseenums.c:462
+#: ../libgimpbase/gimpbaseenums.c:463
 msgid "Stock ID"
 msgstr "Stock ID"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libgimpbase/gimpbaseenums.c:464
 msgid "Inline pixbuf"
 msgstr "Зображення у рядку"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libgimpbase/gimpbaseenums.c:465
 msgid "Image file"
 msgstr "Файл зображення"
 
-#: ../libgimpbase/gimpbaseenums.c:493
+#: ../libgimpbase/gimpbaseenums.c:494
 msgid "RGB color"
 msgstr "Кольори RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:495 ../libgimpbase/gimpbaseenums.c:530
 msgid "Grayscale"
 msgstr "Сірий"
 
-#: ../libgimpbase/gimpbaseenums.c:495
+#: ../libgimpbase/gimpbaseenums.c:496
 msgid "Indexed color"
 msgstr "Індексований колір"
 
-#: ../libgimpbase/gimpbaseenums.c:527
+#: ../libgimpbase/gimpbaseenums.c:528
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:529
 msgid "RGB-alpha"
 msgstr "RGB-альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:531
 msgid "Grayscale-alpha"
 msgstr "Альфа-сірий"
 
-#: ../libgimpbase/gimpbaseenums.c:532
+#: ../libgimpbase/gimpbaseenums.c:533
 msgid "Indexed-alpha"
 msgstr "Індексований-альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:562
+#: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|None"
 msgstr "Ніякого"
 
-#: ../libgimpbase/gimpbaseenums.c:563
+#: ../libgimpbase/gimpbaseenums.c:564
 msgid "interpolation|Linear"
 msgstr "Лінійна"
 
-#: ../libgimpbase/gimpbaseenums.c:564
+#: ../libgimpbase/gimpbaseenums.c:565
 msgid "Cubic"
 msgstr "Кубічна"
 
-#: ../libgimpbase/gimpbaseenums.c:565
+#: ../libgimpbase/gimpbaseenums.c:566
 msgid "Sinc (Lanczos3)"
 msgstr "Sinc (Lanczos3)"
 
-#: ../libgimpbase/gimpbaseenums.c:593
+#: ../libgimpbase/gimpbaseenums.c:594
 msgid "Constant"
 msgstr "Константа"
 
-#: ../libgimpbase/gimpbaseenums.c:594
+#: ../libgimpbase/gimpbaseenums.c:595
 msgid "Incremental"
 msgstr "Поступова"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:224
+#: ../libgimpbase/gimpbaseenums.c:624 ../modules/display-filter-lcms.c:191
 msgid "None"
 msgstr "Немає"
 
-#: ../libgimpbase/gimpbaseenums.c:624
+#: ../libgimpbase/gimpbaseenums.c:625
 msgid "Sawtooth wave"
 msgstr "Зубчата хвиля"
 
-#: ../libgimpbase/gimpbaseenums.c:625
+#: ../libgimpbase/gimpbaseenums.c:626
 msgid "Triangular wave"
 msgstr "Трикутна хвиля"
 
-#: ../libgimpbase/gimpbaseenums.c:654
+#: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run interactively"
 msgstr "Запустити інтерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:655
+#: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run non-interactively"
 msgstr "Запустити неінтерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: ../libgimpbase/gimpbaseenums.c:657
 msgid "Run with last used values"
 msgstr "Запустити з останніми введеними значеннями"
 
-#: ../libgimpbase/gimpbaseenums.c:684
+#: ../libgimpbase/gimpbaseenums.c:685
 msgid "Pixels"
 msgstr "Точок"
 
-#: ../libgimpbase/gimpbaseenums.c:685
+#: ../libgimpbase/gimpbaseenums.c:686
 msgid "Points"
 msgstr "Пунктів"
 
-#: ../libgimpbase/gimpbaseenums.c:714
+#: ../libgimpbase/gimpbaseenums.c:715
 msgid "Shadows"
 msgstr "Тіні"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libgimpbase/gimpbaseenums.c:716
 msgid "Midtones"
 msgstr "Напівтони"
 
-#: ../libgimpbase/gimpbaseenums.c:716
+#: ../libgimpbase/gimpbaseenums.c:717
 msgid "Highlights"
 msgstr "Світлі частини"
 
-#: ../libgimpbase/gimpbaseenums.c:744
+#: ../libgimpbase/gimpbaseenums.c:745
 msgid "Normal (Forward)"
 msgstr "Звичайне (вперед)"
 
-#: ../libgimpbase/gimpbaseenums.c:745
+#: ../libgimpbase/gimpbaseenums.c:746
 msgid "Corrective (Backward)"
 msgstr "Коригуюче (назад)"
 
-#: ../libgimpbase/gimpbaseenums.c:775
+#: ../libgimpbase/gimpbaseenums.c:776
 msgid "Adjust"
 msgstr "З полями"
 
-#: ../libgimpbase/gimpbaseenums.c:776
+#: ../libgimpbase/gimpbaseenums.c:777
 msgid "Clip"
 msgstr "Без полів"
 
-#: ../libgimpbase/gimpbaseenums.c:777
+#: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop to result"
 msgstr "У прямокутник"
 
-#: ../libgimpbase/gimpbaseenums.c:778
+#: ../libgimpbase/gimpbaseenums.c:779
 msgid "Crop with aspect"
 msgstr "Пропорційна"
 
-#: ../libgimpbase/gimpbaseenums.c:881
+#: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
 msgstr "Внутрішня процедура GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:882
+#: ../libgimpbase/gimpbaseenums.c:910
 msgid "GIMP Plug-In"
 msgstr "Модуль GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:883
+#: ../libgimpbase/gimpbaseenums.c:911
 msgid "GIMP Extension"
 msgstr "Розширення GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:884
+#: ../libgimpbase/gimpbaseenums.c:912
 msgid "Temporary Procedure"
 msgstr "Тимчасова процедура"
 
-#: ../libgimpbase/gimpmemsize.c:180
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d байт"
-msgstr[1] "%d байти"
-msgstr[2] "%d байтів"
+#: ../libgimpbase/gimpbaseenums.c:1074
+msgid "From left to right"
+msgstr "Зліва направо"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f Кбайт"
+#: ../libgimpbase/gimpbaseenums.c:1075
+msgid "From right to left"
+msgstr "Справа наліво"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f Кбайт"
+#: ../libgimpbase/gimpbaseenums.c:1105
+msgid "Left justified"
+msgstr "Виключка ліворуч"
 
-#: ../libgimpbase/gimpmemsize.c:194
-#, c-format
-msgid "%d KB"
-msgstr "%d Кбайт"
+#: ../libgimpbase/gimpbaseenums.c:1106
+msgid "Right justified"
+msgstr "Виключка праворуч"
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f Мбайт"
+#: ../libgimpbase/gimpbaseenums.c:1107
+msgid "Centered"
+msgstr "Виключка у центрі"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f Мбайт"
-
-#: ../libgimpbase/gimpmemsize.c:209
-#, c-format
-msgid "%d MB"
-msgstr "%d Мбайт"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f Гбайт"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f Гбайт"
-
-#: ../libgimpbase/gimpmemsize.c:224
-#, c-format
-msgid "%d GB"
-msgstr "%d Гбайт"
+#: ../libgimpbase/gimpbaseenums.c:1108
+msgid "Filled"
+msgstr "Повна виключка"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:216 ../modules/colorsel_cmyk_lcms.c:408
-#: ../modules/colorsel_cmyk_lcms.c:414
+#: ../modules/display-filter-lcms.c:183
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(неправильний рядок UTF-8)"
 
@@ -874,10 +866,10 @@ msgstr "неправильне значення '%ld' для маркера %s"
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксичному розборі маркера '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:474
+#: ../libgimpconfig/gimpconfig-iface.c:487 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:654
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "критична помилка при синтаксичному розборі"
 
@@ -887,7 +879,7 @@ msgid "Cannot expand ${%s}"
 msgstr "Неможливо розширити ${%s}"
 
 #: ../libgimpconfig/gimpconfigwriter.c:78
-#: ../libgimpconfig/gimpconfigwriter.c:693
+#: ../libgimpconfig/gimpconfigwriter.c:718
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Помилка при запису до '%s': %s"
@@ -902,7 +894,8 @@ msgstr "Не вдається створити тимчасовий файл д�
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -911,7 +904,7 @@ msgstr ""
 "Помилка при запису до тимчасового файлу для '%s': %s\n"
 "Первинний файл не був змінений."
 
-#: ../libgimpconfig/gimpconfigwriter.c:682
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -920,7 +913,7 @@ msgstr ""
 "Помилка запису до тимчасового файлу для '%s': %s\n"
 "Файл не був створений."
 
-#: ../libgimpconfig/gimpconfigwriter.c:711
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Не вдається створити '%s': %s"
@@ -958,7 +951,7 @@ msgstr "Не вдається завантажити"
 msgid "Not loaded"
 msgstr "Не завантажено"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:123
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -967,7 +960,7 @@ msgstr ""
 "Не вдається визначити коректний домашній каталог.\n"
 "Натомість, мініатюри будуть зберігатись у теці тимчасових файлів (%s)."
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:247 ../libgimpthumb/gimpthumb-utils.c:315
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не вдається створити каталог файлів попереднього перегляду '%s'."
@@ -1007,8 +1000,9 @@ msgid "Select color profile from disk..."
 msgstr "Оберіть кольоровий профіль з диску..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-msgid "profile|None"
-msgstr "Не використовується"
+msgctxt "profile"
+msgid "None"
+msgstr "Немає"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1033,6 +1027,10 @@ msgstr ""
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "_Нотація HTML:"
+
+#: ../libgimpwidgets/gimphelpui.c:420
+msgid "Press F1 for more help"
+msgstr "Натисніть F1 для отримання повної довідки"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
@@ -1064,7 +1062,7 @@ msgstr "Гігабайти"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1171
+#: ../libgimpwidgets/gimppageselector.c:1166
 msgid "Nothing selected"
 msgstr "Нічого не вибрано"
 
@@ -1084,18 +1082,18 @@ msgstr "Відкрити сторінки _як"
 msgid "Page 000"
 msgstr "Сторінка 000"
 
-#: ../libgimpwidgets/gimppageselector.c:512
-#: ../libgimpwidgets/gimppageselector.c:749
+#: ../libgimpwidgets/gimppageselector.c:508
+#: ../libgimpwidgets/gimppageselector.c:744
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1176
+#: ../libgimpwidgets/gimppageselector.c:1171
 msgid "One page selected"
 msgstr "Вибрано одну сторінку"
 
-#: ../libgimpwidgets/gimppageselector.c:1183
-#: ../libgimpwidgets/gimppageselector.c:1187
+#: ../libgimpwidgets/gimppageselector.c:1178
+#: ../libgimpwidgets/gimppageselector.c:1182
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1132,7 +1130,7 @@ msgstr "Стиль клітинок"
 msgid "_Preview"
 msgstr "_Перегляд"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1901
+#: ../libgimpwidgets/gimppropwidgets.c:1860
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1140,75 +1138,75 @@ msgstr[0] "Введення тексту у це поле обмежено %d с
 msgstr[1] "Введення тексту у це поле обмежено %d символами"
 msgstr[2] "Введення тексту у це поле обмежено %d символами"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "Anchor"
 msgstr "Прикріпити"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "C_enter"
 msgstr "_Центрувати"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Duplicate"
 msgstr "_Дублювати"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "_Edit"
 msgstr "_Правка"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Linked"
 msgstr "Пов'язані"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
 msgstr "Вставити як нове"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
 msgstr "Вставити у"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Видимий"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:156 ../libgimpwidgets/gimpstock.c:160
 msgid "_Stroke"
 msgstr "_Обвести"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_etter Spacing"
 msgstr "Інтервал між _літерами"
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libgimpwidgets/gimpstock.c:173
 msgid "L_ine Spacing"
 msgstr "Інтервал між _рядками"
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:189
 msgid "_Resize"
 msgstr "Змінити _розмір"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:190 ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
 msgstr "Мас_штаб"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "Cr_op"
 msgstr "_Обрізати"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:315
 msgid "_Transform"
 msgstr "Пере_творити"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
 msgstr "Пов_ернути"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:321
 msgid "_Shear"
 msgstr "Н_ахилити"
 
@@ -1228,7 +1226,7 @@ msgstr "Одиниця"
 msgid "Factor"
 msgstr "Множник"
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:511
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1236,16 +1234,16 @@ msgstr ""
 "Використовуйте цю кнопку для ініціалізації генератора випадкових чисел - це "
 "дозволить вам повторити дану \"випадкову\" операцію"
 
-#: ../libgimpwidgets/gimpwidgets.c:1009
+#: ../libgimpwidgets/gimpwidgets.c:515
 msgid "_New Seed"
 msgstr "_Нове значення"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:528
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Ініціалізувати генератор випадкових чисел згенерованим випадковим числом"
 
-#: ../libgimpwidgets/gimpwidgets.c:1026
+#: ../libgimpwidgets/gimpwidgets.c:532
 msgid "_Randomize"
 msgstr "Пере_мішати"
 
@@ -1313,64 +1311,64 @@ msgstr "Наблизити"
 msgid "Zoom out"
 msgstr "Віддалити"
 
-#: ../modules/cdisplay_colorblind.c:67
+#: ../modules/display-filter-color-blind.c:67
 msgid "Protanopia (insensitivity to red)"
 msgstr "Протанопія (нечутливість до червоного)"
 
-#: ../modules/cdisplay_colorblind.c:69
+#: ../modules/display-filter-color-blind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Девтеранопія (нечутливість до зеленого)"
 
-#: ../modules/cdisplay_colorblind.c:71
+#: ../modules/display-filter-color-blind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Трітаопія (нечутливість до синього)"
 
-#: ../modules/cdisplay_colorblind.c:200
+#: ../modules/display-filter-color-blind.c:198
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Фільтр, що моделює несприйняття кольору (алгоритм Бреттеля-Виєнота-Моллона)"
 
-#: ../modules/cdisplay_colorblind.c:292
+#: ../modules/display-filter-color-blind.c:261
 msgid "Color Deficient Vision"
 msgstr "Зір зі зниженим сприйняттям кольору"
 
-#: ../modules/cdisplay_colorblind.c:507
+#: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
 msgstr "Тип з_ниженого сприйняття кольору:"
 
-#: ../modules/cdisplay_gamma.c:91
+#: ../modules/display-filter-gamma.c:90
 msgid "Gamma color display filter"
 msgstr "Фільтр кольорової гами"
 
-#: ../modules/cdisplay_gamma.c:160
+#: ../modules/display-filter-gamma.c:129
 msgid "Gamma"
 msgstr "Гама"
 
-#: ../modules/cdisplay_gamma.c:253
+#: ../modules/display-filter-gamma.c:232
 msgid "_Gamma:"
 msgstr "_Гама:"
 
-#: ../modules/cdisplay_highcontrast.c:91
+#: ../modules/display-filter-high-contrast.c:90
 msgid "High Contrast color display filter"
 msgstr "Фільтр підвищеної контрастності"
 
-#: ../modules/cdisplay_highcontrast.c:160
+#: ../modules/display-filter-high-contrast.c:129
 msgid "Contrast"
 msgstr "Контрастність"
 
-#: ../modules/cdisplay_highcontrast.c:253
+#: ../modules/display-filter-high-contrast.c:232
 msgid "Contrast c_ycles:"
 msgstr "С_тупінь контрасту:"
 
-#: ../modules/cdisplay_lcms.c:111
+#: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
 msgstr "Фільтр налаштовування передачі кольору, що використовує ICC"
 
-#: ../modules/cdisplay_lcms.c:172
+#: ../modules/display-filter-lcms.c:134
 msgid "Color Management"
 msgstr "Керування кольором"
 
-#: ../modules/cdisplay_lcms.c:245
+#: ../modules/display-filter-lcms.c:212
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1378,477 +1376,528 @@ msgstr ""
 "Цей фільтр налаштовується у вкладці «Керування кольором» діалогу "
 "налаштовування програми."
 
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"
 msgstr "Режим обробки:"
 
-#: ../modules/cdisplay_lcms.c:267
+#: ../modules/display-filter-lcms.c:233
 msgid "Image profile:"
 msgstr "Профіль зображення:"
 
-#: ../modules/cdisplay_lcms.c:275
+#: ../modules/display-filter-lcms.c:241
 msgid "Monitor profile:"
 msgstr "Профіль монітору:"
 
-#: ../modules/cdisplay_lcms.c:283
+#: ../modules/display-filter-lcms.c:249
 msgid "Print simulation profile:"
 msgstr "Профіль імітації принтера:"
 
-#: ../modules/cdisplay_proof.c:103
+#: ../modules/display-filter-proof.c:97
 msgid "Color proof filter using ICC color profile"
 msgstr "Фільтр налаштовування передачі кольору, що використовує ICC"
 
-#: ../modules/cdisplay_proof.c:180
+#: ../modules/display-filter-proof.c:145
 msgid "Color Proof"
 msgstr "Налаштовування передачі кольору"
 
-#: ../modules/cdisplay_proof.c:340
+#: ../modules/display-filter-proof.c:311
 msgid "Choose an ICC Color Profile"
 msgstr "Виберіть ICC-профіль"
 
-#: ../modules/cdisplay_proof.c:367
+#: ../modules/display-filter-proof.c:338
 msgid "All files (*.*)"
 msgstr "Усі файли (*.*)"
 
-#: ../modules/cdisplay_proof.c:372
+#: ../modules/display-filter-proof.c:343
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Кольоровий ICC-профіль (*.icc, *.icm)"
 
-#: ../modules/cdisplay_proof.c:430
+#: ../modules/display-filter-proof.c:401
 msgid "_Profile:"
 msgstr "_Профіль:"
 
-#: ../modules/cdisplay_proof.c:436
+#: ../modules/display-filter-proof.c:407
 msgid "_Intent:"
 msgstr "_Тип:"
 
-#: ../modules/cdisplay_proof.c:441
+#: ../modules/display-filter-proof.c:412
 msgid "_Black Point Compensation"
 msgstr "Компенсація _чорних цяток"
 
-#: ../modules/colorsel_cmyk.c:73
+#: ../modules/color-selector-cmyk.c:71
 msgid "CMYK color selector"
 msgstr "Вибору кольору - CMYK"
 
-#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
+#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk-lcms.c:150
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
+#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk-lcms.c:169
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
+#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk-lcms.c:171
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
+#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk-lcms.c:173
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
+#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk-lcms.c:175
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
+#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk-lcms.c:179
 msgid "Cyan"
 msgstr "Бірюзовий"
 
-#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
+#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk-lcms.c:180
 msgid "Magenta"
 msgstr "Пурпурний"
 
-#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
+#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk-lcms.c:181
 msgid "Yellow"
 msgstr "Жовтий"
 
-#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
+#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk-lcms.c:182
 msgid "Black"
 msgstr "Чорний"
 
-#: ../modules/colorsel_cmyk.c:195
+#: ../modules/color-selector-cmyk.c:172
 msgid "Black _pullout:"
 msgstr "_Вміст чорного:"
 
-#: ../modules/colorsel_cmyk.c:212
+#: ../modules/color-selector-cmyk.c:189
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Відсоток вмісту чорного у кольорових чорнилах."
 
-#: ../modules/colorsel_cmyk_lcms.c:91
+#: ../modules/color-selector-cmyk-lcms.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "Вибір кольору у моделі CMYK (використовуючи кольоровий профіль)"
 
-#: ../modules/colorsel_cmyk_lcms.c:397
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr ": (немає)"
 
-#: ../modules/colorsel_cmyk_lcms.c:417
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
 
-#: ../modules/colorsel_triangle.c:104
-msgid "Painter-style triangle color selector"
-msgstr "Вибір кольору - трикутник"
-
-#: ../modules/colorsel_triangle.c:170
-msgid "Triangle"
-msgstr "Трикутник"
-
-#: ../modules/colorsel_water.c:84
+#: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
 msgstr "Тип вибору кольору - акварель"
 
-#: ../modules/colorsel_water.c:150
+#: ../modules/color-selector-water.c:118
 msgid "Watercolor"
 msgstr "Акварель"
 
-#: ../modules/colorsel_water.c:213
+#: ../modules/color-selector-water.c:186
 msgid "Pressure"
 msgstr "Тиск"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/color-selector-wheel.c:103
+msgid "HSV color wheel"
+msgstr "Кольорове круг HSV"
+
+#: ../modules/color-selector-wheel.c:134
+msgid "Wheel"
+msgstr "Коло"
+
+#: ../modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "Клавіша 0"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "Клавіша 1"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "Клавіша 2"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "Клавіша 3"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "Клавіша 4"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "Клавіша 5"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "Клавіша 6"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "Клавіша 7"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "Клавіша 8"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "Клавіша 9"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Миша з кнопками"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Клавіша ліворуч"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Клавіша праворуч"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Середня клавіша"
 
-#: ../modules/controller_linux_input.c:72
+#: ../modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Бокова клавіша"
 
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "Додаткова клавіша"
 
-#: ../modules/controller_linux_input.c:74
+#: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Клавіша «Вперед»"
 
-#: ../modules/controller_linux_input.c:75
+#: ../modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Клавіша «Назад»"
 
-#: ../modules/controller_linux_input.c:76
+#: ../modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Клавіша «Завдання»"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Клавіша колеса"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "Педаль вниз"
 
-#: ../modules/controller_linux_input.c:84
+#: ../modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "Педаль вгору"
 
-#: ../modules/controller_linux_input.c:90
-#: ../modules/controller_dx_dinput.c:469
+#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:443
 msgid "X Move Left"
 msgstr "X Move Left"
 
-#: ../modules/controller_linux_input.c:91
-#: ../modules/controller_dx_dinput.c:472
+#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:446
 msgid "X Move Right"
 msgstr "X Move Right"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Y Move Forward"
 
-#: ../modules/controller_linux_input.c:93
+#: ../modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Y Move Back"
 
-#: ../modules/controller_linux_input.c:94
-#: ../modules/controller_dx_dinput.c:487
+#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:461
 msgid "Z Move Up"
 msgstr "Z Move Up"
 
-#: ../modules/controller_linux_input.c:95
-#: ../modules/controller_dx_dinput.c:490
+#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:464
 msgid "Z Move Down"
 msgstr "Z Move Down"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
 msgstr "X Axis Tilt Forward"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
 msgstr "X Axis Tilt Back"
 
-#: ../modules/controller_linux_input.c:99
-#: ../modules/controller_dx_dinput.c:505
+#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:479
 msgid "Y Axis Tilt Right"
 msgstr "Y Axis Tilt Right"
 
-#: ../modules/controller_linux_input.c:100
-#: ../modules/controller_dx_dinput.c:508
+#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:482
 msgid "Y Axis Tilt Left"
 msgstr "Y Axis Tilt Left"
 
-#: ../modules/controller_linux_input.c:101
-#: ../modules/controller_dx_dinput.c:514
+#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:488
 msgid "Z Axis Turn Left"
 msgstr "Z Axis Turn Left"
 
-#: ../modules/controller_linux_input.c:102
-#: ../modules/controller_dx_dinput.c:517
+#: ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:491
 msgid "Z Axis Turn Right"
 msgstr "Z Axis Turn Right"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Горизонтальне колесо — назад"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Горизонтальне колесо — вперед"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Поворот кола ліворуч"
 
-#: ../modules/controller_linux_input.c:107
+#: ../modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Поворот кола праворуч"
 
-#: ../modules/controller_linux_input.c:108
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Поворот колеса ліворуч"
 
-#: ../modules/controller_linux_input.c:109
+#: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Поворот колеса праворуч"
 
-#: ../modules/controller_linux_input.c:179
+#: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Linux-контролер вхідних повідомлень"
 
-#: ../modules/controller_linux_input.c:249
-#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
+#: ../modules/controller-linux-input.c:218
+#: ../modules/controller-dx-dinput.c:196 ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Пристрій:"
 
-#: ../modules/controller_linux_input.c:250
+#: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr "Назва пристрою, з якого читати вхідні Linux-події."
 
-#: ../modules/controller_linux_input.c:261
+#: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linux Input"
 
-#: ../modules/controller_linux_input.c:539
+#: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Вхідні Linux-події"
 
-#: ../modules/controller_linux_input.c:551
-#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+#: ../modules/controller-linux-input.c:525
+#: ../modules/controller-dx-dinput.c:1095 ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Жоден пристрій не налаштований"
 
-#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Читання з %s"
 
-#: ../modules/controller_linux_input.c:595
-#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Пристрій недоступний: %s"
 
-#: ../modules/controller_linux_input.c:614
-#: ../modules/controller_dx_dinput.c:1147
+#: ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1120
 msgid "Device not available"
 msgstr "Пристрій недоступний"
 
-#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
 msgstr "Кінець файлу"
 
-#: ../modules/controller_dx_dinput.c:157
+#: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX-контролер вхідних повідомлень"
 
-#: ../modules/controller_dx_dinput.c:228
+#: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
 msgstr "Назва пристрою, з якого читати події DirectInput."
 
-#: ../modules/controller_dx_dinput.c:237
+#: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller_dx_dinput.c:446
+#: ../modules/controller-dx-dinput.c:420
 #, c-format
 msgid "Button %d"
 msgstr "Клавіша %d"
 
-#: ../modules/controller_dx_dinput.c:449
+#: ../modules/controller-dx-dinput.c:423
 #, c-format
 msgid "Button %d Press"
 msgstr "Натискання клавіші %d"
 
-#: ../modules/controller_dx_dinput.c:452
+#: ../modules/controller-dx-dinput.c:426
 #, c-format
 msgid "Button %d Release"
 msgstr "Відпускання клавіші %d"
 
-#: ../modules/controller_dx_dinput.c:478
+#: ../modules/controller-dx-dinput.c:452
 msgid "Y Move Away"
 msgstr "Y Move Away"
 
-#: ../modules/controller_dx_dinput.c:481
+#: ../modules/controller-dx-dinput.c:455
 msgid "Y Move Near"
 msgstr "Y Move Near"
 
-#: ../modules/controller_dx_dinput.c:496
+#: ../modules/controller-dx-dinput.c:470
 msgid "X Axis Tilt Away"
 msgstr "X Axis Tilt Away"
 
-#: ../modules/controller_dx_dinput.c:499
+#: ../modules/controller-dx-dinput.c:473
 msgid "X Axis Tilt Near"
 msgstr "X Axis Tilt Near"
 
-#: ../modules/controller_dx_dinput.c:528
+#: ../modules/controller-dx-dinput.c:502
 #, c-format
 msgid "Slider %d Increase"
 msgstr "Слайдер %d — збільшення"
 
-#: ../modules/controller_dx_dinput.c:531
+#: ../modules/controller-dx-dinput.c:505
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "Слайдер %d — зменшення"
 
-#: ../modules/controller_dx_dinput.c:541
+#: ../modules/controller-dx-dinput.c:515
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X View"
 
-#: ../modules/controller_dx_dinput.c:544
+#: ../modules/controller-dx-dinput.c:518
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y View"
 
-#: ../modules/controller_dx_dinput.c:547
+#: ../modules/controller-dx-dinput.c:521
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d Return"
 
-#: ../modules/controller_dx_dinput.c:1111
+#: ../modules/controller-dx-dinput.c:1084
 msgid "DirectInput Events"
 msgstr "Вхідні повідомлення DirectInput"
 
-#: ../modules/controller_midi.c:167
+#: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "Контролер MIDI-подій"
 
-#: ../modules/controller_midi.c:236
+#: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Назва пристрою,  з якого читати MIDI-події"
 
-#: ../modules/controller_midi.c:239
+#: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Введіть 'alsa', щоб використовувати ALSA-секвенсер"
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Канал:"
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
 "MIDI-канал, з якого читати події. Вкажіть -1, щоб читати з усіх MIDI-каналів."
 
-#: ../modules/controller_midi.c:259
+#: ../modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "Нота %02x увімк."
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "Нота %02x вимкн."
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Контролер %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI-події"
 
-#: ../modules/controller_midi.c:454
+#: ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:456
+#: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "Контролер вхідних MIDI-подій"
+
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d байт"
+#~ msgstr[1] "%d байти"
+#~ msgstr[2] "%d байтів"
+
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f Кбайт"
+
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f Кбайт"
+
+#~ msgid "%d KB"
+#~ msgstr "%d Кбайт"
+
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f Мбайт"
+
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f Мбайт"
+
+#~ msgid "%d MB"
+#~ msgstr "%d Мбайт"
+
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f Гбайт"
+
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f Гбайт"
+
+#~ msgid "%d GB"
+#~ msgstr "%d Гбайт"
+
+#~ msgid "profile|None"
+#~ msgstr "Не використовується"
+
+#~ msgid "Painter-style triangle color selector"
+#~ msgstr "Вибір кольору - трикутник"
+
+#~ msgid "Triangle"
+#~ msgstr "Трикутник"
