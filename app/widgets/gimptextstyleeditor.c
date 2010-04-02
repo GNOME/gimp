@@ -98,7 +98,7 @@ static void      gimp_text_style_editor_set_baseline     (GimpTextStyleEditor *e
 static void      gimp_text_style_editor_kerning_changed  (GtkAdjustment       *adjustment,
                                                           GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_kerning      (GimpTextStyleEditor *editor,
-                                                          gint                 kerning);
+                                                          GtkTextTag          *kerning_tag);
 
 static void      gimp_text_style_editor_update           (GimpTextStyleEditor *editor);
 static gboolean  gimp_text_style_editor_update_idle      (GimpTextStyleEditor *editor);
@@ -737,8 +737,15 @@ gimp_text_style_editor_kerning_changed (GtkAdjustment       *adjustment,
 
 static void
 gimp_text_style_editor_set_kerning (GimpTextStyleEditor *editor,
-                                    gint                 kerning)
+                                    GtkTextTag          *kerning_tag)
 {
+  gint kerning = 0;
+
+  if (kerning_tag)
+    g_object_get (kerning_tag,
+                  "rise", &kerning, /* FIXME */
+                  NULL);
+
   g_signal_handlers_block_by_func (editor->kerning_adjustment,
                                    gimp_text_style_editor_kerning_changed,
                                    editor);
@@ -788,7 +795,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       GtkTextTag  *font_tag          = NULL;
       GtkTextTag  *size_tag          = NULL;
       GtkTextTag  *baseline_tag      = NULL;
-      gint         kerning;
+      GtkTextTag  *kerning_tag       = NULL;
 
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
       gtk_text_iter_order (&start, &end);
@@ -802,11 +809,14 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
         }
 
       /*  and get some initial values  */
-      font_tag = gimp_text_buffer_get_iter_font (editor->buffer, &start, NULL);
-      size_tag = gimp_text_buffer_get_iter_size (editor->buffer, &start, NULL);
-      baseline_tag = gimp_text_buffer_get_iter_baseline (editor->buffer, &start,
-                                                         NULL);
-      gimp_text_buffer_get_iter_kerning (editor->buffer, &start, &kerning);
+      font_tag     = gimp_text_buffer_get_iter_font (editor->buffer,
+                                                     &start, NULL);
+      size_tag     = gimp_text_buffer_get_iter_size (editor->buffer,
+                                                     &start, NULL);
+      baseline_tag = gimp_text_buffer_get_iter_baseline (editor->buffer,
+                                                         &start, NULL);
+      kerning_tag  = gimp_text_buffer_get_iter_kerning (editor->buffer,
+                                                        &start, NULL);
 
       for (iter = start;
            gtk_text_iter_in_range (&iter, &start, &end);
@@ -868,12 +878,12 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
           if (! kerning_differs)
             {
-              gint tag_kerning;
+              GtkTextTag *tag;
 
-              gimp_text_buffer_get_iter_kerning (editor->buffer, &iter,
-                                                 &tag_kerning);
+              tag = gimp_text_buffer_get_iter_kerning (editor->buffer, &iter,
+                                                       NULL);
 
-              if (kerning != tag_kerning)
+              if (tag != kerning_tag)
                 kerning_differs = TRUE;
             }
 
@@ -896,7 +906,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       if (kerning_differs)
         gtk_entry_set_text (GTK_ENTRY (editor->kerning_spinbutton), "");
       else
-        gimp_text_style_editor_set_kerning (editor, kerning);
+        gimp_text_style_editor_set_kerning (editor, kerning_tag);
     }
   else
     {
@@ -905,7 +915,6 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       GSList      *tags_on;
       GSList      *tags_off;
       GList       *list;
-      gint         value;
 
       gtk_text_buffer_get_iter_at_mark (buffer, &cursor,
                                         gtk_text_buffer_get_insert (buffer));
@@ -974,8 +983,12 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
                                              g_slist_find (tags_off, tag));
         }
 
-      gimp_text_buffer_get_iter_kerning (editor->buffer, &cursor, &value);
-      gimp_text_style_editor_set_kerning (editor, value);
+      {
+        GtkTextTag *tag;
+
+        tag = gimp_text_buffer_get_iter_kerning (editor->buffer, &cursor, NULL);
+        gimp_text_style_editor_set_kerning (editor, tag);
+      }
 
       g_slist_free (tags);
       g_slist_free (tags_on);
