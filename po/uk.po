@@ -1,4 +1,3 @@
-# Ukrainian translation of the GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Yuri Syrota <rasta@renome.rovno.ua>, 1999.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010
@@ -403,9 +402,8 @@ msgid "Templates"
 msgstr "Шаблони"
 
 #: ../app/actions/actions.c:209
-#, fuzzy
 msgid "Text Tool"
-msgstr "_Текст"
+msgstr "Текст"
 
 #: ../app/actions/actions.c:212
 msgid "Text Editor"
@@ -761,43 +759,36 @@ msgid "Channel to Selection"
 msgstr "Канал -> Виділене"
 
 #: ../app/actions/colormap-actions.c:44
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Colormap Menu"
 msgstr "Меню мапи кольорів"
 
 #: ../app/actions/colormap-actions.c:48
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "_Правка кольору..."
 
 #: ../app/actions/colormap-actions.c:49
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Edit this color"
-msgstr "Правка кольору"
+msgstr "Змінити цей колір"
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "_Додати колір з основного"
 
 #: ../app/actions/colormap-actions.c:58
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add current foreground color"
 msgstr "Додає активний колір переднього плану"
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
 msgstr "_Додати колір з тла"
 
 #: ../app/actions/colormap-actions.c:64
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add current background color"
 msgstr "Додає активний колір тла"
@@ -812,146 +803,124 @@ msgid "Edit Colormap Entry"
 msgstr "Правка елементу палітри кольорів"
 
 #: ../app/actions/config-actions.c:38
-#, fuzzy
 msgctxt "config-action"
 msgid "Use _GEGL"
 msgstr "_Використовувати GEGL"
 
 #: ../app/actions/config-actions.c:39
-#, fuzzy
 msgctxt "config-action"
 msgid "If possible, use GEGL for image processing"
 msgstr "При можливості використовувати GEGL для обробки зображення"
 
 #: ../app/actions/context-actions.c:46
-#, fuzzy
 msgctxt "context-action"
 msgid "_Context"
 msgstr "_Контекст"
 
 #: ../app/actions/context-actions.c:48
-#, fuzzy
 msgctxt "context-action"
 msgid "_Colors"
 msgstr "_Колір"
 
 #: ../app/actions/context-actions.c:50
-#, fuzzy
 msgctxt "context-action"
 msgid "_Opacity"
 msgstr "_Непрозорість"
 
 #: ../app/actions/context-actions.c:52
-#, fuzzy
 msgctxt "context-action"
 msgid "Paint _Mode"
 msgstr "_Режим малювання"
 
 #: ../app/actions/context-actions.c:54
-#, fuzzy
 msgctxt "context-action"
 msgid "_Tool"
 msgstr "_Інструмент"
 
 #: ../app/actions/context-actions.c:56
-#, fuzzy
 msgctxt "context-action"
 msgid "_Brush"
 msgstr "_Пензель"
 
 #: ../app/actions/context-actions.c:58
-#, fuzzy
 msgctxt "context-action"
 msgid "_Pattern"
 msgstr "_Текстура"
 
 #: ../app/actions/context-actions.c:60
-#, fuzzy
 msgctxt "context-action"
 msgid "_Palette"
 msgstr "_Палітра"
 
 #: ../app/actions/context-actions.c:62
-#, fuzzy
 msgctxt "context-action"
 msgid "_Gradient"
 msgstr "_Градієнт"
 
 #: ../app/actions/context-actions.c:64
-#, fuzzy
 msgctxt "context-action"
 msgid "_Font"
 msgstr "_Шрифт"
 
 #: ../app/actions/context-actions.c:67
-#, fuzzy
 msgctxt "context-action"
 msgid "_Shape"
 msgstr "_Фігура"
 
 #: ../app/actions/context-actions.c:69
-#, fuzzy
 msgctxt "context-action"
 msgid "_Radius"
 msgstr "_Радіус"
 
 #: ../app/actions/context-actions.c:71
-#, fuzzy
 msgctxt "context-action"
 msgid "S_pikes"
 msgstr "_Промені"
 
 #: ../app/actions/context-actions.c:73
-#, fuzzy
 msgctxt "context-action"
 msgid "_Hardness"
 msgstr "_Жорсткість"
 
 #: ../app/actions/context-actions.c:75
-#, fuzzy
 msgctxt "context-action"
 msgid "_Aspect Ratio"
-msgstr "Відношення сторін"
+msgstr "_Відношення сторін"
 
 #: ../app/actions/context-actions.c:77
-#, fuzzy
 msgctxt "context-action"
 msgid "A_ngle"
 msgstr "_Кут"
 
 #: ../app/actions/context-actions.c:80
-#, fuzzy
 msgctxt "context-action"
 msgid "_Default Colors"
 msgstr "Т_ипові кольори"
 
 #: ../app/actions/context-actions.c:82
-#, fuzzy
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
 msgstr "Зробити колір переднього плану чорним, а колір тла — білим"
 
 #: ../app/actions/context-actions.c:87
-#, fuzzy
 msgctxt "context-action"
 msgid "S_wap Colors"
 msgstr "_Обміняти місцями кольори"
 
 #: ../app/actions/context-actions.c:88
-#, fuzzy
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
 msgstr "Поміняти місцями кольори переднього плану та тла"
 
 #: ../app/actions/context-commands.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Paint Mode: %s"
-msgstr "_Режим малювання"
+msgstr "Режим малювання: %s"
 
 #: ../app/actions/context-commands.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "Brush Shape: %s"
-msgstr "Пензлі"
+msgstr "Форма пензля: %s"
 
 #: ../app/actions/context-commands.c:612
 #, c-format
@@ -964,19 +933,16 @@ msgid "Brush Angle: %2.2f"
 msgstr "Кут пензля: %2.2f"
 
 #: ../app/actions/cursor-info-actions.c:40
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
 msgstr "Меню «Інформація про курсор миші»"
 
 #: ../app/actions/cursor-info-actions.c:47
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
 msgstr "_Об'єднувати за зразком"
 
 #: ../app/actions/cursor-info-actions.c:48
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Використовувати всі видимі шари при виділенні_області"
@@ -1023,415 +989,346 @@ msgid ""
 msgstr "Ви дійсно бажаєте видалити \"%s\" зі списку зображень на диску?"
 
 #: ../app/actions/dialogs-actions.c:44
-#, fuzzy
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "Панель _інструментів"
 
 #: ../app/actions/dialogs-actions.c:50
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "П_араметри інструментів"
 
 #: ../app/actions/dialogs-actions.c:51
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Відкрити діалог параметрів інструменту"
 
 #: ../app/actions/dialogs-actions.c:56
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "_Стан пристрою"
 
 #: ../app/actions/dialogs-actions.c:57
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Відкрити діалог статусу пристрою вводу"
 
 #: ../app/actions/dialogs-actions.c:62
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Шари"
 
 #: ../app/actions/dialogs-actions.c:63
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Відкрити діалог шарів"
 
 #: ../app/actions/dialogs-actions.c:68
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Канали"
 
 #: ../app/actions/dialogs-actions.c:69
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Відкрити діалог каналів"
 
 #: ../app/actions/dialogs-actions.c:74
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "К_онтури"
 
 #: ../app/actions/dialogs-actions.c:75
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Відкрити діалог контурів"
 
 #: ../app/actions/dialogs-actions.c:80
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "_Мапа кольорів"
 
 #: ../app/actions/dialogs-actions.c:81
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Відкрити діалог мапи кольорів"
 
 #: ../app/actions/dialogs-actions.c:86
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "_Гістограма"
 
 #: ../app/actions/dialogs-actions.c:87
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Відкрити діалог гістограми"
 
 #: ../app/actions/dialogs-actions.c:92
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "Правка виділеної діл_янки"
 
 #: ../app/actions/dialogs-actions.c:93
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Відкрити діалог правки виділеної ділянки"
 
 #: ../app/actions/dialogs-actions.c:98
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "_Навігація"
 
 #: ../app/actions/dialogs-actions.c:99
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Відкрити діалог навігації у документі"
 
 #: ../app/actions/dialogs-actions.c:104
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "_Історія скасувань"
 
 #: ../app/actions/dialogs-actions.c:105
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Відкрити діалог історії дій"
 
 #: ../app/actions/dialogs-actions.c:110
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Pointer"
 msgstr "Курсор миші"
 
 #: ../app/actions/dialogs-actions.c:111
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Відкрити діалог інформації про курсор"
 
 #: ../app/actions/dialogs-actions.c:116
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "_Зразкові точки"
 
 #: ../app/actions/dialogs-actions.c:117
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Відкрити діалог зі зразковими точками"
 
 #: ../app/actions/dialogs-actions.c:122
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Кол_ьори"
 
 #: ../app/actions/dialogs-actions.c:123
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Відкрити діалог кольору тла/переднього плану"
 
 #: ../app/actions/dialogs-actions.c:128
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_Пензлі"
 
 #: ../app/actions/dialogs-actions.c:129
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Відкрити діалог пензлів"
 
 #: ../app/actions/dialogs-actions.c:134
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Редактор пензлів"
 
 #: ../app/actions/dialogs-actions.c:135
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Відкрити редактор пензлів"
 
 #: ../app/actions/dialogs-actions.c:140
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
-msgstr "Динаміка пензля"
+msgstr "Динаміка малювання"
 
 #: ../app/actions/dialogs-actions.c:141
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
-msgstr "Відкрити діалог контурів"
+msgstr "Відкрити діалог динаміки малювання"
 
 #: ../app/actions/dialogs-actions.c:146
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "Редактор градієнтів"
+msgstr "Редактор динаміки малювання"
 
 #: ../app/actions/dialogs-actions.c:147
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
-msgstr "Відкрити редактор градієнтів"
+msgstr "Відкрити редактор динаміки малювання"
 
 #: ../app/actions/dialogs-actions.c:152
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "_Текстури"
 
 #: ../app/actions/dialogs-actions.c:153
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Відкрити діалог текстур"
 
 #: ../app/actions/dialogs-actions.c:158
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "Гра_дієнти"
 
 #: ../app/actions/dialogs-actions.c:159
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Відкрити діалог градієнтів"
 
 #: ../app/actions/dialogs-actions.c:164
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Редактор градієнтів"
 
 #: ../app/actions/dialogs-actions.c:165
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Відкрити редактор градієнтів"
 
 #: ../app/actions/dialogs-actions.c:170
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Па_літри"
 
 #: ../app/actions/dialogs-actions.c:171
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Відкрити діалог кольорових разків"
 
 #: ../app/actions/dialogs-actions.c:176
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "Редактор палітри"
 
 #: ../app/actions/dialogs-actions.c:177
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
-msgstr "Відкрити редктор кольорових разків"
+msgstr "Відкрити редактор кольорових разків"
 
 #: ../app/actions/dialogs-actions.c:182
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "Ш_рифти"
 
 #: ../app/actions/dialogs-actions.c:183
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Відкрити діалог шрифтів"
 
 #: ../app/actions/dialogs-actions.c:188
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "Бу_фери"
 
 #: ../app/actions/dialogs-actions.c:189
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Відкрити діалог іменованих буферів обміну"
 
 #: ../app/actions/dialogs-actions.c:194
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "_Зображення"
 
 #: ../app/actions/dialogs-actions.c:195
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Відкрити діалог зображень"
 
 #: ../app/actions/dialogs-actions.c:200
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Н_едавні зображення"
 
 #: ../app/actions/dialogs-actions.c:201
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Відкрити діалог зі списком відкритих раніше зображень"
 
 #: ../app/actions/dialogs-actions.c:206
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "Ша_блони"
 
 #: ../app/actions/dialogs-actions.c:207
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Відкрити діалог з шаблонами документів"
 
 #: ../app/actions/dialogs-actions.c:212
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "Консоль пом_илок"
 
 #: ../app/actions/dialogs-actions.c:213
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Відкрити консоль помилок"
 
 #: ../app/actions/dialogs-actions.c:223
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Параметри"
 
 #: ../app/actions/dialogs-actions.c:224
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Відкрити діалог параметрів програми"
 
 #: ../app/actions/dialogs-actions.c:229
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Input Devices"
-msgstr "Пристрої вводу"
+msgstr "Пристрої _вводу"
 
 #: ../app/actions/dialogs-actions.c:230
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
-msgstr "Відкрити редктор кольорових разків"
+msgstr "Відкрити редактор пристроїв вводу"
 
 #: ../app/actions/dialogs-actions.c:235
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
-msgstr "_Комбінації клавіш..."
+msgstr "_Комбінації клавіш"
 
 #: ../app/actions/dialogs-actions.c:236
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Відкрити діалог налаштування комбінацій клавіш"
 
 #: ../app/actions/dialogs-actions.c:241
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Модулі"
 
 #: ../app/actions/dialogs-actions.c:242
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Відкрити діалог керування модулями"
 
 #: ../app/actions/dialogs-actions.c:247
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "По_рада дня"
 
 #: ../app/actions/dialogs-actions.c:248
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Показати збірку корисних порід з використання GIMP"
 
 #: ../app/actions/dialogs-actions.c:253
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Про програму"
 
 #: ../app/actions/dialogs-actions.c:254
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Про програму GIMP"
@@ -1446,305 +1343,254 @@ msgid "Raise the toolbox"
 msgstr "Підняти вгору панель інструментів"
 
 #: ../app/actions/dialogs-actions.c:303
-#, fuzzy
 msgid "New Toolbox"
-msgstr "Панель інструментів"
+msgstr "Додати панель інструментів"
 
 #: ../app/actions/dialogs-actions.c:304
-#, fuzzy
 msgid "Create a new toolbox"
-msgstr "Створити новий шаблон"
+msgstr "Створити нову панель інструментів"
 
 #: ../app/actions/dock-actions.c:45
-#, fuzzy
 msgctxt "dock-action"
 msgid "M_ove to Screen"
-msgstr "Пере_містити на екран..."
+msgstr "Пере_містити на екран"
 
 #: ../app/actions/dock-actions.c:49
-#, fuzzy
 msgctxt "dock-action"
 msgid "Close Dock"
 msgstr "Закрити панель"
 
 #: ../app/actions/dock-actions.c:54
-#, fuzzy
 msgctxt "dock-action"
 msgid "_Open Display..."
 msgstr "Відкрити  _екран..."
 
 #: ../app/actions/dock-actions.c:55
-#, fuzzy
 msgctxt "dock-action"
 msgid "Connect to another display"
 msgstr "Встановити з'єднання з іншим екраном"
 
 #: ../app/actions/dock-actions.c:63
-#, fuzzy
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "Показувати _виділення"
+msgstr "Показувати список _зображень"
 
 #: ../app/actions/dock-actions.c:69
-#, fuzzy
 msgctxt "dock-action"
 msgid "Auto _Follow Active Image"
 msgstr "Слідувати за _активним зображенням"
 
 #: ../app/actions/dockable-actions.c:48
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Dialogs Menu"
 msgstr "Меню діалогів"
 
 #: ../app/actions/dockable-actions.c:53
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Add Tab"
 msgstr "_Додати вкладку"
 
 #: ../app/actions/dockable-actions.c:55
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Preview Size"
 msgstr "_Розмір ескізу"
 
 #: ../app/actions/dockable-actions.c:57
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Tab Style"
 msgstr "_Стиль вкладок"
 
 #: ../app/actions/dockable-actions.c:60
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Close Tab"
 msgstr "_Закрити вкладку"
 
 #: ../app/actions/dockable-actions.c:65
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Detach Tab"
 msgstr "_Відкріпити вкладку"
 
 #: ../app/actions/dockable-actions.c:84
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Tiny"
 msgstr "К_рихітний"
 
 #: ../app/actions/dockable-actions.c:86
-#, fuzzy
 msgctxt "preview-size"
 msgid "E_xtra Small"
 msgstr "Д_уже малий"
 
 #: ../app/actions/dockable-actions.c:88
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Small"
 msgstr "_Малий"
 
 #: ../app/actions/dockable-actions.c:90
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Medium"
 msgstr "_Середній"
 
 #: ../app/actions/dockable-actions.c:92
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Large"
 msgstr "_Великий"
 
 #: ../app/actions/dockable-actions.c:94
-#, fuzzy
 msgctxt "preview-size"
 msgid "Ex_tra Large"
 msgstr "Ду_же великий"
 
 #: ../app/actions/dockable-actions.c:96
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Huge"
 msgstr "В_еличезний"
 
 #: ../app/actions/dockable-actions.c:98
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Enormous"
 msgstr "_Гігантський"
 
 #: ../app/actions/dockable-actions.c:100
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Gigantic"
 msgstr "К_олосальний"
 
 #: ../app/actions/dockable-actions.c:106
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Icon"
 msgstr "_Значок"
 
 #: ../app/actions/dockable-actions.c:108
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current _Status"
 msgstr "_Стан"
 
 #: ../app/actions/dockable-actions.c:110
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Text"
 msgstr "_Текст"
 
 #: ../app/actions/dockable-actions.c:112
-#, fuzzy
 msgctxt "tab-style"
 msgid "I_con & Text"
 msgstr "З_начок та текст"
 
 #: ../app/actions/dockable-actions.c:114
-#, fuzzy
 msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "С_тан на текст"
 
 #: ../app/actions/dockable-actions.c:124
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
 msgstr "_Замкнути вкладку у панелі"
 
 #: ../app/actions/dockable-actions.c:126
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
 msgstr "Захистити цю вкладку від випадкового переміщення курсором миші"
 
 #: ../app/actions/dockable-actions.c:132
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
 msgstr "Показувати панель з _кнопками"
 
 #: ../app/actions/dockable-actions.c:141
-#, fuzzy
 msgctxt "dockable-action"
 msgid "View as _List"
-msgstr "Відображати _списком"
+msgstr "Перегляд у вигляді _списку"
 
 #: ../app/actions/dockable-actions.c:146
-#, fuzzy
 msgctxt "dockable-action"
 msgid "View as _Grid"
-msgstr "Відображати у вигляді _таблиці"
+msgstr "Перегляд у вигляді _таблиці"
 
 #: ../app/actions/documents-actions.c:41
-#, fuzzy
 msgctxt "documents-action"
 msgid "Documents Menu"
 msgstr "Меню списку зображень"
 
 #: ../app/actions/documents-actions.c:45
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Open Image"
 msgstr "_Відкрити зображення"
 
 #: ../app/actions/documents-actions.c:46
-#, fuzzy
 msgctxt "documents-action"
 msgid "Open the selected entry"
 msgstr "Видалити вибраний елемент"
 
 #: ../app/actions/documents-actions.c:51
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Raise or Open Image"
-msgstr "_Підняти чи відкрити зображення"
+msgstr "_Розгорнути чи відкрити зображення"
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgctxt "documents-action"
 msgid "Raise window if already open"
 msgstr "Зробити активним, якщо вже відкрито"
 
 #: ../app/actions/documents-actions.c:57
-#, fuzzy
 msgctxt "documents-action"
 msgid "File Open _Dialog"
 msgstr "_Діалог відкривання файлу"
 
 #: ../app/actions/documents-actions.c:58
-#, fuzzy
 msgctxt "documents-action"
 msgid "Open image dialog"
 msgstr "Відкривання зображення"
 
 #: ../app/actions/documents-actions.c:63
-#, fuzzy
 msgctxt "documents-action"
 msgid "Copy Image _Location"
 msgstr "Копіювати _адресу файлу"
 
 #: ../app/actions/documents-actions.c:64
-#, fuzzy
 msgctxt "documents-action"
 msgid "Copy image location to clipboard"
 msgstr "Копіювати адресу файлу у буфер обміну"
 
 #: ../app/actions/documents-actions.c:69
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove _Entry"
 msgstr "Видалити _елемент"
 
 #: ../app/actions/documents-actions.c:70
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove the selected entry"
 msgstr "Видалити вибраний елемент"
 
 #: ../app/actions/documents-actions.c:75
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Clear History"
 msgstr "О_чистити історію дій"
 
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgctxt "documents-action"
 msgid "Clear the entire document history"
 msgstr "Очистити весь журнал відкритих раніше документів"
 
 #: ../app/actions/documents-actions.c:81
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate _Preview"
-msgstr "Перечитати _перегляд"
+msgstr "Перечитати _мініатюру"
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate preview"
-msgstr "Перечитати перегляд"
+msgstr "Перечитати мініатюру"
 
 #: ../app/actions/documents-actions.c:87
-#, fuzzy
 msgctxt "documents-action"
 msgid "Reload _all Previews"
-msgstr "Перечитати _усі перегляди"
+msgstr "Перечитати _усі мініатюри"
 
 #: ../app/actions/documents-actions.c:88
-#, fuzzy
 msgctxt "documents-action"
 msgid "Reload all previews"
-msgstr "Перечитати усі перегляди"
+msgstr "Перечитати усі мініатюри"
 
 #: ../app/actions/documents-actions.c:93
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
 msgstr "Видалити застарілі з_аписи"
@@ -1752,7 +1598,7 @@ msgstr "Видалити застарілі з_аписи"
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr ""
+msgstr "Видалити записи про файли, які вже недоступні"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
@@ -1832,10 +1678,9 @@ msgstr "Змінити стан зв'язаності"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/drawable-actions.c:87
-#, fuzzy
 msgctxt "drawable-action"
 msgid "L_ock pixels"
-msgstr "точок"
+msgstr "_Замкнути точки растру від змін"
 
 #: ../app/actions/drawable-actions.c:89
 msgctxt "drawable-action"
@@ -1920,76 +1765,64 @@ msgid "Create a new dynamics"
 msgstr "Створити нову динаміку"
 
 #: ../app/actions/dynamics-actions.c:52
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Д_ублювати контур"
+msgstr "Д_ублювати динаміку"
 
 #: ../app/actions/dynamics-actions.c:53
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "_Імітувати динаміку пензля"
+msgstr "Створити копію динаміки"
 
 #: ../app/actions/dynamics-actions.c:58
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Copy Dynamics _Location"
-msgstr "Копіювати _розташування пензля"
+msgstr "Копіювати _адресу динаміки"
 
 #: ../app/actions/dynamics-actions.c:59
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Copy dynamics file location to clipboard"
 msgstr "Копіювати розташування файлу пензля у буфер обміну"
 
 #: ../app/actions/dynamics-actions.c:64
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Delete Dynamics"
-msgstr "Видалення вузлів"
+msgstr "В_идалити динаміку"
 
 #: ../app/actions/dynamics-actions.c:65
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Delete this dynamics"
-msgstr "Видалити це зображення"
+msgstr "Видалити цю динаміку"
 
 #: ../app/actions/dynamics-actions.c:70
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Refresh Dynamicss"
-msgstr "Динаміка пензля"
+msgstr "О_новити динаміку"
 
 #: ../app/actions/dynamics-actions.c:71
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Refresh dynamics"
-msgstr "Динаміка пензля"
+msgstr "Оновити динаміку"
 
 #: ../app/actions/dynamics-actions.c:79
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Правка градієнта..."
+msgstr "_Правка диманіки..."
 
 #: ../app/actions/dynamics-actions.c:80
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Edit dynamics"
-msgstr "_Імітувати динаміку пензля"
+msgstr "Змінити динаміку"
 
 #: ../app/actions/dynamics-editor-actions.c:42
-#, fuzzy
 msgctxt "dynamics-editor-action"
 msgid "Paint Dynamics Editor Menu"
-msgstr "Меню редактора градієнтів"
+msgstr "Меню редактора динаміки малювання"
 
 #: ../app/actions/dynamics-editor-actions.c:50
-#, fuzzy
 msgctxt "dynamics-editor-action"
 msgid "Edit Active Dynamics"
-msgstr "Змінити активний пензель..."
+msgstr "Змінити активну динаміку"
 
 #: ../app/actions/edit-actions.c:63
 msgctxt "edit-action"
@@ -2524,7 +2357,7 @@ msgstr "Перезаписати"
 #: ../app/actions/file-actions.c:153
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr ""
+msgstr "Експортувати зображення назад у початковий імпортований файл"
 
 #: ../app/actions/file-actions.c:158
 msgctxt "file-action"
@@ -2534,7 +2367,7 @@ msgstr "Експорт..."
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr ""
+msgstr "Експортувати зображення у такі формати даних як PNG та JPEG"
 
 #: ../app/actions/file-actions.c:292
 #, c-format
@@ -5633,7 +5466,6 @@ msgid "From _Theme"
 msgstr "З т_еми"
 
 #: ../app/actions/view-actions.c:365
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Встановити колір тла поточної теми оформлення"
@@ -6276,7 +6108,6 @@ msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr "Встановити кількість процесорів, що використовуються GIMP одночасно."
 
 #: ../app/config/gimprc-blurbs.h:257
-#, fuzzy
 msgid ""
 "When enabled, the X server is queried for the mouse's current position on "
 "each motion event, rather than relying on the position hint.  This means "
@@ -6613,667 +6444,556 @@ msgid "Positioned"
 msgstr "Фіксоване"
 
 #: ../app/core/core-enums.c:87
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Створити оптимальну палітру"
 
 #: ../app/core/core-enums.c:88
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Використовувати палітру оптимізовану для WWW"
 
 #: ../app/core/core-enums.c:89
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Використовувати чорно-білу (1-бітну) палітру"
 
 #: ../app/core/core-enums.c:90
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Використовувати власну палітру"
 
 #: ../app/core/core-enums.c:216
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "Перший об'єкт"
 
 #: ../app/core/core-enums.c:217
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "Зображення"
 
 #: ../app/core/core-enums.c:218
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "Виділення"
 
 #: ../app/core/core-enums.c:219
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "Активний шар"
 
 #: ../app/core/core-enums.c:220
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "Активний канал"
 
 #: ../app/core/core-enums.c:221
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "Активний контур"
 
 #: ../app/core/core-enums.c:253
-#, fuzzy
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
 #: ../app/core/core-enums.c:254
-#, fuzzy
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Колір тла"
 
 #: ../app/core/core-enums.c:255
-#, fuzzy
 msgctxt "fill-type"
 msgid "White"
 msgstr "Білий"
 
 #: ../app/core/core-enums.c:256
-#, fuzzy
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "Прозорість"
+msgstr "Прозорий шар"
 
 #: ../app/core/core-enums.c:257
-#, fuzzy
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Текстура"
 
 #: ../app/core/core-enums.c:258
-#, fuzzy
 msgctxt "fill-type"
 msgid "None"
 msgstr "Немає"
 
 #: ../app/core/core-enums.c:286
-#, fuzzy
 msgctxt "fill-style"
 msgid "Solid color"
-msgstr "Один колір"
+msgstr "Одним кольором"
 
 #: ../app/core/core-enums.c:287
-#, fuzzy
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Текстура"
 
 #: ../app/core/core-enums.c:315
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "Лінія штриху"
+msgstr "Обвести лінією"
 
 #: ../app/core/core-enums.c:316
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
-msgstr "Використати один з інструментів"
+msgstr "Обвести одним з інструментів"
 
 #: ../app/core/core-enums.c:345
-#, fuzzy
 msgctxt "join-style"
 msgid "Miter"
-msgstr "Фацетне з'єднання"
+msgstr "Гостре"
 
 #: ../app/core/core-enums.c:346
-#, fuzzy
 msgctxt "join-style"
 msgid "Round"
-msgstr "Округлий"
+msgstr "Скруглене"
 
 #: ../app/core/core-enums.c:347
-#, fuzzy
 msgctxt "join-style"
 msgid "Bevel"
-msgstr "Фасочне з'єднання"
+msgstr "Фаска"
 
 #: ../app/core/core-enums.c:376
-#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
-msgstr "Плаский"
+msgstr "Пласке"
 
 #: ../app/core/core-enums.c:377
-#, fuzzy
 msgctxt "cap-style"
 msgid "Round"
-msgstr "Округлий"
+msgstr "Округле"
 
 #: ../app/core/core-enums.c:378
-#, fuzzy
 msgctxt "cap-style"
 msgid "Square"
-msgstr "Квадратний"
+msgstr "Квадратне"
 
 #: ../app/core/core-enums.c:415
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Custom"
-msgstr "Нетиповий"
+msgstr "Нетипове"
 
 #: ../app/core/core-enums.c:416
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Лінія"
 
 #: ../app/core/core-enums.c:417
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Long dashes"
-msgstr "Довгі риски"
+msgstr "Довгі тире"
 
 #: ../app/core/core-enums.c:418
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Medium dashes"
-msgstr "Середні риски"
+msgstr "Середні тире"
 
 #: ../app/core/core-enums.c:419
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Short dashes"
-msgstr "Короткі риски"
+msgstr "Короткі тире"
 
 #: ../app/core/core-enums.c:420
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Sparse dots"
-msgstr "Рідкі риски"
+msgstr "Рідкі крапки"
 
 #: ../app/core/core-enums.c:421
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Крапки"
 
 #: ../app/core/core-enums.c:422
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Часті крапки"
 
 #: ../app/core/core-enums.c:423
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Пунктир"
 
 #: ../app/core/core-enums.c:424
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Тире, крапка"
 
 #: ../app/core/core-enums.c:425
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Тире, крапка, крапка"
 
 #: ../app/core/core-enums.c:454
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Коло"
 
 #: ../app/core/core-enums.c:455
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Square"
-msgstr "Квадратний"
+msgstr "Квадратні"
 
 #: ../app/core/core-enums.c:456
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Ромб"
 
 #: ../app/core/core-enums.c:485
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Горизонтальне"
 
 #: ../app/core/core-enums.c:486
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Вертикальне"
 
 #: ../app/core/core-enums.c:487
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Невідомо"
 
 #: ../app/core/core-enums.c:518
-#, fuzzy
 msgctxt "item-set"
 msgid "None"
 msgstr "Немає"
 
 #: ../app/core/core-enums.c:519
-#, fuzzy
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Всі шари"
 
 #: ../app/core/core-enums.c:520
-#, fuzzy
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Шари з розміром зображення"
 
 #: ../app/core/core-enums.c:521
-#, fuzzy
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Всі видимі шари"
 
 #: ../app/core/core-enums.c:522
-#, fuzzy
 msgctxt "item-set"
 msgid "All linked layers"
-msgstr "Всі з'єднані шари"
+msgstr "Всі пов'язані шари"
 
 #: ../app/core/core-enums.c:588
-#, fuzzy
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Крихітний"
 
 #: ../app/core/core-enums.c:589
-#, fuzzy
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Дуже малий"
 
 #: ../app/core/core-enums.c:590
-#, fuzzy
 msgctxt "view-size"
 msgid "Small"
 msgstr "Малий"
 
 #: ../app/core/core-enums.c:591
-#, fuzzy
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Середній"
 
 #: ../app/core/core-enums.c:592
-#, fuzzy
 msgctxt "view-size"
 msgid "Large"
 msgstr "Великий"
 
 #: ../app/core/core-enums.c:593
-#, fuzzy
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Дуже великий"
 
 #: ../app/core/core-enums.c:594
-#, fuzzy
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Величезний"
 
 #: ../app/core/core-enums.c:595
-#, fuzzy
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Гігантський"
 
 #: ../app/core/core-enums.c:596
-#, fuzzy
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Колосальний"
 
 #: ../app/core/core-enums.c:624
-#, fuzzy
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Перегляд списком"
 
 #: ../app/core/core-enums.c:625
-#, fuzzy
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Перегляд таблицею"
 
 #: ../app/core/core-enums.c:691
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Без мініатюр"
 
 #: ../app/core/core-enums.c:692
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Звичайний (128x128)"
 
 #: ../app/core/core-enums.c:693
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Великий (256x256)"
 
 #: ../app/core/core-enums.c:870
-#, fuzzy
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale image"
-msgstr "Масштаб зображення"
+msgstr "Зміна розміру зображення"
 
 #: ../app/core/core-enums.c:872
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Зміна розміру зображення"
 
 #: ../app/core/core-enums.c:873
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Віддзеркалення зображення"
 
 #: ../app/core/core-enums.c:874
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Обертання зображення"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Кадрування зображення"
 
 #: ../app/core/core-enums.c:876
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Перетворення зображення"
 
 #: ../app/core/core-enums.c:877
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Видалити елемент"
 
 #: ../app/core/core-enums.c:878
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Об'єднання шарів"
 
 #: ../app/core/core-enums.c:879
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Об'єднання контурів"
 
 #: ../app/core/core-enums.c:880
-#, fuzzy
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Швидка маска"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:911
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Сітка"
 
 #: ../app/core/core-enums.c:882 ../app/core/core-enums.c:913
-#, fuzzy
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Напрямна"
 
 #: ../app/core/core-enums.c:883 ../app/core/core-enums.c:914
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Зразкова точка"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:915
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Шар/Канал"
 
 #: ../app/core/core-enums.c:885 ../app/core/core-enums.c:916
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Зміна шару/каналу"
 
 #: ../app/core/core-enums.c:886 ../app/core/core-enums.c:917
-#, fuzzy
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Маска виділеної ділянки"
 
 #: ../app/core/core-enums.c:887 ../app/core/core-enums.c:921
-#, fuzzy
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Видимість елемента"
 
 #: ../app/core/core-enums.c:888 ../app/core/core-enums.c:922
-#, fuzzy
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Приєднати/від'єднати елемент"
 
 #: ../app/core/core-enums.c:889
-#, fuzzy
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Властивості елемента"
 
 #: ../app/core/core-enums.c:890 ../app/core/core-enums.c:920
-#, fuzzy
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Переміщення елемента"
 
 #: ../app/core/core-enums.c:891
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Зміна масштабу елемента"
 
 #: ../app/core/core-enums.c:892
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Зміна розміру елемента"
 
 #: ../app/core/core-enums.c:893
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Додавання шару"
 
 #: ../app/core/core-enums.c:894 ../app/core/core-enums.c:933
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Додавання маски шару"
 
 #: ../app/core/core-enums.c:895 ../app/core/core-enums.c:935
-#, fuzzy
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Застосування маски шару"
 
 #: ../app/core/core-enums.c:896 ../app/core/core-enums.c:943
-#, fuzzy
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Плаваюче виділення у шар"
 
 #: ../app/core/core-enums.c:897
-#, fuzzy
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Плаваюче виділення"
 
 #: ../app/core/core-enums.c:898
-#, fuzzy
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прикріплення плаваючого виділення"
 
 #: ../app/core/core-enums.c:899
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставлення"
 
 #: ../app/core/core-enums.c:900
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вирізання"
 
 #: ../app/core/core-enums.c:901
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Текст"
 
 #: ../app/core/core-enums.c:902 ../app/core/core-enums.c:944
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Перетворення"
 
 #: ../app/core/core-enums.c:903 ../app/core/core-enums.c:945
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Малювання"
 
 #: ../app/core/core-enums.c:904 ../app/core/core-enums.c:948
-#, fuzzy
 msgctxt "undo-type"
 msgid "Attach parasite"
-msgstr "Додавання шуму"
+msgstr "Додавання паразита"
 
 #: ../app/core/core-enums.c:905 ../app/core/core-enums.c:949
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove parasite"
-msgstr "Видалення шуму"
+msgstr "Видалення паразиту"
 
 #: ../app/core/core-enums.c:906
-#, fuzzy
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Імпортування контуру"
 
 #: ../app/core/core-enums.c:907
-#, fuzzy
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Доповнення"
 
 #: ../app/core/core-enums.c:908
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Тип зображення"
 
 #: ../app/core/core-enums.c:909
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Розмір зображення"
 
 #: ../app/core/core-enums.c:910
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Зміна роздільної здатності зображення"
 
 #: ../app/core/core-enums.c:912
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Зміна індексованої палітри"
 
 #: ../app/core/core-enums.c:918
-#, fuzzy
 msgctxt "undo-type"
 msgid "Reorder item"
-msgstr "Видалити елемент"
+msgstr "Реорганізація елемента"
 
 #: ../app/core/core-enums.c:919
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Перейменування елементу"
 
 #: ../app/core/core-enums.c:923
-#, fuzzy
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Створення шару"
 
 #: ../app/core/core-enums.c:924
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Видалення шару"
 
 #: ../app/core/core-enums.c:925
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layer mode"
-msgstr "Встановлення режиму шару"
+msgstr "Зміна режиму шару"
 
 #: ../app/core/core-enums.c:926
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layer opacity"
-msgstr "Встановлення непрозорості шару"
+msgstr "Зміна непрозорості шару"
 
 #: ../app/core/core-enums.c:927
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Заблокувати/розблокувати альфа-канал"
@@ -7286,229 +7006,192 @@ msgstr ""
 #: ../app/core/core-enums.c:929
 msgctxt "undo-type"
 msgid "Resume group layer resize"
-msgstr ""
+msgstr "Відновити зміну озміру групи шарів"
 
 #: ../app/core/core-enums.c:930
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert group layer"
-msgstr "Перетворення кута"
+msgstr "Перетворення групи шарів"
 
 #: ../app/core/core-enums.c:931
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Текстовий шар"
 
 #: ../app/core/core-enums.c:932
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Зміна текстового шару"
 
 #: ../app/core/core-enums.c:934
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer mask"
-msgstr "Видалення маску шару"
+msgstr "Видалення маски шару"
 
 #: ../app/core/core-enums.c:936
-#, fuzzy
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Показати маску шару"
 
 #: ../app/core/core-enums.c:937
-#, fuzzy
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Створення каналу"
 
 #: ../app/core/core-enums.c:938
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete channel"
-msgstr "Видалити канал"
+msgstr "Видалення каналу"
 
 #: ../app/core/core-enums.c:939
-#, fuzzy
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Колір каналу"
 
 #: ../app/core/core-enums.c:940
-#, fuzzy
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Новий контур"
 
 #: ../app/core/core-enums.c:941
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Видалити контур"
 
 #: ../app/core/core-enums.c:942
-#, fuzzy
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Зміна контуру"
 
 #: ../app/core/core-enums.c:946
-#, fuzzy
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Перо"
 
 #: ../app/core/core-enums.c:947
-#, fuzzy
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Обрати колір переднього плану"
 
 #: ../app/core/core-enums.c:950
-#, fuzzy
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Дію неможливо скасувати"
 
 #: ../app/core/core-enums.c:1222
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Складений"
 
 #: ../app/core/core-enums.c:1223
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Червоний"
 
 #: ../app/core/core-enums.c:1224
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Зелений"
 
 #: ../app/core/core-enums.c:1225
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Синій"
 
 #: ../app/core/core-enums.c:1226
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Hue"
 msgstr "Відтінок"
 
 #: ../app/core/core-enums.c:1227
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "Насиченість"
 
 #: ../app/core/core-enums.c:1228
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "Яскравість"
 
 #: ../app/core/core-enums.c:1257
-#, fuzzy
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Повідомлення"
 
 #: ../app/core/core-enums.c:1258
-#, fuzzy
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Попередження"
 
 #: ../app/core/core-enums.c:1259
-#, fuzzy
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Помилка"
 
 #: ../app/core/core-enums.c:1288
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
-msgstr "Підтверджувати дії"
+msgstr "Питати, що робити"
 
 #: ../app/core/core-enums.c:1289
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Зберегти вбудований профіль"
 
 #: ../app/core/core-enums.c:1290
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
-msgstr "Перетворення кольорової моделі зображення на RGB"
+msgstr "Перетворення кольорової моделі на RGB"
 
 #: ../app/core/core-enums.c:1326
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Непрозорість"
 
 #: ../app/core/core-enums.c:1327
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Розмір"
 
 #: ../app/core/core-enums.c:1328
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Angle"
-msgstr "_Кут"
+msgstr "Кут"
 
 #: ../app/core/core-enums.c:1329
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Колір"
 
 #: ../app/core/core-enums.c:1330
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Твердість"
 
 #: ../app/core/core-enums.c:1331
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Відношення сторін"
 
 #: ../app/core/core-enums.c:1332
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Spacing"
-msgstr "Клітини"
+msgstr "Інтервал"
 
 #: ../app/core/core-enums.c:1333
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Швидкість"
 
 #: ../app/core/core-enums.c:1334
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr "Зробити п_лаваючим"
+msgstr "Потік"
 
 #: ../app/core/core-enums.c:1335
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Фацетне з'єднання"
+msgstr "Тремтіння"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:232
 #: ../app/gui/session.c:349 ../app/menus/menus.c:448
@@ -7562,9 +7245,8 @@ msgid "FG to BG (RGB)"
 msgstr "Передній план до тла (RGB)"
 
 #: ../app/core/gimp-gradients.c:70
-#, fuzzy
 msgid "FG to BG (Hardedge)"
-msgstr "Передній план до тла (RGB)"
+msgstr "Передній план до тла (різкий перехід)"
 
 #: ../app/core/gimp-gradients.c:87
 msgid "FG to BG (HSV counter-clockwise)"
@@ -7589,9 +7271,8 @@ msgstr "Передній план до прозорого"
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
-msgstr "tips-locale:uk"
+msgstr "tags-locale:uk"
 
 #: ../app/core/gimp-user-install.c:154
 #, c-format
@@ -7646,9 +7327,8 @@ msgstr "Шуми"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:924 ../app/dialogs/preferences-dialog.c:2724
-#, fuzzy
 msgid "Dynamics"
-msgstr "Динаміка пензля"
+msgstr "Динаміка малювання"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:940
@@ -7663,7 +7343,7 @@ msgstr "Модулі"
 #. update tag cache
 #: ../app/core/gimp.c:953
 msgid "Updating tag cache"
-msgstr ""
+msgstr "Оновлюється кеш позначок"
 
 #: ../app/core/gimpbrush-load.c:176
 #, c-format
@@ -7737,9 +7417,8 @@ msgstr ""
 "Критична помилка аналізу файлу пензля '%s': широкі пензлі не підтримуються."
 
 #: ../app/core/gimpbrush.c:136
-#, fuzzy
 msgid "Brush Spacing"
-msgstr "Клітини"
+msgstr "Інтервал пензля"
 
 #: ../app/core/gimpbrushgenerated-load.c:86
 #, c-format
@@ -7779,40 +7458,34 @@ msgid "Error while reading brush file '%s': %s"
 msgstr "Помилка при зчитуванні файлу пензля '%s': %s"
 
 #: ../app/core/gimpbrushgenerated.c:129
-#, fuzzy
 msgid "Brush Shape"
-msgstr "Пензлі"
+msgstr "Форма пензля"
 
 #: ../app/core/gimpbrushgenerated.c:137
-#, fuzzy
 msgid "Brush Radius"
-msgstr "Динаміка пензля"
+msgstr "Радіус пензля"
 
 #: ../app/core/gimpbrushgenerated.c:144
-#, fuzzy
 msgid "Brush Spikes"
-msgstr "Пензлі"
+msgstr "Промені пензля"
 
 #: ../app/core/gimpbrushgenerated.c:151
-#, fuzzy
 msgid "Brush Hardness"
-msgstr "Твердість"
+msgstr "Жорсткість пензля"
 
 #: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:141
-#, fuzzy
 msgid "Brush Aspect Ratio"
-msgstr "Відношення сторін"
+msgstr "Відношення сторін пензля"
 
 #: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:145
-#, fuzzy
 msgid "Brush Angle"
-msgstr "Пензлі"
+msgstr "Кут пензля"
 
 #: ../app/core/gimpbrushpipe-load.c:112 ../app/core/gimpbrushpipe-load.c:132
 #: ../app/core/gimpbrushpipe-load.c:222
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Критична помилка аналізу файла пензля '%s': файл пошкоджений."
+msgstr "Критична помилка аналізу файлу пензля '%s': файл пошкоджений."
 
 #: ../app/core/gimpchannel-select.c:59
 msgctxt "command"
@@ -7934,9 +7607,8 @@ msgid "Opacity"
 msgstr "Непрозорість"
 
 #: ../app/core/gimpcontext.c:630
-#, fuzzy
 msgid "Paint Mode"
-msgstr "_Режим малювання"
+msgstr "Режим малювання"
 
 #: ../app/core/gimpdata.c:679 ../app/core/gimptoolpresets.c:277
 #, c-format
@@ -7982,9 +7654,9 @@ msgid ""
 msgstr ""
 
 #: ../app/core/gimpdatafactory.c:759
-#, fuzzy, c-format
+#, c-format
 msgid "You don't have any writable data folder configured."
-msgstr "Каталог для запису даних не вказано."
+msgstr "Каталог з правами на запис даних не вказано."
 
 #: ../app/core/gimpdatafactory.c:875
 #, c-format
@@ -8108,9 +7780,8 @@ msgid "Transformation"
 msgstr "Перетворення"
 
 #: ../app/core/gimpdynamicsoutput.c:106
-#, fuzzy
 msgid "Output type"
-msgstr "Рівні на виході"
+msgstr "Тип виводу"
 
 #: ../app/core/gimpgradient-load.c:70 ../app/core/gimpgradient-load.c:95
 #: ../app/core/gimpgradient-load.c:116 ../app/core/gimpgradient-load.c:167
@@ -8190,44 +7861,36 @@ msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Вертикальний зсув першої лінії сітки. Значення може бути від'ємним."
 
 #: ../app/core/gimpgrouplayer.c:178 ../app/core/gimpgrouplayer.c:837
-#, fuzzy
 msgid "Layer Group"
-msgstr "Зробити шар в_ерхнім"
+msgstr "Група шарів"
 
 #: ../app/core/gimpgrouplayer.c:179
-#, fuzzy
 msgid "Rename Layer Group"
-msgstr "Перейменування шару"
+msgstr "Перейменування групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:180
-#, fuzzy
 msgid "Move Layer Group"
-msgstr "Переміщення шару"
+msgstr "Переміщення групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:181
-#, fuzzy
 msgid "Scale Layer Group"
-msgstr "Масштабування шару"
+msgstr "Масштабування групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:182
-#, fuzzy
 msgid "Resize Layer Group"
-msgstr "Зміна розміру шару"
+msgstr "Зміна розміру групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:183
-#, fuzzy
 msgid "Flip Layer Group"
-msgstr "Віддзеркалення шару"
+msgstr "Віддзеркалення групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:184
-#, fuzzy
 msgid "Rotate Layer Group"
-msgstr "Обертання шару"
+msgstr "Обертання групи шарів"
 
 #: ../app/core/gimpgrouplayer.c:185
-#, fuzzy
 msgid "Transform Layer Group"
-msgstr "Перетворення шару"
+msgstr "Перетворення групи шарів"
 
 #: ../app/core/gimpimage-arrange.c:142
 msgid "Arrange Objects"
@@ -8323,27 +7986,24 @@ msgid "Flatten Image"
 msgstr "Зведення зображення"
 
 #: ../app/core/gimpimage-merge.c:225
-#, fuzzy
 msgid "Cannot merge down to a layer group."
-msgstr "Не вдається перейменувати маски шарів."
+msgstr "Не вдається виконати зведення у групу шарів."
 
 #: ../app/core/gimpimage-merge.c:232
 msgid "The layer to merge down to is locked."
-msgstr ""
+msgstr "Шар, я який має бути виконане зведення, замкнений"
 
 #: ../app/core/gimpimage-merge.c:244
-#, fuzzy
 msgid "There is no visible layer to merge down to."
-msgstr "Немає шару для перетворення."
+msgstr "Немає видимого шару, у якому можна виконати зведення."
 
 #: ../app/core/gimpimage-merge.c:255
 msgid "Merge Down"
 msgstr "Об'єднання з попереднім"
 
 #: ../app/core/gimpimage-merge.c:277
-#, fuzzy
 msgid "Merge Layer Group"
-msgstr "Об'єднання шарів"
+msgstr "Звести групу шарів"
 
 #: ../app/core/gimpimage-merge.c:330
 msgid "Merge Visible Paths"
@@ -8720,14 +8380,14 @@ msgstr ""
 "у рядку %d."
 
 #: ../app/core/gimppalette-load.c:472
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from palette file '%s'"
-msgstr "Не вдається прочитати заголовок з '%s': %s"
+msgstr "Не вдається прочитати заголовок з файлу палітри «%s»"
 
 #: ../app/core/gimppalette-load.c:495 ../app/core/gimppalette-load.c:583
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in palette file '%s'"
-msgstr "Критична помилка аналізу файлу палітри '%s': відсутній заголовок."
+msgstr "Критична помилка аналізу файлу палітри '%s'"
 
 #: ../app/core/gimppattern-load.c:84 ../app/core/gimppattern-load.c:130
 #: ../app/core/gimppattern-load.c:161
@@ -8834,76 +8494,64 @@ msgid "Background"
 msgstr "Тло"
 
 #: ../app/core/gimpunit.c:56
-#, fuzzy
 msgctxt "unit-singular"
 msgid "pixel"
-msgstr "точка"
+msgstr "точки растру"
 
 #: ../app/core/gimpunit.c:56
-#, fuzzy
 msgctxt "unit-plural"
 msgid "pixels"
-msgstr "точок"
+msgstr "точки растру"
 
 #: ../app/core/gimpunit.c:60
-#, fuzzy
 msgctxt "unit-singular"
 msgid "inch"
 msgstr "дюйм"
 
 #: ../app/core/gimpunit.c:60
-#, fuzzy
 msgctxt "unit-plural"
 msgid "inches"
 msgstr "дюйми"
 
 #: ../app/core/gimpunit.c:63
-#, fuzzy
 msgctxt "unit-singular"
 msgid "millimeter"
 msgstr "міліметр"
 
 #: ../app/core/gimpunit.c:63
-#, fuzzy
 msgctxt "unit-plural"
 msgid "millimeters"
 msgstr "міліметри"
 
 #: ../app/core/gimpunit.c:67
-#, fuzzy
 msgctxt "unit-singular"
 msgid "point"
 msgstr "пункт"
 
 #: ../app/core/gimpunit.c:67
-#, fuzzy
 msgctxt "unit-plural"
 msgid "points"
 msgstr "пункти"
 
 #: ../app/core/gimpunit.c:70
-#, fuzzy
 msgctxt "unit-singular"
 msgid "pica"
 msgstr "піка"
 
 #: ../app/core/gimpunit.c:70
-#, fuzzy
 msgctxt "unit-plural"
 msgid "picas"
 msgstr "піки"
 
 #: ../app/core/gimpunit.c:78
-#, fuzzy
 msgctxt "singular"
 msgid "percent"
 msgstr "відсоток"
 
 #: ../app/core/gimpunit.c:78
-#, fuzzy
 msgctxt "plural"
 msgid "percent"
-msgstr "відсоток"
+msgstr "відсотки"
 
 #: ../app/dialogs/about-dialog.c:102 ../app/gui/gui.c:484
 msgid "About GIMP"
@@ -9072,14 +8720,12 @@ msgid "Enter location (URI):"
 msgstr "Введіть адресу (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:105
-#, fuzzy
 msgid "Export Image"
-msgstr "Відновити зображення"
+msgstr "Експорт зображення"
 
 #: ../app/dialogs/file-save-dialog.c:106
-#, fuzzy
 msgid "_Export"
-msgstr "_Імпорт"
+msgstr "_Експортувати"
 
 #: ../app/dialogs/file-save-dialog.c:468
 msgid ""
@@ -9095,12 +8741,16 @@ msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
+"Ви можете використовувати цей діалог для експорту у різні формати даних. "
+"Якщо ж треба зберегти у форматі GIMP XCF, скористайтесь командою Файл→Зберегти."
 
 #: ../app/dialogs/file-save-dialog.c:602
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
+"Ви можете використовувати цей діалог для збереження файлів у форматі GIMP XCF. "
+"Використовуйте команду Файл→Експортувати для експорту у інші формати даних."
 
 #: ../app/dialogs/file-save-dialog.c:608
 msgid ""
@@ -9634,9 +9284,8 @@ msgid "Interface"
 msgstr "Інтерфейс"
 
 #: ../app/dialogs/preferences-dialog.c:1598
-#, fuzzy
 msgid "Language"
-msgstr "_Мова"
+msgstr "Мова"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1604
@@ -9781,9 +9430,8 @@ msgid "_Brush"
 msgstr "_Пензель"
 
 #: ../app/dialogs/preferences-dialog.c:1917
-#, fuzzy
 msgid "_Dynamics"
-msgstr "Динаміка пензля"
+msgstr "_Динаміка"
 
 #: ../app/dialogs/preferences-dialog.c:1920
 msgid "_Pattern"
@@ -9818,9 +9466,8 @@ msgstr "Показувати _активне зображення"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1975
-#, fuzzy
 msgid "Tools configuration"
-msgstr "Налаштовування"
+msgstr "Видимі у панелі інструменти"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "Default New Image"
@@ -10109,9 +9756,8 @@ msgid "Window Manager Hints"
 msgstr "Керування зовнішнім виглядом виглядом вікон"
 
 #: ../app/dialogs/preferences-dialog.c:2619
-#, fuzzy
 msgid "Hint for _docks and toolbox:"
-msgstr "Стиль вікна панелі _інструментів:"
+msgstr "Тип вікна для _панелей:"
 
 #: ../app/dialogs/preferences-dialog.c:2622
 msgid "Focus"
@@ -10167,14 +9813,12 @@ msgid "Select Brush Folders"
 msgstr "Виберіть теку пензлів"
 
 #: ../app/dialogs/preferences-dialog.c:2724
-#, fuzzy
 msgid "Dynamics Folders"
-msgstr "Теки шрифтів"
+msgstr "Теки з файлами динаміки малювання"
 
 #: ../app/dialogs/preferences-dialog.c:2726
-#, fuzzy
 msgid "Select Dynamics Folders"
-msgstr "Виберіть теку шрифтів"
+msgstr "Виберіть теку з файлами динаміки малювання"
 
 #: ../app/dialogs/preferences-dialog.c:2728
 msgid "Pattern Folders"
@@ -10521,19 +10165,18 @@ msgstr "Одиниці"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:250
-#, fuzzy
 msgid "Selection Bounding Box"
-msgstr "Редактор виділеної ділянки"
+msgstr "Область (BB) виділення"
 
 #. Width
 #: ../app/display/gimpcursorview.c:286
 msgid "W"
-msgstr ""
+msgstr "Ш"
 
 #. Height
 #: ../app/display/gimpcursorview.c:293
 msgid "H"
-msgstr ""
+msgstr "В"
 
 #: ../app/display/gimpcursorview.c:320
 msgid "_Sample Merged"
@@ -10568,7 +10211,7 @@ msgstr "Закрити %s"
 
 #: ../app/display/gimpdisplayshell-close.c:164
 msgid "Close _without Saving"
-msgstr ""
+msgstr "Закрити _без збережння"
 
 #: ../app/display/gimpdisplayshell-close.c:231
 #, c-format
@@ -10631,7 +10274,7 @@ msgstr "Опускання нового контуру"
 #: ../app/display/gimpdisplayshell-dnd.c:442 ../app/tools/gimpblendtool.c:174
 #: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:279
 msgid "Cannot modify the pixels of layer groups."
-msgstr ""
+msgstr "Неможливо змінити точки растру групи шарів"
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
 #: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
@@ -10639,7 +10282,7 @@ msgstr ""
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:286
 #: ../app/tools/gimptransformtool.c:349 ../app/tools/gimptransformtool.c:1193
 msgid "The active layer's pixels are locked."
-msgstr ""
+msgstr "Точки растру активного шару заблоковані від змін"
 
 #: ../app/display/gimpdisplayshell-dnd.c:512
 #: ../app/widgets/gimplayertreeview.c:757
@@ -10666,9 +10309,9 @@ msgid "Image saved to '%s'"
 msgstr "Зображення збережено у '%s'"
 
 #: ../app/display/gimpdisplayshell-handlers.c:619
-#, fuzzy, c-format
+#, c-format
 msgid "Image exported to '%s'"
-msgstr "Зображення збережено у '%s'"
+msgstr "Зображення експортовано у '%s'"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
@@ -10706,16 +10349,15 @@ msgstr "(немає)"
 
 #: ../app/display/gimpdisplayshell-title.c:500
 msgid " (exported)"
-msgstr ""
+msgstr " (експортовано)"
 
 #: ../app/display/gimpdisplayshell-title.c:502
 msgid " (overwritten)"
-msgstr ""
+msgstr " (перезаписано)"
 
 #: ../app/display/gimpdisplayshell-title.c:508
-#, fuzzy
 msgid " (imported)"
-msgstr "Імпорт"
+msgstr " (імпортовано)"
 
 #: ../app/display/gimpstatusbar.c:375
 #, c-format
@@ -10801,9 +10443,8 @@ msgid "No brushes available for use with this tool."
 msgstr "Немає пензлів доступних для використання з цим інструментом."
 
 #: ../app/paint/gimpbrushcore.c:437
-#, fuzzy
 msgid "No paint dynamics available for use with this tool."
-msgstr "Немає текстур, доступних для використання з цим інструментом."
+msgstr "Немає динамік малювання для використання з цим інструментом."
 
 #: ../app/paint/gimpclone.c:102 ../app/tools/gimpclonetool.c:60
 msgid "Clone"
@@ -10839,16 +10480,15 @@ msgstr "Перо"
 
 #: ../app/paint/gimpinkoptions.c:72
 msgid "Ink Blob Size"
-msgstr ""
+msgstr "Розмір каплі Пера"
 
 #: ../app/paint/gimpinkoptions.c:99
-#, fuzzy
 msgid "Ink Blob Aspect Ratio"
-msgstr "Відношення сторін"
+msgstr "Відношення сторін каплі Пера"
 
 #: ../app/paint/gimpinkoptions.c:103
 msgid "Ink Blob Angle"
-msgstr ""
+msgstr "Кут Пера"
 
 #: ../app/paint/gimppaintbrush.c:65 ../app/tools/gimppaintbrushtool.c:50
 msgid "Paintbrush"
@@ -10863,9 +10503,8 @@ msgid "Paint"
 msgstr "Малювання"
 
 #: ../app/paint/gimppaintoptions.c:136
-#, fuzzy
 msgid "Brush Scale"
-msgstr "Пензлі"
+msgstr "Масштаб пензля"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
@@ -10889,49 +10528,41 @@ msgid "Set a source image first."
 msgstr "Вкажіть початкове зображення."
 
 #: ../app/paint/paint-enums.c:52
-#, fuzzy
 msgctxt "perspective-clone-mode"
 msgid "Modify Perspective"
-msgstr "Зміна перспектива"
+msgstr "Зміна перспективи"
 
 #: ../app/paint/paint-enums.c:53
-#, fuzzy
 msgctxt "perspective-clone-mode"
 msgid "Perspective Clone"
-msgstr "Штамп з перспективою"
+msgstr "Штамп по перспективі"
 
 #: ../app/paint/paint-enums.c:83
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "None"
 msgstr "Немає"
 
 #: ../app/paint/paint-enums.c:84
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Aligned"
 msgstr "З вирівнюванням"
 
 #: ../app/paint/paint-enums.c:85
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Registered"
 msgstr "З реєстрацією"
 
 #: ../app/paint/paint-enums.c:86
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "Фіксоване"
 
 #: ../app/paint/paint-enums.c:114
-#, fuzzy
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Розмивання"
 
 #: ../app/paint/paint-enums.c:115
-#, fuzzy
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Різкість"
@@ -11093,18 +10724,16 @@ msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Спроба додати елемент '%s' (%d) до неправильного зображення"
 
 #: ../app/pdb/gimppdb-utils.c:368
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не доданий у "
-"зображення"
+"Неможливо змінити об'єкт '%s' (%d), оскільки його зміст замкнено від змін"
 
 #: ../app/pdb/gimppdb-utils.c:388
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
-"Неможливо використовувати об'єкт '%s' (%d), оскільки він не доданий у "
-"зображення"
+"Неможливо змінити об'єкт '%s' (%d), оскільки група це група об'єктів"
 
 #: ../app/pdb/gimppdb-utils.c:409
 #, c-format
@@ -11243,45 +10872,38 @@ msgid "Set text layer attribute"
 msgstr "Зміна ознак текстового шару"
 
 #: ../app/pdb/vectors-cmds.c:644
-#, fuzzy
 msgid "Remove path stroke"
-msgstr "Видалення шуму"
+msgstr "Видалення обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:680
-#, fuzzy
 msgid "Close path stroke"
-msgstr "З'єднання контурів"
+msgstr "Закрити обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:720
-#, fuzzy
 msgid "Translate path stroke"
-msgstr "Maxim Dziumanenko"
+msgstr "Транслювати обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:760
-#, fuzzy
 msgid "Scale path stroke"
-msgstr "Зміна масштабу контуру"
+msgstr "Масштабувати обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:802
-#, fuzzy
 msgid "Rotate path stroke"
-msgstr "Обертання контуру"
+msgstr "Обернути обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:842 ../app/pdb/vectors-cmds.c:886
-#, fuzzy
 msgid "Flip path stroke"
-msgstr "Віддзеркалення контуру"
+msgstr "Віддзеркалення обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:1015 ../app/pdb/vectors-cmds.c:1137
 #: ../app/pdb/vectors-cmds.c:1356
-#, fuzzy
 msgid "Add path stroke"
-msgstr "Додавання контуру"
+msgstr "Додавання обведення контуру"
 
 #: ../app/pdb/vectors-cmds.c:1189 ../app/pdb/vectors-cmds.c:1242
 #: ../app/pdb/vectors-cmds.c:1303
 msgid "Extend path stroke"
-msgstr ""
+msgstr "Розширенняч обведення контуру"
 
 #: ../app/plug-in/gimpenvirontable.c:281
 #, c-format
@@ -11496,16 +11118,14 @@ msgstr ""
 "ви не збираєтесь редагувати текстовий шар."
 
 #: ../app/text/text-enums.c:23
-#, fuzzy
 msgctxt "text-box-mode"
 msgid "Dynamic"
-msgstr "Динаміка пензля"
+msgstr "Динамічний"
 
 #: ../app/text/text-enums.c:24
-#, fuzzy
 msgctxt "text-box-mode"
 msgid "Fixed"
-msgstr "Фіксоване"
+msgstr "Фіксований"
 
 #: ../app/tools/gimp-tools.c:325
 msgid ""
@@ -11524,9 +11144,8 @@ msgid "_Airbrush"
 msgstr "_Аерограф"
 
 #: ../app/tools/gimpairbrushtool.c:88
-#, fuzzy
 msgid "Motion only"
-msgstr "Лише світле"
+msgstr "Лише рух"
 
 #: ../app/tools/gimpairbrushtool.c:97 ../app/tools/gimpconvolvetool.c:216
 #: ../app/tools/gimpsmudgetool.c:96
@@ -11534,9 +11153,8 @@ msgid "Rate:"
 msgstr "Швидкість:"
 
 #: ../app/tools/gimpairbrushtool.c:103
-#, fuzzy
 msgid "Flow:"
-msgstr "Жовтий:"
+msgstr "Потік:"
 
 #: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:768
 msgid "Align"
@@ -11951,9 +11569,8 @@ msgid "_Lightness:"
 msgstr "_Освітленість:"
 
 #: ../app/tools/gimpcoloroptions.c:75
-#, fuzzy
 msgid "Color Picker Average Radius"
-msgstr "Інформація про піпетку"
+msgstr "Середній радіус піпетки"
 
 #: ../app/tools/gimpcoloroptions.c:161
 msgid "Sample average"
@@ -12095,9 +11712,8 @@ msgid "Click or press Enter to crop"
 msgstr "Для кадрування клацніть мишею або натисніть Enter"
 
 #: ../app/tools/gimpcroptool.c:328
-#, fuzzy
 msgid "There is no active layer to crop."
-msgstr "Немає активного шару чи каналу для вирізання."
+msgstr "Немає активного шару чи каналу для картування."
 
 #: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
@@ -12134,6 +11750,8 @@ msgstr "Натисніть, щоб додати контрольні точки 
 #: ../app/tools/gimpcurvestool.c:340
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr ""
+"Клацніть мишею для переміщення точки під курсором на криву (спробуйте з "
+"Shift, Ctrl)"
 
 #: ../app/tools/gimpcurvestool.c:453 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
@@ -12399,7 +12017,6 @@ msgid "Mark foreground by painting on the object to extract"
 msgstr "Заштрихуйте об'єкт, що виділяється"
 
 #: ../app/tools/gimpforegroundselecttool.c:328
-#, fuzzy
 msgid "Roughly outline the object to extract"
 msgstr "Обведіть об'єкт що витягується на швидкоруч"
 
@@ -12479,9 +12096,8 @@ msgid "Operation Settings"
 msgstr "Параметри"
 
 #: ../app/tools/gimpgegltool.c:435
-#, fuzzy
 msgid "Select an operation from the list above"
-msgstr "Очистити історію дій"
+msgstr "Виберіть операцію зі списку згори"
 
 #: ../app/tools/gimphealtool.c:53
 msgid "Healing Tool: Heal image irregularities"
@@ -12770,7 +12386,6 @@ msgid "Zoom Tool: Adjust the zoom level"
 msgstr "Масштаб: зміна масштабу зображення"
 
 #: ../app/tools/gimpmagnifytool.c:89
-#, fuzzy
 msgctxt "tool"
 msgid "_Zoom"
 msgstr "Мас_штаб"
@@ -12908,7 +12523,6 @@ msgid "Scale:"
 msgstr "Масштаб:"
 
 #: ../app/tools/gimppaintoptions-gui.c:130
-#, fuzzy
 msgid "Aspect Ratio:"
 msgstr "Пропорції:"
 
@@ -12959,9 +12573,8 @@ msgid "%s to pick a color"
 msgstr "%s, зоб взяти колір піпеткою"
 
 #: ../app/tools/gimppainttool.c:279
-#, fuzzy
 msgid "Cannot paint on layer groups."
-msgstr "Не вдається перейменувати маски шарів."
+msgstr "Не вдається малювати на групі шарів"
 
 #: ../app/tools/gimppainttool.c:689
 #, c-format
@@ -13242,7 +12855,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:141
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr ""
+msgstr "Вибір мови тексту може змінити зовнішній вигляд вид тексту"
 
 #: ../app/tools/gimptextoptions.c:157
 msgid "Indentation of the first line"
@@ -13258,27 +12871,26 @@ msgstr "Інтервал між літерами"
 
 #: ../app/tools/gimptextoptions.c:175
 msgid "Text box resize mode"
-msgstr ""
+msgstr "Режим зміни розміру текстового блока"
 
 #: ../app/tools/gimptextoptions.c:182
 msgid ""
 "Use an external editor window for text entry, instead of direct-on-canvas "
 "editing"
 msgstr ""
+"Використовувати вікно з редактором тексту замість редагування прямо на полотні"
 
 #: ../app/tools/gimptextoptions.c:464
 msgid "Font:"
 msgstr "Шрифт:"
 
 #: ../app/tools/gimptextoptions.c:480
-#, fuzzy
 msgid "Use editor"
-msgstr "Текстовий редактор"
+msgstr "Використовувати діалог редактора"
 
 #: ../app/tools/gimptextoptions.c:500
-#, fuzzy
 msgid "Hinting:"
-msgstr "Інструктування"
+msgstr "Уточнення:"
 
 #: ../app/tools/gimptextoptions.c:504
 msgid "Text Color"
@@ -13294,12 +12906,11 @@ msgstr "Вирівнювання:"
 
 #: ../app/tools/gimptextoptions.c:538
 msgid "Box:"
-msgstr ""
+msgstr "Блок:"
 
 #: ../app/tools/gimptextoptions.c:552
-#, fuzzy
 msgid "Language:"
-msgstr "_Мова"
+msgstr "Мова:"
 
 #: ../app/tools/gimptexttool.c:193
 msgid "Text"
@@ -13374,7 +12985,7 @@ msgstr "Автоматично встановити оптимальну бін�
 
 #: ../app/tools/gimptool.c:886
 msgid "Can't work on an empty image, add a layer first"
-msgstr ""
+msgstr "Робота з порожнім зображенням неможлива, спочатку додайте шар"
 
 #: ../app/tools/gimptransformoptions.c:272
 msgid "Transform:"
@@ -13423,7 +13034,7 @@ msgstr "Немає контуру для перетворення."
 
 #: ../app/tools/gimptransformtool.c:1206
 msgid "The active path's strokes are locked."
-msgstr ""
+msgstr "Елементи активного контуру заблоковані від змін"
 
 #: ../app/tools/gimpvectoroptions.c:76
 msgid "Restrict editing to polygons"
@@ -13464,9 +13075,8 @@ msgid "Pat_hs"
 msgstr "Кон_тури"
 
 #: ../app/tools/gimpvectortool.c:254
-#, fuzzy
 msgid "The active path is locked."
-msgstr "Перемістити активний контур"
+msgstr "Активний контур заблоковано від змін"
 
 #: ../app/tools/gimpvectortool.c:342
 msgid "Add Stroke"
@@ -13549,9 +13159,8 @@ msgid "Click-Drag to move the handle around"
 msgstr "Натисніть та перетягніть, щоб перемістити важіль"
 
 #: ../app/tools/gimpvectortool.c:1245
-#, fuzzy
 msgid "Click-Drag to move the handles around symmetrically"
-msgstr "Натисніть та перетягніть, щоб перемістити важіль"
+msgstr "Натисніть та перетягніть, щоб перемістити важелі симетрично"
 
 #: ../app/tools/gimpvectortool.c:1260
 msgid "Click-Drag to change the shape of the curve"
@@ -13603,144 +13212,121 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "Немає активного шару або каналу для обведення"
 
 #: ../app/tools/tools-enums.c:91
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "Без напрямних"
 
 #: ../app/tools/tools-enums.c:92
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "Ліній у центрі"
 
 #: ../app/tools/tools-enums.c:93
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
 msgstr "Правило третіх частих"
 
 #: ../app/tools/tools-enums.c:94
-#, fuzzy
 msgctxt "rectangle-guide"
 msgid "Golden sections"
-msgstr "Золотий зріз"
+msgstr "Золотий перетин"
 
 #: ../app/tools/tools-enums.c:95
 msgctxt "rectangle-guide"
 msgid "Diagonal lines"
-msgstr ""
+msgstr "Діагональні лінії"
 
 #: ../app/tools/tools-enums.c:185
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Відношення сторін"
 
 #: ../app/tools/tools-enums.c:186
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "Ширина"
 
 #: ../app/tools/tools-enums.c:187
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "Висота"
 
 #: ../app/tools/tools-enums.c:188
-#, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "Розмір"
 
 #: ../app/tools/tools-enums.c:217
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "Вильне виділення"
 
 #: ../app/tools/tools-enums.c:218
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Фіксований розмір"
 
 #: ../app/tools/tools-enums.c:219
-#, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
-msgstr "Фіксоване відношення сторін"
+msgstr "Фіксовані пропорції"
 
 #: ../app/tools/tools-enums.c:248
-#, fuzzy
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Шар"
 
 #: ../app/tools/tools-enums.c:249
-#, fuzzy
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Виділення"
 
 #: ../app/tools/tools-enums.c:250
-#, fuzzy
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Контур"
 
 #: ../app/tools/tools-enums.c:280
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "Контур"
 
 #: ../app/tools/tools-enums.c:281
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "Сітка"
 
 #: ../app/tools/tools-enums.c:282
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "Зображення"
 
 #: ../app/tools/tools-enums.c:283
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "Зображення + сітка"
 
 #: ../app/tools/tools-enums.c:311
-#, fuzzy
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "Число ліній сітки"
 
 #: ../app/tools/tools-enums.c:312
-#, fuzzy
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "Відстань між лініями сітки"
 
 #: ../app/tools/tools-enums.c:341
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Створення"
 
 #: ../app/tools/tools-enums.c:342
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Правка"
 
 #: ../app/tools/tools-enums.c:343
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Переміщення"
@@ -14260,19 +13846,17 @@ msgid "%s (read only)"
 msgstr "%s (лише для читання)"
 
 #: ../app/widgets/gimpdeviceeditor.c:160
-#, fuzzy
 msgid "Delete the selected device"
-msgstr "Видалити вибраний шаблон"
+msgstr "Видалити вибраний пристрій"
 
 #: ../app/widgets/gimpdeviceeditor.c:468
-#, fuzzy
 msgid "Delete Device Settings"
-msgstr "Видалити вибрані профілі"
+msgstr "Видалити вибрані пристрої"
 
 #: ../app/widgets/gimpdeviceeditor.c:489
-#, fuzzy, c-format
+#, c-format
 msgid "Delete \"%s\"?"
-msgstr "Видалити '%s'?"
+msgstr "Видалити «%s»?"
 
 #: ../app/widgets/gimpdeviceeditor.c:492
 msgid ""
@@ -14283,57 +13867,53 @@ msgstr ""
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 #: ../app/widgets/gimpdynamicseditor.c:146
 #: ../app/widgets/gimpdynamicsoutputeditor.c:213
-#, fuzzy
 msgid "Pressure"
-msgstr "Натиск:"
+msgstr "Натиск"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
 msgid "X tilt"
-msgstr ""
+msgstr "Нахил по X"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:144
 msgid "Y tilt"
-msgstr ""
+msgstr "Нахил по Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
 #: ../app/widgets/gimpdynamicseditor.c:150
 #: ../app/widgets/gimpdynamicsoutputeditor.c:241
-#, fuzzy
 msgid "Wheel"
-msgstr "Колесо миші"
+msgstr "Колесо"
 
 #. the axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:192
-#, fuzzy
 msgid "Axes"
-msgstr "точок"
+msgstr "Осі"
 
 #. the keys
 #: ../app/widgets/gimpdeviceinfoeditor.c:266
 msgid "Keys"
-msgstr ""
+msgstr "Клавіші"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:366
 #: ../app/widgets/gimpdeviceinfoeditor.c:584
-#, fuzzy, c-format
+#, c-format
 msgid "none"
-msgstr "(немає)"
+msgstr "немає"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:414
-#, fuzzy, c-format
+#, c-format
 msgid "%s Curve"
-msgstr "Криві"
+msgstr "Крива %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:473
 #: ../app/widgets/gimpdynamicsoutputeditor.c:196
-#, fuzzy
 msgid "_Reset Curve"
-msgstr "_Відновити колір"
+msgstr "_Скинути криву"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:486
 #, c-format
 msgid "The axis '%s' has no curve"
-msgstr ""
+msgstr "У осі %s немає кривої"
 
 #: ../app/widgets/gimpdevicestatus.c:137
 msgid "Save device status"
@@ -14374,7 +13954,7 @@ msgstr "Бажаєте замінити це зображення тим, яке
 #: ../app/widgets/gimpdock.h:34
 msgctxt "dock"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. String used to separate books (GtkNotebooks) within a dock,
 #. e.g. "Tool Options, Layers - Brushes"
@@ -14382,7 +13962,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:39
 msgctxt "dock"
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #. String used to separate dock columns,
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
@@ -14390,7 +13970,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:44
 msgctxt "dock"
 msgid " | "
-msgstr ""
+msgstr " | "
 
 #: ../app/widgets/gimpdockable.c:235
 msgid "Configure this tab"
@@ -14409,38 +13989,33 @@ msgstr ""
 "яке зображення активно у поточний момент."
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
-#, fuzzy
 msgid "Lock pixels"
-msgstr "точок"
+msgstr "Замкнути точки растру від змін"
 
 #: ../app/widgets/gimpdynamicseditor.c:131
 #: ../app/widgets/gimpdynamicseditor.c:137
 msgid "Mapping matrix"
-msgstr ""
+msgstr "Матриця прив'язки"
 
 #: ../app/widgets/gimpdynamicseditor.c:147
 #: ../app/widgets/gimpdynamicsoutputeditor.c:220
-#, fuzzy
 msgid "Velocity"
-msgstr "Швидкість:"
+msgstr "Швидкість"
 
 #: ../app/widgets/gimpdynamicseditor.c:149
 #: ../app/widgets/gimpdynamicsoutputeditor.c:234
-#, fuzzy
 msgid "Tilt"
-msgstr "Нахил:"
+msgstr "Нахил"
 
 #: ../app/widgets/gimpdynamicseditor.c:151
 #: ../app/widgets/gimpdynamicsoutputeditor.c:248
-#, fuzzy
 msgid "Random"
-msgstr "Випадковість:"
+msgstr "Випадковість"
 
 #: ../app/widgets/gimpdynamicseditor.c:152
 #: ../app/widgets/gimpdynamicsoutputeditor.c:255
-#, fuzzy
 msgid "Fade"
-msgstr "По_слабити"
+msgstr "Згасання"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -14485,9 +14060,8 @@ msgid "Extensions"
 msgstr "За розширенням"
 
 #: ../app/widgets/gimpfilleditor.c:127
-#, fuzzy
 msgid "Fill Color"
-msgstr "Заповнення кольором _переднього плану"
+msgstr "Колір заповнення"
 
 #: ../app/widgets/gimpfilleditor.c:145
 msgid "_Antialiasing"
@@ -14690,24 +14264,24 @@ msgstr "Канал:"
 
 #. Button
 #: ../app/widgets/gimpimagecommenteditor.c:107
-#, fuzzy
 msgid "Use default comment"
-msgstr "Типовий формат"
+msgstr "Використовувати типовий коментар"
 
 #: ../app/widgets/gimpimagecommenteditor.c:109
 msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
+"Замінити поточний коментар до зображення на вказаний у параметрах "
+"програми типовий (Правка→Параметри→Зображення типово)."
 
 #: ../app/widgets/gimpimageprofileview.c:200
 msgid "Querying..."
 msgstr "Запит..."
 
 #: ../app/widgets/gimpimagepropview.c:122
-#, fuzzy
 msgid "Size in pixels:"
-msgstr "Розмір у пам'яті:"
+msgstr "Розмір у точках:"
 
 #: ../app/widgets/gimpimagepropview.c:125
 msgid "Print size:"
@@ -14928,14 +14502,12 @@ msgid "Dash _preset:"
 msgstr "Тип _пунктиру:"
 
 #: ../app/widgets/gimptagentry.c:45
-#, fuzzy
 msgid "filter"
-msgstr "Фацетне з'єднання"
+msgstr "фільтр за позначками"
 
 #: ../app/widgets/gimptagentry.c:46
-#, fuzzy
 msgid "enter tags"
-msgstr "Ліній у центрі"
+msgstr "введіть позначки"
 
 #. Seperator for tags
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
@@ -14943,7 +14515,7 @@ msgstr "Ліній у центрі"
 #.
 #: ../app/widgets/gimptagentry.c:1718
 msgid ","
-msgstr ""
+msgstr ","
 
 #: ../app/widgets/gimptemplateeditor.c:179
 #, c-format
@@ -14987,7 +14559,7 @@ msgstr "%d ppi, %s"
 #: ../app/widgets/gimptextbuffer-serialize.c:338
 #, c-format
 msgid "Attribute \"%s\" is invalid on <%s> element in this context"
-msgstr ""
+msgstr "У цьому контексті атрибут \"%s\" некоректний для елементу <%s>"
 
 #: ../app/widgets/gimptextbuffer-serialize.c:410
 #, c-format
@@ -15004,23 +14576,20 @@ msgid "_Use selected font"
 msgstr "_Використовувати вибраний шрифт"
 
 #: ../app/widgets/gimptextstyleeditor.c:199
-#, fuzzy
 msgid "Change size of selected text"
-msgstr "Зміна розміру змісту шару"
+msgstr "Зміна розміру виділеного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:218
-#, fuzzy
 msgid "Clear style of selected text"
-msgstr "Видалити виділені точки"
+msgstr "Зміна стилю виділеного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:238
 msgid "Change kerning of selected text"
-msgstr ""
+msgstr "Змінити кернінгу вибраного тексту"
 
 #: ../app/widgets/gimptextstyleeditor.c:254
-#, fuzzy
 msgid "Change baseline of selected text"
-msgstr "Зміна розміру змісту шару"
+msgstr "Зміна базової лінії вибраного тексту"
 
 #: ../app/widgets/gimpthumbbox.c:343
 #, c-format
@@ -15106,22 +14675,18 @@ msgstr ""
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
 
 #: ../app/widgets/gimptooleditor.c:294
-#, fuzzy
 msgid "Raise this tool"
-msgstr "Підняти вгору панель інструментів"
+msgstr "Підняти інструмент"
 
 #: ../app/widgets/gimptooleditor.c:295
-#, fuzzy
 msgid "Raise this tool to the top"
 msgstr "Підняти інструмент вгору"
 
 #: ../app/widgets/gimptooleditor.c:302
-#, fuzzy
 msgid "Lower this tool"
 msgstr "Опустити інструмент"
 
 #: ../app/widgets/gimptooleditor.c:303
-#, fuzzy
 msgid "Lower this tool to the bottom"
 msgstr "Опустити інструмент донизу"
 
@@ -15147,20 +14712,18 @@ msgid "Error saving tool options presets: %s"
 msgstr "Помилка при записі параметрів інструменту: %s"
 
 #: ../app/widgets/gimptranslationstore.c:105
-#, fuzzy
 msgid "System Language"
-msgstr "_Мова"
+msgstr "Як у системі"
 
 #: ../app/widgets/gimptranslationstore.c:107
 msgid "English"
-msgstr ""
+msgstr "Англійська"
 
 #: ../app/widgets/gimpuimanager.c:750
 msgid "Your GIMP installation is incomplete:"
 msgstr "Встановлення GIMP не завершено:"
 
 #: ../app/widgets/gimpuimanager.c:752
-#, fuzzy
 msgid "Please make sure the menu XML files are correctly installed."
 msgstr "Перевірте, що XML-файли меню, коректно встановлені."
 
@@ -15178,9 +14741,8 @@ msgid "Reorder path"
 msgstr "Реорганізувати контур"
 
 #: ../app/widgets/gimpvectorstreeview.c:118
-#, fuzzy
 msgid "Lock path strokes"
-msgstr "З'єднання контурів"
+msgstr "Замкнути контур від змін"
 
 #: ../app/widgets/gimpviewablebox.c:80
 msgid "Open the brush selection dialog"
@@ -15223,121 +14785,101 @@ msgid "%s (try %s, %s, %s)"
 msgstr "%s (спробуйте %s, %s, %s)"
 
 #: ../app/widgets/widgets-enums.c:23
-#, fuzzy
 msgctxt "active-color"
 msgid "Foreground"
-msgstr "Переднього плану"
+msgstr "Передній план"
 
 #: ../app/widgets/widgets-enums.c:24
-#, fuzzy
 msgctxt "active-color"
 msgid "Background"
 msgstr "Тло"
 
 #: ../app/widgets/widgets-enums.c:85
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "Pixel"
-msgstr "Точок"
+msgstr "Точка"
 
 #: ../app/widgets/widgets-enums.c:86
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../app/widgets/widgets-enums.c:87
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "HSV"
 msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:88
-#, fuzzy
 msgctxt "color-frame-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:118
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Pick only"
-msgstr "Показати інформацію про колір"
+msgstr "Лише зняти"
 
 #: ../app/widgets/widgets-enums.c:119
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set foreground color"
 msgstr "Встановити колір переднього плану"
 
 #: ../app/widgets/widgets-enums.c:120
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Set background color"
 msgstr "Встановити колір тла"
 
 #: ../app/widgets/widgets-enums.c:121
-#, fuzzy
 msgctxt "color-pick-mode"
 msgid "Add to palette"
 msgstr "Додати до палітри"
 
 #: ../app/widgets/widgets-enums.c:178
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Linear histogram"
 msgstr "Лінійна гістограма"
 
 #: ../app/widgets/widgets-enums.c:179
-#, fuzzy
 msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Логарифмічна гістограма"
 
 #: ../app/widgets/widgets-enums.c:213
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Значок"
 
 #: ../app/widgets/widgets-enums.c:214
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Поточний стан"
 
 #: ../app/widgets/widgets-enums.c:215
-#, fuzzy
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Текст"
 
 #: ../app/widgets/widgets-enums.c:216
-#, fuzzy
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Опис"
 
 #: ../app/widgets/widgets-enums.c:217
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Значок та текст"
 
 #: ../app/widgets/widgets-enums.c:218
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Значок та опис"
 
 #: ../app/widgets/widgets-enums.c:219
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Стан на текст"
 
 #: ../app/widgets/widgets-enums.c:220
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
@@ -15405,12 +14947,11 @@ msgstr "Помилка збереження XCF файлу: %s"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "fuzzy"
-msgstr ""
+msgstr "ретушовані"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:2
-#, fuzzy
 msgid "round"
-msgstr "Округлий"
+msgstr "круглі"
 
 #: ../desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
