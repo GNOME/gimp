@@ -8,12 +8,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp - Tips\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2007-09-23 22:10+0100\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2010-04-02 13:22+0000\n"
+"PO-Revision-Date: 2010-04-02 19:54+0100\n"
+"Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
@@ -21,126 +22,114 @@ msgstr ""
 "X-Poedit-Language: Slovenian\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Dobrodošli v programu za obdelavo slik GIMP!</big>"
-
-#: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
 msgstr "<tt>Ctrl</tt>-klik v orodju Zapolni s kanglico uporabi barvo ozadja namesto barve ospredja. Podobno <tt>Ctrl</tt>-klik v orodju kapalke nastavi barvo ozadja namesto barve ospredja."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr "<tt>Ctrl</tt>-klik v predogledu maske plasti v pogovornem oknu Plasti vključi ali izključi učinek maske plasti. <tt>Alt</tt>-klik na predogled maske plasti v pogovornem oknu Plasti vključi ali izključi neposreden ogled maske."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
 msgstr "<tt>Ctrl</tt>-vleka z orodjem Zasukaj povzroči vrtenje po 15-stopinjskih korakih."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr "<tt>Shift</tt>-klik na ikono očesa v pogovornem oknu Plasti skrije vse druge plasti. S ponovnim klikom na <tt>Shift</tt> jih zopet vse pokaže. "
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
 msgstr "Plavajoči izbor mora biti zasidran na novo plast ali zadnjo aktivno plast, preden izvedete druge operacije na sliki. Kliknite na ikono &quot;Nova Plast&quot; ali &quot;Zasidraj plast&quot; v pogovornem oknu Plasti, ali pa za to uporabite menije."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
 msgstr "Potem ko omogočite &quot;Uporabi dinamične tipke za bližnjice&quot; v pogovornem oknu nastavitev, lahko tipke za bližnjice prerazporedite. Prikličite meni, izberite ukaz v njem, nato pritisnite želeno kombinacijo tipk. Če je &quot;Shrani tipke za bližnjice ob izhodu&quot; vključen, bodo nove kombinacije tipk shranjene ob izhodu iz aplikacije GIMP. Kasneje raje izključite &quot;Dinamične tipke za bližnjice&quot;, da preprečite nenamerno dodeljevanje novih bližnjic."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
-msgstr "Kliknite in povlecite na ravnilo za postavitev vodila na sliko. Vse povlečene izbire se bodo pripele na vodila. Vodila odstranite z vlečenjem le-teh prek zunanjih robov slike z orodjem Premakni."
+msgstr "Kliknite in povlecite na ravnilo za postavitev vodila na sliko. Vsi povlečeni izbori se bodo pripeli na vodila. Vodila odstranite z vlečenjem le-teh prek zunanjih robov slike z orodjem Premakni."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
-msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
-msgstr "GIMP zagotavlja razveljavitev velike večine sprememb na sliki, zato uživajte v eksperimentiranju!"
-
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
 msgstr "GIMP omogoča neposredno shranjevanje v načinu stiskanja podatkov gzip. Dodajte le končnico <tt>.gz</tt> ( ali <tt>.bz2</tt>, če je nameščen program bzip2) na koncu imena datoteke in ta se shrani v stisnjeni obliki. Tudi program lahko neposredno odpira tako stisnjene slike."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
 msgstr "GIMP uporablja plasti, s katerimi lažje organizirate slike. Predstavljate si jih kot večje število prosojnic ali filtrov, zloženih drug na drugega, tako da s pogledom od zgoraj vidite sestavljeno vsebino cele slike."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer→Transparency→Add Alpha Channel."
 msgstr "Če je ime plasti prikazano s <b>krepko</b> pisavo, ta kanal nima kanala alfa. Kanal alfa lahko dodate z ukazom Plast→Prosojnost→Dodaj kanal alfa."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Colors→Levels). If there are any color casts, you can correct them with the Curves tool (Colors→Curves)."
 msgstr "Če nekatere skenirane slike niso videti dovolj barvite, lahko njihov tonski obseg enostavno spremenite z gumbom \"Samodejno\" v orodju Ravni (Barve→Ravni). Če so barve na sliki nepravilno prikazane, lahko to popravite z orodjem Krivulje (Barve→Krivulje)."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
 msgstr "Pri izrisu poti po obrisu predmeta (Uredi→Izris poti) uporabite trenutne nastavitve izbranega risarskega orodja. Uporabite npr. slikarski čopič v načinu barvnega preliva, radirko ali orodje za razmazovanje."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
 msgstr "Če je vaše namizje preveč nastlano, lahko pritisnete tipko <tt>Tab</tt> v oknu slike, da vključite ali izključite vidnost orodne vrstice in drugih pogovornih oken."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid "Most plug-ins work on the current layer of the current image. In some cases, you will have to merge all layers (Image→Flatten Image) if you want the plug-in to work on the whole image."
-msgstr "Večina vtičnikov obdela samo trenutno aktivno plast na odprti sliki. V nekaterih primerih je potrebno vse plasti združiti v eno plast (Slika→Splošči sliko), preden lahko uporabimo vtičnik na celi sliki."
+msgstr "Večina vstavkov obdela samo trenutno dejavno plast na odprti sliki. V nekaterih primerih je potrebno vse plasti združiti v eno plast (Slika→Splošči sliko), preden lahko uporabimo vstavek na celi sliki."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid "Not all effects can be applied to all kinds of images. This is indicated by a grayed-out menu-entry. You may need to change the image mode to RGB (Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha Channel) or flatten it (Image→Flatten Image)."
 msgstr "Vsem vrstam slik ne moremo dodeliti vseh učinkov. To nakazujejo posiveli menijski vnosi. Morda morate spremeniti slikovni način v RGB (Slika→Način→RGB), dodati kanal alfa (Plast→Prosojnost→Dodaj kanal alfa) ali sploščiti sliko (Slika→Splošči sliko)."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid "Pressing and holding the <tt>Shift</tt> key before making a selection allows you to add to the current selection instead of replacing it. Using <tt>Ctrl</tt> before making a selection subtracts from the current one."
-msgstr "Pritisnite in držite pritisnjeno tipko <tt>Shift</tt>, da lahko pred izbiranjem s klikanjem leve tipke miške dodate novo področja k že obstoječemu izboru, namesto da ga nadomestite. Z uporabo tipke <tt>Ctrl</tt> pred začetkom izbire z miško od obstoječega izbora odštejete novi izbor."
+msgstr "Pritisnite in držite pritisnjeno tipko <tt>Shift</tt>, da lahko pred izbiranjem s klikanjem leve tipke miške dodate novo področja k že obstoječemu izboru, namesto da ga nadomestite. Z uporabo tipke <tt>Ctrl</tt> pred začetkom izbiranja z miško od obstoječega izbora odštejete novi izbor."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
-msgid "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an ellipse select. To place a circle precisely, drag horizontal and vertical guides tangent to the circle you want to select, place your cursor at the intersection of the guides, and the resulting selection will just touch the guides."
-msgstr "Za krožni izbor dela slike najprej ob pritisnjeni tipki <tt>Shift</tt> izberemo elipso. Za natančno pozicioniranje krožnega izbora povlečemo vodoravno in navpično vodilo, in sicer tangentno na del, kjer želimo označiti krožni izbor. Na presečišču obeh vodil kliknemo in začnemo vleči krožni izbor."
-
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid "When you save an image to work on it again later, try using XCF, GIMP's native file format (use the file extension <tt>.xcf</tt>). This preserves the layers and every aspect of your work-in-progress. Once a project is completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr "Če obdelujete sliko in jo želite pozneje še naprej obdelovati, jo shranite v zapisu GIMP (s končnico <tt>.xcf</tt>). Ta namreč omogoča shranjevanje vseh plasti in večine drugih nastavitev. Ko je projekt zaključen, ga lahko shranite v zapisih TIF, JPEG, PNG, GIF, ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already. Most window managers can be configured to ignore the <tt>Alt</tt> key or to use the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr "Izbor lahko premikate ali prilagodite s pomočjo <tt>Alt</tt>-povleci. Če se s to kombinacijo premakne okno, vaš okenski upravitelj že uporablja tipko <tt>Alt</tt>. Večina okenskih upraviteljev je mogoče nastaviti tako, da prezrejo pritisnjeno tipko <tt>Alt</tt> ali da namesto nje uporabijo tipko <tt>Super</tt> (ali \"Logotip Windows\")."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
 msgstr "Zahtevnejše izbore naredimo in urejamo s pomočjo orodja Poti. Pogovorno okno Poti omogoča hkratno delo na večjem številu poti in pretvorbo le-teh v izbor."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
 msgstr "Če povlečete plast iz okna Plasti in jo spustite na orodjarno, boste iz nje ustvarili novo sliko, ki vsebuje samo to plast."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current selection with that color."
 msgstr "Uporabite lahko marsikatero možnost urejanja s pomočjo tehnike povleci in spusti, npr. z vlečenjem barve iz orodjarne ali barvne palete v sliko; trenutna slika ali izbrano področje se bo prebarvalo z izbrano barvo."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid "You can draw simple squares or circles using Edit→Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters→Render→Gfig."
 msgstr "Enostavne kvadrate ali kroge narišete z ukazom Uredi→Izbor poteze. S potezo oriše rob trenutnega izbora. Bolj zahtevne oblike lahko narišete z orodjem Pot ali z ukazom Filtri→Upodobi→Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid "You can get context-sensitive help for most of GIMP's features by pressing the F1 key at any time. This also works inside the menus."
 msgstr "Za večino funkcij GIMPa obstaja od konteksta odvisna pomoč, do katere lahko vedno dostopate s pritiskom na tipko F1. To deluje tudi znotraj menijev."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
 msgstr "Številne operacije s plastmi lahko opravite z desnim klikom miške na ime plasti v pogovornem oknu Plasti."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid "You can save a selection to a channel (Select→Save to Channel) and then modify this channel with any paint tools. Using the buttons in the Channels dialog, you can toggle the visibility of this new channel or convert it to a selection."
-msgstr "Izbor lahko shranite v kanal (Izberi→Shrani v kanal) in ga potem obdelate s katerim koli orodjem za risanje. S pomočjo gumbov v pogovornem oknu Kanali lahko spreminjate vidnost novega kanala ali ga spremenite v izbiro."
+msgstr "Izbor lahko shranite v kanal (Izberi→Shrani v kanal) in ga potem obdelate s katerim koli orodjem za risanje. S pomočjo gumbov v pogovornem oknu Kanali lahko spreminjate vidnost novega kanala ali ga spremenite v izbor."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an image (if your window manager doesn't trap those keys...)."
 msgstr "Uporabite kombinacijo tipk <tt>Ctrl</tt> in <tt>Tab</tt> za prehajanje med plastmi slike  (če vaš upravljalnik oken to dovoljuje in ne prestreže te kombinacije tipk)."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr "S srednjim gumbom miške si lahko pomagate za pomikanje okoli slike (ali po možnosti držite pritisnjeno <tt>preslednico</tt>, medtem ko premikate miško)."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
-msgstr "Orodja za slikanje lahko uporabite tudi za spreminjanje izbora. Kliknite na spodnji levi gumb &quot;Hitra maska&quot; v oknu odprte slike. S slikanjem po sliki spreminjate izbor, s ponovnim klikom na gumb pa izbor spremenite nazaj v navadno izbiro."
+msgstr "Orodja za slikanje lahko uporabite tudi za spreminjanje izbora. Kliknite na spodnji levi gumb &quot;Hitra maska&quot; v oknu odprte slike. S slikanjem po sliki spreminjate izbor, s ponovnim klikom na gumb pa izbor spremenite nazaj v navaden izbor."
 
