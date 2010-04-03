@@ -6,113 +6,115 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu-2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-10 14:16+0200\n"
+"POT-Creation-Date: 2010-04-03 16:03+0300\n"
 "PO-Revision-Date: 2008-01-10 17:54+0200\n"
 "Last-Translator: Maxim Dziumanenko <dziumanenko@gmail.com>\n"
-"Language-Team: Ukrainian <uk@li.org>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:133
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Консоль Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:196
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Ласкаво просимо до TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:202
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Інтерактивне середовище розробки на Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:238
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "О_гляд..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:296
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Зберегти вивід консолі Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:343
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Не вдається відкрити '%s' для запису: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:372
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Переглядач процедур Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:716
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Режим оцінки Script-Fu дозволяє лише неінтерактивну роботу"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:191
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu/ не може обробляти два сценарії одночасно."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:193
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Ви вже запустили сценарій \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:300
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:348
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu: Вибір кольору"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu: Вибір файлу"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:463
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu: Вибір файлу"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu: Вибір шрифту"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu: Вибір палітри"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu: Вибір текстури"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu: Вибір градієнту"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu: Вибір пензля"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:658
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
-msgid ""
-"Error while executing\n"
-"%s\n"
-"\n"
-"%s"
-msgstr ""
-"Помилка під час виконання\n"
-"%s\n"
-"\n"
-"%s"
+msgid "Error while executing %s:"
+msgstr "Помилка під час виконання: %s"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr "Бракує аргументів для виклику 'script-fu-register'"
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
+#, c-format
+msgid "Error while loading %s:"
+msgstr "Помилка під час виконання %s:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
@@ -135,8 +137,8 @@ msgid "Interactive console for Script-Fu development"
 msgstr "Інтерактивна консоль розробки на Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:116
-msgid "Script-Fu _Console"
-msgstr "_Консоль Script-Fu"
+msgid "_Console"
+msgstr "_Консоль"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -159,106 +161,56 @@ msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:307
-msgid "_Buttons"
-msgstr "_Кнопки"
-
-#: ../plug-ins/script-fu/script-fu.c:309
-msgid "_Logos"
-msgstr "_Емблеми"
-
-#: ../plug-ins/script-fu/script-fu.c:311
-msgid "_Misc"
-msgstr "_Різне"
-
-#: ../plug-ins/script-fu/script-fu.c:313
-msgid "_Patterns"
-msgstr "_Текстури"
-
-#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Тест"
 
-#: ../plug-ins/script-fu/script-fu.c:317
-msgid "_Utilities"
-msgstr "_Утиліти"
+#: ../plug-ins/script-fu/script-fu.c:310
+msgid "_Buttons"
+msgstr "_Кнопки"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:312
+msgid "_Logos"
+msgstr "_Емблеми"
+
+#: ../plug-ins/script-fu/script-fu.c:314
+msgid "_Patterns"
+msgstr "_Текстури"
+
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "Теми _веб-сторінок"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Чуже _сяйво"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "_Піднесені об'єкти"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Класичний Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "_Альфа на емблему"
 
-#: ../plug-ins/script-fu/script-fu.c:330
-msgid "An_imation"
-msgstr "_Анімація"
-
-#: ../plug-ins/script-fu/script-fu.c:332
-msgid "_Animators"
-msgstr "_Аніматори"
-
-#: ../plug-ins/script-fu/script-fu.c:334
-msgid "_Artistic"
-msgstr "І_мітація"
-
-#: ../plug-ins/script-fu/script-fu.c:336
-msgid "_Blur"
-msgstr "_Розмиття"
-
-#: ../plug-ins/script-fu/script-fu.c:338
-msgid "_Decor"
-msgstr "_Декор"
-
-#: ../plug-ins/script-fu/script-fu.c:340
-msgid "_Effects"
-msgstr "_Ефекти"
-
-#: ../plug-ins/script-fu/script-fu.c:342
-msgid "En_hance"
-msgstr "_Покращення"
-
-#: ../plug-ins/script-fu/script-fu.c:344
-msgid "_Light and Shadow"
-msgstr "_Світло та тінь"
-
-#: ../plug-ins/script-fu/script-fu.c:346
-msgid "S_hadow"
-msgstr "_Тінь"
-
-#: ../plug-ins/script-fu/script-fu.c:348
-msgid "_Render"
-msgstr "_Візуалізація"
-
-#: ../plug-ins/script-fu/script-fu.c:350
-msgid "_Alchemy"
-msgstr "Ал_хімія"
-
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Перечитати всі доступні сценарії Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Оновити сценарій"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr "Ви не можете використовувати функцію «Оновити сценарії», доки відкритий діалог Script-Fu. Закрийте всі вікна Script-Fu та спробуйте знову."
+msgstr ""
+"Ви не можете використовувати функцію «Оновити сценарії», доки відкритий "
+"діалог Script-Fu. Закрийте всі вікна Script-Fu та спробуйте знову."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -296,8 +248,6 @@ msgstr "Типові параметри рельєфу"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -308,8 +258,7 @@ msgstr "Типові параметри рельєфу"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
@@ -336,8 +285,6 @@ msgstr "Шрифт"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -347,8 +294,7 @@ msgstr "Шрифт"
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
@@ -363,7 +309,9 @@ msgstr "Радіус розмивання контуру"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr "Окреслити виділену область (або альфа-канал) з текстурою та додати тінь, що відкидається"
+msgstr ""
+"Окреслити виділену область (або альфа-канал) з текстурою та додати тінь, що "
+"відкидається"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -411,8 +359,6 @@ msgstr "Радіус розмивання тіні"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -423,8 +369,7 @@ msgstr "Радіус розмивання тіні"
 #: ../plug-ins/script-fu/scripts/slide.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
@@ -451,15 +396,12 @@ msgstr "_Об'ємний трюше..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:1
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
@@ -578,7 +520,7 @@ msgstr "Звести зображення"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 msgid "Glow color"
 msgstr "Колір сяйва"
 
@@ -669,8 +611,6 @@ msgstr "Заповнення"
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -726,13 +666,15 @@ msgstr "Ширина зазору"
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr "Додати ефект градієнту, тінь та тло до виділеної області (чи альфа-каналу)"
+msgstr ""
+"Додати ефект градієнту, тінь та тло до виділеної області (чи альфа-каналу)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr "Створити емблему, що складається з тексту, градієнтної заливки, тіні та тла"
+msgstr ""
+"Створити емблему, що складається з тексту, градієнтної заливки, тіні та тла"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -813,7 +755,6 @@ msgid "Create a beveled pattern hrule for webpages"
 msgstr "Створити рельєфну горизонтальну лінію для веб-сторінок"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -835,7 +776,8 @@ msgstr "Для зведення анімації потрібно принайм
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr "Створити проміжні шари для анімації двох або більше шарів вище фонового"
+msgstr ""
+"Створити проміжні шари для анімації двох або більше шарів вище фонового"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -857,7 +799,9 @@ msgstr "_Плавний перехід..."
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
-msgstr "Додати змішане тло, підсвічення та тінь до виділеної області (чи альфа-каналу)"
+msgstr ""
+"Додати змішане тло, підсвічення та тінь до виділеної області (чи альфа-"
+"каналу)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -955,7 +899,9 @@ msgstr "Ширина корони"
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr "Створити проміжні шари для переходу у вигляді анімаційні випалення між двома шарами"
+msgstr ""
+"Створити проміжні шари для переходу у вигляді анімаційні випалення між двома "
+"шарами"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
@@ -977,7 +923,9 @@ msgstr "Швидкість (точок/кадр)"
 msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
-msgstr "Сценарій випалювання потрібні рівно два шари: шар переднього плану з альфа-каналом та фоновий шар."
+msgstr ""
+"Сценарій випалювання потрібні рівно два шари: шар переднього плану з альфа-"
+"каналом та фоновий шар."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1042,7 +990,9 @@ msgstr "Вигравірувана..."
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
-msgstr "Створити емблему з текстом, піднятим чи вигравіруваним у вказаному зображені на тлі"
+msgstr ""
+"Створити емблему з текстом, піднятим чи вигравіруваним у вказаному зображені "
+"на тлі"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1066,7 +1016,8 @@ msgstr "К_рейда.."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr "Створити ефект різьби по дереву для виділеної області (чи альфа-каналу)"
+msgstr ""
+"Створити ефект різьби по дереву для виділеної області (чи альфа-каналу)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1104,7 +1055,9 @@ msgstr "Зберегти тло"
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr "Додати до виділення (чи альфа-каналу) ефект хромування за допомогою вказаного зразка"
+msgstr ""
+"Додати до виділення (чи альфа-каналу) ефект хромування за допомогою "
+"вказаного зразка"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1169,7 +1122,8 @@ msgstr "Зерно"
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr "Заповнити виділену область (чи альфа-канал) смугами, як на монтажній платі"
+msgstr ""
+"Заповнити виділену область (чи альфа-канал) смугами, як на монтажній платі"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1247,7 +1201,9 @@ msgstr "_Кавові плями..."
 msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
-msgstr "Створити ефект коміксу для виділеної області, з її окресленням та заповненням градієнтом"
+msgstr ""
+"Створити ефект коміксу для виділеної області, з її окресленням та "
+"заповненням градієнтом"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1270,7 +1226,9 @@ msgstr "Розмір контуру"
 msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
-msgstr "Додати ефект блискучого металу до виділеної області з відбиттям та тінями у перспективі"
+msgstr ""
+"Додати ефект блискучого металу до виділеної області з відбиттям та тінями у "
+"перспективі"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1278,10 +1236,13 @@ msgstr "Холодний _метал..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr "Створити емблему, стилізовану під метал, з відбиттям та тінями у перспективі"
+msgstr ""
+"Створити емблему, стилізовану під метал, з відбиттям та тінями у перспективі"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels)"
 msgstr "Розмір ефекту (у точках)"
 
@@ -1358,12 +1319,10 @@ msgid "Color"
 msgstr "Колір"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "Зсув вздовж X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Зсув вздовж Y"
 
@@ -1469,7 +1428,9 @@ msgstr "Чорний на білому"
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
-msgstr "Створити зображення заповнене зразками символів з шрифтів, що підходять до умов пошуку шрифту"
+msgstr ""
+"Створити зображення заповнене зразками символів з шрифтів, що підходять до "
+"умов пошуку шрифту"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1507,7 +1468,9 @@ msgstr "_Текст"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr "Додати ефект замороження до виділеної області (чи альфа-каналу) та зробити тінь"
+msgstr ""
+"Додати ефект замороження до виділеної області (чи альфа-каналу) та зробити "
+"тінь"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1547,103 +1510,69 @@ msgstr "Розмір тіні (%)"
 msgid "_Fuzzy Border..."
 msgstr "_Нечітка рамка..."
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "Автокадрування"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "посилання на веб-сайт GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "Створення зображення більшого заголовку, користуючись темою сайту gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Посилання на посібник користувача"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "Створити зображення для маленького заголовка, використовуючи тему сайту gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Зберегти та використати _виділення"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "Темний колір"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Створити, відкривати та з_берігати файли"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "Колір відблисків"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "_Малювання простих об'єктів"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "Індексоване зображення"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Як використовувати _діалоги"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "Кількість кольорів"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "_Реєстр доповнень"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "Видалити тло"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "_Використання контурів"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "Поріг вибору за кольором"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "Основні _концепції"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "Колір тіні"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "_Веб-сторінка розробників"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "_Великий заголовок..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "_Головна веб-сторінка"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "_Малий заголовок..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "Пі_дготовка зображений до публікації у Інтернет"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid ""
-"Create an image of a Tube Button Label Header using the gimp.org webpage "
-"theme"
-msgstr "Створити зображення заголовку використовуючи тему сайту gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "_Сайт з посібником користувача"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "Створити зображення позначки першого рівня використовуючи тему сайту gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"Create an image of a second level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr "Створити зображення позначки другого рівня використовуючи тему сайту gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid ""
-"Create an image of a third level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr "Створити зображення позначки третього рівня використовуючи тему сайта gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "_Позначки дод.кнопок труби..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "_Двічі вкладені кнопки..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "Позначки _головної труби.."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "Позначка кнопки _труби..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "Робота з цифровим _фото"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
-msgstr "Додати градієнти, текстури, тіні та рельєфи до виділеної області (чи альфа-каналу)"
+msgstr ""
+"Додати градієнти, текстури, тіні та рельєфи до виділеної області (чи альфа-"
+"каналу)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1678,7 +1607,6 @@ msgid "Pattern (text)"
 msgstr "Текстура (текст)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "Тінь"
 
@@ -1700,15 +1628,12 @@ msgstr "Використовувати накладання текстур"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr "Додати ефект сяючого розплавленого металу до виділення (чи альфа-каналу)"
+msgstr ""
+"Додати ефект сяючого розплавленого металу до виділення (чи альфа-каналу)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
 msgstr "Створити емблему, що виглядає як сяючий розплавлений метал"
-
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-msgid "Effect size (pixels * 3)"
-msgstr "Розмір ефекту (точки * 3)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1769,7 +1694,8 @@ msgstr "Напрямні з виді_леного"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr "Додати напрямні до розташування, вказаному у відсотках від розміру зображення"
+msgstr ""
+"Додати напрямні до розташування, вказаному у відсотках від розміру зображення"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1871,7 +1797,9 @@ msgstr "_Лава"
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
-msgstr "Заповнити шар променями, що йдіть від центру, використовуючи колір переднього плану"
+msgstr ""
+"Заповнити шар променями, що йдіть від центру, використовуючи колір "
+"переднього плану"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -1950,10 +1878,6 @@ msgstr "Створити логотип у стилі неонової рекл�
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "Створити тінь"
-
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
-msgid "Effect size (pixels * 5)"
-msgstr "Розмір ефекту (точок * 5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
@@ -2295,29 +2219,10 @@ msgstr "Створити емблему з ефектом швидкісного
 msgid "Speed Text..."
 msgstr "Швидкісний текст..."
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:2
-msgid "Create a simple sphere with a drop shadow"
-msgstr "Створити просту сферу, що відкидає тінь"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
-msgid "Lighting (degrees)"
-msgstr "Освітлення (в градусах)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
-msgid "Radius (pixels)"
-msgstr "Радіус (у точках)"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
-msgid "Sphere color"
-msgstr "Колір сфери"
-
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
-msgid "_Sphere..."
-msgstr "_Сфера..."
-
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr "Створити анімацію із зображення, розмістивши його на сфері, що обертається"
+msgstr ""
+"Створити анімацію із зображення, розмістивши його на сфері, що обертається"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2338,8 +2243,7 @@ msgstr "_Куля, що обертається..."
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Малювання спірографів, епітрохоїд та кривих Ліссажу"
+msgstr "Малювання спірографів, епітрохоїд та кривих Ліссажу"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2462,43 +2366,11 @@ msgstr "Тип"
 msgid "_Spyrogimp..."
 msgstr "_Спірограф..."
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
-msgid "Burst color"
-msgstr "Колір спалаху"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
-msgid "Create a logo using a starburst gradient"
-msgstr "Створити емблему, використовуючи градієнт зіркового спалаху"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-msgid "Effect size (pixels * 30)"
-msgstr "Розмір ефекту (точок * 30)"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a starburst gradient and add a "
-"shadow"
-msgstr "Заповнити виділену область (чи альфа-канал) зірковими спалахами та додати тінь"
-
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
-msgid "Starb_urst..."
-msgstr "_Спалах зірки..."
-
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr "Створити емблему, використовуючи камені, відблиски зірок та тіні"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-msgid "Effect size (pixels * 4)"
-msgstr "Розмір ефекту (точки * 4)"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
-"and shadow"
-msgstr "Заповнити виділену область (чи альфа-канал) каменями, відблисками зірок та тінями"
-
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 msgid "Sta_rscape..."
 msgstr "_Зоряне тло..."
 
@@ -2536,7 +2408,8 @@ msgstr "_Вихор..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr "Додати ефект часток, що розлітаються до виділеної області (чи альфа-каналу)"
+msgstr ""
+"Додати ефект часток, що розлітаються до виділеної області (чи альфа-каналу)"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2592,7 +2465,9 @@ msgstr "Кінцевий колір"
 msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
-msgstr "Заповнити виділення (чи альфа-канал) текстурою та додати підсвічення, тіні та мозаїку на тлі"
+msgstr ""
+"Заповнити виділення (чи альфа-канал) текстурою та додати підсвічення, тіні "
+"та мозаїку на тлі"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2686,7 +2561,9 @@ msgstr "Амплітуда"
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr "Створити багатошарове зображення з ефектом, ніби у поточне зображення кинули камінь"
+msgstr ""
+"Створити багатошарове зображення з ефектом, ніби у поточне зображення кинули "
+"камінь"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2704,7 +2581,9 @@ msgstr "Х_вилі..."
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr "Створити новий шар, заповнений хвилями для використання у якості накладки чи рельєфу"
+msgstr ""
+"Створити новий шар, заповнений хвилями для використання у якості накладки чи "
+"рельєфу"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2738,65 +2617,10 @@ msgstr "Довжина нитки"
 msgid "_Weave..."
 msgstr "_Хвилі..."
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "посилання на веб-сайт GIMP"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Посилання на посібник користувача"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Зберегти та використати _виділення"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Створити, відкривати та з_берігати файли"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "_Малювання простих об'єктів"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Як використовувати _діалоги"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "_Реєстр доповнень"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "_Використання контурів"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "Основні _концепції"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "_Веб-сторінка розробників"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "_Головна веб-сторінка"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "Пі_дготовка зображений до публікації у Інтернет"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "_Сайт з посібником користувача"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "Робота з цифровим _фото"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "Додати легкий напівпрозорий 3D-ефект до виділеної області (чи альфа-каналу)"
+msgstr ""
+"Додати легкий напівпрозорий 3D-ефект до виділеної області (чи альфа-каналу)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2826,6 +2650,10 @@ msgstr "Зсув відблисків вздовж X"
 msgid "Highlight Y offset"
 msgstr "Зсув відблисків вздовж Y"
 
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "Колір відблисків"
+
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Непрозорість відблисків"
@@ -2833,3 +2661,165 @@ msgstr "Непрозорість відблисків"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-ефект..."
+
+#~ msgid "Autocrop"
+#~ msgstr "Автокадрування"
+
+#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Створення зображення більшого заголовку, користуючись темою сайту gimp.org"
+
+#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Створити зображення для маленького заголовка, використовуючи тему сайту "
+#~ "gimp.org"
+
+#~ msgid "Dark color"
+#~ msgstr "Темний колір"
+
+#~ msgid "Index image"
+#~ msgstr "Індексоване зображення"
+
+#~ msgid "Number of colors"
+#~ msgstr "Кількість кольорів"
+
+#~ msgid "Remove background"
+#~ msgstr "Видалити тло"
+
+#~ msgid "Select-by-color threshold"
+#~ msgstr "Поріг вибору за кольором"
+
+#~ msgid "Shadow color"
+#~ msgstr "Колір тіні"
+
+#~ msgid "_Big Header..."
+#~ msgstr "_Великий заголовок..."
+
+#~ msgid "_Small Header..."
+#~ msgstr "_Малий заголовок..."
+
+#~ msgid ""
+#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "theme"
+#~ msgstr "Створити зображення заголовку використовуючи тему сайту gimp.org"
+
+#~ msgid ""
+#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Створити зображення позначки першого рівня використовуючи тему сайту gimp."
+#~ "org"
+
+#~ msgid ""
+#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr ""
+#~ "Створити зображення позначки другого рівня використовуючи тему сайту gimp."
+#~ "org"
+
+#~ msgid ""
+#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr ""
+#~ "Створити зображення позначки третього рівня використовуючи тему сайта "
+#~ "gimp.org"
+
+#~ msgid "T_ube Sub-Button Label..."
+#~ msgstr "_Позначки дод.кнопок труби..."
+
+#~ msgid "Tub_e Sub-Sub-Button Label..."
+#~ msgstr "_Двічі вкладені кнопки..."
+
+#~ msgid "_General Tube Labels..."
+#~ msgstr "Позначки _головної труби.."
+
+#~ msgid "_Tube Button Label..."
+#~ msgstr "Позначка кнопки _труби..."
+
+#~ msgid "_Misc"
+#~ msgstr "_Різне"
+
+#~ msgid "_Utilities"
+#~ msgstr "_Утиліти"
+
+#~ msgid "An_imation"
+#~ msgstr "_Анімація"
+
+#~ msgid "_Animators"
+#~ msgstr "_Аніматори"
+
+#~ msgid "_Artistic"
+#~ msgstr "І_мітація"
+
+#~ msgid "_Blur"
+#~ msgstr "_Розмиття"
+
+#~ msgid "_Decor"
+#~ msgstr "_Декор"
+
+#~ msgid "_Effects"
+#~ msgstr "_Ефекти"
+
+#~ msgid "En_hance"
+#~ msgstr "_Покращення"
+
+#~ msgid "_Light and Shadow"
+#~ msgstr "_Світло та тінь"
+
+#~ msgid "S_hadow"
+#~ msgstr "_Тінь"
+
+#~ msgid "_Render"
+#~ msgstr "_Візуалізація"
+
+#~ msgid "_Alchemy"
+#~ msgstr "Ал_хімія"
+
+#~ msgid "Effect size (pixels * 3)"
+#~ msgstr "Розмір ефекту (точки * 3)"
+
+#~ msgid "Effect size (pixels * 5)"
+#~ msgstr "Розмір ефекту (точок * 5)"
+
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "Створити просту сферу, що відкидає тінь"
+
+#~ msgid "Lighting (degrees)"
+#~ msgstr "Освітлення (в градусах)"
+
+#~ msgid "Radius (pixels)"
+#~ msgstr "Радіус (у точках)"
+
+#~ msgid "Sphere color"
+#~ msgstr "Колір сфери"
+
+#~ msgid "_Sphere..."
+#~ msgstr "_Сфера..."
+
+#~ msgid "Burst color"
+#~ msgstr "Колір спалаху"
+
+#~ msgid "Create a logo using a starburst gradient"
+#~ msgstr "Створити емблему, використовуючи градієнт зіркового спалаху"
+
+#~ msgid "Effect size (pixels * 30)"
+#~ msgstr "Розмір ефекту (точок * 30)"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
+#~ "shadow"
+#~ msgstr ""
+#~ "Заповнити виділену область (чи альфа-канал) зірковими спалахами та додати "
+#~ "тінь"
+
+#~ msgid "Starb_urst..."
+#~ msgstr "_Спалах зірки..."
+
+#~ msgid "Effect size (pixels * 4)"
+#~ msgstr "Розмір ефекту (точки * 4)"
+
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
+#~ "glow, and shadow"
+#~ msgstr ""
+#~ "Заповнити виділену область (чи альфа-канал) каменями, відблисками зірок "
+#~ "та тінями"
