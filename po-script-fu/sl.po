@@ -6,11 +6,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.0 scriptfu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-17 11:19+0000\n"
-"PO-Revision-Date: 2008-09-20 19:15+0100\n"
-"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Project-Id-Version: GIMP 2.8 scriptfu\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2010-04-02 13:21+0000\n"
+"PO-Revision-Date: 2010-04-02 19:53+0100\n"
+"Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,37 +20,37 @@ msgstr ""
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Konzola Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Dobrodošli v TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Interaktivni razvoj shem"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_Prebrskaj ..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Shrani izpis konzole Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' ni mogoče odpreti za pisanje: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Brskalnik procedur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Ocenjevalni način konzole Script-Fu omogoča le ne-interaktiven priklic"
 
@@ -63,153 +63,154 @@ msgstr "Script-Fu ne more obdelati dveh skriptov naenkrat."
 msgid "You are already running the \"%s\" script."
 msgstr "Že poganjate skript \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:244
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
-#. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:306
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s: "
 
-#: ../plug-ins/script-fu/script-fu-interface.c:354
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
-msgstr "Izbira barv Script-Fu"
+msgstr "Izbor barv Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
-msgstr "Izbira datoteke Script-Fu"
+msgstr "Izbor datoteke Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
-msgstr "Izbira mape Script-Fu"
+msgstr "Izbor mape Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
-msgstr "Izbira pisave Script-Fu"
+msgstr "Izbor pisave Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:489
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
-msgstr "Izbira palete Script-Fu"
+msgstr "Izbor palete Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:498
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
-msgstr "Izbira vzorca Script-fu"
+msgstr "Izbor vzorca Script-fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:507
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
-msgstr "Izbira preliva Script-Fu"
+msgstr "Izbor preliva Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:516
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
-msgstr "Izbira čopiča Script-Fu"
+msgstr "Izbor čopiča Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:918
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Napaka pri izvajanju %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Premalo argumentov za klic 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:709
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Napaka pri nalaganju %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Možnosti strežnika Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "_Zaženi strežnik"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "Vrata strežnika:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "Dnevniška datoteka strežnika:"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktivna konzola za razvoj Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "_Konzola"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Strežnik za oddaljeno upravljanje Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "_Zaženi strežnik ..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP na spletu"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "_Uporabniški vodnik"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "_Preizkusi"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "_Gumbi"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "_Logotipi"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "_Vzorci"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "_Teme spletnih strani"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "_Svetleči napis  ..."
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "_Izbočeni vzorec"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa v _logotip"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Ponovno preberi vse dosegljive skripte Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Osveži skripte"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
 msgstr "Ko je odprto pogovorno okno Script-Fu, ne smete uporabiti \"Osveži skripte\".  Prosimo, zaprite vsa okna Script-Fu in poskusite znova."
 
@@ -249,8 +250,6 @@ msgstr "Privzete vrednosti preslikave odtisa "
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -288,8 +287,6 @@ msgstr "Pisava"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -361,8 +358,6 @@ msgstr "Polmer zabrisanosti sence"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -400,7 +395,6 @@ msgstr "Vzorec Truchet 3_D  ..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
@@ -616,8 +610,6 @@ msgstr "Blazinjenje"
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -756,7 +748,6 @@ msgid "Create a beveled pattern hrule for webpages"
 msgstr "Ustvari izbočeno vzorčasto pasico-črto za spletne strani"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -1106,7 +1097,7 @@ msgstr "Zapolni izbrano področje (ali alfo) s sledmi, kot so tiste na tiskanih 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep selection"
-msgstr "Ohrani izbiro"
+msgstr "Ohrani izbor"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
@@ -1120,7 +1111,7 @@ msgstr "Velikost oljne maske"
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
 #: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
-msgstr "Ločen sloj"
+msgstr "Ločena plast"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
@@ -1286,12 +1277,10 @@ msgid "Color"
 msgstr "Barva"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "Zamik X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Zamik Y"
 
@@ -1472,91 +1461,61 @@ msgstr "Polnost senc (%)"
 msgid "_Fuzzy Border..."
 msgstr "_Nejasen rob ..."
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "Samodejno obreži"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "Zaznamek spletne strani GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "Ustvari sliko velikega naslova z uporabo teme spletne strani gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Zaznamki uporabniškega priročnika"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "Ustvari sliko majhnega naslova z uporabo teme spletne strani gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Ustvarjanje in uporaba _izborov"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "Zatemnjena barva"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Ustvarjanje, odpiranje in shranjevanje _datotek"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "Osvetljena barva"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Risanje _enostavnih predmetov"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "Indeksirana slika"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Kako uporabljamo _pogovorna okna"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "Število barv"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "_Imenik vtičnikov"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "Odstrani ozadje"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "Uporaba _poti"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "Prag po izboru barve"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "_Osnovni koncepti"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "Barva senc"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "_Spletna stran za razvijalce"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "_Velik naslov ..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "_Glavna spletna stran"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "_Majehn naslov ..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Priprava slik za splet"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
-msgstr "Ustvari sliko naslova oznake cevnega gumba z uporabo teme spletne strani gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "Spletna stran _uporabniškega priročnika"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "Ustvari sliko oznake cevnega gumba z uporabo teme spletne strani gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
-msgstr "Ustvari sliko drugoravenske oznake cevnega gumba z uporabo teme spletne strani gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
-msgstr "Ustvari sliko tretjeravenske oznake cevnega gumba z uporabo teme spletne strani gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "Cevni _pod-gumb z napisom ..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Cevni pod-pod _gumb z napisom ..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "_Splošni cevni gumbi z napisi ..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "_Cevni gumb z napisom ..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "_Delo s fotografijami digitalnega fotoaparata"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
@@ -1675,7 +1634,7 @@ msgstr "_Mreža ..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr "Nova vodila iz _izbire"
+msgstr "Nova vodila iz _izbora"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -2127,7 +2086,7 @@ msgstr "Nas_tavi barvni katalog ..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
-msgstr "Pretvori izbiro v čopič"
+msgstr "Pretvori izbor v čopič"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
@@ -2135,7 +2094,7 @@ msgstr "V _čopič ..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "Convert a selection to an image"
-msgstr "Pretvori izbiro v sliko"
+msgstr "Pretvori izbor v sliko"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
@@ -2143,7 +2102,7 @@ msgstr "V _sliko"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid "Convert a selection to a pattern"
-msgstr "Pretvori izbiro v vzorec"
+msgstr "Pretvori izbor v vzorec"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
@@ -2579,62 +2538,6 @@ msgstr "Dolžina niti"
 msgid "_Weave..."
 msgstr "_Tkanje ..."
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "Zaznamek spletne strani GIMP"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Zaznamki uporabniškega priročnika"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Ustvarjanje in uporaba _izborov"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Ustvarjanje, odpiranje in shranjevanje _datotek"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Risanje _enostavnih predmetov"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Kako uporabljamo _pogovorna okna"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "_Imenik vtičnikov"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "Uporaba _poti"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "_Osnovni koncepti"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "_Spletna stran za razvijalce"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "_Glavna spletna stran"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Priprava slik za splet"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "Spletna stran _uporabniškega priročnika"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "_Delo s fotografijami digitalnega fotoaparata"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Dodaj subtilen prosojen 3D-učinek izbranemu področju (ali alfo)"
@@ -2667,6 +2570,10 @@ msgstr "Poudari odmik X"
 msgid "Highlight Y offset"
 msgstr "Poudari odmik Y"
 
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "Osvetljena barva"
+
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Poudari prekrivnost"
@@ -2674,87 +2581,4 @@ msgstr "Poudari prekrivnost"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr " _Xach-učinek ..."
-
-#~ msgid "_Misc"
-#~ msgstr "_Razno"
-#~ msgid "_Utilities"
-#~ msgstr "_Pripomočki"
-#~ msgid "An_imation"
-#~ msgstr "An_imacija"
-#~ msgid "_Animators"
-#~ msgstr "_Animatorji"
-#~ msgid "_Artistic"
-#~ msgstr "_Umetniško"
-#~ msgid "_Blur"
-#~ msgstr "Za_briši"
-#~ msgid "_Decor"
-#~ msgstr "_Okrasi"
-#~ msgid "_Effects"
-#~ msgstr "_Učinki"
-#~ msgid "En_hance"
-#~ msgstr "Iz_boljšaj"
-#~ msgid "_Light and Shadow"
-#~ msgstr "_Svetloba in senca"
-#~ msgid "S_hadow"
-#~ msgstr "Sen_ca"
-#~ msgid "_Render"
-#~ msgstr "_Upodobi"
-#~ msgid "_Alchemy"
-#~ msgstr "_Alkemija"
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Velikost učinka (slikovne točke * 3)"
-#~ msgid "BG opacity"
-#~ msgstr "Prekrivnost ozadja"
-#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
-#~ msgstr "Ustvari grafikon porazdelitve nasičenosti, vrednosti in obarvanosti"
-#~ msgid "Draw _HSV Graph..."
-#~ msgstr "Nariši graf _HSV ..."
-#~ msgid "End X"
-#~ msgstr "Končni X"
-#~ msgid "End Y"
-#~ msgstr "Končni Y"
-#~ msgid "From top-left to bottom-right"
-#~ msgstr "Od levo zgoraj do desno spodaj"
-#~ msgid "Graph scale"
-#~ msgstr "Merilo grafikona"
-#~ msgid "Start X"
-#~ msgstr "Začetni X"
-#~ msgid "Start Y"
-#~ msgstr "Začetni Y"
-#~ msgid "Use selection bounds instead of values below"
-#~ msgstr "Uporabi mere izbora namesto spodnjih vrednosti"
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Velikost učinka (slikovne točke * 5)"
-#~ msgid "Create a simple sphere with a drop shadow"
-#~ msgstr "Ustvari enostavno kroglo, ki meče senco"
-#~ msgid "Lighting (degrees)"
-#~ msgstr "Osvetlitev (v stopinjah)"
-#~ msgid "Radius (pixels)"
-#~ msgstr "Polmer (v slikovnih točkah)"
-#~ msgid "Sphere color"
-#~ msgstr "Barva krogle"
-#~ msgid "_Sphere..."
-#~ msgstr "_Krogla ..."
-#~ msgid "Burst color"
-#~ msgstr "Barva poka"
-#~ msgid "Create a logo using a starburst gradient"
-#~ msgstr "Ustvari logotip z uporabo preliva eksplozije zvezde"
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Velikost učinka (slikovne točke * 30)"
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
-#~ "shadow"
-#~ msgstr ""
-#~ "Zapolni izbrano področje (ali alfo) s prelivom eksplozije zvezde in "
-#~ "dodano senco"
-#~ msgid "Starb_urst..."
-#~ msgstr "_Eksplozija zvezde ..."
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Velikost učinka (slikovne točke * 4)"
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
-#~ "glow, and shadow"
-#~ msgstr ""
-#~ "Zapolni izbrano področje (ali alfo) s kamnito teksturo, žarjenjem nove in "
-#~ "senco"
 
