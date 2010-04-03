@@ -311,6 +311,8 @@
 
 #define GIMP_HELP_DYNAMICS_EDITOR_DIALOG          "gimp-dynamics-editor-dialog"
 
+#define GIMP_HELP_TOOL_PRESET_EDITOR_DIALOG       "gimp-tool-preset-editor-dialog"
+
 #define GIMP_HELP_DYNAMICS_DIALOG                 "gimp-dynamics-dialog"
 #define GIMP_HELP_DYNAMICS_EDIT                   "gimp-dynamics-edit"
 #define GIMP_HELP_DYNAMICS_NEW                    "gimp-dynamics-new"
@@ -389,6 +391,14 @@
 #define GIMP_HELP_BUFFER_PASTE_INTO               "gimp-buffer-paste-into"
 #define GIMP_HELP_BUFFER_PASTE_AS_NEW             "gimp-buffer-paste-as-new"
 #define GIMP_HELP_BUFFER_DELETE                   "gimp-buffer-delete"
+
+#define GIMP_HELP_TOOL_PRESET_DIALOG                 "gimp-tool-preset-dialog"
+#define GIMP_HELP_TOOL_PRESET_EDIT                   "gimp-tool-preset-edit"
+#define GIMP_HELP_TOOL_PRESET_NEW                    "gimp-tool-preset-new"
+#define GIMP_HELP_TOOL_PRESET_DUPLICATE              "gimp-tool-preset-duplicate"
+#define GIMP_HELP_TOOL_PRESET_COPY_LOCATION          "gimp-tool-preset-copy-location"
+#define GIMP_HELP_TOOL_PRESET_DELETE                 "gimp-tool-preset-delete"
+#define GIMP_HELP_TOOL_PRESET_REFRESH                "gimp-tool-preset-refresh"
 
 #define GIMP_HELP_DOCUMENT_CLEAR                  "gimp-document-clear"
 #define GIMP_HELP_DOCUMENT_COPY_LOCATION          "gimp-document-copy-location"

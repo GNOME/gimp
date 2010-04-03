@@ -20,9 +20,14 @@ N_("When enabled, an image will become the active image when its image " \
 #define BRUSH_PATH_WRITABLE_BLURB ""
 
 #define DYNAMICS_PATH_BLURB \
-"Sets the dynamics search path."
+N_("Sets the dynamics search path.")
 
 #define DYNAMICS_PATH_WRITABLE_BLURB ""
+
+#define TOOL_PRESET_PATH_BLURB \
+N_("Sets the dynamics search path.")
+
+#define TOOL_PRESET_PATH_WRITABLE_BLURB ""
 
 #define CANVAS_PADDING_COLOR_BLURB \
 N_("Sets the canvas padding color used if the padding mode is set to " \
@@ -57,6 +62,10 @@ N_("Context-dependent mouse pointers are helpful.  They are enabled by " \
 #define DEFAULT_DYNAMICS_BLURB \
 "Specify a default dynamics.  The dynamics is searched for in the " \
 "specified dynamics path."
+
+#define DEFAULT_TOOL_PRESET_BLURB \
+"Specify a default tool preset.  The tool preset is searched for in the " \
+"specified tool prests path."
 
 #define DEFAULT_DOT_FOR_DOT_BLURB \
 N_("When enabled, this will ensure that each pixel of an image gets " \

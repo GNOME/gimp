@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="tool-preset-popup">
+    <menuitem action="tool-preset-edit" />
+    <separator />
+    <menuitem action="tool-preset-new" />
+    <menuitem action="tool-preset-duplicate" />
+    <menuitem action="tool-preset-copy-location" />
+    <menuitem action="tool-preset-delete" />
+    <separator />
+    <menuitem action="tool-preset-refresh" />
+    <separator />
+  </popup>
+</ui>

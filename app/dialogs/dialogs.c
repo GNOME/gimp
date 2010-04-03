@@ -166,13 +166,13 @@ GimpContainer *global_recent_docks = NULL;
     TRUE                          /* hideable         */,  \
     TRUE                          /* dockable         */}
 
-#define LIST(id, name, blurb, stock_id, help_id, view_size) \
+#define LIST(id, new_func, name, blurb, stock_id, help_id, view_size) \
   { "gimp-"#id"-list"             /* identifier       */, \
     name                          /* name             */, \
     blurb                         /* blurb            */, \
     stock_id                      /* stock_id         */, \
     help_id                       /* help_id          */, \
-    dialogs_##id##_list_view_new  /* new_func         */, \
+    dialogs_##new_func##_list_view_new  /* new_func         */, \
     view_size                     /* view_size        */, \
     FALSE                         /* singleton        */, \
     FALSE                         /* session_managed  */, \
@@ -297,8 +297,10 @@ static const GimpDialogFactoryEntry entries[] =
             GIMP_HELP_TEMPLATE_DIALOG, GIMP_VIEW_SIZE_SMALL),
 
   /* Some things do not have grids, so just list */
-  LIST (dynamics, N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
+  LIST (dynamics, dynamics, N_("Paint Dynamics"), NULL, GIMP_STOCK_DYNAMICS,
         GIMP_HELP_DYNAMICS_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
+  LIST (tool-preset, tool_preset, N_("Tool Presets"), NULL, GIMP_STOCK_TOOL_PRESET,
+        GIMP_HELP_TOOL_PRESET_DIALOG, GIMP_VIEW_SIZE_MEDIUM),
 
   /*  image related  */
   DOCKABLE ("gimp-layer-list",
@@ -363,6 +365,10 @@ static const GimpDialogFactoryEntry entries[] =
             N_("Palette Editor"), NULL, GIMP_STOCK_PALETTE,
             GIMP_HELP_PALETTE_EDITOR_DIALOG,
             dialogs_palette_editor_get, 0, TRUE),
+  DOCKABLE ("gimp-tool-preset-editor",
+            N_("Tool Preset Editor"), NULL, GIMP_STOCK_TOOL_PRESET,
+            GIMP_HELP_TOOL_PRESET_EDITOR_DIALOG,
+            dialogs_tool_preset_editor_get, 0, TRUE),
 
   /*  image windows  */
   FOREIGN_NOT_HIDEABLE ("gimp-empty-image-window",

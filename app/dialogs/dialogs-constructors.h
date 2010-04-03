@@ -155,6 +155,11 @@ GtkWidget * dialogs_buffer_list_view_new   (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
                                             gint               view_size);
+GtkWidget * dialogs_tool_preset_list_view_new
+                                           (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            GimpUIManager     *ui_manager,
+                                            gint               view_size);
 GtkWidget * dialogs_document_list_view_new (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
@@ -264,6 +269,9 @@ GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             GimpUIManager     *ui_manager,
                                             gint               view_size);
-
+GtkWidget * dialogs_tool_preset_editor_get (GimpDialogFactory *factory,
+                                            GimpContext       *context,
+                                            GimpUIManager     *ui_manager,
+                                            gint               view_size);
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */

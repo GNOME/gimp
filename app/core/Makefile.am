@@ -359,6 +359,12 @@ libappcore_a_sources = \
 	gimptoolinfo.h				\
 	gimptooloptions.c			\
 	gimptooloptions.h			\
+	gimptoolpreset.c			\
+	gimptoolpreset.h			\
+	gimptoolpreset-load.c			\
+	gimptoolpreset-load.h			\
+	gimptoolpreset-save.c			\
+	gimptoolpreset-save.h			\
 	gimptoolpresets.c			\
 	gimptoolpresets.h			\
 	gimptreehandler.c			\

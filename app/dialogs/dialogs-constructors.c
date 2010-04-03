@@ -64,6 +64,8 @@
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
+#include "widgets/gimptoolpresetfactoryview.h"
+#include "widgets/gimptoolpreseteditor.h"
 #include "widgets/gimpundoeditor.h"
 #include "widgets/gimpvectorstreeview.h"
 
@@ -443,6 +445,19 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
+dialogs_tool_preset_list_view_new (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                GimpUIManager     *ui_manager,
+                                gint               view_size)
+{
+  return gimp_tool_preset_factory_view_new (GIMP_VIEW_TYPE_LIST,
+                                            context->gimp->tool_preset_factory,
+                                            context,
+                                            view_size, 1,
+                                            gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
 dialogs_document_list_view_new (GimpDialogFactory *factory,
                                 GimpContext       *context,
                                 GimpUIManager     *ui_manager,
@@ -765,6 +780,16 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 {
   return gimp_palette_editor_new (context,
                                   gimp_dialog_factory_get_menu_factory (factory));
+}
+
+GtkWidget *
+dialogs_tool_preset_editor_get (GimpDialogFactory *factory,
+                                GimpContext       *context,
+                                GimpUIManager     *ui_manager,
+                                gint               view_size)
+{
+  return gimp_tool_preset_editor_new (context,
+                                      gimp_dialog_factory_get_menu_factory (factory));
 }
 
 

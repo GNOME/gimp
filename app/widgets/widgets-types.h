@@ -63,6 +63,7 @@ typedef struct _GimpBrushEditor              GimpBrushEditor;
 typedef struct _GimpDynamicsEditor           GimpDynamicsEditor;
 typedef struct _GimpGradientEditor           GimpGradientEditor;
 typedef struct _GimpPaletteEditor            GimpPaletteEditor;
+typedef struct _GimpToolPresetEditor         GimpToolPresetEditor;
 
 /*  GimpImageEditor widgets  */
 
@@ -110,7 +111,7 @@ typedef struct _GimpDataFactoryView          GimpDataFactoryView;
 typedef struct _GimpBrushFactoryView         GimpBrushFactoryView;
 typedef struct _GimpDynamicsFactoryView      GimpDynamicsFactoryView;
 typedef struct _GimpPatternFactoryView       GimpPatternFactoryView;
-
+typedef struct _GimpToolPresetFactoryView    GimpToolPresetFactoryView;
 
 /*  menus  */
 

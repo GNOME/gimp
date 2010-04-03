@@ -85,6 +85,9 @@ struct _GimpContext
   GimpPalette          *palette;
   gchar                *palette_name;
 
+  GimpToolPreset       *tool_preset;
+  gchar                *tool_preset_name;
+
   GimpFont             *font;
   gchar                *font_name;
 
@@ -130,6 +133,8 @@ struct _GimpContextClass
                                GimpGradient         *gradient);
   void (* palette_changed)    (GimpContext          *context,
                                GimpPalette          *palette);
+  void (* tool_preset_changed)(GimpContext          *context,
+                               GimpToolPreset       *tool_preset);
   void (* font_changed)       (GimpContext          *context,
                                GimpFont             *font);
   void (* buffer_changed)     (GimpContext          *context,
@@ -298,6 +303,13 @@ GimpPalette   * gimp_context_get_palette        (GimpContext     *context);
 void            gimp_context_set_palette        (GimpContext     *context,
                                                  GimpPalette     *palette);
 void            gimp_context_palette_changed    (GimpContext     *context);
+
+
+/*  tool_preset  */
+GimpToolPreset * gimp_context_get_tool_preset     (GimpContext     *context);
+void             gimp_context_set_tool_preset     (GimpContext     *context,
+                                                   GimpToolPreset  *tool_preset);
+void             gimp_context_tool_preset_changed (GimpContext     *context);
 
 
 /*  font  */

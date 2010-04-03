@@ -76,6 +76,8 @@
 #include "gimptagcache.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
+#include "gimptoolpreset.h"
+#include "gimptoolpreset-load.h"
 
 #include "gimp-intl.h"
 
@@ -248,6 +250,8 @@ gimp_init (Gimp *gimp)
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
 
+  gimp->tool_preset_factory = NULL;
+
   gimp->tag_cache           = NULL;
 
   gimp->pdb                 = gimp_pdb_new (gimp);
@@ -294,6 +298,9 @@ gimp_dispose (GObject *object)
 
   if (gimp->palette_factory)
     gimp_data_factory_data_free (gimp->palette_factory);
+
+  if (gimp->tool_preset_factory)
+    gimp_data_factory_data_free (gimp->tool_preset_factory);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -370,6 +377,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->palette_factory);
       gimp->palette_factory = NULL;
+    }
+
+  if (gimp->tool_preset_factory)
+    {
+      g_object_unref (gimp->tool_preset_factory);
+      gimp->tool_preset_factory = NULL;
     }
 
   if (gimp->tag_cache)
@@ -501,6 +514,8 @@ gimp_get_memsize (GimpObject *object,
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->palette_factory),
                                       gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tool_preset_factory),
+                                      gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->tag_cache),
                                       gui_size);
@@ -567,6 +582,11 @@ gimp_real_initialize (Gimp               *gimp,
     { gimp_palette_load,         NULL /* legacy loader */,            TRUE  }
   };
 
+  static const GimpDataFactoryLoaderEntry tool_preset_loader_entries[] =
+  {
+    { gimp_tool_preset_load,        GIMP_TOOL_PRESET_FILE_EXTENSION,        TRUE  }
+  };
+
   GimpData *clipboard_brush;
   GimpData *clipboard_pattern;
 
@@ -631,6 +651,17 @@ gimp_real_initialize (Gimp               *gimp,
                            gimp_palette_get_standard);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->palette_factory),
                                "palette factory");
+
+  gimp->tool_preset_factory =
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_TOOL_PRESET,
+                           "tool-preset-path", "tool-preset-path-writable",
+                           tool_preset_loader_entries,
+                           G_N_ELEMENTS (tool_preset_loader_entries),
+                           gimp_tool_preset_new,
+                           gimp_tool_preset_get_standard);
+  gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_preset_factory),
+                               "tool preset factory");
 
   gimp->tag_cache = gimp_tag_cache_new ();
 
@@ -702,6 +733,8 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
+
+  gimp_data_factory_data_save (gimp->tool_preset_factory);
 
   gimp_fonts_reset (gimp);
 
@@ -941,6 +974,10 @@ gimp_restore (Gimp               *gimp,
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
 
+  /*  initialize the list of gimp tool presets   */
+  status_callback (NULL, _("Tool Presets"), 0.65);
+  gimp_data_factory_data_init (gimp->tool_preset_factory, gimp->no_data);
+
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.7);
   gimp_templates_load (gimp);
@@ -962,6 +999,8 @@ gimp_restore (Gimp               *gimp,
                                 gimp_data_factory_get_container (gimp->gradient_factory));
   gimp_tag_cache_add_container (gimp->tag_cache,
                                 gimp_data_factory_get_container (gimp->palette_factory));
+  gimp_tag_cache_add_container (gimp->tag_cache,
+                                gimp_data_factory_get_container (gimp->tool_preset_factory));
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
 }

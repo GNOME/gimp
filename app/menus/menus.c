@@ -239,6 +239,15 @@ menus_init (Gimp              *gimp,
                                       "palettes-menu.xml", plug_in_menus_setup,
                                       NULL);
 
+
+  gimp_menu_factory_manager_register (global_menu_factory, "<ToolPreset>",
+                                      "tool-preset",
+                                      "plug-in",
+                                      NULL,
+                                      "/tool-preset-popup",
+                                      "tool-preset-menu.xml", plug_in_menus_setup,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Fonts>",
                                       "fonts",
                                       "plug-in",

@@ -28,6 +28,7 @@ menudata_DATA = \
 	palette-editor-menu.xml		\
 	palettes-menu.xml		\
 	patterns-menu.xml		\
+	tool-preset-menu.xml		\
 	quick-mask-menu.xml		\
 	sample-points-menu.xml		\
 	selection-menu.xml		\
