@@ -37,6 +37,7 @@
 #include "gimpcontainerview.h"
 #include "gimptextbuffer.h"
 #include "gimptextstyleeditor.h"
+#include "gimptexttag.h"
 
 #include "gimp-intl.h"
 
@@ -559,9 +560,7 @@ gimp_text_style_editor_set_font (GimpTextStyleEditor *editor,
   gchar *font = NULL;
 
   if (font_tag)
-    g_object_get (font_tag,
-                  "font", &font,
-                  NULL);
+    font = gimp_text_tag_get_font (font_tag);
 
   g_signal_handlers_block_by_func (editor->context,
                                    gimp_text_style_editor_font_changed,
@@ -649,9 +648,7 @@ gimp_text_style_editor_set_size (GimpTextStyleEditor *editor,
   gint size = 0;
 
   if (size_tag)
-    g_object_get (size_tag,
-                  "size", &size,
-                  NULL);
+    size = gimp_text_tag_get_size (size_tag);
 
   g_signal_handlers_block_by_func (editor->size_adjustment,
                                    gimp_text_style_editor_size_changed,
@@ -697,9 +694,7 @@ gimp_text_style_editor_set_baseline (GimpTextStyleEditor *editor,
   gint baseline = 0;
 
   if (baseline_tag)
-    g_object_get (baseline_tag,
-                  "rise", &baseline,
-                  NULL);
+    baseline = gimp_text_tag_get_baseline (baseline_tag);
 
   g_signal_handlers_block_by_func (editor->baseline_adjustment,
                                    gimp_text_style_editor_baseline_changed,
@@ -742,9 +737,7 @@ gimp_text_style_editor_set_kerning (GimpTextStyleEditor *editor,
   gint kerning = 0;
 
   if (kerning_tag)
-    g_object_get (kerning_tag,
-                  "rise", &kerning, /* FIXME */
-                  NULL);
+    kerning = gimp_text_tag_get_kerning (kerning_tag);
 
   g_signal_handlers_block_by_func (editor->kerning_adjustment,
                                    gimp_text_style_editor_kerning_changed,

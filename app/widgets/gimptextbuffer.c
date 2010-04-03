@@ -47,6 +47,7 @@
 
 #include "gimptextbuffer.h"
 #include "gimptextbuffer-serialize.h"
+#include "gimptexttag.h"
 
 #include "gimp-intl.h"
 
@@ -344,9 +345,7 @@ gimp_text_buffer_get_iter_size (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (size)
-            g_object_get (tag,
-                          "size", size,
-                          NULL);
+            *size = gimp_text_tag_get_size (tag);
 
           return tag;
         }
@@ -368,15 +367,9 @@ gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
 
   for (list = buffer->size_tags; list; list = g_list_next (list))
     {
-      gint tag_size;
-
       tag = list->data;
 
-      g_object_get (tag,
-                    "size", &tag_size,
-                    NULL);
-
-      if (tag_size == size)
+      if (size == gimp_text_tag_get_size (tag))
         return tag;
     }
 
@@ -384,7 +377,7 @@ gimp_text_buffer_get_size_tag (GimpTextBuffer *buffer,
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "size", size,
+                                    GIMP_TEXT_PROP_NAME_SIZE, size,
                                     NULL);
 
   buffer->size_tags = g_list_prepend (buffer->size_tags, tag);
@@ -512,9 +505,7 @@ gimp_text_buffer_get_iter_baseline (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (baseline)
-            g_object_get (tag,
-                          "rise", baseline,
-                          NULL);
+            *baseline = gimp_text_tag_get_baseline (tag);
 
           return tag;
         }
@@ -536,15 +527,9 @@ gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
 
   for (list = buffer->baseline_tags; list; list = g_list_next (list))
     {
-      gint tag_baseline;
-
       tag = list->data;
 
-      g_object_get (tag,
-                    "rise", &tag_baseline,
-                    NULL);
-
-      if (tag_baseline == baseline)
+      if (baseline == gimp_text_tag_get_baseline (tag))
         return tag;
     }
 
@@ -552,7 +537,7 @@ gimp_text_buffer_get_baseline_tag (GimpTextBuffer *buffer,
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "rise", baseline,
+                                    GIMP_TEXT_PROP_NAME_BASELINE, baseline,
                                     NULL);
 
   buffer->baseline_tags = g_list_prepend (buffer->baseline_tags, tag);
@@ -680,9 +665,7 @@ gimp_text_buffer_get_iter_kerning (GimpTextBuffer    *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (kerning)
-            g_object_get (tag,
-                          "rise", kerning, /* FIXME */
-                          NULL);
+            *kerning = gimp_text_tag_get_kerning (tag);
 
           return tag;
         }
@@ -704,15 +687,9 @@ gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
 
   for (list = buffer->kerning_tags; list; list = g_list_next (list))
     {
-      gint tag_kerning;
-
       tag = list->data;
 
-      g_object_get (tag,
-                    "rise", &tag_kerning, /* FIXME */
-                    NULL);
-
-      if (tag_kerning == kerning)
+      if (kerning == gimp_text_tag_get_kerning (tag))
         return tag;
     }
 
@@ -720,7 +697,7 @@ gimp_text_buffer_get_kerning_tag (GimpTextBuffer *buffer,
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "rise", kerning, /* FIXME */
+                                    GIMP_TEXT_PROP_NAME_KERNING, kerning,
                                     NULL);
 
   buffer->kerning_tags = g_list_prepend (buffer->kerning_tags, tag);
@@ -848,9 +825,7 @@ gimp_text_buffer_get_iter_font (GimpTextBuffer     *buffer,
       if (gtk_text_iter_has_tag (iter, tag))
         {
           if (font)
-            g_object_get (tag,
-                          "font", font,
-                          NULL);
+            *font = gimp_text_tag_get_font (tag);
 
           return tag;
         }
@@ -876,9 +851,7 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
 
       tag = list->data;
 
-      g_object_get (tag,
-                    "font", &tag_font,
-                    NULL);
+      tag_font = gimp_text_tag_get_font (tag);
 
       if (! strcmp (font, tag_font))
         {
@@ -935,6 +908,13 @@ gimp_text_buffer_set_font (GimpTextBuffer    *buffer,
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
+/*  Pango markup attribute names  */
+
+#define GIMP_TEXT_ATTR_NAME_SIZE     "size"
+#define GIMP_TEXT_ATTR_NAME_BASELINE "rise"
+#define GIMP_TEXT_ATTR_NAME_KERNING  "letter_spacing"
+#define GIMP_TEXT_ATTR_NAME_FONT     "font"
+
 const gchar *
 gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
                               GtkTextTag      *tag,
@@ -969,68 +949,40 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
   else if (g_list_find (buffer->size_tags, tag))
     {
       if (attribute)
-        *attribute = "size";
+        *attribute = GIMP_TEXT_ATTR_NAME_SIZE;
 
       if (value)
-        {
-          gint size;
-
-          g_object_get (tag,
-                        "size", &size,
-                        NULL);
-
-          *value = g_strdup_printf ("%d", size);
-        }
+        *value = g_strdup_printf ("%d", gimp_text_tag_get_size (tag));
 
       return "span";
     }
   else if (g_list_find (buffer->baseline_tags, tag))
     {
       if (attribute)
-        *attribute = "rise";
+        *attribute = GIMP_TEXT_ATTR_NAME_BASELINE;
 
       if (value)
-        {
-          gint baseline;
-
-          g_object_get (tag,
-                        "rise", &baseline,
-                        NULL);
-
-          *value = g_strdup_printf ("%d", baseline);
-        }
+        *value = g_strdup_printf ("%d", gimp_text_tag_get_baseline (tag));
 
       return "span";
     }
   else if (g_list_find (buffer->kerning_tags, tag))
     {
       if (attribute)
-        *attribute = "letter_spacing";
+        *attribute = GIMP_TEXT_ATTR_NAME_KERNING;
 
       if (value)
-        {
-          gint kerning;
-
-          g_object_get (tag,
-                        "rise", &kerning, /* FIXME */
-                        NULL);
-
-          *value = g_strdup_printf ("%d", kerning);
-        }
+        *value = g_strdup_printf ("%d", gimp_text_tag_get_kerning (tag));
 
       return "span";
     }
   else if (g_list_find (buffer->font_tags, tag))
     {
       if (attribute)
-        *attribute = "font";
+        *attribute = GIMP_TEXT_ATTR_NAME_FONT;
 
       if (value)
-        {
-          g_object_get (tag,
-                        "font", value,
-                        NULL);
-        }
+        *value = gimp_text_tag_get_font (tag);
 
       return "span";
     }
@@ -1067,19 +1019,19 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
            attribute != NULL       &&
            value     != NULL)
     {
-      if (! strcmp (attribute, "size"))
+      if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_SIZE))
         {
           return gimp_text_buffer_get_size_tag (buffer, atoi (value));
         }
-      else if (! strcmp (attribute, "rise"))
+      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_BASELINE))
         {
           return gimp_text_buffer_get_baseline_tag (buffer, atoi (value));
         }
-      else if (! strcmp (attribute, "letter_spacing"))
+      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_KERNING))
         {
           return gimp_text_buffer_get_kerning_tag (buffer, atoi (value));
         }
-      else if (! strcmp (attribute, "font"))
+      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_FONT))
         {
           return gimp_text_buffer_get_font_tag (buffer, value);
         }

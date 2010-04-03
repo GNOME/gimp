@@ -306,6 +306,8 @@ libappwidgets_a_sources = \
 	gimptextproxy.h			\
 	gimptextstyleeditor.c		\
 	gimptextstyleeditor.h		\
+	gimptexttag.c			\
+	gimptexttag.h			\
 	gimpthumbbox.c			\
 	gimpthumbbox.h			\
 	gimptoggleaction.c		\
