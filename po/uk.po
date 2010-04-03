@@ -5393,289 +5393,241 @@ msgid "S_how Grid"
 msgstr "Показувати с_ітку"
 
 #: ../app/actions/view-actions.c:163
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's grid"
-msgstr "Відображати сітку зображення"
+msgstr "Показувати сітку зображення"
 
 #: ../app/actions/view-actions.c:169
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Показувати зразкові точки"
 
 #: ../app/actions/view-actions.c:170
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's color sample points"
-msgstr "Відображати кольорові зразкові точки зображення"
+msgstr "Показувати кольорові зразкові точки зображення"
 
 #: ../app/actions/view-actions.c:176
-#, fuzzy
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "П_рив'язка до напрямних"
 
 #: ../app/actions/view-actions.c:177
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "При роботі курсор активного інструменту прилипає до напрямних"
 
 #: ../app/actions/view-actions.c:183
-#, fuzzy
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Прив'_язка до сітки"
 
 #: ../app/actions/view-actions.c:184
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "При роботі курсор активного інструменту прилипає до сітки"
 
 #: ../app/actions/view-actions.c:190
-#, fuzzy
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Прилипати до _меж полотна"
 
 #: ../app/actions/view-actions.c:191
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "При роботі курсор активного інструменту прилипає до меж полотна"
 
 #: ../app/actions/view-actions.c:197
-#, fuzzy
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Прилипати до _активного контуру"
 
 #: ../app/actions/view-actions.c:198
-#, fuzzy
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "При роботі курсор активного інструмента прилипає до активного контуру"
 
 #: ../app/actions/view-actions.c:204
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Показувати панель _меню"
 
 #: ../app/actions/view-actions.c:205
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Показувати панель меню у вікнах зображень"
 
 #: ../app/actions/view-actions.c:211
-#, fuzzy
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Показувати _лінійки"
 
 #: ../app/actions/view-actions.c:212
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Показувати лінійки у цьому вікні"
 
 #: ../app/actions/view-actions.c:218
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Показувати смуги _прокручування"
 
 #: ../app/actions/view-actions.c:219
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Показувати смуги прокручування у цьому вікні"
 
 #: ../app/actions/view-actions.c:225
-#, fuzzy
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Показувати рядок ст_ану"
 
 #: ../app/actions/view-actions.c:226
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Показувати рядок стану у цьому вікні"
 
 #: ../app/actions/view-actions.c:232
-#, fuzzy
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "На весь _екран"
 
 #: ../app/actions/view-actions.c:233
-#, fuzzy
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Перемикнутися у повноекранний режим або вийти з нього"
 
 #: ../app/actions/view-actions.c:264
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "З_меншити"
 
 #: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom out"
 msgstr "Зменшити"
 
 #: ../app/actions/view-actions.c:270
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "З_більшити"
 
 #: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom in"
 msgstr "Збільшити"
 
 #: ../app/actions/view-actions.c:276
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Зменшити"
 
 #: ../app/actions/view-actions.c:282
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Збільшити"
 
 #: ../app/actions/view-actions.c:301
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:302
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Масштаб 16:1"
 
 #: ../app/actions/view-actions.c:307
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:308
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Масштаб 8:1"
 
 #: ../app/actions/view-actions.c:313
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:314
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Масштаб 4:1"
 
 #: ../app/actions/view-actions.c:319
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:320
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Масштаб 2:1"
 
 #: ../app/actions/view-actions.c:325
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:326
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Масштаб 1:1"
 
 #: ../app/actions/view-actions.c:331
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:332
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Масштаб 1:2"
 
 #: ../app/actions/view-actions.c:337
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:338
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Масштаб 1:4"
 
 #: ../app/actions/view-actions.c:343
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:344
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Масштаб 1:8"
 
 #: ../app/actions/view-actions.c:349
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:350
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Масштаб 1:16"
 
 #: ../app/actions/view-actions.c:355
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "_Інший..."
 
 #: ../app/actions/view-actions.c:356
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Вказати інший масштаб"
 
 #: ../app/actions/view-actions.c:364
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "З т_еми"
@@ -5687,49 +5639,41 @@ msgid "Use the current theme's background color"
 msgstr "Встановити колір тла поточної теми оформлення"
 
 #: ../app/actions/view-actions.c:370
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "_Світлий"
 
 #: ../app/actions/view-actions.c:371
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Використовувати світлий колір тла"
 
 #: ../app/actions/view-actions.c:376
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "_Темний"
 
 #: ../app/actions/view-actions.c:377
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Використовувати темний колір тла"
 
 #: ../app/actions/view-actions.c:382
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr "Вибрати інший _колір..."
 
 #: ../app/actions/view-actions.c:383
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Використовувати довільний колір тла"
 
 #: ../app/actions/view-actions.c:388
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Як у п_араметрах"
 
 #: ../app/actions/view-actions.c:390
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Скинути колір тла до вказаного у параметрах програми"
@@ -5772,39 +5716,36 @@ msgid "Move this window to screen %s"
 msgstr "Перемістити це вікно на екран %s"
 
 #: ../app/actions/windows-actions.c:85
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "_Вікна"
 
 #: ../app/actions/windows-actions.c:87
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "_Нещодавні прикріплені діалоги"
 
 #: ../app/actions/windows-actions.c:89
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "Діалоги з підтримкою _прикріплення"
 
 #: ../app/actions/windows-actions.c:95
-#, fuzzy
 msgctxt "windows-action"
 msgid "Hide Docks"
-msgstr "Закрити панель"
+msgstr "Сховати діалоги з підтримкою прикріплення"
 
 #: ../app/actions/windows-actions.c:103
 msgctxt "windows-action"
 msgid ""
 "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
+"Совати всі діалоги та панелі, залишити видимими лише вікна із зображеннями"
 
 #: ../app/actions/windows-actions.c:109
 msgctxt "windows-action"
 msgid "Single-Window Mode"
-msgstr ""
+msgstr "Одно-віконний режим"
 
 #: ../app/actions/windows-actions.c:110
 msgctxt "windows-action"
@@ -5812,207 +5753,174 @@ msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
 "implemented!"
 msgstr ""
+"Якщо увімкнено, GIMP праює у режимі одного вікна. Поточна реалізація поки що далека від завершення!"
 
 #: ../app/base/base-enums.c:23
-#, fuzzy
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "Згладжування"
 
 #: ../app/base/base-enums.c:24
-#, fuzzy
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Вручну"
 
 #: ../app/base/base-enums.c:56
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Value"
-msgstr "Яскравість"
+msgstr "Значення"
 
 #: ../app/base/base-enums.c:57
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Червоний"
 
 #: ../app/base/base-enums.c:58
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Зелений"
 
 #: ../app/base/base-enums.c:59
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Синій"
 
 #: ../app/base/base-enums.c:60
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Альфа"
 
 #: ../app/base/base-enums.c:61
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../app/base/base-enums.c:113
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "Звичайний"
 
 #: ../app/base/base-enums.c:114
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "Розчинення"
 
 #: ../app/base/base-enums.c:115
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "Позаду"
 
 #: ../app/base/base-enums.c:116
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr "Множення"
 
 #: ../app/base/base-enums.c:117
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "Екран"
 
 #: ../app/base/base-enums.c:118
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Overlay"
 msgstr "Перекривання"
 
 #: ../app/base/base-enums.c:119
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "Різниця"
 
 #: ../app/base/base-enums.c:120
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Addition"
 msgstr "Додавання"
 
 #: ../app/base/base-enums.c:121
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Subtract"
 msgstr "Віднімання"
 
 #: ../app/base/base-enums.c:122
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Darken only"
 msgstr "Лише темне"
 
 #: ../app/base/base-enums.c:123
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
 msgstr "Лише світле"
 
 #: ../app/base/base-enums.c:124
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hue"
 msgstr "Відтінок"
 
 #: ../app/base/base-enums.c:125
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Saturation"
 msgstr "Насиченість"
 
 #: ../app/base/base-enums.c:126
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color"
 msgstr "Колір"
 
 #: ../app/base/base-enums.c:127
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Value"
 msgstr "Яскравість"
 
 #: ../app/base/base-enums.c:128
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "Ділення"
 
 #: ../app/base/base-enums.c:129
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dodge"
 msgstr "Освітлення"
 
 #: ../app/base/base-enums.c:130
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Burn"
 msgstr "Затемнення"
 
 #: ../app/base/base-enums.c:131
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr "Направлене світло"
 
 #: ../app/base/base-enums.c:132
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Soft light"
 msgstr "Розсіяне світло"
 
 #: ../app/base/base-enums.c:133
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
-msgstr "Кристалізація діленням"
+msgstr "Витягування зерна"
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
-msgstr "Кристалізація об'єднанням"
+msgstr "Об'єднання зерна"
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr "Очищення кольору"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "Гумка"
 
 #: ../app/base/base-enums.c:137
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "Замінити"
 
 #: ../app/base/base-enums.c:138
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
 msgstr "Антигумка"
@@ -6035,61 +5943,51 @@ msgid "Failed to resize swap file: %s"
 msgstr "Не вдається змінити розмір файлу підкачки: %s"
 
 #: ../app/config/config-enums.c:24
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon"
 msgstr "Значок інструменту"
 
 #: ../app/config/config-enums.c:25
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
 msgstr "Значок інструменту з перехрестям"
 
 #: ../app/config/config-enums.c:26
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Crosshair only"
 msgstr "Лише перехрестя"
 
 #: ../app/config/config-enums.c:56
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "From theme"
 msgstr "З теми"
 
 #: ../app/config/config-enums.c:57
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Light check color"
 msgstr "Світлий"
 
 #: ../app/config/config-enums.c:58
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Dark check color"
 msgstr "Темний"
 
 #: ../app/config/config-enums.c:59
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Custom color"
 msgstr "Вибраний колір"
 
 #: ../app/config/config-enums.c:88
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "No action"
 msgstr "Нічого не робити"
 
 #: ../app/config/config-enums.c:89
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Pan view"
 msgstr "Переміщуватися на зображені"
 
 #: ../app/config/config-enums.c:90
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
 msgstr "Перемикнутися на інструмент переміщення"
@@ -6097,52 +5995,44 @@ msgstr "Перемикнутися на інструмент переміщен�
 #: ../app/config/config-enums.c:118
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "Низька"
 
 #: ../app/config/config-enums.c:119
-#, fuzzy
 msgctxt "zoom-quality"
 msgid "High"
-msgstr "Висота"
+msgstr "Висока"
 
 #: ../app/config/config-enums.c:147
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
 msgstr "Перегляд довідки GIMP"
 
 #: ../app/config/config-enums.c:148
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr "Зовнішній переглядач"
 
 #: ../app/config/config-enums.c:177
-#, fuzzy
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "Звичайне вікно"
 
 #: ../app/config/config-enums.c:178
-#, fuzzy
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "Допоміжне вікно"
 
 #: ../app/config/config-enums.c:179
-#, fuzzy
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "Завжди згори"
 
 #: ../app/config/config-enums.c:207
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Black & white"
-msgstr "Чорна-білий"
+msgstr "Чорно-білий"
 
 #: ../app/config/config-enums.c:208
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Fancy"
 msgstr "Кольоровий"
@@ -6253,7 +6143,6 @@ msgstr ""
 "число, яке визначає цю межу."
 
 #: ../app/config/gimprc-blurbs.h:113
-#, fuzzy
 msgid ""
 "The window type hint that is set on dock windows and the toolbox window. "
 "This may affect the way your window manager decorates and handles these "
@@ -6267,9 +6156,8 @@ msgid "When enabled, the selected brush will be used for all tools."
 msgstr "Якщо ввімкнено, вибраний пензель використовується в усіх інструментах."
 
 #: ../app/config/gimprc-blurbs.h:148
-#, fuzzy
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "Якщо ввімкнено, вибраний пензель використовується в усіх інструментах."
+msgstr "Якщо ввімкнено, вибрана динаміка використовується в усіх інструментах."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6316,9 +6204,8 @@ msgstr ""
 "перетвореннях."
 
 #: ../app/config/gimprc-blurbs.h:202
-#, fuzzy
 msgid "Specifies the language to use for the user interface."
-msgstr "Визначає піксельний формат курсору миші."
+msgstr "Визначає мову інтерфейсу користувача."
 
 #: ../app/config/gimprc-blurbs.h:205
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -6557,11 +6444,11 @@ msgstr "Показувати контекстну підказку при нав
 
 #: ../app/config/gimprc-blurbs.h:362
 msgid "Use GIMP in a single-window mode."
-msgstr ""
+msgstr "Використовувати GIMP у режимі з одним вікном"
 
 #: ../app/config/gimprc-blurbs.h:365
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr ""
+msgstr "Сховати всі діалоги у панелі, залишити лише вікна зображень"
 
 #: ../app/config/gimprc-blurbs.h:368
 msgid "What to do when the space bar is pressed in the image window."
@@ -6706,28 +6593,24 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "значення ознаки %s не є правильним рядком UTF-8"
 
 #: ../app/core/core-enums.c:54
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "Немає"
 
 #: ../app/core/core-enums.c:55
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
-msgstr "Змішування кольорів за Флойдом-Стейнбергом (звичайне)"
+msgstr "За Флойдом-Стейнбергом (звичайне)"
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
-msgstr "Змішування кольорів за Флойдом-Стейнбергом (зменшене розтікання)"
+msgstr "За Флойдом-Стейнбергом (зменшене розтікання)"
 
 #: ../app/core/core-enums.c:57
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Positioned"
-msgstr "Позиція"
+msgstr "Фіксоване"
 
 #: ../app/core/core-enums.c:87
 #, fuzzy
