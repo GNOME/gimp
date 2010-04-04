@@ -2,17 +2,16 @@
 # Copyright (C) 2004-2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
-# Boštjan Špetič <igzebede@cyberpipe.org>, 2004.
-# Boštjan Špetič <igzebedze@cyberpipe.org>, 2005.
-# Martin Srebotnjak <miles@filmsi.net>, 2007.
+# Boštjan Špetič <igzebede@cyberpipe.org>, 2004 - 2005.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
+# Martin Srebotnjak <miles@filmsi.net>, 2007, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2010-04-02 13:21+0000\n"
-"PO-Revision-Date: 2010-04-02 21:43+0100\n"
+"POT-Creation-Date: 2010-04-03 14:58+0000\n"
+"PO-Revision-Date: 2010-04-03 17:03+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +60,7 @@ msgid ""
 "\n"
 "To avoid data loss, please check the location and permissions of the swap directory defined in your Preferences (currently \"%s\")."
 msgstr ""
-"Preizkusno izmenjalno datoteko ni mogoče odpreti.\n"
+"Preizkusne izmenjalne datoteke ni mogoče odpreti.\n"
 "\n"
 "V izogib izgubi podatkov preverite mesto in pravice izmenjalne mape, kot je določena v Nastavitvah (trenutno je to \"%s\")."
 
@@ -123,15 +122,15 @@ msgstr "Ne uporabi posebnih funkcij pospeševanja CPE"
 
 #: ../app/main.c:190
 msgid "Use an alternate sessionrc file"
-msgstr "Uporabi alternativno datoteko sessionrc"
+msgstr "Uporabi nadomestno datoteko sessionrc"
 
 #: ../app/main.c:195
 msgid "Use an alternate user gimprc file"
-msgstr "Uporabi alternativno sistemsko datoteko gimprc"
+msgstr "Uporabi nadomestno sistemsko datoteko gimprc"
 
 #: ../app/main.c:200
 msgid "Use an alternate system gimprc file"
-msgstr "Uporabi alternativno sistemsko datoteko gimprc"
+msgstr "Uporabi nadomestno sistemsko datoteko gimprc"
 
 #: ../app/main.c:205
 msgid "Batch command to run (can be used multiple times)"
@@ -148,7 +147,7 @@ msgstr "Izpiši sporočila v konzoli namesto v pogovornih oknih"
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:221
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "Način kompatibilnosti PDB (off|on|warn)"
+msgstr "Način združljivosti PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:227
@@ -169,7 +168,7 @@ msgstr "Izvozi datoteko gimprc s privzetimi nastavitvami"
 
 #: ../app/main.c:346
 msgid "[FILE|URI...]"
-msgstr "[FILE|URI...]"
+msgstr "[DATOTEKA|URI...]"
 
 #: ../app/main.c:364
 msgid ""
@@ -651,7 +650,7 @@ msgstr "_Dvigni kanal"
 #: ../app/actions/channels-actions.c:80
 msgctxt "channels-action"
 msgid "Raise this channel one step in the channel stack"
-msgstr "Dvigni ta kanal za eno mesto v skladu kanalov"
+msgstr "Dvigni ta kanal za eno stopnjo v skladu kanalov"
 
 #: ../app/actions/channels-actions.c:85
 msgctxt "channels-action"
@@ -671,7 +670,7 @@ msgstr "_Spusti kanal"
 #: ../app/actions/channels-actions.c:93
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
-msgstr "Spusti ta kanal za eno mesto v skladu kanalov"
+msgstr "Spusti ta kanal za eno stopnjo v skladu kanalov"
 
 #: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
@@ -775,7 +774,7 @@ msgstr "Kopija kanala %s"
 #: ../app/pdb/selection-cmds.c:454
 #: ../app/pdb/selection-cmds.c:521
 msgid "Channel to Selection"
-msgstr "Kanal v izbiro"
+msgstr "Kanal v izbor"
 
 #: ../app/actions/colormap-actions.c:44
 msgctxt "colormap-action"
@@ -2580,10 +2579,9 @@ msgstr "_Levi konec"
 
 #: ../app/actions/gradient-editor-actions.c:257
 #: ../app/actions/gradient-editor-actions.c:287
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
-msgstr "_fiksna"
+msgstr "_Nespremenljiva"
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
@@ -2736,7 +2734,7 @@ msgstr "_Prezrcali izbor"
 
 #: ../app/actions/gradient-editor-actions.c:805
 msgid "_Replicate Selection..."
-msgstr "_Razmnoži izbiro ..."
+msgstr "_Razmnoži izbor ..."
 
 #: ../app/actions/gradient-editor-actions.c:807
 msgid "Split Segments at _Midpoints"
@@ -2784,11 +2782,11 @@ msgstr "Podvoji odsek preliva"
 
 #: ../app/actions/gradient-editor-commands.c:456
 msgid "Replicate Selection"
-msgstr "Razmnoži izbiro"
+msgstr "Razmnoži izbor"
 
 #: ../app/actions/gradient-editor-commands.c:457
 msgid "Replicate Gradient Selection"
-msgstr "Razmnoži izbiro preliva"
+msgstr "Razmnoži izbor preliva"
 
 #: ../app/actions/gradient-editor-commands.c:470
 msgid "Replicate"
@@ -3230,7 +3228,7 @@ msgstr "Sukanje ..."
 #: ../app/actions/image-commands.c:427
 #: ../app/actions/layers-commands.c:683
 msgid "Cannot crop because the current selection is empty."
-msgstr "Obrezava ni možna, ker je trenutna izbira prazna."
+msgstr "Obrezava ni možna, ker je trenutni izbor prazen."
 
 #: ../app/actions/image-commands.c:627
 msgid "Change Print Size"
@@ -3431,7 +3429,7 @@ msgstr "_Dvigni plast"
 #: ../app/actions/layers-actions.c:122
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
-msgstr "Dvigni to plast za eno mesto na skladu plasti"
+msgstr "Dvigni to plast za eno stopnjo na skladu plasti"
 
 #: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
@@ -3451,7 +3449,7 @@ msgstr "_Spusti plast"
 #: ../app/actions/layers-actions.c:134
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr "Spusti to plast za eno mesto na skladu plasti"
+msgstr "Spusti to plast za eno stopnjo na skladu plasti"
 
 #: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
@@ -4330,10 +4328,9 @@ msgid "_Select"
 msgstr "_Izberi"
 
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgctxt "select-action"
 msgid "_All"
-msgstr "_Celoten pogled"
+msgstr "_Vse"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -6082,7 +6079,6 @@ msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr "Koliko procesorjev naj GIMP poskusi uporabljati vzporedno."
 
 #: ../app/config/gimprc-blurbs.h:257
-#, fuzzy
 msgid "When enabled, the X server is queried for the mouse's current position on each motion event, rather than relying on the position hint.  This means painting with large brushes should be more accurate, but it may be slower.  Conversely, on some X servers enabling this option results in faster painting."
 msgstr "Če je vključeno, bo o položaju kazalca pri premiku miške ali kak drug dogodek vedno povprašan strežnik X, namig o položaju bo prezrt. Tako bo risanje z velikimi čopiči natančnejše, a počasnejše. Neverjetno, a na nekaterih strežnikih X to pomeni tudi hitrejše delovanje."
 
@@ -6188,7 +6184,7 @@ msgstr "Kaj naj se zgodi, ko je v oknu slike pritisnjena preslednica."
 
 #: ../app/config/gimprc-blurbs.h:371
 msgid "Sets the swap file location. GIMP uses a tile based memory allocation scheme. The swap file is used to quickly and easily swap tiles out to disk and back in. Be aware that the swap file can easily get very large if GIMP is used with large images. Also, things can get horribly slow if the swap file is created on a folder that is mounted over NFS.  For these reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr "Izberite lokacijo izmenjalne datoteke. GIMP uporablja porazdelitveno shemo določanja pomnilnika. Uporablja izmenjalno datoteko za enostavnejše izbiranje delov z diska in nazaj. Vedite, da lahko izmenjalna datoteka hitro zelo naraste, če delate z velikimi slikami. Delo lahko postane izjemno počasno, če jo ustvarite na omrežnem pogonu prek NFS. Zaradi tega priporočamo, da izmenjalni datoteki nastavite pot shranjevanja \"/tmp\"."
+msgstr "Izberite mesto izmenjalne datoteke. GIMP uporablja porazdelitveno shemo določanja pomnilnika. Uporablja izmenjalno datoteko za enostavnejše izbiranje delov z diska in nazaj. Vedite, da lahko izmenjalna datoteka hitro zelo naraste, če delate z velikimi slikami. Delo lahko postane izjemno počasno, če jo ustvarite na omrežnem pogonu prek NFS. Zaradi tega priporočamo, da izmenjalni datoteki nastavite pot shranjevanja \"/tmp\"."
 
 #: ../app/config/gimprc-blurbs.h:380
 msgid "When enabled, menus can be torn off."
@@ -6788,7 +6784,7 @@ msgstr "Preoblikuj"
 #, fuzzy
 msgctxt "undo-type"
 msgid "Paint"
-msgstr "Barva"
+msgstr "Slikaj/Barvaj/Barva"
 
 #: ../app/core/core-enums.c:904
 #: ../app/core/core-enums.c:948
@@ -7056,13 +7052,12 @@ msgstr "Mera"
 #, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr "_Plavajoče"
+msgstr "Potek/Zvezno"
 
 #: ../app/core/core-enums.c:1335
-#, fuzzy
 msgctxt "dynamics-output-type"
 msgid "Jitter"
-msgstr "Sredica"
+msgstr "Razgibanost"
 
 #: ../app/core/gimp-contexts.c:154
 #: ../app/core/gimptooloptions.c:232
@@ -7464,7 +7459,7 @@ msgstr "Nastavi prekrivnost kanala"
 #: ../app/core/gimpchannel.c:1889
 #: ../app/core/gimpselection.c:532
 msgid "Selection Mask"
-msgstr "Maska izbire"
+msgstr "Maska izbora"
 
 #: ../app/core/gimpcontext.c:622
 msgid "Opacity"
@@ -8308,11 +8303,11 @@ msgstr "Malce potrpljenja ..."
 #: ../app/core/gimpselection.c:154
 #: ../app/tools/gimpeditselectiontool.c:241
 msgid "Move Selection"
-msgstr "Premakni izbiro"
+msgstr "Premakni izbor"
 
 #: ../app/core/gimpselection.c:172
 msgid "Sharpen Selection"
-msgstr "Izostri izbiro"
+msgstr "Izostri izbor"
 
 #: ../app/core/gimpselection.c:173
 msgid "Select None"
@@ -8535,11 +8530,11 @@ msgstr "Histogram"
 
 #: ../app/dialogs/dialogs.c:325
 msgid "Selection"
-msgstr "Izbira"
+msgstr "Izbor"
 
 #: ../app/dialogs/dialogs.c:325
 msgid "Selection Editor"
-msgstr "Urejevalnik izbire"
+msgstr "Urejevalnik izbora"
 
 #: ../app/dialogs/dialogs.c:329
 msgid "Undo"
@@ -9024,7 +9019,7 @@ msgstr "Pokaži vrstico s_tanja"
 
 #: ../app/dialogs/preferences-dialog.c:1284
 msgid "Show s_election"
-msgstr "Pokaži _izbiro"
+msgstr "Pokaži _izbor"
 
 #: ../app/dialogs/preferences-dialog.c:1287
 msgid "Show _layer boundary"
@@ -10009,9 +10004,8 @@ msgstr "Enote"
 
 #. Selection Bounding Box
 #: ../app/display/gimpcursorview.c:250
-#, fuzzy
 msgid "Selection Bounding Box"
-msgstr "Okvir izbire"
+msgstr "Okvir izbora"
 
 #. Width
 #: ../app/display/gimpcursorview.c:286
@@ -10965,7 +10959,7 @@ msgstr "Mera:"
 #: ../app/tools/gimpairbrushtool.c:103
 #, fuzzy
 msgid "Flow:"
-msgstr "Rumena:"
+msgstr "Potek/Zvezno:"
 
 #: ../app/tools/gimpaligntool.c:135
 #: ../app/tools/gimpaligntool.c:768
@@ -11188,7 +11182,7 @@ msgstr "Prizadeto območje (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"
-msgstr "Napolni celotno izbiro"
+msgstr "Napolni celotni izbor"
 
 #: ../app/tools/gimpbucketfilloptions.c:244
 msgid "Fill similar colors"
@@ -12592,7 +12586,7 @@ msgstr "Operjeni robovi"
 
 #: ../app/tools/gimpselectiontool.c:253
 msgid "Click-Drag to replace the current selection"
-msgstr "Kliknite in povlecite za zamenjavo trenutne izbire."
+msgstr "Kliknite in povlecite za zamenjavo trenutnega izbora."
 
 #: ../app/tools/gimpselectiontool.c:261
 msgid "Click-Drag to create a new selection"
@@ -12867,7 +12861,7 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
-"Pot v izbiro\n"
+"Pot v izbor\n"
 "%s  Dodaj\n"
 "%s  Odštej\n"
 "%s  Presekaj"
@@ -13018,7 +13012,7 @@ msgstr "Izbriši sidra"
 
 #: ../app/tools/gimpvectortool.c:1957
 msgid "Path to selection"
-msgstr "Pot v izbiro"
+msgstr "Pot v izbor"
 
 #: ../app/tools/gimpvectortool.c:1984
 msgid "There is no active layer or channel to stroke to"
@@ -13215,7 +13209,7 @@ msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 #: ../app/widgets/gimpactionview.c:337
 #: ../app/widgets/gimpcontrollereditor.c:344
 msgid "Action"
-msgstr "Akcija"
+msgstr "Dejanje"
 
 #: ../app/widgets/gimpactionview.c:366
 msgid "Shortcut"
@@ -14306,9 +14300,8 @@ msgid "Dash _preset:"
 msgstr "Prednastavitev _črtkane črte:"
 
 #: ../app/widgets/gimptagentry.c:45
-#, fuzzy
 msgid "filter"
-msgstr "Filter"
+msgstr "Filtriraj"
 
 #: ../app/widgets/gimptagentry.c:46
 msgid "enter tags"
@@ -14412,7 +14405,7 @@ msgstr "Pr_edogled"
 #: ../app/widgets/gimpthumbbox.c:416
 #: ../app/widgets/gimpthumbbox.c:480
 msgid "No selection"
-msgstr "Ni izbire"
+msgstr "Nič ni izbrano"
 
 #: ../app/widgets/gimpthumbbox.c:608
 #: ../app/widgets/gimpthumbbox.c:629
@@ -14566,11 +14559,11 @@ msgstr "Odpri pogovorno okno za izbor preliva"
 
 #: ../app/widgets/gimpviewablebox.c:305
 msgid "Open the palette selection dialog"
-msgstr "Odpri pogovorno okno za ozbiro palete"
+msgstr "Odpri pogovorno okno za izbor palete"
 
 #: ../app/widgets/gimpviewablebox.c:363
 msgid "Open the font selection dialog"
-msgstr "Odpri pogovorno okno za izbiro pisave"
+msgstr "Odpri pogovorno okno za izbor pisave"
 
 #: ../app/widgets/gimpwidgets-utils.c:649
 #, c-format
@@ -14734,7 +14727,7 @@ msgstr "slika GIMP XCF"
 #: ../app/xcf/xcf.c:270
 #, c-format
 msgid "Opening '%s'"
-msgstr "Odpiranje '%s'"
+msgstr "Odpiranje '%s' ..."
 
 #: ../app/xcf/xcf.c:312
 #, c-format
