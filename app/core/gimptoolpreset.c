@@ -31,12 +31,11 @@
 
 #include "gimp-intl.h"
 
+
 enum
 {
   PROP_0,
-
   PROP_NAME,
-
   PROP_TOOL_OPTIONS
 };
 
@@ -87,7 +86,6 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
                                    "tool-options", NULL,
                                    GIMP_TYPE_TOOL_PRESET,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
-
 }
 
 static void
@@ -101,7 +99,11 @@ gimp_tool_preset_finalize (GObject *object)
 {
   GimpToolPreset *tool_preset = GIMP_TOOL_PRESET (object);
 
-  g_object_unref (tool_preset->tool_options);
+  if (tool_preset->tool_options)
+    {
+      g_object_unref (tool_preset->tool_options);
+      tool_preset->tool_options = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -112,39 +114,33 @@ gimp_tool_preset_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  GimpToolPreset       *tool_preset    = GIMP_TOOL_PRESET (object);
-  GimpToolOptions      *src_output  = NULL;
-  GimpToolOptions      *dest_output = NULL;
+  GimpToolPreset  *tool_preset = GIMP_TOOL_PRESET (object);
 
   switch (property_id)
     {
     case PROP_NAME:
-      gimp_object_set_name (GIMP_OBJECT (tool_preset), g_value_get_string (value));
+      gimp_object_set_name (GIMP_OBJECT (tool_preset),
+                            g_value_get_string (value));
       break;
 
     case PROP_TOOL_OPTIONS:
-      src_output  = g_value_get_object (value);
-      dest_output = tool_preset->tool_options;
+      if (tool_preset->tool_options)
+        g_object_unref (tool_preset->tool_options);
+      tool_preset->tool_options =
+        gimp_config_duplicate (g_value_get_object (value));
       break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-
-  if (src_output && dest_output)
-    {
-      gimp_config_copy (GIMP_CONFIG (src_output),
-                        GIMP_CONFIG (dest_output),
-                        GIMP_CONFIG_PARAM_SERIALIZE);
-    }
 }
 
 static void
 gimp_tool_preset_get_property (GObject    *object,
-                            guint       property_id,
-                            GValue     *value,
-                            GParamSpec *pspec)
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
 {
   GimpToolPreset *tool_preset = GIMP_TOOL_PRESET (object);
 
@@ -201,8 +197,6 @@ gimp_tool_preset_new (const gchar *name)
  //                      "tool-options", options,
                        NULL);
 }
-
-
 
 GimpData *
 gimp_tool_preset_get_standard (void)

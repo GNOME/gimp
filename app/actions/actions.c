@@ -171,7 +171,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "gradients", N_("Gradients"), GIMP_STOCK_GRADIENT,
     gradients_actions_setup,
     gradients_actions_update },
-  { "tool-preset", N_("Tool Presets"), GIMP_STOCK_DYNAMICS,
+  { "tool-preset", N_("Tool Presets"), GIMP_STOCK_TOOL_PRESET,
     tool_preset_actions_setup,
     tool_preset_actions_update },
   { "help", N_("Help"), GTK_STOCK_HELP,

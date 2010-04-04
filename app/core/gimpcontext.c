@@ -45,9 +45,9 @@
 #include "gimppaintinfo.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
-#include "gimptoolpreset.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
+#include "gimptoolpreset.h"
 
 #include "text/gimpfont.h"
 
@@ -207,15 +207,15 @@ static void gimp_context_real_set_palette    (GimpContext      *context,
                                               GimpPalette      *palatte);
 
 /*  tool preset  */
-static void gimp_context_tool_preset_dirty       (GimpToolPreset   *tool_preset,
-                                                  GimpContext      *context);
-static void gimp_context_tool_preset_removed     (GimpContainer    *container,
-                                                  GimpToolPreset   *tool_preset,
-                                                  GimpContext      *context);
-static void gimp_context_tool_preset_list_thaw   (GimpContainer    *container,
-                                                  GimpContext      *context);
-static void gimp_context_real_set_tool_preset    (GimpContext      *context,
-                                                  GimpToolPreset   *tool_preset);
+static void gimp_context_tool_preset_dirty     (GimpToolPreset   *tool_preset,
+                                                GimpContext      *context);
+static void gimp_context_tool_preset_removed   (GimpContainer    *container,
+                                                GimpToolPreset   *tool_preset,
+                                                GimpContext      *context);
+static void gimp_context_tool_preset_list_thaw (GimpContainer    *container,
+                                                GimpContext      *context);
+static void gimp_context_real_set_tool_preset  (GimpContext      *context,
+                                                GimpToolPreset   *tool_preset);
 
 /*  font  */
 static void gimp_context_font_dirty          (GimpFont         *font,
@@ -1664,7 +1664,6 @@ gimp_context_copy_property (GimpContext         *src,
       dest_name_loc   = &dest->palette_name;
       break;
 
-
     case GIMP_CONTEXT_PROP_TOOL_PRESET:
       gimp_context_real_set_tool_preset (dest, src->tool_preset);
       object          = src->tool_preset;
@@ -3050,6 +3049,7 @@ gimp_context_real_set_palette (GimpContext *context,
   gimp_context_palette_changed (context);
 }
 
+
 /********************************************************************************/
 /*  tool preset *****************************************************************/
 
@@ -3084,16 +3084,16 @@ gimp_context_tool_preset_changed (GimpContext *context)
 
 static void
 gimp_context_tool_preset_dirty (GimpToolPreset *tool_preset,
-                             GimpContext  *context)
+                                GimpContext    *context)
 {
   g_free (context->tool_preset_name);
   context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
 }
 
 static void
-gimp_context_tool_preset_removed (GimpContainer *container,
-                               GimpToolPreset  *tool_preset,
-                               GimpContext   *context)
+gimp_context_tool_preset_removed (GimpContainer  *container,
+                                  GimpToolPreset *tool_preset,
+                                  GimpContext    *context)
 {
   if (tool_preset == context->tool_preset)
     {
@@ -3111,7 +3111,7 @@ gimp_context_tool_preset_removed (GimpContainer *container,
 
 static void
 gimp_context_tool_preset_list_thaw (GimpContainer *container,
-                                 GimpContext   *context)
+                                    GimpContext   *context)
 {
   GimpToolPreset *tool_preset;
 
@@ -3126,8 +3126,8 @@ gimp_context_tool_preset_list_thaw (GimpContainer *container,
 }
 
 static void
-gimp_context_real_set_tool_preset (GimpContext  *context,
-                                GimpToolPreset *tool_preset)
+gimp_context_real_set_tool_preset (GimpContext    *context,
+                                   GimpToolPreset *tool_preset)
 {
   if (! standard_tool_preset)
     {

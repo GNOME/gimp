@@ -34,8 +34,9 @@ typedef struct _GimpToolPresetClass GimpToolPresetClass;
 
 struct _GimpToolPreset
 {
-  GimpData            parent_instance;
-  GimpToolOptions     *tool_options;
+  GimpData         parent_instance;
+
+  GimpToolOptions *tool_options;
 };
 
 struct _GimpToolPresetClass
@@ -44,10 +45,11 @@ struct _GimpToolPresetClass
 };
 
 
-GType                gimp_tool_preset_get_type     (void) G_GNUC_CONST;
+GType      gimp_tool_preset_get_type     (void) G_GNUC_CONST;
 
-GimpData           * gimp_tool_preset_new          (const gchar     *name);
+GimpData * gimp_tool_preset_new          (const gchar     *name);
 
-GimpData           * gimp_tool_preset_get_standard (void);
+GimpData * gimp_tool_preset_get_standard (void);
+
 
 #endif  /*  __GIMP_TOOL_PRESET_H__  */

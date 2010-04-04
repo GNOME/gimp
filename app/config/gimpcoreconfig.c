@@ -37,14 +37,14 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH     "Round Fuzzy"
-#define DEFAULT_DYNAMICS  "Basic Dynamics"
-#define DEFAULT_PATTERN   "Pine"
-#define DEFAULT_PALETTE   "Default"
-#define DEFAULT_GRADIENT  "FG to BG (RGB)"
-#define DEFAULT_TOOL_PRESET  "Current Options"
-#define DEFAULT_FONT      "Sans"
-#define DEFAULT_COMMENT   "Created with GIMP"
+#define DEFAULT_BRUSH       "Round Fuzzy"
+#define DEFAULT_DYNAMICS    "Basic Dynamics"
+#define DEFAULT_PATTERN     "Pine"
+#define DEFAULT_PALETTE     "Default"
+#define DEFAULT_GRADIENT    "FG to BG (RGB)"
+#define DEFAULT_TOOL_PRESET "Current Options"
+#define DEFAULT_FONT        "Sans"
+#define DEFAULT_COMMENT     "Created with GIMP"
 
 
 enum
@@ -149,6 +149,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_CUBIC,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path", PLUG_IN_PATH_BLURB,
@@ -156,6 +157,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_plug_in_path ("modules");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path", MODULE_PATH_BLURB,
@@ -163,6 +165,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_plug_in_path ("interpreters");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_INTERPRETER_PATH,
                                  "interpreter-path", INTERPRETER_PATH_BLURB,
@@ -170,6 +173,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_plug_in_path ("environ");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
                                  "environ-path", ENVIRON_PATH_BLURB,
@@ -177,6 +181,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_data_path ("brushes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
                                  "brush-path", BRUSH_PATH_BLURB,
@@ -184,6 +189,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_writable_path ("brushes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH_WRITABLE,
                                  "brush-path-writable",
@@ -192,6 +198,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_data_path ("dynamics");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DYNAMICS_PATH,
                                  "dynamics-path", DYNAMICS_PATH_BLURB,
@@ -199,6 +206,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_writable_path ("dynamics");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_DYNAMICS_PATH_WRITABLE,
                                  "dynamics-path-writable",
@@ -207,6 +215,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_data_path ("patterns");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path", PATTERN_PATH_BLURB,
@@ -214,6 +223,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_writable_path ("patterns");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH_WRITABLE,
                                  "pattern-path-writable",
@@ -222,6 +232,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_data_path ("palettes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
                                  "palette-path", PALETTE_PATH_BLURB,
@@ -229,6 +240,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_writable_path ("palettes");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH_WRITABLE,
                                  "palette-path-writable",
@@ -237,6 +249,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_data_path ("gradients");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path", GRADIENT_PATH_BLURB,
@@ -244,6 +257,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_writable_path ("gradients");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH_WRITABLE,
                                  "gradient-path-writable",
@@ -251,13 +265,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
-  g_free (path);
-  path = gimp_config_build_data_path ("fonts");
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
-                                 "font-path", FONT_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR_LIST, path,
-                                 GIMP_PARAM_STATIC_STRINGS |
-                                 GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   path = gimp_config_build_data_path ("tool-presets");
@@ -267,6 +274,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+
   path = gimp_config_build_writable_path ("tool-presets");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TOOL_PRESET_PATH_WRITABLE,
                                  "tool-preset-path-writable",
@@ -274,6 +282,14 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+
+  path = gimp_config_build_data_path ("fonts");
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
+                                 "font-path", FONT_PATH_BLURB,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_CONFIRM);
   g_free (path);
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
@@ -466,18 +482,18 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->pattern_path_writable);
   g_free (core_config->palette_path);
   g_free (core_config->palette_path_writable);
-  g_free (core_config->tool_preset_path);
-  g_free (core_config->tool_preset_path_writable);
   g_free (core_config->gradient_path);
   g_free (core_config->gradient_path_writable);
+  g_free (core_config->tool_preset_path);
+  g_free (core_config->tool_preset_path_writable);
   g_free (core_config->font_path);
   g_free (core_config->font_path_writable);
   g_free (core_config->default_brush);
   g_free (core_config->default_dynamics);
   g_free (core_config->default_pattern);
   g_free (core_config->default_palette);
-  g_free (core_config->default_tool_preset);
   g_free (core_config->default_gradient);
+  g_free (core_config->default_tool_preset);
   g_free (core_config->default_font);
   g_free (core_config->plug_in_rc_path);
 
@@ -542,14 +558,6 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->dynamics_path_writable);
       core_config->dynamics_path_writable = g_value_dup_string (value);
       break;
-    case PROP_TOOL_PRESET_PATH:
-      g_free (core_config->tool_preset_path);
-      core_config->tool_preset_path = g_value_dup_string (value);
-      break;
-    case PROP_TOOL_PRESET_PATH_WRITABLE:
-      g_free (core_config->tool_preset_path_writable);
-      core_config->tool_preset_path_writable = g_value_dup_string (value);
-      break;
     case PROP_PATTERN_PATH:
       g_free (core_config->pattern_path);
       core_config->pattern_path = g_value_dup_string (value);
@@ -573,6 +581,14 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_GRADIENT_PATH_WRITABLE:
       g_free (core_config->gradient_path_writable);
       core_config->gradient_path_writable = g_value_dup_string (value);
+      break;
+    case PROP_TOOL_PRESET_PATH:
+      g_free (core_config->tool_preset_path);
+      core_config->tool_preset_path = g_value_dup_string (value);
+      break;
+    case PROP_TOOL_PRESET_PATH_WRITABLE:
+      g_free (core_config->tool_preset_path_writable);
+      core_config->tool_preset_path_writable = g_value_dup_string (value);
       break;
     case PROP_FONT_PATH:
       g_free (core_config->font_path);
@@ -733,12 +749,6 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_DYNAMICS_PATH_WRITABLE:
       g_value_set_string (value, core_config->dynamics_path_writable);
       break;
-    case PROP_TOOL_PRESET_PATH:
-      g_value_set_string (value, core_config->tool_preset_path);
-      break;
-    case PROP_TOOL_PRESET_PATH_WRITABLE:
-      g_value_set_string (value, core_config->tool_preset_path_writable);
-      break;
     case PROP_PATTERN_PATH:
       g_value_set_string (value, core_config->pattern_path);
       break;
@@ -756,6 +766,12 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_GRADIENT_PATH_WRITABLE:
       g_value_set_string (value, core_config->gradient_path_writable);
+      break;
+    case PROP_TOOL_PRESET_PATH:
+      g_value_set_string (value, core_config->tool_preset_path);
+      break;
+    case PROP_TOOL_PRESET_PATH_WRITABLE:
+      g_value_set_string (value, core_config->tool_preset_path_writable);
       break;
     case PROP_FONT_PATH:
       g_value_set_string (value, core_config->font_path);

@@ -167,19 +167,19 @@ GimpContainer *global_recent_docks = NULL;
     TRUE                          /* dockable         */}
 
 #define LIST(id, new_func, name, blurb, stock_id, help_id, view_size) \
-  { "gimp-"#id"-list"             /* identifier       */, \
-    name                          /* name             */, \
-    blurb                         /* blurb            */, \
-    stock_id                      /* stock_id         */, \
-    help_id                       /* help_id          */, \
+  { "gimp-"#id"-list"                   /* identifier       */, \
+    name                                /* name             */, \
+    blurb                               /* blurb            */, \
+    stock_id                            /* stock_id         */, \
+    help_id                             /* help_id          */, \
     dialogs_##new_func##_list_view_new  /* new_func         */, \
-    view_size                     /* view_size        */, \
-    FALSE                         /* singleton        */, \
-    FALSE                         /* session_managed  */, \
-    FALSE                         /* remember_size    */, \
-    TRUE                          /* remember_if_open */, \
-    TRUE                          /* hideable         */, \
-    TRUE                          /* dockable         */}
+    view_size                           /* view_size        */, \
+    FALSE                               /* singleton        */, \
+    FALSE                               /* session_managed  */, \
+    FALSE                               /* remember_size    */, \
+    TRUE                                /* remember_if_open */, \
+    TRUE                                /* hideable         */, \
+    TRUE                                /* dockable         */}
 
 
 static const GimpDialogFactoryEntry entries[] =

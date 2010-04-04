@@ -249,7 +249,6 @@ gimp_init (Gimp *gimp)
   gimp->pattern_factory     = NULL;
   gimp->gradient_factory    = NULL;
   gimp->palette_factory     = NULL;
-
   gimp->tool_preset_factory = NULL;
 
   gimp->tag_cache           = NULL;
@@ -584,7 +583,7 @@ gimp_real_initialize (Gimp               *gimp,
 
   static const GimpDataFactoryLoaderEntry tool_preset_loader_entries[] =
   {
-    { gimp_tool_preset_load,        GIMP_TOOL_PRESET_FILE_EXTENSION,        TRUE  }
+    { gimp_tool_preset_load,     GIMP_TOOL_PRESET_FILE_EXTENSION,     TRUE  }
   };
 
   GimpData *clipboard_brush;
@@ -733,7 +732,6 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->pattern_factory);
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
-
   gimp_data_factory_data_save (gimp->tool_preset_factory);
 
   gimp_fonts_reset (gimp);
