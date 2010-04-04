@@ -2,15 +2,15 @@
 # Copyright (C) 2007 THE GIMP'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the GIMP package.
 #
-# Martin Srebotnjak <miles@filmsi.net>, 2007.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
+# Martin Srebotnjak <miles@filmsi.net>, 2007, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standard plug-ins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2010-04-02 13:21+0000\n"
-"PO-Revision-Date: 2010-04-02 21:44+0100\n"
+"PO-Revision-Date: 2010-04-03 16:46+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -3510,7 +3510,7 @@ msgstr "ena sličica na plast (zamenjaj)"
 
 #: ../plug-ins/common/file-gif-save.c:1203
 msgid "You can only export as animation when the image has more than one layer. The image you are trying to export only has one layer."
-msgstr ""
+msgstr "Kot animacijo lahko sliko izvozite le, če ima več kot eno plast. Slika, ki jo skušate izvoziti, ima le eno plast."
 
 #: ../plug-ins/common/file-gif-save.c:2347
 msgid "Error writing output file."
@@ -3722,37 +3722,37 @@ msgstr "Slika '%s' je v RGB, vendar ji manjkajo nekatere komponente."
 #: ../plug-ins/common/file-jp2-load.c:284
 #, c-format
 msgid "The image '%s' is in the CIEXYZ color space, but there is no code in place to convert it to RGB."
-msgstr ""
+msgstr "Slika '%s' je v barvnem prostoru CIEXYZ, vendar koda, ki bi jo pretvorila v RGB, še ne obstaja."
 
 #: ../plug-ins/common/file-jp2-load.c:291
 #, c-format
 msgid "The image '%s' is in the CIELAB color space, but there is no code in place to convert it to RGB."
-msgstr ""
+msgstr "Slika '%s' je v barvnem prostoru CIELAB, vendar koda, ki bi jo pretvorila v RGB, še ne obstaja."
 
 #: ../plug-ins/common/file-jp2-load.c:298
 #, c-format
 msgid "The image '%s' is in the YCbCr color space, but there is no code in place to convert it to RGB."
-msgstr ""
+msgstr "Slika '%s' je v barvnem prostoru YCbCr, vendar koda, ki bi jo pretvorila v RGB, še ne obstaja."
 
 #: ../plug-ins/common/file-jp2-load.c:306
 #, c-format
 msgid "The image '%s' is in an unknown color space."
-msgstr "Slika '%s' ima neznan barvni profil."
+msgstr "Slika '%s' je v neznanem barvnem prostoru."
 
 #: ../plug-ins/common/file-jp2-load.c:320
 #, c-format
 msgid "Image component %d of image '%s' did not have the same size as the image which is currently not supported."
-msgstr ""
+msgstr "Barvna komponenta %d slike '%s' nima enake velikosti kot slika, kar trenutno ni podprto."
 
 #: ../plug-ins/common/file-jp2-load.c:331
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
-msgstr ""
+msgstr "Barvna komponenta %d slike '%s' nima hkrati parametrov hstep in vstep."
 
 #: ../plug-ins/common/file-jp2-load.c:340
 #, c-format
 msgid "Image component %d of image '%s' is signed which is currently not supported by GIMP."
-msgstr ""
+msgstr "Barvna komponenta %d slike '%s' je podpisana, kar trenutno ni podprto."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -4929,6 +4929,10 @@ msgid ""
 "Nominal size has no relation with the actual size (width or height).\n"
 "It is only used to determine which frame depends on which animation sequence, and which sequence is used based on the value of \"gtk-cursor-theme-size\"."
 msgstr ""
+"Izberite nominalno velikost sličic.\n"
+"Če nimate načrtov, da bi ustvarili kazalec več velikosti ali pa o tem sploh nič ne veste, pustite \"32px\".\n"
+"Nominalna velikost nima nobene povezave z dejansko velikostjo (višino ali širino).\n"
+"Namenjena je le ugotavljanju, katera sličica je odvisna od katerega animiranega zaporedja ter katero zaporedje je uporabljeno glede na vrednost \"gtk-cursor-theme-size\"."
 
 #: ../plug-ins/common/file-xmc.c:1172
 msgid "_Use this value only for a frame which size is not specified."
@@ -5022,6 +5026,8 @@ msgid ""
 "Cannot save the cursor because the hotspot is not on '%s'.\n"
 "Try to change the hotspot position, layer geometry or save without auto-crop."
 msgstr ""
+"Kazalca ni mogoče shraniti, ker vroča točka ni na '%s'.\n"
+"Poskusite spremeniti položaj vroče točke, geometrijo plasti ali pa shranite s samo-obrezavo."
 
 #: ../plug-ins/common/file-xmc.c:1721
 #, c-format
@@ -5400,7 +5406,7 @@ msgstr "Napredne možnosti paketa filtrov"
 #. ****************** MISC OPTIONS **************************
 #: ../plug-ins/common/filter-pack.c:1417
 msgid "Preview Size"
-msgstr "Velikost predogleda"
+msgstr "Predogledna velikost"
 
 #: ../plug-ins/common/fractal-trace.c:115
 msgid "Transform image with the Mandelbrot Fractal"
@@ -7686,7 +7692,7 @@ msgstr "_Največ (%):"
 
 #: ../plug-ins/common/tile-paper.c:369
 msgid "_Wrap around"
-msgstr "_Ovij okoli"
+msgstr "_Ovij okrog"
 
 #: ../plug-ins/common/tile-paper.c:379
 msgid "Background Type"
@@ -10288,7 +10294,7 @@ msgstr "GIMPresionist "
 
 #: ../plug-ins/gimpressionist/orientation.c:91
 msgid "Or_ientation"
-msgstr "_Usmeritev"
+msgstr "_Postavitev"
 
 #: ../plug-ins/gimpressionist/orientation.c:105
 msgid "Directions:"
@@ -12872,354 +12878,3 @@ msgstr "_Zajem zaslonske slike ..."
 msgid "No data captured"
 msgstr "Zajetih ni bilo nič podatkov"
 
-#~ msgid "Save as Text"
-#~ msgstr "Shrani kot besedilo"
-
-#~ msgid "Save as C-Source"
-#~ msgstr "Shrani kot izvorno kodo C"
-
-#~ msgid "Save as Brush"
-#~ msgstr "Shrani kot čopič"
-
-#~ msgid "Save as GIF"
-#~ msgstr "Shrani kot GIF"
-
-#~ msgid "GIF Options"
-#~ msgstr "Možnosti GIF"
-
-#~ msgid "I_nterlace"
-#~ msgstr "Preplete_no"
-
-#~ msgid "_GIF comment:"
-#~ msgstr "Komentar _GIF:"
-
-#~ msgid "Animated GIF Options"
-#~ msgstr "Možnosti animiranega GIFa"
-
-#~ msgid "_Loop forever"
-#~ msgstr "_Zankaj za vedno"
-
-#~ msgid "_Delay between frames where unspecified:"
-#~ msgstr "_Premor med sličicami, kjer ni določen:"
-
-#~ msgid "_Frame disposal where unspecified:"
-#~ msgstr "_Vrstni red sličic, če te niso določene:"
-
-#~ msgid "_Use delay entered above for all frames"
-#~ msgstr "_Uporabi zgoraj vneseni časovni premor za vse sličice"
-
-#~ msgid "U_se disposal entered above for all frames"
-#~ msgstr "U_porabi zgoraj vneseno opustitev za vse sličice"
-
-#~ msgid "Layer %s doesn't have an alpha channel, skipped"
-#~ msgstr "Plast %s nima kanala alfa, zato bo prezrta"
-
-#~ msgid "Save as HTML table"
-#~ msgstr "Shrani kot tabelo HTML"
-
-#~ msgid "Save as MNG"
-#~ msgstr "Shrani kot MNG"
-
-#~ msgid "Save as Pattern"
-#~ msgstr "Shrani kot vzorec"
-
-#~ msgid "Save as PNG"
-#~ msgstr "Shrani kot PNG"
-
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Prepletanje (Adam7)"
-
-#~ msgid "Save _background color"
-#~ msgstr "Shrani barvo _ozadja"
-
-#~ msgid "Save _gamma"
-#~ msgstr "Shrani _gamo"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "Shrani odmik plas_ti"
-
-#~ msgid "Save _resolution"
-#~ msgstr "Shrani _ločljivost"
-
-#~ msgid "Save creation _time"
-#~ msgstr "Shrani _čas nastanka"
-
-#~ msgid "Save comme_nt"
-#~ msgstr "Shrani _komentar"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Shrani barvne _vrednosti prosojnih slikovnih točk"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "Raven _stiskanja:"
-
-#~ msgid "S_ave Defaults"
-#~ msgstr "S_hrani privzete vrednosti"
-
-#~ msgid "Save as PNM"
-#~ msgstr "Shrani kot PNM"
-
-#~ msgid "Save as PSP"
-#~ msgstr "Shrani kot PSP"
-
-#~ msgid "Save as TGA"
-#~ msgstr "Shrani kot TGA"
-
-#~ msgid "Save as TIFF"
-#~ msgstr "Shrani kot TIFF"
-
-#~ msgid "Save as XBM"
-#~ msgstr "Shrani kot XBM"
-
-#~ msgid "Save as XPM"
-#~ msgstr "Shrani kot XPM"
-
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "Lep pozdrav s strani ekipe GIMPa!"
-
-#~ msgid "Gee Zoom"
-#~ msgstr "Gee-povečava"
-
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "Hvala, ker ste izbrali GIMP"
-
-#~ msgid "An obsolete creation by %s"
-#~ msgstr "Zastarela stvaritev avtorja %s"
-
-#~ msgid "Gee Slime"
-#~ msgstr "Gee-vrtinčenje"
-
-#~ msgid "A less obsolete creation by %s"
-#~ msgstr "Manj zastarela stvaritev avtorja %s"
-
-#~ msgid ""
-#~ "Web browser not specified.\n"
-#~ "Please specify a web browser using the Preferences dialog."
-#~ msgstr ""
-#~ "Spletni brskalnik ni določen.\n"
-#~ "Prosimo, navedite spletni brskalnik z uporabo pogovornega okna Nastavitve."
-
-#~ msgid ""
-#~ "Could not parse the web browser command specified in the Preferences "
-#~ "dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "V pogovornem oknu Možnosti podanega ukaza za spletni brskalnik ni mogoče "
-#~ "razčleniti:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Could not execute the web browser specified in the Preferences dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "V pogovornem oknu Možnosti podanega ukaza za spletni brskalnik ni mogoče "
-#~ "izvesti:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Save as BMP"
-#~ msgstr "Shrani kot BMP"
-
-#~ msgid "GFLI 1.3 - Save framestack"
-#~ msgstr "GFLI 1.3 - Shrani skladovnico okvirov"
-
-#~ msgid "File size: %02.01f kB"
-#~ msgstr "Velikost datoteke: %02.01f kB"
-
-#~ msgid "Save as JPEG"
-#~ msgstr "Shrani kot JPEG"
-
-#~ msgid "Save as SGI"
-#~ msgstr "Shrani kot SGI"
-
-#~ msgid "Co_nnect"
-#~ msgstr "Pove_ži"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "Poveži se _anonimno"
-
-#~ msgid "Connect as u_ser:"
-#~ msgstr "Poveži se _kot uporabnik:"
-
-#~ msgid "_Username:"
-#~ msgstr "_Uporabniško ime:"
-
-#~ msgid "_Domain:"
-#~ msgstr "_Domena:"
-
-#~ msgid "_Password:"
-#~ msgstr "_Geslo:"
-
-#~ msgid "_Forget password immediately"
-#~ msgstr "_Takoj pozabi geslo"
-
-#~ msgid "_Remember password until you logout"
-#~ msgstr "_Zapomni si geslo do odjave"
-
-#~ msgid "_Remember forever"
-#~ msgstr "_Zapomni si za vedno"
-
-#~ msgid "Uploading %s of image data"
-#~ msgstr "Prenašanje %s podatkov slike"
-
-#~ msgid "Failed to read %s from '%s': %s"
-#~ msgstr "Ni mogoče prebrati %s iz '%s': %s"
-
-#~ msgid "Failed to write %s to '%s': %s"
-#~ msgstr "Napaka pri pisanju %s v '%s': %s"
-
-#~ msgid "Save as XJT"
-#~ msgstr "Shrani kot XJT"
-
-#~ msgid "Smoothness of Aliasing"
-#~ msgstr "Gladkost glajenja robov"
-
-#~ msgid "Preview as You Drag"
-#~ msgstr "Predogled med vleko"
-
-#~ msgid "Email the image"
-#~ msgstr "Pošlji sliko"
-
-#~ msgid "_Mail Image..."
-#~ msgstr "_Spajanje dokumentov ..."
-
-#~ msgid "Encapsulation:"
-#~ msgstr "Ovijanje:"
-
-#~ msgid "_MIME"
-#~ msgstr "_MIME"
-
-#~ msgid "_Uuencode"
-#~ msgstr "_Uuencode"
-
-#~ msgid "_Recipient:"
-#~ msgstr "_Prejemnik:"
-
-#~ msgid "_Sender:"
-#~ msgstr "_Pošiljatelj:"
-
-#~ msgid "Comm_ent:"
-#~ msgstr "_Komentar:"
-
-#~ msgid "First Source Color"
-#~ msgstr "Prva izvorna barva"
-
-#~ msgid "Second Source Color"
-#~ msgstr "Druga izvorna barva"
-
-#~ msgid "First Destination Color"
-#~ msgstr "Prva ciljna barva"
-
-#~ msgid "Second Destination Color"
-#~ msgstr "Druga ciljna barva"
-
-#~ msgid "Map colors sending foreground to black, background to white"
-#~ msgstr "Preslika barve, tako da ospredje postane črno, ozadje pa belo"
-
-#~ msgid "Adjust _Foreground & Background"
-#~ msgstr "Prilagodi _barvi ospredja in ozadja"
-
-#~ msgid "Map color range specified by two colors to another range"
-#~ msgstr "Preslika obseg barv, ki ga določata dve barvi, v drug obseg"
-
-#~ msgid "Color Range _Mapping..."
-#~ msgstr "Preslikava _barvnega obsega ..."
-
-#~ msgid "Cannot operate on gray or indexed color images."
-#~ msgstr "Ne deluje na sivinskih ali indeksiranih barvnih slikah."
-
-#~ msgid "Adjusting foreground and background colors"
-#~ msgstr "Barve ospredja / ozadja"
-
-#~ msgid "Mapping colors"
-#~ msgstr "Preslikovanje barv ..."
-
-#~ msgid "Map Color Range"
-#~ msgstr "Preslikaj barvni obseg"
-
-#~ msgid "Source Color Range"
-#~ msgstr "Izvorni barvni obseg"
-
-#~ msgid "Destination Color Range"
-#~ msgstr "Ciljni barvni obseg"
-
-#~ msgid "Unable to add additional point.\n"
-#~ msgstr "Ni mogoče dodati točke.\n"
-
-#~ msgid "Invalid UTF-8 string in PSD file"
-#~ msgstr "Neveljavni niz UTF-8 v datoteki PSD"
-
-#~ msgid "Cannot handle bitmap PSD files"
-#~ msgstr "Ne podpira datotek PSD z bitnimi slikami"
-
-#~ msgid "Cannot handle PSD files in CMYK color"
-#~ msgstr "Ne podpira datotek PSD z barvami CMYK"
-
-#~ msgid "Cannot handle PSD files in Multichannel color"
-#~ msgstr "Ne podpira datotek PSD v načinu večkanalnih barv"
-
-#~ msgid "Cannot handle PSD files in Duotone color"
-#~ msgstr "Datotek PSD ni mogoče obdelovati v barvah Duotone"
-
-#~ msgid "Cannot handle PSD files in Lab color"
-#~ msgstr "Datotek PSD ni mogoče obdelovati v barvah Lab"
-
-#~ msgid "Cannot handle the color mode %d of the PSD file"
-#~ msgstr "Ne podpira barvnega načina %d datoteke PSD"
-
-#~ msgid "Cannot handle PSD file with more than %d channels"
-#~ msgstr "Datoteke PSD z več kot %d kanali ni mogoče urejati"
-
-#~ msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-#~ msgstr "Datoteke PSD v barvah CMYK z več kot 5 kanali niso podprte"
-
-#~ msgid "Cannot handle image mode %d (%s)"
-#~ msgstr "Slikovni način %d (%s) ni podprt"
-
-#~ msgid "Cannot handle %d bits per channel PSD files"
-#~ msgstr "V datotekah PSD niso podprti %d biti na kanal"
-
-#~ msgid "This is not an Adobe Photoshop PSD file"
-#~ msgstr "To ni datoteka Adobe Photoshop PSD"
-
-#~ msgid "The PSD file has bad version number '%d', not 1"
-#~ msgstr "Datoteka PSD ima nepravilno številko različice '%d' namesto 1"
-
-#~ msgid "Or_igin at bottom left"
-#~ msgstr "_Vir v spodnjem levem kotu"
-
-#~ msgid "checkbutton|Snap to grid"
-#~ msgstr "Pripni na mrežo"
-
-#~ msgid "The GIMP help files are not found."
-#~ msgstr "Datotek pomoči za GIMP ni mogoče najti."
-
-#~ msgid "There is a problem with the GIMP help files."
-#~ msgstr "Z datotekami pomoči za GIMP je nekaj narobe."
-
-#~ msgid "Please check your installation."
-#~ msgstr "Prosimo, preverite namestitev."
-
-#~ msgid "Drag and drop this icon to a web browser"
-#~ msgstr "Povlecite in spustite to ikono v spletni brskalnik"
-
-#~ msgid "Document not found"
-#~ msgstr "Dokumenta ni mogoče najti"
-
-#~ msgid "The requested URL could not be loaded:"
-#~ msgstr "Zahtevanega URL ni mogoče naložiti:"
-
-#~ msgid "_Smoothing:"
-#~ msgstr "_Glajenje:"
-
-#~ msgid "Printable area:"
-#~ msgstr "Natisljivo področje:"
-
-#~ msgid "Downloading %s of image data..."
-#~ msgstr "Prenašanje %s podatkov slike s strežnika ..."
-
-#~ msgid "Could not open output file for writing"
-#~ msgstr "Izhodne datoteke ni mogoče odpreti za pisanje"
