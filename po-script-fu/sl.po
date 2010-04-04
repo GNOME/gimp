@@ -1,15 +1,15 @@
 # Slovenian translation of GIMP Script-Fu.
 # Copyright (C) 2007 Free Software Foundation, Inc.
 #
-# Martin Srebotnjak <miles@filmsi.net>, 2007.
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
+# Martin Srebotnjak <miles@filmsi.net>, 2007, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
 "POT-Creation-Date: 2010-04-02 13:21+0000\n"
-"PO-Revision-Date: 2010-04-02 19:53+0100\n"
+"PO-Revision-Date: 2010-04-03 16:13+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -1234,11 +1234,11 @@ msgstr "Granularnost (1 je nizka)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth horizontally"
-msgstr "Pogladi vodoravno"
+msgstr "Zgladi vodoravno"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth vertically"
-msgstr "Pogladi navpično"
+msgstr "Zgladi navpično"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
@@ -2372,7 +2372,7 @@ msgstr "_Sled delcev ..."
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
-msgstr "Pogladi robove"
+msgstr "Zgladi robove"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Create a logo by rendering the specified text along the perimeter of a circle"
