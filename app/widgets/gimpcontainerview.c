@@ -819,27 +819,19 @@ gimp_container_view_real_get_selected (GimpContainerView    *view,
   GimpObject               *object;
 
   if (list)
-    {
-      *list = NULL;
-    }
+    *list = NULL;
 
-  if (!private->container
-      || !private->context)
-    {
-      return 0;
-    }
+  if (! private->container || ! private->context)
+    return 0;
 
   children_type = gimp_container_get_children_type (private->container);
   object = gimp_context_get_by_type (private->context,
                                      children_type);
 
-  if (list
-      && object)
-    {
-      *list = g_list_append (*list, object);
-    }
+  if (list && object)
+    *list = g_list_append (*list, object);
 
-  return object != NULL;
+  return object ? 1 : 0;
 }
 
 void

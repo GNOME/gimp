@@ -1408,13 +1408,13 @@ static gint
 gimp_container_tree_view_get_selected (GimpContainerView    *view,
                                        GList               **items)
 {
-  GimpContainerTreeView    *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GtkTreeSelection         *selection;
-  gint                      selected_count;
-  GList                    *selected_rows;
-  GList                    *current_row;
-  GtkTreeIter               iter;
-  GimpViewRenderer         *renderer;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkTreeSelection      *selection;
+  gint                   selected_count;
+  GList                 *selected_rows;
+  GList                 *current_row;
+  GtkTreeIter            iter;
+  GimpViewRenderer      *renderer;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view->view));
   selected_count = gtk_tree_selection_count_selected_rows (selection);
@@ -1428,7 +1428,7 @@ gimp_container_tree_view_get_selected (GimpContainerView    *view,
   selected_rows = gtk_tree_selection_get_selected_rows (selection, NULL);
 
   *items = NULL;
-  for (current_row = g_list_first (selected_rows);
+  for (current_row = selected_rows;
        current_row;
        current_row = g_list_next (current_row))
     {
@@ -1440,9 +1440,7 @@ gimp_container_tree_view_get_selected (GimpContainerView    *view,
                           -1);
 
       if (renderer->viewable)
-        {
-          *items = g_list_prepend (*items, renderer->viewable);
-        }
+        *items = g_list_prepend (*items, renderer->viewable);
 
       g_object_unref (renderer);
     }
@@ -1454,4 +1452,3 @@ gimp_container_tree_view_get_selected (GimpContainerView    *view,
 
   return selected_count;
 }
-
