@@ -1,7 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -83,8 +82,8 @@ gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 
 static GObject *
 gimp_tool_preset_editor_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+                                     guint                  n_params,
+                                     GObjectConstructParam *params)
 {
   GObject *object;
 
@@ -97,7 +96,7 @@ gimp_tool_preset_editor_constructor (GType                  type,
 
 static void
 gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
-                               GimpData       *data)
+                                  GimpData       *data)
 {
   GimpToolPresetEditor *tool_preset_editor = GIMP_TOOL_PRESET_EDITOR (editor);
 
@@ -133,7 +132,7 @@ gimp_tool_preset_editor_set_data (GimpDataEditor *editor,
 
 GtkWidget *
 gimp_tool_preset_editor_new (GimpContext     *context,
-                          GimpMenuFactory *menu_factory)
+                             GimpMenuFactory *menu_factory)
 {
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -141,7 +140,7 @@ gimp_tool_preset_editor_new (GimpContext     *context,
   return g_object_new (GIMP_TYPE_TOOL_PRESET_EDITOR,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<ToolPresetEditor>",
-                       "ui-path",         "/tool_preset-editor-popup",
+                       "ui-path",         "/tool-preset-editor-popup",
                        "data-factory",    context->gimp->tool_preset_factory,
                        "context",         context,
                        "data",            gimp_context_get_tool_preset (context),
@@ -153,8 +152,8 @@ gimp_tool_preset_editor_new (GimpContext     *context,
 
 static void
 gimp_tool_preset_editor_notify_model (GimpToolPreset       *options,
-                                   const GParamSpec   *pspec,
-                                   GimpToolPresetEditor *editor)
+                                      const GParamSpec     *pspec,
+                                      GimpToolPresetEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
@@ -176,8 +175,8 @@ gimp_tool_preset_editor_notify_model (GimpToolPreset       *options,
 
 static void
 gimp_tool_preset_editor_notify_data (GimpToolPreset       *options,
-                                  const GParamSpec   *pspec,
-                                  GimpToolPresetEditor *editor)
+                                     const GParamSpec     *pspec,
+                                     GimpToolPresetEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
 
