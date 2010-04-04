@@ -287,27 +287,27 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   /* Query tag entry */
   factory_view->priv->query_tag_entry =
-      gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
-                                GIMP_TAG_ENTRY_MODE_QUERY);
-  gtk_widget_show (factory_view->priv->query_tag_entry);
+    gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
+                              GIMP_TAG_ENTRY_MODE_QUERY);
   gtk_box_pack_start (GTK_BOX (editor->view),
                       factory_view->priv->query_tag_entry,
                       FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (editor->view),
                          factory_view->priv->query_tag_entry, 0);
+  gtk_widget_show (factory_view->priv->query_tag_entry);
 
   /* Assign tag entry */
   factory_view->priv->assign_tag_entry =
-      gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
-                                GIMP_TAG_ENTRY_MODE_ASSIGN);
+    gimp_combo_tag_entry_new (GIMP_FILTERED_CONTAINER (factory_view->priv->tag_filtered_container),
+                              GIMP_TAG_ENTRY_MODE_ASSIGN);
   gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (factory_view->priv->assign_tag_entry),
                                      factory_view->priv->selected_items);
   g_list_free (factory_view->priv->selected_items);
   factory_view->priv->selected_items = NULL;
-  gtk_widget_show (factory_view->priv->assign_tag_entry);
   gtk_box_pack_start (GTK_BOX (editor->view),
                       factory_view->priv->assign_tag_entry,
                       FALSE, FALSE, 0);
+  gtk_widget_show (factory_view->priv->assign_tag_entry);
 
   gimp_container_view_enable_dnd (editor->view,
                                   GTK_BUTTON (factory_view->priv->edit_button),
@@ -335,16 +335,15 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
 
   if (view->priv->assign_tag_entry)
     {
-      GList             *active_items = NULL;
       GimpContainerView *container_view = GIMP_CONTAINER_VIEW (editor->view);
+      GList             *active_items   = NULL;
 
       gimp_container_view_get_selected (container_view, &active_items);
       gimp_tag_entry_set_selected_items (GIMP_TAG_ENTRY (view->priv->assign_tag_entry),
                                          active_items);
-
       g_list_free (active_items);
     }
-  else
+  else if (viewable)
     {
       view->priv->selected_items = g_list_append (view->priv->selected_items,
                                                   viewable);
