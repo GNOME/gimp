@@ -22,6 +22,7 @@
   <menuitem action="dialogs-gradients" />
   <menuitem action="dialogs-palettes" />
   <menuitem action="dialogs-fonts" />
+  <menuitem action="dialogs-tool-presets" />
   <menuitem action="dialogs-buffers" />
   <separator />
   <menuitem action="dialogs-images" />
