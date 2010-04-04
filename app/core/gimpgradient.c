@@ -279,15 +279,33 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
 
       while (segment)
         {
-          g_checksum_update (checksum, (const guchar *) &segment->left, sizeof (segment->left));
-          g_checksum_update (checksum, (const guchar *) &segment->middle, sizeof (segment->middle));
-          g_checksum_update (checksum, (const guchar *) &segment->right,sizeof (segment->right));
-          g_checksum_update (checksum, (const guchar *) &segment->left_color_type, sizeof (segment->left_color_type));
-          g_checksum_update (checksum, (const guchar *) &segment->left_color, sizeof (segment->left_color));
-          g_checksum_update (checksum, (const guchar *) &segment->right_color_type, sizeof (segment->right_color_type));
-          g_checksum_update (checksum, (const guchar *) &segment->right_color, sizeof (segment->right_color));
-          g_checksum_update (checksum, (const guchar *) &segment->type, sizeof (segment->type));
-          g_checksum_update (checksum, (const guchar *) &segment->color, sizeof (segment->color));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->left,
+                             sizeof (segment->left));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->middle,
+                             sizeof (segment->middle));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->right,
+                             sizeof (segment->right));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->left_color_type,
+                             sizeof (segment->left_color_type));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->left_color,
+                             sizeof (segment->left_color));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->right_color_type,
+                             sizeof (segment->right_color_type));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->right_color,
+                             sizeof (segment->right_color));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->type,
+                             sizeof (segment->type));
+          g_checksum_update (checksum,
+                             (const guchar *) &segment->color,
+                             sizeof (segment->color));
 
           segment = segment->next;
         }
@@ -299,6 +317,7 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
 
   return checksum_string;
 }
+
 
 /*  public functions  */
 
