@@ -102,15 +102,14 @@ void
 tool_preset_actions_update (GimpActionGroup *group,
                             gpointer         user_data)
 {
-  GimpContext  *context  = action_data_get_context (user_data);
+  GimpContext    *context     = action_data_get_context (user_data);
   GimpToolPreset *tool_preset = NULL;
-  GimpData     *data     = NULL;
-  const gchar  *filename = NULL;
+  GimpData       *data        = NULL;
+  const gchar    *filename    = NULL;
 
   if (context)
     {
-      tool_preset = GIMP_TOOL_PRESET (gimp_tool_preset_new("Current Options")); //FIXMEE!!!!!!!!!!!!
-
+      tool_preset = gimp_context_get_tool_preset (context);
 
       if (tool_preset)
         {
