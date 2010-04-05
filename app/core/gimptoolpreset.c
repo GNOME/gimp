@@ -24,6 +24,7 @@
 
 #include "core-types.h"
 
+#include "gimptoolinfo.h"
 #include "gimptooloptions.h"
 #include "gimptoolpreset.h"
 #include "gimptoolpreset-load.h"
@@ -84,8 +85,8 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TOOL_OPTIONS,
                                    "tool-options", NULL,
-                                   GIMP_TYPE_TOOL_PRESET,
-                                   GIMP_CONFIG_PARAM_AGGREGATE);
+                                   GIMP_TYPE_TOOL_OPTIONS,
+                                   GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -190,22 +191,37 @@ gimp_tool_preset_get_extension (GimpData *data)
 /*  public functions  */
 
 GimpData *
-gimp_tool_preset_new (const gchar *name)
+gimp_tool_preset_new (const gchar *name,
+                      GimpContext *context)
 {
+  GimpToolInfo *tool_info;
+  const gchar  *stock_id;
+
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  tool_info = gimp_context_get_tool (context);
+
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+
   return g_object_new (GIMP_TYPE_TOOL_PRESET,
-                       "name", name,
- //                      "tool-options", options,
+                       "name",         name,
+                       "stock-id",     stock_id,
+                       "tool-options", tool_info->tool_options,
                        NULL);
 }
 
 GimpData *
-gimp_tool_preset_get_standard (void)
+gimp_tool_preset_get_standard (GimpContext *context)
 {
   static GimpData *standard_tool_preset = NULL;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
   if (! standard_tool_preset)
     {
-      standard_tool_preset = gimp_tool_preset_new ("Standard tool preset");
+      standard_tool_preset = gimp_tool_preset_new ("Standard tool preset",
+                                                   context);
 
       gimp_data_clean (standard_tool_preset);
       gimp_data_make_internal (standard_tool_preset, "gimp-tool-preset-standard");

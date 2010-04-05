@@ -36,15 +36,20 @@ typedef enum
 
 GList               * gimp_palette_load               (const gchar  *filename,
                                                        GError      **error);
-GList               * gimp_palette_load_act           (const gchar  *filename,
+GList               * gimp_palette_load_act           (GimpContext  *context,
+                                                       const gchar  *filename,
                                                        GError      **error);
-GList               * gimp_palette_load_riff          (const gchar  *filename,
+GList               * gimp_palette_load_riff          (GimpContext  *context,
+                                                       const gchar  *filename,
                                                        GError      **error);
-GList               * gimp_palette_load_psp           (const gchar  *filename,
+GList               * gimp_palette_load_psp           (GimpContext  *context,
+                                                       const gchar  *filename,
                                                        GError      **error);
-GList               * gimp_palette_load_aco           (const gchar  *filename,
+GList               * gimp_palette_load_aco           (GimpContext  *context,
+                                                       const gchar  *filename,
                                                        GError      **error);
-GList               * gimp_palette_load_css           (const gchar  *filename,
+GList               * gimp_palette_load_css           (GimpContext  *context,
+                                                       const gchar  *filename,
                                                        GError      **error);
 
 GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename);

@@ -250,7 +250,8 @@ gimp_palette_load (const gchar  *filename,
 }
 
 GList *
-gimp_palette_load_act (const gchar  *filename,
+gimp_palette_load_act (GimpContext  *context,
+                       const gchar  *filename,
                        GError      **error)
 {
   GimpPalette *palette;
@@ -274,7 +275,7 @@ gimp_palette_load_act (const gchar  *filename,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
   g_free (palette_name);
 
   while (read (fd, color_bytes, 3) == 3)
@@ -295,7 +296,8 @@ gimp_palette_load_act (const gchar  *filename,
 }
 
 GList *
-gimp_palette_load_riff (const gchar  *filename,
+gimp_palette_load_riff (GimpContext  *context,
+                        const gchar  *filename,
                         GError      **error)
 {
   GimpPalette *palette;
@@ -319,7 +321,7 @@ gimp_palette_load_riff (const gchar  *filename,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
   g_free (palette_name);
 
   lseek (fd, 28, SEEK_SET);
@@ -343,7 +345,8 @@ gimp_palette_load_riff (const gchar  *filename,
 }
 
 GList *
-gimp_palette_load_psp (const gchar  *filename,
+gimp_palette_load_psp (GimpContext  *context,
+                       const gchar  *filename,
                        GError      **error)
 {
   GimpPalette *palette;
@@ -375,7 +378,7 @@ gimp_palette_load_psp (const gchar  *filename,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
   g_free (palette_name);
 
   lseek (fd, 16, SEEK_SET);
@@ -434,7 +437,8 @@ gimp_palette_load_psp (const gchar  *filename,
 }
 
 GList *
-gimp_palette_load_aco (const gchar  *filename,
+gimp_palette_load_aco (GimpContext  *context,
+                       const gchar  *filename,
                        GError      **error)
 {
   GimpPalette *palette;
@@ -476,7 +480,7 @@ gimp_palette_load_aco (const gchar  *filename,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
   g_free (palette_name);
 
   format_version = header[1] + (header[0] << 8);
@@ -602,7 +606,8 @@ gimp_palette_load_aco (const gchar  *filename,
 
 
 GList *
-gimp_palette_load_css (const gchar  *filename,
+gimp_palette_load_css (GimpContext  *context,
+                       const gchar  *filename,
                        GError      **error)
 {
   GimpPalette *palette;
@@ -630,7 +635,7 @@ gimp_palette_load_css (const gchar  *filename,
     }
 
   name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (name));
+  palette = GIMP_PALETTE (gimp_palette_new (name, context));
   g_free (name);
 
   do

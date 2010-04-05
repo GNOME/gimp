@@ -2490,7 +2490,7 @@ gimp_context_brush_list_thaw (GimpContainer *container,
 
   brush = gimp_context_find_object (context, container,
                                     context->brush_name,
-                                    gimp_brush_get_standard ());
+                                    gimp_brush_get_standard (context));
 
   gimp_context_real_set_brush (context, brush);
 }
@@ -2520,7 +2520,7 @@ gimp_context_real_set_brush (GimpContext *context,
                              GimpBrush   *brush)
 {
   if (! standard_brush)
-    standard_brush = GIMP_BRUSH (gimp_brush_get_standard ());
+    standard_brush = GIMP_BRUSH (gimp_brush_get_standard (context));
 
   if (context->brush == brush)
     return;
@@ -2630,7 +2630,7 @@ gimp_context_dynamics_list_thaw (GimpContainer *container,
 
   dynamics = gimp_context_find_object (context, container,
                                        context->dynamics_name,
-                                       gimp_dynamics_get_standard ());
+                                       gimp_dynamics_get_standard (context));
 
   gimp_context_real_set_dynamics (context, dynamics);
 }
@@ -2641,7 +2641,7 @@ gimp_context_real_set_dynamics (GimpContext  *context,
 {
   if (! standard_dynamics)
     {
-      standard_dynamics = GIMP_DYNAMICS (gimp_dynamics_get_standard ());
+      standard_dynamics = GIMP_DYNAMICS (gimp_dynamics_get_standard (context));
     }
 
   if (context->dynamics == dynamics)
@@ -2736,7 +2736,7 @@ gimp_context_pattern_list_thaw (GimpContainer *container,
 
   pattern = gimp_context_find_object (context, container,
                                       context->pattern_name,
-                                      gimp_pattern_get_standard ());
+                                      gimp_pattern_get_standard (context));
 
   gimp_context_real_set_pattern (context, pattern);
 }
@@ -2766,7 +2766,7 @@ gimp_context_real_set_pattern (GimpContext *context,
                                GimpPattern *pattern)
 {
   if (! standard_pattern)
-    standard_pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
+    standard_pattern = GIMP_PATTERN (gimp_pattern_get_standard (context));
 
   if (context->pattern == pattern)
     return;
@@ -2858,7 +2858,7 @@ gimp_context_gradient_list_thaw (GimpContainer *container,
 
   gradient = gimp_context_find_object (context, container,
                                        context->gradient_name,
-                                       gimp_gradient_get_standard ());
+                                       gimp_gradient_get_standard (context));
 
   gimp_context_real_set_gradient (context, gradient);
 }
@@ -2888,7 +2888,7 @@ gimp_context_real_set_gradient (GimpContext  *context,
                                 GimpGradient *gradient)
 {
   if (! standard_gradient)
-    standard_gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
+    standard_gradient = GIMP_GRADIENT (gimp_gradient_get_standard (context));
 
   if (context->gradient == gradient)
     return;
@@ -2980,7 +2980,7 @@ gimp_context_palette_list_thaw (GimpContainer *container,
 
   palette = gimp_context_find_object (context, container,
                                       context->palette_name,
-                                      gimp_palette_get_standard ());
+                                      gimp_palette_get_standard (context));
 
   gimp_context_real_set_palette (context, palette);
 }
@@ -3010,7 +3010,7 @@ gimp_context_real_set_palette (GimpContext *context,
                                GimpPalette *palette)
 {
   if (! standard_palette)
-    standard_palette = GIMP_PALETTE (gimp_palette_get_standard ());
+    standard_palette = GIMP_PALETTE (gimp_palette_get_standard (context));
 
   if (context->palette == palette)
     return;
@@ -3120,7 +3120,7 @@ gimp_context_tool_preset_list_thaw (GimpContainer *container,
 
   tool_preset = gimp_context_find_object (context, container,
                                           context->tool_preset_name,
-                                          gimp_tool_preset_get_standard ());
+                                          gimp_tool_preset_get_standard (context));
 
   gimp_context_real_set_tool_preset (context, tool_preset);
 }
@@ -3130,14 +3130,10 @@ gimp_context_real_set_tool_preset (GimpContext    *context,
                                    GimpToolPreset *tool_preset)
 {
   if (! standard_tool_preset)
-    {
-      standard_tool_preset = GIMP_TOOL_PRESET (gimp_tool_preset_get_standard ());
-    }
+    standard_tool_preset = GIMP_TOOL_PRESET (gimp_tool_preset_get_standard (context));
 
   if (context->tool_preset == tool_preset)
-    {
-      return;
-    }
+    return;
 
   if (context->tool_preset_name && tool_preset != standard_tool_preset)
     {

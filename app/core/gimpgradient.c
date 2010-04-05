@@ -322,7 +322,8 @@ gimp_gradient_get_checksum (GimpTagged *tagged)
 /*  public functions  */
 
 GimpData *
-gimp_gradient_new (const gchar *name)
+gimp_gradient_new (const gchar *name,
+                   GimpContext *context)
 {
   GimpGradient *gradient;
 
@@ -339,13 +340,13 @@ gimp_gradient_new (const gchar *name)
 }
 
 GimpData *
-gimp_gradient_get_standard (void)
+gimp_gradient_get_standard (GimpContext *context)
 {
   static GimpData *standard_gradient = NULL;
 
   if (! standard_gradient)
     {
-      standard_gradient = gimp_gradient_new ("Standard");
+      standard_gradient = gimp_gradient_new ("Standard", context);
 
       gimp_data_clean (standard_gradient);
       gimp_data_make_internal (standard_gradient, "gimp-gradient-standard");

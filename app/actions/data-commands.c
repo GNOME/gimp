@@ -121,13 +121,16 @@ data_new_cmd_callback (GtkAction *action,
 
   if (gimp_data_factory_view_has_data_new_func (view))
     {
-      GimpContext *context;
-      GimpData    *data;
+      GimpDataFactory *factory;
+      GimpContext     *context;
+      GimpData        *data;
+
+      factory = gimp_data_factory_view_get_data_factory (view);
 
       context =
         gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
-      data = gimp_data_factory_data_new (gimp_data_factory_view_get_data_factory (view), _("Untitled"));
+      data = gimp_data_factory_data_new (factory, _("Untitled"), context);
 
       if (data)
         {

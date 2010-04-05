@@ -60,8 +60,9 @@ struct _GimpPaletteClass
 
 GType              gimp_palette_get_type     (void) G_GNUC_CONST;
 
-GimpData         * gimp_palette_new          (const gchar      *name);
-GimpData         * gimp_palette_get_standard (void);
+GimpData         * gimp_palette_new          (const gchar      *name,
+                                              GimpContext      *context);
+GimpData         * gimp_palette_get_standard (GimpContext      *context);
 
 GimpPaletteEntry * gimp_palette_add_entry    (GimpPalette      *palette,
                                               gint              position,

@@ -399,7 +399,8 @@ gimp_brush_get_checksum (GimpTagged *tagged)
 /*  public functions  */
 
 GimpData *
-gimp_brush_new (const gchar *name)
+gimp_brush_new (const gchar *name,
+                GimpContext *context)
 {
   g_return_val_if_fail (name != NULL, NULL);
 
@@ -409,13 +410,13 @@ gimp_brush_new (const gchar *name)
 }
 
 GimpData *
-gimp_brush_get_standard (void)
+gimp_brush_get_standard (GimpContext *context)
 {
   static GimpData *standard_brush = NULL;
 
   if (! standard_brush)
     {
-      standard_brush = gimp_brush_new ("Standard");
+      standard_brush = gimp_brush_new ("Standard", context);
 
       gimp_data_clean (standard_brush);
       gimp_data_make_internal (standard_brush, "gimp-brush-standard");

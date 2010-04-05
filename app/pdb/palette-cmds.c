@@ -56,7 +56,8 @@ palette_new_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
+      GimpData *data = gimp_data_factory_data_new (gimp->palette_factory,
+                                                   name, context);
 
       if (data)
         actual_name = g_strdup (gimp_object_get_name (data));

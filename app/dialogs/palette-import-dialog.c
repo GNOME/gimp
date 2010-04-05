@@ -807,11 +807,13 @@ palette_import_make_palette (ImportDialog *dialog)
         if (gimp_image_base_type (image) == GIMP_INDEXED)
           {
             palette = gimp_palette_import_from_indexed_image (image,
+                                                              dialog->context,
                                                               palette_name);
           }
         else if (sample_merged)
           {
             palette = gimp_palette_import_from_image (image,
+                                                      dialog->context,
                                                       palette_name,
                                                       n_colors,
                                                       threshold,
@@ -824,6 +826,7 @@ palette_import_make_palette (ImportDialog *dialog)
             drawable = GIMP_DRAWABLE (gimp_image_get_active_layer (image));
 
             palette = gimp_palette_import_from_drawable (drawable,
+                                                         dialog->context,
                                                          palette_name,
                                                          n_colors,
                                                          threshold,
@@ -840,7 +843,8 @@ palette_import_make_palette (ImportDialog *dialog)
         filename =
           gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->file_chooser));
 
-        palette = gimp_palette_import_from_file (filename,
+        palette = gimp_palette_import_from_file (dialog->context,
+                                                 filename,
                                                  palette_name, &error);
         g_free (filename);
 

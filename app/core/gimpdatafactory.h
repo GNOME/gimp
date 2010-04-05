@@ -25,10 +25,11 @@
 #include "gimpobject.h"
 
 
-typedef GimpData * (* GimpDataNewFunc)         (const gchar  *name);
+typedef GimpData * (* GimpDataNewFunc)         (const gchar  *name,
+                                                GimpContext  *context);
 typedef GList    * (* GimpDataLoadFunc)        (const gchar  *filename,
                                                 GError      **error);
-typedef GimpData * (* GimpDataGetStandardFunc) (void);
+typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext  *context);
 
 
 typedef struct _GimpDataFactoryLoaderEntry GimpDataFactoryLoaderEntry;
@@ -83,14 +84,16 @@ void            gimp_data_factory_data_save         (GimpDataFactory  *factory);
 void            gimp_data_factory_data_free         (GimpDataFactory  *factory);
 
 GimpData      * gimp_data_factory_data_new          (GimpDataFactory  *factory,
-                                                     const gchar      *name);
+                                                     const gchar      *name,
+                                                     GimpContext      *context);
 GimpData      * gimp_data_factory_data_duplicate    (GimpDataFactory  *factory,
                                                      GimpData         *data);
 gboolean        gimp_data_factory_data_delete       (GimpDataFactory  *factory,
                                                      GimpData         *data,
                                                      gboolean          delete_from_disk,
                                                      GError          **error);
-GimpData      * gimp_data_factory_data_get_standard (GimpDataFactory  *factory);
+GimpData      * gimp_data_factory_data_get_standard (GimpDataFactory  *factory,
+                                                     GimpContext      *context);
 gboolean        gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
                                                      GimpData         *data,
                                                      GError          **error);

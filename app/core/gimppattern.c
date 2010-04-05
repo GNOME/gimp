@@ -209,7 +209,8 @@ gimp_pattern_get_checksum (GimpTagged *tagged)
 }
 
 GimpData *
-gimp_pattern_new (const gchar *name)
+gimp_pattern_new (const gchar *name,
+                  GimpContext *context)
 {
   GimpPattern *pattern;
   guchar      *data;
@@ -236,13 +237,13 @@ gimp_pattern_new (const gchar *name)
 }
 
 GimpData *
-gimp_pattern_get_standard (void)
+gimp_pattern_get_standard (GimpContext *context)
 {
   static GimpData *standard_pattern = NULL;
 
   if (! standard_pattern)
     {
-      standard_pattern = gimp_pattern_new ("Standard");
+      standard_pattern = gimp_pattern_new ("Standard", context);
 
       gimp_data_clean (standard_pattern);
       gimp_data_make_internal (standard_pattern, "gimp-pattern-standard");

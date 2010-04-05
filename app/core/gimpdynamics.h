@@ -56,8 +56,9 @@ struct _GimpDynamicsClass
 
 GType                gimp_dynamics_get_type     (void) G_GNUC_CONST;
 
-GimpData           * gimp_dynamics_new          (const gchar            *name);
-GimpData           * gimp_dynamics_get_standard (void);
+GimpData           * gimp_dynamics_new          (const gchar            *name,
+                                                 GimpContext            *context);
+GimpData           * gimp_dynamics_get_standard (GimpContext            *context);
 
 GimpDynamicsOutput * gimp_dynamics_get_output   (GimpDynamics           *dynamics,
                                                  GimpDynamicsOutputType  type);
