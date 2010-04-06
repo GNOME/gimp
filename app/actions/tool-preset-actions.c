@@ -63,8 +63,8 @@ static const GimpActionEntry tool_preset_actions[] =
     GIMP_HELP_TOOL_PRESET_COPY_LOCATION },
 
   { "tool-preset-delete", GTK_STOCK_DELETE,
-    NC_("tool-preset-action", "_Delete ToolPreset"), "",
-    NC_("tool-preset-action", "Delete this tool_preset"),
+    NC_("tool-preset-action", "_Delete Tool Preset"), "",
+    NC_("tool-preset-action", "Delete this tool preset"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_TOOL_PRESET_DELETE },
 
@@ -78,8 +78,8 @@ static const GimpActionEntry tool_preset_actions[] =
 static const GimpStringActionEntry tool_preset_edit_actions[] =
 {
   { "tool-preset-edit", GTK_STOCK_EDIT,
-    NC_("tool-preset-action", "_Edit ToolPreset..."), NULL,
-    NC_("tool-preset-action", "Edit tool preset"),
+    NC_("tool-preset-action", "_Edit Tool Preset..."), NULL,
+    NC_("tool-preset-action", "Edit this tool preset"),
     "gimp-tool-preset-editor",
     GIMP_HELP_TOOL_PRESET_EDIT }
 };
