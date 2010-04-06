@@ -70,6 +70,7 @@ app/actions/text-tool-actions.c
 app/actions/text-tool-commands.c
 app/actions/tool-options-actions.c
 app/actions/tool-options-commands.c
+app/actions/tool-preset-actions.c
 app/actions/tools-actions.c
 app/actions/vectors-actions.c
 app/actions/vectors-commands.c
