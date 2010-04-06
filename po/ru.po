@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-04 20:47+0400\n"
-"PO-Revision-Date: 2010-04-04 21:36+0400\n"
+"POT-Creation-Date: 2010-04-07 00:16+0400\n"
+"PO-Revision-Date: 2010-04-07 00:33+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -978,24 +978,24 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:130
+#: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:124 ../app/core/gimpimage.c:1522
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:222
-#: ../app/core/gimppalette.c:377 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:378 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
 msgstr "Без имени"
 
-#: ../app/actions/data-commands.c:235
+#: ../app/actions/data-commands.c:238
 msgid "Delete Object"
 msgstr "Удалить объект"
 
-#: ../app/actions/data-commands.c:258
+#: ../app/actions/data-commands.c:261
 #, c-format
 msgid "Delete '%s'?"
 msgstr "Удалить '%s'?"
 
-#: ../app/actions/data-commands.c:261
+#: ../app/actions/data-commands.c:264
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
@@ -4623,9 +4623,9 @@ msgstr "Открыть текствый файл (UTF-8)"
 #: ../app/core/gimpbrushgenerated-load.c:72
 #: ../app/core/gimpbrushpipe-load.c:80 ../app/core/gimpcurve-load.c:54
 #: ../app/core/gimpgradient-load.c:61 ../app/core/gimppalette-load.c:75
-#: ../app/core/gimppalette-load.c:271 ../app/core/gimppalette-load.c:316
-#: ../app/core/gimppalette-load.c:372 ../app/core/gimppalette-load.c:461
-#: ../app/core/gimppalette-load.c:627 ../app/core/gimppattern-load.c:75
+#: ../app/core/gimppalette-load.c:272 ../app/core/gimppalette-load.c:318
+#: ../app/core/gimppalette-load.c:375 ../app/core/gimppalette-load.c:465
+#: ../app/core/gimppalette-load.c:632 ../app/core/gimppattern-load.c:75
 #: ../app/tools/gimpcurvestool.c:637 ../app/tools/gimplevelstool.c:747
 #: ../app/xcf/xcf.c:328
 #, c-format
@@ -4787,6 +4787,71 @@ msgstr "Сбросить параметры"
 msgid "Do you really want to reset all tool options to default values?"
 msgstr ""
 "Вы действительно хотите вернуться к исходным параметрам всех инструментов?"
+
+#: ../app/actions/tool-preset-actions.c:44
+msgctxt "tool-preset-action"
+msgid "Tool Preset Menu"
+msgstr "Меню профилей инструментов"
+
+#: ../app/actions/tool-preset-actions.c:48
+msgctxt "tool-preset-action"
+msgid "_New Tool Preset"
+msgstr "_Создать профиль инструмента"
+
+#: ../app/actions/tool-preset-actions.c:49
+msgctxt "tool-preset-action"
+msgid "Create a new tool preset"
+msgstr "Создать новый профиль инструмента"
+
+#: ../app/actions/tool-preset-actions.c:54
+msgctxt "tool-preset-action"
+msgid "D_uplicate Tool Preset"
+msgstr "Создать _копию профиля инструмента"
+
+#: ../app/actions/tool-preset-actions.c:55
+msgctxt "tool-preset-action"
+msgid "Duplicate this tool preset"
+msgstr "Создать копию этого профиля инструментов"
+
+#: ../app/actions/tool-preset-actions.c:60
+msgctxt "tool-preset-action"
+msgid "Copy Tool Preset _Location"
+msgstr "Скопировать _расположение профиля инструмента"
+
+#: ../app/actions/tool-preset-actions.c:61
+msgctxt "tool-preset-action"
+msgid "Copy tool preset file location to clipboard"
+msgstr "Скопировать расположение файла профиля инструмента в буфер обмена"
+
+#: ../app/actions/tool-preset-actions.c:66
+msgctxt "tool-preset-action"
+msgid "_Delete Tool Preset"
+msgstr "_Удалить профиль инструмента"
+
+#: ../app/actions/tool-preset-actions.c:67
+msgctxt "tool-preset-action"
+msgid "Delete this tool preset"
+msgstr "Удалить этот профиль инструмента"
+
+#: ../app/actions/tool-preset-actions.c:72
+msgctxt "tool-preset-action"
+msgid "_Refresh Tool Presets"
+msgstr "О_бновить список профилей инструментов"
+
+#: ../app/actions/tool-preset-actions.c:73
+msgctxt "tool-preset-action"
+msgid "Refresh tool presets"
+msgstr "Обновить список профилей инструментов"
+
+#: ../app/actions/tool-preset-actions.c:81
+msgctxt "tool-preset-action"
+msgid "_Edit Tool Preset..."
+msgstr "_Изменить профиль инструмента..."
+
+#: ../app/actions/tool-preset-actions.c:82
+msgctxt "tool-preset-action"
+msgid "Edit this tool preset"
+msgstr "Изменить этот профиль инструмента"
 
 #: ../app/actions/tools-actions.c:45
 msgctxt "tools-action"
@@ -7648,7 +7713,7 @@ msgid "Could not delete '%s': %s"
 msgstr "Невозможно удалить '%s': %s"
 
 #: ../app/core/gimpdatafactory.c:418 ../app/core/gimpdatafactory.c:447
-#: ../app/core/gimpdatafactory.c:609 ../app/core/gimpdatafactory.c:631
+#: ../app/core/gimpdatafactory.c:613 ../app/core/gimpdatafactory.c:635
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7659,17 +7724,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:525 ../app/core/gimpdatafactory.c:528
+#: ../app/core/gimpdatafactory.c:527 ../app/core/gimpdatafactory.c:530
 #: ../app/core/gimpitem.c:423 ../app/core/gimpitem.c:426
 msgid "copy"
 msgstr "копия"
 
-#: ../app/core/gimpdatafactory.c:537 ../app/core/gimpitem.c:435
+#: ../app/core/gimpdatafactory.c:539 ../app/core/gimpitem.c:435
 #, c-format
 msgid "%s copy"
 msgstr "Копия %s"
 
-#: ../app/core/gimpdatafactory.c:728
+#: ../app/core/gimpdatafactory.c:732
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -7677,7 +7742,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:749
+#: ../app/core/gimpdatafactory.c:753
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -7685,12 +7750,12 @@ msgid ""
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:759
+#: ../app/core/gimpdatafactory.c:763
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Каталоги данных с правами на запись не обнаружены."
 
-#: ../app/core/gimpdatafactory.c:875
+#: ../app/core/gimpdatafactory.c:879
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8360,12 +8425,12 @@ msgstr "Невозможно переименовать маски слоёв."
 msgid "Show Layer Mask"
 msgstr "Показать маску слоя"
 
-#: ../app/core/gimppalette-import.c:430
+#: ../app/core/gimppalette-import.c:438
 #, c-format
 msgid "Index %d"
 msgstr "Индекс %d"
 
-#: ../app/core/gimppalette-import.c:534
+#: ../app/core/gimppalette-import.c:547
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Неизвестный тип файла палитры: %s"
@@ -8418,12 +8483,12 @@ msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Загружается палитра '%s': значение RGB вне допустимого диапазона в строке %d."
 
-#: ../app/core/gimppalette-load.c:472
+#: ../app/core/gimppalette-load.c:476
 #, c-format
 msgid "Could not read header from palette file '%s'"
 msgstr "Невозможно прочесть заголовок из файла палитры '%s'"
 
-#: ../app/core/gimppalette-load.c:495 ../app/core/gimppalette-load.c:583
+#: ../app/core/gimppalette-load.c:499 ../app/core/gimppalette-load.c:587
 #, c-format
 msgid "Fatal parse error in palette file '%s'"
 msgstr "Неисправимая ошибка разбора файла палитры '%s'"
@@ -14643,23 +14708,20 @@ msgid "_Use selected font"
 msgstr "_Использовать выбранный шрифт"
 
 #: ../app/widgets/gimptextstyleeditor.c:200
-#, fuzzy
 msgid "Change size of selected text"
-msgstr "Очистить форматирование выделенного текста"
+msgstr "Изменить кегль выделенного текста"
 
 #: ../app/widgets/gimptextstyleeditor.c:219
 msgid "Clear style of selected text"
 msgstr "Очистить форматирование выделенного текста"
 
 #: ../app/widgets/gimptextstyleeditor.c:239
-#, fuzzy
 msgid "Change kerning of selected text"
-msgstr "Очистить форматирование выделенного текста"
+msgstr "Изменить кернинг выделенного текста"
 
 #: ../app/widgets/gimptextstyleeditor.c:255
-#, fuzzy
 msgid "Change baseline of selected text"
-msgstr "Очистить форматирование выделенного текста"
+msgstr "Изменить линию шрифта выделенного текста"
 
 #: ../app/widgets/gimpthumbbox.c:343
 #, c-format
