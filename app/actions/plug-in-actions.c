@@ -438,10 +438,23 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       p1 = strrchr (path_original, '/');
       p2 = strrchr (path_translated, '/');
 
-      *p1 = '\0';
-      *p2 = '\0';
+      if (p1 && p2)
+        {
+          *p1 = '\0';
+          *p2 = '\0';
 
-      label = p2 + 1;
+          label = p2 + 1;
+        }
+      else
+        {
+          g_warning ("bad menu path for procedure \"%s\": \"%s\"",
+                     gimp_object_get_name (proc), path_original);
+
+          g_free (path_original);
+          g_free (path_translated);
+
+          return;
+        }
     }
 
   entry.name        = gimp_object_get_name (proc);
