@@ -929,6 +929,19 @@ gimp_plug_in_menu_register (GimpPlugIn  *plug_in,
       return FALSE;
     }
 
+  if (! strlen (proc->menu_label))
+    {
+      gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
+                    "Plug-in \"%s\"\n(%s)\n"
+                    "attempted to register the procedure \"%s\" "
+                    "in the menu \"%s\", but the procedure has no label.  "
+                    "This is not allowed.",
+                    gimp_object_get_name (plug_in),
+                    gimp_filename_to_utf8 (plug_in->prog),
+                    proc_name, menu_path);
+
+      return FALSE;
+    }
   if (! gimp_plug_in_procedure_add_menu_path (proc, menu_path, &error))
     {
       gimp_message_literal (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
