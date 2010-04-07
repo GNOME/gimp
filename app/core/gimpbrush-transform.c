@@ -682,21 +682,27 @@ gimp_brush_transform_bounding_box (TempBuf           *brush,
   const gdouble  h = brush->height;
   gdouble        x1, x2, x3, x4;
   gdouble        y1, y2, y3, y4;
+  gdouble        temp_x;
+  gdouble        temp_y;
 
   gimp_matrix3_transform_point (matrix, 0, 0, &x1, &y1);
   gimp_matrix3_transform_point (matrix, w, 0, &x2, &y2);
   gimp_matrix3_transform_point (matrix, 0, h, &x3, &y3);
   gimp_matrix3_transform_point (matrix, w, h, &x4, &y4);
 
-  *x = floor (MIN (MIN (x1, x2), MIN (x3, x4)));
-  *y = floor (MIN (MIN (y1, y2), MIN (y3, y4)));
+  temp_x = MIN (MIN (x1, x2), MIN (x3, x4));
+  temp_y = MIN (MIN (y1, y2), MIN (y3, y4));
 
-  *width  = (gint) (ceil  (MAX (MAX (x1, x2), MAX (x3, x4))) - *x);
-  *height = (gint) (ceil  (MAX (MAX (y1, y2), MAX (y3, y4))) - *y);
+  *width  = (gint) ceil (MAX (MAX (x1, x2), MAX (x3, x4)) - temp_x);
+  *height = (gint) ceil (MAX (MAX (y1, y2), MAX (y3, y4)) - temp_y);
+
+  *x = floor (temp_x);
+  *y = floor (temp_y);
 
   /* Transform size can not be less than 1 px */
   *width  = MAX(1, *width);
   *height = MAX(1, *height);
+
 }
 
 static gdouble
