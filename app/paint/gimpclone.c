@@ -178,7 +178,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   PixelRegion        destPR;
   GimpPattern       *pattern = NULL;
   gdouble            fade_point;
-  gdouble            hardness;
+  gdouble            force;
 
   switch (options->clone_type)
     {
@@ -243,7 +243,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+  force = gimp_dynamics_output_get_linear_value (dynamics->force_output,
                                                     coords,
                                                     paint_options,
                                                     fade_point);
@@ -254,7 +254,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
                                 gimp_paint_options_get_brush_mode (paint_options),
-                                hardness,
+                                force,
 
                                 /* In fixed mode, paint incremental so the
                                  * individual brushes are properly applied

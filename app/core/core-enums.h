@@ -595,6 +595,7 @@ typedef enum  /*< pdb-skip >*/
   GIMP_DYNAMICS_OUTPUT_ANGLE,        /*< desc="Angle"        >*/
   GIMP_DYNAMICS_OUTPUT_COLOR,        /*< desc="Color"        >*/
   GIMP_DYNAMICS_OUTPUT_HARDNESS,     /*< desc="Hardness"     >*/
+  GIMP_DYNAMICS_OUTPUT_FORCE,        /*< desc="Force"        >*/
   GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO, /*< desc="Aspect ratio" >*/
   GIMP_DYNAMICS_OUTPUT_SPACING,      /*< desc="Spacing"      >*/
   GIMP_DYNAMICS_OUTPUT_RATE,         /*< desc="Rate"         >*/

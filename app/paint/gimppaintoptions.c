@@ -645,11 +645,9 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-/*  Im leaving the pressurize code in here, but Im not sure how,
- *  or if at all it should be used. Not as hardness anyway.
- *
- *  if (gimp_dynamics_output_is_enabled(dynamics->hardness_output))
- *    return GIMP_BRUSH_PRESSURE; */
+
+   if (gimp_dynamics_output_is_enabled(dynamics->force_output))
+     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
 }

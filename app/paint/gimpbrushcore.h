@@ -48,6 +48,7 @@ struct _GimpBrushCore
   gdouble        scale;
   gdouble        angle;
   gdouble        hardness;
+  gdouble        force;
   gdouble        aspect_ratio;
 
   /*  brush buffers  */

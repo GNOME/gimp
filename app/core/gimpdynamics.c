@@ -45,6 +45,7 @@ enum
   PROP_SIZE_OUTPUT,
   PROP_ANGLE_OUTPUT,
   PROP_COLOR_OUTPUT,
+  PROP_FORCE_OUTPUT,
   PROP_HARDNESS_OUTPUT,
   PROP_ASPECT_RATIO_OUTPUT,
   PROP_SPACING_OUTPUT,
@@ -109,6 +110,11 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                    GIMP_TYPE_DYNAMICS_OUTPUT,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
 
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_FORCE_OUTPUT,
+                                   "force-output", NULL,
+                                   GIMP_TYPE_DYNAMICS_OUTPUT,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
+
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_HARDNESS_OUTPUT,
                                    "hardness-output", NULL,
                                    GIMP_TYPE_DYNAMICS_OUTPUT,
@@ -161,6 +167,11 @@ gimp_dynamics_init (GimpDynamics *dynamics)
   dynamics->opacity_output      = gimp_dynamics_create_output (dynamics,
                                                                "opacity-output",
                                                                GIMP_DYNAMICS_OUTPUT_OPACITY);
+
+  dynamics->force_output        = gimp_dynamics_create_output (dynamics,
+                                                               "force-output",
+                                                               GIMP_DYNAMICS_OUTPUT_FORCE);
+
   dynamics->hardness_output     = gimp_dynamics_create_output (dynamics,
                                                                "hardness-output",
                                                                GIMP_DYNAMICS_OUTPUT_HARDNESS);
@@ -196,6 +207,7 @@ gimp_dynamics_finalize (GObject *object)
   GimpDynamics *dynamics = GIMP_DYNAMICS (object);
 
   g_object_unref (dynamics->opacity_output);
+  g_object_unref (dynamics->force_output);
   g_object_unref (dynamics->hardness_output);
   g_object_unref (dynamics->rate_output);
   g_object_unref (dynamics->flow_output);
@@ -228,6 +240,11 @@ gimp_dynamics_set_property (GObject      *object,
     case PROP_OPACITY_OUTPUT:
       src_output  = g_value_get_object (value);
       dest_output = dynamics->opacity_output;
+      break;
+
+    case PROP_FORCE_OUTPUT:
+      src_output  = g_value_get_object (value);
+      dest_output = dynamics->force_output;
       break;
 
     case PROP_HARDNESS_OUTPUT:
@@ -304,6 +321,10 @@ gimp_dynamics_get_property (GObject    *object,
 
     case PROP_OPACITY_OUTPUT:
       g_value_set_object (value, dynamics->opacity_output);
+      break;
+
+    case PROP_FORCE_OUTPUT:
+      g_value_set_object (value, dynamics->force_output);
       break;
 
     case PROP_HARDNESS_OUTPUT:
@@ -413,6 +434,11 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
     {
     case GIMP_DYNAMICS_OUTPUT_OPACITY:
       return dynamics->opacity_output;
+      break;
+
+
+    case GIMP_DYNAMICS_OUTPUT_FORCE:
+      return dynamics->force_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_HARDNESS:

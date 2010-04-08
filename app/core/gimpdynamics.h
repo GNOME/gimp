@@ -38,6 +38,7 @@ struct _GimpDynamics
 
   GimpDynamicsOutput *opacity_output;
   GimpDynamicsOutput *hardness_output;
+  GimpDynamicsOutput *force_output;
   GimpDynamicsOutput *rate_output;
   GimpDynamicsOutput *flow_output;
   GimpDynamicsOutput *size_output;

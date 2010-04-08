@@ -191,6 +191,7 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->scale                        = 1.0;
   core->angle                        = 1.0;
   core->hardness                     = 1.0;
+  core->force                        = 1.0;
 
   core->pressure_brush               = NULL;
 
@@ -357,25 +358,25 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
         {
           return FALSE;
         }
-  /*No drawing anything if the scale is too small*/
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      gdouble    fade_point;
-
-      if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
+      /*No drawing anything if the scale is too small*/
+      if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_transforming_brush)
         {
-          fade_point = gimp_paint_options_get_fade (paint_options, image,
-                                                    paint_core->pixel_dist);
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+          gdouble    fade_point;
 
-          scale = paint_options->brush_scale *
-                  gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
-                                                         &current_coords,
-                                                         paint_options,
-                                                         fade_point);
-          if (scale < 0.0001) return FALSE;
+          if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
+            {
+              fade_point = gimp_paint_options_get_fade (paint_options, image,
+                                                        paint_core->pixel_dist);
+
+              scale = paint_options->brush_scale *
+                      gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
+                                                             &current_coords,
+                                                             paint_options,
+                                                             fade_point);
+              if (scale < 0.0001) return FALSE;
+            }
         }
-    }
 
       if (GIMP_BRUSH_CORE_GET_CLASS (paint_core)->handles_changing_brush)
         {
@@ -1069,13 +1070,13 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               gdouble                   image_opacity,
                               GimpLayerModeEffects      paint_mode,
                               GimpBrushApplicationMode  brush_hardness,
-                              gdouble                   dynamic_hardness,
+                              gdouble                   dynamic_force,
                               GimpPaintApplicationMode  mode)
 {
   TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         coords,
                                                         brush_hardness,
-                                                        dynamic_hardness);
+                                                        dynamic_force);
 
   if (brush_mask)
     {
@@ -1115,13 +1116,13 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 gdouble                   brush_opacity,
                                 gdouble                   image_opacity,
                                 GimpBrushApplicationMode  brush_hardness,
-                                gdouble                   dynamic_hardness,
+                                gdouble                   dynamic_force,
                                 GimpPaintApplicationMode  mode)
 {
   TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         coords,
                                                         brush_hardness,
-                                                        dynamic_hardness);
+                                                        dynamic_force);
 
   if (brush_mask)
     {
@@ -1632,7 +1633,7 @@ TempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                 const GimpCoords         *coords,
                                 GimpBrushApplicationMode  brush_hardness,
-                                gdouble                   dynamic_hardness)
+                                gdouble                   dynamic_force)
 {
   TempBuf *mask;
 
@@ -1659,7 +1660,7 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
       mask = gimp_brush_core_pressurize_mask (core, mask,
                                               coords->x,
                                               coords->y,
-                                              dynamic_hardness);
+                                              dynamic_force);
       break;
 
     default:

@@ -119,7 +119,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpPaintApplicationMode  paint_appl_mode;
   gdouble                   fade_point;
   gdouble                   grad_point;
-  gdouble                   hardness;
+  gdouble                   force;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -188,7 +188,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                     area->bytes);
     }
 
-  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+  force = gimp_dynamics_output_get_linear_value (dynamics->force_output,
                                                     coords,
                                                     paint_options,
                                                     fade_point);
@@ -200,6 +200,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
                                 gimp_paint_options_get_brush_mode (paint_options),
-                                hardness,
+                                force,
                                 paint_appl_mode);
 }

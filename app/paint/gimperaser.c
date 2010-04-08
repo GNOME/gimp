@@ -115,7 +115,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gdouble            opacity;
   TempBuf           *area;
   guchar             col[MAX_CHANNELS];
-  gdouble            hardness;
+  gdouble            force;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -145,7 +145,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_get_data (area), col,
                 area->width * area->height, area->bytes);
 
-  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+  force = gimp_dynamics_output_get_linear_value (dynamics->force_output,
                                                     coords,
                                                     paint_options,
                                                     fade_point);
@@ -157,6 +157,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                                 (options->anti_erase ?
                                  GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
                                 gimp_paint_options_get_brush_mode (paint_options),
-                                hardness,
+                                force,
                                 paint_options->application_mode);
 }
