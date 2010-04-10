@@ -272,8 +272,8 @@ gimp_palette_get_description (GimpViewable  *viewable,
 }
 
 GimpData *
-gimp_palette_new (const gchar *name,
-                  GimpContext *context)
+gimp_palette_new (GimpContext *context,
+                  const gchar *name)
 {
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
@@ -290,7 +290,7 @@ gimp_palette_get_standard (GimpContext *context)
 
   if (! standard_palette)
     {
-      standard_palette = gimp_palette_new ("Standard", context);
+      standard_palette = gimp_palette_new (context, "Standard");
 
       gimp_data_clean (standard_palette);
       gimp_data_make_internal (standard_palette, "gimp-palette-standard");

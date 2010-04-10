@@ -57,7 +57,7 @@ brush_new_invoker (GimpProcedure      *procedure,
   if (success)
     {
       GimpData *data = gimp_data_factory_data_new (gimp->brush_factory,
-                                                   name, context);
+                                                   context, name);
 
       if (data)
         actual_name = g_strdup (gimp_object_get_name (data));

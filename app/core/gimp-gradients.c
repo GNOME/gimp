@@ -116,8 +116,8 @@ gimp_gradients_add_gradient (Gimp        *gimp,
 {
   GimpGradient *gradient;
 
-  gradient = GIMP_GRADIENT (gimp_gradient_new (name,
-                                               gimp_get_user_context (gimp)));
+  gradient = GIMP_GRADIENT (gimp_gradient_new (gimp_get_user_context (gimp),
+                                               name));
 
   gimp_data_make_internal (GIMP_DATA (gradient), id);
 

@@ -399,9 +399,12 @@ gimp_dynamics_get_extension (GimpData *data)
 /*  public functions  */
 
 GimpData *
-gimp_dynamics_new (const gchar *name,
-                   GimpContext *context)
+gimp_dynamics_new (GimpContext *context,
+                   const gchar *name)
 {
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (name[0] != '\0', NULL);
+
   return g_object_new (GIMP_TYPE_DYNAMICS,
                        "name", name,
                        NULL);
@@ -414,7 +417,7 @@ gimp_dynamics_get_standard (GimpContext *context)
 
   if (! standard_dynamics)
     {
-      standard_dynamics = gimp_dynamics_new ("Standard dynamics", context);
+      standard_dynamics = gimp_dynamics_new (context, "Standard dynamics");
 
       gimp_data_clean (standard_dynamics);
       gimp_data_make_internal (standard_dynamics, "gimp-dynamics-standard");

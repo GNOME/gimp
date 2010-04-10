@@ -25,8 +25,8 @@
 #include "gimpobject.h"
 
 
-typedef GimpData * (* GimpDataNewFunc)         (const gchar  *name,
-                                                GimpContext  *context);
+typedef GimpData * (* GimpDataNewFunc)         (GimpContext  *context,
+                                                const gchar  *name);
 typedef GList    * (* GimpDataLoadFunc)        (const gchar  *filename,
                                                 GError      **error);
 typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext  *context);
@@ -84,8 +84,8 @@ void            gimp_data_factory_data_save         (GimpDataFactory  *factory);
 void            gimp_data_factory_data_free         (GimpDataFactory  *factory);
 
 GimpData      * gimp_data_factory_data_new          (GimpDataFactory  *factory,
-                                                     const gchar      *name,
-                                                     GimpContext      *context);
+                                                     GimpContext      *context,
+                                                     const gchar      *name);
 GimpData      * gimp_data_factory_data_duplicate    (GimpDataFactory  *factory,
                                                      GimpData         *data);
 gboolean        gimp_data_factory_data_delete       (GimpDataFactory  *factory,

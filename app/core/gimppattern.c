@@ -209,14 +209,15 @@ gimp_pattern_get_checksum (GimpTagged *tagged)
 }
 
 GimpData *
-gimp_pattern_new (const gchar *name,
-                  GimpContext *context)
+gimp_pattern_new (GimpContext *context,
+                  const gchar *name)
 {
   GimpPattern *pattern;
   guchar      *data;
   gint         row, col;
 
   g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (name[0] != '\n', NULL);
 
   pattern = g_object_new (GIMP_TYPE_PATTERN,
                           "name", name,
@@ -243,7 +244,7 @@ gimp_pattern_get_standard (GimpContext *context)
 
   if (! standard_pattern)
     {
-      standard_pattern = gimp_pattern_new ("Standard", context);
+      standard_pattern = gimp_pattern_new (context, "Standard");
 
       gimp_data_clean (standard_pattern);
       gimp_data_make_internal (standard_pattern, "gimp-pattern-standard");

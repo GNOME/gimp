@@ -47,8 +47,8 @@ struct _GimpToolPresetClass
 
 GType      gimp_tool_preset_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_tool_preset_new          (const gchar *name,
-                                          GimpContext *context);
+GimpData * gimp_tool_preset_new          (GimpContext *context,
+                                          const gchar *name);
 GimpData * gimp_tool_preset_get_standard (GimpContext *context);
 
 

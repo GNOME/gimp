@@ -191,14 +191,15 @@ gimp_tool_preset_get_extension (GimpData *data)
 /*  public functions  */
 
 GimpData *
-gimp_tool_preset_new (const gchar *name,
-                      GimpContext *context)
+gimp_tool_preset_new (GimpContext *context,
+                      const gchar *name)
 {
   GimpToolInfo *tool_info;
   const gchar  *stock_id;
 
-  g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+  g_return_val_if_fail (name[0] != '\0', NULL);
 
   tool_info = gimp_context_get_tool (context);
 
@@ -220,8 +221,8 @@ gimp_tool_preset_get_standard (GimpContext *context)
 
   if (! standard_tool_preset)
     {
-      standard_tool_preset = gimp_tool_preset_new ("Standard tool preset",
-                                                   context);
+      standard_tool_preset = gimp_tool_preset_new (context,
+                                                   "Standard tool preset");
 
       gimp_data_clean (standard_tool_preset);
       gimp_data_make_internal (standard_tool_preset, "gimp-tool-preset-standard");

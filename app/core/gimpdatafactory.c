@@ -478,17 +478,17 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 
 GimpData *
 gimp_data_factory_data_new (GimpDataFactory *factory,
-                            const gchar     *name,
-                            GimpContext     *context)
+                            GimpContext     *context,
+                            const gchar     *name)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   if (factory->priv->data_new_func)
     {
-      GimpData *data = factory->priv->data_new_func (name, context);
+      GimpData *data = factory->priv->data_new_func (context, name);
 
       if (data)
         {

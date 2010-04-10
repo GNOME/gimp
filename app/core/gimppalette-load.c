@@ -275,7 +275,7 @@ gimp_palette_load_act (GimpContext  *context,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
+  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
   while (read (fd, color_bytes, 3) == 3)
@@ -321,7 +321,7 @@ gimp_palette_load_riff (GimpContext  *context,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
+  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
   lseek (fd, 28, SEEK_SET);
@@ -378,7 +378,7 @@ gimp_palette_load_psp (GimpContext  *context,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
+  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
   lseek (fd, 16, SEEK_SET);
@@ -480,7 +480,7 @@ gimp_palette_load_aco (GimpContext  *context,
     }
 
   palette_name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name, context));
+  palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
   format_version = header[1] + (header[0] << 8);
@@ -635,7 +635,7 @@ gimp_palette_load_css (GimpContext  *context,
     }
 
   name = g_filename_display_basename (filename);
-  palette = GIMP_PALETTE (gimp_palette_new (name, context));
+  palette = GIMP_PALETTE (gimp_palette_new (context, name));
   g_free (name);
 
   do

@@ -130,7 +130,7 @@ data_new_cmd_callback (GtkAction *action,
       context =
         gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
-      data = gimp_data_factory_data_new (factory, _("Untitled"), context);
+      data = gimp_data_factory_data_new (factory, context, _("Untitled"));
 
       if (data)
         {
