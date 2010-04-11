@@ -278,7 +278,8 @@ data_refresh_cmd_callback (GtkAction *action,
   return_if_no_gimp (gimp, user_data);
 
   gimp_set_busy (gimp);
-  gimp_data_factory_data_refresh (gimp_data_factory_view_get_data_factory (view));
+  gimp_data_factory_data_refresh (gimp_data_factory_view_get_data_factory (view),
+                                  action_data_get_context (user_data));
   gimp_unset_busy (gimp);
 }
 

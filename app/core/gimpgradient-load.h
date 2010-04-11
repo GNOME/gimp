@@ -23,9 +23,11 @@
 #define GIMP_GRADIENT_SVG_FILE_EXTENSION ".svg"
 
 
-GList  * gimp_gradient_load     (const gchar  *filename,
+GList  * gimp_gradient_load     (GimpContext  *context,
+                                 const gchar  *filename,
                                  GError      **error);
-GList  * gimp_gradient_load_svg (const gchar  *filename,
+GList  * gimp_gradient_load_svg (GimpContext  *context,
+                                 const gchar  *filename,
                                  GError      **error);
 
 

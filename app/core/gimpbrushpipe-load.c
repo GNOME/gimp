@@ -55,7 +55,8 @@
 
 
 GList *
-gimp_brush_pipe_load (const gchar  *filename,
+gimp_brush_pipe_load (GimpContext  *context,
+                      const gchar  *filename,
                       GError      **error)
 {
   GimpBrushPipe     *pipe = NULL;
@@ -209,7 +210,8 @@ gimp_brush_pipe_load (const gchar  *filename,
 
   while (pipe->nbrushes < num_of_brushes)
     {
-      pipe->brushes[pipe->nbrushes] = gimp_brush_load_brush (fd, filename, NULL);
+      pipe->brushes[pipe->nbrushes] = gimp_brush_load_brush (context,
+                                                             fd, filename, NULL);
 
       if (pipe->brushes[pipe->nbrushes])
         {

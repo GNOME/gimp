@@ -28,7 +28,8 @@
 
 
 GList *
-gimp_dynamics_load (const gchar  *filename,
+gimp_dynamics_load (GimpContext  *context,
+                    const gchar  *filename,
                     GError      **error)
 {
   GimpDynamics *dynamics;

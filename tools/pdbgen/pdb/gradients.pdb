@@ -29,7 +29,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  gimp_data_factory_data_refresh (gimp->gradient_factory);
+  gimp_data_factory_data_refresh (gimp->gradient_factory, context);
 }
 CODE
     );

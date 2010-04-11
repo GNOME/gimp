@@ -24,7 +24,8 @@
 #define GIMP_BRUSH_GENERATED_FILE_EXTENSION ".vbr"
 
 
-GList * gimp_brush_generated_load (const gchar  *filename,
+GList * gimp_brush_generated_load (GimpContext  *context,
+                                   const gchar  *filename,
                                    GError      **error);
 
 

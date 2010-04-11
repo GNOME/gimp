@@ -949,23 +949,28 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the list of gimp brushes    */
   status_callback (NULL, _("Brushes"), 0.1);
-  gimp_data_factory_data_init (gimp->brush_factory, gimp->no_data);
+  gimp_data_factory_data_init (gimp->brush_factory, gimp->user_context,
+                               gimp->no_data);
 
   /*  initialize the list of gimp dynamics   */
   status_callback (NULL, _("Dynamics"), 0.2);
-  gimp_data_factory_data_init (gimp->dynamics_factory, gimp->no_data);
+  gimp_data_factory_data_init (gimp->dynamics_factory, gimp->user_context,
+                               gimp->no_data);
 
   /*  initialize the list of gimp patterns   */
   status_callback (NULL, _("Patterns"), 0.3);
-  gimp_data_factory_data_init (gimp->pattern_factory, gimp->no_data);
+  gimp_data_factory_data_init (gimp->pattern_factory, gimp->user_context,
+                               gimp->no_data);
 
   /*  initialize the list of gimp palettes   */
   status_callback (NULL, _("Palettes"), 0.4);
-  gimp_data_factory_data_init (gimp->palette_factory, gimp->no_data);
+  gimp_data_factory_data_init (gimp->palette_factory, gimp->user_context,
+                               gimp->no_data);
 
   /*  initialize the list of gimp gradients  */
   status_callback (NULL, _("Gradients"), 0.5);
-  gimp_data_factory_data_init (gimp->gradient_factory, gimp->no_data);
+  gimp_data_factory_data_init (gimp->gradient_factory, gimp->user_context,
+                               gimp->no_data);
 
   /*  initialize the list of fonts  */
   status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
@@ -974,7 +979,8 @@ gimp_restore (Gimp               *gimp,
 
   /*  initialize the list of gimp tool presets   */
   status_callback (NULL, _("Tool Presets"), 0.65);
-  gimp_data_factory_data_init (gimp->tool_preset_factory, gimp->no_data);
+  gimp_data_factory_data_init (gimp->tool_preset_factory, gimp->user_context,
+                               gimp->no_data);
 
   /*  initialize the template list  */
   status_callback (NULL, _("Templates"), 0.7);

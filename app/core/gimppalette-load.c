@@ -50,7 +50,8 @@
 
 
 GList *
-gimp_palette_load (const gchar  *filename,
+gimp_palette_load (GimpContext  *context,
+                   const gchar  *filename,
                    GError      **error)
 {
   GimpPalette      *palette;

@@ -74,6 +74,7 @@ struct _GimpDataFactoryPriv
 static void    gimp_data_factory_finalize     (GObject              *object);
 
 static void    gimp_data_factory_data_load    (GimpDataFactory      *factory,
+                                               GimpContext          *context,
                                                GHashTable           *cache);
 
 static gint64  gimp_data_factory_get_memsize  (GimpObject           *object,
@@ -215,9 +216,11 @@ gimp_data_factory_new (Gimp                             *gimp,
 
 void
 gimp_data_factory_data_init (GimpDataFactory *factory,
+                             GimpContext     *context,
                              gboolean         no_data)
 {
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   /*  Freeze and thaw the container even if no_data,
    *  this creates the standard data that serves as fallback.
@@ -233,7 +236,7 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
           g_print ("Loading '%s' data\n", name ? name : "???");
         }
 
-      gimp_data_factory_data_load (factory, NULL);
+      gimp_data_factory_data_load (factory, context, NULL);
     }
 
   gimp_container_thaw (factory->priv->container);
@@ -304,11 +307,13 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
 typedef struct
 {
   GimpDataFactory *factory;
+  GimpContext     *context;
   GHashTable      *cache;
 } GimpDataLoadContext;
 
 static void
 gimp_data_factory_data_load (GimpDataFactory *factory,
+                             GimpContext     *context,
                              GHashTable      *cache)
 {
   gchar *path;
@@ -323,10 +328,11 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
     {
       GList               *writable_list = NULL;
       gchar               *tmp;
-      GimpDataLoadContext  context;
+      GimpDataLoadContext  load_context;
 
-      context.factory = factory;
-      context.cache   = cache;
+      load_context.factory = factory;
+      load_context.context = context;
+      load_context.cache   = cache;
 
       tmp = gimp_config_path_expand (path, TRUE, NULL);
       g_free (path);
@@ -345,11 +351,12 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
         }
 
       gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
-                                       gimp_data_factory_load_data, &context);
+                                       gimp_data_factory_load_data,
+                                       &load_context);
 
       gimp_datafiles_read_directories (path, G_FILE_TEST_IS_DIR,
                                        gimp_data_factory_load_data_recursive,
-                                       &context);
+                                       &load_context);
 
       if (writable_path)
         {
@@ -363,11 +370,13 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
 }
 
 void
-gimp_data_factory_data_refresh (GimpDataFactory *factory)
+gimp_data_factory_data_refresh (GimpDataFactory *factory,
+                                GimpContext     *context)
 {
   GHashTable *cache;
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
 
   gimp_container_freeze (factory->priv->container);
 
@@ -387,7 +396,7 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory)
    *  objects remaining there will be those that are not present on
    *  the disk (that have to be destroyed)
    */
-  gimp_data_factory_data_load (factory, cache);
+  gimp_data_factory_data_load (factory, context, cache);
 
   /*  Now all the data is loaded. Free what remains in the cache  */
   g_hash_table_foreach_remove (cache,
@@ -832,7 +841,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         GList  *data_list;
         GError *error = NULL;
 
-        data_list = loader->load_func (file_data->filename, &error);
+        data_list = loader->load_func (context->context,
+                                       file_data->filename, &error);
 
         if (G_LIKELY (data_list))
           {

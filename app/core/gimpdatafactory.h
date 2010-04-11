@@ -27,7 +27,8 @@
 
 typedef GimpData * (* GimpDataNewFunc)         (GimpContext  *context,
                                                 const gchar  *name);
-typedef GList    * (* GimpDataLoadFunc)        (const gchar  *filename,
+typedef GList    * (* GimpDataLoadFunc)        (GimpContext  *context,
+                                                const gchar  *filename,
                                                 GError      **error);
 typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext  *context);
 
@@ -78,8 +79,10 @@ GimpDataFactory * gimp_data_factory_new      (Gimp                             *
                                               GimpDataGetStandardFunc           get_standard_func);
 
 void            gimp_data_factory_data_init         (GimpDataFactory  *factory,
+                                                     GimpContext      *context,
                                                      gboolean          no_data);
-void            gimp_data_factory_data_refresh      (GimpDataFactory  *factory);
+void            gimp_data_factory_data_refresh      (GimpDataFactory  *factory,
+                                                     GimpContext      *context);
 void            gimp_data_factory_data_save         (GimpDataFactory  *factory);
 void            gimp_data_factory_data_free         (GimpDataFactory  *factory);
 

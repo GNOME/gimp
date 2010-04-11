@@ -22,7 +22,8 @@
 #define GIMP_TOOL_PRESET_FILE_EXTENSION ".gtp"
 
 
-GList * gimp_tool_preset_load (const gchar  *filename,
+GList * gimp_tool_preset_load (GimpContext  *context,
+                               const gchar  *filename,
                                GError      **error);
 
 

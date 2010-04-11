@@ -38,7 +38,8 @@
 
 
 GList *
-gimp_gradient_load (const gchar  *filename,
+gimp_gradient_load (GimpContext  *context,
+                    const gchar  *filename,
                     GError      **error)
 {
   GimpGradient        *gradient;
@@ -310,7 +311,8 @@ static const GMarkupParser markup_parser =
 
 
 GList *
-gimp_gradient_load_svg (const gchar  *filename,
+gimp_gradient_load_svg (GimpContext  *context,
+                        const gchar  *filename,
                         GError      **error)
 {
   GimpXmlParser *xml_parser;

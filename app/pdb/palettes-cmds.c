@@ -48,7 +48,7 @@ palettes_refresh_invoker (GimpProcedure      *procedure,
                           const GValueArray  *args,
                           GError            **error)
 {
-  gimp_data_factory_data_refresh (gimp->palette_factory);
+  gimp_data_factory_data_refresh (gimp->palette_factory, context);
 
   return gimp_procedure_get_return_values (procedure, TRUE, NULL);
 }

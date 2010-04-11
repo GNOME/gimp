@@ -122,7 +122,8 @@ static gint32      abr_rle_decode                (FILE         *file,
 /*  public functions  */
 
 GList *
-gimp_brush_load (const gchar  *filename,
+gimp_brush_load (GimpContext  *context,
+                 const gchar  *filename,
                  GError      **error)
 {
   GimpBrush *brush;
@@ -141,7 +142,7 @@ gimp_brush_load (const gchar  *filename,
       return NULL;
     }
 
-  brush = gimp_brush_load_brush (fd, filename, error);
+  brush = gimp_brush_load_brush (context, fd, filename, error);
 
   close (fd);
 
@@ -152,7 +153,8 @@ gimp_brush_load (const gchar  *filename,
 }
 
 GimpBrush *
-gimp_brush_load_brush (gint          fd,
+gimp_brush_load_brush (GimpContext  *context,
+                       gint          fd,
                        const gchar  *filename,
                        GError      **error)
 {
@@ -400,7 +402,8 @@ gimp_brush_load_brush (gint          fd,
 }
 
 GList *
-gimp_brush_load_abr (const gchar  *filename,
+gimp_brush_load_abr (GimpContext  *context,
+                     const gchar  *filename,
                      GError      **error)
 {
   FILE      *file;

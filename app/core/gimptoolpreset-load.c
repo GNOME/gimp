@@ -23,16 +23,19 @@
 
 #include "core-types.h"
 
+#include "gimpcontext.h"
 #include "gimptoolpreset.h"
 #include "gimptoolpreset-load.h"
 
 
 GList *
-gimp_tool_preset_load (const gchar  *filename,
+gimp_tool_preset_load (GimpContext  *context,
+                       const gchar  *filename,
                        GError      **error)
 {
   GimpToolPreset *tool_preset;
 
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);

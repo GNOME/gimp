@@ -43,7 +43,8 @@
 
 
 GList *
-gimp_brush_generated_load (const gchar  *filename,
+gimp_brush_generated_load (GimpContext  *context,
+                           const gchar  *filename,
                            GError      **error)
 {
   GimpBrush               *brush;
