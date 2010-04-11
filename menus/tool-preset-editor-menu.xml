@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="tool-preset-editor-popup">
+    <menuitem action="tool-preset-editor-edit-active" />
+  </popup>
+</ui>

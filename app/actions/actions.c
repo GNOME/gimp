@@ -88,6 +88,7 @@
 #include "text-tool-actions.h"
 #include "tool-options-actions.h"
 #include "tool-preset-actions.h"
+#include "tool-preset-editor-actions.h"
 #include "tools-actions.h"
 #include "vectors-actions.h"
 #include "view-actions.h"
@@ -174,6 +175,9 @@ static const GimpActionFactoryEntry action_groups[] =
   { "tool-preset", N_("Tool Presets"), GIMP_STOCK_TOOL_PRESET,
     tool_preset_actions_setup,
     tool_preset_actions_update },
+  { "tool-preset-editor", N_("Tool Preset Editor"), GIMP_STOCK_TOOL_PRESET,
+    tool_preset_editor_actions_setup,
+    tool_preset_editor_actions_update },
   { "help", N_("Help"), GTK_STOCK_HELP,
     help_actions_setup,
     help_actions_update },

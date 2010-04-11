@@ -77,7 +77,8 @@ static void
 gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  /*Nuffink*/
+
+  editor->tool_preset_model = g_object_new (GIMP_TYPE_TOOL_PRESET, NULL);
 }
 
 static GObject *

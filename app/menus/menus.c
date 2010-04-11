@@ -313,6 +313,13 @@ menus_init (Gimp              *gimp,
                                       "palette-editor-menu.xml", NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<ToolPresetEditor>",
+                                      "tool-preset-editor",
+                                      NULL,
+                                      "/tool-preset-editor-popup",
+                                      "tool-preset-editor-menu.xml", NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Selection>",
                                       "select",
                                       "vectors",
