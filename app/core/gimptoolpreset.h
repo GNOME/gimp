@@ -36,6 +36,7 @@ struct _GimpToolPreset
 {
   GimpData         parent_instance;
 
+  Gimp            *gimp;
   GimpToolOptions *tool_options;
 };
 

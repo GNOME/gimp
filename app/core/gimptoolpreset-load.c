@@ -40,7 +40,9 @@ gimp_tool_preset_load (GimpContext  *context,
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  tool_preset = g_object_new (GIMP_TYPE_TOOL_PRESET, NULL);
+  tool_preset = g_object_new (GIMP_TYPE_TOOL_PRESET,
+                              "gimp", context->gimp,
+                              NULL);
 
   if (gimp_config_deserialize_file (GIMP_CONFIG (tool_preset),
                                     filename,
