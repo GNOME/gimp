@@ -141,7 +141,8 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
                                    g_param_spec_object ("context",
                                                         NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_DATA,
                                    g_param_spec_object ("data",
@@ -210,6 +211,7 @@ gimp_data_editor_constructor (GType                  type,
   editor = GIMP_DATA_EDITOR (object);
 
   g_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
+  g_assert (GIMP_IS_CONTEXT (editor->context));
 
   gimp_data_editor_set_edit_active (editor, TRUE);
 
