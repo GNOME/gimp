@@ -43,6 +43,7 @@
 static GObject * gimp_dynamics_editor_constructor  (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
+static void   gimp_dynamics_editor_finalize        (GObject            *object);
 
 static void   gimp_dynamics_editor_set_data        (GimpDataEditor     *editor,
                                                     GimpData           *data);
@@ -87,6 +88,7 @@ gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   object_class->constructor = gimp_dynamics_editor_constructor;
+  object_class->finalize    = gimp_dynamics_editor_finalize;
 
   editor_class->set_data    = gimp_dynamics_editor_set_data;
   editor_class->title       = _("Paint Dynamics Editor");
@@ -181,6 +183,20 @@ gimp_dynamics_editor_constructor (GType                  type,
   gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
 
   return object;
+}
+
+static void
+gimp_dynamics_editor_finalize (GObject *object)
+{
+  GimpDynamicsEditor *editor = GIMP_DYNAMICS_EDITOR (object);
+
+  if (editor->dynamics_model)
+    {
+      g_object_unref (editor->dynamics_model);
+      editor->dynamics_model = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
