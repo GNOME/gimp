@@ -651,7 +651,7 @@ def _interact(proc_name, start_params):
     if on_run:
         on_run()
 
-    tooltips = gtk.Tooltips()
+    tooltips = gtk.Tooltip()
 
     dialog = gimpui.Dialog(proc_name, "python-fu", None, 0, None, proc_name,
                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -731,10 +731,10 @@ def _interact(proc_name, start_params):
         table.attach(wid, 2,3, i,i+1, yoptions=0)
 
         if pf_type != PF_TEXT:
-            tooltips.set_tip(wid, desc, None)
+            wid.set_tooltip_text(desc)
         else:
             # Attach tip to TextView, not to ScrolledWindow
-            tooltips.set_tip(wid.view, desc, None)
+            wid.view.set_tooltip_text(desc)
         wid.show()
 
         wid.desc = desc
@@ -759,7 +759,6 @@ def _interact(proc_name, start_params):
 #    progress_vbox.pack_start(progress_label)
 #    progress_label.show()
 
-    tooltips.enable()
     dialog.show()
 
     gtk.main()
