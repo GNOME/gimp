@@ -1,0 +1,314 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Imam Musthaqim <userindesign@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python.gimp-2-6\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2009-03-31 05:19+0000\n"
+"PO-Revision-Date: 2009-04-01 19:43+0700\n"
+"Last-Translator: Imam Musthaqim <userindesign@gmail.com>\n"
+"Language-Team: INDONESIAN <userindesign@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Indonesian\n"
+"X-Poedit-Country: INDONESIA\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:386
+msgid "Missing exception information"
+msgstr "Kehilangan informasi pengecualian"
+
+#: ../plug-ins/pygimp/gimpfu.py:395
+#, python-format
+msgid "An error occured running %s"
+msgstr "Terjadi kesalahan saat menjalankan %s"
+
+#: ../plug-ins/pygimp/gimpfu.py:406
+msgid "_More Information"
+msgstr "_Informasi Lainnya"
+
+#: ../plug-ins/pygimp/gimpfu.py:518 ../plug-ins/pygimp/gimpfu.py:530
+#: ../plug-ins/pygimp/gimpfu.py:536
+msgid "No"
+msgstr "Tidak"
+
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:536
+msgid "Yes"
+msgstr "Ya"
+
+#: ../plug-ins/pygimp/gimpfu.py:587 ../plug-ins/pygimp/gimpui.py:224
+msgid "Python-Fu File Selection"
+msgstr "Pilihan File Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:598
+msgid "Python-Fu Folder Selection"
+msgstr "Pilihan Folder Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:689
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Masukan yang tidak sah untuk '%s'"
+
+#: ../plug-ins/pygimp/gimpui.py:177
+msgid "Python-Fu Color Selection"
+msgstr "Pilihan Warna Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Simpan sebagai XHTML berwarna"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Simpan sebagai XHTML berwarna"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "XHTML Berwarna"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "_Sumber karakter"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "Kode sumber"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "File teks"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "Kotak entri"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "_File untuk dibaca atau karakter untuk digunakan"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "Ukuran fo_nt dalam piksel"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "_Tulis file CSS terpisah"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:57
+msgid "Add a layer of fog"
+msgstr "Tambahkan lapisan kabut"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Fog..."
+msgstr "_Kabut..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+msgid "_Layer name"
+msgstr "_Nama lapisan"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+msgid "Clouds"
+msgstr "Awan"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+msgid "_Fog color"
+msgstr "_Warna kabut"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+msgid "_Turbulence"
+msgstr "_Turbulensi"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:70
+msgid "Op_acity"
+msgstr "Ke_pekatan"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Offset-kan warna dalam palet"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_Offset-kan Palet..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Palet"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "Off_set"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Sortir warna dalam palet"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "_Sortir Palet..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "_Model warna"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "Kanal yang akan _disortir"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Merah atau Rona"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Hijau atau Saturasi"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Biru atau Nilai"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_Menaik"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Buat gradien berulang dengan menggunakan warna dari palet"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "Palet ke _Gradien Berulang"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Buat gradien dengan menggunakan warna dari palet"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Palet ke _Gradien"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Iris"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:418
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Memotong gambar mengikuti panduan, membuat kutipan tabel HTML dan gambar"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:429
+msgid "_Slice..."
+msgstr "Iri_s..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Path for HTML export"
+msgstr "Lokasi untuk ekspor HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Filename for export"
+msgstr "Nama file yang akan diekspor"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Image name prefix"
+msgstr "Awalan nama gambar"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Image format"
+msgstr "Format gambar"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Separate image folder"
+msgstr "Pisahkan folder gambar"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+msgid "Folder for image export"
+msgstr "Folder untuk ekspor gambar"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Space between table elements"
+msgstr "Spasi di antara elemen tabel"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript untuk onmouseover dan klik"
+
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
+msgid "Skip animation for table caps"
+msgstr "Lompati animasi untuk cap tabel"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
+msgid "Python Console"
+msgstr "Konsol Python"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
+msgid "_Browse..."
+msgstr "_Jelajahi..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:139
+msgid "Python Procedure Browser"
+msgstr "Browser Prosedur Python"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:168
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Tidak dapat membuka '%s' untuk menulis: %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Tidak dapat menulis ke '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:191
+msgid "Save Python-Fu Console Output"
+msgstr "Simpan Keluaran Konsol  Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:217
+msgid "Interactive GIMP Python interpreter"
+msgstr "Penerjemah Python GIMP Interaktif"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:222
+msgid "_Console"
+msgstr "_Konsol"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Tambahkan bayangan jatuh ke lapisan, dan dapat dibuat bevel"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_Bayangan Jatuh dan Bevel..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "_Bayangan buram"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "_Bevel"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "_Bayangan jatuh"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "Pemindahan _X bayangan jatuh"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "Pemindahan _Y bayangan jatuh"
