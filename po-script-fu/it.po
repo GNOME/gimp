@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2009
+# Marco Ciampa <ciampix@libero.it>, 2003-2010
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-25 16:16+0100\n"
-"PO-Revision-Date: 2009-03-25 16:15+0100\n"
+"POT-Creation-Date: 2010-04-14 18:06+0200\n"
+"PO-Revision-Date: 2010-04-14 14:11+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1300,7 +1300,7 @@ msgstr "Nuvole a differenza..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Disturbo pieno applicato con modalità livello differenza"
+msgstr "Disturbo in tinta unita applicato con modalità livello differenza"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -2439,7 +2439,7 @@ msgstr "Forma"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
-msgstr "Colore pieno"
+msgstr "Tinta unita"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"

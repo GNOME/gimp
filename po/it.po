@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2009
+# Marco Ciampa <ciampix@libero.it>, 2003-2010
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
 # Convenzioni adottate per Gimp:
@@ -24,13 +24,14 @@
 # (to) shear = inclinare
 # undo history = cronologia annullamenti
 # wave = onda
+# solid color = tinta unita
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-30 12:19+0100\n"
-"PO-Revision-Date: 2009-11-30 12:20+0100\n"
+"POT-Creation-Date: 2010-04-14 18:05+0200\n"
+"PO-Revision-Date: 2010-04-14 18:05+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2579,7 +2580,7 @@ msgstr "Riflessione"
 msgid "Rotating"
 msgstr "Rotazione"
 
-#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:639
+#: ../app/actions/image-commands.c:408 ../app/actions/layers-commands.c:642
 msgid "Cannot crop because the current selection is empty."
 msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 
@@ -2592,12 +2593,12 @@ msgid "Scale Image"
 msgstr "Scala immagine"
 
 #. Scaling
-#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1101
+#: ../app/actions/image-commands.c:658 ../app/actions/layers-commands.c:1104
 #: ../app/dialogs/preferences-dialog.c:1925
 #: ../app/pdb/drawable-transform-cmds.c:682
 #: ../app/pdb/drawable-transform-cmds.c:758 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:289
-#: ../app/pdb/layer-cmds.c:334 ../app/pdb/transform-tools-cmds.c:291
+#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:292
+#: ../app/pdb/layer-cmds.c:337 ../app/pdb/transform-tools-cmds.c:291
 #: ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
 msgstr "Scala"
@@ -2994,50 +2995,50 @@ msgstr "Seleziona il livello sotto il livello corrente"
 msgid "Set Opacity"
 msgstr "Imposta opacità"
 
-#: ../app/actions/layers-commands.c:203
+#: ../app/actions/layers-commands.c:204
 msgid "Layer Attributes"
 msgstr "Attributi di livello"
 
-#: ../app/actions/layers-commands.c:206
+#: ../app/actions/layers-commands.c:207
 msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
-#: ../app/actions/layers-commands.c:249 ../app/actions/layers-commands.c:251
-#: ../app/actions/layers-commands.c:319 ../app/actions/layers-commands.c:323
+#: ../app/actions/layers-commands.c:250 ../app/actions/layers-commands.c:252
+#: ../app/actions/layers-commands.c:320 ../app/actions/layers-commands.c:324
 #: ../app/widgets/gimpdrawabletreeview.c:326
 #: ../app/widgets/gimplayertreeview.c:835
 msgid "New Layer"
 msgstr "Nuovo livello"
 
-#: ../app/actions/layers-commands.c:254
+#: ../app/actions/layers-commands.c:255
 msgid "Create a New Layer"
 msgstr "Crea un nuovo livello"
 
-#: ../app/actions/layers-commands.c:352
+#: ../app/actions/layers-commands.c:355
 msgid "Visible"
 msgstr "Visibile"
 
-#: ../app/actions/layers-commands.c:571
+#: ../app/actions/layers-commands.c:574
 msgid "Set Layer Boundary Size"
 msgstr "Imposta dimensione margini del livello"
 
-#: ../app/actions/layers-commands.c:612 ../app/core/gimplayer.c:251
+#: ../app/actions/layers-commands.c:615 ../app/core/gimplayer.c:251
 msgid "Scale Layer"
 msgstr "Scala livello"
 
-#: ../app/actions/layers-commands.c:649
+#: ../app/actions/layers-commands.c:652
 msgid "Crop Layer"
 msgstr "Ritaglia livello"
 
-#: ../app/actions/layers-commands.c:788
+#: ../app/actions/layers-commands.c:791
 msgid "Layer Mask to Selection"
 msgstr "Maschera livello a selezione"
 
-#: ../app/actions/layers-commands.c:1036
+#: ../app/actions/layers-commands.c:1039
 msgid "Please select a channel first"
 msgstr "Selezionare prima un canale"
 
-#: ../app/actions/layers-commands.c:1044 ../app/core/gimplayer.c:1283
+#: ../app/actions/layers-commands.c:1047 ../app/core/gimplayer.c:1283
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "Aggiungi maschera di livello"
@@ -4210,7 +4211,7 @@ msgstr "A tutto sch_ermo"
 
 #: ../app/actions/view-actions.c:231
 msgid "Toggle fullscreen view"
-msgstr "Commuta la visualizzazione a schermo pieno"
+msgstr "Commuta la visualizzazione a pieno schermo"
 
 #: ../app/actions/view-actions.c:292
 msgid "1_6:1  (1600%)"
@@ -5236,7 +5237,7 @@ msgstr "Delinea con uno strumento"
 
 #: ../app/core/core-enums.c:307
 msgid "Solid color"
-msgstr "Colore pieno"
+msgstr "Tinta unita"
 
 #: ../app/core/core-enums.c:336
 msgid "Miter"
@@ -5520,7 +5521,7 @@ msgstr "Incolla"
 msgid "Cut"
 msgstr "Taglia"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:161
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Testo"
@@ -6612,8 +6613,8 @@ msgstr "Livello"
 msgid "Rename Layer"
 msgstr "Rinomina livello"
 
-#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:434
-#: ../app/pdb/layer-cmds.c:470
+#: ../app/core/gimplayer.c:250 ../app/pdb/layer-cmds.c:437
+#: ../app/pdb/layer-cmds.c:473
 msgid "Move Layer"
 msgstr "Sposta livello"
 
@@ -7877,7 +7878,7 @@ msgstr "Visualizzazione predefinita in modalità normale"
 
 #: ../app/dialogs/preferences-dialog.c:2165
 msgid "Default Appearance in Fullscreen Mode"
-msgstr "Visualizzazione predefinita in modalità pienoschermo"
+msgstr "Visualizzazione predefinita in modalità a pieno schermo"
 
 #: ../app/dialogs/preferences-dialog.c:2174
 msgid "Image Title & Statusbar Format"
@@ -8642,7 +8643,7 @@ msgstr "(pulito)"
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: ../app/display/gimpstatusbar.c:346
+#: ../app/display/gimpstatusbar.c:364
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Cancella <i>%s</i>"
@@ -9221,11 +9222,11 @@ msgstr "Inizializzazione plug-in"
 msgid "Starting Extensions"
 msgstr "Avvio estensioni"
 
-#: ../app/plug-in/gimppluginmanager.c:296
+#: ../app/plug-in/gimppluginmanager.c:290
 msgid "Plug-In Interpreters"
 msgstr "Interpreti dei plug-in"
 
-#: ../app/plug-in/gimppluginmanager.c:303
+#: ../app/plug-in/gimppluginmanager.c:297
 msgid "Plug-In Environment"
 msgstr "Ambiente plug-in"
 
@@ -9286,7 +9287,7 @@ msgstr ""
 "Mai posto quiz vaghi\n"
 "o indecifrabili."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:879
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:901
 msgid "Add Text Layer"
 msgstr "Aggiungi livello testo"
 
@@ -10240,24 +10241,24 @@ msgstr ""
 msgid "_Free Select"
 msgstr "A mano _libera"
 
-#: ../app/tools/gimpfreeselecttool.c:1116
+#: ../app/tools/gimpfreeselecttool.c:1117
 msgid "Click to complete selection"
 msgstr "Fare clic per completare la selezione"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1121
 msgid "Click-Drag to move segment vertex"
 msgstr "Fare clic e trascinare per spostare il capo del segmento"
 
-#: ../app/tools/gimpfreeselecttool.c:1125
+#: ../app/tools/gimpfreeselecttool.c:1126
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr "Invio esegue, Esc annulla, Backspace rimuove l'ultimo segmento"
 
-#: ../app/tools/gimpfreeselecttool.c:1129
+#: ../app/tools/gimpfreeselecttool.c:1130
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Clic e trascina crea un segmento libero, clic crea un segmento poligonale"
 
-#: ../app/tools/gimpfreeselecttool.c:1581
+#: ../app/tools/gimpfreeselecttool.c:1582
 msgctxt "command"
 msgid "Free Select"
 msgstr "Selezione libera"
@@ -10292,12 +10293,12 @@ msgstr "Operazione _GEGL... "
 msgid "GEGL operations do not operate on indexed layers."
 msgstr "Le operazioni GEGL non possono agire su livelli indicizzati."
 
-#: ../app/tools/gimpgegltool.c:338
+#: ../app/tools/gimpgegltool.c:339
 msgid "_Operation:"
 msgstr "_Operazione:"
 
 #. The options vbox
-#: ../app/tools/gimpgegltool.c:411
+#: ../app/tools/gimpgegltool.c:412
 msgid "Operation Settings"
 msgstr "Impostazioni operazione:"
 
@@ -11122,27 +11123,27 @@ msgstr "Tracciato dal testo"
 msgid "Text along Path"
 msgstr "Testo lungo il tracciato"
 
-#: ../app/tools/gimptexttool.c:161
+#: ../app/tools/gimptexttool.c:162
 msgid "Text Tool: Create or edit text layers"
 msgstr "Strumento testo: crea o modifica livelli di testo"
 
-#: ../app/tools/gimptexttool.c:162
+#: ../app/tools/gimptexttool.c:163
 msgid "Te_xt"
 msgstr "_Testo"
 
-#: ../app/tools/gimptexttool.c:956
+#: ../app/tools/gimptexttool.c:987
 msgid "GIMP Text Editor"
 msgstr "Editor di testi di GIMP"
 
-#: ../app/tools/gimptexttool.c:1072 ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1103 ../app/tools/gimptexttool.c:1106
 msgid "Confirm Text Editing"
 msgstr "Conferma modifica del testo"
 
-#: ../app/tools/gimptexttool.c:1079
+#: ../app/tools/gimptexttool.c:1110
 msgid "Create _New Layer"
 msgstr "Crea un _nuovo livello"
 
-#: ../app/tools/gimptexttool.c:1103
+#: ../app/tools/gimptexttool.c:1134
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11157,7 +11158,7 @@ msgstr ""
 "Puoi modificare il livello oppure creare un nuovo livello di testo dai suoi "
 "attributi."
 
-#: ../app/tools/gimptexttool.c:1315
+#: ../app/tools/gimptexttool.c:1356
 msgid "Reshape Text Layer"
 msgstr "Risagoma il livello di testo"
 

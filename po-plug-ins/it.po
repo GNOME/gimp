@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-06 12:19+0100\n"
-"PO-Revision-Date: 2010-02-06 12:53+0100\n"
+"POT-Creation-Date: 2010-04-14 18:06+0200\n"
+"PO-Revision-Date: 2010-04-14 18:03+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3760,19 +3760,19 @@ msgstr "Importa da file PDF"
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf.c:879
+#: ../plug-ins/common/file-pdf.c:880
 msgid "_Width (pixels):"
 msgstr "_Larghezza (pixel):"
 
-#: ../plug-ins/common/file-pdf.c:880
+#: ../plug-ins/common/file-pdf.c:881
 msgid "_Height (pixels):"
 msgstr "_Altezza (pixel):"
 
-#: ../plug-ins/common/file-pdf.c:882
+#: ../plug-ins/common/file-pdf.c:883
 msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
-#: ../plug-ins/common/file-pdf.c:1156
+#: ../plug-ins/common/file-pdf.c:1157
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
@@ -6031,12 +6031,12 @@ msgstr "Crea una texture casuale a effetto nuvola"
 
 #: ../plug-ins/common/noise-solid.c:182
 msgid "_Solid Noise..."
-msgstr "Disturbo _pieno..."
+msgstr "Disturbo tinta _unita..."
 
 #. Dialog initialization
 #: ../plug-ins/common/noise-solid.c:315 ../plug-ins/common/noise-solid.c:563
 msgid "Solid Noise"
-msgstr "Disturbo pieno"
+msgstr "Disturbo in tinta unita"
 
 #: ../plug-ins/common/noise-solid.c:615
 msgid "_Detail:"
@@ -6184,7 +6184,7 @@ msgstr "Percentuale del _bianco:"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
-msgstr "Semplifica l'immagine in un insieme di quadrati di colori pieni"
+msgstr "Semplifica l'immagine in un insieme di quadrati di tinte unite"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
@@ -7021,7 +7021,7 @@ msgstr "Usa colore di sfondo"
 #: ../plug-ins/common/sphere-designer.c:291
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid"
-msgstr "Pieno"
+msgstr "Tinta unita"
 
 #: ../plug-ins/common/sphere-designer.c:292
 msgid "Checker"
@@ -9825,7 +9825,7 @@ msgstr "Copia la trama della carta selezionata come sfondo"
 
 #: ../plug-ins/gimpressionist/general.c:167
 msgid "Solid colored background"
-msgstr "Sfondo con colore pieno"
+msgstr "Sfondo con colore in tinta unita"
 
 #: ../plug-ins/gimpressionist/general.c:186
 msgid "Use a transparent background; Only the strokes painted will be visible"
