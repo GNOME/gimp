@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-24 16:18+0100\n"
-"PO-Revision-Date: 2010-02-24 16:21+0100\n"
+"POT-Creation-Date: 2010-04-14 18:33+0200\n"
+"PO-Revision-Date: 2010-04-14 18:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -421,91 +421,91 @@ msgstr "Rilevamento sfondo animazione"
 msgid "Optimizing animation"
 msgstr "Ottimizzazione animazione"
 
-#: ../plug-ins/common/animation-play.c:169
+#: ../plug-ins/common/animation-play.c:170
 msgid "Preview a GIMP layer-based animation"
 msgstr "Anteprima di un'animazione basata sui livelli di GIMP"
 
-#: ../plug-ins/common/animation-play.c:174
+#: ../plug-ins/common/animation-play.c:175
 msgid "_Playback..."
 msgstr "_Esecuzione..."
 
-#: ../plug-ins/common/animation-play.c:453
+#: ../plug-ins/common/animation-play.c:454
 msgid "_Step"
 msgstr "Pa_sso"
 
-#: ../plug-ins/common/animation-play.c:453
+#: ../plug-ins/common/animation-play.c:454
 msgid "Step to next frame"
 msgstr "Esegui passo di un frame"
 
-#: ../plug-ins/common/animation-play.c:457
+#: ../plug-ins/common/animation-play.c:458
 msgid "Rewind the animation"
 msgstr "Riavvolgi l'animazione"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:476
 msgid "Faster"
 msgstr "Più veloce"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:476
 msgid "Increase the speed of the animation"
 msgstr "Aumenta la velocità dell'animazione"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:481
 msgid "Slower"
 msgstr "Più lenta"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:481
 msgid "Decrease the speed of the animation"
 msgstr "Diminuisce la velocità dell'animazione"
 
-#: ../plug-ins/common/animation-play.c:485
+#: ../plug-ins/common/animation-play.c:486
 msgid "Reset speed"
 msgstr "Reimposta la velocità"
 
-#: ../plug-ins/common/animation-play.c:485
+#: ../plug-ins/common/animation-play.c:486
 msgid "Reset the speed of the animation"
 msgstr "Reimposta la velocità dell'animazione"
 
-#: ../plug-ins/common/animation-play.c:493
-#: ../plug-ins/common/animation-play.c:1474
+#: ../plug-ins/common/animation-play.c:494
+#: ../plug-ins/common/animation-play.c:1475
 msgid "Start playback"
 msgstr "Inizia l'esecuzione"
 
-#: ../plug-ins/common/animation-play.c:497
+#: ../plug-ins/common/animation-play.c:498
 msgid "Detach"
 msgstr "Stacca"
 
-#: ../plug-ins/common/animation-play.c:498
+#: ../plug-ins/common/animation-play.c:499
 msgid "Detach the animation from the dialog window"
 msgstr "Stacca l'animazione dalla finestra di dialogo"
 
-#: ../plug-ins/common/animation-play.c:590
+#: ../plug-ins/common/animation-play.c:591
 msgid "Animation Playback:"
 msgstr "Esecuzione animazione:"
 
 #. list is given in "fps" - frames per second
-#: ../plug-ins/common/animation-play.c:663
+#: ../plug-ins/common/animation-play.c:664
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: ../plug-ins/common/animation-play.c:674
+#: ../plug-ins/common/animation-play.c:675
 msgid "Default framerate"
 msgstr "Frequenza predefinita fotogrammi"
 
-#: ../plug-ins/common/animation-play.c:695
+#: ../plug-ins/common/animation-play.c:696
 msgid "Playback speed"
 msgstr "Velocità di riproduzione"
 
-#: ../plug-ins/common/animation-play.c:831
+#: ../plug-ins/common/animation-play.c:832
 msgid "Tried to display an invalid layer."
 msgstr "Tentativo di visualizzazione di un livello non valido."
 
-#: ../plug-ins/common/animation-play.c:1351
+#: ../plug-ins/common/animation-play.c:1352
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Fotogramma %d di %d"
 
-#: ../plug-ins/common/animation-play.c:1474
+#: ../plug-ins/common/animation-play.c:1475
 msgid "Stop playback"
 msgstr "Blocca l'esecuzione"
 
@@ -1078,7 +1078,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1711
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
-#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2397
+#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2398
 #: ../plug-ins/lighting/lighting-ui.c:1210
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -3333,7 +3333,10 @@ msgstr "Un fotogramma per livello (rimpiazza)"
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
-msgstr "È possibile esportare come animazione solo quando l'immagine possiede più di un livello. L'immagine che si sta tentando di esportare possiede un solo livello."
+msgstr ""
+"È possibile esportare come animazione solo quando l'immagine possiede più di "
+"un livello. L'immagine che si sta tentando di esportare possiede un solo "
+"livello."
 
 #: ../plug-ins/common/file-gif-save.c:2347
 msgid "Error writing output file."
@@ -3725,7 +3728,9 @@ msgstr "millisecondi"
 msgid ""
 "These options are only available when the exported image has more than one "
 "layer. The image you are exporting only has one layer."
-msgstr "Queste opzioni sono disponibili quando l'immagine esportata possiede più di un livello. L'immagine che si sta esportando ha un solo livello."
+msgstr ""
+"Queste opzioni sono disponibili quando l'immagine esportata possiede più di "
+"un livello. L'immagine che si sta esportando ha un solo livello."
 
 #: ../plug-ins/common/file-mng.c:1559
 msgid "MNG animation"
@@ -3831,19 +3836,19 @@ msgstr "Importa da file PDF"
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf.c:889
+#: ../plug-ins/common/file-pdf.c:890
 msgid "_Width (pixels):"
 msgstr "_Larghezza (pixel):"
 
-#: ../plug-ins/common/file-pdf.c:890
+#: ../plug-ins/common/file-pdf.c:891
 msgid "_Height (pixels):"
 msgstr "_Altezza (pixel):"
 
-#: ../plug-ins/common/file-pdf.c:892
+#: ../plug-ins/common/file-pdf.c:893
 msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
-#: ../plug-ins/common/file-pdf.c:1166
+#: ../plug-ins/common/file-pdf.c:1167
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
@@ -6312,12 +6317,12 @@ msgstr "Crea una texture casuale a effetto nuvola"
 
 #: ../plug-ins/common/noise-solid.c:181
 msgid "_Solid Noise..."
-msgstr "Disturbo _pieno..."
+msgstr "Disturbo tinta _unita..."
 
 #. Dialog initialization
 #: ../plug-ins/common/noise-solid.c:314 ../plug-ins/common/noise-solid.c:562
 msgid "Solid Noise"
-msgstr "Disturbo pieno"
+msgstr "Disturbo in tinta unita"
 
 #: ../plug-ins/common/noise-solid.c:615
 msgid "_Detail:"
@@ -7302,7 +7307,7 @@ msgstr "Usa colore di sfondo"
 #: ../plug-ins/common/sphere-designer.c:290
 #: ../plug-ins/gimpressionist/general.c:165
 msgid "Solid"
-msgstr "Pieno"
+msgstr "Tinta unita"
 
 #: ../plug-ins/common/sphere-designer.c:291
 msgid "Checker"
@@ -7397,7 +7402,7 @@ msgstr "Finestra di selezione del colore"
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:193
-#: ../plug-ins/ifs-compose/ifs-compose.c:555
+#: ../plug-ins/ifs-compose/ifs-compose.c:556
 msgid "Scale:"
 msgstr "Scala:"
 
@@ -7633,7 +7638,7 @@ msgstr "Piastrelle piccole"
 #. Area for buttons etc
 #. Flip
 #: ../plug-ins/common/tile-small.c:413
-#: ../plug-ins/ifs-compose/ifs-compose.c:611
+#: ../plug-ins/ifs-compose/ifs-compose.c:612
 msgid "Flip"
 msgstr "Ribalta"
 
@@ -8109,7 +8114,7 @@ msgstr "Ampiezza passo:"
 
 #: ../plug-ins/common/warp.c:433
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
-#: ../plug-ins/ifs-compose/ifs-compose.c:1213
+#: ../plug-ins/ifs-compose/ifs-compose.c:1214
 msgid "Iterations:"
 msgstr "Iterazioni:"
 
@@ -8187,7 +8192,7 @@ msgid "Vector mag:"
 msgstr "Intensità vettore:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:569
+#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:570
 msgid "Angle:"
 msgstr "Angolo:"
 
@@ -8949,29 +8954,29 @@ msgstr ""
 "RLE aggressiva\n"
 "(non supportata da SGI)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:234
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:233
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Scaricamento immagine (%s di %s)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:238
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:237
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Caricamento immagine (%s di %s)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:260
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:259
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:135
 #: ../plug-ins/file-uri/uri-backend-wget.c:345
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Scaricato %s di dati immagine"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:264
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:263
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Caricato %s di dati immagine"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:318
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:317
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:157
 #: ../plug-ins/file-uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -10086,7 +10091,7 @@ msgstr "Copia la trama della carta selezionata come sfondo"
 
 #: ../plug-ins/gimpressionist/general.c:166
 msgid "Solid colored background"
-msgstr "Sfondo con colore pieno"
+msgstr "Sfondo con colore in tinta unita"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -11020,16 +11025,16 @@ msgstr ""
 "Errore di analisi in '%s':\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:335
+#: ../plug-ins/ifs-compose/ifs-compose.c:336
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Crea un frattale IFS (Iterated Function System)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:347
+#: ../plug-ins/ifs-compose/ifs-compose.c:348
 msgid "_IFS Fractal..."
 msgstr "Frattale _IFS..."
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:527
+#: ../plug-ins/ifs-compose/ifs-compose.c:528
 #: ../plug-ins/lighting/lighting-ui.c:526
 #: ../plug-ins/map-object/map-object-ui.c:675
 #: ../plug-ins/map-object/map-object-ui.c:729
@@ -11039,7 +11044,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:541
+#: ../plug-ins/ifs-compose/ifs-compose.c:542
 #: ../plug-ins/lighting/lighting-ui.c:540
 #: ../plug-ins/map-object/map-object-ui.c:689
 #: ../plug-ins/map-object/map-object-ui.c:742
@@ -11050,149 +11055,149 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:583
+#: ../plug-ins/ifs-compose/ifs-compose.c:584
 msgid "Asymmetry:"
 msgstr "Asimmetria:"
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:597
+#: ../plug-ins/ifs-compose/ifs-compose.c:598
 msgid "Shear:"
 msgstr "Inclina:"
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:642
+#: ../plug-ins/ifs-compose/ifs-compose.c:643
 msgid "Simple"
 msgstr "Semplice"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:651
+#: ../plug-ins/ifs-compose/ifs-compose.c:652
 msgid "IFS Fractal: Target"
 msgstr "Frattale IFS: obbiettivo"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:657
+#: ../plug-ins/ifs-compose/ifs-compose.c:658
 msgid "Scale hue by:"
 msgstr "Scala tonalità di:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:672
+#: ../plug-ins/ifs-compose/ifs-compose.c:673
 msgid "Scale value by:"
 msgstr "Scala valore di:"
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:689
+#: ../plug-ins/ifs-compose/ifs-compose.c:690
 msgid "Full"
 msgstr "Tutto"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:697
+#: ../plug-ins/ifs-compose/ifs-compose.c:698
 msgid "IFS Fractal: Red"
 msgstr "Frattale IFS: rosso"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:705
+#: ../plug-ins/ifs-compose/ifs-compose.c:706
 msgid "IFS Fractal: Green"
 msgstr "Frattale IFS: verde"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:713
+#: ../plug-ins/ifs-compose/ifs-compose.c:714
 msgid "IFS Fractal: Blue"
 msgstr "Frattale IFS: blu"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:721
+#: ../plug-ins/ifs-compose/ifs-compose.c:722
 msgid "IFS Fractal: Black"
 msgstr "Frattale IFS: nero"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:771
+#: ../plug-ins/ifs-compose/ifs-compose.c:772
 msgid "IFS Fractal"
 msgstr "Frattale IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:869
+#: ../plug-ins/ifs-compose/ifs-compose.c:870
 msgid "Spatial Transformation"
 msgstr "Trasformazione spaziale"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:875
+#: ../plug-ins/ifs-compose/ifs-compose.c:876
 msgid "Color Transformation"
 msgstr "Trasformazione colore"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:885
+#: ../plug-ins/ifs-compose/ifs-compose.c:886
 msgid "Relative probability:"
 msgstr "Probabilità relativa:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1060
+#: ../plug-ins/ifs-compose/ifs-compose.c:1061
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Select _All"
 msgstr "Selezion_a tutto"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1064
+#: ../plug-ins/ifs-compose/ifs-compose.c:1065
 msgid "Re_center"
 msgstr "Ri_centra"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1064
+#: ../plug-ins/ifs-compose/ifs-compose.c:1065
 msgid "Recompute Center"
 msgstr "Ricalcola centro"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1068
+#: ../plug-ins/ifs-compose/ifs-compose.c:1069
 msgid "Render Options"
 msgstr "Opzioni di render"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1074
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Muovi"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1077
+#: ../plug-ins/ifs-compose/ifs-compose.c:1078
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1077
+#: ../plug-ins/ifs-compose/ifs-compose.c:1078
 msgid "Rotate / Scale"
 msgstr "Rotazione / scalatura"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1080
+#: ../plug-ins/ifs-compose/ifs-compose.c:1081
 msgid "Stretch"
 msgstr "Allarga"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1178
+#: ../plug-ins/ifs-compose/ifs-compose.c:1179
 msgid "IFS Fractal Render Options"
 msgstr "Opzioni di render IFS frattale"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1200
+#: ../plug-ins/ifs-compose/ifs-compose.c:1201
 msgid "Max. memory:"
 msgstr "Memoria massima:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1227
+#: ../plug-ins/ifs-compose/ifs-compose.c:1228
 msgid "Subdivide:"
 msgstr "Suddividi:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1240
+#: ../plug-ins/ifs-compose/ifs-compose.c:1241
 msgid "Spot radius:"
 msgstr "Raggio:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1305
+#: ../plug-ins/ifs-compose/ifs-compose.c:1306
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Rendering IFS (%d/%d)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1471
+#: ../plug-ins/ifs-compose/ifs-compose.c:1472
 #, c-format
 msgid "Transformation %s"
 msgstr "Trasformazione %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2402
+#: ../plug-ins/ifs-compose/ifs-compose.c:2403
 msgid "Save failed"
 msgstr "Salvataggio fallito"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2485
-#: ../plug-ins/ifs-compose/ifs-compose.c:2498
+#: ../plug-ins/ifs-compose/ifs-compose.c:2486
+#: ../plug-ins/ifs-compose/ifs-compose.c:2499
 msgid "Open failed"
 msgstr "Apertura fallita"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2493
+#: ../plug-ins/ifs-compose/ifs-compose.c:2494
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Il file '%s' non sembra essere un file frattale IFS."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2533
+#: ../plug-ins/ifs-compose/ifs-compose.c:2534
 msgid "Save as IFS Fractal file"
 msgstr "Salva come file IFS frattale"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2570
+#: ../plug-ins/ifs-compose/ifs-compose.c:2571
 msgid "Open IFS Fractal file"
 msgstr "Apri file IFS frattale"
 

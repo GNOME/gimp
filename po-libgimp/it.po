@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007, 2008, 2009
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 # Luca Ferretti <elle.uca@libero.it>, 2006, 2009.
 #
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-19 13:39+0100\n"
-"PO-Revision-Date: 2009-12-19 13:39+0100\n"
+"POT-Creation-Date: 2010-04-14 18:11+0200\n"
+"PO-Revision-Date: 2010-04-14 18:11+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1187,15 +1187,15 @@ msgstr "Nessuno"
 msgid "Scales"
 msgstr "Scale"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:208
 msgid "Current:"
 msgstr "Attuale:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:231
+#: ../libgimpwidgets/gimpcolorselection.c:217
 msgid "Old:"
 msgstr "Precedente:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:285
+#: ../libgimpwidgets/gimpcolorselection.c:302
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1203,7 +1203,7 @@ msgstr ""
 "Notazione colore esadecimale come si usa in HTML e CSS. Questa voce accetta "
 "anche i nomi di colore CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:291
+#: ../libgimpwidgets/gimpcolorselection.c:308
 msgid "HTML _notation:"
 msgstr "_Notazione HTML:"
 
@@ -1297,7 +1297,7 @@ msgstr ""
 "dello schermo per selezionare quel colore."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:278
+#: ../libgimpwidgets/gimppreview.c:279
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -1372,23 +1372,23 @@ msgstr "Spaziatura r_ighe"
 msgid "_Resize"
 msgstr "_Ridimensiona"
 
-#: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:320
 msgid "_Scale"
 msgstr "_Scala"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:296
 msgid "Cr_op"
 msgstr "Rita_glia"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:315
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libgimpwidgets/gimpstock.c:319
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:321
 msgid "_Shear"
 msgstr "_Inclina"
 
