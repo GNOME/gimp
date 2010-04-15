@@ -651,8 +651,6 @@ def _interact(proc_name, start_params):
     if on_run:
         on_run()
 
-    tooltips = gtk.Tooltip()
-
     dialog = gimpui.Dialog(proc_name, "python-fu", None, 0, None, proc_name,
                            (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                             gtk.STOCK_OK, gtk.RESPONSE_OK))
