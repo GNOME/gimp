@@ -39,7 +39,7 @@
 static const GimpActionEntry tool_preset_editor_actions[] =
 {
   { "tool-preset-editor-popup", GIMP_STOCK_TOOL_PRESET,
-    NC_("tool-preset-editor-action", "Paint ToolPreset Editor Menu"), NULL, NULL, NULL,
+    NC_("tool-preset-editor-action", "Tool Preset Editor Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_EDITOR_DIALOG }
 };
 
@@ -47,7 +47,7 @@ static const GimpActionEntry tool_preset_editor_actions[] =
 static const GimpToggleActionEntry tool_preset_editor_toggle_actions[] =
 {
   { "tool-preset-editor-edit-active", GIMP_STOCK_LINKED,
-    NC_("tool-preset-editor-action", "Edit Active ToolPreset"), NULL, NULL,
+    NC_("tool-preset-editor-action", "Edit Active Tool Preset"), NULL, NULL,
     G_CALLBACK (data_editor_edit_active_cmd_callback),
     FALSE,
     GIMP_HELP_BRUSH_EDITOR_EDIT_ACTIVE }
