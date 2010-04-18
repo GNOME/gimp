@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include <gegl.h>
-
 #include <gegl-plugin.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -125,8 +124,6 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               y,
                                                     gint               width,
                                                     gint               height);
-
-static gboolean   gimp_drawable_update_timeout     (GimpDrawable *drawable);
 
 static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
                                                     gint               width,
@@ -259,14 +256,6 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->bytes     = 0;
   drawable->type      = -1;
   drawable->has_alpha = FALSE;
-
-  drawable->dirty_x1 = 0;
-  drawable->dirty_y1 = 0;
-  drawable->dirty_x2 = 0;
-  drawable->dirty_y2 = 0;
-
-  drawable->update_count = 0;
-  drawable->update_timeout = 0;
 }
 
 /* sorry for the evil casts */
@@ -1208,36 +1197,8 @@ gimp_drawable_update (GimpDrawable *drawable,
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  if (drawable->update_timeout > 0)
-    {
-
-      drawable->dirty_x1 = MIN (x, drawable->dirty_x1);
-      drawable->dirty_y1 = MIN (y, drawable->dirty_y1);
-
-      drawable->dirty_x2 = MAX (x + width, drawable->dirty_x2);
-
-      drawable->dirty_y2 = MAX (y + height, drawable->dirty_y2);
-
-      drawable->update_count = drawable->update_count + 1;
-    }
-  else
-    {
-      g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
-                     x, y, width, height);
-
-      drawable->dirty_x1 = drawable->dirty_x2;
-      drawable->dirty_y1 = drawable->dirty_y2;
-      drawable->dirty_x2 = 0;
-      drawable->dirty_y2 = 0;
-
-      drawable->update_count = 0;
-
-      drawable->update_timeout =
-          g_timeout_add_full (G_PRIORITY_HIGH,
-                              40,
-                              (GSourceFunc) gimp_drawable_update_timeout,
-                              drawable, NULL);
-    }
+  g_signal_emit (drawable, gimp_drawable_signals[UPDATE], 0,
+                 x, y, width, height);
 }
 
 void
@@ -2034,16 +1995,4 @@ gimp_drawable_detach_floating_sel (GimpDrawable *drawable,
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (floating_sel));
 
   gimp_image_set_floating_selection (image, NULL);
-}
-
-static gboolean
-gimp_drawable_update_timeout (GimpDrawable *drawable)
-{
-  drawable->update_timeout = 0;
-
-  if (drawable->update_count > 0)
-    gimp_drawable_update(drawable,
-                         drawable->dirty_x1, drawable->dirty_y1,
-                         drawable->dirty_x2 - drawable->dirty_x1, drawable->dirty_y2 - drawable->dirty_y1);
-  return FALSE;
 }
