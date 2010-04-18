@@ -41,6 +41,15 @@ struct _GimpDrawable
   GimpImageType  type;               /* type of drawable               */
   gboolean       has_alpha;          /* drawable has alpha             */
 
+  gint           dirty_x1;
+  gint           dirty_y1;
+  gint           dirty_x2;
+  gint           dirty_y2;
+
+  guint          update_timeout;     /* update delay timeout ID         */
+
+  guint          update_count;
+
   GimpDrawablePrivate *private;
 };
 
