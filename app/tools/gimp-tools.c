@@ -305,9 +305,17 @@ gimp_tools_restore (Gimp *gimp)
       GimpToolOptionsGUIFunc  options_gui_func;
       GtkWidget              *options_gui;
 
+      /*  copy all context properties except those the tool actually
+       *  uses, because the subsequent deserialize() on the tool
+       *  options will only set the properties that were set to
+       *  non-default values at the time of saving, and we want to
+       *  keep these default values as if they have been saved.
+       * (see bug #541586).
+       */
       gimp_context_copy_properties (gimp_get_user_context (gimp),
                                     GIMP_CONTEXT (tool_info->tool_options),
-                                    GIMP_CONTEXT_ALL_PROPS_MASK);
+                                    GIMP_CONTEXT_ALL_PROPS_MASK &~
+                                    tool_info->context_props);
 
       gimp_tool_options_deserialize (tool_info->tool_options, NULL);
 
