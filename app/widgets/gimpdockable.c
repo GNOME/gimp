@@ -800,7 +800,7 @@ gimp_dockable_get_icon (GimpDockable *dockable,
 }
 
 static GtkWidget *
-gimp_dockable_get_tab_widget_internal (GimpDockable *dockable,
+gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
                                        GimpContext  *context,
                                        GimpTabStyle  tab_style,
                                        GtkIconSize   size,
@@ -1100,20 +1100,20 @@ gimp_dockable_set_tab_style (GimpDockable *dockable,
 }
 
 GtkWidget *
-gimp_dockable_get_tab_widget (GimpDockable *dockable,
-                              GimpContext  *context,
-                              GimpTabStyle  tab_style,
-                              GtkIconSize   size)
+gimp_dockable_new_tab_widget_for_style (GimpDockable *dockable,
+                                        GimpContext  *context,
+                                        GimpTabStyle  tab_style,
+                                        GtkIconSize   size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return gimp_dockable_get_tab_widget_internal (dockable, context,
+  return gimp_dockable_new_tab_widget_internal (dockable, context,
                                                 tab_style, size, FALSE);
 }
 
 GtkWidget *
-gimp_dockable_get_drag_widget (GimpDockable *dockable)
+gimp_dockable_new_drag_widget (GimpDockable *dockable)
 {
   GtkWidget *frame;
   GtkWidget *widget;
@@ -1123,7 +1123,7 @@ gimp_dockable_get_drag_widget (GimpDockable *dockable)
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
 
-  widget = gimp_dockable_get_tab_widget_internal (dockable,
+  widget = gimp_dockable_new_tab_widget_internal (dockable,
                                                   dockable->p->context,
                                                   GIMP_TAB_STYLE_ICON_BLURB,
                                                   GTK_ICON_SIZE_DND,

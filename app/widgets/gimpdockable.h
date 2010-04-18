@@ -88,11 +88,12 @@ gboolean        gimp_dockable_is_locked        (GimpDockable   *dockable);
 
 void            gimp_dockable_set_tab_style    (GimpDockable   *dockable,
                                                 GimpTabStyle    tab_style);
-GtkWidget     * gimp_dockable_get_tab_widget   (GimpDockable   *dockable,
+GtkWidget     * gimp_dockable_new_tab_widget_for_style
+                                               (GimpDockable   *dockable,
                                                 GimpContext    *context,
                                                 GimpTabStyle    tab_style,
                                                 GtkIconSize     size);
-GtkWidget     * gimp_dockable_get_drag_widget  (GimpDockable   *dockable);
+GtkWidget     * gimp_dockable_new_drag_widget  (GimpDockable   *dockable);
 void            gimp_dockable_set_context      (GimpDockable   *dockable,
                                                 GimpContext    *context);
 GimpUIManager * gimp_dockable_get_menu         (GimpDockable   *dockable,
