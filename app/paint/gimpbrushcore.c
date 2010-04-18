@@ -1049,7 +1049,7 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
 
 
       gimp_brush_transform_matrix (height, width,
-                                   scale_y, scale_x, angle, &matrix);
+                                   scale_x, scale_y, angle, &matrix);
 
       core->transformed_brush_bound_segs
                       = boundary_transform (core->brush_bound_segs,
