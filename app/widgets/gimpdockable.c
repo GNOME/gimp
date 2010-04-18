@@ -1100,10 +1100,10 @@ gimp_dockable_set_tab_style (GimpDockable *dockable,
 }
 
 GtkWidget *
-gimp_dockable_new_tab_widget_for_style (GimpDockable *dockable,
-                                        GimpContext  *context,
-                                        GimpTabStyle  tab_style,
-                                        GtkIconSize   size)
+gimp_dockable_new_tab_widget (GimpDockable *dockable,
+                              GimpContext  *context,
+                              GimpTabStyle  tab_style,
+                              GtkIconSize   size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);

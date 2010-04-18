@@ -88,8 +88,7 @@ gboolean        gimp_dockable_is_locked        (GimpDockable   *dockable);
 
 void            gimp_dockable_set_tab_style    (GimpDockable   *dockable,
                                                 GimpTabStyle    tab_style);
-GtkWidget     * gimp_dockable_new_tab_widget_for_style
-                                               (GimpDockable   *dockable,
+GtkWidget     * gimp_dockable_new_tab_widget   (GimpDockable   *dockable,
                                                 GimpContext    *context,
                                                 GimpTabStyle    tab_style,
                                                 GtkIconSize     size);

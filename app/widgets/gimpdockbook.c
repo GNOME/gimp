@@ -468,10 +468,10 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   /* For the notebook right-click menu, always use the icon style */
   menu_widget =
-    gimp_dockable_new_tab_widget_for_style (dockable,
-                                            gimp_dock_get_context (dockbook->p->dock),
-                                            GIMP_TAB_STYLE_ICON_BLURB,
-                                            MENU_WIDGET_ICON_SIZE);
+    gimp_dockable_new_tab_widget (dockable,
+                                  gimp_dock_get_context (dockbook->p->dock),
+                                  GIMP_TAB_STYLE_ICON_BLURB,
+                                  MENU_WIDGET_ICON_SIZE);
 
   g_return_if_fail (GTK_IS_WIDGET (menu_widget));
 
@@ -585,10 +585,10 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
                         NULL);
 
   tab_widget =
-    gimp_dockable_new_tab_widget_for_style (dockable,
-                                            gimp_dock_get_context (dockbook->p->dock),
-                                            gimp_dockable_get_tab_style (dockable),
-                                            tab_size);
+    gimp_dockable_new_tab_widget (dockable,
+                                  gimp_dock_get_context (dockbook->p->dock),
+                                  gimp_dockable_get_tab_style (dockable),
+                                  tab_size);
 
   if (! GIMP_IS_VIEW (tab_widget))
     {
