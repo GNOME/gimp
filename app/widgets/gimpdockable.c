@@ -1097,10 +1097,10 @@ gimp_dockable_set_tab_style (GimpDockable *dockable,
 }
 
 GtkWidget *
-gimp_dockable_new_tab_widget (GimpDockable *dockable,
-                              GimpContext  *context,
-                              GimpTabStyle  tab_style,
-                              GtkIconSize   size)
+gimp_dockable_create_tab_widget (GimpDockable *dockable,
+                                 GimpContext  *context,
+                                 GimpTabStyle  tab_style,
+                                 GtkIconSize   size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -1110,7 +1110,7 @@ gimp_dockable_new_tab_widget (GimpDockable *dockable,
 }
 
 GtkWidget *
-gimp_dockable_new_drag_widget (GimpDockable *dockable)
+gimp_dockable_create_drag_widget (GimpDockable *dockable)
 {
   GtkWidget *frame;
   GtkWidget *widget;

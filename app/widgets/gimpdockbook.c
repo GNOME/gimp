@@ -468,10 +468,10 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   /* For the notebook right-click menu, always use the icon style */
   menu_widget =
-    gimp_dockable_new_tab_widget (dockable,
-                                  gimp_dock_get_context (dockbook->p->dock),
-                                  GIMP_TAB_STYLE_ICON_BLURB,
-                                  MENU_WIDGET_ICON_SIZE);
+    gimp_dockable_create_tab_widget (dockable,
+                                     gimp_dock_get_context (dockbook->p->dock),
+                                     GIMP_TAB_STYLE_ICON_BLURB,
+                                     MENU_WIDGET_ICON_SIZE);
 
   g_return_if_fail (GTK_IS_WIDGET (menu_widget));
 
@@ -585,10 +585,10 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
                         NULL);
 
   tab_widget =
-    gimp_dockable_new_tab_widget (dockable,
-                                  gimp_dock_get_context (dockbook->p->dock),
-                                  gimp_dockable_get_tab_style (dockable),
-                                  tab_size);
+    gimp_dockable_create_tab_widget (dockable,
+                                     gimp_dock_get_context (dockbook->p->dock),
+                                     gimp_dockable_get_tab_style (dockable),
+                                     tab_size);
 
   if (! GIMP_IS_VIEW (tab_widget))
     {
@@ -815,7 +815,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DND);
   gtk_window_set_screen (GTK_WINDOW (window), gtk_widget_get_screen (widget));
 
-  view = gimp_dockable_new_drag_widget (dockable);
+  view = gimp_dockable_create_drag_widget (dockable);
   gtk_container_add (GTK_CONTAINER (window), view);
   gtk_widget_show (view);
 
