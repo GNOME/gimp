@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-07 00:16+0400\n"
-"PO-Revision-Date: 2010-04-07 00:33+0400\n"
+"POT-Creation-Date: 2010-04-19 19:58+0400\n"
+"PO-Revision-Date: 2010-04-20 00:09+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -251,207 +251,211 @@ msgstr "используя %s версии %s (собранной с верси�
 msgid "%s version %s"
 msgstr "%s версии %s"
 
-#: ../app/actions/actions.c:108 ../app/dialogs/dialogs.c:353
+#: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:353
 #: ../app/widgets/gimpbrusheditor.c:89
 msgid "Brush Editor"
 msgstr "Редактор кисти"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:111 ../app/core/gimp.c:951
+#: ../app/actions/actions.c:112 ../app/core/gimp.c:951
 #: ../app/dialogs/dialogs.c:282 ../app/dialogs/preferences-dialog.c:2720
 msgid "Brushes"
 msgstr "Кисти"
 
-#: ../app/actions/actions.c:114 ../app/dialogs/dialogs.c:292
+#: ../app/actions/actions.c:115 ../app/dialogs/dialogs.c:292
 msgid "Buffers"
 msgstr "Буферы"
 
-#: ../app/actions/actions.c:117 ../app/dialogs/dialogs.c:311
+#: ../app/actions/actions.c:118 ../app/dialogs/dialogs.c:311
 msgid "Channels"
 msgstr "Каналы"
 
-#: ../app/actions/actions.c:120 ../app/dialogs/convert-dialog.c:174
+#: ../app/actions/actions.c:121 ../app/dialogs/convert-dialog.c:174
 #: ../app/dialogs/dialogs.c:319
 msgid "Colormap"
 msgstr "Цветовая карта"
 
-#: ../app/actions/actions.c:123
+#: ../app/actions/actions.c:124
 msgid "Configuration"
 msgstr "Настройка"
 
-#: ../app/actions/actions.c:126
+#: ../app/actions/actions.c:127
 msgid "Context"
 msgstr "Контекст"
 
-#: ../app/actions/actions.c:129 ../app/dialogs/dialogs.c:275
+#: ../app/actions/actions.c:130 ../app/dialogs/dialogs.c:275
 msgid "Pointer Information"
 msgstr "Информация об указателе"
 
-#: ../app/actions/actions.c:132
+#: ../app/actions/actions.c:133
 msgid "Debug"
 msgstr "Отладка"
 
-#: ../app/actions/actions.c:135
+#: ../app/actions/actions.c:136
 msgid "Dialogs"
 msgstr "Диалоги"
 
-#: ../app/actions/actions.c:138
+#: ../app/actions/actions.c:139
 msgid "Dock"
 msgstr "Панель"
 
-#: ../app/actions/actions.c:141
+#: ../app/actions/actions.c:142
 msgid "Dockable"
 msgstr "Панель"
 
 #. Document History
-#: ../app/actions/actions.c:144 ../app/dialogs/dialogs.c:294
+#: ../app/actions/actions.c:145 ../app/dialogs/dialogs.c:294
 #: ../app/dialogs/preferences-dialog.c:1573
 msgid "Document History"
 msgstr "Недавние изображения"
 
-#: ../app/actions/actions.c:147
+#: ../app/actions/actions.c:148
 msgid "Drawable"
 msgstr "Изображение"
 
 #. Some things do not have grids, so just list
-#: ../app/actions/actions.c:150 ../app/dialogs/dialogs.c:300
+#: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:300
 msgid "Paint Dynamics"
 msgstr "Динамика рисования"
 
-#: ../app/actions/actions.c:153 ../app/dialogs/dialogs.c:357
-#: ../app/widgets/gimpdynamicseditor.c:92
+#: ../app/actions/actions.c:154 ../app/dialogs/dialogs.c:357
+#: ../app/widgets/gimpdynamicseditor.c:94
 msgid "Paint Dynamics Editor"
 msgstr "Редактор динамики рисования"
 
-#: ../app/actions/actions.c:156
+#: ../app/actions/actions.c:157
 msgid "Edit"
 msgstr "Правка"
 
-#: ../app/actions/actions.c:159 ../app/dialogs/dialogs.c:271
+#: ../app/actions/actions.c:160 ../app/dialogs/dialogs.c:271
 msgid "Error Console"
 msgstr "Консоль ошибок"
 
-#: ../app/actions/actions.c:162
+#: ../app/actions/actions.c:163
 msgid "File"
 msgstr "Файл"
 
-#: ../app/actions/actions.c:165 ../app/dialogs/dialogs.c:290
+#: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:290
 #: ../app/dialogs/preferences-dialog.c:2740
 msgid "Fonts"
 msgstr "Шрифты"
 
-#: ../app/actions/actions.c:168 ../app/dialogs/dialogs.c:361
+#: ../app/actions/actions.c:169 ../app/dialogs/dialogs.c:361
 #: ../app/widgets/gimpgradienteditor.c:275
 msgid "Gradient Editor"
 msgstr "Редактор градиентов"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:171 ../app/core/gimp.c:967
+#: ../app/actions/actions.c:172 ../app/core/gimp.c:971
 #: ../app/dialogs/dialogs.c:286 ../app/dialogs/preferences-dialog.c:2736
 msgid "Gradients"
 msgstr "Градиенты"
 
 #. initialize the list of gimp tool presets
-#: ../app/actions/actions.c:174 ../app/core/gimp.c:976
+#: ../app/actions/actions.c:175 ../app/core/gimp.c:981
 #: ../app/dialogs/dialogs.c:302
 msgid "Tool Presets"
 msgstr "Профили инструментов"
 
-#: ../app/actions/actions.c:177
+#: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:369
+msgid "Tool Preset Editor"
+msgstr "Редактор профилей инструментов"
+
+#: ../app/actions/actions.c:181
 msgid "Help"
 msgstr "Справка"
 
-#: ../app/actions/actions.c:180
+#: ../app/actions/actions.c:184
 msgid "Image"
 msgstr "Изображение"
 
 #. list & grid views
-#: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:280
+#: ../app/actions/actions.c:187 ../app/dialogs/dialogs.c:280
 msgid "Images"
 msgstr "Изображения"
 
-#: ../app/actions/actions.c:186 ../app/dialogs/dialogs.c:307
+#: ../app/actions/actions.c:190 ../app/dialogs/dialogs.c:307
 #: ../app/dialogs/resize-dialog.c:287
 msgid "Layers"
 msgstr "Слои"
 
-#: ../app/actions/actions.c:189 ../app/dialogs/dialogs.c:365
+#: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:365
 #: ../app/widgets/gimppaletteeditor.c:154
 msgid "Palette Editor"
 msgstr "Редактор палитры образцов"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:192 ../app/core/gimp.c:963
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:966
 #: ../app/dialogs/dialogs.c:288 ../app/dialogs/preferences-dialog.c:2732
 msgid "Palettes"
 msgstr "Палитры образцов"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:195 ../app/core/gimp.c:959
+#: ../app/actions/actions.c:199 ../app/core/gimp.c:961
 #: ../app/dialogs/dialogs.c:284 ../app/dialogs/preferences-dialog.c:2728
 msgid "Patterns"
 msgstr "Текстуры"
 
-#: ../app/actions/actions.c:198 ../app/dialogs/preferences-dialog.c:2744
+#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2744
 msgid "Plug-Ins"
 msgstr "Расширения"
 
-#: ../app/actions/actions.c:201 ../app/core/gimpchannel.c:369
+#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:369
 msgid "Quick Mask"
 msgstr "Быстрая маска"
 
-#: ../app/actions/actions.c:204 ../app/dialogs/dialogs.c:335
+#: ../app/actions/actions.c:208 ../app/dialogs/dialogs.c:335
 msgid "Sample Points"
 msgstr "Образцовые точки"
 
-#: ../app/actions/actions.c:207
+#: ../app/actions/actions.c:211
 msgid "Select"
 msgstr "Выделение"
 
 #. initialize the template list
-#: ../app/actions/actions.c:210 ../app/core/gimp.c:980
+#: ../app/actions/actions.c:214 ../app/core/gimp.c:986
 #: ../app/dialogs/dialogs.c:296
 msgid "Templates"
 msgstr "Шаблоны"
 
-#: ../app/actions/actions.c:213
+#: ../app/actions/actions.c:217
 msgid "Text Tool"
 msgstr "Текст"
 
-#: ../app/actions/actions.c:216
+#: ../app/actions/actions.c:220
 msgid "Text Editor"
 msgstr "Редактор текста"
 
-#: ../app/actions/actions.c:219 ../app/dialogs/dialogs.c:263
+#: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:263
 #: ../app/dialogs/preferences-dialog.c:1854 ../app/gui/gui.c:430
 msgid "Tool Options"
 msgstr "Параметры инструментов"
 
-#: ../app/actions/actions.c:222
+#: ../app/actions/actions.c:226
 msgid "Tools"
 msgstr "Инструменты"
 
-#: ../app/actions/actions.c:225 ../app/dialogs/dialogs.c:315
+#: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:315
 #: ../app/tools/gimpvectortool.c:162
 msgid "Paths"
 msgstr "Контуры"
 
-#: ../app/actions/actions.c:228
+#: ../app/actions/actions.c:232
 msgid "View"
 msgstr "Просмотр"
 
-#: ../app/actions/actions.c:231
+#: ../app/actions/actions.c:235
 msgid "Windows"
 msgstr "Окна"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:579
+#: ../app/actions/actions.c:583
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:605
+#: ../app/actions/actions.c:609
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -979,8 +983,8 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:124 ../app/core/gimpimage.c:1522
-#: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:222
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1522
+#: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:378 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:92
 msgid "Untitled"
@@ -4219,21 +4223,21 @@ msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "Открыть диалог последнего использованного фильтра или сценария"
 
-#: ../app/actions/plug-in-actions.c:518
+#: ../app/actions/plug-in-actions.c:531
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "По_вторить «%s»"
 
-#: ../app/actions/plug-in-actions.c:519
+#: ../app/actions/plug-in-actions.c:532
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторить с настройкой «%s»"
 
-#: ../app/actions/plug-in-actions.c:535
+#: ../app/actions/plug-in-actions.c:548
 msgid "Repeat Last"
 msgstr "Повторить последний"
 
-#: ../app/actions/plug-in-actions.c:537
+#: ../app/actions/plug-in-actions.c:550
 msgid "Re-Show Last"
 msgstr "Повторить с настройкой последний"
 
@@ -4619,13 +4623,13 @@ msgstr "Открыть текствый файл (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:143
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:58
-#: ../app/core/gimpbrush-load.c:139 ../app/core/gimpbrush-load.c:419
-#: ../app/core/gimpbrushgenerated-load.c:72
-#: ../app/core/gimpbrushpipe-load.c:80 ../app/core/gimpcurve-load.c:54
-#: ../app/core/gimpgradient-load.c:61 ../app/core/gimppalette-load.c:75
-#: ../app/core/gimppalette-load.c:272 ../app/core/gimppalette-load.c:318
-#: ../app/core/gimppalette-load.c:375 ../app/core/gimppalette-load.c:465
-#: ../app/core/gimppalette-load.c:632 ../app/core/gimppattern-load.c:75
+#: ../app/core/gimpbrush-load.c:140 ../app/core/gimpbrush-load.c:422
+#: ../app/core/gimpbrushgenerated-load.c:73
+#: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpcurve-load.c:54
+#: ../app/core/gimpgradient-load.c:62 ../app/core/gimppalette-load.c:76
+#: ../app/core/gimppalette-load.c:273 ../app/core/gimppalette-load.c:319
+#: ../app/core/gimppalette-load.c:376 ../app/core/gimppalette-load.c:466
+#: ../app/core/gimppalette-load.c:633 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:637 ../app/tools/gimplevelstool.c:747
 #: ../app/xcf/xcf.c:328
 #, c-format
@@ -7243,58 +7247,63 @@ msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Преобразовать в рабочее пространство RGB"
 
-#: ../app/core/core-enums.c:1326
+#: ../app/core/core-enums.c:1327
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Непрозрачность"
 
-#: ../app/core/core-enums.c:1327
+#: ../app/core/core-enums.c:1328
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Размер"
 
-#: ../app/core/core-enums.c:1328
+#: ../app/core/core-enums.c:1329
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Угол"
 
-#: ../app/core/core-enums.c:1329
+#: ../app/core/core-enums.c:1330
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Цвет"
 
-#: ../app/core/core-enums.c:1330
+#: ../app/core/core-enums.c:1331
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Жёсткость"
 
-#: ../app/core/core-enums.c:1331
+#: ../app/core/core-enums.c:1332
+msgctxt "dynamics-output-type"
+msgid "Force"
+msgstr "Сила"
+
+#: ../app/core/core-enums.c:1333
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Соотн. сторон"
 
-#: ../app/core/core-enums.c:1332
+#: ../app/core/core-enums.c:1334
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Интервал"
 
-#: ../app/core/core-enums.c:1333
+#: ../app/core/core-enums.c:1335
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Скорость"
 
-#: ../app/core/core-enums.c:1334
+#: ../app/core/core-enums.c:1336
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Поток"
 
-#: ../app/core/core-enums.c:1335
+#: ../app/core/core-enums.c:1337
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Дрожание"
 
 #: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:232
-#: ../app/gui/session.c:349 ../app/menus/menus.c:457
+#: ../app/gui/session.c:349 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:267
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -7422,74 +7431,74 @@ msgid "Parasites"
 msgstr "Паразиты"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:955 ../app/dialogs/preferences-dialog.c:2724
+#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2724
 msgid "Dynamics"
 msgstr "Динамика рисования"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:971
+#: ../app/core/gimp.c:976
 msgid "Fonts (this may take a while)"
 msgstr "Шрифты (их загрузка может длиться долго)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:984 ../app/dialogs/preferences-dialog.c:2752
+#: ../app/core/gimp.c:990 ../app/dialogs/preferences-dialog.c:2752
 msgid "Modules"
 msgstr "Модули"
 
 #. update tag cache
-#: ../app/core/gimp.c:988
+#: ../app/core/gimp.c:994
 msgid "Updating tag cache"
 msgstr "Обновляется кэш меток"
 
-#: ../app/core/gimpbrush-load.c:176
+#: ../app/core/gimpbrush-load.c:178
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Невозможно прочесть %d байт из '%s': %s"
 
-#: ../app/core/gimpbrush-load.c:196
+#: ../app/core/gimpbrush-load.c:198
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': ширина = 0."
 
-#: ../app/core/gimpbrush-load.c:205
+#: ../app/core/gimpbrush-load.c:207
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': высота = 0."
 
-#: ../app/core/gimpbrush-load.c:214
+#: ../app/core/gimpbrush-load.c:216
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': Bytes = 0."
 
-#: ../app/core/gimpbrush-load.c:238
+#: ../app/core/gimpbrush-load.c:240
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная глубина %d."
 
-#: ../app/core/gimpbrush-load.c:251
+#: ../app/core/gimpbrush-load.c:253
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия %d."
 
-#: ../app/core/gimpbrush-load.c:267 ../app/core/gimpbrush-load.c:387
-#: ../app/core/gimpbrush-load.c:719
+#: ../app/core/gimpbrush-load.c:269 ../app/core/gimpbrush-load.c:389
+#: ../app/core/gimpbrush-load.c:722
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': файл, вероятно, оборван."
 
-#: ../app/core/gimpbrush-load.c:275 ../app/core/gimpbrushgenerated-load.c:127
-#: ../app/core/gimpbrushpipe-load.c:96
+#: ../app/core/gimpbrush-load.c:277 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле кисти '%s'."
 
-#: ../app/core/gimpbrush-load.c:282 ../app/core/gimppattern-load.c:145
+#: ../app/core/gimpbrush-load.c:284 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:82
 #: ../app/tools/gimpvectortool.c:319
 msgid "Unnamed"
 msgstr "Безымянный"
 
-#: ../app/core/gimpbrush-load.c:376
+#: ../app/core/gimpbrush-load.c:378
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -7499,7 +7508,7 @@ msgstr ""
 "кисти %d\n"
 "Кисти GIMP должны быть в режиме RGBA или градации серого."
 
-#: ../app/core/gimpbrush-load.c:447
+#: ../app/core/gimpbrush-load.c:450
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7507,7 +7516,7 @@ msgstr ""
 "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия формата abr "
 "'%d'."
 
-#: ../app/core/gimpbrush-load.c:614
+#: ../app/core/gimpbrush-load.c:617
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -7518,12 +7527,12 @@ msgstr ""
 msgid "Brush Spacing"
 msgstr "Интервал кисти"
 
-#: ../app/core/gimpbrushgenerated-load.c:86
+#: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': это не файл кисти GIMP."
 
-#: ../app/core/gimpbrushgenerated-load.c:103
+#: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
@@ -7531,7 +7540,7 @@ msgstr ""
 "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP "
 "в строке %d."
 
-#: ../app/core/gimpbrushgenerated-load.c:149
+#: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
@@ -7539,17 +7548,17 @@ msgstr ""
 "Неисправимая ошибка разбора файла кисти '%s': неизвестная форма кисти GIMP в "
 "строке %d."
 
-#: ../app/core/gimpbrushgenerated-load.c:225
+#: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
 msgid "Line %d: %s"
 msgstr "Строке %d: %s"
 
-#: ../app/core/gimpbrushgenerated-load.c:227
+#: ../app/core/gimpbrushgenerated-load.c:228
 #, c-format
 msgid "File is truncated in line %d"
 msgstr "Файл обрезан в строке %d"
 
-#: ../app/core/gimpbrushgenerated-load.c:230
+#: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
 msgid "Error while reading brush file '%s': %s"
 msgstr "Ошибка при чтении файла кисти '%s': %s"
@@ -7578,8 +7587,8 @@ msgstr "Соотношение сторон кисти"
 msgid "Brush Angle"
 msgstr "Угол кисти"
 
-#: ../app/core/gimpbrushpipe-load.c:112 ../app/core/gimpbrushpipe-load.c:132
-#: ../app/core/gimpbrushpipe-load.c:222
+#: ../app/core/gimpbrushpipe-load.c:113 ../app/core/gimpbrushpipe-load.c:133
+#: ../app/core/gimpbrushpipe-load.c:224
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
@@ -7712,8 +7721,8 @@ msgstr "Режим рисования"
 msgid "Could not delete '%s': %s"
 msgstr "Невозможно удалить '%s': %s"
 
-#: ../app/core/gimpdatafactory.c:418 ../app/core/gimpdatafactory.c:447
-#: ../app/core/gimpdatafactory.c:613 ../app/core/gimpdatafactory.c:635
+#: ../app/core/gimpdatafactory.c:427 ../app/core/gimpdatafactory.c:456
+#: ../app/core/gimpdatafactory.c:622 ../app/core/gimpdatafactory.c:644
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7724,17 +7733,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:527 ../app/core/gimpdatafactory.c:530
+#: ../app/core/gimpdatafactory.c:536 ../app/core/gimpdatafactory.c:539
 #: ../app/core/gimpitem.c:423 ../app/core/gimpitem.c:426
 msgid "copy"
 msgstr "копия"
 
-#: ../app/core/gimpdatafactory.c:539 ../app/core/gimpitem.c:435
+#: ../app/core/gimpdatafactory.c:548 ../app/core/gimpitem.c:435
 #, c-format
 msgid "%s copy"
 msgstr "Копия %s"
 
-#: ../app/core/gimpdatafactory.c:732
+#: ../app/core/gimpdatafactory.c:741
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -7742,7 +7751,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:753
+#: ../app/core/gimpdatafactory.c:762
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -7750,12 +7759,12 @@ msgid ""
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:763
+#: ../app/core/gimpdatafactory.c:772
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Каталоги данных с правами на запись не обнаружены."
 
-#: ../app/core/gimpdatafactory.c:879
+#: ../app/core/gimpdatafactory.c:889
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -7880,48 +7889,48 @@ msgstr "Преобразование"
 msgid "Output type"
 msgstr "Тип выхода"
 
-#: ../app/core/gimpgradient-load.c:70 ../app/core/gimpgradient-load.c:95
-#: ../app/core/gimpgradient-load.c:116 ../app/core/gimpgradient-load.c:167
+#: ../app/core/gimpgradient-load.c:71 ../app/core/gimpgradient-load.c:96
+#: ../app/core/gimpgradient-load.c:117 ../app/core/gimpgradient-load.c:168
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr ""
 "Неисправимая ошибка разбора файла градиента '%s': ошибка чтения в строке %d"
 
-#: ../app/core/gimpgradient-load.c:80
+#: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
 "Неисправимая ошибка разбора файла градиента '%s': это не файл градиента GIMP."
 
-#: ../app/core/gimpgradient-load.c:108
+#: ../app/core/gimpgradient-load.c:109
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле градиента '%s'."
 
-#: ../app/core/gimpgradient-load.c:135
+#: ../app/core/gimpgradient-load.c:136
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
 msgstr "Неисправимая ошибка разбора файла '%s': файл повреждён в строке %d."
 
-#: ../app/core/gimpgradient-load.c:217 ../app/core/gimpgradient-load.c:228
+#: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
 "Неисправимая ошибка разбора файла градиента '%s': повреждённый сегмент %d в "
 "строке %d."
 
-#: ../app/core/gimpgradient-load.c:240 ../app/core/gimpgradient-load.c:254
+#: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
 "Файл градиента '%s' повреждён: сегменты не находятся в промежутке от 0 до 1."
 
-#: ../app/core/gimpgradient-load.c:333
+#: ../app/core/gimpgradient-load.c:335
 #, c-format
 msgid "No linear gradients found in '%s'"
 msgstr "В '%s' не найдено градиентов"
 
-#: ../app/core/gimpgradient-load.c:343
+#: ../app/core/gimpgradient-load.c:345
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Ошибка при импорте градиента из '%s': %s"
@@ -8435,25 +8444,25 @@ msgstr "Индекс %d"
 msgid "Unknown type of palette file: %s"
 msgstr "Неизвестный тип файла палитры: %s"
 
-#: ../app/core/gimppalette-load.c:84 ../app/core/gimppalette-load.c:110
-#: ../app/core/gimppalette-load.c:131 ../app/core/gimppalette-load.c:160
-#: ../app/core/gimppalette-load.c:236
+#: ../app/core/gimppalette-load.c:85 ../app/core/gimppalette-load.c:111
+#: ../app/core/gimppalette-load.c:132 ../app/core/gimppalette-load.c:161
+#: ../app/core/gimppalette-load.c:237
 #, c-format
 msgid "Fatal parse error in palette file '%s': Read error in line %d."
 msgstr ""
 "Неисправимая ошибка разбора файла палитры '%s': ошибка чтения в строке %d."
 
-#: ../app/core/gimppalette-load.c:94
+#: ../app/core/gimppalette-load.c:95
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
 msgstr "Неисправимая ошибка разбора файла палитры '%s': отсутствует заголовок."
 
-#: ../app/core/gimppalette-load.c:123
+#: ../app/core/gimppalette-load.c:124
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Недопустимая строка UTF-8 файле палитры \"%s\""
 
-#: ../app/core/gimppalette-load.c:147
+#: ../app/core/gimppalette-load.c:148
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -8462,45 +8471,45 @@ msgstr ""
 "Загружается палитра '%s': неправильное число столбцов в строке %d. "
 "Используется значение по умолчанию."
 
-#: ../app/core/gimppalette-load.c:183
+#: ../app/core/gimppalette-load.c:184
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr "Загружается палитра '%s': в строке %d отсутствует КРАСНЫЙ компонент."
 
-#: ../app/core/gimppalette-load.c:191
+#: ../app/core/gimppalette-load.c:192
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr "Загружается палитра '%s': в строке %d отсутствует ЗЕЛЕНЫЙ компонент."
 
-#: ../app/core/gimppalette-load.c:199
+#: ../app/core/gimppalette-load.c:200
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "Загружается палитра '%s': в строке %d отсутствует СИНИЙ компонент."
 
-#: ../app/core/gimppalette-load.c:209
+#: ../app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
 "Загружается палитра '%s': значение RGB вне допустимого диапазона в строке %d."
 
-#: ../app/core/gimppalette-load.c:476
+#: ../app/core/gimppalette-load.c:477
 #, c-format
 msgid "Could not read header from palette file '%s'"
 msgstr "Невозможно прочесть заголовок из файла палитры '%s'"
 
-#: ../app/core/gimppalette-load.c:499 ../app/core/gimppalette-load.c:587
+#: ../app/core/gimppalette-load.c:500 ../app/core/gimppalette-load.c:588
 #, c-format
 msgid "Fatal parse error in palette file '%s'"
 msgstr "Неисправимая ошибка разбора файла палитры '%s'"
 
-#: ../app/core/gimppattern-load.c:84 ../app/core/gimppattern-load.c:130
-#: ../app/core/gimppattern-load.c:161
+#: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
+#: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
 msgstr ""
 "Неисправимая ошибка разбора файла текстуры '%s': вероятно, файл оборван."
 
-#: ../app/core/gimppattern-load.c:103
+#: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
@@ -8508,7 +8517,7 @@ msgstr ""
 "Неисправимая ошибка разбора файла текстуры '%s': неизвестная версия формата %"
 "d."
 
-#: ../app/core/gimppattern-load.c:113
+#: ../app/core/gimppattern-load.c:114
 #, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
@@ -8518,7 +8527,7 @@ msgstr ""
 "d.\n"
 "Текстуры GIMP должны быть в оттенках серого или RGB."
 
-#: ../app/core/gimppattern-load.c:138
+#: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Недопустимая строка UTF-8 файле текстуры '%s'"
@@ -8796,10 +8805,6 @@ msgstr "Передний план/Фон"
 #: ../app/dialogs/dialogs.c:347
 msgid "FG/BG Color"
 msgstr "Цвет переднего плана/фона"
-
-#: ../app/dialogs/dialogs.c:369
-msgid "Tool Preset Editor"
-msgstr "Редактор профилей инструментов"
 
 #: ../app/dialogs/fade-dialog.c:110
 #, c-format
@@ -10558,11 +10563,11 @@ msgstr "Запуск GIMP"
 msgid "Airbrush"
 msgstr "Аэрограф"
 
-#: ../app/paint/gimpbrushcore.c:430
+#: ../app/paint/gimpbrushcore.c:431
 msgid "No brushes available for use with this tool."
 msgstr "Нет кистей, доступных для использования с этим инструментом."
 
-#: ../app/paint/gimpbrushcore.c:437
+#: ../app/paint/gimpbrushcore.c:438
 msgid "No paint dynamics available for use with this tool."
 msgstr ""
 "Нет динамик рисования, доступных для использования с этим инструментом."
@@ -11258,7 +11263,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Фиксированный"
 
-#: ../app/tools/gimp-tools.c:325
+#: ../app/tools/gimp-tools.c:333
 msgid ""
 "This tool has\n"
 "no options."
@@ -13123,7 +13128,7 @@ msgid "Transform:"
 msgstr "Преобразование:"
 
 #: ../app/tools/gimptransformoptions.c:281
-#: ../app/widgets/gimpdynamicseditor.c:148
+#: ../app/widgets/gimpdynamicseditor.c:150
 #: ../app/widgets/gimpdynamicsoutputeditor.c:227
 msgid "Direction"
 msgstr "Направление"
@@ -13964,15 +13969,15 @@ msgstr "Колесо мыши"
 msgid "Mouse Wheel Events"
 msgstr "Действия колеса мыши"
 
-#: ../app/widgets/gimpdataeditor.c:219
+#: ../app/widgets/gimpdataeditor.c:221
 msgid "Save"
 msgstr "Сохранить"
 
-#: ../app/widgets/gimpdataeditor.c:227
+#: ../app/widgets/gimpdataeditor.c:229
 msgid "Revert"
 msgstr "Восстановить"
 
-#: ../app/widgets/gimpdataeditor.c:443
+#: ../app/widgets/gimpdataeditor.c:445
 #, c-format
 msgid "%s (read only)"
 msgstr "%s (только для чтения)"
@@ -13995,9 +14000,11 @@ msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
 msgstr ""
+"Вы намереваетесь удалить сохранённые параметры этого устройства.\n"
+"При следующем его подключении будут использованы параметры по умолчанию."
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
-#: ../app/widgets/gimpdynamicseditor.c:146
+#: ../app/widgets/gimpdynamicseditor.c:148
 #: ../app/widgets/gimpdynamicsoutputeditor.c:213
 msgid "Pressure"
 msgstr "Нажим"
@@ -14011,7 +14018,7 @@ msgid "Y tilt"
 msgstr "Наклон по Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
-#: ../app/widgets/gimpdynamicseditor.c:150
+#: ../app/widgets/gimpdynamicseditor.c:152
 #: ../app/widgets/gimpdynamicsoutputeditor.c:241
 msgid "Wheel"
 msgstr "Колесо"
@@ -14124,27 +14131,27 @@ msgstr ""
 msgid "Lock pixels"
 msgstr "Запереть точки растра от изменений"
 
-#: ../app/widgets/gimpdynamicseditor.c:131
-#: ../app/widgets/gimpdynamicseditor.c:137
+#: ../app/widgets/gimpdynamicseditor.c:133
+#: ../app/widgets/gimpdynamicseditor.c:139
 msgid "Mapping matrix"
 msgstr "Матрица привязки"
 
-#: ../app/widgets/gimpdynamicseditor.c:147
+#: ../app/widgets/gimpdynamicseditor.c:149
 #: ../app/widgets/gimpdynamicsoutputeditor.c:220
 msgid "Velocity"
 msgstr "Скорость"
 
-#: ../app/widgets/gimpdynamicseditor.c:149
+#: ../app/widgets/gimpdynamicseditor.c:151
 #: ../app/widgets/gimpdynamicsoutputeditor.c:234
 msgid "Tilt"
 msgstr "Наклон"
 
-#: ../app/widgets/gimpdynamicseditor.c:151
+#: ../app/widgets/gimpdynamicseditor.c:153
 #: ../app/widgets/gimpdynamicsoutputeditor.c:248
 msgid "Random"
 msgstr "Случайность"
 
-#: ../app/widgets/gimpdynamicseditor.c:152
+#: ../app/widgets/gimpdynamicseditor.c:154
 #: ../app/widgets/gimpdynamicsoutputeditor.c:255
 msgid "Fade"
 msgstr "Угасание"
