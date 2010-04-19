@@ -42,8 +42,8 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.1.2])
 m4_define([gegl_required_version], [0.1.2])
-m4_define([glib_required_version], [2.22.0])
-m4_define([gtk_required_version], [2.18.1])
+m4_define([glib_required_version], [2.24.0])
+m4_define([gtk_required_version], [2.20.0])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.6.0])
 m4_define([pangocairo_required_version], [1.20.1])
@@ -466,13 +466,13 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.24.0 or newer])
-if $PKG_CONFIG --atleast-version=2.24.0 glib-2.0; then
-  have_glib_2_24=yes
+AC_MSG_CHECKING([if GLib is version 2.26.0 or newer])
+if $PKG_CONFIG --atleast-version=2.26.0 glib-2.0; then
+  have_glib_2_26=yes
 else
-  have_glib_2_24=no
+  have_glib_2_26=no
 fi
-AC_MSG_RESULT($have_glib_2_24)
+AC_MSG_RESULT($have_glib_2_26)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -491,13 +491,13 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.20.0 or newer])
-if $PKG_CONFIG --atleast-version=2.20.0 gtk+-2.0; then
-  have_gtk_2_20=yes
+AC_MSG_CHECKING([if GTK+ is version 2.22.0 or newer])
+if $PKG_CONFIG --atleast-version=2.22.0 gtk+-2.0; then
+  have_gtk_2_22=yes
 else
-  have_gtk_2_20=no
+  have_gtk_2_22=no
 fi
-AC_MSG_RESULT($have_gtk_2_20)
+AC_MSG_RESULT($have_gtk_2_22)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -1872,11 +1872,11 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # must build without problems with future releases of libraries and
 # disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_24" != "xyes"; then
+if test "x$have_glib_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_20" != "xyes"; then
+if test "x$have_gtk_2_22" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
