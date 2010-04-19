@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -812,7 +809,7 @@ gimp_cursor_set (GtkWidget          *widget,
   GdkCursor *cursor;
 
   g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (GTK_WIDGET_REALIZED (widget));
+  g_return_if_fail (gtk_widget_get_realized (widget));
 
   cursor = gimp_cursor_new (gtk_widget_get_display (widget),
                             cursor_format,

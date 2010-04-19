@@ -20,9 +20,6 @@
 
 #include <string.h>
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -503,7 +500,7 @@ gimp_ruler_realize (GtkWidget *widget)
   GdkWindowAttr  attributes;
   gint           attributes_mask;
 
-  GTK_WIDGET_SET_FLAGS (ruler, GTK_REALIZED);
+  gtk_widget_set_realized (widget, TRUE);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -527,8 +524,7 @@ gimp_ruler_realize (GtkWidget *widget)
                                          &attributes, attributes_mask));
   gdk_window_set_user_data (gtk_widget_get_window (widget), ruler);
 
-  widget->style = gtk_style_attach (gtk_widget_get_style (widget),
-                                    gtk_widget_get_window (widget));
+  gtk_widget_style_attach (widget);
   gtk_style_set_background (gtk_widget_get_style (widget),
                             gtk_widget_get_window (widget),
                             GTK_STATE_ACTIVE);
@@ -571,7 +567,7 @@ gimp_ruler_size_allocate (GtkWidget     *widget,
 
   gtk_widget_set_allocation (widget, allocation);
 
-  if (GTK_WIDGET_REALIZED (widget))
+  if (gtk_widget_get_realized (widget))
     {
       gdk_window_move_resize (gtk_widget_get_window (widget),
                               allocation->x, allocation->y,

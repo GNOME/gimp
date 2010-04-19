@@ -18,9 +18,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmodule/gimpmodule.h"
@@ -274,7 +271,7 @@ static void
 gimp_window_transient_realized (GtkWidget *window,
                                 GdkWindow *parent)
 {
-  if (GTK_WIDGET_REALIZED (window))
+  if (gtk_widget_get_realized (window))
     gdk_window_set_transient_for (gtk_widget_get_window (window), parent);
 }
 
@@ -293,7 +290,7 @@ gimp_window_set_transient_for (GtkWindow *window,
   if (! parent)
     return;
 
-  if (GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
+  if (gtk_widget_get_realized (GTK_WIDGET (window)))
     gdk_window_set_transient_for (gtk_widget_get_window (GTK_WIDGET (window)),
                                   parent);
 

@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -344,7 +341,7 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   GdkColor         fg   = { 0, 0, 0, 0 };
   GdkColor         bg   = { 0, 0, 0, 0 };
 
-  if (! GTK_WIDGET_REALIZED (GTK_WIDGET (canvas)))
+  if (! gtk_widget_get_realized (GTK_WIDGET (canvas)))
     return NULL;
 
   switch (style)
@@ -1052,7 +1049,7 @@ gimp_canvas_set_bg_color (GimpCanvas *canvas,
   GdkColormap *colormap;
   GdkColor     gdk_color;
 
-  if (! GTK_WIDGET_REALIZED (widget))
+  if (! gtk_widget_get_realized (widget))
     return;
 
   gimp_rgb_get_gdk_color (color, &gdk_color);

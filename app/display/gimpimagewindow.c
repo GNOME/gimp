@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -923,7 +920,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
-  if (! GTK_WIDGET_REALIZED (window))
+  if (! gtk_widget_get_realized (GTK_WIDGET (window)))
     return;
 
   /* FIXME this so needs cleanup and shell/window separation */

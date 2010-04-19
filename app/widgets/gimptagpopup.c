@@ -204,6 +204,9 @@ gimp_tag_popup_constructor (GType                  type,
   GObject               *object;
   GimpTagPopup          *popup;
   GimpFilteredContainer *container;
+  GtkWidget             *entry;
+  GtkAllocation          entry_allocation;
+  GtkStyle              *frame_style;
   gint                   x;
   gint                   y;
   gint                   width;
@@ -227,11 +230,14 @@ gimp_tag_popup_constructor (GType                  type,
                                                        construct_params);
   popup = GIMP_TAG_POPUP (object);
 
-  gtk_window_set_screen (GTK_WINDOW (popup),
-                         gtk_widget_get_screen (GTK_WIDGET (popup->combo_entry)));
+  entry = GTK_WIDGET (popup->combo_entry);
+
+  gtk_window_set_screen (GTK_WINDOW (popup), gtk_widget_get_screen (entry));
 
   popup->context = gtk_widget_create_pango_context (GTK_WIDGET (popup));
   popup->layout  = pango_layout_new (popup->context);
+
+  gtk_widget_get_allocation (entry, &entry_allocation);
 
   gtk_widget_style_get (GTK_WIDGET (popup),
                         "scroll-arrow-vlength", &popup->scroll_arrow_height,
@@ -291,23 +297,25 @@ gimp_tag_popup_constructor (GType                  type,
                               popup);
     }
 
-  width  = (GTK_WIDGET (popup->combo_entry)->allocation.width -
-            2 * popup->frame->style->xthickness);
+  frame_style = gtk_widget_get_style (popup->frame);
+
+  width  = (entry_allocation.width -
+            2 * frame_style->xthickness);
   height = (gimp_tag_popup_layout_tags (popup, width) +
-            2 * popup->frame->style->ythickness);
+            2 * frame_style->ythickness);
 
-  gdk_window_get_origin (GTK_WIDGET (popup->combo_entry)->window, &x, &y);
+  gdk_window_get_origin (gtk_widget_get_window (entry), &x, &y);
 
-  max_height = GTK_WIDGET (popup->combo_entry)->allocation.height * 10;
+  max_height = entry_allocation.height * 10;
 
-  screen_height = gdk_screen_get_height (gtk_widget_get_screen (GTK_WIDGET (popup->combo_entry)));
+  screen_height = gdk_screen_get_height (gtk_widget_get_screen (entry));
 
   popup_height = MIN (height, max_height);
 
   popup_rects[0].x      = x;
   popup_rects[0].y      = 0;
-  popup_rects[0].width  = GTK_WIDGET (popup->combo_entry)->allocation.width;
-  popup_rects[0].height = y + GTK_WIDGET (popup->combo_entry)->allocation.height;
+  popup_rects[0].width  = entry_allocation.width;
+  popup_rects[0].height = y + entry_allocation.height;
 
   popup_rects[1].x      = x;
   popup_rects[1].y      = y;
@@ -330,14 +338,12 @@ gimp_tag_popup_constructor (GType                  type,
       if (popup_rects[0].height >= popup_rects[1].height)
         {
           popup_rect = popup_rects[0];
-          popup_rect.y += (popup->scroll_arrow_height +
-                           popup->frame->style->ythickness);
+          popup_rect.y += popup->scroll_arrow_height + frame_style->ythickness;
         }
       else
         {
           popup_rect = popup_rects[1];
-          popup_rect.y -= (popup->scroll_arrow_height +
-                           popup->frame->style->ythickness);
+          popup_rect.y -= popup->scroll_arrow_height + frame_style->ythickness;
         }
 
       popup_height = popup_rect.height;
@@ -648,6 +654,7 @@ gimp_tag_popup_border_event (GtkWidget *widget,
   if (event->type == GDK_BUTTON_PRESS)
     {
       GdkEventButton *button_event = (GdkEventButton *) event;
+      GtkAllocation   allocation;
       gint            x;
       gint            y;
 
@@ -657,13 +664,15 @@ gimp_tag_popup_border_event (GtkWidget *widget,
           return TRUE;
         }
 
+      gtk_widget_get_allocation (widget, &allocation);
+
       gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
 
       if (button_event->window != gtk_widget_get_window (popup->tag_area) &&
-          (x < widget->allocation.y                            ||
-           y < widget->allocation.x                            ||
-           x > widget->allocation.x + widget->allocation.width ||
-           y > widget->allocation.y + widget->allocation.height))
+          (x < allocation.y                    ||
+           y < allocation.x                    ||
+           x > allocation.x + allocation.width ||
+           y > allocation.y + allocation.height))
         {
           /* user has clicked outside the popup area,
            * which means it should be hidden.
@@ -682,7 +691,8 @@ gimp_tag_popup_border_event (GtkWidget *widget,
       gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, NULL);
 
       gimp_tag_popup_handle_scrolling (popup, x, y,
-                                       motion_event->window == widget->window,
+                                       motion_event->window ==
+                                       gtk_widget_get_window (widget),
                                        TRUE);
     }
   else if (event->type == GDK_BUTTON_RELEASE)
@@ -1496,7 +1506,7 @@ get_arrows_visible_area (GimpTagPopup *popup,
                              &padding_top, &padding_bottom,
                              &padding_left, &padding_right);
 
-  *border = widget->allocation;
+  gtk_widget_get_allocation (widget, border);
 
   upper->x      = border->x + padding_left;
   upper->y      = border->y;

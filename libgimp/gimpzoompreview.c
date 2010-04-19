@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -567,7 +564,7 @@ gimp_zoom_preview_draw_thumb (GimpPreview     *preview,
 static void
 gimp_zoom_preview_set_cursor (GimpPreview *preview)
 {
-  if (! GTK_WIDGET_REALIZED (preview->area))
+  if (! gtk_widget_get_realized (preview->area))
     return;
 
   if (gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview)) > 1.0)

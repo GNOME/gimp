@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -1263,7 +1260,7 @@ gimp_dockable_blink_cancel (GimpDockable *dockable)
 static void
 gimp_dockable_cursor_setup (GimpDockable *dockable)
 {
-  if (! GTK_WIDGET_REALIZED (GTK_WIDGET (dockable)))
+  if (! gtk_widget_get_realized (GTK_WIDGET (dockable)))
     return;
 
   if (! dockable->p->title_window)

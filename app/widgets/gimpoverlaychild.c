@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimpmath/gimpmath.h>
@@ -81,7 +78,7 @@ gimp_overlay_child_new (GimpOverlayBox *box,
 
   cairo_matrix_init_identity (&child->matrix);
 
-  if (GTK_WIDGET_REALIZED (box))
+  if (gtk_widget_get_realized (GTK_WIDGET (box)))
     gimp_overlay_child_realize (box, child);
 
   gtk_widget_set_parent (widget, GTK_WIDGET (box));
@@ -98,7 +95,7 @@ gimp_overlay_child_free (GimpOverlayBox   *box,
 
   gtk_widget_unparent (child->widget);
 
-  if (GTK_WIDGET_REALIZED (box))
+  if (gtk_widget_get_realized (GTK_WIDGET (box)))
     gimp_overlay_child_unrealize (box, child);
 
   g_slice_free (GimpOverlayChild, child);
@@ -245,7 +242,7 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
   gtk_widget_get_allocation (child->widget, &child_allocation);
 
-  if (GTK_WIDGET_REALIZED (widget))
+  if (gtk_widget_get_realized (GTK_WIDGET (widget)))
     {
       GdkRectangle old_allocation;
       GdkRectangle old_bounds;

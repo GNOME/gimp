@@ -19,8 +19,6 @@
 
 #include <string.h>
 
-#undef GSEAL_ENABLE
-
 /* FIXME: #undef GTK_DISABLE_DEPRECATED */
 #undef GTK_DISABLE_DEPRECATED
 
@@ -328,7 +326,7 @@ gimp_colormap_editor_set_image (GimpImageEditor *image_editor,
         {
           gtk_adjustment_set_upper (editor->index_adjustment, 0);
 
-          if (GTK_WIDGET_MAPPED (GTK_WIDGET (editor)))
+          if (gtk_widget_get_mapped (GTK_WIDGET (editor)))
             gimp_colormap_editor_clear (editor, -1);
         }
     }

@@ -34,9 +34,6 @@
 
 #include <glib/gstdio.h>
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -2207,7 +2204,7 @@ design_op_update_callback (GtkRadioAction *action,
   ifsDesign->op = gtk_radio_action_get_current_value (action);
 
   /* cursor switch */
-  if (GTK_WIDGET_REALIZED (ifsDesign->area))
+  if (gtk_widget_get_realized (ifsDesign->area))
     design_area_realize (ifsDesign->area);
 }
 

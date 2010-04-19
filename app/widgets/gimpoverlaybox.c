@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -143,7 +140,7 @@ gimp_overlay_box_realize (GtkWidget *widget)
   gint            attributes_mask;
   GList          *list;
 
-  GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
+  gtk_widget_set_realized (widget, TRUE);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -168,8 +165,7 @@ gimp_overlay_box_realize (GtkWidget *widget)
                     G_CALLBACK (gimp_overlay_box_pick_embedded_child),
                     widget);
 
-  widget->style = gtk_style_attach (gtk_widget_get_style (widget),
-                                    gtk_widget_get_window (widget));
+  gtk_widget_style_attach (widget);
   gtk_style_set_background (gtk_widget_get_style (widget),
                             gtk_widget_get_window (widget),
                             GTK_STATE_NORMAL);
@@ -216,7 +212,7 @@ gimp_overlay_box_size_allocate (GtkWidget     *widget,
 
   gtk_widget_set_allocation (widget, allocation);
 
-  if (GTK_WIDGET_REALIZED (widget))
+  if (gtk_widget_get_realized (widget))
     gdk_window_move_resize (gtk_widget_get_window (widget),
                             allocation->x,
                             allocation->y,

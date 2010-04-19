@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #ifdef GDK_WINDOWING_WIN32
@@ -181,12 +178,12 @@ gimp_window_get_native (GtkWindow *window)
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
-  if (window && GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
+  if (window && gtk_widget_get_realized (GTK_WIDGET (window)))
     return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
-  if (window && GTK_WIDGET_REALIZED (GTK_WIDGET (window)))
+  if (window && gtk_widget_get_realized (GTK_WIDGET (window)))
     return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 

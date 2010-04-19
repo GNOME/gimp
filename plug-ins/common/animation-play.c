@@ -35,9 +35,6 @@
 
 #include <string.h>
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -416,7 +413,7 @@ detach_callback (GtkToggleAction *action)
       gtk_window_set_screen (GTK_WINDOW (shape_window),
                              gtk_widget_get_screen (drawing_area));
 
-      if (GTK_WIDGET_REALIZED (drawing_area))
+      if (gtk_widget_get_realized (drawing_area))
         {
           gint x, y;
 

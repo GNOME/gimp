@@ -2,8 +2,8 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorscale.c
- * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
- *                     Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2010  Sven Neumann <sven@gimp.org>
+ *                          Michael Natterer <mitch@gimp.org>
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -23,8 +23,6 @@
 #include "config.h"
 
 #include <string.h>
-
-#undef GSEAL_ENABLE
 
 #include <gtk/gtk.h>
 
@@ -78,7 +76,7 @@ gimp_color_scale_init (GimpColorScale *scale)
 {
   GtkRange *range = GTK_RANGE (scale);
 
-  range->slider_size_fixed = TRUE;
+  gtk_range_set_slider_size_fixed (range, TRUE);
   /* range->update_policy     = GTK_UPDATE_DELAYED; */
 
   gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
@@ -118,6 +116,7 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
 {
   GimpColorScale *scale = GIMP_COLOR_SCALE (widget);
   GtkRange       *range = GTK_RANGE (widget);
+  GdkRectangle    range_rect;
   gint            focus = 0;
   gint            trough_border;
   gint            scale_width;
@@ -138,25 +137,28 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
       focus += focus_padding;
     }
 
-  range->min_slider_size = (MIN (allocation->width,
-                                 allocation->height) - 2 * focus) / 2;
+  gtk_range_set_min_slider_size (range,
+                                 (MIN (allocation->width,
+                                       allocation->height) - 2 * focus) / 2);
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  scale_width  = range->range_rect.width  - 2 * (focus + trough_border);
-  scale_height = range->range_rect.height - 2 * (focus + trough_border);
+  gtk_range_get_range_rect (range, &range_rect);
+
+  scale_width  = range_rect.width  - 2 * (focus + trough_border);
+  scale_height = range_rect.height - 2 * (focus + trough_border);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      scale_width  -= range->min_slider_size - 1;
+      scale_width  -= gtk_range_get_min_slider_size (range) - 1;
       scale_height -= 2;
       break;
 
     case GTK_ORIENTATION_VERTICAL:
       scale_width  -= 2;
-      scale_height -= range->min_slider_size - 1;
+      scale_height -= gtk_range_get_min_slider_size (range) - 1;
       break;
     }
 
@@ -243,28 +245,18 @@ gimp_color_scale_expose (GtkWidget      *widget,
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
   GtkAllocation   allocation;
+  GdkRectangle    range_rect;
   GdkRectangle    expose_area;        /* Relative to widget->allocation */
   GdkRectangle    area;
   gint            focus = 0;
   gint            trough_border;
+  gint            slider_start;
   gint            slider_size;
   gint            x, y;
   gint            w, h;
 
   if (! scale->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
-
-  /* This is ugly as it relies heavily on GTK+ internals, but I see no
-   * other way to force the range to recalculate its layout. Might
-   * break if GtkRange internals change.
-   */
-  if (range->need_recalc)
-    {
-      GTK_WIDGET_UNSET_FLAGS (widget, GTK_REALIZED);
-      GTK_WIDGET_CLASS (parent_class)->size_allocate (widget,
-                                                      &widget->allocation);
-      GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
-    }
 
   gtk_widget_style_get (widget,
                         "trough-border", &trough_border,
@@ -283,18 +275,21 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  x = allocation.x + range->range_rect.x + focus;
-  y = allocation.y + range->range_rect.y + focus;
-  w = range->range_rect.width  - 2 * focus;
-  h = range->range_rect.height - 2 * focus;
+  gtk_range_get_range_rect (range, &range_rect);
+  gtk_range_get_slider_range (range, &slider_start, NULL);
 
-  slider_size = range->min_slider_size / 2;
+  x = allocation.x + range_rect.x + focus;
+  y = allocation.y + range_rect.y + focus;
+  w = range_rect.width  - 2 * focus;
+  h = range_rect.height - 2 * focus;
+
+  slider_size = gtk_range_get_min_slider_size (range) / 2;
 
   expose_area = event->area;
   expose_area.x -= allocation.x;
   expose_area.y -= allocation.y;
 
-  if (gdk_rectangle_intersect (&expose_area, &range->range_rect, &area))
+  if (gdk_rectangle_intersect (&expose_area, &range_rect, &area))
     {
       gboolean sensitive = gtk_widget_is_sensitive (widget);
 
@@ -354,15 +349,15 @@ gimp_color_scale_expose (GtkWidget      *widget,
   if (gtk_widget_has_focus (widget))
     gtk_paint_focus (style, window, gtk_widget_get_state (widget),
                      &area, widget, "trough",
-                     allocation.x + range->range_rect.x,
-                     allocation.y + range->range_rect.y,
-                     range->range_rect.width,
-                     range->range_rect.height);
+                     allocation.x + range_rect.x,
+                     allocation.y + range_rect.y,
+                     range_rect.width,
+                     range_rect.height);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      area.x      = allocation.x + range->slider_start;
+      area.x      = allocation.x + slider_start;
       area.y      = y + trough_border;
       area.width  = 2 * slider_size + 1;
       area.height = h - 2 * trough_border;
@@ -370,7 +365,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
     case GTK_ORIENTATION_VERTICAL:
       area.x      = x + trough_border;
-      area.y      = allocation.y + range->slider_start;
+      area.y      = allocation.y + slider_start;
       area.width  = w - 2 * trough_border;
       area.height = 2 * slider_size + 1;
       break;

@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -377,7 +374,7 @@ gimp_view_size_allocate (GtkWidget     *widget,
 
   gtk_widget_set_allocation (widget, allocation);
 
-  if (GTK_WIDGET_REALIZED (widget))
+  if (gtk_widget_get_realized (widget))
     gdk_window_move_resize (view->event_window,
                             allocation->x,
                             allocation->y,
@@ -432,7 +429,7 @@ gimp_view_button_press_event (GtkWidget      *widget,
       ! view->show_popup)
     return FALSE;
 
-  if (! GTK_WIDGET_REALIZED (widget))
+  if (! gtk_widget_get_realized (widget))
     return FALSE;
 
   if (bevent->type == GDK_BUTTON_PRESS)
@@ -780,19 +777,19 @@ static void
 gimp_view_update_callback (GimpViewRenderer *renderer,
                            GimpView         *view)
 {
-  GtkWidget *widget = GTK_WIDGET (view);
-  gint       width;
-  gint       height;
+  GtkWidget      *widget = GTK_WIDGET (view);
+  GtkRequisition  requisition;
+  gint            width;
+  gint            height;
+
+  gtk_widget_get_requisition (widget, &requisition);
 
   width  = renderer->width  + 2 * renderer->border_width;
   height = renderer->height + 2 * renderer->border_width;
 
-  if (width  != widget->requisition.width ||
-      height != widget->requisition.height)
+  if (width  != requisition.width ||
+      height != requisition.height)
     {
-      widget->requisition.width  = width;
-      widget->requisition.height = height;
-
       gtk_widget_queue_resize (widget);
     }
   else

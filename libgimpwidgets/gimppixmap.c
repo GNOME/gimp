@@ -93,7 +93,7 @@ gimp_pixmap_set (GimpPixmap  *pixmap,
   GTK_WIDGET (pixmap)->requisition.width  = 0;
   GTK_WIDGET (pixmap)->requisition.height = 0;
 
-  if (! GTK_WIDGET_REALIZED (GTK_WIDGET (pixmap)))
+  if (! gtk_widget_get_realized (GTK_WIDGET (pixmap)))
     {
       if (xpm_data)
         {

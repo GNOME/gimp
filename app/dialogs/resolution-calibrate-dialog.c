@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -62,7 +59,7 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
   gint          monitor;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
-  g_return_if_fail (GTK_WIDGET_REALIZED (resolution_entry));
+  g_return_if_fail (gtk_widget_get_realized (resolution_entry));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
 
   /*  this dialog can only exist once  */

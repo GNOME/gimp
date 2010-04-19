@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -780,7 +777,7 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
 static void
 gimp_scrolled_preview_set_cursor (GimpPreview *preview)
 {
-  if (! GTK_WIDGET_REALIZED (preview->area))
+  if (! gtk_widget_get_realized (preview->area))
     return;
 
   if (preview->xmax - preview->xmin > preview->width  ||

@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -477,7 +474,7 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 
   preview->timeout_id = 0;
 
-  if (toplevel && GTK_WIDGET_REALIZED (toplevel))
+  if (toplevel && gtk_widget_get_realized (toplevel))
     {
       gdk_window_set_cursor (gtk_widget_get_window (toplevel),
                              preview->cursor_busy);
@@ -502,7 +499,7 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 static void
 gimp_preview_real_set_cursor (GimpPreview *preview)
 {
-  if (GTK_WIDGET_REALIZED (preview->area))
+  if (gtk_widget_get_realized (preview->area))
     gdk_window_set_cursor (gtk_widget_get_window (preview->area),
                            preview->default_cursor);
 }

@@ -613,7 +613,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   gboolean         return_val       = FALSE;
   gboolean         update_sw_cursor = FALSE;
 
-  g_return_val_if_fail (GTK_WIDGET_REALIZED (canvas), FALSE);
+  g_return_val_if_fail (gtk_widget_get_realized (canvas), FALSE);
 
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
