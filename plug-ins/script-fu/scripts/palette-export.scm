@@ -6,6 +6,8 @@
 ; See instruction on adding new exporters at the end
 ; ----------------------------------------------------------------------------------------------------
 ; Changelog:
+; April 20nd, 2009 - Version 1.2
+;                  Grammar fixes, messages are translatable now.
 ; July 23rd, 2009 - Version 1.1
 ;                  Removed the palette choose box - the script will now export the active palette.
 ;                  This was done because, this script should usually be invoked by a right click on a
@@ -232,14 +234,12 @@
                       SF-STRING "The name of the file to create
 (If a file with this name already exist, it will be replaced)" (string-append "palette." file-type)
                       )
-  (script-fu-menu-register (string-append "gimp-palette-export-" export-type) "<Palettes>/Export as")
+  (script-fu-menu-register (string-append "gimp-palette-export-" export-type) _"<Palettes>/Export as")
   )
 
 (define (bad-file-name)
-  (gimp-message (string-append "The file name you entered is not a suitable name for a file name! \""
-                               file-name "\" All the characters in the file name are either "
-                               "white-spaces or characters which can not appear in file names (The"
-                               "following characters can not appear in file names: "
+  (gimp-message (string-append _"The file name you entered is not a suitable name for a file name! \"
+                               file-name _"All the characters in the file name are either white-spaces or characters which can not appear in file names (The following characters can not appear in file names: "
                                (list->string illegal-file-name-chars) ")")))
 
 ; ----------------------------------------------------------------------------------------------------
@@ -307,8 +307,7 @@
     )
   )
 (register-palette-exporter "css" "css"
-                           (string-append "Exports the active palette as a list css stylesheet with the colors "
-                                          "entry name as their class name, and the color itself as the color attribute")
+                           (string-append _"Export the active palette as a list css stylesheet with the colors entry name as their class name, and the color itself as the color attribute")
                            "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-php directory-name file-name)
@@ -332,7 +331,7 @@
     )
   )
 (register-palette-exporter "php" "php"
-                           "Exports the active palette as a php dictionary (name => color)"
+                           _"Export the active palette as a PHP dictionary (name => color)"
                            "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-python directory-name file-name)
@@ -361,7 +360,7 @@
     )
   )
 (register-palette-exporter "python" "py"
-                           "Exports the active palette as a python dictionary (name: color)"
+                           _"Export the active palette as a Python dictionary (name: color)"
                            "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-text directory-name file-name)
@@ -388,7 +387,7 @@
     )
   )
 (register-palette-exporter "text" "txt"
-                           "Write all the colors in a palette to a text file, one hexa-decimal value per line (no names)"
+                           _"Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
                            "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-java directory-name file-name)
@@ -428,5 +427,5 @@
   )
 
 (register-palette-exporter "java" "java"
-                           "Exports the active palette as a java.util.Hashtable<String, Color>"
+                           _"Export the active palette as a java.util.Hashtable<String, Color>"
                            "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
