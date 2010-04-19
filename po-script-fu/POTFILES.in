@@ -71,6 +71,7 @@ plug-ins/script-fu/scripts/mkbrush.scm
 plug-ins/script-fu/scripts/neon-logo.scm
 plug-ins/script-fu/scripts/news-text.scm
 plug-ins/script-fu/scripts/old-photo.scm
+plug-ins/script-fu/scripts/palette-export.scm
 plug-ins/script-fu/scripts/paste-as-brush.scm
 plug-ins/script-fu/scripts/paste-as-pattern.scm
 plug-ins/script-fu/scripts/perspective-shadow.scm
