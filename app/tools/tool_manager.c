@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -30,6 +31,7 @@
 #include "core/gimplist.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
+#include "core/gimptoolpreset.h"
 
 #include "config/gimpcoreconfig.h"
 
@@ -59,7 +61,10 @@ static void              tool_manager_set    (Gimp            *gimp,
                                               GimpToolManager *tool_manager);
 static void   tool_manager_tool_changed      (GimpContext     *user_context,
                                               GimpToolInfo    *tool_info,
-                                              gpointer         data);
+                                              GimpToolManager *tool_manager);
+static void   tool_manager_preset_changed    (GimpContext     *user_context,
+                                              GimpToolPreset  *preset,
+                                              GimpToolManager *tool_manager);
 static void   tool_manager_image_clean_dirty (GimpImage       *image,
                                               GimpDirtyMask    dirty_mask,
                                               GimpToolManager *tool_manager);
@@ -99,17 +104,30 @@ tool_manager_init (Gimp *gimp)
   g_signal_connect (user_context, "tool-changed",
                     G_CALLBACK (tool_manager_tool_changed),
                     tool_manager);
+  g_signal_connect (user_context, "tool-preset-changed",
+                    G_CALLBACK (tool_manager_preset_changed),
+                    tool_manager);
 }
 
 void
 tool_manager_exit (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
+  GimpContext     *user_context;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   tool_manager = tool_manager_get (gimp);
   tool_manager_set (gimp, NULL);
+
+  user_context = gimp_get_user_context (gimp);
+
+  g_signal_handlers_disconnect_by_func (user_context,
+                                        tool_manager_tool_changed,
+                                        tool_manager);
+  g_signal_handlers_disconnect_by_func (user_context,
+                                        tool_manager_preset_changed,
+                                        tool_manager);
 
   gimp_container_remove_handler (gimp->images,
                                  tool_manager->image_clean_handler_id);
@@ -524,12 +542,11 @@ tool_manager_set (Gimp            *gimp,
 }
 
 static void
-tool_manager_tool_changed (GimpContext  *user_context,
-                           GimpToolInfo *tool_info,
-                           gpointer      data)
+tool_manager_tool_changed (GimpContext     *user_context,
+                           GimpToolInfo    *tool_info,
+                           GimpToolManager *tool_manager)
 {
-  GimpToolManager *tool_manager = data;
-  GimpTool        *new_tool     = NULL;
+  GimpTool *new_tool = NULL;
 
   if (! tool_info)
     return;
@@ -547,7 +564,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
         {
           g_signal_handlers_block_by_func (user_context,
                                            tool_manager_tool_changed,
-                                           data);
+                                           tool_manager);
 
           /*  explicitly set the current tool  */
           gimp_context_set_tool (user_context,
@@ -555,7 +572,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
           g_signal_handlers_unblock_by_func (user_context,
                                              tool_manager_tool_changed,
-                                             data);
+                                             tool_manager);
         }
 
       return;
@@ -618,6 +635,29 @@ tool_manager_tool_changed (GimpContext  *user_context,
   tool_manager_select_tool (user_context->gimp, new_tool);
 
   g_object_unref (new_tool);
+}
+
+static void
+tool_manager_preset_changed (GimpContext     *user_context,
+                             GimpToolPreset  *preset,
+                             GimpToolManager *tool_manager)
+{
+  GimpToolInfo *preset_tool;
+
+  if (! preset || user_context->gimp->busy)
+    return;
+
+  preset_tool = gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
+
+  if (preset_tool != gimp_context_get_tool (user_context))
+    {
+      gimp_context_set_tool (user_context, preset_tool);
+
+#if 0
+      gimp_config_copy (GIMP_CONFIG (preset->tool_options),
+                        GIMP_CONFIG (preset_tool->tool_options), 0);
+#endif
+    }
 }
 
 static void
