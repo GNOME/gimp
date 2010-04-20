@@ -268,7 +268,9 @@ gimp_tool_info_new (Gimp                *gimp,
                                               NULL);
     }
 
-  g_object_set (tool_info->tool_options, "tool-info", tool_info, NULL);
+  g_object_set (tool_info->tool_options,
+                "tool",      tool_info,
+                "tool-info", tool_info, NULL);
 
   if (tool_info->context_props)
     {

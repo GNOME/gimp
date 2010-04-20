@@ -301,6 +301,11 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
             break;
           }
 
+        /* this is a hack */
+        g_object_set (options,
+                      "tool-info", gimp_context_get_tool (GIMP_CONTEXT (options)),
+                      NULL);
+
         g_value_take_object (value, options);
       }
       break;
