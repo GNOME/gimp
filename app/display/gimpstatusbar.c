@@ -19,8 +19,6 @@
 
 #include <string.h>
 
-#undef GSEAL_ENABLE
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -163,9 +161,9 @@ static void
 gimp_statusbar_init (GimpStatusbar *statusbar)
 {
   GtkWidget     *hbox;
-  GtkWidget     *label;
   GtkWidget     *image;
   GimpUnitStore *store;
+  GList         *children;
 
   statusbar->shell          = NULL;
   statusbar->messages       = NULL;
@@ -183,27 +181,15 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   statusbar->progress_active      = FALSE;
   statusbar->progress_shown       = FALSE;
 
-  label = g_object_ref (GTK_STATUSBAR (statusbar)->label);
+  /*  remove the message label from the message area  */
+  hbox = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
+  gtk_box_set_spacing (GTK_BOX (hbox), HBOX_SPACING);
 
-  /* remove the message area or label and insert a hbox */
-#if GTK_CHECK_VERSION (2, 19, 1)
-  {
-    hbox = gtk_statusbar_get_message_area (GTK_STATUSBAR (statusbar));
-    gtk_box_set_spacing (GTK_BOX (hbox), HBOX_SPACING);
-    gtk_container_remove (GTK_CONTAINER (hbox), label);
-  }
-#else
-  {
-    GtkWidget *label_parent;
+  children = gtk_container_get_children (GTK_CONTAINER (hbox));
+  statusbar->label = g_object_ref (children->data);
+  g_list_free (children);
 
-    label_parent = gtk_widget_get_parent (label);
-    gtk_container_remove (GTK_CONTAINER (label_parent), label);
-
-    hbox = gtk_hbox_new (FALSE, HBOX_SPACING);
-    gtk_container_add (GTK_CONTAINER (label_parent), hbox);
-    gtk_widget_show (hbox);
-  }
-#endif
+  gtk_container_remove (GTK_CONTAINER (hbox), statusbar->label);
 
   g_signal_connect (hbox, "size-request",
                     G_CALLBACK (gimp_statusbar_hbox_size_request),
@@ -241,12 +227,12 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
                     G_CALLBACK (gimp_statusbar_scale_activated),
                     statusbar);
 
-  /*  put the message area or label back into the hbox  */
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 1);
+  /*  put the label back into the message area  */
+  gtk_box_pack_start (GTK_BOX (hbox), statusbar->label, TRUE, TRUE, 1);
 
-  g_object_unref (label);
+  g_object_unref (statusbar->label);
 
-  g_signal_connect_after (GTK_STATUSBAR (statusbar)->label, "expose-event",
+  g_signal_connect_after (statusbar->label, "expose-event",
                           G_CALLBACK (gimp_statusbar_label_expose),
                           statusbar);
 
@@ -383,7 +369,7 @@ gimp_statusbar_progress_start (GimpProgress *progress,
         }
 
       gtk_widget_show (statusbar->progressbar);
-      gtk_widget_hide (GTK_STATUSBAR (statusbar)->label);
+      gtk_widget_hide (statusbar->label);
 
       /*  This call is needed so that the progress bar is drawn in the
        *  correct place. Probably due a bug in GTK+.
@@ -426,7 +412,7 @@ gimp_statusbar_progress_end (GimpProgress *progress)
       statusbar->progress_value  = 0.0;
 
       gtk_widget_hide (bar);
-      gtk_widget_show (GTK_STATUSBAR (statusbar)->label);
+      gtk_widget_show (statusbar->label);
 
       gimp_statusbar_pop (statusbar, "progress");
 
@@ -528,7 +514,6 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
                                  const gchar         *message)
 {
   GimpStatusbar *statusbar  = GIMP_STATUSBAR (progress);
-  GtkWidget     *label      = GTK_STATUSBAR (statusbar)->label;
   PangoLayout   *layout;
   const gchar   *stock_id;
   gboolean       handle_msg = FALSE;
@@ -538,7 +523,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
     return FALSE;
 
   /*  we can only handle short one-liners  */
-  layout = gtk_widget_create_pango_layout (label, message);
+  layout = gtk_widget_create_pango_layout (statusbar->label, message);
 
   stock_id = gimp_get_message_stock_id (severity);
 
@@ -547,7 +532,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
       GtkAllocation label_allocation;
       gint          width;
 
-      gtk_widget_get_allocation (label, &label_allocation);
+      gtk_widget_get_allocation (statusbar->label, &label_allocation);
 
       pango_layout_get_pixel_size (layout, &width, NULL);
 
@@ -557,7 +542,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
             {
               GdkPixbuf *pixbuf;
 
-              pixbuf = gtk_widget_render_icon (label, stock_id,
+              pixbuf = gtk_widget_render_icon (statusbar->label, stock_id,
                                                GTK_ICON_SIZE_MENU, NULL);
 
               width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf);
@@ -601,13 +586,11 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
     }
   else
     {
-      GtkLabel *label = GTK_LABEL (GTK_STATUSBAR (statusbar)->label);
-
       if (statusbar->icon)
         g_object_unref (statusbar->icon);
 
       if (stock_id)
-        statusbar->icon = gtk_widget_render_icon (GTK_WIDGET (label),
+        statusbar->icon = gtk_widget_render_icon (statusbar->label,
                                                   stock_id,
                                                   GTK_ICON_SIZE_MENU, NULL);
       else
@@ -621,7 +604,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
           gchar          *tmp;
 
           tmp = g_strconcat (" ", text, NULL);
-          gtk_label_set_text (label, tmp);
+          gtk_label_set_text (GTK_LABEL (statusbar->label), tmp);
           g_free (tmp);
 
           rect.x      = 0;
@@ -637,13 +620,13 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
           attr->end_index   = 1;
           pango_attr_list_insert (attrs, attr);
 
-          gtk_label_set_attributes (label, attrs);
+          gtk_label_set_attributes (GTK_LABEL (statusbar->label), attrs);
           pango_attr_list_unref (attrs);
         }
       else
         {
-          gtk_label_set_text (label, text);
-          gtk_label_set_attributes (label, NULL);
+          gtk_label_set_text (GTK_LABEL (statusbar->label), text);
+          gtk_label_set_attributes (GTK_LABEL (statusbar->label), NULL);
         }
     }
 }
