@@ -45,6 +45,7 @@
 enum
 {
   PROP_0,
+  PROP_TOOL,
   PROP_TOOL_INFO
 };
 
@@ -74,6 +75,8 @@ gimp_tool_options_class_init (GimpToolOptionsClass *klass)
 
   klass->reset               = gimp_tool_options_real_reset;
 
+  g_object_class_override_property (object_class, PROP_TOOL, "tool");
+
   g_object_class_install_property (object_class, PROP_TOOL_INFO,
                                    g_param_spec_object ("tool-info",
                                                         NULL, NULL,
@@ -88,6 +91,44 @@ gimp_tool_options_init (GimpToolOptions *options)
   options->tool_info = NULL;
 }
 
+/*  This is such a horrible hack, but neccessary because we
+ *  a) load an option's tool-info from disk in many cases
+ *  b) screwed up in the past and saved the wrong tool-info in some cases
+ */
+static GimpToolInfo *
+gimp_tool_options_check_tool_info (GimpToolOptions *options,
+                                   GimpToolInfo    *tool_info)
+{
+  if (G_OBJECT_TYPE (options) == tool_info->tool_options_type)
+    {
+      return tool_info;
+    }
+  else
+    {
+      GList *list;
+
+      for (list = gimp_get_tool_info_iter (tool_info->gimp);
+           list;
+           list = g_list_next (list))
+        {
+          GimpToolInfo *new_info = list->data;
+
+          if (G_OBJECT_TYPE (options) == new_info->tool_options_type)
+            {
+              g_printerr ("%s: correcting bogus deserialized tool "
+                          "type '%s' with right type '%s'\n",
+                          g_type_name (G_OBJECT_TYPE (options)),
+                          gimp_object_get_name (tool_info),
+                          gimp_object_get_name (new_info));
+
+              return new_info;
+            }
+        }
+
+      g_return_val_if_reached (NULL);
+    }
+}
+
 static void
 gimp_tool_options_set_property (GObject      *object,
                                 guint         property_id,
@@ -98,12 +139,31 @@ gimp_tool_options_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TOOL:
+      {
+        GimpToolInfo *tool_info = g_value_get_object (value);
+        GimpToolInfo *context_tool;
+
+        context_tool = gimp_context_get_tool (GIMP_CONTEXT (options));
+
+        g_return_if_fail (context_tool == NULL ||
+                          context_tool == tool_info);
+
+        tool_info = gimp_tool_options_check_tool_info (options, tool_info);
+
+        if (! context_tool)
+          gimp_context_set_tool (GIMP_CONTEXT (options), tool_info);
+      }
+      break;
+
     case PROP_TOOL_INFO:
       {
         GimpToolInfo *tool_info = g_value_get_object (value);
 
         g_return_if_fail (options->tool_info == NULL ||
                           options->tool_info == tool_info);
+
+        tool_info = gimp_tool_options_check_tool_info (options, tool_info);
 
         if (! options->tool_info)
           options->tool_info = g_value_dup_object (value);
@@ -126,6 +186,10 @@ gimp_tool_options_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_TOOL:
+      g_value_set_object (value, gimp_context_get_tool (GIMP_CONTEXT (options)));
+      break;
+
     case PROP_TOOL_INFO:
       g_value_set_object (value, options->tool_info);
       break;
