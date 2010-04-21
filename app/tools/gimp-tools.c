@@ -313,7 +313,9 @@ gimp_tools_restore (Gimp *gimp)
       gimp_context_copy_properties (gimp_get_user_context (gimp),
                                     GIMP_CONTEXT (tool_info->tool_options),
                                     GIMP_CONTEXT_ALL_PROPS_MASK &~
-                                    tool_info->context_props);
+                                    (tool_info->context_props |
+                                     GIMP_CONTEXT_TOOL_MASK   |
+                                     GIMP_CONTEXT_PAINT_INFO_MASK));
 
       gimp_tool_options_deserialize (tool_info->tool_options, NULL);
 
