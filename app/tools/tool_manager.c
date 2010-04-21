@@ -56,18 +56,23 @@ struct _GimpToolManager
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get    (Gimp            *gimp);
-static void              tool_manager_set    (Gimp            *gimp,
-                                              GimpToolManager *tool_manager);
-static void   tool_manager_tool_changed      (GimpContext     *user_context,
-                                              GimpToolInfo    *tool_info,
-                                              GimpToolManager *tool_manager);
-static void   tool_manager_preset_changed    (GimpContext     *user_context,
-                                              GimpToolPreset  *preset,
-                                              GimpToolManager *tool_manager);
-static void   tool_manager_image_clean_dirty (GimpImage       *image,
-                                              GimpDirtyMask    dirty_mask,
-                                              GimpToolManager *tool_manager);
+static GimpToolManager * tool_manager_get     (Gimp            *gimp);
+static void              tool_manager_set     (Gimp            *gimp,
+                                               GimpToolManager *tool_manager);
+static void   tool_manager_tool_changed       (GimpContext     *user_context,
+                                               GimpToolInfo    *tool_info,
+                                               GimpToolManager *tool_manager);
+static void   tool_manager_preset_changed     (GimpContext     *user_context,
+                                               GimpToolPreset  *preset,
+                                               GimpToolManager *tool_manager);
+static void   tool_manager_image_clean_dirty  (GimpImage       *image,
+                                               GimpDirtyMask    dirty_mask,
+                                               GimpToolManager *tool_manager);
+
+static void   tool_manager_connect_options    (GimpContext     *user_context,
+                                               GimpToolInfo    *tool_info);
+static void   tool_manager_disconnect_options (GimpContext     *user_context,
+                                               GimpToolInfo    *tool_info);
 
 
 /*  public functions  */
@@ -592,17 +597,72 @@ tool_manager_tool_changed (GimpContext     *user_context,
     }
 
   /*  disconnect the old tool's context  */
-  if (tool_manager->active_tool            &&
-      tool_manager->active_tool->tool_info &&
-      tool_manager->active_tool->tool_info->context_props)
+  if (tool_manager->active_tool &&
+      tool_manager->active_tool->tool_info)
     {
-      GimpToolInfo *old_tool_info = tool_manager->active_tool->tool_info;
-
-      gimp_context_set_parent (GIMP_CONTEXT (old_tool_info->tool_options),
-                               NULL);
+      tool_manager_disconnect_options (user_context,
+                                       tool_manager->active_tool->tool_info);
     }
 
   /*  connect the new tool's context  */
+  tool_manager_connect_options (user_context, tool_info);
+
+  tool_manager_select_tool (user_context->gimp, new_tool);
+
+  g_object_unref (new_tool);
+}
+
+static void
+tool_manager_preset_changed (GimpContext     *user_context,
+                             GimpToolPreset  *preset,
+                             GimpToolManager *tool_manager)
+{
+  GimpToolInfo *preset_tool;
+  gboolean      tool_change = FALSE;
+
+  if (! preset || user_context->gimp->busy)
+    return;
+
+  preset_tool = gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
+
+  if (preset_tool != gimp_context_get_tool (user_context))
+    tool_change = TRUE;
+
+  if (! tool_change)
+    tool_manager_disconnect_options (user_context, preset_tool);
+
+  gimp_config_copy (GIMP_CONFIG (preset->tool_options),
+                    GIMP_CONFIG (preset_tool->tool_options), 0);
+
+  if (tool_change)
+    gimp_context_set_tool (user_context, preset_tool);
+  else
+    tool_manager_connect_options (user_context, preset_tool);
+}
+
+static void
+tool_manager_image_clean_dirty (GimpImage       *image,
+                                GimpDirtyMask    dirty_mask,
+                                GimpToolManager *tool_manager)
+{
+  GimpTool *tool = tool_manager->active_tool;
+
+  if (tool &&
+      ! gimp_tool_control_get_preserve (tool->control) &&
+      (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
+    {
+      GimpDisplay *display = gimp_tool_has_image (tool, image);
+
+      if (display)
+        tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
+                                     display);
+    }
+}
+
+static void
+tool_manager_connect_options (GimpContext  *user_context,
+                              GimpToolInfo *tool_info)
+{
   if (tool_info->context_props)
     {
       GimpCoreConfig      *config       = user_context->gimp->config;
@@ -631,50 +691,14 @@ tool_manager_tool_changed (GimpContext     *user_context,
       gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
                                user_context);
     }
-
-  tool_manager_select_tool (user_context->gimp, new_tool);
-
-  g_object_unref (new_tool);
 }
 
 static void
-tool_manager_preset_changed (GimpContext     *user_context,
-                             GimpToolPreset  *preset,
-                             GimpToolManager *tool_manager)
+tool_manager_disconnect_options (GimpContext  *user_context,
+                                 GimpToolInfo *tool_info)
 {
-  GimpToolInfo *preset_tool;
-
-  if (! preset || user_context->gimp->busy)
-    return;
-
-  preset_tool = gimp_context_get_tool (GIMP_CONTEXT (preset->tool_options));
-
-  if (preset_tool != gimp_context_get_tool (user_context))
+  if (tool_info->context_props)
     {
-      gimp_context_set_tool (user_context, preset_tool);
-
-#if 0
-      gimp_config_copy (GIMP_CONFIG (preset->tool_options),
-                        GIMP_CONFIG (preset_tool->tool_options), 0);
-#endif
-    }
-}
-
-static void
-tool_manager_image_clean_dirty (GimpImage       *image,
-                                GimpDirtyMask    dirty_mask,
-                                GimpToolManager *tool_manager)
-{
-  GimpTool *tool = tool_manager->active_tool;
-
-  if (tool &&
-      ! gimp_tool_control_get_preserve (tool->control) &&
-      (gimp_tool_control_get_dirty_mask (tool->control) & dirty_mask))
-    {
-      GimpDisplay *display = gimp_tool_has_image (tool, image);
-
-      if (display)
-        tool_manager_control_active (image->gimp, GIMP_TOOL_ACTION_HALT,
-                                     display);
+      gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options), NULL);
     }
 }
