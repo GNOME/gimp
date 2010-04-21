@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-19 19:58+0400\n"
-"PO-Revision-Date: 2010-04-21 01:34+0400\n"
+"PO-Revision-Date: 2010-04-21 04:54+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3046,7 +3046,7 @@ msgstr "Изменить размер изображения, чтобы пом�
 #: ../app/actions/image-actions.c:91
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "_Разрешение при печати..."
+msgstr "_Размер при печати..."
 
 #: ../app/actions/image-actions.c:92
 msgctxt "image-action"
@@ -3146,7 +3146,7 @@ msgstr "Преобразовать изображение в градации с
 #: ../app/actions/image-actions.c:152
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "Ин_дексированное..."
+msgstr "Ин_дексированный..."
 
 #: ../app/actions/image-actions.c:153
 msgctxt "image-convert-action"

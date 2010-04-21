@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-19 23:58+0400\n"
-"PO-Revision-Date: 2010-04-20 00:07+0400\n"
+"PO-Revision-Date: 2010-04-21 05:07+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1703,7 +1703,7 @@ msgstr "_Сетка..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr "Направляющие из _выделения"
+msgstr "Создать из _выделения"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -1723,7 +1723,7 @@ msgstr "Горизонталь"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
-msgstr "На_правляющая (в %)..."
+msgstr "Создать на_правляющую по %..."
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
@@ -1741,7 +1741,7 @@ msgstr "Добавить направляющую к положению, зад�
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
-msgstr "_Новая направляющая..."
+msgstr "_Создать направляющую..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Position"
