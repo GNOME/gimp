@@ -61,6 +61,9 @@ static void   gimp_tool_options_get_property (GObject         *object,
 
 static void   gimp_tool_options_real_reset   (GimpToolOptions *tool_options);
 
+static void   gimp_tool_options_tool_notify  (GimpToolOptions *options,
+                                              GParamSpec      *pspec);
+
 
 G_DEFINE_TYPE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT)
 
@@ -89,6 +92,10 @@ static void
 gimp_tool_options_init (GimpToolOptions *options)
 {
   options->tool_info = NULL;
+
+  g_signal_connect (options, "notify::tool",
+                    G_CALLBACK (gimp_tool_options_tool_notify),
+                    NULL);
 }
 
 /*  This is such a horrible hack, but neccessary because we
@@ -97,7 +104,8 @@ gimp_tool_options_init (GimpToolOptions *options)
  */
 static GimpToolInfo *
 gimp_tool_options_check_tool_info (GimpToolOptions *options,
-                                   GimpToolInfo    *tool_info)
+                                   GimpToolInfo    *tool_info,
+                                   gboolean         warn)
 {
   if (G_OBJECT_TYPE (options) == tool_info->tool_options_type)
     {
@@ -115,11 +123,12 @@ gimp_tool_options_check_tool_info (GimpToolOptions *options,
 
           if (G_OBJECT_TYPE (options) == new_info->tool_options_type)
             {
-              g_printerr ("%s: correcting bogus deserialized tool "
-                          "type '%s' with right type '%s'\n",
-                          g_type_name (G_OBJECT_TYPE (options)),
-                          gimp_object_get_name (tool_info),
-                          gimp_object_get_name (new_info));
+              if (warn)
+                g_printerr ("%s: correcting bogus deserialized tool "
+                            "type '%s' with right type '%s'\n",
+                            g_type_name (G_OBJECT_TYPE (options)),
+                            gimp_object_get_name (tool_info),
+                            gimp_object_get_name (new_info));
 
               return new_info;
             }
@@ -149,7 +158,7 @@ gimp_tool_options_set_property (GObject      *object,
         g_return_if_fail (context_tool == NULL ||
                           context_tool == tool_info);
 
-        tool_info = gimp_tool_options_check_tool_info (options, tool_info);
+        tool_info = gimp_tool_options_check_tool_info (options, tool_info, TRUE);
 
         if (! context_tool)
           gimp_context_set_tool (GIMP_CONTEXT (options), tool_info);
@@ -163,7 +172,7 @@ gimp_tool_options_set_property (GObject      *object,
         g_return_if_fail (options->tool_info == NULL ||
                           options->tool_info == tool_info);
 
-        tool_info = gimp_tool_options_check_tool_info (options, tool_info);
+        tool_info = gimp_tool_options_check_tool_info (options, tool_info, TRUE);
 
         if (! options->tool_info)
           options->tool_info = g_value_dup_object (value);
@@ -205,6 +214,27 @@ gimp_tool_options_real_reset (GimpToolOptions *tool_options)
 {
   gimp_config_reset (GIMP_CONFIG (tool_options));
 }
+
+static void
+gimp_tool_options_tool_notify (GimpToolOptions *options,
+                               GParamSpec      *pspec)
+{
+  GimpToolInfo *tool_info = gimp_context_get_tool (GIMP_CONTEXT (options));
+  GimpToolInfo *new_info;
+
+  new_info = gimp_tool_options_check_tool_info (options, tool_info, FALSE);
+
+  if (tool_info && new_info != tool_info)
+    g_warning ("%s: 'tool' property on %s was set to bogus value "
+               "'%s', it MUST be '%s'.",
+               G_STRFUNC,
+               g_type_name (G_OBJECT_TYPE (options)),
+               gimp_object_get_name (tool_info),
+               gimp_object_get_name (new_info));
+}
+
+
+/*  public functions  */
 
 void
 gimp_tool_options_reset (GimpToolOptions *tool_options)
