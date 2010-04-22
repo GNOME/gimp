@@ -266,26 +266,20 @@ void
 gimp_draw_tool_resume (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (draw_tool->paused_count > 0);
 
-  if (draw_tool->paused_count > 0)
-    {
-      draw_tool->paused_count--;
+  draw_tool->paused_count--;
 
 #ifdef USE_TIMEOUT
-      if (draw_tool->paused_count == 0 && ! draw_tool->draw_timeout)
-        draw_tool->draw_timeout =
-          gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
-                                        DRAW_TIMEOUT,
-                                        (GSourceFunc) gimp_draw_tool_draw_timeout,
-                                        draw_tool, NULL);
+  if (draw_tool->paused_count == 0 && ! draw_tool->draw_timeout)
+    draw_tool->draw_timeout =
+      gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
+                                    DRAW_TIMEOUT,
+                                    (GSourceFunc) gimp_draw_tool_draw_timeout,
+                                    draw_tool, NULL);
 #else
-      gimp_draw_tool_draw (draw_tool);
+  gimp_draw_tool_draw (draw_tool);
 #endif
-    }
-  else
-    {
-      g_warning ("%s: called with draw_tool->paused_count == 0", G_STRFUNC);
-    }
 }
 
 gboolean
