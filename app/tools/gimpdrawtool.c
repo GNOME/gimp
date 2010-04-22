@@ -46,6 +46,8 @@
 #define USE_TIMEOUT  1
 
 
+static void          gimp_draw_tool_dispose      (GObject        *object);
+
 static gboolean      gimp_draw_tool_has_display  (GimpTool       *tool,
                                                   GimpDisplay    *display);
 static GimpDisplay * gimp_draw_tool_has_image    (GimpTool       *tool,
@@ -83,7 +85,10 @@ G_DEFINE_TYPE (GimpDrawTool, gimp_draw_tool, GIMP_TYPE_TOOL)
 static void
 gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 {
-  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
+  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass *tool_class   = GIMP_TOOL_CLASS (klass);
+
+  object_class->dispose   = gimp_draw_tool_dispose;
 
   tool_class->has_display = gimp_draw_tool_has_display;
   tool_class->has_image   = gimp_draw_tool_has_image;
@@ -99,6 +104,20 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
 
   draw_tool->paused_count = 0;
   draw_tool->is_drawn     = FALSE;
+}
+
+static void
+gimp_draw_tool_dispose (GObject *object)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (object);
+
+  if (draw_tool->draw_timeout)
+    {
+      g_source_remove (draw_tool->draw_timeout);
+      draw_tool->draw_timeout = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static gboolean
