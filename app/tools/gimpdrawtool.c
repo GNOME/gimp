@@ -272,9 +272,9 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
       draw_tool->paused_count--;
 
 #ifdef USE_TIMEOUT
-      if (! draw_tool->draw_timeout)
+      if (draw_tool->paused_count == 0 && ! draw_tool->draw_timeout)
         draw_tool->draw_timeout =
-          gdk_threads_add_timeout_full (G_PRIORITY_HIGH,
+          gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
                                         DRAW_TIMEOUT,
                                         (GSourceFunc) gimp_draw_tool_draw_timeout,
                                         draw_tool, NULL);
