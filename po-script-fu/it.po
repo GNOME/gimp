@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-14 18:06+0200\n"
-"PO-Revision-Date: 2010-04-14 14:11+0200\n"
+"POT-Creation-Date: 2010-04-23 12:42+0200\n"
+"PO-Revision-Date: 2010-04-23 12:42+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2708,7 +2708,7 @@ msgstr "Oscurità ombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow depth"
-msgstr "Profondità dell'ombra"
+msgstr "Profondità ombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
