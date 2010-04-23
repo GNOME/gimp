@@ -1069,6 +1069,60 @@ CODE
     );
 }
 
+sub layer_group_get_layers {
+    $blurb = 'Get a list of layers in given layer group';
+
+    $help = <<'HELP';
+Get a list of layers in given layer group. If it is not a group,
+ returns an empty list with 0 entries.
+HELP
+
+    &joao_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'layer_group', type => 'layer',
+          desc => 'The layer group' }
+     );
+
+    @outargs = (
+        { name => 'layer_ids', type => 'int32array',
+          desc => 'The list of layers contained in the group',
+          array => { name => 'num_layers',
+                     desc => 'The number of layers contained in the group' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *list;
+  
+  if (GIMP_IS_GROUP_LAYER (layer_group))
+    {
+      list = GIMP_PROJECTABLE_GET_INTERFACE (layer_group)->get_layers(layer_group);
+
+      num_layers = g_list_length (list);
+
+      if (num_layers)
+        {
+          gint i;
+
+          layer_ids = g_new (gint32, num_layers);
+
+          for (i = 0; i < num_layers; i++, list = g_list_next (list))
+              layer_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+        }
+    }
+  else
+    {
+      num_layers = 0;
+      layer_ids = g_new (gint32, num_layers);
+    }
+}
+CODE
+    );
+}
+
+
 
 @headers = qw("libgimpbase/gimpbase.h"
               "config/gimpcoreconfig.h"
@@ -1077,6 +1131,8 @@ CODE
               "core/gimpitem-linked.h"
               "core/gimppickable.h"
               "core/gimpprogress.h"
+              "core/gimpprojectable.h"
+              "core/gimpgrouplayer.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
@@ -1100,7 +1156,9 @@ CODE
             layer_get_show_mask layer_set_show_mask
             layer_get_edit_mask layer_set_edit_mask
             layer_get_opacity layer_set_opacity
-            layer_get_mode layer_set_mode);
+            layer_get_mode layer_set_mode
+            layer_group_get_layers
+            );
 
 %exports = (app => [@procs], lib => [@procs]);
 
