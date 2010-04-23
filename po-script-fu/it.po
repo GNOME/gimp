@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-14 18:33+0200\n"
-"PO-Revision-Date: 2010-04-14 18:37+0200\n"
+"POT-Creation-Date: 2010-04-23 12:45+0200\n"
+"PO-Revision-Date: 2010-04-23 12:57+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1955,6 +1955,41 @@ msgstr "Seppia"
 msgid "_Old Photo..."
 msgstr "_Vecchia foto..."
 
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid "<Palettes>/Export as"
+msgstr "Esporta come"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid ""
+"All the characters in the file name are either white-spaces or characters "
+"which can not appear in file names (The following characters can not appear "
+"in file names: "
+msgstr "Tutti i caratteri nel nome di file sono o spaziati fra loro o caratteri che non possono essere usati in un nome di file (i seguenti caratteri non possono fare parte di un nome di file: "
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Esporta la tavolozza attiva come dizionario PHP (nome => colore)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Esporta la tavolozza attiva come dizionario Python (nome: colore)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Esporta la tavolozza attiva come java.util.Hashtable<Stringa, Colore>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid ""
+"Export the active palette as a list css stylesheet with the colors entry "
+"name as their class name, and the color itself as the color attribute"
+msgstr "Esporta la tavolozza attiva come elenco di fogli di stile css con le voci colore come nome di classe e il colore vero e proprio come attributo"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr "Scrivi tutti i colori presenti nella tavolozza in un file di testo, un valore esadecimale per riga (senza nomi)"
+
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "Brush name"
@@ -2648,7 +2683,7 @@ msgstr "Oscurità ombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow depth"
-msgstr "Profondità dell'ombra"
+msgstr "Profondità ombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
@@ -2711,79 +2746,3 @@ msgstr "Opacità illuminazione"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effetto _xach..."
-
-#~ msgid "Autocrop"
-#~ msgstr "Autoritagliamento"
-
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Crea un'immagine di una grande intestazione usando il tema delle pagine "
-#~ "web di gimp.org"
-
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Crea un'immagine di una piccola intestazione usando il tema delle pagine "
-#~ "web di gimp.org"
-
-#~ msgid "Dark color"
-#~ msgstr "Colore scuro"
-
-#~ msgid "Index image"
-#~ msgstr "Immagine indicizzata"
-
-#~ msgid "Number of colors"
-#~ msgstr "Numero di colori"
-
-#~ msgid "Remove background"
-#~ msgstr "Rimuovi sfondo"
-
-#~ msgid "Select-by-color threshold"
-#~ msgstr "Soglia selezione per colore"
-
-#~ msgid "Shadow color"
-#~ msgstr "Colore ombra"
-
-#~ msgid "_Big Header..."
-#~ msgstr "Intestazione _grande..."
-
-#~ msgid "_Small Header..."
-#~ msgstr "Intestazione _piccola..."
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
-#~ "theme"
-#~ msgstr ""
-#~ "Crea un'immagine di un'intestazione di un'etichetta di un pulsante a tubo "
-#~ "usando il tema delle pagine di gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Crea un'immagine di un'etichetta di un pulsante a tubo usando il tema "
-#~ "delle pagine web di gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Crea un'immagine di un'etichetta di un pulsante a tubo di secondo livello "
-#~ "usando il tema delle pagine web di gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Crea un'immagine di un'etichetta di un pulsante a tubo di terzo livello "
-#~ "usando il tema delle pagine web di gimp.org"
-
-#~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "Etichetta sotto-pulsante a tubo..."
-
-#~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "Etichetta sotto-sotto-pulsante a tubo..."
-
-#~ msgid "_General Tube Labels..."
-#~ msgstr "Etichette a tubo _generiche..."
-
-#~ msgid "_Tube Button Label..."
-#~ msgstr "Etichetta pulsante a _tubo..."
