@@ -78,12 +78,27 @@ gimp_tool_preset_editor_class_init (GimpToolPresetEditorClass *klass)
 static void
 gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 {
-  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GimpToolPreset *preset;
-  GtkWidget      *button;
+
+}
+
+static GObject *
+gimp_tool_preset_editor_constructor (GType                  type,
+                                     guint                  n_params,
+                                     GObjectConstructParam *params)
+{
+  GObject              *object;
+  GimpToolPresetEditor *editor;
+  GimpDataEditor       *data_editor;
+  GimpToolPreset       *preset;
+  GtkWidget            *button;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor      = GIMP_TOOL_PRESET_EDITOR (object);
+  data_editor = GIMP_DATA_EDITOR (editor);
 
   preset = editor->tool_preset_model = g_object_new (GIMP_TYPE_TOOL_PRESET,
-                                                     //"gimp", data_editor->context->gimp,
+                                                     "gimp", data_editor->context->gimp,
                                                      NULL);
 
   g_signal_connect (preset, "notify",
@@ -124,24 +139,6 @@ gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-}
-
-static GObject *
-gimp_tool_preset_editor_constructor (GType                  type,
-                                     guint                  n_params,
-                                     GObjectConstructParam *params)
-{
-  GObject              *object;
-  GimpToolPresetEditor *editor;
-  GimpDataEditor       *data_editor;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor      = GIMP_TOOL_PRESET_EDITOR (object);
-  data_editor = GIMP_DATA_EDITOR (editor);
-
-  gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
 
   return object;
 }

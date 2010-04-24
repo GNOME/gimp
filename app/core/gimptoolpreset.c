@@ -180,6 +180,8 @@ gimp_tool_preset_constructor (GType                  type,
 
   preset = GIMP_TOOL_PRESET (object);
 
+  g_assert (GIMP_IS_GIMP (preset->gimp));
+
   return object;
 }
 
