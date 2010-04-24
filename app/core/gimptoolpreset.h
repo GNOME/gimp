@@ -38,6 +38,14 @@ struct _GimpToolPreset
 
   Gimp            *gimp;
   GimpToolOptions *tool_options;
+
+  gboolean         use_fg_bg;
+  gboolean         use_brush;
+  gboolean         use_dynamics;
+  gboolean         use_gradient;
+  gboolean         use_pattern;
+  gboolean         use_palette;
+  gboolean         use_font;
 };
 
 struct _GimpToolPresetClass
@@ -46,11 +54,13 @@ struct _GimpToolPresetClass
 };
 
 
-GType      gimp_tool_preset_get_type     (void) G_GNUC_CONST;
+GType               gimp_tool_preset_get_type     (void) G_GNUC_CONST;
 
-GimpData * gimp_tool_preset_new          (GimpContext *context,
-                                          const gchar *name);
-GimpData * gimp_tool_preset_get_standard (GimpContext *context);
+GimpData *          gimp_tool_preset_new          (GimpContext *context,
+                                                   const gchar *name);
+GimpData *          gimp_tool_preset_get_standard (GimpContext *context);
 
+
+GimpContextPropMask gimp_tool_preset_get_prop_mask (GimpToolPreset *preset);
 
 #endif  /*  __GIMP_TOOL_PRESET_H__  */
