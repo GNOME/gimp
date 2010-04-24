@@ -33,7 +33,7 @@
 
 #include "gimp-intl.h"
 
-#define DEFAULT_USE_FG_BG    TRUE
+#define DEFAULT_USE_FG_BG    FALSE
 #define DEFAULT_USE_BRUSH    TRUE
 #define DEFAULT_USE_DYNAMICS TRUE
 #define DEFAULT_USE_GRADIENT TRUE
@@ -179,8 +179,6 @@ gimp_tool_preset_constructor (GType                  type,
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   preset = GIMP_TOOL_PRESET (object);
-
-  g_assert (GIMP_IS_GIMP (preset->gimp));
 
   return object;
 }

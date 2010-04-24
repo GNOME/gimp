@@ -638,6 +638,10 @@ tool_manager_preset_changed (GimpContext     *user_context,
     gimp_context_set_tool (user_context, preset_tool);
   else
     tool_manager_connect_options (user_context, preset_tool);
+
+  gimp_context_copy_properties (GIMP_CONTEXT (preset->tool_options),
+                                user_context,
+                                gimp_tool_preset_get_prop_mask (preset));
 }
 
 static void

@@ -78,6 +78,53 @@ gimp_tool_preset_editor_class_init (GimpToolPresetEditorClass *klass)
 static void
 gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 {
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GimpToolPreset *preset;
+  GtkWidget      *button;
+
+  preset = editor->tool_preset_model = g_object_new (GIMP_TYPE_TOOL_PRESET,
+                                                     //"gimp", data_editor->context->gimp,
+                                                     NULL);
+
+  g_signal_connect (preset, "notify",
+                    G_CALLBACK (gimp_tool_preset_editor_notify_model),
+                    editor);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg", _("Apply stored FG/BG"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-brush", _("Apply stored brush"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics", _("Apply stored dynamics"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient", _("Apply stored gradient"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern", _("Apply stored pattern"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette", _("Apply stored pallete"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-font", _("Apply stored font"));
+  gtk_box_pack_start (GTK_BOX (data_editor), button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
 }
 
 static GObject *
@@ -93,10 +140,6 @@ gimp_tool_preset_editor_constructor (GType                  type,
 
   editor      = GIMP_TOOL_PRESET_EDITOR (object);
   data_editor = GIMP_DATA_EDITOR (editor);
-
-  editor->tool_preset_model = g_object_new (GIMP_TYPE_TOOL_PRESET,
-                                            "gimp", data_editor->context->gimp,
-                                            NULL);
 
   gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
 
