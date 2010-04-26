@@ -54,13 +54,13 @@ struct _GimpToolPresetClass
 };
 
 
-GType               gimp_tool_preset_get_type     (void) G_GNUC_CONST;
+GType                 gimp_tool_preset_get_type      (void) G_GNUC_CONST;
 
-GimpData *          gimp_tool_preset_new          (GimpContext *context,
-                                                   const gchar *name);
-GimpData *          gimp_tool_preset_get_standard (GimpContext *context);
+GimpData            * gimp_tool_preset_new           (GimpContext    *context,
+                                                      const gchar    *name);
+GimpData            * gimp_tool_preset_get_standard  (GimpContext    *context);
 
+GimpContextPropMask   gimp_tool_preset_get_prop_mask (GimpToolPreset *preset);
 
-GimpContextPropMask gimp_tool_preset_get_prop_mask (GimpToolPreset *preset);
 
 #endif  /*  __GIMP_TOOL_PRESET_H__  */

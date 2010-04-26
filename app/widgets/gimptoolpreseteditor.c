@@ -105,37 +105,44 @@ gimp_tool_preset_editor_constructor (GType                  type,
                     G_CALLBACK (gimp_tool_preset_editor_notify_model),
                     editor);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg", _("Apply stored FG/BG"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-fg-bg",
+                                       _("Apply stored FG/BG"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-brush", _("Apply stored brush"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-brush",
+                                       _("Apply stored brush"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics", _("Apply stored dynamics"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-dynamics",
+                                       _("Apply stored dynamics"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient", _("Apply stored gradient"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-gradient",
+                                       _("Apply stored gradient"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern", _("Apply stored pattern"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-pattern",
+                                       _("Apply stored pattern"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette", _("Apply stored pallete"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette"
+                                       , _("Apply stored pallete"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-font", _("Apply stored font"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-font",
+                                       _("Apply stored font"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);

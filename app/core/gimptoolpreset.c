@@ -33,6 +33,7 @@
 
 #include "gimp-intl.h"
 
+
 #define DEFAULT_USE_FG_BG    FALSE
 #define DEFAULT_USE_BRUSH    TRUE
 #define DEFAULT_USE_DYNAMICS TRUE
@@ -153,7 +154,6 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
                                     "use-font", NULL,
                                     DEFAULT_USE_FONT,
                                     GIMP_PARAM_STATIC_STRINGS);
-
 }
 
 static void
@@ -246,6 +246,7 @@ gimp_tool_preset_set_property (GObject      *object,
     case PROP_USE_FONT:
       tool_preset->use_font = g_value_get_boolean (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -295,6 +296,7 @@ gimp_tool_preset_get_property (GObject    *object,
     case PROP_USE_FONT:
       g_value_set_boolean (value, tool_preset->use_font);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -457,7 +459,6 @@ gimp_tool_preset_get_prop_mask (GimpToolPreset *preset)
 
   g_return_val_if_fail (GIMP_IS_TOOL_PRESET (preset), 0);
 
-  /*  FG and BG are always shared between all tools  */
   if (preset->use_fg_bg)
     {
       use_props |= GIMP_CONTEXT_FOREGROUND_MASK;
