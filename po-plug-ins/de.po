@@ -904,9 +904,11 @@ msgstr "Bump-Map _kacheln"
 msgid "_Azimuth:"
 msgstr "_Azimut:"
 
+# XXX: Höhe/Winkel der imaginären Lichtquelle (0,50° bis 90°)
+# (s.a. plug-ins/script-fu/scripts/{clothify,swirltile}.scm)
 #: ../plug-ins/common/bump-map.c:904
 msgid "_Elevation:"
-msgstr "_Höhe:"
+msgstr "_Höhenwinkel:"
 
 #: ../plug-ins/common/bump-map.c:930 ../plug-ins/common/file-ps.c:3379
 msgid "_X offset:"

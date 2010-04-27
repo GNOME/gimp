@@ -1211,10 +1211,12 @@ msgstr "Weichzeichnen Y"
 msgid "Depth"
 msgstr "Tiefe"
 
+# XXX: (Bumpmap:) Höhe/Winkel der imaginären Lichtquelle (0,50° bis 90°)
+# (s.a. plug-ins/common/bump-map.c)
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:6
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
-msgstr "Erhöhung"
+msgstr "Höhenwinkel"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
