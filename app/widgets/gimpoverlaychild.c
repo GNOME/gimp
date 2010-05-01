@@ -334,6 +334,9 @@ gimp_overlay_child_expose (GimpOverlayBox   *box,
           GdkPixmap *pixmap = gdk_offscreen_window_get_pixmap (child->window);
           cairo_t   *cr     = gdk_cairo_create (gtk_widget_get_window (widget));
 
+          gdk_cairo_region (cr, event->region);
+          cairo_clip (cr);
+
           cairo_transform (cr, &child->matrix);
           gdk_cairo_set_source_pixmap (cr, pixmap, 0, 0);
           cairo_paint_with_alpha (cr, child->opacity);
@@ -373,12 +376,23 @@ gimp_overlay_child_damage (GimpOverlayBox   *box,
 
   if (event->window == child->window)
     {
-      GdkRectangle bounds;
+      GdkRectangle *rects;
+      gint          n_rects;
+      gint          i;
 
-      gimp_overlay_child_transform_bounds (child, &event->area, &bounds);
+      gdk_region_get_rectangles (event->region, &rects, &n_rects);
 
-      gdk_window_invalidate_rect (gtk_widget_get_window (widget),
-                                  &bounds, FALSE);
+      for (i = 0; i < n_rects; i++)
+        {
+          GdkRectangle bounds;
+
+          gimp_overlay_child_transform_bounds (child, &rects[i], &bounds);
+
+          gdk_window_invalidate_rect (gtk_widget_get_window (widget),
+                                      &bounds, FALSE);
+        }
+
+      g_free (rects);
 
       return TRUE;
     }
