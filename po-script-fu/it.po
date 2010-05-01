@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-23 12:45+0200\n"
-"PO-Revision-Date: 2010-04-23 12:57+0200\n"
+"PO-Revision-Date: 2010-05-02 00:22+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1159,7 +1159,7 @@ msgstr "Senza sfondo (solo per livello separato)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
-msgstr "Rendi oleosa la dimensione maschera"
+msgstr "Dimensione maschera pittura ad olio"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
