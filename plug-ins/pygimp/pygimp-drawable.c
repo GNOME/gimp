@@ -1704,25 +1704,6 @@ lay_set_preserve_trans(PyGimpLayer *self, PyObject *value, void *closure)
     return lay_set_lock_alpha(self, value, closure);
 }
 
-static PyObject *
-lay_get_layers(PyGimpLayer *self, void *closure)
-{
-    gint32 *layers;
-    gint n_layers, i;
-    PyObject *ret;
-
-    layers = gimp_layer_group_get_layers(self->ID, &n_layers);
-
-    ret = PyList_New(n_layers);
-
-    for (i = 0; i < n_layers; i++)
-        PyList_SetItem(ret, i, pygimp_layer_new(layers[i]));
-
-    g_free(layers);
-
-    return ret;
-}
-
 static PyGetSetDef lay_getsets[] = {
     { "is_floating_sel", (getter)lay_get_is_floating_sel, (setter)0 },
     { "mask", (getter)lay_get_mask, (setter)0 },
@@ -1734,7 +1715,6 @@ static PyGetSetDef lay_getsets[] = {
     { "show_mask", (getter)lay_get_show_mask, (setter)lay_set_show_mask },
     { "preserve_trans", (getter)lay_get_preserve_trans,
       (setter)lay_set_preserve_trans },
-    { "layers", (getter)lay_get_layers, (setter)0 },
     { NULL, (getter)0, (setter)0 }
 };
 
