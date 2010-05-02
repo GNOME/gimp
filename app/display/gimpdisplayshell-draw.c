@@ -588,68 +588,46 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  gint sx, sy;
-  gint sw, sh;
+  GdkRectangle  rect;
+  gint          x2, y2;
+  gint          i, j;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (gimp_display_get_image (shell->display));
 
-  if (! gimp_display_get_image (shell->display))
-    return;
+  x2 = x + w;
+  y2 = y + h;
 
-  sx = - shell->offset_x;
-  sy = - shell->offset_y;
-
-  gimp_display_shell_draw_get_scaled_image_size (shell, &sw, &sh);
-
-  /*  check if the passed in area intersects with
-   *  both the display and the image
-   */
-  if (gimp_rectangle_intersect (x, y, w, h,
-                                0, 0, shell->disp_width,  shell->disp_height,
-                                &x, &y, &w, &h)
-      &&
-      gimp_rectangle_intersect (x, y, w, h,
-                                sx, sy, sw, sh,
-                                &x, &y, &w, &h))
+  if (shell->highlight)
     {
-      GdkRectangle  rect;
-      gint          x2, y2;
-      gint          i, j;
+      rect.x      = ceil  (shell->scale_x * shell->highlight->x);
+      rect.y      = ceil  (shell->scale_y * shell->highlight->y);
+      rect.width  = floor (shell->scale_x * shell->highlight->width);
+      rect.height = floor (shell->scale_y * shell->highlight->height);
+    }
 
-      x2 = x + w;
-      y2 = y + h;
-
-      if (shell->highlight)
+  /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
+   *  sized chunks
+   */
+  for (i = y; i < y2; i += GIMP_DISPLAY_RENDER_BUF_HEIGHT)
+    {
+      for (j = x; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
         {
-          rect.x      = ceil  (shell->scale_x * shell->highlight->x);
-          rect.y      = ceil  (shell->scale_y * shell->highlight->y);
-          rect.width  = floor (shell->scale_x * shell->highlight->width);
-          rect.height = floor (shell->scale_y * shell->highlight->height);
-        }
+          gint disp_xoffset, disp_yoffset;
+          gint dx, dy;
 
-      /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
-       *  sized chunks
-       */
-      for (i = y; i < y2; i += GIMP_DISPLAY_RENDER_BUF_HEIGHT)
-        {
-          for (j = x; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
-            {
-              gint disp_xoffset, disp_yoffset;
-              gint dx, dy;
+          dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
+          dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
-              dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
-              dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+          gimp_display_shell_scroll_get_disp_offset (shell,
+                                                     &disp_xoffset,
+                                                     &disp_yoffset);
 
-              gimp_display_shell_scroll_get_disp_offset (shell,
-                                                         &disp_xoffset,
-                                                         &disp_yoffset);
-
-              gimp_display_shell_render (shell,
-                                         j - disp_xoffset,
-                                         i - disp_yoffset,
-                                         dx, dy,
-                                         shell->highlight ? &rect : NULL);
-            }
+          gimp_display_shell_render (shell,
+                                     j - disp_xoffset,
+                                     i - disp_yoffset,
+                                     dx, dy,
+                                     shell->highlight ? &rect : NULL);
         }
     }
 }
