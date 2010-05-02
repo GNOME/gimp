@@ -160,12 +160,16 @@ gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
       gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
       if (area && (y < area->y || y >= area->y + area->height))
         return;
+      if (y < y1 || y >= y2)
+        return;
       y1 = y2 = y;
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
       if (area && (x < area->x || x >= area->x + area->width))
+        return;
+      if (x < x1 || x >= x2)
         return;
       x1 = x2 = x;
       break;
