@@ -2275,10 +2275,10 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_display_shell_preview_transform (shell);
 
   /* draw the grid */
-  gimp_display_shell_draw_grid (shell, &eevent->area);
+  gimp_display_shell_draw_grid (shell, eevent->region);
 
   /* draw the guides */
-  gimp_display_shell_draw_guides (shell);
+  gimp_display_shell_draw_guides (shell, eevent->region);
 
   /* draw the sample points */
   gimp_display_shell_draw_sample_points (shell);

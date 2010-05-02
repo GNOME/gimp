@@ -190,12 +190,12 @@ gimp_move_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       if (move->guide && gimp_display_shell_get_show_guides (shell))
-        gimp_display_shell_draw_guide (shell, move->guide, TRUE);
+        gimp_display_shell_draw_guide (shell, move->guide, NULL, TRUE);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
       if (move->guide && gimp_display_shell_get_show_guides (shell))
-        gimp_display_shell_draw_guide (shell, move->guide, FALSE);
+        gimp_display_shell_draw_guide (shell, move->guide, NULL, FALSE);
       break;
     }
 
@@ -446,7 +446,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
       gimp_image_flush (image);
 
       if (move->guide)
-        gimp_display_shell_draw_guide (shell, move->guide, TRUE);
+        gimp_display_shell_draw_guide (shell, move->guide, NULL, TRUE);
 
       move->moving_guide      = FALSE;
       move->guide_position    = -1;
@@ -667,12 +667,12 @@ gimp_move_tool_oper_update (GimpTool         *tool,
     }
 
   if (move->guide && move->guide != guide)
-    gimp_display_shell_draw_guide (shell, move->guide, FALSE);
+    gimp_display_shell_draw_guide (shell, move->guide, NULL, FALSE);
 
   move->guide = guide;
 
   if (move->guide)
-    gimp_display_shell_draw_guide (shell, move->guide, TRUE);
+    gimp_display_shell_draw_guide (shell, move->guide, NULL, TRUE);
 }
 
 static void
@@ -819,7 +819,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 
   if (move->guide)
     gimp_display_shell_draw_guide (gimp_display_get_shell (display),
-                                   move->guide, FALSE);
+                                   move->guide, NULL, FALSE);
 
   move->guide             = NULL;
   move->moving_guide      = TRUE;

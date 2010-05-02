@@ -132,9 +132,10 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 }
 
 void
-gimp_display_shell_draw_guide (GimpDisplayShell *shell,
-                               GimpGuide        *guide,
-                               gboolean          active)
+gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
+                               GimpGuide          *guide,
+                               const GdkRectangle *area,
+                               gboolean            active)
 {
   gint  position;
   gint  x1, y1, x2, y2;
@@ -157,11 +158,15 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
+      if (area && (y < area->y || y >= area->y + area->height))
+        return;
       y1 = y2 = y;
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
+      if (area && (x < area->x || x >= area->x + area->width))
+        return;
       x1 = x2 = x;
       break;
 
@@ -176,48 +181,58 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_guides (GimpDisplayShell *shell)
+gimp_display_shell_draw_guides (GimpDisplayShell *shell,
+                                const GdkRegion  *region)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (region != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_guides (shell))
     {
-      GList *list;
+      GdkRectangle  area;
+      GList        *list;
+
+      if (region)
+        gdk_region_get_clipbox (region, &area);
 
       for (list = gimp_image_get_guides (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_guide (shell, list->data, FALSE);
+          gimp_display_shell_draw_guide (shell, list->data,
+                                         region ? &area : NULL,
+                                         FALSE);
         }
     }
 }
 
 void
-gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
-                              const GdkRectangle *area)
+gimp_display_shell_draw_grid (GimpDisplayShell *shell,
+                              const GdkRegion  *region)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (area != NULL);
+  g_return_if_fail (region != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_grid (shell))
     {
-      GimpGrid   *grid;
-      GimpCanvas *canvas;
-      gdouble     x, y;
-      gint        x0, x1, x2, x3;
-      gint        y0, y1, y2, y3;
-      gint        x_real, y_real;
-      gdouble     x_offset, y_offset;
-      gint        width, height;
+      GimpCanvas   *canvas = GIMP_CANVAS (shell->canvas);
+      GimpGrid     *grid;
+      GdkRectangle  area;
+      GdkGC        *grid_gc;
+      gdouble       x, y;
+      gint          x0, x1, x2, x3;
+      gint          y0, y1, y2, y3;
+      gint          x_real, y_real;
+      gdouble       x_offset, y_offset;
+      gint          width, height;
 
 #define CROSSHAIR 2
 
@@ -227,10 +242,12 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
 
       g_return_if_fail (grid->xspacing > 0 && grid->yspacing > 0);
 
-      x1 = area->x;
-      y1 = area->y;
-      x2 = area->x + area->width;
-      y2 = area->y + area->height;
+      gdk_region_get_clipbox (region, &area);
+
+      x1 = area.x;
+      y1 = area.y;
+      x2 = area.x + area.width;
+      y2 = area.y + area.height;
 
       width  = gimp_image_get_width  (image);
       height = gimp_image_get_height (image);
@@ -243,10 +260,10 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
       while (y_offset > 0)
         y_offset -= grid->yspacing;
 
-      canvas = GIMP_CANVAS (shell->canvas);
+      grid_gc = gimp_display_shell_get_grid_gc (shell, grid);
 
-      gimp_canvas_set_custom_gc (canvas,
-                                 gimp_display_shell_get_grid_gc (shell, grid));
+      gdk_gc_set_clip_region (grid_gc, region);
+      gimp_canvas_set_custom_gc (canvas, grid_gc);
 
       switch (grid->style)
         {
@@ -366,6 +383,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
         }
 
       gimp_canvas_set_custom_gc (canvas, NULL);
+      gdk_gc_set_clip_region (grid_gc, NULL);
     }
 }
 

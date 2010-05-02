@@ -29,10 +29,12 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
                                                       gint               *h);
 void   gimp_display_shell_draw_guide                 (GimpDisplayShell   *shell,
                                                       GimpGuide          *guide,
+                                                      const GdkRectangle *area,
                                                       gboolean            active);
-void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
+                                                      const GdkRegion    *region);
 void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
-                                                      const GdkRectangle *area);
+                                                      const GdkRegion    *region);
 void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
                                                       const GimpVector2  *points,
                                                       gint                num_points,
