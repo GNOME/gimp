@@ -31,6 +31,9 @@ void       gimp_display_shell_canvas_size_allocate    (GtkWidget        *widget,
 gboolean   gimp_display_shell_canvas_expose           (GtkWidget        *widget,
                                                        GdkEventExpose   *eevent,
                                                        GimpDisplayShell *shell);
+gboolean   gimp_display_shell_canvas_expose_after     (GtkWidget        *widget,
+                                                       GdkEventExpose   *eevent,
+                                                       GimpDisplayShell *shell);
 gboolean   gimp_display_shell_canvas_tool_events      (GtkWidget        *widget,
                                                        GdkEvent         *event,
                                                        GimpDisplayShell *shell);
@@ -55,6 +58,7 @@ void       gimp_display_shell_quick_mask_toggled      (GtkWidget        *widget,
 gboolean   gimp_display_shell_nav_button_press        (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
                                                        GimpDisplayShell *shell);
+
 gboolean   gimp_display_shell_flush_event_queue       (GimpDisplayShell *shell);
 
 

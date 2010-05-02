@@ -384,11 +384,44 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
     {
       if (gimp_display_get_image (shell->display))
         {
+          gimp_display_shell_pause (shell);
+
+          /*  only double-buffer if there are overlay children, or
+           *  they will flicker badly
+           */
+          if (GIMP_OVERLAY_BOX (widget)->children)
+            gdk_window_begin_paint_region (eevent->window, eevent->region);
+
           gimp_display_shell_canvas_expose_image (shell, eevent);
         }
       else
         {
           gimp_display_shell_canvas_expose_drop_zone (shell, eevent);
+        }
+    }
+
+  return FALSE;
+}
+
+gboolean
+gimp_display_shell_canvas_expose_after (GtkWidget        *widget,
+                                        GdkEventExpose   *eevent,
+                                        GimpDisplayShell *shell)
+{
+  /*  are we in destruction?  */
+  if (! shell->display || ! gimp_display_get_shell (shell->display))
+    return TRUE;
+
+  /*  ignore events on overlays  */
+  if (eevent->window == gtk_widget_get_window (widget))
+    {
+      if (gimp_display_get_image (shell->display))
+        {
+          /*  see above  */
+          if (GIMP_OVERLAY_BOX (widget)->children)
+            gdk_window_end_paint (eevent->window);
+
+          gimp_display_shell_resume (shell);
         }
     }
 
@@ -2172,55 +2205,71 @@ static void
 gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
                                         GdkEventExpose   *eevent)
 {
-  GdkRegion    *region = NULL;
+  GdkRegion    *clear_region;
+  GdkRegion    *image_region;
+  GdkRectangle  image_rect;
   GdkRectangle *rects;
   gint          n_rects;
   gint          i;
 
-  /*  If the call to gimp_display_shell_pause() would cause a redraw,
-   *  we need to make sure that no XOR drawing happens on areas that
-   *  have already been cleared by the windowing system.
+  /*  first, clear the exposed part of the region that is outside the
+   *  image, which is the exposed region minus the image rectangle
    */
-  if (shell->paused_count == 0)
+
+  clear_region = gdk_region_copy (eevent->region);
+
+  image_rect.x = - shell->offset_x;
+  image_rect.y = - shell->offset_y;
+  gimp_display_shell_draw_get_scaled_image_size (shell,
+                                                 &image_rect.width,
+                                                 &image_rect.height);
+  image_region = gdk_region_rectangle (&image_rect);
+
+  gdk_region_subtract (clear_region, image_region);
+  gdk_region_destroy (image_region);
+
+  if (! gdk_region_empty (clear_region))
     {
-      GdkRectangle  area;
+      gdk_region_get_rectangles (clear_region, &rects, &n_rects);
 
-      area.x      = 0;
-      area.y      = 0;
-      area.width  = shell->disp_width;
-      area.height = shell->disp_height;
+      for (i = 0; i < n_rects; i++)
+        gdk_window_clear_area (gtk_widget_get_window (shell->canvas),
+                               rects[i].x,
+                               rects[i].y,
+                               rects[i].width,
+                               rects[i].height);
 
-      region = gdk_region_rectangle (&area);
-
-      gdk_region_subtract (region, eevent->region);
-
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR, region);
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR_DASHED, region);
+      g_free (rects);
     }
 
-  gimp_display_shell_pause (shell);
+  /*  then, draw the exposed part of the region that is inside the
+   *  image, which is the exposed region minus the region used for
+   *  clearing above
+   */
 
-  if (region)
+  image_region = gdk_region_copy (eevent->region);
+
+  gdk_region_subtract (image_region, clear_region);
+  gdk_region_destroy (clear_region);
+
+  if (! gdk_region_empty (image_region))
     {
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR, NULL);
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_XOR_DASHED, NULL);
-      gdk_region_destroy (region);
+      gdk_region_get_rectangles (image_region, &rects, &n_rects);
+
+      for (i = 0; i < n_rects; i++)
+        gimp_display_shell_draw_area (shell,
+                                      rects[i].x,
+                                      rects[i].y,
+                                      rects[i].width,
+                                      rects[i].height);
+
+      g_free (rects);
     }
 
-  gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
+  gdk_region_destroy (image_region);
 
-  for (i = 0; i < n_rects; i++)
-    gimp_display_shell_draw_area (shell,
-                                  rects[i].x,
-                                  rects[i].y,
-                                  rects[i].width,
-                                  rects[i].height);
-
-  g_free (rects);
+  /*  finally, draw all the remaining image window stuff on top
+   */
 
   /* draw the transform tool preview */
   gimp_display_shell_preview_transform (shell);
@@ -2239,15 +2288,29 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   /* restart (and recalculate) the selection boundaries */
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
-
-  gimp_display_shell_resume (shell);
 }
 
 static void
 gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
                                             GdkEventExpose   *eevent)
 {
-  cairo_t *cr;
+  cairo_t      *cr;
+  GdkRectangle *rects;
+  gint          n_rects;
+  gint          i;
+
+  gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
+
+  for (i = 0; i < n_rects; i++)
+    {
+      gdk_window_clear_area (gtk_widget_get_window (shell->canvas),
+                             rects[i].x,
+                             rects[i].y,
+                             rects[i].width,
+                             rects[i].height);
+    }
+
+  g_free (rects);
 
   cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
   gdk_cairo_region (cr, eevent->region);

@@ -554,6 +554,9 @@ gimp_display_shell_constructor (GType                  type,
   g_signal_connect (shell->canvas, "expose-event",
                     G_CALLBACK (gimp_display_shell_canvas_expose),
                     shell);
+  g_signal_connect_after (shell->canvas, "expose-event",
+                          G_CALLBACK (gimp_display_shell_canvas_expose_after),
+                          shell);
 
   g_signal_connect (shell->canvas, "enter-notify-event",
                     G_CALLBACK (gimp_display_shell_canvas_tool_events),
