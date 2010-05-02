@@ -43,8 +43,10 @@ void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
                                                       gint                width);
 void   gimp_display_shell_draw_sample_point          (GimpDisplayShell   *shell,
                                                       GimpSamplePoint    *sample_point,
+                                                      const GdkRectangle *area,
                                                       gboolean            active);
-void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
+                                                      const GdkRegion    *region);
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell);

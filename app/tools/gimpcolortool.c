@@ -210,15 +210,15 @@ gimp_color_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_RESUME:
       if (color_tool->sample_point &&
           gimp_display_shell_get_show_sample_points (shell))
-        gimp_display_shell_draw_sample_point (shell,
-                                              color_tool->sample_point, TRUE);
+        gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
+                                              NULL, TRUE);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
       if (color_tool->sample_point &&
           gimp_display_shell_get_show_sample_points (shell))
-        gimp_display_shell_draw_sample_point (shell,
-                                              color_tool->sample_point, FALSE);
+        gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
+                                              NULL, FALSE);
       break;
     }
 
@@ -357,7 +357,7 @@ gimp_color_tool_button_release (GimpTool              *tool,
 
       if (color_tool->sample_point)
         gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
-                                              TRUE);
+                                              NULL, TRUE);
 
       color_tool->moving_sample_point = FALSE;
       color_tool->sample_point_x      = -1;
@@ -497,7 +497,7 @@ gimp_color_tool_oper_update (GimpTool         *tool,
 
   if (color_tool->sample_point)
     gimp_display_shell_draw_sample_point (shell, color_tool->sample_point,
-                                          TRUE);
+                                          NULL, TRUE);
 }
 
 static void
@@ -824,7 +824,8 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   if (color_tool->sample_point)
     gimp_display_shell_draw_sample_point (gimp_display_get_shell (display),
-                                          color_tool->sample_point, FALSE);
+                                          color_tool->sample_point,
+                                          NULL, FALSE);
 
   color_tool->sample_point        = NULL;
   color_tool->moving_sample_point = TRUE;

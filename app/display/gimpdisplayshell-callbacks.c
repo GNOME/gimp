@@ -2281,7 +2281,7 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_display_shell_draw_guides (shell, eevent->region);
 
   /* draw the sample points */
-  gimp_display_shell_draw_sample_points (shell);
+  gimp_display_shell_draw_sample_points (shell, eevent->region);
 
   /* and the cursor (if we have a software cursor) */
   gimp_display_shell_draw_cursor (shell);
