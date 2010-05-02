@@ -935,9 +935,9 @@ gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
  * Sets a rectangular clipping area for the specified style.
  **/
 void
-gimp_canvas_set_clip_rect (GimpCanvas      *canvas,
-                           GimpCanvasStyle  style,
-                           GdkRectangle    *rect)
+gimp_canvas_set_clip_rect (GimpCanvas         *canvas,
+                           GimpCanvasStyle     style,
+                           const GdkRectangle *rect)
 {
   if (! canvas->gc[style])
     {
@@ -961,7 +961,7 @@ gimp_canvas_set_clip_rect (GimpCanvas      *canvas,
 void
 gimp_canvas_set_clip_region (GimpCanvas      *canvas,
                              GimpCanvasStyle  style,
-                             GdkRegion       *region)
+                             const GdkRegion *region)
 {
   if (! canvas->gc[style])
     {
