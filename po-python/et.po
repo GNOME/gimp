@@ -19,295 +19,220 @@ msgstr ""
 "X-Generator: Emacs\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
 msgstr "Rohke_m teavet"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr "Ei"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr "Jah"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu faili valimine"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu kausta valimine"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpui.py:175
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu värvi valimine"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
 msgid "Colored XHTML"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
 msgid "Character _source"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
 msgstr "Lähtekood"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
 msgid "Text file"
 msgstr "Tekstifail"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
 msgid "Entry box"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "_File to read or characters to use"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Fo_nt size in pixels"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "_Write a separate CSS file"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Python konsool"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Sirvi..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 msgid "Python Procedure Browser"
 msgstr "Python protseduuride sirvija"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ei suutnud avada faili '%s' kirjutamiseks: %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "Ei suutnud kirjutada faili '%s': %s"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
 msgid "Save Python-Fu Console Output"
 msgstr "Salvesta Python-Fu puldi väljund"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Pult"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "_Fog..."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "_Layer name"
 msgstr "_Kihi nimi"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Clouds"
 msgstr "Pilved"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
 msgid "_Fog color"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Turbulence"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "Op_acity"
 msgstr "Läbip_aistmatus"
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 msgid "Off_set"
 msgstr "_Nihe"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
 msgid "_Sort Palette..."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 msgid "Color _model"
 msgstr "Värvi_mudel"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 msgid "Channel to _sort"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
 msgstr "Punane või värvitoon"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
 msgstr "Roheline või küllastus"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
 msgstr "Sinine või väärtus"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 msgid "_Ascending"
 msgstr "K_asvav"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
 msgstr "Viiluta"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
 msgstr "_Viiluta..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
 msgid "Path for HTML export"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "Filename for export"
 msgstr "Eksporditava faili nimi"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Image name prefix"
 msgstr "Pildi nime eesliide"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Image format"
 msgstr "Pildi formaat"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Separate image folder"
 msgstr "Pildi kaust eraldi"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
 msgstr "Kaust pildi eksportimiseks"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Javascript for onmouseover and clicked"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 msgid "_Shadow blur"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Bevel"
 msgstr "_Viltu"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Drop shadow"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "Drop shadow _X displacement"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _Y displacement"
 msgstr ""
 
