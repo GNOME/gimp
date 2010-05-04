@@ -35,8 +35,9 @@ def get_layer_attributes(layer):
     x = int(a.get('x', '0'))
     y = int(a.get('y', '0'))
     opac = float(a.get('opacity', '1.0'))
+    visible = a.get('visibility', 'visible') != 'hidden'
 
-    return path, name, x, y, opac
+    return path, name, x, y, opac, visible
 
 
 def thumbnail_ora(filename, thumb_size):
@@ -92,7 +93,7 @@ def save_ora(img, drawable, filename, raw_filename):
         orafile.write(tmp, path)
         os.remove(tmp)
 
-    def add_layer(x, y, opac, gimp_layer, path):
+    def add_layer(x, y, opac, gimp_layer, path, visible=True):
         store_layer(img, gimp_layer, path)
         # create layer attributes
         layer = ET.Element('layer')
@@ -103,13 +104,14 @@ def save_ora(img, drawable, filename, raw_filename):
         a['x'] = str(x)
         a['y'] = str(y)
         a['opacity'] = str(opac)
+        a['visibility'] = 'visible' if visible else 'hidden'
         return layer
 
     # save layers
     for lay in img.layers:
         x, y = lay.offsets
         opac = lay.opacity / 100.0 # needs to be between 0.0 and 1.0
-        add_layer(x, y, opac, lay, 'data/%s.png' % lay.name)
+        add_layer(x, y, opac, lay, 'data/%s.png' % lay.name, lay.visible)
 
     # save thumbnail
     w, h = img.width, img.height
@@ -154,7 +156,7 @@ def load_ora(filename, raw_filename):
         return res
 
     for layer_no, layer in enumerate(get_layers(stack)):
-        path, name, x, y, opac = get_layer_attributes(layer)
+        path, name, x, y, opac, visible = get_layer_attributes(layer)
 
         if not path.lower().endswith('.png'):
             continue
@@ -174,6 +176,7 @@ def load_ora(filename, raw_filename):
         gimp_layer.name = name
         gimp_layer.set_offsets(x, y)  # move to correct position
         gimp_layer.opacity = opac * 100  # a float between 0 and 100
+        gimp_layer.visible = visible
         img.add_layer(gimp_layer, layer_no)
 
         os.remove(tmp)
