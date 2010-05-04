@@ -1,20 +1,20 @@
 # GIMP Script-Fu Japanese message catalog
-# Copyright (C) 2000,2003,2005,2008-2009 Free Software Foundation, Inc.
-# Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
-# Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000
+# Copyright (C) 2000,2003,2005,2008-2010 Free Software Foundation, Inc.
+# Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000.
+# Takashi Kido <yositaka@yd5.so-net.ne.jp>, 2000.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 # Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2003.
 # Tadashi Jokagi <elf2000@users.sourceforge.net>, 2005.
 # OKANO Takayoshi <kano@na.rim.or.jp>, 2005.
-# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009.
-#
+# Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>, 2008-2009, 2010.
+# RyōTa SimaMoto <liangtai.s4@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-6\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&component=Internationalisation\n"
-"POT-Creation-Date: 2009-10-03 21:33+0900\n"
-"PO-Revision-Date: 2009-09-28 22:45+0900\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2010-05-02 00:13+0000\n"
+"PO-Revision-Date: 2010-05-04 13:29+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr "'script-fu-register' を呼ぶための引数が不足しています。
 #, c-format
 msgid "Error while loading %s:"
 msgstr ""
-"\"%s\"読込み中にエラーが発生しました。\n"
+"\"%s\" 読込み中にエラーが発生しました。\n"
 "（詳細または原因は次のとおりです。）"
 
 #: ../plug-ins/script-fu/script-fu-server.c:713
@@ -1173,11 +1173,11 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep selection"
-msgstr "選択範囲を残す"
+msgstr "選択範囲を解除しない"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
-msgstr "背景なし（レイヤーを分けるだけ）"
+msgstr "背景なし ([別レイヤーを生成する] を適用する場合のみ有効)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
@@ -1187,7 +1187,7 @@ msgstr "油絵化マスクサイズ"
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
 #: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
-msgstr "レイヤーに分ける"
+msgstr "別レイヤーを生成する"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
