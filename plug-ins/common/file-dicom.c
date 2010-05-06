@@ -923,6 +923,7 @@ add_tag_pointer (GByteArray   *group_stream,
   gboolean is_long;
   guint16  swapped16;
   guint32  swapped32;
+  guint    pad = 0;
 
   is_long = (strstr ("OB|OW|SQ|UN", value_rep) != NULL) || length > 65535;
 
@@ -933,21 +934,56 @@ add_tag_pointer (GByteArray   *group_stream,
   g_byte_array_append (group_stream, (guint8 *) &swapped16, 2);
 
   g_byte_array_append (group_stream, (const guchar *) value_rep, 2);
+
+  if (length % 2 != 0)
+    {
+      /* the dicom standard requires all elements to be of even byte
+       * length. this element would be odd, so we must pad it before
+       * adding it
+       */
+      pad = 1;
+    }
+
   if (is_long)
     {
 
       g_byte_array_append (group_stream, (const guchar *) "\0\0", 2);
 
-      swapped32 = g_ntohl (GUINT32_SWAP_LE_BE (length));
+      swapped32 = g_ntohl (GUINT32_SWAP_LE_BE (length + pad));
       g_byte_array_append (group_stream, (guint8 *) &swapped32, 4);
     }
   else
     {
-      swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (length));
+      swapped16 = g_ntohs (GUINT16_SWAP_LE_BE (length + pad));
       g_byte_array_append (group_stream, (guint8 *) &swapped16, 2);
     }
 
   g_byte_array_append (group_stream, data, length);
+
+  if (pad)
+    {
+       /* add a padding byte to the stream
+        *
+        * From ftp://medical.nema.org/medical/dicom/2009/09_05pu3.pdf:
+        *
+        * Values with VRs constructed of character strings, except in
+        * the case of the VR UI, shall be padded with SPACE characters
+        * (20H, in the Default Character Repertoire) when necessary to
+        * achieve even length.  Values with a VR of UI shall be padded
+        * with a single trailing NULL (00H) character when necessary
+        * to achieve even length. Values with a VR of OB shall be
+        * padded with a single trailing NULL byte value (00H) when
+        * necessary to achieve even length.
+        */
+      if (strstr ("UI|OB", value_rep) != NULL)
+        {
+          g_byte_array_append (group_stream, (guint8 *) 0x0000, 1);
+        }
+      else
+        {
+          g_byte_array_append (group_stream, (guint8 *) " ", 1);
+        }
+    }
 }
 
 /* Convenience function for adding a string to the dicom stream */
