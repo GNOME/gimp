@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-05-26 18:41+0000\n"
-"PO-Revision-Date: 2009-05-04 17:16+0800\n"
+"POT-Creation-Date: 2010-05-04 04:10+0000\n"
+"PO-Revision-Date: 2009-05-04 23:12+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgstr "Script-Fu 渐变选择"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:823
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "执行 %s 时出错："
@@ -251,8 +251,6 @@ msgstr "默认凹凸贴图设置"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -290,8 +288,6 @@ msgstr "字体"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -364,8 +360,6 @@ msgstr "阴影模糊半径"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -403,7 +397,6 @@ msgstr "3D Truchet(_D)..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
@@ -619,8 +612,6 @@ msgstr "衬距"
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -763,7 +754,6 @@ msgid "Create a beveled pattern hrule for webpages"
 msgstr "为 web 页面创建斜角图案的水平分隔条"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -1310,12 +1300,10 @@ msgid "Color"
 msgstr "颜色"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "位移 X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "位移 Y"
 
@@ -1498,98 +1486,6 @@ msgstr "阴影深度 (%)"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
 msgstr "边缘模糊(_F)..."
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "自动剪裁"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "用 gimp.org 的页面主题创建一幅大标题的图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "用 gimp.org 的页面主题创建一幅小标题的图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "深颜色"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "高亮颜色"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "索引图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "颜色数量"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "去除背景"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "按颜色选择阈值"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "阴影颜色"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "大标题(_B)..."
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "小标题(_S)..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid ""
-"Create an image of a Tube Button Label Header using the gimp.org webpage "
-"theme"
-msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签标题的图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签的图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"Create an image of a second level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr "用 gimp.org 的页面主题创建一幅二级的管状按钮标签的图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid ""
-"Create an image of a third level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr "用 gimp.org 的页面主题创建一幅三级的管状按钮标签的图像"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "管状子按钮标签(_U)..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "管状子子按钮标签(_E)..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "普通管状标签(_G)..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "管状按钮标签(_T)..."
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
 msgid "Bookmark to the GIMP web site"
@@ -1995,6 +1891,45 @@ msgstr "褐色"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "老照片(_O)..."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid "<Palettes>/Export as"
+msgstr "导出为"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid ""
+"All the characters in the file name are either white-spaces or characters "
+"which can not appear in file names (The following characters can not appear "
+"in file names: "
+msgstr ""
+"文件名中的所有字符都是空白字符或不能在文件名中出现的字符 (以下字符不能出现在"
+"文件名中："
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "导出当前调色板为 PHP 字典 (name => color)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "导出当前调色板为 Python 字典 (name: color)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "导出当前调色板为 java.util.Hashtable<String, Color>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid ""
+"Export the active palette as a list css stylesheet with the colors entry "
+"name as their class name, and the color itself as the color attribute"
+msgstr ""
+"导出当前调色板为以颜色条目名称作为类名的 css 样式表列表，并以颜色本身作为颜色"
+"属性"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr "将调色板内的所有颜色写入到一个文本文件，每行一个十六进制值(无名称)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -2716,6 +2651,10 @@ msgstr "突出显示 X 偏移"
 msgid "Highlight Y offset"
 msgstr "突出显示 Y 偏移"
 
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "高亮颜色"
+
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "突出显示不透明度"
@@ -2723,3 +2662,67 @@ msgstr "突出显示不透明度"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effect..."
+
+#~ msgid "Autocrop"
+#~ msgstr "自动剪裁"
+
+#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgstr "用 gimp.org 的页面主题创建一幅大标题的图像"
+
+#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgstr "用 gimp.org 的页面主题创建一幅小标题的图像"
+
+#~ msgid "Dark color"
+#~ msgstr "深颜色"
+
+#~ msgid "Index image"
+#~ msgstr "索引图像"
+
+#~ msgid "Number of colors"
+#~ msgstr "颜色数量"
+
+#~ msgid "Remove background"
+#~ msgstr "去除背景"
+
+#~ msgid "Select-by-color threshold"
+#~ msgstr "按颜色选择阈值"
+
+#~ msgid "Shadow color"
+#~ msgstr "阴影颜色"
+
+#~ msgid "_Big Header..."
+#~ msgstr "大标题(_B)..."
+
+#~ msgid "_Small Header..."
+#~ msgstr "小标题(_S)..."
+
+#~ msgid ""
+#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "theme"
+#~ msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签标题的图像"
+
+#~ msgid ""
+#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ msgstr "用 gimp.org 的页面主题创建一幅管状按钮标签的图像"
+
+#~ msgid ""
+#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr "用 gimp.org 的页面主题创建一幅二级的管状按钮标签的图像"
+
+#~ msgid ""
+#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr "用 gimp.org 的页面主题创建一幅三级的管状按钮标签的图像"
+
+#~ msgid "T_ube Sub-Button Label..."
+#~ msgstr "管状子按钮标签(_U)..."
+
+#~ msgid "Tub_e Sub-Sub-Button Label..."
+#~ msgstr "管状子子按钮标签(_E)..."
+
+#~ msgid "_General Tube Labels..."
+#~ msgstr "普通管状标签(_G)..."
+
+#~ msgid "_Tube Button Label..."
+#~ msgstr "管状按钮标签(_T)..."
