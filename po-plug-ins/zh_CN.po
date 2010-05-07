@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-12-09 21:39+0000\n"
-"PO-Revision-Date: 2009-12-10 15:32+0800\n"
+"POT-Creation-Date: 2010-05-04 04:10+0000\n"
+"PO-Revision-Date: 2010-05-05 23:02+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -423,91 +423,91 @@ msgstr "寻找动画背景"
 msgid "Optimizing animation"
 msgstr "优化动画"
 
-#: ../plug-ins/common/animation-play.c:169
+#: ../plug-ins/common/animation-play.c:167
 msgid "Preview a GIMP layer-based animation"
 msgstr "预览一个基于 GIMP 图层的动画"
 
-#: ../plug-ins/common/animation-play.c:174
+#: ../plug-ins/common/animation-play.c:172
 msgid "_Playback..."
 msgstr "回放(_P)..."
 
-#: ../plug-ins/common/animation-play.c:453
+#: ../plug-ins/common/animation-play.c:451
 msgid "_Step"
 msgstr "单步(_S)"
 
-#: ../plug-ins/common/animation-play.c:453
+#: ../plug-ins/common/animation-play.c:451
 msgid "Step to next frame"
 msgstr "跳到下一帧"
 
-#: ../plug-ins/common/animation-play.c:457
+#: ../plug-ins/common/animation-play.c:455
 msgid "Rewind the animation"
 msgstr "快退动画"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:473
 msgid "Faster"
 msgstr "加快"
 
-#: ../plug-ins/common/animation-play.c:475
+#: ../plug-ins/common/animation-play.c:473
 msgid "Increase the speed of the animation"
 msgstr "提高动画的速度"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:478
 msgid "Slower"
 msgstr "减慢"
 
-#: ../plug-ins/common/animation-play.c:480
+#: ../plug-ins/common/animation-play.c:478
 msgid "Decrease the speed of the animation"
 msgstr "降低动画的速度"
 
-#: ../plug-ins/common/animation-play.c:485
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset speed"
 msgstr "重置速度"
 
-#: ../plug-ins/common/animation-play.c:485
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset the speed of the animation"
 msgstr "重置动画速度"
 
-#: ../plug-ins/common/animation-play.c:493
-#: ../plug-ins/common/animation-play.c:1474
+#: ../plug-ins/common/animation-play.c:491
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Start playback"
 msgstr "开始回放"
 
-#: ../plug-ins/common/animation-play.c:497
+#: ../plug-ins/common/animation-play.c:495
 msgid "Detach"
 msgstr "分离"
 
-#: ../plug-ins/common/animation-play.c:498
+#: ../plug-ins/common/animation-play.c:496
 msgid "Detach the animation from the dialog window"
 msgstr "从对话窗口中分离动画"
 
-#: ../plug-ins/common/animation-play.c:590
+#: ../plug-ins/common/animation-play.c:588
 msgid "Animation Playback:"
 msgstr "动画回放："
 
 #. list is given in "fps" - frames per second
-#: ../plug-ins/common/animation-play.c:663
+#: ../plug-ins/common/animation-play.c:661
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: ../plug-ins/common/animation-play.c:674
+#: ../plug-ins/common/animation-play.c:672
 msgid "Default framerate"
 msgstr "默认帧率"
 
-#: ../plug-ins/common/animation-play.c:695
+#: ../plug-ins/common/animation-play.c:693
 msgid "Playback speed"
 msgstr "回放速度"
 
-#: ../plug-ins/common/animation-play.c:831
+#: ../plug-ins/common/animation-play.c:829
 msgid "Tried to display an invalid layer."
 msgstr "已试图显示一个无效图层。"
 
-#: ../plug-ins/common/animation-play.c:1351
+#: ../plug-ins/common/animation-play.c:1349
 #, c-format
 msgid "Frame %d of %d"
 msgstr "帧 %d/%d"
 
-#: ../plug-ins/common/animation-play.c:1474
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Stop playback"
 msgstr "停止回放"
 
@@ -519,7 +519,7 @@ msgstr "边缘平滑使用 Scale3X 边缘外推算法"
 msgid "_Antialias"
 msgstr "边缘平滑(_A)"
 
-#: ../plug-ins/common/antialias.c:147
+#: ../plug-ins/common/antialias.c:149
 msgid "Antialiasing..."
 msgstr "边缘平滑..."
 
@@ -610,7 +610,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
 #: ../plug-ins/common/file-pcx.c:424 ../plug-ins/common/file-pix.c:381
 #: ../plug-ins/common/file-png.c:851 ../plug-ins/common/file-pnm.c:584
-#: ../plug-ins/common/file-raw.c:759 ../plug-ins/common/file-sunras.c:974
+#: ../plug-ins/common/file-raw.c:761 ../plug-ins/common/file-sunras.c:974
 #: ../plug-ins/common/file-tga.c:1063 ../plug-ins/common/file-tiff-load.c:998
 #: ../plug-ins/common/file-xbm.c:896 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:256 ../plug-ins/common/tile.c:266
@@ -1023,8 +1023,8 @@ msgstr "加载通道混合器设置"
 #: ../plug-ins/common/file-pdf.c:550 ../plug-ins/common/file-pix.c:342
 #: ../plug-ins/common/file-png.c:720 ../plug-ins/common/file-pnm.c:493
 #: ../plug-ins/common/file-ps.c:1036 ../plug-ins/common/file-ps.c:3043
-#: ../plug-ins/common/file-psp.c:1703 ../plug-ins/common/file-raw.c:253
-#: ../plug-ins/common/file-raw.c:707 ../plug-ins/common/file-sunras.c:390
+#: ../plug-ins/common/file-psp.c:1703 ../plug-ins/common/file-raw.c:255
+#: ../plug-ins/common/file-raw.c:709 ../plug-ins/common/file-sunras.c:390
 #: ../plug-ins/common/file-svg.c:332 ../plug-ins/common/file-svg.c:730
 #: ../plug-ins/common/file-tga.c:441 ../plug-ins/common/file-tiff-load.c:291
 #: ../plug-ins/common/file-xbm.c:736 ../plug-ins/common/file-xmc.c:666
@@ -1059,13 +1059,13 @@ msgstr "保存通道混合器设置"
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:800
-#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:761
+#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:779
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
 #: ../plug-ins/common/file-pat.c:475 ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1269
 #: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1213
-#: ../plug-ins/common/file-raw.c:587 ../plug-ins/common/file-raw.c:615
+#: ../plug-ins/common/file-raw.c:589 ../plug-ins/common/file-raw.c:617
 #: ../plug-ins/common/file-sunras.c:562 ../plug-ins/common/file-tga.c:1169
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
 #: ../plug-ins/common/file-xmc.c:1460 ../plug-ins/common/file-xwd.c:613
@@ -1077,7 +1077,7 @@ msgstr "保存通道混合器设置"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1711
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
-#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2397
+#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1210
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1742,7 +1742,7 @@ msgstr ""
 "拖放颜色以重新整理颜色表。显示的数字是原索引。右键点击以显示排序选项菜单。"
 
 #: ../plug-ins/common/compose.c:188 ../plug-ins/common/decompose.c:169
-#: ../plug-ins/common/file-raw.c:1096
+#: ../plug-ins/common/file-raw.c:1098
 msgid "RGB"
 msgstr "RGB"
 
@@ -2101,7 +2101,7 @@ msgid "D_ivisor:"
 msgstr "除数(_I)："
 
 #: ../plug-ins/common/convolution-matrix.c:1008
-#: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1117
+#: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1119
 msgid "O_ffset:"
 msgstr "位移(_F)："
 
@@ -2653,7 +2653,7 @@ msgstr "去除条纹"
 
 #: ../plug-ins/common/destripe.c:473 ../plug-ins/common/file-html-table.c:580
 #: ../plug-ins/common/file-ps.c:3166 ../plug-ins/common/file-ps.c:3361
-#: ../plug-ins/common/file-raw.c:1130 ../plug-ins/common/smooth-palette.c:435
+#: ../plug-ins/common/file-raw.c:1132 ../plug-ins/common/smooth-palette.c:435
 #: ../plug-ins/common/tile-paper.c:302 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
 #: ../plug-ins/imagemap/imap_rectangle.c:402
@@ -2965,7 +2965,7 @@ msgstr "刻画"
 
 #: ../plug-ins/common/engrave.c:244 ../plug-ins/common/file-html-table.c:596
 #: ../plug-ins/common/file-ps.c:3176 ../plug-ins/common/file-ps.c:3370
-#: ../plug-ins/common/file-raw.c:1143 ../plug-ins/common/film.c:1002
+#: ../plug-ins/common/file-raw.c:1145 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:440 ../plug-ins/common/tile-paper.c:313
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:174
 #: ../plug-ins/imagemap/imap_rectangle.c:409
@@ -3008,7 +3008,7 @@ msgstr "加载 KISS 色板"
 #: ../plug-ins/common/file-pat.c:334 ../plug-ins/common/file-pcx.c:365
 #: ../plug-ins/common/file-pdf.c:595 ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
-#: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:712
+#: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:714
 #: ../plug-ins/common/file-sunras.c:485 ../plug-ins/common/file-tga.c:446
 #: ../plug-ins/common/file-tiff-load.c:604 ../plug-ins/common/file-wmf.c:993
 #: ../plug-ins/common/file-xbm.c:741 ../plug-ins/common/file-xmc.c:678
@@ -3033,7 +3033,7 @@ msgstr "不支持的位深度(%d)！"
 #. init the progress meter
 #. And let's begin the progress
 #: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:657
-#: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1266
+#: ../plug-ins/common/file-gif-save.c:786 ../plug-ins/common/file-gih.c:1266
 #: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:480
 #: ../plug-ins/common/file-pcx.c:633 ../plug-ins/common/file-pix.c:528
 #: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:981
@@ -3196,7 +3196,7 @@ msgid "Description:"
 msgstr "描述："
 
 #: ../plug-ins/common/file-gif-load.c:148
-#: ../plug-ins/common/file-gif-save.c:168
+#: ../plug-ins/common/file-gif-save.c:176
 msgid "GIF image"
 msgstr "GIF 图像"
 
@@ -3237,39 +3237,39 @@ msgid ""
 msgstr ""
 "GIF：无法处理无书面文件的 GIF 合成类型 %d。动画可能无法准确地播放或重储存。"
 
-#: ../plug-ins/common/file-gif-save.c:447
+#: ../plug-ins/common/file-gif-save.c:465
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "无法进一步减少颜色。另存为不透明。"
 
-#: ../plug-ins/common/file-gif-save.c:562
+#: ../plug-ins/common/file-gif-save.c:580
 #, c-format
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr "无法保存“%s”。GIF 文件格式不支持宽度或高度大于 %d 像素的图像。"
 
-#: ../plug-ins/common/file-gif-save.c:673
+#: ../plug-ins/common/file-gif-save.c:691
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr "GIF 格式只支持 7 位 ASCII 编码的注释。注释没有被保存。"
 
-#: ../plug-ins/common/file-gif-save.c:732
+#: ../plug-ins/common/file-gif-save.c:750
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr "无法保存 RGB 颜色图像。请先转换成索引颜色或灰度。"
 
-#: ../plug-ins/common/file-gif-save.c:910
+#: ../plug-ins/common/file-gif-save.c:928
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "插入了延时以防止生成严重阻塞 CPU 的动画。"
 
-#: ../plug-ins/common/file-gif-save.c:950
+#: ../plug-ins/common/file-gif-save.c:968
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr "您试图另存为 GIF 的图像含有超出图像实际边界的图层。"
 
-#: ../plug-ins/common/file-gif-save.c:967
+#: ../plug-ins/common/file-gif-save.c:985
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
@@ -3277,70 +3277,42 @@ msgstr ""
 "GIF 文件格式不允许这种情况。您可以选择裁掉所有图层中超出图像边界的部分，或者"
 "放弃保存。"
 
-#: ../plug-ins/common/file-gif-save.c:1008
+#: ../plug-ins/common/file-gif-save.c:1121
 msgid "GIF"
 msgstr "GIF"
 
-#. regular gif parameter settings
-#: ../plug-ins/common/file-gif-save.c:1017
-msgid "GIF Options"
-msgstr "GIF 选项"
+#: ../plug-ins/common/file-gif-save.c:1129
+#, c-format
+msgid ""
+"Error loading UI file '%s':\n"
+"%s"
+msgstr ""
+"打开用户界面文件“%s”出错：\n"
+"%s"
 
-#: ../plug-ins/common/file-gif-save.c:1023
-msgid "I_nterlace"
-msgstr "交错(_N)"
-
-#: ../plug-ins/common/file-gif-save.c:1039
-msgid "_GIF comment:"
-msgstr "GIF 注释(_G)："
-
-#. additional animated gif parameter settings
-#: ../plug-ins/common/file-gif-save.c:1097
-msgid "Animated GIF Options"
-msgstr "GIF 动画选项"
-
-#: ../plug-ins/common/file-gif-save.c:1103
-msgid "_Loop forever"
-msgstr "反复循环(_L)"
-
-#: ../plug-ins/common/file-gif-save.c:1116
-msgid "_Delay between frames where unspecified:"
-msgstr "没有指明的帧之间的延时(_D)："
-
-#: ../plug-ins/common/file-gif-save.c:1131 ../plug-ins/common/file-mng.c:1493
-msgid "milliseconds"
-msgstr "毫秒"
-
-#: ../plug-ins/common/file-gif-save.c:1141
-msgid "_Frame disposal where unspecified:"
-msgstr "没有指明的帧的处理(_F)："
-
-#: ../plug-ins/common/file-gif-save.c:1145
+#: ../plug-ins/common/file-gif-save.c:1182
 msgid "I don't care"
 msgstr "我不关心"
 
-#: ../plug-ins/common/file-gif-save.c:1147
+#: ../plug-ins/common/file-gif-save.c:1184
 msgid "Cumulative layers (combine)"
 msgstr "累积各图层(组合)"
 
-#: ../plug-ins/common/file-gif-save.c:1149
+#: ../plug-ins/common/file-gif-save.c:1186
 msgid "One frame per layer (replace)"
 msgstr "每图层一帧(替换)"
 
-#. The "Always use default values" toggles
-#: ../plug-ins/common/file-gif-save.c:1165
-msgid "_Use delay entered above for all frames"
-msgstr "上面输入的延迟用于所有帧(_U)"
+#: ../plug-ins/common/file-gif-save.c:1203
+msgid ""
+"You can only export as animation when the image has more than one layer. The "
+"image you are trying to export only has one layer."
+msgstr "只能在图像有多个图层时导出为动画。您正在试图导出的图像仅含有一个图层。"
 
-#: ../plug-ins/common/file-gif-save.c:1175
-msgid "U_se disposal entered above for all frames"
-msgstr "上面输入的布置用于所有帧(_S)"
-
-#: ../plug-ins/common/file-gif-save.c:2328
+#: ../plug-ins/common/file-gif-save.c:2347
 msgid "Error writing output file."
 msgstr "写输出文件时出错。"
 
-#: ../plug-ins/common/file-gif-save.c:2398
+#: ../plug-ins/common/file-gif-save.c:2417
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "默认注释限制在 %d 个字节之内。"
@@ -3633,7 +3605,8 @@ msgstr "保存分辨率"
 msgid "Save creation time"
 msgstr "保存创建时间"
 
-#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1784
+#. Dialog init
+#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1800
 msgid "PNG"
 msgstr "PNG"
 
@@ -3677,7 +3650,7 @@ msgstr "默认帧处理："
 msgid "PNG compression level:"
 msgstr "PNG 压缩等级："
 
-#: ../plug-ins/common/file-mng.c:1416 ../plug-ins/common/file-png.c:1893
+#: ../plug-ins/common/file-mng.c:1416
 msgid "Choose a high compression level for small file size"
 msgstr "提高压缩等级可以减小文件大小"
 
@@ -3701,7 +3674,18 @@ msgstr "循环"
 msgid "Default frame delay:"
 msgstr "默认帧延时："
 
-#: ../plug-ins/common/file-mng.c:1550
+#: ../plug-ins/common/file-mng.c:1493
+msgid "milliseconds"
+msgstr "毫秒"
+
+#: ../plug-ins/common/file-mng.c:1506
+msgid ""
+"These options are only available when the exported image has more than one "
+"layer. The image you are exporting only has one layer."
+msgstr ""
+"这些选项仅在被导出的图像有多个图层时可用。您正在试图导出的图像仅有一个图层。"
+
+#: ../plug-ins/common/file-mng.c:1559
 msgid "MNG animation"
 msgstr "MNG 动画"
 
@@ -3805,19 +3789,19 @@ msgstr "从 PDF 导入"
 msgid "_Import"
 msgstr "导入(_I)"
 
-#: ../plug-ins/common/file-pdf.c:889
+#: ../plug-ins/common/file-pdf.c:890
 msgid "_Width (pixels):"
 msgstr "宽度(像素)(_W)："
 
-#: ../plug-ins/common/file-pdf.c:890
+#: ../plug-ins/common/file-pdf.c:891
 msgid "_Height (pixels):"
 msgstr "高度(像素)(_H)："
 
-#: ../plug-ins/common/file-pdf.c:892
+#: ../plug-ins/common/file-pdf.c:893
 msgid "_Resolution:"
 msgstr "分辨率(_R)："
 
-#: ../plug-ins/common/file-pdf.c:1166
+#: ../plug-ins/common/file-pdf.c:1167
 #, c-format
 msgid "pixels/%s"
 msgstr "像素/%s"
@@ -3857,49 +3841,10 @@ msgstr "PNG 文件中指定的位移导致图层定位在图像以外。"
 msgid "Error while saving '%s'. Could not save image."
 msgstr "保存“%s”出错。无法保存图像。"
 
-#: ../plug-ins/common/file-png.c:1802
-msgid "_Interlacing (Adam7)"
-msgstr "交错储存(Adam7)(_I)"
-
-#: ../plug-ins/common/file-png.c:1813
-msgid "Save _background color"
-msgstr "保存背景色(_B)"
-
-#: ../plug-ins/common/file-png.c:1821
-msgid "Save _gamma"
-msgstr "保存 _Gamma"
-
-#: ../plug-ins/common/file-png.c:1831
-msgid "Save layer o_ffset"
-msgstr "保存图层位移(_F)"
-
-#: ../plug-ins/common/file-png.c:1840
-msgid "Save _resolution"
-msgstr "保存分辨率(_R)"
-
-#: ../plug-ins/common/file-png.c:1850
-msgid "Save creation _time"
-msgstr "保存创建时间(_T)"
-
-#: ../plug-ins/common/file-png.c:1859
-msgid "Save comme_nt"
-msgstr "保存注释(_N)"
-
-#: ../plug-ins/common/file-png.c:1875
-msgid "Save color _values from transparent pixels"
-msgstr "保存透明像素的颜色值(_V)"
-
-#: ../plug-ins/common/file-png.c:1889
-msgid "Co_mpression level:"
-msgstr "压缩等级(_M)："
-
-#: ../plug-ins/common/file-png.c:1907 ../plug-ins/file-jpeg/jpeg-save.c:1179
-msgid "_Load Defaults"
-msgstr "加载默认值(_L)"
-
-#: ../plug-ins/common/file-png.c:1915
-msgid "S_ave Defaults"
-msgstr "保存默认值(_A)"
+#: ../plug-ins/common/file-png.c:1817
+#, c-format
+msgid "Error loading UI file '%s': %s"
+msgstr "打开用户界面文件“%s”出错：%s"
 
 #: ../plug-ins/common/file-pnm.c:247
 msgid "PNM Image"
@@ -3959,20 +3904,20 @@ msgstr "不支持的最大值。"
 msgid "Error reading file."
 msgstr "读文件出错。"
 
-#: ../plug-ins/common/file-pnm.c:1184
+#: ../plug-ins/common/file-pnm.c:1185
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1187
+#: ../plug-ins/common/file-pnm.c:1188
 msgid "Data formatting"
 msgstr "数据格式"
 
-#: ../plug-ins/common/file-pnm.c:1191
+#: ../plug-ins/common/file-pnm.c:1192
 msgid "Raw"
 msgstr "原始"
 
-#: ../plug-ins/common/file-pnm.c:1192
+#: ../plug-ins/common/file-pnm.c:1193
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -4181,83 +4126,83 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "原始图像数据"
 
-#: ../plug-ins/common/file-raw.c:1052
+#: ../plug-ins/common/file-raw.c:1054
 msgid "Load Image from Raw Data"
 msgstr "从原始数据载入图像"
 
-#: ../plug-ins/common/file-raw.c:1086
+#: ../plug-ins/common/file-raw.c:1088
 msgid "Image"
 msgstr "图像"
 
-#: ../plug-ins/common/file-raw.c:1097
+#: ../plug-ins/common/file-raw.c:1099
 msgid "RGB Alpha"
 msgstr "RGB Alpha"
 
-#: ../plug-ins/common/file-raw.c:1098
+#: ../plug-ins/common/file-raw.c:1100
 msgid "RGB565"
 msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw.c:1099
+#: ../plug-ins/common/file-raw.c:1101
 msgid "Planar RGB"
 msgstr "平面 RGB"
 
-#: ../plug-ins/common/file-raw.c:1100
+#: ../plug-ins/common/file-raw.c:1102
 msgid "Indexed"
 msgstr "索引"
 
-#: ../plug-ins/common/file-raw.c:1101
+#: ../plug-ins/common/file-raw.c:1103
 msgid "Indexed Alpha"
 msgstr "索引 Alpha"
 
-#: ../plug-ins/common/file-raw.c:1106
+#: ../plug-ins/common/file-raw.c:1108
 msgid "Image _Type:"
 msgstr "图像类型(_T)："
 
-#: ../plug-ins/common/file-raw.c:1156
+#: ../plug-ins/common/file-raw.c:1158
 msgid "Palette"
 msgstr "色板"
 
-#: ../plug-ins/common/file-raw.c:1166 ../plug-ins/common/file-raw.c:1251
+#: ../plug-ins/common/file-raw.c:1168 ../plug-ins/common/file-raw.c:1253
 msgid "R, G, B (normal)"
 msgstr "R，G，B(普通)"
 
-#: ../plug-ins/common/file-raw.c:1167 ../plug-ins/common/file-raw.c:1253
+#: ../plug-ins/common/file-raw.c:1169 ../plug-ins/common/file-raw.c:1255
 msgid "B, G, R, X (BMP style)"
 msgstr "B，G，R，X(BMP 风格)"
 
-#: ../plug-ins/common/file-raw.c:1172
+#: ../plug-ins/common/file-raw.c:1174
 msgid "_Palette Type:"
 msgstr "色板类型(_P)："
 
-#: ../plug-ins/common/file-raw.c:1183
+#: ../plug-ins/common/file-raw.c:1185
 msgid "Off_set:"
 msgstr "位移(_S)："
 
-#: ../plug-ins/common/file-raw.c:1195
+#: ../plug-ins/common/file-raw.c:1197
 msgid "Select Palette File"
 msgstr "选择调色板文件"
 
-#: ../plug-ins/common/file-raw.c:1201
+#: ../plug-ins/common/file-raw.c:1203
 msgid "Pal_ette File:"
 msgstr "色板文件(_E)："
 
-#: ../plug-ins/common/file-raw.c:1229
+#: ../plug-ins/common/file-raw.c:1231
 msgid "Raw Image"
 msgstr "Raw 图像"
 
-#: ../plug-ins/common/file-raw.c:1237
+#: ../plug-ins/common/file-raw.c:1239
 msgid "RGB Save Type"
 msgstr "RGB 保存类型"
 
-#: ../plug-ins/common/file-raw.c:1241
+#: ../plug-ins/common/file-raw.c:1243
 msgid "Standard (R,G,B)"
 msgstr "标准(R,G,B)"
 
-#: ../plug-ins/common/file-raw.c:1242
+#: ../plug-ins/common/file-raw.c:1244
 msgid "Planar (RRR,GGG,BBB)"
 msgstr "平面(RRR，GGG，BBB)"
 
-#: ../plug-ins/common/file-raw.c:1247
+#: ../plug-ins/common/file-raw.c:1249
 msgid "Indexed Palette Type"
 msgstr "索引色板类型"
 
@@ -4897,6 +4842,8 @@ msgid ""
 "The parasite \"%s\" is too long for X cursor.\n"
 "The overflowed string was dropped."
 msgstr ""
+"对于 X 光标来说，寄生物“%s”过长。\n"
+"溢出的字符串被丢弃了。"
 
 #: ../plug-ins/common/file-xmc.c:2167
 #, c-format
@@ -5287,32 +5234,6 @@ msgstr "Y_1："
 #: ../plug-ins/common/fractal-trace.c:787
 msgid "Y_2:"
 msgstr "Y_2："
-
-#: ../plug-ins/common/gee-zoom.c:131 ../plug-ins/common/gee.c:98
-msgid "A big hello from the GIMP team!"
-msgstr "来自 GIMP 小组的热情问候！"
-
-#: ../plug-ins/common/gee-zoom.c:136 ../plug-ins/common/gee-zoom.c:196
-msgid "Gee Zoom"
-msgstr "Gee Zoom"
-
-#: ../plug-ins/common/gee-zoom.c:202 ../plug-ins/common/gee.c:165
-msgid "Thank You for Choosing GIMP"
-msgstr "感谢您选择 GIMP"
-
-#: ../plug-ins/common/gee-zoom.c:210
-#, c-format
-msgid "An obsolete creation by %s"
-msgstr "%s 的已废弃的创作"
-
-#: ../plug-ins/common/gee.c:103 ../plug-ins/common/gee.c:159
-msgid "Gee Slime"
-msgstr "Gee Slime"
-
-#: ../plug-ins/common/gee.c:172
-#, c-format
-msgid "A less obsolete creation by %s"
-msgstr "%s 的较陈旧的创作"
 
 #: ../plug-ins/common/gradient-map.c:83
 msgid "Recolor the image using colors from the active gradient"
@@ -7378,7 +7299,7 @@ msgstr "颜色选择对话框"
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:193
-#: ../plug-ins/ifs-compose/ifs-compose.c:555
+#: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "缩放："
 
@@ -7612,7 +7533,7 @@ msgstr "小块平铺"
 #. Area for buttons etc
 #. Flip
 #: ../plug-ins/common/tile-small.c:413
-#: ../plug-ins/ifs-compose/ifs-compose.c:611
+#: ../plug-ins/ifs-compose/ifs-compose.c:609
 msgid "Flip"
 msgstr "翻转"
 
@@ -8083,7 +8004,7 @@ msgstr "单步大小："
 
 #: ../plug-ins/common/warp.c:433
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
-#: ../plug-ins/ifs-compose/ifs-compose.c:1213
+#: ../plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "Iterations:"
 msgstr "迭代次数："
 
@@ -8161,7 +8082,7 @@ msgid "Vector mag:"
 msgstr "矢量幅度："
 
 #. Angle
-#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:569
+#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:567
 msgid "Angle:"
 msgstr "角度："
 
@@ -8710,6 +8631,10 @@ msgstr "浮点数"
 msgid "Comment"
 msgstr "注释"
 
+#: ../plug-ins/file-jpeg/jpeg-save.c:1179
+msgid "_Load Defaults"
+msgstr "加载默认值(_L)"
+
 #: ../plug-ins/file-jpeg/jpeg-save.c:1188
 msgid "Sa_ve Defaults"
 msgstr "保存默认值(_V)"
@@ -8806,7 +8731,7 @@ msgstr "不支持的压缩模式：%d"
 
 #: ../plug-ins/file-psd/psd-load.c:1643
 msgid "Extra"
-msgstr ""
+msgstr "附加的"
 
 #: ../plug-ins/file-psd/psd-load.c:1818
 #, c-format
@@ -8903,29 +8828,29 @@ msgstr ""
 "Aggressive RLE\n"
 "(不被 SGI 支持)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:234
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:233
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "正在下载图像(第 %s 幅，共 %s 幅)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:238
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:237
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "正在上传图像(第 %s 幅，共 %s 幅)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:260
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:259
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:135
 #: ../plug-ins/file-uri/uri-backend-wget.c:345
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "已下载 %s 的图像数据"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:264
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:263
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "已上传 %s 的图像数据"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:318
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:317
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:157
 #: ../plug-ins/file-uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -9258,6 +9183,10 @@ msgstr ""
 "您需要增加一项比如\n"
 "(%s \"%s\")\n"
 "到您的 %s 文件。"
+
+#: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:562
+msgid "Fractal Explorer"
+msgstr "分形探索器"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
 msgid "Realtime preview"
@@ -10937,16 +10866,16 @@ msgstr ""
 "解析“%s”出错：\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:335
+#: ../plug-ins/ifs-compose/ifs-compose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "创建一个迭代函数系统(IFS)分形"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:347
+#: ../plug-ins/ifs-compose/ifs-compose.c:345
 msgid "_IFS Fractal..."
 msgstr "IFS 分形(_I)..."
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:527
+#: ../plug-ins/ifs-compose/ifs-compose.c:525
 #: ../plug-ins/lighting/lighting-ui.c:526
 #: ../plug-ins/map-object/map-object-ui.c:675
 #: ../plug-ins/map-object/map-object-ui.c:729
@@ -10956,7 +10885,7 @@ msgid "X:"
 msgstr "X："
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:541
+#: ../plug-ins/ifs-compose/ifs-compose.c:539
 #: ../plug-ins/lighting/lighting-ui.c:540
 #: ../plug-ins/map-object/map-object-ui.c:689
 #: ../plug-ins/map-object/map-object-ui.c:742
@@ -10967,149 +10896,149 @@ msgid "Y:"
 msgstr "Y："
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:583
+#: ../plug-ins/ifs-compose/ifs-compose.c:581
 msgid "Asymmetry:"
 msgstr "不对称度："
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:597
+#: ../plug-ins/ifs-compose/ifs-compose.c:595
 msgid "Shear:"
 msgstr "切变："
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:642
+#: ../plug-ins/ifs-compose/ifs-compose.c:640
 msgid "Simple"
 msgstr "简单"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:651
+#: ../plug-ins/ifs-compose/ifs-compose.c:649
 msgid "IFS Fractal: Target"
 msgstr "IFS 分形：目标"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:657
+#: ../plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Scale hue by:"
 msgstr "色调缩放："
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:672
+#: ../plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale value by:"
 msgstr "亮度缩放："
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:689
+#: ../plug-ins/ifs-compose/ifs-compose.c:687
 msgid "Full"
 msgstr "完全"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:697
+#: ../plug-ins/ifs-compose/ifs-compose.c:695
 msgid "IFS Fractal: Red"
 msgstr "IFS 分形：红"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:705
+#: ../plug-ins/ifs-compose/ifs-compose.c:703
 msgid "IFS Fractal: Green"
 msgstr "IFS 分形：绿"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:713
+#: ../plug-ins/ifs-compose/ifs-compose.c:711
 msgid "IFS Fractal: Blue"
 msgstr "IFS 分形：蓝"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:721
+#: ../plug-ins/ifs-compose/ifs-compose.c:719
 msgid "IFS Fractal: Black"
 msgstr "IFS 分形：黑"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:771
+#: ../plug-ins/ifs-compose/ifs-compose.c:769
 msgid "IFS Fractal"
 msgstr "IFS 分形"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:869
+#: ../plug-ins/ifs-compose/ifs-compose.c:867
 msgid "Spatial Transformation"
 msgstr "空间变换"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:875
+#: ../plug-ins/ifs-compose/ifs-compose.c:873
 msgid "Color Transformation"
 msgstr "颜色变换"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:885
+#: ../plug-ins/ifs-compose/ifs-compose.c:883
 msgid "Relative probability:"
 msgstr "相对概率："
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1060
+#: ../plug-ins/ifs-compose/ifs-compose.c:1058
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Select _All"
 msgstr "全选(_A)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1064
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Re_center"
 msgstr "居中(_C)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1064
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Recompute Center"
 msgstr "重新计算中心"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1068
+#: ../plug-ins/ifs-compose/ifs-compose.c:1066
 msgid "Render Options"
 msgstr "渲染选项"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1074
+#: ../plug-ins/ifs-compose/ifs-compose.c:1072
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "移动"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1077
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate"
 msgstr "旋转"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1077
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate / Scale"
 msgstr "旋转/缩放"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1080
+#: ../plug-ins/ifs-compose/ifs-compose.c:1078
 msgid "Stretch"
 msgstr "拉伸"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1178
+#: ../plug-ins/ifs-compose/ifs-compose.c:1176
 msgid "IFS Fractal Render Options"
 msgstr "IFS 分形渲染选项"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1200
+#: ../plug-ins/ifs-compose/ifs-compose.c:1198
 msgid "Max. memory:"
 msgstr "最大内存："
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1227
+#: ../plug-ins/ifs-compose/ifs-compose.c:1225
 msgid "Subdivide:"
 msgstr "细分："
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1240
+#: ../plug-ins/ifs-compose/ifs-compose.c:1238
 msgid "Spot radius:"
 msgstr "点半径："
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1305
+#: ../plug-ins/ifs-compose/ifs-compose.c:1303
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "渲染 IFS (%d/%d)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1471
+#: ../plug-ins/ifs-compose/ifs-compose.c:1469
 #, c-format
 msgid "Transformation %s"
 msgstr "变换 %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2402
+#: ../plug-ins/ifs-compose/ifs-compose.c:2400
 msgid "Save failed"
 msgstr "保存失败"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2485
-#: ../plug-ins/ifs-compose/ifs-compose.c:2498
+#: ../plug-ins/ifs-compose/ifs-compose.c:2483
+#: ../plug-ins/ifs-compose/ifs-compose.c:2496
 msgid "Open failed"
 msgstr "打开失败"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2493
+#: ../plug-ins/ifs-compose/ifs-compose.c:2491
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "文件“%s”似乎不是 IFS 分形文件。"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2533
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
 msgid "Save as IFS Fractal file"
 msgstr "另存为 IFS 分形文件"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2570
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
 msgid "Open IFS Fractal file"
 msgstr "打开 IFS 分形文件"
 
@@ -12719,6 +12648,81 @@ msgstr "屏幕截图(_S)..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "没有取得数据"
+
+#~ msgid "GIF Options"
+#~ msgstr "GIF 选项"
+
+#~ msgid "I_nterlace"
+#~ msgstr "交错(_N)"
+
+#~ msgid "_GIF comment:"
+#~ msgstr "GIF 注释(_G)："
+
+#~ msgid "Animated GIF Options"
+#~ msgstr "GIF 动画选项"
+
+#~ msgid "_Loop forever"
+#~ msgstr "反复循环(_L)"
+
+#~ msgid "_Delay between frames where unspecified:"
+#~ msgstr "没有指明的帧之间的延时(_D)："
+
+#~ msgid "_Frame disposal where unspecified:"
+#~ msgstr "没有指明的帧的处理(_F)："
+
+#~ msgid "_Use delay entered above for all frames"
+#~ msgstr "上面输入的延迟用于所有帧(_U)"
+
+#~ msgid "U_se disposal entered above for all frames"
+#~ msgstr "上面输入的布置用于所有帧(_S)"
+
+#~ msgid "_Interlacing (Adam7)"
+#~ msgstr "交错储存(Adam7)(_I)"
+
+#~ msgid "Save _background color"
+#~ msgstr "保存背景色(_B)"
+
+#~ msgid "Save _gamma"
+#~ msgstr "保存 _Gamma"
+
+#~ msgid "Save layer o_ffset"
+#~ msgstr "保存图层位移(_F)"
+
+#~ msgid "Save _resolution"
+#~ msgstr "保存分辨率(_R)"
+
+#~ msgid "Save creation _time"
+#~ msgstr "保存创建时间(_T)"
+
+#~ msgid "Save comme_nt"
+#~ msgstr "保存注释(_N)"
+
+#~ msgid "Save color _values from transparent pixels"
+#~ msgstr "保存透明像素的颜色值(_V)"
+
+#~ msgid "Co_mpression level:"
+#~ msgstr "压缩等级(_M)："
+
+#~ msgid "S_ave Defaults"
+#~ msgstr "保存默认值(_A)"
+
+#~ msgid "A big hello from the GIMP team!"
+#~ msgstr "来自 GIMP 小组的热情问候！"
+
+#~ msgid "Gee Zoom"
+#~ msgstr "Gee Zoom"
+
+#~ msgid "Thank You for Choosing GIMP"
+#~ msgstr "感谢您选择 GIMP"
+
+#~ msgid "An obsolete creation by %s"
+#~ msgstr "%s 的已废弃的创作"
+
+#~ msgid "Gee Slime"
+#~ msgstr "Gee Slime"
+
+#~ msgid "A less obsolete creation by %s"
+#~ msgstr "%s 的较陈旧的创作"
 
 #~ msgid "Save as Text"
 #~ msgstr "另存为文本"
