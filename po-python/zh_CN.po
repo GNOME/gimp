@@ -10,45 +10,45 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-09-02 19:58+0000\n"
-"PO-Revision-Date: 2009-08-12 14:50+0800\n"
+"POT-Creation-Date: 2010-04-15 14:39+0000\n"
+"PO-Revision-Date: 2010-01-04 18:18+0800\n"
 "Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:391
+#: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
 msgstr "丢失异常信息"
 
-#: ../plug-ins/pygimp/gimpfu.py:400
+#: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-msgid "An error occured running %s"
+msgid "An error occurred running %s"
 msgstr "运行 %s 出现一个错误"
 
-#: ../plug-ins/pygimp/gimpfu.py:411
+#: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
 msgstr "更多信息(_M)"
 
-#: ../plug-ins/pygimp/gimpfu.py:523 ../plug-ins/pygimp/gimpfu.py:535
-#: ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
 msgid "No"
 msgstr "否"
 
-#: ../plug-ins/pygimp/gimpfu.py:533 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
 msgid "Yes"
 msgstr "是"
 
-#: ../plug-ins/pygimp/gimpfu.py:592 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu 文件选择"
 
-#: ../plug-ins/pygimp/gimpfu.py:603
+#: ../plug-ins/pygimp/gimpfu.py:607
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu 文件夹选择"
 
-#: ../plug-ins/pygimp/gimpfu.py:694
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "“%s” 的输入非法"
