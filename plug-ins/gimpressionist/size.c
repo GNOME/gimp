@@ -105,7 +105,7 @@ create_sizepage (GtkNotebook *notebook)
 
   sizenumadjust =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                          _("Sizes:"),
+                          _("Size variants:"),
                           150, -1, pcvals.size_num,
                           1.0, 30.0, 1.0, 1.0, 0,
                           TRUE, 0, 0,
@@ -147,7 +147,7 @@ create_sizepage (GtkNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (box2), box3, FALSE, FALSE, 0);
   gtk_widget_show (box3);
 
-  tmpw = gtk_label_new (_("Size:"));
+  tmpw = gtk_label_new (_("Size depends on:"));
   gtk_box_pack_start (GTK_BOX (box3), tmpw,FALSE,FALSE,0);
   gtk_widget_show (tmpw);
 
