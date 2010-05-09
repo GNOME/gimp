@@ -37,6 +37,11 @@ typedef struct _GimpXmpModelEntryClass  GimpXmpModelEntryClass;
 struct _GimpXmpModelEntryClass
 {
   GtkEntryClass parent_class;
+
+  void          (*gimp_xmp_model_set_text) (GimpXmpModelEntry *entry,
+                                            const gchar       *value);
+
+  const gchar * (*gimp_xmp_model_get_text) (GimpXmpModelEntry *entry);
 };
 
 struct _GimpXmpModelEntry
@@ -46,12 +51,16 @@ struct _GimpXmpModelEntry
 };
 
 
-GType       gimp_xmp_model_entry_get_type (void) G_GNUC_CONST;
+GType         gimp_xmp_model_entry_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_xmp_model_entry_new      (const gchar *schema_uri,
-                                           const gchar *property,
-                                           XMPModel    *xmp_model);
+GtkWidget   * gimp_xmp_model_entry_new      (const gchar       *schema_uri,
+                                             const gchar       *property,
+                                             XMPModel          *xmp_model);
 
+void          gimp_xmp_model_set_text       (GimpXmpModelEntry *entry,
+                                             const gchar       *value);
+
+const gchar * gimp_xmp_model_get_text       (GimpXmpModelEntry *entry);
 
 G_END_DECLS
 

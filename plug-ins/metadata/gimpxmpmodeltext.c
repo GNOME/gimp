@@ -48,8 +48,8 @@ G_DEFINE_TYPE_WITH_CODE (GimpXmpModelText, gimp_xmp_model_text,
 
 static GObject *
 gimp_xmp_model_text_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+                                 guint                  n_params,
+                                 GObjectConstructParam *params)
 {
   GObject                  *obj;
 

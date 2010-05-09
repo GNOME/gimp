@@ -1,4 +1,5 @@
-/* gimpxmpmodelwidget.c - interface definition for xmpmodel gtkwidgets
+/* gimpxmpmodelwidget.c - interface definition for XMPModel bound
+ *                        GTKWidgets
  *
  * Copyright (C) 2010, Róman Joost <romanofski@gimp.org>
  *
@@ -47,7 +48,7 @@ static void     gimp_xmp_model_widget_iface_base_init   (GimpXmpModelWidgetInter
 static GimpXmpModelWidgetPrivate *
                 gimp_xmp_model_widget_get_private       (GimpXmpModelWidget *widget);
 
-static void     gimp_widget_xmp_model_changed           (XMPModel           *xmp_model,
+static void     gimp_xmp_model_widget_xmpmodel_changed  (XMPModel           *xmp_model,
                                                          GtkTreeIter        *iter,
                                                          gpointer           *user_data);
 
@@ -56,6 +57,7 @@ const gchar *   find_schema_prefix                      (const gchar        *sch
 void            set_property_edit_icon                  (GtkWidget          *widget,
                                                          XMPModel           *xmp_model,
                                                          GtkTreeIter        *iter);
+
 
 GType
 gimp_xmp_model_widget_interface_get_type (void)
@@ -149,7 +151,7 @@ gimp_xmp_model_widget_constructor (GObject *object)
                             priv->property_name);
 
   g_signal_connect (priv->xmp_model, signal,
-                    G_CALLBACK (gimp_widget_xmp_model_changed),
+                    G_CALLBACK (gimp_xmp_model_widget_xmpmodel_changed),
                     widget);
 
   g_free (signal);
@@ -237,10 +239,20 @@ gimp_xmp_model_widget_get_private (GimpXmpModelWidget *widget)
   return private;
 }
 
+/**
+ * gimp_xmp_model_widget_xmpmodel_changed:
+ * @xmp_model: XMPModel this widget is bound to.
+ * @iter: The iter which points to the last change in the XMPModel
+ * @user_data: which should be the GtkWidget displaying the value.
+ *
+ * If the XMPModel has been changed, the GtkWidget needs to be updated.
+ * This method updates the corresponding GtkWidget with the new value
+ * from the XMPModel.
+ **/
 static void
-gimp_widget_xmp_model_changed (XMPModel     *xmp_model,
-                               GtkTreeIter  *iter,
-                               gpointer     *user_data)
+gimp_xmp_model_widget_xmpmodel_changed (XMPModel     *xmp_model,
+                                        GtkTreeIter  *iter,
+                                        gpointer     *user_data)
 {
   GimpXmpModelWidget        *widget = GIMP_XMP_MODEL_WIDGET (user_data);
   GimpXmpModelWidgetPrivate *priv  = GIMP_XMP_MODEL_WIDGET_GET_PRIVATE (widget);
@@ -263,6 +275,14 @@ gimp_widget_xmp_model_changed (XMPModel     *xmp_model,
   return;
 }
 
+/**
+ * gimp_xmp_model_widget_set_text:
+ * @widget: The GtkWidget where the new value is set.
+ * @tree_value: The new string which will be set on the widget.
+ *
+ * This method sets the new value on the GtkWidget implementing the
+ * #GimpXmpModelWidgetInterface.
+ **/
 void
 gimp_xmp_model_widget_set_text (GimpXmpModelWidget  *widget,
                                 const gchar         *tree_value)
@@ -275,9 +295,16 @@ gimp_xmp_model_widget_set_text (GimpXmpModelWidget  *widget,
     iface->widget_set_text (widget, tree_value);
 }
 
+/**
+ * gimp_xmp_model_widget_changed:
+ * @widget: The GtkWidget which was changed.
+ * @value: The new string from the GtkWidget.
+ *
+ * If the GtkWidget was changed, a new value is set in the #XMPModel.
+ **/
 void
 gimp_xmp_model_widget_changed (GimpXmpModelWidget *widget,
-                               const gchar *value)
+                               const gchar        *value)
 {
   GimpXmpModelWidgetPrivate *priv = GIMP_XMP_MODEL_WIDGET_GET_PRIVATE (widget);
 
@@ -286,6 +313,10 @@ gimp_xmp_model_widget_changed (GimpXmpModelWidget *widget,
                                  priv->property_name,
                                  value);
 }
+
+/**
+ * utility methods
+ **/
 
 /* find the schema prefix for the given URI */
 const gchar*
