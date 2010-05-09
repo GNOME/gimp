@@ -624,9 +624,18 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if (output->use_tilt)
     {
-      total += gimp_curve_map_value (output->tilt_curve,
-                                     (sqrt ((1 - fabs (coords->xtilt)) /
-                                     (1 - fabs (coords->ytilt)))));
+      gdouble tilt_value =  MIN ((1 - fabs (coords->xtilt)) /
+                                 (1 - fabs (coords->ytilt)), 20);
+
+      if (tilt_value <= 1.0)
+        tilt_value = gimp_curve_map_value (output->tilt_curve,
+                                           tilt_value);
+      else
+        tilt_value = (1 - gimp_curve_map_value (output->tilt_curve,
+                                                (1.0 - (tilt_value - 1.0) / 19.0))) * 19.0 + 1.0 ;
+
+      total += tilt_value;
+
       factors++;
     }
 
@@ -668,7 +677,7 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   g_printerr ("Dynamics queried(aspect). Result: %f, factors: %d, total: %f\n",
               result, factors, total);
 #endif
-  if (result < 0.25) result = 0.25;
+  result = CLAMP (result, 0.05, 20.0);
 
   return result;
 }
