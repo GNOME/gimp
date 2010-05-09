@@ -63,12 +63,8 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   GimpMatrix3 matrix;
   gint        x, y;
 
-  if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (brush->mask->width, brush->mask->height,
-                                 scale * aspect_ratio, scale, angle, &matrix);
-  else
-    gimp_brush_transform_matrix (brush->mask->width, brush->mask->height,
-                                 scale, scale / aspect_ratio, angle, &matrix);
+  gimp_brush_transform_matrix (brush->mask->width, brush->mask->height,
+                               scale, aspect_ratio, angle, &matrix);
 
   gimp_brush_transform_bounding_box (brush->mask, &matrix, &x, &y, width, height);
 }
@@ -173,12 +169,8 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
   source = temp_buf_copy (brush->mask, NULL);
 
-   if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (source->height, source->width,
-                                 scale * aspect_ratio, scale, angle, &matrix);
-  else
-    gimp_brush_transform_matrix (source->height, source->width,
-                                 scale, scale / aspect_ratio, angle, &matrix);
+  gimp_brush_transform_matrix (source->height, source->width,
+                               scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (source, NULL);
@@ -460,12 +452,8 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 
   source = brush->pixmap;
 
-  if (aspect_ratio < 1.0)
-    gimp_brush_transform_matrix (source->height, source->width,
-                                 scale * aspect_ratio, scale, angle, &matrix);
-  else
-    gimp_brush_transform_matrix (source->height, source->width,
-                                 scale, scale / aspect_ratio, angle, &matrix);
+  gimp_brush_transform_matrix (source->height, source->width,
+                               scale, aspect_ratio, angle, &matrix);
 
   if (gimp_matrix3_is_identity (&matrix))
     return temp_buf_copy (source, NULL);
@@ -653,19 +641,33 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
 void
 gimp_brush_transform_matrix (gdouble      width,
                              gdouble      height,
-                             gdouble      scale_x,
-                             gdouble      scale_y,
+                             gdouble      scale,
+                             gdouble      aspect_ratio,
                              gdouble      angle,
                              GimpMatrix3 *matrix)
 {
   const gdouble center_x = width  / 2;
   const gdouble center_y = height / 2;
+  gdouble scale_x;
+  gdouble scale_y;
+
+  if (aspect_ratio < 1.0)
+    {
+        scale_x = scale * aspect_ratio;
+        scale_y = scale;
+    }
+  else
+    {
+      scale_x = scale;
+      scale_y = scale / aspect_ratio;
+    }
 
   gimp_matrix3_identity (matrix);
-  gimp_matrix3_translate (matrix, - center_x, - center_y);
-  gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
-  gimp_matrix3_translate (matrix, center_x, center_y);
   gimp_matrix3_scale (matrix, scale_x, scale_y);
+  gimp_matrix3_translate (matrix, - center_x * scale_x, - center_y * scale_y);
+  gimp_matrix3_rotate (matrix, -2 * G_PI * angle);
+  gimp_matrix3_translate (matrix, center_x * scale_x, center_y * scale_y);
+
 }
 
 /*  private functions  */
