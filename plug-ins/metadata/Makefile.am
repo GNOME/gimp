@@ -33,8 +33,12 @@ metadata_SOURCES = \
 	xmp-schemas.c		\
 	interface.h		\
 	interface.c		\
+	gimpxmpmodelwidget.h	\
+	gimpxmpmodelwidget.c	\
 	gimpxmpmodelentry.h	\
 	gimpxmpmodelentry.c	\
+	gimpxmpmodeltext.h	\
+	gimpxmpmodeltext.c	\
 	exif-decode.h		\
 	exif-decode.c
 #	exif-encode.h		\

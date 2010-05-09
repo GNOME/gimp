@@ -54,6 +54,7 @@
 #include "metadata.h"
 #include "xmp-encode.h"
 #include "gimpxmpmodelentry.h"
+#include "gimpxmpmodeltext.h"
 
 
 #define RESPONSE_IMPORT   1
@@ -190,42 +191,6 @@ update_icons (MetadataGui *mgui)
   gtk_tree_model_foreach (model, icon_foreach_func, mgui);
 }
 
-/* FIXME: temporary data structure for testing */
-typedef struct
-{
-  const gchar *schema;
-  const gchar *property_name;
-  GSList      *widget_list;
-  MetadataGui *mgui;
-} WidgetXRef;
-
-static void
-text_changed (GtkTextBuffer *text_buffer,
-              gpointer       user_data)
-{
-  WidgetXRef  *xref = user_data;
-  GtkTextIter  start;
-  GtkTextIter  end;
-
-  gtk_text_buffer_get_bounds (text_buffer, &start, &end);
-  g_print ("XMP: %s %p %p %s\n", xref->property_name, text_buffer, user_data, gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE)); /* FIXME */
-}
-
-static void
-register_text_xref (GtkTextBuffer *text_buffer,
-                    const gchar   *schema,
-                    const gchar   *property_name)
-{
-  WidgetXRef *xref;
-
-  xref = g_new (WidgetXRef, 1);
-  xref->schema = schema;
-  xref->property_name = property_name;
-  xref->widget_list = g_slist_prepend (NULL, text_buffer);
-  g_signal_connect (GTK_TEXT_BUFFER (text_buffer), "changed",
-                    G_CALLBACK (text_changed), xref);
-}
-
 static void
 add_description_tab (GtkWidget   *notebook,
                      MetadataGui *mgui)
@@ -235,7 +200,6 @@ add_description_tab (GtkWidget   *notebook,
   GtkWidget     *entry;
   GtkWidget     *scrolled_window;
   GtkWidget     *text_view;
-  GtkTextBuffer *text_buffer;
 
   frame = gimp_frame_new (_("Description"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
@@ -273,14 +237,11 @@ add_description_tab (GtkWidget   *notebook,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
           GTK_POLICY_AUTOMATIC,
           GTK_POLICY_AUTOMATIC);
-  text_view = gtk_text_view_new ();
-  text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
-  gtk_text_buffer_set_text (text_buffer,
-                            "FIXME:\n"
-                            "These widgets are currently disconnected from the XMP model.\n"
-                            "Please use the Advanced tab.",
-                            -1);
-  register_text_xref (text_buffer, XMP_SCHEMA_DUBLIN_CORE, "description");
+  text_view = g_object_new (GIMP_TYPE_XMP_MODEL_TEXT,
+                            "schema-uri", XMP_SCHEMA_DUBLIN_CORE,
+                            "property-name", "description",
+                            "xmp-model", mgui->xmp_model,
+                            NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
            _("_Description:"), 0.0, 0.5,
@@ -301,9 +262,11 @@ add_description_tab (GtkWidget   *notebook,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
           GTK_POLICY_AUTOMATIC,
           GTK_POLICY_AUTOMATIC);
-  text_view = gtk_text_view_new ();
-  text_buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
-  register_text_xref (text_buffer, XMP_SCHEMA_PDF, "Keywords");
+  text_view = g_object_new (GIMP_TYPE_XMP_MODEL_TEXT,
+                            "schema-uri", XMP_SCHEMA_PDF,
+                            "property-name", "Keywords",
+                            "xmp-model", mgui->xmp_model,
+                            NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
            _("_Keywords:"), 0.0, 0.5,
