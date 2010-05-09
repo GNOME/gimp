@@ -32,6 +32,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpdynamicsoutput.h"
@@ -42,7 +43,10 @@
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
+
+
 #include "gimppaintoptions.h"
+
 
 #include "gimp-intl.h"
 
@@ -1021,6 +1025,13 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
   angle = core->angle;
   aspect_ratio = core->aspect_ratio;
 
+  /* Generated brushes have their aspect ratio appled before base angle */
+  if (aspect_ratio != 1.0 && GIMP_IS_BRUSH_GENERATED (core->main_brush))
+    {
+      gdouble base_angle = gimp_brush_generated_get_angle (
+                                       GIMP_BRUSH_GENERATED (core->main_brush));
+      angle = angle + base_angle / 360;
+    }
   height = core->brush_bound_width;
   width  = core->brush_bound_height;
 

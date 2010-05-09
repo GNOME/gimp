@@ -316,7 +316,7 @@ gimp_brush_generated_transform_size (GimpBrush *gbrush,
                                       brush->radius * scale,
                                       brush->spikes,
                                       brush->hardness,
-                                      brush->aspect_ratio * aspect_ratio,
+                                      MIN (brush->aspect_ratio * aspect_ratio, 20),
                                       (brush->angle + 360 * angle),
                                       &half_width, &half_height,
                                       NULL, NULL, NULL, NULL);
@@ -335,7 +335,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (gbrush);
 
   /* Since generated brushes are symmetric the dont have intput
-   * for aspect ratios  < 1.0. its same as rotate by 90 degrees and
+   * for aspect ratios  < 1.0. its same as rotate by extra 90 degrees and
    * 1 / ratio. So we fix the input up for this case.   */
 
   if (aspect_ratio < 1.0)
