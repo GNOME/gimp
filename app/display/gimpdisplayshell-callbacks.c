@@ -367,6 +367,19 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
     }
 }
 
+static gboolean
+gimp_display_shell_is_double_buffered (GimpDisplayShell *shell)
+{
+  /*  always double-buffer if there are overlay children or a
+   *  transform preview, or they will flicker badly
+   */
+  if (GIMP_OVERLAY_BOX (shell->canvas)->children ||
+      gimp_display_shell_get_show_transform (shell))
+    return TRUE;
+
+  return FALSE;
+}
+
 gboolean
 gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GdkEventExpose   *eevent,
@@ -383,10 +396,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
         {
           gimp_display_shell_pause (shell);
 
-          /*  only double-buffer if there are overlay children, or
-           *  they will flicker badly
-           */
-          if (GIMP_OVERLAY_BOX (widget)->children)
+          if (gimp_display_shell_is_double_buffered (shell))
             gdk_window_begin_paint_region (eevent->window, eevent->region);
 
           gimp_display_shell_canvas_expose_image (shell, eevent);
@@ -414,8 +424,7 @@ gimp_display_shell_canvas_expose_after (GtkWidget        *widget,
     {
       if (gimp_display_get_image (shell->display))
         {
-          /*  see above  */
-          if (GIMP_OVERLAY_BOX (widget)->children)
+          if (gimp_display_shell_is_double_buffered (shell))
             gdk_window_end_paint (eevent->window);
 
           gimp_display_shell_resume (shell);
