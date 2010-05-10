@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-#undef GTK_DISABLE_DEPRECATED
-
 #include <stdlib.h>
 
 #include <gegl.h>
@@ -784,7 +781,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             GIMP_LOG (TOOL_EVENTS, "event (display %p): FOCUS_IN", display);
 
-            GTK_WIDGET_SET_FLAGS (canvas, GTK_HAS_FOCUS);
+            if (G_UNLIKELY (! gtk_widget_has_focus (canvas)))
+              g_warning ("%s: FOCUS_IN but canvas has no focus", G_STRFUNC);
 
             /*  press modifier keys when the canvas gets the focus
              *
@@ -800,7 +798,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             GIMP_LOG (TOOL_EVENTS, "event (display %p): FOCUS_OUT", display);
 
-            GTK_WIDGET_UNSET_FLAGS (canvas, GTK_HAS_FOCUS);
+            if (G_LIKELY (gtk_widget_has_focus (canvas)))
+              g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
 
             /*  reset it here to be prepared for the next
              *  FOCUS_IN / BUTTON_PRESS confusion
