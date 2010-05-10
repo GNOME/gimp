@@ -84,9 +84,9 @@ static void      add_tag_pointer       (GByteArray       *group_stream,
                                         const gchar      *value_rep,
                                         const guint8     *data,
                                         gint              length);
-static GSList *  dicom_add_tags        (FILE *DICOM,
-                                        GByteArray *group_stream,
-                                        GSList *elements);
+static GSList *  dicom_add_tags        (FILE             *DICOM,
+                                        GByteArray       *group_stream,
+                                        GSList           *elements);
 static gboolean  write_group_to_file   (FILE             *DICOM,
                                         gint              group,
                                         GByteArray       *group_stream);
@@ -290,8 +290,10 @@ run (const gchar      *name,
 
 /**
  * add_parasites_to_image:
- * @data: pointer to a GimpParasite to be attached to the image specified by @user_data.
- * @user_data: pointer to the image_ID to which parasite @data should be added.
+ * @data:      pointer to a GimpParasite to be attached to the image
+ *             specified by @user_data.
+ * @user_data: pointer to the image_ID to which parasite @data should
+ *             be added.
  *
  * Attaches parasite to image and also frees that parasite
 **/
@@ -299,8 +301,9 @@ static void
 add_parasites_to_image (gpointer data,
                         gpointer user_data)
 {
-  GimpParasite *parasite = (GimpParasite *)data;
-  gint32 *image_ID = (gint32 *)user_data;
+  GimpParasite *parasite = (GimpParasite *) data;
+  gint32       *image_ID = (gint32 *) user_data;
+
   gimp_image_parasite_attach (*image_ID, parasite);
   gimp_parasite_free (parasite);
 }
@@ -540,21 +543,25 @@ load_image (const gchar  *filename,
         {
           /* save this element to a parasite for later writing */
           GimpParasite *parasite;
-          gchar pname[255];
+          gchar         pname[255];
+
           /* all elements are retrievable using gimp_parasite_list() */
-          g_snprintf(pname,sizeof(pname),"dcm/%04x-%04x-%s",group_word,element_word,value_rep);
+          g_snprintf (pname, sizeof (pname),
+                      "dcm/%04x-%04x-%s", group_word, element_word, value_rep);
           if ((parasite = gimp_parasite_new (pname,
-                                        GIMP_PARASITE_PERSISTENT,
-                                        element_length, value)))
+                                             GIMP_PARASITE_PERSISTENT,
+                                             element_length, value)))
             {
               /*
-               * at this point, the image has not yet been created, so image_ID is not valid.
-               * keep the parasite around until we're able to attach it.
+               * at this point, the image has not yet been created, so
+               * image_ID is not valid.  keep the parasite around
+               * until we're able to attach it.
                */
-              /* gimp_image_parasite_attach (image_ID, parasite);*/
-              /* gimp_parasite_free (parasite); */
-              /* add to our list of parasites to be added (prepending for speed. we'll reverse it later) */
-              elements = g_slist_prepend (elements,parasite);
+
+              /* add to our list of parasites to be added (prepending
+               * for speed. we'll reverse it later)
+               */
+              elements = g_slist_prepend (elements, parasite);
             }
 
           g_free (value);
@@ -619,21 +626,20 @@ load_image (const gchar  *filename,
 
   if (elements)
     {
-      /* flip the parasites back around into the order they were created (read from the file) */
+      /* flip the parasites back around into the order they were
+       * created (read from the file)
+       */
       elements = g_slist_reverse (elements);
       /* and add each one to the image */
-      g_slist_foreach (elements,add_parasites_to_image,(gpointer)&image_ID);
+      g_slist_foreach (elements, add_parasites_to_image, (gpointer) &image_ID);
       g_slist_free (elements);
     }
-  /* free the structures */
+
   g_free (pix_buf);
   g_free (dicominfo);
 
-  /* close the file */
   fclose (DICOM);
 
-  /* Tell GIMP to display the image and detach. */
-  /* gimp_drawable_flush (drawable); -- implicitely done via gimp_drawable_detach() */
   gimp_drawable_detach (drawable);
 
   return image_ID;
@@ -792,79 +798,93 @@ toggle_endian2 (guint16 *buf16,
     }
 }
 
-typedef struct _DicomElement {
-    guint16  group_word;
-    guint16  element_word;
-    gchar    value_rep[3];
-    guint32  element_length;
-    guint8   *value;
-    gint     free;
+typedef struct
+{
+  guint16   group_word;
+  guint16   element_word;
+  gchar     value_rep[3];
+  guint32   element_length;
+  guint8   *value;
+  gboolean  free;
 } DICOMELEMENT;
 
 /**
  * dicom_add_element:
- * @elements: head of a GSList containing DICOMELEMENT structures.
- * @group_word: Dicom Element group number for the tag to be added to @elements.
- * @element_word: Dicom Element element number for the tag to be added to @elements.
- * @value_rep: a string representing the Dicom VR for the new element.
- * @value: a pointer to an integer containing the value for the element to be created.
+ * @elements:     head of a GSList containing DICOMELEMENT structures.
+ * @group_word:   Dicom Element group number for the tag to be added to
+ *                @elements.
+ * @element_word: Dicom Element element number for the tag to be added
+ *                to @elements.
+ * @value_rep:    a string representing the Dicom VR for the new element.
+ * @value:        a pointer to an integer containing the value for the
+ *                element to be created.
  *
  * Creates a DICOMELEMENT object and inserts it into @elements.
  *
  * Return value: the new head of @elements
 **/
 static GSList *
-dicom_add_element (GSList *elements,
-                   guint16 group_word,
-                   guint16 element_word,
-                   gchar *value_rep,
-                   guint32 element_length,
-                   guint8 *value,
-                   gint copy)
+dicom_add_element (GSList      *elements,
+                   guint16      group_word,
+                   guint16      element_word,
+                   const gchar *value_rep,
+                   guint32      element_length,
+                   guint8      *value)
 {
-  DICOMELEMENT *element = g_new0 (DICOMELEMENT, 1);
-  if (element)
-    {
-      element->free = 0;
-      if (copy)
-        {
-          guint8 *v = g_new (guint8,element_length);
-          if (v)
-            {
-              memcpy (v,value,element_length);
-              value = v;
-              element->free = 1;
-            }
-        }
-      element->group_word = group_word;
-      element->element_word = element_word;
-      strncpy (element->value_rep,value_rep,sizeof (element->value_rep));
-      element->element_length = element_length;
-      element->value = value;
-      elements = g_slist_prepend (elements,element);
-    }
+  DICOMELEMENT *element = g_slice_new0 (DICOMELEMENT);
+
+  element->group_word     = group_word;
+  element->element_word   = element_word;
+  strncpy (element->value_rep, value_rep, sizeof (element->value_rep));
+  element->element_length = element_length;
+  element->value          = value;
+
+  return g_slist_prepend (elements, element);
+}
+
+static GSList *
+dicom_add_element_copy (GSList       *elements,
+                        guint16       group_word,
+                        guint16       element_word,
+                        gchar        *value_rep,
+                        guint32       element_length,
+                        const guint8 *value)
+{
+  elements = dicom_add_element (elements,
+                                group_word, element_word, value_rep,
+                                element_length,
+                                g_memdup (value, element_length));
+
+  ((DICOMELEMENT *) elements->data)->free = TRUE;
+
   return elements;
 }
 
 /**
  * dicom_add_element_int:
- * @elements: head of a GSList containing DICOMELEMENT structures.
- * @group_word: Dicom Element group number for the tag to be added to @elements.
- * @element_word: Dicom Element element number for the tag to be added to @elements.
- * @value_rep: a string representing the Dicom VR for the new element.
- * @value: a pointer to an integer containing the value for the element to be created.
+ * @elements:     head of a GSList containing DICOMELEMENT structures.
+
+ * @group_word:   Dicom Element group number for the tag to be added to
+ *                @elements.
+ * @element_word: Dicom Element element number for the tag to be added to
+ *                @elements.
+ * @value_rep:    a string representing the Dicom VR for the new element.
+ * @value:        a pointer to an integer containing the value for the
+ *                element to be created.
  *
- * Creates a DICOMELEMENT object from the passed integer pointer and adds it to @elements.
- * Note: value should be the address of a guint16 for @value_rep==%US or guint32 for other values of @value_rep
+ * Creates a DICOMELEMENT object from the passed integer pointer and
+ * adds it to @elements.  Note: value should be the address of a
+ * guint16 for @value_rep == %US or guint32 for other values of
+ * @value_rep
  *
  * Return value: the new head of @elements
  */
 static GSList *
-dicom_add_element_int (GSList *elements,
-                       guint16 group_word,
-                       guint16 element_word,
-                       gchar *value_rep,
-                       guint8 *value)
+dicom_add_element_int (GSList  *elements,
+                       guint16  group_word,
+                       guint16  element_word,
+                       gchar   *value_rep,
+                       guint8  *value)
 {
   guint32 len;
 
@@ -873,7 +893,9 @@ dicom_add_element_int (GSList *elements,
   else
     len = 4;
 
-  return dicom_add_element (elements,group_word,element_word,value_rep,len,value,0);
+  return dicom_add_element (elements,
+                            group_word, element_word, value_rep,
+                            len, value);
 }
 
 /**
@@ -889,14 +911,14 @@ dicom_element_done (gpointer data,
 {
   if (data)
     {
-      DICOMELEMENT *e = (DICOMELEMENT *)data;
+      DICOMELEMENT *e = data;
+
       if (e->free)
-        {
-          g_free (e->value);
-        }
-      g_free (data);
+        g_free (e->value);
+
+      g_slice_free (DICOMELEMENT, data);
     }
-} 
+}
 
 /**
  * dicom_elements_destroy:
@@ -909,7 +931,7 @@ dicom_elements_destroy (GSList *elements)
 {
   if (elements)
     {
-      g_slist_foreach (elements,dicom_element_done,NULL);
+      g_slist_foreach (elements, dicom_element_done, NULL);
       g_slist_free (elements);
     }
 }
@@ -924,17 +946,17 @@ dicom_elements_destroy (GSList *elements)
  * Return value: the new head of @elements
 **/
 static GSList *
-dicom_destroy_element (GSList *elements,
+dicom_destroy_element (GSList       *elements,
                        DICOMELEMENT *ele)
 {
   if (ele)
     {
-      elements = g_slist_remove_all (elements,ele);
+      elements = g_slist_remove_all (elements, ele);
+
       if (ele->free)
-        {
-          g_free (ele->value);
-        }
-      g_free (ele);
+        g_free (ele->value);
+
+      g_slice_free (DICOMELEMENT, ele);
     }
 
   return elements;
@@ -944,11 +966,11 @@ dicom_destroy_element (GSList *elements,
  * dicom_elements_compare:
  * @a: pointer to a DICOMELEMENT structure.
  * @b: pointer to a DICOMELEMENT structure.
- * 
+ *
  * Determines the equality of @a and @b as strcmp
  *
  * Return value: an integer indicating the equality of @a and @b.
-**/ 
+**/
 static gint
 dicom_elements_compare (gconstpointer a,
                         gconstpointer b)
@@ -975,6 +997,7 @@ dicom_elements_compare (gconstpointer a,
     {
       return -1;
     }
+
   return 1;
 }
 
@@ -986,21 +1009,23 @@ dicom_elements_compare (gconstpointer a,
  *
  * Retrieves the specified DICOMELEMENT from @head, if available.
  *
- * Return value: a DICOMELEMENT matching the specified group,element, or NULL if the specified element was not found.
+ * Return value: a DICOMELEMENT matching the specified group,element,
+ *               or NULL if the specified element was not found.
 **/
 static DICOMELEMENT *
-dicom_element_find_by_num (GSList *head,
-                           guint16 group_word,
-                           guint16 element_word)
+dicom_element_find_by_num (GSList  *head,
+                           guint16  group_word,
+                           guint16  element_word)
 {
-  DICOMELEMENT data = {group_word,element_word,"",0,NULL};
+  DICOMELEMENT data = { group_word,element_word, "", 0, NULL};
   GSList *ele = g_slist_find_custom (head,&data,dicom_elements_compare);
-  return ele?ele->data:NULL;
+  return (ele ? ele->data : NULL);
 }
 
 /**
  * dicom_get_elements_list:
- * @image_ID: the image_ID from which to read parasites in order to retrieve the dicom elements
+ * @image_ID: the image_ID from which to read parasites in order to
+ *            retrieve the dicom elements
  *
  * Reads all DICOMELEMENTs from the specified image's parasites.
  *
@@ -1009,93 +1034,102 @@ dicom_element_find_by_num (GSList *head,
 static GSList *
 dicom_get_elements_list (gint32 image_ID)
 {
-  GSList *elements = NULL;
-  GimpParasite *parasite;
+  GSList        *elements = NULL;
+  GimpParasite  *parasite;
   gchar        **parasites = NULL;
   gint           count = 0;
 
   gimp_image_parasite_list (image_ID,&count,&parasites);
+
   if (parasites && count > 0)
     {
       gint i;
+
       for (i = 0; i < count; i++)
         {
-          if (strncmp (parasites[i],"dcm",3) == 0)
+          if (strncmp (parasites[i], "dcm", 3) == 0)
             {
-              parasite = gimp_image_parasite_find (image_ID,parasites[i]);
+              parasite = gimp_image_parasite_find (image_ID, parasites[i]);
+
               if (parasite)
                 {
                   gchar buf[1024];
                   gchar *ptr1;
                   gchar *ptr2;
-                  gchar value_rep[3]="";
-                  guint16 group_word=0;
-                  guint16 element_word=0;
+                  gchar value_rep[3]   = "";
+                  guint16 group_word   = 0;
+                  guint16 element_word = 0;
 
                   /* sacrificial buffer */
-                  strncpy (buf,parasites[i],sizeof (buf));
+                  strncpy (buf, parasites[i], sizeof (buf));
 
-                  /* buf should now hold a string of the form dcm/XXXX-XXXX-AA
-                   * where XXXX are Hex values for group and element respectively
-                   * AA is the Value Representation of the element
+                  /* buf should now hold a string of the form
+                   * dcm/XXXX-XXXX-AA where XXXX are Hex values for
+                   * group and element respectively AA is the Value
+                   * Representation of the element
                    *
                    * start off by jumping over the dcm/ to the first Hex blob
                    */
-                  ptr1 = strchr (buf,'/');
+                  ptr1 = strchr (buf, '/');
+
                   if (ptr1)
                     {
                       gchar t[15];
+
                       ptr1++;
                       ptr2 = strchr (ptr1,'-');
+
                       if (ptr2)
-                        {
-                          *ptr2 = '\0';
-                        }
-                      g_snprintf (t,sizeof (t),"0x%s",ptr1);
-                      group_word = (guint16)g_ascii_strtoull (t,NULL,16);
-                      ptr1 = ptr2+1;
+                        *ptr2 = '\0';
+
+                      g_snprintf (t, sizeof (t), "0x%s", ptr1);
+                      group_word = (guint16) g_ascii_strtoull (t, NULL, 16);
+                      ptr1 = ptr2 + 1;
                     }
+
                   /* now get the second Hex blob */
                   if (ptr1)
                     {
                       gchar t[15];
-                      ptr2 = strchr (ptr1,'-');
+
+                      ptr2 = strchr (ptr1, '-');
+
                       if (ptr2)
-                        {
-                          *ptr2 = '\0';
-                        }
-                      g_snprintf (t,sizeof (t),"0x%s",ptr1);
-                      element_word = (guint16)g_ascii_strtoull (t,NULL,16);
-                      ptr1 = ptr2+1;
+                        *ptr2 = '\0';
+
+                      g_snprintf (t, sizeof (t), "0x%s", ptr1);
+                      element_word = (guint16) g_ascii_strtoull (t, NULL, 16);
+                      ptr1 = ptr2 + 1;
                     }
+
                   /* and lastly, the VR */
                   if (ptr1)
-                    {
-                      strncpy (value_rep,ptr1,sizeof (value_rep));
-                    }
+                    strncpy (value_rep, ptr1, sizeof (value_rep));
+
                   /*
-                   * If all went according to plan, we should be able to add this element
+                   * If all went according to plan, we should be able
+                   * to add this element
                    */
                   if (group_word > 0 && element_word > 0)
                     {
-                      /* create a copy of the parasite's data so we can drop the const qualifier */
-                      guint32 len = gimp_parasite_data_size (parasite);
-                      if (len > 0)
-                        {
-                          guint8 *val = g_new0 (guint8,len);
-                          if (val)
-                            {
-                              memcpy (val,gimp_parasite_data (parasite),len);
-                              /* and add the dicom element, asking to have it's value copied for later garbage collection */
-                              elements = dicom_add_element (elements,group_word,element_word,value_rep,len,val,1);
-                              g_free (val);
-                            }
-                        }
+                      const guint8 *val = gimp_parasite_data (parasite);
+                      const guint   len = gimp_parasite_data_size (parasite);
+
+                      /* and add the dicom element, asking to have
+                         it's value copied for later garbage collection */
+                      elements = dicom_add_element_copy (elements,
+                                                         group_word,
+                                                         element_word,
+                                                         value_rep, len, val);
                     }
+
                   gimp_parasite_free (parasite);
                 }
             }
-          /* make sure we free each individual parasite name, in addition to the array of names */
+
+          /* make sure we free each individual parasite name, in
+           * addition to the array of names
+           */
           g_free (parasites[i]);
         }
     }
@@ -1113,7 +1147,7 @@ dicom_get_elements_list (gint32 image_ID)
  * @samples_per_pixel: samples per pixel of the image to be written.
  *                     if set to %3 the planar configuration for color images
  *                     will also be removed from @elements
- * 
+ *
  * Removes certain DICOMELEMENTs from the elements list which are specific to the output of this plugin.
  *
  * Return value: the new head of @elements
@@ -1170,10 +1204,13 @@ dicom_remove_gimp_specified_elements (GSList *elements,
 
 /**
  * dicom_ensure_required_elements_present:
- * @elements:  GSList to remove elements from
- * @today_string: string containing today's date in DICOM format. This is used to default any required Dicom elements of date type to today's date.
+ * @elements:     GSList to remove elements from
+ * @today_string: string containing today's date in DICOM format. This
+ *                is used to default any required Dicom elements of date
+ *                type to today's date.
  *
- * Defaults DICOMELEMENTs to the values set by previous version of this plugin, but only if they do not already exist.
+ * Defaults DICOMELEMENTs to the values set by previous version of
+ * this plugin, but only if they do not already exist.
  *
  * Return value: the new head of @elements
 **/
@@ -1181,51 +1218,66 @@ static GSList *
 dicom_ensure_required_elements_present (GSList *elements,
                                         gchar *today_string)
 {
-  DICOMELEMENT defaults[] = {
-              /* Meta element group */
-              /* 0002,0001 - File Meta Information Version */
-              {0x0002,0x0001,"OB",2,(guint8 *)"\0\1"},
-              /* 0002,0010 - Transfer syntax uid */
-              {0x0002,0x0001,"UI",strlen ("1.2.840.10008.1.2.1"),(guint8 *)"1.2.840.10008.1.2.1"},
-              /* 0002,0013 - Implementation version name */
-              {0x0002,0x0013,"SH",strlen ("Gimp Dicom Plugin 1.0"),(guint8 *)"Gimp Dicom Plugin 1.0"},
-              /* Identifying group */
-              /* Study date */
-              {0x0008,0x0020,"DA",strlen (today_string),(guint8 *)today_string},
-              /* Series date */
-              {0x0008,0x0021,"DA",strlen (today_string),(guint8 *)today_string},
-              /* Acquisition date */
-              {0x0008,0x0022,"DA",strlen (today_string),(guint8 *)today_string},
-              /* Content Date */
-              {0x0008,0x0023,"DA",strlen (today_string),(guint8 *)today_string},
-              /* Modality - I have to add something.. */
-              {0x0008,0x0060,"CS",strlen ("MR"),(guint8 *)"MR"},
-              /* Patient group */
-              /* Patient name */
-              {0x0010, 0x0010, "PN", strlen ("DOE^WILBER"), (guint8 *)"DOE^WILBER"},
-              /* Patient ID */
-              {0x0010, 0x0020, "CS", strlen ("314159265"), (guint8 *)"314159265"},
-              /* Patient Birth date */
-              {0x0010, 0x0030, "DA", strlen (today_string), (guint8 *)today_string},
-              /* Patient sex */
-              {0x0010, 0x0040, "CS", strlen (""), (guint8 *)"" /* unknown */},
-              /* Relationship group */
-              /* Instance number */
-              {0x0020, 0x0013, "IS", strlen ("1"), (guint8 *)"1"},
+  const DICOMELEMENT defaults[] = {
+    /* Meta element group */
+    /* 0002, 0001 - File Meta Information Version */
+    { 0x0002, 0x0001, "OB", 2, (guint8 *) "\0\1" },
+    /* 0002, 0010 - Transfer syntax uid */
+    { 0x0002, 0x0001, "UI",
+      strlen ("1.2.840.10008.1.2.1"), (guint8 *) "1.2.840.10008.1.2.1"},
+    /* 0002, 0013 - Implementation version name */
+    { 0x0002, 0x0013, "SH",
+      strlen ("GIMP Dicom Plugin 1.0"), (guint8 *) "GIMP Dicom Plugin 1.0" },
+    /* Identifying group */
+    /* Study date */
+    { 0x0008, 0x0020, "DA",
+      strlen (today_string), (guint8 *) today_string },
+    /* Series date */
+    { 0x0008, 0x0021, "DA",
+      strlen (today_string), (guint8 *) today_string },
+    /* Acquisition date */
+    { 0x0008, 0x0022, "DA",
+      strlen (today_string), (guint8 *) today_string },
+    /* Content Date */
+    { 0x0008, 0x0023, "DA",
+      strlen (today_string), (guint8 *) today_string},
+    /* Modality - I have to add something.. */
+    { 0x0008, 0x0060, "CS", strlen ("MR"), (guint8 *) "MR" },
+    /* Patient group */
+    /* Patient name */
+    { 0x0010,  0x0010, "PN",
+      strlen ("DOE^WILBER"), (guint8 *) "DOE^WILBER" },
+    /* Patient ID */
+    { 0x0010,  0x0020, "CS",
+      strlen ("314159265"), (guint8 *) "314159265" },
+    /* Patient Birth date */
+    { 0x0010,  0x0030, "DA",
+      strlen (today_string), (guint8 *) today_string },
+    /* Patient sex */
+    { 0x0010,  0x0040, "CS", strlen (""), (guint8 *) "" /* unknown */ },
+    /* Relationship group */
+    /* Instance number */
+    { 0x0020, 0x0013, "IS", strlen ("1"), (guint8 *) "1" },
 
-              {0,0,"",0,NULL}
+    { 0, 0, "", 0, NULL }
   };
   gint i;
 
   /*
    * Make sure that all of the default elements have a value
    */
-  for (i=0; defaults[i].group_word > 0;i++)
+  for (i=0; defaults[i].group_word > 0; i++)
     {
-      if (dicom_element_find_by_num (elements,defaults[i].group_word,defaults[i].element_word) == NULL)
+      if (dicom_element_find_by_num (elements,
+                                     defaults[i].group_word,
+                                     defaults[i].element_word) == NULL)
         {
-          elements = dicom_add_element (elements,defaults[i].group_word,defaults[i].element_word,
-                                        defaults[i].value_rep,defaults[i].element_length,defaults[i].value,0);
+          elements = dicom_add_element (elements,
+                                        defaults[i].group_word,
+                                        defaults[i].element_word,
+                                        defaults[i].value_rep,
+                                        defaults[i].element_length,
+                                        defaults[i].value);
         }
     }
 
@@ -1332,24 +1384,34 @@ save_image (const gchar  *filename,
   /* Image presentation group */
   group = 0x0028;
   /* Samples per pixel */
-  elements = dicom_add_element_int (elements,group,0x0002,"US",(guint8 *)&samples_per_pixel);
+  elements = dicom_add_element_int (elements, group, 0x0002, "US",
+                                    (guint8 *) &samples_per_pixel);
   /* Photometric interpretation */
-  elements = dicom_add_element (elements,group,0x0004,"CS",strlen (photometric_interp),(guint8 *)photometric_interp,0);
+  elements = dicom_add_element (elements, group, 0x0004, "CS",
+                                strlen (photometric_interp),
+                                (guint8 *) photometric_interp);
   /* Planar configuration for color images */
   if (samples_per_pixel == 3)
-    elements = dicom_add_element_int (elements,group,0x0006,"US",(guint8 *)&zero);
+    elements = dicom_add_element_int (elements, group, 0x0006, "US",
+                                      (guint8 *) &zero);
   /* rows */
-  elements = dicom_add_element_int (elements, group, 0x0010, "US", (guint8 *)&(drawable->height));
+  elements = dicom_add_element_int (elements, group, 0x0010, "US",
+                                    (guint8 *) &(drawable->height));
   /* columns */
-  elements = dicom_add_element_int (elements, group, 0x0011, "US", (guint8 *)&(drawable->width));
+  elements = dicom_add_element_int (elements, group, 0x0011, "US",
+                                    (guint8 *) &(drawable->width));
   /* Bits allocated */
-  elements = dicom_add_element_int (elements, group, 0x0100, "US", (guint8 *)&eight);
+  elements = dicom_add_element_int (elements, group, 0x0100, "US",
+                                    (guint8 *) &eight);
   /* Bits Stored */
-  elements = dicom_add_element_int (elements, group, 0x0101, "US", (guint8 *)&eight);
+  elements = dicom_add_element_int (elements, group, 0x0101, "US",
+                                    (guint8 *) &eight);
   /* High bit */
-  elements = dicom_add_element_int (elements, group, 0x0102, "US", (guint8 *)&seven);
+  elements = dicom_add_element_int (elements, group, 0x0102, "US",
+                                    (guint8 *) &seven);
   /* Pixel representation */
-  elements = dicom_add_element_int (elements, group, 0x0103, "US", (guint8 *)&zero);
+  elements = dicom_add_element_int (elements, group, 0x0103, "US",
+                                    (guint8 *) &zero);
 
   /* Pixel data */
   group = 0x7fe0;
@@ -1362,11 +1424,12 @@ save_image (const gchar  *filename,
                            FALSE, FALSE);
       gimp_pixel_rgn_get_rect (&pixel_rgn,
                                src, 0, 0, drawable->width, drawable->height);
-      elements = dicom_add_element (elements,group,0x0010,"OW",
-                                    drawable->width * drawable->height * samples_per_pixel,
-                                    (guint8 *)src,0);
+      elements = dicom_add_element (elements, group, 0x0010, "OW",
+                                    drawable->width * drawable->height *
+                                    samples_per_pixel,
+                                    (guint8 *) src);
 
-      elements = dicom_add_tags (DICOM,group_stream,elements);
+      elements = dicom_add_tags (DICOM, group_stream, elements);
 
       g_free (src);
     }
@@ -1388,7 +1451,7 @@ save_image (const gchar  *filename,
  * dicom_print_tags:
  * @data: pointer to a DICOMELEMENT structure which is to be written to file
  * @user_data: structure containing state information and output parameters
- * 
+ *
  * Writes the specified DICOMELEMENT to @user_data's group_stream member.
  * Between groups, flushes the group_stream to @user_data's DICOM member.
  */
@@ -1397,46 +1460,53 @@ dicom_print_tags(gpointer data,
                  gpointer user_data)
 {
   struct {
-    FILE *DICOM;
+    FILE       *DICOM;
     GByteArray *group_stream;
-    gint last_group;
+    gint        last_group;
   } *d = user_data;
-  DICOMELEMENT *e = (DICOMELEMENT *)data;
+  DICOMELEMENT *e = (DICOMELEMENT *) data;
+
   if (d->last_group >= 0 && e->group_word != d->last_group)
     {
       write_group_to_file (d->DICOM, d->last_group, d->group_stream);
     }
 
-  add_tag_pointer (d->group_stream,e->group_word,e->element_word,e->value_rep,e->value,e->element_length);
+  add_tag_pointer (d->group_stream,
+                   e->group_word, e->element_word,
+                   e->value_rep,e->value, e->element_length);
   d->last_group = e->group_word;
 }
 
 /**
  * dicom_add_tags:
- * @DICOM: File pointer to which @elements should be written.
- * @group_stream: byte array used for staging Dicom Element groups before flushing them to disk.
- * @elements:  GSList container the Dicom Element elements from
- * 
+ * @DICOM:        File pointer to which @elements should be written.
+ * @group_stream: byte array used for staging Dicom Element groups
+ *                before flushing them to disk.
+ * @elements:     GSList container the Dicom Element elements from
+ *
  * Writes all Dicom tags in @elements to the file @DICOM
- * 
+ *
  * Return value: the new head of @elements
 **/
 static GSList *
-dicom_add_tags(FILE *DICOM,
-              GByteArray *group_stream,
-              GSList *elements)
+dicom_add_tags (FILE       *DICOM,
+                GByteArray *group_stream,
+                GSList     *elements)
 {
   struct {
-    FILE *DICOM;
+    FILE       *DICOM;
     GByteArray *group_stream;
-    gint last_group;
-  } data = {DICOM,group_stream,-1};
-  elements = g_slist_sort (elements,dicom_elements_compare);
-  g_slist_foreach (elements,dicom_print_tags,&data);
+    gint        last_group;
+  } data = { DICOM, group_stream, -1 };
+
+  elements = g_slist_sort (elements, dicom_elements_compare);
+  g_slist_foreach (elements, dicom_print_tags, &data);
   /* make sure that the final group is written to the file */
   write_group_to_file (data.DICOM, data.last_group, data.group_stream);
+
   return elements;
 }
+
 /* add_tag_pointer () adds to the group_stream one single value with its
  * corresponding value_rep. Note that we use "explicit VR".
  */
