@@ -1,14 +1,14 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2009
+# Marco Ciampa <ciampix@libero.it>, 2003-2010
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-14 18:33+0200\n"
-"PO-Revision-Date: 2010-04-14 18:36+0200\n"
+"PO-Revision-Date: 2010-05-10 08:46+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -10571,11 +10571,11 @@ msgstr "Imposta manualmente l'ampiezza del tratto"
 
 #: ../plug-ins/gimpressionist/size.c:207
 msgid "Opens up the Size Map Editor"
-msgstr "Apri l'editor ampiezza mappa"
+msgstr "Apre l'editor della mappa dimensione"
 
 #: ../plug-ins/gimpressionist/sizemap.c:400
 msgid "Size Map Editor"
-msgstr "Editor ampiezza mappa"
+msgstr "Modifica la mappa della dimensione"
 
 #: ../plug-ins/gimpressionist/sizemap.c:429
 msgid "Smvectors"
