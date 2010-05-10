@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -94,12 +92,15 @@ struct _GimpToolboxPrivate
   gint               area_columns;
 
   GimpPanedBox      *drag_handler;
+
+  gboolean           in_destruction;
 };
 
 
 static GObject   * gimp_toolbox_constructor             (GType                  type,
                                                          guint                  n_params,
                                                          GObjectConstructParam *params);
+static void        gimp_toolbox_dispose                 (GObject               *object);
 static void        gimp_toolbox_set_property            (GObject               *object,
                                                          guint                  property_id,
                                                          const GValue          *value,
@@ -190,6 +191,7 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   GimpDockClass  *dock_class   = GIMP_DOCK_CLASS (klass);
 
   object_class->constructor           = gimp_toolbox_constructor;
+  object_class->dispose               = gimp_toolbox_dispose;
   object_class->set_property          = gimp_toolbox_set_property;
   object_class->get_property          = gimp_toolbox_get_property;
 
@@ -397,6 +399,18 @@ gimp_toolbox_constructor (GType                  type,
                           gtk_widget_get_style (GTK_WIDGET (toolbox)));
 
   return object;
+}
+
+static void
+gimp_toolbox_dispose (GObject *object)
+{
+  GimpToolbox *toolbox = GIMP_TOOLBOX (object);
+
+  toolbox->p->in_destruction = TRUE;
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+
+  toolbox->p->in_destruction = FALSE;
 }
 
 static void
@@ -779,7 +793,7 @@ gimp_toolbox_book_added (GimpDock     *dock,
 {
   if (GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_added)
     GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_added (dock, dockbook);
-  
+
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 1)
     {
       gimp_dock_invalidate_geometry (dock);
@@ -790,11 +804,13 @@ static void
 gimp_toolbox_book_removed (GimpDock     *dock,
                            GimpDockbook *dockbook)
 {
+  GimpToolbox *toolbox = GIMP_TOOLBOX (dock);
+
   if (GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_removed)
     GIMP_DOCK_CLASS (gimp_toolbox_parent_class)->book_removed (dock, dockbook);
 
   if (g_list_length (gimp_dock_get_dockbooks (dock)) == 0 &&
-      ! (GTK_OBJECT_FLAGS (dock) & GTK_IN_DESTRUCTION))
+      ! toolbox->p->in_destruction)
     {
       gimp_dock_invalidate_geometry (dock);
     }
