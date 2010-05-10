@@ -28,6 +28,7 @@ Global data follows no strict rules.
 "tiff"    : The standard GIMP TIFF plugin
 "jpeg"    : The standard GIMP JPEG plugin
 "png"     : The standard GIMP PNG plugin
+"dcm"     : The standard GIMP DICOM plugin
 "gimp"    : For common and standard parasites
 
 ------------------------------------------------------------------
@@ -215,6 +216,13 @@ Global data follows no strict rules.
         from GtkPageSetup. The content is identical to what is stored in
 	~/.gimp-2.x/print-page-setup.
 
+"dcm/XXXX-XXXX-AA" (IMAGE, PERSISTANT)
+        These parasites are stored by the Dicom plug-in and hold the DICOM
+        element information for that image. The format is raw binary data
+        as read from the original image.
+        where: XXXX is a 4-digit ascii encoded hexadecimal number
+               AA is a two character ascii value representing the Dicom
+                 element's Value Represenation (VR)
 
 ------------------------------------------------------------------
 *** KNOWN LAYER/DRAWABLE PARASITES:
