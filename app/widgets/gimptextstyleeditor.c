@@ -167,14 +167,6 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
 
-  /*  don't let unhandled key events drop through to the text editor  */
-  g_signal_connect_after (editor, "key-press-event",
-                          G_CALLBACK (gtk_true),
-                          NULL);
-  g_signal_connect_after (editor, "key-release-event",
-                          G_CALLBACK (gtk_false),
-                          NULL);
-
   /*  upper row  */
 
   editor->upper_hbox = gtk_hbox_new (FALSE, 0);
