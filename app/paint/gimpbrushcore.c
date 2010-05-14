@@ -963,8 +963,23 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
     {
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
-      mask = gimp_brush_transform_mask (core->main_brush,
-                                        1.0, 1.0, 0.0, 1.0);
+      /* Generated brushes are a bit special*/
+      if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
+        {
+          GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
+
+          gdouble ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
+
+          gimp_brush_generated_set_aspect_ratio (generated_brush, 1.0);
+
+          mask = gimp_brush_transform_mask (core->main_brush,
+                                            1.0, 1.0, 0.0, 1.0);
+
+          gimp_brush_generated_set_aspect_ratio (generated_brush, ratio);
+        }
+      else
+        mask = gimp_brush_transform_mask (core->main_brush,
+                                          1.0, 1.0, 0.0, 1.0);
     }
 
   if (mask)
@@ -1033,8 +1048,8 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
       gdouble base_angle = gimp_brush_generated_get_angle (generated_brush);
       angle = angle + base_angle / 360;
 
-      /* Dont apply  the ratio. I wont make sense. The outlines for generated brushes need to be recreated */
-      aspect_ratio = 1.0;
+      if (aspect_ratio == 1.0)
+        aspect_ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
     }
 
   height = core->brush_bound_width;
@@ -1072,7 +1087,7 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
                                             &core->n_brush_bound_segs,
                                             &matrix);
 
-      //FIXME. Do noy use scale_x/scale_y
+      /* FIXME. Do noy use scale_x/scale_y */
       core->transformed_brush_bound_width = core->brush_bound_width * scale_x;
       core->transformed_brush_bound_height = core->brush_bound_height * scale_y;
     }
