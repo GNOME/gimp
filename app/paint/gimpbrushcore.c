@@ -1025,13 +1025,18 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
   angle = core->angle;
   aspect_ratio = core->aspect_ratio;
 
-  /* Generated brushes have their aspect ratio appled before base angle */
-  if (aspect_ratio != 1.0 && GIMP_IS_BRUSH_GENERATED (core->main_brush))
+  /* Generated brushes have their angle applied on top of base angle */
+  if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
     {
-      gdouble base_angle = gimp_brush_generated_get_angle (
-                                       GIMP_BRUSH_GENERATED (core->main_brush));
+      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
+
+      gdouble base_angle = gimp_brush_generated_get_angle (generated_brush);
       angle = angle + base_angle / 360;
+
+      /* Dont apply  the ratio. I wont make sense. The outlines for generated brushes need to be recreated */
+      aspect_ratio = 1.0;
     }
+
   height = core->brush_bound_width;
   width  = core->brush_bound_height;
 
