@@ -153,13 +153,10 @@ gen_property (GString            *buffer,
     case XMP_TYPE_LANG_ALT:
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Alt>\n",
                               schema->prefix, property->name);
-      for (i = 0; value_array[i] != NULL; i += 2)
-        {
-          gen_element (buffer, 4,
-                       "rdf", "li", value_array[i + 1],
-                       "xml:lang", value_array[i],
-                       NULL);
-        }
+      gen_element (buffer, 4,
+                   "rdf", "li", value_array[0],
+                   "xml:lang", "x-default",
+                   NULL);
       g_string_append_printf (buffer, "   </rdf:Alt>\n  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
