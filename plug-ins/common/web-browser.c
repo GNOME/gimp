@@ -172,7 +172,7 @@ browser_open_url (const gchar  *url,
             err = _("A sharing violation occurred.");
             break;
           default :
-            err = _("Unknown Windows error.");
+            err = _("Unknown Microsoft Windows error.");
         }
 
       g_set_error (error, 0, 0, _("Failed to open '%s': %s"), url, err);
