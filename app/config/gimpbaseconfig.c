@@ -99,6 +99,8 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   num_processors = num_processors * 2;
 #endif
 
+  num_processors = MIN (num_processors, GIMP_MAX_NUM_THREADS);
+
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
                                  1, GIMP_MAX_NUM_THREADS, num_processors,
