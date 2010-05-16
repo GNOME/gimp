@@ -526,28 +526,34 @@ open_document (const gchar  *filename,
                GError      **load_error)
 {
   PopplerDocument *doc;
-  gchar           *uri;
+  GMappedFile     *mapped_file;
   GError          *error = NULL;
 
-  uri = g_filename_to_uri (filename, NULL, &error);
+  mapped_file = g_mapped_file_new (filename, FALSE, &error);
 
-  if (! uri)
+  if (! mapped_file)
     {
       g_set_error (load_error, 0, 0,
-                   "Could not convert '%s' to an URI: %s",
+                   "Could not load '%s' %s",
                    gimp_filename_to_utf8 (filename), error->message);
       g_error_free (error);
       return NULL;
     }
 
-  doc = poppler_document_new_from_file (uri, NULL, &error);
+  doc = poppler_document_new_from_data (g_mapped_file_get_contents (mapped_file),
+                                        g_mapped_file_get_length (mapped_file),
+                                        NULL,
+                                        &error);
 
-  g_free (uri);
+  /* We can't g_mapped_file_unref(mapped_file) as apparently doc has
+   * references to data in there. No big deal, this is just a
+   * short-lived plug-in.
+   */
 
   if (! doc)
     {
       g_set_error (load_error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Could not open '%s' for reading: %s"),
+                   _("Could not load '%s': %s"),
                    gimp_filename_to_utf8 (filename),
                    error->message);
       g_error_free (error);
