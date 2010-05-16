@@ -143,6 +143,7 @@ file_open_location_cmd_callback (GtkAction *action,
 
   gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                   gtk_widget_get_screen (widget),
+                                  NULL /*ui_manager*/,
                                   "gimp-file-open-location-dialog", -1, TRUE);
 }
 
@@ -490,6 +491,7 @@ file_open_dialog_show (Gimp        *gimp,
 
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gtk_widget_get_screen (parent),
+                                           NULL /*ui_manager*/,
                                            "gimp-file-open-dialog", -1, FALSE);
 
   if (dialog)
@@ -532,6 +534,7 @@ file_save_dialog_show (Gimp        *gimp,
     {
       dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (parent),
+                                               NULL /*ui_manager*/,
                                                "gimp-file-save-dialog",
                                                -1, FALSE);
 
@@ -582,6 +585,7 @@ file_export_dialog_show (Gimp      *gimp,
     {
       dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (parent),
+                                               NULL /*ui_manager*/,
                                                "gimp-file-export-dialog",
                                                -1, FALSE);
 

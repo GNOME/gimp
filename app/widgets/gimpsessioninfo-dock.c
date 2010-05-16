@@ -231,6 +231,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
+                                               ui_manager,
                                                dock_info->identifier,
                                                -1 /*view_size*/,
                                                FALSE /*present*/);

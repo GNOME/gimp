@@ -461,6 +461,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
 
       dialog =
         gimp_dialog_factory_dialog_new (factory, screen,
+                                        NULL /*ui_manager*/,
                                         info->p->factory_entry->identifier,
                                         info->p->factory_entry->view_size,
                                         ! GIMP_GUI_CONFIG (config)->hide_docks);

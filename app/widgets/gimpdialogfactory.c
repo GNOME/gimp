@@ -458,9 +458,15 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
             {
               dock_window = gimp_dialog_factory_dialog_new (factory,
                                                             screen,
+                                                            NULL /*ui_manager*/,
                                                             "gimp-toolbox-window",
                                                             -1 /*view_size*/,
                                                             FALSE /*present*/);
+
+              /* When we get a dock window, we also get a UI
+               * manager
+               */
+              ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
             }
         }
 
@@ -605,6 +611,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * gimp_dialog_factory_dialog_new:
  * @factory:      a #GimpDialogFactory
  * @screen:       the #GdkScreen the dialog should appear on
+ * @ui_manager:   A #GimpUIManager, if applicable.
  * @identifier:   the identifier of the dialog as registered with
  *                gimp_dialog_factory_register_entry()
  * @view_size:    the initial preview size
@@ -619,6 +626,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                 GdkScreen         *screen,
+                                GimpUIManager     *ui_manager,
                                 const gchar       *identifier,
                                 gint               view_size,
                                 gboolean           present)
@@ -630,7 +638,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   screen,
                                                   factory->p->context,
-                                                  NULL,
+                                                  ui_manager,
                                                   identifier,
                                                   view_size,
                                                   FALSE,

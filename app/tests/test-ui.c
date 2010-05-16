@@ -188,6 +188,7 @@ gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
   GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
   GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                                         gtk_widget_get_screen (toplevel),
+                                                                        NULL /*ui_manager*/,
                                                                         "gimp-tool-options",
                                                                         -1 /*view_size*/,
                                                                         FALSE /*present*/);

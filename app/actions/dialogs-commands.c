@@ -42,6 +42,7 @@ dialogs_create_toplevel_cmd_callback (GtkAction   *action,
   if (value)
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
+                                    NULL /*ui_manager*/,
                                     value, -1, TRUE);
 }
 

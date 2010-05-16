@@ -175,6 +175,7 @@ global_error_dialog (void)
 {
   return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                          gdk_screen_get_default (),
+                                         NULL /*ui_manager*/,
                                          "gimp-error-dialog", -1,
                                          FALSE);
 }
