@@ -29,12 +29,17 @@ UI:
  - Polish save+export path-part precedence rules
  - Merge the GSoC 2009 Advanced GUI for Brush Dynamics project
  - Default to non-fixed-aspect in Canvas Size dialog
- - Add a still incomplete and unstable Single-window mode
+ - Add a still incomplete and Single-window mode
  - Have an Export button, not Save, in export dialogs
  - Improve Free Select Tool handle highlightning
  - Support changing user interface language from preferences
  - Update ps-menurc with PS CS4 keyboard shortcuts
  - Reduce spacing around canvas and use it for the canvas itself
+ - Put name of active dockables in dock window titles
+ - Don't have Toolbox in list of Recently Closed Docks, handle that
+   directly in the Windows menu
+ - Support selecting and tagging multiple objects in resource lists
+ - Optimize 
 
 
 Core:
@@ -88,14 +93,15 @@ General:
  - Add unit testing framework in app/tests/ and some basic tests,
    including basic UI tests and XCF tests
  - Tentatively introduce usage of using Glade + GtkBuilder
+ - Depend on GLib 2.24.0 and GTK+ 2.20.0
 
 
 Changes in GIMP 2.7.0
 =====================
 
 UI:
-
  - Change the Text Tool to perform text editing on-canvas (GSoC 2008)
+   and add the ability to mix different text styles in the same layer
  - Add support for tagging GIMP resources such as brushes and allow
    filtering based on these tags (GSoC 2008)
  - Separate the activies of saving an image and exporting it, there is
@@ -122,6 +128,14 @@ UI:
  - Make Alt+Click on layers in Layers dockable create a selection from
    the layer
  - Allow to specify written language in the Text Tool
+ - Support custom mapping curves for input device properties like "Pressure"
+ - New desktop launcher icon
+ - Use Ctrl+J and Ctrl+Shift+J for 'Shrink Wrap' and 'Fit Image in
+   Window' to avoid conflict with Ctrl+Shift+R for 'Show Rulers'
+ - Add 'Windows→Hide docks' menu item that does what 'Tab' does and also displays
+   it's state. Make the state persistent across sessions, too.
+ - Make dock window title separators translatable
+ - 
 
 
 Plug-ins:
@@ -136,6 +150,8 @@ Plug-ins:
  - Add plug-in API for getting image URI, for manipulating size of
    text layers, for getting and setting text layer hint, and for
    unified export dialog appearance
+ - Add an 'As Animation' toggle to the GIF export options
+ - Add 'active_vectors' getsetter to Python 'gimp.Image'
 
 
 Data:
