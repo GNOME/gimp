@@ -147,7 +147,7 @@
 
 
 (define (script-fu-selection-round image drawable radius)
-  (script-fu-selection-rounded-rectangle image drawable (* radius 100))
+  (script-fu-selection-rounded-rectangle image drawable (* radius 100) FALSE)
 )
 
 
