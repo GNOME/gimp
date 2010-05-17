@@ -405,6 +405,35 @@ gimp_container_tree_store_set_view_size (GimpContainerTreeStore *store)
 
 /*  private functions  */
 
+void
+gimp_container_tree_store_columns_init (GType *types,
+                                        gint  *n_types)
+{
+  g_return_if_fail (types != NULL);
+  g_return_if_fail (n_types != NULL);
+  g_return_if_fail (*n_types == 0);
+
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER ==
+            gimp_container_tree_store_columns_add (types, n_types,
+                                                   GIMP_TYPE_VIEW_RENDERER));
+
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME ==
+            gimp_container_tree_store_columns_add (types, n_types,
+                                                   G_TYPE_STRING));
+
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES ==
+            gimp_container_tree_store_columns_add (types, n_types,
+                                                   PANGO_TYPE_ATTR_LIST));
+
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE ==
+            gimp_container_tree_store_columns_add (types, n_types,
+                                                   G_TYPE_BOOLEAN));
+
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA ==
+            gimp_container_tree_store_columns_add (types, n_types,
+                                                   G_TYPE_POINTER));
+}
+
 gint
 gimp_container_tree_store_columns_add (GType *types,
                                        gint  *n_types,
