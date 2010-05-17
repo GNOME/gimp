@@ -56,6 +56,10 @@ struct _GimpContainerTreeStoreClass
 
 GType          gimp_container_tree_store_get_type      (void) G_GNUC_CONST;
 
+gint           gimp_container_tree_store_columns_add   (GType                  *types,
+                                                        gint                   *n_types,
+                                                        GType                   type);
+
 GtkTreeModel * gimp_container_tree_store_new           (GimpContainerView      *container_view,
                                                         gint                    n_columns,
                                                         GType                  *types);

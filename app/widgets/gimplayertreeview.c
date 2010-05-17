@@ -47,6 +47,7 @@
 
 #include "gimpactiongroup.h"
 #include "gimpcellrendererviewable.h"
+#include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
@@ -265,22 +266,15 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
                                             GIMP_TYPE_LAYER_TREE_VIEW,
                                             GimpLayerTreeViewPriv);
 
-  /* The following used to read:
-   *
-   * tree_view->model_columns[tree_view->n_model_columns++] = ...
-   *
-   * but combining the two lead to gcc miscompiling the function on ppc/ia64
-   * (model_column_mask and model_column_mask_visible would have the same
-   * value, probably due to bad instruction reordering). See bug #113144 for
-   * more info.
-   */
-  view->priv->model_column_mask = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns] = GIMP_TYPE_VIEW_RENDERER;
-  tree_view->n_model_columns++;
+  view->priv->model_column_mask =
+    gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                           &tree_view->n_model_columns,
+                                           GIMP_TYPE_VIEW_RENDERER);
 
-  view->priv->model_column_mask_visible = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
-  tree_view->n_model_columns++;
+  view->priv->model_column_mask_visible =
+    gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                           &tree_view->n_model_columns,
+                                           G_TYPE_BOOLEAN);
 
   /*  Paint mode menu  */
 

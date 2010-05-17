@@ -44,6 +44,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
@@ -303,22 +304,15 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
                                             GIMP_TYPE_ITEM_TREE_VIEW,
                                             GimpItemTreeViewPriv);
 
-  /* The following used to read:
-   *
-   * tree_view->model_columns[tree_view->n_model_columns++] = ...
-   *
-   * but combining the two lead to gcc miscompiling the function on ppc/ia64
-   * (model_column_mask and model_column_mask_visible would have the same
-   * value, probably due to bad instruction reordering). See bug #113144 for
-   * more info.
-   */
-  view->priv->model_column_visible = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
-  tree_view->n_model_columns++;
+  view->priv->model_column_visible =
+    gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                           &tree_view->n_model_columns,
+                                           G_TYPE_BOOLEAN);
 
-  view->priv->model_column_linked = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
-  tree_view->n_model_columns++;
+  view->priv->model_column_linked =
+    gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                           &tree_view->n_model_columns,
+                                           G_TYPE_BOOLEAN);
 
   gimp_container_tree_view_set_dnd_drop_to_empty (tree_view, TRUE);
 

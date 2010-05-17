@@ -405,6 +405,21 @@ gimp_container_tree_store_set_view_size (GimpContainerTreeStore *store)
 
 /*  private functions  */
 
+gint
+gimp_container_tree_store_columns_add (GType *types,
+                                       gint  *n_types,
+                                       GType  type)
+{
+  g_return_val_if_fail (types != NULL, 0);
+  g_return_val_if_fail (n_types != NULL, 0);
+  g_return_val_if_fail (*n_types >= 0, 0);
+
+  types[*n_types] = type;
+  (*n_types)++;
+
+  return *n_types - 1;
+}
+
 static void
 gimp_container_tree_store_set (GimpContainerTreeStore *store,
                                GtkTreeIter            *iter,

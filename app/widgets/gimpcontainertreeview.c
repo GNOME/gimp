@@ -172,13 +172,26 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
                                                  GIMP_TYPE_CONTAINER_TREE_VIEW,
                                                  GimpContainerTreeViewPriv);
 
-  tree_view->n_model_columns = GIMP_CONTAINER_TREE_VIEW_N_COLUMNS;
-
-  tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER]        = GIMP_TYPE_VIEW_RENDERER;
-  tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME]            = G_TYPE_STRING;
-  tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES] = PANGO_TYPE_ATTR_LIST;
-  tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE]  = G_TYPE_BOOLEAN;
-  tree_view->model_columns[GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA]       = G_TYPE_POINTER;
+  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER ==
+            gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                                   &tree_view->n_model_columns,
+                                                   GIMP_TYPE_VIEW_RENDERER));
+  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME ==
+            gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                                   &tree_view->n_model_columns,
+                                                   G_TYPE_STRING));
+  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES ==
+            gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                                   &tree_view->n_model_columns,
+                                                   PANGO_TYPE_ATTR_LIST));
+  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE ==
+            gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                                   &tree_view->n_model_columns,
+                                                   G_TYPE_BOOLEAN));
+  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA ==
+            gimp_container_tree_store_columns_add (tree_view->model_columns,
+                                                   &tree_view->n_model_columns,
+                                                   G_TYPE_POINTER));
 
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                        GTK_SHADOW_IN);
