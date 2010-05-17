@@ -32,6 +32,7 @@
 
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainercombobox.h"
+#include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpviewrenderer.h"
 
@@ -77,8 +78,6 @@ static void     gimp_container_combo_box_clear_items  (GimpContainerView      *v
 static void    gimp_container_combo_box_set_view_size (GimpContainerView      *view);
 
 static void     gimp_container_combo_box_changed      (GtkComboBox            *combo_box,
-                                                       GimpContainerView      *view);
-static void gimp_container_combo_box_renderer_update  (GimpViewRenderer       *renderer,
                                                        GimpContainerView      *view);
 
 
@@ -132,45 +131,48 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
 }
 
 static void
-gimp_container_combo_box_init (GimpContainerComboBox *combo_box)
+gimp_container_combo_box_init (GimpContainerComboBox *combo)
 {
-  GtkListStore    *store;
+  GtkTreeModel    *model;
   GtkCellLayout   *layout;
   GtkCellRenderer *cell;
+  GType            types[GIMP_CONTAINER_TREE_STORE_N_COLUMNS];
+  gint             n_types = 0;
 
-  store = gtk_list_store_new (GIMP_CONTAINER_COMBO_BOX_N_COLUMNS,
-                              GIMP_TYPE_VIEW_RENDERER,
-                              G_TYPE_STRING);
+  gimp_container_tree_store_columns_init (types, &n_types);
 
-  gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (store));
+  model = gimp_container_tree_store_new (GIMP_CONTAINER_VIEW (combo),
+                                         n_types, types);
 
-  g_object_unref (store);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo), model);
 
-  layout = GTK_CELL_LAYOUT (combo_box);
+  g_object_unref (model);
+
+  layout = GTK_CELL_LAYOUT (combo);
 
   cell = gimp_cell_renderer_viewable_new ();
   gtk_cell_layout_pack_start (layout, cell, FALSE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "renderer",
-                                  GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER,
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                   NULL);
 
-  combo_box->viewable_renderer = cell;
+  combo->viewable_renderer = cell;
 
   cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
                                   "text",
-                                  GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME,
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
                                   NULL);
 
-  combo_box->text_renderer = cell;
+  combo->text_renderer = cell;
 
-  g_signal_connect (combo_box, "changed",
+  g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_container_combo_box_changed),
-                    combo_box);
+                    combo);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (combo_box), FALSE);
+  gtk_widget_set_sensitive (GTK_WIDGET (combo), FALSE);
 }
 
 static void
@@ -243,44 +245,6 @@ gimp_container_combo_box_new (GimpContainer *container,
   return combo_box;
 }
 
-static void
-gimp_container_combo_box_set (GimpContainerComboBox *combo_box,
-                              GtkTreeIter           *iter,
-                              GimpViewable          *viewable)
-{
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (combo_box);
-  GtkTreeModel      *model;
-  GimpViewRenderer  *renderer;
-  gchar             *name;
-  gint               view_size;
-  gint               border_width;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
-
-  view_size = gimp_container_view_get_view_size (view, &border_width);
-
-  name = gimp_viewable_get_description (viewable, NULL);
-
-  renderer = gimp_view_renderer_new (gimp_container_view_get_context (view),
-                                     G_TYPE_FROM_INSTANCE (viewable),
-                                     view_size, border_width,
-                                     FALSE);
-  gimp_view_renderer_set_viewable (renderer, viewable);
-  gimp_view_renderer_remove_idle (renderer);
-
-  g_signal_connect (renderer, "update",
-                    G_CALLBACK (gimp_container_combo_box_renderer_update),
-                    view);
-
-  gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                      GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, renderer,
-                      GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME,     name,
-                      -1);
-
-  g_object_unref (renderer);
-  g_free (name);
-}
-
 
 /*  GimpContainerView methods  */
 
@@ -293,24 +257,8 @@ gimp_container_combo_box_set_context (GimpContainerView *view,
   parent_view_iface->set_context (view, context);
 
   if (model)
-    {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
-
-      for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (model, &iter,
-                              GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, &renderer,
-                              -1);
-
-          gimp_view_renderer_set_context (renderer, context);
-          g_object_unref (renderer);
-        }
-    }
+    gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (model),
+                                           context);
 }
 
 static gpointer
@@ -320,12 +268,12 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
                                       gint               index)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GtkTreeIter   iter;
+  GtkTreeIter  *iter;
 
-  if (index == -1)
-    gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-  else
-    gtk_list_store_insert (GTK_LIST_STORE (model), &iter, index);
+  iter = gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (model),
+                                                viewable,
+                                                parent_insert_data,
+                                                index);
 
   if (gtk_tree_model_iter_n_children (model, NULL) == 1)
     {
@@ -335,10 +283,7 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
       gtk_widget_set_sensitive (GTK_WIDGET (view), TRUE);
     }
 
-  gimp_container_combo_box_set (GIMP_CONTAINER_COMBO_BOX (view),
-                                &iter, viewable);
-
-  return gtk_tree_iter_copy (&iter);
+  return iter;
 }
 
 static void
@@ -349,10 +294,12 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
   GtkTreeIter  *iter  = insert_data;
 
+  gimp_container_tree_store_remove_item (GIMP_CONTAINER_TREE_STORE (model),
+                                         viewable,
+                                         iter);
+
   if (iter)
     {
-      gtk_list_store_remove (GTK_LIST_STORE (model), iter);
-
       /*  If the store is now empty, clear out renderers from all cells
        *  so that they don't reference the viewables.  See bug #149906.
        */
@@ -373,44 +320,12 @@ gimp_container_combo_box_reorder_item (GimpContainerView *view,
                                        gint               new_index,
                                        gpointer           insert_data)
 {
-  GtkTreeModel  *model     = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GimpContainer *container = gimp_container_view_get_container (view);
-  GtkTreeIter   *iter      = insert_data;
+  GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
-  if (!iter)
-    return;
-
-  if (new_index == -1 || new_index == gimp_container_get_n_children (container) - 1)
-    {
-      gtk_list_store_move_before (GTK_LIST_STORE (model), iter, NULL);
-    }
-  else if (new_index == 0)
-    {
-      gtk_list_store_move_after (GTK_LIST_STORE (model), iter, NULL);
-    }
-  else
-    {
-      GtkTreePath *path;
-      gint         old_index;
-
-      path = gtk_tree_model_get_path (model, iter);
-      old_index = gtk_tree_path_get_indices (path)[0];
-      gtk_tree_path_free (path);
-
-      if (new_index != old_index)
-        {
-          GtkTreeIter  place;
-
-          path = gtk_tree_path_new_from_indices (new_index, -1);
-          gtk_tree_model_get_iter (model, &place, path);
-          gtk_tree_path_free (path);
-
-          if (new_index > old_index)
-            gtk_list_store_move_after (GTK_LIST_STORE (model), iter, &place);
-          else
-            gtk_list_store_move_before (GTK_LIST_STORE (model), iter, &place);
-        }
-    }
+  gimp_container_tree_store_reorder_item (GIMP_CONTAINER_TREE_STORE (model),
+                                          viewable,
+                                          new_index,
+                                          insert_data);
 }
 
 static void
@@ -419,18 +334,10 @@ gimp_container_combo_box_rename_item (GimpContainerView *view,
                                       gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GtkTreeIter  *iter  = insert_data;
 
-  if (iter)
-    {
-      gchar *name = gimp_viewable_get_description (viewable, NULL);
-
-      gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                          GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME, name,
-                          -1);
-
-      g_free (name);
-    }
+  gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
+                                         viewable,
+                                         insert_data);
 }
 
 static gboolean
@@ -466,7 +373,7 @@ gimp_container_combo_box_clear_items (GimpContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
-  gtk_list_store_clear (GTK_LIST_STORE (model));
+  gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
 
   gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
 
@@ -477,60 +384,25 @@ static void
 gimp_container_combo_box_set_view_size (GimpContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GtkTreeIter   iter;
-  gboolean      iter_valid;
-  gint          view_size;
-  gint          border_width;
 
-  view_size = gimp_container_view_get_view_size (view, &border_width);
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      GimpViewRenderer *renderer;
-
-      gtk_tree_model_get (model, &iter,
-                          GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, &renderer,
-                          -1);
-
-      gimp_view_renderer_set_size (renderer, view_size, border_width);
-      g_object_unref (renderer);
-    }
+  gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
 }
 
 static void
-gimp_container_combo_box_changed (GtkComboBox       *combo_box,
+gimp_container_combo_box_changed (GtkComboBox       *combo,
                                   GimpContainerView *view)
 {
   GtkTreeIter iter;
 
-  if (gtk_combo_box_get_active_iter (combo_box, &iter))
+  if (gtk_combo_box_get_active_iter (combo, &iter))
     {
       GimpViewRenderer *renderer;
 
-      gtk_tree_model_get (gtk_combo_box_get_model (combo_box), &iter,
-                          GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER, &renderer,
+      gtk_tree_model_get (gtk_combo_box_get_model (combo), &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       gimp_container_view_item_selected (view, renderer->viewable);
       g_object_unref (renderer);
-    }
-}
-
-static void
-gimp_container_combo_box_renderer_update (GimpViewRenderer  *renderer,
-                                          GimpContainerView *view)
-{
-  GtkTreeIter *iter = gimp_container_view_lookup (view, renderer->viewable);
-
-  if (iter)
-    {
-      GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-      GtkTreePath  *path;
-
-      path = gtk_tree_model_get_path (model, iter);
-      gtk_tree_model_row_changed (model, path, iter);
-      gtk_tree_path_free (path);
     }
 }

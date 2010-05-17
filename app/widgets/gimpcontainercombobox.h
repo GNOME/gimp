@@ -22,14 +22,6 @@
 #define __GIMP_CONTAINER_COMBO_BOX_H__
 
 
-enum
-{
-  GIMP_CONTAINER_COMBO_BOX_COLUMN_RENDERER,
-  GIMP_CONTAINER_COMBO_BOX_COLUMN_NAME,
-  GIMP_CONTAINER_COMBO_BOX_N_COLUMNS
-};
-
-
 #define GIMP_TYPE_CONTAINER_COMBO_BOX            (gimp_container_combo_box_get_type ())
 #define GIMP_CONTAINER_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_COMBO_BOX, GimpContainerComboBox))
 #define GIMP_CONTAINER_COMBO_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_COMBO_BOX, GimpContainerComboBoxClass))
@@ -42,10 +34,10 @@ typedef struct _GimpContainerComboBoxClass  GimpContainerComboBoxClass;
 
 struct _GimpContainerComboBox
 {
-  GtkComboBox         parent_instance;
+  GtkComboBox      parent_instance;
 
-  GtkCellRenderer    *text_renderer;
-  GtkCellRenderer    *viewable_renderer;
+  GtkCellRenderer *text_renderer;
+  GtkCellRenderer *viewable_renderer;
 };
 
 struct _GimpContainerComboBoxClass
