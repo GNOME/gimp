@@ -32,6 +32,7 @@
 
 #include "gimpcellrendererviewable.h"
 #include "gimpcontainerentry.h"
+#include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpviewrenderer.h"
 
@@ -69,8 +70,6 @@ static void     gimp_container_entry_changed      (GtkEntry               *entry
 static void   gimp_container_entry_match_selected (GtkEntryCompletion     *widget,
                                                    GtkTreeModel           *model,
                                                    GtkTreeIter            *iter,
-                                                   GimpContainerView      *view);
-static void gimp_container_entry_renderer_update  (GimpViewRenderer       *renderer,
                                                    GimpContainerView      *view);
 
 
@@ -119,8 +118,10 @@ static void
 gimp_container_entry_init (GimpContainerEntry *entry)
 {
   GtkEntryCompletion *completion;
-  GtkListStore       *store;
+  GtkTreeModel       *model;
   GtkCellRenderer    *cell;
+  GType               types[GIMP_CONTAINER_TREE_STORE_N_COLUMNS];
+  gint                n_types = 0;
 
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
                              "inline-completion",  TRUE,
@@ -128,12 +129,15 @@ gimp_container_entry_init (GimpContainerEntry *entry)
                              "popup-set-width",    FALSE,
                              NULL);
 
-  store = gtk_list_store_new (GIMP_CONTAINER_ENTRY_N_COLUMNS,
-                              GIMP_TYPE_VIEW_RENDERER,
-                              G_TYPE_STRING);
+  gimp_container_tree_store_columns_init (types, &n_types);
 
-  gtk_entry_completion_set_model (completion, GTK_TREE_MODEL (store));
-  g_object_unref (store);
+  model = gimp_container_tree_store_new (GIMP_CONTAINER_VIEW (entry),
+                                         n_types, types);
+  gimp_container_tree_store_set_use_name (GIMP_CONTAINER_TREE_STORE (model),
+                                          TRUE);
+
+  gtk_entry_completion_set_model (completion, model);
+  g_object_unref (model);
 
   gtk_entry_set_completion (GTK_ENTRY (entry), completion);
 
@@ -149,11 +153,11 @@ gimp_container_entry_init (GimpContainerEntry *entry)
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (completion), cell, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (completion), cell,
                                   "renderer",
-                                  GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                   NULL);
 
   gtk_entry_completion_set_text_column (completion,
-                                        GIMP_CONTAINER_ENTRY_COLUMN_NAME);
+                                        GIMP_CONTAINER_TREE_STORE_COLUMN_NAME);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (gimp_container_entry_changed),
@@ -188,40 +192,6 @@ gimp_container_entry_new (GimpContainer *container,
   return entry;
 }
 
-static void
-gimp_container_entry_set (GimpContainerEntry *entry,
-                          GtkTreeIter        *iter,
-                          GimpViewable       *viewable)
-{
-  GimpContainerView *view  = GIMP_CONTAINER_VIEW (entry);
-  GtkTreeModel      *model = gimp_container_entry_get_model (entry);
-  GimpViewRenderer  *renderer;
-  gint               view_size;
-  gint               border_width;
-
-  view_size = gimp_container_view_get_view_size (view, &border_width);
-
-  renderer = gimp_view_renderer_new (gimp_container_view_get_context (view),
-                                     G_TYPE_FROM_INSTANCE (viewable),
-                                     view_size, border_width,
-                                     FALSE);
-  gimp_view_renderer_set_viewable (renderer, viewable);
-  gimp_view_renderer_remove_idle (renderer);
-
-  g_signal_connect (renderer, "update",
-                    G_CALLBACK (gimp_container_entry_renderer_update),
-                    view);
-
-  gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                      GIMP_CONTAINER_ENTRY_COLUMN_RENDERER,
-                      renderer,
-                      GIMP_CONTAINER_ENTRY_COLUMN_NAME,
-                      gimp_object_get_name (viewable),
-                      -1);
-
-  g_object_unref (renderer);
-}
-
 
 /*  GimpContainerView methods  */
 
@@ -234,24 +204,8 @@ gimp_container_entry_set_context (GimpContainerView *view,
   parent_view_iface->set_context (view, context);
 
   if (model)
-    {
-      GtkTreeIter iter;
-      gboolean    iter_valid;
-
-      for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (model, &iter))
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (model, &iter,
-                              GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
-                              -1);
-
-          gimp_view_renderer_set_context (renderer, context);
-          g_object_unref (renderer);
-        }
-    }
+    gimp_container_tree_store_set_context (GIMP_CONTAINER_TREE_STORE (model),
+                                           context);
 }
 
 static gpointer
@@ -261,16 +215,11 @@ gimp_container_entry_insert_item (GimpContainerView *view,
                                   gint               index)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
-  GtkTreeIter   iter;
 
-  if (index == -1)
-    gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-  else
-    gtk_list_store_insert (GTK_LIST_STORE (model), &iter, index);
-
-  gimp_container_entry_set (GIMP_CONTAINER_ENTRY (view), &iter, viewable);
-
-  return gtk_tree_iter_copy (&iter);
+  return gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (model),
+                                                viewable,
+                                                parent_insert_data,
+                                                index);
 }
 
 static void
@@ -279,10 +228,10 @@ gimp_container_entry_remove_item (GimpContainerView *view,
                                   gpointer           insert_data)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
-  GtkTreeIter  *iter  = insert_data;
 
-  if (iter)
-    gtk_list_store_remove (GTK_LIST_STORE (model), iter);
+  gimp_container_tree_store_remove_item (GIMP_CONTAINER_TREE_STORE (model),
+                                         viewable,
+                                         insert_data);
 }
 
 static void
@@ -291,45 +240,12 @@ gimp_container_entry_reorder_item (GimpContainerView *view,
                                    gint               new_index,
                                    gpointer           insert_data)
 {
-  GtkTreeModel  *model     = gimp_container_entry_get_model (view);
-  GimpContainer *container = gimp_container_view_get_container (view);
-  GtkTreeIter   *iter      = insert_data;
+  GtkTreeModel *model = gimp_container_entry_get_model (view);
 
-  if (!iter)
-    return;
-
-  if (new_index == -1 ||
-      new_index == gimp_container_get_n_children (container) - 1)
-    {
-      gtk_list_store_move_before (GTK_LIST_STORE (model), iter, NULL);
-    }
-  else if (new_index == 0)
-    {
-      gtk_list_store_move_after (GTK_LIST_STORE (model), iter, NULL);
-    }
-  else
-    {
-      GtkTreePath *path;
-      gint         old_index;
-
-      path = gtk_tree_model_get_path (model, iter);
-      old_index = gtk_tree_path_get_indices (path)[0];
-      gtk_tree_path_free (path);
-
-      if (new_index != old_index)
-        {
-          GtkTreeIter  place;
-
-          path = gtk_tree_path_new_from_indices (new_index, -1);
-          gtk_tree_model_get_iter (model, &place, path);
-          gtk_tree_path_free (path);
-
-          if (new_index > old_index)
-            gtk_list_store_move_after (GTK_LIST_STORE (model), iter, &place);
-          else
-            gtk_list_store_move_before (GTK_LIST_STORE (model), iter, &place);
-        }
-    }
+  gimp_container_tree_store_reorder_item (GIMP_CONTAINER_TREE_STORE (model),
+                                          viewable,
+                                          new_index,
+                                          insert_data);
 }
 
 static void
@@ -338,13 +254,10 @@ gimp_container_entry_rename_item (GimpContainerView *view,
                                   gpointer           insert_data)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
-  GtkTreeIter  *iter  = insert_data;
 
-  if (iter)
-    gtk_list_store_set (GTK_LIST_STORE (model), iter,
-                        GIMP_CONTAINER_ENTRY_COLUMN_NAME,
-                        gimp_object_get_name (viewable),
-                        -1);
+  gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
+                                         viewable,
+                                         insert_data);
 }
 
 static gboolean
@@ -373,7 +286,7 @@ gimp_container_entry_clear_items (GimpContainerView *view)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
 
-  gtk_list_store_clear (GTK_LIST_STORE (model));
+  gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
 
   parent_view_iface->clear_items (view);
 }
@@ -382,29 +295,8 @@ static void
 gimp_container_entry_set_view_size (GimpContainerView *view)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
-  GtkTreeIter   iter;
-  gboolean      iter_valid;
-  gint          view_size;
-  gint          border_width;
 
-  if (! model)
-    return;
-
-  view_size = gimp_container_view_get_view_size (view, &border_width);
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      GimpViewRenderer *renderer;
-
-      gtk_tree_model_get (model, &iter,
-                          GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
-                          -1);
-
-      gimp_view_renderer_set_size (renderer, view_size, border_width);
-      g_object_unref (renderer);
-    }
+  gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
 }
 
 static void
@@ -435,25 +327,9 @@ gimp_container_entry_match_selected (GtkEntryCompletion *widget,
   GimpViewRenderer *renderer;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_ENTRY_COLUMN_RENDERER, &renderer,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                       -1);
 
   gimp_container_view_item_selected (view, renderer->viewable);
   g_object_unref (renderer);
-}
-
-static void
-gimp_container_entry_renderer_update (GimpViewRenderer  *renderer,
-                                      GimpContainerView *view)
-{
-  GtkTreeIter *iter = gimp_container_view_lookup (view, renderer->viewable);
-
-  if (iter)
-    {
-      GtkTreeModel *model = gimp_container_entry_get_model (view);
-      GtkTreePath  *path  = gtk_tree_model_get_path (model, iter);
-
-      gtk_tree_model_row_changed (model, path, iter);
-      gtk_tree_path_free (path);
-    }
 }
