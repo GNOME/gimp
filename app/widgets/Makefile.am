@@ -81,6 +81,8 @@ libappwidgets_a_sources = \
 	gimpcontainergridview.h		\
 	gimpcontainerpopup.c		\
 	gimpcontainerpopup.h		\
+	gimpcontainertreestore.c	\
+	gimpcontainertreestore.h	\
 	gimpcontainertreeview.c		\
 	gimpcontainertreeview.h		\
 	gimpcontainertreeview-dnd.c	\
