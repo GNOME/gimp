@@ -37,7 +37,8 @@
 enum
 {
   PROP_0,
-  PROP_CONTAINER_VIEW
+  PROP_CONTAINER_VIEW,
+  PROP_USE_NAME
 };
 
 
@@ -46,6 +47,7 @@ typedef struct _GimpContainerTreeStorePrivate GimpContainerTreeStorePrivate;
 struct _GimpContainerTreeStorePrivate
 {
   GimpContainerView *container_view;
+  gboolean           use_name;
 };
 
 #define GET_PRIVATE(store) \
@@ -97,6 +99,12 @@ gimp_container_tree_store_class_init (GimpContainerTreeStoreClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_USE_NAME,
+                                   g_param_spec_boolean ("use-name",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (klass, sizeof (GimpContainerTreeStorePrivate));
 }
 
@@ -139,6 +147,9 @@ gimp_container_tree_store_set_property (GObject      *object,
     case PROP_CONTAINER_VIEW:
       private->container_view = g_value_get_object (value); /* don't ref */
       break;
+    case PROP_USE_NAME:
+      private->use_name = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -158,6 +169,9 @@ gimp_container_tree_store_get_property (GObject    *object,
     {
     case PROP_CONTAINER_VIEW:
       g_value_set_object (value, private->container_view);
+      break;
+    case PROP_USE_NAME:
+      g_value_set_boolean (value, private->use_name);
       break;
 
     default:
@@ -187,6 +201,31 @@ gimp_container_tree_store_new (GimpContainerView *container_view,
   gtk_tree_store_set_column_types (GTK_TREE_STORE (store), n_columns, types);
 
   return GTK_TREE_MODEL (store);
+}
+
+void
+gimp_container_tree_store_set_use_name  (GimpContainerTreeStore *store,
+                                         gboolean                use_name)
+{
+  GimpContainerTreeStorePrivate *private;
+
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+
+  private = GET_PRIVATE (store);
+
+  if (private->use_name != use_name)
+    {
+      private->use_name = use_name ? TRUE : FALSE;
+      g_object_notify (G_OBJECT (store), "use-name");
+    }
+}
+
+gboolean
+gimp_container_tree_store_get_use_name (GimpContainerTreeStore *store)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store), FALSE);
+
+  return GET_PRIVATE (store)->use_name;
 }
 
 static gboolean
@@ -326,8 +365,14 @@ gimp_container_tree_store_rename_item (GimpContainerTreeStore *store,
 
   if (iter)
     {
-      gchar *name = gimp_viewable_get_description (viewable, NULL);
-      gchar *old_name;
+      GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+      gchar                         *name;
+      gchar                         *old_name;
+
+      if (private->use_name)
+        name = (gchar *) gimp_object_get_name (viewable);
+      else
+        name = gimp_viewable_get_description (viewable, NULL);
 
       gtk_tree_model_get (GTK_TREE_MODEL (store), iter,
                           GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, &old_name,
@@ -340,7 +385,9 @@ gimp_container_tree_store_rename_item (GimpContainerTreeStore *store,
       if (name && old_name && strlen (name) < strlen (old_name))
         new_name_shorter = TRUE;
 
-      g_free (name);
+      if (! private->use_name)
+        g_free (name);
+
       g_free (old_name);
     }
 
@@ -477,7 +524,10 @@ gimp_container_tree_store_set (GimpContainerTreeStore *store,
                     G_CALLBACK (gimp_container_tree_store_renderer_update),
                     store);
 
-  name = gimp_viewable_get_description (viewable, NULL);
+  if (private->use_name)
+    name = (gchar *) gimp_object_get_name (viewable);
+  else
+    name = gimp_viewable_get_description (viewable, NULL);
 
   gtk_tree_store_set (GTK_TREE_STORE (store), iter,
                       GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,       renderer,
@@ -485,7 +535,9 @@ gimp_container_tree_store_set (GimpContainerTreeStore *store,
                       GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE, TRUE,
                       -1);
 
-  g_free (name);
+  if (! private->use_name)
+    g_free (name);
+
   g_object_unref (renderer);
 }
 
