@@ -152,6 +152,50 @@ CODE
     );
 }
 
+sub text_layer_get_markup {
+    $blurb = 'Get the markup from a text layer as string.';
+
+    $help = <<'HELP';
+This procedure returns the markup of the styles from a text layer.
+The markup will be in the form of Pango's markup - See
+http://www.pango.org/ for more information about Pango and its markup.
+Note: Setting the markup of a text layer using Pango's markup is not
+supported for now.
+HELP
+
+    $author = 'Barak Itkin <lightningismyname@gmail.com>';
+    $copyright = 'Barak Itkin';
+    $date = '2010';
+    $since = '2.8';
+
+    @inargs = (
+        { name => 'layer', type => 'layer',
+          desc => 'The text layer' }
+    );
+
+    @outargs = (
+        { name => 'markup', type => 'string',
+          desc => 'The markup which represents the style of the specified text layer.' }
+    );
+    
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
+    {
+      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+                    "markup", &markup,
+                    NULL);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 sub text_layer_get_font {
     $blurb = 'Get the font from a text layer as string.';
 
@@ -1164,6 +1208,7 @@ CODE
 @procs = qw(text_layer_new
             text_layer_get_text
             text_layer_set_text
+            text_layer_get_markup
             text_layer_get_font
             text_layer_set_font
             text_layer_get_font_size
@@ -1188,7 +1233,7 @@ CODE
             text_layer_set_line_spacing
             text_layer_get_letter_spacing
             text_layer_set_letter_spacing
-	    text_layer_resize
+            text_layer_resize
             text_layer_get_hinting
             text_layer_set_hinting
 );

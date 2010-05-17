@@ -36,6 +36,7 @@ gint32                gimp_text_layer_new                (gint32                
 gchar*                gimp_text_layer_get_text           (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_text           (gint32                 layer_ID,
                                                           const gchar           *text);
+gchar*                gimp_text_layer_get_markup         (gint32                 layer_ID);
 gchar*                gimp_text_layer_get_font           (gint32                 layer_ID);
 gboolean              gimp_text_layer_set_font           (gint32                 layer_ID,
                                                           const gchar           *font);

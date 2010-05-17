@@ -635,6 +635,7 @@ EXPORTS
 	gimp_text_layer_get_language
 	gimp_text_layer_get_letter_spacing
 	gimp_text_layer_get_line_spacing
+	gimp_text_layer_get_markup
 	gimp_text_layer_get_text
 	gimp_text_layer_new
 	gimp_text_layer_resize

@@ -143,6 +143,42 @@ gimp_text_layer_set_text (gint32       layer_ID,
 }
 
 /**
+ * gimp_text_layer_get_markup:
+ * @layer_ID: The text layer.
+ *
+ * Get the markup from a text layer as string.
+ *
+ * This procedure returns the markup of the styles from a text layer.
+ * The markup will be in the form of Pango's markup - See
+ * http://www.pango.org/ for more information about Pango and its
+ * markup. Note: Setting the markup of a text layer using Pango's
+ * markup is not supported for now.
+ *
+ * Returns: The markup which represents the style of the specified text layer.
+ *
+ * Since: GIMP 2.8
+ */
+gchar *
+gimp_text_layer_get_markup (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *markup = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-text-layer-get-markup",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    markup = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return markup;
+}
+
+/**
  * gimp_text_layer_get_font:
  * @layer_ID: The text layer.
  *

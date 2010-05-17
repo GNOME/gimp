@@ -174,6 +174,44 @@ text_layer_set_text_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+text_layer_get_markup_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpLayer *layer;
+  gchar *markup = NULL;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_layer_is_text_layer (layer, FALSE, error))
+        {
+          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
+                        "markup", &markup,
+                        NULL);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (&return_vals->values[1], markup);
+
+  return return_vals;
+}
+
+static GValueArray *
 text_layer_get_font_invoker (GimpProcedure      *procedure,
                              Gimp               *gimp,
                              GimpContext        *context,
@@ -1277,6 +1315,36 @@ register_text_layer_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-text-layer-get-markup
+   */
+  procedure = gimp_procedure_new (text_layer_get_markup_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-text-layer-get-markup");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-text-layer-get-markup",
+                                     "Get the markup from a text layer as string.",
+                                     "This procedure returns the markup of the styles from a text layer. The markup will be in the form of Pango's markup - See http://www.pango.org/ for more information about Pango and its markup. Note: Setting the markup of a text layer using Pango's markup is not supported for now.",
+                                     "Barak Itkin <lightningismyname@gmail.com>",
+                                     "Barak Itkin",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The text layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("markup",
+                                                           "markup",
+                                                           "The markup which represents the style of the specified text layer.",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
