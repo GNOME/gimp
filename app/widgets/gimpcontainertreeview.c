@@ -172,23 +172,23 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
                                                  GIMP_TYPE_CONTAINER_TREE_VIEW,
                                                  GimpContainerTreeViewPriv);
 
-  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER ==
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER ==
             gimp_container_tree_store_columns_add (tree_view->model_columns,
                                                    &tree_view->n_model_columns,
                                                    GIMP_TYPE_VIEW_RENDERER));
-  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME ==
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME ==
             gimp_container_tree_store_columns_add (tree_view->model_columns,
                                                    &tree_view->n_model_columns,
                                                    G_TYPE_STRING));
-  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES ==
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES ==
             gimp_container_tree_store_columns_add (tree_view->model_columns,
                                                    &tree_view->n_model_columns,
                                                    PANGO_TYPE_ATTR_LIST));
-  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE ==
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE ==
             gimp_container_tree_store_columns_add (tree_view->model_columns,
                                                    &tree_view->n_model_columns,
                                                    G_TYPE_BOOLEAN));
-  g_assert (GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA ==
+  g_assert (GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA ==
             gimp_container_tree_store_columns_add (tree_view->model_columns,
                                                    &tree_view->n_model_columns,
                                                    G_TYPE_POINTER));
@@ -221,7 +221,7 @@ gimp_container_tree_view_constructor (GType                  type,
 
   tree_view->view = g_object_new (GTK_TYPE_TREE_VIEW,
                                   "model",           tree_view->model,
-                                  "search-column",   GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,
+                                  "search-column",   GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
                                   "enable-search",   FALSE,
                                   "headers-visible", FALSE,
                                   "has-tooltip",     TRUE,
@@ -248,7 +248,7 @@ gimp_container_tree_view_constructor (GType                  type,
 
   gtk_tree_view_column_set_attributes (tree_view->main_column,
                                        tree_view->renderer_cell,
-                                       "renderer", GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER,
+                                       "renderer", GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                        NULL);
 
   tree_view->priv->name_cell = gtk_cell_renderer_text_new ();
@@ -259,9 +259,9 @@ gimp_container_tree_view_constructor (GType                  type,
 
   gtk_tree_view_column_set_attributes (tree_view->main_column,
                                        tree_view->priv->name_cell,
-                                       "text",       GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,
-                                       "attributes", GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_ATTRIBUTES,
-                                       "sensitive",  GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE,
+                                       "text",       GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
+                                       "attributes", GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_ATTRIBUTES,
+                                       "sensitive",  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                                        NULL);
 
   g_signal_connect (tree_view->priv->name_cell, "editing-canceled",
@@ -655,7 +655,7 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
           GimpViewRenderer *renderer;
 
           gtk_tree_model_get (tree_view->model, &selected_iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                               -1);
 
           if (renderer->viewable != viewable)
@@ -820,13 +820,13 @@ gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
       gchar            *name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       name = gimp_viewable_get_description (renderer->viewable, NULL);
 
       gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                           -1);
 
       g_free (name);
@@ -921,7 +921,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
       gtk_tree_model_get_iter (tree_view->model, &iter, path);
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       tree_view->priv->dnd_renderer = renderer;
@@ -1057,7 +1057,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
 
                           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model),
                                               &iter,
-                                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME,
+                                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
                                               real_name,
                                               -1);
                         }
@@ -1152,7 +1152,7 @@ gimp_container_tree_view_tooltip (GtkWidget             *widget,
     return FALSE;
 
   gtk_tree_model_get (tree_view->model, &iter,
-                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                       -1);
 
   if (renderer)
@@ -1274,7 +1274,7 @@ gimp_container_tree_view_get_selected (GimpContainerView    *view,
                                (GtkTreePath *) current_row->data);
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       if (renderer->viewable)

@@ -34,6 +34,7 @@
 #include "core/gimplist.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpsettingseditor.h"
@@ -283,7 +284,7 @@ gimp_settings_editor_row_separator_func (GtkTreeModel *model,
   gchar *name = NULL;
 
   gtk_tree_model_get (model, iter,
-                      GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, &name,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, &name,
                       -1);
   g_free (name);
 
@@ -373,7 +374,7 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
       gchar            *name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       object = GIMP_OBJECT (renderer->viewable);
@@ -403,7 +404,7 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
 
           name = gimp_viewable_get_description (renderer->viewable, NULL);
           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                               -1);
           g_free (name);
         }

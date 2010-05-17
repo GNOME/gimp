@@ -31,6 +31,7 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpcontainerview.h"
+#include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdeviceeditor.h"
 #include "gimpdeviceinfo.h"
@@ -331,8 +332,8 @@ gimp_device_editor_add_device (GimpContainer    *container,
       treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
 
       gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, widget,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME_SENSITIVE,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, widget,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                           gimp_device_info_get_device (info, NULL) != NULL,
                           -1);
     }
@@ -357,7 +358,7 @@ gimp_device_editor_remove_device (GimpContainer    *container,
       treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
 
       gtk_tree_model_get (treeview->model, iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, &widget,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
                           -1);
 
       if (widget)
@@ -381,7 +382,7 @@ gimp_device_editor_select_device (GimpContainerView *view,
       treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
 
       gtk_tree_model_get (treeview->model, insert_data,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_USER_DATA, &widget,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_USER_DATA, &widget,
                           -1);
 
       if (widget)

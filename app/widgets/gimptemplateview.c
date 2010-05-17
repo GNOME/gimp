@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimptemplate.h"
 
+#include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimptemplateview.h"
@@ -195,7 +196,7 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
       const gchar      *old_name;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       object = GIMP_OBJECT (renderer->viewable);
@@ -215,7 +216,7 @@ gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
                                                        NULL);
 
           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                               -1);
           g_free (name);
         }

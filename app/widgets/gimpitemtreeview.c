@@ -1196,7 +1196,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
       GError           *error = NULL;
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       item = GIMP_ITEM (renderer->viewable);
@@ -1216,7 +1216,7 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
           gchar *name = gimp_viewable_get_description (renderer->viewable, NULL);
 
           gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), &iter,
-                              GIMP_CONTAINER_TREE_VIEW_COLUMN_NAME, name,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, name,
                               -1);
           g_free (name);
 
@@ -1442,7 +1442,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
       context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
       g_object_get (toggle,
                     "active", &active,
@@ -1467,7 +1467,7 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
                                                       &iter))
             {
               gtk_tree_model_get (tree_view->model, &iter,
-                                  GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                                   -1);
 
               if ((GimpItem *) renderer->viewable != item)

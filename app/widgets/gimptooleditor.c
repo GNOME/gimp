@@ -32,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
+#include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpviewrenderer.h"
 #include "gimptooleditor.h"
@@ -492,7 +493,7 @@ gimp_tool_editor_eye_data_func (GtkTreeViewColumn *tree_column,
   gboolean          visible;
 
   gtk_tree_model_get (tree_model, iter,
-                      GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                       -1);
 
   g_object_get (renderer->viewable, "visible", &visible, NULL);
@@ -523,7 +524,7 @@ gimp_tool_editor_eye_clicked (GtkCellRendererToggle *toggle,
                     "active", &active,
                     NULL);
       gtk_tree_model_get (priv->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       g_object_set (renderer->viewable, "visible", ! active, NULL);

@@ -27,6 +27,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpcontainertreeview-private.h"
@@ -105,7 +106,7 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
       gtk_tree_model_get_iter (tree_view->model, &iter, drop_path);
 
       gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_VIEW_COLUMN_RENDERER, &renderer,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
                           -1);
 
       dest_viewable = renderer->viewable;
