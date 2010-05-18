@@ -238,8 +238,10 @@
   )
 
 (define (bad-file-name)
-  (gimp-message (string-append _"The file name you entered is not a suitable name for a file name! \"
-                               file-name _"All the characters in the file name are either white-spaces or characters which can not appear in file names (The following characters can not appear in file names: "
+  (gimp-message (string-append _"The file name you entered is not a suitable name for a file name!\n"
+                               file-name _"\nAll the characters in the file name are either "
+                               _"white-spaces or characters which can not appear in file names (The "
+                               _"following characters can not appear in file names: "
                                (list->string illegal-file-name-chars) ")")))
 
 ; ----------------------------------------------------------------------------------------------------
