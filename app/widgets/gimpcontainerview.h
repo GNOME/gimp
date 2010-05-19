@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.h
- * Copyright (C) 2001-2006 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2010 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ typedef enum
   GIMP_CONTAINER_VIEW_PROP_0,
   GIMP_CONTAINER_VIEW_PROP_CONTAINER,
   GIMP_CONTAINER_VIEW_PROP_CONTEXT,
-  GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION,
+  GIMP_CONTAINER_VIEW_PROP_SELECTION_MODE,
   GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
   GIMP_CONTAINER_VIEW_PROP_VIEW_SIZE,
   GIMP_CONTAINER_VIEW_PROP_VIEW_BORDER_WIDTH,
@@ -48,45 +48,45 @@ struct _GimpContainerViewInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  gboolean (* select_item)       (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           insert_data);
-  void     (* activate_item)     (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           insert_data);
-  void     (* context_item)      (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           insert_data);
+  gboolean (* select_item)        (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
+  void     (* activate_item)      (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
+  void     (* context_item)       (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
 
   /*  virtual functions  */
-  void     (* set_container)     (GimpContainerView *view,
-                                  GimpContainer     *container);
-  void     (* set_context)       (GimpContainerView *view,
-                                  GimpContext       *context);
-  void     (* set_multiple_selection) (GimpContainerView *view,
-                                       gboolean           value);
+  void     (* set_container)      (GimpContainerView *view,
+                                   GimpContainer     *container);
+  void     (* set_context)        (GimpContainerView *view,
+                                   GimpContext       *context);
+  void     (* set_selection_mode) (GimpContainerView *view,
+                                   GtkSelectionMode   mode);
 
-  gpointer (* insert_item)       (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           parent_insert_data,
-                                  gint               index);
-  void     (* insert_item_after) (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           insert_data);
-  void     (* remove_item)       (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           insert_data);
-  void     (* reorder_item)      (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gint               new_index,
-                                  gpointer           insert_data);
-  void     (* rename_item)       (GimpContainerView *view,
-                                  GimpViewable      *object,
-                                  gpointer           insert_data);
-  void     (* clear_items)       (GimpContainerView *view);
-  void     (* set_view_size)     (GimpContainerView *view);
-  gint     (* get_selected)      (GimpContainerView  *view,
-                                  GList             **items);
+  gpointer (* insert_item)        (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           parent_insert_data,
+                                   gint               index);
+  void     (* insert_item_after)  (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
+  void     (* remove_item)        (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
+  void     (* reorder_item)       (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gint               new_index,
+                                   gpointer           insert_data);
+  void     (* rename_item)        (GimpContainerView *view,
+                                   GimpViewable      *object,
+                                   gpointer           insert_data);
+  void     (* clear_items)        (GimpContainerView *view);
+  void     (* set_view_size)      (GimpContainerView *view);
+  gint     (* get_selected)       (GimpContainerView  *view,
+                                   GList             **items);
 
 
   /*  the destroy notifier for private->hash_table's values  */
@@ -105,9 +105,9 @@ GimpContext   * gimp_container_view_get_context   (GimpContainerView *view);
 void            gimp_container_view_set_context   (GimpContainerView *view,
                                                    GimpContext       *context);
 
-gboolean        gimp_container_view_get_multiple_selection (GimpContainerView *view);
-void            gimp_container_view_set_multiple_selection (GimpContainerView *view,
-                                                            gboolean           value);
+GtkSelectionMode gimp_container_view_get_selection_mode (GimpContainerView *view);
+void             gimp_container_view_set_selection_mode (GimpContainerView *view,
+                                                         GtkSelectionMode   mode);
 
 gint         gimp_container_view_get_view_size (GimpContainerView *view,
                                                 gint              *view_border_width);

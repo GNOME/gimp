@@ -240,7 +240,7 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
-  gimp_container_editor_set_multiple_selection (editor, TRUE);
+  gimp_container_editor_set_selection_mode (editor, GTK_SELECTION_MULTIPLE);
 
   if (GIMP_IS_CONTAINER_TREE_VIEW (editor->view))
     {

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainertreeview.c
- * Copyright (C) 2003-2004 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2010 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,8 +58,8 @@ static void          gimp_container_tree_view_set_container     (GimpContainerVi
                                                                  GimpContainer               *container);
 static void          gimp_container_tree_view_set_context       (GimpContainerView           *view,
                                                                  GimpContext                 *context);
-static void          gimp_container_tree_view_set_multiple_selection (GimpContainerView      *view,
-                                                                      gboolean                value);
+static void          gimp_container_tree_view_set_selection_mode(GimpContainerView           *view,
+                                                                 GtkSelectionMode             mode);
 
 static gpointer      gimp_container_tree_view_insert_item       (GimpContainerView           *view,
                                                                  GimpViewable                *viewable,
@@ -148,17 +148,17 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   if (! parent_view_iface)
     parent_view_iface = g_type_default_interface_peek (GIMP_TYPE_CONTAINER_VIEW);
 
-  iface->set_container = gimp_container_tree_view_set_container;
-  iface->set_context   = gimp_container_tree_view_set_context;
-  iface->set_multiple_selection = gimp_container_tree_view_set_multiple_selection;
-  iface->insert_item   = gimp_container_tree_view_insert_item;
-  iface->remove_item   = gimp_container_tree_view_remove_item;
-  iface->reorder_item  = gimp_container_tree_view_reorder_item;
-  iface->rename_item   = gimp_container_tree_view_rename_item;
-  iface->select_item   = gimp_container_tree_view_select_item;
-  iface->clear_items   = gimp_container_tree_view_clear_items;
-  iface->set_view_size = gimp_container_tree_view_set_view_size;
-  iface->get_selected  = gimp_container_tree_view_get_selected;
+  iface->set_container      = gimp_container_tree_view_set_container;
+  iface->set_context        = gimp_container_tree_view_set_context;
+  iface->set_selection_mode = gimp_container_tree_view_set_selection_mode;
+  iface->insert_item        = gimp_container_tree_view_insert_item;
+  iface->remove_item        = gimp_container_tree_view_remove_item;
+  iface->reorder_item       = gimp_container_tree_view_reorder_item;
+  iface->rename_item        = gimp_container_tree_view_rename_item;
+  iface->select_item        = gimp_container_tree_view_select_item;
+  iface->clear_items        = gimp_container_tree_view_clear_items;
+  iface->set_view_size      = gimp_container_tree_view_set_view_size;
+  iface->get_selected       = gimp_container_tree_view_get_selected;
 
   iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
@@ -547,16 +547,14 @@ gimp_container_tree_view_set_context (GimpContainerView *view,
 }
 
 static void
-gimp_container_tree_view_set_multiple_selection (GimpContainerView *view,
-                                                 gboolean           value)
+gimp_container_tree_view_set_selection_mode (GimpContainerView *view,
+                                             GtkSelectionMode   mode)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
-  gtk_tree_selection_set_mode (tree_view->priv->selection,
-                               value ? GTK_SELECTION_MULTIPLE :
-                                       GTK_SELECTION_NONE);
+  gtk_tree_selection_set_mode (tree_view->priv->selection, mode);
 
-  parent_view_iface->set_multiple_selection (view, value);
+  parent_view_iface->set_selection_mode (view, mode);
 }
 
 static gpointer

@@ -184,18 +184,18 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   return TRUE;
 }
 
-gboolean
-gimp_container_editor_get_multiple_selection (GimpContainerEditor *editor)
+GtkSelectionMode
+gimp_container_editor_get_selection_mode (GimpContainerEditor *editor)
 {
-  return gimp_container_view_get_multiple_selection (GIMP_CONTAINER_VIEW (editor->view));
+  return gimp_container_view_get_selection_mode (GIMP_CONTAINER_VIEW (editor->view));
 }
 
 void
-gimp_container_editor_set_multiple_selection (GimpContainerEditor *editor,
-                                              gboolean             value)
+gimp_container_editor_set_selection_mode (GimpContainerEditor *editor,
+                                          GtkSelectionMode     mode)
 {
-  gimp_container_view_set_multiple_selection (GIMP_CONTAINER_VIEW (editor->view),
-                                              value);
+  gimp_container_view_set_selection_mode (GIMP_CONTAINER_VIEW (editor->view),
+                                          mode);
 }
 
 /*  private functions  */

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerview.c
- * Copyright (C) 2001-2009 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2010 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ struct _GimpContainerViewPrivate
   gint             view_size;
   gint             view_border_width;
   gboolean         reorderable;
-  gboolean         multiple_selection;
+  GtkSelectionMode selection_mode;
 
   /*  initialized by subclass  */
   GtkWidget       *dnd_widget;
@@ -83,8 +83,8 @@ static void   gimp_container_view_real_set_container (GimpContainerView *view,
                                                       GimpContainer     *container);
 static void   gimp_container_view_real_set_context   (GimpContainerView *view,
                                                       GimpContext       *context);
-static void   gimp_container_view_real_set_multiple_selection (GimpContainerView *view,
-                                                               gboolean           value);
+static void   gimp_container_view_real_set_selection_mode (GimpContainerView *view,
+                                                           GtkSelectionMode   mode);
 
 static void   gimp_container_view_clear_items      (GimpContainerView  *view);
 static void   gimp_container_view_real_clear_items (GimpContainerView  *view);
@@ -204,24 +204,24 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                   GIMP_TYPE_OBJECT,
                   G_TYPE_POINTER);
 
-  view_iface->select_item       = NULL;
-  view_iface->activate_item     = NULL;
-  view_iface->context_item      = NULL;
+  view_iface->select_item        = NULL;
+  view_iface->activate_item      = NULL;
+  view_iface->context_item       = NULL;
 
-  view_iface->set_container     = gimp_container_view_real_set_container;
-  view_iface->set_context       = gimp_container_view_real_set_context;
-  view_iface->set_multiple_selection = gimp_container_view_real_set_multiple_selection;
-  view_iface->insert_item       = NULL;
-  view_iface->insert_item_after = NULL;
-  view_iface->remove_item       = NULL;
-  view_iface->reorder_item      = NULL;
-  view_iface->rename_item       = NULL;
-  view_iface->clear_items       = gimp_container_view_real_clear_items;
-  view_iface->set_view_size     = NULL;
-  view_iface->get_selected      = gimp_container_view_real_get_selected;
+  view_iface->set_container      = gimp_container_view_real_set_container;
+  view_iface->set_context        = gimp_container_view_real_set_context;
+  view_iface->set_selection_mode = gimp_container_view_real_set_selection_mode;
+  view_iface->insert_item        = NULL;
+  view_iface->insert_item_after  = NULL;
+  view_iface->remove_item        = NULL;
+  view_iface->reorder_item       = NULL;
+  view_iface->rename_item        = NULL;
+  view_iface->clear_items        = gimp_container_view_real_clear_items;
+  view_iface->set_view_size      = NULL;
+  view_iface->get_selected       = gimp_container_view_real_get_selected;
 
-  view_iface->insert_data_free  = NULL;
-  view_iface->model_is_tree     = FALSE;
+  view_iface->insert_data_free   = NULL;
+  view_iface->model_is_tree      = FALSE;
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_object ("container",
@@ -236,10 +236,11 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                             GIMP_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
-                                       g_param_spec_boolean ("multiple-selection",
-                                                            NULL, NULL,
-                                                            FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                       g_param_spec_enum ("selection-mode",
+                                                          NULL, NULL,
+                                                          GTK_TYPE_SELECTION_MODE,
+                                                          GTK_SELECTION_SINGLE,
+                                                          GIMP_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
                                        g_param_spec_boolean ("reorderable",
@@ -349,8 +350,8 @@ gimp_container_view_install_properties (GObjectClass *klass)
                                     GIMP_CONTAINER_VIEW_PROP_CONTEXT,
                                     "context");
   g_object_class_override_property (klass,
-                                    GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION,
-                                    "multiple-selection");
+                                    GIMP_CONTAINER_VIEW_PROP_SELECTION_MODE,
+                                    "selection-mode");
   g_object_class_override_property (klass,
                                     GIMP_CONTAINER_VIEW_PROP_REORDERABLE,
                                     "reorderable");
@@ -499,30 +500,32 @@ gimp_container_view_real_set_context (GimpContainerView *view,
     }
 }
 
-gboolean
-gimp_container_view_get_multiple_selection (GimpContainerView *view)
+GtkSelectionMode
+gimp_container_view_get_selection_mode (GimpContainerView *view)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  return private->multiple_selection;
+  return private->selection_mode;
 }
 
 void
-gimp_container_view_set_multiple_selection (GimpContainerView *view,
-                                            gboolean           value)
+gimp_container_view_set_selection_mode (GimpContainerView *view,
+                                        GtkSelectionMode   mode)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (mode == GTK_SELECTION_SINGLE ||
+                    mode == GTK_SELECTION_MULTIPLE);
 
-  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_multiple_selection (view, value);
+  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->set_selection_mode (view, mode);
 }
 
 static void
-gimp_container_view_real_set_multiple_selection (GimpContainerView *view,
-                                                 gboolean           value)
+gimp_container_view_real_set_selection_mode (GimpContainerView *view,
+                                             GtkSelectionMode   mode)
 {
   GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
-  private->multiple_selection = value;
+  private->selection_mode = mode;
 }
 
 gint
@@ -870,8 +873,8 @@ gimp_container_view_set_property (GObject      *object,
     case GIMP_CONTAINER_VIEW_PROP_CONTEXT:
       gimp_container_view_set_context (view, g_value_get_object (value));
       break;
-    case GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION:
-      gimp_container_view_set_multiple_selection (view, g_value_get_boolean (value));
+    case GIMP_CONTAINER_VIEW_PROP_SELECTION_MODE:
+      gimp_container_view_set_selection_mode (view, g_value_get_enum (value));
       break;
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       gimp_container_view_set_reorderable (view, g_value_get_boolean (value));
@@ -913,8 +916,8 @@ gimp_container_view_get_property (GObject    *object,
     case GIMP_CONTAINER_VIEW_PROP_CONTEXT:
       g_value_set_object (value, gimp_container_view_get_context (view));
       break;
-    case GIMP_CONTAINER_VIEW_PROP_MULTIPLE_SELECTION:
-      g_value_set_boolean (value, gimp_container_view_get_multiple_selection (view));
+    case GIMP_CONTAINER_VIEW_PROP_SELECTION_MODE:
+      g_value_set_enum (value, gimp_container_view_get_selection_mode (view));
       break;
     case GIMP_CONTAINER_VIEW_PROP_REORDERABLE:
       g_value_set_boolean (value, gimp_container_view_get_reorderable (view));
