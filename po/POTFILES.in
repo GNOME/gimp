@@ -71,6 +71,7 @@ app/actions/text-tool-commands.c
 app/actions/tool-options-actions.c
 app/actions/tool-options-commands.c
 app/actions/tool-preset-actions.c
+app/actions/tool-preset-editor-actions.c
 app/actions/tools-actions.c
 app/actions/vectors-actions.c
 app/actions/vectors-commands.c
@@ -464,6 +465,7 @@ app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimptooleditor.c
 app/widgets/gimptooloptionseditor.c
+app/widgets/gimptoolpreseteditor.c
 app/widgets/gimptranslationstore.c
 app/widgets/gimpuimanager.c
 app/widgets/gimpundoeditor.c
