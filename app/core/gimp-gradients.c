@@ -75,7 +75,7 @@ gimp_gradients_init (Gimp *gimp)
   gradient->segments->left_color_type        = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type       = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->next                   = gimp_gradient_segment_new ();
-  gradient->segments->next->prev             = gradient->segments->next;
+  gradient->segments->next->prev             = gradient->segments;
   gradient->segments->next->left             = 0.50;
   gradient->segments->next->middle           = 0.75;
   gradient->segments->next->right            = 1.00;
