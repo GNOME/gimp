@@ -317,8 +317,8 @@ load_image (const gchar  *filename,
           jas_image_cmptbry (image, components[i]) != jas_image_bry (image))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Image component %d of image '%s' did not have the "
-                         "same size as the image which is currently not "
+                       _("Image component %d of image '%s' does not have the "
+                         "same size as the image. This is currently not "
                          "supported."),
                        i, gimp_filename_to_utf8 (filename));
           return -1;
@@ -337,8 +337,8 @@ load_image (const gchar  *filename,
       if (jas_image_cmptsgnd (image, components[i]))
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Image component %d of image '%s' is signed which is "
-                         "currently not supported by GIMP."),
+                       _("Image component %d of image '%s' is signed. "
+                         "This is currently not supported."),
                        i, gimp_filename_to_utf8 (filename));
           return -1;
         }
