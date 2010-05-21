@@ -309,9 +309,9 @@ query (void)
       { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
       { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
       /* following elements are XMC specific options */
-      { GIMP_PDB_INT32,    "x_hot",        "X-coordinate of hotspot"       },
-      { GIMP_PDB_INT32,    "y_hot",        "Y-coordinate of hotspot\n"
-                                           "Use (-1, -1) to keep original hotspot."},
+      { GIMP_PDB_INT32,    "x_hot",        "X-coordinate of hot spot"       },
+      { GIMP_PDB_INT32,    "y_hot",        "Y-coordinate of hot spot\n"
+                                           "Use (-1, -1) to keep original hot spot."},
       { GIMP_PDB_INT32,    "crop",         "Auto-crop or not"              },
       { GIMP_PDB_INT32,    "size",         "Default nominal size"          },
       { GIMP_PDB_INT32,    "size_replace", "Replace existent size or not." },
@@ -477,7 +477,7 @@ run (const gchar      *name,
       if (! hotspotRange)
         {
           g_set_error (&error, 0, 0,
-                       _("Cannot set the hotspot!\n"
+                       _("Cannot set the hot spot!\n"
                          "You must arrange layers so that all of them have an intersection."));
           *nreturn_vals = 2;
           values[1].type          = GIMP_PDB_STRING;
@@ -1075,7 +1075,7 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
   /*
    *  Hotspot
    */
-  /* label "Hotspot  _X:" + spinbox */
+  /* label "Hot spot  _X:" + spinbox */
   x1 = hotspotRange->x;
   x2 = hotspotRange->width + hotspotRange->x - 1;
   tmpwidget =
@@ -1087,11 +1087,11 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xmcparas.x);
   gimp_help_set_help_data (tmpwidget,
-                         _("Enter the X coordinate of the hotspot."
+                         _("Enter the X coordinate of the hot spot."
                            "The origin is top left corner."),
                          NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Hotspot _X:"), 0, 0.5, tmpwidget, 1, TRUE);
+                             _("Hot spot _X:"), 0, 0.5, tmpwidget, 1, TRUE);
   /* label "Y:" + spinbox */
   y1 = hotspotRange->y;
   y2 = hotspotRange->height + hotspotRange->y - 1;
@@ -1105,7 +1105,7 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
                     &xmcparas.y);
   /* tooltip */
   gimp_help_set_help_data (tmpwidget,
-                         _("Enter the Y coordinate of the hotspot."
+                         _("Enter the Y coordinate of the hot spot."
                            "The origin is top left corner."),
                          NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1, 0,
@@ -1563,8 +1563,8 @@ save_image (const gchar *filename,
                                &save_rgn))
             { /* if hotspot is not on save_rgn */
               g_set_error (error, 0, 0,
-                           _("Cannot save the cursor because the hotspot is not on '%s'.\n"
-                             "Try to change the hotspot position, layer geometry or "
+                           _("Cannot save the cursor because the hot spot is not on '%s'.\n"
+                             "Try to change the hot spot position, layer geometry or "
                              "save without auto-crop."),
                            gimp_any_to_utf8 (framename, -1, NULL));
               return FALSE;
