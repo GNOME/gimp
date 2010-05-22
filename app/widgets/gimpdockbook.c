@@ -102,6 +102,8 @@ static void      gimp_dockbook_dockable_removed   (GimpDockbook   *dockbook,
 static void      gimp_dockbook_update_tabs        (GimpDockbook   *dockbook,
                                                    gboolean        added);
 
+static void      gimp_dockbook_recreate_tab_widgets
+                                                  (GimpDockbook   *dockbook);
 static void      gimp_dockbook_tab_drag_source_setup (GtkWidget    *widget,
                                                       GimpDockable *dockable);
 static void      gimp_dockbook_tab_drag_begin     (GtkWidget      *widget,
@@ -259,9 +261,7 @@ static void
 gimp_dockbook_style_set (GtkWidget *widget,
                          GtkStyle  *prev_style)
 {
-  GList *children;
-  GList *list;
-  gint   tab_border;
+  gint tab_border;
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
@@ -282,21 +282,7 @@ gimp_dockbook_style_set (GtkWidget *widget,
                 "tab-border", tab_border,
                 NULL);
 
-  children = gtk_container_get_children (GTK_CONTAINER (widget));
-
-  for (list = children; list; list = g_list_next (list))
-    {
-      GtkWidget *tab_widget;
-
-      tab_widget = gimp_dockbook_create_tab_widget (GIMP_DOCKBOOK (widget),
-                                                    GIMP_DOCKABLE (list->data));
-
-      gtk_notebook_set_tab_label (GTK_NOTEBOOK (widget),
-                                  GTK_WIDGET (list->data),
-                                  tab_widget);
-    }
-
-  g_list_free (children);
+  gimp_dockbook_recreate_tab_widgets (GIMP_DOCKBOOK (widget));
 }
 
 static void
@@ -763,6 +749,27 @@ gimp_dockbook_drag_source_to_dockable (GtkWidget *drag_source)
 }
 
 /*  tab DND source side  */
+
+static void
+gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook)
+{
+  GList *dockables = gtk_container_get_children (GTK_CONTAINER (dockbook));
+  GList *iter      = NULL;
+
+  for (iter = dockables; iter; iter = g_list_next (iter))
+    {
+      GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
+      GtkWidget *tab_widget;
+
+      tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
+
+      gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
+                                  GTK_WIDGET (dockable),
+                                  tab_widget);
+    }
+
+  g_list_free (dockables);
+}
 
 static void
 gimp_dockbook_tab_drag_source_setup (GtkWidget    *widget,
