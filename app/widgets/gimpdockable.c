@@ -143,6 +143,9 @@ static void       gimp_dockable_clear_title_area  (GimpDockable   *dockable);
 static gboolean   gimp_dockable_menu_button_press (GtkWidget      *button,
                                                    GdkEventButton *bevent,
                                                    GimpDockable   *dockable);
+static GimpTabStyle
+                  gimp_dockable_convert_tab_style (GimpDockable   *dockable,
+                                                   GimpTabStyle    tab_style);
 static gboolean   gimp_dockable_show_menu         (GimpDockable   *dockable);
 static gboolean   gimp_dockable_blink_timeout     (GimpDockable   *dockable);
 
@@ -1066,34 +1069,9 @@ void
 gimp_dockable_set_tab_style (GimpDockable *dockable,
                              GimpTabStyle  tab_style)
 {
-  GtkWidget *child;
-
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
 
-  child = gtk_bin_get_child (GTK_BIN (dockable));
-
-  if (child && ! GIMP_DOCKED_GET_INTERFACE (child)->get_preview)
-    {
-      switch (tab_style)
-        {
-        case GIMP_TAB_STYLE_PREVIEW:
-          tab_style = GIMP_TAB_STYLE_ICON;
-          break;
-
-        case GIMP_TAB_STYLE_PREVIEW_NAME:
-          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-          break;
-
-        case GIMP_TAB_STYLE_PREVIEW_BLURB:
-          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  dockable->p->tab_style = tab_style;
+  dockable->p->tab_style = gimp_dockable_convert_tab_style (dockable, tab_style);
 }
 
 GtkWidget *
@@ -1331,6 +1309,36 @@ gimp_dockable_menu_button_press (GtkWidget      *button,
     }
 
   return FALSE;
+}
+
+static GimpTabStyle
+gimp_dockable_convert_tab_style (GimpDockable   *dockable,
+                                 GimpTabStyle    tab_style)
+{
+  GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
+
+  if (child && ! GIMP_DOCKED_GET_INTERFACE (child)->get_preview)
+    {
+      switch (tab_style)
+        {
+        case GIMP_TAB_STYLE_PREVIEW:
+          tab_style = GIMP_TAB_STYLE_ICON;
+          break;
+
+        case GIMP_TAB_STYLE_PREVIEW_NAME:
+          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+          break;
+
+        case GIMP_TAB_STYLE_PREVIEW_BLURB:
+          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  return tab_style;
 }
 
 static void
