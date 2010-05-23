@@ -129,6 +129,8 @@ static gboolean  gimp_dockbook_tab_drag_drop      (GtkWidget      *widget,
                                                    gint            y,
                                                    guint           time);
 
+static GtkIconSize
+                 gimp_dockbook_get_tab_icon_size  (GimpDockbook   *dockbook);
 static void      gimp_dockbook_add_tab_timeout    (GimpDockbook   *dockbook,
                                                    GimpDockable   *dockable);
 static void      gimp_dockbook_remove_tab_timeout (GimpDockbook   *dockbook);
@@ -563,18 +565,13 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
 {
   GtkWidget      *tab_widget;
   GimpDockWindow *dock_window;
-  GtkIconSize     tab_size = DEFAULT_TAB_ICON_SIZE;
-  GtkAction      *action   = NULL;
-
-  gtk_widget_style_get (GTK_WIDGET (dockbook),
-                        "tab-icon-size", &tab_size,
-                        NULL);
+  GtkAction      *action = NULL;
 
   tab_widget =
     gimp_dockable_create_tab_widget (dockable,
                                      gimp_dock_get_context (dockbook->p->dock),
                                      gimp_dockable_get_tab_style (dockable),
-                                     tab_size);
+                                     gimp_dockbook_get_tab_icon_size (dockbook));
 
   if (! GIMP_IS_VIEW (tab_widget))
     {
@@ -1013,6 +1010,18 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
     gtk_drag_finish (context, TRUE, TRUE, time);
 
   return handle;
+}
+
+static GtkIconSize
+gimp_dockbook_get_tab_icon_size (GimpDockbook *dockbook)
+{
+  GtkIconSize tab_size = DEFAULT_TAB_ICON_SIZE;
+  
+  gtk_widget_style_get (GTK_WIDGET (dockbook),
+                        "tab-icon-size", &tab_size,
+                        NULL);
+
+  return tab_size;
 }
 
 static void
