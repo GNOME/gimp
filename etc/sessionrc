@@ -11,7 +11,8 @@
     (open-on-exit)
     (gimp-toolbox
         (book
-            (dockable "gimp-tool-options"))))
+            (dockable "gimp-tool-options"
+                (tab-style icon)))))
 (session-info "dock" "gimp-dock-window"
     (position -0 0)
     (size 210 820)
