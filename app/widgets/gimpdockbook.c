@@ -46,14 +46,16 @@
 #include "gimpwidgets-utils.h"
 
 #include "gimp-log.h"
+#include "gimp-intl.h"
 
-#define DEFAULT_TAB_BORDER          0
-#define DEFAULT_TAB_ICON_SIZE       GTK_ICON_SIZE_BUTTON
-#define DND_WIDGET_ICON_SIZE        GTK_ICON_SIZE_BUTTON
-#define MENU_WIDGET_ICON_SIZE       GTK_ICON_SIZE_MENU
-#define MENU_WIDGET_SPACING         4
-#define TAB_HOVER_TIMEOUT           500
-#define GIMP_N_TAB_STYLE_CANDIDATES 3 /* G_N_ELEMENTS (gimp_tab_style_candidates); */
+#define DEFAULT_TAB_BORDER           0
+#define DEFAULT_TAB_ICON_SIZE        GTK_ICON_SIZE_BUTTON
+#define DND_WIDGET_ICON_SIZE         GTK_ICON_SIZE_BUTTON
+#define MENU_WIDGET_ICON_SIZE        GTK_ICON_SIZE_MENU
+#define MENU_WIDGET_SPACING          4
+#define TAB_HOVER_TIMEOUT            500
+#define GIMP_N_TAB_STYLE_CANDIDATES  3 /* G_N_ELEMENTS (gimp_tab_style_candidates); */
+#define GIMP_DOCKABLE_DETACH_REF_KEY "gimp-dockable-detach-ref"
 
 
 enum
@@ -109,12 +111,16 @@ static gboolean     gimp_dockbook_drag_drop                   (GtkWidget      *w
                                                                gint            x,
                                                                gint            y,
                                                                guint           time);
+static gboolean     gimp_dockbook_popup_menu                  (GtkWidget      *widget);
+static gboolean     gimp_dockbook_menu_button_press           (GimpDockbook   *dockbook,
+                                                               GdkEventButton *bevent,
+                                                               GtkWidget      *button);
+static gboolean     gimp_dockbook_show_menu                   (GimpDockbook   *dockbook);
+static void         gimp_dockbook_menu_end                    (GimpDockable   *dockable);
 static void         gimp_dockbook_dockable_added              (GimpDockbook   *dockbook,
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_dockable_removed            (GimpDockbook   *dockbook,
                                                                GimpDockable   *dockable);
-static void         gimp_dockbook_update_tabs                 (GimpDockbook   *dockbook,
-                                                               gboolean        added);
 static void         gimp_dockbook_recreate_tab_widgets        (GimpDockbook   *dockbook,
                                                                gboolean        only_auto);
 static void         gimp_dockbook_tab_drag_source_setup       (GtkWidget      *widget,
@@ -226,6 +232,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   widget_class->drag_leave    = gimp_dockbook_drag_leave;
   widget_class->drag_motion   = gimp_dockbook_drag_motion;
   widget_class->drag_drop     = gimp_dockbook_drag_drop;
+  widget_class->popup_menu    = gimp_dockbook_popup_menu;
 
   klass->dockable_added     = gimp_dockbook_dockable_added;
   klass->dockable_removed   = gimp_dockbook_dockable_removed;
@@ -251,19 +258,45 @@ static void
 gimp_dockbook_init (GimpDockbook *dockbook)
 {
   GtkNotebook *notebook = GTK_NOTEBOOK (dockbook);
+  GtkWidget   *image    = NULL;
 
   dockbook->p = G_TYPE_INSTANCE_GET_PRIVATE (dockbook,
                                              GIMP_TYPE_DOCKBOOK,
                                              GimpDockbookPrivate);
 
+  /* Various init */
   gtk_notebook_popup_enable (notebook);
   gtk_notebook_set_scrollable (notebook, TRUE);
   gtk_notebook_set_show_border (notebook, FALSE);
+  gtk_notebook_set_show_tabs (notebook, TRUE);
 
   gtk_drag_dest_set (GTK_WIDGET (dockbook),
                      0,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
+
+  /* Menu button */
+  dockbook->p->menu_button = gtk_button_new ();
+  gtk_widget_set_can_focus (dockbook->p->menu_button, FALSE);
+  gtk_button_set_relief (GTK_BUTTON (dockbook->p->menu_button),
+                         GTK_RELIEF_NONE);
+  gtk_widget_show (dockbook->p->menu_button);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (dockbook->p->menu_button), image);
+  gtk_widget_show (image);
+
+  gimp_help_set_help_data (dockbook->p->menu_button, _("Configure this tab"),
+                           GIMP_HELP_DOCK_TAB_MENU);
+
+  g_signal_connect_swapped (dockbook->p->menu_button, "button-press-event",
+                            G_CALLBACK (gimp_dockbook_menu_button_press),
+                            dockbook);
+
+  gtk_notebook_set_action_widget (notebook,
+                                  dockbook->p->menu_button,
+                                  GTK_PACK_END);
+  gtk_widget_show (dockbook->p->menu_button);
 }
 
 static void
@@ -285,6 +318,12 @@ gimp_dockbook_finalize (GObject *object)
     {
       g_object_unref (dockbook->p->ui_manager);
       dockbook->p->ui_manager = NULL;
+    }
+
+    if (dockbook->p->menu_button)
+    {
+      gtk_widget_unparent (dockbook->p->menu_button);
+      dockbook->p->menu_button = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -393,11 +432,185 @@ gimp_dockbook_drag_drop (GtkWidget      *widget,
   return handled;
 }
 
+static gboolean
+gimp_dockbook_popup_menu (GtkWidget *widget)
+{
+  return gimp_dockbook_show_menu (GIMP_DOCKBOOK (widget));
+}
+
+static gboolean
+gimp_dockbook_menu_button_press (GimpDockbook   *dockbook,
+                                 GdkEventButton *bevent,
+                                 GtkWidget      *button)
+{
+  gboolean handled = FALSE;
+
+  if (bevent->button == 1 && bevent->type == GDK_BUTTON_PRESS)
+    handled = gimp_dockbook_show_menu (dockbook);
+
+  return handled;
+}
+
+static gboolean
+gimp_dockbook_show_menu (GimpDockbook *dockbook)
+{
+  GimpUIManager *dockbook_ui_manager = NULL;
+  GimpUIManager *dialog_ui_manager   = NULL;
+  const gchar   *dialog_ui_path      = NULL;
+  gpointer       dialog_popup_data   = FALSE;
+  GtkWidget     *parent_menu_widget  = NULL;
+  GtkAction     *parent_menu_action  = NULL;
+  GimpDockable  *dockable            = NULL;
+  gint           page_num            = -1;
+
+  dockbook_ui_manager =
+    gimp_dockbook_get_ui_manager (dockbook);
+
+  if (! dockbook_ui_manager)
+    return FALSE;
+
+  parent_menu_widget =
+    gtk_ui_manager_get_widget (GTK_UI_MANAGER (dockbook_ui_manager),
+                               "/dockable-popup/dockable-menu");
+  parent_menu_action =
+    gtk_ui_manager_get_action (GTK_UI_MANAGER (dockbook_ui_manager),
+                               "/dockable-popup/dockable-menu");
+
+  if (! parent_menu_widget || ! parent_menu_action)
+    return FALSE;
+
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+  dockable = GIMP_DOCKABLE (gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook),
+                                                       page_num));
+
+  if (!dockable )
+    return FALSE;
+
+  dialog_ui_manager = gimp_dockable_get_menu (dockable,
+                                              &dialog_ui_path,
+                                              &dialog_popup_data);
+
+  if (dialog_ui_manager && dialog_ui_path)
+    {
+      GtkWidget   *child_menu_widget;
+      GtkAction   *child_menu_action;
+      const gchar *label;
+
+      child_menu_widget =
+        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dialog_ui_manager),
+                                   dialog_ui_path);
+
+      if (! child_menu_widget)
+        {
+          g_warning ("%s: UI manager '%s' has now widget at path '%s'",
+                     G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
+          return FALSE;
+        }
+
+      child_menu_action =
+        gtk_ui_manager_get_action (GTK_UI_MANAGER (dialog_ui_manager),
+                                   dialog_ui_path);
+
+      if (! child_menu_action)
+        {
+          g_warning ("%s: UI manager '%s' has no action at path '%s'",
+                     G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
+          return FALSE;
+        }
+
+      g_object_get (child_menu_action,
+                    "label", &label,
+                    NULL);
+
+      g_object_set (parent_menu_action,
+                    "label",    label,
+                    "stock-id", gimp_dockable_get_stock_id (dockable),
+                    "visible",  TRUE,
+                    NULL);
+
+      if (gimp_dockable_get_stock_id (dockable))
+        {
+          if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (),
+                                       gimp_dockable_get_stock_id (dockable)))
+            {
+              gtk_action_set_icon_name (parent_menu_action, gimp_dockable_get_stock_id (dockable));
+            }
+        }
+
+      if (! GTK_IS_MENU (child_menu_widget))
+        {
+          g_warning ("%s: child_menu_widget (%p) is not a GtkMenu",
+                     G_STRFUNC, child_menu_widget);
+          return FALSE;
+        }
+
+      {
+        GtkWidget *image = gimp_dockable_get_icon (dockable,
+                                                   GTK_ICON_SIZE_MENU);
+
+        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (parent_menu_widget),
+                                       image);
+        gtk_widget_show (image);
+      }
+
+      gtk_menu_item_set_submenu (GTK_MENU_ITEM (parent_menu_widget),
+                                 child_menu_widget);
+
+      gimp_ui_manager_update (dialog_ui_manager, dialog_popup_data);
+    }
+  else
+    {
+      g_object_set (parent_menu_action, "visible", FALSE, NULL);
+    }
+
+  /*  an action callback may destroy both dockable and dockbook, so
+   *  reference them for gimp_dockbook_menu_end()
+   */
+  g_object_ref (dockable);
+  g_object_set_data_full (G_OBJECT (dockable), GIMP_DOCKABLE_DETACH_REF_KEY,
+                          g_object_ref (dockbook),
+                          g_object_unref);
+
+  gimp_ui_manager_update (dockbook_ui_manager, dockable);
+  gimp_ui_manager_ui_popup (dockbook_ui_manager, "/dockable-popup",
+                            GTK_WIDGET (dockable),
+                            NULL, dockable,
+                            (GDestroyNotify) gimp_dockbook_menu_end, dockable);
+
+  return TRUE;
+}
+
+static void
+gimp_dockbook_menu_end (GimpDockable *dockable)
+{
+  GimpUIManager   *dialog_ui_manager;
+  const gchar     *dialog_ui_path;
+  gpointer         dialog_popup_data;
+
+  dialog_ui_manager = gimp_dockable_get_menu (dockable,
+                                              &dialog_ui_path,
+                                              &dialog_popup_data);
+
+  if (dialog_ui_manager && dialog_ui_path)
+    {
+      GtkWidget *child_menu_widget =
+        gtk_ui_manager_get_widget (GTK_UI_MANAGER (dialog_ui_manager),
+                                   dialog_ui_path);
+
+      if (child_menu_widget)
+        gtk_menu_detach (GTK_MENU (child_menu_widget));
+    }
+
+  /*  release gimp_dockable_show_menu()'s references  */
+  g_object_set_data (G_OBJECT (dockable), GIMP_DOCKABLE_DETACH_REF_KEY, NULL);
+  g_object_unref (dockable);
+}
+
 static void
 gimp_dockbook_dockable_added (GimpDockbook *dockbook,
                               GimpDockable *dockable)
 {
-  gimp_dockbook_update_tabs (dockbook, TRUE);
+  gimp_dockbook_refresh_tab_layout_lut (dockbook);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                  gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
@@ -408,27 +621,7 @@ static void
 gimp_dockbook_dockable_removed (GimpDockbook *dockbook,
                                 GimpDockable *dockable)
 {
-  gimp_dockbook_update_tabs (dockbook, FALSE);
-}
-
-static void
-gimp_dockbook_update_tabs (GimpDockbook *dockbook,
-                           gboolean      added)
-{
-  switch (gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook)))
-    {
-    case 1:
-      gtk_notebook_set_show_tabs (GTK_NOTEBOOK (dockbook), FALSE);
-      break;
-
-    case 2:
-      if (added)
-        gtk_notebook_set_show_tabs (GTK_NOTEBOOK (dockbook), TRUE);
-      break;
-
-    default:
-      break;
-    }
+  gimp_dockbook_refresh_tab_layout_lut (dockbook);
 }
 
 /**

@@ -207,6 +207,7 @@ dockable_actions_update (GimpActionGroup *group,
   GimpTabStyle            tab_style           = -1;
   gint                    n_pages             = 0;
   gint                    n_books             = 0;
+  GimpDockedInterface     *docked_iface       = NULL;
 
   if (GIMP_IS_DOCKBOOK (data))
     {
@@ -330,30 +331,24 @@ dockable_actions_update (GimpActionGroup *group,
         }
     }
 
-  SET_VISIBLE ("dockable-tab-style-menu", n_pages > 1);
+  if (tab_style == GIMP_TAB_STYLE_ICON)
+    SET_ACTIVE ("dockable-tab-style-icon", TRUE);
+  else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
+    SET_ACTIVE ("dockable-tab-style-preview", TRUE);
+  else if (tab_style == GIMP_TAB_STYLE_NAME)
+    SET_ACTIVE ("dockable-tab-style-name", TRUE);
+  else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
+    SET_ACTIVE ("dockable-tab-style-icon-name", TRUE);
+  else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
+    SET_ACTIVE ("dockable-tab-style-preview-name", TRUE);
+  else if (tab_style == GIMP_TAB_STYLE_AUTOMATIC)
+    SET_ACTIVE ("dockable-tab-style-automatic", TRUE);
 
-  if (n_pages > 1)
-    {
-      GimpDockedInterface *docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
-
-      if (tab_style == GIMP_TAB_STYLE_ICON)
-        SET_ACTIVE ("dockable-tab-style-icon", TRUE);
-      else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
-        SET_ACTIVE ("dockable-tab-style-preview", TRUE);
-      else if (tab_style == GIMP_TAB_STYLE_NAME)
-        SET_ACTIVE ("dockable-tab-style-name", TRUE);
-      else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
-        SET_ACTIVE ("dockable-tab-style-icon-name", TRUE);
-      else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
-        SET_ACTIVE ("dockable-tab-style-preview-name", TRUE);
-      else if (tab_style == GIMP_TAB_STYLE_AUTOMATIC)
-        SET_ACTIVE ("dockable-tab-style-automatic", TRUE);
-
-      SET_SENSITIVE ("dockable-tab-style-preview",
-                     docked_iface->get_preview);
-      SET_SENSITIVE ("dockable-tab-style-preview-name",
-                     docked_iface->get_preview);
-    }
+  docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+  SET_SENSITIVE ("dockable-tab-style-preview",
+                 docked_iface->get_preview);
+  SET_SENSITIVE ("dockable-tab-style-preview-name",
+                 docked_iface->get_preview);
 
   SET_VISIBLE ("dockable-view-type-grid", view_type != -1);
   SET_VISIBLE ("dockable-view-type-list", view_type != -1);
