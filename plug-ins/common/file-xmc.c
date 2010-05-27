@@ -1509,14 +1509,14 @@ save_image (const gchar *filename,
       if (drawable->width > MAX_SAVE_DIMENSION)
         {
           g_set_error (error, 0, 0,
-                       _("Width of '%s' is too large. Please reduce more than %dpx)"),
+                       _("Width of '%s' is too large. Please reduce more than %dpx."),
                        gimp_any_to_utf8 (framename, -1, NULL), MAX_SAVE_DIMENSION);
           return FALSE;
         }
       if (drawable->height > MAX_SAVE_DIMENSION)
         {
           g_set_error (error, 0, 0,
-                       _("Height of '%s' is too large. Please reduce more than %dpx)"),
+                       _("Height of '%s' is too large. Please reduce more than %dpx."),
                        gimp_any_to_utf8 (framename, -1, NULL), MAX_SAVE_DIMENSION);
           return FALSE;
         }
