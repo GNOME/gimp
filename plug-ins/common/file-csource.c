@@ -686,15 +686,14 @@ rgb565_toggle_button_update (GtkWidget *toggle,
     gtk_widget_set_sensitive (widget, ! active);
 }
 
-static GtkWidget *prefixed_name;
-static GtkWidget *centry;
-
 static gboolean
 run_save_dialog (Config *config)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *table;
+  GtkWidget *prefixed_name;
+  GtkWidget *centry;
   GtkWidget *toggle;
   GtkWidget *rle_toggle;
   GtkWidget *alpha_toggle;
@@ -844,6 +843,7 @@ run_save_dialog (Config *config)
 
   if (!config->prefixed_name || !config->prefixed_name[0])
     config->prefixed_name = "tmp";
+
   if (config->comment && !config->comment[0])
     config->comment = NULL;
 
