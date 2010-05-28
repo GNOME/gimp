@@ -43,6 +43,7 @@ typedef struct
   gboolean  use_comment;
   gboolean  glib_types;
   gboolean  alpha;
+  gboolean  rgb565;
   gboolean  use_macros;
   gboolean  use_rle;
   gdouble   opacity;
@@ -63,7 +64,6 @@ static gboolean save_image      (Config           *config,
                                  GError          **error);
 static gboolean run_save_dialog (Config           *config);
 
-
 /* --- variables --- */
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -81,6 +81,7 @@ static Config config =
   FALSE,        /* use_comment */
   TRUE,         /* glib_types */
   FALSE,        /* alpha */
+  FALSE,        /* rgb565 */
   FALSE,        /* use_macros */
   FALSE,        /* use_rle */
   100.0,        /* opacity */
@@ -416,17 +417,39 @@ save_image (Config  *config,
       guint8 *data, *p;
       gint x, y, pad, n_bytes, bpp;
 
-      bpp = config->alpha ? 4 : 3;
+      bpp = config->rgb565 ? 2 : (config->alpha ? 4 : 3);
       n_bytes = drawable->width * drawable->height * bpp;
       pad = drawable->width * drawable->bpp;
       if (config->use_rle)
         pad = MAX (pad, 130 + n_bytes / 127);
+
       data = g_new (guint8, pad + n_bytes);
       p = data + pad;
+
       for (y = 0; y < drawable->height; y++)
         {
           gimp_pixel_rgn_get_row (&pixel_rgn, data, 0, y, drawable->width);
-          if (config->alpha)
+
+          if (bpp == 2)
+             for (x = 0; x < drawable->width; x++)
+              {
+                guint8 *d = data + x * drawable->bpp;
+                guint8 r, g, b;
+                gushort rgb16;
+                gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
+
+                alpha *= config->opacity / 25500.0;
+                r = (0.5 + alpha * (gdouble) d[0]);
+                g = (0.5 + alpha * (gdouble) d[1]);
+                b = (0.5 + alpha * (gdouble) d[2]);
+                r >>= 3;
+                g >>= 2;
+                b >>= 3;
+                rgb16 = (r << 11) + (g << 5) + b;
+                *(p++) = (guchar) rgb16;
+                *(p++) = (guchar) (rgb16 >> 8);
+              }
+          else if (config->alpha)
             for (x = 0; x < drawable->width; x++)
               {
                 guint8 *d = data + x * drawable->bpp;
@@ -450,6 +473,7 @@ save_image (Config  *config,
                 *(p++) = 0.5 + alpha * (gdouble) d[2];
               }
         }
+
       img_buffer = data + pad;
       if (config->use_rle)
         {
@@ -519,7 +543,8 @@ save_image (Config  *config,
       fprintf (fp, "static const struct {\n");
       fprintf (fp, "  %s\t width;\n", s_uint);
       fprintf (fp, "  %s\t height;\n", s_uint);
-      fprintf (fp, "  %s\t bytes_per_pixel; /* 3:RGB, 4:RGBA */ \n", s_uint);
+      fprintf (fp, "  %s\t bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */ \n",
+               s_uint);
       if (config->use_comment)
         fprintf (fp, "  %s\t*comment;\n", s_char);
       fprintf (fp, "  %s\t %spixel_data[",
@@ -531,12 +556,12 @@ save_image (Config  *config,
         fprintf (fp, "%u * %u * %u + 1];\n",
                  drawable->width,
                  drawable->height,
-                 config->alpha ? 4 : 3);
+                 config->rgb565 ? 2 : (config->alpha ? 4 : 3));
       fprintf (fp, "} %s = {\n", config->prefixed_name);
       fprintf (fp, "  %u, %u, %u,\n",
                drawable->width,
                drawable->height,
-               config->alpha ? 4 : 3);
+               config->rgb565 ? 2 : (config->alpha ? 4 : 3));
     }
   else /* use macros */
     {
@@ -643,6 +668,24 @@ save_image (Config  *config,
   return TRUE;
 }
 
+static void
+rgb565_toggle_button_update (GtkWidget *toggle,
+                             gpointer   data)
+{
+  GtkWidget *widget;
+  gboolean   active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+
+  gimp_toggle_button_update (toggle, data);
+
+  widget = g_object_get_data (G_OBJECT (toggle), "set-insensitive-1");
+  if (widget)
+    gtk_widget_set_sensitive (widget, ! active);
+
+  widget = g_object_get_data (G_OBJECT (toggle), "set-insensitive-2");
+  if (widget)
+    gtk_widget_set_sensitive (widget, ! active);
+}
+
 static GtkWidget *prefixed_name;
 static GtkWidget *centry;
 
@@ -653,6 +696,8 @@ run_save_dialog (Config *config)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *toggle;
+  GtkWidget *rle_toggle;
+  GtkWidget *alpha_toggle;
   GtkObject *adj;
   gboolean   run;
 
@@ -714,7 +759,8 @@ run_save_dialog (Config *config)
 
   /* Use Macros
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("Us_e macros instead of struct"));
+  toggle =
+    gtk_check_button_new_with_mnemonic (_("Us_e macros instead of struct"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 config->use_macros);
@@ -726,7 +772,8 @@ run_save_dialog (Config *config)
 
   /* Use RLE
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("Use _1 byte Run-Length-Encoding"));
+  rle_toggle = toggle =
+    gtk_check_button_new_with_mnemonic (_("Use _1 byte Run-Length-Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 config->use_rle);
@@ -738,7 +785,8 @@ run_save_dialog (Config *config)
 
   /* Alpha
    */
-  toggle = gtk_check_button_new_with_mnemonic (_("Sa_ve alpha channel (RGBA/RGB)"));
+  alpha_toggle = toggle =
+    gtk_check_button_new_with_mnemonic (_("Sa_ve alpha channel (RGBA/RGB)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 config->alpha);
@@ -747,6 +795,23 @@ run_save_dialog (Config *config)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &config->alpha);
+
+  /* RGB-565
+   */
+  toggle = gtk_check_button_new_with_mnemonic (_("Save as _RGB565 (16-bit)"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+
+  /* RLE and alpha settings are not used with RGB-565 */
+  g_object_set_data (G_OBJECT (toggle), "set-insensitive-1", rle_toggle);
+  g_object_set_data (G_OBJECT (toggle), "set-insensitive-2", alpha_toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (rgb565_toggle_button_update),
+                    &config->rgb565);
+  gtk_widget_show (toggle);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                config->rgb565);
 
   /* Max Alpha Value
    */
