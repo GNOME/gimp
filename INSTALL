@@ -134,7 +134,7 @@ These are:
      default is for strict checking to be disabled. NOTE: This option
      is intended primarily as a convenience for developers.
 
-  --enable-gimpdir=DIR.  This option changes the default directory
+  --with-gimpdir=DIR.  This option changes the default directory
      GIMP uses to search for its configuration files from ~/.gimp-2.7
      (the directory .gimp-2.7 in the users home directory) to DIR.
 
@@ -151,36 +151,36 @@ These are:
      will bail out if libtiff, libjpeg or libpng can not be found. You
      better fix the underlying problem and install these libraries with
      their header files. If you absolutely want to compile GIMP without
-     support for TIFF, JPEG or PNG you need to explicitely disable
+     support for TIFF, JPEG or PNG you need to explicitly disable
      them using the options given above.
 
-  --without-exif.  If libexif is available, the JPEG plug-in will use
+  --without-libexif.  If libexif is available, the JPEG plug-in will use
      it to keep EXIF data in your JPEG files intact.  If this is
-     causing any trouble at compile-time, you can build --without-exif.
+     causing any trouble at compile-time, you can build --without-libexif.
      Get libexif from http://www.sourceforge.net/projects/libexif.
 
   --without-aa.  The AA plug-in needs libaa and configure checks for
-     its presense. Use --without-aa if you run into problems.
+     its presence. Use --without-aa if you run into problems.
 
   --without-libxpm.  The XPM plug-in needs libxpm and configure checks
      for its presence. If for some reason you don't want to build the
      XPM plug-in even though the library is installed, use
      --without-libxpm to disable it explicitly.
 
-  --without-mng.  The MNG plug-in needs libmng and configure checks
-     for its presense. If for some reason you don't want to build the
+  --without-libmng.  The MNG plug-in needs libmng and configure checks
+     for its presence. If for some reason you don't want to build the
      MNG plug-in even though the library is installed, use
-     --without-mng to disable it explicitly.
+     --without-libmng to disable it explicitly.
 
   --without-wmf.  The WMF plug-in needs libwmf2 and configure checks for
-     its presense. Use --without-aa if you run into problems.
+     its presence. Use --without-wmf if you run into problems.
 
   --without-webkit.  If for some reason you don't want to build the
      Help Browser plug-in, you can use --without-webkit to disable
      it explicitly.
 
-  --without-svg.  If for some reason you want to build GIMP without
-     SVG support, you can build --without-svg.
+  --without-librsvg.  If for some reason you want to build GIMP without
+     SVG support, you can build --without-librsvg.
 
   --without-lcms.  If for some reason you want to build GIMP without
      using lcms for color support, you can build with --without-lcms.
@@ -225,7 +225,7 @@ These are:
 
   --with-html-dir=PATH.  This option allows to specify where the
      libgimp API reference should be installed. You might want to modify
-     the path so it points to the place where glib and gtk+ installled
+     the path so it points to the place where glib and gtk+ installed
      their API references so that the libgimp reference can link to
      them.
 
@@ -262,7 +262,7 @@ These are:
      Script-Fu plug-in, you can use --without-script-fu.
 
   --without-xmc.  The X11 Mouse Cursor(XMC) plug-in needs libXcursor
-     and configure checks for its presense. If for some reason you
+     and configure checks for its presence. If for some reason you
      don't want to build the XMC plug-in even though the library is
      installed, use --without-xmc to disable it explicitly.
 
