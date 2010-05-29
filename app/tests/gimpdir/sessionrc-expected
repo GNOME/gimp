@@ -83,12 +83,6 @@
                     (current-data "Standard")
                     (zoom-factor "2.80"))))))
 (session-info "toplevel"
-    (factory-entry "gimp-toolbox-window")
-    (position 13 37)
-    (size 96 620)
-    (open-on-exit)
-    (gimp-toolbox))
-(session-info "toplevel"
     (factory-entry "gimp-file-open-dialog")
     (position 392 140)
     (size 902 816))

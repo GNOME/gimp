@@ -78,10 +78,12 @@
                     (edit-active "true")
                     (current-data "Standard")
                     (zoom-factor "2.80"))))))
-(session-info "toolbox" "dock"
-    (position 13 37)
-    (size 96 620)
-    (open-on-exit))
+# Enable this when we have a way to handle that the toolbox size is
+# likely to change due to the use of GDK_HINT_RESIZE_INC
+# (session-info "toolbox" "dock"
+#     (position 13 37)
+#     (size 96 620)
+#     (open-on-exit))
 (session-info "toplevel" "gimp-file-open-dialog"
     (position 392 140)
     (size 902 816))
