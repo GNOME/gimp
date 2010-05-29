@@ -1222,6 +1222,8 @@ AC_SUBST(AA_LIBS)
 # Check for libxpm
 ##################
 
+AC_ARG_WITH(libxpm,  [  --without-libxpm        build without XPM support])
+
 gimp_save_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS $X_CFLAGS"
 gimp_save_LDFLAGS="$LDFLAGS"
@@ -1229,8 +1231,9 @@ LDFLAGS="$LDFLAGS $X_LIBS"
 if test "$gdk_target" = x11; then
   lib_X11=-lX11
 fi
-have_libxpm=yes
-if test -z "$XPM_LIBS"; then
+have_libxpm=no
+if test "x$with_libxpm" != xno && test -z "$XPM_LIBS"; then
+  have_libxpm=yes
   AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
     [AC_CHECK_HEADER(X11/xpm.h,
       FILE_XPM='file-xpm$(EXEEXT)'; XPM_LIBS="$X_LIBS $X_PRE_LIBS $lib_X11 -lXpm",

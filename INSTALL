@@ -162,6 +162,11 @@ These are:
   --without-aa.  The AA plug-in needs libaa and configure checks for
      its presense. Use --without-aa if you run into problems.
 
+  --without-libxpm.  The XPM plug-in needs libxpm and configure checks
+     for its presence. If for some reason you don't want to build the
+     XPM plug-in even though the library is installed, use
+     --without-libxpm to disable it explicitly.
+
   --without-mng.  The MNG plug-in needs libmng and configure checks
      for its presense. If for some reason you don't want to build the
      MNG plug-in even though the library is installed, use
