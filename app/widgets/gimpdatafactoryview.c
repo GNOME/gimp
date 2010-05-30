@@ -40,7 +40,6 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpcombotagentry.h"
-#include "gimpcontainergridview.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
