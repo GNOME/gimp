@@ -109,6 +109,10 @@ void                gimp_dock_add_book                (GimpDock       *dock,
                                                        gint            index);
 void                gimp_dock_remove_book             (GimpDock       *dock,
                                                        GimpDockbook   *dockbook);
+void                gimp_dock_temp_add                (GimpDock       *dock,
+                                                       GtkWidget      *widget);
+void                gimp_dock_temp_remove             (GimpDock       *dock,
+                                                       GtkWidget      *widget);
 
 
 #endif /* __GIMP_DOCK_H__ */

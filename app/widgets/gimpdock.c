@@ -60,6 +60,7 @@ enum
 
 struct _GimpDockPrivate
 {
+  GtkWidget         *temp_vbox;
   GtkWidget         *main_vbox;
   GtkWidget         *paned_vbox;
 
@@ -173,6 +174,10 @@ gimp_dock_init (GimpDock *dock)
   gtk_widget_set_name (GTK_WIDGET (dock), name);
   g_free (name);
 
+  dock->p->temp_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (dock), dock->p->temp_vbox);
+  /* Never show it */
+  
   dock->p->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->p->main_vbox);
   gtk_widget_show (dock->p->main_vbox);
@@ -699,4 +704,40 @@ gimp_dock_remove_book (GimpDock     *dock,
   g_signal_emit (dock, dock_signals[BOOK_REMOVED], 0, dockbook);
 
   g_object_unref (dockbook);
+}
+
+/**
+ * gimp_dock_temp_add:
+ * @dock:
+ * @widget:
+ *
+ * Method to temporarily add a widget to the dock, for example to make
+ * font-scale style property to be applied temporarily to the
+ * child.
+ **/
+void
+gimp_dock_temp_add (GimpDock  *dock,
+                    GtkWidget *child)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (GTK_IS_WIDGET (child));
+
+  gtk_container_add (GTK_CONTAINER (dock->p->temp_vbox), child);
+}
+
+/**
+ * gimp_dock_temp_remove:
+ * @dock:
+ * @child:
+ *
+ * Removes a temporarly child added with gimp_dock_temp_add().
+ **/
+void
+gimp_dock_temp_remove (GimpDock  *dock,
+                       GtkWidget *child)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (GTK_IS_WIDGET (child));
+
+  gtk_container_remove (GTK_CONTAINER (dock->p->temp_vbox), child);
 }
