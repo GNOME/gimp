@@ -391,9 +391,7 @@ libappwidgets_a_sources = \
 	gtkwrapbox.c			\
 	gtkwrapbox.h			\
 	gtkhwrapbox.c			\
-	gtkhwrapbox.h			\
-	gtkvwrapbox.c			\
-	gtkvwrapbox.h
+	gtkhwrapbox.h
 
 libappwidgets_a_built_sources = widgets-enums.c
 
