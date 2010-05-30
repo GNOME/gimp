@@ -19,6 +19,8 @@
 
 #include <string.h>
 
+#undef GSEAL_ENABLE
+
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"

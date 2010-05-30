@@ -22,6 +22,7 @@
 #include "config.h"
 
 #undef GSEAL_ENABLE
+#undef GTK_DISABLE_DEPRECATED
 
 #include "gtkvwrapbox.h"
 
