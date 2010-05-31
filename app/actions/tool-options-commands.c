@@ -182,7 +182,7 @@ tool_options_reset_all_cmd_callback (GtkAction *action,
   GimpEditor *editor = GIMP_EDITOR (data);
   GtkWidget  *dialog;
 
-  dialog = gimp_message_dialog_new (_("Reset Tool Options"),
+  dialog = gimp_message_dialog_new (_("Reset All Tool Options"),
                                     GIMP_STOCK_QUESTION,
                                     GTK_WIDGET (editor),
                                     GTK_DIALOG_MODAL |
