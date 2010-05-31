@@ -234,7 +234,7 @@
                       SF-STRING "The name of the file to create
 (If a file with this name already exist, it will be replaced)" (string-append "palette." file-type)
                       )
-  (script-fu-menu-register (string-append "gimp-palette-export-" export-type) _"<Palettes>/Export as")
+  (script-fu-menu-register (string-append "gimp-palette-export-" export-type) "<Palettes>/Export as")
   )
 
 (define (bad-file-name)
