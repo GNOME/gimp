@@ -1,35 +1,20 @@
-; ----------------------------------------------------------------------------------------------------
-; GIMP palette export toolkit - Written by Barak Itkin <lightningismyname@gmail.com>
+; -----------------------------------------------------------------------------
+; GIMP palette export toolkit -
+; Written by Barak Itkin <lightningismyname@gmail.com>
 ;
-; This script includes various exporters for gimp palettes, and other utility function to help in
-; exporting to other (text-based) formats.
+; This script includes various exporters for GIMP palettes, and other
+; utility function to help in exporting to other (text-based) formats.
 ; See instruction on adding new exporters at the end
-; ----------------------------------------------------------------------------------------------------
-; Changelog:
-; April 20nd, 2009 - Version 1.2
-;                  Grammar fixes, messages are translatable now.
-; July 23rd, 2009 - Version 1.1
-;                  Removed the palette choose box - the script will now export the active palette.
-;                  This was done because, this script should usually be invoked by a right click on a
-;                  palette, and it's confusing to have to choose a palette again.
-;                  Renamed the default palette name to "palette.ext"
-;                  Shortened long lines (320 charcters =D)
 ;
-;                  See http://bugzilla.gnome.org/show_bug.cgi?id=304399#c19
-;
-; May 15th, 2009 - Version 1.0
-;                  Basic framework for exporting palettes.
-;                  The default exporters are java, css, text, python and php
-;
-;                  See http://bugzilla.gnome.org/show_bug.cgi?id=304399#c16
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 ; Numbers and Math
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 
 ; For all the opertations below, this is the order of respectable digits:
 (define conversion-digits (list "0" "1" "2" "3" "4" "5" "6" "7" "8" "9"
-                                "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q"
-                                "r" "s" "t" "u" "v" "w" "x" "y" "z"))
+                                "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k"
+				"l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v"
+				"w" "x" "y" "z"))
 
 ; Converts a decimal number to another base. The returned number is a string
 (define (convert-decimal-to-base num base)
@@ -42,10 +27,12 @@
   (define (calc base num str)
     (let ((max-order (highest-order num base)))
       (cond ((not (= 0 max-order))
-             (let ((num-of-times (quotient num (inexact->exact (expt base max-order)))))
+             (let ((num-of-times (quotient
+				  num (inexact->exact (expt base max-order)))))
                (calc base
                      (- num (* num-of-times (expt base max-order)))
-                     (string-append str (list-ref conversion-digits num-of-times)))
+                     (string-append str
+				    (list-ref conversion-digits num-of-times)))
                )
              )
             (else (string-append str (list-ref conversion-digits num)))
@@ -74,8 +61,8 @@
   (calc base num-str 0)
   )
 
-; If a string num-str is shorter then size, pad it with pad-str in the begining untill it's at least
-; size long
+; If a string num-str is shorter then size, pad it with pad-str in the
+; begining untill it's at least size long
 (define (pre-pad-number num-str size pad-str)
   (if (< (string-length num-str) size)
       (pre-pad-number (string-append pad-str num-str) size pad-str)
@@ -83,11 +70,12 @@
       )
   )
 
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 ; Color convertors
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 
-; The standard way for representing a color would be a list of red green and blue (gimp's default)
+; The standard way for representing a color would be a list of red
+; green and blue (GIMP's default)
 (define color-get-red car)
 (define color-get-green cadr)
 (define color-get-blue caddr)
@@ -97,9 +85,12 @@
 
 (define (color-rgb-to-hexa-decimal color)
   (string-append "#"
-                 (pre-pad-number (convert-decimal-to-base (color-get-red color) 16) 2 "0")
-                 (pre-pad-number (convert-decimal-to-base (color-get-green color) 16) 2 "0")
-                 (pre-pad-number (convert-decimal-to-base (color-get-blue color) 16) 2 "0")
+                 (pre-pad-number
+		  (convert-decimal-to-base (color-get-red color) 16) 2 "0")
+                 (pre-pad-number
+		  (convert-decimal-to-base (color-get-green color) 16) 2 "0")
+                 (pre-pad-number
+		  (convert-decimal-to-base (color-get-blue color) 16) 2 "0")
                  )
   )
 
@@ -120,9 +111,9 @@
   )
 
 
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 ; Export utils
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 
 ; List of charcters that should not appear in file names
 (define illegal-file-name-chars (list #\\ #\/ #\: #\* #\? #\" #\< #\> #\|))
@@ -141,8 +132,9 @@
 ; A function to check if a certain value obj is inside a list lst
 (define (contained? obj lst) (member obj lst))
 
-; This functions filters a string to have only characters which are either alpha-numeric or contained
-; in more-legal (which is a variable holding a list of characters)
+; This functions filters a string to have only characters which are
+; either alpha-numeric or contained in more-legal (which is a variable
+; holding a list of characters)
 (define (clean str more-legal)
   (list->string (filter (lambda (ch) (or (char-alphabetic? ch)
                                          (char-numeric? ch)
@@ -150,13 +142,19 @@
                         (string->list str)))
   )
 
-; A function that recieves the a file-name, and filters out all the character that shouldn't appear
-; in file names. Then, it makes sure the remaining name isn't only white-spaces. If it's only
-; white-spaces, the function returns false. Otherwise, it returns the fixed file-name
+; A function that recieves the a file-name, and filters out all the
+; character that shouldn't appear in file names. Then, it makes sure
+; the remaining name isn't only white-spaces. If it's only
+; white-spaces, the function returns false. Otherwise, it returns the
+; fixed file-name
 (define (valid-file-name name)
-  (let* ((clean (list->string (filter (lambda (ch) (not (contained? ch illegal-file-name-chars)))
+  (let* ((clean (list->string (filter (lambda (ch)
+					(not (contained?
+					      ch illegal-file-name-chars)))
                                       (string->list name))))
-         (clean-without-spaces (list->string (filter (lambda (ch) (not (char-whitespace? ch)))
+         (clean-without-spaces (list->string (filter (lambda (ch)
+						       (not (char-whitespace?
+							     ch)))
                                                      (string->list clean))))
          )
     (if (equal? clean-without-spaces "")
@@ -166,13 +164,14 @@
     )
   )
 
-; Filters a string from all the characters which are not alpha-numeric (this also removes whitespaces)
+; Filters a string from all the characters which are not alpha-numeric
+; (this also removes whitespaces)
 (define (name-alpha-numeric str)
   (clean str '())
   )
 
-; This function does the same as name-alpha-numeric, with an added operation - it removes
-; any numbers from the begining
+; This function does the same as name-alpha-numeric, with an added
+; operation - it removes any numbers from the begining
 (define (name-standard str)
   (let ((cleaned (clean str '())))
     (while (char-numeric? (string-ref cleaned 0))
@@ -195,11 +194,13 @@
 
   (define (write-color-line index)
     (display name-pre)
-    (display (name-convertor (car (gimp-palette-entry-get-name palette-name index))))
+    (display (name-convertor
+	      (car (gimp-palette-entry-get-name palette-name index))))
     (display name-after)
     (display name-color-seperator)
     (display color-pre)
-    (display (color-convertor (car (gimp-palette-entry-get-color palette-name index))))
+    (display (color-convertor
+	      (car (gimp-palette-entry-get-color palette-name index))))
     (display color-after)
     )
 
@@ -222,80 +223,41 @@
     )
   )
 
-(define (register-palette-exporter export-type file-type description author copyright date)
+(define (register-palette-exporter
+	 export-type export-name file-type description author copyright date)
   (script-fu-register (string-append "gimp-palette-export-" export-type)
-                      (string-append export-type "...")
+                      export-name
                       description
                       author
                       copyright
                       date
                       ""
-                      SF-DIRNAME "Folder for the output file" ""
-                      SF-STRING "The name of the file to create
-(If a file with this name already exist, it will be replaced)" (string-append "palette." file-type)
+                      SF-DIRNAME _"Folder for the output file" ""
+                      SF-STRING _"The name of the file to create (if a file with this name already exist, it will be replaced)"
+                      (string-append "palette." file-type)
                       )
-  (script-fu-menu-register (string-append "gimp-palette-export-" export-type) "<Palettes>/Export as")
+  (script-fu-menu-register (string-append "gimp-palette-export-" export-type)
+                           "<Palettes>/Export as")
   )
 
 (define (bad-file-name)
-  (gimp-message (string-append _"The file name you entered is not a suitable name for a file name!\n"
-                               file-name _"\nAll the characters in the file name are either "
-                               _"white-spaces or characters which can not appear in file names (The "
-                               _"following characters can not appear in file names: "
-                               (list->string illegal-file-name-chars) ")")))
+  (gimp-message (string-append _"The filename you entered is not a suitable name for a file."
+			       "\n\n"
+			       _"All characters in the name are either white-spaces or characters which can not appear in filenames.")))
 
-; ----------------------------------------------------------------------------------------------------
+; -----------------------------------------------------------------------------
 ; Exporters
-; ----------------------------------------------------------------------------------------------------
-; The typical look of an exporter would be like this (look at the bottom to see some examples):
-; (define (gimp-palette-export-my-export directory-name file-name palette-name)
-;   (let ((valid-name (valid-file-name file-name)))
-;     (if valid-name
-;         (with-output-to-file (string-append directory-name DIR-SEPARATOR file-name)
-;           (lambda ()
-;             (export-palette (car (gimp-context-get-palette)) - The active palette (since this script
-;                                                                should be invoked by a right click on
-;                                                                a palette)
-;                             color-to-string-convertor - A function that recieves a color and
-;                                                         converts it to a string
-;                             name-convertor - A function that recieves the name of the color
-;                                                       from the palette, and alters it if necessary
-;                             start - A string to put before the loop of the colors
-;                             name-pre - A string to put before the name of each color
-;                             name-after - A string to put after the name of each color
-;                             name-color-seperator - A string to put between the name of the color
-;                                                    and the color itself
-;                             color-pre - A string to put before each color
-;                             color-after - A string to put after each color
-;                             entry-seperator - A string that should be put only between entries
-;                             end - A string to put when the loop has ended
-;                             )))
-;         (bad-file-name)
-;         )
-;     )
-;   )
-; (register-palette-exporter "my-export" ".filetype" description author copyright date)
-;
-; avaialable name conversions: name-alpha-numeric, name-standard, name-no-conversion, name-none, color-none
-; avaialable color conversions: color-rgb-to-hexa-decimal, color-rgb-to-css, color-rgb-to-comma-seperated-list
-;
-; You can also add more custom features with this toolkit, however then you will need to do some coding :)
-; For non-programmers who want to add exporters: \n means newline, \t means tab, (and for a normal \, you
-; must write \\)
-;
-; WARNING! If a procedure that writes a file from script-fu crashes, it will currupt the behaviour of the entire
-;          script-fu system (you will have to restart gimp) so you must double-check that it can't get stuck!
-;          If you are not sure what you are doing, use the template above or contact me by email (and I'll try to
-;          help) <lightningismyname@gmail.com>
+; -----------------------------------------------------------------------------
 
 (define (gimp-palette-export-css directory-name file-name)
   (let ((valid-name (valid-file-name file-name)))
     (if valid-name
-        (with-output-to-file (string-append directory-name DIR-SEPARATOR file-name)
+        (with-output-to-file (string-append
+			      directory-name DIR-SEPARATOR file-name)
           (lambda () (export-palette (car (gimp-context-get-palette))
                                      color-rgb-to-css
                                      name-alpha-numeric        ; name-convertor
-                                     "/* Generated with GIMP palette Export */\n" ; start
+                                     "/* Generated with GIMP Palette Export */\n" ; start
                                      "."                       ; name-pre
                                      ""                        ; name-after
                                      " { "                     ; name-color-seperator
@@ -308,18 +270,20 @@
         )
     )
   )
-(register-palette-exporter "css" "css"
-                           (string-append _"Export the active palette as a list css stylesheet with the colors entry name as their class name, and the color itself as the color attribute")
-                           "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
+(register-palette-exporter "css" "_CSS stylesheet..." "css"
+                           (string-append _"Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute")
+                           "Barak Itkin <lightningismyname@gmail.com>"
+			   "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-php directory-name file-name)
   (let ((valid-name (valid-file-name file-name)))
     (if valid-name
-        (with-output-to-file (string-append directory-name DIR-SEPARATOR file-name)
+        (with-output-to-file (string-append
+			      directory-name DIR-SEPARATOR file-name)
           (lambda () (export-palette (car (gimp-context-get-palette))
                                      color-rgb-to-hexa-decimal
                                      name-standard             ; name-convertor
-                                     "<?php\n/* Generated with GIMP palette Export */\n$colors={\n" ; start
+                                     "<?php\n/* Generated with GIMP Palette Export */\n$colors={\n" ; start
                                      "'"                       ; name-pre
                                      "'"                       ; name-after
                                      " => "                    ; name-color-seperator
@@ -332,18 +296,21 @@
         )
     )
   )
-(register-palette-exporter "php" "php"
+(register-palette-exporter "php" "P_HP dictionary..." "php"
                            _"Export the active palette as a PHP dictionary (name => color)"
-                           "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin <lightningismyname@gmail.com>"
+			   "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-python directory-name file-name)
   (let ((valid-name (valid-file-name file-name)))
     (if valid-name
-        (with-output-to-file (string-append directory-name DIR-SEPARATOR file-name)
+        (with-output-to-file (string-append
+			      directory-name DIR-SEPARATOR file-name)
           (lambda ()
             (let ((palette-name (car (gimp-context-get-palette))))
-              (begin (displayln "# Generated with GIMP palette Export")
-                     (displayln (string-append "# Based on the palette " palette-name))
+              (begin (displayln "# Generated with GIMP Palette Export")
+                     (displayln (string-append
+				 "# Based on the palette " palette-name))
                      (export-palette palette-name
                                      color-rgb-to-hexa-decimal
                                      name-standard             ; name-convertor
@@ -361,14 +328,16 @@
         )
     )
   )
-(register-palette-exporter "python" "py"
+(register-palette-exporter "python" "_Python dictionary" "py"
                            _"Export the active palette as a Python dictionary (name: color)"
-                           "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin <lightningismyname@gmail.com>"
+			   "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-text directory-name file-name)
   (let ((valid-name (valid-file-name file-name)))
     (if valid-name
-        (with-output-to-file (string-append directory-name DIR-SEPARATOR file-name)
+        (with-output-to-file (string-append
+			      directory-name DIR-SEPARATOR file-name)
           (lambda ()
             (export-palette (car (gimp-context-get-palette))
                             color-rgb-to-hexa-decimal
@@ -388,14 +357,16 @@
         )
     )
   )
-(register-palette-exporter "text" "txt"
+(register-palette-exporter "text" "_Text file..." "txt"
                            _"Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
-                           "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin <lightningismyname@gmail.com>"
+			   "Barak Itkin" "May 15th, 2009")
 
 (define (gimp-palette-export-java directory-name file-name)
   (let ((valid-name (valid-file-name file-name)))
     (if valid-name
-        (with-output-to-file (string-append directory-name DIR-SEPARATOR file-name)
+        (with-output-to-file (string-append directory-name
+					    DIR-SEPARATOR file-name)
           (lambda ()
             (let ((palette-name (car (gimp-context-get-palette))))
               (begin (displayln "")
@@ -403,12 +374,17 @@
                      (displayln "import java.util.Hashtable;")
                      (displayln "")
                      (displayln "// Generated with GIMP palette Export ")
-                     (displayln (string-append "// Based on the palette " palette-name))
-                     (displayln (string-append "public class " (name-standard palette-name) " {"))
+                     (displayln (string-append
+				 "// Based on the palette " palette-name))
+                     (displayln (string-append
+				 "public class "
+				 (name-standard palette-name) " {"))
                      (displayln "")
                      (displayln "    Hashtable<String, Color> colors;")
                      (displayln "")
-                     (displayln (string-append "    public " (name-standard palette-name) "() {"))
+                     (displayln (string-append
+				 "    public "
+				 (name-standard palette-name) "() {"))
                      (export-palette (car (gimp-context-get-palette))
                                      color-rgb-to-comma-seperated-list
                                      name-no-conversion
@@ -428,6 +404,8 @@
     )
   )
 
-(register-palette-exporter "java" "java"
+(register-palette-exporter "java" "J_ava map..." "java"
                            _"Export the active palette as a java.util.Hashtable<String, Color>"
-                           "Barak Itkin <lightningismyname@gmail.com>" "Barak Itkin" "May 15th, 2009")
+                           "Barak Itkin <lightningismyname@gmail.com>"
+			   "Barak Itkin" "May 15th, 2009")
+
