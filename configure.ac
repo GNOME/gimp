@@ -1745,13 +1745,18 @@ esac
 # Check for Mac OS X TWAIN framework
 ####################################
 
+AC_ARG_WITH(mac-twain,  [  --without-mac-twain     don't build the Mac TWAIN plug-in])
+
 mac_twain_ok=no
-AC_MSG_CHECKING([for Mac OS X TWAIN support])
-AC_TRY_CPP([
+if test "x$with_mac_twain" != xno; then
+  AC_MSG_CHECKING([for Mac OS X TWAIN support])
+  AC_TRY_CPP([
 #include <Carbon/Carbon.h>
 #include <TWAIN/TWAIN.h>
-], mac_twain_ok=yes)
-AC_MSG_RESULT($mac_twain_ok)
+  ], mac_twain_ok=yes)
+  AC_MSG_RESULT($mac_twain_ok)
+fi
+
 AM_CONDITIONAL(HAVE_MAC_TWAIN, test "x$mac_twain_ok" = xyes)
 
 

@@ -204,6 +204,9 @@ These are:
   --without-hal.  If you want to build the Linux Input controller module
      without HAL support, you can use the --without-hal option.
 
+  --without-mac-twain.  If you don't want to compile the Mac OS X
+    TWAIN plug-in, you can use the --without-mac-twain option.
+
   --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
      algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW
      patent (which should have expired in most countries by now), you
