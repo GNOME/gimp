@@ -765,7 +765,7 @@ msgstr "_Deckkraft"
 
 #: ../app/actions/context-actions.c:49
 msgid "Paint _Mode"
-msgstr "Zeichen_modus"
+msgstr "Mal_modus"
 
 #: ../app/actions/context-actions.c:50
 msgid "_Tool"
@@ -1521,7 +1521,7 @@ msgstr "_Verblassen …"
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
-"Den Zeichenmodus und die Deckkraft der letzten Pixel-Modifikation bearbeiten"
+"Den Malmodus und die Deckkraft der letzten Pixel-Modifikation bearbeiten"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -9654,7 +9654,7 @@ msgstr "Füllart  (%s)"
 #: ../app/tools/gimpbucketfilloptions.c:239
 #, c-format
 msgid "Affected Area  (%s)"
-msgstr "Beeinflusster Bereich (%s)"
+msgstr "Betroffener Bereich (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"
