@@ -225,7 +225,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
-msgstr "3-D-_Umriss …"
+msgstr "3D-_Umriss …"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
@@ -434,7 +434,7 @@ msgstr "Blockgröße"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 msgid "Create an image filled with a 3D Truchet pattern"
-msgstr "Ein mit einem 3-D-Truchet-Muster gefülltes Bild erzeugen"
+msgstr "Ein mit einem 3D-Truchet-Muster gefülltes Bild erzeugen"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -1212,7 +1212,7 @@ msgid "Depth"
 msgstr "Tiefe"
 
 # XXX: (Bumpmap:) Höhe/Winkel der imaginären Lichtquelle (0,50° bis 90°)
-# (s.a. plug-ins/common/bump-map.c)
+# (s.a. plug-ins/common/{bump-map,emboss}.c)
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:6
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
@@ -1447,10 +1447,13 @@ msgstr "Bildhöhe"
 msgid "Image width"
 msgstr "Bildbreite"
 
+# XXX: kein "Zufälliger Anfangswert" (im Gegenteil!),
+# sondern ein "Zufallszahlengeneratorinitialisierungswert" ;-)
+# vergl. plug-ins/gradient-flare/gradient-flare.c
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:5
 #: ../plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random seed"
-msgstr "Zufälliger Anfangswert"
+msgstr "Anfangswert für Zufallszahlen"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:6
 #: ../plug-ins/script-fu/scripts/land.scm.h:8

@@ -935,9 +935,9 @@ msgid "Exchange foreground and background colors"
 msgstr "Die Vorder- und Hintergrundfarbe vertauschen"
 
 #: ../app/actions/context-commands.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Paint Mode: %s"
-msgstr "Zeichen_modus"
+msgstr "Malmodus: %s"
 
 #: ../app/actions/context-commands.c:552
 #, fuzzy, c-format
@@ -1951,7 +1951,7 @@ msgstr "_Verblassen …"
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
-"Den Zeichenmodus und die Deckkraft der letzten Pixel-Modifikation bearbeiten"
+"Den Malmodus und die Deckkraft der letzten Pixel-Modifikation bearbeiten"
 
 #: ../app/actions/edit-actions.c:110
 msgctxt "edit-action"
@@ -4741,12 +4741,12 @@ msgstr "Den am aktuellen Pfad entlang verbiegen"
 #: ../app/actions/text-tool-actions.c:105
 msgctxt "text-tool-action"
 msgid "From left to right"
-msgstr "Von Links nach Rechts"
+msgstr "Von links nach rechts"
 
 #: ../app/actions/text-tool-actions.c:110
 msgctxt "text-tool-action"
 msgid "From right to left"
-msgstr "Von Rechts nach Links"
+msgstr "Von rechts nach links"
 
 #: ../app/actions/tool-options-actions.c:55
 msgctxt "tool-options-action"
@@ -7761,9 +7761,8 @@ msgid "Opacity"
 msgstr "Deckkraft"
 
 #: ../app/core/gimpcontext.c:630
-#, fuzzy
 msgid "Paint Mode"
-msgstr "Zeichen_modus"
+msgstr "Malmodus"
 
 #: ../app/core/gimpdata.c:679 ../app/core/gimptoolpresets.c:277
 #, c-format
@@ -11611,7 +11610,7 @@ msgstr "Füllart  (%s)"
 #: ../app/tools/gimpbucketfilloptions.c:239
 #, c-format
 msgid "Affected Area  (%s)"
-msgstr "Beeinflusster Bereich (%s)"
+msgstr "Betroffener Bereich (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"

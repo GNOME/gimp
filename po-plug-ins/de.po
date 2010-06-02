@@ -579,7 +579,6 @@ msgstr "U_nten-rechts"
 msgid "_Depth:"
 msgstr "_Tiefe:"
 
-# XXX "Ein auf eine Jalousie gemaltes Bild simulieren" (!?)
 #: ../plug-ins/common/blinds.c:112
 msgid "Simulate an image painted on window blinds"
 msgstr "Ein auf eine Jalousie gemaltes Bild simulieren"
@@ -905,7 +904,8 @@ msgid "_Azimuth:"
 msgstr "_Azimut:"
 
 # XXX: Höhe/Winkel der imaginären Lichtquelle (0,50° bis 90°)
-# (s.a. plug-ins/script-fu/scripts/{clothify,swirltile}.scm)
+# (s.a. plug-ins/script-fu/scripts/{clothify,swirltile}.scm,
+#       plug-ins/common/emboss.c)
 #: ../plug-ins/common/bump-map.c:904
 msgid "_Elevation:"
 msgstr "_Höhenwinkel:"
@@ -2313,13 +2313,15 @@ msgstr "Kurven bearbeiten"
 msgid "Curve for Border"
 msgstr "Kurve für Rand"
 
+# Oberer Rand
 #: ../plug-ins/common/curve-bend.c:1396
 msgid "_Upper"
-msgstr "_Obere"
+msgstr "_Oben"
 
+# Unterer Rand
 #: ../plug-ins/common/curve-bend.c:1397
 msgid "_Lower"
-msgstr "_Untere"
+msgstr "_Unten"
 
 #: ../plug-ins/common/curve-bend.c:1407
 msgid "Curve Type"
@@ -2989,9 +2991,12 @@ msgstr "_Bump-Map"
 msgid "_Emboss"
 msgstr "_Relief"
 
+# XXX: Höhe/Winkel der imaginären Lichtquelle (0,50° bis 90°)
+# (s.a. plug-ins/script-fu/scripts/{clothify,swirltile}.scm,
+#       plug-ins/common/bump-map.c)
 #: ../plug-ins/common/emboss.c:512
 msgid "E_levation:"
-msgstr "_Höhe:"
+msgstr "_Höhenwinkel:"
 
 #: ../plug-ins/common/engrave.c:100
 msgid "Simulate an antique engraving"
@@ -10108,6 +10113,7 @@ msgstr "Original beibehalten"
 msgid "Preserve the original image as a background"
 msgstr "Das ursprüngliche Bild als Hintergrund beibehalten"
 
+# XXX: Vom Papier(!?)
 #: ../plug-ins/gimpressionist/general.c:155
 msgid "From paper"
 msgstr "Von Papier"
@@ -10756,13 +10762,14 @@ msgstr "Standard"
 msgid "Parameters"
 msgstr "Parameter"
 
+# vergl. "Rotation:" weiter unten
 #: ../plug-ins/gradient-flare/gradient-flare.c:2770
 msgid "Ro_tation:"
 msgstr "_Drehung:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2782
 msgid "_Hue rotation:"
-msgstr "_Farbton-Rotation:"
+msgstr "_Farbton-Verschiebung:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2794
 msgid "Vector _angle:"
@@ -10836,10 +10843,11 @@ msgstr "Editor für Verlaufsaufhellungen"
 msgid "Rescan Gradients"
 msgstr "Verläufe neu einlesen"
 
+# Alt: Zeich(n)enoptionen
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3445
 msgid "Glow Paint Options"
-msgstr "Zeichenoptionen für Glühen"
+msgstr "Maloptionen für Glühen"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3456
 #: ../plug-ins/gradient-flare/gradient-flare.c:3484
@@ -10847,22 +10855,23 @@ msgstr "Zeichenoptionen für Glühen"
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-# TODO ??
 #: ../plug-ins/gradient-flare/gradient-flare.c:3469
 #: ../plug-ins/gradient-flare/gradient-flare.c:3497
 #: ../plug-ins/gradient-flare/gradient-flare.c:3525
 msgid "Paint mode:"
-msgstr "Zeichenmodus:"
+msgstr "Malmodus:"
 
+# Alt: Zeich(n)enoptionen
 #. Rays
 #: ../plug-ins/gradient-flare/gradient-flare.c:3473
 msgid "Rays Paint Options"
-msgstr "Zeichenoptionen für Strahlen"
+msgstr "Maloptionen für Strahlen"
 
+# Alt: Zeich(n)enoptionen
 #. Rays
 #: ../plug-ins/gradient-flare/gradient-flare.c:3501
 msgid "Second Flares Paint Options"
-msgstr "Zeichenoptionen für zweites Flare"
+msgstr "Maloptionen für Sekundärlichtreflexe"
 
 #.
 #. *  Gradient Menus
@@ -10899,13 +10908,13 @@ msgstr "Größe (%):"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3710
 #: ../plug-ins/gradient-flare/gradient-flare.c:3847
 msgid "Rotation:"
-msgstr "Rotation:"
+msgstr "Drehung:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3617
 #: ../plug-ins/gradient-flare/gradient-flare.c:3723
 #: ../plug-ins/gradient-flare/gradient-flare.c:3860
 msgid "Hue rotation:"
-msgstr "Farbton-Rotation:"
+msgstr "Farbton-Verschiebung:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3631
 msgid "G_low"
@@ -10936,7 +10945,7 @@ msgstr "Wahrscheinlichkeitsverlauf:"
 #.
 #: ../plug-ins/gradient-flare/gradient-flare.c:3877
 msgid "Shape of Second Flares"
-msgstr "Form des zweiten Flare"
+msgstr "Form der Sekundärlichtreflexe"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3885
 #: ../plug-ins/imagemap/imap_menu.c:221
@@ -10948,13 +10957,16 @@ msgstr "Kreis"
 msgid "Polygon"
 msgstr "Polygon"
 
+# XXX: kein "Zufälliger Anfangswert" (im Gegenteil!),
+# sondern ein "Zufallszahlengeneratorinitialisierungswert" ;-)
+# vergl. plug-ins/script-fu/scripts/{flatland,land}.scm
 #: ../plug-ins/gradient-flare/gradient-flare.c:3935
 msgid "Random seed:"
-msgstr "Zufälliger Anfangswert:"
+msgstr "Anfangswert für Zufallszahlen:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3949
 msgid "_Second Flares"
-msgstr "_Zweites Flare"
+msgstr "_Sekundärlichtreflexe"
 
 #: ../plug-ins/help-browser/dialog.c:185
 #: ../plug-ins/help-browser/dialog.c:1114
