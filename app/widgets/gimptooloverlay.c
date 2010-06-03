@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimptooloverlay.c
- * Copyright (C) 2009  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2009-2010  Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -48,22 +49,24 @@ struct _ResponseData
 };
 
 
-static void       gimp_tool_overlay_destroy       (GtkObject      *object);
+static void       gimp_tool_overlay_destroy       (GtkObject       *object);
 
-static void       gimp_tool_overlay_size_request  (GtkWidget      *widget,
-                                                   GtkRequisition *requisition);
-static void       gimp_tool_overlay_size_allocate (GtkWidget      *widget,
-                                                   GtkAllocation  *allocation);
-static gboolean   gimp_tool_overlay_expose        (GtkWidget      *widget,
-                                                   GdkEventExpose *eevent);
+static void       gimp_tool_overlay_size_request  (GtkWidget       *widget,
+                                                   GtkRequisition  *requisition);
+static void       gimp_tool_overlay_size_allocate (GtkWidget       *widget,
+                                                   GtkAllocation   *allocation);
+static gboolean   gimp_tool_overlay_expose        (GtkWidget       *widget,
+                                                   GdkEventExpose  *eevent);
 
-static void       gimp_tool_overlay_forall        (GtkContainer   *container,
-                                                   gboolean        include_internals,
-                                                   GtkCallback     callback,
-                                                   gpointer        callback_data);
+static void       gimp_tool_overlay_forall        (GtkContainer    *container,
+                                                   gboolean         include_internals,
+                                                   GtkCallback      callback,
+                                                   gpointer         callback_data);
 
-static ResponseData * get_response_data           (GtkWidget      *widget,
-                                                   gboolean        create);
+static void       gimp_tool_overlay_close         (GimpToolOverlay *overlay);
+
+static ResponseData * get_response_data           (GtkWidget       *widget,
+                                                   gboolean         create);
 
 
 G_DEFINE_TYPE (GimpToolOverlay, gimp_tool_overlay, GTK_TYPE_BIN)
@@ -88,6 +91,8 @@ gimp_tool_overlay_class_init (GimpToolOverlayClass *klass)
 
   container_class->forall     = gimp_tool_overlay_forall;
 
+  klass->close                = gimp_tool_overlay_close;
+
   signals[RESPONSE] =
     g_signal_new ("response",
                   G_OBJECT_CLASS_TYPE (klass),
@@ -106,6 +111,9 @@ gimp_tool_overlay_class_init (GimpToolOverlayClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  gtk_binding_entry_add_signal (gtk_binding_set_by_class (klass),
+                                GDK_Escape, 0, "close", 0);
 }
 
 static void
@@ -310,6 +318,36 @@ gimp_tool_overlay_forall (GtkContainer *container,
       if (overlay->action_area)
         (* callback) (overlay->action_area, callback_data);
     }
+}
+
+static void
+gimp_tool_overlay_close (GimpToolOverlay *overlay)
+{
+  GList        *children;
+  GList        *list;
+  ResponseData *ad = NULL;
+
+  children = gtk_container_get_children (GTK_CONTAINER (overlay->action_area));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *child = list->data;
+
+      ad = get_response_data (child, FALSE);
+
+      if (ad->response_id == GTK_RESPONSE_CLOSE ||
+          ad->response_id == GTK_RESPONSE_CANCEL)
+        {
+          break;
+        }
+
+      ad = NULL;
+    }
+
+  g_list_free (children);
+
+  if (ad)
+    gimp_tool_overlay_response (overlay, ad->response_id);
 }
 
 GtkWidget *
