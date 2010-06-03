@@ -32,6 +32,7 @@
 
 #include "gimpcontainereditor.h"
 #include "gimpcontainergridview.h"
+#include "gimpcontainericonview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
 #include "gimpdocked.h"
@@ -130,11 +131,19 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
   switch (view_type)
     {
     case GIMP_VIEW_TYPE_GRID:
+#if 0
+      editor->view =
+        GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (container,
+                                                           context,
+                                                           view_size,
+                                                           view_border_width));
+#else
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
                                                            context,
                                                            view_size,
                                                            view_border_width));
+#endif
       break;
 
     case GIMP_VIEW_TYPE_LIST:
