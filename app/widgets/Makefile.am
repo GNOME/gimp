@@ -233,6 +233,8 @@ libappwidgets_a_sources = \
 	gimpoverlaybox.h		\
 	gimpoverlaychild.c		\
 	gimpoverlaychild.h		\
+	gimpoverlaydialog.c		\
+	gimpoverlaydialog.h		\
 	gimppaletteeditor.c		\
 	gimppanedbox.c			\
 	gimppanedbox.h			\
@@ -332,8 +334,6 @@ libappwidgets_a_sources = \
 	gimptooleditor.h		\
 	gimptooloptionseditor.c		\
 	gimptooloptionseditor.h		\
-	gimptooloverlay.c		\
-	gimptooloverlay.h		\
 	gimptoolpreseteditor.c		\
 	gimptoolpreseteditor.h		\
 	gimptoolpresetfactoryview.c	\

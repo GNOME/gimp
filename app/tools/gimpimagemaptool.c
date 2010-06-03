@@ -45,9 +45,9 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpoverlaybox.h"
+#include "widgets/gimpoverlaydialog.h"
 #include "widgets/gimpsettingsbox.h"
 #include "widgets/gimptooldialog.h"
-#include "widgets/gimptooloverlay.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -310,14 +310,14 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       if (image_map_tool->overlay)
         {
           image_map_tool->shell = shell =
-            gimp_tool_overlay_new (tool_info,
-                                   klass->shell_desc,
+            gimp_overlay_dialog_new (tool_info,
+                                     klass->shell_desc,
 
-                                   GIMP_STOCK_RESET, RESPONSE_RESET,
-                                   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                   GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     GIMP_STOCK_RESET, RESPONSE_RESET,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                                   NULL);
+                                     NULL);
 
           gtk_container_set_border_width (GTK_CONTAINER (shell), 6);
 
@@ -384,7 +384,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                  G_CALLBACK (gimp_image_map_tool_gegl_notify),
                                  image_map_tool, 0);
     }
-  else if (GIMP_IS_TOOL_OVERLAY (image_map_tool->shell) &&
+  else if (GIMP_IS_OVERLAY_DIALOG (image_map_tool->shell) &&
            ! gtk_widget_get_parent (image_map_tool->shell))
     {
       gimp_overlay_box_add_child (GIMP_OVERLAY_BOX (display_shell->canvas),
@@ -665,7 +665,7 @@ gimp_image_map_tool_dialog_hide (GimpImageMapTool *image_map_tool)
     {
       gimp_dialog_factory_hide_dialog (shell);
     }
-  else if (GIMP_IS_TOOL_OVERLAY (shell))
+  else if (GIMP_IS_OVERLAY_DIALOG (shell))
     {
       g_object_ref (shell);
       gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (shell)),
