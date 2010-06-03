@@ -29,6 +29,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpviewable.h"
 
+#include "gimpcellrendererviewable.h"
 #include "gimpcontainertreestore.h"
 #include "gimpcontainerview.h"
 #include "gimpviewrenderer.h"
@@ -47,6 +48,7 @@ typedef struct _GimpContainerTreeStorePrivate GimpContainerTreeStorePrivate;
 struct _GimpContainerTreeStorePrivate
 {
   GimpContainerView *container_view;
+  GList             *renderer_cells;
   gboolean           use_name;
 };
 
@@ -131,6 +133,14 @@ gimp_container_tree_store_constructor (GType                  type,
 static void
 gimp_container_tree_store_finalize (GObject *object)
 {
+  GimpContainerTreeStorePrivate *private = GET_PRIVATE (object);
+
+  if (private->renderer_cells)
+    {
+      g_list_free (private->renderer_cells);
+      private->renderer_cells = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -204,8 +214,22 @@ gimp_container_tree_store_new (GimpContainerView *container_view,
 }
 
 void
-gimp_container_tree_store_set_use_name  (GimpContainerTreeStore *store,
-                                         gboolean                use_name)
+gimp_container_tree_store_add_renderer_cell (GimpContainerTreeStore *store,
+                                             GtkCellRenderer        *cell)
+{
+  GimpContainerTreeStorePrivate *private;
+
+  g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
+  g_return_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell));
+
+  private = GET_PRIVATE (store);
+
+  private->renderer_cells = g_list_prepend (private->renderer_cells, cell);
+}
+
+void
+gimp_container_tree_store_set_use_name (GimpContainerTreeStore *store,
+                                        gboolean                use_name)
 {
   GimpContainerTreeStorePrivate *private;
 
@@ -285,7 +309,22 @@ gimp_container_tree_store_remove_item (GimpContainerTreeStore *store,
                                        GtkTreeIter            *iter)
 {
   if (iter)
-    gtk_tree_store_remove (GTK_TREE_STORE (store), iter);
+    {
+      gtk_tree_store_remove (GTK_TREE_STORE (store), iter);
+
+      /*  If the store is empty after this remove, clear out renderers
+       *  from all cells so they don't keep refing the viewables
+       *  (see bug #149906).
+       */
+      if (! gtk_tree_model_iter_n_children (GTK_TREE_MODEL (store), NULL))
+        {
+          GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+          GList                         *list;
+
+          for (list = private->renderer_cells; list; list = list->next)
+            g_object_set (list->data, "renderer", NULL, NULL);
+        }
+    }
 }
 
 void
@@ -400,6 +439,19 @@ gimp_container_tree_store_clear_items (GimpContainerTreeStore *store)
   g_return_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store));
 
   gtk_tree_store_clear (GTK_TREE_STORE (store));
+
+  /*  If the store is empty after this remove, clear out renderers
+   *  from all cells so they don't keep refing the viewables
+   *  (see bug #149906).
+   */
+  if (! gtk_tree_model_iter_n_children (GTK_TREE_MODEL (store), NULL))
+    {
+      GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+      GList                         *list;
+
+      for (list = private->renderer_cells; list; list = list->next)
+        g_object_set (list->data, "renderer", NULL, NULL);
+    }
 }
 
 typedef struct

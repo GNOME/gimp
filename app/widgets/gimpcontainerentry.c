@@ -156,6 +156,9 @@ gimp_container_entry_init (GimpContainerEntry *entry)
                                   GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                   NULL);
 
+  gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (model),
+                                               cell);
+
   gtk_entry_completion_set_text_column (completion,
                                         GIMP_CONTAINER_TREE_STORE_COLUMN_NAME);
 

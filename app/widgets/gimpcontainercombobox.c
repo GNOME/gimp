@@ -157,6 +157,9 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
                                   GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
                                   NULL);
 
+  gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (model),
+                                               cell);
+
   combo->viewable_renderer = cell;
 
   cell = gtk_cell_renderer_text_new ();
@@ -298,19 +301,9 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
                                          viewable,
                                          iter);
 
-  if (iter)
+  if (iter && gtk_tree_model_iter_n_children (model, NULL) == 0)
     {
-      /*  If the store is now empty, clear out renderers from all cells
-       *  so that they don't reference the viewables.  See bug #149906.
-       */
-      if (gtk_tree_model_iter_n_children (model, NULL) == 0)
-        {
-          g_object_set (GIMP_CONTAINER_COMBO_BOX (view)->viewable_renderer,
-                        "renderer", NULL,
-                        NULL);
-
-          gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
-        }
+      gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
     }
 }
 

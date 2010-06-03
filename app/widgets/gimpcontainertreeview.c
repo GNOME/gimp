@@ -250,8 +250,8 @@ gimp_container_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_container_tree_view_name_canceled),
                     tree_view);
 
-  tree_view->priv->renderer_cells = g_list_prepend (tree_view->priv->renderer_cells,
-                                                    tree_view->renderer_cell);
+  gimp_container_tree_view_add_renderer_cell (tree_view,
+                                              tree_view->renderer_cell);
 
   tree_view->priv->selection = gtk_tree_view_get_selection (tree_view->view);
 
@@ -439,6 +439,9 @@ gimp_container_tree_view_add_renderer_cell (GimpContainerTreeView *tree_view,
 
   tree_view->priv->renderer_cells = g_list_prepend (tree_view->priv->renderer_cells,
                                                     cell);
+
+  gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+                                               cell);
 }
 
 void
@@ -596,21 +599,7 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
                                          iter);
 
   if (iter)
-    {
-      gtk_tree_view_columns_autosize (tree_view->view);
-
-      /*  If the store is empty after this remove, clear out renderers
-       *  from all cells so they don't keep refing the viewables
-       *  (see bug #149906).
-       */
-      if (! gtk_tree_model_iter_n_children (tree_view->model, NULL))
-        {
-          GList *list;
-
-          for (list = tree_view->priv->renderer_cells; list; list = list->next)
-            g_object_set (list->data, "renderer", NULL, NULL);
-        }
-    }
+    gtk_tree_view_columns_autosize (tree_view->view);
 }
 
 static void
@@ -723,17 +712,6 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
 
   gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (tree_view->model));
-
-  /*  Clear out renderers from all cells so they don't keep refing the
-   *  viewables (see bug #149906).
-   */
-  if (! gtk_tree_model_iter_n_children (tree_view->model, NULL))
-    {
-      GList *list;
-
-      for (list = tree_view->priv->renderer_cells; list; list = list->next)
-        g_object_set (list->data, "renderer", NULL, NULL);
-    }
 
   parent_view_iface->clear_items (view);
 }
