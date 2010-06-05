@@ -78,16 +78,12 @@ struct _GimpTemplateClass
 };
 
 
-GType          gimp_template_get_type        (void) G_GNUC_CONST;
+GType          gimp_template_get_type       (void) G_GNUC_CONST;
 
-GimpTemplate * gimp_template_new             (const gchar    *name);
+GimpTemplate * gimp_template_new            (const gchar  *name);
 
-void           gimp_template_set_from_image  (GimpTemplate   *template,
-                                              GimpImage      *image);
-
-GimpImage    * gimp_template_create_image    (Gimp           *gimp,
-                                              GimpTemplate   *template,
-                                              GimpContext    *context);
+void           gimp_template_set_from_image (GimpTemplate *template,
+                                             GimpImage    *image);
 
 
 #endif /* __GIMP_TEMPLATE__ */

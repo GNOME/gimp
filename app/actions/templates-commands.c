@@ -91,7 +91,7 @@ templates_create_image_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
-      gimp_template_create_image (gimp, template, context);
+      gimp_image_new_from_template (gimp, template, context);
       gimp_image_new_set_last_template (gimp, template);
     }
 }

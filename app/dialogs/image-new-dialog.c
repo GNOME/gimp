@@ -344,7 +344,7 @@ image_new_create_image (ImageNewDialog *dialog)
 
   gtk_widget_destroy (dialog->dialog);
 
-  gimp_template_create_image (gimp, template, gimp_get_user_context (gimp));
+  gimp_image_new_from_template (gimp, template, gimp_get_user_context (gimp));
   gimp_image_new_set_last_template (gimp, template);
 
   g_object_unref (template);

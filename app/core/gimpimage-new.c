@@ -31,6 +31,7 @@
 #include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
+#include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-new.h"
@@ -76,6 +77,77 @@ gimp_image_new_set_last_template (Gimp         *gimp,
 
   gimp_config_sync (G_OBJECT (template),
                     G_OBJECT (gimp->image_new_last_template), 0);
+}
+
+GimpImage *
+gimp_image_new_from_template (Gimp         *gimp,
+                              GimpTemplate *template,
+                              GimpContext  *context)
+{
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GimpImageType  type;
+  gint           width, height;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  image = gimp_create_image (gimp,
+                             template->width, template->height,
+                             template->image_type,
+                             FALSE);
+
+  gimp_image_undo_disable (image);
+
+  if (template->comment)
+    {
+      GimpParasite *parasite;
+
+      parasite = gimp_parasite_new ("gimp-comment",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (template->comment) + 1,
+                                    template->comment);
+      gimp_image_parasite_attach (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+
+  gimp_image_set_resolution (image,
+                             template->xresolution, template->yresolution);
+  gimp_image_set_unit (image, template->resolution_unit);
+
+  width  = gimp_image_get_width (image);
+  height = gimp_image_get_height (image);
+
+  switch (template->fill_type)
+    {
+    case GIMP_TRANSPARENT_FILL:
+      type = ((template->image_type == GIMP_RGB) ?
+              GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE);
+      break;
+    default:
+      type = ((template->image_type == GIMP_RGB) ?
+              GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE);
+      break;
+    }
+
+  layer = gimp_layer_new (image, width, height, type,
+                          _("Background"),
+                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
+                              context, template->fill_type);
+
+  gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+
+  gimp_image_undo_enable (image);
+  gimp_image_clean_all (image);
+
+  gimp_create_display (gimp, image, template->unit, 1.0);
+
+  g_object_unref (image);
+
+  return image;
 }
 
 GimpImage *

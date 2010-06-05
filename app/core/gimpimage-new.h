@@ -24,6 +24,9 @@ GimpTemplate * gimp_image_new_get_last_template (Gimp            *gimp,
 void           gimp_image_new_set_last_template (Gimp            *gimp,
                                                  GimpTemplate    *template);
 
+GimpImage    * gimp_image_new_from_template     (Gimp            *gimp,
+                                                 GimpTemplate    *template,
+                                                 GimpContext     *context);
 GimpImage    * gimp_image_new_from_drawable     (Gimp            *gimp,
                                                  GimpDrawable    *drawable);
 GimpImage    * gimp_image_new_from_component    (Gimp            *gimp,
