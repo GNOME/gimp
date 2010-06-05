@@ -1000,7 +1000,7 @@ HELP
     @outargs = (
 	{ name => 'pixel', type => 'int8array',
 	  desc => 'The pixel value',
-	  array => { name => 'num_channels', type => 'int32', no_validate => 1,
+	  array => { name => 'num_channels', no_validate => 1,
 	  	     desc => 'The number of channels for the pixel' } }
     );
 
@@ -1059,7 +1059,7 @@ HELP
 	  desc => 'The y coordinate' },
 	{ name => 'pixel', type => 'int8array',
 	  desc => 'The pixel value',
-	  array => { name => 'num_channels', type => 'int32', no_validate => 1,
+	  array => { name => 'num_channels', no_validate => 1,
 	  	     desc => 'The number of channels for the pixel' } }
     );
 

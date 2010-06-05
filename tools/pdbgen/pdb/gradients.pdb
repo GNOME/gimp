@@ -128,7 +128,7 @@ sub gradients_sample_custom {
     @inargs = (
 	{ name  => 'positions', type  => 'floatarray',
 	  desc  => 'The list of positions to sample along the gradient',
-	  array => { name => 'num_samples', type => 'int32',
+	  array => { name => 'num_samples',
 		     desc => 'The number of samples to take' } },
 	{ name => 'reverse', type => 'boolean',
 	  desc => 'Use the reverse gradient' }
