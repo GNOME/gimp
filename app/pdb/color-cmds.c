@@ -1102,13 +1102,13 @@ register_color_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("start-range",
                                                       "start range",
                                                       "Start of the intensity measurement range",
-                                                      0, 256, 0,
+                                                      0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("end-range",
                                                       "end range",
                                                       "End of the intensity measurement range",
-                                                      0, 256, 0,
+                                                      0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("mean",

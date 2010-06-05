@@ -215,20 +215,6 @@ package Gimp::CodeGen::pdb;
 
 # Split out the parts of an arg constraint
 sub arg_parse {
-    my %premap = (
-	'<'  => '<=',
-	'>'  => '>=',
-	'<=' => '<',
-	'>=' => '>'
-    );
-
-    my %postmap = (
-	'<'  => '>=',
-	'>'  => '<=',
-	'<=' => '>',
-	'>=' => '<'
-    );
-
     my $arg = shift;
 
     if ($arg =~ /^enum (\w+)(.*)/) {
@@ -251,7 +237,7 @@ sub arg_parse {
 		     \s* (\w+) \s*
 		     (?:(<=|<) \s* ([+-.\dA-Z_][^\s]*))?
 		   /x) {
-	return ($3, $1, $2 ? $premap{$2} : $2, $5, $4 ? $postmap{$4} : $4);
+	return ($3, $1, $2, $5, $4);
     }
 }
 
