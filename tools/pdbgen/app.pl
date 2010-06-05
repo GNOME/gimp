@@ -324,8 +324,18 @@ g_param_spec_double ("$name",
 CODE
     }
     elsif ($pdbtype eq 'int32') {
-	$min = defined $typeinfo[0] ? $typeinfo[0] : G_MININT32;
-	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXINT32;
+	if (defined $typeinfo[0]) {
+	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
+	}
+	else {
+	    $min = G_MININT32;
+	}
+	if (defined $typeinfo[2]) {
+	    $max = ($typeinfo[3] eq '<') ? ($typeinfo[2] - 1) : $typeinfo[2];
+	}
+	else {
+	    $max = G_MAXINT32;
+	}
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
 gimp_param_spec_int32 ("$name",
@@ -336,8 +346,18 @@ gimp_param_spec_int32 ("$name",
 CODE
     }
     elsif ($pdbtype eq 'int16') {
-	$min = defined $typeinfo[0] ? $typeinfo[0] : G_MININT16;
-	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXINT16;
+	if (defined $typeinfo[0]) {
+	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
+	}
+	else {
+	    $min = G_MININT16;
+	}
+	if (defined $typeinfo[2]) {
+	    $max = ($typeinfo[3] eq '<') ? ($typeinfo[2] - 1) : $typeinfo[2];
+	}
+	else {
+	    $max = G_MAXINT16;
+	}
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
 gimp_param_spec_int16 ("$name",
@@ -348,8 +368,18 @@ gimp_param_spec_int16 ("$name",
 CODE
     }
     elsif ($pdbtype eq 'int8') {
-	$min = defined $typeinfo[0] ? $typeinfo[0] : 0;
-	$max = defined $typeinfo[2] ? $typeinfo[2] : G_MAXUINT8;
+	if (defined $typeinfo[0]) {
+	    $min = ($typeinfo[1] eq '<') ? ($typeinfo[0] + 1) : $typeinfo[0];
+	}
+	else {
+	    $min = 0;
+	}
+	if (defined $typeinfo[2]) {
+	    $max = ($typeinfo[3] eq '<') ? ($typeinfo[2] - 1) : $typeinfo[2];
+	}
+	else {
+	    $max = G_MAXUINT8;
+	}
 	$default = exists $arg->{default} ? $arg->{default} : defined $typeinfo[0] ? $typeinfo[0] : 0;
 	$pspec = <<CODE;
 gimp_param_spec_int8 ("$name",

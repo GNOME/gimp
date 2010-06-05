@@ -164,10 +164,10 @@ sub arrayexpand {
 
 	    # We can't have negative lengths, but let them set a min number
 	    unless (exists $arg->{type}) {
-		$arg->{type} = '0 < int32';
+		$arg->{type} = '0 <= int32';
 	    }
 	    elsif ($arg->{type} !~ /^\s*\d+\s*</) {
-		$arg->{type} = '0 < ' . $arg->{type};
+		$arg->{type} = '0 <= ' . $arg->{type};
 	    }
 
 	    $arg->{void_ret} = 1 if exists $_->{void_ret};
