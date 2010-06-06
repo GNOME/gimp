@@ -152,3 +152,19 @@ gimp_layer_mode_to_gegl_operation (GimpLayerModeEffects mode)
 
   return "gegl:over";
 }
+
+const gchar *
+gimp_interpolation_to_gegl_filter (GimpInterpolationType interpolation)
+{
+  switch (interpolation)
+    {
+    case GIMP_INTERPOLATION_NONE:    return "nearest";
+    case GIMP_INTERPOLATION_LINEAR:  return "linear";
+    case GIMP_INTERPOLATION_CUBIC:   return "cubic";
+    case GIMP_INTERPOLATION_LANCZOS: return "lanczos";
+    default:
+      break;
+    }
+
+  return "nearest";
+}
