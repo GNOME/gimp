@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h> /* strcmp */
-
 #include <glib-object.h>
 
 #include "core-types.h"
@@ -31,8 +28,8 @@
 #include "gimpmarshal.h"
 #include "gimptag.h"
 #include "gimptagged.h"
-#include "gimplist.h"
 #include "gimpfilteredcontainer.h"
+
 
 enum
 {
@@ -105,14 +102,14 @@ G_DEFINE_TYPE (GimpFilteredContainer, gimp_filtered_container, GIMP_TYPE_LIST)
 
 #define parent_class gimp_filtered_container_parent_class
 
-static guint        gimp_filtered_container_signals[LAST_SIGNAL] = { 0, };
+static guint gimp_filtered_container_signals[LAST_SIGNAL] = { 0, };
 
 
 static void
 gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
 {
-  GObjectClass       *g_object_class    = G_OBJECT_CLASS (klass);
-  GimpObjectClass    *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GObjectClass    *g_object_class    = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   g_object_class->constructor    = gimp_filtered_container_constructor;
   g_object_class->dispose        = gimp_filtered_container_dispose;
@@ -134,7 +131,8 @@ gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
                   G_TYPE_INT);
 
   g_object_class_install_property (g_object_class, PROP_SRC_CONTAINER,
-                                   g_param_spec_object ("src-container", NULL, NULL,
+                                   g_param_spec_object ("src-container",
+                                                        NULL, NULL,
                                                         GIMP_TYPE_CONTAINER,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -259,11 +257,9 @@ static gint64
 gimp_filtered_container_get_memsize (GimpObject *object,
                                      gint64     *gui_size)
 {
-  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
-  gint64                 memsize            = 0;
+  gint64 memsize = 0;
 
-  memsize += (gimp_container_get_n_children (GIMP_CONTAINER (filtered_container)) *
-              sizeof (GList));
+  /* FIXME take members into account */
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
