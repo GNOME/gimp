@@ -31,6 +31,7 @@
 #include "base/tile.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -291,7 +292,6 @@ debug_benchmark_projection (GimpImage *image)
 {
   GimpProjection *projection = gimp_image_get_projection (image);
   TileManager    *tiles;
-  GTimer         *timer;
   gint            x, y;
 
   gimp_image_invalidate (image,
@@ -302,7 +302,7 @@ debug_benchmark_projection (GimpImage *image)
 
   tiles = gimp_pickable_get_tiles (GIMP_PICKABLE (projection));
 
-  timer = g_timer_new ();
+  GIMP_TIMER_START ();
 
   for (x = 0; x < tile_manager_width (tiles); x += TILE_WIDTH)
     {
@@ -314,10 +314,7 @@ debug_benchmark_projection (GimpImage *image)
         }
     }
 
-  g_print ("Validation of the entire projection took %.0f ms\n",
-           1000 * g_timer_elapsed (timer, NULL));
-
-  g_timer_destroy (timer);
+  GIMP_TIMER_END ("Validation of the entire projection");
 
   g_object_unref (image);
 

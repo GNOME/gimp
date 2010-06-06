@@ -19,6 +19,15 @@
 #define __APP_GIMP_UTILS_H__
 
 
+#define GIMP_TIMER_START() \
+  { GTimer *_timer = g_timer_new ();
+
+#define GIMP_TIMER_END(message) \
+  g_printerr ("%s: " message " took %0.2f seconds\n", \
+              G_STRFUNC, g_timer_elapsed (_timer, NULL)); \
+  g_timer_destroy (_timer); }
+
+
 gint64       gimp_g_type_instance_get_memsize      (GTypeInstance   *instance);
 gint64       gimp_g_object_get_memsize             (GObject         *object);
 gint64       gimp_g_hash_table_get_memsize         (GHashTable      *hash,

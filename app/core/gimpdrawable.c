@@ -36,6 +36,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h" /* temp for gimp_use_gegl() */
+#include "gimp-utils.h" /* temp for GIMP_TIMER */
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-combine.h"
@@ -460,6 +461,8 @@ gimp_drawable_scale (GimpItem              *item,
 
   new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
 
+  GIMP_TIMER_START ();
+
   if (gimp_use_gegl (gimp_item_get_image (item)->gimp) &&
       ! gimp_drawable_is_indexed (drawable)            &&
       interpolation_type != GIMP_INTERPOLATION_LANCZOS)
@@ -510,6 +513,8 @@ gimp_drawable_scale (GimpItem              *item,
                     progress ? gimp_progress_update_and_flush : NULL,
                     progress);
     }
+
+  GIMP_TIMER_END ("scaling");
 
   gimp_drawable_set_tiles_full (drawable, gimp_item_is_attached (item), NULL,
                                 new_tiles, gimp_drawable_type (drawable),
