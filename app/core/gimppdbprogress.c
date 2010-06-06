@@ -419,8 +419,7 @@ gimp_pdb_progress_get_by_callback (GimpPdbProgressClass *klass,
     {
       GimpPdbProgress *progress = list->data;
 
-      if (progress->callback_name &&
-          strcmp (callback_name, progress->callback_name) == 0)
+      if (! g_strcmp0 (callback_name, progress->callback_name))
         return progress;
     }
 

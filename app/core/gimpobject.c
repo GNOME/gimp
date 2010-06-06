@@ -205,8 +205,7 @@ gimp_object_set_name (GimpObject  *object,
 {
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  if ((!object->p->name && !name) ||
-      (object->p->name && name && !strcmp (object->p->name, name)))
+  if (! g_strcmp0 (object->p->name, name))
     return;
 
   gimp_object_name_free (object);
@@ -233,8 +232,7 @@ gimp_object_set_name_safe (GimpObject  *object,
 {
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  if ((!object->p->name && !name) ||
-      (object->p->name && name && !strcmp (object->p->name, name)))
+  if (! g_strcmp0 (object->p->name, name))
     return;
 
   gimp_object_name_free (object);

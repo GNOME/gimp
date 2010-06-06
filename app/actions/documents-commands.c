@@ -354,7 +354,7 @@ documents_raise_display (GimpDisplay  *display,
 {
   const gchar *uri = gimp_object_get_name (gimp_display_get_image (display));
 
-  if (uri && ! strcmp (closure->name, uri))
+  if (! g_strcmp0 (closure->name, uri))
     {
       closure->found = TRUE;
       gimp_display_shell_present (gimp_display_get_shell (display));

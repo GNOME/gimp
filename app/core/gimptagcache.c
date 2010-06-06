@@ -566,7 +566,7 @@ gimp_tag_cache_load_text (GMarkupParseContext  *context,
 
   current_element = g_markup_parse_context_get_element (context);
 
-  if (current_element && strcmp (current_element, "tag") == 0)
+  if (g_strcmp0 (current_element, "tag") == 0)
     {
       if (text_len >= sizeof (buffer))
         {
