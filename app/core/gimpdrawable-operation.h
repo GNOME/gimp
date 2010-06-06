@@ -24,11 +24,18 @@
 #define __GIMP_DRAWABLE_OPERATION_H__
 
 
-void   gimp_drawable_apply_operation (GimpDrawable *drawable,
-                                      GimpProgress *progress,
-                                      const gchar  *undo_desc,
-                                      GeglNode     *operation,
-                                      gboolean      linear);
+void   gimp_drawable_apply_operation          (GimpDrawable *drawable,
+                                               GimpProgress *progress,
+                                               const gchar  *undo_desc,
+                                               GeglNode     *operation,
+                                               gboolean      linear);
+
+void   gimp_drawable_apply_operation_to_tiles (GimpDrawable *drawable,
+                                               GimpProgress *progress,
+                                               const gchar  *undo_desc,
+                                               GeglNode     *operation,
+                                               gboolean      linear,
+                                               TileManager  *new_tiles);
 
 
 #endif /* __GIMP_DRAWABLE_OPERATION_H__ */
