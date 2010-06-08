@@ -39,7 +39,6 @@ struct _GimpDrawable
 
   gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
-  gboolean       has_alpha;          /* drawable has alpha             */
 
   GimpDrawablePrivate *private;
 };

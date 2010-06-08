@@ -254,13 +254,12 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
-  drawable->private   = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
-                                                     GIMP_TYPE_DRAWABLE,
-                                                     GimpDrawablePrivate);
+  drawable->private = G_TYPE_INSTANCE_GET_PRIVATE (drawable,
+                                                   GIMP_TYPE_DRAWABLE,
+                                                   GimpDrawablePrivate);
 
-  drawable->bytes     = 0;
-  drawable->type      = -1;
-  drawable->has_alpha = FALSE;
+  drawable->bytes = 0;
+  drawable->type  = -1;
 }
 
 /* sorry for the evil casts */
@@ -832,7 +831,6 @@ gimp_drawable_real_set_tiles (GimpDrawable *drawable,
   drawable->private->tiles = tiles;
   drawable->type           = type;
   drawable->bytes          = tile_manager_bpp (tiles);
-  drawable->has_alpha      = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
 
   gimp_item_set_offset (item, offset_x, offset_y);
   gimp_item_set_size (item,
@@ -1207,9 +1205,8 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   gimp_item_configure (GIMP_ITEM (drawable), image,
                        offset_x, offset_y, width, height, name);
 
-  drawable->type      = type;
-  drawable->bytes     = GIMP_IMAGE_TYPE_BYTES (type);
-  drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+  drawable->type  = type;
+  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (type);
 
   if (drawable->private->tiles)
     tile_manager_unref (drawable->private->tiles);
@@ -1861,7 +1858,7 @@ gimp_drawable_has_alpha (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  return drawable->has_alpha;
+  return GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (drawable));
 }
 
 GimpImageType
