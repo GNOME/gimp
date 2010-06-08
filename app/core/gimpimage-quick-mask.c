@@ -82,7 +82,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
       if (! mask)
         {
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
-                                       _("Enable Quick Mask"));
+                                       C_("undo-type", "Enable Quick Mask"));
 
           if (gimp_channel_is_empty (selection))
             {
@@ -132,7 +132,7 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           GimpLayer *floating_sel = gimp_image_get_floating_selection (image);
 
           gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,
-                                       _("Disable Quick Mask"));
+                                       C_("undo-type", "Disable Quick Mask"));
 
           if (private->quick_mask_inverted)
             gimp_channel_invert (mask, TRUE);

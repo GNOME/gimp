@@ -84,7 +84,7 @@ gimp_image_scale (GimpImage             *image,
   g_object_freeze_notify (G_OBJECT (image));
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
-                               _("Scale Image"));
+                               C_("undo-type", "Scale Image"));
 
   old_width   = gimp_image_get_width  (image);
   old_height  = gimp_image_get_height (image);

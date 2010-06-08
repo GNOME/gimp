@@ -59,7 +59,7 @@ gimp_image_set_grid (GimpImage *image,
     return;
 
   if (push_undo)
-    gimp_image_undo_push_image_grid (image, _("Grid"), private->grid);
+    gimp_image_undo_push_image_grid (image, C_("undo-type", "Grid"), private->grid);
 
   gimp_config_sync (G_OBJECT (grid), G_OBJECT (private->grid), 0);
 }

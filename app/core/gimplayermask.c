@@ -107,7 +107,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   item_class->get_tree          = gimp_layer_mask_get_tree;
   item_class->duplicate         = gimp_layer_mask_duplicate;
   item_class->rename            = gimp_layer_mask_rename;
-  item_class->translate_desc    = _("Move Layer Mask");
+  item_class->translate_desc    = C_("undo-type", "Move Layer Mask");
 }
 
 static void
@@ -257,7 +257,7 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
 
       if (push_undo)
-        gimp_image_undo_push_layer_mask_apply (image, _("Apply Layer Mask"),
+        gimp_image_undo_push_layer_mask_apply (image, C_("undo-type", "Apply Layer Mask"),
                                                layer_mask);
 
       layer_mask->apply_mask = apply ? TRUE : FALSE;
@@ -325,7 +325,7 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
 
       if (push_undo)
-        gimp_image_undo_push_layer_mask_show (image, _("Show Layer Mask"),
+        gimp_image_undo_push_layer_mask_show (image, C_("undo-type", "Show Layer Mask"),
                                               layer_mask);
 
       layer_mask->show_mask = show ? TRUE : FALSE;

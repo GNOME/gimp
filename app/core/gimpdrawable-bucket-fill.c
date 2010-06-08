@@ -283,7 +283,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
   /*  Apply it to the image  */
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
-                              TRUE, C_("command", "Bucket Fill"),
+                              TRUE, C_("undo-type", "Bucket Fill"),
                               opacity, paint_mode,
                               NULL, NULL, x1, y1);
   tile_manager_unref (buf_tiles);

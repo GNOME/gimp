@@ -139,7 +139,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* FIXME: undo group type is wrong */
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Arrange Objects"));
+                                   C_("undo-type", "Arrange Objects"));
 
       for (l = object_list, n = 1; l; l = g_list_next (l), n++)
         {

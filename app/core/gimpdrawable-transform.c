@@ -563,7 +563,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
 
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
-                               GIMP_UNDO_GROUP_TRANSFORM, _("Transform"));
+                               GIMP_UNDO_GROUP_TRANSFORM, C_("undo-type", "Transform"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -641,7 +641,7 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_TRANSFORM,
-                               C_("command", "Flip"));
+                               C_("undo-type", "Flip"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -741,7 +741,7 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   /* Start a transform undo group */
   gimp_image_undo_group_start (image,
                                GIMP_UNDO_GROUP_TRANSFORM,
-                               C_("command", "Rotate"));
+                               C_("undo-type", "Rotate"));
 
   /* Cut/Copy from the specified drawable */
   orig_tiles = gimp_drawable_transform_cut (drawable, context, &new_layer);
@@ -880,9 +880,9 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   if (GIMP_IS_LAYER (drawable))
-    undo_desc = _("Transform Layer");
+    undo_desc = C_("undo-type", "Transform Layer");
   else if (GIMP_IS_CHANNEL (drawable))
-    undo_desc = _("Transform Channel");
+    undo_desc = C_("undo-type", "Transform Channel");
   else
     return FALSE;
 

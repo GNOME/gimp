@@ -804,15 +804,15 @@ gimp_image_convert (GimpImage               *image,
   switch (new_type)
     {
     case GIMP_RGB:
-      undo_desc = _("Convert Image to RGB");
+      undo_desc = C_("undo-type", "Convert Image to RGB");
       break;
 
     case GIMP_GRAY:
-      undo_desc = _("Convert Image to Grayscale");
+      undo_desc = C_("undo-type", "Convert Image to Grayscale");
       break;
 
     case GIMP_INDEXED:
-      undo_desc = _("Convert Image to Indexed");
+      undo_desc = C_("undo-type", "Convert Image to Indexed");
       break;
     }
 

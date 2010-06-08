@@ -1629,7 +1629,7 @@ gimp_image_set_resolution (GimpImage *image,
       (ABS (private->yresolution - yresolution) >= 1e-5))
     {
       gimp_image_undo_push_image_resolution (image,
-                                             _("Change Image Resolution"));
+                                             C_("undo-type", "Change Image Resolution"));
 
       private->xresolution = xresolution;
       private->yresolution = yresolution;
@@ -1681,7 +1681,7 @@ gimp_image_set_unit (GimpImage *image,
   if (private->resolution_unit != unit)
     {
       gimp_image_undo_push_image_resolution (image,
-                                             _("Change Image Unit"));
+                                             C_("undo-type", "Change Image Unit"));
 
       private->resolution_unit = unit;
       gimp_image_unit_changed (image);
@@ -2651,7 +2651,7 @@ gimp_image_parasite_attach (GimpImage          *image,
    */
   if (gimp_parasite_is_undoable (&copy))
     gimp_image_undo_push_image_parasite (image,
-                                         _("Attach Parasite to Image"),
+                                         C_("undo-type", "Attach Parasite to Image"),
                                          &copy);
 
   /*  We used to push an cantundo on te stack here. This made the undo stack
@@ -2692,7 +2692,7 @@ gimp_image_parasite_detach (GimpImage   *image,
 
   if (gimp_parasite_is_undoable (parasite))
     gimp_image_undo_push_image_parasite_remove (image,
-                                                _("Remove Parasite from Image"),
+                                                C_("undo-type", "Remove Parasite from Image"),
                                                 name);
 
   gimp_parasite_list_remove (private->parasites, name);
@@ -3280,7 +3280,7 @@ gimp_image_add_layer (GimpImage *image,
   old_has_alpha = gimp_image_has_alpha (image);
 
   if (push_undo)
-    gimp_image_undo_push_layer_add (image, _("Add Layer"),
+    gimp_image_undo_push_layer_add (image, C_("undo-type", "Add Layer"),
                                     layer,
                                     gimp_image_get_active_layer (image));
 
@@ -3330,7 +3330,7 @@ gimp_image_remove_layer (GimpImage *image,
         }
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
-                                   _("Remove Layer"));
+                                   C_("undo-type", "Remove Layer"));
       undo_group = TRUE;
 
       gimp_image_remove_layer (image, gimp_image_get_floating_selection (image),
@@ -3343,14 +3343,14 @@ gimp_image_remove_layer (GimpImage *image,
 
   if (gimp_layer_is_floating_sel (layer))
     {
-      undo_desc = _("Remove Floating Selection");
+      undo_desc = C_("undo-type", "Remove Floating Selection");
 
       gimp_drawable_detach_floating_sel (gimp_layer_get_floating_sel_drawable (layer),
                                          layer);
     }
   else
     {
-      undo_desc = _("Remove Layer");
+      undo_desc = C_("undo-type", "Remove Layer");
     }
 
   if (push_undo)
@@ -3506,7 +3506,7 @@ gimp_image_raise_layer (GimpImage  *image,
 
   return gimp_image_reorder_layer (image, layer,
                                    gimp_layer_get_parent (layer), index - 1,
-                                   TRUE, _("Raise Layer"));
+                                   TRUE, C_("undo-type", "Raise Layer"));
 }
 
 gboolean
@@ -3518,7 +3518,7 @@ gimp_image_raise_layer_to_top (GimpImage *image,
 
   return gimp_image_reorder_layer (image, layer,
                                    gimp_layer_get_parent (layer), 0,
-                                   TRUE, _("Raise Layer to Top"));
+                                   TRUE, C_("undo-type", "Raise Layer to Top"));
 }
 
 gboolean
@@ -3546,7 +3546,7 @@ gimp_image_lower_layer (GimpImage  *image,
 
   return gimp_image_reorder_layer (image, layer,
                                    gimp_layer_get_parent (layer), index + 1,
-                                   TRUE, _("Lower Layer"));
+                                   TRUE, C_("undo-type", "Lower Layer"));
 }
 
 gboolean
@@ -3565,7 +3565,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *image,
 
   return gimp_image_reorder_layer (image, layer,
                                    gimp_layer_get_parent (layer), length - 1,
-                                   TRUE, _("Lower Layer to Bottom"));
+                                   TRUE, C_("undo-type", "Lower Layer to Bottom"));
 }
 
 gboolean
@@ -3612,7 +3612,7 @@ gimp_image_add_channel (GimpImage   *image,
     return FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_channel_add (image, _("Add Channel"),
+    gimp_image_undo_push_channel_add (image, C_("undo-type", "Add Channel"),
                                       channel,
                                       gimp_image_get_active_channel (image));
 
@@ -3650,7 +3650,7 @@ gimp_image_remove_channel (GimpImage   *image,
         }
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
-                                   _("Remove Channel"));
+                                   C_("undo-type", "Remove Channel"));
       undo_group = TRUE;
 
       gimp_image_remove_layer (image, gimp_image_get_floating_selection (image),
@@ -3662,7 +3662,7 @@ gimp_image_remove_channel (GimpImage   *image,
   active_channel = gimp_image_get_active_channel (image);
 
   if (push_undo)
-    gimp_image_undo_push_channel_remove (image, _("Remove Channel"), channel,
+    gimp_image_undo_push_channel_remove (image, C_("undo-type", "Remove Channel"), channel,
                                          gimp_channel_get_parent (channel),
                                          gimp_item_get_index (GIMP_ITEM (channel)),
                                          active_channel);
@@ -3706,7 +3706,7 @@ gimp_image_raise_channel (GimpImage    *image,
 
   return gimp_image_reorder_channel (image, channel,
                                      gimp_channel_get_parent (channel), index - 1,
-                                     TRUE, _("Raise Channel"));
+                                     TRUE, C_("undo-type", "Raise Channel"));
 }
 
 gboolean
@@ -3718,7 +3718,7 @@ gimp_image_raise_channel_to_top (GimpImage   *image,
 
   return gimp_image_reorder_channel (image, channel,
                                      gimp_channel_get_parent (channel), 0,
-                                     TRUE, _("Raise Channel to Top"));
+                                     TRUE, C_("undo-type", "Raise Channel to Top"));
 }
 
 
@@ -3747,7 +3747,7 @@ gimp_image_lower_channel (GimpImage    *image,
 
   return gimp_image_reorder_channel (image, channel,
                                      gimp_channel_get_parent (channel), index + 1,
-                                     TRUE, _("Lower Channel"));
+                                     TRUE, C_("undo-type", "Lower Channel"));
 }
 
 gboolean
@@ -3766,7 +3766,7 @@ gimp_image_lower_channel_to_bottom (GimpImage   *image,
 
   return gimp_image_reorder_channel (image, channel,
                                      gimp_channel_get_parent (channel), length - 1,
-                                     TRUE, _("Lower Channel to Bottom"));
+                                     TRUE, C_("undo-type", "Lower Channel to Bottom"));
 }
 
 gboolean
@@ -3813,7 +3813,7 @@ gimp_image_add_vectors (GimpImage   *image,
     return FALSE;
 
   if (push_undo)
-    gimp_image_undo_push_vectors_add (image, _("Add Path"),
+    gimp_image_undo_push_vectors_add (image, C_("undo-type", "Add Path"),
                                       vectors,
                                       gimp_image_get_active_vectors (image));
 
@@ -3844,7 +3844,7 @@ gimp_image_remove_vectors (GimpImage   *image,
   active_vectors = gimp_image_get_active_vectors (image);
 
   if (push_undo)
-    gimp_image_undo_push_vectors_remove (image, _("Remove Path"), vectors,
+    gimp_image_undo_push_vectors_remove (image, C_("undo-type", "Remove Path"), vectors,
                                          gimp_vectors_get_parent (vectors),
                                          gimp_item_get_index (GIMP_ITEM (vectors)),
                                          active_vectors);
@@ -3880,7 +3880,7 @@ gimp_image_raise_vectors (GimpImage    *image,
 
   return gimp_image_reorder_vectors (image, vectors,
                                      gimp_vectors_get_parent (vectors), index - 1,
-                                     TRUE, _("Raise Path"));
+                                     TRUE, C_("undo-type", "Raise Path"));
 }
 
 gboolean
@@ -3892,7 +3892,7 @@ gimp_image_raise_vectors_to_top (GimpImage   *image,
 
   return gimp_image_reorder_vectors (image, vectors,
                                      gimp_vectors_get_parent (vectors), 0,
-                                     TRUE, _("Raise Path to Top"));
+                                     TRUE, C_("undo-type", "Raise Path to Top"));
 }
 
 gboolean
@@ -3920,7 +3920,7 @@ gimp_image_lower_vectors (GimpImage    *image,
 
   return gimp_image_reorder_vectors (image, vectors,
                                      gimp_vectors_get_parent (vectors), index + 1,
-                                     TRUE, _("Lower Path"));
+                                     TRUE, C_("undo-type", "Lower Path"));
 }
 
 gboolean
@@ -3939,7 +3939,7 @@ gimp_image_lower_vectors_to_bottom (GimpImage   *image,
 
   return gimp_image_reorder_vectors (image, vectors,
                                      gimp_vectors_get_parent (vectors), length - 1,
-                                     TRUE, _("Lower Path to Bottom"));
+                                     TRUE, C_("undo-type", "Lower Path to Bottom"));
 }
 
 gboolean

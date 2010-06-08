@@ -48,7 +48,7 @@ gimp_image_add_hguide (GimpImage *image,
                           image->gimp->next_guide_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_guide (image, _("Add Horizontal Guide"), guide);
+    gimp_image_undo_push_guide (image, C_("undo-type", "Add Horizontal Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
   g_object_unref (G_OBJECT (guide));
@@ -71,7 +71,7 @@ gimp_image_add_vguide (GimpImage *image,
                           image->gimp->next_guide_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_guide (image, _("Add Vertical Guide"), guide);
+    gimp_image_undo_push_guide (image, C_("undo-type", "Add Vertical Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
   g_object_unref (G_OBJECT (guide));
@@ -114,7 +114,7 @@ gimp_image_remove_guide (GimpImage *image,
   gimp_image_update_guide (image, guide);
 
   if (push_undo)
-    gimp_image_undo_push_guide (image, _("Remove Guide"), guide);
+    gimp_image_undo_push_guide (image, C_("undo-type", "Remove Guide"), guide);
 
   private->guides = g_list_remove (private->guides, guide);
   gimp_guide_removed (guide);
@@ -139,7 +139,7 @@ gimp_image_move_guide (GimpImage *image,
     g_return_if_fail (position <= gimp_image_get_width (image));
 
   if (push_undo)
-    gimp_image_undo_push_guide (image, _("Move Guide"), guide);
+    gimp_image_undo_push_guide (image, C_("undo-type", "Move Guide"), guide);
 
   gimp_image_update_guide (image, guide);
   gimp_guide_set_position (guide, position);

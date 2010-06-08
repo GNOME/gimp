@@ -48,7 +48,7 @@ gimp_image_item_list_translate (GimpImage *image,
 
       if (push_undo)
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                     _("Translate Items"));
+                                     C_("undo-type", "Translate Items"));
 
       for (l = list; l; l = g_list_next (l))
         gimp_item_translate (GIMP_ITEM (l->data),
@@ -75,7 +75,7 @@ gimp_image_item_list_flip (GimpImage           *image,
       GList *l;
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                                   _("Flip Items"));
+                                   C_("undo-type", "Flip Items"));
 
       for (l = list; l; l = g_list_next (l))
         gimp_item_flip (GIMP_ITEM (l->data), context,
@@ -102,7 +102,7 @@ gimp_image_item_list_rotate (GimpImage        *image,
       GList *l;
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                                   _("Rotate Items"));
+                                   C_("undo-type", "Rotate Items"));
 
       for (l = list; l; l = g_list_next (l))
         gimp_item_rotate (GIMP_ITEM (l->data), context,
@@ -132,7 +132,7 @@ gimp_image_item_list_transform (GimpImage              *image,
       GList *l;
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                                   _("Transform Items"));
+                                   C_("undo-type", "Transform Items"));
 
       for (l = list; l; l = g_list_next (l))
         gimp_item_transform (GIMP_ITEM (l->data), context,

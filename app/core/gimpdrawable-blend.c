@@ -241,7 +241,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, FALSE);
   gimp_drawable_apply_region (drawable, &bufPR,
-                              TRUE, _("Blend"),
+                              TRUE, C_("undo-type", "Blend"),
                               opacity, paint_mode,
                               NULL, NULL, x, y);
 

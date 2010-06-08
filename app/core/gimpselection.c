@@ -151,8 +151,8 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->flip                    = gimp_selection_flip;
   item_class->rotate                  = gimp_selection_rotate;
   item_class->stroke                  = gimp_selection_stroke;
-  item_class->translate_desc          = _("Move Selection");
-  item_class->stroke_desc             = _("Stroke Selection");
+  item_class->translate_desc          = C_("undo-type", "Move Selection");
+  item_class->stroke_desc             = C_("undo-type", "Stroke Selection");
 
   drawable_class->invalidate_boundary = gimp_selection_invalidate_boundary;
 
@@ -168,14 +168,14 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   channel_class->grow                 = gimp_selection_grow;
   channel_class->shrink               = gimp_selection_shrink;
 
-  channel_class->feather_desc         = _("Feather Selection");
-  channel_class->sharpen_desc         = _("Sharpen Selection");
-  channel_class->clear_desc           = _("Select None");
-  channel_class->all_desc             = _("Select All");
-  channel_class->invert_desc          = _("Invert Selection");
-  channel_class->border_desc          = _("Border Selection");
-  channel_class->grow_desc            = _("Grow Selection");
-  channel_class->shrink_desc          = _("Shrink Selection");
+  channel_class->feather_desc         = C_("undo-type", "Feather Selection");
+  channel_class->sharpen_desc         = C_("undo-type", "Sharpen Selection");
+  channel_class->clear_desc           = C_("undo-type", "Select None");
+  channel_class->all_desc             = C_("undo-type", "Select All");
+  channel_class->invert_desc          = C_("undo-type", "Invert Selection");
+  channel_class->border_desc          = C_("undo-type", "Border Selection");
+  channel_class->grow_desc            = C_("undo-type", "Grow Selection");
+  channel_class->shrink_desc          = C_("undo-type", "Shrink Selection");
 }
 
 static void
@@ -580,7 +580,7 @@ gimp_selection_load (GimpSelection *selection,
   g_return_if_fail (height == gimp_item_get_height (GIMP_ITEM (channel)));
 
   gimp_channel_push_undo (GIMP_CHANNEL (selection),
-                          _("Channel to Selection"));
+                          C_("undo-type", "Channel to Selection"));
 
   /*  copy the channel to the mask  */
   pixel_region_init (&srcPR,
@@ -848,7 +848,7 @@ gimp_selection_float (GimpSelection *selection,
 
   /*  Start an undo group  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_FLOAT,
-                               _("Float Selection"));
+                               C_("undo-type", "Float Selection"));
 
   /*  Cut or copy the selected region  */
   tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,

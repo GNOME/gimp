@@ -126,10 +126,10 @@ gimp_image_crop (GimpImage   *image,
 
       if (crop_layers)
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CROP,
-                                     C_("command", "Crop Image"));
+                                     C_("undo-type", "Crop Image"));
       else
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
-                                     _("Resize Image"));
+                                     C_("undo-type", "Resize Image"));
 
       /*  Push the image size to the stack  */
       gimp_image_undo_push_image_size (image,

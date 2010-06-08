@@ -419,6 +419,7 @@ gimp_item_real_duplicate (GimpItem *item,
 
     g_return_val_if_fail (name != NULL, NULL);
 
+
     ext = strrchr (name, '#');
     len = strlen (_("copy"));
 
@@ -1539,7 +1540,7 @@ gimp_item_parasite_attach (GimpItem           *item,
           /* do a group in case we have attach_parent set */
           gimp_image_undo_group_start (item->image,
                                        GIMP_UNDO_GROUP_PARASITE_ATTACH,
-                                       _("Attach Parasite"));
+                                       C_("undo-type", "Attach Parasite"));
 
           gimp_image_undo_push_item_parasite (item->image, NULL, item, &copy);
         }
@@ -1549,7 +1550,7 @@ gimp_item_parasite_attach (GimpItem           *item,
                                         (item, gimp_parasite_name (&copy))))
         {
           gimp_image_undo_push_cantundo (item->image,
-                                         _("Attach Parasite to Item"));
+                                         C_("undo-type", "Attach Parasite to Item"));
         }
     }
 
@@ -1591,14 +1592,14 @@ gimp_item_parasite_detach (GimpItem    *item,
   if (gimp_parasite_is_undoable (parasite))
     {
       gimp_image_undo_push_item_parasite_remove (item->image,
-                                                 _("Remove Parasite from Item"),
+                                                 C_("undo-type", "Remove Parasite from Item"),
                                                  item,
                                                  gimp_parasite_name (parasite));
     }
   else if (gimp_parasite_is_persistent (parasite))
     {
       gimp_image_undo_push_cantundo (item->image,
-                                     _("Remove Parasite from Item"));
+                                     C_("undo-type", "Remove Parasite from Item"));
     }
 
   gimp_parasite_list_remove (item->parasites, name);

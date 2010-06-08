@@ -64,7 +64,7 @@ gimp_image_set_colormap (GimpImage    *image,
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
   if (push_undo)
-    gimp_image_undo_push_image_colormap (image, _("Set Colormap"));
+    gimp_image_undo_push_image_colormap (image, C_("undo-type", "Set Colormap"));
 
   if (private->colormap)
     memset (private->colormap, 0, GIMP_IMAGE_COLORMAP_SIZE);
@@ -129,7 +129,7 @@ gimp_image_set_colormap_entry (GimpImage     *image,
 
   if (push_undo)
     gimp_image_undo_push_image_colormap (image,
-                                         _("Change Colormap entry"));
+                                         C_("undo-type", "Change Colormap entry"));
 
   gimp_rgb_get_uchar (color,
                       &private->colormap[color_index * 3],
@@ -154,7 +154,7 @@ gimp_image_add_colormap_entry (GimpImage     *image,
   g_return_if_fail (color != NULL);
 
   gimp_image_undo_push_image_colormap (image,
-                                       _("Add Color to Colormap"));
+                                       C_("undo-type", "Add Color to Colormap"));
 
   gimp_rgb_get_uchar (color,
                       &private->colormap[private->n_colors * 3],

@@ -105,7 +105,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
 
   if (merge_list)
     {
-      const gchar *undo_desc = _("Merge Visible Layers");
+      const gchar *undo_desc = C_("undo-type", "Merge Visible Layers");
 
       gimp_set_busy (image->gimp);
 
@@ -119,7 +119,7 @@ gimp_image_merge_visible_layers (GimpImage     *image,
       layer = gimp_image_merge_layers (image,
                                        container,
                                        merge_list, context, merge_type,
-                                       _("Merge Visible Layers"));
+                                       C_("undo-type", "Merge Visible Layers"));
       g_slist_free (merge_list);
 
       if (invisible_list)
@@ -173,7 +173,7 @@ gimp_image_flatten (GimpImage   *image,
   layer = gimp_image_merge_layers (image,
                                    gimp_image_get_layers (image),
                                    merge_list, context,
-                                   GIMP_FLATTEN_IMAGE, _("Flatten Image"));
+                                   GIMP_FLATTEN_IMAGE, C_("undo-type", "Flatten Image"));
   g_slist_free (merge_list);
 
   gimp_image_alpha_changed (image);
@@ -252,7 +252,7 @@ gimp_image_merge_down (GimpImage      *image,
   layer = gimp_image_merge_layers (image,
                                    gimp_item_get_container (GIMP_ITEM (current_layer)),
                                    merge_list, context, merge_type,
-                                   _("Merge Down"));
+                                   C_("undo-type", "Merge Down"));
   g_slist_free (merge_list);
 
   gimp_unset_busy (image->gimp);
@@ -274,7 +274,7 @@ gimp_image_merge_group_layer (GimpImage      *image,
   g_return_val_if_fail (gimp_item_get_image (GIMP_ITEM (group)) == image, NULL);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE,
-                               _("Merge Layer Group"));
+                               C_("undo-type", "Merge Layer Group"));
 
   parent = gimp_layer_get_parent (GIMP_LAYER (group));
   index  = gimp_item_get_index (GIMP_ITEM (group));
@@ -327,7 +327,7 @@ gimp_image_merge_visible_vectors (GimpImage  *image,
       gimp_set_busy (image->gimp);
 
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,
-                                   _("Merge Visible Paths"));
+                                   C_("undo-type", "Merge Visible Paths"));
 
       vectors = GIMP_VECTORS (merge_list->data);
 

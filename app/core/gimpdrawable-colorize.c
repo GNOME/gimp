@@ -69,7 +69,7 @@ gimp_drawable_colorize (GimpDrawable *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, progress, _("Colorize"),
+      gimp_drawable_apply_operation (drawable, progress, C_("undo-type", "Colorize"),
                                      node, TRUE);
       g_object_unref (node);
     }
@@ -81,7 +81,7 @@ gimp_drawable_colorize (GimpDrawable *drawable,
 
       gimp_colorize_config_to_cruft (config, &cruft);
 
-      gimp_drawable_process (drawable, progress, _("Colorize"),
+      gimp_drawable_process (drawable, progress, C_("undo-type", "Colorize"),
                              (PixelProcessorFunc) colorize, &cruft);
     }
 

@@ -56,7 +56,7 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   if (push_undo)
-    gimp_channel_push_undo (channel, C_("command", "Rectangle Select"));
+    gimp_channel_push_undo (channel, C_("undo-type", "Rectangle Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -107,7 +107,7 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   if (push_undo)
-    gimp_channel_push_undo (channel, C_("command", "Ellipse Select"));
+    gimp_channel_push_undo (channel, C_("undo-type", "Ellipse Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -161,7 +161,7 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
   if (push_undo)
-    gimp_channel_push_undo (channel, C_("command", "Rounded Rectangle Select"));
+    gimp_channel_push_undo (channel, C_("undo-type", "Rounded Rectangle Select"));
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
@@ -430,7 +430,7 @@ gimp_channel_select_alpha (GimpChannel    *channel,
 
   gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-  gimp_channel_select_channel (channel, _("Alpha to Selection"), add_on,
+  gimp_channel_select_channel (channel, C_("undo-type", "Alpha to Selection"), add_on,
                                off_x, off_y,
                                op, feather,
                                feather_radius_x,
@@ -468,7 +468,7 @@ gimp_channel_select_component (GimpChannel     *channel,
   gimp_enum_get_value (GIMP_TYPE_CHANNEL_TYPE, component,
                        NULL, NULL, &desc, NULL);
 
-  undo_desc = g_strdup_printf (_("%s Channel to Selection"), desc);
+  undo_desc = g_strdup_printf (C_("undo-type", "%s Channel to Selection"), desc);
 
   gimp_channel_select_channel (channel, undo_desc, add_on,
                                0, 0, op,
@@ -516,7 +516,7 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
   if (! sample_merged)
     gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
-  gimp_channel_select_channel (channel, C_("command", "Fuzzy Select"),
+  gimp_channel_select_channel (channel, C_("undo-type", "Fuzzy Select"),
                                add_on, add_on_x, add_on_y,
                                op,
                                feather,
@@ -563,7 +563,7 @@ gimp_channel_select_by_color (GimpChannel         *channel,
   if (! sample_merged)
     gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
 
-  gimp_channel_select_channel (channel, C_("command", "Select by Color"),
+  gimp_channel_select_channel (channel, C_("undo-type", "Select by Color"),
                                add_on, add_on_x, add_on_y,
                                op,
                                feather,

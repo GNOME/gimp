@@ -261,14 +261,14 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->stroke               = gimp_channel_stroke;
   item_class->get_node             = gimp_channel_get_node;
   item_class->default_name         = _("Channel");
-  item_class->rename_desc          = _("Rename Channel");
-  item_class->translate_desc       = _("Move Channel");
-  item_class->scale_desc           = _("Scale Channel");
-  item_class->resize_desc          = _("Resize Channel");
-  item_class->flip_desc            = _("Flip Channel");
-  item_class->rotate_desc          = _("Rotate Channel");
-  item_class->transform_desc       = _("Transform Channel");
-  item_class->stroke_desc          = _("Stroke Channel");
+  item_class->rename_desc          = C_("undo-type", "Rename Channel");
+  item_class->translate_desc       = C_("undo-type", "Move Channel");
+  item_class->scale_desc           = C_("undo-type", "Scale Channel");
+  item_class->resize_desc          = C_("undo-type", "Resize Channel");
+  item_class->flip_desc            = C_("undo-type", "Flip Channel");
+  item_class->rotate_desc          = C_("undo-type", "Rotate Channel");
+  item_class->transform_desc       = C_("undo-type", "Transform Channel");
+  item_class->stroke_desc          = C_("undo-type", "Stroke Channel");
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
@@ -290,14 +290,14 @@ gimp_channel_class_init (GimpChannelClass *klass)
   klass->grow           = gimp_channel_real_grow;
   klass->shrink         = gimp_channel_real_shrink;
 
-  klass->feather_desc   = _("Feather Channel");
-  klass->sharpen_desc   = _("Sharpen Channel");
-  klass->clear_desc     = _("Clear Channel");
-  klass->all_desc       = _("Fill Channel");
-  klass->invert_desc    = _("Invert Channel");
-  klass->border_desc    = _("Border Channel");
-  klass->grow_desc      = _("Grow Channel");
-  klass->shrink_desc    = _("Shrink Channel");
+  klass->feather_desc   = C_("undo-type", "Feather Channel");
+  klass->sharpen_desc   = C_("undo-type", "Sharpen Channel");
+  klass->clear_desc     = C_("undo-type", "Clear Channel");
+  klass->all_desc       = C_("undo-type", "Fill Channel");
+  klass->invert_desc    = C_("undo-type", "Invert Channel");
+  klass->border_desc    = C_("undo-type", "Border Channel");
+  klass->grow_desc      = C_("undo-type", "Grow Channel");
+  klass->shrink_desc    = C_("undo-type", "Shrink Channel");
 }
 
 static void
@@ -1712,7 +1712,7 @@ gimp_channel_set_color (GimpChannel   *channel,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (channel));
 
-          gimp_image_undo_push_channel_color (image, _("Set Channel Color"),
+          gimp_image_undo_push_channel_color (image, C_("undo-type", "Set Channel Color"),
                                               channel);
         }
 
@@ -1778,7 +1778,7 @@ gimp_channel_set_opacity (GimpChannel *channel,
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (channel));
 
-          gimp_image_undo_push_channel_color (image, _("Set Channel Opacity"),
+          gimp_image_undo_push_channel_color (image, C_("undo-type", "Set Channel Opacity"),
                                               channel);
         }
 

@@ -92,7 +92,7 @@ floating_sel_anchor (GimpLayer *layer)
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_ANCHOR,
-                               _("Anchor Floating Selection"));
+                               C_("undo-type", "Anchor Floating Selection"));
 
   /*  Composite the floating selection contents  */
   floating_sel_composite (layer);
@@ -130,7 +130,7 @@ floating_sel_to_layer (GimpLayer  *layer,
     }
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_TO_LAYER,
-                               _("Floating Selection to Layer"));
+                               C_("undo-type", "Floating Selection to Layer"));
 
   gimp_image_undo_push_fs_to_layer (image, NULL, layer);
 

@@ -159,7 +159,7 @@ gimp_drawable_curves (GimpDrawable     *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, progress, _("Curves"),
+      gimp_drawable_apply_operation (drawable, progress, C_("undo-type", "Curves"),
                                      node, TRUE);
       g_object_unref (node);
     }
@@ -176,7 +176,7 @@ gimp_drawable_curves (GimpDrawable     *drawable,
                       &cruft,
                       gimp_drawable_bytes (drawable));
 
-      gimp_drawable_process_lut (drawable, progress, _("Curves"), lut);
+      gimp_drawable_process_lut (drawable, progress, C_("undo-type", "Curves"), lut);
       gimp_lut_free (lut);
     }
 }

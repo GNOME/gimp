@@ -255,13 +255,13 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->transform               = gimp_layer_transform;
   item_class->get_node                = gimp_layer_get_node;
   item_class->default_name            = _("Layer");
-  item_class->rename_desc             = _("Rename Layer");
-  item_class->translate_desc          = _("Move Layer");
-  item_class->scale_desc              = _("Scale Layer");
-  item_class->resize_desc             = _("Resize Layer");
-  item_class->flip_desc               = _("Flip Layer");
-  item_class->rotate_desc             = _("Rotate Layer");
-  item_class->transform_desc          = _("Transform Layer");
+  item_class->rename_desc             = C_("undo-type", "Rename Layer");
+  item_class->translate_desc          = C_("undo-type", "Move Layer");
+  item_class->scale_desc              = C_("undo-type", "Scale Layer");
+  item_class->resize_desc             = C_("undo-type", "Resize Layer");
+  item_class->flip_desc               = C_("undo-type", "Flip Layer");
+  item_class->rotate_desc             = C_("undo-type", "Rotate Layer");
+  item_class->transform_desc          = C_("undo-type", "Transform Layer");
 
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
@@ -1396,7 +1396,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
     }
 
   if (push_undo)
-    gimp_image_undo_push_layer_mask_add (image, _("Add Layer Mask"),
+    gimp_image_undo_push_layer_mask_add (image, C_("undo-type", "Add Layer Mask"),
                                          layer, mask);
 
   layer->mask = g_object_ref_sink (mask);
@@ -1510,7 +1510,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
               guchar *alpha_ptr;
 
               gimp_drawable_push_undo (drawable,
-                                       _("Transfer Alpha to Mask"),
+                                       C_("undo-type", "Transfer Alpha to Mask"),
                                        0, 0,
                                        gimp_item_get_width  (item),
                                        gimp_item_get_height (item),
@@ -1680,8 +1680,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
     {
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_APPLY_MASK,
                                    (mode == GIMP_MASK_APPLY) ?
-                                   _("Apply Layer Mask") :
-                                   _("Delete Layer Mask"));
+                                   C_("undo-type", "Apply Layer Mask") :
+                                   C_("undo-type", "Delete Layer Mask"));
 
       gimp_image_undo_push_layer_mask_remove (image, NULL, layer, mask);
 
@@ -1800,7 +1800,7 @@ gimp_layer_add_alpha (GimpLayer *layer)
   /*  Set the new tiles  */
   gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
                            gimp_item_is_attached (GIMP_ITEM (layer)),
-                           _("Add Alpha Channel"),
+                           C_("undo-type", "Add Alpha Channel"),
                            new_tiles, new_type);
   tile_manager_unref (new_tiles);
 }
@@ -1854,7 +1854,7 @@ gimp_layer_flatten (GimpLayer   *layer,
   /*  Set the new tiles  */
   gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
                            gimp_item_is_attached (GIMP_ITEM (layer)),
-                           _("Remove Alpha Channel"),
+                           C_("undo-type", "Remove Alpha Channel"),
                            new_tiles, new_type);
   tile_manager_unref (new_tiles);
 }
@@ -1874,7 +1874,7 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                               _("Layer to Image Size"));
+                               C_("undo-type", "Layer to Image Size"));
 
   gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
   gimp_item_resize (GIMP_ITEM (layer), context,

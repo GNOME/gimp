@@ -76,7 +76,7 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
                      "config", config,
                      NULL);
 
-      gimp_drawable_apply_operation (drawable, progress, _("Color Balance"),
+      gimp_drawable_apply_operation (drawable, progress, C_("undo-type", "Color Balance"),
                                      node, TRUE);
       g_object_unref (node);
     }
@@ -86,7 +86,7 @@ gimp_drawable_color_balance (GimpDrawable     *drawable,
 
       gimp_color_balance_config_to_cruft (config, &cruft);
 
-      gimp_drawable_process (drawable, progress, _("Color Balance"),
+      gimp_drawable_process (drawable, progress, C_("undo-type", "Color Balance"),
                              (PixelProcessorFunc) color_balance, &cruft);
     }
 

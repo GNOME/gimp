@@ -258,7 +258,7 @@ gimp_edit_paste (GimpImage    *image,
 
   /*  Start a group undo  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
-                               _("Paste"));
+                               C_("undo-type", "Paste"));
 
   /*  If there is a selection mask clear it--
    *  this might not always be desired, but in general,
@@ -385,7 +385,7 @@ gimp_edit_clear (GimpImage    *image,
   return gimp_edit_fill_internal (image, drawable, context,
                                   GIMP_TRANSPARENT_FILL,
                                   GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
-                                  _("Clear"));
+                                  C_("undo-type", "Clear"));
 }
 
 gboolean
@@ -404,23 +404,23 @@ gimp_edit_fill (GimpImage    *image,
   switch (fill_type)
     {
     case GIMP_FOREGROUND_FILL:
-      undo_desc = _("Fill with Foreground Color");
+      undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
     case GIMP_BACKGROUND_FILL:
-      undo_desc = _("Fill with Background Color");
+      undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
     case GIMP_WHITE_FILL:
-      undo_desc = _("Fill with White");
+      undo_desc = C_("undo-type", "Fill with White");
       break;
 
     case GIMP_TRANSPARENT_FILL:
-      undo_desc = _("Fill with Transparency");
+      undo_desc = C_("undo-type", "Fill with Transparency");
       break;
 
     case GIMP_PATTERN_FILL:
-      undo_desc = _("Fill with Pattern");
+      undo_desc = C_("undo-type", "Fill with Pattern");
       break;
 
     case GIMP_NO_FILL:
@@ -497,7 +497,7 @@ gimp_edit_extract (GimpImage     *image,
   TileManager *tiles;
 
   if (cut_pixels)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, C_("undo-type", "Cut"));
 
   /*  Cut/copy the mask portion from the image  */
   tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
