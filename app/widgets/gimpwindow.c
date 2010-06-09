@@ -28,6 +28,8 @@
 
 #include "gimpwindow.h"
 
+#include "gimp-log.h"
+
 
 static gboolean  gimp_window_key_press_event (GtkWidget   *widget,
                                               GdkEventKey *kevent);
@@ -65,19 +67,43 @@ gimp_window_key_press_event (GtkWidget   *widget,
   if (GTK_IS_EDITABLE (focus)  ||
       GTK_IS_TEXT_VIEW (focus) ||
       GIMP_IS_CANVAS (focus))
-    handled = gtk_window_propagate_key_event (window, event);
+    {
+      handled = gtk_window_propagate_key_event (window, event);
+
+      if (handled)
+        GIMP_LOG (KEY_EVENTS,
+                  "handled by gtk_window_propagate_key_event(text_widget)");
+    }
 
   /* invoke control/alt accelerators */
   if (! handled && event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
-    handled = gtk_window_activate_key (window, event);
+    {
+      handled = gtk_window_activate_key (window, event);
+
+      if (handled)
+        GIMP_LOG (KEY_EVENTS,
+                  "handled by gtk_window_activate_key(modified)");
+    }
 
   /* invoke focus widget handlers */
   if (! handled)
-    handled = gtk_window_propagate_key_event (window, event);
+    {
+      handled = gtk_window_propagate_key_event (window, event);
+
+      if (handled)
+        GIMP_LOG (KEY_EVENTS,
+                  "handled by gtk_window_propagate_key_event(other_widget)");
+    }
 
   /* invoke non-(control/alt) accelerators */
   if (! handled && ! (event->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
-    handled = gtk_window_activate_key (window, event);
+    {
+      handled = gtk_window_activate_key (window, event);
+
+      if (handled)
+        GIMP_LOG (KEY_EVENTS,
+                  "handled by gtk_window_activate_key(unmodified)");
+    }
 
   /* chain up, bypassing gtk_window_key_press(), to invoke binding set */
   if (! handled)
@@ -87,6 +113,10 @@ gimp_window_key_press_event (GtkWidget   *widget,
       widget_class = g_type_class_peek_static (g_type_parent (GTK_TYPE_WINDOW));
 
       handled = widget_class->key_press_event (widget, event);
+
+      if (handled)
+        GIMP_LOG (KEY_EVENTS,
+                  "handled by widget_class->key_press_event()");
     }
 
   return handled;
