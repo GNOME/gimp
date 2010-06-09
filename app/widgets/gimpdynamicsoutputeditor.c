@@ -602,11 +602,12 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
   view =  GTK_TREE_VIEW(private->input_view);
   model = GTK_TREE_MODEL(gtk_tree_view_get_model(view));
   sel   =  gtk_tree_view_get_selection(view);
+
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
-      gint                input;
+      gint input;
 
       gtk_tree_model_get (GTK_TREE_MODEL(model), &iter,
                           INPUT_COLUMN_INDEX, &input,
@@ -614,30 +615,32 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
 
       switch (input)
         {
-          case INPUT_PRESSURE:
-            value = output->use_pressure;
-            break;
-          case INPUT_VELOCITY:
-            value = output->use_velocity;
-            break;
-          case INPUT_DIRECTION:
-            value = output->use_direction;
-            break;
-          case INPUT_TILT:
-            value = output->use_tilt;
-            break;
-          case INPUT_WHEEL:
-            value = output->use_wheel;
-            break;
-          case INPUT_RANDOM:
-            value = output->use_random;
-            break;
-          case INPUT_FADE:
-            value = output->use_fade;
-            break;
+        case INPUT_PRESSURE:
+          value = output->use_pressure;
+          break;
+        case INPUT_VELOCITY:
+          value = output->use_velocity;
+          break;
+        case INPUT_DIRECTION:
+          value = output->use_direction;
+          break;
+        case INPUT_TILT:
+          value = output->use_tilt;
+          break;
+        case INPUT_WHEEL:
+          value = output->use_wheel;
+          break;
+        case INPUT_RANDOM:
+          value = output->use_random;
+          break;
+        case INPUT_FADE:
+          value = output->use_fade;
+          break;
 
+        default:
+          g_warn_if_reached ();
+          return;
         }
-
 
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                           INPUT_COLUMN_USE_INPUT, value, -1);
@@ -652,8 +655,7 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput *output,
 
           gimp_dynamics_output_editor_activate_input(input, editor);
         }
-  }
-
+    }
 }
 
 /*  public functions  */
