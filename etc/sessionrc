@@ -12,7 +12,7 @@
     (gimp-toolbox
         (book
             (dockable "gimp-tool-options"
-                (tab-style icon)))))
+                (tab-style automatic)))))
 (session-info "dock" "gimp-dock-window"
     (position -0 0)
     (size 210 820)
@@ -20,21 +20,21 @@
     (gimp-dock
         (book
             (dockable "gimp-layer-list"
-	        (tab-style icon))
+                (tab-style automatic))
             (dockable "gimp-channel-list"
-	        (tab-style icon))
+                (tab-style automatic))
             (dockable "gimp-vectors-list"
-	        (tab-style icon))
+                (tab-style automatic))
             (dockable "gimp-undo-history"
-	        (tab-style icon)))
+                (tab-style automatic)))
         (book
             (position 420)
             (dockable "gimp-brush-grid"
-	        (tab-style preview))
+                (tab-style automatic))
             (dockable "gimp-pattern-grid"
-	        (tab-style preview))
+                (tab-style automatic))
             (dockable "gimp-gradient-list"
-	        (tab-style preview)))))
+                (tab-style automatic)))))
 (session-info "toplevel"
     (factory-entry "gimp-empty-image-window")
     (position 410 370)

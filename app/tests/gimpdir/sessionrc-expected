@@ -71,7 +71,7 @@
         (book
             (current-page 0)
             (dockable "gimp-channel-list"
-                (tab-style icon)
+                (tab-style automatic)
                 (preview-size 32)))
         (book
             (position 162)

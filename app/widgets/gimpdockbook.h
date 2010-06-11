@@ -74,6 +74,7 @@ void            gimp_dockbook_update_with_context       (GimpDockbook    *dockbo
                                                          GimpContext     *context);
 GtkWidget    *  gimp_dockbook_create_tab_widget         (GimpDockbook    *dockbook,
                                                          GimpDockable    *dockable);
+void            gimp_dockbook_update_auto_tab_style     (GimpDockbook    *dockbook);
 gboolean        gimp_dockbook_drop_dockable             (GimpDockbook    *dockbook,
                                                          GtkWidget       *drag_source);
 void            gimp_dockbook_set_drag_handler          (GimpDockbook    *dockbook,

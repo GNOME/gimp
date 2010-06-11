@@ -205,6 +205,8 @@ gimp_tab_style_get_type (void)
     { GIMP_TAB_STYLE_ICON_BLURB, "GIMP_TAB_STYLE_ICON_BLURB", "icon-blurb" },
     { GIMP_TAB_STYLE_PREVIEW_NAME, "GIMP_TAB_STYLE_PREVIEW_NAME", "preview-name" },
     { GIMP_TAB_STYLE_PREVIEW_BLURB, "GIMP_TAB_STYLE_PREVIEW_BLURB", "preview-blurb" },
+    { GIMP_TAB_STYLE_UNDEFINED, "GIMP_TAB_STYLE_UNDEFINED", "undefined" },
+    { GIMP_TAB_STYLE_AUTOMATIC, "GIMP_TAB_STYLE_AUTOMATIC", "automatic" },
     { 0, NULL, NULL }
   };
 
@@ -218,6 +220,8 @@ gimp_tab_style_get_type (void)
     { GIMP_TAB_STYLE_ICON_BLURB, NC_("tab-style", "Icon & desc"), NULL },
     { GIMP_TAB_STYLE_PREVIEW_NAME, NC_("tab-style", "Status & text"), NULL },
     { GIMP_TAB_STYLE_PREVIEW_BLURB, NC_("tab-style", "Status & desc"), NULL },
+    { GIMP_TAB_STYLE_UNDEFINED, NC_("tab-style", "Undefined"), NULL },
+    { GIMP_TAB_STYLE_AUTOMATIC, NC_("tab-style", "Automatic"), NULL },
     { 0, NULL, NULL }
   };
 

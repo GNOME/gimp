@@ -88,6 +88,7 @@ static GtkWidget * gimp_tool_options_editor_get_preview       (GimpDocked       
                                                                GimpContext           *context,
                                                                GtkIconSize            size);
 static gchar     * gimp_tool_options_editor_get_title         (GimpDocked            *docked);
+static gboolean    gimp_tool_options_editor_get_prefer_icon   (GimpDocked            *docked);
 static void        gimp_tool_options_editor_save_clicked      (GtkWidget             *widget,
                                                                GimpToolOptionsEditor *editor);
 static void        gimp_tool_options_editor_restore_clicked   (GtkWidget             *widget,
@@ -184,8 +185,9 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 static void
 gimp_tool_options_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->get_preview = gimp_tool_options_editor_get_preview;
-  docked_iface->get_title   = gimp_tool_options_editor_get_title;
+  docked_iface->get_preview     = gimp_tool_options_editor_get_preview;
+  docked_iface->get_title       = gimp_tool_options_editor_get_title;
+  docked_iface->get_prefer_icon = gimp_tool_options_editor_get_prefer_icon;
 }
 
 static GObject *
@@ -347,6 +349,15 @@ gimp_tool_options_editor_get_title (GimpDocked *docked)
   tool_info = gimp_context_get_tool (context);
 
   return tool_info ? g_strdup (tool_info->blurb) : NULL;
+}
+
+static gboolean
+gimp_tool_options_editor_get_prefer_icon (GimpDocked *docked)
+{
+  /* We support get_preview() for tab tyles, but we prefer to show our
+   * icon
+   */
+  return TRUE;
 }
 
 

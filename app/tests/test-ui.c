@@ -16,6 +16,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -31,6 +32,8 @@
 #include "display/gimpimagewindow.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockable.h"
+#include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocked.h"
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimphelp-ids.h"
@@ -65,6 +68,8 @@ typedef struct
 
 
 static void            gimp_ui_tool_options_editor_updates      (GimpTestFixture   *fixture,
+                                                                 gconstpointer      data);
+static void            gimp_ui_automatic_tab_style              (GimpTestFixture   *fixture,
                                                                  gconstpointer      data);
 static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture   *fixture,
                                                                  gconstpointer      data);
@@ -112,6 +117,12 @@ int main(int argc, char **argv)
               NULL,
               gimp_ui_tool_options_editor_updates,
               NULL);
+  g_test_add ("/gimp-ui/automatic-tab-style",
+              GimpTestFixture,
+              gimp,
+              NULL,
+              gimp_ui_automatic_tab_style,
+              NULL);
   g_test_add ("/gimp-ui/create-new-image-via-dialog",
               GimpTestFixture,
               gimp,
@@ -154,6 +165,7 @@ int main(int argc, char **argv)
               NULL,
               gimp_ui_switch_back_to_multi_window_mode,
               NULL);
+
 
   /* Run the tests and return status */
   result = g_test_run ();
@@ -215,6 +227,82 @@ gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
                    gimp_tool_options_editor_get_tool_options (editor)->
                    tool_info->
                    help_id);
+}
+
+static GtkWidget *
+gimp_ui_get_dialog (const gchar *identifier)
+{
+  GtkWidget *result = NULL;
+  GList     *iter;
+
+  for (iter = gimp_dialog_factory_get_open_dialogs (gimp_dialog_factory_get_singleton ());
+       iter;
+       iter = g_list_next (iter))
+    {
+      GtkWidget *dialog = GTK_WIDGET (iter->data);
+      GimpDialogFactoryEntry *entry = NULL;
+
+      gimp_dialog_factory_from_widget (dialog, &entry);
+
+      if (strcmp (entry->identifier, identifier) == 0)
+        {
+          result = dialog;
+          break;
+        }
+    }
+
+  return result;
+}
+
+static void
+gimp_ui_automatic_tab_style (GimpTestFixture *fixture,
+                             gconstpointer    data)
+{
+  GtkWidget    *channel_dockable = gimp_ui_get_dialog ("gimp-channel-list");
+  GimpDockable *dockable;
+  GimpUIManager *ui_manager;
+  g_assert (channel_dockable != NULL);
+
+  dockable = GIMP_DOCKABLE (channel_dockable);
+
+  /* The channel dockable is the only dockable, it has enough space
+   * for the icon-blurb
+   */
+  g_assert_cmpint (GIMP_TAB_STYLE_ICON_BLURB,
+                   ==,
+                   gimp_dockable_get_actual_tab_style (dockable));
+
+  /* Add some dockables to the channel dockable dockbook */
+  ui_manager =
+    gimp_dockbook_get_ui_manager (gimp_dockable_get_dockbook (dockable));
+  gimp_ui_manager_activate_action (ui_manager,
+                                   "dockable",
+                                   "dialogs-sample-points");
+  gimp_ui_manager_activate_action (ui_manager,
+                                   "dockable",
+                                   "dialogs-vectors");
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Now there is not enough space to have icon-blurb for channel
+   * dockable, make sure it's just an icon now
+   */
+  g_assert_cmpint (GIMP_TAB_STYLE_ICON,
+                   ==,
+                   gimp_dockable_get_actual_tab_style (dockable));
+
+  /* Close the two dockables we added */
+  gimp_ui_manager_activate_action (ui_manager,
+                                   "dockable",
+                                   "dockable-close-tab");
+  gimp_ui_manager_activate_action (ui_manager,
+                                   "dockable",
+                                   "dockable-close-tab");
+  gimp_test_run_mainloop_until_idle ();
+
+  /* We should now be back on icon-blurb */
+  g_assert_cmpint (GIMP_TAB_STYLE_ICON_BLURB,
+                   ==,
+                   gimp_dockable_get_actual_tab_style (dockable));
 }
 
 static void

@@ -35,7 +35,8 @@ typedef enum
   GIMP_LOG_FLOATING_SELECTION = 1 << 11,
   GIMP_LOG_SHM                = 1 << 12,
   GIMP_LOG_TEXT_EDITING       = 1 << 13,
-  GIMP_LOG_KEY_EVENTS         = 1 << 14
+  GIMP_LOG_KEY_EVENTS         = 1 << 14,
+  GIMP_LOG_AUTO_TAB_STYLE     = 1 << 15
 } GimpLogFlags;
 
 
@@ -91,6 +92,7 @@ void   gimp_logv     (const gchar *function,
 #define SHM                GIMP_LOG_SHM
 #define TEXT_EDITING       GIMP_LOG_TEXT_EDITING
 #define KEY_EVENTS         GIMP_LOG_KEY_EVENTS
+#define AUTO_TAB_STYLE     GIMP_LOG_AUTO_TAB_STYLE
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */

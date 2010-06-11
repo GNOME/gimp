@@ -51,7 +51,8 @@ gimp_log_init (void)
         { "floating-selection", GIMP_LOG_FLOATING_SELECTION },
         { "shm",                GIMP_LOG_SHM                },
         { "text-editing",       GIMP_LOG_TEXT_EDITING       },
-        { "key-events",         GIMP_LOG_KEY_EVENTS         }
+        { "key-events",         GIMP_LOG_KEY_EVENTS         },
+        { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     }
       };
 
       /*  g_parse_debug_string() has special treatment of the string 'help',

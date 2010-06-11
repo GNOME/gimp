@@ -50,6 +50,7 @@ struct _GimpDockedInterface
   GtkWidget     * (* get_preview)         (GimpDocked   *docked,
                                            GimpContext  *context,
                                            GtkIconSize   size);
+  gboolean        (* get_prefer_icon)     (GimpDocked   *docked);
   GimpUIManager * (* get_menu)            (GimpDocked   *docked,
                                            const gchar **ui_path,
                                            gpointer     *popup_data);
@@ -76,6 +77,7 @@ GList         * gimp_docked_get_aux_info        (GimpDocked   *docked);
 GtkWidget     * gimp_docked_get_preview         (GimpDocked   *docked,
                                                  GimpContext  *context,
                                                  GtkIconSize   size);
+gboolean        gimp_docked_get_prefer_icon     (GimpDocked   *docked);
 GimpUIManager * gimp_docked_get_menu            (GimpDocked   *docked,
                                                  const gchar **ui_path,
                                                  gpointer     *popup_data);

@@ -107,7 +107,9 @@ typedef enum
   GIMP_TAB_STYLE_ICON_NAME,     /*< desc="Icon & text"    >*/
   GIMP_TAB_STYLE_ICON_BLURB,    /*< desc="Icon & desc"    >*/
   GIMP_TAB_STYLE_PREVIEW_NAME,  /*< desc="Status & text"  >*/
-  GIMP_TAB_STYLE_PREVIEW_BLURB  /*< desc="Status & desc"  >*/
+  GIMP_TAB_STYLE_PREVIEW_BLURB, /*< desc="Status & desc"  >*/
+  GIMP_TAB_STYLE_UNDEFINED,     /*< desc="Undefined"      >*/
+  GIMP_TAB_STYLE_AUTOMATIC      /*< desc="Automatic"      >*/
 } GimpTabStyle;
 
 

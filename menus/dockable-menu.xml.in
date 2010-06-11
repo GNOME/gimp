@@ -27,6 +27,8 @@
       <menuitem action="dockable-tab-style-name" />
       <menuitem action="dockable-tab-style-icon-name" />
       <menuitem action="dockable-tab-style-preview-name" />
+      <separator />
+      <menuitem action="dockable-tab-style-automatic" />
     </menu>
     <menuitem action="dockable-view-type-list" />
     <menuitem action="dockable-view-type-grid" />

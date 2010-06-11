@@ -191,6 +191,21 @@ gimp_docked_get_preview (GimpDocked  *docked,
   return NULL;
 }
 
+gboolean
+gimp_docked_get_prefer_icon (GimpDocked *docked)
+{
+  GimpDockedInterface *docked_iface;
+
+  g_return_val_if_fail (GIMP_IS_DOCKED (docked), FALSE);
+
+  docked_iface = GIMP_DOCKED_GET_INTERFACE (docked);
+
+  if (docked_iface->get_prefer_icon)
+    return docked_iface->get_prefer_icon (docked);
+
+  return FALSE;
+}
+
 GimpUIManager *
 gimp_docked_get_menu (GimpDocked     *docked,
                       const gchar   **ui_path,

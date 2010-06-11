@@ -111,7 +111,9 @@ static const GimpRadioActionEntry dockable_tab_style_actions[] =
   TAB_STYLE ("icon-name",
              NC_("tab-style", "I_con & Text"),    GIMP_TAB_STYLE_ICON_NAME),
   TAB_STYLE ("preview-name",
-             NC_("tab-style", "St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME)
+             NC_("tab-style", "St_atus & Text"),  GIMP_TAB_STYLE_PREVIEW_NAME),
+  TAB_STYLE ("automatic",
+             NC_("tab-style", "Automatic"),       GIMP_TAB_STYLE_AUTOMATIC)
 };
 
 #undef VIEW_SIZE
@@ -176,7 +178,7 @@ dockable_actions_setup (GimpActionGroup *group)
                                        dockable_tab_style_actions,
                                        G_N_ELEMENTS (dockable_tab_style_actions),
                                        NULL,
-                                       GIMP_TAB_STYLE_PREVIEW,
+                                       GIMP_TAB_STYLE_AUTOMATIC,
                                        G_CALLBACK (dockable_tab_style_cmd_callback));
 
   gimp_action_group_add_radio_actions (group, "dockable-action",
@@ -344,6 +346,8 @@ dockable_actions_update (GimpActionGroup *group,
         SET_ACTIVE ("dockable-tab-style-icon-name", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
         SET_ACTIVE ("dockable-tab-style-preview-name", TRUE);
+      else if (tab_style == GIMP_TAB_STYLE_AUTOMATIC)
+        SET_ACTIVE ("dockable-tab-style-automatic", TRUE);
 
       SET_SENSITIVE ("dockable-tab-style-preview",
                      docked_iface->get_preview);

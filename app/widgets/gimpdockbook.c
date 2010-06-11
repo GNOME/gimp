@@ -47,12 +47,13 @@
 
 #include "gimp-log.h"
 
-#define DEFAULT_TAB_BORDER     0
-#define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
-#define DND_WIDGET_ICON_SIZE   GTK_ICON_SIZE_BUTTON
-#define MENU_WIDGET_ICON_SIZE  GTK_ICON_SIZE_MENU
-#define MENU_WIDGET_SPACING    4
-#define TAB_HOVER_TIMEOUT      500
+#define DEFAULT_TAB_BORDER          0
+#define DEFAULT_TAB_ICON_SIZE       GTK_ICON_SIZE_BUTTON
+#define DND_WIDGET_ICON_SIZE        GTK_ICON_SIZE_BUTTON
+#define MENU_WIDGET_ICON_SIZE       GTK_ICON_SIZE_MENU
+#define MENU_WIDGET_SPACING         4
+#define TAB_HOVER_TIMEOUT           500
+#define GIMP_N_TAB_STYLE_CANDIDATES 3 /* G_N_ELEMENTS (gimp_tab_style_candidates); */
 
 
 enum
@@ -65,18 +66,34 @@ enum
 
 struct _GimpDockbookPrivate
 {
-  GimpDock      *dock;
-  GimpUIManager *ui_manager;
+  GimpDock       *dock;
+  GimpUIManager  *ui_manager;
 
-  guint          tab_hover_timeout;
-  GimpDockable  *tab_hover_dockable;
+  guint           tab_hover_timeout;
+  GimpDockable   *tab_hover_dockable;
 
-  GimpPanedBox  *drag_handler;
+  GimpPanedBox   *drag_handler;
+
+  /* Cache for "what actual tab style for automatic styles can we use
+   * for a given dockbook width
+   */
+  gint            min_width_for_style[GIMP_N_TAB_STYLE_CANDIDATES];
+
+  /* We need a list separate from the GtkContainer children list,
+   * because we need to do calculations for all dockables before we
+   * can add a dockable as a child, namely automatic tab style
+   * calculations
+   */
+  GList          *dockables;
+
+  GtkWidget      *menu_button;
 };
 
 
 static void         gimp_dockbook_dispose                     (GObject        *object);
 static void         gimp_dockbook_finalize                    (GObject        *object);
+static void         gimp_dockbook_size_allocate               (GtkWidget      *widget,
+                                                               GtkAllocation  *allocation);
 static void         gimp_dockbook_style_set                   (GtkWidget      *widget,
                                                                GtkStyle       *prev_style);
 static void         gimp_dockbook_drag_leave                  (GtkWidget      *widget,
@@ -98,7 +115,8 @@ static void         gimp_dockbook_dockable_removed            (GimpDockbook   *d
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_update_tabs                 (GimpDockbook   *dockbook,
                                                                gboolean        added);
-static void         gimp_dockbook_recreate_tab_widgets        (GimpDockbook   *dockbook);
+static void         gimp_dockbook_recreate_tab_widgets        (GimpDockbook   *dockbook,
+                                                               gboolean        only_auto);
 static void         gimp_dockbook_tab_drag_source_setup       (GtkWidget      *widget,
                                                                GimpDockable   *dockable);
 static void         gimp_dockbook_tab_drag_begin              (GtkWidget      *widget,
@@ -122,6 +140,10 @@ static gboolean     gimp_dockbook_tab_drag_drop               (GtkWidget      *w
                                                                gint            x,
                                                                gint            y,
                                                                guint           time);
+static GimpTabStyle gimp_dockbook_tab_style_to_prefered       (GimpTabStyle    tab_style,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_refresh_tab_layout_lut      (GimpDockbook   *dockbook);
+static void         gimp_dockbook_update_automatic_tab_style  (GimpDockbook   *dockbook);
 static GtkWidget *  gimp_dockable_create_event_box_tab_widget (GimpDockable   *dockable,
                                                                GimpContext    *context,
                                                                GimpTabStyle    tab_style,
@@ -136,6 +158,7 @@ static void         gimp_dockbook_tab_locked_notify           (GimpDockable   *d
                                                                GimpDockbook   *dockbook);
 static void         gimp_dockbook_help_func                   (const gchar    *help_id,
                                                                gpointer        help_data);
+static const gchar *gimp_dockbook_get_tab_style_name          (GimpTabStyle    tab_style);
 
 
 G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
@@ -146,12 +169,24 @@ static guint dockbook_signals[LAST_SIGNAL] = { 0 };
 
 static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
+/* List of candidates for the automatic style, starting with the
+ * biggest first
+ */
+static GimpTabStyle gimp_tab_style_candidates[] = {
+  GIMP_TAB_STYLE_PREVIEW_BLURB,
+  GIMP_TAB_STYLE_PREVIEW_NAME,
+  GIMP_TAB_STYLE_PREVIEW,
+};
+
 
 static void
 gimp_dockbook_class_init (GimpDockbookClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  if (G_N_ELEMENTS (gimp_tab_style_candidates) != GIMP_N_TAB_STYLE_CANDIDATES)
+    g_error ("Update GIMP_N_TAB_STYLE_CANDIDATES");
 
   dockbook_signals[DOCKABLE_ADDED] =
     g_signal_new ("dockable-added",
@@ -186,10 +221,11 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
   object_class->dispose     = gimp_dockbook_dispose;
   object_class->finalize    = gimp_dockbook_finalize;
 
-  widget_class->style_set   = gimp_dockbook_style_set;
-  widget_class->drag_leave  = gimp_dockbook_drag_leave;
-  widget_class->drag_motion = gimp_dockbook_drag_motion;
-  widget_class->drag_drop   = gimp_dockbook_drag_drop;
+  widget_class->size_allocate = gimp_dockbook_size_allocate;
+  widget_class->style_set     = gimp_dockbook_style_set;
+  widget_class->drag_leave    = gimp_dockbook_drag_leave;
+  widget_class->drag_motion   = gimp_dockbook_drag_motion;
+  widget_class->drag_drop     = gimp_dockbook_drag_drop;
 
   klass->dockable_added     = gimp_dockbook_dockable_added;
   klass->dockable_removed   = gimp_dockbook_dockable_removed;
@@ -255,6 +291,18 @@ gimp_dockbook_finalize (GObject *object)
 }
 
 static void
+gimp_dockbook_size_allocate (GtkWidget      *widget,
+                             GtkAllocation  *allocation)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  /* Update tab styles, also recreates if changed */
+  gimp_dockbook_update_automatic_tab_style (dockbook);
+}
+
+static void
 gimp_dockbook_style_set (GtkWidget *widget,
                          GtkStyle  *prev_style)
 {
@@ -279,7 +327,8 @@ gimp_dockbook_style_set (GtkWidget *widget,
                 "tab-border", tab_border,
                 NULL);
 
-  gimp_dockbook_recreate_tab_widgets (GIMP_DOCKBOOK (widget));
+  gimp_dockbook_recreate_tab_widgets (GIMP_DOCKBOOK (widget),
+                                      FALSE /*only_auto*/);
 }
 
 static void
@@ -382,6 +431,241 @@ gimp_dockbook_update_tabs (GimpDockbook *dockbook,
     }
 }
 
+/**
+ * gimp_dockbook_get_dockable_tab_width:
+ * @dockable:
+ * @tab_style:
+ *
+ * Returns: Width of tab when the dockable is using the specified tab
+ *          style.
+ **/
+static gint
+gimp_dockbook_get_dockable_tab_width (GimpDockbook *dockbook,
+                                      GimpDockable *dockable,
+                                      GimpTabStyle  tab_style)
+{
+  GtkRequisition  dockable_request;
+  GtkWidget      *tab_widget;
+
+  tab_widget =
+    gimp_dockable_create_event_box_tab_widget (dockable,
+                                               gimp_dock_get_context (dockbook->p->dock),
+                                               tab_style,
+                                               gimp_dockbook_get_tab_icon_size (dockbook));
+
+  /* So font-scale is applied. We can't apply styles without having a
+   * GdkScreen :(
+   */
+  gimp_dock_temp_add (dockbook->p->dock, tab_widget);
+
+  gtk_widget_size_request (tab_widget, &dockable_request);
+
+  /* Also destroys the widget */
+  gimp_dock_temp_remove (dockbook->p->dock, tab_widget);
+
+  return dockable_request.width;
+}
+
+/**
+ * gimp_dockbook_tab_style_to_prefered:
+ * @tab_style:
+ * @dockable:
+ *
+ * The list of tab styles to try in automatic mode only consists of
+ * preview styles. For some dockables, like the tool options dockable,
+ * we rather want to use the icon tab styles for the automatic
+ * mode. This function is used to convert tab styles for such
+ * dockables.
+ *
+ * Returns: An icon tab style if the dockable prefers icon tab styles
+ *          in automatic mode.
+ **/
+static GimpTabStyle
+gimp_dockbook_tab_style_to_prefered (GimpTabStyle  tab_style,
+                                     GimpDockable *dockable)
+{
+  GimpDocked *docked = GIMP_DOCKED (gtk_bin_get_child (GTK_BIN (dockable)));
+
+  if (gimp_docked_get_prefer_icon (docked))
+    tab_style = gimp_preview_tab_style_to_icon (tab_style);
+
+  return tab_style;
+}
+
+/**
+ * gimp_dockbook_refresh_tab_layout_lut:
+ * @dockbook:
+ *
+ * For each given set of tab widgets, there is a fixed mapping between
+ * the width of the dockbook and the actual tab style to use for auto
+ * tab widgets. This function refreshes that look-up table.
+ **/
+static void
+gimp_dockbook_refresh_tab_layout_lut (GimpDockbook *dockbook)
+{
+  GList *auto_dockables        = NULL;
+  GList *iter                  = NULL;
+  gint   fixed_tab_style_space = 0;
+  int    i                     = 0;
+
+  /* Calculate space taken by dockables with fixed tab styles */
+  fixed_tab_style_space = 0;
+  for (iter = dockbook->p->dockables; iter; iter = g_list_next (iter))
+    {
+      GimpDockable *dockable  = GIMP_DOCKABLE (iter->data);
+      GimpTabStyle  tab_style = gimp_dockable_get_tab_style (dockable);
+
+      if (tab_style == GIMP_TAB_STYLE_AUTOMATIC)
+        auto_dockables = g_list_prepend (auto_dockables, dockable);
+      else
+        fixed_tab_style_space +=
+          gimp_dockbook_get_dockable_tab_width (dockbook,
+                                                dockable,
+                                                tab_style);
+    }
+
+  /* Calculate space taken with auto tab style for all candidates */
+  for (i = 0; i < GIMP_N_TAB_STYLE_CANDIDATES; i++)
+    {
+      gint         size_with_candidate = 0;
+      GimpTabStyle candidate           = gimp_tab_style_candidates[i];
+
+      for (iter = auto_dockables; iter; iter = g_list_next (iter))
+        {
+          GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
+          GimpTabStyle  style_to_use;
+
+          style_to_use = gimp_dockbook_tab_style_to_prefered (candidate,
+                                                              dockable);
+          size_with_candidate +=
+            gimp_dockbook_get_dockable_tab_width (dockbook,
+                                                  dockable,
+                                                  style_to_use);
+        }
+
+      dockbook->p->min_width_for_style[i] =
+        fixed_tab_style_space + size_with_candidate;
+
+      GIMP_LOG (AUTO_TAB_STYLE, "Total tab space taken for auto tab style %s = %d",
+                gimp_dockbook_get_tab_style_name (candidate),
+                dockbook->p->min_width_for_style[i]);
+    }
+
+  g_list_free (auto_dockables);
+}
+
+/**
+ * gimp_dockbook_update_automatic_tab_style:
+ * @dockbook:
+ *
+ * Based on widget allocation, sets actual tab style for dockables
+ * with automatic tab styles. Takes care of recreating tab widgets if
+ * necessary.
+ **/
+static void
+gimp_dockbook_update_automatic_tab_style (GimpDockbook *dockbook)
+{
+  GtkWidget    *widget              = GTK_WIDGET (dockbook);
+  gboolean      changed             = FALSE;
+  GList        *iter                = NULL;
+  GtkAllocation dockbook_allocation = { 0, };
+  GtkAllocation button_allocation   = { 0, };
+  GimpTabStyle  tab_style           = 0;
+  int           i                   = 0;
+  gint          available_space     = 0;
+  guint         tab_hborder         = 0;
+  gint          xthickness          = 0;
+  gint          tab_curvature       = 0;
+  gint          focus_width         = 0;
+  gint          tab_overlap         = 0;
+  gint          tab_padding         = 0;
+  gint          border_loss         = 0;
+  gint          action_widget_size  = 0;
+
+  xthickness = gtk_widget_get_style (widget)->xthickness;
+  g_object_get (widget,
+                "tab-hborder", &tab_hborder,
+                NULL);
+  gtk_widget_style_get (widget,
+                        "tab-curvature",    &tab_curvature,
+                        "focus-line-width", &focus_width,
+                        "tab-overlap",      &tab_overlap,
+                        NULL);
+  gtk_widget_get_allocation (dockbook->p->menu_button,
+                             &button_allocation);
+
+  /* Calculate available space. Based on code in GTK+ internal
+   * functions gtk_notebook_size_request() and
+   * gtk_notebook_pages_allocate()
+   */
+  gtk_widget_get_allocation (widget, &dockbook_allocation);
+
+  /* Border on both sides */
+  border_loss = gtk_container_get_border_width (GTK_CONTAINER (dockbook)) * 2;
+
+  /* Space taken by action widget */
+  action_widget_size = button_allocation.width + xthickness;
+
+  /* Space taken by the tabs but not the tab widgets themselves */
+  tab_padding = gtk_notebook_get_n_pages (GTK_NOTEBOOK (dockbook)) *
+                (2 * (xthickness + tab_curvature + focus_width + tab_hborder) -
+                 tab_overlap);
+
+  available_space = dockbook_allocation.width
+    - border_loss
+    - action_widget_size
+    - tab_padding
+    - tab_overlap;
+
+  GIMP_LOG (AUTO_TAB_STYLE, "\n"
+            "  available_space             = %d where\n"
+            "    dockbook_allocation.width = %d\n"
+            "    border_loss               = %d\n"
+            "    action_widget_size        = %d\n"
+            "    tab_padding               = %d\n"
+            "    tab_overlap               = %d\n",
+            available_space,
+            dockbook_allocation.width,
+            border_loss,
+            action_widget_size,
+            tab_padding,
+            tab_overlap);
+
+  /* Try all candidates, if we don't get any hit we still end up on
+   * the smallest style (which we always fall back to if we don't get
+   * a better match)
+   */
+  for (i = 0; i < GIMP_N_TAB_STYLE_CANDIDATES; i++)
+    {
+      tab_style = gimp_tab_style_candidates[i];
+      if (available_space > dockbook->p->min_width_for_style[i])
+        {
+          GIMP_LOG (AUTO_TAB_STYLE, "Choosing tab style %s",
+                    gimp_dockbook_get_tab_style_name (tab_style));
+          break;
+        }
+    }
+
+  for (iter = dockbook->p->dockables; iter; iter = g_list_next (iter))
+    {
+      GimpDockable *dockable         = GIMP_DOCKABLE (iter->data);
+      GimpTabStyle  actual_tab_style = tab_style;
+
+      if (gimp_dockable_get_tab_style (dockable) != GIMP_TAB_STYLE_AUTOMATIC)
+        continue;
+
+      actual_tab_style = gimp_dockbook_tab_style_to_prefered (tab_style,
+                                                              dockable);
+
+      if (gimp_dockable_set_actual_tab_style (dockable, actual_tab_style))
+        changed = TRUE;
+    }
+
+  if (changed)
+    gimp_dockbook_recreate_tab_widgets (dockbook,
+                                        TRUE /*only_auto*/);
+}
+
 GtkWidget *
 gimp_dockbook_new (GimpMenuFactory *menu_factory)
 {
@@ -443,6 +727,16 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   GIMP_LOG (DND, "Adding GimpDockable %p to GimpDockbook %p", dockable, dockbook);
 
+  /* Add to internal list before doing automatic tab style
+   * calculations
+   */
+  dockbook->p->dockables = g_list_insert (dockbook->p->dockables,
+                                          dockable,
+                                          position);
+
+  gimp_dockbook_update_auto_tab_style (dockbook);  
+
+  /* Create the new tab widget, it will get the correct tab style now */
   tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
 
   g_return_if_fail (GTK_IS_WIDGET (tab_widget));
@@ -515,10 +809,14 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
   gimp_dockable_set_context (dockable, NULL);
 
   gtk_container_remove (GTK_CONTAINER (dockbook), GTK_WIDGET (dockable));
+  dockbook->p->dockables = g_list_remove (dockbook->p->dockables,
+                                          dockable);
 
   g_signal_emit (dockbook, dockbook_signals[DOCKABLE_REMOVED], 0, dockable);
 
   g_object_unref (dockable);
+
+  gimp_dockbook_update_auto_tab_style (dockbook);
 
   children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
@@ -565,7 +863,7 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
   tab_widget =
     gimp_dockable_create_event_box_tab_widget (dockable,
                                                gimp_dock_get_context (dockbook->p->dock),
-                                               gimp_dockable_get_tab_style (dockable),
+                                               gimp_dockable_get_actual_tab_style (dockable),
                                                gimp_dockbook_get_tab_icon_size (dockbook));
 
   /* EEK */
@@ -649,6 +947,23 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
   return tab_widget;
 }
 
+/**
+ * gimp_dockbook_update_auto_tab_style:
+ * @dockbook:
+ *
+ * Refresh the table that we use to map dockbook width to actual auto
+ * tab style, then update auto tabs (also recreate tab widgets if
+ * necessary).
+ **/
+void
+gimp_dockbook_update_auto_tab_style (GimpDockbook *dockbook)
+{
+  g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
+
+  gimp_dockbook_refresh_tab_layout_lut (dockbook);
+  gimp_dockbook_update_automatic_tab_style (dockbook);
+}
+
 gboolean
 gimp_dockbook_drop_dockable (GimpDockbook *dockbook,
                              GtkWidget    *drag_source)
@@ -730,7 +1045,8 @@ gimp_dockbook_drag_source_to_dockable (GtkWidget *drag_source)
 /*  tab DND source side  */
 
 static void
-gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook)
+gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook,
+                                    gboolean      only_auto)
 {
   GList *dockables = gtk_container_get_children (GTK_CONTAINER (dockbook));
   GList *iter      = NULL;
@@ -739,6 +1055,10 @@ gimp_dockbook_recreate_tab_widgets (GimpDockbook *dockbook)
     {
       GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
       GtkWidget *tab_widget;
+
+      if (only_auto &&
+          ! gimp_dockable_get_tab_style (dockable) == GIMP_TAB_STYLE_AUTOMATIC)
+        continue;
 
       tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
 
@@ -1108,4 +1428,11 @@ gimp_dockbook_help_func (const gchar *help_id,
                              NULL);
   else
     gimp_standard_help_func (GIMP_HELP_DOCK, NULL);
+}
+
+static const gchar *
+gimp_dockbook_get_tab_style_name (GimpTabStyle tab_style)
+{
+  return g_enum_get_value (g_type_class_peek (GIMP_TYPE_TAB_STYLE),
+                           tab_style)->value_name;  
 }
