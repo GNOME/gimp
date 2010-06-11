@@ -429,6 +429,30 @@ gimp_get_icon_size (GtkWidget   *widget,
   return icon_size;
 }
 
+GimpTabStyle
+gimp_preview_tab_style_to_icon (GimpTabStyle tab_style)
+{
+  switch (tab_style)
+    {
+    case GIMP_TAB_STYLE_PREVIEW:
+      tab_style = GIMP_TAB_STYLE_ICON;
+      break;
+
+    case GIMP_TAB_STYLE_PREVIEW_NAME:
+      tab_style = GIMP_TAB_STYLE_ICON_NAME;
+      break;
+
+    case GIMP_TAB_STYLE_PREVIEW_BLURB:
+      tab_style = GIMP_TAB_STYLE_ICON_BLURB;
+      break;
+
+    default:
+      break;
+    }
+
+  return tab_style;
+}
+
 const gchar *
 gimp_get_mod_name_shift (void)
 {

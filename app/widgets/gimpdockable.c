@@ -1318,25 +1318,7 @@ gimp_dockable_convert_tab_style (GimpDockable   *dockable,
   GtkWidget *child = gtk_bin_get_child (GTK_BIN (dockable));
 
   if (child && ! GIMP_DOCKED_GET_INTERFACE (child)->get_preview)
-    {
-      switch (tab_style)
-        {
-        case GIMP_TAB_STYLE_PREVIEW:
-          tab_style = GIMP_TAB_STYLE_ICON;
-          break;
-
-        case GIMP_TAB_STYLE_PREVIEW_NAME:
-          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-          break;
-
-        case GIMP_TAB_STYLE_PREVIEW_BLURB:
-          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-          break;
-
-        default:
-          break;
-        }
-    }
+    tab_style = gimp_preview_tab_style_to_icon (tab_style);
 
   return tab_style;
 }
