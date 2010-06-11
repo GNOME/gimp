@@ -30,6 +30,8 @@
 #include "gimpstock.h"
 #include "gimpwidgets-private.h"
 
+#include "libgimp/libgimp-intl.h"
+
 #include "gimp-wilber-pixbufs.h"
 
 
@@ -38,6 +40,23 @@ GimpGetColorFunc      _gimp_get_foreground_func = NULL;
 GimpGetColorFunc      _gimp_get_background_func = NULL;
 GimpEnsureModulesFunc _gimp_ensure_modules_func = NULL;
 
+
+static void
+gimp_widgets_init_foreign_enums (void)
+{
+  static const GimpEnumDesc input_mode_descs[] =
+  {
+    { GDK_MODE_DISABLED, NC_("input-mode", "Disabled"), NULL },
+    { GDK_MODE_SCREEN,   NC_("input-mode", "Screen"),   NULL },
+    { GDK_MODE_WINDOW,   NC_("input-mode", "Window"),   NULL },
+    { 0, NULL, NULL }
+  };
+
+  gimp_type_set_translation_domain (GDK_TYPE_INPUT_MODE,
+                                    GETTEXT_PACKAGE "-libgimp");
+  gimp_type_set_translation_context (GDK_TYPE_INPUT_MODE, "input-mode");
+  gimp_enum_set_value_descriptions (GDK_TYPE_INPUT_MODE, input_mode_descs);
+}
 
 void
 gimp_widgets_init (GimpHelpFunc          standard_help_func,
@@ -81,6 +100,8 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
   g_list_free (icon_list);
+
+  gimp_widgets_init_foreign_enums ();
 
   gimp_widgets_initialized = TRUE;
 }
