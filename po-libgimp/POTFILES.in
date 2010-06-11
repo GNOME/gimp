@@ -57,6 +57,7 @@ libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
+libgimpwidgets/gimpwidgets-private.c
 libgimpwidgets/gimpwidgetsenums.c
 
 modules/color-selector-cmyk-lcms.c
