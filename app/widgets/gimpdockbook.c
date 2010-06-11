@@ -75,72 +75,67 @@ struct _GimpDockbookPrivate
 };
 
 
-static void      gimp_dockbook_dispose            (GObject        *object);
-static void      gimp_dockbook_finalize           (GObject        *object);
-
-static void      gimp_dockbook_style_set          (GtkWidget      *widget,
-                                                   GtkStyle       *prev_style);
-
-static void      gimp_dockbook_drag_leave         (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   guint           time);
-static gboolean  gimp_dockbook_drag_motion        (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   gint            x,
-                                                   gint            y,
-                                                   guint           time);
-static gboolean  gimp_dockbook_drag_drop          (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   gint            x,
-                                                   gint            y,
-                                                   guint           time);
-
-static void      gimp_dockbook_dockable_added     (GimpDockbook   *dockbook,
-                                                   GimpDockable   *dockable);
-static void      gimp_dockbook_dockable_removed   (GimpDockbook   *dockbook,
-                                                   GimpDockable   *dockable);
-static void      gimp_dockbook_update_tabs        (GimpDockbook   *dockbook,
-                                                   gboolean        added);
-
-static void      gimp_dockbook_recreate_tab_widgets
-                                                  (GimpDockbook   *dockbook);
-static void      gimp_dockbook_tab_drag_source_setup (GtkWidget    *widget,
-                                                      GimpDockable *dockable);
-static void      gimp_dockbook_tab_drag_begin     (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   GimpDockable   *dockable);
-static void      gimp_dockbook_tab_drag_end       (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   GimpDockable   *dockable);
-
-static void      gimp_dockbook_tab_drag_leave     (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   guint           time,
-                                                   GimpDockable   *dockable);
-static gboolean  gimp_dockbook_tab_drag_motion    (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   gint            x,
-                                                   gint            y,
-                                                   guint           time,
-                                                   GimpDockable   *dockable);
-static gboolean  gimp_dockbook_tab_drag_drop      (GtkWidget      *widget,
-                                                   GdkDragContext *context,
-                                                   gint            x,
-                                                   gint            y,
-                                                   guint           time);
-
-static GtkIconSize
-                 gimp_dockbook_get_tab_icon_size  (GimpDockbook   *dockbook);
-static void      gimp_dockbook_add_tab_timeout    (GimpDockbook   *dockbook,
-                                                   GimpDockable   *dockable);
-static void      gimp_dockbook_remove_tab_timeout (GimpDockbook   *dockbook);
-static gboolean  gimp_dockbook_tab_timeout        (GimpDockbook   *dockbook);
-static void      gimp_dockbook_tab_locked_notify  (GimpDockable   *dockable,
-                                                   GParamSpec     *pspec,
-                                                   GimpDockbook   *dockbook);
-
-static void      gimp_dockbook_help_func          (const gchar    *help_id,
-                                                   gpointer        help_data);
+static void         gimp_dockbook_dispose                     (GObject        *object);
+static void         gimp_dockbook_finalize                    (GObject        *object);
+static void         gimp_dockbook_style_set                   (GtkWidget      *widget,
+                                                               GtkStyle       *prev_style);
+static void         gimp_dockbook_drag_leave                  (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               guint           time);
+static gboolean     gimp_dockbook_drag_motion                 (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               gint            x,
+                                                               gint            y,
+                                                               guint           time);
+static gboolean     gimp_dockbook_drag_drop                   (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               gint            x,
+                                                               gint            y,
+                                                               guint           time);
+static void         gimp_dockbook_dockable_added              (GimpDockbook   *dockbook,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_dockable_removed            (GimpDockbook   *dockbook,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_update_tabs                 (GimpDockbook   *dockbook,
+                                                               gboolean        added);
+static void         gimp_dockbook_recreate_tab_widgets        (GimpDockbook   *dockbook);
+static void         gimp_dockbook_tab_drag_source_setup       (GtkWidget      *widget,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_tab_drag_begin              (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_tab_drag_end                (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_tab_drag_leave              (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               guint           time,
+                                                               GimpDockable   *dockable);
+static gboolean     gimp_dockbook_tab_drag_motion             (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               gint            x,
+                                                               gint            y,
+                                                               guint           time,
+                                                               GimpDockable   *dockable);
+static gboolean     gimp_dockbook_tab_drag_drop               (GtkWidget      *widget,
+                                                               GdkDragContext *context,
+                                                               gint            x,
+                                                               gint            y,
+                                                               guint           time);
+static GtkWidget *  gimp_dockable_create_event_box_tab_widget (GimpDockable   *dockable,
+                                                               GimpContext    *context,
+                                                               GimpTabStyle    tab_style,
+                                                               GtkIconSize     size);
+static GtkIconSize  gimp_dockbook_get_tab_icon_size           (GimpDockbook   *dockbook);
+static void         gimp_dockbook_add_tab_timeout             (GimpDockbook   *dockbook,
+                                                               GimpDockable   *dockable);
+static void         gimp_dockbook_remove_tab_timeout          (GimpDockbook   *dockbook);
+static gboolean     gimp_dockbook_tab_timeout                 (GimpDockbook   *dockbook);
+static void         gimp_dockbook_tab_locked_notify           (GimpDockable   *dockable,
+                                                               GParamSpec     *pspec,
+                                                               GimpDockbook   *dockbook);
+static void         gimp_dockbook_help_func                   (const gchar    *help_id,
+                                                               gpointer        help_data);
 
 
 G_DEFINE_TYPE (GimpDockbook, gimp_dockbook, GTK_TYPE_NOTEBOOK)
@@ -568,23 +563,10 @@ gimp_dockbook_create_tab_widget (GimpDockbook *dockbook,
   GtkAction      *action = NULL;
 
   tab_widget =
-    gimp_dockable_create_tab_widget (dockable,
-                                     gimp_dock_get_context (dockbook->p->dock),
-                                     gimp_dockable_get_tab_style (dockable),
-                                     gimp_dockbook_get_tab_icon_size (dockbook));
-
-  if (! GIMP_IS_VIEW (tab_widget))
-    {
-      GtkWidget *event_box;
-
-      event_box = gtk_event_box_new ();
-      gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
-      gtk_event_box_set_above_child (GTK_EVENT_BOX (event_box), TRUE);
-      gtk_container_add (GTK_CONTAINER (event_box), tab_widget);
-      gtk_widget_show (tab_widget);
-
-      tab_widget = event_box;
-    }
+    gimp_dockable_create_event_box_tab_widget (dockable,
+                                               gimp_dock_get_context (dockbook->p->dock),
+                                               gimp_dockable_get_tab_style (dockable),
+                                               gimp_dockbook_get_tab_icon_size (dockbook));
 
   /* EEK */
   dock_window = gimp_dock_window_from_dock (dockbook->p->dock);
@@ -1010,6 +992,36 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
     gtk_drag_finish (context, TRUE, TRUE, time);
 
   return handle;
+}
+
+static GtkWidget *
+gimp_dockable_create_event_box_tab_widget (GimpDockable *dockable,
+                                           GimpContext  *context,
+                                           GimpTabStyle  tab_style,
+                                           GtkIconSize   size)
+{
+  GtkWidget *tab_widget;
+
+  tab_widget =
+    gimp_dockable_create_tab_widget (dockable,
+                                     context,
+                                     tab_style,
+                                     size);
+
+  if (! GIMP_IS_VIEW (tab_widget))
+    {
+      GtkWidget *event_box;
+
+      event_box = gtk_event_box_new ();
+      gtk_event_box_set_visible_window (GTK_EVENT_BOX (event_box), FALSE);
+      gtk_event_box_set_above_child (GTK_EVENT_BOX (event_box), TRUE);
+      gtk_container_add (GTK_CONTAINER (event_box), tab_widget);
+      gtk_widget_show (tab_widget);
+
+      tab_widget = event_box;
+    }
+
+  return tab_widget;
 }
 
 static GtkIconSize
