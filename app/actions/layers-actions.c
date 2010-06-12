@@ -149,7 +149,7 @@ static const GimpActionEntry layers_actions[] =
 
   { "layers-merge-down", GIMP_STOCK_MERGE_DOWN,
     NC_("layers-action", "Merge Do_wn"), NULL,
-    NC_("layers-action", "Merge this layer with the one below it"),
+    NC_("layers-action", "Merge this layer with the first visible layer below it"),
     G_CALLBACK (layers_merge_down_cmd_callback),
     GIMP_HELP_LAYER_MERGE_DOWN },
 
