@@ -64,6 +64,8 @@ static gboolean   gimp_canvas_focus_in_event  (GtkWidget       *widget,
                                                GdkEventFocus   *event);
 static gboolean   gimp_canvas_focus_out_event (GtkWidget       *widget,
                                                GdkEventFocus   *event);
+static gboolean   gimp_canvas_focus           (GtkWidget       *widget,
+                                               GtkDirectionType direction);
 
 static GdkGC    * gimp_canvas_gc_new          (GimpCanvas      *canvas,
                                                GimpCanvasStyle  style);
@@ -173,6 +175,7 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
   widget_class->style_set       = gimp_canvas_style_set;
   widget_class->focus_in_event  = gimp_canvas_focus_in_event;
   widget_class->focus_out_event = gimp_canvas_focus_out_event;
+  widget_class->focus           = gimp_canvas_focus;
 
   g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config", NULL, NULL,
@@ -314,6 +317,26 @@ gimp_canvas_focus_out_event (GtkWidget     *widget,
   /*  see focus-in-event
    */
   return FALSE;
+}
+
+static gboolean
+gimp_canvas_focus (GtkWidget        *widget,
+                   GtkDirectionType  direction)
+{
+  GtkWidget *focus = gtk_container_get_focus_child (GTK_CONTAINER (widget));
+
+  /* override GtkContainer's focus() implementation which would always
+   * give focus to the canvas because it is focussable. Instead, try
+   * navigating in the focussed overlay child first, and use
+   * GtkContainer's default implementation only if that fails (which
+   * happens when cursor navigation leaves the overlay child's
+   * widget).
+   */
+
+  if (focus && gtk_widget_child_focus (focus, direction))
+    return TRUE;
+
+  return GTK_WIDGET_CLASS (parent_class)->focus (widget, direction);
 }
 
 /* Returns: %TRUE if the XOR color is not white */
