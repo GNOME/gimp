@@ -329,8 +329,7 @@ gimp_canvas_focus (GtkWidget        *widget,
    * give focus to the canvas because it is focussable. Instead, try
    * navigating in the focussed overlay child first, and use
    * GtkContainer's default implementation only if that fails (which
-   * happens when cursor navigation leaves the overlay child's
-   * widget).
+   * happens when focus navigation leaves the overlay child).
    */
 
   if (focus && gtk_widget_child_focus (focus, direction))
