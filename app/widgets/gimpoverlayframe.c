@@ -72,12 +72,11 @@ static void
 gimp_overlay_frame_size_request (GtkWidget      *widget,
                                  GtkRequisition *requisition)
 {
-  GtkContainer   *container = GTK_CONTAINER (widget);
-  GtkWidget      *child     = gtk_bin_get_child (GTK_BIN (widget));
+  GtkWidget      *child = gtk_bin_get_child (GTK_BIN (widget));
   GtkRequisition  child_requisition;
   gint            border_width;
 
-  border_width = gtk_container_get_border_width (container);
+  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
   requisition->width  = border_width * 2;
   requisition->height = border_width * 2;
@@ -100,14 +99,13 @@ static void
 gimp_overlay_frame_size_allocate (GtkWidget     *widget,
                                   GtkAllocation *allocation)
 {
-  GtkContainer  *container = GTK_CONTAINER (widget);
-  GtkWidget     *child     = gtk_bin_get_child (GTK_BIN (widget));
+  GtkWidget     *child = gtk_bin_get_child (GTK_BIN (widget));
   GtkAllocation  child_allocation;
   gint           border_width;
 
   gtk_widget_set_allocation (widget, allocation);
 
-  border_width = gtk_container_get_border_width (container);
+  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
   if (child && gtk_widget_get_visible (child))
     {
@@ -124,12 +122,11 @@ static gboolean
 gimp_overlay_frame_expose (GtkWidget      *widget,
                            GdkEventExpose *eevent)
 {
-  cairo_t       *cr = gdk_cairo_create (gtk_widget_get_window (widget));
-  GtkStyle      *style;
+  cairo_t       *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
+  GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
   gint           border_width;
 
-  style = gtk_widget_get_style (widget);
   gtk_widget_get_allocation (widget, &allocation);
 
   border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
@@ -142,14 +139,14 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
   cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
   gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
 
-#define TO_RAD(deg) (deg * (G_PI / 180.0))
+#define DEG_TO_RAD(deg) ((deg) * (G_PI / 180.0))
 
   cairo_arc (cr,
              border_width,
              border_width,
              border_width,
-             TO_RAD (180),
-             TO_RAD (270));
+             DEG_TO_RAD (180),
+             DEG_TO_RAD (270));
   cairo_line_to (cr,
                  allocation.width - border_width,
                  0);
@@ -158,8 +155,8 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
              allocation.width - border_width,
              border_width,
              border_width,
-             TO_RAD (270),
-             TO_RAD (0));
+             DEG_TO_RAD (270),
+             DEG_TO_RAD (0));
   cairo_line_to (cr,
                  allocation.width,
                  allocation.height - border_width);
@@ -168,8 +165,8 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
              allocation.width  - border_width,
              allocation.height - border_width,
              border_width,
-             TO_RAD (0),
-             TO_RAD (90));
+             DEG_TO_RAD (0),
+             DEG_TO_RAD (90));
   cairo_line_to (cr,
                  border_width,
                  allocation.height);
@@ -178,8 +175,8 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
              border_width,
              allocation.height - border_width,
              border_width,
-             TO_RAD (90),
-             TO_RAD (180));
+             DEG_TO_RAD (90),
+             DEG_TO_RAD (180));
   cairo_close_path (cr);
 
   cairo_fill (cr);
