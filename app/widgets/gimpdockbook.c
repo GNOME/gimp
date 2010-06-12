@@ -451,6 +451,17 @@ gimp_dockbook_menu_button_press (GimpDockbook   *dockbook,
   return handled;
 }
 
+static void
+gimp_dockbook_menu_position (GtkMenu  *menu,
+                             gint     *x,
+                             gint     *y,
+                             gpointer  data)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
+
+  gimp_button_menu_position (dockbook->p->menu_button, menu, GTK_POS_LEFT, x, y);
+}
+
 static gboolean
 gimp_dockbook_show_menu (GimpDockbook *dockbook)
 {
@@ -574,7 +585,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
   gimp_ui_manager_update (dockbook_ui_manager, dockable);
   gimp_ui_manager_ui_popup (dockbook_ui_manager, "/dockable-popup",
                             GTK_WIDGET (dockable),
-                            NULL, dockable,
+                            gimp_dockbook_menu_position, dockbook,
                             (GDestroyNotify) gimp_dockbook_menu_end, dockable);
 
   return TRUE;
