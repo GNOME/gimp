@@ -38,6 +38,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpoverlaybox.h"
+#include "widgets/gimpoverlayframe.h"
 #include "widgets/gimptextbuffer.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimptextproxy.h"
@@ -167,9 +168,9 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       gdouble  xres = 1.0;
       gdouble  yres = 1.0;
 
-      text_tool->style_overlay = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (text_tool->style_overlay),
-                                 GTK_SHADOW_OUT);
+      text_tool->style_overlay = gimp_overlay_frame_new ();
+      gtk_container_set_border_width (GTK_CONTAINER (text_tool->style_overlay),
+                                      4);
       gimp_display_shell_add_overlay (shell,
                                       text_tool->style_overlay,
                                       0, 0,
