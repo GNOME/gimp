@@ -178,7 +178,8 @@ static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 /* List of candidates for the automatic style, starting with the
  * biggest first
  */
-static GimpTabStyle gimp_tab_style_candidates[] = {
+static GimpTabStyle gimp_tab_style_candidates[] =
+{
   GIMP_TAB_STYLE_PREVIEW_BLURB,
   GIMP_TAB_STYLE_PREVIEW_NAME,
   GIMP_TAB_STYLE_PREVIEW,
@@ -474,8 +475,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
   GimpDockable  *dockable            = NULL;
   gint           page_num            = -1;
 
-  dockbook_ui_manager =
-    gimp_dockbook_get_ui_manager (dockbook);
+  dockbook_ui_manager = gimp_dockbook_get_ui_manager (dockbook);
 
   if (! dockbook_ui_manager)
     return FALSE;
@@ -494,7 +494,7 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
   dockable = GIMP_DOCKABLE (gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook),
                                                        page_num));
 
-  if (!dockable )
+  if (! dockable)
     return FALSE;
 
   dialog_ui_manager = gimp_dockable_get_menu (dockable,
@@ -503,9 +503,9 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
 
   if (dialog_ui_manager && dialog_ui_path)
     {
-      GtkWidget   *child_menu_widget;
-      GtkAction   *child_menu_action;
-      const gchar *label;
+      GtkWidget *child_menu_widget;
+      GtkAction *child_menu_action;
+      gchar     *label;
 
       child_menu_widget =
         gtk_ui_manager_get_widget (GTK_UI_MANAGER (dialog_ui_manager),
@@ -539,12 +539,15 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
                     "visible",  TRUE,
                     NULL);
 
+      g_free (label);
+
       if (gimp_dockable_get_stock_id (dockable))
         {
           if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (),
                                        gimp_dockable_get_stock_id (dockable)))
             {
-              gtk_action_set_icon_name (parent_menu_action, gimp_dockable_get_stock_id (dockable));
+              gtk_action_set_icon_name (parent_menu_action,
+                                        gimp_dockable_get_stock_id (dockable));
             }
         }
 
@@ -594,9 +597,9 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
 static void
 gimp_dockbook_menu_end (GimpDockable *dockable)
 {
-  GimpUIManager   *dialog_ui_manager;
-  const gchar     *dialog_ui_path;
-  gpointer         dialog_popup_data;
+  GimpUIManager *dialog_ui_manager;
+  const gchar   *dialog_ui_path;
+  gpointer       dialog_popup_data;
 
   dialog_ui_manager = gimp_dockable_get_menu (dockable,
                                               &dialog_ui_path,
@@ -612,7 +615,7 @@ gimp_dockbook_menu_end (GimpDockable *dockable)
         gtk_menu_detach (GTK_MENU (child_menu_widget));
     }
 
-  /*  release gimp_dockable_show_menu()'s references  */
+  /*  release gimp_dockbook_show_menu()'s references  */
   g_object_set_data (G_OBJECT (dockable), GIMP_DOCKABLE_DETACH_REF_KEY, NULL);
   g_object_unref (dockable);
 }
