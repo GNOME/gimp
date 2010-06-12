@@ -1023,10 +1023,13 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
 
   /* Calculate other focus point */
   {
-    GdkEvent *event;
-    gboolean  event_looks_sane;
-    gboolean  cursor_within_canvas;
-    gint      canvas_pointer_x, canvas_pointer_y;
+    GdkEvent  *event;
+    GtkWidget *window;
+    gboolean   event_looks_sane;
+    gboolean   cursor_within_canvas;
+    gint       canvas_pointer_x, canvas_pointer_y;
+
+    window = GTK_WIDGET (gimp_display_shell_get_window (shell));
 
     /*  Center on the mouse position instead of the display center if
      *  one of the following conditions are fulfilled and pointer is
@@ -1035,7 +1038,7 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
      *   (1) there's no current event (the action was triggered by an
      *       input controller)
      *   (2) the event originates from the canvas (a scroll event)
-     *   (3) the event originates from the shell (a key press event)
+     *   (3) the event originates from the window (a key press event)
      *
      *  Basically the only situation where we don't want to center on
      *  mouse position is if the action is being called from a menu.
@@ -1043,9 +1046,9 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
 
     event = gtk_get_current_event ();
 
-    event_looks_sane = ! event ||
-                       gtk_get_event_widget (event) == shell->canvas ||
-                       gtk_get_event_widget (event) == GTK_WIDGET (shell);
+    event_looks_sane = (! event ||
+                        gtk_get_event_widget (event) == shell->canvas ||
+                        gtk_get_event_widget (event) == window);
 
 
     gtk_widget_get_pointer (shell->canvas,
