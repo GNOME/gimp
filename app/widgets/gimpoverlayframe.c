@@ -53,19 +53,7 @@ gimp_overlay_frame_class_init (GimpOverlayFrameClass *klass)
 static void
 gimp_overlay_frame_init (GimpOverlayFrame *frame)
 {
-  GtkWidget   *widget = GTK_WIDGET (frame);
-
-#if 0 /* crashes badly beause gtk+ doesn't support offscreen windows
-       * with colormap != parent_colormap yet
-       */
-  GdkScreen   *screen = gtk_widget_get_screen (widget);
-  GdkColormap *rgba   = gdk_screen_get_rgba_colormap (screen);
-
-  if (rgba)
-    gtk_widget_set_colormap (widget, rgba);
-#endif
-
-  gtk_widget_set_app_paintable (widget, TRUE);
+  gtk_widget_set_app_paintable (GTK_WIDGET (frame), TRUE);
 }
 
 static void
@@ -122,62 +110,76 @@ static gboolean
 gimp_overlay_frame_expose (GtkWidget      *widget,
                            GdkEventExpose *eevent)
 {
-  cairo_t       *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  gint           border_width;
+  cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
+  GtkStyle *style = gtk_widget_get_style (widget);
+  gboolean  rgba;
 
-  gtk_widget_get_allocation (widget, &allocation);
+  rgba = gdk_screen_get_rgba_colormap (gtk_widget_get_screen (widget)) != NULL;
 
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
-  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip_preserve (cr);
-  cairo_fill (cr);
+  if (rgba)
+    {
+      cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+      gdk_cairo_region (cr, eevent->region);
+      cairo_clip_preserve (cr);
+      cairo_fill (cr);
+    }
 
   cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
   gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
 
+  if (rgba)
+    {
+      GtkAllocation  allocation;
+      gint           border_width;
+
+      gtk_widget_get_allocation (widget, &allocation);
+
+      border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
 #define DEG_TO_RAD(deg) ((deg) * (G_PI / 180.0))
 
-  cairo_arc (cr,
-             border_width,
-             border_width,
-             border_width,
-             DEG_TO_RAD (180),
-             DEG_TO_RAD (270));
-  cairo_line_to (cr,
-                 allocation.width - border_width,
-                 0);
-
-  cairo_arc (cr,
-             allocation.width - border_width,
-             border_width,
-             border_width,
-             DEG_TO_RAD (270),
-             DEG_TO_RAD (0));
-  cairo_line_to (cr,
-                 allocation.width,
-                 allocation.height - border_width);
-
-  cairo_arc (cr,
-             allocation.width  - border_width,
-             allocation.height - border_width,
-             border_width,
-             DEG_TO_RAD (0),
-             DEG_TO_RAD (90));
-  cairo_line_to (cr,
+      cairo_arc (cr,
                  border_width,
-                 allocation.height);
+                 border_width,
+                 border_width,
+                 DEG_TO_RAD (180),
+                 DEG_TO_RAD (270));
+      cairo_line_to (cr,
+                     allocation.width - border_width,
+                     0);
 
-  cairo_arc (cr,
-             border_width,
-             allocation.height - border_width,
-             border_width,
-             DEG_TO_RAD (90),
-             DEG_TO_RAD (180));
-  cairo_close_path (cr);
+      cairo_arc (cr,
+                 allocation.width - border_width,
+                 border_width,
+                 border_width,
+                 DEG_TO_RAD (270),
+                 DEG_TO_RAD (0));
+      cairo_line_to (cr,
+                     allocation.width,
+                     allocation.height - border_width);
+
+      cairo_arc (cr,
+                 allocation.width  - border_width,
+                 allocation.height - border_width,
+                 border_width,
+                 DEG_TO_RAD (0),
+                 DEG_TO_RAD (90));
+      cairo_line_to (cr,
+                     border_width,
+                     allocation.height);
+
+      cairo_arc (cr,
+                 border_width,
+                 allocation.height - border_width,
+                 border_width,
+                 DEG_TO_RAD (90),
+                 DEG_TO_RAD (180));
+      cairo_close_path (cr);
+    }
+  else
+    {
+      gdk_cairo_region (cr, eevent->region);
+    }
 
   cairo_fill (cr);
 

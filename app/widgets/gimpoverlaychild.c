@@ -129,6 +129,8 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
 {
   GtkWidget     *widget;
   GdkDisplay    *display;
+  GdkScreen     *screen;
+  GdkColormap   *colormap;
   GtkAllocation  child_allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
@@ -139,6 +141,11 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   widget = GTK_WIDGET (box);
 
   display = gtk_widget_get_display (widget);
+  screen  = gtk_widget_get_screen (widget);
+
+  colormap = gdk_screen_get_rgba_colormap (screen);
+  if (colormap)
+    gtk_widget_set_colormap (child->widget, colormap);
 
   gtk_widget_get_allocation (child->widget, &child_allocation);
 
@@ -157,9 +164,9 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   attributes.y           = child_allocation.y;
   attributes.window_type = GDK_WINDOW_OFFSCREEN;
   attributes.wclass      = GDK_INPUT_OUTPUT;
-  attributes.visual      = gtk_widget_get_visual (widget);
-  attributes.colormap    = gtk_widget_get_colormap (widget);
-  attributes.event_mask  = gtk_widget_get_events (widget);
+  attributes.visual      = gtk_widget_get_visual (child->widget);
+  attributes.colormap    = gtk_widget_get_colormap (child->widget);
+  attributes.event_mask  = gtk_widget_get_events (child->widget) | GDK_EXPOSURE_MASK;
   attributes.cursor      = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
 
   attributes_mask = (GDK_WA_X        |
@@ -345,11 +352,13 @@ gimp_overlay_child_expose (GimpOverlayBox   *box,
     }
   else if (event->window == child->window)
     {
-      gtk_paint_flat_box (gtk_widget_get_style (widget),
+#if 0
+      gtk_paint_flat_box (gtk_widget_get_style (child->widget),
                           event->window,
                           GTK_STATE_NORMAL, GTK_SHADOW_NONE,
                           &event->area, widget, NULL,
                           0, 0, -1, -1);
+#endif
 
       gtk_container_propagate_expose (GTK_CONTAINER (widget),
                                       child->widget,
