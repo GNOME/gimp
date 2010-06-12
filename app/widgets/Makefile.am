@@ -235,6 +235,8 @@ libappwidgets_a_sources = \
 	gimpoverlaychild.h		\
 	gimpoverlaydialog.c		\
 	gimpoverlaydialog.h		\
+	gimpoverlayframe.c		\
+	gimpoverlayframe.h		\
 	gimppaletteeditor.c		\
 	gimppanedbox.c			\
 	gimppanedbox.h			\

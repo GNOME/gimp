@@ -55,8 +55,6 @@ static void       gimp_overlay_dialog_size_request  (GtkWidget         *widget,
                                                      GtkRequisition    *requisition);
 static void       gimp_overlay_dialog_size_allocate (GtkWidget         *widget,
                                                      GtkAllocation     *allocation);
-static gboolean   gimp_overlay_dialog_expose        (GtkWidget         *widget,
-                                                     GdkEventExpose    *eevent);
 
 static void       gimp_overlay_dialog_forall        (GtkContainer      *container,
                                                      gboolean           include_internals,
@@ -69,7 +67,8 @@ static ResponseData * get_response_data             (GtkWidget         *widget,
                                                      gboolean          create);
 
 
-G_DEFINE_TYPE (GimpOverlayDialog, gimp_overlay_dialog, GTK_TYPE_BIN)
+G_DEFINE_TYPE (GimpOverlayDialog, gimp_overlay_dialog,
+               GIMP_TYPE_OVERLAY_FRAME)
 
 static guint signals[LAST_SIGNAL] = { 0, };
 
@@ -87,7 +86,6 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
 
   widget_class->size_request  = gimp_overlay_dialog_size_request;
   widget_class->size_allocate = gimp_overlay_dialog_size_allocate;
-  widget_class->expose_event  = gimp_overlay_dialog_expose;
 
   container_class->forall     = gimp_overlay_dialog_forall;
 
@@ -119,24 +117,10 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
 static void
 gimp_overlay_dialog_init (GimpOverlayDialog *dialog)
 {
-  GtkWidget   *widget = GTK_WIDGET (dialog);
-
-#if 0 /* crashes badly beause gtk+ doesn't support offscreen windows
-       * with colormap != parent_colormap yet
-       */
-  GdkScreen   *screen = gtk_widget_get_screen (widget);
-  GdkColormap *rgba   = gdk_screen_get_rgba_colormap (screen);
-
-  if (rgba)
-    gtk_widget_set_colormap (widget, rgba);
-#endif
-
-  gtk_widget_set_app_paintable (widget, TRUE);
-
   dialog->action_area = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog->action_area),
                              GTK_BUTTONBOX_END);
-  gtk_widget_set_parent (dialog->action_area, widget);
+  gtk_widget_set_parent (dialog->action_area, GTK_WIDGET (dialog));
   gtk_widget_show (dialog->action_area);
 }
 
@@ -226,80 +210,6 @@ gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
   action_allocation.height = MAX (action_requisition.height, 0);
 
   gtk_widget_size_allocate (dialog->action_area, &action_allocation);
-}
-
-static gboolean
-gimp_overlay_dialog_expose (GtkWidget      *widget,
-                            GdkEventExpose *eevent)
-{
-  cairo_t       *cr = gdk_cairo_create (gtk_widget_get_window (widget));
-  GtkStyle      *style;
-  GtkAllocation  allocation;
-  gint           border_width;
-  gint           inner_width;
-  gint           inner_height;
-
-  style = gtk_widget_get_style (widget);
-  gtk_widget_get_allocation (widget, &allocation);
-
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
-  inner_width  = allocation.width  - border_width / 2;
-  inner_height = allocation.height - border_width / 2;
-
-  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip_preserve (cr);
-  cairo_fill (cr);
-
-  cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
-  gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
-
-#define TO_RAD(deg) (deg * (G_PI / 180.0))
-
-  cairo_arc (cr,
-             border_width,
-             border_width,
-             border_width,
-             TO_RAD (180),
-             TO_RAD (270));
-  cairo_line_to (cr,
-                 allocation.width - border_width,
-                 0);
-
-  cairo_arc (cr,
-             allocation.width - border_width,
-             border_width,
-             border_width,
-             TO_RAD (270),
-             TO_RAD (0));
-  cairo_line_to (cr,
-                 allocation.width,
-                 allocation.height - border_width);
-
-  cairo_arc (cr,
-             allocation.width  - border_width,
-             allocation.height - border_width,
-             border_width,
-             TO_RAD (0),
-             TO_RAD (90));
-  cairo_line_to (cr,
-                 border_width,
-                 allocation.height);
-
-  cairo_arc (cr,
-             border_width,
-             allocation.height - border_width,
-             border_width,
-             TO_RAD (90),
-             TO_RAD (180));
-  cairo_close_path (cr);
-
-  cairo_fill (cr);
-
-  cairo_destroy (cr);
-
-  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
 }
 
 static void

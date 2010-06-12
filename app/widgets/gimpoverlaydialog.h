@@ -22,6 +22,9 @@
 #define __GIMP_OVERLAY_DIALOG_H__
 
 
+#include "gimpoverlayframe.h"
+
+
 #define GIMP_TYPE_OVERLAY_DIALOG            (gimp_overlay_dialog_get_type ())
 #define GIMP_OVERLAY_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OVERLAY_DIALOG, GimpOverlayDialog))
 #define GIMP_OVERLAY_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OVERLAY_DIALOG, GimpOverlayDialogClass))
@@ -35,14 +38,14 @@ typedef struct _GimpOverlayDialogClass GimpOverlayDialogClass;
 
 struct _GimpOverlayDialog
 {
-  GtkBin     parent_instance;
+  GimpOverlayFrame  parent_instance;
 
-  GtkWidget *action_area;
+  GtkWidget        *action_area;
 };
 
 struct _GimpOverlayDialogClass
 {
-  GtkBinClass  parent_class;
+  GimpOverlayFrameClass  parent_class;
 
   void (* response) (GimpOverlayDialog *overlay,
                      gint               response_id);
