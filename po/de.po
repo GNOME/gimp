@@ -851,7 +851,7 @@ msgstr "_Deckkraft"
 #: ../app/actions/context-actions.c:52
 msgctxt "context-action"
 msgid "Paint _Mode"
-msgstr "Zeichen_modus"
+msgstr "Mal_modus"
 
 #: ../app/actions/context-actions.c:54
 msgctxt "context-action"
@@ -9631,7 +9631,7 @@ msgstr "Voreingestellte _Interpolationsart:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1910
 msgid "Paint Options Shared Between Tools"
-msgstr "Zeicheneinstellungen werkzeugübergreifend nutzen"
+msgstr "Maleinstellungen werkzeugübergreifend nutzen"
 
 #: ../app/dialogs/preferences-dialog.c:1914
 msgid "_Brush"
@@ -10921,12 +10921,12 @@ msgstr "Benannte Ablage »%s« wurde nicht gefunden"
 
 #: ../app/pdb/gimppdb-utils.c:289
 msgid "Invalid empty paint method name"
-msgstr "Ungültiger, leerer Name der Zeichenmethode"
+msgstr "Ungültiger, leerer Name der Malmethode"
 
 #: ../app/pdb/gimppdb-utils.c:299
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr "Zeichenmethode »%s« existiert nicht"
+msgstr "Malmethode »%s« existiert nicht"
 
 #: ../app/pdb/gimppdb-utils.c:316
 #, c-format

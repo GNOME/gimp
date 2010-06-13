@@ -700,7 +700,7 @@ msgstr "Gaußscher Weichzeichner"
 #. parameter settings
 #: ../plug-ins/common/blur-gauss.c:508
 msgid "Blur Radius"
-msgstr "Weichenzeichenradius"
+msgstr "Weichzeichnenradius"
 
 #: ../plug-ins/common/blur-gauss.c:522 ../plug-ins/common/jigsaw.c:2457
 #: ../plug-ins/common/noise-spread.c:384
@@ -715,7 +715,7 @@ msgstr "_Vertikal:"
 # TODO
 #: ../plug-ins/common/blur-gauss.c:549
 msgid "Blur Method"
-msgstr "Weichenzeichenmethode"
+msgstr "Weichzeichnenmethode"
 
 #: ../plug-ins/common/blur-gauss.c:553
 msgid "_IIR"
@@ -2102,9 +2102,10 @@ msgstr "Er_weitern"
 msgid "_Wrap"
 msgstr "_Umfalten"
 
+# Herausgeschobene Pixel am Rand behandeln
 #: ../plug-ins/common/convolution-matrix.c:74
 msgid "Cro_p"
-msgstr "_Zuschneiden"
+msgstr "_Abschneiden"
 
 #: ../plug-ins/common/convolution-matrix.c:200
 msgid "Apply a generic 5x5 convolution matrix"
