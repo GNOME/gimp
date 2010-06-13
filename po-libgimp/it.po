@@ -1,7 +1,7 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
+# Daniele Medri <madrid@linux.it>, 2000-2002
+# Marco Ciampa <ciampix@libero.it>, 2003-2010
 # Alessandro Falappa <alessandro@falappa.net>, 2007
 # Luca Ferretti <elle.uca@libero.it>, 2006, 2009.
 #
@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-14 18:11+0200\n"
-"PO-Revision-Date: 2010-04-14 18:11+0200\n"
+"POT-Creation-Date: 2010-06-13 13:32+0200\n"
+"PO-Revision-Date: 2010-06-13 13:33+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1297,7 +1297,7 @@ msgstr ""
 "dello schermo per selezionare quel colore."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:279
+#: ../libgimpwidgets/gimppreview.c:276
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -1427,6 +1427,21 @@ msgstr "Generatore del seme di casualità con un numero generato casualmente"
 #: ../libgimpwidgets/gimpwidgets.c:531
 msgid "_Randomize"
 msgstr "_Casualizza"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:49
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "Disabilitata"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "Schermo"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+msgctxt "input-mode"
+msgid "Window"
+msgstr "Finestra"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
 msgctxt "aspect-type"

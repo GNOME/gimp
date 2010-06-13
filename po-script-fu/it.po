@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000-2002
-# Marco Ciampa <ciampix@libero.it>, 2003-2008
+# Marco Ciampa <ciampix@libero.it>, 2003-2010
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-23 12:45+0200\n"
-"PO-Revision-Date: 2010-05-02 00:22+0200\n"
+"POT-Creation-Date: 2010-06-13 13:31+0200\n"
+"PO-Revision-Date: 2010-06-13 10:51+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1956,15 +1956,20 @@ msgid "_Old Photo..."
 msgstr "_Vecchia foto..."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
-msgid "<Palettes>/Export as"
-msgstr "Esporta come"
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Tutti i caratteri nel nome sono o spaziati fra loro o sono caratteri che non "
+"possono essere usati in un nome di file."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
 msgid ""
-"All the characters in the file name are either white-spaces or characters "
-"which can not appear in file names (The following characters can not appear "
-"in file names: "
-msgstr "Tutti i caratteri nel nome di file sono o spaziati fra loro o caratteri che non possono essere usati in un nome di file (i seguenti caratteri non possono fare parte di un nome di file: "
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Esporta la tavolozza attiva come elenco di fogli di stile CSS, con le voci "
+"colore come nome di classe e il colore vero e proprio come attributo"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
 msgid "Export the active palette as a PHP dictionary (name => color)"
@@ -1979,16 +1984,28 @@ msgid "Export the active palette as a java.util.Hashtable<String, Color>"
 msgstr "Esporta la tavolozza attiva come java.util.Hashtable<Stringa, Colore>"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
-msgid ""
-"Export the active palette as a list css stylesheet with the colors entry "
-"name as their class name, and the color itself as the color attribute"
-msgstr "Esporta la tavolozza attiva come elenco di fogli di stile css con le voci colore come nome di classe e il colore vero e proprio come attributo"
+msgid "Folder for the output file"
+msgstr "Cartella per il file di uscita"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Il nome del file inserito non è adatto ad essere usato per un file."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Il nome del file da creare (se un file con questo nome esiste già, "
+"quest'ultimo verrà sovrascritto)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
-msgstr "Scrivi tutti i colori presenti nella tavolozza in un file di testo, un valore esadecimale per riga (senza nomi)"
+msgstr ""
+"Scrivi tutti i colori presenti nella tavolozza in un file di testo, un "
+"valore esadecimale per riga (senza nomi)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
