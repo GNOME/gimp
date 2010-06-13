@@ -7809,7 +7809,7 @@ msgstr "Voreingestellte _Interpolationsart:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1936
 msgid "Paint Options Shared Between Tools"
-msgstr "Zeicheneinstellungen werkzeugübergreifend nutzen"
+msgstr "Maleinstellungen werkzeugübergreifend nutzen"
 
 #: ../app/dialogs/preferences-dialog.c:1949
 msgid "Move Tool"
@@ -9037,12 +9037,12 @@ msgstr "Benannte Ablage »%s« wurde nicht gefunden"
 #: ../app/pdb/gimppdb-utils.c:281
 #, c-format
 msgid "Invalid empty paint method name"
-msgstr "Ungültiger, leerer Name der Zeichenmethode"
+msgstr "Ungültiger, leerer Name der Malmethode"
 
 #: ../app/pdb/gimppdb-utils.c:291
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr "Zeichenmethode »%s« existiert nicht"
+msgstr "Malmethode »%s« existiert nicht"
 
 #: ../app/pdb/gimppdb-utils.c:307
 #, c-format
