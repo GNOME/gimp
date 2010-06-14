@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-14 18:33+0200\n"
-"PO-Revision-Date: 2010-05-10 08:46+0200\n"
+"POT-Creation-Date: 2010-06-15 00:38+0200\n"
+"PO-Revision-Date: 2010-06-15 00:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -421,91 +421,91 @@ msgstr "Rilevamento sfondo animazione"
 msgid "Optimizing animation"
 msgstr "Ottimizzazione animazione"
 
-#: ../plug-ins/common/animation-play.c:170
+#: ../plug-ins/common/animation-play.c:167
 msgid "Preview a GIMP layer-based animation"
 msgstr "Anteprima di un'animazione basata sui livelli di GIMP"
 
-#: ../plug-ins/common/animation-play.c:175
+#: ../plug-ins/common/animation-play.c:172
 msgid "_Playback..."
 msgstr "_Esecuzione..."
 
-#: ../plug-ins/common/animation-play.c:454
+#: ../plug-ins/common/animation-play.c:451
 msgid "_Step"
 msgstr "Pa_sso"
 
-#: ../plug-ins/common/animation-play.c:454
+#: ../plug-ins/common/animation-play.c:451
 msgid "Step to next frame"
 msgstr "Esegui passo di un frame"
 
-#: ../plug-ins/common/animation-play.c:458
+#: ../plug-ins/common/animation-play.c:455
 msgid "Rewind the animation"
 msgstr "Riavvolgi l'animazione"
 
-#: ../plug-ins/common/animation-play.c:476
+#: ../plug-ins/common/animation-play.c:473
 msgid "Faster"
 msgstr "Più veloce"
 
-#: ../plug-ins/common/animation-play.c:476
+#: ../plug-ins/common/animation-play.c:473
 msgid "Increase the speed of the animation"
 msgstr "Aumenta la velocità dell'animazione"
 
-#: ../plug-ins/common/animation-play.c:481
+#: ../plug-ins/common/animation-play.c:478
 msgid "Slower"
 msgstr "Più lenta"
 
-#: ../plug-ins/common/animation-play.c:481
+#: ../plug-ins/common/animation-play.c:478
 msgid "Decrease the speed of the animation"
 msgstr "Diminuisce la velocità dell'animazione"
 
-#: ../plug-ins/common/animation-play.c:486
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset speed"
 msgstr "Reimposta la velocità"
 
-#: ../plug-ins/common/animation-play.c:486
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset the speed of the animation"
 msgstr "Reimposta la velocità dell'animazione"
 
-#: ../plug-ins/common/animation-play.c:494
-#: ../plug-ins/common/animation-play.c:1475
+#: ../plug-ins/common/animation-play.c:491
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Start playback"
 msgstr "Inizia l'esecuzione"
 
-#: ../plug-ins/common/animation-play.c:498
+#: ../plug-ins/common/animation-play.c:495
 msgid "Detach"
 msgstr "Stacca"
 
-#: ../plug-ins/common/animation-play.c:499
+#: ../plug-ins/common/animation-play.c:496
 msgid "Detach the animation from the dialog window"
 msgstr "Stacca l'animazione dalla finestra di dialogo"
 
-#: ../plug-ins/common/animation-play.c:591
+#: ../plug-ins/common/animation-play.c:588
 msgid "Animation Playback:"
 msgstr "Esecuzione animazione:"
 
 #. list is given in "fps" - frames per second
-#: ../plug-ins/common/animation-play.c:664
+#: ../plug-ins/common/animation-play.c:661
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: ../plug-ins/common/animation-play.c:675
+#: ../plug-ins/common/animation-play.c:672
 msgid "Default framerate"
 msgstr "Frequenza predefinita fotogrammi"
 
-#: ../plug-ins/common/animation-play.c:696
+#: ../plug-ins/common/animation-play.c:693
 msgid "Playback speed"
 msgstr "Velocità di riproduzione"
 
-#: ../plug-ins/common/animation-play.c:832
+#: ../plug-ins/common/animation-play.c:829
 msgid "Tried to display an invalid layer."
 msgstr "Tentativo di visualizzazione di un livello non valido."
 
-#: ../plug-ins/common/animation-play.c:1352
+#: ../plug-ins/common/animation-play.c:1349
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Fotogramma %d di %d"
 
-#: ../plug-ins/common/animation-play.c:1475
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Stop playback"
 msgstr "Blocca l'esecuzione"
 
@@ -603,7 +603,7 @@ msgstr "_Verticale"
 #.
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:934
 #: ../plug-ins/common/decompose.c:722 ../plug-ins/common/file-cel.c:361
-#: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:556
+#: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:609
 #: ../plug-ins/common/file-gif-load.c:927
 #: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
 #: ../plug-ins/common/file-pcx.c:424 ../plug-ins/common/file-pix.c:381
@@ -1016,21 +1016,20 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/common/cml-explorer.c:2177 ../plug-ins/common/curve-bend.c:884
 #: ../plug-ins/common/file-cel.c:311 ../plug-ins/common/file-compressor.c:497
 #: ../plug-ins/common/file-compressor.c:665
-#: ../plug-ins/common/file-dicom.c:324 ../plug-ins/common/file-gbr.c:360
+#: ../plug-ins/common/file-dicom.c:339 ../plug-ins/common/file-gbr.c:360
 #: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:643
 #: ../plug-ins/common/file-jp2-load.c:197
 #: ../plug-ins/common/file-jp2-load.c:206 ../plug-ins/common/file-mng.c:1107
 #: ../plug-ins/common/file-pat.c:329 ../plug-ins/common/file-pcx.c:360
-#: ../plug-ins/common/file-pdf.c:550 ../plug-ins/common/file-pix.c:342
-#: ../plug-ins/common/file-png.c:720 ../plug-ins/common/file-pnm.c:493
-#: ../plug-ins/common/file-ps.c:1036 ../plug-ins/common/file-ps.c:3043
-#: ../plug-ins/common/file-psp.c:1703 ../plug-ins/common/file-raw.c:255
-#: ../plug-ins/common/file-raw.c:709 ../plug-ins/common/file-sunras.c:390
-#: ../plug-ins/common/file-svg.c:332 ../plug-ins/common/file-svg.c:730
-#: ../plug-ins/common/file-tga.c:441 ../plug-ins/common/file-tiff-load.c:291
-#: ../plug-ins/common/file-xbm.c:736 ../plug-ins/common/file-xmc.c:666
-#: ../plug-ins/common/file-xmc.c:853 ../plug-ins/common/file-xwd.c:432
-#: ../plug-ins/common/sphere-designer.c:2001
+#: ../plug-ins/common/file-pix.c:342 ../plug-ins/common/file-png.c:720
+#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
+#: ../plug-ins/common/file-ps.c:3043 ../plug-ins/common/file-psp.c:1703
+#: ../plug-ins/common/file-raw.c:255 ../plug-ins/common/file-raw.c:709
+#: ../plug-ins/common/file-sunras.c:390 ../plug-ins/common/file-svg.c:332
+#: ../plug-ins/common/file-svg.c:730 ../plug-ins/common/file-tga.c:441
+#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:736
+#: ../plug-ins/common/file-xmc.c:666 ../plug-ins/common/file-xmc.c:853
+#: ../plug-ins/common/file-xwd.c:432 ../plug-ins/common/sphere-designer.c:2001
 #: ../plug-ins/file-bmp/bmp-read.c:155 ../plug-ins/file-faxg3/faxg3.c:232
 #: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:652
@@ -1059,7 +1058,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-compressor.c:507
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
-#: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:800
+#: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:1352
 #: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:779
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
@@ -1078,7 +1077,7 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1711
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
-#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2398
+#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1210
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -2081,7 +2080,7 @@ msgstr "_Avvolgi"
 
 #: ../plug-ins/common/convolution-matrix.c:74
 msgid "Cro_p"
-msgstr "_Taglierino"
+msgstr "_Taglia"
 
 #: ../plug-ins/common/convolution-matrix.c:200
 msgid "Apply a generic 5x5 convolution matrix"
@@ -2109,20 +2108,20 @@ msgstr "Matrice"
 
 #: ../plug-ins/common/convolution-matrix.c:982
 msgid "D_ivisor:"
-msgstr "D_ivisore:"
+msgstr "_Divisore:"
 
 #: ../plug-ins/common/convolution-matrix.c:1008
 #: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1119
 msgid "O_ffset:"
-msgstr "O_ffset:"
+msgstr "_Compensazione:"
 
 #: ../plug-ins/common/convolution-matrix.c:1037
 msgid "N_ormalise"
-msgstr "N_ormalizza"
+msgstr "Normaliz_za"
 
 #: ../plug-ins/common/convolution-matrix.c:1049
 msgid "A_lpha-weighting"
-msgstr "Ponderazione-alfa"
+msgstr "Ponderazione-a_lfa"
 
 #: ../plug-ins/common/convolution-matrix.c:1068
 msgid "Border"
@@ -3015,11 +3014,11 @@ msgstr "Carica tavolozza KISS"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:316 ../plug-ins/common/file-dicom.c:329
+#: ../plug-ins/common/file-cel.c:316 ../plug-ins/common/file-dicom.c:344
 #: ../plug-ins/common/file-gbr.c:365 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:648 ../plug-ins/common/file-jp2-load.c:190
 #: ../plug-ins/common/file-pat.c:334 ../plug-ins/common/file-pcx.c:365
-#: ../plug-ins/common/file-pdf.c:595 ../plug-ins/common/file-pix.c:347
+#: ../plug-ins/common/file-pdf.c:601 ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
 #: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:714
 #: ../plug-ins/common/file-sunras.c:485 ../plug-ins/common/file-tga.c:446
@@ -3080,53 +3079,53 @@ msgstr ""
 "Nessuna estensione plausibile, tentativo di salvataggio tramite il magic del "
 "file."
 
-#: ../plug-ins/common/file-csource.c:111
+#: ../plug-ins/common/file-csource.c:112
 msgid "C source code"
 msgstr "Codice sorgente C"
 
-#: ../plug-ins/common/file-csource.c:659
+#: ../plug-ins/common/file-csource.c:703
 msgid "C-Source"
 msgstr "Sorgente C"
 
-#: ../plug-ins/common/file-csource.c:677
+#: ../plug-ins/common/file-csource.c:721
 msgid "_Prefixed name:"
 msgstr "Nome con _prefisso:"
 
-#: ../plug-ins/common/file-csource.c:686
+#: ../plug-ins/common/file-csource.c:730
 msgid "Co_mment:"
 msgstr "Co_mmento:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:693
+#: ../plug-ins/common/file-csource.c:737
 msgid "_Save comment to file"
 msgstr "_Salva commento nel file"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:705
+#: ../plug-ins/common/file-csource.c:749
 msgid "_Use GLib types (guint8*)"
 msgstr "_Usa tipi GLib (guint8*)"
 
-#. Use Macros
-#.
-#: ../plug-ins/common/file-csource.c:717
+#: ../plug-ins/common/file-csource.c:762
 msgid "Us_e macros instead of struct"
 msgstr "Us_a le macro invece delle struct"
 
-#. Use RLE
-#.
-#: ../plug-ins/common/file-csource.c:729
+#: ../plug-ins/common/file-csource.c:775
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Usa codifica run-length a _1 byte"
 
-#. Alpha
-#.
-#: ../plug-ins/common/file-csource.c:741
+#: ../plug-ins/common/file-csource.c:788
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Sal_va canale alfa (RGBA/RGB)"
 
-#: ../plug-ins/common/file-csource.c:759
+#. RGB-565
+#.
+#: ../plug-ins/common/file-csource.c:800
+msgid "Save as _RGB565 (16-bit)"
+msgstr "Salva come _RGB565 (16-bit)"
+
+#: ../plug-ins/common/file-csource.c:823
 msgid "Op_acity:"
 msgstr "Op_acità:"
 
@@ -3139,25 +3138,25 @@ msgstr "Collegamento al desktop"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Errore di caricamento file desktop \"%s\": %s"
 
-#: ../plug-ins/common/file-dicom.c:145
+#: ../plug-ins/common/file-dicom.c:138
 msgid "DICOM image"
 msgstr "Immagine DICOM"
 
-#: ../plug-ins/common/file-dicom.c:170
+#: ../plug-ins/common/file-dicom.c:163
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Immagini digitali e comunicazioni in immagini mediche"
 
-#: ../plug-ins/common/file-dicom.c:351
+#: ../plug-ins/common/file-dicom.c:366
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' non è un file DICOM"
 
-#: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:665
+#: ../plug-ins/common/file-dicom.c:1320 ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
-#: ../plug-ins/common/file-dicom.c:783 ../plug-ins/common/file-ps.c:1203
+#: ../plug-ins/common/file-dicom.c:1335 ../plug-ins/common/file-ps.c:1203
 #: ../plug-ins/common/file-xwd.c:603 ../plug-ins/file-fits/fits.c:465
 #: ../plug-ins/file-xjt/xjt.c:1687
 msgid "Cannot operate on unknown image types."
@@ -3595,11 +3594,11 @@ msgstr "L'immagine \"%s\" possiede uno spazio colore sconosciuto."
 #: ../plug-ins/common/file-jp2-load.c:320
 #, c-format
 msgid ""
-"Image component %d of image '%s' did not have the same size as the image "
-"which is currently not supported."
+"Image component %d of image '%s' does not have the same size as the image. "
+"This is currently not supported."
 msgstr ""
-"La componente %d dell'immagine '%s' non possiede la stessa dimensione "
-"dell'immagine, questa condizione non è attualmente supportata."
+"La componente %d dell'immagine \"%s\" non possiede la stessa dimensione "
+"dell'immagine; questa condizione non è attualmente supportata."
 
 #: ../plug-ins/common/file-jp2-load.c:331
 #, c-format
@@ -3610,11 +3609,10 @@ msgstr ""
 #: ../plug-ins/common/file-jp2-load.c:340
 #, c-format
 msgid ""
-"Image component %d of image '%s' is signed which is currently not supported "
-"by GIMP."
+"Image component %d of image '%s' is signed. This is currently not supported."
 msgstr ""
 "La componente %d dell'immagine \"%s\" è firmata. Tale caratteristica non è "
-"attualmente supportata da GIMP."
+"attualmente supportata."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -3817,38 +3815,43 @@ msgstr "Fallita la scrittura sul file \"%s\": %s"
 msgid "Portable Document Format"
 msgstr "PDF"
 
-#: ../plug-ins/common/file-pdf.c:629
+#: ../plug-ins/common/file-pdf.c:556
+#, c-format
+msgid "Could not load '%s': %s"
+msgstr "Impossibile caricare \"%s\": %s"
+
+#: ../plug-ins/common/file-pdf.c:635
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf.c:631 ../plug-ins/common/file-ps.c:1125
+#: ../plug-ins/common/file-pdf.c:637 ../plug-ins/common/file-ps.c:1125
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pagine"
 
-#: ../plug-ins/common/file-pdf.c:817
+#: ../plug-ins/common/file-pdf.c:823
 msgid "Import from PDF"
 msgstr "Importa da file PDF"
 
-#: ../plug-ins/common/file-pdf.c:822 ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-pdf.c:828 ../plug-ins/common/file-ps.c:3095
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Importa"
 
-#: ../plug-ins/common/file-pdf.c:890
+#: ../plug-ins/common/file-pdf.c:896
 msgid "_Width (pixels):"
 msgstr "_Larghezza (pixel):"
 
-#: ../plug-ins/common/file-pdf.c:891
+#: ../plug-ins/common/file-pdf.c:897
 msgid "_Height (pixels):"
 msgstr "_Altezza (pixel):"
 
-#: ../plug-ins/common/file-pdf.c:893
+#: ../plug-ins/common/file-pdf.c:899
 msgid "_Resolution:"
 msgstr "_Risoluzione:"
 
-#: ../plug-ins/common/file-pdf.c:1167
+#: ../plug-ins/common/file-pdf.c:1173
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
@@ -4653,7 +4656,7 @@ msgstr "Prefisso _identificativo: "
 msgid "_Write hot spot values"
 msgstr "_Scrivi valori punti caldi"
 
-#: ../plug-ins/common/file-xbm.c:1262
+#: ../plug-ins/common/file-xbm.c:1262 ../plug-ins/common/file-xmc.c:1094
 msgid "Hot spot _X:"
 msgstr "Punto caldo _X:"
 
@@ -4682,12 +4685,12 @@ msgstr "Cursore del mouse X11"
 #: ../plug-ins/common/file-xmc.c:480
 #, c-format
 msgid ""
-"Cannot set the hotspot!\n"
+"Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "Impossibile impostare l'hotspot!\n"
-"È necessario regolare i livelli in modo tale che tutti possegano "
-"un'intersezione."
+"È necessario regolare i livelli in modo tale che tutti abbiano "
+"un'intersezione comune."
 
 #: ../plug-ins/common/file-xmc.c:673
 #, c-format
@@ -4732,17 +4735,13 @@ msgid "XMC Options"
 msgstr "Opzioni XMC"
 
 #: ../plug-ins/common/file-xmc.c:1090
-msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
 msgstr ""
 "Inserire la coordinata X dell'hotspot. L'origine è l'angolo in alto a "
 "sinistra."
 
-#: ../plug-ins/common/file-xmc.c:1094
-msgid "Hotspot _X:"
-msgstr "Punto caldo _X:"
-
 #: ../plug-ins/common/file-xmc.c:1108
-msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
 msgstr ""
 "Inserire la coordinata Y dell'hotspot. L'origine è l'angolo in alto a "
 "sinistra."
@@ -4871,13 +4870,13 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1512
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx)"
-msgstr "La larghezza di \"%s\" è troppo grande. Ridurre di più di %dpx)"
+msgid "Width of '%s' is too large. Please reduce more than %dpx."
+msgstr "La larghezza di \"%s\" è troppo grande. Ridurre di più di %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1519
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx)"
-msgstr "L'altezza di \"%s\" è troppo grande. Ridurre di più di %dpx)"
+msgid "Height of '%s' is too large. Please reduce more than %dpx."
+msgstr "L'altezza di \"%s\" è troppo grande. Ridurre di più di %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1526
 #, c-format
@@ -4887,8 +4886,9 @@ msgstr "La dimensione di \"%s\" è zero!"
 #: ../plug-ins/common/file-xmc.c:1566
 #, c-format
 msgid ""
-"Cannot save the cursor because the hotspot is not on '%s'.\n"
-"Try to change the hotspot position, layer geometry or save without auto-crop."
+"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Try to change the hot spot position, layer geometry or save without auto-"
+"crop."
 msgstr ""
 "Impossibile salvare il cursore dato che l'hotspot non è su \"%s\".\n"
 "Provare a cambiare la posizione dell'hotspot, la geometria del livello o "
@@ -7402,7 +7402,7 @@ msgstr "Finestra di selezione del colore"
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:193
-#: ../plug-ins/ifs-compose/ifs-compose.c:556
+#: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Scala:"
 
@@ -7638,7 +7638,7 @@ msgstr "Piastrelle piccole"
 #. Area for buttons etc
 #. Flip
 #: ../plug-ins/common/tile-small.c:413
-#: ../plug-ins/ifs-compose/ifs-compose.c:612
+#: ../plug-ins/ifs-compose/ifs-compose.c:609
 msgid "Flip"
 msgstr "Ribalta"
 
@@ -8114,7 +8114,7 @@ msgstr "Ampiezza passo:"
 
 #: ../plug-ins/common/warp.c:433
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
-#: ../plug-ins/ifs-compose/ifs-compose.c:1214
+#: ../plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "Iterations:"
 msgstr "Iterazioni:"
 
@@ -8192,7 +8192,7 @@ msgid "Vector mag:"
 msgstr "Intensità vettore:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:570
+#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:567
 msgid "Angle:"
 msgstr "Angolo:"
 
@@ -8307,8 +8307,8 @@ msgid "A sharing violation occurred."
 msgstr "Si è verificata una violazione di condivisione."
 
 #: ../plug-ins/common/web-browser.c:175
-msgid "Unknown Windows error."
-msgstr "Errore sulle finestre sconosciuto."
+msgid "Unknown Microsoft Windows error."
+msgstr "Errore Microsoft Windows sconosciuto."
 
 #: ../plug-ins/common/web-browser.c:178
 #, c-format
@@ -11025,16 +11025,16 @@ msgstr ""
 "Errore di analisi in '%s':\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:336
+#: ../plug-ins/ifs-compose/ifs-compose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Crea un frattale IFS (Iterated Function System)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:348
+#: ../plug-ins/ifs-compose/ifs-compose.c:345
 msgid "_IFS Fractal..."
 msgstr "Frattale _IFS..."
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:528
+#: ../plug-ins/ifs-compose/ifs-compose.c:525
 #: ../plug-ins/lighting/lighting-ui.c:526
 #: ../plug-ins/map-object/map-object-ui.c:675
 #: ../plug-ins/map-object/map-object-ui.c:729
@@ -11044,7 +11044,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:542
+#: ../plug-ins/ifs-compose/ifs-compose.c:539
 #: ../plug-ins/lighting/lighting-ui.c:540
 #: ../plug-ins/map-object/map-object-ui.c:689
 #: ../plug-ins/map-object/map-object-ui.c:742
@@ -11055,149 +11055,149 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:584
+#: ../plug-ins/ifs-compose/ifs-compose.c:581
 msgid "Asymmetry:"
 msgstr "Asimmetria:"
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:598
+#: ../plug-ins/ifs-compose/ifs-compose.c:595
 msgid "Shear:"
 msgstr "Inclina:"
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:643
+#: ../plug-ins/ifs-compose/ifs-compose.c:640
 msgid "Simple"
 msgstr "Semplice"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:652
+#: ../plug-ins/ifs-compose/ifs-compose.c:649
 msgid "IFS Fractal: Target"
 msgstr "Frattale IFS: obbiettivo"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:658
+#: ../plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Scale hue by:"
 msgstr "Scala tonalità di:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:673
+#: ../plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale value by:"
 msgstr "Scala valore di:"
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:690
+#: ../plug-ins/ifs-compose/ifs-compose.c:687
 msgid "Full"
 msgstr "Tutto"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:698
+#: ../plug-ins/ifs-compose/ifs-compose.c:695
 msgid "IFS Fractal: Red"
 msgstr "Frattale IFS: rosso"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:706
+#: ../plug-ins/ifs-compose/ifs-compose.c:703
 msgid "IFS Fractal: Green"
 msgstr "Frattale IFS: verde"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:714
+#: ../plug-ins/ifs-compose/ifs-compose.c:711
 msgid "IFS Fractal: Blue"
 msgstr "Frattale IFS: blu"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:722
+#: ../plug-ins/ifs-compose/ifs-compose.c:719
 msgid "IFS Fractal: Black"
 msgstr "Frattale IFS: nero"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:772
+#: ../plug-ins/ifs-compose/ifs-compose.c:769
 msgid "IFS Fractal"
 msgstr "Frattale IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:870
+#: ../plug-ins/ifs-compose/ifs-compose.c:867
 msgid "Spatial Transformation"
 msgstr "Trasformazione spaziale"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:876
+#: ../plug-ins/ifs-compose/ifs-compose.c:873
 msgid "Color Transformation"
 msgstr "Trasformazione colore"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:886
+#: ../plug-ins/ifs-compose/ifs-compose.c:883
 msgid "Relative probability:"
 msgstr "Probabilità relativa:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1061
+#: ../plug-ins/ifs-compose/ifs-compose.c:1058
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Select _All"
 msgstr "Selezion_a tutto"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1065
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Re_center"
 msgstr "Ri_centra"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1065
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Recompute Center"
 msgstr "Ricalcola centro"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1069
+#: ../plug-ins/ifs-compose/ifs-compose.c:1066
 msgid "Render Options"
 msgstr "Opzioni di render"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1075
+#: ../plug-ins/ifs-compose/ifs-compose.c:1072
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Muovi"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1078
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate"
 msgstr "Ruota"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1078
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate / Scale"
 msgstr "Rotazione / scalatura"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1081
+#: ../plug-ins/ifs-compose/ifs-compose.c:1078
 msgid "Stretch"
 msgstr "Allarga"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1179
+#: ../plug-ins/ifs-compose/ifs-compose.c:1176
 msgid "IFS Fractal Render Options"
 msgstr "Opzioni di render IFS frattale"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1201
+#: ../plug-ins/ifs-compose/ifs-compose.c:1198
 msgid "Max. memory:"
 msgstr "Memoria massima:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1228
+#: ../plug-ins/ifs-compose/ifs-compose.c:1225
 msgid "Subdivide:"
 msgstr "Suddividi:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1241
+#: ../plug-ins/ifs-compose/ifs-compose.c:1238
 msgid "Spot radius:"
 msgstr "Raggio:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1306
+#: ../plug-ins/ifs-compose/ifs-compose.c:1303
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Rendering IFS (%d/%d)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1472
+#: ../plug-ins/ifs-compose/ifs-compose.c:1469
 #, c-format
 msgid "Transformation %s"
 msgstr "Trasformazione %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2403
+#: ../plug-ins/ifs-compose/ifs-compose.c:2400
 msgid "Save failed"
 msgstr "Salvataggio fallito"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2486
-#: ../plug-ins/ifs-compose/ifs-compose.c:2499
+#: ../plug-ins/ifs-compose/ifs-compose.c:2483
+#: ../plug-ins/ifs-compose/ifs-compose.c:2496
 msgid "Open failed"
 msgstr "Apertura fallita"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2494
+#: ../plug-ins/ifs-compose/ifs-compose.c:2491
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Il file '%s' non sembra essere un file frattale IFS."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2534
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
 msgid "Save as IFS Fractal file"
 msgstr "Salva come file IFS frattale"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2571
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
 msgid "Open IFS Fractal file"
 msgstr "Apri file IFS frattale"
 
