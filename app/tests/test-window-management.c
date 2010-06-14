@@ -48,42 +48,8 @@ typedef struct
 } GimpTestFixture;
 
 
-static void window_roles   (GimpTestFixture *fixture,
-                                      gconstpointer    data);
-
-
 static Gimp *gimp = NULL;
 
-
-int main(int argc, char **argv)
-{
-  int test_result;
-
-  g_type_init ();
-  gtk_init (&argc, &argv);
-  g_test_init (&argc, &argv, NULL);
-
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir-empty");
-
-  /* We share the same application instance across all tests */
-  gimp = gimp_init_for_gui_testing (FALSE, FALSE);
-
-  /* Add tests */
-  ADD_TEST (window_roles);
-
-  /* Run the tests and return status */
-  test_result = g_test_run ();
-
-  /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
-
-  /* Exit somewhat properly to avoid annoying warnings */
-  gimp_exit (gimp, TRUE);
-
-  return test_result;
-}
 
 /**
  * window_roles:
@@ -121,4 +87,34 @@ window_roles (GimpTestFixture *fixture,
   g_object_unref (toolbox);
   g_object_unref (dock);
    */
+}
+
+int main(int argc, char **argv)
+{
+  int test_result;
+
+  g_type_init ();
+  gtk_init (&argc, &argv);
+  g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir-empty");
+
+  /* We share the same application instance across all tests */
+  gimp = gimp_init_for_gui_testing (FALSE, FALSE);
+
+  /* Add tests */
+  ADD_TEST (window_roles);
+
+  /* Run the tests and return status */
+  test_result = g_test_run ();
+
+  /* Don't write files to the source dir */
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
+
+  /* Exit somewhat properly to avoid annoying warnings */
+  gimp_exit (gimp, TRUE);
+
+  return test_result;
 }
