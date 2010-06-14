@@ -89,6 +89,17 @@ gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
   image_coords->y /= shell->scale_y;
 }
 
+/**
+ * gimp_display_shell_transform_xy:
+ * @shell:
+ * @x:
+ * @y:
+ * @nx:
+ * @ny:
+ * @use_offsets:
+ *
+ * Transforms an image coordinate to a shell coordinate.
+ **/
 void
 gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
                                  gdouble                 x,
