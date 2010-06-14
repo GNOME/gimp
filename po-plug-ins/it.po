@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-14 18:06+0200\n"
-"PO-Revision-Date: 2010-05-10 08:47+0200\n"
+"POT-Creation-Date: 2010-06-15 00:40+0200\n"
+"PO-Revision-Date: 2010-06-15 00:31+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2068,7 +2068,7 @@ msgstr "_Avvolgi"
 
 #: ../plug-ins/common/convolution-matrix.c:75
 msgid "Cro_p"
-msgstr "_Taglierino"
+msgstr "_Taglia"
 
 #: ../plug-ins/common/convolution-matrix.c:201
 msgid "Apply a generic 5x5 convolution matrix"
@@ -2096,20 +2096,20 @@ msgstr "Matrice"
 
 #: ../plug-ins/common/convolution-matrix.c:982
 msgid "D_ivisor:"
-msgstr "D_ivisore:"
+msgstr "_Divisore:"
 
 #: ../plug-ins/common/convolution-matrix.c:1008
 #: ../plug-ins/common/depth-merge.c:768 ../plug-ins/common/file-raw.c:1045
 msgid "O_ffset:"
-msgstr "O_ffset:"
+msgstr "_Compensazione:"
 
 #: ../plug-ins/common/convolution-matrix.c:1037
 msgid "N_ormalise"
-msgstr "N_ormalizza"
+msgstr "Normaliz_za"
 
 #: ../plug-ins/common/convolution-matrix.c:1049
 msgid "A_lpha-weighting"
-msgstr "Ponderazione-alfa"
+msgstr "Ponderazione-a_lfa"
 
 #: ../plug-ins/common/convolution-matrix.c:1068
 msgid "Border"
