@@ -57,6 +57,14 @@
 #define GIMP_UI_POSITION_EPSILON        1
 #define GIMP_UI_POSITION_EPSILON        1
 
+#define ADD_TEST(function) \
+  g_test_add ("/gimp-ui/" #function, \
+              GimpTestFixture, \
+              gimp, \
+              NULL, \
+              function, \
+              NULL);
+
 
 typedef gboolean (*GimpUiTestFunc) (GObject *object);
 
@@ -67,24 +75,6 @@ typedef struct
 } GimpTestFixture;
 
 
-static void            gimp_ui_tool_options_editor_updates      (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_automatic_tab_style              (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_create_new_image_via_dialog      (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_restore_recently_closed_dock     (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_tab_toggle_dont_change_position  (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_switch_to_single_window_mode     (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_hide_docks_in_single_window_mode (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_show_docks_in_single_window_mode (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
-static void            gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture   *fixture,
-                                                                 gconstpointer      data);
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
 static GtkWidget     * gimp_ui_find_dock_window                 (GimpDialogFactory *dialog_factory,
@@ -93,95 +83,8 @@ static gboolean        gimp_ui_not_toolbox_window               (GObject        
 static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
 
 
-int main(int argc, char **argv)
-{
-  Gimp *gimp   = NULL;
-  gint  result = -1;
-
-  g_type_init ();
-  gtk_init (&argc, &argv);
-  g_test_init (&argc, &argv, NULL);
-
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-  gimp_test_utils_setup_menus_dir ();
-
-  /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (FALSE, TRUE);
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Setup the tests */
-  g_test_add ("/gimp-ui/tool-options-editor-updates",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_tool_options_editor_updates,
-              NULL);
-  g_test_add ("/gimp-ui/automatic-tab-style",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_automatic_tab_style,
-              NULL);
-  g_test_add ("/gimp-ui/create-new-image-via-dialog",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_create_new_image_via_dialog,
-              NULL);
-  g_test_add ("/gimp-ui/restore-recently-closed-multi-column-dock",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_restore_recently_closed_dock,
-              NULL);
-  g_test_add ("/gimp-ui/tab-toggle-dont-change-dock-window-position",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_tab_toggle_dont_change_position,
-              NULL);
-  g_test_add ("/gimp-ui/switch-to-single-window-mode",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_switch_to_single_window_mode,
-              NULL);
-  g_test_add ("/gimp-ui/hide-docks-in-single-window-mode",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_hide_docks_in_single_window_mode,
-              NULL);
-  g_test_add ("/gimp-ui/show-docks-in-single-window-mode",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_show_docks_in_single_window_mode,
-              NULL);
-  g_test_add ("/gimp-ui/switch-back-to-multi-window-mode",
-              GimpTestFixture,
-              gimp,
-              NULL,
-              gimp_ui_switch_back_to_multi_window_mode,
-              NULL);
-
-
-  /* Run the tests and return status */
-  result = g_test_run ();
-
-  /* Don't write files to the source dir */
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
-                                       "app/tests/gimpdir-output");
-
-  /* Exit properly so we don't break script-fu plug-in wire */
-  gimp_exit (gimp, TRUE);
-
-  return result;
-}
-
 /**
- * gimp_ui_tool_options_editor_updates:
+ * tool_options_editor_updates:
  * @fixture:
  * @data:
  *
@@ -189,8 +92,8 @@ int main(int argc, char **argv)
  * changes.
  **/
 static void
-gimp_ui_tool_options_editor_updates (GimpTestFixture *fixture,
-                                     gconstpointer    data)
+tool_options_editor_updates (GimpTestFixture *fixture,
+                             gconstpointer    data)
 {
   Gimp                  *gimp         = GIMP (data);
   GimpDisplay           *display      = GIMP_DISPLAY (gimp_get_empty_display (gimp));
@@ -255,8 +158,8 @@ gimp_ui_get_dialog (const gchar *identifier)
 }
 
 static void
-gimp_ui_automatic_tab_style (GimpTestFixture *fixture,
-                             gconstpointer    data)
+automatic_tab_style (GimpTestFixture *fixture,
+                     gconstpointer    data)
 {
   GtkWidget    *channel_dockable = gimp_ui_get_dialog ("gimp-channel-list");
   GimpDockable *dockable;
@@ -306,8 +209,8 @@ gimp_ui_automatic_tab_style (GimpTestFixture *fixture,
 }
 
 static void
-gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
-                                     gconstpointer    data)
+create_new_image_via_dialog (GimpTestFixture *fixture,
+                             gconstpointer    data)
 {
   Gimp              *gimp             = GIMP (data);
   GimpDisplay       *display          = GIMP_DISPLAY (gimp_get_empty_display (gimp));
@@ -353,8 +256,8 @@ gimp_ui_create_new_image_via_dialog (GimpTestFixture *fixture,
 }
 
 static void
-gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
-                                      gconstpointer    data)
+restore_recently_closed_multi_column_dock (GimpTestFixture *fixture,
+                                           gconstpointer    data)
 {
   Gimp      *gimp                          = GIMP (data);
   GtkWidget *dock_window                   = NULL;
@@ -399,7 +302,7 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_ui_tab_toggle_dont_change_position:
+ * tab_toggle_dont_change_dock_window_position:
  * @fixture:
  * @data:
  *
@@ -408,8 +311,8 @@ gimp_ui_restore_recently_closed_dock (GimpTestFixture *fixture,
  * use Tab though, we only simulate its effect.
  **/
 static void
-gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
-                                         gconstpointer    data)
+tab_toggle_dont_change_dock_window_position (GimpTestFixture *fixture,
+                                             gconstpointer    data)
 {
   Gimp      *gimp          = GIMP (data);
   GtkWidget *dock_window   = NULL;
@@ -467,8 +370,8 @@ gimp_ui_tab_toggle_dont_change_position (GimpTestFixture *fixture,
 }
 
 static void
-gimp_ui_switch_to_single_window_mode (GimpTestFixture *fixture,
-                                      gconstpointer    data)
+switch_to_single_window_mode (GimpTestFixture *fixture,
+                              gconstpointer    data)
 {
   Gimp *gimp = GIMP (data);
 
@@ -529,24 +432,24 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
 }
 
 static void
-gimp_ui_hide_docks_in_single_window_mode (GimpTestFixture *fixture,
-                                          gconstpointer   data)
+hide_docks_in_single_window_mode (GimpTestFixture *fixture,
+                                  gconstpointer   data)
 {
   Gimp *gimp = GIMP (data);
   gimp_ui_toggle_docks_in_single_window_mode (gimp);
 }
 
 static void
-gimp_ui_show_docks_in_single_window_mode (GimpTestFixture *fixture,
-                                          gconstpointer    data)
+show_docks_in_single_window_mode (GimpTestFixture *fixture,
+                                  gconstpointer    data)
 {
   Gimp *gimp = GIMP (data);
   gimp_ui_toggle_docks_in_single_window_mode (gimp);
 }
 
 static void
-gimp_ui_switch_back_to_multi_window_mode (GimpTestFixture *fixture,
-                                          gconstpointer    data)
+switch_back_to_multi_window_mode (GimpTestFixture *fixture,
+                                  gconstpointer    data)
 {
   Gimp *gimp = GIMP (data);
 
@@ -645,4 +548,45 @@ gimp_ui_multicolumn_not_toolbox_window (GObject *object)
 
   return (! gimp_dock_window_has_toolbox (dock_window) &&
           g_list_length (gimp_dock_window_get_docks (dock_window)) > 1);
+}
+
+int main(int argc, char **argv)
+{
+  Gimp *gimp   = NULL;
+  gint  result = -1;
+
+  g_type_init ();
+  gtk_init (&argc, &argv);
+  g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
+  gimp_test_utils_setup_menus_dir ();
+
+  /* Start up GIMP */
+  gimp = gimp_init_for_gui_testing (FALSE, TRUE);
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Add tests */
+  ADD_TEST (tool_options_editor_updates);
+  ADD_TEST (automatic_tab_style);
+  ADD_TEST (create_new_image_via_dialog);
+  ADD_TEST (restore_recently_closed_multi_column_dock);
+  ADD_TEST (tab_toggle_dont_change_dock_window_position);
+  ADD_TEST (switch_to_single_window_mode);
+  ADD_TEST (hide_docks_in_single_window_mode);
+  ADD_TEST (show_docks_in_single_window_mode);
+  ADD_TEST (switch_back_to_multi_window_mode);
+
+  /* Run the tests and return status */
+  result = g_test_run ();
+
+  /* Don't write files to the source dir */
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
+                                       "app/tests/gimpdir-output");
+
+  /* Exit properly so we don't break script-fu plug-in wire */
+  gimp_exit (gimp, TRUE);
+
+  return result;
 }

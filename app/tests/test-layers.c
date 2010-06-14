@@ -30,6 +30,14 @@
 
 #define GIMP_TEST_IMAGE_SIZE 100
 
+#define ADD_TEST(function) \
+  g_test_add ("/gimp-layers/" #function, \
+              GimpTestFixture, \
+              gimp, \
+              gimp_test_image_setup, \
+              function, \
+              gimp_test_image_teardown);
+
 
 typedef struct
 {
@@ -41,47 +49,10 @@ static void gimp_test_image_setup    (GimpTestFixture *fixture,
                                       gconstpointer    data);
 static void gimp_test_image_teardown (GimpTestFixture *fixture,
                                       gconstpointer    data);
-static void gimp_test_add_layer      (GimpTestFixture *fixture,
-                                      gconstpointer    data);
-static void gimp_test_remove_layer   (GimpTestFixture *fixture,
-                                      gconstpointer    data);
 
 
 static Gimp *gimp = NULL;
 
-
-int
-main (int    argc,
-      char **argv)
-{
-  g_thread_init (NULL);
-  g_type_init ();
-  g_test_init (&argc, &argv, NULL);
-
-  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
-                                       "app/tests/gimpdir");
-
-  /* We share the same application instance across all tests */
-  gimp = gimp_init_for_testing (TRUE);
-
-  /* Setup the tests */
-  g_test_add ("/gimp-layers/add-layer",
-              GimpTestFixture,
-              NULL,
-              gimp_test_image_setup,
-              gimp_test_add_layer,
-              gimp_test_image_teardown);
-
-  g_test_add ("/gimp-layers/remove-layer",
-              GimpTestFixture,
-              NULL,
-              gimp_test_image_setup,
-              gimp_test_remove_layer,
-              gimp_test_image_teardown);
-
-  /* Run the tests and return status */
-  return g_test_run ();
-}
 
 /**
  * gimp_test_image_setup:
@@ -115,15 +86,15 @@ gimp_test_image_teardown (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_test_add_layer:
+ * add_layer:
  * @fixture:
  * @data:
  *
  * Super basic test that makes sure we can add a layer.
  **/
 static void
-gimp_test_add_layer (GimpTestFixture *fixture,
-                     gconstpointer    data)
+add_layer (GimpTestFixture *fixture,
+           gconstpointer    data)
 {
   GimpImage *image = fixture->image;
   GimpLayer *layer;
@@ -152,15 +123,15 @@ gimp_test_add_layer (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_test_remove_layer:
+ * remove_layer:
  * @fixture:
  * @data:
  *
  * Super basic test that makes sure we can remove a layer.
  **/
 static void
-gimp_test_remove_layer (GimpTestFixture *fixture,
-                        gconstpointer    data)
+remove_layer (GimpTestFixture *fixture,
+              gconstpointer    data)
 {
   GimpImage *image = fixture->image;
   GimpLayer *layer;
@@ -193,4 +164,26 @@ gimp_test_remove_layer (GimpTestFixture *fixture,
                            NULL);
 
   g_assert_cmpint (gimp_image_get_n_layers (image), ==, 0);
+}
+
+int
+main (int    argc,
+      char **argv)
+{
+  g_thread_init (NULL);
+  g_type_init ();
+  g_test_init (&argc, &argv, NULL);
+
+  gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
+                                       "app/tests/gimpdir");
+
+  /* We share the same application instance across all tests */
+  gimp = gimp_init_for_testing (TRUE);
+
+  /* Add tests */
+  ADD_TEST (add_layer);
+  ADD_TEST (remove_layer);
+
+  /* Run the tests and return status */
+  return g_test_run ();
 }

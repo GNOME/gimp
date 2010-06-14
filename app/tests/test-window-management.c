@@ -33,13 +33,22 @@
 #include "gimp-app-test-utils.h"
 
 
+#define ADD_TEST(function) \
+  g_test_add ("/gimp-window-management/" #function, \
+              GimpTestFixture, \
+              NULL, \
+              NULL, \
+              function, \
+              NULL);
+
+
 typedef struct
 {
   int dummy;
 } GimpTestFixture;
 
 
-static void gimp_test_window_roles   (GimpTestFixture *fixture,
+static void window_roles   (GimpTestFixture *fixture,
                                       gconstpointer    data);
 
 
@@ -60,13 +69,8 @@ int main(int argc, char **argv)
   /* We share the same application instance across all tests */
   gimp = gimp_init_for_gui_testing (FALSE, FALSE);
 
-  /* Setup the tests */
-  g_test_add ("/gimp-window-management/window-roles",
-              GimpTestFixture,
-              NULL,
-              NULL,
-              gimp_test_window_roles,
-              NULL);
+  /* Add tests */
+  ADD_TEST (window_roles);
 
   /* Run the tests and return status */
   test_result = g_test_run ();
@@ -82,15 +86,15 @@ int main(int argc, char **argv)
 }
 
 /**
- * gimp_test_window_roles:
+ * window_roles:
  * @fixture:
  * @data:
  *
  * Makes sure that different windows have the right roles specified.
  **/
 static void
-gimp_test_window_roles (GimpTestFixture *fixture,
-                        gconstpointer    data)
+window_roles (GimpTestFixture *fixture,
+              gconstpointer    data)
 {
   GtkWidget      *dock           = NULL;
   GtkWidget      *toolbox        = NULL;
