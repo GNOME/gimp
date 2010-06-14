@@ -102,6 +102,7 @@ typedef struct _GimpBrush            GimpBrush;
 typedef struct _GimpBrushClipboard   GimpBrushClipboard;
 typedef struct _GimpBrushGenerated   GimpBrushGenerated;
 typedef struct _GimpBrushPipe        GimpBrushPipe;
+typedef struct _GimpCage             GimpCage;
 typedef struct _GimpCurve            GimpCurve;
 typedef struct _GimpDynamics         GimpDynamics;
 typedef struct _GimpDynamicsOutput   GimpDynamicsOutput;

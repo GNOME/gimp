@@ -36,6 +36,7 @@ OBJECTS = \
 	gimpbucketfilloptions.obj \
 	gimpbucketfilltool.obj \
 	gimpbycolorselecttool.obj \
+	gimpcagetool.obj \
 	gimpclonetool.obj \
 	gimpcolorbalancetool.obj \
 	gimpcolorizetool.obj \

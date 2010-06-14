@@ -36,6 +36,7 @@ OBJECTS = \
 	gimphuesaturationconfig.obj \
 	gimplevelsconfig.obj \
 	gimpoperationcolorbalance.obj \
+	gimpoperationcage.obj  \
 	gimpoperationcurves.obj \
 	gimpoperationhuesaturation.obj \
 	gimpoperationlevels.obj \

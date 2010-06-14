@@ -42,6 +42,7 @@
 #include "gimpbrightnesscontrasttool.h"
 #include "gimpbucketfilltool.h"
 #include "gimpbycolorselecttool.h"
+#include "gimpcagetool.h"
 #include "gimpclonetool.h"
 #include "gimpcolorbalancetool.h"
 #include "gimpcolorizetool.h"
@@ -153,6 +154,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_crop_tool_register,
     gimp_align_tool_register,
     gimp_move_tool_register,
+    gimp_cage_tool_register,
 
     /*  non-modifying tools  */
 

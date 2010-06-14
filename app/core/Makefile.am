@@ -72,6 +72,8 @@ libappcore_a_sources = \
 	gimpbrushpipe-load.h			\
 	gimpbuffer.c				\
 	gimpbuffer.h				\
+	gimpcage.c				\
+	gimpcage.h				\
 	gimpchannel.c				\
 	gimpchannel.h				\
 	gimpchannel-combine.c			\

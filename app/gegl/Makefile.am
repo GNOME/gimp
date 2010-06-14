@@ -51,6 +51,9 @@ libappgegl_a_SOURCES = \
 	gimpoperationcolorbalance.h	\
 	gimpoperationcolorize.c		\
 	gimpoperationcolorize.h		\
+	##right place ?
+	gimpoperationcage.h			\
+	gimpoperationcage.c			\
 	gimpoperationcurves.c		\
 	gimpoperationcurves.h		\
 	gimpoperationdesaturate.c	\
