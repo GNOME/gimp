@@ -624,8 +624,6 @@ static void
 gimp_dockbook_dockable_added (GimpDockbook *dockbook,
                               GimpDockable *dockable)
 {
-  gimp_dockbook_refresh_tab_layout_lut (dockbook);
-
   gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook),
                                  gtk_notebook_page_num (GTK_NOTEBOOK (dockbook),
                                                         GTK_WIDGET (dockable)));
@@ -635,7 +633,6 @@ static void
 gimp_dockbook_dockable_removed (GimpDockbook *dockbook,
                                 GimpDockable *dockable)
 {
-  gimp_dockbook_refresh_tab_layout_lut (dockbook);
 }
 
 /**
