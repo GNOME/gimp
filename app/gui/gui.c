@@ -630,9 +630,9 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_display_shell_render_exit (gimp);
   gimp_render_exit (gimp);
 
-  dialogs_exit (gimp);
   gimp_controllers_exit (gimp);
   gimp_devices_exit (gimp);
+  dialogs_exit (gimp);
 
   g_signal_handlers_disconnect_by_func (gimp,
                                         G_CALLBACK (gui_global_buffer_changed),
