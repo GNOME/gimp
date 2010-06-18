@@ -249,10 +249,10 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   shell->disp_height = allocation.height;
 
   /*  set up the scrollbar observers  */
-  g_signal_connect (shell->hsbdata, "value-changed",
+  g_signal_connect (shell->hsbdata, "notify::value",
                     G_CALLBACK (gimp_display_shell_hscrollbar_update),
                     shell);
-  g_signal_connect (shell->vsbdata, "value-changed",
+  g_signal_connect (shell->vsbdata, "notify::value",
                     G_CALLBACK (gimp_display_shell_vscrollbar_update),
                     shell);
 
