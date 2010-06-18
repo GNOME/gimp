@@ -234,7 +234,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_CANVAS,
                                     "default-snap-to-canvas",
                                     DEFAULT_SNAP_TO_CANVAS_BLURB,
-                                    TRUE,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_SNAP_TO_PATH,
                                     "default-snap-to-path",
