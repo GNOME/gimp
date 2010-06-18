@@ -841,6 +841,28 @@ gimp_display_shell_set_initial_scale (GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_push_zoom_focus_pointer_pos:
+ * @shell:
+ * @x:
+ * @y:
+ *
+ * When the zoom focus mechanism asks for the pointer the next time,
+ * use @x and @y.
+ **/
+void
+gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
+                                                gint              x,
+                                                gint              y)
+{
+  GdkPoint *point = g_slice_new (GdkPoint);
+  point->x = x;
+  point->y = y;
+
+  g_queue_push_head (shell->zoom_focus_pointer_queue,
+                     point);
+}
+
+/**
  * gimp_display_shell_scale_to:
  * @shell:
  * @scale:
@@ -1051,9 +1073,21 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                         gtk_get_event_widget (event) == window);
 
 
-    gtk_widget_get_pointer (shell->canvas,
-                            &canvas_pointer_x,
-                            &canvas_pointer_y);
+    if (g_queue_peek_head (shell->zoom_focus_pointer_queue) == NULL)
+      {
+        gtk_widget_get_pointer (shell->canvas,
+                                &canvas_pointer_x,
+                                &canvas_pointer_y);
+      }
+    else
+      {
+        GdkPoint *point = g_queue_pop_head (shell->zoom_focus_pointer_queue);
+
+        canvas_pointer_x = point->x;
+        canvas_pointer_y = point->y;
+
+        g_slice_free (GdkPoint, point);
+      }
 
     cursor_within_canvas = canvas_pointer_x >= 0 &&
                            canvas_pointer_y >= 0 &&

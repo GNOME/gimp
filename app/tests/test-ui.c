@@ -23,11 +23,13 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs/dialogs-types.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimpimagewindow.h"
 
@@ -44,6 +46,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
@@ -54,6 +57,7 @@
 
 #define GIMP_UI_WINDOW_POSITION_EPSILON 10
 #define GIMP_UI_POSITION_EPSILON        1
+#define GIMP_UI_ZOOM_EPSILON            0.01
 
 #define ADD_TEST(function) \
   g_test_add ("/gimp-ui/" #function, \
@@ -75,6 +79,7 @@ typedef struct
 
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
+static void            gimp_ui_synthesize_plus_key_event        (GtkWidget         *widget);
 static GtkWidget     * gimp_ui_find_dock_window                 (GimpDialogFactory *dialog_factory,
                                                                  GimpUiTestFunc     predicate);
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
@@ -251,6 +256,68 @@ create_new_image_via_dialog (GimpTestFixture *fixture,
   g_assert_cmpint (n_images,
                    ==,
                    n_initial_images + 1);
+}
+
+static void
+keyboard_zoom_focus (GimpTestFixture *fixture,
+                     gconstpointer    data)
+{
+  Gimp              *gimp    = GIMP (data);
+  GimpDisplay       *display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+  GimpDisplayShell  *shell   = gimp_display_get_shell (display);
+  GimpImageWindow   *window  = gimp_display_shell_get_window (shell);
+  gint               image_x;
+  gint               image_y;
+  gint               shell_x_before_zoom;
+  gint               shell_y_before_zoom;
+  gdouble            factor_before_zoom;
+  gint               shell_x_after_zoom;
+  gint               shell_y_after_zoom;
+  gdouble            factor_after_zoom;
+
+  /* We need to use a point that is within the visible (exposed) part
+   * of the canvas
+   */
+  image_x = 400;
+  image_y = 50;
+
+  /* Setup zoom focus on the bottom right part of the image. We avoid
+   * 0,0 because that's essentially a particularly easy special case.
+   */
+  gimp_display_shell_transform_xy (shell,
+                                   image_x,
+                                   image_y,
+                                   &shell_x_before_zoom,
+                                   &shell_y_before_zoom,
+                                   FALSE /*use_offsets*/);
+  gimp_display_shell_push_zoom_focus_pointer_pos (shell,
+                                                  shell_x_before_zoom,
+                                                  shell_y_before_zoom);
+  factor_before_zoom = gimp_zoom_model_get_factor (shell->zoom);
+
+  /* Do the zoom */
+  gimp_ui_synthesize_plus_key_event (GTK_WIDGET (window));
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Make sure the zoom focus point remained fixed */
+  gimp_display_shell_transform_xy (shell,
+                                   image_x,
+                                   image_y,
+                                   &shell_x_after_zoom,
+                                   &shell_y_after_zoom,
+                                   FALSE /*use_offsets*/);
+  factor_after_zoom = gimp_zoom_model_get_factor (shell->zoom);
+
+  /* First of all make sure a zoom happend at all */
+  g_assert_cmpfloat (fabs (factor_before_zoom - factor_after_zoom),
+                     >=,
+                     GIMP_UI_ZOOM_EPSILON);
+  g_assert_cmpint (ABS (shell_x_after_zoom - shell_x_before_zoom),
+                   <=,
+                   GIMP_UI_POSITION_EPSILON);
+  g_assert_cmpint (ABS (shell_y_after_zoom - shell_y_before_zoom),
+                   <=,
+                   GIMP_UI_POSITION_EPSILON);
 }
 
 static void
@@ -507,6 +574,44 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
   gdk_event_free (event);
 }
 
+static void
+gimp_ui_synthesize_plus_key_event (GtkWidget *widget)
+{
+  GdkWindow *window           = NULL;
+  GdkEvent  *event            = NULL;
+  guint      keyval           = GDK_plus;
+  guint      hardware_keycode = 20;
+
+  /* FIXME: How do we figure out hardware_keycode, especially in a
+   * platform independent way? 20 is the hardware keycode on my
+   * machine for GDK_plus when using a X11 backend... I hope it will
+   * be the same on others running at least the X11 build of GTK+
+   */
+
+  window = gtk_widget_get_window (widget);
+  g_assert (window);
+
+  event = gdk_event_new (GDK_KEY_PRESS);
+  event->any.window           = g_object_ref (window);
+  event->any.send_event       = TRUE;
+  event->key.keyval           = keyval;
+  event->key.time             = GDK_CURRENT_TIME;
+  event->key.state            = 0;
+  event->key.hardware_keycode = hardware_keycode;
+  gdk_event_put (event);
+  gdk_event_free (event);
+
+  event = gdk_event_new (GDK_KEY_RELEASE);
+  event->any.window           = g_object_ref (window);
+  event->any.send_event       = TRUE;
+  event->key.keyval           = keyval;
+  event->key.time             = GDK_CURRENT_TIME;
+  event->key.state            = 0;
+  event->key.hardware_keycode = hardware_keycode;
+  gdk_event_put (event);
+  gdk_event_free (event);
+}
+
 static GtkWidget *
 gimp_ui_find_dock_window (GimpDialogFactory *dialog_factory,
                           GimpUiTestFunc     predicate)
@@ -569,6 +674,7 @@ int main(int argc, char **argv)
   ADD_TEST (tool_options_editor_updates);
   ADD_TEST (automatic_tab_style);
   ADD_TEST (create_new_image_via_dialog);
+  ADD_TEST (keyboard_zoom_focus);
   ADD_TEST (restore_recently_closed_multi_column_dock);
   ADD_TEST (tab_toggle_dont_change_dock_window_position);
   ADD_TEST (switch_to_single_window_mode);

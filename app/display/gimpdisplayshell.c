@@ -304,6 +304,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->event_history = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
   shell->event_queue   = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
 
+  shell->zoom_focus_pointer_queue = g_queue_new ();
+
   gtk_widget_set_events (GTK_WIDGET (shell), (GDK_POINTER_MOTION_MASK      |
                                               GDK_POINTER_MOTION_HINT_MASK |
                                               GDK_BUTTON_PRESS_MASK        |

@@ -198,6 +198,8 @@ struct _GimpDisplayShell
   gboolean           event_delay;      /* TRUE if theres an unsent event in
                                           the history buffer                  */
 
+  GQueue            *zoom_focus_pointer_queue;
+
   gint               event_delay_timeout;
   GdkModifierType    last_active_state;
 };

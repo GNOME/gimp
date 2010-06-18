@@ -62,6 +62,9 @@ void     gimp_display_shell_set_initial_scale              (GimpDisplayShell *sh
                                                             gdouble           scale,
                                                             gint             *display_width,
                                                             gint             *display_height);
+void     gimp_display_shell_push_zoom_focus_pointer_pos    (GimpDisplayShell *shell,
+                                                            gint              x,
+                                                            gint              y);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SCALE_H__  */
