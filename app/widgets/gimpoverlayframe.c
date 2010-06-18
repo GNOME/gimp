@@ -22,9 +22,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "widgets-types.h"
 
 #include "gimpoverlayframe.h"
+#include "gimpwidgets-utils.h"
 
 
 static void       gimp_overlay_frame_size_request  (GtkWidget      *widget,
@@ -181,7 +184,71 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
       gdk_cairo_region (cr, eevent->region);
     }
 
+/* #define BLING 1 */
+
+#ifdef BLING
+
+  {
+    GtkAllocation    allocation;
+    cairo_pattern_t *gradient;
+    GimpRGB          color;
+    gdouble          x0, y0;
+    gdouble          x1, y1;
+    gdouble          w, h;
+    gdouble          d, n;
+
+    gtk_widget_get_allocation (widget, &allocation);
+
+    w = allocation.width  - allocation.x;
+    h = allocation.height - allocation.y;
+
+    d = sqrt (SQR (w) + SQR (h));
+    n = w * h / d;
+
+    x0 = allocation.x + w / 2 - h * (n / d);
+    y0 = allocation.y + h / 2 - w * (n / d);
+
+    x1 = allocation.x + w / 2 + h * (n / d);
+    y1 = allocation.y + h / 2 + w * (n / d);
+
+    gradient = cairo_pattern_create_linear (x0, y0, x1, y1);
+
+    gimp_rgb_set_gdk_color (&color, &style->bg[GTK_STATE_NORMAL]);
+    cairo_pattern_add_color_stop_rgba (gradient,
+                                       0.0,
+                                       color.r,
+                                       color.g,
+                                       color.b,
+                                       1.0);
+    cairo_pattern_add_color_stop_rgba (gradient,
+                                       1.0,
+                                       color.r,
+                                       color.g,
+                                       color.b,
+                                       1.0);
+
+    gimp_rgb_set_gdk_color (&color, &style->bg[GTK_STATE_SELECTED]);
+    cairo_pattern_add_color_stop_rgba (gradient,
+                                       0.5,
+                                       color.r,
+                                       color.g,
+                                       color.b,
+                                       1.0);
+
+    cairo_set_source (cr, gradient);
+
+    cairo_pattern_destroy (gradient);
+
+    cairo_clip (cr);
+  }
+
+  cairo_paint (cr);
+
+#else
+
   cairo_fill (cr);
+
+#endif
 
   cairo_destroy (cr);
 
