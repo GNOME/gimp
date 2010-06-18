@@ -110,6 +110,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_COLORIZE            "gimp-tool-colorize"
 #define GIMP_STOCK_TOOL_CROP                "gimp-tool-crop"
 #define GIMP_STOCK_TOOL_CURVES              "gimp-tool-curves"
+#define GIMP_STOCK_TOOL_DESATURATE          "gimp-tool-desaturate"
 #define GIMP_STOCK_TOOL_DODGE               "gimp-tool-dodge"
 #define GIMP_STOCK_TOOL_ELLIPSE_SELECT      "gimp-tool-ellipse-select"
 #define GIMP_STOCK_TOOL_ERASER              "gimp-tool-eraser"
@@ -277,7 +278,6 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_PALETTE                  GTK_STOCK_SELECT_COLOR
 #define GIMP_STOCK_PATTERN                  GIMP_STOCK_TOOL_BUCKET_FILL
 #define GIMP_STOCK_TOOL_PRESET              GIMP_STOCK_TOOL_PAINTBRUSH
-#define GIMP_STOCK_TOOL_DESATURATE          GIMP_STOCK_CONVERT_GRAYSCALE
 
 
 void   gimp_stock_init (void);

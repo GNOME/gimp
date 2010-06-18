@@ -285,6 +285,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-crop-22.png			\
 	tools/stock-tool-curves-16.png			\
 	tools/stock-tool-curves-22.png			\
+	tools/stock-tool-desaturate-16.png		\
+	tools/stock-tool-desaturate-22.png		\
 	tools/stock-tool-dodge-16.png			\
 	tools/stock-tool-dodge-22.png			\
 	tools/stock-tool-ellipse-select-16.png		\
