@@ -7,7 +7,6 @@ uinstalled_m4 = \
 	binreloc.m4	\
 	detectcflags.m4	\
 	gimpprint.m4	\
-	gtk-doc.m4	\
 	pythondev.m4
 
 EXTRA_DIST = $(installed_m4) $(uninstalled_m4)
