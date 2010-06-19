@@ -418,6 +418,7 @@ app/widgets/gimpdnd.c
 app/widgets/gimpdock.c
 app/widgets/gimpdock.h
 app/widgets/gimpdockable.c
+app/widgets/gimpdockbook.c
 app/widgets/gimpdockwindow.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
