@@ -2,8 +2,8 @@
 
 (GimpSessionInfo "Palettes - FG/BG - Images"
     (factory-entry "gimp-dock-window")
-    (position 586 116)
-    (size 200 573)
+    (position 585 115)
+    (size 200 575)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
@@ -27,7 +27,7 @@
                 (tab-style preview)))))
 (GimpSessionInfo "Selection, Fonts"
     (factory-entry "gimp-dock-window")
-    (position 200 179)
+    (position 200 180)
     (size 200 300)
     (open-on-exit)
     (aux-info

@@ -138,8 +138,13 @@ gimp_session_info_serialize (GimpConfig       *config,
                              GimpConfigWriter *writer,
                              gpointer          data)
 {
-  GimpSessionInfo *info = GIMP_SESSION_INFO (config);
-  GList           *iter = NULL;
+  GimpSessionInfo      *info  = GIMP_SESSION_INFO (config);
+  GimpSessionInfoClass *klass = GIMP_SESSION_INFO_GET_CLASS (info);
+  GList                *iter  = NULL;
+  gint                  x_to_write;
+  gint                  y_to_write;
+  gint                  w_to_write;
+  gint                  h_to_write;
 
   if (info->p->factory_entry && info->p->factory_entry->identifier)
     {
@@ -148,14 +153,23 @@ gimp_session_info_serialize (GimpConfig       *config,
       gimp_config_writer_close (writer);
     }
 
+  x_to_write = gimp_session_info_class_apply_position_accuracy (klass,
+                                                                info->p->x);
+  y_to_write = gimp_session_info_class_apply_position_accuracy (klass,
+                                                                info->p->y);
+  w_to_write = gimp_session_info_class_apply_position_accuracy (klass,
+                                                                info->p->width);
+  h_to_write = gimp_session_info_class_apply_position_accuracy (klass,
+                                                                info->p->height);
+
   gimp_config_writer_open (writer, "position");
-  gimp_config_writer_printf (writer, "%d %d", info->p->x, info->p->y);
+  gimp_config_writer_printf (writer, "%d %d", x_to_write, y_to_write);
   gimp_config_writer_close (writer);
 
   if (info->p->width > 0 && info->p->height > 0)
     {
       gimp_config_writer_open (writer, "size");
-      gimp_config_writer_printf (writer, "%d %d", info->p->width, info->p->height);
+      gimp_config_writer_printf (writer, "%d %d", w_to_write, h_to_write);
       gimp_config_writer_close (writer);
     }
 
@@ -850,4 +864,45 @@ gimp_session_info_get_height (GimpSessionInfo *info)
   g_return_val_if_fail (GIMP_IS_SESSION_INFO (info), 0);
 
   return info->p->height;
+}
+
+/**
+ * gimp_session_info_class_set_position_accuracy:
+ * @accuracy:
+ *
+ * When writing sessionrc, make positions and sizes a multiple of
+ * @accuracy. Meant to be used by test cases that does regression
+ * testing on session managed window positions and sizes, to allow for
+ * some deviations from the original setup, that the window manager
+ * might impose.
+ **/
+void
+gimp_session_info_class_set_position_accuracy (GimpSessionInfoClass *klass,
+                                               gint                  accuracy)
+{
+  g_return_if_fail (GIMP_IS_SESSION_INFO_CLASS (klass));
+
+  klass->position_accuracy = accuracy;
+}
+
+/**
+ * gimp_session_info_class_apply_position_accuracy:
+ * @position:
+ *
+ * Rounds @position to the nearest multiple of what was set with
+ * gimp_session_info_class_set_position_accuracy().
+ *
+ * Returns: Result.
+ **/
+gint
+gimp_session_info_class_apply_position_accuracy (GimpSessionInfoClass *klass,
+                                                 gint                  position)
+{
+  gint n = klass->position_accuracy;
+  gint to_floor;
+
+  g_return_val_if_fail (GIMP_IS_SESSION_INFO_CLASS (klass), position);
+
+  to_floor = position + n / 2;
+  return to_floor - to_floor % n;
 }

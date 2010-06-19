@@ -7,7 +7,7 @@
 
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
-    (position 566 171)
+    (position 565 170)
     (size 210 535)
     (open-on-exit)
     (aux-info
@@ -28,8 +28,8 @@
                 (tab-style preview)))))
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
-    (position 141 291)
-    (size 406 300)
+    (position 140 290)
+    (size 405 300)
     (open-on-exit)
     (aux-info
         (show-image-menu "false")
@@ -46,7 +46,7 @@
                 (tab-style icon)))))
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
-    (position 795 43)
+    (position 795 45)
     (size 200 265)
     (open-on-exit)
     (aux-info
@@ -61,8 +61,8 @@
                 (tab-style preview)))))
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
-    (position 803 344)
-    (size 200 421)
+    (position 805 345)
+    (size 200 420)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
@@ -74,7 +74,7 @@
                 (tab-style automatic)
                 (preview-size 32)))
         (book
-            (position 174)
+            (position 162)
             (current-page 0)
             (dockable "gimp-palette-editor"
                 (tab-style icon)
@@ -84,14 +84,14 @@
                     (zoom-factor "2.80"))))))
 (session-info "toplevel"
     (factory-entry "gimp-file-open-dialog")
-    (position 392 140)
-    (size 902 816))
+    (position 390 140)
+    (size 900 815))
 (session-info "toplevel"
     (factory-entry "gimp-image-new-dialog")
     (position 100 100))
 (session-info "toplevel"
     (factory-entry "gimp-empty-image-window")
-    (position 140 32)
+    (position 140 30)
     (size 610 190))
 
 (last-tip-shown 0)

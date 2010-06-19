@@ -27,6 +27,8 @@
 
 #include "menus/menus.h"
 
+#include "widgets/gimpsessioninfo.h"
+
 #include "base/base.h"
 
 #include "config/gimpbaseconfig.h"
@@ -81,11 +83,16 @@ gimp_status_func_dummy (const gchar *text1,
 Gimp *
 gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
 {
-  Gimp *gimp;
+  GimpSessionInfoClass *klass;
+  Gimp                 *gimp;
 
   /* from main() */
   g_thread_init(NULL);
   g_type_init();
+
+  /* Introduce an error margin for positions written to sessionrc */
+  klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
+  gimp_session_info_class_set_position_accuracy (klass, 5);
 
   /* from app_run() */
   gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, !show_gui,
@@ -97,6 +104,8 @@ gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
   gui_init (gimp, TRUE);
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
+
+  g_type_class_unref (klass);
 
   return gimp;
 }
