@@ -160,6 +160,17 @@ search.
 This is a colon-separated list of folders to search.
 
 .TP
+(tool-preset-path "${gimp_dir}/tool-presets:${gimp_data_dir}/tool-presets")
+
+Sets the dynamics search path.  This is a colon-separated list of folders to
+search.
+
+.TP
+(tool-preset-path-writable "${gimp_dir}/tool-presets")
+
+This is a colon-separated list of folders to search.
+
+.TP
 (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
 Where to look for fonts in addition to the system-wide installed fonts.  This
@@ -191,6 +202,12 @@ Specify a default palette.  This is a string value.
 (default-gradient "FG to BG (RGB)")
 
 Specify a default gradient.  This is a string value.
+
+.TP
+(default-tool-preset "Current Options")
+
+Specify a default tool preset.  The tool preset is searched for in the
+specified tool prests path.  This is a string value.
 
 .TP
 (default-font "Sans")
@@ -641,7 +658,7 @@ Snap to the grid by default in new image windows.  Possible values are yes and
 no.
 
 .TP
-(default-snap-to-canvas yes)
+(default-snap-to-canvas no)
 
 Snap to the canvas edge by default in new image windows.  Possible values are
 yes and no.
@@ -742,6 +759,12 @@ Save the tool options when GIMP exits.  Possible values are yes and no.
 
 Show a tooltip when the pointer hovers over an item.  Possible values are yes
 and no.
+
+.TP
+(hide-docks no)
+
+Hide docks and other windows, leaving only image windows.  Possible values are
+yes and no.
 
 .TP
 (single-window-mode no)

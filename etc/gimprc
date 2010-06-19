@@ -119,6 +119,15 @@
 # 
 # (gradient-path-writable "${gimp_dir}/gradients")
 
+# Sets the dynamics search path.  This is a colon-separated list of folders
+# to search.
+# 
+# (tool-preset-path "${gimp_dir}/tool-presets:${gimp_data_dir}/tool-presets")
+
+# This is a colon-separated list of folders to search.
+# 
+# (tool-preset-path-writable "${gimp_dir}/tool-presets")
+
 # Where to look for fonts in addition to the system-wide installed fonts. 
 # This is a colon-separated list of folders to search.
 # 
@@ -145,6 +154,11 @@
 # Specify a default gradient.  This is a string value.
 # 
 # (default-gradient "FG to BG (RGB)")
+
+# Specify a default tool preset.  The tool preset is searched for in the
+# specified tool prests path.  This is a string value.
+# 
+# (default-tool-preset "Current Options")
 
 # Specify a default font.  This is a string value.
 # 
@@ -499,7 +513,7 @@
 # Snap to the canvas edge by default in new image windows.  Possible values
 # are yes and no.
 # 
-# (default-snap-to-canvas yes)
+# (default-snap-to-canvas no)
 
 # Snap to the active path by default in new image windows.  Possible values
 # are yes and no.
@@ -582,6 +596,11 @@
 # yes and no.
 # 
 # (show-tooltips yes)
+
+# Hide docks and other windows, leaving only image windows.  Possible values
+# are yes and no.
+# 
+# (hide-docks no)
 
 # Use GIMP in a single-window mode.  Possible values are yes and no.
 # 
