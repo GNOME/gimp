@@ -120,6 +120,14 @@
                                           { 921.0, 922.0, /* pad zeroes */ },\
                                           { 931.0, 932.0, /* pad zeroes */ }, }
 
+#define ADD_TEST(function) \
+  g_test_add ("/gimp-xcf/" #function, \
+              GimpTestFixture, \
+              NULL, \
+              NULL, \
+              function, \
+              NULL);
+
 
 typedef struct
 {
@@ -127,14 +135,6 @@ typedef struct
 } GimpTestFixture;
 
 
-static void        gimp_write_and_read_gimp_2_6_format         (GimpTestFixture *fixture,
-                                                                gconstpointer    data);
-static void        gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
-                                                                gconstpointer    data);
-static void        gimp_load_gimp_2_6_file                     (GimpTestFixture *fixture,
-                                                                gconstpointer    data);
-static void        gimp_write_and_read_gimp_2_8_format         (GimpTestFixture *fixture,
-                                                                gconstpointer    data);
 GimpImage        * gimp_test_load_image                        (Gimp            *gimp,
                                                                 const gchar     *uri);
 static void        gimp_write_and_read_file                    (gboolean         with_unusual_stuff,
@@ -153,7 +153,7 @@ static Gimp *gimp = NULL;
 
 
 /**
- * gimp_write_and_read_gimp_2_6_format:
+ * write_and_read_gimp_2_6_format:
  * @fixture:
  * @data:
  *
@@ -161,8 +161,8 @@ static Gimp *gimp = NULL;
  * constructed with GIMP 2.6.
  **/
 static void
-gimp_write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
-                                     gconstpointer    data)
+write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
+                                gconstpointer    data)
 {
   gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
                             FALSE /*compat_paths*/,
@@ -170,7 +170,7 @@ gimp_write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_write_and_read_gimp_2_6_format_unusual:
+ * write_and_read_gimp_2_6_format_unusual:
  * @fixture:
  * @data:
  *
@@ -179,8 +179,8 @@ gimp_write_and_read_gimp_2_6_format (GimpTestFixture *fixture,
  * vectors and with a floating selection.
  **/
 static void
-gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
-                                             gconstpointer    data)
+write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
+                                        gconstpointer    data)
 {
   gimp_write_and_read_file (TRUE /*with_unusual_stuff*/,
                             TRUE /*compat_paths*/,
@@ -188,7 +188,7 @@ gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_load_gimp_2_6_file:
+ * load_gimp_2_6_file:
  * @fixture:
  * @data:
  *
@@ -196,8 +196,8 @@ gimp_write_and_read_gimp_2_6_format_unusual (GimpTestFixture *fixture,
  * expected.
  **/
 static void
-gimp_load_gimp_2_6_file (GimpTestFixture *fixture,
-                         gconstpointer    data)
+load_gimp_2_6_file (GimpTestFixture *fixture,
+                    gconstpointer    data)
 {
   GimpImage *image = NULL;
   gchar     *uri   = NULL;
@@ -221,7 +221,7 @@ gimp_load_gimp_2_6_file (GimpTestFixture *fixture,
 }
 
 /**
- * gimp_write_and_read_gimp_2_8_format:
+ * write_and_read_gimp_2_8_format:
  * @fixture:
  * @data:
  *
@@ -230,8 +230,8 @@ gimp_load_gimp_2_6_file (GimpTestFixture *fixture,
  * was lost.
  **/
 static void
-gimp_write_and_read_gimp_2_8_format (GimpTestFixture *fixture,
-                                     gconstpointer    data)
+write_and_read_gimp_2_8_format (GimpTestFixture *fixture,
+                                gconstpointer    data)
 {
   gimp_write_and_read_file (FALSE /*with_unusual_stuff*/,
                             FALSE /*compat_paths*/,
@@ -885,31 +885,11 @@ main (int    argc,
    */
   gimp = gimp_init_for_gui_testing (TRUE, FALSE);
 
-  /* Setup the tests */
-  g_test_add ("/gimp-xcf/write-and-read-gimp-2-6",
-              GimpTestFixture,
-              NULL,
-              NULL,
-              gimp_write_and_read_gimp_2_6_format,
-              NULL);
-  g_test_add ("/gimp-xcf/write-and-read-gimp-2-6-unusual",
-              GimpTestFixture,
-              NULL,
-              NULL,
-              gimp_write_and_read_gimp_2_6_format_unusual,
-              NULL);
-  g_test_add ("/gimp-xcf/load-gimp-2-6-file",
-              GimpTestFixture,
-              NULL,
-              NULL,
-              gimp_load_gimp_2_6_file,
-              NULL);
-  g_test_add ("/gimp-xcf/write-and-read-gimp-2-8",
-              GimpTestFixture,
-              NULL,
-              NULL,
-              gimp_write_and_read_gimp_2_8_format,
-              NULL);
+  /* Add tests */
+  ADD_TEST (write_and_read_gimp_2_6_format);
+  ADD_TEST (write_and_read_gimp_2_6_format_unusual);
+  ADD_TEST (load_gimp_2_6_file);
+  ADD_TEST (write_and_read_gimp_2_8_format);
 
   /* Don't write files to the source dir */
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_BUILDDIR",
