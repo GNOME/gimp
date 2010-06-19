@@ -132,13 +132,14 @@ gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
 
   g_object_freeze_notify (G_OBJECT (shell->hsbdata));
 
+  /* Update upper and lower value before we set the new value */
+  gimp_display_shell_scroll_setup_hscrollbar (shell, shell->offset_x);
+
   g_object_set (shell->hsbdata,
                 "value",          (gdouble) shell->offset_x,
                 "page-size",      (gdouble) shell->disp_width,
                 "page-increment", (gdouble) shell->disp_width / 2,
                 NULL);
-
-  gimp_display_shell_scroll_setup_hscrollbar (shell, shell->offset_x);
 
   g_object_thaw_notify (G_OBJECT (shell->hsbdata)); /* emits "changed" */
 
@@ -147,13 +148,14 @@ gimp_display_shell_scale_update_scrollbars (GimpDisplayShell *shell)
 
   g_object_freeze_notify (G_OBJECT (shell->vsbdata));
 
+  /* Update upper and lower value before we set the new value */
+  gimp_display_shell_scroll_setup_vscrollbar (shell, shell->offset_y);
+
   g_object_set (shell->vsbdata,
                 "value",          (gdouble) shell->offset_y,
                 "page-size",      (gdouble) shell->disp_height,
                 "page-increment", (gdouble) shell->disp_height / 2,
                 NULL);
-
-  gimp_display_shell_scroll_setup_vscrollbar (shell, shell->offset_y);
 
   g_object_thaw_notify (G_OBJECT (shell->vsbdata)); /* emits "changed" */
 }
