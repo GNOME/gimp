@@ -41,7 +41,8 @@ UI:
  - Support selecting and tagging multiple objects in resource lists
  - Improve on-canvas text editing and text attribute setting
  - Add GimpContainerTreeStore and use it in all GtkTreeStore based views
- - Make sure dockable tabs always show as much detail as possible
+ - Add a new default "automatic" tab style that makes sure dockable tabs
+   always show as much detail as possible
  - Remove the dockable title bar and add the menu arrow button next to the
    notebook tabs
  - Add an icon for the desaturate tool
@@ -72,6 +73,7 @@ Core:
 GEGL:
 
  - Make sure all nodes are added to their resp. graphs
+ - Use GEGL for layer scaling if use-gegl is TRUE
 
 
 Plug-ins:
@@ -79,6 +81,7 @@ Plug-ins:
  - Updated script-fu's scheme to latest upstream fixes
  - Don't store image-specific print settings globally
  - Add fundamental OpenRaster (.ora) import and export support
+ - Add RGB565 support to the csource plug-in
 
 
 Data:
