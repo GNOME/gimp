@@ -140,7 +140,8 @@ static void      gimp_image_window_session_clear       (GimpImageWindow     *win
 static void      gimp_image_window_session_apply       (GimpImageWindow     *window,
                                                         const gchar         *entry_id);
 static void      gimp_image_window_session_update      (GimpImageWindow     *window,
-                                                        GimpDisplay         *new_display);
+                                                        GimpDisplay         *new_display,
+                                                        gboolean             from_switch_page);
 static const gchar *
                  gimp_image_window_config_to_entry_id  (GimpGuiConfig       *config);
 static void      gimp_image_window_set_entry_id        (GimpImageWindow     *window,
@@ -1254,7 +1255,9 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   gimp_display_shell_appearance_update (private->active_shell);
 
-  gimp_image_window_session_update (window, active_display);
+  gimp_image_window_session_update (window,
+                                    active_display,
+                                    TRUE /*from_switch_page*/);
 
   gimp_ui_manager_update (private->menubar_manager, active_display);
 }
@@ -1312,7 +1315,9 @@ gimp_image_window_image_notify (GimpDisplay      *display,
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GtkWidget              *view;
 
-  gimp_image_window_session_update (window, display);
+  gimp_image_window_session_update (window,
+                                    display,
+                                    FALSE /*from_switch_page*/);
 
   view = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
                                      GTK_WIDGET (gimp_display_get_shell (display)));
@@ -1377,7 +1382,8 @@ gimp_image_window_session_apply (GimpImageWindow *window,
 
 static void
 gimp_image_window_session_update (GimpImageWindow *window,
-                                  GimpDisplay     *new_display)
+                                  GimpDisplay     *new_display,
+                                  gboolean         from_switch_page)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
@@ -1404,8 +1410,11 @@ gimp_image_window_session_update (GimpImageWindow *window,
     }
   else if (strcmp (private->entry_id, GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID) == 0)
     {
-      /* Always session manage the single image window */
-      gimp_image_window_session_apply (window, private->entry_id);
+      /* Always session manage the single image window, but not if all
+       * we did was switch tabs
+       */
+      if (! from_switch_page)
+        gimp_image_window_session_apply (window, private->entry_id);
     }
   else
     {
@@ -1437,7 +1446,9 @@ gimp_image_window_set_entry_id (GimpImageWindow *window,
 
   private->entry_id = entry_id;
 
-  gimp_image_window_session_update (window, private->active_shell->display);
+  gimp_image_window_session_update (window,
+                                    private->active_shell->display,
+                                    FALSE /*from_switch_page*/);
 }
 
 static void
