@@ -40,6 +40,11 @@ UI:
    directly in the Windows menu
  - Support selecting and tagging multiple objects in resource lists
  - Improve on-canvas text editing and text attribute setting
+ - Add GimpContainerTreeStore and use it in all GtkTreeStore based views
+ - Make sure dockable tabs always show as much detail as possible
+ - Remove the dockable title bar and add the menu arrow button next to the
+   notebook tabs
+ - Add an icon for the desaturate tool
 
 
 Core:
@@ -58,6 +63,10 @@ Core:
    instead of letting the image do this job
  - Fix brush rotation artifacts at even 90 degree rotation
  - Don't leak shared tile memory on Solaris
+ - Add a PDB procedure to access a text layer's markup
+ - Remove legacy cruft from pdbgen and make sure number ranges are correct
+ - Move all image creation functions to a common file
+ - Add translation context to all undo descriptions
 
 
 GEGL:
