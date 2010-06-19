@@ -7,12 +7,13 @@
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007, 2009.
 # Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-17 19:58+0300\n"
-"PO-Revision-Date: 2010-03-28 22:22+0400\n"
+"POT-Creation-Date: 2010-05-22 01:00+0400\n"
+"PO-Revision-Date: 2010-06-19 15:43+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -427,91 +428,91 @@ msgstr "Поиск фона анимации"
 msgid "Optimizing animation"
 msgstr "Оптимизация"
 
-#: ../plug-ins/common/animation-play.c:170
+#: ../plug-ins/common/animation-play.c:167
 msgid "Preview a GIMP layer-based animation"
 msgstr "Предварительный просмотр анимированного изображения"
 
-#: ../plug-ins/common/animation-play.c:175
+#: ../plug-ins/common/animation-play.c:172
 msgid "_Playback..."
 msgstr "_Воспроизведение..."
 
-#: ../plug-ins/common/animation-play.c:454
+#: ../plug-ins/common/animation-play.c:451
 msgid "_Step"
 msgstr "_Шаг"
 
-#: ../plug-ins/common/animation-play.c:454
+#: ../plug-ins/common/animation-play.c:451
 msgid "Step to next frame"
 msgstr "Шаг до следующего кадра"
 
-#: ../plug-ins/common/animation-play.c:458
+#: ../plug-ins/common/animation-play.c:455
 msgid "Rewind the animation"
 msgstr "Перемотать назад"
 
-#: ../plug-ins/common/animation-play.c:476
+#: ../plug-ins/common/animation-play.c:473
 msgid "Faster"
 msgstr "Быстрее"
 
-#: ../plug-ins/common/animation-play.c:476
+#: ../plug-ins/common/animation-play.c:473
 msgid "Increase the speed of the animation"
 msgstr "Увеличить скорость воспроизведения анимации"
 
-#: ../plug-ins/common/animation-play.c:481
+#: ../plug-ins/common/animation-play.c:478
 msgid "Slower"
 msgstr "Медленнее"
 
-#: ../plug-ins/common/animation-play.c:481
+#: ../plug-ins/common/animation-play.c:478
 msgid "Decrease the speed of the animation"
 msgstr "Уменьшить скорость воспроизведения анимации"
 
-#: ../plug-ins/common/animation-play.c:486
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset speed"
 msgstr "Сбросить скорость"
 
-#: ../plug-ins/common/animation-play.c:486
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset the speed of the animation"
 msgstr "Сбросить скорость воспроизведения анимации"
 
-#: ../plug-ins/common/animation-play.c:494
-#: ../plug-ins/common/animation-play.c:1475
+#: ../plug-ins/common/animation-play.c:491
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Start playback"
 msgstr "Начать воспроизведение"
 
-#: ../plug-ins/common/animation-play.c:498
+#: ../plug-ins/common/animation-play.c:495
 msgid "Detach"
 msgstr "Отсоединить"
 
-#: ../plug-ins/common/animation-play.c:499
+#: ../plug-ins/common/animation-play.c:496
 msgid "Detach the animation from the dialog window"
 msgstr "Отсоединить анимацию от окна диалога"
 
-#: ../plug-ins/common/animation-play.c:591
+#: ../plug-ins/common/animation-play.c:588
 msgid "Animation Playback:"
 msgstr "Воспроизведение фильма:"
 
 #. list is given in "fps" - frames per second
-#: ../plug-ins/common/animation-play.c:664
+#: ../plug-ins/common/animation-play.c:661
 #, c-format
 msgid "%d fps"
 msgstr "%d fps"
 
-#: ../plug-ins/common/animation-play.c:675
+#: ../plug-ins/common/animation-play.c:672
 msgid "Default framerate"
 msgstr "Частота кадров по умолчанию"
 
-#: ../plug-ins/common/animation-play.c:696
+#: ../plug-ins/common/animation-play.c:693
 msgid "Playback speed"
 msgstr "Скорость воспроизведения"
 
-#: ../plug-ins/common/animation-play.c:832
+#: ../plug-ins/common/animation-play.c:829
 msgid "Tried to display an invalid layer."
 msgstr "Была предпринята попытка отобразить некорректный слой."
 
-#: ../plug-ins/common/animation-play.c:1352
+#: ../plug-ins/common/animation-play.c:1349
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Кадр %d из %d"
 
-#: ../plug-ins/common/animation-play.c:1475
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Stop playback"
 msgstr "Остановить воспроизведение"
 
@@ -609,7 +610,7 @@ msgstr "По _вертикали"
 #.
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:934
 #: ../plug-ins/common/decompose.c:722 ../plug-ins/common/file-cel.c:361
-#: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:556
+#: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:609
 #: ../plug-ins/common/file-gif-load.c:927
 #: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
 #: ../plug-ins/common/file-pcx.c:424 ../plug-ins/common/file-pix.c:381
@@ -1024,21 +1025,20 @@ msgstr "Загрузить установки микшера каналов"
 #: ../plug-ins/common/cml-explorer.c:2177 ../plug-ins/common/curve-bend.c:884
 #: ../plug-ins/common/file-cel.c:311 ../plug-ins/common/file-compressor.c:497
 #: ../plug-ins/common/file-compressor.c:665
-#: ../plug-ins/common/file-dicom.c:324 ../plug-ins/common/file-gbr.c:360
+#: ../plug-ins/common/file-dicom.c:339 ../plug-ins/common/file-gbr.c:360
 #: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:643
 #: ../plug-ins/common/file-jp2-load.c:197
 #: ../plug-ins/common/file-jp2-load.c:206 ../plug-ins/common/file-mng.c:1107
 #: ../plug-ins/common/file-pat.c:329 ../plug-ins/common/file-pcx.c:360
-#: ../plug-ins/common/file-pdf.c:550 ../plug-ins/common/file-pix.c:342
-#: ../plug-ins/common/file-png.c:720 ../plug-ins/common/file-pnm.c:493
-#: ../plug-ins/common/file-ps.c:1036 ../plug-ins/common/file-ps.c:3043
-#: ../plug-ins/common/file-psp.c:1703 ../plug-ins/common/file-raw.c:255
-#: ../plug-ins/common/file-raw.c:709 ../plug-ins/common/file-sunras.c:390
-#: ../plug-ins/common/file-svg.c:332 ../plug-ins/common/file-svg.c:730
-#: ../plug-ins/common/file-tga.c:441 ../plug-ins/common/file-tiff-load.c:291
-#: ../plug-ins/common/file-xbm.c:736 ../plug-ins/common/file-xmc.c:666
-#: ../plug-ins/common/file-xmc.c:853 ../plug-ins/common/file-xwd.c:432
-#: ../plug-ins/common/sphere-designer.c:2001
+#: ../plug-ins/common/file-pix.c:342 ../plug-ins/common/file-png.c:720
+#: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
+#: ../plug-ins/common/file-ps.c:3043 ../plug-ins/common/file-psp.c:1703
+#: ../plug-ins/common/file-raw.c:255 ../plug-ins/common/file-raw.c:709
+#: ../plug-ins/common/file-sunras.c:390 ../plug-ins/common/file-svg.c:332
+#: ../plug-ins/common/file-svg.c:730 ../plug-ins/common/file-tga.c:441
+#: ../plug-ins/common/file-tiff-load.c:291 ../plug-ins/common/file-xbm.c:736
+#: ../plug-ins/common/file-xmc.c:666 ../plug-ins/common/file-xmc.c:853
+#: ../plug-ins/common/file-xwd.c:432 ../plug-ins/common/sphere-designer.c:2001
 #: ../plug-ins/file-bmp/bmp-read.c:155 ../plug-ins/file-faxg3/faxg3.c:232
 #: ../plug-ins/file-fits/fits.c:357 ../plug-ins/file-fli/fli-gimp.c:459
 #: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:652
@@ -1067,7 +1067,7 @@ msgstr "Сохранить установки микшера каналов"
 #: ../plug-ins/common/file-compressor.c:507
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
-#: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:800
+#: ../plug-ins/common/file-csource.c:405 ../plug-ins/common/file-dicom.c:1352
 #: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:779
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
@@ -1086,7 +1086,7 @@ msgstr "Сохранить установки микшера каналов"
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1711
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
-#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2398
+#: ../plug-ins/gfig/gfig.c:793 ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1210
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -3021,11 +3021,11 @@ msgstr "Загрузка палитры KISS"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:316 ../plug-ins/common/file-dicom.c:329
+#: ../plug-ins/common/file-cel.c:316 ../plug-ins/common/file-dicom.c:344
 #: ../plug-ins/common/file-gbr.c:365 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:648 ../plug-ins/common/file-jp2-load.c:190
 #: ../plug-ins/common/file-pat.c:334 ../plug-ins/common/file-pcx.c:365
-#: ../plug-ins/common/file-pdf.c:595 ../plug-ins/common/file-pix.c:347
+#: ../plug-ins/common/file-pdf.c:601 ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
 #: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:714
 #: ../plug-ins/common/file-sunras.c:485 ../plug-ins/common/file-tga.c:446
@@ -3143,27 +3143,27 @@ msgstr "Ссылка .desktop"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Ошибка при открытии файла .desktop '%s': %s"
 
-#: ../plug-ins/common/file-dicom.c:145
+#: ../plug-ins/common/file-dicom.c:138
 msgid "DICOM image"
 msgstr "Изображение DICOM"
 
-#: ../plug-ins/common/file-dicom.c:170
+#: ../plug-ins/common/file-dicom.c:163
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Изображение формата Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/file-dicom.c:351
+#: ../plug-ins/common/file-dicom.c:366
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr ""
 "\"%s\"\n"
 "не является файлом DICOM"
 
-#: ../plug-ins/common/file-dicom.c:768 ../plug-ins/common/file-pcx.c:665
+#: ../plug-ins/common/file-dicom.c:1320 ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Невозможно сохранить изображения с альфа-каналом."
 
-#: ../plug-ins/common/file-dicom.c:783 ../plug-ins/common/file-ps.c:1203
+#: ../plug-ins/common/file-dicom.c:1335 ../plug-ins/common/file-ps.c:1203
 #: ../plug-ins/common/file-xwd.c:603 ../plug-ins/file-fits/fits.c:465
 #: ../plug-ins/file-xjt/xjt.c:1687
 msgid "Cannot operate on unknown image types."
@@ -3177,6 +3177,7 @@ msgstr "Кисть GIMP"
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
+"Неправильные данные заголовка в '%s': ширина=%lu, высота=%lu, байтов=%lu"
 
 #: ../plug-ins/common/file-gbr.c:415 ../plug-ins/common/file-gbr.c:427
 msgid "Unsupported brush format"
@@ -3604,8 +3605,8 @@ msgstr "Изображение '%s' использует неизвестное 
 #: ../plug-ins/common/file-jp2-load.c:320
 #, c-format
 msgid ""
-"Image component %d of image '%s' did not have the same size as the image "
-"which is currently not supported."
+"Image component %d of image '%s' does not have the same size as the image. "
+"This is currently not supported."
 msgstr ""
 
 #: ../plug-ins/common/file-jp2-load.c:331
@@ -3616,8 +3617,7 @@ msgstr ""
 #: ../plug-ins/common/file-jp2-load.c:340
 #, c-format
 msgid ""
-"Image component %d of image '%s' is signed which is currently not supported "
-"by GIMP."
+"Image component %d of image '%s' is signed. This is currently not supported."
 msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
@@ -3822,38 +3822,43 @@ msgstr "Ошибка при записи файла '%s': %s"
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/file-pdf.c:629
+#: ../plug-ins/common/file-pdf.c:556
+#, c-format
+msgid "Could not load '%s': %s"
+msgstr "Не удалось загрузить '%s': %s"
+
+#: ../plug-ins/common/file-pdf.c:635
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf.c:631 ../plug-ins/common/file-ps.c:1125
+#: ../plug-ins/common/file-pdf.c:637 ../plug-ins/common/file-ps.c:1125
 #, c-format
 msgid "%s-pages"
 msgstr "%s-страниц"
 
-#: ../plug-ins/common/file-pdf.c:817
+#: ../plug-ins/common/file-pdf.c:823
 msgid "Import from PDF"
 msgstr "Импорт из PDF"
 
-#: ../plug-ins/common/file-pdf.c:822 ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-pdf.c:828 ../plug-ins/common/file-ps.c:3095
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Импортировать"
 
-#: ../plug-ins/common/file-pdf.c:889
+#: ../plug-ins/common/file-pdf.c:896
 msgid "_Width (pixels):"
 msgstr "_Ширина (пикселов):"
 
-#: ../plug-ins/common/file-pdf.c:890
+#: ../plug-ins/common/file-pdf.c:897
 msgid "_Height (pixels):"
 msgstr "_Высота (пикселов):"
 
-#: ../plug-ins/common/file-pdf.c:892
+#: ../plug-ins/common/file-pdf.c:899
 msgid "_Resolution:"
 msgstr "_Разрешение:"
 
-#: ../plug-ins/common/file-pdf.c:1166
+#: ../plug-ins/common/file-pdf.c:1173
 #, c-format
 msgid "pixels/%s"
 msgstr "точек растра/%s"
@@ -4661,7 +4666,7 @@ msgstr "Префикс идентификатора:"
 msgid "_Write hot spot values"
 msgstr "Записать значения \"горячих точек\""
 
-#: ../plug-ins/common/file-xbm.c:1262
+#: ../plug-ins/common/file-xbm.c:1262 ../plug-ins/common/file-xmc.c:1094
 msgid "Hot spot _X:"
 msgstr "«Горячая точка» X:"
 
@@ -4688,9 +4693,9 @@ msgid "X11 Mouse Cursor"
 msgstr "Указатель мыши X11"
 
 #: ../plug-ins/common/file-xmc.c:480
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cannot set the hotspot!\n"
+"Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "Не удалось получить горячую точку!\n"
@@ -4739,15 +4744,11 @@ msgid "XMC Options"
 msgstr "Параметры XMC"
 
 #: ../plug-ins/common/file-xmc.c:1090
-msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
 msgstr ""
 
-#: ../plug-ins/common/file-xmc.c:1094
-msgid "Hotspot _X:"
-msgstr "Горячая точка по _X:"
-
 #: ../plug-ins/common/file-xmc.c:1108
-msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1119
@@ -4869,10 +4870,11 @@ msgid "The size of '%s' is zero!"
 msgstr "Размер '%s' равен нулю!"
 
 #: ../plug-ins/common/file-xmc.c:1566
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Cannot save the cursor because the hotspot is not on '%s'.\n"
-"Try to change the hotspot position, layer geometry or save without auto-crop."
+"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Try to change the hot spot position, layer geometry or save without auto-"
+"crop."
 msgstr ""
 "Не удалось сохранить курсор, потому что горячая точка не находится в '%s'.\n"
 "Попробуйте изменить положение горячей точки, геометрию слоя или сохраните "
@@ -7382,7 +7384,7 @@ msgstr "Диалог выбора цвета"
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:193
-#: ../plug-ins/ifs-compose/ifs-compose.c:556
+#: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Масштаб:"
 
@@ -7618,7 +7620,7 @@ msgstr "Маленькая черепица"
 #. Area for buttons etc
 #. Flip
 #: ../plug-ins/common/tile-small.c:413
-#: ../plug-ins/ifs-compose/ifs-compose.c:612
+#: ../plug-ins/ifs-compose/ifs-compose.c:609
 msgid "Flip"
 msgstr "Отражение"
 
@@ -8093,7 +8095,7 @@ msgstr "Размер шага:"
 
 #: ../plug-ins/common/warp.c:433
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
-#: ../plug-ins/ifs-compose/ifs-compose.c:1214
+#: ../plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "Iterations:"
 msgstr "Число повторов:"
 
@@ -8171,7 +8173,7 @@ msgid "Vector mag:"
 msgstr "Длина вектора:"
 
 #. Angle
-#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:570
+#: ../plug-ins/common/warp.c:683 ../plug-ins/ifs-compose/ifs-compose.c:567
 msgid "Angle:"
 msgstr "Угол:"
 
@@ -8284,8 +8286,8 @@ msgid "A sharing violation occurred."
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:175
-msgid "Unknown Windows error."
-msgstr "Неизвестная ошибка Windows"
+msgid "Unknown Microsoft Windows error."
+msgstr "Неизвестная ошибка Windows."
 
 #: ../plug-ins/common/web-browser.c:178
 #, c-format
@@ -8929,29 +8931,29 @@ msgstr ""
 "Агрессивное RLE\n"
 "(Не поддерживается SGI)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:234
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:233
 #, c-format
 msgid "Downloading image (%s of %s)"
 msgstr "Скачивается изображение (%s из %s)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:238
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:237
 #, c-format
 msgid "Uploading image (%s of %s)"
 msgstr "Закачивается изображение (%s из %s)"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:260
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:259
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:135
 #: ../plug-ins/file-uri/uri-backend-wget.c:345
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Загружено %s изображения"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:264
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:263
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Отправлено %s изображения"
 
-#: ../plug-ins/file-uri/uri-backend-gvfs.c:318
+#: ../plug-ins/file-uri/uri-backend-gvfs.c:317
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:157
 #: ../plug-ins/file-uri/uri-backend-wget.c:194
 msgid "Connecting to server"
@@ -11001,16 +11003,16 @@ msgstr ""
 "Ошибка при открытии файла \"%s\":\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:336
+#: ../plug-ins/ifs-compose/ifs-compose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Создать фрактал Iterated Function System (IFS)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:348
+#: ../plug-ins/ifs-compose/ifs-compose.c:345
 msgid "_IFS Fractal..."
 msgstr "_IFS-фрактал..."
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:528
+#: ../plug-ins/ifs-compose/ifs-compose.c:525
 #: ../plug-ins/lighting/lighting-ui.c:526
 #: ../plug-ins/map-object/map-object-ui.c:675
 #: ../plug-ins/map-object/map-object-ui.c:729
@@ -11020,7 +11022,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:542
+#: ../plug-ins/ifs-compose/ifs-compose.c:539
 #: ../plug-ins/lighting/lighting-ui.c:540
 #: ../plug-ins/map-object/map-object-ui.c:689
 #: ../plug-ins/map-object/map-object-ui.c:742
@@ -11031,149 +11033,149 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:584
+#: ../plug-ins/ifs-compose/ifs-compose.c:581
 msgid "Asymmetry:"
 msgstr "Асимметрия:"
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:598
+#: ../plug-ins/ifs-compose/ifs-compose.c:595
 msgid "Shear:"
 msgstr "Наклон:"
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:643
+#: ../plug-ins/ifs-compose/ifs-compose.c:640
 msgid "Simple"
 msgstr "Простое"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:652
+#: ../plug-ins/ifs-compose/ifs-compose.c:649
 msgid "IFS Fractal: Target"
 msgstr "IFS Fractal: Target"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:658
+#: ../plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Scale hue by:"
 msgstr "Масштабировать оттенок по:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:673
+#: ../plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale value by:"
 msgstr "Масштабировать яркость по:"
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:690
+#: ../plug-ins/ifs-compose/ifs-compose.c:687
 msgid "Full"
 msgstr "Полное"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:698
+#: ../plug-ins/ifs-compose/ifs-compose.c:695
 msgid "IFS Fractal: Red"
 msgstr "IFS-фрактал: красный"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:706
+#: ../plug-ins/ifs-compose/ifs-compose.c:703
 msgid "IFS Fractal: Green"
 msgstr "IFS-фрактал: зеленый"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:714
+#: ../plug-ins/ifs-compose/ifs-compose.c:711
 msgid "IFS Fractal: Blue"
 msgstr "IFS-фрактал: синий"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:722
+#: ../plug-ins/ifs-compose/ifs-compose.c:719
 msgid "IFS Fractal: Black"
 msgstr "IFS-фрактал: черный"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:772
+#: ../plug-ins/ifs-compose/ifs-compose.c:769
 msgid "IFS Fractal"
 msgstr "IFS-фрактал"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:870
+#: ../plug-ins/ifs-compose/ifs-compose.c:867
 msgid "Spatial Transformation"
 msgstr "Пространственное преобразование"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:876
+#: ../plug-ins/ifs-compose/ifs-compose.c:873
 msgid "Color Transformation"
 msgstr "Преобразование цветов"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:886
+#: ../plug-ins/ifs-compose/ifs-compose.c:883
 msgid "Relative probability:"
 msgstr "Относительная вероятность:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1061
+#: ../plug-ins/ifs-compose/ifs-compose.c:1058
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Select _All"
 msgstr "Выделить _все"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1065
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Re_center"
 msgstr "Пересчитать центр"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1065
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Recompute Center"
 msgstr "Пересчитать центр"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1069
+#: ../plug-ins/ifs-compose/ifs-compose.c:1066
 msgid "Render Options"
 msgstr "Параметры визуализации"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1075
+#: ../plug-ins/ifs-compose/ifs-compose.c:1072
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Переместить"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1078
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate"
 msgstr "Повернуть"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1078
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate / Scale"
 msgstr "/Вращение\\/Масштаб"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1081
+#: ../plug-ins/ifs-compose/ifs-compose.c:1078
 msgid "Stretch"
 msgstr "Растянуть"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1179
+#: ../plug-ins/ifs-compose/ifs-compose.c:1176
 msgid "IFS Fractal Render Options"
 msgstr "Параметры визуализации"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1201
+#: ../plug-ins/ifs-compose/ifs-compose.c:1198
 msgid "Max. memory:"
 msgstr "Макс. память:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1228
+#: ../plug-ins/ifs-compose/ifs-compose.c:1225
 msgid "Subdivide:"
 msgstr "Подразделять:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1241
+#: ../plug-ins/ifs-compose/ifs-compose.c:1238
 msgid "Spot radius:"
 msgstr "Радиус пятна:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1306
+#: ../plug-ins/ifs-compose/ifs-compose.c:1303
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Визуализация IFS (%d/%d)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1472
+#: ../plug-ins/ifs-compose/ifs-compose.c:1469
 #, c-format
 msgid "Transformation %s"
 msgstr "Преобразование %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2403
+#: ../plug-ins/ifs-compose/ifs-compose.c:2400
 msgid "Save failed"
 msgstr "Сохранить не удалось"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2486
-#: ../plug-ins/ifs-compose/ifs-compose.c:2499
+#: ../plug-ins/ifs-compose/ifs-compose.c:2483
+#: ../plug-ins/ifs-compose/ifs-compose.c:2496
 msgid "Open failed"
 msgstr "Не удалось открыть"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2494
+#: ../plug-ins/ifs-compose/ifs-compose.c:2491
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Файл '%s' не является файлом IFS Fractal"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2534
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
 msgid "Save as IFS Fractal file"
 msgstr "Сохранить как файл IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2571
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
 msgid "Open IFS Fractal file"
 msgstr "Открыть файл IFS"
 
@@ -12792,6 +12794,9 @@ msgstr "_Снимок экрана..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "Данные не захвачены"
+
+#~ msgid "Hotspot _X:"
+#~ msgstr "Горячая точка по _X:"
 
 #~ msgid "GIF Options"
 #~ msgstr "Параметры GIF"
