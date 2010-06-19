@@ -39,7 +39,7 @@ UI:
  - Don't have Toolbox in list of Recently Closed Docks, handle that
    directly in the Windows menu
  - Support selecting and tagging multiple objects in resource lists
- - Optimize 
+ - Improve on-canvas text editing and text attribute setting
 
 
 Core:
