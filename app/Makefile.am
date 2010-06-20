@@ -73,6 +73,8 @@ libapp_sources = \
 libapp_generated_sources = \
 	git-version.h
 
+CLEANFILES = $(libapp_generated_sources)
+
 $(srcdir)/version.c: git-version.h
 
 libapp_a_SOURCES = $(libapp_sources) $(libapp_generated_sources)

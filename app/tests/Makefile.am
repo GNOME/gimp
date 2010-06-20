@@ -20,6 +20,7 @@ TESTS = \
 
 
 EXTRA_PROGRAMS = $(TESTS)
+CLEANFILES = $(EXTRA_PROGRAMS)
 
 $(TESTS): gimpdir-output
 
