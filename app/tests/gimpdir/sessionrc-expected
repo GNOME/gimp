@@ -22,7 +22,7 @@
             (dockable "gimp-undo-history"
                 (tab-style icon)))
         (book
-            (position 289)
+            (position 290)
             (current-page 0)
             (dockable "gimp-brush-grid"
                 (tab-style preview)))))
@@ -62,7 +62,7 @@
 (session-info "toplevel"
     (factory-entry "gimp-dock-window")
     (position 805 345)
-    (size 200 420)
+    (size 200 450)
     (open-on-exit)
     (aux-info
         (show-image-menu "true")
@@ -74,7 +74,7 @@
                 (tab-style automatic)
                 (preview-size 32)))
         (book
-            (position 162)
+            (position 200)
             (current-page 0)
             (dockable "gimp-palette-editor"
                 (tab-style icon)

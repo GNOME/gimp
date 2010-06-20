@@ -31,6 +31,7 @@
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
+#include "gimpsessioninfo.h" /* for gimp_session_info_class_apply_position_accuracy() */
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dockable.h"
 
@@ -80,9 +81,20 @@ gimp_session_info_book_serialize (GimpConfigWriter    *writer,
 
   if (info->position != 0)
     {
+      GimpSessionInfoClass *klass;
+      gint                  pos_to_write;
+
+      klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
+
+      pos_to_write =
+        gimp_session_info_class_apply_position_accuracy (klass,
+                                                         info->position);
+
       gimp_config_writer_open (writer, "position");
-      gimp_config_writer_printf (writer, "%d", info->position);
+      gimp_config_writer_printf (writer, "%d", pos_to_write);
       gimp_config_writer_close (writer);
+
+      g_type_class_unref (klass);
     }
 
   gimp_config_writer_open (writer, "current-page");

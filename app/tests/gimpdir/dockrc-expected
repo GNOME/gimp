@@ -14,14 +14,14 @@
             (dockable "gimp-palette-list"
                 (tab-style preview)))
         (book
-            (position 141)
+            (position 140)
             (current-page 0)
             (dockable "gimp-color-editor"
                 (tab-style preview)
                 (aux-info
                     (current-page "GimpColorSelect"))))
         (book
-            (position 414)
+            (position 415)
             (current-page 0)
             (dockable "gimp-image-list"
                 (tab-style preview)))))
