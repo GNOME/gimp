@@ -7,8 +7,8 @@ SUBDIRS = \
 # tests through an environment variable so they can set the gimpdir
 # they want to use
 TESTS_ENVIRONMENT = \
-	GIMP_TESTING_ABS_TOP_SRCDIR=$(abs_top_srcdir) \
-	GIMP_TESTING_ABS_TOP_BUILDDIR=$(abs_top_builddir)
+	GIMP_TESTING_ABS_TOP_SRCDIR=@abs_top_srcdir@ \
+	GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@
 
 TESTS = \
 	test-layer-grouping	\
