@@ -1303,7 +1303,7 @@ if test "x$with_print" != xno; then
   enable_print="yes"
 fi
 
-AM_CONDITIONAL(BUILD_PRINT, test "x$enable_print" == xyes)
+AM_CONDITIONAL(BUILD_PRINT, test "x$enable_print" = xyes)
 
 
 ######################
