@@ -898,11 +898,14 @@ gint
 gimp_session_info_class_apply_position_accuracy (GimpSessionInfoClass *klass,
                                                  gint                  position)
 {
-  gint n = klass->position_accuracy;
-  gint to_floor;
-
   g_return_val_if_fail (GIMP_IS_SESSION_INFO_CLASS (klass), position);
 
-  to_floor = position + n / 2;
-  return to_floor - to_floor % n;
+  if (klass->position_accuracy > 0)
+    {
+      gint to_floor = position + klass->position_accuracy / 2;
+
+      return to_floor - to_floor % klass->position_accuracy;
+    }
+
+  return position;
 }
