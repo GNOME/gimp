@@ -1119,7 +1119,7 @@ if test -z "$Z_LIBS"; then
 fi
 
 if test "x$have_zlib" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/x-psd"
+  MIME_TYPES="$MIME_TYPES;image/x-psp"
 fi
 
 AC_SUBST(FILE_PSP)
