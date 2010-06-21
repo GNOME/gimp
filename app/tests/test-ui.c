@@ -79,7 +79,8 @@ typedef struct
 
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
-static void            gimp_ui_synthesize_plus_key_event        (GtkWidget         *widget);
+static void            gimp_ui_synthesize_key_event             (GtkWidget         *widget,
+                                                                 guint              keyval);
 static GtkWidget     * gimp_ui_find_dock_window                 (GimpDialogFactory *dialog_factory,
                                                                  GimpUiTestFunc     predicate);
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
@@ -296,7 +297,7 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
   factor_before_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
   /* Do the zoom */
-  gimp_ui_synthesize_plus_key_event (GTK_WIDGET (window));
+  gimp_ui_synthesize_key_event (GTK_WIDGET (window), GDK_plus);
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure the zoom focus point remained fixed */
@@ -575,41 +576,19 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
 }
 
 static void
-gimp_ui_synthesize_plus_key_event (GtkWidget *widget)
+gimp_ui_synthesize_key_event (GtkWidget *widget,
+                              guint      keyval)
 {
-  GdkWindow *window           = NULL;
-  GdkEvent  *event            = NULL;
-  guint      keyval           = GDK_plus;
-  guint      hardware_keycode = 20;
-
-  /* FIXME: How do we figure out hardware_keycode, especially in a
-   * platform independent way? 20 is the hardware keycode on my
-   * machine for GDK_plus when using a X11 backend... I hope it will
-   * be the same on others running at least the X11 build of GTK+
-   */
-
-  window = gtk_widget_get_window (widget);
-  g_assert (window);
-
-  event = gdk_event_new (GDK_KEY_PRESS);
-  event->any.window           = g_object_ref (window);
-  event->any.send_event       = TRUE;
-  event->key.keyval           = keyval;
-  event->key.time             = GDK_CURRENT_TIME;
-  event->key.state            = 0;
-  event->key.hardware_keycode = hardware_keycode;
-  gdk_event_put (event);
-  gdk_event_free (event);
-
-  event = gdk_event_new (GDK_KEY_RELEASE);
-  event->any.window           = g_object_ref (window);
-  event->any.send_event       = TRUE;
-  event->key.keyval           = keyval;
-  event->key.time             = GDK_CURRENT_TIME;
-  event->key.state            = 0;
-  event->key.hardware_keycode = hardware_keycode;
-  gdk_event_put (event);
-  gdk_event_free (event);
+  gdk_test_simulate_key (gtk_widget_get_window (widget),
+                         -1, -1, /*x, y*/
+                         keyval,
+                         0 /*modifiers*/,
+                         GDK_KEY_PRESS);
+  gdk_test_simulate_key (gtk_widget_get_window (widget),
+                         -1, -1, /*x, y*/
+                         keyval,
+                         0 /*modifiers*/,
+                         GDK_KEY_RELEASE);
 }
 
 static GtkWidget *
