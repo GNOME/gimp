@@ -282,7 +282,7 @@ git-version.h: update-git-version-header
 	elif test ! -f "$@"; then \
 	  echo "#define GIMP_GIT_VERSION \"Unknown, shouldn't happen\"" > "$@.tmp"; \
 	fi
-	@if ( test -f "$@" && cmp "$@.tmp" "$@" > /dev/null); then \
+	@if ( test -f "$@.tmp" && test -f "$@" && cmp "$@.tmp" "$@" > /dev/null ); then \
 	  rm -f "$@.tmp"; \
 	elif test -f "$@.tmp"; then \
 	  mv "$@.tmp" "$@"; \
