@@ -198,12 +198,12 @@ gimp_color_panel_new (const gchar       *title,
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  panel = g_object_new (GIMP_TYPE_COLOR_PANEL, NULL);
+  panel = g_object_new (GIMP_TYPE_COLOR_PANEL,
+                        "title", title,
+                        "type",  type,
+                        "color", color,
+                        NULL);
 
-  GIMP_COLOR_BUTTON (panel)->title = g_strdup (title);
-
-  gimp_color_button_set_type (GIMP_COLOR_BUTTON (panel), type);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
   gtk_widget_set_size_request (GTK_WIDGET (panel), width, height);
 
   return GTK_WIDGET (panel);
