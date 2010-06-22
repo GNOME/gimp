@@ -736,8 +736,11 @@ gimp_dock_window_update_title_idle (GimpDockWindow *dock_window)
 {
   gchar *desc = gimp_dock_window_get_description (dock_window,
                                                   FALSE /*complete*/);
-  if (desc != NULL)
-    gtk_window_set_title (GTK_WINDOW (dock_window), desc);
+  if (desc)
+    {
+      gtk_window_set_title (GTK_WINDOW (dock_window), desc);
+      g_free (desc);
+    }
 
   dock_window->p->update_title_idle_id = 0;
 
