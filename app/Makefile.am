@@ -83,9 +83,10 @@ gimp_2_7_SOURCES = $(libapp_sources) main.c
 
 
 EXTRA_DIST = \
-	makefile.msc	\
-	gimp.rc.in	\
 	fileicon.ico	\
+	gimp.manifest	\
+	gimp.rc.in	\
+	makefile.msc	\
 	wilber.ico
 
 if OS_WIN32

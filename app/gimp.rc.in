@@ -61,5 +61,7 @@ BEGIN
     END
 END
 
+#include "winuser.h"
 1	ICON	"wilber.ico"
 2	ICON	"fileicon.ico"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "gimp.manifest"
