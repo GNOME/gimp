@@ -561,7 +561,7 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
             }
         }
 
-      g_list_free (list);
+      g_list_free (children);
     }
 
   GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
