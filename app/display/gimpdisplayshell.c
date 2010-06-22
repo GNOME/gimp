@@ -898,6 +898,12 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->event_queue = NULL;
     }
 
+  if (shell->zoom_focus_pointer_queue)
+    {
+      g_queue_free (shell->zoom_focus_pointer_queue);
+      shell->zoom_focus_pointer_queue = NULL;
+    }
+
   if (shell->title_idle_id)
     {
       g_source_remove (shell->title_idle_id);
