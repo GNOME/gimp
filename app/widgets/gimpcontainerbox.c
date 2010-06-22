@@ -43,6 +43,8 @@
 static void   gimp_container_box_view_iface_init   (GimpContainerViewInterface *iface);
 static void   gimp_container_box_docked_iface_init (GimpDockedInterface *iface);
 
+static void   gimp_container_box_constructed       (GObject      *object);
+
 static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
                                                     GimpContext  *context,
                                                     GtkIconSize   size);
@@ -65,6 +67,7 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed  = gimp_container_box_constructed;
   object_class->set_property = gimp_container_view_set_property;
   object_class->get_property = gimp_container_view_get_property;
 
@@ -74,8 +77,7 @@ gimp_container_box_class_init (GimpContainerBoxClass *klass)
 static void
 gimp_container_box_init (GimpContainerBox *box)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (box);
-  GtkWidget         *sb;
+  GtkWidget *sb;
 
   box->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), box->scrolled_win, TRUE, TRUE, 0);
@@ -84,8 +86,6 @@ gimp_container_box_init (GimpContainerBox *box)
   sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
 
   gtk_widget_set_can_focus (sb, FALSE);
-
-  gimp_container_view_set_dnd_widget (view, box->scrolled_win);
 }
 
 static void
@@ -98,6 +98,18 @@ gimp_container_box_docked_iface_init (GimpDockedInterface *iface)
 {
   iface->get_preview = gimp_container_box_get_preview;
   iface->set_context = gimp_container_box_set_context;
+}
+
+static void
+gimp_container_box_constructed (GObject *object)
+{
+  GimpContainerBox *box = GIMP_CONTAINER_BOX (object);
+
+  gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (box),
+                                      box->scrolled_win);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 void
