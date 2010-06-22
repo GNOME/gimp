@@ -177,6 +177,23 @@ gimp_container_popup_finalize (GObject *object)
 }
 
 static void
+gimp_container_popup_grab_notify (GtkWidget *widget,
+                                  gboolean   was_grabbed)
+{
+  if (! was_grabbed)
+    g_signal_emit (widget, popup_signals[CANCEL], 0);
+}
+
+static gboolean
+gimp_container_popup_grab_broken_event (GtkWidget          *widget,
+                                        GdkEventGrabBroken *event)
+{
+  gimp_container_popup_grab_notify (widget, FALSE);
+
+  return FALSE;
+}
+
+static void
 gimp_container_popup_map (GtkWidget *widget)
 {
   GTK_WIDGET_CLASS (parent_class)->map (widget);
@@ -194,6 +211,14 @@ gimp_container_popup_map (GtkWidget *widget)
                              GDK_CURRENT_TIME) == 0)
         {
           gtk_grab_add (widget);
+
+          g_signal_connect (widget, "grab-notify",
+                            G_CALLBACK (gimp_container_popup_grab_notify),
+                            widget);
+          g_signal_connect (widget, "grab-broken-event",
+                            G_CALLBACK (gimp_container_popup_grab_broken_event),
+                            widget);
+
           return;
         }
       else
