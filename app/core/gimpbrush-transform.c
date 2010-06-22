@@ -167,7 +167,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
-  source = temp_buf_copy (brush->mask, NULL);
+  source = brush->mask;
 
   gimp_brush_transform_matrix (source->height, source->width,
                                scale, aspect_ratio, angle, &matrix);
@@ -320,6 +320,7 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
         src_space_cur_pos_y = src_space_cur_pos_y_i >> fraction_bits;
 
     } /* end for y */
+
   if (hardness < 1.0)
     {
       TempBuf      *blur_src;
@@ -335,13 +336,16 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
 
       blur_src = temp_buf_copy (result, NULL);
 
-      pixel_region_init_temp_buf (&srcPR, blur_src, blur_src->x, blur_src->y, blur_src->width, blur_src->height);
-      pixel_region_init_temp_buf (&destPR, result, result->x, result->y, result->width, result->height);
+      pixel_region_init_temp_buf (&srcPR, blur_src,
+                                  blur_src->x, blur_src->y,
+                                  blur_src->width, blur_src->height);
+      pixel_region_init_temp_buf (&destPR, result,
+                                  result->x, result->y,
+                                  result->width, result->height);
 
       convolve_region (&srcPR, &destPR, blur_kernel, kernel_size,
-                       gimp_brush_transform_array_sum(blur_kernel, kernel_len),
+                       gimp_brush_transform_array_sum (blur_kernel, kernel_len),
                        GIMP_NORMAL_CONVOL, FALSE);
-
     }
 
   return result;
