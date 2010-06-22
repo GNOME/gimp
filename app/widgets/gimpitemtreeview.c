@@ -525,7 +525,7 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
           gtk_box_set_spacing (GTK_BOX (child), button_spacing);
         }
 
-      g_list_free (list);
+      g_list_free (children);
     }
 
   if (view->priv->lock_box)
