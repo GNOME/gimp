@@ -38,11 +38,9 @@
 
  ( ) Commit changes that you had to do to get 'make distcheck' running.
 
- ( ) Make a release commit so that a release entry is added to the
-     generated ChangeLog.
-
  ( ) Run 'make dist' to create the final tarball. This will generate
-     ChangeLog.
+     ChangeLog. Note that we don't bother with any release commit,
+     that's what tags are for (see below).
 
  ( ) Use md5sum to create a checksum of the tarball (tar.bz2).
 
