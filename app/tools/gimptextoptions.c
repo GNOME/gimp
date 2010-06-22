@@ -70,6 +70,7 @@ enum
 };
 
 
+static void  gimp_text_options_finalize           (GObject      *object);
 static void  gimp_text_options_set_property       (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
@@ -98,12 +99,15 @@ G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_RECTANGLE_OPTIONS,
                                                 NULL))
 
+#define parent_class gimp_text_options_parent_class
+
 
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
 
@@ -204,6 +208,20 @@ static void
 gimp_text_options_init (GimpTextOptions *options)
 {
   options->size_entry = NULL;
+}
+
+static void
+gimp_text_options_finalize (GObject *object)
+{
+  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
+
+  if (options->language)
+    {
+      g_free (options->language);
+      options->language = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
