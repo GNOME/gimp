@@ -17,6 +17,9 @@ Functions to perform adaptive supersampling on an area.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpProgressFunc ##### -->
 <para>
 

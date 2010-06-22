@@ -18,11 +18,15 @@ Enums and definitions.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_enums_init ##### -->
 <para>
 
 </para>
 
+@void: 
 
 
 <!-- ##### ENUM GimpBrushApplicationMode ##### -->

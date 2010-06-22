@@ -17,6 +17,9 @@ Widget for entering a color's hex triplet.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpColorHexEntry ##### -->
 <para>
 
@@ -35,6 +38,7 @@ Widget for entering a color's hex triplet.
 
 </para>
 
+@void: 
 @Returns: 
 
 

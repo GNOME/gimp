@@ -17,6 +17,9 @@ gimpconfig-path
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpConfigPathType ##### -->
 <para>
 

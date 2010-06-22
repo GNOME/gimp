@@ -17,6 +17,9 @@ gimpconfig-params
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO GIMP_CONFIG_PARAM_SERIALIZE ##### -->
 <para>
 

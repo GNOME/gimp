@@ -19,6 +19,9 @@ using a pre-defined function pointer per pixel.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpRgnIterator ##### -->
 <para>
 

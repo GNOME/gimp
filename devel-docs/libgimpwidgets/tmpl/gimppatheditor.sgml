@@ -33,6 +33,9 @@ the search path, the "path_changed" signal will be emitted.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpPathEditor ##### -->
 <para>
 

@@ -17,6 +17,9 @@ GimpColorDisplayStack
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpColorDisplayStack ##### -->
 <para>
 
@@ -61,6 +64,7 @@ GimpColorDisplayStack
 
 </para>
 
+@void: 
 @Returns: 
 
 

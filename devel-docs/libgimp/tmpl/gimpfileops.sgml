@@ -18,6 +18,9 @@ File operations (load, save, etc.)
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_temp_name ##### -->
 <para>
 

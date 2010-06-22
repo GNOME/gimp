@@ -29,6 +29,9 @@ gimp_pixmap_button_new()
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpPixmap ##### -->
 <para>
 

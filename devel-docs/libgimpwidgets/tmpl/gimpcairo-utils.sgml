@@ -17,6 +17,9 @@ gimpcairo-utils
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_cairo_set_source_rgb ##### -->
 <para>
 

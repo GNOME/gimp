@@ -18,6 +18,9 @@ Functions for manipulating color, including curves and histograms.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_brightness_contrast ##### -->
 <para>
 

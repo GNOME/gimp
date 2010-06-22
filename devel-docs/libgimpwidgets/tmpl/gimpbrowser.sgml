@@ -17,6 +17,9 @@ GimpBrowser
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpBrowser ##### -->
 <para>
 
@@ -37,6 +40,7 @@ GimpBrowser
 
 </para>
 
+@void: 
 @Returns: 
 
 

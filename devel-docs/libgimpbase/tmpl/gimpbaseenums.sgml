@@ -17,6 +17,9 @@ Basic GIMP enumeration data types.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpAddMaskType ##### -->
 <para>
 

@@ -24,11 +24,15 @@ locales.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_stock_init ##### -->
 <para>
 
 </para>
 
+@void: 
 
 
 <!-- ##### MACRO GIMP_STOCK_ANCHOR ##### -->

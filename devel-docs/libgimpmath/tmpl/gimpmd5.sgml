@@ -17,6 +17,9 @@ the MD5 message-digest algorithm
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_md5_get_digest ##### -->
 <para>
 

@@ -18,6 +18,9 @@ Miscellaneous utility functions for libgimpconfig.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_config_diff ##### -->
 <para>
 

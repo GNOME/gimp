@@ -18,6 +18,9 @@ Display a dialog box with a message.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_message ##### -->
 <para>
 
@@ -32,6 +35,7 @@ Display a dialog box with a message.
 
 </para>
 
+@void: 
 @Returns: 
 
 

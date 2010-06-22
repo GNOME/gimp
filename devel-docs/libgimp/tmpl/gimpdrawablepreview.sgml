@@ -17,6 +17,9 @@ A widget providing a preview of a #GimpDrawable.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpDrawablePreview ##### -->
 <para>
 

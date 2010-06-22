@@ -18,6 +18,9 @@ signal(2), signal(5 or 7), sigaction(2).
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpSignalHandlerFunc ##### -->
 <para>
 A prototype for signal handler functions. Note that each function which

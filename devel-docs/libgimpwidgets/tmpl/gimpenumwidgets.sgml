@@ -17,6 +17,9 @@ GimpEnumWidgets
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_enum_radio_box_new ##### -->
 <para>
 

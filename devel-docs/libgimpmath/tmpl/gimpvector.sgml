@@ -21,6 +21,9 @@ Utilities to set up and manipulate vectors.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpVector2 ##### -->
 <para>
 A two dimensional vector.

@@ -18,6 +18,9 @@ rather than the ones from math.h for enhanced portability.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO RINT ##### -->
 <para>
 This macro rounds its argument @x to an integer value in floating point

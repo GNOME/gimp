@@ -17,11 +17,15 @@ Operations related to palettes.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_palettes_refresh ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 

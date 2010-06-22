@@ -36,6 +36,9 @@ gimp_coordinates_new()
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpUnitMenu ##### -->
 <para>
 

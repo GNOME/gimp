@@ -18,6 +18,9 @@ Functions for removing or attaching floating selections.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_floating_sel_remove ##### -->
 <para>
 

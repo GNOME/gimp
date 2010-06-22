@@ -18,6 +18,9 @@ Operations on a single layer.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_layer_new ##### -->
 <para>
 

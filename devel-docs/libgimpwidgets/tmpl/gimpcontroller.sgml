@@ -17,6 +17,9 @@ An abstract interface for implementing arbitrary input controllers.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpControllerEventType ##### -->
 <para>
 

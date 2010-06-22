@@ -17,11 +17,15 @@ Functions related to getting and setting brushes.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_brushes_refresh ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -60,6 +64,7 @@ Functions related to getting and setting brushes.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -77,6 +82,7 @@ Functions related to getting and setting brushes.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -94,6 +100,7 @@ Functions related to getting and setting brushes.
 
 </para>
 
+@void: 
 @Returns: 
 
 

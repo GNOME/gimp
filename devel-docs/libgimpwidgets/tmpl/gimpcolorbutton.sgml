@@ -24,6 +24,9 @@ color, the "color_changed" signal is emitted.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpColorButton ##### -->
 <para>
 

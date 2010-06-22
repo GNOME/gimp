@@ -17,6 +17,9 @@ Definitions of useful #GParamFlags.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO GIMP_PARAM_STATIC_STRINGS ##### -->
 <para>
 Since: GIMP 2.4

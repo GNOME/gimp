@@ -17,6 +17,9 @@ GimpHintBox
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_hint_box_new ##### -->
 <para>
 

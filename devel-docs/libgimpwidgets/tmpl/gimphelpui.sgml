@@ -18,6 +18,9 @@ system.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpHelpFunc ##### -->
 <para>
 This is the prototype for all functions you pass as @help_func to the
@@ -58,6 +61,7 @@ Since: GIMP 2.2
 
 </para>
 
+@void: 
 
 
 <!-- ##### FUNCTION gimp_help_disable_tooltips ##### -->
@@ -65,6 +69,7 @@ Since: GIMP 2.2
 
 </para>
 
+@void: 
 
 
 <!-- ##### FUNCTION gimp_standard_help_func ##### -->

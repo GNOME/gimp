@@ -19,6 +19,9 @@ modifier keys pressed.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpButton ##### -->
 <para>
 
@@ -38,6 +41,7 @@ modifier keys pressed.
 
 </para>
 
+@void: 
 @Returns: 
 
 

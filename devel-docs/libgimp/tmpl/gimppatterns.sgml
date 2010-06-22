@@ -18,11 +18,15 @@ Functions relating to patterns.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_patterns_refresh ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 

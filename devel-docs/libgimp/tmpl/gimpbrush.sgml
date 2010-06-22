@@ -17,6 +17,9 @@ Functions operating on a single brush.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_brush_new ##### -->
 <para>
 

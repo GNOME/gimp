@@ -17,6 +17,9 @@ Get a thumbnail pixbuf for a drawable or image.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpPixbufTransparency ##### -->
 <para>
 

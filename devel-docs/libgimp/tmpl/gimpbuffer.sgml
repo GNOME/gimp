@@ -17,6 +17,9 @@ gimpbuffer
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_buffers_get_list ##### -->
 <para>
 

@@ -17,6 +17,9 @@ GimpPageSelector
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpPageSelector ##### -->
 <para>
 
@@ -60,6 +63,7 @@ GimpPageSelector
 
 </para>
 
+@void: 
 @Returns: 
 
 

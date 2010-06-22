@@ -18,6 +18,9 @@ Functions useful for plugins, e.g. registration and progress indicators.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_plugin_domain_register ##### -->
 <para>
 
@@ -83,6 +86,7 @@ Functions useful for plugins, e.g. registration and progress indicators.
 
 </para>
 
+@void: 
 @Returns: 
 
 

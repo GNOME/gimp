@@ -20,11 +20,15 @@ all other GIMP Library headers.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_version ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -33,6 +37,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -63,6 +68,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 
 
 <!-- ##### USER_FUNCTION GimpQuitProc ##### -->
@@ -70,6 +76,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 
 
 <!-- ##### USER_FUNCTION GimpQueryProc ##### -->
@@ -77,6 +84,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 
 
 <!-- ##### USER_FUNCTION GimpRunProc ##### -->
@@ -157,6 +165,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 
 
 <!-- ##### FUNCTION gimp_install_procedure ##### -->
@@ -254,6 +263,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -262,6 +272,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -270,6 +281,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -278,6 +290,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -286,6 +299,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -294,6 +308,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -302,6 +317,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -310,6 +326,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -318,6 +335,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -326,6 +344,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -334,6 +353,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -342,6 +362,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -350,6 +371,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -358,6 +380,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -366,6 +389,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -374,6 +398,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -382,6 +407,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -390,6 +416,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -398,6 +425,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 
 
 <!-- ##### FUNCTION gimp_extension_ack ##### -->
@@ -405,6 +433,7 @@ all other GIMP Library headers.
 
 </para>
 
+@void: 
 
 
 <!-- ##### FUNCTION gimp_extension_process ##### -->

@@ -18,6 +18,9 @@ Edit menu functions (cut, copy, paste, clear, etc.)
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_edit_cut ##### -->
 <para>
 
@@ -60,6 +63,7 @@ Edit menu functions (cut, copy, paste, clear, etc.)
 
 </para>
 
+@void: 
 @Returns: 
 
 

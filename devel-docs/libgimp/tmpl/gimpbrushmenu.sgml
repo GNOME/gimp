@@ -17,6 +17,9 @@ A widget for selecting brushes.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_brush_select_widget_new ##### -->
 <para>
 

@@ -29,6 +29,9 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpChainButton ##### -->
 <para>
 

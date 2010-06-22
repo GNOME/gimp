@@ -31,6 +31,9 @@ element for row r and column c of the matrix is coeff[r][c].
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpMatrix2 ##### -->
 <para>
 A two by two matrix.

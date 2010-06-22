@@ -18,11 +18,15 @@ Operations related to gradients.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_gradients_refresh ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -41,6 +45,7 @@ Operations related to gradients.
 
 </para>
 
+@void: 
 @Returns: 
 
 

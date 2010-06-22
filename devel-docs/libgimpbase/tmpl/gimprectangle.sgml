@@ -17,6 +17,9 @@ gimprectangle
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_rectangle_intersect ##### -->
 <para>
 

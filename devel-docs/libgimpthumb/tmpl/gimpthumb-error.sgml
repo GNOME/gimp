@@ -17,6 +17,9 @@ Error codes used by libgimpthumb
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpThumbError ##### -->
 <para>
 These are the possible error codes used when a #GError is set by
@@ -39,6 +42,7 @@ Identifier for the libgimpthumb error domain.
 
 </para>
 
+@void: 
 @Returns: 
 
 

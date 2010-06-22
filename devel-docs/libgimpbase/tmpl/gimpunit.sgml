@@ -23,6 +23,9 @@ user-defined units.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpUnit ##### -->
 <para>
 
@@ -41,6 +44,7 @@ user-defined units.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -49,6 +53,7 @@ user-defined units.
 
 </para>
 
+@void: 
 @Returns: 
 
 

@@ -17,6 +17,9 @@ Functions operating on a single pattern.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_pattern_get_info ##### -->
 <para>
 

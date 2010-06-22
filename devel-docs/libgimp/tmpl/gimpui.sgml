@@ -23,6 +23,9 @@ gtk_preview_set_gamma().
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_ui_init ##### -->
 <para>
 
@@ -46,6 +49,7 @@ gtk_preview_set_gamma().
 
 </para>
 
+@void: 
 @Returns: 
 
 

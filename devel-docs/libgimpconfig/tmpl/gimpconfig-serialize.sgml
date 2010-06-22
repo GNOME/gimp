@@ -18,6 +18,9 @@ Serializing interface for libgimpconfig.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_config_serialize_properties ##### -->
 <para>
 

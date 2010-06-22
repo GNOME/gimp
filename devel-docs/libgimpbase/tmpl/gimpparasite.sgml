@@ -19,6 +19,9 @@ gimp_parasite_attach() and their related functions.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpParasite ##### -->
 <para>
 

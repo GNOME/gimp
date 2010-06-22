@@ -17,11 +17,15 @@ Functions to manipulate a plug-in's context.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_context_push ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -30,6 +34,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -74,6 +79,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -82,6 +88,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -90,6 +97,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -107,6 +115,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -124,6 +133,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -141,6 +151,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -158,6 +169,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -175,6 +187,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -192,6 +205,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -209,6 +223,7 @@ Functions to manipulate a plug-in's context.
 
 </para>
 
+@void: 
 @Returns: 
 
 

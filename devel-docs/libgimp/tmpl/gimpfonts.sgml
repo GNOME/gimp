@@ -17,11 +17,15 @@ Operations related to fonts.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_fonts_refresh ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 

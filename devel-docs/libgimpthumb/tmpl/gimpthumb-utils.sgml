@@ -17,6 +17,9 @@ Utility functions provided and used by libgimpthumb
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_thumb_init ##### -->
 <para>
 

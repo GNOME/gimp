@@ -17,6 +17,9 @@ GimpIntComboBox
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_int_option_menu_new ##### -->
 <para>
 

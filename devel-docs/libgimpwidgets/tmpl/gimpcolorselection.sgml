@@ -17,6 +17,9 @@ Widget for doing a color selection.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpColorSelection ##### -->
 <para>
 
@@ -40,6 +43,7 @@ Widget for doing a color selection.
 
 </para>
 
+@void: 
 @Returns: 
 
 

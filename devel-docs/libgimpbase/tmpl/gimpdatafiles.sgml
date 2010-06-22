@@ -17,6 +17,9 @@ Functions to handle GIMP data files.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpDatafileData ##### -->
 <para>
 

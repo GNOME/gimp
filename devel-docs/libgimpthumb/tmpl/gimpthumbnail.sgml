@@ -17,6 +17,9 @@ The GimpThumbnail object
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpThumbnail ##### -->
 <para>
 All members of #GimpThumbnail are private and should only be accessed
@@ -79,6 +82,7 @@ using object properties.
 
 </para>
 
+@void: 
 @Returns: 
 
 

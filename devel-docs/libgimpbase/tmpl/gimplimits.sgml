@@ -18,6 +18,9 @@ Boundaries of some GIMP data types and some global constants.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO GIMP_MIN_IMAGE_SIZE ##### -->
 <para>
 The minimum width and height of a GIMP image in pixels.

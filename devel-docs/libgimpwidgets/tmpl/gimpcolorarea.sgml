@@ -17,6 +17,9 @@ Displays a GimpRGB color, optionally with alpha-channel.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpColorArea ##### -->
 <para>
 

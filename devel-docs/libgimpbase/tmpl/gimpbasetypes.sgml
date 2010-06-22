@@ -17,6 +17,9 @@ Translation between gettext translation domain identifier and GType.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpEnumDesc ##### -->
 <para>
 

@@ -18,11 +18,15 @@ Functions for querying and changing procedural database (PDB) entries.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_procedural_db_temp_name ##### -->
 <para>
 
 </para>
 
+@void: 
 @Returns: 
 
 

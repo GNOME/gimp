@@ -18,6 +18,9 @@ Functions for manipulating selections.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_selection_bounds ##### -->
 <para>
 

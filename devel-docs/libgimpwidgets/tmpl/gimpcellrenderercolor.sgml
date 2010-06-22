@@ -17,6 +17,9 @@ GimpCellRendererColor
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpCellRendererColor ##### -->
 <para>
 
@@ -43,6 +46,7 @@ GimpCellRendererColor
 
 </para>
 
+@void: 
 @Returns: 
 
 

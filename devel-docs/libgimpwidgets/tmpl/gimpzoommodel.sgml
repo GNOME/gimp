@@ -17,6 +17,9 @@ GimpZoomModel
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpZoomModel ##### -->
 <para>
 
@@ -75,6 +78,7 @@ GimpZoomModel
 
 </para>
 
+@void: 
 @Returns: 
 
 

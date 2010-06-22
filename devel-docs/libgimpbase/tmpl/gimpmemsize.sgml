@@ -17,6 +17,9 @@ Functions to (de)serialize a given memory size.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_memsize_serialize ##### -->
 <para>
 

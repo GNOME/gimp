@@ -17,6 +17,9 @@ gimpgrid
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_image_grid_get_spacing ##### -->
 <para>
 

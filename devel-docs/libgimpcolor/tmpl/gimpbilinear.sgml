@@ -17,6 +17,9 @@ GimpBilinear
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_bilinear ##### -->
 <para>
 

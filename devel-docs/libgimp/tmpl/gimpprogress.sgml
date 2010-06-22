@@ -17,6 +17,9 @@ Functions for embedding the progress bar into a plug-in's GUI.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpProgressVtable ##### -->
 <para>
 
@@ -70,6 +73,7 @@ Functions for embedding the progress bar into a plug-in's GUI.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -97,6 +101,7 @@ Functions for embedding the progress bar into a plug-in's GUI.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -105,6 +110,7 @@ Functions for embedding the progress bar into a plug-in's GUI.
 
 </para>
 
+@void: 
 @Returns: 
 
 

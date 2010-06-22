@@ -18,6 +18,9 @@ It serves as a container for #GimpColorSelectors.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpColorNotebook ##### -->
 <para>
 

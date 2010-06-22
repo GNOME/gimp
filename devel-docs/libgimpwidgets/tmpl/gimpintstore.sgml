@@ -17,6 +17,9 @@ A model for integer based name-value pairs (e.g. enums)
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpIntStore ##### -->
 <para>
 
@@ -45,6 +48,7 @@ A model for integer based name-value pairs (e.g. enums)
 
 </para>
 
+@void: 
 @Returns: 
 
 

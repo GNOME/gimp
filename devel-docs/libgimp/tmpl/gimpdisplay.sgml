@@ -18,6 +18,9 @@ Functions to create, delete and flush new displays (views) on an image.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_display_new ##### -->
 <para>
 
@@ -59,6 +62,7 @@ Functions to create, delete and flush new displays (views) on an image.
 
 </para>
 
+@void: 
 @Returns: 
 
 

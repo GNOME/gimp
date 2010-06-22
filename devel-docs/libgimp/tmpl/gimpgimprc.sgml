@@ -18,6 +18,9 @@ Interactions with settings from .gimprc.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_gimprc_query ##### -->
 <para>
 
@@ -42,6 +45,7 @@ Interactions with settings from .gimprc.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -50,6 +54,7 @@ Interactions with settings from .gimprc.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -58,6 +63,7 @@ Interactions with settings from .gimprc.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -66,6 +72,7 @@ Interactions with settings from .gimprc.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -84,6 +91,7 @@ Interactions with settings from .gimprc.
 
 </para>
 
+@void: 
 @Returns: 
 
 

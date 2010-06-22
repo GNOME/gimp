@@ -18,6 +18,9 @@ Utility functions to (de)serialize certain C structures to/from #GimpParasite's.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO GIMP_PIXPIPE_MAXDIM ##### -->
 <para>
 

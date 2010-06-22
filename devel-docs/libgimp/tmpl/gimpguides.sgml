@@ -18,6 +18,9 @@ Functions for manipulating guides.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_image_add_hguide ##### -->
 <para>
 

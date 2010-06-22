@@ -19,6 +19,9 @@ Kilobytes, Megabytes and Gigabytes. Used in the GIMP preferences dialog.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpMemsizeEntry ##### -->
 <para>
 The #GimpSizeEntry struct is considered private.

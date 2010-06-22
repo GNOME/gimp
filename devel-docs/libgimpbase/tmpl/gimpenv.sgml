@@ -18,6 +18,9 @@ configuration files.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_env_init ##### -->
 <para>
 
@@ -31,6 +34,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -39,6 +43,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -47,6 +52,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -55,6 +61,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -63,6 +70,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -89,6 +97,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 

@@ -17,6 +17,9 @@ GimpPropWidgets
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_prop_boolean_combo_box_new ##### -->
 <para>
 

@@ -17,6 +17,9 @@ A widget providing a HIG-compliant subclass of #GtkFrame.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpFrame ##### -->
 <para>
 

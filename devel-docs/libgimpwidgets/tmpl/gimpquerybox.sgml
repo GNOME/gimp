@@ -31,6 +31,9 @@ GimpUnitMenu
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpQueryStringCallback ##### -->
 <para>
 Note that you have to g_free() the returned string.

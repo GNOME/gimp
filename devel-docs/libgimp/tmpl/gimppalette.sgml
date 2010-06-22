@@ -17,6 +17,9 @@ Functions operating on a single palette.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_palette_new ##### -->
 <para>
 
@@ -200,6 +203,7 @@ Functions operating on a single palette.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -208,6 +212,7 @@ Functions operating on a single palette.
 
 </para>
 
+@void: 
 @Returns: 
 
 

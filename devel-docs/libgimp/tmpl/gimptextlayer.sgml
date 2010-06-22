@@ -17,6 +17,9 @@ gimptextlayer
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_text_layer_new ##### -->
 <para>
 

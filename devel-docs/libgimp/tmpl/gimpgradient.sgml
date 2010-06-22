@@ -17,6 +17,9 @@ Functions operating on a single gradient.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_gradient_new ##### -->
 <para>
 

@@ -19,6 +19,9 @@ from any point on the screen.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT GimpPickButton ##### -->
 <para>
 
@@ -38,6 +41,7 @@ from any point on the screen.
 
 </para>
 
+@void: 
 @Returns: 
 
 

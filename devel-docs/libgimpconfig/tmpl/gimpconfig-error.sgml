@@ -17,6 +17,9 @@ gimpconfig-error
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpConfigError ##### -->
 <para>
 
@@ -40,6 +43,7 @@ gimpconfig-error
 
 </para>
 
+@void: 
 @Returns: 
 
 

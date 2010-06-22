@@ -17,6 +17,9 @@ gimpdrawabletransform
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_drawable_transform_flip_simple ##### -->
 <para>
 
