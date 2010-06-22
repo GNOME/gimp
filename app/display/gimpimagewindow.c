@@ -398,6 +398,12 @@ gimp_image_window_finalize (GObject *object)
                                         gimp_image_window_update_ui_manager,
                                         window);
 
+  if (private->shells)
+    {
+      g_list_free (private->shells);
+      private->shells = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
