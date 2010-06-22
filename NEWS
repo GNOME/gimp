@@ -7,6 +7,54 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.8 to GIMP 2.6.9
+=================================================
+
+* Bugs fixed:
+
+ 612618 - Font selection remains visible
+ 622234 - gimp.desktop: image/x-psd in MimeTypes twice
+ 622196 - Unportable test(1) construct in configure script
+ 620604 - Description of "histogram" procedure is slightly inaccurate
+ 541586 - Tool options not saved/loaded correctly?
+ 614153 - Importing PDF files with long titles
+ 600112 - blur-gauss-selective.exe crashes
+ 599233 - Dialog of "Save as BMP" ignores changes which are not made
+          with a mous
+ 565001 - Text-Tool crashes when edit a 2.4.2 version xcf
+ 565001 - Text-Tool crashes when edit a 2.4.2 version xcf
+ 610478 - Layer preview suddenly stops getting updated
+ 609026 - leaks shared memory
+ 609056 - Exporting to Alias PIX format fails
+ 608188 - a few strings in Save as... > Raw image data dialog are always
+          in English
+ 604820 - GEGL Operation "path" crashes GIMP
+ 603711 - Crashes when using path tool
+ 607242 - GIMP 2.7.0 fails to build against libpng 1.4.0
+ 606372 - Saving to .ppm fails on indexed colorspace
+ 605237 - the "Antialiasing..." message in the progress bar does not show
+          translated
+ 604508 - gimp-layer-new-from-visible should work from updated projection
+
+* Updated and new translations:
+
+ Asturian (ast)
+ Basque (eu)
+ Burmese (my)
+ Catalan (ca)
+ Chinese (Hong Kong) (zh_HK)
+ Chinese (Taiwan) (zh_HK)
+ German (de)
+ Italian (it)
+ Latvian (lv)
+ Low German (nds)
+ Russian (ro)
+ Simplified Chinese (zh_CN)
+ Slovenian (sl)
+ Ukrainian (uk)
+ Valencian (ca@valencia)
+
+
 Overview of Changes from GIMP 2.6.7 to GIMP 2.6.8
 =================================================
 
