@@ -357,6 +357,8 @@ ppm_load (const char *fn, ppm_t *p)
     fread (tmpcol, p->height * p->width, 1, f);
     for (y = 0; y < p->width * p->height * 3; y++) {
       p->col[y] = tmpcol[y / 3];
+
+    g_free (tmpcol);
     }
   }
   fclose (f);

@@ -1089,6 +1089,7 @@ ico_save_image (const gchar  *filename,
 
   ico_save_info_free (&info);
   fclose (fp);
+  g_free (entries);
 
   return GIMP_PDB_SUCCESS;
 }

@@ -3135,6 +3135,7 @@ p_load_linefile (const gchar *filename,
   l_fp = g_fopen(filename, "rb");
   if(l_fp == NULL)
   {
+    g_free(l_file_buff);
     return(NULL);
   }
   fread(l_file_buff, *len, 1, l_fp);

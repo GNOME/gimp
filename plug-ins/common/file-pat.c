@@ -235,6 +235,8 @@ run (const gchar      *name,
 
           strncpy (description, name, sizeof (description));
           description[sizeof (description) - 1] = '\0';
+
+          g_free (name);
         }
 
       switch (run_mode)

@@ -1289,6 +1289,8 @@ load_save_defaults (void)
 
   if (num_fields == 12)
     memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
+
+  g_free (def_str);
 }
 
 static void
