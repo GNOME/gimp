@@ -580,6 +580,8 @@ gimp_paned_box_remove_widget (GimpPanedBox *paned_box,
         gtk_box_pack_start (GTK_BOX (paned_box), other_widget, TRUE, TRUE, 0);
 
       g_object_unref (other_widget);
+
+      g_object_unref (widget);
     }
 }
 
