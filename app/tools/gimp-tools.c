@@ -213,6 +213,7 @@ void
 gimp_tools_exit (Gimp *gimp)
 {
   GList *default_order;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -223,6 +224,19 @@ gimp_tools_exit (Gimp *gimp)
   g_list_free (default_order);
 
   g_object_set_data (G_OBJECT (gimp), "gimp-tools-default-order", NULL);
+
+  for (list = gimp_get_tool_info_iter (gimp);
+       list;
+       list = g_list_next (list))
+    {
+      GimpToolInfo *tool_info = list->data;
+      GtkWidget    *options_gui;
+
+      options_gui = g_object_get_data (G_OBJECT (tool_info->tool_options),
+                                       "gimp-tool-options-gui");
+
+      g_object_unref (options_gui);
+    }
 
   tool_manager_exit (gimp);
 }
@@ -342,7 +356,8 @@ gimp_tools_restore (Gimp *gimp)
         }
 
       g_object_set_data (G_OBJECT (tool_info->tool_options),
-                         "gimp-tool-options-gui", options_gui);
+                         "gimp-tool-options-gui",
+                         g_object_ref_sink (options_gui));
 
       if (tool_info->presets)
         gimp_tool_presets_load (tool_info->presets, NULL);
