@@ -171,6 +171,9 @@ file_open_dialog_response (GtkWidget *open_dialog,
             {
               success = TRUE;
 
+              /* Make the dialog stay on top of all images we open if
+               * we open say 10 at once
+               */
               gdk_window_raise (gtk_widget_get_window (open_dialog));
             }
         }
