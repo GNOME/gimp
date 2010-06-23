@@ -2,15 +2,15 @@
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
 # Lucian Adrian Grijincu <lucian.grijincu AT gmail DOT com>, 2009.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-02-07 10:14+0000\n"
-"PO-Revision-Date: 2010-02-10 18:47+0200\n"
+"POT-Creation-Date: 2010-06-23 18:21+0000\n"
+"PO-Revision-Date: 2010-05-27 00:28+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgstr ""
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
 msgstr ""
-"Nu a fost specificat niciun interpretor batch, se folosește cel implicit „%"
+"Nu a fost specificat niciun interpretor batch, se va folosi cel implicit „%"
 "s”.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
@@ -572,9 +572,10 @@ msgstr "Creează un canal nou cu ultimele valori folosite"
 msgid "D_uplicate Channel"
 msgstr "D_uplică canalul"
 
+# tooltip descriptiv
 #: ../app/actions/channels-actions.c:67
 msgid "Create a duplicate of this channel and add it to the image"
-msgstr "Creează un duplicat al acestui canal și adaugă-l la imagine"
+msgstr "Creează un duplicat al acestui canal pe care îl adaugă la imagine"
 
 #: ../app/actions/channels-actions.c:72
 msgid "_Delete Channel"
@@ -703,12 +704,12 @@ msgstr "Canal la Selecție"
 
 #: ../app/actions/colormap-actions.c:44
 msgid "Colormap Menu"
-msgstr "Meniu paletă de culori"
+msgstr "Meniu de paletă de culori"
 
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
-msgstr "_Editează culoarea..."
+msgstr "_Editare culoare..."
 
 #: ../app/actions/colormap-actions.c:49
 #: ../app/actions/palette-editor-actions.c:49
@@ -717,11 +718,11 @@ msgstr "Editează culoarea"
 
 #: ../app/actions/colormap-actions.c:57
 msgid "_Add Color from FG"
-msgstr "_Adaugă o culoare din prim plan"
+msgstr "_Adaugă o culoare din prim-plan"
 
 #: ../app/actions/colormap-actions.c:58
 msgid "Add current foreground color"
-msgstr "Adaugă culoarea actuală de prim plan"
+msgstr "Adaugă culoarea actuală de prim-plan"
 
 #: ../app/actions/colormap-actions.c:63
 msgid "_Add Color from BG"
@@ -762,7 +763,7 @@ msgstr "_Opacitate"
 
 #: ../app/actions/context-actions.c:49
 msgid "Paint _Mode"
-msgstr "_Mod de a picta"
+msgstr "_Mod de pictură"
 
 #: ../app/actions/context-actions.c:50
 msgid "_Tool"
@@ -822,7 +823,7 @@ msgstr "_Culori implicite"
 
 #: ../app/actions/context-actions.c:66
 msgid "Set foreground color to black, background color to white"
-msgstr "Stabilește la negru culoarea de prim plan și la alb culoarea de fundal"
+msgstr "Stabilește la negru culoarea de prim-plan și la alb culoarea de fundal"
 
 #: ../app/actions/context-actions.c:71
 msgid "S_wap Colors"
@@ -830,7 +831,7 @@ msgstr "_Interschimbă culorile"
 
 #: ../app/actions/context-actions.c:72
 msgid "Exchange foreground and background colors"
-msgstr "Interschimbă culorile de prim plan și fundal"
+msgstr "Interschimbă culorile de prim-plan și fundal"
 
 #: ../app/actions/cursor-info-actions.c:40
 msgid "Pointer Information Menu"
@@ -848,8 +849,8 @@ msgid "Sample Merged"
 msgstr "Eșantion combinat"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
-#: ../app/dialogs/file-open-dialog.c:264
+#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:229
+#: ../app/dialogs/file-open-dialog.c:273
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:537
@@ -993,7 +994,7 @@ msgstr "Culo_ri"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the FG/BG color dialog"
-msgstr "Deschide dialogul culorilor de prim plan și de fundal"
+msgstr "Deschide dialogul culorilor de prim-plan și de fundal"
 
 #: ../app/actions/dialogs-actions.c:117
 msgid "_Brushes"
@@ -1634,11 +1635,11 @@ msgstr "Curăță pixelii selectați"
 
 #: ../app/actions/edit-actions.c:189
 msgid "Fill with _FG Color"
-msgstr "Umple cu culoarea de _prim plan"
+msgstr "Umple cu culoarea de _prim-plan"
 
 #: ../app/actions/edit-actions.c:190
 msgid "Fill the selection using the foreground color"
-msgstr "Umple selecția folosind culoarea de prim plan"
+msgstr "Umple selecția folosind culoarea de prim-plan"
 
 #: ../app/actions/edit-actions.c:195
 msgid "Fill with B_G Color"
@@ -1979,7 +1980,7 @@ msgstr ""
 
 #: ../app/actions/fonts-actions.c:44
 msgid "Fonts Menu"
-msgstr "Meniu fonturi"
+msgstr "Meniu de fonturi"
 
 #: ../app/actions/fonts-actions.c:48
 msgid "_Rescan Font List"
@@ -2048,14 +2049,14 @@ msgstr "Ext_remitatea dreaptă"
 #: ../app/actions/gradient-editor-actions.c:166
 #: ../app/actions/gradient-editor-actions.c:214
 msgid "_Foreground Color"
-msgstr "Culoare _prim plan"
+msgstr "Culoare de _prim-plan"
 
 #: ../app/actions/gradient-editor-actions.c:171
 #: ../app/actions/gradient-editor-actions.c:219
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:301
 msgid "_Background Color"
-msgstr "Culoare _fundal"
+msgstr "Culoare de _fundal"
 
 #: ../app/actions/gradient-editor-actions.c:204
 msgid "_Right Neighbor's Left Endpoint"
@@ -2073,19 +2074,19 @@ msgstr "_Fixat"
 #: ../app/actions/gradient-editor-actions.c:263
 #: ../app/actions/gradient-editor-actions.c:291
 msgid "F_oreground Color"
-msgstr "Cul_oare prim plan"
+msgstr "Cul_oare de prim-plan"
 
 # hm ? cine-i transparent ?
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:296
 msgid "Fo_reground Color (Transparent)"
-msgstr "Cul_oare prim plan (transparent)"
+msgstr "Cul_oare de prim-plan (transparent)"
 
 # hm ? cine-i transparent ?
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
 msgid "B_ackground Color (Transparent)"
-msgstr "Cul_oare fundal (transparent)"
+msgstr "Cul_oare de fundal (transparent)"
 
 #: ../app/actions/gradient-editor-actions.c:314
 msgid "_Linear"
@@ -2321,7 +2322,7 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:44
 msgid "Gradients Menu"
-msgstr "Meniu degradeuri"
+msgstr "Meniu de degradeuri"
 
 #: ../app/actions/gradients-actions.c:48
 msgid "_New Gradient"
@@ -2366,7 +2367,7 @@ msgstr "Șterge degradeul"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
-msgstr "_Reîmprospătează degradeul"
+msgstr "_Reîmprospătează degradeurile"
 
 #: ../app/actions/gradients-actions.c:79
 msgid "Refresh gradients"
@@ -2374,7 +2375,7 @@ msgstr "Reîmprospătează degradeurile"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr "_Editează degradeul..."
+msgstr "_Editare degrade..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
@@ -2404,7 +2405,7 @@ msgstr "Arată ajutorul pentru un element specific al interfeței utilizator"
 
 #: ../app/actions/image-actions.c:47 ../app/actions/image-actions.c:51
 msgid "Image Menu"
-msgstr "Meniu imagine"
+msgstr "Meniu de imagine"
 
 #: ../app/actions/image-actions.c:54
 msgid "_Image"
@@ -2631,7 +2632,7 @@ msgstr "Scalare"
 
 #: ../app/actions/images-actions.c:43
 msgid "Images Menu"
-msgstr "Meniu imagini"
+msgstr "Meniu de imagini"
 
 #: ../app/actions/images-actions.c:47
 msgid "_Raise Views"
@@ -2659,7 +2660,7 @@ msgstr "Șterge această imagine"
 
 #: ../app/actions/layers-actions.c:48
 msgid "Layers Menu"
-msgstr "Meniu straturi"
+msgstr "Meniu de straturi"
 
 #: ../app/actions/layers-actions.c:51
 msgid "_Layer"
@@ -2699,7 +2700,7 @@ msgstr "Activează instrumentul text pe acest strat de text"
 
 #: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
-msgstr "_Editează atributele de strat..."
+msgstr "_Editare atribute de strat..."
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
@@ -2709,9 +2710,10 @@ msgstr "Editează numele stratului"
 msgid "_New Layer..."
 msgstr "Strat _nou..."
 
+# tooltip descriptiv
 #: ../app/actions/layers-actions.c:75
 msgid "Create a new layer and add it to the image"
-msgstr "Creează un strat nou și adaugă-l la imagine"
+msgstr "Creează un strat nou pe care îl adaugă la imagine"
 
 #: ../app/actions/layers-actions.c:80
 msgid "_New Layer"
@@ -2733,9 +2735,10 @@ msgstr "Creează un strat nou din ce este vizibil în această imagine"
 msgid "D_uplicate Layer"
 msgstr "D_uplică stratul"
 
+# tooltip descriptiv
 #: ../app/actions/layers-actions.c:93
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr "Creează un duplicat al stratului și adaugă-l la imagine"
+msgstr "Creează un duplicat al stratului pe care îl adaugă la imagine"
 
 #: ../app/actions/layers-actions.c:98
 msgid "_Delete Layer"
@@ -2944,7 +2947,7 @@ msgstr "Al_fa la selecție"
 
 #: ../app/actions/layers-actions.c:288
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "Înlocuiește selecția cu cu canalul alfa al stratului"
+msgstr "Înlocuiește selecția cu canalul alfa al stratului"
 
 #: ../app/actions/layers-actions.c:293 ../app/actions/layers-actions.c:320
 msgid "A_dd to Selection"
@@ -2956,7 +2959,7 @@ msgstr "Adaugă canalul alfa al stratului la selecția curentă"
 
 #: ../app/actions/layers-actions.c:300
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr "Scade canalul alfa al stratului la selecția curentă"
+msgstr "Scade canalul alfa al stratului din selecția curentă"
 
 #: ../app/actions/layers-actions.c:306
 msgid "Intersect the layer's alpha channel with the current selection"
@@ -3092,11 +3095,11 @@ msgstr "Editare paletă activă"
 
 #: ../app/actions/palette-editor-actions.c:72
 msgid "New Color from _FG"
-msgstr "Culoare nouă din planul _frontal"
+msgstr "Culoare nouă din p_rim-plan"
 
 #: ../app/actions/palette-editor-actions.c:73
 msgid "New color from foreground color"
-msgstr "Culoare nouă din culoarea de plan frontal"
+msgstr "Culoare nouă din culoarea de prim-plan"
 
 #: ../app/actions/palette-editor-actions.c:78
 msgid "New Color from _BG"
@@ -3390,7 +3393,7 @@ msgstr "Sigur vreți să fie resetate toate filtrele la valorile implicite ?"
 
 #: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
-msgstr "Meniu mască rapidă"
+msgstr "Meniu de mască rapidă"
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
@@ -3437,6 +3440,7 @@ msgstr "Meniu de punct eșantion"
 msgid "Selection Editor Menu"
 msgstr "Meniu de editor de selecție"
 
+# meniul principal
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
 msgstr "_Selecție"
@@ -3610,7 +3614,7 @@ msgstr "Conturează selecția"
 
 #: ../app/actions/templates-actions.c:42
 msgid "Templates Menu"
-msgstr "Meniu șablon"
+msgstr "Meniu de șabloane"
 
 #: ../app/actions/templates-actions.c:46
 msgid "_Create Image from Template"
@@ -3884,7 +3888,7 @@ msgstr "Rotește cu un unghi arbitrar"
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
-msgstr "Meniu trasee"
+msgstr "Meniu de trasee"
 
 #: ../app/actions/vectors-actions.c:48
 msgid "Path _Tool"
@@ -4763,8 +4767,8 @@ msgstr ""
 msgid ""
 "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
-"Instalează o hartă de culori privată; ar putea fi util pe afișoare de 8 biți "
-"(256 de culori)."
+"Instalează o paletă de culori privată; ar putea fi util pe afișoare de 8 "
+"biți (256 de culori)."
 
 #: ../app/config/gimprc-blurbs.h:167
 msgid ""
@@ -5134,7 +5138,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:390
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
-"Arată culorile curente de prim plan și de fundal în trusa de instrumente."
+"Arată culorile curente de prim-plan și de fundal în trusa de instrumente."
 
 #: ../app/config/gimprc-blurbs.h:393
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
@@ -5286,7 +5290,7 @@ msgstr "Traseu activ"
 
 #: ../app/core/core-enums.c:247
 msgid "Foreground color"
-msgstr "Culoare de prim plan"
+msgstr "Culoare de prim-plan"
 
 #: ../app/core/core-enums.c:248
 msgid "Background color"
@@ -5526,7 +5530,7 @@ msgstr "Grilă"
 
 #: ../app/core/core-enums.c:862 ../app/core/core-enums.c:894
 msgid "Guide"
-msgstr "Ghid"
+msgstr "Ghidaj"
 
 #: ../app/core/core-enums.c:863 ../app/core/core-enums.c:895
 msgid "Sample Point"
@@ -5534,11 +5538,11 @@ msgstr "Punct eșantion"
 
 #: ../app/core/core-enums.c:864 ../app/core/core-enums.c:896
 msgid "Layer/Channel"
-msgstr "Strat/Canal"
+msgstr "Strat sau canal"
 
 #: ../app/core/core-enums.c:865 ../app/core/core-enums.c:897
 msgid "Layer/Channel modification"
-msgstr "Modificare strat/canal"
+msgstr "Modificare de strat sau canal"
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:898
 msgid "Selection mask"
@@ -5550,7 +5554,7 @@ msgstr "Vizibilitate element"
 
 #: ../app/core/core-enums.c:868 ../app/core/core-enums.c:902
 msgid "Link/Unlink item"
-msgstr "Legare/Dezlegare element"
+msgstr "Legare sau dezlegare element"
 
 #: ../app/core/core-enums.c:869
 msgid "Item properties"
@@ -5604,7 +5608,7 @@ msgstr "Lipire"
 msgid "Cut"
 msgstr "Tăiere"
 
-#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:160
+#: ../app/core/core-enums.c:882 ../app/tools/gimptexttool.c:161
 #: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Text"
@@ -5738,7 +5742,7 @@ msgstr "Cerneală"
 
 #: ../app/core/core-enums.c:929
 msgid "Select foreground"
-msgstr "Selectare prim plan"
+msgstr "Selectare prim-plan"
 
 #: ../app/core/core-enums.c:932
 msgid "Not undoable"
@@ -5785,7 +5789,7 @@ msgstr "Strat lipit"
 
 #: ../app/core/gimp-edit.c:464
 msgid "Fill with Foreground Color"
-msgstr "Umple cu culoarea de prim plan"
+msgstr "Umple cu culoarea de prim-plan"
 
 #: ../app/core/gimp-edit.c:468
 msgid "Fill with Background Color"
@@ -5801,7 +5805,7 @@ msgstr "Umple cu transparență"
 
 #: ../app/core/gimp-edit.c:480
 msgid "Fill with Pattern"
-msgstr "Umple cu model"
+msgstr "Umple cu un model"
 
 #: ../app/core/gimp-edit.c:573
 msgid "Global Buffer"
@@ -6228,7 +6232,7 @@ msgstr "Egalizare"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
 msgid "Foreground Extraction"
-msgstr "Extracție prim plan"
+msgstr "Extracție prim-plan"
 
 #: ../app/core/gimpdrawable-hue-saturation.c:78
 #: ../app/tools/gimphuesaturationtool.c:102
@@ -6343,7 +6347,7 @@ msgstr "Stilul de linie folosit de grilă."
 
 #: ../app/core/gimpgrid.c:90
 msgid "The foreground color of the grid."
-msgstr "Culoarea de prim plan a grilei."
+msgstr "Culoarea de prim-plan a grilei."
 
 # hm ? cine-i dublă, linia sau întreruperea ?
 #: ../app/core/gimpgrid.c:95
@@ -6413,6 +6417,7 @@ msgstr "Convertire la culori indexate (etapa 2)"
 msgid "Converting to indexed colors (stage 3)"
 msgstr "Convertire la culori indexate (etapa 3)"
 
+# apare la contextul lui undo
 #: ../app/core/gimpimage-crop.c:130
 msgctxt "command"
 msgid "Crop Image"
@@ -6832,7 +6837,7 @@ msgid ""
 "default value."
 msgstr ""
 "La citirea fișierului de paletă „%s”: număr nevalid de coloane în linia %d. "
-"Se folosește valoarea implicită."
+"Se va folosi valoarea implicită."
 
 #: ../app/core/gimppalette-load.c:183
 #, c-format
@@ -7056,13 +7061,15 @@ msgstr "_Nume canal:"
 msgid "Initialize from _selection"
 msgstr "Inițializează din _selecție"
 
+# titlu pe bară
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
 msgstr "Convertire la culori indexate"
 
+# titlu sub bară
 #: ../app/dialogs/convert-dialog.c:128
 msgid "Convert Image to Indexed Colors"
-msgstr "Convertire imagine la culori indexate"
+msgstr "Convertește imaginea la culori indexate"
 
 #: ../app/dialogs/convert-dialog.c:138
 msgid "C_onvert"
@@ -7151,11 +7158,11 @@ msgstr "Afișare navigație"
 
 #: ../app/dialogs/dialogs.c:218
 msgid "FG/BG"
-msgstr "Prim plan / fundal"
+msgstr "Prim plan și fundal"
 
 #: ../app/dialogs/dialogs.c:218
 msgid "FG/BG Color"
-msgstr "Culoare prim plan / fundal"
+msgstr "Culoare de prim-plan și de fundal"
 
 # titlu pe bară
 # titlu sub bară
@@ -7176,7 +7183,7 @@ msgstr "_Mod:"
 msgid "_Opacity:"
 msgstr "_Opacitate:"
 
-#: ../app/dialogs/file-open-dialog.c:253
+#: ../app/dialogs/file-open-dialog.c:262
 msgid "Open layers"
 msgstr "Deschide straturi"
 
@@ -7385,7 +7392,7 @@ msgstr "Înălțime:"
 
 #: ../app/dialogs/layer-options-dialog.c:202
 msgid "Layer Fill Type"
-msgstr "Tip de umplere strat"
+msgstr "Tipul de umplere a stratului"
 
 # hm ?
 #: ../app/dialogs/layer-options-dialog.c:217
@@ -7896,7 +7903,7 @@ msgstr "Aspect"
 
 #: ../app/dialogs/preferences-dialog.c:1982
 msgid "Show _foreground & background color"
-msgstr "Arată culoarea de prim plan și de _fundal"
+msgstr "Arată culoarea de prim-plan și de _fundal"
 
 #: ../app/dialogs/preferences-dialog.c:1986
 msgid "Show active _brush, pattern & gradient"
@@ -8341,9 +8348,10 @@ msgstr "Dosare pentru teme"
 msgid "Select Theme Folders"
 msgstr "Selectează dosarul de teme"
 
+# apare în dialogul de rezoluție de tipărire
 #: ../app/dialogs/print-size-dialog.c:138
 msgid "Print Size"
-msgstr "Dimensiuni de tipărire"
+msgstr "Dimensiune de tipărire"
 
 #. the image size labels
 #: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:202
@@ -8431,6 +8439,7 @@ msgstr "_Orizontal:"
 msgid "_Vertical:"
 msgstr "_Vertical:"
 
+# apare în dialogul de scalare imagine
 #. Image size frame
 #: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:139
 msgid "Image Size"
@@ -8782,7 +8791,7 @@ msgstr "(curat)"
 msgid "(none)"
 msgstr "(niciunul)"
 
-#: ../app/display/gimpstatusbar.c:346
+#: ../app/display/gimpstatusbar.c:364
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Anulează <i>%s</i>"
@@ -9176,7 +9185,7 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:361 ../app/plug-in/gimppluginprocframe.c:209
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "Procedura „%s” nu a întors nicio valoare"
+msgstr "Procedura „%s” nu a întors nicio valoare."
 
 #: ../app/pdb/gimpprocedure.c:585
 #, c-format
@@ -9185,7 +9194,7 @@ msgid ""
 "Expected %s, got %s."
 msgstr ""
 "Procedura „%s” a întors un tip de valoare greșit pentru valoarea „%s” (#%d) "
-"trimisă înapoi. Era prevăzut %s, a fost obținut %s."
+"întoarsă. Era prevăzut %s, a fost obținut %s."
 
 #: ../app/pdb/gimpprocedure.c:597
 #, c-format
@@ -9202,8 +9211,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Procedura „%s” a întors un ID nevalid pentru argumentul „%s”. Cel mai "
-"probabil un plug‑in încearcă să lucreze pe un strat care nu mai există."
+"Procedura „%s” a întors un ID care nu este valid pentru argumentul „%s”. Cel "
+"mai probabil un plug‑in încearcă să lucreze pe un strat care nu mai există."
 
 #: ../app/pdb/gimpprocedure.c:641
 #, c-format
@@ -9211,8 +9220,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"Procedura „%s” a fost chemată cu un ID nevalid pentru argumentul „%s”. Cel "
-"mai probabil un plug‑in încearcă să lucreze pe un strat care nu mai există."
+"Procedura „%s” a fost chemată cu un ID care nu este valid pentru argumentul "
+"„%s”. Cel mai probabil un plug‑in încearcă să lucreze pe un strat care nu "
+"mai există."
 
 #: ../app/pdb/gimpprocedure.c:657
 #, c-format
@@ -9220,8 +9230,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Procedura „%s” a întors un ID nevalid pentru argumentul „%s”. Cel mai "
-"probabil un plug‑in încearcă să lucreze pe o imagine care nu mai există."
+"Procedura „%s” a întors un ID care nu este valid pentru argumentul „%s”. Cel "
+"mai probabil un plug‑in încearcă să lucreze pe o imagine care nu mai există."
 
 #: ../app/pdb/gimpprocedure.c:669
 #, c-format
@@ -9229,8 +9239,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"Procedura „%s” a fost chemată cu un ID nevalid pentru argumentul „%s”. Cel "
-"mai probabil un plug‑in încearcă să lucreze pe o imagine care nu mai există."
+"Procedura „%s” a fost chemată cu un ID care nu este valid pentru argumentul "
+"„%s”. Cel mai probabil un plug‑in încearcă să lucreze pe o imagine care nu "
+"mai există."
 
 #: ../app/pdb/gimpprocedure.c:689
 #, c-format
@@ -9238,8 +9249,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"Procedura „%s” a întors „%s” pentru valoarea „%s” (#%d, tip %s) trimisă "
-"înapoi. Această valoare este în afara intervalului."
+"Procedura „%s” a întors „%s” pentru valoarea „%s” (#%d, tip %s) întoarsă. "
+"Această valoare este în afara intervalului."
 
 #: ../app/pdb/gimpprocedure.c:702
 #, c-format
@@ -9255,7 +9266,7 @@ msgstr ""
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Rezoluția imaginii este în afara limitelor, se folosește rezoluția implicită "
+"Rezoluția imaginii este în afara limitelor, se va folosi rezoluția implicită "
 "în loc."
 
 #: ../app/pdb/selection-tools-cmds.c:218 ../app/tools/gimpfreeselecttool.c:197
@@ -9366,11 +9377,11 @@ msgid "Starting Extensions"
 msgstr "Pornire extensii"
 
 # hm ?
-#: ../app/plug-in/gimppluginmanager.c:296
+#: ../app/plug-in/gimppluginmanager.c:290
 msgid "Plug-In Interpreters"
 msgstr "Plugin-uri de interpretoare"
 
-#: ../app/plug-in/gimppluginmanager.c:303
+#: ../app/plug-in/gimppluginmanager.c:297
 msgid "Plug-In Environment"
 msgstr "Mediu pentru plugin-uri"
 
@@ -9432,7 +9443,7 @@ msgstr ""
 "Șipotul țâșnește hipnotic\n"
 "azvârlindu-se în mrejele bălții fumegânde."
 
-#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:879
+#: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:901
 msgid "Add Text Layer"
 msgstr "Adaugă strat de text"
 
@@ -9497,7 +9508,7 @@ msgstr ""
 "care vreți să editați stratul de text, nu este nevoie să vă îngrijorați "
 "despre acest lucru."
 
-#: ../app/tools/gimp-tools.c:327
+#: ../app/tools/gimp-tools.c:335
 msgid ""
 "This tool has\n"
 "no options."
@@ -9970,7 +9981,7 @@ msgstr "Clic în oricare imagine pentru a-i vedea culoarea"
 
 #: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:509
 msgid "Click in any image to pick the foreground color"
-msgstr "Clic în oricare imagine pentru a preleva culoarea de prim plan"
+msgstr "Clic în oricare imagine pentru a preleva culoarea de prim-plan"
 
 #: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:515
 msgid "Click in any image to pick the background color"
@@ -10325,7 +10336,7 @@ msgstr "Marchează fundalul"
 
 #: ../app/tools/gimpforegroundselectoptions.c:286
 msgid "Mark foreground"
-msgstr "Marchează prim planul"
+msgstr "Marchează prim-planul"
 
 #: ../app/tools/gimpforegroundselectoptions.c:302
 msgid "Small brush"
@@ -10350,15 +10361,15 @@ msgstr "Sensibilitate de culoare"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select"
-msgstr "Selecție prim plan"
+msgstr "Selecție prim-plan"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr "Selecție prim plan: selectează o zonă ce conține obiecte de prim plan"
+msgstr "Selecție prim-plan: selectează o zonă ce conține obiecte de prim-plan"
 
 #: ../app/tools/gimpforegroundselecttool.c:147
 msgid "F_oreground Select"
-msgstr "Selecție _prim plan"
+msgstr "Selecție _prim-plan"
 
 # hm ? sau tușă ?
 #: ../app/tools/gimpforegroundselecttool.c:314
@@ -10368,7 +10379,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:316
 msgid "Mark foreground by painting on the object to extract"
-msgstr "Marchează prim planul prin pictarea pe obiectul de extras"
+msgstr "Marchează prim-planul prin pictarea pe obiectul de extras"
 
 # hm ?
 #: ../app/tools/gimpforegroundselecttool.c:327
@@ -10378,7 +10389,7 @@ msgstr "Evidențiază cu contur dur obiectul de extras"
 #: ../app/tools/gimpforegroundselecttool.c:766
 msgctxt "command"
 msgid "Foreground Select"
-msgstr "Selecție prim plan"
+msgstr "Selecție prim-plan"
 
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid ""
@@ -11294,27 +11305,27 @@ msgstr "Traseu din text"
 msgid "Text along Path"
 msgstr "Text în lungul traseului"
 
-#: ../app/tools/gimptexttool.c:161
+#: ../app/tools/gimptexttool.c:162
 msgid "Text Tool: Create or edit text layers"
 msgstr "Text: creează sau editează straturi de text"
 
-#: ../app/tools/gimptexttool.c:162
+#: ../app/tools/gimptexttool.c:163
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:956
+#: ../app/tools/gimptexttool.c:987
 msgid "GIMP Text Editor"
 msgstr "Editor de text GIMP"
 
-#: ../app/tools/gimptexttool.c:1072 ../app/tools/gimptexttool.c:1075
+#: ../app/tools/gimptexttool.c:1103 ../app/tools/gimptexttool.c:1106
 msgid "Confirm Text Editing"
 msgstr "Confirmare editare text"
 
-#: ../app/tools/gimptexttool.c:1079
+#: ../app/tools/gimptexttool.c:1110
 msgid "Create _New Layer"
 msgstr "Creează un strat _nou"
 
-#: ../app/tools/gimptexttool.c:1103
+#: ../app/tools/gimptexttool.c:1134
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -11329,7 +11340,7 @@ msgstr ""
 "Puteți edita stratul, sau crea un strat de text nou din atributele lui de "
 "text."
 
-#: ../app/tools/gimptexttool.c:1315
+#: ../app/tools/gimptexttool.c:1356
 msgid "Reshape Text Layer"
 msgstr "Reprofilează stratul text"
 
@@ -11908,17 +11919,17 @@ msgstr "Notație HTML:"
 
 #: ../app/widgets/gimpcolormapeditor.c:492
 msgid "Only indexed images have a colormap."
-msgstr "Numai imaginile indexate au hartă de culoare."
+msgstr "Numai imaginile indexate au paletă de culori."
 
 #: ../app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Paletă"
 
-#: ../app/widgets/gimpcontainerpopup.c:540
+#: ../app/widgets/gimpcontainerpopup.c:565
 msgid "Smaller Previews"
 msgstr "Previzualizări mai mici"
 
-#: ../app/widgets/gimpcontainerpopup.c:545
+#: ../app/widgets/gimpcontainerpopup.c:570
 msgid "Larger Previews"
 msgstr "Previzualizări mai mari"
 
@@ -12317,7 +12328,7 @@ msgstr "RGB (%d, %d, %d)"
 
 #: ../app/widgets/gimpgradienteditor.c:1044
 msgid "Foreground color set to:"
-msgstr "Culoare de prim plan stabilită la:"
+msgstr "Culoare de prim-plan stabilită la:"
 
 #: ../app/widgets/gimpgradienteditor.c:1051
 msgid "Background color set to:"
@@ -12368,11 +12379,11 @@ msgstr "_Stil linie:"
 
 #: ../app/widgets/gimpgrideditor.c:221
 msgid "Change grid foreground color"
-msgstr "Schimbă culoarea de prim plan a grilei"
+msgstr "Schimbă culoarea de prim-plan a grilei"
 
 #: ../app/widgets/gimpgrideditor.c:228
 msgid "_Foreground color:"
-msgstr "Culoare de _prim plan:"
+msgstr "Culoare de _prim-plan:"
 
 #: ../app/widgets/gimpgrideditor.c:232
 msgid "Change grid background color"
@@ -12788,15 +12799,15 @@ msgid ""
 "The arrows swap colors.\n"
 "Click to open the color selection dialog."
 msgstr ""
-"Culori de prim plan și de fundal.\n"
+"Culori de prim-plan și de fundal.\n"
 "Pătratele mici negru și alb resetează culorile.\n"
 "Săgețile interschimbă culorile.\n"
-"Dați clic pentru a deschide dialogul selecție a culorii."
+"Dați clic pentru a deschide dialogul de selecție a culorii."
 
 # titlu pe bară
 #: ../app/widgets/gimptoolbox-color-area.c:141
 msgid "Change Foreground Color"
-msgstr "Modificare culoare de prim plan"
+msgstr "Modificare culoare de prim-plan"
 
 # titlu pe bară
 #: ../app/widgets/gimptoolbox-color-area.c:146
@@ -12955,7 +12966,7 @@ msgstr "Numai selectare"
 
 #: ../app/widgets/widgets-enums.c:116
 msgid "Set foreground color"
-msgstr "Stabilește culoarea de prim plan "
+msgstr "Stabilește culoarea de prim-plan "
 
 #: ../app/widgets/widgets-enums.c:117
 msgid "Set background color"
@@ -13053,8 +13064,8 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "Avertisment XCF: versiunea 0 a formatului de fișier XCF\n"
-"nu salvează corect hărțile de culoare indexate.\n"
-"Se substituie harta de culoare cu scala de gri."
+"nu salvează corect paletele de culori indexate.\n"
+"Se va substitui cu paletă de scală de gri."
 
 #: ../app/xcf/xcf-read.c:109
 msgid "Invalid UTF-8 string in XCF file"
@@ -13298,7 +13309,7 @@ msgstr "Nu s-a putut porni „%s”: %s"
 
 # hm ? sau imperativ ?
 #~ msgid "command|Foreground Select"
-#~ msgstr "Selecție prim plan"
+#~ msgstr "Selecție prim-plan"
 
 # hm ? sau imperativ ?
 #~ msgid "command|Free Select"
