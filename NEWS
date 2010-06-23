@@ -22,7 +22,6 @@ Overview of Changes from GIMP 2.6.8 to GIMP 2.6.9
  599233 - Dialog of "Save as BMP" ignores changes which are not made
           with a mous
  565001 - Text-Tool crashes when edit a 2.4.2 version xcf
- 565001 - Text-Tool crashes when edit a 2.4.2 version xcf
  610478 - Layer preview suddenly stops getting updated
  609026 - leaks shared memory
  609056 - Exporting to Alias PIX format fails
