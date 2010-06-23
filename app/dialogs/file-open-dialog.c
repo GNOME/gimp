@@ -124,6 +124,15 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
 
+  /* When we are going to open new image windows, unset the transient
+   * window. We don't need it since we will use gdk_window_raise() to
+   * keep the dialog on top. And if we don't do it, then the dialog
+   * will pull the image window it was invoked from on top of all the
+   * new opened image windows, and we don't want that to happen.
+   */
+  if (! dialog->open_as_layers)
+    gtk_window_set_transient_for (GTK_WINDOW (open_dialog), NULL);
+
   for (list = uris; list; list = g_slist_next (list))
     {
       gchar *filename = file_utils_filename_from_uri (list->data);
