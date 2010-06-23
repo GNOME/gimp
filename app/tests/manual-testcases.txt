@@ -1,0 +1,15 @@
+This file contains manual test cases
+------------------------------------
+
+/gimp-manual-tests/opened_image_stays_on_top
+
+  Step-by-step:
+    1. Create a new image, make the image window almost as big as the screen
+    2. From the image window menu, do File -> Open
+    3. Select an image and open it
+
+  Expected result:
+    The image is opened and is kept above the image it was opened from
+
+  Last known PASS:
+    2010-06-23
