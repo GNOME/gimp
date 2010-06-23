@@ -255,6 +255,10 @@ app_run (const gchar         *full_prog_name,
 
   g_object_unref (gimp);
 
+#ifdef DEBUG_INSTANCES
+  gimp_object_debug_instances ();
+#endif
+
   errors_exit ();
   gegl_exit ();
   base_exit ();
