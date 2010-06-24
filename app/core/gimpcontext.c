@@ -2140,7 +2140,7 @@ gimp_context_paint_info_list_thaw (GimpContainer *container,
   GimpPaintInfo *paint_info;
 
   if (! context->paint_name)
-    context->paint_name = g_strdup ("GimpPaintbrush");
+    context->paint_name = g_strdup ("gimp-paintbrush");
 
   paint_info = gimp_context_find_object (context, container,
                                          context->paint_name,
