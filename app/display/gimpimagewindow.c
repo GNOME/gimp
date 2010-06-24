@@ -112,6 +112,7 @@ typedef struct
 static GObject * gimp_image_window_constructor         (GType                type,
                                                         guint                n_params,
                                                         GObjectConstructParam *params);
+static void      gimp_image_window_dispose             (GObject             *object);
 static void      gimp_image_window_finalize            (GObject             *object);
 static void      gimp_image_window_set_property        (GObject             *object,
                                                         guint                property_id,
@@ -206,6 +207,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor        = gimp_image_window_constructor;
+  object_class->dispose            = gimp_image_window_dispose;
   object_class->finalize           = gimp_image_window_finalize;
   object_class->set_property       = gimp_image_window_set_property;
   object_class->get_property       = gimp_image_window_get_property;
@@ -383,6 +385,23 @@ gimp_image_window_constructor (GType                  type,
 }
 
 static void
+gimp_image_window_dispose (GObject *object)
+{
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
+  if (private->dialog_factory)
+    {
+      g_signal_handlers_disconnect_by_func (private->dialog_factory,
+                                            gimp_image_window_update_ui_manager,
+                                            window);
+      private->dialog_factory = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_image_window_finalize (GObject *object)
 {
   GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
@@ -393,10 +412,6 @@ gimp_image_window_finalize (GObject *object)
       g_object_unref (private->menubar_manager);
       private->menubar_manager = NULL;
     }
-
-  g_signal_handlers_disconnect_by_func (private->dialog_factory,
-                                        gimp_image_window_update_ui_manager,
-                                        window);
 
   if (private->shells)
     {
