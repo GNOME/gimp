@@ -96,6 +96,7 @@ enum
 };
 
 
+static void    gimp_paint_options_dispose          (GObject      *object);
 static void    gimp_paint_options_finalize         (GObject      *object);
 static void    gimp_paint_options_set_property     (GObject      *object,
                                                     guint         property_id,
@@ -120,6 +121,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose      = gimp_paint_options_dispose;
   object_class->finalize     = gimp_paint_options_finalize;
   object_class->set_property = gimp_paint_options_set_property;
   object_class->get_property = gimp_paint_options_get_property;
@@ -243,12 +245,23 @@ gimp_paint_options_init (GimpPaintOptions *options)
 }
 
 static void
-gimp_paint_options_finalize (GObject *object)
+gimp_paint_options_dispose (GObject *object)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
   if (options->paint_info)
-    g_object_unref (options->paint_info);
+    {
+      g_object_unref (options->paint_info);
+      options->paint_info = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_paint_options_finalize (GObject *object)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
   g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
