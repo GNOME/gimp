@@ -336,6 +336,8 @@ gimp_finalize (GObject *object)
 
   if (gimp->tool_info_list)
     {
+      gimp_container_foreach (gimp->tool_info_list,
+                              (GFunc) g_object_run_dispose, NULL);
       g_object_unref (gimp->tool_info_list);
       gimp->tool_info_list = NULL;
     }
