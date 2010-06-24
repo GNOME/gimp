@@ -421,6 +421,11 @@ dialogs_exit (Gimp *gimp)
 
   if (gimp_dialog_factory_get_singleton ())
     {
+      /* run dispose manually so the factory destroys its dialogs, which
+       * might in turn directly or indirectly ref the factory
+       */
+      g_object_run_dispose (G_OBJECT (gimp_dialog_factory_get_singleton ()));
+
       g_object_unref (gimp_dialog_factory_get_singleton ());
       gimp_dialog_factory_set_singleton (NULL);
     }
