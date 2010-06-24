@@ -4,7 +4,7 @@
 # Marco Ciampa <ciampix@libero.it>, 2003-2010
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
-# Convenzioni adottate per Gimp:
+# Convenzioni adottate per GIMP:
 #
 # brush = pennello
 # brush pipe = pennello animato
@@ -4530,10 +4530,10 @@ msgid ""
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
 msgstr ""
-"Impossibile aprire il file di scambio. Gimp ha esaurito la memoria "
+"Impossibile aprire il file di scambio. GIMP ha esaurito la memoria "
 "disponibile e non può usare il file di scambio. Alcune parti dell'immagine "
 "potrebbero essere rovinate. Provare a salvare il lavoro usando un nome "
-"differente, quindi riavviare Gimp e controllare la posizione della cartella "
+"differente, quindi riavviare GIMP e controllare la posizione della cartella "
 "del file di scambio nelle preferenze."
 
 #: ../app/base/tile-swap.c:568
@@ -4725,7 +4725,7 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"Gimp avvertirà l'utente se si è tentato di creare un immagine che occupa più "
+"GIMP avvertirà l'utente se si è tentato di creare un immagine che occupa più "
 "memoria di quella specificata qui."
 
 #: ../app/config/gimprc-blurbs.h:185
@@ -4977,7 +4977,7 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Imposta la posizione del file di scambio. Gimp usa uno schema di allocazione "
+"Imposta la posizione del file di scambio. GIMP usa uno schema di allocazione "
 "\"tile based\". Il file di scambio viene usato per spostare facilmente e "
 "velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file "
 "di scambio di GIMP può allargarsi molto se si elaborano immagini molto "
@@ -6933,7 +6933,7 @@ msgid "translator-credits"
 msgstr ""
 "Marco Ciampa (attuale responsabile)\n"
 "Alessandro Falappa\n"
-"Gruppo Traduttori Italiani di Gimp"
+"Gruppo Traduttori Italiani di GIMP"
 
 #: ../app/dialogs/about-dialog.c:529
 msgid "GIMP is brought to you by"
@@ -12917,11 +12917,11 @@ msgstr "Editor immagine"
 
 #: ../tools/gimp-remote.c:65
 msgid "Use a running GIMP only, never start a new one"
-msgstr "Usa sempre il Gimp in esecuzione, non eseguirne un altro"
+msgstr "Usa sempre il GIMP in esecuzione, non eseguirne un altro"
 
 #: ../tools/gimp-remote.c:70
 msgid "Only check if GIMP is running, then quit"
-msgstr "Controlla solo se Gimp è in esecuzione e poi esci"
+msgstr "Controlla solo se GIMP è in esecuzione e poi esci"
 
 #: ../tools/gimp-remote.c:76
 msgid "Print X window ID of GIMP toolbox window, then quit"
@@ -12933,7 +12933,7 @@ msgstr "Esegui gimp senza mostrare la finestra iniziale"
 
 #: ../tools/gimp-remote-x11.c:67
 msgid "Could not connect to GIMP."
-msgstr "Impossibile connettersi a Gimp"
+msgstr "Impossibile connettersi a GIMP."
 
 #: ../tools/gimp-remote-x11.c:68
 msgid "Make sure that the Toolbox is visible!"
