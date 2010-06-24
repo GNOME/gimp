@@ -670,15 +670,8 @@ gimp_container_icon_view_drag_viewable (GtkWidget    *widget,
                                         GimpContext **context,
                                         gpointer      data)
 {
-  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (data);
-
   if (context)
     *context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (data));
-
-#if 0
-  if (icon_view->priv->dnd_renderer)
-    return icon_view->priv->dnd_renderer->viewable;
-#endif
 
   return NULL;
 }
@@ -687,7 +680,6 @@ static GdkPixbuf *
 gimp_container_icon_view_drag_pixbuf (GtkWidget *widget,
                                       gpointer   data)
 {
-  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (data);
   GimpViewRenderer      *renderer  = NULL; //icon_view->priv->dnd_renderer;
   gint                   width;
   gint                   height;
