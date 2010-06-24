@@ -105,6 +105,18 @@ gimp_container_box_constructed (GObject *object)
 {
   GimpContainerBox *box = GIMP_CONTAINER_BOX (object);
 
+  /* This is evil: the hash table of "insert_data" is created on
+   * demand when GimpContainerView API is used, using a
+   * value_free_func that is set in the interface_init functions of
+   * its implementors. Therefore, no GimpContainerView API must be
+   * called from any init() function, because the interface_init()
+   * function of a subclass that sets the right value_free_func might
+   * not have been called yet, leaving the insert_data hash table
+   * without memory management.
+   *
+   * Call GimpContainerView API from GObject::constructed() instead,
+   * which runs after everything is set up correctly.
+   */
   gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (box),
                                       box->scrolled_win);
 
