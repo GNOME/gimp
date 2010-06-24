@@ -1871,6 +1871,33 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
                                 (x1 + 2 * x2) / 3, y2, FALSE);
       break;
 
+    case GIMP_RECTANGLE_GUIDE_FIFTHS:
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1, y1 + (y2 - y1) / 5,
+                                x2, y1 + (y2 - y1) / 5, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1, y1 + 2 * (y2 - y1) / 5,
+                                x2, y1 + 2 * (y2 - y1) / 5, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1, y1 + 3 * (y2 - y1) / 5,
+                                x2, y1 + 3 * (y2 - y1) / 5, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1, y1 + 4 * (y2 - y1) / 5,
+                                x2, y1 + 4 * (y2 - y1) / 5, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1 + (x2 - x1) / 5, y1,
+                                x1 + (x2 - x1) / 5, y2, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1 + 2 * (x2 - x1) / 5, y1,
+                                x1 + 2 * (x2 - x1) / 5, y2, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1 + 3 * (x2 - x1) / 5, y1,
+                                x1 + 3 * (x2 - x1) / 5, y2, FALSE);
+      gimp_draw_tool_draw_line (draw_tool,
+                                x1 + 4 * (x2 - x1) / 5, y1,
+                                x1 + 4 * (x2 - x1) / 5, y2, FALSE);
+      break;
+
     case GIMP_RECTANGLE_GUIDE_GOLDEN:
       gimp_draw_tool_draw_line (draw_tool,
                                 x1,

@@ -81,6 +81,7 @@ gimp_rectangle_guide_get_type (void)
     { GIMP_RECTANGLE_GUIDE_NONE, "GIMP_RECTANGLE_GUIDE_NONE", "none" },
     { GIMP_RECTANGLE_GUIDE_CENTER_LINES, "GIMP_RECTANGLE_GUIDE_CENTER_LINES", "center-lines" },
     { GIMP_RECTANGLE_GUIDE_THIRDS, "GIMP_RECTANGLE_GUIDE_THIRDS", "thirds" },
+    { GIMP_RECTANGLE_GUIDE_FIFTHS, "GIMP_RECTANGLE_GUIDE_FIFTHS", "fifths" },
     { GIMP_RECTANGLE_GUIDE_GOLDEN, "GIMP_RECTANGLE_GUIDE_GOLDEN", "golden" },
     { GIMP_RECTANGLE_GUIDE_DIAGONALS, "GIMP_RECTANGLE_GUIDE_DIAGONALS", "diagonals" },
     { 0, NULL, NULL }
@@ -91,6 +92,7 @@ gimp_rectangle_guide_get_type (void)
     { GIMP_RECTANGLE_GUIDE_NONE, NC_("rectangle-guide", "No guides"), NULL },
     { GIMP_RECTANGLE_GUIDE_CENTER_LINES, NC_("rectangle-guide", "Center lines"), NULL },
     { GIMP_RECTANGLE_GUIDE_THIRDS, NC_("rectangle-guide", "Rule of thirds"), NULL },
+    { GIMP_RECTANGLE_GUIDE_FIFTHS, NC_("rectangle-guide", "Rule of fifths"), NULL },
     { GIMP_RECTANGLE_GUIDE_GOLDEN, NC_("rectangle-guide", "Golden sections"), NULL },
     { GIMP_RECTANGLE_GUIDE_DIAGONALS, NC_("rectangle-guide", "Diagonal lines"), NULL },
     { 0, NULL, NULL }
