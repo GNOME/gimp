@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-11 01:40+0200\n"
-"PO-Revision-Date: 2010-06-11 01:40+0200\n"
+"PO-Revision-Date: 2010-06-25 00:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -486,7 +486,7 @@ msgstr "Copia percorso pennel_lo"
 
 #: ../app/actions/brushes-actions.c:66
 msgid "Copy brush file location to clipboard"
-msgstr "Copia l'indirizzo file pennello negli appunti"
+msgstr "Copia la posizione del file pennello negli appunti"
 
 #: ../app/actions/brushes-actions.c:71
 msgid "_Delete Brush"
@@ -1295,11 +1295,11 @@ msgstr "Apri finestra immagine"
 
 #: ../app/actions/documents-actions.c:64
 msgid "Copy Image _Location"
-msgstr "Copia _indirizzo immagine"
+msgstr "Copia _la posizione immagine"
 
 #: ../app/actions/documents-actions.c:65
 msgid "Copy image location to clipboard"
-msgstr "Copia l'indirizzo immagine negli appunti"
+msgstr "Copia la posizione dell'immagine negli appunti"
 
 #: ../app/actions/documents-actions.c:70
 msgid "Remove _Entry"
@@ -1811,7 +1811,7 @@ msgstr "Apri un file immagine come livelli"
 
 #: ../app/actions/file-actions.c:83
 msgid "Open _Location..."
-msgstr "Apri _posizione... "
+msgstr "Apri _la posizione... "
 
 #: ../app/actions/file-actions.c:84
 msgid "Open an image file from a specified location"
@@ -2322,11 +2322,11 @@ msgstr "Duplica gradiente"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
-msgstr "Copia _indirizzo gradiente"
+msgstr "Copia _la posizione del gradiente"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
-msgstr "Copia l'indirizzo file gradiente negli appunti"
+msgstr "Copia la posizione del file gradiente negli appunti"
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
@@ -3135,11 +3135,11 @@ msgstr "Fondi tavolozze"
 
 #: ../app/actions/palettes-actions.c:72
 msgid "Copy Palette _Location"
-msgstr "Copia indirizzo ta_volozza"
+msgstr "Copia _la posizione della tavolozza"
 
 #: ../app/actions/palettes-actions.c:73
 msgid "Copy palette file location to clipboard"
-msgstr "Copia l'indirizzo file tavolozza negli appunti"
+msgstr "Copia la posizione del file tavolozza negli appunti"
 
 #: ../app/actions/palettes-actions.c:78
 msgid "_Delete Palette"
@@ -3203,11 +3203,11 @@ msgstr "Duplica motivo"
 
 #: ../app/actions/patterns-actions.c:65
 msgid "Copy Pattern _Location"
-msgstr "Copia _indirizzo motivo"
+msgstr "Copia _la posizione del motivo"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
-msgstr "Copia l'indirizzo file motivo negli appunti"
+msgstr "Copia la posizione del file motivo negli appunti"
 
 #: ../app/actions/patterns-actions.c:71
 msgid "_Delete Pattern"
@@ -7077,7 +7077,7 @@ msgstr "Apri posizione"
 
 #: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
-msgstr "Inserisci posizione (URI):"
+msgstr "Inserisci la posizione (URI):"
 
 #: ../app/dialogs/file-save-dialog.c:302 ../app/dialogs/file-save-dialog.c:338
 msgid ""
