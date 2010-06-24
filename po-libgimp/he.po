@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 19:53+0100\n"
+"POT-Creation-Date: 2010-06-21 15:34+0300\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -18,84 +18,105 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0.1\n"
 
-#: ../libgimp/gimpbrushmenu.c:129
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1044
+msgid "success"
+msgstr ""
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1048
+msgid "execution error"
+msgstr ""
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1052
+msgid "calling error"
+msgstr ""
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1056
+msgid "cancelled"
+msgstr ""
+
+#: ../libgimp/gimpbrushselectbutton.c:169
 msgid "Brush Selection"
 msgstr "בחירת מברשת"
 
-#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+#: ../libgimp/gimpbrushselectbutton.c:918
+#: ../libgimp/gimppatternselectbutton.c:716
 msgid "_Browse..."
 msgstr ""
 
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
-#, c-format
-msgid "%s can't handle layers"
+#: ../libgimp/gimpexport.c:223 ../libgimp/gimpexport.c:259
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layers"
 msgstr "%s אינו יכול לטפל בשכבות "
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:224 ../libgimp/gimpexport.c:233
+#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:260
 msgid "Merge Visible Layers"
 msgstr "איחוד שכבות נראות"
 
-#: ../libgimp/gimpexport.c:224
-#, c-format
-msgid "%s can't handle layer offsets, size or opacity"
+#: ../libgimp/gimpexport.c:232
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s לא יכול לטפל בהסטות, גודל או אטימות שכבה"
 
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
-#, c-format
-msgid "%s can only handle layers as animation frames"
+#: ../libgimp/gimpexport.c:241 ../libgimp/gimpexport.c:250
+#, fuzzy, c-format
+msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s יכול לטפל בשכבות רק כשלד הנפשה"
 
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:251
 msgid "Save as Animation"
 msgstr "שמירה כהנפשה"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:269
 msgid "Flatten Image"
 msgstr "השטחת תמונה"
 
-#: ../libgimp/gimpexport.c:260
-#, c-format
-msgid "%s can't handle transparency"
+#: ../libgimp/gimpexport.c:268
+#, fuzzy, c-format
+msgid "%s plug-in can't handle transparency"
 msgstr "%s לא יכול לטפל ברקע שקוף"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:277
 #, fuzzy, c-format
-msgid "%s can't handle layer masks"
+msgid "%s plug-in can't handle layer masks"
 msgstr "%s אינו יכול לטפל בשכבות "
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:278
 msgid "Apply Layer Masks"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:278
-#, c-format
-msgid "%s can only handle RGB images"
+#: ../libgimp/gimpexport.c:286
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB images"
 msgstr "%s יכול לטפל רק בתמונות RGB"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:287 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:334
 msgid "Convert to RGB"
 msgstr "הסבה ל RGB"
 
-#: ../libgimp/gimpexport.c:287
-#, c-format
-msgid "%s can only handle grayscale images"
+#: ../libgimp/gimpexport.c:295
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale images"
 msgstr "%s יכול לטפל רק בתמונות בגווני אפור"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:346
 msgid "Convert to Grayscale"
 msgstr "הסבה לגווני אפור"
 
-#: ../libgimp/gimpexport.c:296
-#, c-format
-msgid "%s can only handle indexed images"
+#: ../libgimp/gimpexport.c:304
+#, fuzzy, c-format
+msgid "%s plug-in can only handle indexed images"
 msgstr "%s יכול לטפל רק בתמונות ממופתחות"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:305 ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:344
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -103,12 +124,12 @@ msgstr ""
 "הסבה למיפתוח תוך שימוש בברירות מחדל\n"
 "(יש באפשרותך לבצע זאת ידנית כדי לכוונן את התוצאה)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:314
 #, fuzzy, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s יכול לטפל רק בתמונות ממופתחות או RGB"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:315
 #, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
@@ -117,54 +138,54 @@ msgstr ""
 "הסבה למיפתוח תוך שימוש בברירות מחדל\n"
 "(יש באפשרותך לבצע זאת ידנית כדי לכוונן את התוצאה)"
 
-#: ../libgimp/gimpexport.c:316
-#, c-format
-msgid "%s can only handle RGB or grayscale images"
+#: ../libgimp/gimpexport.c:324
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s אינו יכול לטפל בתמונות בגווני אפור או RGB"
 
-#: ../libgimp/gimpexport.c:325
-#, c-format
-msgid "%s can only handle RGB or indexed images"
+#: ../libgimp/gimpexport.c:333
+#, fuzzy, c-format
+msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s יכול לטפל רק בתמונות ממופתחות או RGB"
 
-#: ../libgimp/gimpexport.c:335
-#, c-format
-msgid "%s can only handle grayscale or indexed images"
+#: ../libgimp/gimpexport.c:343
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s יכול לטפל רק בתמונות ממופתחות או בגווני אפור"
 
-#: ../libgimp/gimpexport.c:346
-#, c-format
-msgid "%s needs an alpha channel"
+#: ../libgimp/gimpexport.c:354
+#, fuzzy, c-format
+msgid "%s plug-in needs an alpha channel"
 msgstr "%s צריך ערוץ אלפא"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:355
 msgid "Add Alpha Channel"
 msgstr "הוספת ערוץ אלפא"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:410
 msgid "Confirm Save"
 msgstr "אישור שמירה"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:416
 msgid "Confirm"
 msgstr "אישור"
 
-#: ../libgimp/gimpexport.c:454
+#: ../libgimp/gimpexport.c:492
 msgid "Export File"
 msgstr "ייצוא קובץ"
 
-#: ../libgimp/gimpexport.c:458
+#: ../libgimp/gimpexport.c:496
 #, fuzzy
 msgid "_Ignore"
 msgstr "התעלם"
 
-#: ../libgimp/gimpexport.c:460
+#: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:969
 #, fuzzy
 msgid "_Export"
 msgstr "ייצוא"
 
 #. the headline
-#: ../libgimp/gimpexport.c:482
+#: ../libgimp/gimpexport.c:528
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -172,11 +193,11 @@ msgid ""
 msgstr "יש לייצא את התמונה לפני שמירתה עקב הסיבות הבאות:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:553
+#: ../libgimp/gimpexport.c:602
 msgid "The export conversion won't modify your original image."
 msgstr "הסבה לייצוא לא תשנה את התמונה המקורית שלך."
 
-#: ../libgimp/gimpexport.c:653
+#: ../libgimp/gimpexport.c:705
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -185,7 +206,7 @@ msgstr ""
 "מסיכת השכבה מועדת להישמר כ %s.\n"
 "השכבות הנראות לעין לא יישמרו."
 
-#: ../libgimp/gimpexport.c:659
+#: ../libgimp/gimpexport.c:711
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -194,763 +215,1230 @@ msgstr ""
 "הערוץ (אזור נבחר שמור) מועד להישמר כ %s.\n"
 "השכבות הנראות לא יישמרו."
 
-#: ../libgimp/gimpfontmenu.c:89
+#: ../libgimp/gimpexport.c:960
+msgid "Export Image as "
+msgstr ""
+
+#: ../libgimp/gimpfontselectbutton.c:129
 msgid "Font Selection"
 msgstr "בחירת גופן"
 
-#: ../libgimp/gimpgradientmenu.c:104
+#: ../libgimp/gimpfontselectbutton.c:144
+#, fuzzy
+msgid "Sans"
+msgstr "קני מידה"
+
+#: ../libgimp/gimpgradientselectbutton.c:147
 msgid "Gradient Selection"
 msgstr "בחירת מדרג צבעים"
 
-#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+#: ../libgimp/gimpmenu.c:449 ../libgimpwidgets/gimpintstore.c:238
 msgid "(Empty)"
 msgstr ""
 
-#: ../libgimp/gimppalettemenu.c:91
+#: ../libgimp/gimppaletteselectbutton.c:129
 #, fuzzy
 msgid "Palette Selection"
 msgstr "בחירת דוגמה"
 
-#: ../libgimp/gimppatternmenu.c:113
+#: ../libgimp/gimppatternselectbutton.c:155
 msgid "Pattern Selection"
 msgstr "בחירת דוגמה"
 
-#: ../libgimp/gimpunitcache.c:57
+#: ../libgimp/gimpprocbrowserdialog.c:140
+msgid "by name"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:141
+msgid "by description"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:142
+msgid "by help"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:143
+msgid "by author"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:144
+msgid "by copyright"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:145
+msgid "by date"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:146
+msgid "by type"
+msgstr ""
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:385
+#: ../libgimp/gimpprocbrowserdialog.c:536 ../libgimpwidgets/gimpbrowser.c:130
+msgid "No matches"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:388
+msgid "Search term invalid or incomplete"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:397
+msgid "Searching"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:408
+msgid "Searching by name"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:429
+msgid "Searching by description"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:436
+msgid "Searching by help"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:443
+msgid "Searching by author"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:450
+msgid "Searching by copyright"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:457
+msgid "Searching by date"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:464
+msgid "Searching by type"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:474
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:483
+msgid "No matches for your query"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:487
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../libgimp/gimpprocview.c:162
+msgid "Parameters"
+msgstr ""
+
+#: ../libgimp/gimpprocview.c:175
+msgid "Return Values"
+msgstr ""
+
+#: ../libgimp/gimpprocview.c:188
+msgid "Additional Information"
+msgstr ""
+
+#: ../libgimp/gimpprocview.c:228
+#, fuzzy
+msgid "Author:"
+msgstr "עוגן"
+
+#: ../libgimp/gimpprocview.c:240
+msgid "Date:"
+msgstr ""
+
+#: ../libgimp/gimpprocview.c:252
+msgid "Copyright:"
+msgstr ""
+
+#: ../libgimp/gimpunitcache.c:56
 msgid "percent"
 msgstr "אחוז"
 
-#: ../libgimpbase/gimpbaseenums.c:26
+#: ../libgimpbase/gimpbaseenums.c:28
 #, fuzzy
+msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_לבן (אטימות מלאה)"
 
-#: ../libgimpbase/gimpbaseenums.c:27
+#: ../libgimpbase/gimpbaseenums.c:29
 #, fuzzy
+msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_שחור (שקיפות מלאה)"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:30
 #, fuzzy
+msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "ערוץ ה_אלפא של השכבה"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:31
 #, fuzzy
+msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "ערוץ ה_אלפא של השכבה"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:32
+#, fuzzy
+msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "אזור _נבחר"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:33
 #, fuzzy
+msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "העתק בגווני א_פור של השכבה"
 
-#: ../libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:34
+msgctxt "add-mask-type"
+msgid "C_hannel"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:65
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "צבע קדמה לרקע (RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:66
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "צבע קדמה לרקע (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:67
 #, fuzzy
+msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "הפיכת צבע רקע לשקוף"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:68
 #, fuzzy
+msgctxt "blend-mode"
 msgid "Custom gradient"
 msgstr "מדרג צבעים מותאם אישית"
 
-#: ../libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:98
 #, fuzzy
+msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "מילוי בצבע רקע"
 
-#: ../libgimpbase/gimpbaseenums.c:94
+#: ../libgimpbase/gimpbaseenums.c:99
 #, fuzzy
+msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "מילוי בצבע קדמה"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:100
 #, fuzzy
+msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "מילוי דוגמה"
 
-#: ../libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:131
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "הוספה לאזור נבחר נוכחי"
 
-#: ../libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:132
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:133
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "החלפת אזור נבחר נוכחי"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:134
+#, fuzzy
+msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr ""
+msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
-#: ../libgimpwidgets/gimpcolorselect.c:352
+#: ../libgimpbase/gimpbaseenums.c:167
+#, fuzzy
+msgctxt "channel-type"
 msgid "Red"
 msgstr "אדום"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
-#: ../libgimpwidgets/gimpcolorselect.c:353
+#: ../libgimpbase/gimpbaseenums.c:168
+#, fuzzy
+msgctxt "channel-type"
 msgid "Green"
 msgstr "ירוק"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
-#: ../libgimpwidgets/gimpcolorselect.c:354
+#: ../libgimpbase/gimpbaseenums.c:169
+#, fuzzy
+msgctxt "channel-type"
 msgid "Blue"
 msgstr "כחול"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:170
+#, fuzzy
+msgctxt "channel-type"
 msgid "Gray"
 msgstr "אפור"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+#: ../libgimpbase/gimpbaseenums.c:171
+#, fuzzy
+msgctxt "channel-type"
 msgid "Indexed"
 msgstr "ממופתח"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
-#: ../libgimpwidgets/gimpcolorselect.c:355
+#: ../libgimpbase/gimpbaseenums.c:172
+#, fuzzy
+msgctxt "channel-type"
 msgid "Alpha"
 msgstr "אלפא"
 
-#: ../libgimpbase/gimpbaseenums.c:194
+#: ../libgimpbase/gimpbaseenums.c:202
+#, fuzzy
+msgctxt "check-size"
 msgid "Small"
 msgstr "קטן"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libgimpbase/gimpbaseenums.c:203
+#, fuzzy
+msgctxt "check-size"
 msgid "Medium"
 msgstr "בינוני"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:204
+#, fuzzy
+msgctxt "check-size"
 msgid "Large"
 msgstr "גדול"
 
-#: ../libgimpbase/gimpbaseenums.c:228
-msgid "Light Checks"
+#: ../libgimpbase/gimpbaseenums.c:237
+#, fuzzy
+msgctxt "check-type"
+msgid "Light checks"
 msgstr "בדיקות הארה"
 
-#: ../libgimpbase/gimpbaseenums.c:229
-msgid "Mid-Tone Checks"
+#: ../libgimpbase/gimpbaseenums.c:238
+#, fuzzy
+msgctxt "check-type"
+msgid "Mid-tone checks"
 msgstr "בדיקות גווני-ביניים"
 
-#: ../libgimpbase/gimpbaseenums.c:230
-msgid "Dark Checks"
+#: ../libgimpbase/gimpbaseenums.c:239
+#, fuzzy
+msgctxt "check-type"
+msgid "Dark checks"
 msgstr "בדיקות כהות"
 
-#: ../libgimpbase/gimpbaseenums.c:231
-msgid "White Only"
+#: ../libgimpbase/gimpbaseenums.c:240
+#, fuzzy
+msgctxt "check-type"
+msgid "White only"
 msgstr "לבן בלבד"
 
-#: ../libgimpbase/gimpbaseenums.c:232
-msgid "Gray Only"
+#: ../libgimpbase/gimpbaseenums.c:241
+#, fuzzy
+msgctxt "check-type"
+msgid "Gray only"
 msgstr "אפור בלבד"
 
-#: ../libgimpbase/gimpbaseenums.c:233
-msgid "Black Only"
+#: ../libgimpbase/gimpbaseenums.c:242
+#, fuzzy
+msgctxt "check-type"
+msgid "Black only"
 msgstr "שחור בלבד"
 
-#: ../libgimpbase/gimpbaseenums.c:261
+#: ../libgimpbase/gimpbaseenums.c:271
 #, fuzzy
-msgid "Image source"
-msgstr "מקור תמונה"
+msgctxt "clone-type"
+msgid "Image"
+msgstr "גודל תמונה"
 
-#: ../libgimpbase/gimpbaseenums.c:262
+#: ../libgimpbase/gimpbaseenums.c:272
 #, fuzzy
-msgid "Pattern source"
-msgstr "מקור דוגמה"
+msgctxt "clone-type"
+msgid "Pattern"
+msgstr "מילוי דוגמה"
 
-#: ../libgimpbase/gimpbaseenums.c:290
-msgid "Dodge"
-msgstr "הבהרה"
-
-#: ../libgimpbase/gimpbaseenums.c:291
-msgid "Burn"
-msgstr "בערה"
-
-#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
-msgid "Linear"
-msgstr "קווי"
-
-#: ../libgimpbase/gimpbaseenums.c:329
+#: ../libgimpbase/gimpbaseenums.c:302
 #, fuzzy
-msgid "Bi-linear"
-msgstr "דו-קווי"
+msgctxt "desaturate-mode"
+msgid "Lightness"
+msgstr "בדיקות הארה"
 
-#: ../libgimpbase/gimpbaseenums.c:330
-msgid "Radial"
-msgstr "מוקדי"
+#: ../libgimpbase/gimpbaseenums.c:303
+msgctxt "desaturate-mode"
+msgid "Luminosity"
+msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:331
-msgid "Square"
-msgstr "ריבוע"
-
-#: ../libgimpbase/gimpbaseenums.c:332
-#, fuzzy
-msgid "Conical (sym)"
-msgstr "חרוטי (סימטרי)"
+#: ../libgimpbase/gimpbaseenums.c:304
+msgctxt "desaturate-mode"
+msgid "Average"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:333
 #, fuzzy
+msgctxt "dodge-burn-type"
+msgid "Dodge"
+msgstr "הבהרה"
+
+#: ../libgimpbase/gimpbaseenums.c:334
+#, fuzzy
+msgctxt "dodge-burn-type"
+msgid "Burn"
+msgstr "בערה"
+
+#: ../libgimpbase/gimpbaseenums.c:400
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Linear"
+msgstr "קווי"
+
+#: ../libgimpbase/gimpbaseenums.c:401
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Bi-linear"
+msgstr "דו-קווי"
+
+#: ../libgimpbase/gimpbaseenums.c:402
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Radial"
+msgstr "מוקדי"
+
+#: ../libgimpbase/gimpbaseenums.c:403
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Square"
+msgstr "ריבוע"
+
+#: ../libgimpbase/gimpbaseenums.c:404
+#, fuzzy
+msgctxt "gradient-type"
+msgid "Conical (sym)"
+msgstr "חרוטי (סימטרי)"
+
+#: ../libgimpbase/gimpbaseenums.c:405
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "חרוטי (סימטרי)"
 
-#: ../libgimpbase/gimpbaseenums.c:334
+#: ../libgimpbase/gimpbaseenums.c:406
+msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:335
+#: ../libgimpbase/gimpbaseenums.c:407
+msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:336
+#: ../libgimpbase/gimpbaseenums.c:408
+msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:337
+#: ../libgimpbase/gimpbaseenums.c:409
 #, fuzzy
+msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "סלסול (בכיוון השעון)"
 
-#: ../libgimpbase/gimpbaseenums.c:338
+#: ../libgimpbase/gimpbaseenums.c:410
 #, fuzzy
+msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "סלסול (בכיוון השעון)"
 
-#: ../libgimpbase/gimpbaseenums.c:367
+#: ../libgimpbase/gimpbaseenums.c:442
+msgctxt "grid-style"
+msgid "Intersections (dots)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:443
+msgctxt "grid-style"
+msgid "Intersections (crosshairs)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:444
+msgctxt "grid-style"
+msgid "Dashed"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:445
+msgctxt "grid-style"
+msgid "Double dashed"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:446
+msgctxt "grid-style"
+msgid "Solid"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:476
+msgctxt "icon-type"
 msgid "Stock ID"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:368
+#: ../libgimpbase/gimpbaseenums.c:477
+msgctxt "icon-type"
 msgid "Inline pixbuf"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:478
 #, fuzzy
+msgctxt "icon-type"
 msgid "Image file"
 msgstr "גודל תמונה"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:508
+#, fuzzy
+msgctxt "image-base-type"
 msgid "RGB color"
-msgstr ""
+msgstr "מילוי בצבע רקע"
 
-#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+#: ../libgimpbase/gimpbaseenums.c:509
+#, fuzzy
+msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "גווני אפור"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:510
+#, fuzzy
+msgctxt "image-base-type"
 msgid "Indexed color"
-msgstr ""
+msgstr "ממופתח"
 
-#: ../libgimpbase/gimpbaseenums.c:432
+#: ../libgimpbase/gimpbaseenums.c:543
+#, fuzzy
+msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:433
+#: ../libgimpbase/gimpbaseenums.c:544
+msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:435
-msgid "Grayscale-alpha"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:437
-msgid "Indexed-alpha"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:467
-msgid "None (Fastest)"
-msgstr "כלום (הכי מהיר)"
-
-#: ../libgimpbase/gimpbaseenums.c:469
-msgid "Cubic"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:470
+#: ../libgimpbase/gimpbaseenums.c:545
 #, fuzzy
-msgid "Lanczos (Best)"
-msgstr "מעוקב (הכי טוב)"
+msgctxt "image-type"
+msgid "Grayscale"
+msgstr "גווני אפור"
 
-#: ../libgimpbase/gimpbaseenums.c:498
-msgid "Constant"
-msgstr "קבוע"
+#: ../libgimpbase/gimpbaseenums.c:546
+#, fuzzy
+msgctxt "image-type"
+msgid "Grayscale-alpha"
+msgstr "גווני אפור"
 
-#: ../libgimpbase/gimpbaseenums.c:499
-msgid "Incremental"
-msgstr "לוח צבעים"
+#: ../libgimpbase/gimpbaseenums.c:547
+#, fuzzy
+msgctxt "image-type"
+msgid "Indexed"
+msgstr "ממופתח"
 
-#: ../libgimpbase/gimpbaseenums.c:528
+#: ../libgimpbase/gimpbaseenums.c:548
+#, fuzzy
+msgctxt "image-type"
+msgid "Indexed-alpha"
+msgstr "ממופתח"
+
+#: ../libgimpbase/gimpbaseenums.c:579
+#, fuzzy
+msgctxt "interpolation-type"
 msgid "None"
 msgstr "כלום"
 
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:580
 #, fuzzy
+msgctxt "interpolation-type"
+msgid "Linear"
+msgstr "קווי"
+
+#: ../libgimpbase/gimpbaseenums.c:581
+msgctxt "interpolation-type"
+msgid "Cubic"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:582
+msgctxt "interpolation-type"
+msgid "Sinc (Lanczos3)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:611
+#, fuzzy
+msgctxt "paint-application-mode"
+msgid "Constant"
+msgstr "קבוע"
+
+#: ../libgimpbase/gimpbaseenums.c:612
+#, fuzzy
+msgctxt "paint-application-mode"
+msgid "Incremental"
+msgstr "לוח צבעים"
+
+#: ../libgimpbase/gimpbaseenums.c:642
+#, fuzzy
+msgctxt "repeat-mode"
+msgid "None"
+msgstr "כלום"
+
+#: ../libgimpbase/gimpbaseenums.c:643
+#, fuzzy
+msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "גל משונן"
 
-#: ../libgimpbase/gimpbaseenums.c:530
+#: ../libgimpbase/gimpbaseenums.c:644
 #, fuzzy
+msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "גל משולש"
 
-#: ../libgimpbase/gimpbaseenums.c:558
+#: ../libgimpbase/gimpbaseenums.c:674
+msgctxt "run-mode"
+msgid "Run interactively"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:675
+msgctxt "run-mode"
+msgid "Run non-interactively"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:676
+msgctxt "run-mode"
+msgid "Run with last used values"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:705
+#, fuzzy
+msgctxt "size-type"
 msgid "Pixels"
 msgstr "פיקסלים"
 
-#: ../libgimpbase/gimpbaseenums.c:559
+#: ../libgimpbase/gimpbaseenums.c:706
 #, fuzzy
+msgctxt "size-type"
 msgid "Points"
 msgstr "נקודות"
 
-#: ../libgimpbase/gimpbaseenums.c:588
+#: ../libgimpbase/gimpbaseenums.c:736
+#, fuzzy
+msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "צללים"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:737
+#, fuzzy
+msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "גווני ביניים"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:738
+#, fuzzy
+msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "הדגשות"
 
-#: ../libgimpbase/gimpbaseenums.c:618
+#: ../libgimpbase/gimpbaseenums.c:767
+msgctxt "transform-direction"
+msgid "Normal (Forward)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:768
+msgctxt "transform-direction"
+msgid "Corrective (Backward)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:799
+msgctxt "transform-resize"
+msgid "Adjust"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:800
+msgctxt "transform-resize"
+msgid "Clip"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:801
+msgctxt "transform-resize"
+msgid "Crop to result"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:802
+msgctxt "transform-resize"
+msgid "Crop with aspect"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:935
+msgctxt "pdb-proc-type"
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:936
+msgctxt "pdb-proc-type"
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:937
+msgctxt "pdb-proc-type"
+msgid "GIMP Extension"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:938
+msgctxt "pdb-proc-type"
+msgid "Temporary Procedure"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1105
+msgctxt "text-direction"
+msgid "From left to right"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1106
+msgctxt "text-direction"
+msgid "From right to left"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:1137
 #, fuzzy
-msgid "Forward (traditional)"
-msgstr "קדימה (מסורתי)"
+msgctxt "text-hint-style"
+msgid "None"
+msgstr "כלום"
 
-#: ../libgimpbase/gimpbaseenums.c:619
+#: ../libgimpbase/gimpbaseenums.c:1138
 #, fuzzy
-msgid "Backward (corrective)"
-msgstr "אחורה (תיקון)"
+msgctxt "text-hint-style"
+msgid "Slight"
+msgstr "הדגשות"
 
-#: ../libgimpbase/gimpmemsize.c:177
-#, c-format
-msgid "%d Bytes"
-msgstr "%d בתים"
+#: ../libgimpbase/gimpbaseenums.c:1139
+#, fuzzy
+msgctxt "text-hint-style"
+msgid "Medium"
+msgstr "בינוני"
 
-#: ../libgimpbase/gimpmemsize.c:182
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f ק\"ב"
+#: ../libgimpbase/gimpbaseenums.c:1140
+msgctxt "text-hint-style"
+msgid "Full"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f ק\"ב"
+#: ../libgimpbase/gimpbaseenums.c:1171
+msgctxt "text-justification"
+msgid "Left justified"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%d KB"
-msgstr "%d ק\"ב"
+#: ../libgimpbase/gimpbaseenums.c:1172
+msgctxt "text-justification"
+msgid "Right justified"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:197
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f מ\"ב"
+#: ../libgimpbase/gimpbaseenums.c:1173
+msgctxt "text-justification"
+msgid "Centered"
+msgstr ""
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f מ\"ב"
-
-#: ../libgimpbase/gimpmemsize.c:205
-#, fuzzy, c-format
-msgid "%d MB"
-msgstr "%d ק\"ב"
-
-#: ../libgimpbase/gimpmemsize.c:212
-#, fuzzy, c-format
-msgid "%.2f GB"
-msgstr "%.2f מ\"ב"
-
-#: ../libgimpbase/gimpmemsize.c:216
-#, fuzzy, c-format
-msgid "%.1f GB"
-msgstr "%.1f מ\"ב"
-
-#: ../libgimpbase/gimpmemsize.c:220
-#, fuzzy, c-format
-msgid "%d GB"
-msgstr "%d ק\"ב"
+#: ../libgimpbase/gimpbaseenums.c:1174
+msgctxt "text-justification"
+msgid "Filled"
+msgstr ""
 
 #: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/color-selector-cmyk-lcms.c:424
+#: ../modules/color-selector-cmyk-lcms.c:430
+#: ../modules/display-filter-lcms.c:182
 msgid "(invalid UTF-8 string)"
 msgstr "(מחרוזת יוניקוד לא-תקינה)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpcolorconfig.c:41
+msgid "Mode of operation for color management."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:43
+msgid "The color profile of your (primary) monitor."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:45
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:49
+msgid "The default RGB working space color profile."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:51
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:53
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:55
+msgid "Sets how colors are mapped for your display."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:57
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:60
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:63
+msgid "The color to use for marking colors which are out of gamut."
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgctxt "color-management-mode"
+msgid "No color management"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgctxt "color-management-mode"
+msgid "Color managed display"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgctxt "color-management-mode"
+msgid "Print simulation"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+msgctxt "color-rendering-intent"
+msgid "Perceptual"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+#, fuzzy
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "רוויה"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:435
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:509
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:524
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:593
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-iface.c:454
-#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
-#: ../libgimpconfig/gimpscanner.c:594
+#: ../libgimpconfig/gimpconfig-iface.c:473
+#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:497
+#: ../libgimpconfig/gimpscanner.c:578
+#: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "שגיאת ניתוח קלט סופנית"
 
-#: ../libgimpconfig/gimpconfig-path.c:349
+#: ../libgimpconfig/gimpconfig-path.c:378
 #, fuzzy, c-format
 msgid "Cannot expand ${%s}"
 msgstr "אין אפשרות לבטל פעולה %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:134
+#: ../libgimpconfig/gimpconfigwriter.c:77
+#: ../libgimpconfig/gimpconfigwriter.c:718
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfigwriter.c:135
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigwriter.c:147
+#: ../libgimpconfig/gimpconfigwriter.c:148
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigwriter.c:666
+#: ../libgimpconfig/gimpconfigwriter.c:679
+#: ../libgimpconfig/gimpconfigwriter.c:699
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigwriter.c:674
+#: ../libgimpconfig/gimpconfigwriter.c:707
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
 
-#: ../libgimpconfig/gimpconfigwriter.c:685
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr ""
-
-#: ../libgimpconfig/gimpconfigwriter.c:703
+#: ../libgimpconfig/gimpconfigwriter.c:731
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpscanner.c:100
+#: ../libgimpconfig/gimpscanner.c:254
 #, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr ""
-
-#: ../libgimpconfig/gimpscanner.c:270
 msgid "invalid UTF-8 string"
 msgstr "מחרוזת יוניקוד לא תקינה"
 
-#: ../libgimpconfig/gimpscanner.c:621
+#: ../libgimpconfig/gimpscanner.c:605
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr ""
 
-#: ../libgimpmodule/gimpmodule.c:177
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "טוען את המודול: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
-#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
-#: ../libgimpmodule/gimpmodule.c:478
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:432
 #, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr ""
 "שגיאת טעינה במודול '%s':\n"
 "%s"
 
-#: ../libgimpmodule/gimpmodule.c:282
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "מדלג על מודול: '%s'\n"
-
-#: ../libgimpmodule/gimpmodule.c:422
+#: ../libgimpmodule/gimpmodule.c:374
 msgid "Module error"
 msgstr "שגיאת מודול"
 
-#: ../libgimpmodule/gimpmodule.c:423
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Loaded"
 msgstr "טעון"
 
-#: ../libgimpmodule/gimpmodule.c:424
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Load failed"
 msgstr "הטעינה נכשלה"
 
-#: ../libgimpmodule/gimpmodule.c:425
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Not loaded"
 msgstr "לא טעון"
 
-#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#: ../libgimpthumb/gimpthumb-utils.c:122
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+
+#: ../libgimpthumb/gimpthumb-utils.c:246 ../libgimpthumb/gimpthumb-utils.c:314
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr ""
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:497
+#, c-format
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr ""
+
+#: ../libgimpthumb/gimpthumbnail.c:893
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""
 
-#: ../libgimpwidgets/gimpcolorbutton.c:99
+#: ../libgimpwidgets/gimpbrowser.c:103
+#, fuzzy
+msgid "_Search:"
+msgstr "_חתיכה"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:117
 #, fuzzy
 msgid "_Foreground Color"
 msgstr "/צבע קדמה"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:103
+#: ../libgimpwidgets/gimpcolorbutton.c:121
 #, fuzzy
 msgid "_Background Color"
 msgstr "/צבע רקע"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:107
+#: ../libgimpwidgets/gimpcolorbutton.c:125
 #, fuzzy
 msgid "Blac_k"
 msgstr "/שחור"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:111
+#: ../libgimpwidgets/gimpcolorbutton.c:129
 #, fuzzy
 msgid "_White"
 msgstr "/לבן"
 
-#: ../libgimpwidgets/gimpcolorscales.c:133
+#: ../libgimpwidgets/gimpcolorprofilestore.c:143
+msgid "Select color profile from disk..."
+msgstr ""
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:279
+#, fuzzy
+msgctxt "profile"
+msgid "None"
+msgstr "כלום"
+
+#: ../libgimpwidgets/gimpcolorscales.c:97
 msgid "Scales"
 msgstr "קני מידה"
 
-#: ../libgimpwidgets/gimpcolorscales.c:155
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_H"
-msgstr "_H"
-
-#: ../libgimpwidgets/gimpcolorscales.c:156
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_S"
-msgstr "_S"
-
-#: ../libgimpwidgets/gimpcolorscales.c:157
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_V"
-msgstr "_V"
-
-#: ../libgimpwidgets/gimpcolorscales.c:158
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_R"
-msgstr "_R"
-
-#: ../libgimpwidgets/gimpcolorscales.c:159
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_G"
-msgstr "_G"
-
-#: ../libgimpwidgets/gimpcolorscales.c:160
-#: ../libgimpwidgets/gimpcolorselect.c:345
-msgid "_B"
-msgstr "_B"
-
-#: ../libgimpwidgets/gimpcolorscales.c:161
-msgid "_A"
-msgstr "_A"
-
-#: ../libgimpwidgets/gimpcolorscales.c:165
-#: ../libgimpwidgets/gimpcolorselect.c:349
-msgid "Hue"
-msgstr "גוון"
-
-#: ../libgimpwidgets/gimpcolorscales.c:166
-#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
-msgid "Saturation"
-msgstr "רוויה"
-
-#: ../libgimpwidgets/gimpcolorscales.c:167
-#: ../libgimpwidgets/gimpcolorselect.c:351
-msgid "Value"
-msgstr "ערך"
-
-#: ../libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "סימון צבעים הקסאדצימלי כנהוג ב HTML"
-
-#: ../libgimpwidgets/gimpcolorscales.c:248
-msgid "HTML _Notation:"
-msgstr ""
-
-#: ../libgimpwidgets/gimpcolorselection.c:203
+#: ../libgimpwidgets/gimpcolorselection.c:208
 msgid "Current:"
 msgstr "נוכחי:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:225
+#: ../libgimpwidgets/gimpcolorselection.c:217
 msgid "Old:"
 msgstr "ישן:"
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpcolorselection.c:302
+#, fuzzy
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr "סימון צבעים הקסאדצימלי כנהוג ב HTML"
+
+#: ../libgimpwidgets/gimpcolorselection.c:308
+msgid "HTML _notation:"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:173
+msgid "Open a file selector to browse your folders"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your files"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:334
 msgid "Select Folder"
 msgstr "בחירת תיקייה"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:336
 msgid "Select File"
 msgstr "בחירת קובץ"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimphelpui.c:419
+msgid "Press F1 for more help"
+msgstr ""
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 #, fuzzy
 msgid "Kilobytes"
 msgstr "קילו בתים"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 #, fuzzy
 msgid "Megabytes"
 msgstr "מגה בתים"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:207
 #, fuzzy
 msgid "Gigabytes"
 msgstr "גיגה בתים"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:268
+#: ../libgimpwidgets/gimppageselector.c:1165
+msgid "Nothing selected"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:286
+#, fuzzy
+msgid "Select _All"
+msgstr "בחירת קובץ"
+
+#: ../libgimpwidgets/gimppageselector.c:306
+#, fuzzy
+msgid "Select _range:"
+msgstr "בחירת קובץ"
+
+#: ../libgimpwidgets/gimppageselector.c:318
+msgid "Open _pages as"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:419
+msgid "Page 000"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:507
+#: ../libgimpwidgets/gimppageselector.c:743
+#, c-format
+msgid "Page %d"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:1170
+msgid "One page selected"
+msgstr ""
+
+#: ../libgimpwidgets/gimppageselector.c:1177
+#: ../libgimpwidgets/gimppageselector.c:1181
+#, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../libgimpwidgets/gimppatheditor.c:213
 #, fuzzy
 msgid "Writable"
 msgstr "משולש"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:222
 #, fuzzy
 msgid "Folder"
 msgstr "בחירת תיקייה"
 
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:106
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
 "יש ללחוץ על הטפטפת, ואז ללחוץ על צבע במקום כלשהו על המסך כדי לבחור בצבע זה."
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
-msgid "Check Size"
-msgstr ""
-
-#: ../libgimpwidgets/gimppreviewarea.c:133
-msgid "Check Style"
-msgstr ""
-
-#. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:240
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:276
 msgid "_Preview"
 msgstr "ת_צוגה מוקדמת"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimppreviewarea.c:93
+msgid "Check Size"
+msgstr ""
+
+#: ../libgimpwidgets/gimppreviewarea.c:100
+msgid "Check Style"
+msgstr ""
+
+#: ../libgimpwidgets/gimppropwidgets.c:1859
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../libgimpwidgets/gimpstock.c:111
 msgid "Anchor"
 msgstr "עוגן"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:112
 msgid "C_enter"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:113
 msgid "_Duplicate"
 msgstr "_שכפול"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:114
 msgid "_Edit"
 msgstr "_עריכה"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:115
 msgid "Linked"
 msgstr "מקושר"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:116
 msgid "Paste as New"
 msgstr "הדבק כחדש"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste Into"
 msgstr "הדבק לתוך"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
 msgstr "_אתחול"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:119
 msgid "Visible"
 msgstr "נראה"
 
-#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+#: ../libgimpwidgets/gimpstock.c:155 ../libgimpwidgets/gimpstock.c:159
 msgid "_Stroke"
 msgstr ""
 
-#: ../libgimpwidgets/gimpstock.c:170
+#: ../libgimpwidgets/gimpstock.c:171
 msgid "L_etter Spacing"
 msgstr "_ריווח אותיות"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:172
 msgid "L_ine Spacing"
 msgstr "ריווח _שורות"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:188
 msgid "_Resize"
 msgstr "שינוי _גודל"
 
-#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
+#: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:321
 msgid "_Scale"
 msgstr "שינוי _קנה מידה"
 
-#: ../libgimpwidgets/gimpstock.c:271
-msgid "Crop"
+#: ../libgimpwidgets/gimpstock.c:296
+#, fuzzy
+msgid "Cr_op"
 msgstr "גזיזה"
 
-#: ../libgimpwidgets/gimpstock.c:288
+#: ../libgimpwidgets/gimpstock.c:316
 msgid "_Transform"
 msgstr "_עיבוד"
 
-#: ../libgimpwidgets/gimpstock.c:291
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Rotate"
 msgstr "_סיבוב"
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:322
 msgid "_Shear"
 msgstr "_חתיכה"
 
-#: ../libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "עוד..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:582
 msgid "Unit Selection"
 msgstr "בחירת יחידה"
 
-#: ../libgimpwidgets/gimpunitmenu.c:655
+#: ../libgimpwidgets/gimpunitmenu.c:631
 msgid "Unit"
 msgstr "יחידה"
 
-#: ../libgimpwidgets/gimpunitmenu.c:659
+#: ../libgimpwidgets/gimpunitmenu.c:635
 msgid "Factor"
 msgstr "יחס"
 
-#: ../libgimpwidgets/gimpwidgets.c:1001
+#: ../libgimpwidgets/gimpwidgets.c:510
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -958,171 +1446,760 @@ msgstr ""
 "השתמש בערך זה כזרע למחולל מספר אקראי - זה מאפשר לך לחזור על פעולה \"אקראית\" "
 "נתונה"
 
-#: ../libgimpwidgets/gimpwidgets.c:1005
+#: ../libgimpwidgets/gimpwidgets.c:514
 msgid "_New Seed"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgets.c:1018
+#: ../libgimpwidgets/gimpwidgets.c:527
 msgid "Seed random number generator with a generated random number"
 msgstr "זרע למחולל מספרים אקראיים עם מספר אקראי מחולל"
 
-#: ../libgimpwidgets/gimpwidgets.c:1022
+#: ../libgimpwidgets/gimpwidgets.c:531
 #, fuzzy
 msgid "_Randomize"
 msgstr "א_קראי"
 
-#: ../modules/cdisplay_colorblind.c:68
+#: ../libgimpwidgets/gimpwidgets-private.c:49
 #, fuzzy
-msgid "Protanopia (insensitivity to red"
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "נראה"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+#, fuzzy
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "ירוק"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+msgctxt "input-mode"
+msgid "Window"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Square"
+msgstr "ריבוע"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Portrait"
+msgstr "ניגוד"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgctxt "aspect-type"
+msgid "Landscape"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Hue"
+msgstr "גוון"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Saturation"
+msgstr "רוויה"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
+msgid "Value"
+msgstr "ערך"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "Red"
+msgstr "אדום"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgid "Green"
+msgstr "ירוק"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgid "Blue"
+msgstr "כחול"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#, fuzzy
+msgctxt "color-selector-channel"
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgid "Alpha"
+msgstr "אלפא"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:161
+msgctxt "page-selector-target"
+msgid "Layers"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:162
+#, fuzzy
+msgctxt "page-selector-target"
+msgid "Images"
+msgstr "מקור תמונה"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:223
+msgctxt "zoom-type"
+msgid "Zoom in"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:224
+msgctxt "zoom-type"
+msgid "Zoom out"
+msgstr ""
+
+#: ../modules/color-selector-cmyk-lcms.c:86
+#, fuzzy
+msgid "CMYK color selector (using color profile)"
+msgstr "בחירת צבע CMYK"
+
+#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk.c:101
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk.c:124
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk.c:126
+msgid "_M"
+msgstr "_M"
+
+#. Yellow
+#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk.c:128
+msgid "_Y"
+msgstr "_Y"
+
+#. Key (Black)
+#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk.c:130
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk.c:134
+msgid "Cyan"
+msgstr "תכלת"
+
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
+msgid "Magenta"
+msgstr "ורוד"
+
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
+msgid "Yellow"
+msgstr "צהוב"
+
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
+msgid "Black"
+msgstr "שחור"
+
+#: ../modules/color-selector-cmyk-lcms.c:412
+msgid "Profile: (none)"
+msgstr ""
+
+#: ../modules/color-selector-cmyk-lcms.c:433
+#, c-format
+msgid "Profile: %s"
+msgstr ""
+
+#: ../modules/color-selector-cmyk.c:70
+msgid "CMYK color selector"
+msgstr "בחירת צבע CMYK"
+
+#: ../modules/color-selector-cmyk.c:171
+msgid "Black _pullout:"
+msgstr ""
+
+#: ../modules/color-selector-cmyk.c:188
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: ../modules/color-selector-water.c:81
+msgid "Watercolor style color selector"
+msgstr "בחירת צבע סגנון צבע מים"
+
+#: ../modules/color-selector-water.c:117
+msgid "Watercolor"
+msgstr "צבע מים"
+
+#: ../modules/color-selector-water.c:185
+msgid "Pressure"
+msgstr "לחץ"
+
+#: ../modules/color-selector-wheel.c:74
+msgid "HSV color wheel"
+msgstr ""
+
+#: ../modules/color-selector-wheel.c:105
+msgid "Wheel"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:155
+msgid "DirectX DirectInput event controller"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:195
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
+msgid "Device:"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:196
+msgid "The device to read DirectInput events from."
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:205
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:419
+#, c-format
+msgid "Button %d"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:422
+#, c-format
+msgid "Button %d Press"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:425
+#, c-format
+msgid "Button %d Release"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:89
+msgid "X Move Left"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:90
+msgid "X Move Right"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:451
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:454
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:93
+msgid "Z Move Up"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:94
+msgid "Z Move Down"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:469
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:472
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:98
+msgid "Y Axis Tilt Right"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:99
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:100
+msgid "Z Axis Turn Left"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:101
+msgid "Z Axis Turn Right"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:501
+#, c-format
+msgid "Slider %d Increase"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:504
+#, c-format
+msgid "Slider %d Decrease"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:514
+#, c-format
+msgid "POV %d X View"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:517
+#, c-format
+msgid "POV %d Y View"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:520
+#, c-format
+msgid "POV %d Return"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:1083
+msgid "DirectInput Events"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
+msgid "No device configured"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-linux-input.c:587
+msgid "Device not available"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:57
+msgid "Button 0"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:58
+msgid "Button 1"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:59
+msgid "Button 2"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:60
+msgid "Button 3"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:61
+msgid "Button 4"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:62
+msgid "Button 5"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:63
+msgid "Button 6"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:64
+msgid "Button 7"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:65
+msgid "Button 8"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:66
+msgid "Button 9"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:67
+msgid "Button Mouse"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:68
+msgid "Button Left"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:69
+msgid "Button Right"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:70
+msgid "Button Middle"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:71
+msgid "Button Side"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:72
+msgid "Button Extra"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:73
+msgid "Button Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:74
+msgid "Button Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:75
+msgid "Button Task"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:77
+msgid "Button Wheel"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:80
+msgid "Button Gear Down"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:83
+msgid "Button Gear Up"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:91
+msgid "Y Move Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:92
+msgid "Y Move Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:96
+msgid "X Axis Tilt Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:97
+msgid "X Axis Tilt Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:103
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:104
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:105
+msgid "Dial Turn Left"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:106
+msgid "Dial Turn Right"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:107
+msgid "Wheel Turn Left"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:108
+msgid "Wheel Turn Right"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:177
+msgid "Linux input event controller"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:218
+msgid "The name of the device to read Linux Input events from."
+msgstr ""
+
+#: ../modules/controller-linux-input.c:229
+msgid "Linux Input"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:512
+msgid "Linux Input Events"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
+#: ../modules/controller-midi.c:479
+#, c-format
+msgid "Reading from %s"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:568
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
+#, c-format
+msgid "Device not available: %s"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
+msgid "End of file"
+msgstr ""
+
+#: ../modules/controller-midi.c:163
+msgid "MIDI event controller"
+msgstr ""
+
+#: ../modules/controller-midi.c:202
+msgid "The name of the device to read MIDI events from."
+msgstr ""
+
+#: ../modules/controller-midi.c:205
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr ""
+
+#: ../modules/controller-midi.c:220
+msgid "Channel:"
+msgstr ""
+
+#: ../modules/controller-midi.c:221
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+
+#: ../modules/controller-midi.c:225
+msgid "MIDI"
+msgstr ""
+
+#: ../modules/controller-midi.c:354
+#, c-format
+msgid "Note %02x on"
+msgstr ""
+
+#: ../modules/controller-midi.c:357
+#, c-format
+msgid "Note %02x off"
+msgstr ""
+
+#: ../modules/controller-midi.c:360
+#, c-format
+msgid "Controller %03d"
+msgstr ""
+
+#: ../modules/controller-midi.c:407
+msgid "MIDI Events"
+msgstr ""
+
+#: ../modules/controller-midi.c:425
+msgid "GIMP"
+msgstr ""
+
+#: ../modules/controller-midi.c:427
+msgid "GIMP MIDI Input Controller"
+msgstr ""
+
+#: ../modules/display-filter-color-blind.c:66
+#, fuzzy
+msgid "Protanopia (insensitivity to red)"
 msgstr "פרוטנופיה (חוסר רגישות רשתית לאדום)"
 
-#: ../modules/cdisplay_colorblind.c:70
+#: ../modules/display-filter-color-blind.c:68
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "דוטראנופיה (חוסר רגישות רשתית לירוק)"
 
-#: ../modules/cdisplay_colorblind.c:72
+#: ../modules/display-filter-color-blind.c:70
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "טריטנופיה (חוסר רגישות  רשתית לכחול)"
 
-#: ../modules/cdisplay_colorblind.c:163
+#: ../modules/display-filter-color-blind.c:197
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "מסנן הדמיית ליקוי צבע (אלגוריתם Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:256
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "ליקוי ראיית צבעים"
 
-#: ../modules/cdisplay_colorblind.c:554
+#: ../modules/display-filter-color-blind.c:482
 #, fuzzy
-msgid "Color _Deficiency Type:"
+msgid "Color _deficiency type:"
 msgstr "סוג ליקוי צבע:"
 
-#: ../modules/cdisplay_gamma.c:105
+#: ../modules/display-filter-gamma.c:89
 msgid "Gamma color display filter"
 msgstr "מסנן גאמה למסך צבעוני"
 
-#: ../modules/cdisplay_gamma.c:178
+#: ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "גאמה"
 
-#: ../modules/cdisplay_gamma.c:352
+#: ../modules/display-filter-gamma.c:231
 #, fuzzy
 msgid "_Gamma:"
 msgstr "גאמה:"
 
-#: ../modules/cdisplay_highcontrast.c:105
+#: ../modules/display-filter-high-contrast.c:89
 msgid "High Contrast color display filter"
 msgstr "מסנן ניגוד גבוה למסך צבעוני"
 
-#: ../modules/cdisplay_highcontrast.c:178
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "ניגוד"
 
-#: ../modules/cdisplay_highcontrast.c:352
+#: ../modules/display-filter-high-contrast.c:231
 #, fuzzy
-msgid "Contrast C_ycles:"
+msgid "Contrast c_ycles:"
 msgstr "מחזורי ניגוד"
 
-#: ../modules/cdisplay_proof.c:57
-msgid "Perceptual"
+#: ../modules/display-filter-lcms.c:101
+msgid "Color management display filter using ICC color profiles"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:58
-msgid "Relative Colorimetric"
+#: ../modules/display-filter-lcms.c:133
+msgid "Color Management"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:60
-msgid "Absolute Colorimetric"
+#: ../modules/display-filter-lcms.c:190
+msgid "None"
+msgstr "כלום"
+
+#: ../modules/display-filter-lcms.c:211
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:147
+#: ../modules/display-filter-lcms.c:225
+msgid "Mode of operation:"
+msgstr ""
+
+#: ../modules/display-filter-lcms.c:232
+#, fuzzy
+msgid "Image profile:"
+msgstr "גודל תמונה"
+
+#: ../modules/display-filter-lcms.c:240
+msgid "Monitor profile:"
+msgstr ""
+
+#: ../modules/display-filter-lcms.c:248
+msgid "Print simulation profile:"
+msgstr ""
+
+#: ../modules/display-filter-proof.c:96
 msgid "Color proof filter using ICC color profile"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:251
+#: ../modules/display-filter-proof.c:144
 msgid "Color Proof"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:462
-msgid "_Intent:"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:465
+#: ../modules/display-filter-proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:468
+#: ../modules/display-filter-proof.c:337
+msgid "All files (*.*)"
+msgstr ""
+
+#: ../modules/display-filter-proof.c:342
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr ""
+
+#: ../modules/display-filter-proof.c:400
 msgid "_Profile:"
 msgstr ""
 
-#: ../modules/cdisplay_proof.c:476
+#: ../modules/display-filter-proof.c:406
+msgid "_Intent:"
+msgstr ""
+
+#: ../modules/display-filter-proof.c:411
 msgid "_Black Point Compensation"
 msgstr ""
 
-#: ../modules/colorsel_cmyk.c:73
-msgid "CMYK color selector"
-msgstr "בחירת צבע CMYK"
+#, fuzzy
+#~ msgid "Pattern source"
+#~ msgstr "מקור דוגמה"
 
-#: ../modules/colorsel_cmyk.c:130
-msgid "CMYK"
-msgstr "CMYK"
+#~ msgid "None (Fastest)"
+#~ msgstr "כלום (הכי מהיר)"
 
-#: ../modules/colorsel_cmyk.c:147
-msgid "_C"
-msgstr "_C"
+#, fuzzy
+#~ msgid "Lanczos (Best)"
+#~ msgstr "מעוקב (הכי טוב)"
 
-#: ../modules/colorsel_cmyk.c:148
-msgid "_M"
-msgstr "_M"
+#, fuzzy
+#~ msgid "Forward (traditional)"
+#~ msgstr "קדימה (מסורתי)"
 
-#: ../modules/colorsel_cmyk.c:149
-msgid "_Y"
-msgstr "_Y"
+#, fuzzy
+#~ msgid "Backward (corrective)"
+#~ msgstr "אחורה (תיקון)"
 
-#: ../modules/colorsel_cmyk.c:150
-msgid "_K"
-msgstr "_K"
+#~ msgid "%d Bytes"
+#~ msgstr "%d בתים"
 
-#: ../modules/colorsel_cmyk.c:154
-msgid "Cyan"
-msgstr "תכלת"
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f ק\"ב"
 
-#: ../modules/colorsel_cmyk.c:155
-msgid "Magenta"
-msgstr "ורוד"
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f ק\"ב"
 
-#: ../modules/colorsel_cmyk.c:156
-msgid "Yellow"
-msgstr "צהוב"
+#~ msgid "%d KB"
+#~ msgstr "%d ק\"ב"
 
-#: ../modules/colorsel_cmyk.c:157
-msgid "Black"
-msgstr "שחור"
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f מ\"ב"
 
-#: ../modules/colorsel_cmyk.c:191
-msgid "Black _Pullout:"
-msgstr ""
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f מ\"ב"
 
-#: ../modules/colorsel_cmyk.c:208
-msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+#, fuzzy
+#~ msgid "%d MB"
+#~ msgstr "%d ק\"ב"
 
-#: ../modules/colorsel_triangle.c:104
-msgid "Painter-style triangle color selector"
-msgstr "בוחר צבע משולש בסגנון המדפסת"
+#, fuzzy
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f מ\"ב"
 
-#: ../modules/colorsel_triangle.c:170
-msgid "Triangle"
-msgstr "משולש"
+#, fuzzy
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f מ\"ב"
 
-#: ../modules/colorsel_water.c:88
-msgid "Watercolor style color selector"
-msgstr "בחירת צבע סגנון צבע מים"
+#, fuzzy
+#~ msgid "%d GB"
+#~ msgstr "%d ק\"ב"
 
-#: ../modules/colorsel_water.c:154
-msgid "Watercolor"
-msgstr "צבע מים"
+#~ msgid "Loading module: '%s'\n"
+#~ msgstr "טוען את המודול: '%s'\n"
 
-#: ../modules/colorsel_water.c:220
-msgid "Pressure"
-msgstr "לחץ"
+#~ msgid "Skipping module: '%s'\n"
+#~ msgstr "מדלג על מודול: '%s'\n"
+
+#~ msgid "Painter-style triangle color selector"
+#~ msgstr "בוחר צבע משולש בסגנון המדפסת"
+
+#~ msgid "Triangle"
+#~ msgstr "משולש"
