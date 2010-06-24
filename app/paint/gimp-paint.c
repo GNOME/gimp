@@ -97,6 +97,8 @@ gimp_paint_exit (Gimp *gimp)
 
   if (gimp->paint_info_list)
     {
+      gimp_container_foreach (gimp->paint_info_list,
+                              (GFunc) g_object_run_dispose, NULL);
       g_object_unref (gimp->paint_info_list);
       gimp->paint_info_list = NULL;
     }
