@@ -176,8 +176,8 @@ gimp_dialog_factory_dispose (GObject *object)
        */
       if (! list)
         {
-          g_warning ("%s: stale non-toplevel entries in factory->p->open_dialogs",
-                     G_STRFUNC);
+          g_warning ("%s: %d stale non-toplevel entries in factory->p->open_dialogs",
+                     G_STRFUNC, g_list_length (factory->p->open_dialogs));
           break;
         }
     }
