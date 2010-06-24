@@ -446,7 +446,8 @@ gimp_tool_preset_get_standard (GimpContext *context)
       gimp_data_clean (standard_tool_preset);
       gimp_data_make_internal (standard_tool_preset, "gimp-tool-preset-standard");
 
-      g_object_ref (standard_tool_preset);
+      g_object_add_weak_pointer (G_OBJECT (standard_tool_preset),
+                                 (gpointer *) &standard_tool_preset);
     }
 
   return standard_tool_preset;

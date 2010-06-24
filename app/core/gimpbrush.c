@@ -421,7 +421,8 @@ gimp_brush_get_standard (GimpContext *context)
       gimp_data_clean (standard_brush);
       gimp_data_make_internal (standard_brush, "gimp-brush-standard");
 
-      g_object_ref (standard_brush);
+      g_object_add_weak_pointer (G_OBJECT (standard_brush),
+                                 (gpointer *) &standard_brush);
     }
 
   return standard_brush;

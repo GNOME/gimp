@@ -295,7 +295,8 @@ gimp_palette_get_standard (GimpContext *context)
       gimp_data_clean (standard_palette);
       gimp_data_make_internal (standard_palette, "gimp-palette-standard");
 
-      g_object_ref (standard_palette);
+      g_object_add_weak_pointer (G_OBJECT (standard_palette),
+                                 (gpointer *) &standard_palette);
     }
 
   return standard_palette;

@@ -351,7 +351,8 @@ gimp_gradient_get_standard (GimpContext *context)
       gimp_data_clean (standard_gradient);
       gimp_data_make_internal (standard_gradient, "gimp-gradient-standard");
 
-      g_object_ref (standard_gradient);
+      g_object_add_weak_pointer (G_OBJECT (standard_gradient),
+                                 (gpointer *) &standard_gradient);
     }
 
   return standard_gradient;

@@ -422,7 +422,8 @@ gimp_dynamics_get_standard (GimpContext *context)
       gimp_data_clean (standard_dynamics);
       gimp_data_make_internal (standard_dynamics, "gimp-dynamics-standard");
 
-      g_object_ref (standard_dynamics);
+      g_object_add_weak_pointer (G_OBJECT (standard_dynamics),
+                                 (gpointer *) &standard_dynamics);
     }
 
   return standard_dynamics;
