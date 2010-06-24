@@ -4,7 +4,7 @@
 # Marco Ciampa <ciampix@libero.it>, 2003-2010
 # Alessandro Falappa <alessandro@falappa.net>, 2007-2008
 #
-# Convenzioni adottate per Gimp:
+# Convenzioni adottate per GIMP:
 #
 # brush = pennello
 # brush pipe = pennello animato
@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-11 01:42+0200\n"
-"PO-Revision-Date: 2010-06-11 02:05+0200\n"
+"POT-Creation-Date: 2010-06-25 00:11+0200\n"
+"PO-Revision-Date: 2010-06-25 00:14+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr ""
 "Dovresti aver ricevuto una copia della GNU General Public License con GIMP. "
 "Se così non fosse, vedere <http://www.gnu.org/licenses/>."
 
-#: ../app/app.c:219
+#: ../app/app.c:220
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -257,15 +257,20 @@ msgstr ""
 "variabile ambiente G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
-#: ../app/version.c:63
+#: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "uso di %s in versione %s (compilato con versione %s)"
 
-#: ../app/version.c:126 ../tools/gimp-remote.c:94
+#: ../app/version.c:127 ../tools/gimp-remote.c:94
 #, c-format
 msgid "%s version %s"
 msgstr "%s versione %s"
+
+#: ../app/version.c:132
+#, c-format
+msgid "git commit %s"
+msgstr "git commit %s"
 
 #: ../app/actions/actions.c:109 ../app/dialogs/dialogs.c:353
 #: ../app/widgets/gimpbrusheditor.c:89
@@ -273,7 +278,7 @@ msgid "Brush Editor"
 msgstr "Editor pennelli"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:112 ../app/core/gimp.c:951
+#: ../app/actions/actions.c:112 ../app/core/gimp.c:953
 #: ../app/dialogs/dialogs.c:282 ../app/dialogs/preferences-dialog.c:2720
 msgid "Brushes"
 msgstr "Pennelli"
@@ -362,13 +367,13 @@ msgid "Gradient Editor"
 msgstr "Editor dei gradienti"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:172 ../app/core/gimp.c:971
+#: ../app/actions/actions.c:172 ../app/core/gimp.c:973
 #: ../app/dialogs/dialogs.c:286 ../app/dialogs/preferences-dialog.c:2736
 msgid "Gradients"
 msgstr "Gradienti"
 
 #. initialize the list of gimp tool presets
-#: ../app/actions/actions.c:175 ../app/core/gimp.c:981
+#: ../app/actions/actions.c:175 ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:302
 msgid "Tool Presets"
 msgstr "Preimpostazioni strumento"
@@ -402,13 +407,13 @@ msgid "Palette Editor"
 msgstr "Editor tavolozza"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:966
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:968
 #: ../app/dialogs/dialogs.c:288 ../app/dialogs/preferences-dialog.c:2732
 msgid "Palettes"
 msgstr "Tavolozze"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:199 ../app/core/gimp.c:961
+#: ../app/actions/actions.c:199 ../app/core/gimp.c:963
 #: ../app/dialogs/dialogs.c:284 ../app/dialogs/preferences-dialog.c:2728
 msgid "Patterns"
 msgstr "Motivi"
@@ -430,7 +435,7 @@ msgid "Select"
 msgstr "Seleziona"
 
 #. initialize the template list
-#: ../app/actions/actions.c:214 ../app/core/gimp.c:986
+#: ../app/actions/actions.c:214 ../app/core/gimp.c:988
 #: ../app/dialogs/dialogs.c:296
 msgid "Templates"
 msgstr "Modelli"
@@ -448,7 +453,7 @@ msgstr "Editor di testi"
 msgid "Tool Options"
 msgstr "Opzioni strumenti"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:934
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:952
 msgid "Tools"
 msgstr "Strumenti"
 
@@ -982,13 +987,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "Usa il colore composto da tutti i livelli visibili"
 
 #: ../app/actions/data-commands.c:104 ../app/actions/documents-commands.c:343
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:221
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:233
+#: ../app/dialogs/file-open-dialog.c:278
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
 #: ../app/widgets/gimplayertreeview.c:762 ../app/widgets/gimptoolbox-dnd.c:178
-#: ../app/widgets/gimptoolbox.c:1229
+#: ../app/widgets/gimptoolbox.c:1247
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1002,7 +1007,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1522
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:378 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:379 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Immagine"
@@ -1378,7 +1383,7 @@ msgid "About GIMP"
 msgstr "Informazioni su GIMP"
 
 #: ../app/actions/dialogs-actions.c:304
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:777
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:795
 msgid "Toolbox"
 msgstr "Strumenti"
 
@@ -1524,27 +1529,32 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_ato e testo"
 
-#: ../app/actions/dockable-actions.c:124
+#: ../app/actions/dockable-actions.c:116 ../app/widgets/widgets-enums.c:224
+msgctxt "tab-style"
+msgid "Automatic"
+msgstr "Automatico"
+
+#: ../app/actions/dockable-actions.c:126
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
 msgstr "Blocca la sc_heda al pannello"
 
-#: ../app/actions/dockable-actions.c:126
+#: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
 msgstr "Rende questa scheda non trascinabile con il puntatore del mouse"
 
-#: ../app/actions/dockable-actions.c:132
+#: ../app/actions/dockable-actions.c:134
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
 msgstr "Mostra _barra pulsanti"
 
-#: ../app/actions/dockable-actions.c:141
+#: ../app/actions/dockable-actions.c:143
 msgctxt "dockable-action"
 msgid "View as _List"
 msgstr "Mostra come e_lenco"
 
-#: ../app/actions/dockable-actions.c:146
+#: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
 msgstr "Mostra come _griglia"
@@ -3492,8 +3502,8 @@ msgstr "_Fondi in basso"
 
 #: ../app/actions/layers-actions.c:152
 msgctxt "layers-action"
-msgid "Merge this layer with the one below it"
-msgstr "Fondi questo livello con quello sottostante"
+msgid "Merge this layer with the first visible layer below it"
+msgstr "Fondi questo livello con il primo visibile sotto di esso"
 
 #: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
@@ -5893,10 +5903,10 @@ msgid ""
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
 msgstr ""
-"Impossibile aprire il file di scambio. Gimp ha esaurito la memoria "
+"Impossibile aprire il file di scambio. GIMP ha esaurito la memoria "
 "disponibile e non può usare il file di scambio. Alcune parti dell'immagine "
 "potrebbero essere rovinate. Provare a salvare il lavoro usando un nome "
-"differente, quindi riavviare Gimp e controllare la posizione della cartella "
+"differente, quindi riavviare GIMP e controllare la posizione della cartella "
 "del file di scambio nelle preferenze."
 
 #: ../app/base/tile-swap.c:725
@@ -6198,7 +6208,7 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
-"Gimp avvertirà l'utente se si è tentato di creare un'immagine che occupa più "
+"GIMP avvertirà l'utente se si è tentato di creare un'immagine che occupa più "
 "memoria di quella specificata qui."
 
 #: ../app/config/gimprc-blurbs.h:225
@@ -6455,7 +6465,7 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Imposta la posizione del file di scambio. Gimp usa uno schema di allocazione "
+"Imposta la posizione del file di scambio. GIMP usa uno schema di allocazione "
 "\"tile based\". Il file di scambio viene usato per spostare facilmente e "
 "velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file "
 "di scambio di GIMP può allargarsi molto se si elaborano immagini molto "
@@ -7372,7 +7382,7 @@ msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Jitter"
 
-#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:326
+#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:344
 #: ../app/gui/session.c:349 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:269
 #, c-format
@@ -7480,41 +7490,41 @@ msgstr "Creazione cartella '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Impossibile creare la cartella '%s': %s"
 
-#: ../app/core/gimp.c:595
+#: ../app/core/gimp.c:597
 msgid "Initialization"
 msgstr "Inizializzazione"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:696
+#: ../app/core/gimp.c:698
 msgid "Internal Procedures"
 msgstr "Procedure interne"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:947
+#: ../app/core/gimp.c:949
 msgid "Looking for data files"
 msgstr "Inizializzazione"
 
-#: ../app/core/gimp.c:947
+#: ../app/core/gimp.c:949
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2724
+#: ../app/core/gimp.c:958 ../app/dialogs/preferences-dialog.c:2724
 msgid "Dynamics"
 msgstr "Dinamica del pennello"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:976
+#: ../app/core/gimp.c:978
 msgid "Fonts (this may take a while)"
 msgstr "Caratteri (può metterci parecchio tempo)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:990 ../app/dialogs/preferences-dialog.c:2752
+#: ../app/core/gimp.c:992 ../app/dialogs/preferences-dialog.c:2752
 msgid "Modules"
 msgstr "Moduli"
 
 #. update tag cache
-#: ../app/core/gimp.c:994
+#: ../app/core/gimp.c:996
 msgid "Updating tag cache"
 msgstr "Aggiornamento cache dei marcatori"
 
@@ -7652,11 +7662,11 @@ msgstr "Punte pennello"
 msgid "Brush Hardness"
 msgstr "Durezza pennello"
 
-#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:141
+#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:143
 msgid "Brush Aspect Ratio"
 msgstr "Rapporto dimensioni pennello"
 
-#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:145
+#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:147
 msgid "Brush Angle"
 msgstr "Angolo pennello"
 
@@ -7800,11 +7810,11 @@ msgstr "Imposta opacità canale"
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
-#: ../app/core/gimpcontext.c:650
+#: ../app/core/gimpcontext.c:640
 msgid "Opacity"
 msgstr "Opacità"
 
-#: ../app/core/gimpcontext.c:658
+#: ../app/core/gimpcontext.c:648
 msgid "Paint Mode"
 msgstr "Modalità disegno"
 
@@ -8917,8 +8927,7 @@ msgstr "Visitate il sito di GIMP"
 msgid "translator-credits"
 msgstr ""
 "Marco Ciampa (attuale responsabile)\n"
-"Alessandro Falappa\n"
-"Gruppo Traduttori Italiani di Gimp"
+"Gruppo Traduttori Italiani di GIMP"
 
 #: ../app/dialogs/about-dialog.c:509
 msgid "GIMP is brought to you by"
@@ -9059,7 +9068,7 @@ msgstr "_Modalità:"
 msgid "_Opacity:"
 msgstr "_Opacità:"
 
-#: ../app/dialogs/file-open-dialog.c:255
+#: ../app/dialogs/file-open-dialog.c:267
 msgid "Open layers"
 msgstr "Apri livelli"
 
@@ -10544,24 +10553,24 @@ msgstr "A"
 msgid "_Sample Merged"
 msgstr "Campionamento diffu_so"
 
-#: ../app/display/gimpdisplayshell.c:500
+#: ../app/display/gimpdisplayshell.c:502
 msgid "Access the image menu"
 msgstr "Accedi al menu immagine"
 
-#: ../app/display/gimpdisplayshell.c:614
+#: ../app/display/gimpdisplayshell.c:616
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
 
-#: ../app/display/gimpdisplayshell.c:643
+#: ../app/display/gimpdisplayshell.c:645
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
-#: ../app/display/gimpdisplayshell.c:666
+#: ../app/display/gimpdisplayshell.c:668
 msgid "Navigate the image display"
 msgstr "Naviga nella finestra immagine"
 
-#: ../app/display/gimpdisplayshell.c:734
-#: ../app/display/gimpdisplayshell.c:1319 ../app/widgets/gimptoolbox.c:315
+#: ../app/display/gimpdisplayshell.c:736
+#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:315
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
 
@@ -10861,7 +10870,7 @@ msgstr "Non ci sono abbastanza punti da tracciare"
 msgid "Paint"
 msgstr "Disegna"
 
-#: ../app/paint/gimppaintoptions.c:136
+#: ../app/paint/gimppaintoptions.c:138
 msgid "Brush Scale"
 msgstr "Scala pennello"
 
@@ -11503,7 +11512,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Fisso"
 
-#: ../app/tools/gimp-tools.c:335
+#: ../app/tools/gimp-tools.c:352
 msgid ""
 "This tool has\n"
 "no options."
@@ -12641,7 +12650,7 @@ msgid "Adjustment"
 msgstr "Regolazione"
 
 #: ../app/tools/gimpinkoptions-gui.c:67 ../app/tools/gimpinkoptions-gui.c:92
-#: ../app/tools/gimprectangleoptions.c:972 ../app/tools/gimptextoptions.c:471
+#: ../app/tools/gimprectangleoptions.c:972 ../app/tools/gimptextoptions.c:489
 msgid "Size:"
 msgstr "Dimensione:"
 
@@ -13131,7 +13140,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1156 ../app/tools/gimprectangletool.c:2103
+#: ../app/tools/gimprectangletool.c:1156 ../app/tools/gimprectangletool.c:2130
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
@@ -13201,7 +13210,7 @@ msgctxt "command"
 msgid "Scale"
 msgstr "Scala"
 
-#: ../app/tools/gimpselectionoptions.c:257 ../app/tools/gimptextoptions.c:484
+#: ../app/tools/gimpselectionoptions.c:257 ../app/tools/gimptextoptions.c:502
 msgid "Antialiasing"
 msgstr "Antialiasing"
 
@@ -13286,36 +13295,36 @@ msgstr "Fare clic per sfumare"
 msgid "Click to smudge the line"
 msgstr "Fare clic per sfumare la riga"
 
-#: ../app/tools/gimptextoptions.c:133
+#: ../app/tools/gimptextoptions.c:137
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Il suggerimento altera la rappresentazione del carattere per produrre un "
 "bitmap chiaro a piccole dimensioni"
 
-#: ../app/tools/gimptextoptions.c:141
+#: ../app/tools/gimptextoptions.c:145
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr ""
 "La lingua del testo potrebbe avere influenza sul modo in cui questo viene "
 "disegnato."
 
-#: ../app/tools/gimptextoptions.c:157
+#: ../app/tools/gimptextoptions.c:161
 msgid "Indentation of the first line"
 msgstr "Indentazione della prima riga"
 
-#: ../app/tools/gimptextoptions.c:163
+#: ../app/tools/gimptextoptions.c:167
 msgid "Adjust line spacing"
 msgstr "Regola la spaziatura righe"
 
-#: ../app/tools/gimptextoptions.c:169
+#: ../app/tools/gimptextoptions.c:173
 msgid "Adjust letter spacing"
 msgstr "Regola la spaziatura caratteri"
 
-#: ../app/tools/gimptextoptions.c:175
+#: ../app/tools/gimptextoptions.c:179
 msgid "Text box resize mode"
 msgstr "Modalità ridimensione rettangolo di testo"
 
-#: ../app/tools/gimptextoptions.c:182
+#: ../app/tools/gimptextoptions.c:186
 msgid ""
 "Use an external editor window for text entry, instead of direct-on-canvas "
 "editing"
@@ -13323,35 +13332,35 @@ msgstr ""
 "Uso di una finestra di modifica del testo esterna invece che eseguire le "
 "modifiche direttamente sulla superficie immagine"
 
-#: ../app/tools/gimptextoptions.c:464
+#: ../app/tools/gimptextoptions.c:482
 msgid "Font:"
 msgstr "Caratteri:"
 
-#: ../app/tools/gimptextoptions.c:480
+#: ../app/tools/gimptextoptions.c:498
 msgid "Use editor"
 msgstr "Usa l'editor"
 
-#: ../app/tools/gimptextoptions.c:500
+#: ../app/tools/gimptextoptions.c:518
 msgid "Hinting:"
 msgstr "Hinting:"
 
-#: ../app/tools/gimptextoptions.c:504
+#: ../app/tools/gimptextoptions.c:522
 msgid "Text Color"
 msgstr "Colore del testo"
 
-#: ../app/tools/gimptextoptions.c:509
+#: ../app/tools/gimptextoptions.c:527
 msgid "Color:"
 msgstr "Colore:"
 
-#: ../app/tools/gimptextoptions.c:515
+#: ../app/tools/gimptextoptions.c:533
 msgid "Justify:"
 msgstr "Allineamento:"
 
-#: ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimptextoptions.c:556
 msgid "Box:"
 msgstr "Rettangolo:"
 
-#: ../app/tools/gimptextoptions.c:552
+#: ../app/tools/gimptextoptions.c:570
 msgid "Language:"
 msgstr "Lingua:"
 
@@ -13394,7 +13403,7 @@ msgstr ""
 "Puoi modificare il livello oppure creare un nuovo livello di testo dai suoi "
 "attributi."
 
-#: ../app/tools/gimptexttool-editor.c:1117
+#: ../app/tools/gimptexttool-editor.c:1118
 msgid "GIMP Text Editor"
 msgstr "Editor di testi di GIMP"
 
@@ -13654,122 +13663,127 @@ msgstr "Tracciato a selezione"
 msgid "There is no active layer or channel to stroke to"
 msgstr "Non c'è un livello o un canale attivo da disegnare"
 
-#: ../app/tools/tools-enums.c:91
+#: ../app/tools/tools-enums.c:92
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "Nessuna guida"
 
-#: ../app/tools/tools-enums.c:92
+#: ../app/tools/tools-enums.c:93
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "Centra le righe"
 
-#: ../app/tools/tools-enums.c:93
+#: ../app/tools/tools-enums.c:94
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
 msgstr "Regola dei terzi"
 
-#: ../app/tools/tools-enums.c:94
+#: ../app/tools/tools-enums.c:95
+msgctxt "rectangle-guide"
+msgid "Rule of fifths"
+msgstr "Regola dei quinti"
+
+#: ../app/tools/tools-enums.c:96
 msgctxt "rectangle-guide"
 msgid "Golden sections"
 msgstr "Sezioni auree"
 
-#: ../app/tools/tools-enums.c:95
+#: ../app/tools/tools-enums.c:97
 msgctxt "rectangle-guide"
 msgid "Diagonal lines"
 msgstr "Righe diagonali"
 
-#: ../app/tools/tools-enums.c:185
+#: ../app/tools/tools-enums.c:187
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Rapporto dimensioni"
 
-#: ../app/tools/tools-enums.c:186
+#: ../app/tools/tools-enums.c:188
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "Larghezza"
 
-#: ../app/tools/tools-enums.c:187
+#: ../app/tools/tools-enums.c:189
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "Altezza"
 
-#: ../app/tools/tools-enums.c:188
+#: ../app/tools/tools-enums.c:190
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../app/tools/tools-enums.c:217
+#: ../app/tools/tools-enums.c:219
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "Selezione libera"
 
-#: ../app/tools/tools-enums.c:218
+#: ../app/tools/tools-enums.c:220
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Ampiezza fissa"
 
-#: ../app/tools/tools-enums.c:219
+#: ../app/tools/tools-enums.c:221
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "Rapporto dimensioni fisso"
 
-#: ../app/tools/tools-enums.c:248
+#: ../app/tools/tools-enums.c:250
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Livello"
 
-#: ../app/tools/tools-enums.c:249
+#: ../app/tools/tools-enums.c:251
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Selezione"
 
-#: ../app/tools/tools-enums.c:250
+#: ../app/tools/tools-enums.c:252
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Tracciato"
 
-#: ../app/tools/tools-enums.c:280
+#: ../app/tools/tools-enums.c:282
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "Profilo"
 
-#: ../app/tools/tools-enums.c:281
+#: ../app/tools/tools-enums.c:283
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "Griglia"
 
-#: ../app/tools/tools-enums.c:282
+#: ../app/tools/tools-enums.c:284
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "Immagine"
 
-#: ../app/tools/tools-enums.c:283
+#: ../app/tools/tools-enums.c:285
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "Immagine + griglia"
 
-#: ../app/tools/tools-enums.c:311
+#: ../app/tools/tools-enums.c:313
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "Numero di righe della griglia"
 
-#: ../app/tools/tools-enums.c:312
+#: ../app/tools/tools-enums.c:314
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "Spaziatura della griglia"
 
-#: ../app/tools/tools-enums.c:341
+#: ../app/tools/tools-enums.c:343
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Progetta"
 
-#: ../app/tools/tools-enums.c:342
+#: ../app/tools/tools-enums.c:344
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Modifica"
 
-#: ../app/tools/tools-enums.c:343
+#: ../app/tools/tools-enums.c:345
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Sposta"
@@ -14027,11 +14041,11 @@ msgstr "Solo le immagini indicizzate hanno una mappa colori."
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../app/widgets/gimpcontainerpopup.c:547
+#: ../app/widgets/gimpcontainerpopup.c:578
 msgid "Smaller Previews"
 msgstr "Anteprime più piccole"
 
-#: ../app/widgets/gimpcontainerpopup.c:552
+#: ../app/widgets/gimpcontainerpopup.c:583
 msgid "Larger Previews"
 msgstr "Anteprime più grandi"
 
@@ -14420,7 +14434,7 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockable.c:235
+#: ../app/widgets/gimpdockbook.c:290
 msgid "Configure this tab"
 msgstr "Configura questa scheda"
 
@@ -15143,19 +15157,19 @@ msgstr "Abbassa questo strumento fino in fondo"
 msgid "Reset tool order and visibility"
 msgstr "Reimposta l'ordine e la visibilità degli strumenti"
 
-#: ../app/widgets/gimptooloptionseditor.c:206
+#: ../app/widgets/gimptooloptionseditor.c:208
 msgid "Save options to..."
 msgstr "Salva le opzioni in..."
 
-#: ../app/widgets/gimptooloptionseditor.c:214
+#: ../app/widgets/gimptooloptionseditor.c:216
 msgid "Restore options from..."
 msgstr "Recupera le opzioni da..."
 
-#: ../app/widgets/gimptooloptionseditor.c:222
+#: ../app/widgets/gimptooloptionseditor.c:224
 msgid "Delete saved options..."
 msgstr "Elimina le opzioni salvate..."
 
-#: ../app/widgets/gimptooloptionseditor.c:562
+#: ../app/widgets/gimptooloptionseditor.c:573
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr ""
@@ -15244,22 +15258,22 @@ msgstr "Apri la finestra di selezione tavolozza"
 msgid "Open the font selection dialog"
 msgstr "Apri la finestra della selezione caratteri"
 
-#: ../app/widgets/gimpwidgets-utils.c:646
+#: ../app/widgets/gimpwidgets-utils.c:670
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (provare %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:646
+#: ../app/widgets/gimpwidgets-utils.c:670
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:650
+#: ../app/widgets/gimpwidgets-utils.c:674
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (provare %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:654
+#: ../app/widgets/gimpwidgets-utils.c:678
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (provare %s, %s, %s)"
@@ -15324,45 +15338,50 @@ msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Istogramma logaritmico"
 
-#: ../app/widgets/widgets-enums.c:213
+#: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Icona"
 
-#: ../app/widgets/widgets-enums.c:214
+#: ../app/widgets/widgets-enums.c:216
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Stato corrente"
 
-#: ../app/widgets/widgets-enums.c:215
+#: ../app/widgets/widgets-enums.c:217
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Testo"
 
-#: ../app/widgets/widgets-enums.c:216
+#: ../app/widgets/widgets-enums.c:218
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Descrizione"
 
-#: ../app/widgets/widgets-enums.c:217
+#: ../app/widgets/widgets-enums.c:219
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Icona e testo"
 
-#: ../app/widgets/widgets-enums.c:218
+#: ../app/widgets/widgets-enums.c:220
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Icona e desc"
 
-#: ../app/widgets/widgets-enums.c:219
+#: ../app/widgets/widgets-enums.c:221
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stato e testo"
 
-#: ../app/widgets/widgets-enums.c:220
+#: ../app/widgets/widgets-enums.c:222
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stato e desc"
+
+#: ../app/widgets/widgets-enums.c:223
+msgctxt "tab-style"
+msgid "Undefined"
+msgstr "Indefinito"
 
 #: ../app/xcf/xcf-load.c:329
 msgid ""
@@ -15446,11 +15465,11 @@ msgstr "Editor immagine"
 
 #: ../tools/gimp-remote.c:64
 msgid "Use a running GIMP only, never start a new one"
-msgstr "Usa sempre il Gimp in esecuzione, non eseguirne un altro"
+msgstr "Usa sempre il GIMP in esecuzione, non eseguirne un altro"
 
 #: ../tools/gimp-remote.c:69
 msgid "Only check if GIMP is running, then quit"
-msgstr "Controlla solo se Gimp è in esecuzione e poi esci"
+msgstr "Controlla solo se GIMP è in esecuzione e poi esci"
 
 #: ../tools/gimp-remote.c:75
 msgid "Print X window ID of GIMP toolbox window, then quit"
@@ -15462,7 +15481,7 @@ msgstr "Esegui gimp senza mostrare la finestra iniziale"
 
 #: ../tools/gimp-remote-x11.c:66
 msgid "Could not connect to GIMP."
-msgstr "Impossibile connettersi a Gimp"
+msgstr "Impossibile connettersi a GIMP."
 
 #: ../tools/gimp-remote-x11.c:67
 msgid "Make sure that the Toolbox is visible!"
