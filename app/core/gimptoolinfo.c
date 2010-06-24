@@ -45,6 +45,7 @@ enum
 };
 
 
+static void    gimp_tool_info_dispose         (GObject       *object);
 static void    gimp_tool_info_finalize        (GObject       *object);
 static void    gimp_tool_info_get_property    (GObject       *object,
                                                guint          property_id,
@@ -69,6 +70,7 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
+  object_class->dispose           = gimp_tool_info_dispose;
   object_class->finalize          = gimp_tool_info_finalize;
   object_class->get_property      = gimp_tool_info_get_property;
   object_class->set_property      = gimp_tool_info_set_property;
@@ -101,6 +103,27 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->visible           = TRUE;
   tool_info->tool_options      = NULL;
   tool_info->paint_info        = NULL;
+}
+
+static void
+gimp_tool_info_dispose (GObject *object)
+{
+  GimpToolInfo *tool_info = GIMP_TOOL_INFO (object);
+
+  if (tool_info->tool_options)
+    {
+      g_object_run_dispose (G_OBJECT (tool_info->tool_options));
+      g_object_unref (tool_info->tool_options);
+      tool_info->tool_options = NULL;
+    }
+
+  if (tool_info->presets)
+    {
+      g_object_unref (tool_info->presets);
+      tool_info->presets = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -139,18 +162,6 @@ gimp_tool_info_finalize (GObject *object)
     {
       g_free (tool_info->help_id);
       tool_info->help_id = NULL;
-    }
-
-  if (tool_info->tool_options)
-    {
-      g_object_unref (tool_info->tool_options);
-      tool_info->tool_options = NULL;
-    }
-
-  if (tool_info->presets)
-    {
-      g_object_unref (tool_info->presets);
-      tool_info->presets = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
