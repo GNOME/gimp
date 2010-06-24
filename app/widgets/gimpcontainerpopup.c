@@ -180,8 +180,14 @@ static void
 gimp_container_popup_grab_notify (GtkWidget *widget,
                                   gboolean   was_grabbed)
 {
-  if (! was_grabbed)
-    g_signal_emit (widget, popup_signals[CANCEL], 0);
+  if (was_grabbed)
+    return;
+
+  /* ignore grabs on one of our children, like the scrollbar */
+  if (gtk_widget_is_ancestor (gtk_grab_get_current (), widget))
+    return;
+
+  g_signal_emit (widget, popup_signals[CANCEL], 0);
 }
 
 static gboolean
