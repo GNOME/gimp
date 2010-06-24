@@ -447,13 +447,16 @@ static void
 gimp_core_config_init (GimpCoreConfig *config)
 {
   config->default_image = g_object_new (GIMP_TYPE_TEMPLATE,
+                                        "name",    "Default Image",
                                         "comment", DEFAULT_COMMENT,
                                         NULL);
   g_signal_connect (config->default_image, "notify",
                     G_CALLBACK (gimp_core_config_default_image_notify),
                     config);
 
-  config->default_grid = g_object_new (GIMP_TYPE_GRID, NULL);
+  config->default_grid = g_object_new (GIMP_TYPE_GRID,
+                                       "name", "Default Grid",
+                                       NULL);
   g_signal_connect (config->default_grid, "notify",
                     G_CALLBACK (gimp_core_config_default_grid_notify),
                     config);
