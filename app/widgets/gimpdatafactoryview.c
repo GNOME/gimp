@@ -70,6 +70,7 @@ struct _GimpDataFactoryViewPriv
 };
 
 
+static void   gimp_data_factory_view_dispose        (GObject             *object);
 static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
                                                      GimpViewable        *viewable);
 static void   gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
@@ -89,7 +90,10 @@ G_DEFINE_TYPE (GimpDataFactoryView, gimp_data_factory_view,
 static void
 gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 {
+  GObjectClass             *object_class = G_OBJECT_CLASS (klass);
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
+
+  object_class->dispose       = gimp_data_factory_view_dispose;
 
   editor_class->select_item   = gimp_data_factory_view_select_item;
   editor_class->activate_item = gimp_data_factory_view_activate_item;
@@ -113,6 +117,20 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->priv->duplicate_button       = NULL;
   view->priv->delete_button          = NULL;
   view->priv->refresh_button         = NULL;
+}
+
+static void
+gimp_data_factory_view_dispose (GObject *object)
+{
+  GimpDataFactoryView *factory_view = GIMP_DATA_FACTORY_VIEW (object);
+
+  if (factory_view->priv->tag_filtered_container)
+    {
+      g_object_unref (factory_view->priv->tag_filtered_container);
+      factory_view->priv->tag_filtered_container = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *
