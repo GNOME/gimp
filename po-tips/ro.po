@@ -1,14 +1,14 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-01-09 11:16+0000\n"
+"POT-Creation-Date: 2010-05-10 06:51+0000\n"
 "PO-Revision-Date: 2010-01-13 09:01+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
@@ -26,9 +26,9 @@ msgid ""
 "color."
 msgstr ""
 "<tt>Ctrl</tt>-clic pe instrumentul Umplere cu găleata determină folosirea de "
-"către aceasta a culorii de fundal în locul celei de prim plan. Similar, "
+"către aceasta a culorii de fundal în locul celei de prim-plan. Similar, "
 "<tt>Ctrl</tt>-clic pe instrumentul Pipetă determină stabilirea culorii de "
-"fundal în locul celei de prim plan."
+"fundal în locul celei de prim-plan."
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
