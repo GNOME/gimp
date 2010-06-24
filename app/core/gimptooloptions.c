@@ -50,6 +50,7 @@ enum
 };
 
 
+static void   gimp_tool_options_dispose      (GObject         *object);
 static void   gimp_tool_options_set_property (GObject         *object,
                                               guint            property_id,
                                               const GValue    *value,
@@ -67,12 +68,15 @@ static void   gimp_tool_options_tool_notify  (GimpToolOptions *options,
 
 G_DEFINE_TYPE (GimpToolOptions, gimp_tool_options, GIMP_TYPE_CONTEXT)
 
+#define parent_class gimp_tool_options_parent_class
+
 
 static void
 gimp_tool_options_class_init (GimpToolOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose      = gimp_tool_options_dispose;
   object_class->set_property = gimp_tool_options_set_property;
   object_class->get_property = gimp_tool_options_get_property;
 
@@ -96,6 +100,20 @@ gimp_tool_options_init (GimpToolOptions *options)
   g_signal_connect (options, "notify::tool",
                     G_CALLBACK (gimp_tool_options_tool_notify),
                     NULL);
+}
+
+static void
+gimp_tool_options_dispose (GObject *object)
+{
+  GimpToolOptions *options = GIMP_TOOL_OPTIONS (object);
+
+  if (options->tool_info)
+    {
+      g_object_unref (options->tool_info);
+      options->tool_info = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 /*  This is such a horrible hack, but neccessary because we
