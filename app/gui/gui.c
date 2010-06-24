@@ -624,6 +624,9 @@ gui_exit_after_callback (Gimp     *gimp,
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 
+  g_object_unref (ui_configurer);
+  ui_configurer = NULL;
+
   session_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
