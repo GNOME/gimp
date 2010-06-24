@@ -1,15 +1,15 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-02-07 10:15+0000\n"
-"PO-Revision-Date: 2010-02-10 01:04+0200\n"
+"POT-Creation-Date: 2010-05-10 06:50+0000\n"
+"PO-Revision-Date: 2010-03-22 18:06+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -796,7 +796,7 @@ msgstr "Atenuare claritate"
 
 #: ../plug-ins/common/border-average.c:99
 msgid "Set foreground to the average color of the image border"
-msgstr "Stabilește culoarea de prim plan la culoarea medie a bordurii imaginii"
+msgstr "Stabilește culoarea de prim-plan la culoarea medie a bordurii imaginii"
 
 #: ../plug-ins/common/border-average.c:104
 msgid "_Border Average..."
@@ -1702,16 +1702,16 @@ msgstr "Colorizare cu culoare particularizată"
 
 #: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
-msgstr "Rearanjează harta de culori"
+msgstr "Rearanjează paleta de culori"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "R_earanjează harta de culori..."
+msgstr "R_earanjează paleta de culori..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
-msgstr "Interschimbă două culori în harta de culori"
+msgstr "Interschimbă două culori în paleta de culori"
 
 #: ../plug-ins/common/colormap-remap.c:123
 msgid "_Swap Colors"
@@ -1725,7 +1725,7 @@ msgstr "O arie de remapare nevalidă a fost pasată funcției de remapare"
 
 #: ../plug-ins/common/colormap-remap.c:332
 msgid "Rearranging the colormap"
-msgstr "Rearanjare hartă de culori"
+msgstr "Rearanjare paletă de culori"
 
 #: ../plug-ins/common/colormap-remap.c:481
 msgid "Sort on Hue"
@@ -1750,14 +1750,14 @@ msgstr "Resetează ordinea"
 # titlu pe bară
 #: ../plug-ins/common/colormap-remap.c:596
 msgid "Rearrange Colormap"
-msgstr "Rearanjare hartă de culori"
+msgstr "Rearanjare paletă de culori"
 
 #: ../plug-ins/common/colormap-remap.c:699
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
-"Trageți și plasați culorile pentru a rearanja harta de culori. Numerele "
+"Trageți și plasați culorile pentru a rearanja paleta de culori. Numerele "
 "afișate sunt índicii originali. Clic dreapta pentru meniul cu opțiuni de "
 "sortare."
 
@@ -2556,14 +2556,14 @@ msgstr "_Descompune în straturi"
 
 #: ../plug-ins/common/decompose.c:1561
 msgid "_Foreground as registration color"
-msgstr "_Folosește prim planul drept culoare de înregistrare"
+msgstr "_Folosește prim-planul drept culoare de înregistrare"
 
 #: ../plug-ins/common/decompose.c:1562
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
-"Pixelii în culoarea de prim plan vor apărea negri în toate imaginile de "
+"Pixelii în culoarea de prim-plan vor apărea negri în toate imaginile de "
 "ieșire. Aceasta poate fi folosit pentru lucruri precum markerii de decupare "
 "care trebuie să rămână vizibili pe toate canalele."
 
@@ -3109,11 +3109,12 @@ msgstr "arhivă bzip"
 
 #: ../plug-ins/common/file-compressor.c:390
 msgid "No sensible file extension, saving as compressed XCF."
-msgstr "Nicio extensie de fișier rezonabilă, se salvează ca XCF comprimat."
+msgstr "Nicio extensie de fișier rezonabilă, se va salva ca XCF comprimat."
 
 #: ../plug-ins/common/file-compressor.c:572
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr "Nicio extensie rezonabilă, se încearcă încărcarea cu detecție magică."
+msgstr ""
+"Nicio extensie rezonabilă, se va încerca încărcarea cu detecție magică."
 
 #: ../plug-ins/common/file-csource.c:112
 msgid "C source code"
@@ -3294,7 +3295,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:447
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr "Nu se mai pot reduce culorile. Se salvează ca opac."
+msgstr "Nu se mai pot reduce culorile. Se va salva ca opac."
 
 #: ../plug-ins/common/file-gif-save.c:562
 #, c-format
@@ -3833,19 +3834,19 @@ msgstr "Import din PDF"
 msgid "_Import"
 msgstr "_Importă"
 
-#: ../plug-ins/common/file-pdf.c:879
+#: ../plug-ins/common/file-pdf.c:880
 msgid "_Width (pixels):"
 msgstr "_Lățime (pixeli):"
 
-#: ../plug-ins/common/file-pdf.c:880
+#: ../plug-ins/common/file-pdf.c:881
 msgid "_Height (pixels):"
 msgstr "Î_nălțime (pixeli):"
 
-#: ../plug-ins/common/file-pdf.c:882
+#: ../plug-ins/common/file-pdf.c:883
 msgid "_Resolution:"
 msgstr "_Rezoluție:"
 
-#: ../plug-ins/common/file-pdf.c:1156
+#: ../plug-ins/common/file-pdf.c:1157
 #, c-format
 msgid "pixels/%s"
 msgstr "pixeli/%s"
@@ -4319,7 +4320,7 @@ msgstr "Nu s-au putut citi intrările de culoare din „%s”"
 
 #: ../plug-ins/common/file-sunras.c:449
 msgid "Type of colormap not supported"
-msgstr "Tipul de hartă de culori nu este suportat"
+msgstr "Tipul de paletă de culori nu este suportat"
 
 #: ../plug-ins/common/file-sunras.c:456 ../plug-ins/common/file-xbm.c:826
 #: ../plug-ins/common/file-xwd.c:489
@@ -5843,7 +5844,7 @@ msgstr "Supra_fețe poroase"
 
 #: ../plug-ins/common/mosaic.c:778
 msgid "_FG/BG lighting"
-msgstr "_Iluminează cu culorile de prim plan și fundal"
+msgstr "_Iluminează cu culorile de prim-plan și de fundal"
 
 #: ../plug-ins/common/newsprint.c:127
 msgid "Round"
@@ -6896,7 +6897,7 @@ msgstr "_Alb și negru"
 
 #: ../plug-ins/common/sinus.c:804
 msgid "_Foreground & background"
-msgstr "Primplan și _fundal"
+msgstr "Prim-plan și _fundal"
 
 #: ../plug-ins/common/sinus.c:806
 msgid "C_hoose here:"
@@ -7114,7 +7115,7 @@ msgstr "Culoare _naturală"
 
 #: ../plug-ins/common/sparkle.c:550
 msgid "_Foreground color"
-msgstr "Culoare de _prim plan"
+msgstr "Culoare de _prim-plan"
 
 #: ../plug-ins/common/sparkle.c:551
 msgid "_Background color"
@@ -7126,7 +7127,7 @@ msgstr "Folosește culoarea imaginii"
 
 #: ../plug-ins/common/sparkle.c:559
 msgid "Use the foreground color"
-msgstr "Folosește culoarea de prim plan"
+msgstr "Folosește culoarea de prim-plan"
 
 #: ../plug-ins/common/sparkle.c:560
 msgid "Use the background color"
@@ -7412,7 +7413,7 @@ msgstr "Im_aginea curentă"
 
 #: ../plug-ins/common/tile-paper.c:390
 msgid "Fo_reground color"
-msgstr "Culoarea de p_rim plan"
+msgstr "Culoarea de p_rim-plan"
 
 #: ../plug-ins/common/tile-paper.c:392
 msgid "Bac_kground color"
@@ -7718,11 +7719,11 @@ msgstr "Valori de _mijloc spre vârfuri"
 
 #: ../plug-ins/common/value-propagate.c:198
 msgid "_Foreground to peaks"
-msgstr "Prim plan la vâr_furi"
+msgstr "Prim-plan la vâr_furi"
 
 #: ../plug-ins/common/value-propagate.c:201
 msgid "O_nly foreground"
-msgstr "_Numai prim plan"
+msgstr "_Numai prim-plan"
 
 #: ../plug-ins/common/value-propagate.c:204
 msgid "Only b_ackground"
@@ -7991,7 +7992,7 @@ msgstr "Negru"
 
 #: ../plug-ins/common/warp.c:516
 msgid "Foreground color"
-msgstr "Culoare de prim plan"
+msgstr "Culoare de prim-plan"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -8239,7 +8240,7 @@ msgstr "Valori mai mari cresc magnitudinea efectului"
 
 #: ../plug-ins/file-bmp/bmp-read.c:88
 msgid "Bad colormap"
-msgstr "Hartă de culori greșită"
+msgstr "Paletă de culori greșită"
 
 #: ../plug-ins/file-bmp/bmp-read.c:172 ../plug-ins/file-bmp/bmp-read.c:182
 #: ../plug-ins/file-bmp/bmp-read.c:189 ../plug-ins/file-bmp/bmp-read.c:198
@@ -9166,7 +9167,7 @@ msgstr "Rază _filtru spațial:"
 
 #: ../plug-ins/flame/flame.c:1164
 msgid "Color_map:"
-msgstr "_Hartă de culoare"
+msgstr "_Paletă de culori:"
 
 #: ../plug-ins/flame/flame.c:1206
 msgid "Custom gradient"
@@ -10904,7 +10905,7 @@ msgstr "ID de ajutor „%s” necunoscut"
 #: ../plug-ins/help/gimphelplocale.c:209
 #, c-format
 msgid "Loading index from '%s'"
-msgstr "Se îîncarcă indexul de la „%s”"
+msgstr "Se încarcă indexul de la „%s”"
 
 #: ../plug-ins/help/gimphelplocale.c:267
 #, c-format
@@ -12573,7 +12574,7 @@ msgstr "Degrade curent"
 
 #: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
-msgstr "Culori de prim plan / fundal"
+msgstr "Culori de prim-plan și de fundal"
 
 #: ../plug-ins/pagecurl/pagecurl.c:611
 msgid "_Opacity:"
