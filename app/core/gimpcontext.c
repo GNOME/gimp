@@ -901,6 +901,78 @@ gimp_context_dispose (GObject *object)
       context->gimp = NULL;
     }
 
+  if (context->tool_info)
+    {
+      g_object_unref (context->tool_info);
+      context->tool_info = NULL;
+    }
+
+  if (context->paint_info)
+    {
+      g_object_unref (context->paint_info);
+      context->paint_info = NULL;
+    }
+
+  if (context->brush)
+    {
+      g_object_unref (context->brush);
+      context->brush = NULL;
+    }
+
+  if (context->dynamics)
+    {
+      g_object_unref (context->dynamics);
+      context->dynamics = NULL;
+    }
+
+  if (context->pattern)
+    {
+      g_object_unref (context->pattern);
+      context->pattern = NULL;
+    }
+
+  if (context->gradient)
+    {
+      g_object_unref (context->gradient);
+      context->gradient = NULL;
+    }
+
+  if (context->palette)
+    {
+      g_object_unref (context->palette);
+      context->palette = NULL;
+    }
+
+  if (context->tool_preset)
+    {
+      g_object_unref (context->tool_preset);
+      context->tool_preset = NULL;
+    }
+
+  if (context->font)
+    {
+      g_object_unref (context->font);
+      context->font = NULL;
+    }
+
+  if (context->buffer)
+    {
+      g_object_unref (context->buffer);
+      context->buffer = NULL;
+    }
+
+  if (context->imagefile)
+    {
+      g_object_unref (context->imagefile);
+      context->imagefile = NULL;
+    }
+
+  if (context->template)
+    {
+      g_object_unref (context->template);
+      context->template = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -913,132 +985,72 @@ gimp_context_finalize (GObject *object)
   context->image   = NULL;
   context->display = NULL;
 
-  if (context->tool_info)
-    {
-      g_object_unref (context->tool_info);
-      context->tool_info = NULL;
-    }
   if (context->tool_name)
     {
       g_free (context->tool_name);
       context->tool_name = NULL;
     }
 
-  if (context->paint_info)
-    {
-      g_object_unref (context->paint_info);
-      context->paint_info = NULL;
-    }
   if (context->paint_name)
     {
       g_free (context->paint_name);
       context->paint_name = NULL;
     }
 
-  if (context->brush)
-    {
-      g_object_unref (context->brush);
-      context->brush = NULL;
-    }
   if (context->brush_name)
     {
       g_free (context->brush_name);
       context->brush_name = NULL;
     }
 
-  if (context->dynamics)
-    {
-      g_object_unref (context->dynamics);
-      context->dynamics = NULL;
-    }
   if (context->dynamics_name)
     {
       g_free (context->dynamics_name);
       context->dynamics_name = NULL;
     }
 
-  if (context->pattern)
-    {
-      g_object_unref (context->pattern);
-      context->pattern = NULL;
-    }
   if (context->pattern_name)
     {
       g_free (context->pattern_name);
       context->pattern_name = NULL;
     }
 
-  if (context->gradient)
-    {
-      g_object_unref (context->gradient);
-      context->gradient = NULL;
-    }
   if (context->gradient_name)
     {
       g_free (context->gradient_name);
       context->gradient_name = NULL;
     }
 
-  if (context->palette)
-    {
-      g_object_unref (context->palette);
-      context->palette = NULL;
-    }
   if (context->palette_name)
     {
       g_free (context->palette_name);
       context->palette_name = NULL;
     }
 
-  if (context->tool_preset)
-    {
-      g_object_unref (context->tool_preset);
-      context->tool_preset = NULL;
-    }
   if (context->tool_preset_name)
     {
       g_free (context->tool_preset_name);
       context->tool_preset_name = NULL;
     }
 
-  if (context->font)
-    {
-      g_object_unref (context->font);
-      context->font = NULL;
-    }
   if (context->font_name)
     {
       g_free (context->font_name);
       context->font_name = NULL;
     }
 
-  if (context->buffer)
-    {
-      g_object_unref (context->buffer);
-      context->buffer = NULL;
-    }
   if (context->buffer_name)
     {
       g_free (context->buffer_name);
       context->buffer_name = NULL;
     }
 
-  if (context->imagefile)
-    {
-      g_object_unref (context->imagefile);
-      context->imagefile = NULL;
-    }
   if (context->imagefile_name)
     {
       g_free (context->imagefile_name);
       context->imagefile_name = NULL;
     }
 
-  if (context->template)
-    {
-      g_object_unref (context->template);
-      context->template = NULL;
-    }
   if (context->template_name)
     {
       g_free (context->template_name);
@@ -1345,7 +1357,6 @@ gimp_context_deserialize_property (GimpConfig *object,
       current   = (GimpObject *) context->tool_preset;
       name_loc  = &context->tool_preset_name;
       break;
-
 
     case GIMP_CONTEXT_PROP_FONT:
       container = context->gimp->fonts;
