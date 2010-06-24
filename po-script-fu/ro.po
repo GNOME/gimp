@@ -1,15 +1,15 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-02-07 10:16+0000\n"
-"PO-Revision-Date: 2010-02-07 01:57+0200\n"
+"POT-Creation-Date: 2010-05-10 06:50+0000\n"
+"PO-Revision-Date: 2010-05-09 13:06+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -951,7 +951,7 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Scriptul pentru arsură necesită în total două straturi: un strat de prim "
+"Scriptul pentru arsură necesită în total două straturi: un strat de prim-"
 "plan cu transparență și un strat de fundal."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
@@ -1297,7 +1297,7 @@ msgstr "Nori de diferență..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Zgomot solid aplicat cu modul strat de diferență"
+msgstr "Zgomot solid aplicat cu módul de strat diferență"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1889,7 +1889,7 @@ msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
 "Umple un strat cu raze care emană din centrul lui înspre exterior, folosind "
-"culoarea de prim plan"
+"culoarea de prim-plan"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2231,14 +2231,13 @@ msgstr "_Rotunjire de colțuri..."
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Schimbă harta de culori a unei imagini cu culorile dintr-o paletă "
+"Schimbă paleta de culori a unei imagini cu culorile dintr-o paletă "
 "specificată."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
 msgstr "Paletă"
 
-# hm ? este mai în ton cu (i) ce face și (ii) ce apare în lista de operații
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
 msgstr "S_tabilește paleta de culori..."
@@ -2648,7 +2647,7 @@ msgstr "Creează o imagine umplută cu un model Truchet"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
-msgstr "Culoare de prim plan"
+msgstr "Culoare de prim-plan"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
