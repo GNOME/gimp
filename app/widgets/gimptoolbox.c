@@ -410,6 +410,24 @@ gimp_toolbox_dispose (GObject *object)
 
   toolbox->p->in_destruction = TRUE;
 
+  if (toolbox->p->context)
+    {
+      g_object_unref (toolbox->p->context);
+      toolbox->p->context = NULL;
+    }
+
+  if (toolbox->p->dialog_factory)
+    {
+      g_object_unref (toolbox->p->dialog_factory);
+      toolbox->p->dialog_factory = NULL;
+    }
+
+  if (toolbox->p->ui_manager)
+    {
+      g_object_unref (toolbox->p->ui_manager);
+      toolbox->p->ui_manager = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 
   toolbox->p->in_destruction = FALSE;
