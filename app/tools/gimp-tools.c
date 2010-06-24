@@ -235,7 +235,10 @@ gimp_tools_exit (Gimp *gimp)
       options_gui = g_object_get_data (G_OBJECT (tool_info->tool_options),
                                        "gimp-tool-options-gui");
 
-      g_object_unref (options_gui);
+      gtk_widget_destroy (options_gui);
+
+      g_object_set_data (G_OBJECT (tool_info->tool_options),
+                         "gimp-tool-options-gui", NULL);
     }
 
   tool_manager_exit (gimp);
@@ -355,9 +358,10 @@ gimp_tools_restore (Gimp *gimp)
           gtk_widget_show (label);
         }
 
-      g_object_set_data (G_OBJECT (tool_info->tool_options),
-                         "gimp-tool-options-gui",
-                         g_object_ref_sink (options_gui));
+      g_object_set_data_full (G_OBJECT (tool_info->tool_options),
+                              "gimp-tool-options-gui",
+                              g_object_ref_sink (options_gui),
+                              (GDestroyNotify) g_object_unref);
 
       if (tool_info->presets)
         gimp_tool_presets_load (tool_info->presets, NULL);
