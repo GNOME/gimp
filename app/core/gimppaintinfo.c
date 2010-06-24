@@ -27,6 +27,7 @@
 #include "gimppaintinfo.h"
 
 
+static void    gimp_paint_info_dispose         (GObject       *object);
 static void    gimp_paint_info_finalize        (GObject       *object);
 static gchar * gimp_paint_info_get_description (GimpViewable  *viewable,
                                                 gchar        **tooltip);
@@ -43,6 +44,7 @@ gimp_paint_info_class_init (GimpPaintInfoClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
+  object_class->dispose           = gimp_paint_info_dispose;
   object_class->finalize          = gimp_paint_info_finalize;
 
   viewable_class->get_description = gimp_paint_info_get_description;
@@ -58,6 +60,20 @@ gimp_paint_info_init (GimpPaintInfo *paint_info)
 }
 
 static void
+gimp_paint_info_dispose (GObject *object)
+{
+  GimpPaintInfo *paint_info = GIMP_PAINT_INFO (object);
+
+  if (paint_info->paint_options)
+    {
+      g_object_unref (paint_info->paint_options);
+      paint_info->paint_options = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_paint_info_finalize (GObject *object)
 {
   GimpPaintInfo *paint_info = GIMP_PAINT_INFO (object);
@@ -66,12 +82,6 @@ gimp_paint_info_finalize (GObject *object)
     {
       g_free (paint_info->blurb);
       paint_info->blurb = NULL;
-    }
-
-  if (paint_info->paint_options)
-    {
-      g_object_unref (paint_info->paint_options);
-      paint_info->paint_options = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
