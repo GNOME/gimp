@@ -29,6 +29,8 @@
 #include "gimpmarshal.h"
 #include "gimpobject.h"
 
+#include "gimp-debug.h"
+
 
 enum
 {
@@ -74,10 +76,6 @@ static void    gimp_object_name_normalize   (GimpObject      *object);
 static GObjectClass *parent_class = NULL;
 
 static guint object_signals[LAST_SIGNAL] = { 0 };
-
-#ifdef DEBUG_INSTANCES
-static GHashTable *class_hash = NULL;
-#endif
 
 
 GType
@@ -150,13 +148,6 @@ gimp_object_class_init (GimpObjectClass *klass)
                                                         G_PARAM_CONSTRUCT));
   g_type_class_add_private (klass,
                             sizeof (GimpObjectPrivate));
-
-#ifdef DEBUG_INSTANCES
-  class_hash = g_hash_table_new_full (g_str_hash,
-                                      g_str_equal,
-                                      NULL,
-                                      (GDestroyNotify )g_hash_table_unref);
-#endif
 }
 
 static void
@@ -169,25 +160,7 @@ gimp_object_init (GimpObject      *object,
   object->p->name       = NULL;
   object->p->normalized = NULL;
 
-#ifdef DEBUG_INSTANCES
-  {
-    GHashTable  *instance_hash;
-    const gchar *type_name;
-
-    type_name = g_type_name (G_TYPE_FROM_CLASS (klass));
-
-    instance_hash = g_hash_table_lookup (class_hash, type_name);
-
-    if (! instance_hash)
-      {
-        instance_hash = g_hash_table_new (g_direct_hash,
-                                          g_direct_equal);
-        g_hash_table_insert (class_hash, (gchar *) type_name, instance_hash);
-      }
-
-    g_hash_table_insert (instance_hash, object, object);
-  }
-#endif /* DEBUG_INSTANCES */
+  gimp_debug_add_instance (G_OBJECT (object), G_OBJECT_CLASS (klass));
 }
 
 static void
@@ -210,24 +183,7 @@ gimp_object_finalize (GObject *object)
 {
   gimp_object_name_free (GIMP_OBJECT (object));
 
-#ifdef DEBUG_INSTANCES
-  {
-    GHashTable  *instance_hash;
-    const gchar *type_name;
-
-    type_name = g_type_name (G_OBJECT_TYPE (object));
-
-    instance_hash = g_hash_table_lookup (class_hash, type_name);
-
-    if (instance_hash)
-      {
-        g_hash_table_remove (instance_hash, object);
-
-        if (g_hash_table_size (instance_hash) == 0)
-          g_hash_table_remove (class_hash, type_name);
-      }
-  }
-#endif /* DEBUG_INSTANCES */
+  gimp_debug_remove_instance (object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -568,32 +524,3 @@ gimp_object_real_get_memsize (GimpObject *object,
 
   return memsize + gimp_g_object_get_memsize ((GObject *) object);
 }
-
-#ifdef DEBUG_INSTANCES
-static void
-gimp_object_debug_instance_foreach (GimpObject *object)
-{
-  g_printerr ("  \'%s\': ref_count = %d\n",
-              gimp_object_get_name (object), G_OBJECT (object)->ref_count);
-}
-
-static void
-gimp_object_debug_class_foreach (const gchar *type_name,
-                                 GHashTable  *instance_hash)
-{
-  g_printerr ("Leaked %s instances: %d\n",
-              type_name, g_hash_table_size (instance_hash));
-
-  g_hash_table_foreach (instance_hash,
-                        (GHFunc) gimp_object_debug_instance_foreach,
-                        NULL);
-}
-
-void
-gimp_object_debug_instances (void)
-{
-  g_hash_table_foreach (class_hash,
-                        (GHFunc) gimp_object_debug_class_foreach,
-                        NULL);
-}
-#endif /* DEBUG_INSTANCES */

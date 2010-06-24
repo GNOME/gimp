@@ -66,6 +66,8 @@ libapp_sources = \
 	units.h		\
 	version.c	\
 	version.h	\
+	gimp-debug.c	\
+	gimp-debug.h	\
 	gimp-log.c	\
 	gimp-log.h	\
 	gimp-intl.h

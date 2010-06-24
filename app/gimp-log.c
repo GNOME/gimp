@@ -19,6 +19,7 @@
 
 #include "glib-object.h"
 
+#include "gimp-debug.h"
 #include "gimp-log.h"
 
 
@@ -52,7 +53,8 @@ gimp_log_init (void)
         { "shm",                GIMP_LOG_SHM                },
         { "text-editing",       GIMP_LOG_TEXT_EDITING       },
         { "key-events",         GIMP_LOG_KEY_EVENTS         },
-        { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     }
+        { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     },
+        { "instances",          GIMP_LOG_INSTANCES          }
       };
 
       /*  g_parse_debug_string() has special treatment of the string 'help',
@@ -64,6 +66,9 @@ gimp_log_init (void)
         gimp_log_flags = g_parse_debug_string (env_log_val,
                                                log_keys,
                                                G_N_ELEMENTS (log_keys));
+
+      if (gimp_log_flags & GIMP_LOG_INSTANCES)
+        gimp_debug_enable_instances ();
     }
 }
 

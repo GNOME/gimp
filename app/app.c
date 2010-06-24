@@ -59,6 +59,7 @@
 #include "batch.h"
 #include "errors.h"
 #include "units.h"
+#include "gimp-debug.h"
 
 #include "gimp-intl.h"
 
@@ -255,9 +256,7 @@ app_run (const gchar         *full_prog_name,
 
   g_object_unref (gimp);
 
-#ifdef DEBUG_INSTANCES
-  gimp_object_debug_instances ();
-#endif
+  gimp_debug_instances ();
 
   errors_exit ();
   gegl_exit ();

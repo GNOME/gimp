@@ -70,11 +70,5 @@ gint          gimp_object_name_collate    (GimpObject       *object1,
 gint64        gimp_object_get_memsize     (GimpObject       *object,
                                            gint64           *gui_size);
 
-/* #define DEBUG_INSTANCES 1 */
-
-#ifdef DEBUG_INSTANCES
-void          gimp_object_debug_instances (void);
-#endif
-
 
 #endif  /* __GIMP_OBJECT_H__ */
