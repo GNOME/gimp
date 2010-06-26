@@ -307,6 +307,9 @@ gimp_dockbook_dispose (GObject *object)
 
   gimp_dockbook_remove_tab_timeout (dockbook);
 
+  while (dockbook->p->dockables)
+    gimp_dockbook_remove (dockbook, dockbook->p->dockables->data);
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -989,8 +992,6 @@ void
 gimp_dockbook_remove (GimpDockbook *dockbook,
                       GimpDockable *dockable)
 {
-  GList *children;
-
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (gimp_dockable_get_dockbook (dockable) == dockbook);
@@ -1020,14 +1021,17 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
 
   g_object_unref (dockable);
 
-  gimp_dockbook_update_auto_tab_style (dockbook);
+  if (dockbook->p->dock)
+    {
+      GList *children = gtk_container_get_children (GTK_CONTAINER (dockbook));
 
-  children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+      if (children)
+        gimp_dockbook_update_auto_tab_style (dockbook);
+      else
+        gimp_dock_remove_book (dockbook->p->dock, dockbook);
 
-  if (! g_list_length (children))
-    gimp_dock_remove_book (dockbook->p->dock, dockbook);
-
-  g_list_free (children);
+      g_list_free (children);
+    }
 }
 
 /**
