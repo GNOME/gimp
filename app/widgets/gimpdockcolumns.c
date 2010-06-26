@@ -71,6 +71,7 @@ struct _GimpDockColumnsPrivate
 };
 
 
+static void      gimp_dock_columns_dispose           (GObject         *object);
 static void      gimp_dock_columns_set_property      (GObject         *object,
                                                       guint            property_id,
                                                       const GValue    *value,
@@ -103,6 +104,7 @@ gimp_dock_columns_class_init (GimpDockColumnsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose      = gimp_dock_columns_dispose;
   object_class->set_property = gimp_dock_columns_set_property;
   object_class->get_property = gimp_dock_columns_get_property;
 
@@ -165,6 +167,17 @@ gimp_dock_columns_init (GimpDockColumns *dock_columns)
                                  dock_columns);
   gtk_container_add (GTK_CONTAINER (dock_columns), dock_columns->p->paned_hbox);
   gtk_widget_show (dock_columns->p->paned_hbox);
+}
+
+static void
+gimp_dock_columns_dispose (GObject *object)
+{
+  GimpDockColumns *dock_columns = GIMP_DOCK_COLUMNS (object);
+
+  while (dock_columns->p->docks)
+    gimp_dock_columns_remove_dock (dock_columns, dock_columns->p->docks->data);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
