@@ -170,8 +170,8 @@ CLEANFILES = gimpui.c gimpthumb.c
 	    --override $*.override \
 	    --register $(PYGTK_DEFSDIR)/gdk-types.defs \
 	    --register $(PYGTK_DEFSDIR)/gtk-types.defs \
-	    --register $(srcdir)/gimpcolor-types.defs \
-	    --register $(srcdir)/gimpenums-types.defs \
+	    --register gimpcolor-types.defs \
+	    --register gimpenums-types.defs \
 	    --prefix $* $*.defs) > gen-$*.c \
 	 && cp gen-$*.c $*.c \
 	 && rm -f gen-$*.c
