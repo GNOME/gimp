@@ -113,6 +113,7 @@ static GObject * gimp_dock_window_constructor             (GType                
                                                            guint                  n_params,
                                                            GObjectConstructParam *params);
 static void      gimp_dock_window_dispose                 (GObject               *object);
+static void      gimp_dock_window_finalize                (GObject               *object);
 static void      gimp_dock_window_set_property            (GObject               *object,
                                                            guint                  property_id,
                                                            const GValue          *value,
@@ -164,6 +165,7 @@ gimp_dock_window_class_init (GimpDockWindowClass *klass)
 
   object_class->constructor  = gimp_dock_window_constructor;
   object_class->dispose      = gimp_dock_window_dispose;
+  object_class->finalize     = gimp_dock_window_finalize;
   object_class->set_property = gimp_dock_window_set_property;
   object_class->get_property = gimp_dock_window_get_property;
 
@@ -479,6 +481,20 @@ gimp_dock_window_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_dock_window_finalize (GObject *object)
+{
+  GimpDockWindow *dock_window = GIMP_DOCK_WINDOW (object);
+
+  if (dock_window->p->ui_manager_name)
+    {
+      g_free (dock_window->p->ui_manager_name);
+      dock_window->p->ui_manager_name = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
