@@ -35,6 +35,7 @@
 #include "display/gimpimagewindow.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdock.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpdocked.h"
@@ -44,6 +45,7 @@
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
@@ -593,6 +595,44 @@ switch_back_to_multi_window_mode (GimpTestFixture *fixture,
   gimp_test_run_mainloop_until_idle ();
 }
 
+/**
+ * window_roles:
+ * @fixture:
+ * @data:
+ *
+ * Makes sure that different windows have the right roles specified.
+ **/
+static void
+window_roles (GimpTestFixture *fixture,
+              gconstpointer    data)
+{
+  GtkWidget      *dock           = NULL;
+  GtkWidget      *toolbox        = NULL;
+  GimpDockWindow *dock_window    = NULL;
+  GimpDockWindow *toolbox_window = NULL;
+
+  dock           = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
+                                              gdk_screen_get_default (),
+                                              FALSE /*toolbox*/);
+  toolbox        = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
+                                              gdk_screen_get_default (),
+                                              TRUE /*toolbox*/);
+  dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
+  toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));
+
+  g_assert_cmpstr (gtk_window_get_role (GTK_WINDOW (dock_window)), ==,
+                   "gimp-dock");
+  g_assert_cmpstr (gtk_window_get_role (GTK_WINDOW (toolbox_window)), ==,
+                   "gimp-toolbox");
+
+  /* When we get here we have a ref count of one, but the signals we
+   * emit cause the reference count to become less than zero for some
+   * reason. So we're lazy and simply ignore to unref these
+  g_object_unref (toolbox);
+  g_object_unref (dock);
+   */
+}
+
 static GimpUIManager *
 gimp_ui_get_ui_manager (Gimp *gimp)
 {
@@ -763,6 +803,7 @@ int main(int argc, char **argv)
   ADD_TEST (hide_docks_in_single_window_mode);
   ADD_TEST (show_docks_in_single_window_mode);
   ADD_TEST (switch_back_to_multi_window_mode);
+  ADD_TEST (window_roles);
 
   /* Run the tests and return status */
   result = g_test_run ();
