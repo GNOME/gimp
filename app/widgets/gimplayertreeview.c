@@ -81,104 +81,89 @@ struct _GimpLayerTreeViewPriv
 };
 
 
-static void  gimp_layer_tree_view_view_iface_init (GimpContainerViewInterface *iface);
-
-static GObject * gimp_layer_tree_view_constructor (GType                type,
-                                                   guint                n_params,
-                                                   GObjectConstructParam *params);
-static void   gimp_layer_tree_view_finalize       (GObject             *object);
-
-static void   gimp_layer_tree_view_set_container  (GimpContainerView   *view,
-                                                   GimpContainer       *container);
-static void   gimp_layer_tree_view_set_context    (GimpContainerView   *view,
-                                                   GimpContext         *context);
-static gpointer gimp_layer_tree_view_insert_item  (GimpContainerView   *view,
-                                                   GimpViewable        *viewable,
-                                                   gpointer             parent_insert_data,
-                                                   gint                 index);
-static gboolean gimp_layer_tree_view_select_item  (GimpContainerView   *view,
-                                                   GimpViewable        *item,
-                                                   gpointer             insert_data);
-static void    gimp_layer_tree_view_set_view_size (GimpContainerView   *view);
-
-static gboolean gimp_layer_tree_view_drop_possible(GimpContainerTreeView *view,
-                                                   GimpDndType          src_type,
-                                                   GimpViewable        *src_viewable,
-                                                   GimpViewable        *dest_viewable,
-                                                   GtkTreePath         *drop_path,
-                                                   GtkTreeViewDropPosition  drop_pos,
-                                                   GtkTreeViewDropPosition *return_drop_pos,
-                                                   GdkDragAction       *return_drag_action);
-static void    gimp_layer_tree_view_drop_color    (GimpContainerTreeView *view,
-                                                   const GimpRGB       *color,
-                                                   GimpViewable        *dest_viewable,
-                                                   GtkTreeViewDropPosition  drop_pos);
-static void    gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView *view,
-                                                   GList               *uri_list,
-                                                   GimpViewable        *dest_viewable,
-                                                   GtkTreeViewDropPosition  drop_pos);
-static void   gimp_layer_tree_view_drop_component (GimpContainerTreeView *tree_view,
-                                                   GimpImage           *image,
-                                                   GimpChannelType      component,
-                                                   GimpViewable        *dest_viewable,
-                                                   GtkTreeViewDropPosition  drop_pos);
-static void   gimp_layer_tree_view_drop_pixbuf    (GimpContainerTreeView *tree_view,
-                                                   GdkPixbuf           *pixbuf,
-                                                   GimpViewable        *dest_viewable,
-                                                   GtkTreeViewDropPosition  drop_pos);
-
-static void   gimp_layer_tree_view_set_image      (GimpItemTreeView    *view,
-                                                   GimpImage           *image);
-static GimpItem * gimp_layer_tree_view_item_new   (GimpImage           *image);
-
-static void   gimp_layer_tree_view_floating_selection_changed
-                                                  (GimpImage           *image,
-                                                   GimpLayerTreeView   *view);
-
-static void   gimp_layer_tree_view_paint_mode_menu_callback
-                                                  (GtkWidget           *widget,
-                                                   GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_opacity_scale_changed
-                                                  (GtkAdjustment       *adj,
-                                                   GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_lock_alpha_button_toggled
-                                                  (GtkWidget           *widget,
-                                                   GimpLayerTreeView   *view);
-
-static void   gimp_layer_tree_view_layer_signal_handler
-                                                  (GimpLayer           *layer,
-                                                   GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_update_options (GimpLayerTreeView   *view,
-                                                   GimpLayer           *layer);
-static void   gimp_layer_tree_view_update_menu    (GimpLayerTreeView   *view,
-                                                   GimpLayer           *layer);
-
-static void   gimp_layer_tree_view_mask_update    (GimpLayerTreeView   *view,
-                                                   GtkTreeIter         *iter,
-                                                   GimpLayer           *layer);
-static void   gimp_layer_tree_view_mask_changed   (GimpLayer           *layer,
-                                                   GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_renderer_update(GimpViewRenderer    *renderer,
-                                                   GimpLayerTreeView   *view);
-
-static void   gimp_layer_tree_view_update_borders (GimpLayerTreeView   *view,
-                                                   GtkTreeIter         *iter);
-static void   gimp_layer_tree_view_mask_callback  (GimpLayerMask       *mask,
-                                                   GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_layer_clicked  (GimpCellRendererViewable *cell,
-                                                   const gchar         *path,
-                                                   GdkModifierType      state,
-                                                   GimpLayerTreeView   *view);
-static void   gimp_layer_tree_view_mask_clicked   (GimpCellRendererViewable *cell,
-                                                   const gchar         *path,
-                                                   GdkModifierType      state,
-                                                   GimpLayerTreeView   *view);
-
-static void   gimp_layer_tree_view_alpha_update   (GimpLayerTreeView   *view,
-                                                   GtkTreeIter         *iter,
-                                                   GimpLayer           *layer);
-static void   gimp_layer_tree_view_alpha_changed  (GimpLayer           *layer,
-                                                   GimpLayerTreeView   *view);
+static void       gimp_layer_tree_view_view_iface_init            (GimpContainerViewInterface *iface);
+static GObject *  gimp_layer_tree_view_constructor                (GType                       type,
+                                                                   guint                       n_params,
+                                                                   GObjectConstructParam      *params);
+static void       gimp_layer_tree_view_finalize                   (GObject                    *object);
+static void       gimp_layer_tree_view_set_container              (GimpContainerView          *view,
+                                                                   GimpContainer              *container);
+static void       gimp_layer_tree_view_set_context                (GimpContainerView          *view,
+                                                                   GimpContext                *context);
+static gpointer   gimp_layer_tree_view_insert_item                (GimpContainerView          *view,
+                                                                   GimpViewable               *viewable,
+                                                                   gpointer                    parent_insert_data,
+                                                                   gint                        index);
+static gboolean   gimp_layer_tree_view_select_item                (GimpContainerView          *view,
+                                                                   GimpViewable               *item,
+                                                                   gpointer                    insert_data);
+static void       gimp_layer_tree_view_set_view_size              (GimpContainerView          *view);
+static gboolean   gimp_layer_tree_view_drop_possible              (GimpContainerTreeView      *view,
+                                                                   GimpDndType                 src_type,
+                                                                   GimpViewable               *src_viewable,
+                                                                   GimpViewable               *dest_viewable,
+                                                                   GtkTreePath                *drop_path,
+                                                                   GtkTreeViewDropPosition     drop_pos,
+                                                                   GtkTreeViewDropPosition    *return_drop_pos,
+                                                                   GdkDragAction              *return_drag_action);
+static void       gimp_layer_tree_view_drop_color                 (GimpContainerTreeView      *view,
+                                                                   const GimpRGB              *color,
+                                                                   GimpViewable               *dest_viewable,
+                                                                   GtkTreeViewDropPosition     drop_pos);
+static void       gimp_layer_tree_view_drop_uri_list              (GimpContainerTreeView      *view,
+                                                                   GList                      *uri_list,
+                                                                   GimpViewable               *dest_viewable,
+                                                                   GtkTreeViewDropPosition     drop_pos);
+static void       gimp_layer_tree_view_drop_component             (GimpContainerTreeView      *tree_view,
+                                                                   GimpImage                  *image,
+                                                                   GimpChannelType             component,
+                                                                   GimpViewable               *dest_viewable,
+                                                                   GtkTreeViewDropPosition     drop_pos);
+static void       gimp_layer_tree_view_drop_pixbuf                (GimpContainerTreeView      *tree_view,
+                                                                   GdkPixbuf                  *pixbuf,
+                                                                   GimpViewable               *dest_viewable,
+                                                                   GtkTreeViewDropPosition     drop_pos);
+static void       gimp_layer_tree_view_set_image                  (GimpItemTreeView           *view,
+                                                                   GimpImage                  *image);
+static GimpItem * gimp_layer_tree_view_item_new                   (GimpImage                  *image);
+static void       gimp_layer_tree_view_floating_selection_changed (GimpImage                  *image,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_paint_mode_menu_callback   (GtkWidget                  *widget,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_opacity_scale_changed      (GtkAdjustment              *adj,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_lock_alpha_button_toggled  (GtkWidget                  *widget,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_layer_signal_handler       (GimpLayer                  *layer,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_update_options             (GimpLayerTreeView          *view,
+                                                                   GimpLayer                  *layer);
+static void       gimp_layer_tree_view_update_menu                (GimpLayerTreeView          *view,
+                                                                   GimpLayer                  *layer);
+static void       gimp_layer_tree_view_mask_update                (GimpLayerTreeView          *view,
+                                                                   GtkTreeIter                *iter,
+                                                                   GimpLayer                  *layer);
+static void       gimp_layer_tree_view_mask_changed               (GimpLayer                  *layer,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_renderer_update            (GimpViewRenderer           *renderer,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_update_borders             (GimpLayerTreeView          *view,
+                                                                   GtkTreeIter                *iter);
+static void       gimp_layer_tree_view_mask_callback              (GimpLayerMask              *mask,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_layer_clicked              (GimpCellRendererViewable   *cell,
+                                                                   const gchar                *path,
+                                                                   GdkModifierType             state,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_mask_clicked               (GimpCellRendererViewable   *cell,
+                                                                   const gchar                *path,
+                                                                   GdkModifierType             state,
+                                                                   GimpLayerTreeView          *view);
+static void       gimp_layer_tree_view_alpha_update               (GimpLayerTreeView          *view,
+                                                                   GtkTreeIter                *iter,
+                                                                   GimpLayer                  *layer);
+static void       gimp_layer_tree_view_alpha_changed              (GimpLayer                  *layer,
+                                                                   GimpLayerTreeView          *view);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayerTreeView, gimp_layer_tree_view,
