@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -45,6 +46,7 @@
 #include "widgets/gimpuimanager.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
@@ -81,10 +83,16 @@ static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp           
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
 static void            gimp_ui_synthesize_key_event             (GtkWidget         *widget,
                                                                  guint              keyval);
+static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
+                                                                 gint               x,
+                                                                 gint               y,
+                                                                 gint               button,
+                                                                 GdkModifierType    modifiers);
 static GtkWidget     * gimp_ui_find_window                      (GimpDialogFactory *dialog_factory,
                                                                  GimpUiTestFunc     predicate);
 static gboolean        gimp_ui_not_toolbox_window               (GObject           *object);
 static gboolean        gimp_ui_multicolumn_not_toolbox_window   (GObject           *object);
+static gboolean        gimp_ui_is_gimp_layer_list               (GObject           *object);
 
 
 /**
@@ -319,6 +327,63 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
   g_assert_cmpint (ABS (shell_y_after_zoom - shell_y_before_zoom),
                    <=,
                    GIMP_UI_POSITION_EPSILON);
+}
+
+/**
+ * alt_click_is_layer_to_selection:
+ * @fixture:
+ * @data:
+ *
+ * Makes sure that we can alt-click on a layer to do
+ * layer-to-selection.
+ **/
+static void
+alt_click_is_layer_to_selection (GimpTestFixture *fixture,
+                                 gconstpointer    data)
+{
+  Gimp        *gimp      = GIMP (data);
+  GimpImage   *image     = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
+  GimpChannel *selection = gimp_image_get_mask (image);
+  GtkWidget   *dockable;
+  GtkWidget   *gtk_tree_view;
+  gint         assumed_layer_x;
+  gint         assumed_layer_y;
+
+  /* Hardcode an assumption of where the layer is in the
+   * GtkTreeView. Doesn't feel worth adding propery API for this. One
+   * can just add a g_usleep() and re-measure new coordinates if we
+   * start to layout layers in the GtkTreeView differently
+   */
+  assumed_layer_x = 96;
+  assumed_layer_y = 16;
+
+  /* First make sure there is no selection */
+  g_assert (! gimp_channel_bounds (selection,
+                                   NULL, NULL, /*x1, y1*/
+                                   NULL, NULL  /*x2, y2*/));
+
+  /* Now simulate alt-click on a layer after finding the GtkTreeView
+   * that shows layers. Note that there is a potential problem with
+   * gtk_test_find_widget and GtkNotebook: it will return e.g. a
+   * GtkTreeView from another page if that page is "on top" of the
+   * reference label.
+   */
+  dockable = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
+                                  gimp_ui_is_gimp_layer_list);
+  gtk_tree_view = gtk_test_find_widget (dockable,
+                                        "Lock:",
+                                        GTK_TYPE_TREE_VIEW);
+  g_assert (gimp_ui_synthesize_click (gtk_tree_view,
+                                      assumed_layer_x,
+                                      assumed_layer_y,
+                                      1 /*button*/,
+                                      GDK_MOD1_MASK));
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Make sure we got a selection */
+  g_assert (gimp_channel_bounds (selection,
+                                 NULL, NULL, /*x1, y1*/
+                                 NULL, NULL  /*x2, y2*/));
 }
 
 static void
@@ -591,6 +656,25 @@ gimp_ui_synthesize_key_event (GtkWidget *widget,
                          GDK_KEY_RELEASE);
 }
 
+static gboolean
+gimp_ui_synthesize_click (GtkWidget       *widget,
+                          gint             x,
+                          gint             y,
+                          gint             button, /*1..3*/
+                          GdkModifierType  modifiers)
+{
+  return (gdk_test_simulate_button (gtk_widget_get_window (widget),
+                                    x, y,
+                                    button,
+                                    modifiers,
+                                    GDK_BUTTON_PRESS) &&
+          gdk_test_simulate_button (gtk_widget_get_window (widget),
+                                    x, y,
+                                    button,
+                                    modifiers,
+                                    GDK_BUTTON_RELEASE));
+}
+
 static GtkWidget *
 gimp_ui_find_window (GimpDialogFactory *dialog_factory,
                      GimpUiTestFunc     predicate)
@@ -637,6 +721,19 @@ gimp_ui_multicolumn_not_toolbox_window (GObject *object)
           g_list_length (gimp_dock_window_get_docks (dock_window)) > 1);
 }
 
+static gboolean
+gimp_ui_is_gimp_layer_list (GObject *object)
+{
+  GimpDialogFactoryEntry *entry = NULL;
+
+  if (! GTK_IS_WIDGET (object))
+    return FALSE;
+
+  gimp_dialog_factory_from_widget (GTK_WIDGET (object), &entry);
+
+  return strcmp (entry->identifier, "gimp-layer-list") == 0;
+}
+
 int main(int argc, char **argv)
 {
   Gimp *gimp   = NULL;
@@ -659,6 +756,7 @@ int main(int argc, char **argv)
   ADD_TEST (automatic_tab_style);
   ADD_TEST (create_new_image_via_dialog);
   ADD_TEST (keyboard_zoom_focus);
+  ADD_TEST (alt_click_is_layer_to_selection);
   ADD_TEST (restore_recently_closed_multi_column_dock);
   ADD_TEST (tab_toggle_dont_change_dock_window_position);
   ADD_TEST (switch_to_single_window_mode);

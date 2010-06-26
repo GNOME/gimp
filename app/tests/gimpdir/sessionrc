@@ -14,12 +14,10 @@
         (follow-active-image "true"))
     (dock
         (book
-            (current-page 1)
+            (current-page 0)
             (dockable "gimp-layer-list"
                 (tab-style icon)
-                (preview-size 32))
-            (dockable "gimp-undo-history"
-                (tab-style icon)))
+                (preview-size 32)))
         (book
             (position 289)
             (current-page 0)
