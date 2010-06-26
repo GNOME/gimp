@@ -66,6 +66,7 @@ gimp_paint_info_dispose (GObject *object)
 
   if (paint_info->paint_options)
     {
+      g_object_run_dispose (G_OBJECT (paint_info->paint_options));
       g_object_unref (paint_info->paint_options);
       paint_info->paint_options = NULL;
     }
