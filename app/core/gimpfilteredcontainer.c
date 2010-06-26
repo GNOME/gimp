@@ -178,6 +178,12 @@ gimp_filtered_container_dispose (GObject *object)
 {
   GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
+  if (filtered_container->tag_ref_counts)
+    {
+      g_hash_table_unref (filtered_container->tag_ref_counts);
+      filtered_container->tag_ref_counts = NULL;
+    }
+
   if (filtered_container->src_container)
     {
       g_signal_handlers_disconnect_by_func (filtered_container->src_container,
