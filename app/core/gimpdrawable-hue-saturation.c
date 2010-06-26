@@ -58,7 +58,7 @@ gimp_drawable_hue_saturation (GimpDrawable *drawable,
                          NULL);
 
   g_object_set (config,
-                "hue",        hue        / 100.0,
+                "hue",        hue        / 180.0,
                 "saturation", saturation / 100.0,
                 "lightness",  lightness  / 100.0,
                 NULL);
