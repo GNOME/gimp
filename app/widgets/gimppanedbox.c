@@ -68,8 +68,10 @@ struct _GimpPanedBoxPrivate
 
   /* A drag handler offered to handle drag events */
   GimpPanedBox           *drag_handler;
-  
 };
+
+
+static void      gimp_paned_box_dispose                 (GObject        *object);
 
 static void      gimp_paned_box_drag_leave              (GtkWidget      *widget,
                                                          GdkDragContext *context,
@@ -90,16 +92,21 @@ static void      gimp_paned_box_set_widget_drag_handler (GtkWidget      *widget,
                                                          GimpPanedBox   *handler);
 
 
+
 G_DEFINE_TYPE (GimpPanedBox, gimp_paned_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_paned_box_parent_class
 
 static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 
+
 static void
 gimp_paned_box_class_init (GimpPanedBoxClass *klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->dispose     = gimp_paned_box_dispose;
 
   widget_class->drag_leave  = gimp_paned_box_drag_leave;
   widget_class->drag_motion = gimp_paned_box_drag_motion;
@@ -123,6 +130,16 @@ gimp_paned_box_init (GimpPanedBox *paned_box)
                      GDK_ACTION_MOVE);
 }
 
+static void
+gimp_paned_box_dispose (GObject *object)
+{
+  GimpPanedBox *paned_box = GIMP_PANED_BOX (object);
+
+  while (paned_box->p->widgets)
+    gimp_paned_box_remove_widget (paned_box, paned_box->p->widgets->data);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
 
 static void
 gimp_paned_box_realize (GtkWidget *widget)
