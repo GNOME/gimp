@@ -774,8 +774,9 @@ gimp_context_constructor (GType                  type,
                           guint                  n_params,
                           GObjectConstructParam *params)
 {
-  GObject *object;
-  Gimp    *gimp;
+  GObject       *object;
+  Gimp          *gimp;
+  GimpContainer *container;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -806,45 +807,51 @@ gimp_context_constructor (GType                  type,
                            G_CALLBACK (gimp_context_paint_info_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->brush_factory), "remove",
+  container = gimp_data_factory_get_container (gimp->brush_factory);
+  g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_brush_removed),
                            object, 0);
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->brush_factory), "thaw",
+  g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_brush_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->dynamics_factory), "remove",
+  container = gimp_data_factory_get_container (gimp->dynamics_factory);
+  g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_dynamics_removed),
                            object, 0);
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->dynamics_factory), "thaw",
+  g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_dynamics_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->pattern_factory), "remove",
+  container = gimp_data_factory_get_container (gimp->pattern_factory);
+  g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_pattern_removed),
                            object, 0);
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->pattern_factory), "thaw",
+  g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_pattern_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->gradient_factory), "remove",
+  container = gimp_data_factory_get_container (gimp->gradient_factory);
+  g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_gradient_removed),
                            object, 0);
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->gradient_factory), "thaw",
+  g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_gradient_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->palette_factory), "remove",
+  container = gimp_data_factory_get_container (gimp->palette_factory);
+  g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_palette_removed),
                            object, 0);
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->palette_factory), "thaw",
+  g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_palette_list_thaw),
                            object, 0);
 
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->tool_preset_factory), "remove",
+  container = gimp_data_factory_get_container (gimp->tool_preset_factory);
+  g_signal_connect_object (container, "remove",
                            G_CALLBACK (gimp_context_tool_preset_removed),
                            object, 0);
-  g_signal_connect_object (gimp_data_factory_get_container (gimp->tool_preset_factory), "thaw",
+  g_signal_connect_object (container, "thaw",
                            G_CALLBACK (gimp_context_tool_preset_list_thaw),
                            object, 0);
 
