@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-15 00:38+0200\n"
-"PO-Revision-Date: 2010-06-15 00:38+0200\n"
+"POT-Creation-Date: 2010-06-27 18:18+0200\n"
+"PO-Revision-Date: 2010-06-27 18:14+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/lighting/lighting-ui.c:415
 #: ../plug-ins/print/print-page-layout.c:461
 msgid "None"
-msgstr "Nessuno"
+msgstr "No"
 
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
 msgid "Collect"
@@ -10510,8 +10510,8 @@ msgid "_Size"
 msgstr "Dimen_sione"
 
 #: ../plug-ins/gimpressionist/size.c:108
-msgid "Sizes:"
-msgstr "Dimensioni:"
+msgid "Size variants:"
+msgstr "Variazioni dimensione:"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
@@ -10534,8 +10534,8 @@ msgid "The largest brush to create"
 msgstr "Il pennello più grande da creare"
 
 #: ../plug-ins/gimpressionist/size.c:150
-msgid "Size:"
-msgstr "Dimensione:"
+msgid "Size depends on:"
+msgstr "La dimensione dipende da:"
 
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
@@ -12710,7 +12710,7 @@ msgstr "Dest_ra:"
 
 #: ../plug-ins/print/print-page-layout.c:454
 msgid "C_enter:"
-msgstr "C_entro:"
+msgstr "C_entrare:"
 
 #: ../plug-ins/print/print-page-layout.c:462
 msgid "Horizontally"
@@ -12722,7 +12722,7 @@ msgstr "Verticalmente"
 
 #: ../plug-ins/print/print-page-layout.c:464
 msgid "Both"
-msgstr "Entrambe"
+msgstr "Orizzontalmente e verticalmente"
 
 #: ../plug-ins/print/print.c:101
 msgid "Print the image"

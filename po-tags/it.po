@@ -1,0 +1,24 @@
+# GIMP tags language po file.
+# Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the GIMP package.
+# Marco Ciampa <ciampix@libero.it>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP 2.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-25 08:06+0200\n"
+"PO-Revision-Date: 2010-06-25 08:10+0200\n"
+"Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:1
+msgid "fuzzy"
+msgstr "frastagliata"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:2
+msgid "round"
+msgstr "rotonda"
