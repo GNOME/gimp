@@ -139,6 +139,9 @@ int main(int argc, char **argv)
                                      &final_dockrc_state))
     result = -1;
 
+  if (result == 0)
+    g_print ("/gimp-session-management/sessionrc_compatibility: OK\n");
+
   /* Don't bother freeing stuff, the process is short-lived */
   return result;
 }
