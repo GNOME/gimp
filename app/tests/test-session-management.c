@@ -69,9 +69,7 @@ int main(int argc, char **argv)
   gchar             *dockrc_filename         = NULL;
   gint               result                  = 0;
 
-  g_type_init ();
-  gtk_init (&argc, &argv);
-  g_test_init (&argc, &argv, NULL);
+  gtk_test_init (&argc, &argv, NULL);
 
   /* Make sure to run this before we use any GIMP functions */
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",

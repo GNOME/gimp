@@ -779,9 +779,7 @@ int main(int argc, char **argv)
   Gimp *gimp   = NULL;
   gint  result = -1;
 
-  g_type_init ();
-  gtk_init (&argc, &argv);
-  g_test_init (&argc, &argv, NULL);
+  gtk_test_init (&argc, &argv, NULL);
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
