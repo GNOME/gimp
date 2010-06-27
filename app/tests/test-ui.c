@@ -358,7 +358,8 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
  * @data:
  *
  * Makes sure that we can alt-click on a layer to do
- * layer-to-selection.
+ * layer-to-selection. Also makes sure that the layer clicked on is
+ * not set as the active layer.
  **/
 static void
 alt_click_is_layer_to_selection (GimpTestFixture *fixture,
@@ -367,46 +368,74 @@ alt_click_is_layer_to_selection (GimpTestFixture *fixture,
   Gimp        *gimp      = GIMP (data);
   GimpImage   *image     = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
   GimpChannel *selection = gimp_image_get_mask (image);
+  GimpLayer   *active_layer;
   GtkWidget   *dockable;
   GtkWidget   *gtk_tree_view;
   gint         assumed_layer_x;
-  gint         assumed_layer_y;
+  gint         assumed_empty_layer_y;
+  gint         assumed_background_layer_y;
 
-  /* Hardcode an assumption of where the layer is in the
+  /* Hardcode assumptions of where the layers are in the
    * GtkTreeView. Doesn't feel worth adding proper API for this. One
    * can just use GIMP_PAUSE and re-measure new coordinates if we
    * start to layout layers in the GtkTreeView differently
    */
-  assumed_layer_x = 96;
-  assumed_layer_y = 42;
+  assumed_layer_x            = 96;
+  assumed_empty_layer_y      = 16;
+  assumed_background_layer_y = 42;
 
-  /* First make sure there is no selection */
-  g_assert (! gimp_channel_bounds (selection,
-                                   NULL, NULL, /*x1, y1*/
-                                   NULL, NULL  /*x2, y2*/));
+  /* Store the active layer, it shall not change during the execution
+   * of this test
+   */
+  active_layer = gimp_image_get_active_layer (image);
 
-  /* Now simulate alt-click on a layer after finding the GtkTreeView
-   * that shows layers. Note that there is a potential problem with
-   * gtk_test_find_widget and GtkNotebook: it will return e.g. a
-   * GtkTreeView from another page if that page is "on top" of the
-   * reference label.
+  /* Find the layer tree view to click in. Note that there is a
+   * potential problem with gtk_test_find_widget and GtkNotebook: it
+   * will return e.g. a GtkTreeView from another page if that page is
+   * "on top" of the reference label.
    */
   dockable = gimp_ui_find_window (gimp_dialog_factory_get_singleton (),
                                   gimp_ui_is_gimp_layer_list);
   gtk_tree_view = gtk_test_find_widget (dockable,
                                         "Lock:",
                                         GTK_TYPE_TREE_VIEW);
+  
+  /* First make sure there is no selection */
+  g_assert (! gimp_channel_bounds (selection,
+                                   NULL, NULL, /*x1, y1*/
+                                   NULL, NULL  /*x2, y2*/));
+
+  /* Now simulate alt-click on the background layer */
   g_assert (gimp_ui_synthesize_click (gtk_tree_view,
                                       assumed_layer_x,
-                                      assumed_layer_y,
+                                      assumed_background_layer_y,
                                       1 /*button*/,
                                       GDK_MOD1_MASK));
   gimp_test_run_mainloop_until_idle ();
 
-  /* Make sure we got a selection */
+  /* Make sure we got a selection and that the active layer didn't
+   * change
+   */
   g_assert (gimp_channel_bounds (selection,
                                  NULL, NULL, /*x1, y1*/
                                  NULL, NULL  /*x2, y2*/));
+  g_assert (gimp_image_get_active_layer (image) == active_layer);
+
+  /* Now simulate alt-click on the empty layer */
+  g_assert (gimp_ui_synthesize_click (gtk_tree_view,
+                                      assumed_layer_x,
+                                      assumed_empty_layer_y,
+                                      1 /*button*/,
+                                      GDK_MOD1_MASK));
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Make sure that emptied the selection and that the active layer
+   * still didn't change
+   */
+  g_assert (! gimp_channel_bounds (selection,
+                                   NULL, NULL, /*x1, y1*/
+                                   NULL, NULL  /*x2, y2*/));
+  g_assert (gimp_image_get_active_layer (image) == active_layer);
 }
 
 static void

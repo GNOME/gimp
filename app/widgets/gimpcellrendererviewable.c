@@ -34,6 +34,7 @@
 
 enum
 {
+  PRE_CLICKED,
   CLICKED,
   LAST_SIGNAL
 };
@@ -91,6 +92,39 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
   GObjectClass         *object_class = G_OBJECT_CLASS (klass);
   GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
+  /**
+   * GimpCellRendererViewable::pre-clicked:
+   * @cell:
+   * @path:
+   * @state:
+   *
+   * Called early on a viewable cell when it is clicked, typically
+   * before selection code is invoked for example.
+   *
+   * Returns: %TRUE if the signal handled the event and event
+   *          propagation should stop, for example preventing a
+   *          selection from happening, %FALSE to continue as normal
+   **/
+  viewable_cell_signals[PRE_CLICKED] =
+    g_signal_new ("pre-clicked",
+                  G_OBJECT_CLASS_TYPE (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpCellRendererViewableClass, pre_clicked),
+                  g_signal_accumulator_true_handled, NULL,
+                  gimp_marshal_BOOLEAN__STRING_FLAGS,
+                  G_TYPE_BOOLEAN, 2,
+                  G_TYPE_STRING,
+                  GDK_TYPE_MODIFIER_TYPE);
+
+  /**
+   * GimpCellRendererViewable::clicked:
+   * @cell:
+   * @path:
+   * @state:
+   *
+   * Called late on a viewable cell when it is clicked, typically
+   * after selection code has been invoked for example.
+   **/
   viewable_cell_signals[CLICKED] =
     g_signal_new ("clicked",
                   G_OBJECT_CLASS_TYPE (object_class),
@@ -313,6 +347,25 @@ GtkCellRenderer *
 gimp_cell_renderer_viewable_new (void)
 {
   return g_object_new (GIMP_TYPE_CELL_RENDERER_VIEWABLE, NULL);
+}
+
+gboolean
+gimp_cell_renderer_viewable_pre_clicked (GimpCellRendererViewable *cell,
+                                         const gchar              *path,
+                                         GdkModifierType           state)
+{
+  gboolean handled = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell), FALSE);
+  g_return_val_if_fail (path != NULL, FALSE);
+
+  g_signal_emit (cell,
+                 viewable_cell_signals[PRE_CLICKED],
+                 0 /*detail*/,
+                 path, state,
+                 &handled);
+
+  return handled;
 }
 
 void

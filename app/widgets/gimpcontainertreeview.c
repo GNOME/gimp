@@ -950,16 +950,25 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
                 {
-                  if (multisel_mode)
+                  gchar *path_str = gtk_tree_path_to_string (path);
+
+                  handled =
+                    gimp_cell_renderer_viewable_pre_clicked (clicked_cell,
+                                                             path_str,
+                                                             bevent->state);
+
+                  if (! handled && multisel_mode)
                     {
                       /* let parent do the work */
                       handled = FALSE;
                     }
-                  else
+                  else if (! handled)
                     {
                       handled = gimp_container_view_item_selected (container_view,
                                                                    renderer->viewable);
                     }
+
+                  g_free (path_str);
                 }
 
               /*  a callback invoked by selecting the item may have

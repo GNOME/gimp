@@ -152,6 +152,10 @@ static void       gimp_layer_tree_view_update_borders             (GimpLayerTree
                                                                    GtkTreeIter                *iter);
 static void       gimp_layer_tree_view_mask_callback              (GimpLayerMask              *mask,
                                                                    GimpLayerTreeView          *view);
+static gboolean   gimp_layer_tree_view_layer_pre_clicked          (GimpCellRendererViewable   *cell,
+                                                                   const gchar                *path_str,
+                                                                   GdkModifierType             state,
+                                                                   GimpLayerTreeView          *layer_view);
 static void       gimp_layer_tree_view_layer_clicked              (GimpCellRendererViewable   *cell,
                                                                    const gchar                *path,
                                                                    GdkModifierType             state,
@@ -363,6 +367,9 @@ gimp_layer_tree_view_constructor (GType                  type,
   gimp_container_tree_view_add_renderer_cell (tree_view,
                                               layer_view->priv->mask_cell);
 
+  g_signal_connect (tree_view->renderer_cell, "pre-clicked",
+                    G_CALLBACK (gimp_layer_tree_view_layer_pre_clicked),
+                    layer_view);
   g_signal_connect (tree_view->renderer_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_layer_clicked),
                     layer_view);
@@ -1300,6 +1307,69 @@ gimp_layer_tree_view_mask_callback (GimpLayerMask     *mask,
   gimp_layer_tree_view_update_borders (layer_view, iter);
 }
 
+static gboolean
+gimp_layer_tree_view_layer_pre_clicked (GimpCellRendererViewable   *cell,
+                                        const gchar                *path_str,
+                                        GdkModifierType             state,
+                                        GimpLayerTreeView          *layer_view)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+  gboolean               handled = FALSE;
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
+      state & GDK_MOD1_MASK)
+    {
+      GimpItemTreeView *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
+      GimpImage        *image          = gimp_item_tree_view_get_image (item_view);
+      GimpViewRenderer *layer_renderer = NULL;
+      GimpDrawable     *layer          = NULL;
+      GimpChannelOps    op;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
+                          -1);
+
+      if (layer_renderer)
+        layer = GIMP_DRAWABLE (layer_renderer->viewable);
+
+      op = GIMP_CHANNEL_OP_REPLACE;
+
+      if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
+        {
+          op = GIMP_CHANNEL_OP_INTERSECT;
+        }
+      else if (state & GDK_SHIFT_MASK)
+        {
+          op = GIMP_CHANNEL_OP_ADD;
+        }
+      else if (state & GDK_CONTROL_MASK)
+        {
+          op = GIMP_CHANNEL_OP_SUBTRACT;
+        }
+
+      gimp_channel_select_alpha (gimp_image_get_mask (image),
+                                 layer,
+                                 op,
+                                 FALSE /*feather*/,
+                                 0.0, 0.0 /*feather_radius_x,y*/);
+      gimp_image_flush (image);
+
+      if (layer_renderer)
+        g_object_unref (layer_renderer);
+
+      /* Don't select the clicked layer */
+      handled = TRUE;
+    }
+
+  gtk_tree_path_free (path);
+
+  return handled;
+}
+
 static void
 gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
                                     const gchar              *path_str,
@@ -1314,69 +1384,25 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
-      GimpUIManager   *ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
-      GimpActionGroup *group;
+      GimpUIManager    *ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
+      GimpActionGroup  *group;
+      GimpViewRenderer *renderer;
 
       group = gimp_ui_manager_get_action_group (ui_manager, "layers");
 
-      if (state & GDK_MOD1_MASK)
+      gtk_tree_model_get (tree_view->model, &iter,
+                          layer_view->priv->model_column_mask, &renderer,
+                          -1);
+
+      if (renderer)
         {
-          GimpItemTreeView *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
-          GimpImage        *image          = gimp_item_tree_view_get_image (item_view);
-          GimpViewRenderer *layer_renderer = NULL;
-          GimpDrawable     *layer          = NULL;
-          GimpChannelOps    op;
+          GimpLayerMask *mask = GIMP_LAYER_MASK (renderer->viewable);
 
-          gtk_tree_model_get (tree_view->model, &iter,
-                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
-                              -1);
+          if (gimp_layer_mask_get_edit (mask))
+            gimp_action_group_set_action_active (group,
+                                                 "layers-mask-edit", FALSE);
 
-          if (layer_renderer)
-            layer = GIMP_DRAWABLE (layer_renderer->viewable);
-
-          op = GIMP_CHANNEL_OP_REPLACE;
-
-          if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
-            {
-              op = GIMP_CHANNEL_OP_INTERSECT;
-            }
-          else if (state & GDK_SHIFT_MASK)
-            {
-              op = GIMP_CHANNEL_OP_ADD;
-            }
-          else if (state & GDK_CONTROL_MASK)
-            {
-              op = GIMP_CHANNEL_OP_SUBTRACT;
-            }
-
-          gimp_channel_select_alpha (gimp_image_get_mask (image),
-                                     layer,
-                                     op,
-                                     FALSE /*feather*/,
-                                     0.0, 0.0 /*feather_radius_x,y*/);
-          gimp_image_flush (image);
-
-          if (layer_renderer)
-            g_object_unref (layer_renderer);
-        }
-      else
-        {
-          GimpViewRenderer *renderer;
-
-          gtk_tree_model_get (tree_view->model, &iter,
-                              layer_view->priv->model_column_mask, &renderer,
-                              -1);
-
-          if (renderer)
-            {
-              GimpLayerMask *mask = GIMP_LAYER_MASK (renderer->viewable);
-
-              if (gimp_layer_mask_get_edit (mask))
-                gimp_action_group_set_action_active (group,
-                                                     "layers-mask-edit", FALSE);
-
-              g_object_unref (renderer);
-            }
+          g_object_unref (renderer);
         }
     }
 
