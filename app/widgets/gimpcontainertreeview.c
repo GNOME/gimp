@@ -952,20 +952,26 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                 {
                   gchar *path_str = gtk_tree_path_to_string (path);
 
-                  handled =
-                    gimp_cell_renderer_viewable_pre_clicked (clicked_cell,
-                                                             path_str,
-                                                             bevent->state);
+                  handled = FALSE;
 
-                  if (! handled && multisel_mode)
+                  if (clicked_cell)
+                    handled =
+                      gimp_cell_renderer_viewable_pre_clicked (clicked_cell,
+                                                               path_str,
+                                                               bevent->state);
+
+                  if (! handled)
                     {
-                      /* let parent do the work */
-                      handled = FALSE;
-                    }
-                  else if (! handled)
-                    {
-                      handled = gimp_container_view_item_selected (container_view,
-                                                                   renderer->viewable);
+                      if (multisel_mode)
+                        {
+                          /* let parent do the work */
+                        }
+                      else
+                        {
+                          handled =
+                            gimp_container_view_item_selected (container_view,
+                                                               renderer->viewable);
+                        }
                     }
 
                   g_free (path_str);
