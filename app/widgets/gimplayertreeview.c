@@ -32,12 +32,13 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpimage-undo.h"
+#include "core/gimpimage.h"
+#include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-undo.h"
-#include "core/gimpitemundo.h"
 #include "core/gimptreehandler.h"
 
 #include "text/gimptextlayer.h"
@@ -1320,22 +1321,43 @@ gimp_layer_tree_view_layer_clicked (GimpCellRendererViewable *cell,
 
       if (state & GDK_MOD1_MASK)
         {
-          const gchar *action = "layers-alpha-selection-replace";
+          GimpItemTreeView *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
+          GimpImage        *image          = gimp_item_tree_view_get_image (item_view);
+          GimpViewRenderer *layer_renderer = NULL;
+          GimpDrawable     *layer          = NULL;
+          GimpChannelOps    op;
+
+          gtk_tree_model_get (tree_view->model, &iter,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
+                              -1);
+
+          if (layer_renderer)
+            layer = GIMP_DRAWABLE (layer_renderer->viewable);
+
+          op = GIMP_CHANNEL_OP_REPLACE;
 
           if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
             {
-              action = "layers-alpha-selection-intersect";
+              op = GIMP_CHANNEL_OP_INTERSECT;
             }
           else if (state & GDK_SHIFT_MASK)
             {
-              action = "layers-alpha-selection-add";
+              op = GIMP_CHANNEL_OP_ADD;
             }
           else if (state & GDK_CONTROL_MASK)
             {
-              action = "layers-alpha-selection-subtract";
+              op = GIMP_CHANNEL_OP_SUBTRACT;
             }
 
-          gimp_action_group_activate_action (group, action);
+          gimp_channel_select_alpha (gimp_image_get_mask (image),
+                                     layer,
+                                     op,
+                                     FALSE /*feather*/,
+                                     0.0, 0.0 /*feather_radius_x,y*/);
+          gimp_image_flush (image);
+
+          if (layer_renderer)
+            g_object_unref (layer_renderer);
         }
       else
         {
