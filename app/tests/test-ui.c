@@ -71,6 +71,11 @@
               function, \
               NULL);
 
+/* Put this in the code below when you want the test to pause so you
+ * can do measurements of widgets on the screen for example
+ */
+#define GIMP_PAUSE (g_usleep (20 * 1000 * 1000))
+
 
 typedef gboolean (*GimpUiTestFunc) (GObject *object);
 
@@ -352,8 +357,8 @@ alt_click_is_layer_to_selection (GimpTestFixture *fixture,
   gint         assumed_layer_y;
 
   /* Hardcode an assumption of where the layer is in the
-   * GtkTreeView. Doesn't feel worth adding propery API for this. One
-   * can just add a g_usleep() and re-measure new coordinates if we
+   * GtkTreeView. Doesn't feel worth adding proper API for this. One
+   * can just use GIMP_PAUSE and re-measure new coordinates if we
    * start to layout layers in the GtkTreeView differently
    */
   assumed_layer_x = 96;
