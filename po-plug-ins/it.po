@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-15 00:40+0200\n"
-"PO-Revision-Date: 2010-06-15 00:31+0200\n"
+"PO-Revision-Date: 2010-06-27 18:16+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -296,7 +296,7 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/lighting/lighting-ui.c:416
 #: ../plug-ins/print/print-page-layout.c:449
 msgid "None"
-msgstr "Nessuno"
+msgstr "No"
 
 #: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
 msgid "Collect"
@@ -12431,7 +12431,7 @@ msgstr "Dest_ra:"
 
 #: ../plug-ins/print/print-page-layout.c:442
 msgid "C_enter:"
-msgstr "C_entro:"
+msgstr "C_entrare:"
 
 #: ../plug-ins/print/print-page-layout.c:450
 msgid "Horizontally"
@@ -12443,7 +12443,7 @@ msgstr "Verticalmente"
 
 #: ../plug-ins/print/print-page-layout.c:452
 msgid "Both"
-msgstr "Entrambe"
+msgstr "Orizzontalmente e verticalmente"
 
 #: ../plug-ins/print/print.c:102
 msgid "Print the image"
