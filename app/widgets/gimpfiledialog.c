@@ -584,19 +584,15 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        * Priority of default paths for Export:
        *
        *   1. Last Export path
-       *   2. Last Export path of any document
-       *   3. Path of import source
-       *   4. Path of XCF source
-       *   5. Last path of any save to XCF
+       *   2. Path of import source
+       *   3. Path of XCF source
+       *   4. Last path of any save to XCF
+       *   5. Last Export path of any document
        *   6. The OS 'Documents' path
        */
 
       dir_uri = g_object_get_data (G_OBJECT (image),
                                    GIMP_FILE_EXPORT_URI_KEY);
-
-      if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (gimp),
-                                     GIMP_FILE_EXPORT_LAST_URI_KEY);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (image),
@@ -612,6 +608,10 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (gimp),
                                      GIMP_FILE_SAVE_LAST_URI_KEY);
+
+      if (! dir_uri)
+        dir_uri = g_object_get_data (G_OBJECT (gimp),
+                                     GIMP_FILE_EXPORT_LAST_URI_KEY);
 
       if (! dir_uri)
         dir_uri = docs_uri;
