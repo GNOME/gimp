@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: GIMP 2.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-25 08:06+0200\n"
-"PO-Revision-Date: 2010-06-25 08:10+0200\n"
+"PO-Revision-Date: 2010-06-27 21:38+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
