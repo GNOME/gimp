@@ -51,6 +51,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
@@ -241,6 +242,8 @@ create_new_image_via_dialog (GimpTestFixture *fixture,
   guint              n_initial_images = g_list_length (gimp_get_image_iter (gimp));
   guint              n_images         = -1;
   gint               tries_left       = 100;
+  GimpImage         *image;
+  GimpLayer         *layer;
 
   /* Bring up the new image dialog */
   gimp_ui_manager_activate_action (ui_manager,
@@ -272,6 +275,19 @@ create_new_image_via_dialog (GimpTestFixture *fixture,
   g_assert_cmpint (n_images,
                    ==,
                    n_initial_images + 1);
+
+  /* Add a layer to the image to make it more useful in later tests */
+  image = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
+  layer = gimp_layer_new (image,
+                          gimp_image_get_width (image),
+                          gimp_image_get_height (image),
+                          gimp_image_base_type_with_alpha (image),
+                          "Layer for testing",
+                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image, layer,
+                        GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
+  gimp_test_run_mainloop_until_idle ();
 }
 
 static void
@@ -362,7 +378,7 @@ alt_click_is_layer_to_selection (GimpTestFixture *fixture,
    * start to layout layers in the GtkTreeView differently
    */
   assumed_layer_x = 96;
-  assumed_layer_y = 16;
+  assumed_layer_y = 42;
 
   /* First make sure there is no selection */
   g_assert (! gimp_channel_bounds (selection,
