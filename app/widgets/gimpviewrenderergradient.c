@@ -188,6 +188,8 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
                                                     renderer->width,
                                                     renderer->height);
 
+  cairo_surface_flush (renderer->surface);
+
   dest        = cairo_image_surface_get_data (renderer->surface);
   dest_stride = cairo_image_surface_get_stride (renderer->surface);
 
@@ -195,6 +197,8 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
     {
       memcpy (dest, buf, renderer->width * 4);
     }
+
+  cairo_surface_mark_dirty (renderer->surface);
 
   renderer->needs_render = FALSE;
 }

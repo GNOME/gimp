@@ -662,6 +662,8 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   mask = tile_manager_new ( width, height, 1);
   pixel_region_init (&maskPR, mask, 0, 0, width, height, TRUE);
 
+  cairo_surface_flush (surface);
+
   data      = cairo_image_surface_get_data (surface);
   rowstride = cairo_image_surface_get_stride (surface);
 

@@ -228,6 +228,8 @@ gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
 
   surface = cairo_image_surface_create (format, width, height);
 
+  cairo_surface_flush (surface);
+
   src         = gdk_pixbuf_get_pixels (pixbuf);
   src_stride  = gdk_pixbuf_get_rowstride (pixbuf);
 
@@ -279,6 +281,8 @@ gimp_cairo_surface_create_from_pixbuf (GdkPixbuf *pixbuf)
     default:
       break;
     }
+
+  cairo_surface_mark_dirty (surface);
 
   return surface;
 }
