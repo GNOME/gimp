@@ -46,6 +46,8 @@ UI:
  - Remove the dockable title bar and add the menu arrow button next to the
    notebook tabs
  - Add an icon for the desaturate tool
+ - Add 'Rule of fifths' crop guide overlay
+ - Make Alt+Click on layers not affecting active layer
 
 
 Core:
@@ -96,16 +98,20 @@ Developer documentation:
  - Add a schedule for 2.8 development
 
 
-General:
+Source and build system:
 
- - Lots of bug fixes and cleanup
- - Lots of translation updates
  - Add more code documentation
  - Clean up subsystem linking dependencies in app/
  - Add unit testing framework in app/tests/ and some basic tests,
    including basic UI tests and XCF tests
  - Tentatively introduce usage of using Glade + GtkBuilder
  - Depend on GLib 2.24.0 and GTK+ 2.20.0
+ - Add git commit hash in --verbose --version output
+ - Don't version control gtk-doc.m4, get it from gtkdocize
+ - Add GimpObject tracking code
+ - Plug memory leaks
+ - Lots of bug fixes and cleanup
+ - Lots of translation updates
 
 
 Changes in GIMP 2.7.0
