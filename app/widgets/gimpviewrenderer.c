@@ -926,6 +926,16 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
   g_return_if_fail (temp_buf != NULL);
   g_return_if_fail (surface != NULL);
 
+  /* In rare cases we can get here while GIMP is exiting, handle that
+   * by checking for availability of the buffers
+   */
+  if (! gimp_render_check_buf ||
+      ! gimp_render_empty_buf ||
+      ! gimp_render_white_buf)
+    return;
+
+  cairo_surface_flush (surface);
+
   dest        = cairo_image_surface_get_data (surface);
   dest_stride = cairo_image_surface_get_stride (surface);
 
@@ -1078,6 +1088,8 @@ gimp_view_render_to_surface (TempBuf         *temp_buf,
 
       dest += dest_stride;
     }
+
+  cairo_surface_mark_dirty (surface);
 }
 
 void

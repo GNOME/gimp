@@ -139,6 +139,8 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
                                                     renderer->width,
                                                     renderer->height);
 
+  cairo_surface_flush (renderer->surface);
+
   row = g_new (guchar, renderer->width * 4);
 
   dest        = cairo_image_surface_get_data (renderer->surface);
@@ -201,6 +203,8 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
     }
 
   g_free (row);
+
+  cairo_surface_mark_dirty (renderer->surface);
 
   renderer->needs_render = FALSE;
 }
