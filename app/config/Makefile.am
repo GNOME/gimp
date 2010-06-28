@@ -102,6 +102,7 @@ test_config_LDADD = \
 	libappconfig.a				\
 	../paint-funcs/libapppaint-funcs.a	\
 	../base/libappbase.a			\
+	../gimp-debug.o				\
 	../gimp-log.o				\
 	$(libgimpmodule)			\
 	$(libgimpcolor)				\
