@@ -31,7 +31,7 @@
 
 
 /**
- * SECTION: GimpColorSpace
+ * SECTION: gimpcolorspace
  * @title: GimpColorSpace
  * @short_description: Utility functions which convert colors between
  *                     different color models.

@@ -28,7 +28,7 @@
 
 
 /**
- * SECTION: GimpCMYK
+ * SECTION: gimpcmyk
  * @title: GimpCMYK
  * @short_description: Definitions and Functions relating to CMYK colors.
  *

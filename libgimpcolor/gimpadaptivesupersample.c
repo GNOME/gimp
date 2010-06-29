@@ -29,7 +29,7 @@
 
 
 /**
- * SECTION: GimpAdaptiveSupersample
+ * SECTION: gimpadaptivesupersample
  * @title: GimpAdaptiveSupersample
  * @short_description: Functions to perform adaptive supersampling on
  *                     an area.

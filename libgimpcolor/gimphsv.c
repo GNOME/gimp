@@ -26,7 +26,7 @@
 
 
 /**
- * SECTION: GimpHSV
+ * SECTION: gimphsv
  * @title: GimpHSV
  * @short_description: Definitions and Functions relating to HSV colors.
  *

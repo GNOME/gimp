@@ -28,7 +28,7 @@
 
 
 /**
- * SECTION: GimpBilinear
+ * SECTION: gimpbilinear
  * @title: GimpBilinear
  * @short_description: Utility functions for bilinear interpolation.
  *

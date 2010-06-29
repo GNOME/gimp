@@ -29,7 +29,7 @@
 
 
 /**
- * SECTION: GimpRGB
+ * SECTION: gimprgb
  * @title: GimpRGB
  * @short_description: Definitions and Functions relating to RGB colors.
  *
@@ -91,10 +91,10 @@ gimp_rgb_copy (const GimpRGB *rgb)
 
 /**
  * gimp_rgb_set:
- * @rgb: a #GimpRGB struct
- * @red:
- * @green:
- * @blue:
+ * @rgb:   a #GimpRGB struct
+ * @red:   the red component
+ * @green: the green component
+ * @blue:  the blue component
  *
  * Sets the red, green and blue components of @rgb and leaves the
  * alpha component unchanged. The color values should be between 0.0
@@ -116,8 +116,8 @@ gimp_rgb_set (GimpRGB *rgb,
 
 /**
  * gimp_rgb_set_alpha:
- * @rgb: a #GimpRGB struct
- * @alpha:
+ * @rgb:   a #GimpRGB struct
+ * @alpha: the alpha component
  *
  * Sets the alpha component of @rgb and leaves the RGB components unchanged.
  **/
@@ -132,10 +132,10 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
 
 /**
  * gimp_rgb_set_uchar:
- * @rgb: a #GimpRGB struct
- * @red:
- * @green:
- * @blue:
+ * @rgb:   a #GimpRGB struct
+ * @red:   the red component
+ * @green: the green component
+ * @blue:  the blue component
  *
  * Sets the red, green and blue components of @rgb from 8bit values
  * (0 to 255) and leaves the alpha component unchanged.
@@ -266,7 +266,7 @@ gimp_rgb_gamma (GimpRGB *rgb,
 
 /**
  * gimp_rgb_luminance:
- * @rgb:
+ * @rgb: a #GimpRGB struct
  *
  * Return value: the luminous intensity of the range from 0.0 to 1.0.
  *
@@ -286,7 +286,7 @@ gimp_rgb_luminance (const GimpRGB *rgb)
 
 /**
  * gimp_rgb_luminance_uchar:
- * @rgb:
+ * @rgb: a #GimpRGB struct
  *
  * Return value: the luminous intensity in the range from 0 to 255.
  *
@@ -302,7 +302,7 @@ gimp_rgb_luminance_uchar (const GimpRGB *rgb)
 
 /**
  * gimp_rgb_intensity:
- * @rgb:
+ * @rgb: a #GimpRGB struct
  *
  * This function is deprecated! Use gimp_rgb_luminance() instead.
  *
@@ -322,7 +322,7 @@ gimp_rgb_intensity (const GimpRGB *rgb)
 
 /**
  * gimp_rgb_intensity_uchar:
- * @rgb:
+ * @rgb: a #GimpRGB struct
  *
  * This function is deprecated! Use gimp_rgb_luminance_uchar() instead.
  *
@@ -385,11 +385,11 @@ gimp_rgb_composite (GimpRGB              *color1,
 
 /**
  * gimp_rgba_set:
- * @rgba: a #GimpRGB struct
- * @red:
- * @green:
- * @blue:
- * @alpha:
+ * @rgba:  a #GimpRGB struct
+ * @red:   the red component
+ * @green: the green component
+ * @blue:  the blue component
+ * @alpha: the alpha component
  *
  * Sets the red, green, blue and alpha components of @rgb. The values
  * should be between 0.0 and 1.0 but there is no check to enforce this
@@ -412,11 +412,11 @@ gimp_rgba_set (GimpRGB *rgba,
 
 /**
  * gimp_rgba_set_uchar:
- * @rgba: a #GimpRGB struct
- * @red:
- * @green:
- * @blue:
- * @alpha:
+ * @rgba:  a #GimpRGB struct
+ * @red:   the red component
+ * @green: the green component
+ * @blue:  the blue component
+ * @alpha: the alpha component
  *
  * Sets the red, green, blue and alpha components of @rgb from 8bit
  * values (0 to 255).

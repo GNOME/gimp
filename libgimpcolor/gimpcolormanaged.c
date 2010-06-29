@@ -29,7 +29,7 @@
 
 
 /**
- * SECTION: GimpColorManaged
+ * SECTION: gimpcolormanaged
  * @title: GimpColorManaged
  * @short_description: An interface dealing with color profiles.
  *
