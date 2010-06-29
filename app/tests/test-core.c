@@ -31,7 +31,7 @@
 #define GIMP_TEST_IMAGE_SIZE 100
 
 #define ADD_TEST(function) \
-  g_test_add ("/gimp-layers/" #function, \
+  g_test_add ("/gimp-core/" #function, \
               GimpTestFixture, \
               gimp, \
               gimp_test_image_setup, \

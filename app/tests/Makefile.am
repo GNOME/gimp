@@ -11,7 +11,7 @@ TESTS_ENVIRONMENT = \
 	GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@
 
 TESTS = \
-	test-layers		\
+	test-core		\
 	test-session-management	\
 	test-ui			\
 	test-xcf

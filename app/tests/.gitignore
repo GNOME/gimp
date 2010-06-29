@@ -4,8 +4,8 @@
 Makefile
 Makefile.in
 libgimpapptestutils.a
+test-core*
 test-layer-grouping*
-test-layers*
 test-session-management*
 test-ui*
 test-window-management*
