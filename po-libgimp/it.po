@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-13 13:32+0200\n"
-"PO-Revision-Date: 2010-06-13 13:33+0200\n"
+"PO-Revision-Date: 2010-06-29 18:06+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -1350,7 +1350,7 @@ msgstr "Incolla dentro"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "_Reset"
-msgstr "Azze_ra"
+msgstr "_Reimposta"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "Visible"
