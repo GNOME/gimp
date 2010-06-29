@@ -5057,13 +5057,14 @@ msgstr "_Schrift:"
 msgid "Select Number Color"
 msgstr "Nummernfarbe auswählen"
 
+# Kontext: wo auf den Filmstreifen erscheint die Beschriftung?
 #: ../plug-ins/common/film.c:1085
 msgid "At _bottom"
-msgstr "Am _Fuß"
+msgstr "_Unten"
 
 #: ../plug-ins/common/film.c:1086
 msgid "At _top"
-msgstr "Am _Kopf"
+msgstr "O_ben"
 
 #. ** The right frame keeps the image selection **
 #: ../plug-ins/common/film.c:1099
@@ -6426,7 +6427,7 @@ msgstr "_Maskengröße:"
 #.
 #: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
-msgstr "_Maskengroße Map verwenden:"
+msgstr "Map für M_askengröße verwenden:"
 
 #: ../plug-ins/common/oilify.c:867 ../plug-ins/common/sinus.c:921
 msgid "_Exponent:"
@@ -6437,7 +6438,7 @@ msgstr "_Exponent:"
 #.
 #: ../plug-ins/common/oilify.c:882
 msgid "Use e_xponent map:"
-msgstr "_Exponenten-Map verwenden:"
+msgstr "Map für E_xponenten verwenden:"
 
 #.
 #. * Intensity algorithm check button
