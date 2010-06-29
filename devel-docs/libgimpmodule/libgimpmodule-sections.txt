@@ -5,6 +5,8 @@ GimpModuleInfo
 GimpModuleState
 GimpModuleQueryFunc
 GimpModuleRegisterFunc
+GIMP_MODULE_ERROR
+GimpModuleError
 GIMP_MODULE_ABI_VERSION
 GIMP_MODULE_PARAM_SERIALIZE
 <TITLE>GimpModule</TITLE>
