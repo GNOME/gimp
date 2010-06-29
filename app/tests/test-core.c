@@ -30,13 +30,21 @@
 
 #define GIMP_TEST_IMAGE_SIZE 100
 
-#define ADD_TEST(function) \
+#define ADD_IMAGE_TEST(function) \
   g_test_add ("/gimp-core/" #function, \
               GimpTestFixture, \
               gimp, \
               gimp_test_image_setup, \
               function, \
               gimp_test_image_teardown);
+
+#define ADD_TEST(function) \
+  g_test_add ("/gimp-core/" #function, \
+              GimpTestFixture, \
+              gimp, \
+              NULL, \
+              function, \
+              NULL);
 
 
 typedef struct
@@ -181,8 +189,8 @@ main (int    argc,
   gimp = gimp_init_for_testing (TRUE);
 
   /* Add tests */
-  ADD_TEST (add_layer);
-  ADD_TEST (remove_layer);
+  ADD_IMAGE_TEST (add_layer);
+  ADD_IMAGE_TEST (remove_layer);
 
   /* Run the tests and return status */
   return g_test_run ();
