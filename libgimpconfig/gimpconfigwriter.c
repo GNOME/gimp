@@ -51,6 +51,16 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpconfigwriter
+ * @title: GimpConfigWriter
+ * @short_description: Functions for writing config info to a file for
+ *                     libgimpconfig.
+ *
+ * Functions for writing config info to a file for libgimpconfig.
+ **/
+
+
 struct _GimpConfigWriter
 {
   gint      fd;

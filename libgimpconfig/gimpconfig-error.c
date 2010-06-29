@@ -27,6 +27,15 @@
 
 
 /**
+ * SECTION: gimpconfig-error
+ * @title: GimpConfig-error
+ * @short_description: Error utils for libgimpconfig.
+ *
+ * Error utils for libgimpconfig.
+ **/
+
+
+/**
  * gimp_config_error_quark:
  *
  * This function is never called directly. Use GIMP_CONFIG_ERROR() instead.

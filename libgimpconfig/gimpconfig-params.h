@@ -27,6 +27,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * SECTION: gimpconfig-params
+ * @title: GimpConfig-params
+ * @short_description: Macros and defines to install config properties.
+ *
+ * Macros and defines to install config properties.
+ **/
+
+
 /*
  * GIMP_CONFIG_PARAM_SERIALIZE - A property that can and should be
  *                               serialized and deserialized.

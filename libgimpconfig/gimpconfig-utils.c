@@ -33,6 +33,15 @@
 #include "gimpconfig-utils.h"
 
 
+/**
+ * SECTION: gimpconfig-utils
+ * @title: GimpConfig-utils
+ * @short_description: Miscellaneous utility functions for libgimpconfig.
+ *
+ * Miscellaneous utility functions for libgimpconfig.
+ **/
+
+
 static gboolean
 gimp_config_diff_property (GObject    *a,
                            GObject    *b,

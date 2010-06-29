@@ -36,6 +36,15 @@
 #include "gimpconfig-utils.h"
 
 
+/**
+ * SECTION: gimpconfig-serialize
+ * @title: GimpConfig-serialize
+ * @short_description: Serializing for libgimpconfig.
+ *
+ * Serializing interface for libgimpconfig.
+ **/
+
+
 static gboolean  gimp_config_serialize_rgb (const GValue *value,
                                             GString      *str,
                                             gboolean      has_alpha);

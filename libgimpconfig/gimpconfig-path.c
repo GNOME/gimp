@@ -35,6 +35,15 @@
 
 
 /**
+ * SECTION: gimpconfig-path
+ * @title: GimpConfig-path
+ * @short_description: File path utilities for libgimpconfig.
+ *
+ * File path utilities for libgimpconfig.
+ **/
+
+
+/**
  * gimp_config_path_get_type:
  *
  * Reveals the object type

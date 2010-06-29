@@ -37,6 +37,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolorconfig
+ * @title: GimpColorConfig
+ * @short_description: Color management settings.
+ *
+ * Color management settings.
+ **/
+
+
 #define COLOR_MANAGEMENT_MODE_BLURB \
   N_("Mode of operation for color management.")
 #define DISPLAY_PROFILE_BLURB \

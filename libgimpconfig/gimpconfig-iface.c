@@ -40,6 +40,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpconfig-iface
+ * @title: GimpConfig-iface
+ * @short_description: High-level API for libgimpconfig.
+ *
+ * High-level API for libgimpconfig.
+ **/
+
+
 /*
  * The GimpConfig serialization and deserialization interface.
  */

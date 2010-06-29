@@ -39,6 +39,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpconfig-deserialize
+ * @title: GimpConfig-deserialize
+ * @short_description: Deserializing code for libgimpconfig.
+ *
+ * Deserializing code for libgimpconfig.
+ **/
+
+
 /*
  *  All functions return G_TOKEN_RIGHT_PAREN on success,
  *  the GTokenType they would have expected but didn't get

@@ -37,6 +37,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpscanner
+ * @title: GimpScanner
+ * @short_description: A wrapper around #GScanner with some convenience API.
+ *
+ * A wrapper around #GScanner with some convenience API.
+ **/
+
+
 typedef struct
 {
   gchar        *name;
