@@ -33,6 +33,17 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpmodule
+ * @title: GimpModule
+ * @short_description: A #GTypeModule subclass which implements module
+ *                     loading using #GModule.
+ * @see_also: #GModule, #GTypeModule
+ *
+ * A #GTypeModule subclass which implements module loading using #GModule.
+ **/
+
+
 enum
 {
   MODIFIED,

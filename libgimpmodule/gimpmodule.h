@@ -31,28 +31,43 @@
 G_BEGIN_DECLS
 
 
-/*  increment the ABI version each time one of the following changes:
+/**
+ * GIMP_MODULE_ABI_VERSION:
+ *
+ * The version of the module system's ABI. Modules put this value into
+ * #GimpModuleInfo's @abi_version field so the code loading the modules
+ * can check if it was compiled against the same module ABI the modules
+ * are compiled against.
+ *
+ *  GIMP_MODULE_ABI_VERSION is incremented each time one of the
+ *  following changes:
  *
  *  - the libgimpmodule implementation (if the change affects modules).
- *  - one of the classes implemented by modules (currently GimpColorDisplay,
- *    GimpColorSelector and GimpController).
- */
+ *
+ *  - one of the classes implemented by modules (currently #GimpColorDisplay,
+ *    #GimpColorSelector and #GimpController).
+ **/
 #define GIMP_MODULE_ABI_VERSION 0x0004
 
 
+/**
+ * GimpModuleState:
+ * @GIMP_MODULE_STATE_ERROR:       Missing gimp_module_register() function
+ *                                 or other error.
+ * @GIMP_MODULE_STATE_LOADED:      An instance of a type implemented by
+ *                                 this module is allocated.
+ * @GIMP_MODULE_STATE_LOAD_FAILED: gimp_module_register() returned %FALSE.
+ * @GIMP_MODULE_STATE_NOT_LOADED:  There are no instances allocated of
+ *                                 types implemented by this module.
+ *
+ * The possible states a #GimpModule can be in.
+ **/
 typedef enum
 {
-  GIMP_MODULE_STATE_ERROR,       /* missing gimp_module_register function
-                                  * or other error
-                                  */
-  GIMP_MODULE_STATE_LOADED,      /* an instance of a type implemented by
-                                  * this module is allocated
-                                  */
-  GIMP_MODULE_STATE_LOAD_FAILED, /* gimp_module_register returned FALSE
-                                  */
-  GIMP_MODULE_STATE_NOT_LOADED   /* there are no instances allocated of
-                                  * types implemented by this module
-                                  */
+  GIMP_MODULE_STATE_ERROR,
+  GIMP_MODULE_STATE_LOADED,
+  GIMP_MODULE_STATE_LOAD_FAILED,
+  GIMP_MODULE_STATE_NOT_LOADED
 } GimpModuleState;
 
 
@@ -66,6 +81,17 @@ typedef enum
 } GimpModuleError;
 
 
+/**
+ * GimpModuleInfo:
+ * @abi_version: The #GIMP_MODULE_ABI_VERSION the module was compiled against.
+ * @purpose:     The module's general purpose.
+ * @author:      The module's author.
+ * @version:     The module's version.
+ * @copyright:   The module's copyright.
+ * @date:        The module's release date.
+ *
+ * This structure contains information about a loadable module.
+ **/
 struct _GimpModuleInfo
 {
   guint32  abi_version;
@@ -77,8 +103,36 @@ struct _GimpModuleInfo
 };
 
 
+/**
+ * GimpModuleQueryFunc:
+ * @module:  The #GimpModule responsible for this loadable module.
+ * @Returns: The #GimpModuleInfo struct describing the module.
+ *
+ * The signature of the query function a loadable GIMP module must
+ * implement.  In the module, the function must be called
+ * gimp_module_query().
+ *
+ * #GimpModule will copy the returned #GimpModuleInfo struct, so the
+ * module doesn't need to keep these values around (however in most
+ * cases the module will just return a pointer to a constant
+ * structure).
+ **/
 typedef const GimpModuleInfo * (* GimpModuleQueryFunc)    (GTypeModule *module);
+
+/**
+ * GimpModuleRegisterFunc:
+ * @module:  The #GimpModule responsible for this loadable module.
+ * @Returns: %TRUE on success, %FALSE otherwise.
+ *
+ * The signature of the register function a loadable GIMP module must
+ * implement.  In the module, the function must be called
+ * gimp_module_register().
+ *
+ * When this function is called, the module should register all the types
+ * it implements with the passed @module.
+ **/
 typedef gboolean               (* GimpModuleRegisterFunc) (GTypeModule *module);
+
 
 /* GimpModules have to implement these */
 G_MODULE_EXPORT const GimpModuleInfo * gimp_module_query    (GTypeModule *module);
@@ -95,6 +149,22 @@ G_MODULE_EXPORT gboolean               gimp_module_register (GTypeModule *module
 
 typedef struct _GimpModuleClass GimpModuleClass;
 
+/**
+ * GimpModule:
+ * @filename:
+ * @verbose:
+ * @state:
+ * @on_disk:
+ * @load_inhibit:
+ * @info:
+ * @last_module_error:
+ *
+ * #GimpModule is a generic mechanism to dynamically load modules into
+ * GIMP.  It is a #GTypeModule subclass, implementing module loading
+ * using #GModule.  #GimpModule does not know which functionality is
+ * implemented by the modules, it just provides a framework to get
+ * arbitrary #GType implementations loaded from disk.
+ **/
 struct _GimpModule
 {
   GTypeModule      parent_instance;

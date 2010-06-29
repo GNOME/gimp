@@ -30,6 +30,16 @@
 #include "gimpmoduledb.h"
 
 
+/**
+ * SECTION: gimpmoduledb
+ * @title: GimpModuleDB
+ * @short_description: Keeps a list of #GimpModule's found in a given
+ *                     searchpath.
+ *
+ * Keeps a list of #GimpModule's found in a given searchpath.
+ **/
+
+
 enum
 {
   ADD,
