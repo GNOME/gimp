@@ -2,12 +2,11 @@
 gimpenv
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions to access the GIMP environment.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-A set of functions to find the locations of GIMP's data directories and
-configuration files.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -16,6 +15,9 @@ configuration files.
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### FUNCTION gimp_env_init ##### -->
@@ -31,6 +33,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -39,6 +42,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -47,6 +51,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -55,6 +60,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -63,6 +69,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 
@@ -89,6 +96,7 @@ configuration files.
 
 </para>
 
+@void: 
 @Returns: 
 
 

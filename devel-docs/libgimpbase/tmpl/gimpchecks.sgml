@@ -2,11 +2,11 @@
 gimpchecks
 
 <!-- ##### SECTION Short_Description ##### -->
-Constants and functions related to rendering checkerboards.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Constants and functions related to rendering checkerboards.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -17,32 +17,33 @@ Constants and functions related to rendering checkerboards.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO GIMP_CHECK_SIZE ##### -->
 <para>
-The default checkerboard size in pixels. This is configurable in the
-core but GIMP plug-ins can't access the user preference and should use
-this constant instead.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_CHECK_SIZE_SM ##### -->
 <para>
-The default small checkerboard size in pixels.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_CHECK_DARK ##### -->
 <para>
-The dark gray value for the default checkerboard pattern.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_CHECK_LIGHT ##### -->
 <para>
-The light gray value for the default checkerboard pattern.
+
 </para>
 
 

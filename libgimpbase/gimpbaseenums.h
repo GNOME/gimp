@@ -20,6 +20,15 @@
 #define __GIMP_BASE_ENUMS_H__
 
 
+/**
+ * SECTION: gimpbaseenums
+ * @title: gimpbaseenums
+ * @short_description: Basic GIMP enumeration data types.
+ *
+ * Basic GIMP enumeration data types.
+ **/
+
+
 G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */

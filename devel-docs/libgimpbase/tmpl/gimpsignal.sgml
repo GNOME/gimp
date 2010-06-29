@@ -2,32 +2,30 @@
 gimpsignal
 
 <!-- ##### SECTION Short_Description ##### -->
-Portable signal handling.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Portable signal handling.
 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-signal(2), signal(5 or 7), sigaction(2).
+
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### USER_FUNCTION GimpSignalHandlerFunc ##### -->
 <para>
-A prototype for signal handler functions. Note that each function which
-takes or returns a variable of this type also accepts or may return
-special values defined by your system's signal.h header file (like
-@SIG_DFL or @SIG_IGN).
+
 </para>
 
-@signum: The number of the signal. Useful if different signals are handled
-         by a single handler.
+@signum: 
 
 
 <!-- ##### FUNCTION gimp_signal_private ##### -->

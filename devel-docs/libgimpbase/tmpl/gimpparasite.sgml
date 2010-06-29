@@ -2,21 +2,22 @@
 gimpparasite
 
 <!-- ##### SECTION Short_Description ##### -->
-Arbitrary pieces of data which can be attached to various GIMP objects.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Arbitrary pieces of data which can be attached to various GIMP objects.
 
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-gimp_image_parasite_attach(), gimp_drawable_parasite_attach(),
-gimp_parasite_attach() and their related functions.
+
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### STRUCT GimpParasite ##### -->

@@ -17,6 +17,9 @@ gimpcpuaccel
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### ENUM GimpCpuAccelFlags ##### -->
 <para>
 
@@ -36,6 +39,7 @@ gimpcpuaccel
 
 </para>
 
+@void: 
 @Returns: 
 
 

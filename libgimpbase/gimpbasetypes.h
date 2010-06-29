@@ -42,6 +42,15 @@ typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
                                          gpointer                user_data);
 
 
+/**
+ * GimpEnumDesc:
+ * @value:      An enum value.
+ * @value_desc: The value's description.
+ * @value_help: The value's help text.
+ *
+ * This structure is used to register translatable descriptions and
+ * help texts for enum values. See gimp_enum_set_value_descriptions().
+ **/
 struct _GimpEnumDesc
 {
   gint         value;
@@ -49,6 +58,15 @@ struct _GimpEnumDesc
   const gchar *value_help;
 };
 
+/**
+ * GimpFlagsDesc:
+ * @value:      A flag value.
+ * @value_desc: The value's description.
+ * @value_help: The value's help text.
+ *
+ * This structure is used to register translatable descriptions and
+ * help texts for flag values. See gimp_flags_set_value_descriptions().
+ **/
 struct _GimpFlagsDesc
 {
   guint        value;

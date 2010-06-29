@@ -29,6 +29,16 @@
 
 
 /**
+ * SECTION: gimpchecks
+ * @title: gimpchecks
+ * @short_description: Constants and functions related to rendering
+ *                     checkerboards.
+ *
+ * Constants and functions related to rendering checkerboards.
+ **/
+
+
+/**
  * gimp_checks_get_shades:
  * @type:  the checkerboard type
  * @light: return location for the light shade

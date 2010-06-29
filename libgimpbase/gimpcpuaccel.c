@@ -38,6 +38,15 @@
 #include "gimpcpuaccel.h"
 
 
+/**
+ * SECTION: gimpcpuaccel
+ * @title: gimpcpuaccel
+ * @short_description: Functions to query and configure CPU acceleration.
+ *
+ * Functions to query and configure CPU acceleration.
+ **/
+
+
 static GimpCpuAccelFlags  cpu_accel (void) G_GNUC_CONST;
 
 

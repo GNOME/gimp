@@ -65,6 +65,16 @@
 #endif
 
 
+/**
+ * SECTION: gimpenv
+ * @title: gimpenv
+ * @short_description: Functions to access the GIMP environment.
+ *
+ * A set of functions to find the locations of GIMP's data directories
+ * and configuration files.
+ **/
+
+
 static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
                                  const gchar *env_dir);
 

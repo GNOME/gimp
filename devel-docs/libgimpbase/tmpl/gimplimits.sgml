@@ -2,11 +2,10 @@
 gimplimits
 
 <!-- ##### SECTION Short_Description ##### -->
-Boundaries of some GIMP data types and some global constants.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Boundaries of some GIMP data types and some global constants.
 
 </para>
 
@@ -18,47 +17,40 @@ Boundaries of some GIMP data types and some global constants.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO GIMP_MIN_IMAGE_SIZE ##### -->
 <para>
-The minimum width and height of a GIMP image in pixels.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_MAX_IMAGE_SIZE ##### -->
 <para>
-The maximum width and height of a GIMP image in pixels. This is a
-somewhat arbitray value that can be used when an upper value for pixel
-sizes is needed; for example to give a spin button an upper limit.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_MIN_RESOLUTION ##### -->
 <para>
-The minimum resolution of a GIMP image in pixels per inch. This is a
-somewhat arbitray value that can be used to when a lower value for a
-resolution is needed. GIMP will not accept resolutions smaller than
-this value.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_MAX_RESOLUTION ##### -->
 <para>
-The maximum resolution of a GIMP image in pixels per inch. This is a
-somewhat arbitray value that can be used to when an upper value for a
-resolution is needed. GIMP will not accept resolutions larger than
-this value.
+
 </para>
 
 
 
 <!-- ##### MACRO GIMP_MAX_MEMSIZE ##### -->
 <para>
-A large but arbitrary value that can be used when an upper limit for a
-memory size (in bytes) is needed. It is smaller than %G_MAXDOUBLE since
-the #GimpMemsizeEntry doesn't handle larger values.
+
 </para>
 
 

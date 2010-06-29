@@ -1924,14 +1924,54 @@ AC_CONFIG_COMMANDS([libgimpbase/gimpversion.h], [
 G_BEGIN_DECLS
 
 
+/**
+ * SECTION: gimpversion
+ * @title: gimpversion
+ * @short_description: Macros and constants useful for determining
+ *                     GIMP's version number and capabilities.
+ *
+ * Macros and constants useful for determining GIMP's version number and
+ * capabilities.
+ **/
+
 _______EOF
 
   cat >>$outfile <<_______EOF
+/**
+ * GIMP_MAJOR_VERSION:
+ *
+ * The major GIMP version number.
+ **/
 #define GIMP_MAJOR_VERSION                              ($gimp_major_ver)
+
+/**
+ * GIMP_MINOR_VERSION:
+ *
+ * The minor GIMP version number.
+ **/
 #define GIMP_MINOR_VERSION                              ($gimp_minor_ver)
+
+/**
+ * GIMP_MICRO_VERSION:
+ *
+ * The micro GIMP version number.
+ **/
 #define GIMP_MICRO_VERSION                              ($gimp_micro_ver)
+
+/**
+ * GIMP_VERSION:
+ *
+ * The GIMP version as a string.
+ **/
 #define GIMP_VERSION                                    "$gimp_ver"
+
+/**
+ * GIMP_API_VERSION:
+ *
+ * Since: GIMP 2.2
+ **/
 #define GIMP_API_VERSION                                "$gimp_api_ver"
+
 _______EOF
 
   cat >>$outfile <<\_______EOF

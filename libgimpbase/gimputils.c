@@ -33,6 +33,15 @@
 
 
 /**
+ * SECTION: gimputils
+ * @title: gimputils
+ * @short_description: Utilities of general interest
+ *
+ * Utilities of general interest
+ **/
+
+
+/**
  * gimp_utf8_strtrim:
  * @str: an UTF-8 encoded string (or %NULL)
  * @max_chars: the maximum number of characters before the string get
@@ -236,7 +245,7 @@ gimp_filename_to_utf8 (const gchar *filename)
  * In some languages, mnemonics are handled by adding the mnemonic
  * character in brackets (like "File (_F)"). This function recognizes
  * this construct and removes the whole bracket construction to get
- * rid of the mnemonic (see bug #157561).
+ * rid of the mnemonic (see bug 157561).
  *
  * Return value: A (possibly stripped) copy of @str which should be
  *               freed using g_free() when it is not needed any longer.

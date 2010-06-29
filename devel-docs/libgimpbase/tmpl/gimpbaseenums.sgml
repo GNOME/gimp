@@ -2,11 +2,11 @@
 gimpbaseenums
 
 <!-- ##### SECTION Short_Description ##### -->
-Basic GIMP enumeration data types.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Basic GIMP enumeration data types.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -15,6 +15,9 @@ Basic GIMP enumeration data types.
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### ENUM GimpAddMaskType ##### -->

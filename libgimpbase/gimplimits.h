@@ -25,18 +25,63 @@
 G_BEGIN_DECLS
 
 
-/*  pixel sizes
- */
+/**
+ * SECTION: gimplimits
+ * @title: gimplimits
+ * @short_description: Boundaries of some GIMP data types and some
+ *                     global constants.
+ *
+ * Boundaries of some GIMP data types and some global constants.
+ **/
+
+
+/**
+ * GIMP_MIN_IMAGE_SIZE:
+ *
+ * The minimum width and height of a GIMP image in pixels.
+ **/
 #define GIMP_MIN_IMAGE_SIZE  1
+
+/**
+ * GIMP_MAX_IMAGE_SIZE:
+ *
+ * The maximum width and height of a GIMP image in pixels. This is a
+ * somewhat arbitray value that can be used when an upper value for
+ * pixel sizes is needed; for example to give a spin button an upper
+ * limit.
+ **/
 #define GIMP_MAX_IMAGE_SIZE  262144    /*  2^18  */
 
-/*  dots per inch
- */
+
+/**
+ * GIMP_MIN_RESOLUTION:
+ *
+ * The minimum resolution of a GIMP image in pixels per inch. This is
+ * a somewhat arbitray value that can be used when a lower value for a
+ * resolution is needed. GIMP will not accept resolutions smaller than
+ * this value.
+ **/
 #define GIMP_MIN_RESOLUTION  5e-3      /*  shouldn't display as 0.000  */
+
+/**
+ * GIMP_MAX_RESOLUTION:
+ *
+ * The maximum resolution of a GIMP image in pixels per inch. This is
+ * a somewhat arbitray value that can be used to when an upper value
+ * for a resolution is needed. GIMP will not accept resolutions larger
+ * than this value.
+ **/
 #define GIMP_MAX_RESOLUTION  65536.0
 
-/*  memory sizes
- */
+
+/**
+ * GIMP_MAX_MEMSIZE:
+ *
+ * A large but arbitrary value that can be used when an upper limit
+ * for a memory size (in bytes) is needed. It is smaller than
+ * %G_MAXDOUBLE since the #GimpMemsizeEntry doesn't handle larger
+ * values.
+ **/
 #define GIMP_MAX_MEMSIZE     ((guint64) 1 << 42) /*  4 terabyte;
                                                   *  needs a 64bit variable
                                                   *  and must be < G_MAXDOUBLE

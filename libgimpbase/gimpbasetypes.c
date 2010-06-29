@@ -26,6 +26,17 @@
 #include "gimpbasetypes.h"
 
 
+/**
+ * SECTION: gimpbasetypes
+ * @title: gimpbasetypes
+ * @short_description: Translation between gettext translation domain
+ *                     identifier and GType.
+ *
+ * Translation between gettext translation domain identifier and
+ * GType.
+ **/
+
+
 static GQuark  gimp_translation_domain_quark  (void) G_GNUC_CONST;
 static GQuark  gimp_translation_context_quark (void) G_GNUC_CONST;
 static GQuark  gimp_value_descriptions_quark  (void) G_GNUC_CONST;
@@ -38,7 +49,7 @@ static GQuark  gimp_value_descriptions_quark  (void) G_GNUC_CONST;
  *
  * This function attaches a constant string as a gettext translation
  * domain identifier to a #GType. The only purpose of this function is
- * to use it when registering a #GTypeEnum with translatable value
+ * to use it when registering a #G_TYPE_ENUM with translatable value
  * names.
  *
  * Since: GIMP 2.2
@@ -58,7 +69,7 @@ gimp_type_set_translation_domain (GType        type,
  * Retrieves the gettext translation domain identifier that has been
  * previously set using gimp_type_set_translation_domain(). You should
  * not need to use this function directly, use gimp_enum_get_value()
- * or gimp_enum_value_get_name() instead.
+ * or gimp_enum_value_get_desc() instead.
  *
  * Return value: the translation domain associated with @type
  *               or %NULL if no domain was set
@@ -74,12 +85,12 @@ gimp_type_get_translation_domain (GType type)
 
 /**
  * gimp_type_set_translation_context:
- * @type:   a #GType
- * @domain: a constant string that identifies a translation context or %NULL
+ * @type:    a #GType
+ * @context: a constant string that identifies a translation context or %NULL
  *
  * This function attaches a constant string as a translation context
  * to a #GType. The only purpose of this function is to use it when
- * registering a #GTypeEnum with translatable value names.
+ * registering a #G_TYPE_ENUM with translatable value names.
  *
  * Since: GIMP 2.8
  **/
@@ -98,7 +109,7 @@ gimp_type_set_translation_context (GType        type,
  * Retrieves the translation context that has been previously set
  * using gimp_type_set_translation_context(). You should not need to
  * use this function directly, use gimp_enum_get_value() or
- * gimp_enum_value_get_name() instead.
+ * gimp_enum_value_get_desc() instead.
  *
  * Return value: the translation context associated with @type
  *               or %NULL if no context was set

@@ -26,9 +26,11 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
-/*
- * GIMP_TYPE_UNIT
- */
+/**
+ * GIMP_TYPE_UNIT:
+ *
+ * #GIMP_TYPE_UNIT is a #GType derived from #G_TYPE_INT.
+ **/
 
 #define GIMP_TYPE_UNIT               (gimp_unit_get_type ())
 #define GIMP_VALUE_HOLDS_UNIT(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_UNIT))
@@ -84,7 +86,7 @@ const gchar * gimp_unit_get_plural          (GimpUnit  unit);
 gdouble       gimp_pixels_to_units          (gdouble   pixels,
                                              GimpUnit  unit,
                                              gdouble   resolution);
-gdouble       gimp_units_to_pixels          (gdouble   units,
+gdouble       gimp_units_to_pixels          (gdouble   value,
                                              GimpUnit  unit,
                                              gdouble   resolution);
 

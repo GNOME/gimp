@@ -22,9 +22,11 @@
 G_BEGIN_DECLS
 
 
-/*
- * GIMP_TYPE_MEMSIZE
- */
+/**
+ * GIMP_TYPE_MEMSIZE:
+ *
+ * #GIMP_TYPE_MEMSIZE is a #GType derived from #G_TYPE_UINT64.
+ **/
 
 #define GIMP_TYPE_MEMSIZE               (gimp_memsize_get_type ())
 #define GIMP_VALUE_HOLDS_MEMSIZE(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MEMSIZE))

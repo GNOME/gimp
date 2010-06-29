@@ -42,6 +42,15 @@
 #include "gimpenv.h"
 
 
+/**
+ * SECTION: gimpdatafiles
+ * @title: gimpdatafiles
+ * @short_description: Functions to handle GIMP data files.
+ *
+ * Functions to handle GIMP data files.
+ **/
+
+
 static inline gboolean   is_script (const gchar *filename);
 static inline gboolean   is_hidden (const gchar *filename);
 

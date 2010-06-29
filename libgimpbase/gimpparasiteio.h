@@ -38,7 +38,9 @@ G_BEGIN_DECLS
 
 #define GIMP_PIXPIPE_MAXDIM 4
 
-typedef struct
+typedef struct _GimpPixPipeParams GimpPixPipeParams;
+
+struct _GimpPixPipeParams
 {
   gint      step;
   gint      ncells;
@@ -52,7 +54,7 @@ typedef struct
   gint      rank[GIMP_PIXPIPE_MAXDIM];
   gchar    *selection[GIMP_PIXPIPE_MAXDIM];
   gboolean  free_selection_string;
-} GimpPixPipeParams;
+};
 
 /* Initalize with dummy values */
 void    gimp_pixpipe_params_init  (GimpPixPipeParams *params);

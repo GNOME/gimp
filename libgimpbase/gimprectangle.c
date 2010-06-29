@@ -26,6 +26,15 @@
 
 
 /**
+ * SECTION: gimprectangle
+ * @title: gimprectangle
+ * @short_description: Utility functions dealing with rectangle extents.
+ *
+ * Utility functions dealing with rectangle extents.
+ **/
+
+
+/**
  * gimp_rectangle_intersect:
  * @x1:          origin of first rectangle
  * @y1:          origin of first rectangle

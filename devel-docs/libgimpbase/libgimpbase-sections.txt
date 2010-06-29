@@ -232,6 +232,7 @@ gimp_param_parasite_get_type
 <SECTION>
 <FILE>gimpparasiteio</FILE>
 GIMP_PIXPIPE_MAXDIM
+GimpPixPipeParams
 gimp_pixpipe_params_init
 gimp_pixpipe_params_parse
 gimp_pixpipe_params_build
@@ -258,6 +259,8 @@ gimp_unit_get_symbol
 gimp_unit_get_abbreviation
 gimp_unit_get_singular
 gimp_unit_get_plural
+gimp_pixels_to_units
+gimp_units_to_pixels
 GIMP_TYPE_UNIT
 GIMP_TYPE_PARAM_UNIT
 GIMP_IS_PARAM_SPEC_UNIT

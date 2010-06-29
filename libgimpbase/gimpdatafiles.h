@@ -27,6 +27,19 @@
 G_BEGIN_DECLS
 
 
+/**
+ * GimpDatafileData:
+ * @filename: the data file's full path.
+ * @dirname:  the folder the data file is is.
+ * @basename: the data file's basename.
+ * @atime:    the last time the file was accessed for reading.
+ * @mtime:    the last time the file was modified.
+ * @ctime:    the time the file was created.
+ *
+ * This structure is passed to the #GimpDatafileLoaderFunc given to
+ * gimp_datafiles_read_directories() for each file encountered in the
+ * data path.
+ **/
 struct _GimpDatafileData
 {
   const gchar *filename;

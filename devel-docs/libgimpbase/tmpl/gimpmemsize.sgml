@@ -2,11 +2,11 @@
 gimpmemsize
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions to (de)serialize a given memory size.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions to (de)serialize a given memory size.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -15,6 +15,9 @@ Functions to (de)serialize a given memory size.
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### FUNCTION gimp_memsize_serialize ##### -->
@@ -47,7 +50,7 @@ Functions to (de)serialize a given memory size.
 
 <!-- ##### MACRO GIMP_TYPE_MEMSIZE ##### -->
 <para>
-#GIMP_TYPE_MEMSIZE is a #GType derived from #G_TYPE_UINT64.
+
 </para>
 
 

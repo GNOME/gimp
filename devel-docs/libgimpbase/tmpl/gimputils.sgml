@@ -2,7 +2,7 @@
 gimputils
 
 <!-- ##### SECTION Short_Description ##### -->
-Utilities of general interest
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -15,6 +15,9 @@ Utilities of general interest
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### FUNCTION gimp_any_to_utf8 ##### -->

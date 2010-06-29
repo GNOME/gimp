@@ -28,6 +28,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpmemsize
+ * @title: gimpmemsize
+ * @short_description: Functions to (de)serialize a given memory size.
+ *
+ * Functions to (de)serialize a given memory size.
+ **/
+
+
 static void   memsize_to_string (const GValue *src_value,
                                  GValue       *dest_value);
 static void   string_to_memsize (const GValue *src_value,

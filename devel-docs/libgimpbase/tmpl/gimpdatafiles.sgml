@@ -2,11 +2,11 @@
 gimpdatafiles
 
 <!-- ##### SECTION Short_Description ##### -->
-Functions to handle GIMP data files.
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-Functions to handle GIMP data files.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -15,6 +15,9 @@ Functions to handle GIMP data files.
 </para>
 
 <!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### STRUCT GimpDatafileData ##### -->

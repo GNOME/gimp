@@ -31,6 +31,18 @@
 #include "gimpunit.h"
 
 
+/**
+ * SECTION: gimpunit
+ * @title: gimpunit
+ * @short_description: Provides a collection of predefined units and
+ *                     functions for creating user-defined units.
+ * @see_also: #GimpUnitMenu, #GimpSizeEntry.
+ *
+ * Provides a collection of predefined units and functions for
+ * creating user-defined units.
+ **/
+
+
 static void   unit_to_string (const GValue *src_value,
                               GValue       *dest_value);
 static void   string_to_unit (const GValue *src_value,
@@ -465,7 +477,9 @@ gimp_param_spec_unit (const gchar *name,
  * @unit:       unit to convert to
  * @resolution: resloution in DPI
  *
- * Returns: %pixels converted to units.
+ * Converts a @value specified in pixels to @unit.
+ *
+ * Returns: @pixels converted to units.
  *
  * Since: GIMP 2.8
  **/
@@ -483,10 +497,12 @@ gimp_pixels_to_units (gdouble  pixels,
 /**
  * gimp_units_to_pixels:
  * @value:      value in units
- * @unit:       unit of %value
+ * @unit:       unit of @value
  * @resolution: resloution in DPI
  *
- * Returns: %value converted to pixels.
+ * Converts a @value specified in @unit to pixels.
+ *
+ * Returns: @value converted to pixels.
  *
  * Since: GIMP 2.8
  **/

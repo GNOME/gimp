@@ -27,6 +27,16 @@
 #include "gimpsignal.h"
 
 
+/**
+ * SECTION: gimpsignal
+ * @title: gimpsignal
+ * @short_description: Portable signal handling.
+ * @see_also: signal(2), signal(5 or 7), sigaction(2).
+ *
+ * Portable signal handling.
+ **/
+
+
 /* Courtesy of Austin Donnelly 06-04-2000 to address bug #2742 */
 
 /**

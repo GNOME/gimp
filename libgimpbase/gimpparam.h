@@ -19,16 +19,46 @@
 #ifndef __GIMP_PARAM_H__
 #define __GIMP_PARAM_H__
 
-/* For information look into the C source or the html documentation */
+
+/**
+ * SECTION: gimpparam
+ * @title: gimpparam
+ * @short_description: Definitions of useful #GParamFlags.
+ *
+ * Definitions of useful #GParamFlags.
+ **/
 
 
+/**
+ * GIMP_PARAM_STATIC_STRINGS:
+ *
+ * Since: GIMP 2.4
+ **/
 #define GIMP_PARAM_STATIC_STRINGS (G_PARAM_STATIC_NAME | \
                                    G_PARAM_STATIC_NICK | \
                                    G_PARAM_STATIC_BLURB)
+
+/**
+ * GIMP_PARAM_READABLE:
+ *
+ * Since: GIMP 2.4
+ **/
 #define GIMP_PARAM_READABLE       (G_PARAM_READABLE    | \
                                    GIMP_PARAM_STATIC_STRINGS)
+
+/**
+ * GIMP_PARAM_WRITABLE:
+ *
+ * Since: GIMP 2.4
+ **/
 #define GIMP_PARAM_WRITABLE       (G_PARAM_WRITABLE    | \
                                    GIMP_PARAM_STATIC_STRINGS)
+
+/**
+ * GIMP_PARAM_READWRITE:
+ *
+ * Since: GIMP 2.4
+ **/
 #define GIMP_PARAM_READWRITE      (G_PARAM_READWRITE   | \
                                    GIMP_PARAM_STATIC_STRINGS)
 
