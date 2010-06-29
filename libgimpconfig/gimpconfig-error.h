@@ -26,13 +26,23 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+/**
+ * GimpConfigError:
+ * @GIMP_CONFIG_ERROR_OPEN:        open failed
+ * @GIMP_CONFIG_ERROR_OPEN_ENOENT: file does not exist
+ * @GIMP_CONFIG_ERROR_WRITE:       write failed
+ * @GIMP_CONFIG_ERROR_PARSE:       parser error
+ * @GIMP_CONFIG_ERROR_VERSION:     parser failed due to version mismatch
+ *
+ * The possible values of a #GError thrown by libgimpconfig.
+ **/
 typedef enum
 {
-  GIMP_CONFIG_ERROR_OPEN,         /*  open failed                            */
-  GIMP_CONFIG_ERROR_OPEN_ENOENT,  /*  file does not exist                    */
-  GIMP_CONFIG_ERROR_WRITE,        /*  write failed                           */
-  GIMP_CONFIG_ERROR_PARSE,        /*  parser error                           */
-  GIMP_CONFIG_ERROR_VERSION       /*  parser failed due to version mismatch  */
+  GIMP_CONFIG_ERROR_OPEN,
+  GIMP_CONFIG_ERROR_OPEN_ENOENT,
+  GIMP_CONFIG_ERROR_WRITE,
+  GIMP_CONFIG_ERROR_PARSE,
+  GIMP_CONFIG_ERROR_VERSION
 } GimpConfigError;
 
 #define GIMP_CONFIG_ERROR (gimp_config_error_quark ())

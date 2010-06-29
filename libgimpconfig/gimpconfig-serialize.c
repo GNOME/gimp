@@ -347,7 +347,7 @@ gimp_config_serialize_property_by_name (GimpConfig       *config,
 /**
  * gimp_config_serialize_value:
  * @value: a #GValue.
- * @str: a #Gstring.
+ * @str: a #GString.
  * @escaped: whether to escape string values.
  *
  * This utility function appends a string representation of #GValue to @str.

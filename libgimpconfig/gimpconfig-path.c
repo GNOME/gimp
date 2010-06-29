@@ -131,7 +131,7 @@ gimp_param_config_path_class_init (GParamSpecClass *class)
  * @name:          Canonical name of the param
  * @nick:          Nickname of the param
  * @blurb:         Brief desciption of param.
- * @type:          a #GimpParamConfigPathType value.
+ * @type:          a #GimpConfigPathType value.
  * @default_value: Value to use if none is assigned.
  * @flags:         a combination of #GParamFlags
  *
@@ -269,7 +269,7 @@ gimp_config_build_writable_path (const gchar *name)
 
 /**
  * gimp_config_path_expand:
- * @path: a %NUL-terminated string in UTF-8 encoding
+ * @path: a NUL-terminated string in UTF-8 encoding
  * @recode: whether to convert to the filesystem's encoding
  * @error: return location for errors
  *
@@ -281,7 +281,7 @@ gimp_config_build_writable_path (const gchar *name)
  * substitution for you and can also attempt to convert to the
  * filesystem encoding.
  *
- * Return value: a newly allocated %NUL-terminated string
+ * Return value: a newly allocated NUL-terminated string
  *
  * Since: GIMP 2.4
  **/

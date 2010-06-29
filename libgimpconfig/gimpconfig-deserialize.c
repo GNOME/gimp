@@ -112,7 +112,7 @@ scanner_string_utf8_valid (GScanner    *scanner,
  * gimp_config_deserialize_properties:
  * @config: a #GimpConfig.
  * @scanner: a #GScanner.
- * @nest_level:
+ * @nest_level: the nest level
  *
  * This function uses the @scanner to configure the properties of @config.
  *
@@ -213,7 +213,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
  * gimp_config_deserialize_property:
  * @config: a #GimpConfig.
  * @scanner: a #GScanner.
- * @nest_level:
+ * @nest_level: the nest level
  *
  * This function deserializes a single property of @config. You
  * shouldn't need to call this function directly. If possible, use

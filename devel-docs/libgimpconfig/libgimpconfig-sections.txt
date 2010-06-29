@@ -3,9 +3,11 @@
 <TITLE>GimpConfig</TITLE>
 GimpConfig
 GimpConfigInterface
+gimp_config_serialize
 gimp_config_serialize_to_file
 gimp_config_serialize_to_fd
 gimp_config_serialize_to_string
+gimp_config_deserialize
 gimp_config_deserialize_file
 gimp_config_deserialize_string
 gimp_config_deserialize_return
@@ -63,6 +65,7 @@ GIMP_CONFIG_INSTALL_PROP_POINTER
 
 <SECTION>
 <FILE>gimpconfig-path</FILE>
+GimpConfigPath
 GimpConfigPathType
 gimp_param_spec_config_path
 gimp_param_spec_config_path_type
