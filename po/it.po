@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-25 00:11+0200\n"
-"PO-Revision-Date: 2010-06-25 00:14+0200\n"
+"PO-Revision-Date: 2010-06-29 10:53+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -6843,7 +6843,7 @@ msgstr "Sconosciuto"
 #: ../app/core/core-enums.c:518
 msgctxt "item-set"
 msgid "None"
-msgstr "Nessuna"
+msgstr "No"
 
 #: ../app/core/core-enums.c:519
 msgctxt "item-set"
