@@ -136,7 +136,8 @@ static void      server_start       (gint         port,
                                      const gchar *logfile);
 static gboolean  execute_command    (SFCommand   *cmd);
 static gint      read_from_client   (gint         filedes);
-static gint      make_socket        (guint        port);
+static gint      make_socket        (const struct addrinfo
+                                                 *ai);
 static void      server_log         (const gchar *format,
                                      ...) G_GNUC_PRINTF (1, 2);
 static void      server_quit        (void);
@@ -150,7 +151,10 @@ static void      print_socket_api_error (const gchar *api_name);
 /*
  *  Local variables
  */
-static gint         server_sock;
+static gint         server_socks[2],
+                    server_socks_used = 0;
+static const gint   server_socks_len = sizeof (server_socks) /
+                                       sizeof (server_socks[0]);
 static GList       *command_queue   = NULL;
 static gint         queue_length    = 0;
 static gint         request_no      = 0;
@@ -284,6 +288,7 @@ script_fu_server_listen (gint timeout)
   struct timeval  tv;
   struct timeval *tvp = NULL;
   SELECT_MASK     fds;
+  gint            sockno;
 
   /*  Set time struct  */
   if (timeout)
@@ -294,7 +299,10 @@ script_fu_server_listen (gint timeout)
     }
 
   FD_ZERO (&fds);
-  FD_SET (server_sock, &fds);
+  for (sockno = 0; sockno < server_socks_used; sockno++)
+    {
+      FD_SET (server_socks[sockno], &fds);
+    }
   g_hash_table_foreach (clients, script_fu_server_add_fd, &fds);
 
   /* Block until input arrives on one or more active sockets
@@ -306,15 +314,25 @@ script_fu_server_listen (gint timeout)
       return;
     }
 
-  /* Service the server socket if it has input pending. */
-  if (FD_ISSET (server_sock, &fds))
+  /* Service the server sockets if any has input pending. */
+  for (sockno = 0; sockno < server_socks_used; sockno++)
     {
-      struct sockaddr_in  clientname;
+      struct sockaddr_storage  client;
+      struct sockaddr_in      *client_in;
+      struct sockaddr_in6     *client_in6;
+      gchar                    clientname[NI_MAXHOST];
 
       /* Connection request on original socket. */
-      guint size = sizeof (clientname);
-      gint  new  = accept (server_sock,
-                           (struct sockaddr *) &clientname, &size);
+      guint                    size = sizeof (client);
+      gint                     new;
+      guint                    portno;
+
+      if (! FD_ISSET (server_socks[sockno], &fds))
+        {
+          continue;
+        }
+
+      new = accept (server_socks[sockno], (struct sockaddr *) &client, &size);
 
       if (new < 0)
         {
@@ -323,13 +341,34 @@ script_fu_server_listen (gint timeout)
         }
 
       /*  Associate the client address with the socket  */
-      g_hash_table_insert (clients,
-                           GINT_TO_POINTER (new),
-                           g_strdup (inet_ntoa (clientname.sin_addr)));
+
+      /* If all else fails ... */
+      strncpy (clientname, "(error during host address lookup)", NI_MAXHOST-1);
+
+      /* Lookup address */
+      (void) getnameinfo ((struct sockaddr *) &client, size, clientname,
+                          sizeof (clientname), NULL, 0, NI_NUMERICHOST);
+
+      g_hash_table_insert (clients, GINT_TO_POINTER (new),
+                           g_strdup (clientname));
+
+      /* Determine port number */
+      switch (client.ss_family)
+        {
+          case AF_INET:
+            client_in = (struct sockaddr_in *) &client;
+            portno = (guint) g_ntohs (client_in->sin_port);
+            break;
+          case AF_INET6:
+            client_in6 = (struct sockaddr_in6 *) &client;
+            portno = (guint) g_ntohs (client_in6->sin6_port);
+            break;
+          default:
+            portno = 0;
+        }
 
       server_log ("Server: connect from host %s, port %d.\n",
-                  inet_ntoa (clientname.sin_addr),
-                  (unsigned int) ntohs (clientname.sin_port));
+                  clientname, portno);
     }
 
   /* Service the client sockets. */
@@ -391,17 +430,45 @@ static void
 server_start (gint         port,
               const gchar *logfile)
 {
-  const gchar *progress;
+  struct addrinfo *ai,
+                  *ai_curr;
+  struct addrinfo  hints;
+  gint             e,
+                   sockno;
+  gchar           *port_s;
 
-  /* First of all, create the socket and set it up to accept connections. */
-  /* This may fail if there's a server running on this port already.      */
-  server_sock = make_socket (port);
+  const gchar     *progress;
 
-  if (listen (server_sock, 5) < 0)
+  memset (&hints, 0, sizeof (hints));
+  hints.ai_flags = AI_PASSIVE | AI_ADDRCONFIG;
+  hints.ai_socktype = SOCK_STREAM;
+
+  port_s = g_strdup_printf ("%d", port);
+  e = getaddrinfo (NULL, port_s, &hints, &ai);
+  g_free (port_s);
+
+  if (e != 0)
     {
-      print_socket_api_error ("listen");
+      g_printerr ("getaddrinfo: %s", gai_strerror (e));
       return;
     }
+
+  for (ai_curr = ai, sockno = 0;
+       ai_curr != NULL && sockno < server_socks_len;
+       ai_curr = ai_curr->ai_next, sockno++)
+    {
+      /* Create the socket and set it up to accept connections.          */
+      /* This may fail if there's a server running on this port already. */
+      server_socks[sockno] = make_socket (ai_curr);
+
+      if (listen (server_socks[sockno], 5) < 0)
+        {
+          print_socket_api_error ("listen");
+          return;
+        }
+    }
+
+  server_socks_used = sockno;
 
   /*  Setup up the server log file  */
   if (logfile && *logfile)
@@ -591,11 +658,10 @@ read_from_client (gint filedes)
 }
 
 static gint
-make_socket (guint port)
+make_socket (const struct addrinfo *ai)
 {
-  struct sockaddr_in name;
-  gint               sock;
-  gint               v = 1;
+  gint                    sock;
+  gint                    v = 1;
 
   /*  Win32 needs the winsock library initialized.  */
 #ifdef G_OS_WIN32
@@ -619,7 +685,7 @@ make_socket (guint port)
 #endif
 
   /* Create the socket. */
-  sock = socket (PF_INET, SOCK_STREAM, 0);
+  sock = socket (ai->ai_family, ai->ai_socktype, ai->ai_protocol);
   if (sock < 0)
     {
       print_socket_api_error ("socket");
@@ -628,12 +694,20 @@ make_socket (guint port)
 
   setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
 
-  /* Give the socket a name. */
-  name.sin_family      = AF_INET;
-  name.sin_port        = htons (port);
-  name.sin_addr.s_addr = htonl (INADDR_ANY);
+#ifdef IPV6_V6ONLY
+  /* Only listen on IPv6 addresses, otherwise bind() will fail. */
+  if (ai->ai_family == AF_INET6)
+    {
+      v = 1;
+      if (setsockopt (sock, IPPROTO_IPV6, IPV6_V6ONLY, &v, sizeof(v)) < 0)
+        {
+          print_socket_api_error ("setsockopt");
+          gimp_quit();
+        }
+    }
+#endif
 
-  if (bind (sock, (struct sockaddr *) &name, sizeof (name)) < 0)
+  if (bind (sock, ai->ai_addr, ai->ai_addrlen) < 0)
     {
       print_socket_api_error ("bind");
       gimp_quit ();
@@ -671,7 +745,12 @@ script_fu_server_shutdown_fd (gpointer key,
 static void
 server_quit (void)
 {
-  CLOSESOCKET (server_sock);
+  gint sockno;
+
+  for (sockno = 0; sockno < server_socks_used; sockno++)
+    {
+      CLOSESOCKET (server_socks[sockno]);
+    }
 
   if (clients)
     {
