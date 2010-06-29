@@ -28,6 +28,16 @@
 #include "gimprgb.h"
 
 
+/**
+ * SECTION: GimpAdaptiveSupersample
+ * @title: GimpAdaptiveSupersample
+ * @short_description: Functions to perform adaptive supersampling on
+ *                     an area.
+ *
+ * Functions to perform adaptive supersampling on an area.
+ **/
+
+
 /*********************************************************************/
 /* Sumpersampling code (Quartic)                                     */
 /* This code is *largely* based on the sources for POV-Ray 3.0. I am */

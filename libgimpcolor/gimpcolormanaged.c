@@ -28,6 +28,15 @@
 #include "gimpcolormanaged.h"
 
 
+/**
+ * SECTION: GimpColorManaged
+ * @title: GimpColorManaged
+ * @short_description: An interface dealing with color profiles.
+ *
+ * An interface dealing with color profiles.
+ **/
+
+
 enum
 {
   PROFILE_CHANGED,

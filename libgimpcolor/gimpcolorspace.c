@@ -30,6 +30,19 @@
 
 
 
+/**
+ * SECTION: GimpColorSpace
+ * @title: GimpColorSpace
+ * @short_description: Utility functions which convert colors between
+ *                     different color models.
+ *
+ * When programming pixel data manipulation functions you will often
+ * use algorithms operating on a color model different from the one
+ * GIMP uses.  This file provides utility functions to convert colors
+ * between different color spaces.
+ **/
+
+
 #define GIMP_HSV_UNDEFINED -1.0
 #define GIMP_HSL_UNDEFINED -1.0
 

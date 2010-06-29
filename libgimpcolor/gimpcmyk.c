@@ -27,6 +27,15 @@
 #include "gimpcmyk.h"
 
 
+/**
+ * SECTION: GimpCMYK
+ * @title: GimpCMYK
+ * @short_description: Definitions and Functions relating to CMYK colors.
+ *
+ * Definitions and Functions relating to CMYK colors.
+ **/
+
+
 /*
  * GIMP_TYPE_CMYK
  */

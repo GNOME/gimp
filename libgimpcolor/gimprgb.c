@@ -28,6 +28,15 @@
 #include "gimprgb.h"
 
 
+/**
+ * SECTION: GimpRGB
+ * @title: GimpRGB
+ * @short_description: Definitions and Functions relating to RGB colors.
+ *
+ * Definitions and Functions relating to RGB colors.
+ **/
+
+
 /*
  * GIMP_TYPE_RGB
  */

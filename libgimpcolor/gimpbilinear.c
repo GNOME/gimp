@@ -27,6 +27,15 @@
 #include "gimpbilinear.h"
 
 
+/**
+ * SECTION: GimpBilinear
+ * @title: GimpBilinear
+ * @short_description: Utility functions for bilinear interpolation.
+ *
+ * Utility functions for bilinear interpolation.
+ **/
+
+
 gdouble
 gimp_bilinear (gdouble  x,
                gdouble  y,

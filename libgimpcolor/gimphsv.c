@@ -25,6 +25,15 @@
 #include "gimphsv.h"
 
 
+/**
+ * SECTION: GimpHSV
+ * @title: GimpHSV
+ * @short_description: Definitions and Functions relating to HSV colors.
+ *
+ * Definitions and Functions relating to HSV colors.
+ **/
+
+
 /*
  * GIMP_TYPE_HSV
  */
