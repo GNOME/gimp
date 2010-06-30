@@ -1118,7 +1118,7 @@ msgstr "_Хромированный..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
-msgstr "Создать простой, но эффективный эффект хромирования"
+msgstr "Создать простой, но эффектно выглядящий хромированный логотип"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
