@@ -1,5 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattisbvf
+ * 
+ * gimpcage.h
+ * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

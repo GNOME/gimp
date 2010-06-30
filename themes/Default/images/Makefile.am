@@ -273,6 +273,8 @@ STOCK_TOOL_IMAGES = \
 	tools/stock-tool-bucket-fill-22.png		\
 	tools/stock-tool-by-color-select-16.png		\
 	tools/stock-tool-by-color-select-22.png		\
+	tools/stock-tool-cage-16.png 			\
+	tools/stock-tool-cage-22.png			\
 	tools/stock-tool-clone-16.png			\
 	tools/stock-tool-clone-22.png			\
 	tools/stock-tool-color-balance-16.png		\

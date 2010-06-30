@@ -246,6 +246,8 @@ STOCK_TOOL_VARIABLES = \
 	stock_tool_bucket_fill_22		tools/stock-tool-bucket-fill-22.png	\
 	stock_tool_by_color_select_16		tools/stock-tool-by-color-select-16.png	\
 	stock_tool_by_color_select_22		tools/stock-tool-by-color-select-22.png	\
+	stock_tool_cage_16		tools/stock-tool-cage-16.png \
+	stock_tool_cage_22		tools/stock-tool-cage-22.png \
 	stock_tool_clone_16		tools/stock-tool-clone-16.png	\
 	stock_tool_clone_22		tools/stock-tool-clone-22.png	\
 	stock_tool_color_balance_16		tools/stock-tool-color-balance-16.png	\

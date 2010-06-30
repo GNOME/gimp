@@ -1,5 +1,4 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpoperationcage.c
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
@@ -35,7 +34,6 @@
 static gboolean gimp_operation_cage_process (GeglOperation       *operation,
                                                void                *in_buf,
                                                void                *out_buf,
-                                               glong                samples,
                                                const GeglRectangle *roi);
 
 G_DEFINE_TYPE (GimpOperationCage, gimp_operation_cage,
@@ -47,7 +45,16 @@ G_DEFINE_TYPE (GimpOperationCage, gimp_operation_cage,
 static void
 gimp_operation_cage_class_init (GimpOperationCageClass *klass)
 {
-  
+  GeglOperationClass              *operation_class;
+  GeglOperationFilterClass        *filter_class;
+
+  operation_class = GEGL_OPERATION_CLASS (klass);
+  filter_class = GEGL_OPERATION_FILTER_CLASS (klass);
+
+  operation_class->name        = "gimp:cage";
+  operation_class->description = "GIMP cage transform";
+
+  filter_class->process         = gimp_operation_cage_process;
 }
 
 static void
@@ -59,8 +66,21 @@ static gboolean
 gimp_operation_cage_process (GeglOperation       *operation,
                                void                *in_buf,
                                void                *out_buf,
-                               glong                samples,
                                const GeglRectangle *roi)
 {
-  
+  gfloat *in    = in_buf;
+  gfloat *out   = out_buf;
+
+  /*while (samples--)
+    {
+      out[RED]   = in[RED];
+      out[GREEN] = in[GREEN];
+      out[BLUE]  = in[BLUE];
+      out[ALPHA] = in[ALPHA];
+
+      in    += 4;
+      out   += 4;
+    }*/
+
+  return TRUE;
 }

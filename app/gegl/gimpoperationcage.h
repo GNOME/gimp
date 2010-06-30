@@ -1,5 +1,4 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpoperationcage.h
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>

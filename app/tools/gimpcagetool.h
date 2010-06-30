@@ -1,5 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995-2001 Spencer Kimball, Peter Mattis, and others
+ *
+ * gimpcagetool.h
+ * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +30,7 @@
 #define GIMP_IS_CAGE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CAGE_TOOL))
 #define GIMP_CAGE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CAGE_TOOL, GimpCageToolClass))
 
+#define GIMP_CAGE_TOOL_GET_OPTIONS(t)  (GIMP_CAGE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
 typedef struct _GimpCageToolClass GimpCageToolClass;
 typedef struct _GimpCageTool GimpCageTool;
