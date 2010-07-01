@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-18 05:09+0400\n"
-"PO-Revision-Date: 2010-06-19 15:41+0400\n"
+"PO-Revision-Date: 2010-07-01 18:21+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1517,7 +1517,7 @@ msgstr "Автоматический"
 #: ../app/actions/dockable-actions.c:126
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr "_Запереть вкладку в панели"
+msgstr "_Заблокировать вкладку в панели"
 
 #: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
@@ -1714,7 +1714,7 @@ msgstr "Изменить состояние связанности"
 #: ../app/actions/drawable-actions.c:87
 msgctxt "drawable-action"
 msgid "L_ock pixels"
-msgstr "_Запереть точки растра от изменений"
+msgstr "_Заблокировать пикселы"
 
 #: ../app/actions/drawable-actions.c:89
 msgctxt "drawable-action"
@@ -3622,7 +3622,7 @@ msgstr "Удалить из слоя информацию о прозрачно�
 #: ../app/actions/layers-actions.c:239
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
-msgstr "_Запереть альфа-канал"
+msgstr "_Заблокировать альфа-канал"
 
 #: ../app/actions/layers-actions.c:241
 msgctxt "layers-action"
@@ -7120,7 +7120,7 @@ msgstr "Смена непрозрачности слоя"
 #: ../app/core/core-enums.c:927
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
-msgstr "Запереть/отпереть альфа-канал"
+msgstr "Блокировка/разблокировка альфа-канала"
 
 #: ../app/core/core-enums.c:928
 msgctxt "undo-type"
@@ -14367,7 +14367,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock pixels"
-msgstr "Запереть точки растра от изменений"
+msgstr "Заблокировать пикселы"
 
 #: ../app/widgets/gimpdynamicseditor.c:133
 #: ../app/widgets/gimpdynamicseditor.c:139
@@ -14733,7 +14733,7 @@ msgstr "цветов"
 
 #: ../app/widgets/gimpitemtreeview.c:702
 msgid "Lock:"
-msgstr "Запереть:"
+msgstr "Блок.:"
 
 #: ../app/widgets/gimpitemtreeview.c:1417
 msgid "Set Item Exclusive Visible"
