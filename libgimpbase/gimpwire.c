@@ -102,7 +102,9 @@ gimp_wire_read (GIOChannel *channel,
     {
       if (!(* wire_read_func) (channel, buf, count, user_data))
         {
+          /* Gives a confusing error message most of the time, disable:
           g_warning ("%s: gimp_wire_read: error", g_get_prgname ());
+           */
           wire_error_val = TRUE;
           return FALSE;
         }
