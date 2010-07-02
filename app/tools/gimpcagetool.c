@@ -65,9 +65,9 @@ void
 gimp_cage_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_CAGE_TOOL,
-                GIMP_TYPE_CAGE_OPTIONS, 
-                0, //options_gui_func
+  (* callback) (GIMP_TYPE_CAGE_TOOL, //Tool type
+                GIMP_TYPE_CAGE_OPTIONS, //Tool options type
+                gimp_cage_options_gui, //Tool opions gui
                 0, //context_props
                 "gimp-cage-tool",
                 _("Cage Transform"),

@@ -21,6 +21,7 @@
 #define __GIMP_CAGE_OPTIONS_H__
 
 #include "tools/gimptransformoptions.h"
+#include "tools/tools-enums.h"
 
 
 #define GIMP_TYPE_CAGE_OPTIONS            (gimp_cage_options_get_type ())
@@ -34,9 +35,12 @@
 typedef struct _GimpCageOptionsClass GimpCageOptionsClass;
 typedef struct _GimpCageOptions GimpCageOptions;
 
+
 struct _GimpCageOptions
 {
   GimpTransformOptions    parent_instance;
+  
+  GimpCageMode            cage_mode;
 };
 
 
@@ -47,5 +51,7 @@ struct _GimpCageOptionsClass
 
 
 GType       gimp_cage_options_get_type (void) G_GNUC_CONST;
+
+GtkWidget * gimp_cage_options_gui      (GimpToolOptions *tool_options);
 
 #endif  /*  __GIMP_CAGE_OPTIONS_H__  */
