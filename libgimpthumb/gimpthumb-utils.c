@@ -46,6 +46,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpthumb-utils
+ * @title: GimpThumb-utils
+ * @short_description: Utility functions provided and used by libgimpthumb
+ *
+ * Utility functions provided and used by libgimpthumb
+ **/
+
+
 static gint           gimp_thumb_size       (GimpThumbSize  size);
 static gchar        * gimp_thumb_png_lookup (const gchar   *name,
                                              const gchar   *basedir,

@@ -51,6 +51,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpthumbnail
+ * @title: GimpThumbnail
+ * @short_description: The GimpThumbnail object
+ *
+ * The GimpThumbnail object
+ **/
+
+
 /*  #define GIMP_THUMB_DEBUG  */
 
 

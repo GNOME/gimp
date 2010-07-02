@@ -42,6 +42,7 @@ struct _GimpThumbnail
 {
   GObject         parent_instance;
 
+  /*< private >*/
   GimpThumbState  image_state;
   gchar          *image_uri;
   gchar          *image_filename;
