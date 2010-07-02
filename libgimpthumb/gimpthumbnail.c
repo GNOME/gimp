@@ -169,6 +169,8 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
   /**
    * GimpThumbnail::image-mimetype:
    *
+   * Image mimetype
+   *
    * Since: GIMP 2.2
    **/
   g_object_class_install_property (object_class,

@@ -186,8 +186,8 @@ gimp_thumb_get_thumb_dir (GimpThumbSize  size)
 
 /**
  * gimp_thumb_get_thumb_dir_local:
- * @dirname:
- * @size: a GimpThumbSize
+ * @dirname: the basename of the dir, without the actual dirname itself
+ * @size:    a GimpThumbSize
  *
  * Retrieve the name of the local thumbnail folder for a specific
  * size.  Unlike gimp_thumb_get_thumb_dir() the returned string is not
@@ -260,9 +260,9 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
 
 /**
  * gimp_thumb_ensure_thumb_dir_local:
- * @dirname:
- * @size: a GimpThumbSize
- * @error: return location for possible errors
+ * @dirname: the basename of the dir, without the actual dirname itself
+ * @size:    a GimpThumbSize
+ * @error:   return location for possible errors
  *
  * This function checks if the directory that is required to store
  * local thumbnails for a particular @size exist and attempts to

@@ -38,6 +38,12 @@ G_BEGIN_DECLS
 
 typedef struct _GimpThumbnailClass GimpThumbnailClass;
 
+/**
+ * GimpThumbnail:
+ *
+ * All members of #GimpThumbnail are private and should only be accessed
+ * using object properties.
+ **/
 struct _GimpThumbnail
 {
   GObject         parent_instance;

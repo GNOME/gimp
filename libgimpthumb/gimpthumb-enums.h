@@ -85,8 +85,8 @@ typedef enum
  * GimpThumbState:
  * @GIMP_THUMB_STATE_UNKNOWN:   nothing is known about the file/thumbnail
  * @GIMP_THUMB_STATE_REMOTE:    the file is on a remote file system
- * @GIMP_THUMB_STATE_FOLDER:
- * @GIMP_THUMB_STATE_SPECIAL:
+ * @GIMP_THUMB_STATE_FOLDER:    the file is a directory
+ * @GIMP_THUMB_STATE_SPECIAL:   the file is a special file
  * @GIMP_THUMB_STATE_NOT_FOUND: the file/thumbnail doesn't exist
  * @GIMP_THUMB_STATE_EXISTS:    the file/thumbnail exists
  * @GIMP_THUMB_STATE_OLD:       the thumbnail may be outdated
