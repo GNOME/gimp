@@ -47,7 +47,7 @@ G_BEGIN_DECLS
  *
  * Mathematical definitions and macros for use both by the GIMP
  * application and plug-ins. These macros should be used rather than
- * the ones from <math.h> for enhanced portability.
+ * the ones from &lt;math.h&gt; for enhanced portability.
  **/
 
 

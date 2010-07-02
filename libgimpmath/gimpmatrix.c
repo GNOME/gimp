@@ -463,12 +463,12 @@ gimp_matrix3_yshear (GimpMatrix3 *matrix,
 /**
  * gimp_matrix3_affine:
  * @matrix: The input matrix.
- * @a:
- * @b:
- * @c:
- * @d:
- * @e:
- * @f:
+ * @a: the 'a' coefficient
+ * @b: the 'b' coefficient
+ * @c: the 'c' coefficient
+ * @d: the 'd' coefficient
+ * @e: the 'e' coefficient
+ * @f: the 'f' coefficient
  *
  * Applies the affine transformation given by six values to @matrix.
  * The six values form define an affine transformation matrix as
