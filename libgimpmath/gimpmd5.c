@@ -14,6 +14,15 @@
 
 
 /**
+ * SECTION: gimpmd5
+ * @title: GimpMD5
+ * @short_description: The MD5 message-digest algorithm
+ *
+ * The MD5 message-digest algorithm
+ **/
+
+
+/**
  * gimp_md5_get_digest:
  * @buffer:      byte buffer
  * @buffer_size: buffer size (in bytes) or -1 if @buffer is nul-terminated.

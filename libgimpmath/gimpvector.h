@@ -29,16 +29,40 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+/**
+ * GimpVector2:
+ * @x: the x axis
+ * @y: the y axis
+ *
+ * A two dimensional vector.
+ **/
 struct _GimpVector2
 {
   gdouble x, y;
 };
 
+/**
+ * GimpVector3:
+ * @x: the x axis
+ * @y: the y axis
+ * @z: the z axis
+ *
+ * A three dimensional vector.
+ **/
 struct _GimpVector3
 {
   gdouble x, y, z;
 };
 
+/**
+ * GimpVector4:
+ * @x: the x axis
+ * @y: the y axis
+ * @z: the z axis
+ * @w: the w axis
+ *
+ * A four dimensional vector.
+ **/
 struct _GimpVector4
 {
   gdouble x, y, z, w;

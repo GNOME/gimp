@@ -26,16 +26,34 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+/**
+ * GimpMatrix2
+ * @coeff: the coefficients
+ *
+ * A two by two matrix.
+ **/
 struct _GimpMatrix2
 {
   gdouble coeff[2][2];
 };
 
+/**
+ * GimpMatrix3
+ * @coeff: the coefficients
+ *
+ * A three by three matrix.
+ **/
 struct _GimpMatrix3
 {
   gdouble coeff[3][3];
 };
 
+/**
+ * GimpMatrix4
+ * @coeff: the coefficients
+ *
+ * A four by four matrix.
+ **/
 struct _GimpMatrix4
 {
   gdouble coeff[4][4];
