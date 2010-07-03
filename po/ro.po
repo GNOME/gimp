@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-06-23 18:21+0000\n"
-"PO-Revision-Date: 2010-05-27 00:28+0200\n"
+"POT-Creation-Date: 2010-06-29 16:23+0000\n"
+"PO-Revision-Date: 2010-06-27 00:39+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -8640,7 +8640,7 @@ msgstr "Navighează afișarea imaginii"
 #: ../app/display/gimpdisplayshell.c:1285
 #: ../app/display/gimpdisplayshell.c:1375 ../app/widgets/gimptoolbox.c:222
 msgid "Drop image files here to open them"
-msgstr "Aruncați aici fișierele de imagine pentru a le deschide"
+msgstr "Plasați aici fișierele de imagine pentru a le deschide"
 
 # pe bara de titlu la închiderea unui fișier creat sau modificat
 #: ../app/display/gimpdisplayshell-close.c:147
@@ -9768,12 +9768,13 @@ msgstr "Căutare culori similare"
 msgid "Fill transparent areas"
 msgstr "Umple zonele transparente"
 
+# checkbox în panoul de selecție
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:151 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:941
 #: ../app/tools/gimpregionselectoptions.c:208
 msgid "Sample merged"
-msgstr "Eșantion combinat"
+msgstr "Eșantionează combinat"
 
 # a fost: umplere pe bază de
 #: ../app/tools/gimpbucketfilloptions.c:294
@@ -11069,12 +11070,12 @@ msgstr "Micșorează automat"
 # checkbox în panoul de selecție
 #: ../app/tools/gimprectangleoptions.c:998
 msgid "Shrink merged"
-msgstr "Micșorare combinată"
+msgstr "Micșorează combinat"
 
 # checkbox în panoul de selecție
 #: ../app/tools/gimprectangleselectoptions.c:164
 msgid "Rounded corners"
-msgstr "Colțuri rotunjite"
+msgstr "Rotunjește colțurile"
 
 #: ../app/tools/gimprectangleselecttool.c:167
 msgid "Rectangle Select"
@@ -11096,9 +11097,10 @@ msgstr "Dreptunghi:"
 msgid "Allow completely transparent regions to be selected"
 msgstr "Permite selectarea zonelor complet transparente"
 
+# tooltip descriptiv
 #: ../app/tools/gimpregionselectoptions.c:90
 msgid "Base region_select on all visible layers"
-msgstr "Bazează _selecția zonei pe toate straturile vizibile"
+msgstr "Bazează selecția zonei pe toate straturile vizibile"
 
 #: ../app/tools/gimpregionselectoptions.c:202
 msgid "Select transparent areas"
@@ -11165,7 +11167,7 @@ msgstr "Anticrenelează"
 # checkbox în panoul de selecție
 #: ../app/tools/gimpselectionoptions.c:273
 msgid "Feather edges"
-msgstr "Margini estompate"
+msgstr "Estompează marginile"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
@@ -11925,11 +11927,11 @@ msgstr "Numai imaginile indexate au paletă de culori."
 msgid "Palette"
 msgstr "Paletă"
 
-#: ../app/widgets/gimpcontainerpopup.c:565
+#: ../app/widgets/gimpcontainerpopup.c:571
 msgid "Smaller Previews"
 msgstr "Previzualizări mai mici"
 
-#: ../app/widgets/gimpcontainerpopup.c:570
+#: ../app/widgets/gimpcontainerpopup.c:576
 msgid "Larger Previews"
 msgstr "Previzualizări mai mari"
 
@@ -13147,234 +13149,3 @@ msgstr "Asigurați-vă că trusa de instrumente este vizibilă !"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Nu s-a putut porni „%s”: %s"
-
-#~ msgid "_Dialogs"
-#~ msgstr "_Dialoguri"
-
-#, fuzzy
-#~ msgid "Create New Doc_k"
-#~ msgstr "/Fișier/Ferestre de dialog/Modele..."
-
-#~ msgid "_Layers, Channels & Paths"
-#~ msgstr "Straturi, cana_le și trasee"
-
-#, fuzzy
-#~ msgid "Open a Layers, Channels & Paths dock"
-#~ msgstr "Strate, Canale și Trasee"
-
-#~ msgid "_Brushes, Patterns & Gradients"
-#~ msgstr "_Peneluri, modele și gradienți"
-
-#, fuzzy
-#~ msgid "Open a Brushes, Patterns & Gradients dock"
-#~ msgstr "/Ferestre de dialog/Modele..."
-
-#~ msgid "Show the tip of the day"
-#~ msgstr "Arată sfatul zilei"
-
-# hm ? sau pozițiile ?
-#~ msgid "Remove all entries from the document history?"
-#~ msgstr "Eliminați toate intrările din istoricul documentelor ?"
-
-#~ msgid "Copy the selected region to the clipboard"
-#~ msgstr "Copiază în clipboard zona selectată"
-
-#~ msgid "Paste as New"
-#~ msgstr "Lipește ca imagine nouă"
-
-#~ msgid "Acq_uire"
-#~ msgstr "_Achiziționeză"
-
-#~ msgid "Toolbox Menu"
-#~ msgstr "Meniu trusă de instrumente"
-
-#~ msgid "_Xtns"
-#~ msgstr "E_xtensii"
-
-#~ msgid "Fit Image _to Window"
-#~ msgstr "Potriveș_te imaginea la fereastră"
-
-# hm ?
-#~ msgid "EEK: can't undo"
-#~ msgstr "Hopa: nu se poate anula"
-
-#~ msgid "command|Rectangle Select"
-#~ msgstr "Selecție dreptunghi"
-
-# hm ? sau imperativ ?
-#~ msgid "command|Ellipse Select"
-#~ msgstr "Selecție elipsă"
-
-#~ msgid "command|Select by Color"
-#~ msgstr "Selectează pe baza culorii"
-
-# hm ? sau imperativ ?
-#~ msgid "command|Bucket Fill"
-#~ msgstr "Umplere cu găleata"
-
-#~ msgid "command|Flip"
-#~ msgstr "Întoarce"
-
-#~ msgid "command|Rotate"
-#~ msgstr "Rotește"
-
-#~ msgid "command|Crop Image"
-#~ msgstr "Decupează imaginea"
-
-#~ msgid "Channel is already on top."
-#~ msgstr "Canalul se află deja sus de tot."
-
-#~ msgid "Channel is already on the bottom."
-#~ msgstr "Canalul se află deja jos de tot"
-
-#, fuzzy
-#~ msgid "Path is already on top."
-#~ msgstr "Stratul este deja în vârf"
-
-#, fuzzy
-#~ msgid "Path is already on the bottom."
-#~ msgstr "Stratul este deja la bază"
-
-#, fuzzy
-#~ msgid "Cannot add layer mask to layer which is not part of an image."
-#~ msgstr ""
-#~ "Nu pot să adaug un strat de tip mască\n"
-#~ "unui strat fără canal alfa(transparență)."
-
-#~ msgid "_Desaturate"
-#~ msgstr "_Desaturează"
-
-#, fuzzy
-#~ msgid "dialog-title|Scale Image"
-#~ msgstr "Scalează imaginea"
-
-#~ msgid "Autoload"
-#~ msgstr "Încărcare automată"
-
-#, fuzzy
-#~ msgid "Module Path"
-#~ msgstr "Încarcă traseul"
-
-#~ msgid "<No modules>"
-#~ msgstr "<Fără module>"
-
-#~ msgid "On disk"
-#~ msgstr "Pe disc"
-
-#~ msgid "Load"
-#~ msgstr "Incarcă"
-
-#~ msgid "Unload"
-#~ msgstr "Descarcă"
-
-#~ msgid "Purpose:"
-#~ msgstr "Scop:"
-
-#~ msgid "Last error:"
-#~ msgstr "Ultima eroare:"
-
-#~ msgid "Available types:"
-#~ msgstr "Tipuri disponibile:"
-
-#~ msgid "Save document _history on exit"
-#~ msgstr "Salvează _istoricul documentelor la ieșire"
-
-#~ msgid "Show tips on _startup"
-#~ msgstr "Arată _sfaturi la pornire"
-
-# hm ?
-#~ msgid "Show tip next time GIMP starts"
-#~ msgstr "Arată sfaturi și la următoarea pornire GIMP"
-
-#~ msgid "Other..."
-#~ msgstr "Altele..."
-
-#~ msgid "Left justified"
-#~ msgstr "Aliniat la stânga"
-
-#~ msgid "Right justified"
-#~ msgstr "Aliniat la dreapta"
-
-#~ msgid "Centered"
-#~ msgstr "Centrat"
-
-#~ msgid "Filled"
-#~ msgstr "Umplut"
-
-#~ msgid "Save Curves"
-#~ msgstr "Salvează curbele"
-
-#~ msgid "Mode"
-#~ msgstr "Mod"
-
-# hm ? sau imperativ ?
-#~ msgid "command|Foreground Select"
-#~ msgstr "Selecție prim-plan"
-
-# hm ? sau imperativ ?
-#~ msgid "command|Free Select"
-#~ msgstr "Selecție liberă"
-
-#~ msgid "Quick Load"
-#~ msgstr "Înărcare rapidă"
-
-#~ msgid "Quick Save"
-#~ msgstr "Salvare rapidă"
-
-#~ msgid "Load Levels"
-#~ msgstr "Incarcă niveluri"
-
-#, fuzzy
-#~ msgid "Load levels settings from file"
-#~ msgstr "Salvează starea dispozitivului la ieșire"
-
-#~ msgid "Save Levels"
-#~ msgstr "Salvează nivelurile"
-
-#~ msgid "tool|Move"
-#~ msgstr "Mutare"
-
-#~ msgid "Pressure sensitivity"
-#~ msgstr "Sensibilitate la presiune"
-
-#~ msgid "command|Perspective"
-#~ msgstr "Perspectivă"
-
-#~ msgid "command|Scale"
-#~ msgstr "Scalează"
-
-# pe bara de titlu la închiderea panoului din dreapta
-#~ msgid "Close all Tabs?"
-#~ msgstr "Închiderea tuturor taburilor"
-
-#~ msgid "Close all Tabs"
-#~ msgstr "Închide toate taburile"
-
-#~ msgid "Close all tabs?"
-#~ msgstr "Închideți toate taburile ?"
-
-#~ msgid ""
-#~ "This window has %d tab open. Closing the window will also close all its "
-#~ "tabs."
-#~ msgid_plural ""
-#~ "This window has %d tabs open. Closing the window will also close all its "
-#~ "tabs."
-#~ msgstr[0] ""
-#~ "Aceastră fereastră are %d tab deschis. Închiderea ferestrei va închide de "
-#~ "asemenea toate taburile ei."
-#~ msgstr[1] ""
-#~ "Aceastră fereastră are %d taburi deschise. Închiderea ferestrei va "
-#~ "închide de asemenea toate taburile ei."
-#~ msgstr[2] ""
-#~ "Aceastră fereastră are %d de taburi deschise. Închiderea ferestrei va "
-#~ "închide de asemenea toate taburile ei."
-
-#, fuzzy
-#~ msgid "Could not find GIMP help browser."
-#~ msgstr "Nu am găsit programul de afișare informații de ajutor"
-
-#~ msgid "Use _web browser instead"
-#~ msgstr "Folosește navigatorul _web în loc"
-
-#~ msgid "Linear"
-#~ msgstr "Liniar"
