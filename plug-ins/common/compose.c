@@ -1152,39 +1152,33 @@ compose_cmyk (guchar **src,
   register const guchar *black_src   = src[3];
   register       guchar *rgb_dst     = dst;
   register       gint    count       = numpix;
-  gint cyan, magenta, yellow, black;
-  gint cyan_incr    = incr_src[0];
-  gint magenta_incr = incr_src[1];
-  gint yellow_incr  = incr_src[2];
-  gint black_incr   = incr_src[3];
+  gint    cyan_incr    = incr_src[0];
+  gint    magenta_incr = incr_src[1];
+  gint    yellow_incr  = incr_src[2];
+  gint    black_incr   = incr_src[3];
+  GimpRGB grgb;
+
+  gimp_rgb_set(&grgb, 0, 0, 0);
 
   while (count-- > 0)
     {
-      black = (gint)*black_src;
-      if (black)
-        {
-          cyan    = (gint) *cyan_src;
-          magenta = (gint) *magenta_src;
-          yellow  = (gint) *yellow_src;
+      GimpCMYK gcmyk;
+      guchar   r, g, b;
 
-          cyan    += black; if (cyan > 255) cyan = 255;
-          magenta += black; if (magenta > 255) magenta = 255;
-          yellow  += black; if (yellow > 255) yellow = 255;
+      gimp_cmyk_set_uchar (&gcmyk,
+                           *cyan_src, *magenta_src, *yellow_src,
+                           *black_src);
+      gimp_cmyk_to_rgb (&gcmyk, &grgb);
+      gimp_rgb_get_uchar (&grgb, &r, &g, &b);
 
-          *(rgb_dst++) = 255 - cyan;
-          *(rgb_dst++) = 255 - magenta;
-          *(rgb_dst++) = 255 - yellow;
-        }
-      else
-        {
-          *(rgb_dst++) = 255 - *cyan_src;
-          *(rgb_dst++) = 255 - *magenta_src;
-          *(rgb_dst++) = 255 - *yellow_src;
-        }
-      cyan_src += cyan_incr;
+      *rgb_dst++ = r;
+      *rgb_dst++ = g;
+      *rgb_dst++ = b;
+
+      cyan_src    += cyan_incr;
       magenta_src += magenta_incr;
-      yellow_src += yellow_incr;
-      black_src += black_incr;
+      yellow_src  += yellow_incr;
+      black_src   += black_incr;
 
       if (dst_has_alpha)
         rgb_dst++;

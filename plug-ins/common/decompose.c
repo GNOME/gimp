@@ -1158,28 +1158,25 @@ extract_cmyk (const guchar  *src,
   register guchar *magenta_dst = dst[1];
   register guchar *yellow_dst = dst[2];
   register guchar *black_dst = dst[3];
-  register guchar k, s;
   register gint count = numpix, offset = bpp-3;
+  GimpCMYK gcmyk;
+
+  gimp_cmyk_set (&gcmyk, 0, 0, 0, 0);
 
   while (count-- > 0)
     {
-      *cyan_dst = k = 255 - *(rgb_src++);
-      *magenta_dst = s = 255 - *(rgb_src++);
-      if (s < k)
-        k = s;
-      *yellow_dst = s = 255 - *(rgb_src++);
-      if (s < k)
-        k = s;                /* Black intensity is minimum of c, m, y */
-      if (k)
-        {
-          *cyan_dst -= k;     /* Remove common part of c, m, y */
-          *magenta_dst -= k;
-          *yellow_dst -= k;
-        }
-      cyan_dst++;
-      magenta_dst++;
-      yellow_dst++;
-      *(black_dst++) = k;
+      GimpRGB grgb;
+      guchar  r, g, b;
+
+      r = *rgb_src++;
+      g = *rgb_src++;
+      b = *rgb_src++;
+
+      gimp_rgb_set_uchar (&grgb, r,g,b);
+      gimp_rgb_to_cmyk (&grgb, 1.0, &gcmyk);
+      gimp_cmyk_get_uchar (&gcmyk,
+                           cyan_dst++, magenta_dst++, yellow_dst++,
+                           black_dst++);
 
       rgb_src += offset;
     }
@@ -1194,18 +1191,23 @@ extract_cyank (const guchar  *src,
 {
   register const guchar *rgb_src = src;
   register guchar *cyan_dst = dst[0];
-  register guchar s, k;
   register gint count = numpix, offset = bpp-3;
+  GimpCMYK gcmyk;
+
+  gimp_cmyk_set(&gcmyk, 0, 0, 0, 0);
 
   while (count-- > 0)
     {
-      *cyan_dst = k = 255 - *(rgb_src++);
-      s = 255 - *(rgb_src++);  /* magenta */
-      if (s < k) k = s;
-      s = 255 - *(rgb_src++);  /* yellow */
-      if (s < k) k = s;
-      if (k) *cyan_dst -= k;
-      cyan_dst++;
+      GimpRGB grgb;
+      guchar  r, g, b;
+
+      r = *rgb_src++;
+      g = *rgb_src++;
+      b = *rgb_src++;
+
+      gimp_rgb_set_uchar (&grgb, r,g,b);
+      gimp_rgb_to_cmyk (&grgb, 1.0, &gcmyk);
+      gimp_cmyk_get_uchar (&gcmyk, cyan_dst++, NULL, NULL, NULL);
 
       rgb_src += offset;
     }
@@ -1220,21 +1222,23 @@ extract_magentak (const guchar  *src,
 {
   register const guchar *rgb_src = src;
   register guchar *magenta_dst = dst[0];
-  register guchar s, k;
   register gint count = numpix, offset = bpp-3;
+  GimpCMYK gcmyk;
+
+  gimp_cmyk_set(&gcmyk, 0, 0, 0, 0);
 
   while (count-- > 0)
     {
-      k = 255 - *(rgb_src++);  /* cyan */
-      *magenta_dst = s = 255 - *(rgb_src++);  /* magenta */
-      if (s < k)
-        k = s;
-      s = 255 - *(rgb_src++);  /* yellow */
-      if (s < k)
-        k = s;
-      if (k)
-        *magenta_dst -= k;
-      magenta_dst++;
+      GimpRGB grgb;
+      guchar  r, g, b;
+
+      r = *rgb_src++;
+      g = *rgb_src++;
+      b = *rgb_src++;
+
+      gimp_rgb_set_uchar (&grgb, r,g,b);
+      gimp_rgb_to_cmyk (&grgb, 1.0, &gcmyk);
+      gimp_cmyk_get_uchar (&gcmyk, NULL, magenta_dst++, NULL, NULL);
 
       rgb_src += offset;
     }
@@ -1250,20 +1254,23 @@ extract_yellowk (const guchar  *src,
 {
   register const guchar *rgb_src = src;
   register guchar *yellow_dst = dst[0];
-  register guchar s, k;
   register gint count = numpix, offset = bpp-3;
+  GimpCMYK gcmyk;
+
+  gimp_cmyk_set(&gcmyk, 0, 0, 0, 0);
 
   while (count-- > 0)
     {
-      k = 255 - *(rgb_src++);  /* cyan */
-      s = 255 - *(rgb_src++);  /* magenta */
-      if (s < k) k = s;
-      *yellow_dst = s = 255 - *(rgb_src++);
-      if (s < k)
-        k = s;
-      if (k)
-        *yellow_dst -= k;
-      yellow_dst++;
+      GimpRGB grgb;
+      guchar  r, g, b;
+
+      r = *rgb_src++;
+      g = *rgb_src++;
+      b = *rgb_src++;
+
+      gimp_rgb_set_uchar (&grgb, r,g,b);
+      gimp_rgb_to_cmyk (&grgb, 1.0, &gcmyk);
+      gimp_cmyk_get_uchar (&gcmyk, NULL, NULL, yellow_dst++, NULL);
 
       rgb_src += offset;
     }
