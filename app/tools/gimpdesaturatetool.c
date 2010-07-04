@@ -121,7 +121,7 @@ gimp_desaturate_tool_initialize (GimpTool     *tool,
   if (! gimp_drawable_is_rgb (drawable))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Desaturate does only operate on RGB layers."));
+			   _("Desaturate only operates on RGB layers."));
       return FALSE;
     }
 
