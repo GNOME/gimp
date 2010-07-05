@@ -36,6 +36,15 @@
 #include "gimpnumberpairentry.h"
 
 
+/**
+ * SECTION: gimpnumberpairentry
+ * @title: GimpNumberPairEntry
+ * @short_description: A #GtkEntry subclass to enter ratios.
+ *
+ * A #GtkEntry subclass to enter ratios.
+ **/
+
+
 #define EPSILON 0.000001
 
 

@@ -33,6 +33,16 @@
 
 
 /**
+ * SECTION: gimpenumwidgets
+ * @title: GimpEnumWidgets
+ * @short_description: A set of utility functions to create widgets
+ *                     based on enums.
+ *
+ * A set of utility functions to create widgets based on enums.
+ **/
+
+
+/**
  * gimp_enum_radio_box_new:
  * @enum_type: the #GType of an enum.
  * @callback: a callback to connect to the "toggled" signal of each

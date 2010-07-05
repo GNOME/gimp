@@ -36,6 +36,35 @@
 #include "gimpsizeentry.h"
 
 
+/**
+ * SECTION: gimpsizeentry
+ * @title: GimpSizeEntry
+ * @short_description: Widget for entering pixel values and resolutions.
+ * @see_also: #GimpUnit, #GimpUnitMenu, gimp_coordinates_new()
+ *
+ * This widget is used to enter pixel distances/sizes and resolutions.
+ *
+ * You can specify the number of fields the widget should provide. For
+ * each field automatic mappings are performed between the field's
+ * "reference value" and its "value".
+ *
+ * There is a #GimpUnitMenu right of the entry fields which lets you
+ * specify the #GimpUnit of the displayed values.
+ *
+ * For each field, there can be one or two #GtkSpinButton's to enter
+ * "value" and "reference value". If you specify @show_refval as
+ * #FALSE in gimp_size_entry_new() there will be only one
+ * #GtkSpinButton and the #GimpUnitMenu will contain an item for
+ * selecting GIMP_UNIT_PIXEL.
+ *
+ * The "reference value" is either of GIMP_UNIT_PIXEL or dpi,
+ * depending on which #GimpSizeEntryUpdatePolicy you specify in
+ * gimp_size_entry_new().  The "value" is either the size in pixels
+ * mapped to the size in a real-world-unit (see #GimpUnit) or the dpi
+ * value mapped to pixels per real-world-unit.
+ **/
+
+
 #define SIZE_MAX_VALUE 500000.0
 
 #define GIMP_SIZE_ENTRY_DIGITS(unit) (MIN (gimp_unit_get_digits (unit), 5) + 1)

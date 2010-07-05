@@ -33,6 +33,15 @@
 #include "gimpzoommodel.h"
 
 
+/**
+ * SECTION: gimpzoommodel
+ * @title: GimpZoomModel
+ * @short_description: A model for zoom values.
+ *
+ * A model for zoom values.
+ **/
+
+
 #define ZOOM_MIN  (1.0 / 256.0)
 #define ZOOM_MAX  (256.0)
 

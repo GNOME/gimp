@@ -31,6 +31,16 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppreviewarea
+ * @title: GimpPreviewArea
+ * @short_description: A general purpose preview widget which caches
+ *                     its pixel data.
+ *
+ * A general purpose preview widget which caches its pixel data.
+ **/
+
+
 enum
 {
   PROP_0,

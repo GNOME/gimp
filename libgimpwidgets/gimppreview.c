@@ -31,6 +31,17 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppreview
+ * @title: GimpPreview
+ * @short_description: A widget providing a #GimpPreviewArea plus
+ *                     framework to update the preview.
+ *
+ * A widget providing a #GimpPreviewArea plus framework to update the
+ * preview.
+ **/
+
+
 #define DEFAULT_SIZE     200
 #define PREVIEW_TIMEOUT  200
 

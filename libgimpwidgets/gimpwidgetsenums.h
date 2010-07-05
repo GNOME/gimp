@@ -62,6 +62,19 @@ typedef enum
 } GimpColorAreaType;
 
 
+/**
+ * GimpColorSelectorChannel:
+ * @GIMP_COLOR_SELECTOR_HUE: the hue channel
+ * @GIMP_COLOR_SELECTOR_SATURATION: the saturation channel
+ * @GIMP_COLOR_SELECTOR_VALUE: the value channel
+ * @GIMP_COLOR_SELECTOR_RED: the red channel
+ * @GIMP_COLOR_SELECTOR_GREEN: the green channel
+ * @GIMP_COLOR_SELECTOR_BLUE: the blue channel
+ * @GIMP_COLOR_SELECTOR_ALPHA: the alpha channel
+ *
+ * An enum to specify the types of color channels edited in
+ * #GimpColorSelector widgets.
+ **/
 #define GIMP_TYPE_COLOR_SELECTOR_CHANNEL (gimp_color_selector_channel_get_type ())
 
 GType gimp_color_selector_channel_get_type (void) G_GNUC_CONST;

@@ -31,6 +31,16 @@
 #include "gimpintstore.h"
 
 
+/**
+ * SECTION: gimpintcombobox
+ * @title: GimpIntComboBox
+ * @short_description: A widget providing a popup menu of integer
+ *                     values (e.g. enums).
+ *
+ * A widget providing a popup menu of integer values (e.g. enums).
+ **/
+
+
 enum
 {
   PROP_0,

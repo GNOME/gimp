@@ -31,6 +31,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppropwidgets
+ * @title: GimpPropWidgets
+ * @short_description: Editable views on #GObject properties.
+ *
+ * Editable views on #GObject properties.
+ **/
+
+
 /*  utility function prototypes  */
 
 static void         set_param_spec     (GObject     *object,

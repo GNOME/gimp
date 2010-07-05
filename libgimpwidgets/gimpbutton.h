@@ -49,7 +49,7 @@ struct _GimpButtonClass
 {
   GtkButtonClass  parent_class;
 
-  void (* extended_clicked) (GimpButton      *preview,
+  void (* extended_clicked) (GimpButton      *button,
                              GdkModifierType  modifier_state);
 
   /* Padding for future expansion */

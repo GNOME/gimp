@@ -29,6 +29,16 @@
 #include "gimpcellrenderertoggle.h"
 
 
+/**
+ * SECTION: gimpcellrenderertoggle
+ * @title: GimpCellRendererToggle
+ * @short_description: A #GtkCellRendererToggle that displays icons instead
+ *                     of a checkbox.
+ *
+ * A #GtkCellRendererToggle that displays icons instead of a checkbox.
+ **/
+
+
 #define DEFAULT_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
 

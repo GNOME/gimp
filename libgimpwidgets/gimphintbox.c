@@ -26,6 +26,15 @@
 #include "gimpwidgets.h"
 
 
+/**
+ * SECTION: gimphintbox
+ * @title: GimpHintBox
+ * @short_description: Displays a wilber icon and a text.
+ *
+ * Displays a wilber icon and a text.
+ **/
+
+
 typedef GtkHBoxClass  GimpHintBoxClass;
 
 typedef struct

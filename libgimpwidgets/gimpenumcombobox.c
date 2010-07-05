@@ -31,6 +31,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpenumcombobox
+ * @title: GimpEnumComboBox
+ * @short_description: A #GimpIntComboBox subclass for selecting an enum value.
+ *
+ * A #GtkComboBox subclass for selecting an enum value.
+ **/
+
+
 enum
 {
   PROP_0,

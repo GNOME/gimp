@@ -31,6 +31,16 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpscrolledpreview
+ * @title: GimpScrolledPreview
+ * @short_description: A widget providing a #GimpPreview enhanced by
+ *                     scrolling capabilities.
+ *
+ * A widget providing a #GimpPreview enhanced by scrolling capabilities.
+ **/
+
+
 #define POPUP_SIZE  100
 
 

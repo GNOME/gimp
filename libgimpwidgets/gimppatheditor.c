@@ -37,6 +37,27 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppatheditor
+ * @title: GimpPathEditor
+ * @short_description: Widget for editing a file search path.
+ * @see_also: #GimpFileEntry, #G_SEARCHPATH_SEPARATOR
+ *
+ * This widget is used to edit file search paths.
+ *
+ * It shows a list of all directories which are in the search
+ * path. You can click a directory to select it. The widget provides a
+ * #GimpFileEntry to change the currently selected directory.
+ *
+ * There are buttons to add or delete directories as well as "up" and
+ * "down" buttons to change the order in which the directories will be
+ * searched.
+ *
+ * Whenever the user adds, deletes, changes or reorders a directory of
+ * the search path, the "path_changed" signal will be emitted.
+ **/
+
+
 enum
 {
   PATH_CHANGED,

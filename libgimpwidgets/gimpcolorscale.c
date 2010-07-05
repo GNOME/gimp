@@ -34,6 +34,15 @@
 #include "gimpcolorscale.h"
 
 
+/**
+ * SECTION: gimpcolorscale
+ * @title: GimpColorScale
+ * @short_description: Fancy colored sliders.
+ *
+ * Fancy colored sliders.
+ **/
+
+
 static void     gimp_color_scale_destroy        (GtkObject       *object);
 static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
                                                  GtkAllocation   *allocation);

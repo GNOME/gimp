@@ -32,6 +32,17 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppickbutton
+ * @title: GimpPickButton
+ * @short_description: Widget to pick a color from screen.
+ *
+ * #GimpPickButton is a specialized button. When clicked, it changes
+ * the cursor to a color-picker pipette and allows the user to pick a
+ * color from any point on the screen.
+ **/
+
+
 enum
 {
   COLOR_PICKED,
@@ -75,6 +86,13 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
+  /**
+   * GimpPickButton::color-picked:
+   * @gimppickbutton: the object which received the signal.
+   * @arg1: pointer to a #GimpRGB structure that holds the picked color
+   *
+   * This signal is emitted when the user has picked a color.
+   **/
   pick_button_signals[COLOR_PICKED] =
     g_signal_new ("color-picked",
                   G_TYPE_FROM_CLASS (klass),

@@ -36,6 +36,16 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppageselector
+ * @title: GimpPageSelector
+ * @short_description: A widget to select pages from multi-page things.
+ *
+ * Use this for example for specifying what pages to import from
+ * a PDF or PS document.
+ **/
+
+
 enum
 {
   SELECTION_CHANGED,

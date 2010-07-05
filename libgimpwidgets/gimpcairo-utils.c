@@ -32,6 +32,16 @@
 
 
 /**
+ * SECTION: gimpcairo-utils
+ * @title: GimpCairo-utils
+ * @short_description: Utility functions for cairo
+ *
+ * Utility functions that make cairo easier to use with common
+ * GIMP data types.
+ **/
+
+
+/**
  * gimp_cairo_set_source_rgb:
  * @cr:    Cairo context
  * @color: GimpRGB color

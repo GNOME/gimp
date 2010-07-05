@@ -30,6 +30,22 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpstock
+ * @title: GimpStock
+ * @short_description: Prebuilt common menu/toolbar items and
+ *                     corresponding icons
+ *
+ * GIMP registers a set of menu/toolbar items and corresponding icons
+ * in addition to the standard GTK+ stock items. These can be used
+ * just like GTK+ stock items. GIMP also overrides a few of the GTK+
+ * icons (namely the ones in dialog size).
+ *
+ * Stock icons may have a RTL variant which gets used for
+ * right-to-left locales.
+ **/
+
+
 #define LIBGIMP_DOMAIN     GETTEXT_PACKAGE "-libgimp"
 #define GIMP_TOILET_PAPER  "gimp-toilet-paper"
 

@@ -30,6 +30,17 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimphelpui
+ * @title: GimpHelpUI
+ * @short_description: Functions for setting tooltip and help identifier
+ *                     used by the GIMP help system.
+ *
+ * Functions for setting tooltip and help identifier used by the GIMP
+ * help system.
+ **/
+
+
 typedef enum
 {
   GIMP_WIDGET_HELP_TYPE_HELP = 0xff

@@ -74,6 +74,26 @@ typedef struct _GimpUnitMenu              GimpUnitMenu;
 typedef struct _GimpZoomModel             GimpZoomModel;
 
 
+/**
+ * GimpHelpFunc:
+ * @help_id:   the help ID
+ * @help_data: the help user data
+ *
+ * This is the prototype for all functions you pass as @help_func to
+ * the various GIMP dialog constructors like gimp_dialog_new(),
+ * gimp_query_int_box() etc.
+ *
+ * Help IDs are textual identifiers the help system uses to figure
+ * which page to display.
+ *
+ * All these dialog constructors functions call gimp_help_connect().
+ *
+ * In most cases it will be ok to use gimp_standard_help_func() which
+ * does nothing but passing the @help_id string to gimp_help(). If
+ * your plug-in needs some more sophisticated help handling you can
+ * provide your own @help_func which has to call gimp_help() to
+ * actually display the help.
+ **/
 typedef void (* GimpHelpFunc) (const gchar *help_id,
                                gpointer     help_data);
 

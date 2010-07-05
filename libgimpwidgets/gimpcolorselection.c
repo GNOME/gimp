@@ -43,6 +43,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolorselection
+ * @title: GimpColorSelection
+ * @short_description: Widget for doing a color selection.
+ *
+ * Widget for doing a color selection.
+ **/
+
+
 #define COLOR_AREA_SIZE  20
 
 

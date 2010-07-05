@@ -32,6 +32,16 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpintstore
+ * @title: GimpIntStore
+ * @short_description: A model for integer based name-value pairs
+ *                     (e.g. enums)
+ *
+ * A model for integer based name-value pairs (e.g. enums)
+ **/
+
+
 enum
 {
   PROP_0,

@@ -31,6 +31,16 @@
 #include "gimpcolorarea.h"
 
 
+/**
+ * SECTION: gimpcolorarea
+ * @title: GimpColorArea
+ * @short_description: Displays a #GimpRGB color, optionally with
+ *                     alpha-channel.
+ *
+ * Displays a #GimpRGB color, optionally with alpha-channel.
+ **/
+
+
 #define DRAG_PREVIEW_SIZE   32
 #define DRAG_ICON_OFFSET    -8
 

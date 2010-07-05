@@ -37,6 +37,17 @@
 #include "gimpcolordisplay.h"
 
 
+/**
+ * SECTION: gimpcolordisplay
+ * @title: GimpColorDisplay
+ * @short_description: Pluggable GIMP display color correction modules.
+ * @see_also: #GModule, #GTypeModule, #GimpModule
+ *
+ * Functions and definitions for creating pluggable GIMP
+ * display color correction modules.
+ **/
+
+
 enum
 {
   PROP_0,

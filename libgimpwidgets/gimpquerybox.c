@@ -36,6 +36,27 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpquerybox
+ * @title: GimpQueryBox
+ * @short_description: Some simple dialogs to enter a single int,
+ *                     double, string or boolean value.
+ * @see_also: #GimpSizeEntry, #GimpUnitMenu
+ *
+ * These functions provide simple dialogs for entering a single
+ * string, integer, double, boolean or pixel size value.
+ *
+ * They return a pointer to a #GtkDialog which has to be shown with
+ * gtk_widget_show() by the caller.
+ *
+ * The dialogs contain an entry widget for the kind of value they ask
+ * for and "OK" and "Cancel" buttons. On "Cancel", all query boxes
+ * except the boolean one silently destroy themselves. On "OK" the
+ * user defined callback function is called and returns the entered
+ * value.
+ **/
+
+
 /*
  *  String, integer, double and size query boxes
  */

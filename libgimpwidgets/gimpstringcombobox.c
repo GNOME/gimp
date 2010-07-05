@@ -30,6 +30,15 @@
 #include "gimpstringcombobox.h"
 
 
+/**
+ * SECTION: gimpstringcombobox
+ * @title: GimpStringComboBox
+ * @short_description: A #GtkComboBox subclass to select strings.
+ *
+ * A #GtkComboBox subclass to select strings.
+ **/
+
+
 enum
 {
   PROP_0,

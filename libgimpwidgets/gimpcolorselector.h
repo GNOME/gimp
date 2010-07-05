@@ -31,8 +31,21 @@ G_BEGIN_DECLS
 /* For information look at the html documentation */
 
 
-#define GIMP_COLOR_SELECTOR_SIZE      150
-#define GIMP_COLOR_SELECTOR_BAR_SIZE  15
+/**
+ * GIMP_COLOR_SELECTOR_SIZE:
+ *
+ * The suggested size for a color area in a #GimpColorSelector
+ * implementation.
+ **/
+#define GIMP_COLOR_SELECTOR_SIZE     150
+
+/**
+ * GIMP_COLOR_SELECTOR_BAR_SIZE:
+ *
+ * The suggested width for a color bar in a #GimpColorSelector
+ * implementation.
+ **/
+#define GIMP_COLOR_SELECTOR_BAR_SIZE 15
 
 
 #define GIMP_TYPE_COLOR_SELECTOR            (gimp_color_selector_get_type ())

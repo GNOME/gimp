@@ -36,6 +36,17 @@
 #include "gimpwidgetsmarshal.h"
 
 
+/**
+ * SECTION: gimpcolorselector
+ * @title: GimpColorSelector
+ * @short_description: Pluggable GIMP color selector modules.
+ * @see_also: #GModule, #GTypeModule, #GimpModule
+ *
+ * Functions and definitions for creating pluggable GIMP color
+ * selector modules.
+ **/
+
+
 enum
 {
   COLOR_CHANGED,

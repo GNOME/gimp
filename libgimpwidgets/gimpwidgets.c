@@ -42,6 +42,17 @@
 
 
 /**
+ * SECTION: gimpwidgets
+ * @title: GimpWidgets
+ * @short_description: A collection of convenient widget constructors,
+ *                     standard callbacks and helper functions.
+ *
+ * A collection of convenient widget constructors, standard callbacks
+ * and helper functions.
+ **/
+
+
+/**
  * gimp_radio_group_new:
  * @in_frame:    %TRUE if you want a #GtkFrame around the radio button group.
  * @frame_title: The title of the Frame or %NULL if you don't want a title.

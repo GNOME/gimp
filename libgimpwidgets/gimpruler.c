@@ -30,6 +30,15 @@
 #include "gimpruler.h"
 
 
+/**
+ * SECTION: gimpruler
+ * @title: GimpRuler
+ * @short_description: A ruler widget with configurable unit and orientation.
+ *
+ * A ruler widget with configurable unit and orientation.
+ **/
+
+
 #define DEFAULT_RULER_FONT_SCALE  PANGO_SCALE_SMALL
 #define MINIMUM_INCR              5
 

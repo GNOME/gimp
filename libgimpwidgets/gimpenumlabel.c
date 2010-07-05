@@ -30,6 +30,15 @@
 #include "gimpenumlabel.h"
 
 
+/**
+ * SECTION: gimpenumlabel
+ * @title: GimpEnumLabel
+ * @short_description: A #GtkLabel subclass that displays an enum value.
+ *
+ * A #GtkLabel subclass that displays an enum value.
+ **/
+
+
 static void   gimp_enum_label_finalize (GObject *object);
 
 
