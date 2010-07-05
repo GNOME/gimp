@@ -94,8 +94,8 @@ typedef void (* GimpQueryBooleanCallback) (GtkWidget   *query_box,
  * GIMP_QUERY_BOX_VBOX:
  * @qbox: The query box.
  *
- * A macro to access the #GtkVBox in a #GimpQueryBox. Useful if you
- * want to add more widgets.
+ * A macro to access the #GtkVBox in a #libgimpwidgets-gimpquerybox.
+ * Useful if you want to add more widgets.
  **/
 #define GIMP_QUERY_BOX_VBOX(qbox) g_object_get_data (G_OBJECT (qbox), \
                                                      "gimp-query-box-vbox")

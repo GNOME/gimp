@@ -338,6 +338,10 @@ gimp_number_pair_entry_finalize (GObject *object)
 
 /**
  * gimp_number_pair_entry_new:
+ * @separators:           The allowed separators.
+ * @allow_simplification: Whether to do simplification on the entered term.
+ * @min_valid_value:      The minimum allowed result value.
+ * @max_valid_value:      The maximum allowed result value.
  *
  * Creates a new #GimpNumberPairEntry widget, which is a GtkEntry that
  * accepts two numbers separated by a separator. Typical input example

@@ -548,11 +548,11 @@ gimp_color_button_get_action_type (GimpColorButton *button)
 
 /**
  * gimp_color_button_new:
- * @title: String that will be used as title for the color_selector.
- * @width: Width of the colorpreview in pixels.
+ * @title:  String that will be used as title for the color_selector.
+ * @width:  Width of the colorpreview in pixels.
  * @height: Height of the colorpreview in pixels.
- * @color: A pointer to a #GimpRGB color.
- * @type:
+ * @color:  A pointer to a #GimpRGB color.
+ * @type:   The type of transparency to be displayed.
  *
  * Creates a new #GimpColorButton widget.
  *
@@ -589,7 +589,7 @@ gimp_color_button_new (const gchar       *title,
 /**
  * gimp_color_button_set_color:
  * @button: Pointer to a #GimpColorButton.
- * @color: Pointer to the new #GimpRGB color.
+ * @color:  Pointer to the new #GimpRGB color.
  *
  * Sets the @button to the given @color.
  **/
@@ -608,7 +608,7 @@ gimp_color_button_set_color (GimpColorButton *button,
 /**
  * gimp_color_button_get_color:
  * @button: Pointer to a #GimpColorButton.
- * @color: Pointer to a #GimpRGB struct used to return the color.
+ * @color:  Pointer to a #GimpRGB struct used to return the color.
  *
  * Retrieves the currently set color from the @button.
  **/

@@ -515,8 +515,8 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
 
 /**
  * gimp_color_selection_set_config:
- * @selection:
- * @config:
+ * @selection: A #GimpColorSelection widget.
+ * @config:    A #GimpColorConfig object.
  *
  * Sets the color management configuration to use with this color selection.
  *

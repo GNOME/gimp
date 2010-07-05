@@ -525,7 +525,7 @@ gimp_scale_entry_get_logarithmic (GtkObject *adjustment)
  *              parameter of gtk_widget_set_sensitive()
  *
  * Sets the sensitivity of the scale_entry's #GtkLabel, #GtkHScale and
- * #GtkSpinbutton.
+ * #GtkSpinButton.
  **/
 void
 gimp_scale_entry_set_sensitive (GtkObject *adjustment,

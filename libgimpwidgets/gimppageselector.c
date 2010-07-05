@@ -607,7 +607,7 @@ gimp_page_selector_get_target (GimpPageSelector *selector)
  * @page_no: The number of the page to set the thumbnail for.
  * @thumbnail: The thumbnail pixbuf.
  *
- * Sets the thumbnail for given %page_no. A default "page" icon will
+ * Sets the thumbnail for given @page_no. A default "page" icon will
  * be used if no page thumbnail is set.
  *
  * Since: GIMP 2.4
@@ -728,9 +728,10 @@ gimp_page_selector_get_page_thumbnail (GimpPageSelector *selector,
 /**
  * gimp_page_selector_set_page_label:
  * @selector: Pointer to a #GimpPageSelector.
- * @page_no: The number of the page to set the label for.
- * @label: The label.
+ * @page_no:  The number of the page to set the label for.
+ * @label:    The label.
  *
+ * Sets the label of the specified page.
  *
  * Since: GIMP 2.4
  **/
@@ -998,7 +999,7 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  * @range: A string representing the set of selected pages.
  *
- * Selectes the pages described by %range. The range string is a
+ * Selectes the pages described by @range. The range string is a
  * user-editable list of pages and ranges, e.g. "1,3,5-7,9-12,14".
  * Note that the page numbering in the range string starts with 1,
  * not 0.
@@ -1101,7 +1102,7 @@ gimp_page_selector_select_range (GimpPageSelector *selector,
  * @selector: Pointer to a #GimpPageSelector.
  *
  * Returns: A newly allocated string representing the set of selected
- *          pages. See gimp_page_selector_set_selected_range() for the
+ *          pages. See gimp_page_selector_select_range() for the
  *          format of the string.
  *
  * Since: GIMP 2.4

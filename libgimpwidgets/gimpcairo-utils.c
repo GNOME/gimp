@@ -196,12 +196,14 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
 
 /**
  * gimp_cairo_surface_create_from_pixbuf:
- * @pixbuf: a GdkPixbuf
+ * @pixbuf: a #GdkPixbuf
  *
  * Create a Cairo image surface from a GdkPixbuf.
  *
  * You should avoid calling this function as there are probably more
  * efficient ways of achieving the result you are looking for.
+ *
+ * Returns: a #cairo_surface_t.
  *
  * Since: GIMP 2.6
  **/

@@ -439,7 +439,7 @@ gimp_unit_menu_set_pixel_digits (GimpUnitMenu *menu,
  * @menu: a #GimpUnitMenu
  *
  * Retrieve the number of digits for a pixel size as set by
- * gimp_unit_set_pixel_digits().
+ * gimp_unit_menu_set_pixel_digits().
  *
  * Return value: the configured number of digits for a pixel size
  **/

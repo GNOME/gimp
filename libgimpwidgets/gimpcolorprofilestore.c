@@ -39,9 +39,9 @@
 /**
  * SECTION: gimpcolorprofilestore
  * @title: GimpColorProfileStore
- * @short_description: A #GtklistStore subclass that keep color profiles.
+ * @short_description: A #GtkListStore subclass that keep color profiles.
  *
- * A #GtklistStore subclass that keep color profiles.
+ * A #GtkListStore subclass that keep color profiles.
  **/
 
 

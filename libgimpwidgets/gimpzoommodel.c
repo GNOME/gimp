@@ -578,7 +578,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
 
 /**
  * gimp_zoom_model_zoom_step:
- * @zoom_type:
+ * @zoom_type: the zoom type
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
  * Utility function to calculate a new scale factor.

@@ -901,7 +901,7 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
  * enum_value's nick to the given @stock_prefix.  See
  * gimp_enum_stock_box_new() for more information.
  *
- * Return value: A #GimpEnumStockBox containing the radio buttons.
+ * Return value: A #libgimpwidgets-gimpenumstockbox containing the radio buttons.
  *
  * Since GIMP 2.4
  */
@@ -1018,7 +1018,7 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * Creates a spin button to set and display the value of the
  * specified double property.
  *
- * Return value: A new #GimpSpinButton.
+ * Return value: A new #libgimpwidgets-gimpspinbutton.
  *
  * Since GIMP 2.4
  */
@@ -1143,8 +1143,8 @@ gimp_prop_hscale_new (GObject     *config,
  * @lower_limit:    The spinbutton's lower boundary if @limit_scale is %FALSE.
  * @upper_limit:    The spinbutton's upper boundary if @limit_scale is %FALSE.
  *
- * Creates a #GimpScaleEntry (slider and spin button) to set and
- * display the value of the specified double property.  See
+ * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
+ * to set and display the value of the specified double property.  See
  * gimp_scale_entry_new() for more information.
  *
  * Return value: The #GtkSpinButton's #GtkAdjustment.
@@ -1229,10 +1229,10 @@ gimp_prop_scale_entry_new (GObject     *config,
  * @label:         The text for the #GtkLabel which will appear left of the
  *                 #GtkHScale.
  *
- * Creates a #GimpScaleEntry (slider and spin button) to set and
- * display the value of the specified double property, which should
- * represent an "opacity" variable with range 0 to 100.  See
- * gimp_scale_entry_new() for more information.
+ * Creates a #libgimpwidgets-gimpscaleentry (slider and spin button)
+ * to set and display the value of the specified double property,
+ * which should represent an "opacity" variable with range 0 to 100.
+ * See gimp_scale_entry_new() for more information.
  *
  * Return value:  The #GtkSpinButton's #GtkAdjustment.
  *

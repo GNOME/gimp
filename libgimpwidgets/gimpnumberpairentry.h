@@ -21,8 +21,8 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GIMP_NUMBER_PAIR_ENTRY_H
-#define GIMP_NUMBER_PAIR_ENTRY_H
+#ifndef __GIMP_NUMBER_PAIR_ENTRY_H__
+#define __GIMP_NUMBER_PAIR_ENTRY_H__
 
 G_BEGIN_DECLS
 
@@ -95,8 +95,6 @@ void           gimp_number_pair_entry_set_user_override  (GimpNumberPairEntry *e
 gboolean       gimp_number_pair_entry_get_user_override  (GimpNumberPairEntry *entry);
 
 
-
-
 G_END_DECLS
 
-#endif /* GIMP_NUMBER_PAIR_ENTRY_H */
+#endif /* __GIMP_NUMBER_PAIR_ENTRY_H__ */

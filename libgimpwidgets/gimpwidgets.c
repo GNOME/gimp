@@ -59,9 +59,9 @@
  * @...:         A %NULL-terminated @va_list describing the radio buttons.
  *
  * Convenience function to create a group of radio buttons embedded into
- * a #GtkFrame or #GtkVbox.
+ * a #GtkFrame or #GtkVBox.
  *
- * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
+ * Returns: A #GtkFrame or #GtkVBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_radio_group_new (gboolean            in_frame,
@@ -168,9 +168,9 @@ gimp_radio_group_new (gboolean            in_frame,
  *                         the radio buttons.
  *
  * Convenience function to create a group of radio buttons embedded into
- * a #GtkFrame or #GtkVbox.
+ * a #GtkFrame or #GtkVBox.
  *
- * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
+ * Returns: A #GtkFrame or #GtkVBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_radio_group_new2 (gboolean         in_frame,
@@ -272,12 +272,12 @@ gimp_radio_group_new2 (gboolean         in_frame,
  *                         the radio buttons.
  *
  * Convenience function to create a group of radio buttons embedded into
- * a #GtkFrame or #GtkVbox. This function does the same thing as
+ * a #GtkFrame or #GtkVBox. This function does the same thing as
  * gimp_radio_group_new2(), but it takes integers as @item_data instead of
  * pointers, since that is a very common case (mapping an enum to a radio
  * group).
  *
- * Returns: A #GtkFrame or #GtkVbox (depending on @in_frame).
+ * Returns: A #GtkFrame or #GtkVBox (depending on @in_frame).
  **/
 GtkWidget *
 gimp_int_radio_group_new (gboolean         in_frame,
@@ -434,7 +434,7 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  * gtk_spin_button_set_numeric() so that non-numeric text cannot be
  * entered.
  *
- * Returns: A #GtkSpinbutton and it's #GtkAdjustment.
+ * Returns: A #GtkSpinButton and its #GtkAdjustment.
  **/
 GtkWidget *
 gimp_spin_button_new (GtkObject **adjustment,  /* return value */

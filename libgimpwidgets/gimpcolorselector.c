@@ -254,8 +254,8 @@ gimp_color_selector_channel_changed (GimpColorSelector *selector)
 
 /**
  * gimp_color_selector_set_config:
- * @selector:
- * @config:
+ * @selector: a #GimpColorSelector widget.
+ * @config:   a #GimpColorConfig object.
  *
  * Sets the color management configuration to use with this color selector.
  *

@@ -577,10 +577,10 @@ gimp_preview_get_update (GimpPreview *preview)
 /**
  * gimp_preview_set_bounds:
  * @preview: a #GimpPreview widget
- * @xmin:
- * @ymin:
- * @xmax:
- * @ymax:
+ * @xmin:    the minimum X value
+ * @ymin:    the minimum Y value
+ * @xmax:    the maximum X value
+ * @ymax:    the maximum Y value
  *
  * Sets the lower and upper limits for the previewed area. The
  * difference between the upper and lower value is used to set the

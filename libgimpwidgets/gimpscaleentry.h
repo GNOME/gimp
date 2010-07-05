@@ -30,7 +30,7 @@ G_BEGIN_DECLS
  * GIMP_SCALE_ENTRY_LABEL:
  * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
  *
- * Returns the scale_entry's #GtkLabel.
+ * Returns: the scale_entry's #GtkLabel.
  **/
 #define GIMP_SCALE_ENTRY_LABEL(adj) \
         (g_object_get_data (G_OBJECT (adj), "label"))
@@ -39,7 +39,7 @@ G_BEGIN_DECLS
  * GIMP_SCALE_ENTRY_SCALE:
  * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
  *
- * Returns the scale_entry's #GtkHScale.
+ * Returns: the scale_entry's #GtkHScale.
  **/
 #define GIMP_SCALE_ENTRY_SCALE(adj) \
         (g_object_get_data (G_OBJECT (adj), "scale"))
@@ -48,7 +48,7 @@ G_BEGIN_DECLS
  * GIMP_SCALE_ENTRY_SCALE_ADJ:
  * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
  *
- * Returns the #GtkAdjustment of the scale_entry's #GtkHScale.
+ * Returns: the #GtkAdjustment of the scale_entry's #GtkHScale.
  **/
 #define GIMP_SCALE_ENTRY_SCALE_ADJ(adj)     \
         gtk_range_get_adjustment \
@@ -58,7 +58,7 @@ G_BEGIN_DECLS
  * GIMP_SCALE_ENTRY_SPINBUTTON:
  * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
  *
- * Returns the scale_entry's #GtkSpinButton.
+ * Returns: the scale_entry's #GtkSpinButton.
  **/
 #define GIMP_SCALE_ENTRY_SPINBUTTON(adj) \
         (g_object_get_data (G_OBJECT (adj), "spinbutton"))
@@ -67,7 +67,7 @@ G_BEGIN_DECLS
  * GIMP_SCALE_ENTRY_SPINBUTTON_ADJ:
  * @adj: The #GtkAdjustment returned by gimp_scale_entry_new().
  *
- * Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
+ * Returns: the #GtkAdjustment of the scale_entry's #GtkSpinButton.
  **/
 #define GIMP_SCALE_ENTRY_SPINBUTTON_ADJ(adj) \
         gtk_spin_button_get_adjustment \

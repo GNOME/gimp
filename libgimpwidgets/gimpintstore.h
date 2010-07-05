@@ -24,6 +24,18 @@
 
 G_BEGIN_DECLS
 
+
+/**
+ * GimpIntStoreColumns:
+ * @GIMP_INT_STORE_VALUE:       the integer value
+ * @GIMP_INT_STORE_LABEL:       a human-readable label
+ * @GIMP_INT_STORE_STOCK_ID:    a stock ID
+ * @GIMP_INT_STORE_PIXBUF:      a #GdkPixbuf
+ * @GIMP_INT_STORE_USER_DATA:   arbitrary user data
+ * @GIMP_INT_STORE_NUM_COLUMNS: the number of columns
+ *
+ * The column types of #GimpIntStore.
+ **/
 typedef enum
 {
   GIMP_INT_STORE_VALUE,

@@ -446,9 +446,9 @@ gimp_cell_renderer_toggle_new (const gchar *stock_id)
 
 /**
  * gimp_cell_renderer_toggle_clicked:
- * @cell: a #GimpCellRendererToggle
- * @path:
- * @state:
+ * @cell:  a #GimpCellRendererToggle
+ * @path:  the path to the clicked row
+ * @state: the modifier state
  *
  * Emits the "clicked" signal from a #GimpCellRendererToggle.
  *
