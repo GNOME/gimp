@@ -35,7 +35,15 @@
 #include <glib.h>
 
 #ifdef G_OS_WIN32
+#define _WIN32_WINNT 0x0502
 #include <winsock2.h>
+#include <ws2tcpip.h>
+#ifndef AI_ADDRCONFIG
+/* Missing from mingw headers, but value is publicly documented 
+ * on http://msdn.microsoft.com/en-us/library/ms737530%28v=VS.85%29.aspx
+ */
+#define AI_ADDRCONFIG 0x0400
+#endif
 #include <libgimpbase/gimpwin32-io.h>
 #else
 #include <sys/socket.h>
