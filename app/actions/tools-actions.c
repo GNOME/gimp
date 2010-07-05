@@ -172,6 +172,15 @@ static const GimpEnumActionEntry tools_paint_brush_angle_actions[] =
     "Increase Brush Angle More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "tools-paint-brush-scale-decrease-percent", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Decrease Brush Scale Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-paint-brush-scale-increase-percent", GIMP_STOCK_TOOL_PAINTBRUSH,
+    "Increase Brush Scale Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
+
 };
 
 static const GimpEnumActionEntry tools_paint_brush_aspect_ratio_actions[] =
@@ -239,6 +248,14 @@ static const GimpEnumActionEntry tools_ink_blob_size_actions[] =
   { "tools-ink-blob-size-increase-skip", GIMP_STOCK_TOOL_INK,
     "Increase Ink Blob Size More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+  { "tools-ink-blob-size-decrease-percent", GIMP_STOCK_TOOL_INK,
+    "Decrease Ink Blob Size Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-ink-blob-size-increase-percent", GIMP_STOCK_TOOL_INK,
+    "Increase Ink Blob Size Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
     NULL },
 };
 
@@ -352,6 +369,16 @@ static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
     "Increase Foreground Select Brush Size More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "tools-foreground-select-brush-size-decrease-percent",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Decrease Foreground Select Brush Size Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-foreground-select-brush-size-increase-percent",
+    GIMP_STOCK_TOOL_FOREGROUND_SELECT,
+    "Increase Foreground Select Brush Size", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
 };
 
 static const GimpEnumActionEntry tools_transform_preview_opacity_actions[] =
@@ -423,6 +450,14 @@ static const GimpEnumActionEntry tools_value_1_actions[] =
     "Increase Value 1 More", "<control>greater", NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "tools-value-1-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Value 1 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-value-1-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Value 1 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
 };
 
 /* tools-value-2 is effectively used to control
@@ -462,6 +497,14 @@ static const GimpEnumActionEntry tools_value_2_actions[] =
     "Increase Value 2 More", "<shift>bracketright", NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "tools-value-2-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Value 2 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-value-2-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Value 2 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
 };
 
 static const GimpEnumActionEntry tools_value_3_actions[] =
@@ -498,6 +541,14 @@ static const GimpEnumActionEntry tools_value_3_actions[] =
     "Increase Value 3 More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL },
+  { "tools-value-3-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Value 3 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-value-3-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Value 3 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
+    NULL },
 };
 
 static const GimpEnumActionEntry tools_value_4_actions[] =
@@ -533,6 +584,14 @@ static const GimpEnumActionEntry tools_value_4_actions[] =
   { "tools-value-4-increase-skip", GIMP_STOCK_TOOL_OPTIONS,
     "Increase Value 4 More", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+  { "tools-value-4-decrease-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Decrease Value 4 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-value-4-increase-percent", GIMP_STOCK_TOOL_OPTIONS,
+    "Increase Value 4 Relative", NULL, NULL,
+    GIMP_ACTION_SELECT_PERCENT_NEXT, FALSE,
     NULL },
 };
 

@@ -547,6 +547,7 @@ action_select_property (GimpActionSelectType  select_type,
                         gdouble               small_inc,
                         gdouble               inc,
                         gdouble               skip_inc,
+                        gdouble               delta_factor,
                         gboolean              wrap)
 {
   GParamSpec *pspec;
@@ -569,7 +570,7 @@ action_select_property (GimpActionSelectType  select_type,
                                    G_PARAM_SPEC_DOUBLE (pspec)->minimum,
                                    G_PARAM_SPEC_DOUBLE (pspec)->maximum,
                                    G_PARAM_SPEC_DOUBLE (pspec)->default_value,
-                                   small_inc, inc, skip_inc, 0, wrap);
+                                   small_inc, inc, skip_inc, delta_factor, wrap);
 
       g_object_set (object, property_name, value, NULL);
 
@@ -595,7 +596,7 @@ action_select_property (GimpActionSelectType  select_type,
                                    G_PARAM_SPEC_INT (pspec)->minimum,
                                    G_PARAM_SPEC_INT (pspec)->maximum,
                                    G_PARAM_SPEC_INT (pspec)->default_value,
-                                   small_inc, inc, skip_inc, 0, wrap);
+                                   small_inc, inc, skip_inc, delta_factor, wrap);
 
       g_object_set (object, property_name, value, NULL);
 

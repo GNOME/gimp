@@ -385,7 +385,7 @@ context_opacity_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "opacity",
-                              1.0 / 255.0, 0.01, 0.1, FALSE);
+                              1.0 / 255.0, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -517,7 +517,7 @@ context_brush_spacing_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "spacing",
-                              1.0, 5.0, 20.0, FALSE);
+                              1.0, 5.0, 20.0, 0.1, FALSE);
     }
 }
 
@@ -632,7 +632,7 @@ context_brush_spikes_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "spikes",
-                              0.0, 1.0, 4.0, FALSE);
+                              0.0, 1.0, 4.0, 0.1, FALSE);
     }
 }
 
@@ -654,7 +654,7 @@ context_brush_hardness_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "hardness",
-                              0.001, 0.01, 0.1, FALSE);
+                              0.001, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -676,7 +676,7 @@ context_brush_aspect_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "aspect-ratio",
-                              0.1, 1.0, 4.0, FALSE);
+                              0.1, 1.0, 4.0, 0.1, FALSE);
     }
 }
 
@@ -708,7 +708,7 @@ context_brush_angle_cmd_callback (GtkAction *action,
         angle = action_select_value ((GimpActionSelectType) value,
                                      angle,
                                      0.0, 180.0, 0.0,
-                                     0.1, 1.0, 15.0, 0.0, TRUE);
+                                     0.1, 1.0, 15.0, 0.1, TRUE);
 
       gimp_brush_generated_set_angle (generated, angle);
 
