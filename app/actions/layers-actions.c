@@ -311,32 +311,28 @@ static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
   { "layers-alpha-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     NC_("layers-action", "Al_pha to Selection"), NULL,
     NC_("layers-action",
-        "Replace the selection with the layer's alpha channel.\n"
-        "Shortcut: Alt-Click thumbnail in layers dialog."),
+        "Replace the selection with the layer's alpha channel"),
     GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_REPLACE },
 
   { "layers-alpha-selection-add", GIMP_STOCK_SELECTION_ADD,
     NC_("layers-action", "A_dd to Selection"), NULL,
     NC_("layers-action",
-        "Add the layer's alpha channel to the current selection.\n"
-        "Shortcut: Alt-Shift-Click thumbnail in layers dialog."),
+        "Add the layer's alpha channel to the current selection"),
     GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_ADD },
 
   { "layers-alpha-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
     NC_("layers-action", "_Subtract from Selection"), NULL,
     NC_("layers-action",
-        "Subtract the layer's alpha channel from the current selection.\n"
-        "Shortcut: Alt-Ctrl-Click thumbnail in layers dialog."),
+        "Subtract the layer's alpha channel from the current selection"),
     GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_SUBTRACT },
 
   { "layers-alpha-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
     NC_("layers-action", "_Intersect with Selection"), NULL,
     NC_("layers-action",
-        "Intersect the layer's alpha channel with the current selection.\n"
-        "Shortcut: Alt-Shift-Ctrl-Click thumbnail in layers dialog."),
+        "Intersect the layer's alpha channel with the current selection"),
     GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
 };
