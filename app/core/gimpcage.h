@@ -21,6 +21,10 @@
 #define __GIMP_CAGE_H__
 
 #include <glib-object.h>
+#include "libgimpmath/gimpmathtypes.h"
+#include <gegl.h>
+#include <gegl-buffer.h>
+
 
 #define GIMP_TYPE_CAGE            (gimp_cage_get_type ())
 #define GIMP_CAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE, GimpCage))
@@ -34,18 +38,17 @@ typedef struct _GimpCageClass GimpCageClass;
 
 struct _GimpCage
 {
-  GObject    parent_instance;
+  GObject         parent_instance;
   
-  gint            cageVerticeNumber;
-  gfloat         *cageVerticeX;
-  gfloat         *cageVerticeY;
+  gint            cage_vertice_number; //number of vertices used by the cage
+  gint            cage_vertices_max; //number of vertices allocated in memory
+  GimpVector2    *cage_vertices;
   
-  gint            pointNumber;
-  gfloat        **CoordsVerticeX;
-  gfloat        **CoordsVerticeY;
-  gfloat        **CoordsEdgeX;
-  gfloat        **CoordsEdgeY;
-
+  GeglBuffer     *cage_vertices_coef;
+  GeglBuffer     *cage_edges_coef;
+  
+  //test data
+  GeglRectangle   extent;
 };
 
 
