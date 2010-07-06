@@ -281,7 +281,7 @@ gimp-console.rc.o: gimp.rc
 # in which case the git-version.h we ship is correct.
 git-version.h: update-git-version-header
 	@if test -d "$(top_srcdir)/.git"; then \
-	  echo "#define GIMP_GIT_VERSION \"`git log HEAD^..HEAD --pretty=format:%H`\"" > "$@.tmp"; \
+	  echo "#define GIMP_GIT_VERSION \"`git show-ref --hash refs/heads/master`\"" > "$@.tmp"; \
 	elif test ! -f "$@"; then \
 	  echo "#define GIMP_GIT_VERSION \"Unknown, shouldn't happen\"" > "$@.tmp"; \
 	fi
