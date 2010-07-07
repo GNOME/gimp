@@ -3110,7 +3110,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-export-to-string",
                                      "Save a path as an SVG string.",
-                                     "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The contents are a %NUL-terminated string that holds a complete XML document. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
+                                     "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The contents are a NUL-terminated string that holds a complete XML document. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                      "Bill Skaggs",
                                      "2007",
