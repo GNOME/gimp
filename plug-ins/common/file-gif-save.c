@@ -216,6 +216,9 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
       filename    = param[3].data.d_string;
 
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
       status = sanity_check (filename, image_ID, &error);
 
       /* Get the export options */
@@ -224,8 +227,6 @@ run (const gchar      *name,
           switch (run_mode)
             {
             case GIMP_RUN_INTERACTIVE:
-              gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
               /*  Possibly retrieve data  */
               gimp_get_data (SAVE_PROC, &gsvals);
 
