@@ -52,8 +52,6 @@ static const GimpActionEntry layers_actions[] =
     NC_("layers-action", "_Layer")        },
   { "layers-stack-menu",             NULL,
     NC_("layers-action", "Stac_k")        },
-  { "layers-text-to-selection-menu", GIMP_STOCK_TOOL_TEXT,
-    NC_("layers-action", "Te_xt to Selection") },
   { "layers-mask-menu",              NULL,
     NC_("layers-action", "_Mask")         },
   { "layers-transparency-menu",      NULL,
@@ -337,36 +335,6 @@ static const GimpEnumActionEntry layers_alpha_to_selection_actions[] =
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
 };
 
-static const GimpEnumActionEntry layers_text_to_selection_actions[] =
-{
-  { "layers-text-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
-    NC_("layers-action", "_Text to Selection"), NULL,
-    NC_("layers-action", "Replace the selection with the text layer's outline"),
-    GIMP_CHANNEL_OP_REPLACE, FALSE,
-    GIMP_HELP_LAYER_TEXT_SELECTION_REPLACE },
-
-  { "layers-text-selection-add", GIMP_STOCK_SELECTION_ADD,
-    NC_("layers-action", "A_dd to Selection"), NULL,
-    NC_("layers-action",
-        "Add the text layer's outline to the current selection"),
-    GIMP_CHANNEL_OP_ADD, FALSE,
-    GIMP_HELP_LAYER_TEXT_SELECTION_ADD },
-
-  { "layers-text-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
-    NC_("layers-action", "_Subtract from Selection"), NULL,
-    NC_("layers-action",
-        "Subtract the text layer's outline from the current selection"),
-    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
-    GIMP_HELP_LAYER_TEXT_SELECTION_SUBTRACT },
-
-  { "layers-text-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
-    NC_("layers-action", "_Intersect with Selection"), NULL,
-    NC_("layers-action",
-        "Intersect the text layer's outline with the current selection"),
-    GIMP_CHANNEL_OP_INTERSECT, FALSE,
-    GIMP_HELP_LAYER_TEXT_SELECTION_INTERSECT }
-};
-
 static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
@@ -470,11 +438,6 @@ layers_actions_setup (GimpActionGroup *group)
 
   gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_alpha_to_selection_actions,
-                                      G_N_ELEMENTS (layers_alpha_to_selection_actions),
-                                      G_CALLBACK (layers_alpha_to_selection_cmd_callback));
-
-  gimp_action_group_add_enum_actions (group, "layers-action",
-                                      layers_text_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
 
@@ -619,10 +582,6 @@ layers_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("layers-text-discard",             text_layer && !ac);
   SET_VISIBLE   ("layers-text-to-vectors",          text_layer && !ac);
   SET_VISIBLE   ("layers-text-along-vectors",       text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-replace",   text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-add",       text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-subtract",  text_layer && !ac);
-  SET_VISIBLE   ("layers-text-selection-intersect", text_layer && !ac);
 
   SET_SENSITIVE ("layers-resize",          writable && !ac);
   SET_SENSITIVE ("layers-resize-to-image", writable && !ac);

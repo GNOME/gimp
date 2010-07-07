@@ -381,12 +381,6 @@
         <menuitem action="layers-text-discard" />
         <menuitem action="layers-text-to-vectors" />
         <menuitem action="layers-text-along-vectors" />
-        <menu action="layers-text-to-selection-menu">
-          <menuitem action="layers-text-selection-replace" />
-          <menuitem action="layers-text-selection-add" />
-          <menuitem action="layers-text-selection-subtract" />
-          <menuitem action="layers-text-selection-intersect" />
-        </menu>
       </placeholder>
       <separator />
       <menu action="layers-stack-menu" name="Stack">
