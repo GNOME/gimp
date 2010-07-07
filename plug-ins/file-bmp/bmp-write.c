@@ -770,10 +770,11 @@ write_image (FILE   *f,
 }
 
 static void
-format_callback (GtkWidget *widget,
-                 gpointer  *data)
+format_callback (GtkToggleButton *toggle,
+                 gpointer         data)
 {
-  BMPSaveData.rgb_format = GPOINTER_TO_INT (data);
+  if (gtk_toggle_button_get_active (toggle))
+    BMPSaveData.rgb_format = GPOINTER_TO_INT (data);
 }
 
 static gboolean
@@ -838,7 +839,7 @@ save_dialog (gint channels)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "clicked",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_565));
 
@@ -851,14 +852,14 @@ save_dialog (gint channels)
 
   gtk_widget_show (toggle);
 
-  g_signal_connect (toggle, "clicked",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBA_5551));
   toggle = gtk_radio_button_new_with_label (group, "X1 R5 G5 B5");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "clicked",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_555));
 
@@ -870,7 +871,7 @@ save_dialog (gint channels)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON(toggle));
   gtk_container_add (GTK_CONTAINER (frame), toggle);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "clicked",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGB_888));
   if (channels < 4)
@@ -890,6 +891,11 @@ save_dialog (gint channels)
   toggle = gtk_radio_button_new_with_label (group, "A8 R8 G8 B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_container_add (GTK_CONTAINER (vbox), toggle);
+  gtk_widget_show (toggle);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (format_callback),
+                    GINT_TO_POINTER (RGBA_8888));
+
 
   if (channels < 4)
     {
@@ -901,16 +907,11 @@ save_dialog (gint channels)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
     }
 
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "clicked",
-                    G_CALLBACK (format_callback),
-                    GINT_TO_POINTER (RGBA_8888));
-
   toggle = gtk_radio_button_new_with_label (group, "X8 R8 G8 B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_container_add (GTK_CONTAINER (vbox), toggle);
   gtk_widget_show (toggle);
-  g_signal_connect (toggle, "clicked",
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
                     GINT_TO_POINTER (RGBX_8888));
 
