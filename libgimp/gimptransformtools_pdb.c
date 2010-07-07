@@ -27,6 +27,16 @@
 #undef __GIMP_TRANSFORM_TOOLS_PDB_H__
 #include "gimptransformtools_pdb.h"
 
+
+/**
+ * SECTION: gimptransformtools
+ * @title: gimptransformtools
+ * @short_description: Access to toolbox transform tools.
+ *
+ * Functions giving access to toolbox transform tools.
+ **/
+
+
 /**
  * gimp_flip:
  * @drawable_ID: The affected drawable.

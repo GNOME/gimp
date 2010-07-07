@@ -279,5 +279,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Text procedures';
+$doc_title = 'gimptexttool';
+$doc_short_desc = 'Functions for controlling the text tool.';
+$doc_long_desc = 'Functions for controlling the text tool.';
 
 1;

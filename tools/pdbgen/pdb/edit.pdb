@@ -939,5 +939,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Edit procedures';
+$doc_title = 'gimpedit';
+$doc_short_desc = 'Edit menu functions (cut, copy, paste, clear, etc.)';
+$doc_long_desc = 'Edit menu functions (cut, copy, paste, clear, etc.)';
 
 1;

@@ -165,5 +165,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Patterns';
+$doc_title = 'gimppatterns';
+$doc_short_desc = 'Functions relating to patterns.';
+$doc_long_desc = 'Functions relating to patterns.';
 
 1;

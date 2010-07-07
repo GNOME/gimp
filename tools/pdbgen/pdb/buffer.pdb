@@ -248,5 +248,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Buffer procedures';
+$doc_title = 'gimpbuffer';
+$doc_short_desc = 'Functions for manipulating cut buffers.';
+$doc_long_desc = 'Functions related to named cut buffers.';
 
 1;

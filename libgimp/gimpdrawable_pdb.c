@@ -29,6 +29,16 @@
 #undef __GIMP_DRAWABLE_PDB_H__
 #include "gimpdrawable_pdb.h"
 
+
+/**
+ * SECTION: gimpdrawable
+ * @title: gimpdrawable
+ * @short_description: Functions to manipulate drawables.
+ *
+ * Functions to manipulate drawables.
+ **/
+
+
 /**
  * gimp_drawable_is_valid:
  * @drawable_ID: The drawable to check.

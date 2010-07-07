@@ -27,6 +27,16 @@
 #undef __GIMP_TEXT_TOOL_PDB_H__
 #include "gimptexttool_pdb.h"
 
+
+/**
+ * SECTION: gimptexttool
+ * @title: gimptexttool
+ * @short_description: Functions for controlling the text tool.
+ *
+ * Functions for controlling the text tool.
+ **/
+
+
 /**
  * gimp_text_fontname:
  * @image_ID: The image.

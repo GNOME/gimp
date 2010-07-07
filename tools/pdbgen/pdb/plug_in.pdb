@@ -376,5 +376,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs[1,2,3,4,5,6,7]]);
 
 $desc = 'Plug-in';
+$doc_title = 'gimpplugin';
+$doc_short_desc = 'Functions useful for plugins, e.g. registration and progress indicators.';
+$doc_long_desc = 'Functions useful for plugins, e.g. registration and progress indicators.';
 
 1;

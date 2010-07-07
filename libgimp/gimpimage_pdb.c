@@ -29,6 +29,17 @@
 #undef __GIMP_IMAGE_PDB_H__
 #include "gimpimage_pdb.h"
 
+
+/**
+ * SECTION: gimpimage
+ * @title: gimpimage
+ * @short_description: Operations on complete images.
+ *
+ * Operations on complete images: creation, resizing/rescaling, and
+ * operations involving multiple layers.
+ **/
+
+
 /**
  * gimp_image_is_valid:
  * @image_ID: The image to check.

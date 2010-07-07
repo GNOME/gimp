@@ -2729,5 +2729,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs[0..46,49..77]]);
 
 $desc = 'Image';
+$doc_title = 'gimpimage';
+$doc_short_desc = 'Operations on complete images.';
+$doc_long_desc = 'Operations on complete images: creation, resizing/rescaling, and operations involving multiple layers.';
 
 1;

@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpselectiontools
+ * @title: gimpselectiontools
+ * @short_description: Access to toolbox selection tools.
+ *
+ * Functions giving access to toolbox selection tools.
+ **/
+
+
 /**
  * gimp_by_color_select:
  * @drawable_ID: The affected drawable.

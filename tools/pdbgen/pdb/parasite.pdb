@@ -464,5 +464,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Parasite procedures';
+$doc_title = 'gimpparasite';
+$doc_short_desc = 'Operations related to parasites.';
+$doc_long_desc = 'Operations related to parasites.';
 
 1;

@@ -27,6 +27,16 @@
 #undef __GIMP_PALETTES_PDB_H__
 #include "gimppalettes_pdb.h"
 
+
+/**
+ * SECTION: gimppalettes
+ * @title: gimppalettes
+ * @short_description: Operations related to palettes.
+ *
+ * Operations related to palettes.
+ **/
+
+
 /**
  * gimp_palettes_refresh:
  *

@@ -65,5 +65,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Help procedures';
+$doc_title = 'gimphelp';
+$doc_short_desc = 'Loading help pages using gimp_help.';
+$doc_long_desc = 'Loading help pages using gimp_help.';
 
 1;

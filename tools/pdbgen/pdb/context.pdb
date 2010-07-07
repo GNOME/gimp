@@ -733,5 +733,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Context';
+$doc_title = 'gimpcontext';
+$doc_short_desc = "Functions to manipulate a plug-in's context.";
+$doc_long_desc = "Functions to manipulate a plug-in's context.";
 
 1;

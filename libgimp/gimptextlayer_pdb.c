@@ -27,6 +27,16 @@
 #undef __GIMP_TEXT_LAYER_PDB_H__
 #include "gimptextlayer_pdb.h"
 
+
+/**
+ * SECTION: gimptextlayer
+ * @title: gimptextlayer
+ * @short_description: Functions for querying and manipulating text layers.
+ *
+ * Functions for querying and manipulating text layers.
+ **/
+
+
 /**
  * gimp_text_layer_new:
  * @image_ID: The image.

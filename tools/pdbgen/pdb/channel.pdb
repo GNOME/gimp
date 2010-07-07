@@ -354,5 +354,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Channel';
+$doc_title = 'gimpchannel';
+$doc_short_desc = 'Functions for manipulating channels.';
+$doc_long_desc = 'Functions for manipulating channels.';
 
 1;

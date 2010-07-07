@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpchannel
+ * @title: gimpchannel
+ * @short_description: Functions for manipulating channels.
+ *
+ * Functions for manipulating channels.
+ **/
+
+
 /**
  * _gimp_channel_new:
  * @image_ID: The image to which to add the channel.

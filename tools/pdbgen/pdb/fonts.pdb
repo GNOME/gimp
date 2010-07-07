@@ -78,5 +78,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Fonts';
+$doc_title = 'gimpfonts';
+$doc_short_desc = 'Operations related to fonts.';
+$doc_long_desc = 'Operations related to fonts.';
 
 1;

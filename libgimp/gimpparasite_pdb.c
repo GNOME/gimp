@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpparasite
+ * @title: gimpparasite
+ * @short_description: Operations related to parasites.
+ *
+ * Operations related to parasites.
+ **/
+
+
 /**
  * gimp_parasite_find:
  * @name: The name of the parasite to find.

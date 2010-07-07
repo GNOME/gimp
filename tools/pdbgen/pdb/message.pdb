@@ -109,5 +109,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Message procedures';
+$doc_title = 'gimpmessage';
+$doc_short_desc = 'Display a dialog box with a message.';
+$doc_long_desc = 'Display a dialog box with a message.';
 
 1;

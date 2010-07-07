@@ -607,5 +607,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palette';
+$doc_title = 'gimppalette';
+$doc_short_desc = 'Functions operating on a single palette.';
+$doc_long_desc = 'Functions operating on a single palette.';
 
 1;

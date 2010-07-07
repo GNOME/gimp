@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpguides
+ * @title: gimpguides
+ * @short_description: Functions for manipulating guides.
+ *
+ * Functions for manipulating guides.
+ **/
+
+
 /**
  * gimp_image_add_hguide:
  * @image_ID: The image.

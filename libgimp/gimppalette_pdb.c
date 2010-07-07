@@ -26,6 +26,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimppalette
+ * @title: gimppalette
+ * @short_description: Functions operating on a single palette.
+ *
+ * Functions operating on a single palette.
+ **/
+
+
 /**
  * gimp_palette_new:
  * @name: The requested name of the new palette.

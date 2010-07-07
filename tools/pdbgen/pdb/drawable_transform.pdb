@@ -1055,5 +1055,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Transformation procedures';
+$doc_title = 'gimpdrawabletransform';
+$doc_short_desc = 'Functions to perform transformatrions on drawables.';
+$doc_long_desc = 'Functions to perform transformatrions on drawables.';
 
 1;

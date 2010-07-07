@@ -109,5 +109,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palette UI';
+$doc_title = 'gimppaletteselect';
+$doc_short_desc = 'Functions providing a palette selection dialog.';
+$doc_long_desc = 'Functions providing a palette selection dialog.';
 
 1;

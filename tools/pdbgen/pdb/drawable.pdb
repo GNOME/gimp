@@ -1434,5 +1434,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';
+$doc_title = 'gimpdrawable';
+$doc_short_desc = 'Functions to manipulate drawables.';
+$doc_long_desc = 'Functions to manipulate drawables.';
 
 1;

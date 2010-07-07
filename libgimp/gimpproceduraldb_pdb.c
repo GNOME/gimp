@@ -26,6 +26,17 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpproceduraldb
+ * @title: gimpproceduraldb
+ * @short_description: Functions for querying and changing procedural database (PDB) entries.
+ *
+ * Functions for querying and changing procedural database (PDB)
+ * entries.
+ **/
+
+
 /**
  * gimp_procedural_db_temp_name:
  *

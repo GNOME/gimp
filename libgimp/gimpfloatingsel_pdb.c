@@ -27,6 +27,16 @@
 #undef __GIMP_FLOATING_SEL_PDB_H__
 #include "gimpfloatingsel_pdb.h"
 
+
+/**
+ * SECTION: gimpfloatingsel
+ * @title: gimpfloatingsel
+ * @short_description: Functions for removing or attaching floating selections.
+ *
+ * Functions for removing or attaching floating selections.
+ **/
+
+
 /**
  * gimp_floating_sel_remove:
  * @floating_sel_ID: The floating selection.

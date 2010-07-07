@@ -29,6 +29,16 @@
 #undef __GIMP_PATTERNS_PDB_H__
 #include "gimppatterns_pdb.h"
 
+
+/**
+ * SECTION: gimppatterns
+ * @title: gimppatterns
+ * @short_description: Functions relating to patterns.
+ *
+ * Functions relating to patterns.
+ **/
+
+
 /**
  * gimp_patterns_refresh:
  *

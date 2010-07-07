@@ -1105,5 +1105,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Layer';
+$doc_title = 'gimplayer';
+$doc_short_desc = 'Operations on a single layer.';
+$doc_long_desc = 'Operations on a single layer.';
 
 1;

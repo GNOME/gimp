@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpdisplay
+ * @title: gimpdisplay
+ * @short_description: Functions to create, delete and flush displays (views) on an image.
+ *
+ * Functions to create, delete and flush displays (views) on an image.
+ **/
+
+
 /**
  * gimp_display_is_valid:
  * @display_ID: The display to check.

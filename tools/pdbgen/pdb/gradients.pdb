@@ -261,5 +261,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradients';
+$doc_title = 'gimpgradients';
+$doc_short_desc = 'Operations related to gradients.';
+$doc_long_desc = 'Operations related to gradients.';
 
 1;

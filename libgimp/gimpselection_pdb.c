@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpselection
+ * @title: gimpselection
+ * @short_description: Functions for manipulating selections.
+ *
+ * Functions for manipulating selections.
+ **/
+
+
 /**
  * gimp_selection_bounds:
  * @image_ID: The image.

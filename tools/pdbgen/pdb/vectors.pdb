@@ -1540,7 +1540,7 @@ sub vectors_export_to_string {
 
     $help = <<'HELP';
 This procedure works like gimp_vectors_export_to_file() but creates a string
-rather than a file. The contents are a %NUL-terminated string that holds a 
+rather than a file. The contents are a NUL-terminated string that holds a 
 complete XML document.  If you pass 0 as the 'vectors' argument, then all
 paths in the image will be exported.
 HELP
@@ -1623,5 +1623,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Vectors';
+$doc_title = 'gimpvectors';
+$doc_short_desc = 'Functions for querying and manipulating vectors.';
+$doc_long_desc = 'Functions for querying and manipulating vectors.';
 
 1;

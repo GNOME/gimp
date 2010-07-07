@@ -655,6 +655,19 @@ HEADER
 	    print CFILE "#undef __GIMP_\U$group\E_PDB_H__\n";
 	    print CFILE qq/#include "${hname}"\n/;
 	}
+	$long_desc = &desc_wrap($main::grp{$group}->{doc_long_desc});
+	print CFILE <<SECTION_DOCS;
+
+
+/**
+ * SECTION: $main::grp{$group}->{doc_title}
+ * \@title: $main::grp{$group}->{doc_title}
+ * \@short_description: $main::grp{$group}->{doc_short_desc}
+ *
+${long_desc}
+ **/
+
+SECTION_DOCS
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

@@ -718,5 +718,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Color';
+$doc_title = 'gimpcolor';
+$doc_short_desc = 'Functions for manipulating color.';
+$doc_long_desc = 'Functions for manipulating color, including curves and histograms.';
 
 1;

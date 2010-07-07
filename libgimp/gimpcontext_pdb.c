@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpcontext
+ * @title: gimpcontext
+ * @short_description: Functions to manipulate a plug-in's context.
+ *
+ * Functions to manipulate a plug-in's context.
+ **/
+
+
 /**
  * gimp_context_push:
  *

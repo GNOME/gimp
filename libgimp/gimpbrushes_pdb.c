@@ -29,6 +29,16 @@
 #undef __GIMP_BRUSHES_PDB_H__
 #include "gimpbrushes_pdb.h"
 
+
+/**
+ * SECTION: gimpbrushes
+ * @title: gimpbrushes
+ * @short_description: Functions for manipulating brushes.
+ *
+ * Functions related to getting and setting brushes.
+ **/
+
+
 /**
  * gimp_brushes_refresh:
  *

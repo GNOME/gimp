@@ -564,5 +564,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image mask';
+$doc_title = 'gimpselection';
+$doc_short_desc = 'Functions for manipulating selections.';
+$doc_long_desc = 'Functions for manipulating selections.';
 
 1;

@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpfonts
+ * @title: gimpfonts
+ * @short_description: Operations related to fonts.
+ *
+ * Operations related to fonts.
+ **/
+
+
 /**
  * gimp_fonts_refresh:
  *

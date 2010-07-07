@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpundo
+ * @title: gimpundo
+ * @short_description: Control of undo/redo.
+ *
+ * Control of undo/redo.
+ **/
+
+
 /**
  * gimp_image_undo_group_start:
  * @image_ID: The ID of the image in which to open an undo group.

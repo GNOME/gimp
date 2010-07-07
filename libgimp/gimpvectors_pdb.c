@@ -26,6 +26,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpvectors
+ * @title: gimpvectors
+ * @short_description: Functions for querying and manipulating vectors.
+ *
+ * Functions for querying and manipulating vectors.
+ **/
+
+
 /**
  * gimp_vectors_is_valid:
  * @vectors_ID: The vectors object to check.
@@ -1546,7 +1556,7 @@ gimp_vectors_export_to_file (gint32       image_ID,
  * Save a path as an SVG string.
  *
  * This procedure works like gimp_vectors_export_to_file() but creates
- * a string rather than a file. The contents are a %NUL-terminated
+ * a string rather than a file. The contents are a NUL-terminated
  * string that holds a complete XML document. If you pass 0 as the
  * 'vectors' argument, then all paths in the image will be exported.
  *

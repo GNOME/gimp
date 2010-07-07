@@ -24,6 +24,17 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpunit
+ * @title: gimpunit
+ * @short_description: Provides a collection of predefined units and functions for creating user-defined units.
+ *
+ * Provides a collection of predefined units and functions for creating
+ * user-defined units.
+ **/
+
+
 /**
  * _gimp_unit_get_number_of_units:
  *

@@ -619,5 +619,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';
+$doc_title = 'gimppaths';
+$doc_short_desc = 'Deprecated operations related to paths.';
+$doc_long_desc = 'Deprecated operations related to paths.';
 
 1;

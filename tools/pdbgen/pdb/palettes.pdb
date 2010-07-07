@@ -160,5 +160,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Palettes';
+$doc_title = 'gimppalettes';
+$doc_short_desc = 'Operations related to palettes.';
+$doc_long_desc = 'Operations related to palettes.';
 
 1;

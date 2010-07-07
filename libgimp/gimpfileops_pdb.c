@@ -26,6 +26,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpfileops
+ * @title: gimpfileops
+ * @short_description: File operations (load, save, etc.)
+ *
+ * File operations (load, save, etc.)
+ **/
+
+
 /**
  * gimp_file_load:
  * @run_mode: The run mode.

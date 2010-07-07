@@ -29,6 +29,16 @@
 #undef __GIMP_PATHS_PDB_H__
 #include "gimppaths_pdb.h"
 
+
+/**
+ * SECTION: gimppaths
+ * @title: gimppaths
+ * @short_description: Deprecated operations related to paths.
+ *
+ * Deprecated operations related to paths.
+ **/
+
+
 /**
  * gimp_path_list:
  * @image_ID: The image to list the paths from.

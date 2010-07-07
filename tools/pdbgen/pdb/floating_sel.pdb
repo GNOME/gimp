@@ -211,5 +211,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Floating selections';
+$doc_title = 'gimpfloatingsel';
+$doc_short_desc = 'Functions for removing or attaching floating selections.';
+$doc_long_desc = 'Functions for removing or attaching floating selections.';
 
 1;

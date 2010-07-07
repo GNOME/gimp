@@ -314,5 +314,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Progress';
+$doc_title = 'gimpprogress';
+$doc_short_desc = "Functions for embedding the progress bar into a plug-in's GUI.";
+$doc_long_desc = "Functions for embedding the progress bar into a plug-in's GUI.";
 
 1;

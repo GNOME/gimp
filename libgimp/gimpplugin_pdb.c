@@ -24,6 +24,17 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpplugin
+ * @title: gimpplugin
+ * @short_description: Functions useful for plugins, e.g. registration and progress indicators.
+ *
+ * Functions useful for plugins, e.g. registration and progress
+ * indicators.
+ **/
+
+
 /**
  * gimp_plugin_domain_register:
  * @domain_name: The name of the textdomain (must be unique).

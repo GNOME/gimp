@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimphelp
+ * @title: gimphelp
+ * @short_description: Loading help pages using gimp_help.
+ *
+ * Loading help pages using gimp_help.
+ **/
+
+
 /**
  * gimp_help:
  * @help_domain: The help domain in which help_id is registered.

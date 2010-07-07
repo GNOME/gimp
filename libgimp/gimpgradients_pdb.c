@@ -29,6 +29,16 @@
 #undef __GIMP_GRADIENTS_PDB_H__
 #include "gimpgradients_pdb.h"
 
+
+/**
+ * SECTION: gimpgradients
+ * @title: gimpgradients
+ * @short_description: Operations related to gradients.
+ *
+ * Operations related to gradients.
+ **/
+
+
 /**
  * gimp_gradients_refresh:
  *

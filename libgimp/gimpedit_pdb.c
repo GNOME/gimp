@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpedit
+ * @title: gimpedit
+ * @short_description: Edit menu functions (cut, copy, paste, clear, etc.)
+ *
+ * Edit menu functions (cut, copy, paste, clear, etc.)
+ **/
+
+
 /**
  * gimp_edit_cut:
  * @drawable_ID: The drawable to cut from.

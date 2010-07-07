@@ -430,5 +430,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Transform Tool procedures';
+$doc_title = 'gimptransformtools';
+$doc_short_desc = 'Access to toolbox transform tools.';
+$doc_long_desc = 'Functions giving access to toolbox transform tools.';
 
 1;

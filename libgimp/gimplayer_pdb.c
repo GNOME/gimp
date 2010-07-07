@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimplayer
+ * @title: gimplayer
+ * @short_description: Operations on a single layer.
+ *
+ * Operations on a single layer.
+ **/
+
+
 /**
  * _gimp_layer_new:
  * @image_ID: The image to which to add the layer.

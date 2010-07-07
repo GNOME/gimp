@@ -109,5 +109,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern UI';
+$doc_title = 'gimppatternselect';
+$doc_short_desc = 'Functions providing a pattern selection dialog.';
+$doc_long_desc = 'Functions providing a pattern selection dialog.';
 
 1;

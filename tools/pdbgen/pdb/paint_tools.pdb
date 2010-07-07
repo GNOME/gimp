@@ -996,5 +996,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paint Tool procedures';
+$doc_title = 'gimppainttools';
+$doc_short_desc = 'Access to toolbox paint tools.';
+$doc_long_desc = 'Functions giving access to toolbox paint tools.';
 
 1;

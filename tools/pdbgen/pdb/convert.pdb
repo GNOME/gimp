@@ -223,5 +223,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Convert';
+$doc_title = 'gimpconvert';
+$doc_short_desc = 'Conversions between RGB, indexed, and grayscale modes.';
+$doc_long_desc = 'Conversions between RGB, indexed, and grayscale modes.';
 
 1;

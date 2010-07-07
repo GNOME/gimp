@@ -26,6 +26,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimppattern
+ * @title: gimppattern
+ * @short_description: Functions operating on a single pattern.
+ *
+ * Functions operating on a single pattern.
+ **/
+
+
 /**
  * gimp_pattern_get_info:
  * @name: The pattern name.

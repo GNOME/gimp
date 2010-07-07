@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpgimprc
+ * @title: gimpgimprc
+ * @short_description: Interactions with settings from gimprc.
+ *
+ * Interactions with settings from gimprc.
+ **/
+
+
 /**
  * gimp_gimprc_query:
  * @token: The token to query for.
