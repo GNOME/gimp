@@ -7,6 +7,27 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.9 to GIMP 2.6.10
+==================================================
+
+* Bugs fixed:
+
+ 613328 - TGA files saved with incorrect header yOrigin data
+ 623290 - Save As... does not save Windows Bitmap as default in dialog
+ 621363 - CMYK decompose broken
+ 595170 - brush - color from gradient works wrong in greyscale
+ 613838 - Error in gimp-hue-saturation PDB call
+ 622608 - GIMP crashes when clicking any scroll bar from combo boxes
+ 565459 - newly opened images are put into the background
+
+* Updated translations:
+
+ German (de)
+ Italian (it)
+ Romanian (ro)
+ Portuguese (pt)
+
+
 Overview of Changes from GIMP 2.6.8 to GIMP 2.6.9
 =================================================
 
