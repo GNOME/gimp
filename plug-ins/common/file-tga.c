@@ -1133,7 +1133,7 @@ ReadImage (FILE        *fp,
 }  /*read_image*/
 
 
-static gint
+static gboolean
 save_image (const gchar  *filename,
             gint32        image_ID,
             gint32        drawable_ID,
@@ -1215,8 +1215,10 @@ save_image (const gchar  *filename,
       header[3] = header[4] = header[5] = header[6] = header[7] = 0;
     }
 
-  header[8]  = header[9]  = 0;                          /* xorigin */
-  header[10] = header[11] = tsvals.origin ? 0 : height; /* yorigin */
+  header[8]  = header[9] = 0;                           /* xorigin */
+  header[10] = tsvals.origin ? 0 : (height % 256);      /* yorigin */
+  header[11] = tsvals.origin ? 0 : (height / 256);      /* yorigin */
+
 
   header[12] = width % 256;
   header[13] = width / 256;
