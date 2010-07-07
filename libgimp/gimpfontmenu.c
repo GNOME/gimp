@@ -32,6 +32,15 @@
 #include "gimpfontmenu.h"
 
 
+/**
+ * SECTION: gimpfontmenu
+ * @title: gimpfontmenu
+ * @short_description: A widget for selecting fonts.
+ *
+ * A widget for selecting fonts.
+ **/
+
+
 typedef struct
 {
   GimpRunFontCallback callback;
@@ -100,7 +109,7 @@ gimp_font_select_widget_close (GtkWidget *widget)
 }
 
 /**
- * gimp_font_select_widget_set;
+ * gimp_font_select_widget_set:
  * @widget:    A font select widget.
  * @font_name: Font name to set; %NULL means no change.
  *

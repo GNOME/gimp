@@ -24,6 +24,15 @@
 G_BEGIN_DECLS
 
 
+/**
+ * SECTION: gimpenums
+ * @title: gimpenums
+ * @short_description: Enums and definitions.
+ *
+ * Enums and definitions.
+ **/
+
+
 #define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
 
 GType gimp_brush_application_mode_get_type (void) G_GNUC_CONST;

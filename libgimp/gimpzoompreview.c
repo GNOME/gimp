@@ -33,12 +33,22 @@
 #include "gimpzoompreview.h"
 
 
+/**
+ * SECTION: gimpzoompreview
+ * @title: GimpZoomPreview
+ * @short_description: A drawable preview with zooming capabilities.
+ *
+ * A drawable preview with zooming capabilities.
+ **/
+
+
 enum
 {
   PROP_0,
   PROP_DRAWABLE,
   PROP_MODEL
 };
+
 
 typedef struct GimpZoomPreviewPrivate
 {
@@ -734,6 +744,8 @@ gimp_zoom_preview_get_source_area (GimpPreview *preview,
  * Creates a new #GimpZoomPreview widget for @drawable.
  *
  * Since: GIMP 2.4
+ *
+ * Returns: a new #GimpZoomPreview.
  **/
 GtkWidget *
 gimp_zoom_preview_new (GimpDrawable *drawable)
@@ -759,6 +771,8 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
  * factor in sync.
  *
  * Since: GIMP 2.4
+ *
+ * Returns: a new #GimpZoomPreview.
  **/
 GtkWidget *
 gimp_zoom_preview_new_with_model (GimpDrawable  *drawable,

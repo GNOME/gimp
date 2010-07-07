@@ -35,6 +35,16 @@
 #include "gimppixbuf.h"
 
 
+/**
+ * SECTION: gimpitemcombobox
+ * @title: GimpItemComboBox
+ * @short_description: Widgets providing popup menus of items.
+ *
+ * Widgets providing popup menus of items (layers, channels,
+ * drawables, vectors).
+ **/
+
+
 #define THUMBNAIL_SIZE  24
 #define WIDTH_REQUEST  200
 

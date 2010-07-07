@@ -38,6 +38,16 @@
 #include "gimpprogressbar.h"
 
 
+/**
+ * SECTION: gimpprogressbar
+ * @title: GimpProgressBar
+ * @short_description: A widget providing a progress bar.
+ *
+ * A widget providing a progress bar that automatically redirects any
+ * progress calls to itself.
+ **/
+
+
 static void     gimp_progress_bar_destroy    (GtkObject   *object);
 
 static void     gimp_progress_bar_start      (const gchar *message,

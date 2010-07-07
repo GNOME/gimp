@@ -31,6 +31,15 @@
 #include "gimpdrawablepreview.h"
 
 
+/**
+ * SECTION: gimpdrawablepreview
+ * @title: GimpDrawablePreview
+ * @short_description: A widget providing a preview of a #GimpDrawable.
+ *
+ * A widget providing a preview of a #GimpDrawable.
+ **/
+
+
 #define SELECTION_BORDER  8
 
 enum

@@ -34,6 +34,15 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpgradientselectbutton
+ * @title: GimpGradientSelectButton
+ * @short_description: A button which pops up a gradient select dialog.
+ *
+ * A button which pops up a gradient select dialog.
+ **/
+
+
 #define CELL_HEIGHT 18
 #define CELL_WIDTH  84
 

@@ -34,6 +34,15 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpfontselectbutton
+ * @title: GimpFontSelectButton
+ * @short_description: A button which pops up a font selection dialog.
+ *
+ * A button which pops up a font selection dialog.
+ **/
+
+
 #define GIMP_FONT_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButtonPrivate))
 
 typedef struct _GimpFontSelectButtonPrivate GimpFontSelectButtonPrivate;

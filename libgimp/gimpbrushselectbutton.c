@@ -34,6 +34,15 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpbrushselectbutton
+ * @title: gimpbrushselectbutton
+ * @short_description: A button that pops up a brush selection dialog.
+ *
+ * A button that pops up a brush selection dialog.
+ **/
+
+
 #define CELL_SIZE 20
 
 

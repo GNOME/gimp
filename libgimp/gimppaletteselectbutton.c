@@ -34,6 +34,15 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppaletteselectbutton
+ * @title: GimpPaletteSelect
+ * @short_description: A button which pops up a palette select dialog.
+ *
+ * A button which pops up a palette select dialog.
+ **/
+
+
 #define GIMP_PALETTE_SELECT_BUTTON_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_PALETTE_SELECT_BUTTON, GimpPaletteSelectButtonPrivate))
 
 typedef struct _GimpPaletteSelectButtonPrivate GimpPaletteSelectButtonPrivate;

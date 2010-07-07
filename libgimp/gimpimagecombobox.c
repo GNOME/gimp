@@ -34,6 +34,15 @@
 #include "gimppixbuf.h"
 
 
+/**
+ * SECTION: gimpimagecombobox
+ * @title: GimpImageComboBox
+ * @short_description: A widget providing a popup menu of images.
+ *
+ * A widget providing a popup menu of images.
+ **/
+
+
 #define THUMBNAIL_SIZE   24
 #define WIDTH_REQUEST   200
 
@@ -101,10 +110,10 @@ gimp_image_combo_box_init (GimpImageComboBox *combo_box)
  * each image and only if the function returns %TRUE, the image is
  * added to the combobox.
  *
- * You should use gimp_int_combo_connect() to initialize and connect
- * the combo. Use gimp_int_combo_box_set_active() to get the active
- * image ID and gimp_int_combo_box_get_active() to retrieve the ID of
- * the selected image.
+ * You should use gimp_int_combo_box_connect() to initialize and
+ * connect the combo. Use gimp_int_combo_box_set_active() to get the
+ * active image ID and gimp_int_combo_box_get_active() to retrieve the
+ * ID of the selected image.
  *
  * Return value: a new #GimpIntComboBox.
  *

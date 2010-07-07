@@ -41,6 +41,16 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpprocview
+ * @title: GimpProcView
+ * @short_description: A widget showing information about a PDB procedure.
+ *
+ * A widget showing information about a PDB procedure, mainly for the
+ * procedure and plug-in browsers.
+ **/
+
+
 /*  local function prototypes  */
 
 static GtkWidget * gimp_proc_view_create_params (const GimpParamDef *params,

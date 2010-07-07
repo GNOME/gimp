@@ -29,6 +29,16 @@
 #include "gimpselectbutton.h"
 
 
+/**
+ * SECTION: gimpselectbutton
+ * @title: GimpSelectButton
+ * @short_description: The base class of the data select buttons.
+ *
+ * The base class of the brush, pattern, gradient, palette and font
+ * select buttons.
+ **/
+
+
 /*  local function prototypes  */
 
 static void   gimp_select_button_destroy (GtkObject *object);

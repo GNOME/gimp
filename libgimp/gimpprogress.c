@@ -65,14 +65,14 @@ static const gdouble   gimp_progress_step    = (1.0 / 256.0);
  * @value_callback: the function to call to change the value
  * @user_data:      a pointer that is returned when uninstalling the progress
  *
- * Return value: the name of the temporary procedure that's been installed
- *
- * Since: GIMP 2.2
- *
  * Note that since GIMP 2.4, @value_callback can be called with
  * negative values. This is triggered by calls to gimp_progress_pulse().
  * The callback should then implement a progress indicating business,
  * e.g. by calling gtk_progress_bar_pulse().
+ *
+ * Return value: the name of the temporary procedure that's been installed
+ *
+ * Since: GIMP 2.2
  **/
 const gchar *
 gimp_progress_install (GimpProgressStartCallback start_callback,

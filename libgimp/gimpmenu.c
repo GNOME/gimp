@@ -32,6 +32,16 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpmenu
+ * @title: gimpmenu
+ * @short_description: Menus for selecting images, layers, channels
+ *                     and drawables.
+ *
+ * Menus for selecting images, layers, channels and drawables.
+ **/
+
+
 #define MENU_THUMBNAIL_WIDTH   24
 #define MENU_THUMBNAIL_HEIGHT  24
 
@@ -57,14 +67,14 @@ static void        gimp_menu_callback      (GtkWidget          *widget,
 
 /**
  * gimp_image_menu_new:
- * @constraint:
- * @callback:
- * @data:
- * @active_image:
+ * @constraint:   a function to filter the menu contents
+ * @callback:     the callback to call when an image is selected
+ * @data:         the callback's user_data
+ * @active_image: an image to preselect
  *
- * Use gimp_image_combo_box_new() instead.
+ * Deprecated: Use gimp_image_combo_box_new() instead.
  *
- * Return value:
+ * Returns: the image menu.
  */
 GtkWidget *
 gimp_image_menu_new (GimpConstraintFunc constraint,
@@ -122,14 +132,14 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 
 /**
  * gimp_layer_menu_new:
- * @constraint:
- * @callback:
- * @data:
- * @active_layer:
+ * @constraint:   a function to filter the menu contents
+ * @callback:     the callback to call when a channel is selected
+ * @data:         the callback's user_data
+ * @active_layer: a layer to preselect
  *
- * Use gimp_layer_combo_box_new() instead.
+ * Deprecated: Use gimp_layer_combo_box_new() instead.
  *
- * Return value:
+ * Returns: the layer menu.
  */
 GtkWidget *
 gimp_layer_menu_new (GimpConstraintFunc constraint,
@@ -199,14 +209,14 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 
 /**
  * gimp_channel_menu_new:
- * @constraint:
- * @callback:
- * @data:
- * @active_channel:
+ * @constraint:     a function to filter the menu contents
+ * @callback:       the callback to call when a channel is selected
+ * @data:           the callback's user_data
+ * @active_channel: a channel to preselect
  *
- * Use gimp_channel_combo_box_new() instead.
+ * Deprecated: Use gimp_channel_combo_box_new() instead.
  *
- * Return value:
+ * Returns: the channel menu.
  */
 GtkWidget *
 gimp_channel_menu_new (GimpConstraintFunc constraint,
@@ -278,14 +288,14 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 
 /**
  * gimp_drawable_menu_new:
- * @constraint:
- * @callback:
- * @data:
- * @active_drawable:
+ * @constraint:      a function to filter the menu contents
+ * @callback:        the callback to call when a channel is selected
+ * @data:            the callback's user_data
+ * @active_drawable: a drawable to preselect
  *
- * Use gimp_drawable_combo_box_new() instead.
+ * Deprecated: Use gimp_drawable_combo_box_new() instead.
  *
- * Return value:
+ * Returns: the drawable menu.
  */
 GtkWidget *
 gimp_drawable_menu_new (GimpConstraintFunc constraint,

@@ -59,7 +59,9 @@
       <xi:include href="xml/gimptextlayer.xml" />
       <xi:include href="xml/gimptexttool.xml" />
       <xi:include href="xml/gimptile.xml" />
-      <xi:include href="xml/gimptools.xml" />
+      <xi:include href="xml/gimppainttools.xml" />
+      <xi:include href="xml/gimpselectiontools.xml" />
+      <xi:include href="xml/gimptransformtools.xml" />
       <xi:include href="xml/gimpundo.xml" />
       <xi:include href="xml/gimpvectors.xml" />
     </chapter>
