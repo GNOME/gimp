@@ -41,7 +41,7 @@ HELP
         headers => [ qw("core/gimpdrawable-brightness-contrast.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -94,7 +94,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-levels.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) ||
       (! gimp_drawable_has_alpha (drawable) &&
@@ -137,7 +137,7 @@ HELP
         headers => [ qw("core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -161,7 +161,7 @@ sub levels_auto {
         headers => [ qw("core/gimpdrawable-levels.h") ],
         code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -195,7 +195,7 @@ HELP
         headers => [ qw("core/gimpdrawable-posterize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -226,7 +226,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-desaturate.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
@@ -264,7 +264,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-desaturate.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
@@ -302,7 +302,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-equalize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -334,7 +334,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-invert.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -377,7 +377,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-curves.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
       (! gimp_drawable_has_alpha (drawable) &&
@@ -424,7 +424,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-curves.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
       (! gimp_drawable_has_alpha (drawable) &&
@@ -476,7 +476,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-color-balance.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -517,7 +517,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-colorize.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       ! gimp_drawable_is_rgb (drawable))
     success = FALSE;
@@ -582,7 +582,7 @@ HELP
                         "core/gimpdrawable-histogram.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), FALSE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error) ||
       gimp_drawable_is_indexed (drawable) ||
       (! gimp_drawable_has_alpha (drawable) &&
        channel == GIMP_HISTOGRAM_ALPHA) ||
@@ -645,7 +645,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-hue-saturation.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable))
     success = FALSE;
@@ -683,7 +683,7 @@ HELP
 	headers => [ qw("core/gimpdrawable-threshold.h") ],
 	code => <<'CODE'
 {
-  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) ||
+  if (! gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) ||
       ! gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) ||
       gimp_drawable_is_indexed (drawable) ||
       (low_threshold > high_threshold))

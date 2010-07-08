@@ -946,7 +946,7 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
         gimp_image_remove_layer (image, layer, TRUE, NULL);
       else
         success = FALSE;
@@ -1140,7 +1140,7 @@ image_remove_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
         gimp_image_remove_channel (image, channel, TRUE, NULL);
       else
         success = FALSE;
@@ -1286,7 +1286,7 @@ image_remove_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
         gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
@@ -1515,7 +1515,7 @@ image_merge_down_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, FALSE, error))
         {
           layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
                                          error);
@@ -1585,7 +1585,7 @@ image_remove_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), mode == GIMP_MASK_APPLY, error) &&
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, mode == GIMP_MASK_APPLY, error) &&
           gimp_layer_get_mask (layer))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else

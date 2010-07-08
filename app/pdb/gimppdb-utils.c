@@ -304,10 +304,12 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
 gboolean
 gimp_pdb_item_is_attached (GimpItem  *item,
+                           GimpImage *image,
                            gboolean   writable,
                            GError   **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (! gimp_item_is_attached (item))
@@ -315,6 +317,16 @@ gimp_pdb_item_is_attached (GimpItem  *item,
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Item '%s' (%d) can not be used because it has not "
                      "been added to an image"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  if (image && image != gimp_item_get_image (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) can not be used because it is "
+                     "attached to another image"),
                    gimp_object_get_name (item),
                    gimp_item_get_ID (item));
       return FALSE;
@@ -414,7 +426,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), writable, error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, writable, error);
 }
 
 static const gchar *
