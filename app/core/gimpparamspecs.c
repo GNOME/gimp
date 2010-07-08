@@ -873,39 +873,34 @@ gimp_param_spec_item_id (const gchar *name,
                          const gchar *nick,
                          const gchar *blurb,
                          Gimp        *gimp,
-                         GType        item_type,
                          gboolean     none_ok,
                          GParamFlags  flags)
 {
   GimpParamSpecItemID *ispec;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
 
   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_ITEM_ID,
                                  name, nick, blurb, flags);
 
-  ispec->gimp      = gimp;
-  ispec->item_type = item_type;
-  ispec->none_ok   = none_ok;
+  ispec->gimp    = gimp;
+  ispec->none_ok = none_ok;
 
   return G_PARAM_SPEC (ispec);
 }
 
 GimpItem *
 gimp_value_get_item (const GValue *value,
-                     Gimp         *gimp,
-                     GType         item_type)
+                     Gimp         *gimp)
 {
   GimpItem *item;
 
   g_return_val_if_fail (GIMP_VALUE_HOLDS_ITEM_ID (value), NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (g_type_is_a (item_type, GIMP_TYPE_ITEM), NULL);
 
   item = gimp_item_get_by_ID (gimp, value->data[0].v_int);
 
-  if (item && ! g_type_is_a (G_TYPE_FROM_INSTANCE (item), item_type))
+  if (item && ! GIMP_IS_ITEM (item))
     return NULL;
 
   return item;
