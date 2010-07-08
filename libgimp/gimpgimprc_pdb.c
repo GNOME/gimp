@@ -294,3 +294,37 @@ gimp_get_module_load_inhibit (void)
 
   return load_inhibit;
 }
+
+/**
+ * gimp_get_number_of_processors:
+ *
+ * Get the number of processors which GIMP was configured to use.
+ *
+ * Returns the number of processors which GIMP was configured to use.
+ * This value is taken from the Preferences and there's no guarantee
+ * for the value to be reasonable. This function is mainly intended for
+ * plugin writers who want to write multithreaded plugins and need to
+ * know how many threads to create.
+ *
+ * Returns: The number of processors.
+ *
+ * Since: GIMP 2.8
+ */
+gint
+gimp_get_number_of_processors (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint num_proc = 0;
+
+  return_vals = gimp_run_procedure ("gimp-get-number-of-processors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    num_proc = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return num_proc;
+}

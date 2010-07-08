@@ -233,8 +233,45 @@ CODE
     );
 }
 
+sub get_number_of_processors {
+    $blurb = 'Get the number of processors which GIMP was configured to use.';
+    $help = <<'HELP';
+Returns the number of processors which GIMP was configured to use. This value
+is taken from the Preferences and there's no guarantee for the value to be
+reasonable. This function is mainly intended for plugin writers who want to
+write multithreaded plugins and need to know how many threads to create.
+HELP
+
+    	$author = 'Barak Itkin <lightningismyname@gmail.com>';
+	$copyright = 'Barak Itkin';
+	$date = '2010';
+	$since = '2.8';
+
+    @outargs = (
+	{  name => 'num_proc', type => '1 <= int32 <= GIMP_MAX_NUM_THREADS',
+	   desc => 'The number of processors' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gchar  *str;
+
+  str = gimp_rc_query (GIMP_RC (gimp->config), "num-processors");
+  num_proc = (gint32) g_ascii_strtoll (str, NULL, 0);
+
+  /* Although this is probably not necessary, still be safe */
+  num_proc = CLAMP (num_proc, 1, GIMP_MAX_NUM_THREADS);
+
+  g_free (str);
+}
+CODE
+    );
+}
+
 
 @headers = qw(<string.h>
+              "base/pixel-processor.h"
               "config/gimprc.h"
               "core/gimp.h");
 
@@ -245,7 +282,8 @@ CODE
             get_monitor_resolution
 	    get_theme_dir
             get_color_configuration
-            get_module_load_inhibit);
+            get_module_load_inhibit
+            get_number_of_processors);
 
 %exports = (app => [@procs], lib => [@procs]);
 

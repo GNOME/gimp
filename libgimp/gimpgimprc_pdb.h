@@ -38,6 +38,7 @@ gboolean               gimp_get_monitor_resolution   (gdouble     *xres,
 gchar*                 gimp_get_theme_dir            (void);
 G_GNUC_INTERNAL gchar* _gimp_get_color_configuration (void);
 gchar*                 gimp_get_module_load_inhibit  (void);
+gint                   gimp_get_number_of_processors (void);
 
 
 G_END_DECLS
