@@ -115,7 +115,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->get_container    = gimp_image_get_channels;
   iv_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_channel;
   iv_class->set_active_item  = (GimpSetItemFunc) gimp_image_set_active_channel;
-  iv_class->reorder_item     = (GimpReorderItemFunc) gimp_image_reorder_channel;
   iv_class->add_item         = (GimpAddItemFunc) gimp_image_add_channel;
   iv_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_channel;
   iv_class->new_item         = gimp_channel_tree_view_item_new;
@@ -131,7 +130,6 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   iv_class->lower_bottom_action = "channels-lower-to-bottom";
   iv_class->duplicate_action    = "channels-duplicate";
   iv_class->delete_action       = "channels-delete";
-  iv_class->reorder_desc        = _("Reorder Channel");
 
   g_type_class_add_private (klass, sizeof (GimpChannelTreeViewPriv));
 }

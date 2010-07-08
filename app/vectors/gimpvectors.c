@@ -200,6 +200,13 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->rotate_desc          = _("Rotate Path");
   item_class->transform_desc       = _("Transform Path");
   item_class->stroke_desc          = _("Stroke Path");
+  item_class->reorder_desc         = C_("undo-type", "Reorder Path");
+  item_class->raise_desc           = C_("undo-type", "Raise Path");
+  item_class->raise_to_top_desc    = C_("undo-type", "Raise Path to Top");
+  item_class->lower_desc           = C_("undo-type", "Lower Path");
+  item_class->lower_to_bottom_desc = C_("undo-type", "Lower Path to Bottom");
+  item_class->raise_failed         = _("Path cannot be raised higher.");
+  item_class->lower_failed         = _("Path cannot be lowered more.");
 
   klass->freeze                    = NULL;
   klass->thaw                      = gimp_vectors_real_thaw;

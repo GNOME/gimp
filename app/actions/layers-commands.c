@@ -416,7 +416,7 @@ layers_raise_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_raise_layer (image, layer, NULL);
+  gimp_image_raise_item (image, GIMP_ITEM (layer), NULL);
   gimp_image_flush (image);
 }
 
@@ -428,7 +428,7 @@ layers_raise_to_top_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_raise_layer_to_top (image, layer);
+  gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
   gimp_image_flush (image);
 }
 
@@ -440,7 +440,7 @@ layers_lower_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_lower_layer (image, layer, NULL);
+  gimp_image_lower_item (image, GIMP_ITEM (layer), NULL);
   gimp_image_flush (image);
 }
 
@@ -452,7 +452,7 @@ layers_lower_to_bottom_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_lower_layer_to_bottom (image, layer);
+  gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
   gimp_image_flush (image);
 }
 

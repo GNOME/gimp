@@ -200,7 +200,7 @@ vectors_raise_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_raise_vectors (image, vectors, NULL);
+  gimp_image_raise_item (image, GIMP_ITEM (vectors), NULL);
   gimp_image_flush (image);
 }
 
@@ -212,7 +212,7 @@ vectors_raise_to_top_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_raise_vectors_to_top (image, vectors);
+  gimp_image_raise_item_to_top (image, GIMP_ITEM (vectors));
   gimp_image_flush (image);
 }
 
@@ -224,7 +224,7 @@ vectors_lower_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_lower_vectors (image, vectors, NULL);
+  gimp_image_lower_item (image, GIMP_ITEM (vectors), NULL);
   gimp_image_flush (image);
 }
 
@@ -236,7 +236,7 @@ vectors_lower_to_bottom_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  gimp_image_lower_vectors_to_bottom (image, vectors);
+  gimp_image_lower_item_to_bottom (image, GIMP_ITEM (vectors));
   gimp_image_flush (image);
 }
 

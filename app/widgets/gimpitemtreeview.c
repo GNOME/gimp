@@ -250,7 +250,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->get_container           = NULL;
   klass->get_active_item         = NULL;
   klass->set_active_item         = NULL;
-  klass->reorder_item            = NULL;
   klass->add_item                = NULL;
   klass->remove_item             = NULL;
   klass->new_item                = NULL;
@@ -265,8 +264,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lower_bottom_action     = NULL;
   klass->duplicate_action        = NULL;
   klass->delete_action           = NULL;
-
-  klass->reorder_desc            = NULL;
 
   klass->lock_content_stock_id   = NULL;
   klass->lock_content_tooltip    = NULL;
@@ -1106,12 +1103,11 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
             dest_index--;
         }
 
-      item_view_class->reorder_item (item_view->priv->image,
-                                     GIMP_ITEM (src_viewable),
-                                     dest_parent,
-                                     dest_index,
-                                     TRUE,
-                                     item_view_class->reorder_desc);
+      gimp_image_reorder_item (item_view->priv->image,
+                               GIMP_ITEM (src_viewable),
+                               dest_parent,
+                               dest_index,
+                               TRUE, NULL);
     }
 
   gimp_image_flush (item_view->priv->image);

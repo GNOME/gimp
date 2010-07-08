@@ -133,6 +133,15 @@ struct _GimpItemClass
   const gchar *rotate_desc;
   const gchar *transform_desc;
   const gchar *stroke_desc;
+
+  const gchar *reorder_desc;
+  const gchar *raise_desc;
+  const gchar *raise_to_top_desc;
+  const gchar *lower_desc;
+  const gchar *lower_to_bottom_desc;
+
+  const gchar *raise_failed;
+  const gchar *lower_failed;
 };
 
 

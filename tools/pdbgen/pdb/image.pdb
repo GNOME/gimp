@@ -780,7 +780,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_layer (image, layer, error);
+  success = gimp_image_raise_item (image, GIMP_ITEM (layer), error);
 }
 CODE
     );
@@ -806,7 +806,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_layer (image, layer, error);
+  success = gimp_image_lower_item (image, GIMP_ITEM (layer), error);
 }
 CODE
     );
@@ -835,7 +835,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_layer_to_top (image, layer);
+  success = gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
 }
 CODE
     );
@@ -864,7 +864,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_layer_to_bottom (image, layer);
+  success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
 }
 CODE
     );
@@ -1174,7 +1174,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_channel (image, channel, error);
+  success = gimp_image_raise_item (image, GIMP_ITEM (channel), error);
 }
 CODE
     );
@@ -1201,7 +1201,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_channel (image, channel, error);
+  success = gimp_image_lower_item (image, GIMP_ITEM (channel), error);
 }
 CODE
     );
@@ -1398,7 +1398,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_vectors (image, vectors, error);
+  success = gimp_image_raise_item (image, GIMP_ITEM (vectors), error);
 }
 CODE
     );
@@ -1425,7 +1425,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_vectors (image, vectors, error);
+  success = gimp_image_lower_item (image, GIMP_ITEM (vectors), error);
 }
 CODE
     );
@@ -1454,7 +1454,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_raise_vectors_to_top (image, vectors);
+  success = gimp_image_raise_item_to_top (image, GIMP_ITEM (vectors));
 }
 CODE
     );
@@ -1483,7 +1483,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = gimp_image_lower_vectors_to_bottom (image, vectors);
+  success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (vectors));
 }
 CODE
     );

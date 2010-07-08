@@ -1009,7 +1009,7 @@ image_raise_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_layer (image, layer, error);
+      success = gimp_image_raise_item (image, GIMP_ITEM (layer), error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1033,7 +1033,7 @@ image_lower_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_layer (image, layer, error);
+      success = gimp_image_lower_item (image, GIMP_ITEM (layer), error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1057,7 +1057,7 @@ image_raise_layer_to_top_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_layer_to_top (image, layer);
+      success = gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1081,7 +1081,7 @@ image_lower_layer_to_bottom_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_layer_to_bottom (image, layer);
+      success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1203,7 +1203,7 @@ image_raise_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_channel (image, channel, error);
+      success = gimp_image_raise_item (image, GIMP_ITEM (channel), error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1227,7 +1227,7 @@ image_lower_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_channel (image, channel, error);
+      success = gimp_image_lower_item (image, GIMP_ITEM (channel), error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1349,7 +1349,7 @@ image_raise_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_vectors (image, vectors, error);
+      success = gimp_image_raise_item (image, GIMP_ITEM (vectors), error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1373,7 +1373,7 @@ image_lower_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_vectors (image, vectors, error);
+      success = gimp_image_lower_item (image, GIMP_ITEM (vectors), error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1397,7 +1397,7 @@ image_raise_vectors_to_top_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_vectors_to_top (image, vectors);
+      success = gimp_image_raise_item_to_top (image, GIMP_ITEM (vectors));
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1421,7 +1421,7 @@ image_lower_vectors_to_bottom_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_vectors_to_bottom (image, vectors);
+      success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (vectors));
     }
 
   return gimp_procedure_get_return_values (procedure, success,

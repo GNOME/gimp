@@ -262,6 +262,13 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->flip_desc               = C_("undo-type", "Flip Layer");
   item_class->rotate_desc             = C_("undo-type", "Rotate Layer");
   item_class->transform_desc          = C_("undo-type", "Transform Layer");
+  item_class->reorder_desc            = C_("undo-type", "Reorder Layer");
+  item_class->raise_desc              = C_("undo-type", "Raise Layer");
+  item_class->raise_to_top_desc       = C_("undo-type", "Raise Layer to Top");
+  item_class->lower_desc              = C_("undo-type", "Lower Layer");
+  item_class->lower_to_bottom_desc    = C_("undo-type", "Lower Layer to Bottom");
+  item_class->raise_failed            = _("Layer cannot be raised higher.");
+  item_class->lower_failed            = _("Layer cannot be lowered more.");
 
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;

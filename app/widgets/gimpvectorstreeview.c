@@ -97,7 +97,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->get_container   = gimp_image_get_vectors;
   iv_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
   iv_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
-  iv_class->reorder_item    = (GimpReorderItemFunc) gimp_image_reorder_vectors;
   iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
   iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
   iv_class->new_item        = gimp_vectors_tree_view_item_new;
@@ -113,7 +112,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->lower_bottom_action   = "vectors-lower-to-bottom";
   iv_class->duplicate_action      = "vectors-duplicate";
   iv_class->delete_action         = "vectors-delete";
-  iv_class->reorder_desc          = _("Reorder path");
   iv_class->lock_content_stock_id = GIMP_STOCK_TOOL_PATH;
   iv_class->lock_content_tooltip  = _("Lock path strokes");
 }

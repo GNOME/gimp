@@ -269,6 +269,13 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->rotate_desc          = C_("undo-type", "Rotate Channel");
   item_class->transform_desc       = C_("undo-type", "Transform Channel");
   item_class->stroke_desc          = C_("undo-type", "Stroke Channel");
+  item_class->reorder_desc         = C_("undo-type", "Reorder Channel");
+  item_class->raise_desc           = C_("undo-type", "Raise Channel");
+  item_class->raise_to_top_desc    = C_("undo-type", "Raise Channel to Top");
+  item_class->lower_desc           = C_("undo-type", "Lower Channel");
+  item_class->lower_to_bottom_desc = C_("undo-type", "Lower Channel to Bottom");
+  item_class->raise_failed         = _("Channel cannot be raised higher.");
+  item_class->lower_failed         = _("Channel cannot be lowered more.");
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
