@@ -42,6 +42,15 @@ gboolean      gimp_image_parasite_detach    (gint32                image_ID,
 gboolean      gimp_image_parasite_list      (gint32                image_ID,
                                              gint                 *num_parasites,
                                              gchar              ***parasites);
+GimpParasite* gimp_item_parasite_find       (gint32                item_ID,
+                                             const gchar          *name);
+gboolean      gimp_item_parasite_attach     (gint32                item_ID,
+                                             const GimpParasite   *parasite);
+gboolean      gimp_item_parasite_detach     (gint32                item_ID,
+                                             const gchar          *name);
+gboolean      gimp_item_parasite_list       (gint32                item_ID,
+                                             gint                 *num_parasites,
+                                             gchar              ***parasites);
 GimpParasite* gimp_drawable_parasite_find   (gint32                drawable_ID,
                                              const gchar          *name);
 gboolean      gimp_drawable_parasite_attach (gint32                drawable_ID,
