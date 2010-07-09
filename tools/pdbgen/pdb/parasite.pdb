@@ -333,12 +333,7 @@ CODE
 }
 
 sub drawable_parasite_find {
-    $blurb = 'Look up a parasite in a drawable';
-
-    $help = <<'HELP';
-Finds and returns the parasite that was previously attached to a drawable.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-parasite-find');
     &jay_pdb_misc('1998');
 
     @inargs = (
@@ -367,12 +362,7 @@ CODE
 }
 
 sub drawable_parasite_attach {
-    $blurb = 'Add a parasite to a drawable.';
-
-    $help = <<'HELP';
-This procedure attaches a parasite to a drawable. It has no return values.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-parasite-attach');
     &jay_pdb_misc('1998');
 
     @inargs = (
@@ -392,12 +382,7 @@ CODE
 }
 
 sub drawable_parasite_detach {
-    $blurb = 'Removes a parasite from a drawable.';
-
-    $help = <<'HELP';
-This procedure detaches a parasite from a drawable. It has no return values.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-parasite-detach');
     &jay_pdb_misc('1998');
 
     @inargs = (
@@ -417,9 +402,7 @@ CODE
 }
 
 sub drawable_parasite_list {
-    $blurb = 'List all parasites.';
-    $help  = 'Returns a list of all currently attached parasites.';
-
+    &std_pdb_deprecated ('gimp-item-parasite-list');
     &marc_pdb_misc('1999');
 
     @inargs = (
@@ -443,13 +426,7 @@ CODE
 }
 
 sub vectors_parasite_find {
-    $blurb = 'Look up a parasite in a vectors object';
-
-    $help = <<'HELP';
-Finds and returns the parasite that was previously attached
-to a vectors object.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-parasite-find');
     &mitch_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -478,12 +455,7 @@ CODE
 }
 
 sub vectors_parasite_attach {
-    $blurb = 'Add a parasite to a vectors object';
-
-    $help = <<'HELP';
-This procedure attaches a parasite to a vectors object. It has no return values.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-parasite-attach');
     &mitch_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -503,13 +475,7 @@ CODE
 }
 
 sub vectors_parasite_detach {
-    $blurb = 'Removes a parasite from a vectors object';
-
-    $help = <<'HELP';
-This procedure detaches a parasite from a vectors object.
-It has no return values.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-parasite-detach');
     &mitch_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -529,9 +495,7 @@ CODE
 }
 
 sub vectors_parasite_list {
-    $blurb = 'List all parasites.';
-    $help  = 'Returns a list of all currently attached parasites.';
-
+    &std_pdb_deprecated ('gimp-item-parasite-list');
     &mitch_pdb_misc('2006', '2.4');
 
     @inargs = (

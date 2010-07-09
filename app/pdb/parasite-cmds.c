@@ -967,12 +967,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-drawable-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-find",
-                                     "Look up a parasite in a drawable",
-                                     "Finds and returns the parasite that was previously attached to a drawable.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-find' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-find' instead.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-parasite-find");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1002,12 +1002,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-drawable-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-attach",
-                                     "Add a parasite to a drawable.",
-                                     "This procedure attaches a parasite to a drawable. It has no return values.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-attach' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-attach' instead.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-parasite-attach");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1030,12 +1030,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-drawable-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-detach",
-                                     "Removes a parasite from a drawable.",
-                                     "This procedure detaches a parasite from a drawable. It has no return values.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-detach' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-detach' instead.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-parasite-detach");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1060,12 +1060,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-drawable-parasite-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-parasite-list",
-                                     "List all parasites.",
-                                     "Returns a list of all currently attached parasites.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-list' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-list' instead.",
                                      "Marc Lehmann",
                                      "Marc Lehmann",
                                      "1999",
-                                     NULL);
+                                     "gimp-item-parasite-list");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1094,12 +1094,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-vectors-parasite-find");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-find",
-                                     "Look up a parasite in a vectors object",
-                                     "Finds and returns the parasite that was previously attached to a vectors object.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-find' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-find' instead.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2006",
-                                     NULL);
+                                     "gimp-item-parasite-find");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1129,12 +1129,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-vectors-parasite-attach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-attach",
-                                     "Add a parasite to a vectors object",
-                                     "This procedure attaches a parasite to a vectors object. It has no return values.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-attach' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-attach' instead.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2006",
-                                     NULL);
+                                     "gimp-item-parasite-attach");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1157,12 +1157,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-vectors-parasite-detach");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-detach",
-                                     "Removes a parasite from a vectors object",
-                                     "This procedure detaches a parasite from a vectors object. It has no return values.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-detach' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-detach' instead.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2006",
-                                     NULL);
+                                     "gimp-item-parasite-detach");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1187,12 +1187,12 @@ register_parasite_procs (GimpPDB *pdb)
                                "gimp-vectors-parasite-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-parasite-list",
-                                     "List all parasites.",
-                                     "Returns a list of all currently attached parasites.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-list' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-parasite-list' instead.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2006",
-                                     NULL);
+                                     "gimp-item-parasite-list");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
