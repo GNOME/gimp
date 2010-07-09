@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimp.h"
 
 
@@ -330,6 +331,8 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
  *
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
+ *
+ * Deprecated: use gimp_image_parasite_attach() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.

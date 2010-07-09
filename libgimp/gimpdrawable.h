@@ -68,11 +68,13 @@ guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
                                                      gint          *dest_height,
                                                      gint          *bpp);
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean       gimp_drawable_attach_new_parasite    (gint32         drawable_ID,
                                                      const gchar   *name,
                                                      gint           flags,
                                                      gint           size,
                                                      gconstpointer  data);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 G_END_DECLS
 

@@ -330,10 +330,12 @@ guint32        gimp_user_time           (void) G_GNUC_CONST;
 
 const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean       gimp_attach_new_parasite (const gchar    *name,
                                          gint            flags,
                                          gint            size,
                                          gconstpointer   data);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

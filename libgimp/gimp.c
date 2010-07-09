@@ -99,6 +99,7 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimp.h"
 #include "gimpunitcache.h"
 
@@ -1485,6 +1486,8 @@ gimp_extension_process (guint timeout)
  *
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
+ *
+ * Deprecated: Use gimp_parasite_attach() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.
