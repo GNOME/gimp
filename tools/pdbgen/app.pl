@@ -223,6 +223,16 @@ gimp_param_spec_image_id ("$name",
                           $flags)
 CODE
     }
+    elsif ($pdbtype eq 'item') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$pspec = <<CODE;
+gimp_param_spec_item_id ("$name",
+                         "$nick",
+                         "$blurb",
+                         pdb->gimp, $none_ok,
+                         $flags)
+CODE
+    }
     elsif ($pdbtype eq 'drawable') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;

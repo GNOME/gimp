@@ -192,8 +192,8 @@ plug_in_params_to_args (GParamSpec **pspecs,
           gimp_value_set_rgb (&value, &params[i].data.d_color);
           break;
 
-        case GIMP_PDB_REGION:
-          g_message ("the \"region\" argument type is not supported");
+        case GIMP_PDB_ITEM:
+          g_value_set_int (&value, params[i].data.d_item);
           break;
 
         case GIMP_PDB_DISPLAY:
@@ -353,8 +353,8 @@ plug_in_args_to_params (GValueArray *args,
           gimp_value_get_rgb (value, &params[i].data.d_color);
           break;
 
-        case GIMP_PDB_REGION:
-          g_message ("the \"region\" argument type is not supported");
+        case GIMP_PDB_ITEM:
+          params[i].data.d_item = g_value_get_int (value);
           break;
 
         case GIMP_PDB_DISPLAY:

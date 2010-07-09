@@ -750,6 +750,7 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_INT32:
         case GIMP_PDB_DISPLAY:
         case GIMP_PDB_IMAGE:
+        case GIMP_PDB_ITEM:
         case GIMP_PDB_LAYER:
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
@@ -791,8 +792,6 @@ gimp_run_procedure (const gchar *name,
           break;
         case GIMP_PDB_PARASITE:
           (void) va_arg (args, GimpParasite *);
-          break;
-        case GIMP_PDB_REGION:
           break;
         case GIMP_PDB_END:
           break;
@@ -848,7 +847,8 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_COLOR:
           params[i].data.d_color = *va_arg (args, GimpRGB *);
           break;
-        case GIMP_PDB_REGION:
+        case GIMP_PDB_ITEM:
+          params[i].data.d_item = va_arg (args, gint32);
           break;
         case GIMP_PDB_DISPLAY:
           params[i].data.d_display = va_arg (args, gint32);

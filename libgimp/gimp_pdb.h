@@ -47,6 +47,7 @@
 #include <libgimp/gimpguides_pdb.h>
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
+#include <libgimp/gimpitem_pdb.h>
 #include <libgimp/gimplayer_pdb.h>
 #include <libgimp/gimpmessage_pdb.h>
 #include <libgimp/gimpmisc_pdb.h>

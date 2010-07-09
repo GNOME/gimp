@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x0013
+#define GIMP_PROTOCOL_VERSION  0x0014
 
 
 enum
@@ -127,9 +127,10 @@ struct _GPParam
       gint32 y;
       gint32 width;
       gint32 height;
-    } d_region;
+    } d_region; /* deprecated */
     gint32        d_display;
     gint32        d_image;
+    gint32        d_item;
     gint32        d_layer;
     gint32        d_channel;
     gint32        d_drawable;

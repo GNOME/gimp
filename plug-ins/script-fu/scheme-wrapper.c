@@ -745,6 +745,7 @@ script_fu_marshal_procedure_call (scheme  *sc,
         case GIMP_PDB_INT32:
         case GIMP_PDB_DISPLAY:
         case GIMP_PDB_IMAGE:
+        case GIMP_PDB_ITEM:
         case GIMP_PDB_LAYER:
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
@@ -1173,36 +1174,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
             }
           break;
 
-        case GIMP_PDB_REGION:
-          if (! (sc->vptr->is_list (sc, sc->vptr->pair_car (a)) &&
-            sc->vptr->list_length (sc, sc->vptr->pair_car (a)) == 4))
-            success = FALSE;
-          if (success)
-            {
-              pointer region;
-
-              region = sc->vptr->pair_car (a);
-              args[i].data.d_region.x =
-                           sc->vptr->ivalue (sc->vptr->pair_car (region));
-              region = sc->vptr->pair_cdr (region);
-              args[i].data.d_region.y =
-                           sc->vptr->ivalue (sc->vptr->pair_car (region));
-              region = sc->vptr->pair_cdr (region);
-              args[i].data.d_region.width =
-                           sc->vptr->ivalue (sc->vptr->pair_car (region));
-              region = sc->vptr->pair_cdr (region);
-              args[i].data.d_region.height =
-                           sc->vptr->ivalue (sc->vptr->pair_car (region));
-#if DEBUG_MARSHALL
-              g_printerr ("      (%d %d %d %d)\n",
-                          args[i].data.d_region.x,
-                          args[i].data.d_region.y,
-                          args[i].data.d_region.width,
-                          args[i].data.d_region.height);
-#endif
-            }
-          break;
-
         case GIMP_PDB_PARASITE:
           if (!sc->vptr->is_list (sc, sc->vptr->pair_car (a)) ||
               sc->vptr->list_length (sc, sc->vptr->pair_car (a)) != 3)
@@ -1385,6 +1356,7 @@ script_fu_marshal_procedure_call (scheme  *sc,
             case GIMP_PDB_INT32:
             case GIMP_PDB_DISPLAY:
             case GIMP_PDB_IMAGE:
+            case GIMP_PDB_ITEM:
             case GIMP_PDB_LAYER:
             case GIMP_PDB_CHANNEL:
             case GIMP_PDB_DRAWABLE:
@@ -1560,32 +1532,6 @@ script_fu_marshal_procedure_call (scheme  *sc,
               }
               break;
 
-            case GIMP_PDB_REGION:
-              {
-                gint32  x, y, w, h;
-                pointer temp_val;
-
-                x = values[i + 1].data.d_region.x;
-                y = values[i + 1].data.d_region.y;
-                w = values[i + 1].data.d_region.width;
-                h = values[i + 1].data.d_region.height;
-
-                temp_val = sc->vptr->cons (sc,
-                             sc->vptr->mk_integer (sc, x),
-                             sc->vptr->cons (sc,
-                               sc->vptr->mk_integer (sc, y),
-                               sc->vptr->cons (sc,
-                                 sc->vptr->mk_integer (sc, w),
-                                 sc->vptr->cons (sc,
-                                   sc->vptr->mk_integer (sc, h),
-                                   sc->NIL))));
-                return_val = sc->vptr->cons (sc,
-                                             temp_val,
-                                             return_val);
-                break;
-              }
-              break;
-
             case GIMP_PDB_PARASITE:
               {
                 if (values[i + 1].data.d_parasite.name == NULL)
@@ -1722,9 +1668,9 @@ script_fu_marshal_destroy_args (GimpParam *params,
           break;
 
         case GIMP_PDB_COLOR:
-        case GIMP_PDB_REGION:
         case GIMP_PDB_DISPLAY:
         case GIMP_PDB_IMAGE:
+        case GIMP_PDB_ITEM:
         case GIMP_PDB_LAYER:
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:

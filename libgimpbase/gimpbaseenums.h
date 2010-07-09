@@ -374,7 +374,7 @@ typedef enum
   GIMP_PDB_FLOATARRAY,
   GIMP_PDB_STRINGARRAY,
   GIMP_PDB_COLOR,
-  GIMP_PDB_REGION,
+  GIMP_PDB_ITEM,
   GIMP_PDB_DISPLAY,
   GIMP_PDB_IMAGE,
   GIMP_PDB_LAYER,
@@ -389,7 +389,8 @@ typedef enum
 
   /*  the following aliases are deprecated  */
   GIMP_PDB_PATH     = GIMP_PDB_VECTORS,     /*< skip >*/
-  GIMP_PDB_BOUNDARY = GIMP_PDB_COLORARRAY   /*< skip >*/
+  GIMP_PDB_BOUNDARY = GIMP_PDB_COLORARRAY,  /*< skip >*/
+  GIMP_PDB_REGION   = GIMP_PDB_ITEM         /*< skip >*/
 } GimpPDBArgType;
 
 

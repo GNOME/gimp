@@ -24,6 +24,7 @@
     guides
     help
     image
+    item
     layer
     message
     misc

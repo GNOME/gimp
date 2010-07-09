@@ -26,6 +26,7 @@ pdb_sources = \
 	pdb/guides.pdb			\
 	pdb/help.pdb			\
 	pdb/image.pdb			\
+	pdb/item.pdb			\
 	pdb/layer.pdb			\
 	pdb/message.pdb			\
 	pdb/misc.pdb			\
