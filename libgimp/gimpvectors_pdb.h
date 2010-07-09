@@ -44,9 +44,6 @@ gboolean              gimp_vectors_set_visible               (gint32            
 gboolean              gimp_vectors_get_linked                (gint32                  vectors_ID);
 gboolean              gimp_vectors_set_linked                (gint32                  vectors_ID,
                                                               gboolean                linked);
-gboolean              gimp_vectors_get_lock_content          (gint32                  vectors_ID);
-gboolean              gimp_vectors_set_lock_content          (gint32                  vectors_ID,
-                                                              gboolean                lock_content);
 gint                  gimp_vectors_get_tattoo                (gint32                  vectors_ID);
 gboolean              gimp_vectors_set_tattoo                (gint32                  vectors_ID,
                                                               gint                    tattoo);

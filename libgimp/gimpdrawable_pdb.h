@@ -60,9 +60,6 @@ gboolean                 gimp_drawable_set_visible        (gint32               
 gboolean                 gimp_drawable_get_linked         (gint32                      drawable_ID);
 gboolean                 gimp_drawable_set_linked         (gint32                      drawable_ID,
                                                            gboolean                    linked);
-gboolean                 gimp_drawable_get_lock_content   (gint32                      drawable_ID);
-gboolean                 gimp_drawable_set_lock_content   (gint32                      drawable_ID,
-                                                           gboolean                    lock_content);
 gint                     gimp_drawable_get_tattoo         (gint32                      drawable_ID);
 gboolean                 gimp_drawable_set_tattoo         (gint32                      drawable_ID,
                                                            gint                        tattoo);

@@ -368,62 +368,6 @@ vectors_set_linked_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-vectors_get_lock_content_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpVectors *vectors;
-  gboolean lock_content = FALSE;
-
-  vectors = gimp_value_get_vectors (&args->values[0], gimp);
-
-  if (success)
-    {
-      lock_content = gimp_item_get_lock_content (GIMP_ITEM (vectors));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], lock_content);
-
-  return return_vals;
-}
-
-static GValueArray *
-vectors_set_lock_content_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gboolean lock_content;
-
-  vectors = gimp_value_get_vectors (&args->values[0], gimp);
-  lock_content = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp_item_can_lock_content (GIMP_ITEM (vectors)))
-        gimp_item_set_lock_content (GIMP_ITEM (vectors), lock_content, TRUE);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
 vectors_get_tattoo_invoker (GimpProcedure      *procedure,
                             Gimp               *gimp,
                             GimpContext        *context,
@@ -1937,64 +1881,6 @@ register_vectors_procs (GimpPDB *pdb)
                                g_param_spec_boolean ("linked",
                                                      "linked",
                                                      "Whether the path is linked",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-vectors-get-lock-content
-   */
-  procedure = gimp_procedure_new (vectors_get_lock_content_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-get-lock-content");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-lock-content",
-                                     "Gets the 'lock content' state of the vectors object.",
-                                     "Gets the 'lock content' state of the vectors object.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2009",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("lock-content",
-                                                         "lock content",
-                                                         "Whether the path's strokes are locked",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-vectors-set-lock-content
-   */
-  procedure = gimp_procedure_new (vectors_set_lock_content_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-set-lock-content");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-set-lock-content",
-                                     "Sets the 'lock content' state of the vectors object.",
-                                     "Sets the 'lock content' state of the vectors object.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2009",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("lock-content",
-                                                     "lock content",
-                                                     "Whether the path's strokes are locked",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -865,58 +865,6 @@ CODE
     );
 }
 
-sub drawable_get_lock_content {
-    $blurb = "Get the 'lock content' state of the specified drawable.";
-
-    $help = "This procedure returns the specified drawable's lock content state.";
-
-    &mitch_pdb_misc('2009', '2.8');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'lock_content', type => 'boolean',
-	  desc => "Whether the drawable's pixels are locked" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  lock_content = gimp_item_get_lock_content (GIMP_ITEM (drawable));
-}
-CODE
-    );
-}
-
-sub drawable_set_lock_content {
-    $blurb = "Set the 'lock content' state of the specified drawable.";
-
-    $help = "This procedure sets the specified drawable's lock content state.";
-
-    &mitch_pdb_misc('2009', '2.8');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => 'lock_content', type => 'boolean',
-	  desc => "The new drawable 'lock content' state" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_item_can_lock_content (GIMP_ITEM (drawable)))
-    gimp_item_set_lock_content (GIMP_ITEM (drawable), lock_content, TRUE);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub drawable_get_tattoo {
     $blurb = "Get the tattoo of the specified drawable.";
 
@@ -1417,7 +1365,6 @@ CODE
             drawable_get_name drawable_set_name
             drawable_get_visible drawable_set_visible
             drawable_get_linked drawable_set_linked
-            drawable_get_lock_content drawable_set_lock_content
             drawable_get_tattoo drawable_set_tattoo
             drawable_mask_bounds
             drawable_mask_intersect
