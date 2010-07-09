@@ -28,12 +28,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean              gimp_vectors_is_valid                  (gint32                  vectors_ID);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gint32                gimp_vectors_new                       (gint32                  image_ID,
                                                               const gchar            *name);
 gint32                gimp_vectors_new_from_text_layer       (gint32                  image_ID,
                                                               gint32                  layer_ID);
 gint32                gimp_vectors_copy                      (gint32                  vectors_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gint32                gimp_vectors_get_image                 (gint32                  vectors_ID);
 gchar*                gimp_vectors_get_name                  (gint32                  vectors_ID);
 gboolean              gimp_vectors_set_name                  (gint32                  vectors_ID,
@@ -47,6 +50,7 @@ gboolean              gimp_vectors_set_linked                (gint32            
 gint                  gimp_vectors_get_tattoo                (gint32                  vectors_ID);
 gboolean              gimp_vectors_set_tattoo                (gint32                  vectors_ID,
                                                               gint                    tattoo);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gint*                 gimp_vectors_get_strokes               (gint32                  vectors_ID,
                                                               gint                   *num_strokes);
 gdouble               gimp_vectors_stroke_get_length         (gint32                  vectors_ID,

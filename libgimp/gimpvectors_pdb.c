@@ -25,6 +25,9 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_VECTORS_PDB_H__
+#include "gimpvectors_pdb.h"
 
 
 /**
@@ -40,10 +43,7 @@
  * gimp_vectors_is_valid:
  * @vectors_ID: The vectors object to check.
  *
- * Returns TRUE if the vectors object is valid.
- *
- * This procedure checks if the given vectors ID is valid and refers to
- * an existing vectors object.
+ * This procedure is deprecated! Use gimp_item_is_valid() instead.
  *
  * Returns: Whether the vectors ID is valid.
  *
@@ -178,9 +178,7 @@ gimp_vectors_copy (gint32 vectors_ID)
  * gimp_vectors_get_image:
  * @vectors_ID: The vectors object.
  *
- * Returns the vectors objects image.
- *
- * Returns the vectors objects image.
+ * This procedure is deprecated! Use gimp_item_get_image() instead.
  *
  * Returns: The vectors image.
  *
@@ -210,9 +208,7 @@ gimp_vectors_get_image (gint32 vectors_ID)
  * gimp_vectors_get_name:
  * @vectors_ID: The vectors object.
  *
- * Gets the name of the vectors object.
- *
- * Gets the name of the vectors object.
+ * This procedure is deprecated! Use gimp_item_get_name() instead.
  *
  * Returns: The name of the vectors object.
  *
@@ -243,9 +239,7 @@ gimp_vectors_get_name (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @name: the new name of the path.
  *
- * Sets the name of the vectors object.
- *
- * Sets the name of the vectors object.
+ * This procedure is deprecated! Use gimp_item_set_name() instead.
  *
  * Returns: TRUE on success.
  *
@@ -276,9 +270,7 @@ gimp_vectors_set_name (gint32       vectors_ID,
  * gimp_vectors_get_visible:
  * @vectors_ID: The vectors object.
  *
- * Gets the visibility of the vectors object.
- *
- * Gets the visibility of the vectors object.
+ * This procedure is deprecated! Use gimp_item_get_visible() instead.
  *
  * Returns: TRUE if the path is visible, FALSE otherwise.
  *
@@ -309,9 +301,7 @@ gimp_vectors_get_visible (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @visible: Whether the path is visible.
  *
- * Sets the visibility of the vectors object.
- *
- * Sets the visibility of the vectors object.
+ * This procedure is deprecated! Use gimp_item_set_visible() instead.
  *
  * Returns: TRUE on success.
  *
@@ -342,9 +332,7 @@ gimp_vectors_set_visible (gint32   vectors_ID,
  * gimp_vectors_get_linked:
  * @vectors_ID: The vectors object.
  *
- * Gets the linked state of the vectors object.
- *
- * Gets the linked state of the vectors object.
+ * This procedure is deprecated! Use gimp_item_get_linked() instead.
  *
  * Returns: TRUE if the path is linked, FALSE otherwise.
  *
@@ -375,9 +363,7 @@ gimp_vectors_get_linked (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @linked: Whether the path is linked.
  *
- * Sets the linked state of the vectors object.
- *
- * Sets the linked state of the vectors object.
+ * This procedure is deprecated! Use gimp_item_set_linked() instead.
  *
  * Returns: TRUE on success.
  *
@@ -408,9 +394,7 @@ gimp_vectors_set_linked (gint32   vectors_ID,
  * gimp_vectors_get_tattoo:
  * @vectors_ID: The vectors object.
  *
- * Get the tattoo of the vectors object.
- *
- * Get the tattoo state of the vectors object.
+ * This procedure is deprecated! Use gimp_item_get_tattoo() instead.
  *
  * Returns: The vectors tattoo.
  *
@@ -441,9 +425,7 @@ gimp_vectors_get_tattoo (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @tattoo: the new tattoo.
  *
- * Set the tattoo of the vectors object.
- *
- * Set the tattoo of the vectors object.
+ * This procedure is deprecated! Use gimp_item_set_tattoo() instead.
  *
  * Returns: TRUE on success.
  *

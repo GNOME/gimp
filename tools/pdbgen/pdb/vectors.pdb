@@ -15,13 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 sub vectors_is_valid {
-    $blurb = 'Returns TRUE if the vectors object is valid.';
-
-    $help = <<'HELP';
-This procedure checks if the given vectors ID is valid and refers to an
-existing vectors object.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-is-valid');
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
@@ -157,9 +151,7 @@ CODE
 }
 
 sub vectors_get_image {
-    $blurb = 'Returns the vectors objects image.';
-    $help  = 'Returns the vectors objects image.';
-
+    &std_pdb_deprecated ('gimp-item-get-image');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -182,9 +174,7 @@ CODE
 }
 
 sub vectors_get_name {
-    $blurb = 'Gets the name of the vectors object.';
-    $help  = 'Gets the name of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-name');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -207,9 +197,7 @@ CODE
 }
 
 sub vectors_set_name {
-    $blurb = 'Sets the name of the vectors object.';
-    $help  = 'Sets the name of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-name');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -229,9 +217,7 @@ CODE
 }
 
 sub vectors_get_visible {
-    $blurb = 'Gets the visibility of the vectors object.';
-    $help  = 'Gets the visibility of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-visible');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -254,9 +240,7 @@ CODE
 }
 
 sub vectors_set_visible {
-    $blurb = 'Sets the visibility of the vectors object.';
-    $help  = 'Sets the visibility of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-visible');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -276,9 +260,7 @@ CODE
 }
 
 sub vectors_get_linked {
-    $blurb = 'Gets the linked state of the vectors object.';
-    $help  = 'Gets the linked state of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-linked');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -301,9 +283,7 @@ CODE
 }
 
 sub vectors_set_linked {
-    $blurb = 'Sets the linked state of the vectors object.';
-    $help  = 'Sets the linked state of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-linked');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -323,9 +303,7 @@ CODE
 }
 
 sub vectors_get_tattoo {
-    $blurb = 'Get the tattoo of the vectors object.';
-    $help  = 'Get the tattoo state of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-tattoo');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -348,9 +326,7 @@ CODE
 }
 
 sub vectors_set_tattoo {
-    $blurb = 'Set the tattoo of the vectors object.';
-    $help  = 'Set the tattoo of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-tattoo');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
