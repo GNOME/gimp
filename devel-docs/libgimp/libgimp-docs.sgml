@@ -50,6 +50,7 @@
       <xi:include href="xml/gimpgrid.xml" />
       <xi:include href="xml/gimpguides.xml" />
       <xi:include href="xml/gimpimage.xml" />
+      <xi:include href="xml/gimpitem.xml" />
       <xi:include href="xml/gimplayer.xml" />
       <xi:include href="xml/gimppaths.xml" />
       <xi:include href="xml/gimppixelfetcher.xml" />
