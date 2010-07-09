@@ -413,7 +413,7 @@ rotate (void)
           gimp_drawable_detach (active_drawable);
           return;
         }
-      if (gimp_drawable_is_layer (active_drawable->drawable_id) &&
+      if (gimp_item_is_layer (active_drawable->drawable_id) &&
           gimp_layer_is_floating_sel (active_drawable->drawable_id))
         {
           gimp_message (_("You can not rotate the whole image if there's a floating selection."));
@@ -425,7 +425,7 @@ rotate (void)
     /* if we are trying to rotate a channel or a mask,
        create an error message and exit */
     {
-      if (! gimp_drawable_is_layer (active_drawable->drawable_id))
+      if (! gimp_item_is_layer (active_drawable->drawable_id))
         {
           gimp_message (_("Sorry, channels and masks can not be rotated."));
           gimp_drawable_detach (active_drawable);

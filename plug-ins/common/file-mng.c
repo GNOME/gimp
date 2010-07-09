@@ -643,7 +643,7 @@ mng_save_image (const gchar  *filename,
   if ((num_layers > 1) && (mng_data.loop))
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_drawable_get_name (layers[0]));
+        parse_ms_tag_from_layer_name (gimp_item_get_name (layers[0]));
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_REPEAT,
                              MNG_ITERACTION_LASTFRAME,
@@ -656,7 +656,7 @@ mng_save_image (const gchar  *filename,
   else
     {
       gint32 ms =
-        parse_ms_tag_from_layer_name (gimp_drawable_get_name (layers[0]));
+        parse_ms_tag_from_layer_name (gimp_item_get_name (layers[0]));
 
       if (mng_putchunk_term (handle, MNG_TERMACTION_LASTFRAME,
                              MNG_ITERACTION_LASTFRAME,
@@ -804,7 +804,7 @@ mng_save_image (const gchar  *filename,
       guchar         *fixed;
       guchar          layer_remap[256];
 
-      layer_name          = gimp_drawable_get_name (layers[i]);
+      layer_name          = gimp_item_get_name (layers[i]);
       layer_chunks_type   = parse_chunks_type_from_layer_name (layer_name);
       layer_drawable_type = gimp_drawable_type (layers[i]);
 

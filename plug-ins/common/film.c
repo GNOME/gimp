@@ -676,7 +676,7 @@ draw_number (gint32 layer_ID,
   g_snprintf (buf, sizeof (buf), "%d", num);
 
   drw = gimp_drawable_get (layer_ID);
-  image_ID = gimp_drawable_get_image (layer_ID);
+  image_ID = gimp_item_get_image (layer_ID);
 
   max_delta = height / 10;
   if (max_delta < 1)

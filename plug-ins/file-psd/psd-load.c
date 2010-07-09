@@ -1254,11 +1254,11 @@ add_layers (const gint32  image_id,
               gimp_image_add_layer (image_id, layer_id, -1);
               drawable = gimp_drawable_get (layer_id);
               gimp_drawable_fill (drawable->drawable_id, GIMP_TRANSPARENT_FILL);
-              gimp_drawable_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
+              gimp_item_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
-                gimp_drawable_set_tattoo (drawable->drawable_id, lyr_a[lidx]->id);
+                gimp_item_set_tattoo (drawable->drawable_id, lyr_a[lidx]->id);
               if (lyr_a[lidx]->layer_flags.irrelevant)
-                gimp_drawable_set_visible (drawable->drawable_id, FALSE);
+                gimp_item_set_visible (drawable->drawable_id, FALSE);
               gimp_drawable_flush (drawable);
               gimp_drawable_detach (drawable);
             }
@@ -1296,9 +1296,9 @@ add_layers (const gint32  image_id,
                                    drawable->width, drawable->height, TRUE, FALSE);
               gimp_pixel_rgn_set_rect (&pixel_rgn, pixels,
                                        0, 0, drawable->width, drawable->height);
-              gimp_drawable_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
+              gimp_item_set_visible (drawable->drawable_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
-                gimp_drawable_set_tattoo (drawable->drawable_id, lyr_a[lidx]->id);
+                gimp_item_set_tattoo (drawable->drawable_id, lyr_a[lidx]->id);
               gimp_drawable_flush (drawable);
               gimp_drawable_detach (drawable);
               g_free (pixels);
@@ -1669,8 +1669,8 @@ add_merged_image (const gint32  image_id,
           g_free (alpha_name);
           drawable = gimp_drawable_get (channel_id);
           if (alpha_id)
-            gimp_drawable_set_tattoo (drawable->drawable_id, alpha_id);
-          gimp_drawable_set_visible (drawable->drawable_id, alpha_visible);
+            gimp_item_set_tattoo (drawable->drawable_id, alpha_id);
+          gimp_item_set_visible (drawable->drawable_id, alpha_visible);
           gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                                 drawable->width, drawable->height,
                                 TRUE, FALSE);

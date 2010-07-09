@@ -481,7 +481,7 @@ print_preview_expose_event (GtkWidget      *widget,
     }
 
   if (preview->thumbnail == NULL &&
-      gimp_drawable_is_valid (preview->drawable->drawable_id))
+      gimp_item_is_valid (preview->drawable->drawable_id))
     {
       preview->thumbnail =
         print_preview_get_thumbnail (preview->drawable,

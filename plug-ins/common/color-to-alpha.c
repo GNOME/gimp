@@ -164,7 +164,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS &&
       gimp_drawable_is_rgb (drawable->drawable_id) &&
-      gimp_drawable_is_layer (drawable->drawable_id))
+      gimp_item_is_layer (drawable->drawable_id))
     {
       gboolean lock_alpha;
 

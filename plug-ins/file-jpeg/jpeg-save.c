@@ -794,7 +794,7 @@ destroy_preview (void)
     }
 
   if (gimp_image_is_valid (preview_image_ID) &&
-      gimp_drawable_is_valid (preview_layer_ID))
+      gimp_item_is_valid (preview_layer_ID))
     {
       /*  assuming that reference counting is working correctly,
           we do not need to delete the layer, removing it from

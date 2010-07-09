@@ -176,7 +176,7 @@ dialog (gint32        image_id,
                              _("Threshold for the red eye color to remove."),
                              NULL);
 
-  if (gimp_selection_is_empty (gimp_drawable_get_image (drawable->drawable_id)))
+  if (gimp_selection_is_empty (gimp_item_get_image (drawable->drawable_id)))
     {
       GtkWidget *hints = gimp_hint_box_new (_("Manually selecting the eyes may "
                                               "improve the results."));

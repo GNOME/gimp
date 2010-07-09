@@ -793,7 +793,7 @@ iwarp (void)
 
           animlayers[i] = gimp_layer_copy (layerID);
           gimp_layer_add_alpha (animlayers[i]);
-          gimp_drawable_set_name (animlayers[i], st);
+          gimp_item_set_name (animlayers[i], st);
           g_free (st);
 
           gimp_image_add_layer (imageID, animlayers[i], 0);
@@ -825,7 +825,7 @@ iwarp (void)
 
               gimp_layer_add_alpha (layerID);
               st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
-              gimp_drawable_set_name (layerID, st);
+              gimp_item_set_name (layerID, st);
               g_free (st);
 
               gimp_image_add_layer (imageID, layerID, 0);
@@ -979,7 +979,7 @@ iwarp_init (void)
 
   image_bpp = gimp_drawable_bpp (drawable->drawable_id);
 
-  if (gimp_drawable_is_layer (drawable->drawable_id))
+  if (gimp_item_is_layer (drawable->drawable_id))
     lock_alpha = gimp_layer_get_lock_alpha (drawable->drawable_id);
   else
     lock_alpha = FALSE;

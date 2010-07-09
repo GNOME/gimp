@@ -121,7 +121,7 @@ check_drawables (void)
   if (mapvals.bump_mapped)
     {
       if (mapvals.bumpmap_id != -1 &&
-          gimp_drawable_get_image (mapvals.bumpmap_id) == -1)
+          gimp_item_get_image (mapvals.bumpmap_id) == -1)
         {
           mapvals.bump_mapped = FALSE;
           mapvals.bumpmap_id  = -1;
@@ -141,7 +141,7 @@ check_drawables (void)
   if (mapvals.env_mapped)
     {
       if (mapvals.envmap_id != -1 &&
-          gimp_drawable_get_image (mapvals.envmap_id) == -1)
+          gimp_item_get_image (mapvals.envmap_id) == -1)
         {
           mapvals.env_mapped = FALSE;
           mapvals.envmap_id  = -1;

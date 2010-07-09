@@ -215,8 +215,8 @@ analyze (GimpDrawable *drawable)
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
 
   cmap = gimp_image_get_colormap (imageID, &numcol);
-  gray = (gimp_drawable_is_gray (drawable->drawable_id)
-          || gimp_drawable_is_channel (drawable->drawable_id));
+  gray = (gimp_drawable_is_gray (drawable->drawable_id) ||
+          gimp_item_is_channel (drawable->drawable_id));
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   selDrawable = gimp_drawable_get (gimp_image_get_selection (imageID));

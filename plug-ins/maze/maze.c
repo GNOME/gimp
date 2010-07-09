@@ -564,7 +564,7 @@ mask_maze (gint32  drawable_ID,
   guchar      *linebuf;
 
   selection_ID =
-    gimp_image_get_selection (gimp_drawable_get_image (drawable_ID));
+    gimp_image_get_selection (gimp_item_get_image (drawable_ID));
 
   if (selection_ID == -1)
     return;

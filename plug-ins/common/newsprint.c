@@ -1238,7 +1238,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  gimp_image_get_resolution (gimp_drawable_get_image (drawable->drawable_id),
+  gimp_image_get_resolution (gimp_item_get_image (drawable->drawable_id),
                              &xres, &yres);
   /* XXX hack: should really note both resolutions, and use
    * rectangular cells, not square cells.  But I'm being lazy,

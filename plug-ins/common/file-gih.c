@@ -1294,7 +1294,7 @@ gih_save_image (const gchar  *filename,
   for (layer = 0, k = 0; layer < nlayers; layer++)
     {
       GimpDrawable *drawable = gimp_drawable_get (layer_ID[layer]);
-      gchar        *name     = gimp_drawable_get_name (drawable->drawable_id);
+      gchar        *name     = gimp_item_get_name (drawable->drawable_id);
 
       gimp_drawable_offsets (drawable->drawable_id, &offsetx, &offsety);
 

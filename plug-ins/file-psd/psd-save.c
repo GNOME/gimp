@@ -853,7 +853,7 @@ save_resources (FILE   *fd,
 
     for (i = PSDImageData.nChannels - 1; i >= 0; i--)
     {
-      char *chName = gimp_drawable_get_name (PSDImageData.lChannels[i]);
+      char *chName = gimp_item_get_name (PSDImageData.lChannels[i]);
       write_string (fd, chName, "channel name");
       g_free (chName);
     }
@@ -1151,7 +1151,7 @@ save_layer_and_mask (FILE   *fd,
 
       flags = 0;
       if (gimp_layer_get_lock_alpha (PSDImageData.lLayers[i])) flags |= 1;
-      if (! gimp_drawable_get_visible (PSDImageData.lLayers[i])) flags |= 2;
+      if (! gimp_item_get_visible (PSDImageData.lLayers[i])) flags |= 2;
       IFDBG printf ("\t\tFlags: %u\n", flags);
       write_gchar (fd, flags, "Flags");
 
@@ -1190,7 +1190,7 @@ save_layer_and_mask (FILE   *fd,
       write_gint32 (fd, 0, "Layer blending size");
       IFDBG printf ("\t\tLayer blending size: %d\n", 0);
 
-      layerName = gimp_drawable_get_name (PSDImageData.lLayers[i]);
+      layerName = gimp_item_get_name (PSDImageData.lLayers[i]);
       write_pascalstring (fd, layerName, 4, "layer name");
       IFDBG printf ("\t\tLayer name: %s\n", layerName);
 
@@ -1360,7 +1360,7 @@ write_pixel_data (FILE   *fd,
     }
 
   /* Write layer mask, as last channel, id -2 */
-  if (gimp_drawable_is_layer (drawableID))
+  if (gimp_item_is_layer (drawableID))
     {
       gint32 maskID = gimp_layer_get_mask (drawableID);
 
@@ -1663,7 +1663,7 @@ save_image (const gchar  *filename,
 
   /* Delete merged image now */
 
-  gimp_drawable_delete (PSDImageData.merged_layer);
+  gimp_item_delete (PSDImageData.merged_layer);
 
   IFDBG printf ("----- Closing PSD file, done -----\n\n");
 

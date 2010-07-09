@@ -1458,7 +1458,7 @@ read_layer_block (FILE     *f,
                                 saved_image_rect[0], saved_image_rect[1]);
 
       if (!visibility)
-        gimp_drawable_set_visible (layer_ID, FALSE);
+        gimp_item_set_visible (layer_ID, FALSE);
 
       gimp_layer_set_lock_alpha (layer_ID, transparency_protected);
 

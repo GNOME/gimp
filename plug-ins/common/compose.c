@@ -702,7 +702,7 @@ compose (const gchar  *compose_type,
   /* Check image sizes */
   if (compose_by_drawable)
     {
-      if (! gimp_drawable_is_valid (inputs[first_ID].comp.ID))
+      if (! gimp_item_is_valid (inputs[first_ID].comp.ID))
         {
           g_message (_("Specified layer %d not found"),
                      inputs[first_ID].comp.ID);
@@ -716,7 +716,7 @@ compose (const gchar  *compose_type,
         {
           if (inputs[j].is_ID)
             {
-              if (! gimp_drawable_is_valid (inputs[j].comp.ID))
+              if (! gimp_item_is_valid (inputs[j].comp.ID))
                 {
                   g_message (_("Specified layer %d not found"),
                              inputs[j].comp.ID);
@@ -818,7 +818,7 @@ compose (const gchar  *compose_type,
     {
       layer_ID_dst = composevals.source_layer_ID;
 
-      if (! gimp_drawable_is_valid (layer_ID_dst))
+      if (! gimp_item_is_valid (layer_ID_dst))
         {
           g_message (_("Unable to recompose, source layer not found"));
           return -1;
@@ -831,7 +831,7 @@ compose (const gchar  *compose_type,
       gimp_pixel_rgn_init (&pixel_rgn_dst_read, drawable_dst,
                            0, 0, drawable_dst->width, drawable_dst->height,
                            FALSE, FALSE);
-      image_ID_dst = gimp_drawable_get_image (layer_ID_dst);
+      image_ID_dst = gimp_item_get_image (layer_ID_dst);
     }
   else
     {
@@ -1475,7 +1475,7 @@ compose_dialog (const gchar *compose_type,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  layer_list = gimp_image_get_layers (gimp_drawable_get_image (drawable_ID),
+  layer_list = gimp_image_get_layers (gimp_item_get_image (drawable_ID),
                                       &nlayers);
 
   dialog = gimp_dialog_new (_("Compose"), PLUG_IN_BINARY,

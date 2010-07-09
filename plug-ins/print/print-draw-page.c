@@ -189,7 +189,7 @@ print_surface_from_drawable (gint32 drawable_ID)
       guchar *colors;
       gint    num_colors;
 
-      colors = gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID),
+      colors = gimp_image_get_colormap (gimp_item_get_image (drawable_ID),
                                         &num_colors);
       memcpy (cmap, colors, 3 * num_colors);
       g_free (colors);

@@ -556,7 +556,7 @@ ico_image_get_reduced_buf (guint32   layer,
 
   if (bpp <= 8 || bpp == 24 || drawable->bpp != 4)
     {
-      gint32        image = gimp_drawable_get_image (layer);
+      gint32        image = gimp_item_get_image (layer);
       GimpDrawable *tmp;
 
       tmp_image = gimp_image_new (gimp_drawable_width (layer),
