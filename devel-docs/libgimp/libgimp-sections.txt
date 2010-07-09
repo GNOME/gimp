@@ -600,7 +600,6 @@ gimp_item_get_image
 gimp_item_delete
 gimp_item_is_drawable
 gimp_item_is_layer
-gimp_item_is_text_layer
 gimp_item_is_channel
 gimp_item_is_layer_mask
 gimp_item_is_selection
@@ -615,6 +614,10 @@ gimp_item_get_lock_content
 gimp_item_set_lock_content
 gimp_item_get_tattoo
 gimp_item_set_tattoo
+gimp_item_parasite_find
+gimp_item_parasite_list
+gimp_item_parasite_attach
+gimp_item_parasite_detach
 </SECTION>
 
 <SECTION>
