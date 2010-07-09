@@ -167,7 +167,7 @@ CODE
 }
 
 sub path_set_points {
-    &std_pdb_deprecated('vectors-stroke-new-from-points');
+    &std_pdb_deprecated('gimp-vectors-stroke-new-from-points');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -573,7 +573,7 @@ CODE
 }
 
 sub path_import {
-    &std_pdb_deprecated('vectors-import-from-file');
+    &std_pdb_deprecated('gimp-vectors-import-from-file');
 
     @inargs = (
 	{ name => 'image', type => 'image',
