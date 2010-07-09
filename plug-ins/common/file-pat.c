@@ -279,10 +279,14 @@ run (const gchar      *name,
 
       if (strlen (description))
         {
-          gimp_image_attach_new_parasite (orig_image_ID, "gimp-pattern-name",
-                                          GIMP_PARASITE_PERSISTENT,
-                                          strlen (description) + 1,
-                                          description);
+          GimpParasite *parasite;
+
+          parasite = gimp_parasite_new ("gimp-pattern-name",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (description) + 1,
+                                        description);
+          gimp_image_parasite_attach (orig_image_ID, parasite);
+          gimp_parasite_free (parasite);
         }
       else
         {
@@ -315,6 +319,7 @@ load_image (const gchar  *filename,
   guchar           *buffer;
   gint32            image_ID;
   gint32            layer_ID;
+  GimpParasite     *parasite;
   GimpDrawable     *drawable;
   gint              line;
   GimpPixelRgn      pixel_rgn;
@@ -417,9 +422,11 @@ load_image (const gchar  *filename,
   image_ID = gimp_image_new (ph.width, ph.height, base_type);
   gimp_image_set_filename (image_ID, filename);
 
-  gimp_image_attach_new_parasite (image_ID, "gimp-pattern-name",
-                                  GIMP_PARASITE_PERSISTENT,
-                                  strlen (name) + 1, name);
+  parasite = gimp_parasite_new ("gimp-pattern-name",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (name) + 1, name);
+  gimp_image_parasite_attach (image_ID, parasite);
+  gimp_parasite_free (parasite);
 
   layer_ID = gimp_layer_new (image_ID, name, ph.width, ph.height,
                              image_type, 100, GIMP_NORMAL_MODE);
