@@ -622,13 +622,14 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
     AC_DEFINE(HAVE_RINT)])])
 
 
-########################################################
-# Check for extra libs needed for getnameinfo and socket
-########################################################
+#####################################################################
+# Check for extra libs needed for getaddrinfo, getnameinfo and socket
+#####################################################################
 
 gimp_save_LIBS=$LIBS
 LIBS=""
 
+AC_CHECK_FUNCS(getaddrinfo, , AC_CHECK_LIB(nsl, getaddrinfo))
 AC_CHECK_FUNCS(getnameinfo, , AC_CHECK_LIB(nsl, getnameinfo))
 AC_CHECK_LIB(socket, socket)
 
