@@ -17,13 +17,7 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub drawable_is_valid {
-    $blurb = 'Returns TRUE if the drawable is valid.';
-
-    $help = <<'HELP';
-This procedure checks if the given drawable ID is valid and refers to an
-existing drawable.
-HELP
-
+    &std_pdb_deprecated('gimp-item-is-valid');
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
@@ -294,11 +288,7 @@ CODE
 }
 
 sub drawable_get_image {
-    $blurb = "Returns the drawable's image.";
-
-    $help = "This procedure returns the drawable's image.";
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-get-image');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -607,13 +597,7 @@ CODE
 }
 
 sub drawable_is_layer {
-    $blurb = 'Returns whether the drawable is a layer.';
-
-    $help = <<HELP;
-This procedure returns TRUE if the specified drawable is a layer.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-is-layer');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -663,13 +647,7 @@ CODE
 }
 
 sub drawable_is_layer_mask {
-    $blurb = 'Returns whether the drawable is a layer mask.';
-
-    $help = <<HELP;
-This procedure returns TRUE if the specified drawable is a layer mask.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-is-layer-mask');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -691,13 +669,7 @@ CODE
 }
 
 sub drawable_is_channel {
-    $blurb = 'Returns whether the drawable is a channel.';
-
-    $help = <<HELP;
-This procedure returns TRUE if the specified drawable is a channel.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-is-channel');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -719,11 +691,7 @@ CODE
 }
 
 sub drawable_get_name {
-    $blurb = "Get the name of the specified drawable.";
-
-    $help = "This procedure returns the specified drawable's name.";
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-get-name');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -745,11 +713,7 @@ CODE
 }
 
 sub drawable_set_name {
-    $blurb = "Set the name of the specified drawable.";
-
-    $help = "This procedure sets the specified drawable's name.";
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-set-name');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -768,11 +732,7 @@ CODE
 }
 
 sub drawable_get_visible {
-    $blurb = "Get the visibility of the specified drawable.";
-
-    $help = "This procedure returns the specified drawable's visibility.";
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-get-visible');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -794,11 +754,7 @@ CODE
 }
 
 sub drawable_set_visible {
-    $blurb = "Set the visibility of the specified drawable.";
-
-    $help = "This procedure sets the specified drawable's visibility.";
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-set-visible');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -817,10 +773,7 @@ CODE
 }
 
 sub drawable_get_linked {
-    $blurb = "Get the linked state of the specified drawable.";
-
-    $help = "This procedure returns the specified drawable's linked state.";
-
+    &std_pdb_deprecated('gimp-item-get-linked');
     &wolfgang_pdb_misc('1998');
 
     @inargs = (
@@ -843,10 +796,7 @@ CODE
 }
 
 sub drawable_set_linked {
-    $blurb = "Set the linked state of the specified drawable.";
-
-    $help = "This procedure sets the specified drawable's linked state.";
-
+    &std_pdb_deprecated('gimp-item-set-linked');
     &wolfgang_pdb_misc('1998');
 
     @inargs = (
@@ -866,15 +816,7 @@ CODE
 }
 
 sub drawable_get_tattoo {
-    $blurb = "Get the tattoo of the specified drawable.";
-
-    $help = <<'HELP';
-This procedure returns the specified drawable's tattoo. A tattoo is a
-unique and permanent identifier attached to a drawable that can be
-used to uniquely identify a drawable within an image even between
-sessions.
-HELP
-
+    &std_pdb_deprecated('gimp-item-get-tattoo');
     &jay_pdb_misc('1998');
 
     @inargs = (
@@ -897,15 +839,7 @@ CODE
 }
 
 sub drawable_set_tattoo {
-    $blurb = "Set the tattoo of the specified drawable.";
-
-    $help = <<'HELP';
-This procedure sets the specified drawable's tattoo. A tattoo is a
-unique and permanent identifier attached to a drawable that can be
-used to uniquely identify a drawable within an image even between
-sessions.
-HELP
-
+    &std_pdb_deprecated('gimp-item-set-tattoo');
     &jay_pdb_misc('1998');
 
     @inargs = (
@@ -1272,17 +1206,7 @@ CODE
 }
 
 sub drawable_delete {
-    $blurb = 'Delete a drawable.';
-
-    $help = <<'HELP';
-This procedure deletes the specified drawable. This must not be done if the
-image containing this drawable was already deleted or if the drawable was
-already removed from the image. The only case in which this procedure is
-useful is if you want to get rid of a drawable which has not yet been
-added to an image.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-item-delete');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',

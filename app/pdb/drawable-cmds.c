@@ -1335,12 +1335,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-is-valid");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-valid",
-                                     "Returns TRUE if the drawable is valid.",
-                                     "This procedure checks if the given drawable ID is valid and refers to an existing drawable.",
+                                     "This procedure is deprecated! Use 'gimp-item-is-valid' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-is-valid' instead.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2007",
-                                     NULL);
+                                     "gimp-item-is-valid");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1364,12 +1364,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-is-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-layer",
-                                     "Returns whether the drawable is a layer.",
-                                     "This procedure returns TRUE if the specified drawable is a layer.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-is-layer' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-is-layer' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-is-layer");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1422,12 +1422,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-is-layer-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-layer-mask",
-                                     "Returns whether the drawable is a layer mask.",
-                                     "This procedure returns TRUE if the specified drawable is a layer mask.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-is-layer-mask' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-is-layer-mask' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-is-layer-mask");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1451,12 +1451,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-is-channel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-is-channel",
-                                     "Returns whether the drawable is a channel.",
-                                     "This procedure returns TRUE if the specified drawable is a channel.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-is-channel' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-is-channel' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-is-channel");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1784,12 +1784,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-delete",
-                                     "Delete a drawable.",
-                                     "This procedure deletes the specified drawable. This must not be done if the image containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-delete' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-delete' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-delete");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1807,12 +1807,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-get-image");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-image",
-                                     "Returns the drawable's image.",
-                                     "This procedure returns the drawable's image.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-get-image' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-image' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-get-image");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1865,12 +1865,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-get-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-name",
-                                     "Get the name of the specified drawable.",
-                                     "This procedure returns the specified drawable's name.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-get-name' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-name' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-get-name");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1895,12 +1895,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-set-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-name",
-                                     "Set the name of the specified drawable.",
-                                     "This procedure sets the specified drawable's name.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-set-name' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-set-name' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-set-name");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1925,12 +1925,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-get-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-visible",
-                                     "Get the visibility of the specified drawable.",
-                                     "This procedure returns the specified drawable's visibility.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-get-visible' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-visible' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-get-visible");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1954,12 +1954,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-set-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-visible",
-                                     "Set the visibility of the specified drawable.",
-                                     "This procedure sets the specified drawable's visibility.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "This procedure is deprecated! Use 'gimp-item-set-visible' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-set-visible' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-set-visible");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1983,12 +1983,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-get-linked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-linked",
-                                     "Get the linked state of the specified drawable.",
-                                     "This procedure returns the specified drawable's linked state.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-linked' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-linked' instead.",
                                      "Wolfgang Hofer",
                                      "Wolfgang Hofer",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-get-linked");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2012,12 +2012,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-set-linked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-linked",
-                                     "Set the linked state of the specified drawable.",
-                                     "This procedure sets the specified drawable's linked state.",
+                                     "This procedure is deprecated! Use 'gimp-item-set-linked' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-set-linked' instead.",
                                      "Wolfgang Hofer",
                                      "Wolfgang Hofer",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-set-linked");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2041,12 +2041,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-get-tattoo",
-                                     "Get the tattoo of the specified drawable.",
-                                     "This procedure returns the specified drawable's tattoo. A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-tattoo' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-get-tattoo' instead.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-get-tattoo");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2070,12 +2070,12 @@ register_drawable_procs (GimpPDB *pdb)
                                "gimp-drawable-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-set-tattoo",
-                                     "Set the tattoo of the specified drawable.",
-                                     "This procedure sets the specified drawable's tattoo. A tattoo is a unique and permanent identifier attached to a drawable that can be used to uniquely identify a drawable within an image even between sessions.",
+                                     "This procedure is deprecated! Use 'gimp-item-set-tattoo' instead.",
+                                     "This procedure is deprecated! Use 'gimp-item-set-tattoo' instead.",
                                      "Jay Cox",
                                      "Jay Cox",
                                      "1998",
-                                     NULL);
+                                     "gimp-item-set-tattoo");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
