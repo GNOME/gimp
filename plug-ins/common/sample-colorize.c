@@ -2491,7 +2491,7 @@ is_layer_alive (gint32 drawable_id)
   if (drawable_id < 0)
     return -1;
 
-  if (gimp_drawable_get_image (drawable_id) < 0)
+  if (gimp_item_get_image (drawable_id) < 0)
     {
       printf ("sample colorize: unknown layer_id %d (Image closed?)\n",
               (int)drawable_id);
@@ -2568,7 +2568,7 @@ init_gdrw (t_GDRW         *gdrw,
       gdrw->index_alpha = 0;      /* there is no alpha channel */
     }
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable->drawable_id);
 
   /* check and see if we have a selection mask */
   sel_channel_id  = gimp_image_get_selection (image_id);
@@ -3087,7 +3087,7 @@ main_colorize (gint mc_flags)
       dst_drawable = gimp_drawable_get (g_values.dst_id);
       if (gimp_drawable_is_gray (g_values.dst_id) &&
           (mc_flags & MC_DST_REMAP))
-        gimp_image_convert_rgb (gimp_drawable_get_image (g_values.dst_id));
+        gimp_image_convert_rgb (gimp_item_get_image (g_values.dst_id));
       colorize_drawable (dst_drawable->drawable_id);
     }
 
