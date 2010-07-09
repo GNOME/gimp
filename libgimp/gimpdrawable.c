@@ -346,7 +346,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
   gboolean      success;
 
-  success = gimp_drawable_parasite_attach (drawable_ID, parasite);
+  success = gimp_item_parasite_attach (drawable_ID, parasite);
 
   gimp_parasite_free (parasite);
 

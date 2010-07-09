@@ -82,7 +82,7 @@ export_merge (gint32  image_ID,
   layers = gimp_image_get_layers (image_ID, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
-      if (gimp_drawable_get_visible (layers[i]))
+      if (gimp_item_get_visible (layers[i]))
         nvisible++;
     }
 
@@ -716,16 +716,16 @@ gimp_export_image (gint32                 *image_ID,
 
   /* ask for confirmation if the user is not saving a layer (see bug #51114) */
   if (format_name &&
-      ! gimp_drawable_is_layer (*drawable_ID) &&
+      ! gimp_item_is_layer (*drawable_ID) &&
       ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
     {
-      if (gimp_drawable_is_layer_mask (*drawable_ID))
+      if (gimp_item_is_layer_mask (*drawable_ID))
         {
           retval = confirm_save_dialog
             (_("You are about to save a layer mask as %s.\n"
                "This will not save the visible layers."), format_name);
         }
-      else if (gimp_drawable_is_channel (*drawable_ID))
+      else if (gimp_item_is_channel (*drawable_ID))
         {
           retval = confirm_save_dialog
             (_("You are about to save a channel (saved selection) as %s.\n"
@@ -762,7 +762,7 @@ gimp_export_image (gint32                 *image_ID,
           /*  If this is the last layer, it's visible and has no alpha
            *  channel, then the image has a "flat" background
            */
-                if (i == n_layers - 1 && gimp_drawable_get_visible (layers[i]))
+                if (i == n_layers - 1 && gimp_item_get_visible (layers[i]))
             background_has_alpha = FALSE;
 
           if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -787,8 +787,8 @@ gimp_export_image (gint32                 *image_ID,
   if (! added_flatten)
     {
       /* check if layer size != canvas size, opacity != 100%, or offsets != 0 */
-      if (n_layers == 1                         &&
-          gimp_drawable_is_layer (*drawable_ID) &&
+      if (n_layers == 1                     &&
+          gimp_item_is_layer (*drawable_ID) &&
           ! (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
         {
           gint offset_x;

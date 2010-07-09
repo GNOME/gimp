@@ -274,7 +274,7 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
   GimpDrawable *drawable = GIMP_ASPECT_PREVIEW (preview)->drawable;
   gint32        image_id;
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable->drawable_id);
 
   if (gimp_selection_is_empty (image_id))
     {
