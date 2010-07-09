@@ -29,7 +29,6 @@
 
 #include "pdb-types.h"
 
-#include "base/pixel-processor.h"
 #include "config/gimprc.h"
 #include "core/gimp-utils.h"
 #include "core/gimp.h"
@@ -223,33 +222,6 @@ get_module_load_inhibit_invoker (GimpProcedure      *procedure,
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], load_inhibit);
-
-  return return_vals;
-}
-
-static GValueArray *
-get_number_of_processors_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
-{
-  GValueArray *return_vals;
-  gint32 num_proc = 0;
-
-  gchar  *str;
-
-  str = gimp_rc_query (GIMP_RC (gimp->config), "num-processors");
-  num_proc = (gint32) g_ascii_strtoll (str, NULL, 0);
-
-  /* Although this is probably not necessary, still be safe */
-  num_proc = CLAMP (num_proc, 1, GIMP_MAX_NUM_THREADS);
-
-  g_free (str);
-
-  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
-  g_value_set_int (&return_vals->values[1], num_proc);
 
   return return_vals;
 }
@@ -468,29 +440,6 @@ register_gimprc_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-get-number-of-processors
-   */
-  procedure = gimp_procedure_new (get_number_of_processors_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-get-number-of-processors");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-get-number-of-processors",
-                                     "Get the number of processors which GIMP was configured to use.",
-                                     "Returns the number of processors which GIMP was configured to use. This value is taken from the Preferences and there's no guarantee for the value to be reasonable. This function is mainly intended for plugin writers who want to write multithreaded plugins and need to know how many threads to create.",
-                                     "Barak Itkin <lightningismyname@gmail.com>",
-                                     "Barak Itkin",
-                                     "2010",
-                                     NULL);
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("num-proc",
-                                                          "num proc",
-                                                          "The number of processors",
-                                                          1, GIMP_MAX_NUM_THREADS, 1,
-                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
