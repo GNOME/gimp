@@ -1020,7 +1020,7 @@ register_item_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("lock-content",
                                                          "lock content",
-                                                         "Whether the item's pixels are locked",
+                                                         "Whether the item's contents are locked",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

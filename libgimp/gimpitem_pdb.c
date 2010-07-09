@@ -532,7 +532,7 @@ gimp_item_set_linked (gint32   item_ID,
  *
  * This procedure returns the specified item's lock content state.
  *
- * Returns: Whether the item's pixels are locked.
+ * Returns: Whether the item's contents are locked.
  *
  * Since: GIMP 2.8
  */

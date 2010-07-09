@@ -446,7 +446,7 @@ sub item_get_lock_content {
 
     @outargs = (
 	{ name => 'lock_content', type => 'boolean',
-	  desc => "Whether the item's pixels are locked" }
+	  desc => "Whether the item's contents are locked" }
     );
 
     %invoke = (
