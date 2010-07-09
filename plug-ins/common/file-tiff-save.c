@@ -505,7 +505,7 @@ save_paths (TIFF   *tif,
        * - use iso8859-1 if possible
        * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
        */
-      name = gimp_vectors_get_name (vectors[v]);
+      name = gimp_item_get_name (vectors[v]);
       tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
 
       if (tmpname && err == NULL)
