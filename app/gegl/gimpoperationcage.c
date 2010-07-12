@@ -20,11 +20,12 @@
 #include "config.h"
 
 #include <gegl.h>
+#include "gimp-gegl-types.h"
+#include <gegl-buffer-iterator.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "gimp-gegl-types.h"
 
 #include "core/gimpcage.h"
 
@@ -32,14 +33,15 @@
 
 
 static gboolean gimp_operation_cage_process (GeglOperation       *operation,
-                                               void                *in_buf,
-                                               void                *out_buf,
-                                               const GeglRectangle *roi);
+                                             GeglBuffer          *in_buf,
+                                             GeglBuffer          *out_buf,
+                                             const GeglRectangle *roi);
+
 
 G_DEFINE_TYPE (GimpOperationCage, gimp_operation_cage,
                GEGL_TYPE_OPERATION_FILTER)
 
-#define parent_class gimp_operation_cage_parent_class
+//#define parent_class gimp_operation_cage_parent_class
 
 
 static void
@@ -64,23 +66,40 @@ gimp_operation_cage_init (GimpOperationCage *self)
 
 static gboolean
 gimp_operation_cage_process (GeglOperation       *operation,
-                               void                *in_buf,
-                               void                *out_buf,
-                               const GeglRectangle *roi)
+                             GeglBuffer          *in_buf,
+                             GeglBuffer          *out_buf,
+                             const GeglRectangle *roi)
 {
-  gfloat *in    = in_buf;
-  gfloat *out   = out_buf;
-
-  /*while (samples--)
+  GeglBufferIterator *i;
+  Babl *format = babl_format ("RaGaBaA float");
+  
+  i = gegl_buffer_iterator_new (out_buf, roi, format, GEGL_BUFFER_WRITE);
+  
+  //iterate on GeglBuffer
+  while (gegl_buffer_iterator_next (i))
+  {
+    //iterate inside the roi
+    gint        n_pixels = i->length;
+    gint        x = i->roi->x; /* initial x                   */
+    gint        y = i->roi->y; /*           and y coordinates */
+    
+    while(n_pixels--)
     {
-      out[RED]   = in[RED];
-      out[GREEN] = in[GREEN];
-      out[BLUE]  = in[BLUE];
-      out[ALPHA] = in[ALPHA];
-
-      in    += 4;
-      out   += 4;
-    }*/
-
+      gfloat *buf = i->data[0];
+      buf[0] = 0.5;
+      buf[1] = 0.5;
+      buf[2] = 0.5;
+      buf[3] = 0.5;
+      
+      /* update x and y coordinates */
+      x++;
+      if (x >= (i->roi->x + i->roi->width))
+      {
+        x = i->roi->x;
+        y++;
+      }
+      
+    }
+  }
   return TRUE;
 }
