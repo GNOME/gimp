@@ -40,7 +40,7 @@ struct _GimpOperationCage
 
 struct _GimpOperationCageClass
 {
-  GeglOperationFilter  parent_class;
+  GeglOperationFilterClass  parent_class;
 };
 
 

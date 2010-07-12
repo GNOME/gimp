@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 
 #include "gimp-gegl.h"
+#include "gimpoperationcage.h"
 #include "gimpoperationcolorbalance.h"
 #include "gimpoperationcolorize.h"
 #include "gimpoperationcurves.h"
@@ -95,6 +96,7 @@ gimp_gegl_init (Gimp *gimp)
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SINK);
   g_type_class_ref (GIMP_TYPE_OPERATION_TILE_SOURCE);
 
+  g_type_class_ref (GIMP_TYPE_OPERATION_CAGE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLOR_BALANCE);
   g_type_class_ref (GIMP_TYPE_OPERATION_COLORIZE);
   g_type_class_ref (GIMP_TYPE_OPERATION_CURVES);

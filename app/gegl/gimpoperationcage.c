@@ -32,16 +32,17 @@
 #include "gimpoperationcage.h"
 
 
-static gboolean gimp_operation_cage_process (GeglOperation       *operation,
-                                             GeglBuffer          *in_buf,
-                                             GeglBuffer          *out_buf,
-                                             const GeglRectangle *roi);
+static gboolean       gimp_operation_cage_process                   (GeglOperation       *operation,
+                                                                     GeglBuffer          *in_buf,
+                                                                     GeglBuffer          *out_buf,
+                                                                     const GeglRectangle *roi);
+static void           gimp_operation_cage_prepare                   (GeglOperation       *operation);
 
 
 G_DEFINE_TYPE (GimpOperationCage, gimp_operation_cage,
                GEGL_TYPE_OPERATION_FILTER)
 
-//#define parent_class gimp_operation_cage_parent_class
+#define parent_class gimp_operation_cage_parent_class
 
 
 static void
@@ -53,9 +54,13 @@ gimp_operation_cage_class_init (GimpOperationCageClass *klass)
   operation_class = GEGL_OPERATION_CLASS (klass);
   filter_class = GEGL_OPERATION_FILTER_CLASS (klass);
 
-  operation_class->name        = "gimp:cage";
+  //FIXME: wrong categories and name, to appears in the gegl tool
+  operation_class->name        = "gegl:cage";
+  operation_class->categories  = "color";
   operation_class->description = "GIMP cage transform";
 
+  operation_class->prepare = gimp_operation_cage_prepare;
+  
   filter_class->process         = gimp_operation_cage_process;
 }
 
@@ -71,7 +76,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
                              const GeglRectangle *roi)
 {
   GeglBufferIterator *i;
-  Babl *format = babl_format ("RaGaBaA float");
+  Babl *format = babl_format ("RGBA float");
   
   i = gegl_buffer_iterator_new (out_buf, roi, format, GEGL_BUFFER_WRITE);
   
@@ -83,13 +88,16 @@ gimp_operation_cage_process (GeglOperation       *operation,
     gint        x = i->roi->x; /* initial x                   */
     gint        y = i->roi->y; /*           and y coordinates */
     
+    gfloat      *dest = i->data[0];
+    
     while(n_pixels--)
     {
-      gfloat *buf = i->data[0];
-      buf[0] = 0.5;
-      buf[1] = 0.5;
-      buf[2] = 0.5;
-      buf[3] = 0.5;
+      dest[RED]   = 1.0;
+      dest[GREEN] = 0.0;
+      dest[BLUE]  = 1.0;
+      dest[ALPHA] = 1.0;
+      
+      dest += 4;
       
       /* update x and y coordinates */
       x++;
@@ -102,4 +110,11 @@ gimp_operation_cage_process (GeglOperation       *operation,
     }
   }
   return TRUE;
+}
+
+static void
+gimp_operation_cage_prepare (GeglOperation  *operation)
+{
+  gegl_operation_set_format (operation, "input", babl_format ("RGBA float"));
+  gegl_operation_set_format (operation, "output", babl_format ("RGBA float"));
 }
