@@ -84,4 +84,6 @@ void      gimp_cage_move_cage_point        (GimpCage    *cage,
                                             gdouble      x,
                                             gdouble      y);
 
+void      gimp_cage_compute_coefficient    (GimpCage *gc);
+
 #endif /* __GIMP_CAGE_H__ */

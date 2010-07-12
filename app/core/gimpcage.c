@@ -32,7 +32,6 @@ G_DEFINE_TYPE (GimpCage, gimp_cage, G_TYPE_OBJECT)
 #define N_ITEMS_PER_ALLOC       10
 
 static void       gimp_cage_finalize (GObject *object);
-static void       gimp_cage_compute_coefficient (GimpCage *gc);
 
 static void
 gimp_cage_class_init (GimpCageClass *klass)
@@ -57,7 +56,6 @@ gimp_cage_init (GimpCage *self)
   self->cage_vertices_coef = NULL;
   self->cage_edges_coef = NULL;
   
-  //gimp_cage_compute_coefficient (self);
 }
 
 static void
@@ -80,7 +78,7 @@ gimp_cage_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
+void
 gimp_cage_compute_coefficient (GimpCage *gc)
 {
   Babl *format;
@@ -122,6 +120,7 @@ gimp_cage_compute_coefficient (GimpCage *gc)
     gint        x = i->roi->x; /* initial x                   */
     gint        y = i->roi->y; /*           and y coordinates */
     
+
     while(n_pixels--)
     {
       for( j = 0; j < gc->cage_vertice_number; j++)
@@ -138,6 +137,7 @@ gimp_cage_compute_coefficient (GimpCage *gc)
         b.y = v1.y - y;
         Q = a.x * a.x + a.y * a.y;
         S = b.x * b.x + b.y * b.y;
+        R = 2.0 * (a.x * b.x + a.y * b.y);
         BA = b.x * a.y - b.y * a.x;
         SRT = sqrt(4.0 * S * Q - R * R);
         L0 = log(S);
@@ -151,10 +151,10 @@ gimp_cage_compute_coefficient (GimpCage *gc)
         
         vertice_coef[j] += BA / (2.0 * M_PI) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
         vertice_coef[(j+1)%gc->cage_vertice_number] -= BA / (2.0 * M_PI) * (L10 / (2.0 * Q) - A10 * R / Q);
-        
-        vertice_coef += gc->cage_vertice_number;
-        edge_coef += gc->cage_vertice_number;
       }
+      
+      vertice_coef += gc->cage_vertice_number;
+      edge_coef += gc->cage_vertice_number;
       
       /* update x and y coordinates */
       x++;
