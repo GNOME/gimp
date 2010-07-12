@@ -21,6 +21,8 @@
 #define __GIMP_CAGE_TOOL_H__
 
 #include "gimptransformtool.h"
+#include "libgimpmath/gimpvector.h"
+#include "core/gimpcage.h"
 
 
 #define GIMP_TYPE_CAGE_TOOL            (gimp_cage_tool_get_type ())
@@ -37,7 +39,12 @@ typedef struct _GimpCageTool GimpCageTool;
 
 struct _GimpCageTool
 {
-  GimpTransformTool    parent_instance;
+  GimpTransformTool     parent_instance;
+  GimpCage             *cage;
+  
+  GimpVector2           cursor_position;
+  gint                  handle_moved;
+  gboolean              cage_complete;
 };
 
 

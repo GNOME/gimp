@@ -21,6 +21,7 @@
 #define __GIMP_CAGE_H__
 
 #include <glib-object.h>
+#include "core-types.h"
 #include "libgimpmath/gimpmathtypes.h"
 #include <gegl.h>
 #include <gegl-buffer.h>
@@ -59,5 +60,28 @@ struct _GimpCageClass
 
 GType         gimp_cage_get_type          (void) G_GNUC_CONST;
 
+/**
+ * gimp_cage_add_cage_point:
+ * @cage: the cage data structure
+ * @x: x value of the new point
+ * @y: y value of the new point
+ * 
+ * Add a new point in the polygon of the cage, and make allocation if needed.
+ */
+void      gimp_cage_add_cage_point         (GimpCage    *cage,
+                                            gdouble      x,
+                                            gdouble      y);
+                           
+void      gimp_cage_remove_last_cage_point (GimpCage    *cage);
+
+gint      gimp_cage_is_on_handle           (GimpCage    *cage,
+                                            gdouble      x,
+                                            gdouble      y,
+                                            gint         handle_size);
+                                            
+void      gimp_cage_move_cage_point        (GimpCage    *cage,
+                                            gint         point_number,
+                                            gdouble      x,
+                                            gdouble      y);
 
 #endif /* __GIMP_CAGE_H__ */

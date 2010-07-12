@@ -23,12 +23,14 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-
+#include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+#include "tools/tools-enums.h"
+#include "gimptoolcontrol.h"
 
 #include "core/gimp-transform-utils.h"
 
@@ -37,29 +39,56 @@
 #include "gimpcagetool.h"
 #include "gimpcageoptions.h"
 
-
 #include "gimp-intl.h"
 
-static void   gimp_cage_tool_finalize       (GObject *object);
-static void   gimp_cage_tool_button_press   (GimpTool              *tool,
-                                             const GimpCoords      *coords,
-                                             guint32                time,
-                                             GdkModifierType        state,
-                                             GimpButtonPressType    press_type,
-                                             GimpDisplay           *display);
-static void   gimp_cage_tool_button_release (GimpTool              *tool,
-                                             const GimpCoords      *coords,
-                                             guint32                time,
-                                             GdkModifierType        state,
-                                             GimpButtonReleaseType  release_type,
-                                             GimpDisplay           *display);
-static void   gimp_cage_tool_draw           (GimpDrawTool *draw_tool);
-
+static gboolean     gimp_cage_tool_initialize     (GimpTool    *tool,
+                                                   GimpDisplay *display,
+                                                   GError     **error);
+static void         gimp_cage_tool_finalize       (GObject *object);
+static void         gimp_cage_tool_start          (GimpCageTool *ct,
+                                                   GimpDisplay        *display);
+static void         gimp_cage_tool_halt           (GimpCageTool *ct);
+static void         gimp_cage_tool_button_press   (GimpTool              *tool,
+                                                   const GimpCoords      *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpButtonPressType    press_type,
+                                                   GimpDisplay           *display);
+static void         gimp_cage_tool_button_release (GimpTool              *tool,
+                                                   const GimpCoords      *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpButtonReleaseType  release_type,
+                                                   GimpDisplay           *display);
+static gboolean     gimp_cage_tool_key_press      (GimpTool    *tool,
+                                                   GdkEventKey *kevent,
+                                                   GimpDisplay *display);
+static void         gimp_cage_tool_motion         (GimpTool         *tool,
+                                                   const GimpCoords *coords,
+                                                   guint32           time,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
+static void         gimp_cage_tool_control        (GimpTool       *tool,
+                                                   GimpToolAction  action,
+                                                   GimpDisplay    *display);
+static void         gimp_cage_tool_cursor_update  (GimpTool         *tool,
+                                                   const GimpCoords *coords,
+                                                   GdkModifierType   state,
+                                                   GimpDisplay      *display);
+static void         gimp_cage_tool_oper_update    (GimpTool         *tool,
+                                                   const GimpCoords *coords,
+                                                   GdkModifierType   state,
+                                                   gboolean          proximity,
+                                                   GimpDisplay      *display);
+static void         gimp_cage_tool_draw           (GimpDrawTool *draw_tool);
+static void         gimp_cage_tool_switch_to_deform (GimpCageTool *ct);
+static void         gimp_cage_tool_remove_last_handle (GimpCageTool *ct);
 
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_TRANSFORM_TOOL)
 
 #define parent_class gimp_cage_tool_parent_class
 
+#define HANDLE_SIZE             10
 
 void
 gimp_cage_tool_register (GimpToolRegisterCallback  callback,
@@ -88,8 +117,14 @@ gimp_cage_tool_class_init (GimpCageToolClass *klass)
   
   object_class->finalize          = gimp_cage_tool_finalize;
   
+  tool_class->initialize          = gimp_cage_tool_initialize;
   tool_class->button_press        = gimp_cage_tool_button_press;
   tool_class->button_release      = gimp_cage_tool_button_release;
+  tool_class->key_press           = gimp_cage_tool_key_press;
+  tool_class->motion              = gimp_cage_tool_motion;
+  tool_class->control             = gimp_cage_tool_control;
+  tool_class->cursor_update       = gimp_cage_tool_cursor_update;
+  tool_class->oper_update         = gimp_cage_tool_oper_update;
   
   draw_tool_class->draw           = gimp_cage_tool_draw;
 }
@@ -97,54 +132,352 @@ gimp_cage_tool_class_init (GimpCageToolClass *klass)
 static void
 gimp_cage_tool_init (GimpCageTool *self)
 {
-
+  self->cage = g_object_new (GIMP_TYPE_CAGE, NULL);
+  self->cursor_position.x = 0;
+  self->cursor_position.y = 0;
+  self->handle_moved = -1;
+  self->cage_complete = FALSE;
 }
 
+static gboolean
+gimp_cage_tool_initialize (GimpTool    *tool,
+                           GimpDisplay *display,
+                           GError     **error)
+{
+  GimpCageTool *cage_tool = GIMP_CAGE_TOOL (tool);
+
+  return GIMP_TOOL_CLASS (parent_class)->initialize(tool, display, error);
+}
 
 static void
 gimp_cage_tool_finalize (GObject *object)
 {
   GimpCageTool        *ct  = GIMP_CAGE_TOOL (object);
-  //GimpCageToolPrivate *priv = GET_PRIVATE (ct);
 
-  /*g_free (priv->points);
-  g_free (priv->segment_indices);
-  g_free (priv->saved_points_lower_segment);
-  g_free (priv->saved_points_higher_segment);*/
-
+  g_object_unref (ct->cage);
+  
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void gimp_cage_tool_button_press (GimpTool              *tool,
-                                         const GimpCoords      *coords,
-                                         guint32                time,
-                                         GdkModifierType        state,
-                                         GimpButtonPressType    press_type,
-                                         GimpDisplay           *display)
-{
 
+
+static void
+gimp_cage_tool_start (GimpCageTool *ct,
+                      GimpDisplay        *display)
+{
+  GimpTool                  *tool      = GIMP_TOOL (ct);
+  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpCageOptions           *options   = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+
+  gimp_cage_tool_halt (ct);
+
+  gimp_tool_control_activate (tool->control);
+
+  tool->display = display;
+
+  gimp_draw_tool_start (draw_tool, display);
+}
+
+static void
+gimp_cage_tool_halt (GimpCageTool *ct)
+{
+  GimpTool                  *tool      = GIMP_TOOL (ct);
+  GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (ct);
+
+  if (gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_stop (draw_tool);
+
+  if (gimp_tool_control_is_active (tool->control))
+    gimp_tool_control_halt (tool->control);
+
+  tool->display              = NULL;
+  
+  g_object_unref (ct->cage);
+  ct->cage = g_object_new (GIMP_TYPE_CAGE, NULL);
+  ct->cursor_position.x = 0;
+  ct->cursor_position.y = 0;
+  ct->handle_moved = -1;
+  ct->cage_complete = FALSE;
+}
+
+static void 
+gimp_cage_tool_button_press (GimpTool              *tool,
+                             const GimpCoords      *coords,
+                             guint32                time,
+                             GdkModifierType        state,
+                             GimpButtonPressType    press_type,
+                             GimpDisplay           *display)
+{
+  GimpCageTool    *ct       = GIMP_CAGE_TOOL (tool);
+  GimpCage        *cage     = ct->cage;
+  
+  if (display != tool->display)
+  {
+    gimp_cage_tool_start  (ct,
+                           display);
+  }
+   
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
+  
+  if (ct->handle_moved < 0)
+  {
+    ct->handle_moved = gimp_cage_is_on_handle (cage,
+                                               coords->x,
+                                               coords->y,
+                                               HANDLE_SIZE);
+  }
+  
+  if (ct->handle_moved < 0)
+  {
+    gimp_cage_add_cage_point (cage,
+                              coords->x,
+                              coords->y);
+  }
+  
+  // user is clicking on the first handle, we close the cage and switch to deform mode
+  if (ct->handle_moved == 0)
+  {
+    ct->cage_complete = TRUE;
+    gimp_cage_tool_switch_to_deform (ct);
+  }
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
   
 }
 
-static void gimp_cage_tool_button_release (GimpTool              *tool,
-                                           const GimpCoords      *coords,
-                                           guint32                time,
-                                           GdkModifierType        state,
-                                           GimpButtonReleaseType  release_type,
-                                           GimpDisplay           *display)
+void 
+gimp_cage_tool_button_release (GimpTool              *tool,
+                               const GimpCoords      *coords,
+                               guint32                time,
+                               GdkModifierType        state,
+                               GimpButtonReleaseType  release_type,
+                               GimpDisplay           *display)
 {                                         
-
+  GimpCageTool        *ct         = GIMP_CAGE_TOOL (tool);
+  
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
+  ct->handle_moved = -1;
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
 }
 
-static void gimp_cage_tool_draw (GimpDrawTool *draw_tool)
+
+static gboolean
+gimp_cage_tool_key_press (GimpTool    *tool,
+                          GdkEventKey *kevent,
+                          GimpDisplay *display)
 {
-  GimpCageTool       *fst                   = GIMP_CAGE_TOOL (draw_tool);
-  //GimpCageToolPrivate *priv                  = GET_PRIVATE (fst);
-  GimpTool           *tool                  = GIMP_TOOL (draw_tool);
+  GimpCageTool *ct    = GIMP_CAGE_TOOL (tool);
+  GimpCage     *cage  = ct->cage;
   
-  gimp_draw_tool_draw_line(draw_tool, 10, 10, 10, 40, FALSE);
-  gimp_draw_tool_draw_line(draw_tool, 10, 40, 40, 40, FALSE);
-  gimp_draw_tool_draw_line(draw_tool, 40, 40, 40, 10, FALSE);
-  gimp_draw_tool_draw_line(draw_tool, 40, 10, 10, 10, FALSE);
+  switch (kevent->keyval)
+    {
+    case GDK_BackSpace:
+      gimp_cage_tool_remove_last_handle (ct);
+      return TRUE;
+
+    case GDK_Return:
+    case GDK_KP_Enter:
+    case GDK_ISO_Enter:
+      gimp_cage_tool_switch_to_deform (ct);
+      return TRUE;
+
+    case GDK_Escape:
+      gimp_cage_tool_halt (ct);
+      return TRUE;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_cage_tool_motion (GimpTool         *tool,
+                        const GimpCoords *coords,
+                        guint32           time,
+                        GdkModifierType   state,
+                        GimpDisplay      *display)
+{
+  GimpCageTool        *ct         = GIMP_CAGE_TOOL (tool);
+  GimpDrawTool        *draw_tool  = GIMP_DRAW_TOOL (tool);
+  GimpCage            *cage       = ct->cage;
   
+
+  gimp_draw_tool_pause (draw_tool);
+
+  /*
+  if (ct->handle_moved >= 0)
+  {
+    gimp_cage_move_cage_point  (cage,
+                                ct->handle_moved,
+                                coords->x,
+                                coords->y);
+  } */
+
+  gimp_draw_tool_resume (draw_tool);
+}
+
+static void
+gimp_cage_tool_control (GimpTool       *tool,
+                         GimpToolAction  action,
+                         GimpDisplay    *display)
+{
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_cage_tool_halt (GIMP_CAGE_TOOL (tool));
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
+static void
+gimp_cage_tool_cursor_update  (GimpTool         *tool,
+                               const GimpCoords *coords,
+                               GdkModifierType   state,
+                               GimpDisplay      *display)
+{
+  GimpCageTool    *ct       = GIMP_CAGE_TOOL (tool);
+  GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (tool);
+
+  if (tool->display == NULL)
+  {
+    GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
+                                                   coords,
+                                                   state,
+                                                   display);
+  }
+  else
+  {
+    GimpCursorModifier modifier;
+
+    if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    {
+      modifier = GIMP_CURSOR_MODIFIER_ANCHOR;
+    }
+    else
+    {
+      modifier = GIMP_CURSOR_MODIFIER_MOVE;
+    }
+
+    gimp_tool_set_cursor (tool, display,
+                          gimp_tool_control_get_cursor (tool->control),
+                          gimp_tool_control_get_tool_cursor (tool->control),
+                          modifier);
+  }
+}
+
+static void
+gimp_cage_tool_oper_update  (GimpTool         *tool,
+                             const GimpCoords *coords,
+                             GdkModifierType   state,
+                             gboolean          proximity,
+                             GimpDisplay      *display)
+{
+  GimpCageTool *ct          = GIMP_CAGE_TOOL (tool);
+  GimpDrawTool *draw_tool   = GIMP_DRAW_TOOL (tool);
+  GimpCage     *cage        = ct->cage;
+  
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  
+  ct->cursor_position.x = coords->x;
+  ct->cursor_position.y = coords->y;
+  
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+}
+
+/**
+ * gimp_cage_tool_draw:
+ * @draw_tool: 
+ * 
+ * Draw the tool on the canvas. 
+ */
+static void
+gimp_cage_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpCageTool       *ct      = GIMP_CAGE_TOOL (draw_tool);
+  GimpTool           *tool    = GIMP_TOOL (draw_tool);
+  GimpCage           *cage    = ct->cage;
+  
+  gint i = 0;
+  gint n = 0;
+  gint on_handle = -1;
+  
+  if (cage->cage_vertice_number <= 0)
+  {
+    return;
+  }
+  
+  gimp_draw_tool_draw_lines (draw_tool,
+                             cage->cage_vertices,
+                             cage->cage_vertice_number,
+                             FALSE, FALSE);
+  
+  if (ct->cage_complete)
+  {
+    gimp_draw_tool_draw_line (draw_tool,
+                              cage->cage_vertices[cage->cage_vertice_number - 1].x,
+                              cage->cage_vertices[cage->cage_vertice_number - 1].y,
+                              cage->cage_vertices[0].x,
+                              cage->cage_vertices[0].y,
+                              FALSE);
+  }
+  else
+  {
+    gimp_draw_tool_draw_line (draw_tool,
+                              cage->cage_vertices[cage->cage_vertice_number - 1].x,
+                              cage->cage_vertices[cage->cage_vertice_number - 1].y,
+                              ct->cursor_position.x,
+                              ct->cursor_position.y,
+                              FALSE);
+  }
+  
+  n = cage->cage_vertice_number;
+  
+  on_handle = gimp_cage_is_on_handle (cage,
+                                      ct->cursor_position.x,
+                                      ct->cursor_position.y,
+                                      HANDLE_SIZE);
+  
+  for(i = 0; i < n; i++)
+  {
+    GimpVector2 point = cage->cage_vertices[i];
+    
+    GimpHandleType handle = GIMP_HANDLE_CIRCLE;
+    
+    if (i == on_handle)
+    {
+      handle = GIMP_HANDLE_FILLED_CIRCLE;
+    }
+    
+    gimp_draw_tool_draw_handle (draw_tool, handle,
+                                point.x,
+                                point.y,
+                                HANDLE_SIZE, HANDLE_SIZE,
+                                GTK_ANCHOR_CENTER, FALSE);
+  }
+}
+
+static void
+gimp_cage_tool_switch_to_deform (GimpCageTool *ct)
+{
+  GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  
+  g_object_set (options, "cage-mode", GIMP_CAGE_MODE_DEFORM, NULL);
+}
+
+static void
+gimp_cage_tool_remove_last_handle (GimpCageTool *ct)
+{
+  GimpCage           *cage    = ct->cage;
+  
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
+  gimp_cage_remove_last_cage_point (cage);
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
 }
