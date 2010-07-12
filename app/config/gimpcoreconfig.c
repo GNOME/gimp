@@ -38,7 +38,7 @@
 
 
 #define DEFAULT_BRUSH       "Round Fuzzy"
-#define DEFAULT_DYNAMICS    "Basic Dynamics"
+#define DEFAULT_DYNAMICS    "Dynamics Off"
 #define DEFAULT_PATTERN     "Pine"
 #define DEFAULT_PALETTE     "Default"
 #define DEFAULT_GRADIENT    "FG to BG (RGB)"
