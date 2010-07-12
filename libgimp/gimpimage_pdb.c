@@ -313,8 +313,7 @@ gimp_image_height (gint32 image_ID)
  * gimp_image_free_shadow:
  * @image_ID: The image.
  *
- * This procedure is deprecated! Use gimp_drawable_free_shadow()
- * instead.
+ * Deprecated: Use gimp_drawable_free_shadow() instead.
  *
  * Returns: TRUE on success.
  */

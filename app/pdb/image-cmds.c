@@ -2803,8 +2803,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-free-shadow");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-free-shadow",
-                                     "This procedure is deprecated! Use 'gimp-drawable-free-shadow' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-free-shadow' instead.",
+                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
+                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
                                      "",
                                      "",
                                      "",
@@ -4099,8 +4099,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-layer-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-layer-mask",
-                                     "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
-                                     "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
                                      "",
                                      "",
                                      "",
@@ -4134,8 +4134,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-remove-layer-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-remove-layer-mask",
-                                     "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
-                                     "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
                                      "",
                                      "",
                                      "",

@@ -470,7 +470,7 @@ gimp_item_parasite_list (gint32    item_ID,
  * @drawable_ID: The drawable.
  * @name: The name of the parasite to find.
  *
- * This procedure is deprecated! Use gimp_item_parasite_find() instead.
+ * Deprecated: Use gimp_item_parasite_find() instead.
  *
  * Returns: The found parasite.
  */
@@ -501,8 +501,7 @@ gimp_drawable_parasite_find (gint32       drawable_ID,
  * @drawable_ID: The drawable.
  * @parasite: The parasite to attach to a drawable.
  *
- * This procedure is deprecated! Use gimp_item_parasite_attach()
- * instead.
+ * Deprecated: Use gimp_item_parasite_attach() instead.
  *
  * Returns: TRUE on success.
  */
@@ -532,8 +531,7 @@ gimp_drawable_parasite_attach (gint32              drawable_ID,
  * @drawable_ID: The drawable.
  * @name: The name of the parasite to detach from a drawable.
  *
- * This procedure is deprecated! Use gimp_item_parasite_detach()
- * instead.
+ * Deprecated: Use gimp_item_parasite_detach() instead.
  *
  * Returns: TRUE on success.
  */
@@ -564,7 +562,7 @@ gimp_drawable_parasite_detach (gint32       drawable_ID,
  * @num_parasites: The number of attached parasites.
  * @parasites: The names of currently attached parasites.
  *
- * This procedure is deprecated! Use gimp_item_parasite_list() instead.
+ * Deprecated: Use gimp_item_parasite_list() instead.
  *
  * Returns: TRUE on success.
  */
@@ -606,7 +604,7 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
  * @vectors_ID: The vectors object.
  * @name: The name of the parasite to find.
  *
- * This procedure is deprecated! Use gimp_item_parasite_find() instead.
+ * Deprecated: Use gimp_item_parasite_find() instead.
  *
  * Returns: The found parasite.
  *
@@ -639,8 +637,7 @@ gimp_vectors_parasite_find (gint32       vectors_ID,
  * @vectors_ID: The vectors object.
  * @parasite: The parasite to attach to a vectors object.
  *
- * This procedure is deprecated! Use gimp_item_parasite_attach()
- * instead.
+ * Deprecated: Use gimp_item_parasite_attach() instead.
  *
  * Returns: TRUE on success.
  *
@@ -672,8 +669,7 @@ gimp_vectors_parasite_attach (gint32              vectors_ID,
  * @vectors_ID: The vectors object.
  * @name: The name of the parasite to detach from a vectors object.
  *
- * This procedure is deprecated! Use gimp_item_parasite_detach()
- * instead.
+ * Deprecated: Use gimp_item_parasite_detach() instead.
  *
  * Returns: TRUE on success.
  *
@@ -706,7 +702,7 @@ gimp_vectors_parasite_detach (gint32       vectors_ID,
  * @num_parasites: The number of attached parasites.
  * @parasites: The names of currently attached parasites.
  *
- * This procedure is deprecated! Use gimp_item_parasite_list() instead.
+ * Deprecated: Use gimp_item_parasite_list() instead.
  *
  * Returns: TRUE on success.
  *

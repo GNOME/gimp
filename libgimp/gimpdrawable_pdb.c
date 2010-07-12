@@ -43,7 +43,7 @@
  * gimp_drawable_is_valid:
  * @drawable_ID: The drawable to check.
  *
- * This procedure is deprecated! Use gimp_item_is_valid() instead.
+ * Deprecated: Use gimp_item_is_valid() instead.
  *
  * Returns: Whether the drawable ID is valid.
  *
@@ -73,7 +73,7 @@ gimp_drawable_is_valid (gint32 drawable_ID)
  * gimp_drawable_is_layer:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_is_layer() instead.
+ * Deprecated: Use gimp_item_is_layer() instead.
  *
  * Returns: TRUE if the drawable is a layer, FALSE otherwise.
  */
@@ -134,7 +134,7 @@ gimp_drawable_is_text_layer (gint32 drawable_ID)
  * gimp_drawable_is_layer_mask:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_is_layer_mask() instead.
+ * Deprecated: Use gimp_item_is_layer_mask() instead.
  *
  * Returns: TRUE if the drawable is a layer mask, FALSE otherwise.
  */
@@ -162,7 +162,7 @@ gimp_drawable_is_layer_mask (gint32 drawable_ID)
  * gimp_drawable_is_channel:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_is_channel() instead.
+ * Deprecated: Use gimp_item_is_channel() instead.
  *
  * Returns: TRUE if the drawable is a channel, FALSE otherwise.
  */
@@ -513,7 +513,7 @@ gimp_drawable_offsets (gint32  drawable_ID,
  * gimp_drawable_delete:
  * @drawable_ID: The drawable to delete.
  *
- * This procedure is deprecated! Use gimp_item_delete() instead.
+ * Deprecated: Use gimp_item_delete() instead.
  *
  * Returns: TRUE on success.
  */
@@ -540,7 +540,7 @@ gimp_drawable_delete (gint32 drawable_ID)
  * gimp_drawable_get_image:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_get_image() instead.
+ * Deprecated: Use gimp_item_get_image() instead.
  *
  * Returns: The drawable's image.
  */
@@ -569,7 +569,7 @@ gimp_drawable_get_image (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @image_ID: The image.
  *
- * This procedure is deprecated!
+ * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
  */
@@ -598,7 +598,7 @@ gimp_drawable_set_image (gint32 drawable_ID,
  * gimp_drawable_get_name:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_get_name() instead.
+ * Deprecated: Use gimp_item_get_name() instead.
  *
  * Returns: The drawable name.
  */
@@ -627,7 +627,7 @@ gimp_drawable_get_name (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @name: The new drawable name.
  *
- * This procedure is deprecated! Use gimp_item_set_name() instead.
+ * Deprecated: Use gimp_item_set_name() instead.
  *
  * Returns: TRUE on success.
  */
@@ -656,7 +656,7 @@ gimp_drawable_set_name (gint32       drawable_ID,
  * gimp_drawable_get_visible:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_get_visible() instead.
+ * Deprecated: Use gimp_item_get_visible() instead.
  *
  * Returns: The drawable visibility.
  */
@@ -685,7 +685,7 @@ gimp_drawable_get_visible (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @visible: The new drawable visibility.
  *
- * This procedure is deprecated! Use gimp_item_set_visible() instead.
+ * Deprecated: Use gimp_item_set_visible() instead.
  *
  * Returns: TRUE on success.
  */
@@ -714,7 +714,7 @@ gimp_drawable_set_visible (gint32   drawable_ID,
  * gimp_drawable_get_linked:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_get_linked() instead.
+ * Deprecated: Use gimp_item_get_linked() instead.
  *
  * Returns: The drawable linked state (for moves).
  */
@@ -743,7 +743,7 @@ gimp_drawable_get_linked (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @linked: The new drawable linked state.
  *
- * This procedure is deprecated! Use gimp_item_set_linked() instead.
+ * Deprecated: Use gimp_item_set_linked() instead.
  *
  * Returns: TRUE on success.
  */
@@ -772,7 +772,7 @@ gimp_drawable_set_linked (gint32   drawable_ID,
  * gimp_drawable_get_tattoo:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_item_get_tattoo() instead.
+ * Deprecated: Use gimp_item_get_tattoo() instead.
  *
  * Returns: The drawable tattoo.
  */
@@ -801,7 +801,7 @@ gimp_drawable_get_tattoo (gint32 drawable_ID)
  * @drawable_ID: The drawable.
  * @tattoo: The new drawable tattoo.
  *
- * This procedure is deprecated! Use gimp_item_set_tattoo() instead.
+ * Deprecated: Use gimp_item_set_tattoo() instead.
  *
  * Returns: TRUE on success.
  */

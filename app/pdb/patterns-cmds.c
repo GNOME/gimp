@@ -248,8 +248,8 @@ register_patterns_procs (GimpPDB *pdb)
                                "gimp-patterns-get-pattern");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-get-pattern",
-                                     "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
-                                     "This procedure is deprecated! Use 'gimp-context-get-pattern' instead.",
+                                     "Deprecated: Use 'gimp-context-get-pattern' instead.",
+                                     "Deprecated: Use 'gimp-context-get-pattern' instead.",
                                      "",
                                      "",
                                      "",
@@ -284,8 +284,8 @@ register_patterns_procs (GimpPDB *pdb)
                                "gimp-patterns-get-pattern-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-patterns-get-pattern-data",
-                                     "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",
-                                     "This procedure is deprecated! Use 'gimp-pattern-get-pixels' instead.",
+                                     "Deprecated: Use 'gimp-pattern-get-pixels' instead.",
+                                     "Deprecated: Use 'gimp-pattern-get-pixels' instead.",
                                      "",
                                      "",
                                      "",

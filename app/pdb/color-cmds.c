@@ -736,8 +736,8 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-levels-auto");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-levels-auto",
-                                     "This procedure is deprecated! Use 'gimp-levels-stretch' instead.",
-                                     "This procedure is deprecated! Use 'gimp-levels-stretch' instead.",
+                                     "Deprecated: Use 'gimp-levels-stretch' instead.",
+                                     "Deprecated: Use 'gimp-levels-stretch' instead.",
                                      "",
                                      "",
                                      "",

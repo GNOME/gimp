@@ -136,7 +136,7 @@ gimp_levels (gint32               drawable_ID,
  * gimp_levels_auto:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_levels_stretch() instead.
+ * Deprecated: Use gimp_levels_stretch() instead.
  *
  * Returns: TRUE on success.
  */

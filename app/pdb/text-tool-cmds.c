@@ -452,8 +452,8 @@ register_text_tool_procs (GimpPDB *pdb)
                                "gimp-text");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text",
-                                     "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
-                                     "This procedure is deprecated! Use 'gimp-text-fontname' instead.",
+                                     "Deprecated: Use 'gimp-text-fontname' instead.",
+                                     "Deprecated: Use 'gimp-text-fontname' instead.",
                                      "",
                                      "",
                                      "",
@@ -587,8 +587,8 @@ register_text_tool_procs (GimpPDB *pdb)
                                "gimp-text-get-extents");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-get-extents",
-                                     "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",
-                                     "This procedure is deprecated! Use 'gimp-text-get-extents-fontname' instead.",
+                                     "Deprecated: Use 'gimp-text-get-extents-fontname' instead.",
+                                     "Deprecated: Use 'gimp-text-get-extents-fontname' instead.",
                                      "",
                                      "",
                                      "",

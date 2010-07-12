@@ -174,7 +174,7 @@ gimp_floating_sel_attach (gint32 layer_ID,
  * @floating_sel_ID: The floating selection.
  * @undo: .
  *
- * This procedure is deprecated!
+ * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
  */
@@ -204,7 +204,7 @@ gimp_floating_sel_rigor (gint32   floating_sel_ID,
  * @floating_sel_ID: The floating selection.
  * @undo: .
  *
- * This procedure is deprecated!
+ * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
  */

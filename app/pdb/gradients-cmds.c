@@ -349,8 +349,8 @@ register_gradients_procs (GimpPDB *pdb)
                                "gimp-gradients-sample-uniform");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-sample-uniform",
-                                     "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
-                                     "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
+                                     "Deprecated: Use 'gimp-gradient-get-uniform-samples' instead.",
+                                     "Deprecated: Use 'gimp-gradient-get-uniform-samples' instead.",
                                      "",
                                      "",
                                      "",
@@ -389,8 +389,8 @@ register_gradients_procs (GimpPDB *pdb)
                                "gimp-gradients-sample-custom");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-sample-custom",
-                                     "This procedure is deprecated! Use 'gimp-gradient-get-custom-samples' instead.",
-                                     "This procedure is deprecated! Use 'gimp-gradient-get-custom-samples' instead.",
+                                     "Deprecated: Use 'gimp-gradient-get-custom-samples' instead.",
+                                     "Deprecated: Use 'gimp-gradient-get-custom-samples' instead.",
                                      "",
                                      "",
                                      "",
@@ -434,8 +434,8 @@ register_gradients_procs (GimpPDB *pdb)
                                "gimp-gradients-get-gradient-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-gradients-get-gradient-data",
-                                     "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
-                                     "This procedure is deprecated! Use 'gimp-gradient-get-uniform-samples' instead.",
+                                     "Deprecated: Use 'gimp-gradient-get-uniform-samples' instead.",
+                                     "Deprecated: Use 'gimp-gradient-get-uniform-samples' instead.",
                                      "",
                                      "",
                                      "",

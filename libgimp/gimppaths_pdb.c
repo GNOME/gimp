@@ -44,7 +44,7 @@
  * @image_ID: The image to list the paths from.
  * @num_paths: The number of paths returned.
  *
- * This procedure is deprecated! Use gimp_image_get_vectors() instead.
+ * Deprecated: Use gimp_image_get_vectors() instead.
  *
  * Returns: List of the paths belonging to this image.
  */
@@ -81,8 +81,7 @@ gimp_path_list (gint32  image_ID,
  * gimp_path_get_current:
  * @image_ID: The image to get the current path from.
  *
- * This procedure is deprecated! Use gimp_image_get_active_vectors()
- * instead.
+ * Deprecated: Use gimp_image_get_active_vectors() instead.
  *
  * Returns: The name of the current path.
  */
@@ -111,8 +110,7 @@ gimp_path_get_current (gint32 image_ID)
  * @image_ID: The image in which a path will become current.
  * @name: The name of the path to make current.
  *
- * This procedure is deprecated! Use gimp_image_set_active_vectors()
- * instead.
+ * Deprecated: Use gimp_image_set_active_vectors() instead.
  *
  * Returns: TRUE on success.
  */
@@ -142,8 +140,7 @@ gimp_path_set_current (gint32       image_ID,
  * @image_ID: The image to delete the path from.
  * @name: The name of the path to delete.
  *
- * This procedure is deprecated! Use gimp_image_remove_vectors()
- * instead.
+ * Deprecated: Use gimp_image_remove_vectors() instead.
  *
  * Returns: TRUE on success.
  */
@@ -176,8 +173,7 @@ gimp_path_delete (gint32       image_ID,
  * @num_path_point_details: The number of points returned. Each point is made up of (x, y, pnt_type) of floats.
  * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution.
  *
- * This procedure is deprecated! Use gimp_vectors_stroke_get_points()
- * instead.
+ * Deprecated: Use gimp_vectors_stroke_get_points() instead.
  *
  * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
  */
@@ -224,8 +220,7 @@ gimp_path_get_points (gint32        image_ID,
  * @num_path_points: The number of elements in the array, i.e. the number of points in the path * 3. Each point is made up of (x, y, type) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve. Note that for BEZIER curves, points must be given in the following order: ACCACCAC... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If (num_path_points/3) % 3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.
  * @points_pairs: The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution.
  *
- * This procedure is deprecated! Use
- * gimp_vectors_stroke_new_from_points() instead.
+ * Deprecated: Use gimp_vectors_stroke_new_from_points() instead.
  *
  * Returns: TRUE on success.
  */
@@ -260,8 +255,7 @@ gimp_path_set_points (gint32         image_ID,
  * gimp_path_stroke_current:
  * @image_ID: The image which contains the path to stroke.
  *
- * This procedure is deprecated! Use gimp_edit_stroke_vectors()
- * instead.
+ * Deprecated: Use gimp_edit_stroke_vectors() instead.
  *
  * Returns: TRUE on success.
  */
@@ -291,8 +285,7 @@ gimp_path_stroke_current (gint32 image_ID)
  * @y_point: The y position of the point.
  * @slope: The slope (dy / dx) at the specified point.
  *
- * This procedure is deprecated! Use
- * gimp_vectors_stroke_get_point_at_dist() instead.
+ * Deprecated: Use gimp_vectors_stroke_get_point_at_dist() instead.
  *
  * Returns: The x position of the point.
  */
@@ -329,7 +322,7 @@ gimp_path_get_point_at_dist (gint32   image_ID,
  * @image_ID: The image.
  * @name: The name of the path whose tattoo should be obtained.
  *
- * This procedure is deprecated! Use gimp_vectors_get_tattoo() instead.
+ * Deprecated: Use gimp_vectors_get_tattoo() instead.
  *
  * Returns: The tattoo associated with the named path.
  */
@@ -361,7 +354,7 @@ gimp_path_get_tattoo (gint32       image_ID,
  * @name: the name of the path whose tattoo should be set.
  * @tattovalue: The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here.
  *
- * This procedure is deprecated! Use gimp_vectors_set_tattoo() instead.
+ * Deprecated: Use gimp_vectors_set_tattoo() instead.
  *
  * Returns: TRUE on success.
  */
@@ -393,8 +386,7 @@ gimp_path_set_tattoo (gint32       image_ID,
  * @image_ID: The image.
  * @tattoo: The tattoo of the required path.
  *
- * This procedure is deprecated! Use gimp_image_get_vectors_by_tattoo()
- * instead.
+ * Deprecated: Use gimp_image_get_vectors_by_tattoo() instead.
  *
  * Returns: The name of the path with the specified tattoo.
  */
@@ -425,7 +417,7 @@ gimp_get_path_by_tattoo (gint32 image_ID,
  * @image_ID: The image.
  * @name: The name of the path whose locked status should be obtained.
  *
- * This procedure is deprecated! Use gimp_vectors_get_linked() instead.
+ * Deprecated: Use gimp_vectors_get_linked() instead.
  *
  * Returns: TRUE if the path is locked, FALSE otherwise.
  */
@@ -457,7 +449,7 @@ gimp_path_get_locked (gint32       image_ID,
  * @name: the name of the path whose locked status should be set.
  * @locked: Whether the path is locked.
  *
- * This procedure is deprecated! Use gimp_vectors_set_linked() instead.
+ * Deprecated: Use gimp_vectors_set_linked() instead.
  *
  * Returns: TRUE on success.
  */
@@ -494,8 +486,7 @@ gimp_path_set_locked (gint32       image_ID,
  * @feather_radius_x: Feather radius x.
  * @feather_radius_y: Feather radius y.
  *
- * This procedure is deprecated! Use gimp_vectors_to_selection()
- * instead.
+ * Deprecated: Use gimp_vectors_to_selection() instead.
  *
  * Returns: TRUE on success.
  */
@@ -537,8 +528,7 @@ gimp_path_to_selection (gint32          image_ID,
  * @merge: Merge paths into a single vectors object.
  * @scale: Scale the SVG to image dimensions.
  *
- * This procedure is deprecated! Use gimp_vectors_import_from_file()
- * instead.
+ * Deprecated: Use gimp_vectors_import_from_file() instead.
  *
  * Returns: TRUE on success.
  */

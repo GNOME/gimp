@@ -320,8 +320,8 @@ register_floating_sel_procs (GimpPDB *pdb)
                                "gimp-floating-sel-rigor");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-rigor",
-                                     "This procedure is deprecated!",
-                                     "This procedure is deprecated!",
+                                     "Deprecated: There is no replacement for this procedure.",
+                                     "Deprecated: There is no replacement for this procedure.",
                                      "",
                                      "",
                                      "",
@@ -349,8 +349,8 @@ register_floating_sel_procs (GimpPDB *pdb)
                                "gimp-floating-sel-relax");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-floating-sel-relax",
-                                     "This procedure is deprecated!",
-                                     "This procedure is deprecated!",
+                                     "Deprecated: There is no replacement for this procedure.",
+                                     "Deprecated: There is no replacement for this procedure.",
                                      "",
                                      "",
                                      "",

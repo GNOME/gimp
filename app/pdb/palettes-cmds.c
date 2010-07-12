@@ -245,8 +245,8 @@ register_palettes_procs (GimpPDB *pdb)
                                "gimp-palettes-get-palette");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-get-palette",
-                                     "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
-                                     "This procedure is deprecated! Use 'gimp-context-get-palette' instead.",
+                                     "Deprecated: Use 'gimp-context-get-palette' instead.",
+                                     "Deprecated: Use 'gimp-context-get-palette' instead.",
                                      "",
                                      "",
                                      "",
@@ -275,8 +275,8 @@ register_palettes_procs (GimpPDB *pdb)
                                "gimp-palettes-get-palette-entry");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-palettes-get-palette-entry",
-                                     "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",
-                                     "This procedure is deprecated! Use 'gimp-palette-entry-get-color' instead.",
+                                     "Deprecated: Use 'gimp-palette-entry-get-color' instead.",
+                                     "Deprecated: Use 'gimp-palette-entry-get-color' instead.",
                                      "",
                                      "",
                                      "",

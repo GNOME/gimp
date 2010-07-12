@@ -433,13 +433,14 @@ CODE
 
 	if ($proc->{deprecated}) {
             if ($proc->{deprecated} eq 'NONE') {
-		$procdesc = &desc_wrap("This procedure is deprecated!");
+		$procdesc = &desc_wrap("Deprecated: There is no replacement " .
+                                       "for this procedure.");
 	    }
 	    else {
 		my $underscores = $proc->{deprecated};
 		$underscores =~ s/-/_/g;
 
-		$procdesc = &desc_wrap("This procedure is deprecated! " .
+		$procdesc = &desc_wrap("Deprecated: " .
 				       "Use $underscores() instead.");
 	    }
 	}
