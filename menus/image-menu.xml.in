@@ -561,6 +561,7 @@
         <menuitem action="tools-shear" />
         <menuitem action="tools-perspective" />
         <menuitem action="tools-flip" />
+        <menuitem action="tools-cage" />
       </menu>
       <menu action="tools-color-menu" name="Color Tools">
         <menuitem action="tools-color-balance" />
