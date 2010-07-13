@@ -896,7 +896,8 @@ load_image (const gchar  *filename,
       png_uint_32  yres;
       gint         unit_type;
 
-      if (png_get_pHYs (pp, info, &xres, &yres, &unit_type))
+      if (png_get_pHYs (pp, info,
+                        &xres, &yres, &unit_type) && xres > 0 && yres > 0)
         {
           switch (unit_type)
             {
