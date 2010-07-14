@@ -1,15 +1,15 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-01-09 11:16+0000\n"
-"PO-Revision-Date: 2010-01-13 09:01+0200\n"
+"POT-Creation-Date: 2010-07-12 21:28+0000\n"
+"PO-Revision-Date: 2010-06-30 18:18+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -245,9 +245,9 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"Puteți să trageți și să aruncați multe chestii în GIMP. De exemplu, tragerea "
+"Puteți să trageți și să plasați multe chestii în GIMP. De exemplu, tragerea "
 "unei culori din trusa de instrumente sau dintr-o paletă de culoare și "
-"aruncarea acesteia peste o imagine va umple selecția curentă cu acea culoare."
+"plasarea acesteia peste o imagine va umple selecția curentă cu acea culoare."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -317,13 +317,3 @@ msgstr ""
 "butonul „Mască rapidă” din partea din stânga jos a unei ferestre cu o "
 "imagine. Modificați selecția prin desenare în imagine după care clic din nou "
 "pe buton pentru a-l converti la loc la o selecție normală."
-
-#~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-#~ msgstr "<big>Bun venit la programul GNU de manipulare de imagini !</big>"
-
-#~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
-#~ "experiment."
-#~ msgstr ""
-#~ "GIMP vă permite să anulați majoritatea modificărilor făcute asupra "
-#~ "imaginii, deci simțiți-vă liberi să experimentați."
