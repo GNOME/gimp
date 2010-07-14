@@ -678,7 +678,7 @@ msgstr "Delta _max.:"
 #: ../plug-ins/common/blur-gauss.c:158
 msgid "Simplest, most commonly used way of blurring"
 msgstr ""
-"Calea cea mai simplă de atenuare a claritîății, folosită cel mai frecvent"
+"Calea cea mai simplă de atenuare a clarității, folosită cel mai frecvent"
 
 #: ../plug-ins/common/blur-gauss.c:171
 msgid "_Gaussian Blur..."
