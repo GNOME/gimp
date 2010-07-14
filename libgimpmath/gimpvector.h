@@ -85,6 +85,8 @@ void        gimp_vector2_rotate            (GimpVector2       *vector,
                                             gdouble            alpha);
 GimpVector2 gimp_vector2_rotate_val        (GimpVector2        vector,
                                             gdouble            alpha);
+GimpVector2 gimp_vector2_normal            (GimpVector2       *vector);
+GimpVector2 gimp_vector2_normal_val        (GimpVector2        vector);
 
 /* Three dimensional vector functions */
 /* ================================== */

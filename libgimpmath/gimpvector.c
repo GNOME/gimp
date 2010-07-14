@@ -451,6 +451,48 @@ gimp_vector2_rotate_val (GimpVector2 vector,
   return result;
 }
 
+/**
+ * gimp_vector2_normal:
+ * @vector: a pointer to a #GimpVector2.
+ *
+ * Compute a normalized perpendicular vector to @vector
+ *
+ * Returns: a #GimpVector2 perpendicular to @vector, with a length of 1.0.
+ **/
+GimpVector2
+gimp_vector2_normal (GimpVector2  *vector)
+{
+  GimpVector2 result;
+  
+  result.x = vector->y;
+  result.y = - vector->x;
+  
+  gimp_vector2_normalize (vector);
+  
+  return result;
+}
+
+/**
+ * gimp_vector2_normal_val:
+ * @vector: a #GimpVector2.
+ *
+ * This function is identical to gimp_vector2_normal() but the vector
+ * is passed by value rather than by reference.
+ *
+ * Returns: a #GimpVector2 perpendicular to @vector, with a length of 1.0.
+ **/
+GimpVector2
+gimp_vector2_normal_val (GimpVector2  vector)
+{
+  GimpVector2 result;
+  
+  result.x = vector.y;
+  result.y = - vector.x;
+  
+  gimp_vector2_normalize (&result);
+  
+  return result;
+}
 /**************************************/
 /* Three dimensional vector functions */
 /**************************************/
