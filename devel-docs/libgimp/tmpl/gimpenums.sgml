@@ -1,0 +1,235 @@
+<!-- ##### SECTION Title ##### -->
+gimpenums
+
+<!-- ##### SECTION Short_Description ##### -->
+Enums and definitions.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Enums and definitions.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION gimp_enums_init ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### ENUM GimpBrushApplicationMode ##### -->
+<para>
+
+</para>
+
+@GIMP_BRUSH_HARD: 
+@GIMP_BRUSH_SOFT: 
+
+<!-- ##### ENUM GimpBrushGeneratedShape ##### -->
+<para>
+The possible shapes generated brushes can take.
+</para>
+
+@GIMP_BRUSH_GENERATED_CIRCLE:  The brush has a circle shape.
+@GIMP_BRUSH_GENERATED_SQUARE:  The brush has a square shape.
+@GIMP_BRUSH_GENERATED_DIAMOND: The brush has a diamond shape.
+
+<!-- ##### ENUM GimpConvertDitherType ##### -->
+<para>
+
+</para>
+
+@GIMP_NO_DITHER: 
+@GIMP_FS_DITHER: 
+@GIMP_FSLOWBLEED_DITHER: 
+@GIMP_FIXED_DITHER: 
+
+<!-- ##### ENUM GimpConvertPaletteType ##### -->
+<para>
+
+</para>
+
+@GIMP_MAKE_PALETTE: 
+@GIMP_REUSE_PALETTE: 
+@GIMP_WEB_PALETTE: 
+@GIMP_MONO_PALETTE: 
+@GIMP_CUSTOM_PALETTE: 
+
+<!-- ##### ENUM GimpConvolutionType ##### -->
+<para>
+
+</para>
+
+@GIMP_NORMAL_CONVOL: 
+@GIMP_ABSOLUTE_CONVOL: 
+@GIMP_NEGATIVE_CONVOL: 
+
+<!-- ##### ENUM GimpConvolveType ##### -->
+<para>
+Operation modes of the convolve tool.
+</para>
+
+@GIMP_BLUR_CONVOLVE:    Blur the drawable.
+@GIMP_SHARPEN_CONVOLVE: Sharpen the drawable.
+
+<!-- ##### ENUM GimpFillType ##### -->
+<para>
+
+</para>
+
+@GIMP_FOREGROUND_FILL: 
+@GIMP_BACKGROUND_FILL: 
+@GIMP_WHITE_FILL: 
+@GIMP_TRANSPARENT_FILL: 
+@GIMP_PATTERN_FILL: 
+
+<!-- ##### ENUM GimpGradientSegmentColor ##### -->
+<para>
+
+</para>
+
+@GIMP_GRADIENT_SEGMENT_RGB: 
+@GIMP_GRADIENT_SEGMENT_HSV_CCW: 
+@GIMP_GRADIENT_SEGMENT_HSV_CW: 
+
+<!-- ##### ENUM GimpGradientSegmentType ##### -->
+<para>
+
+</para>
+
+@GIMP_GRADIENT_SEGMENT_LINEAR: 
+@GIMP_GRADIENT_SEGMENT_CURVED: 
+@GIMP_GRADIENT_SEGMENT_SINE: 
+@GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING: 
+@GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING: 
+
+<!-- ##### ENUM GimpHistogramChannel ##### -->
+<para>
+
+</para>
+
+@GIMP_HISTOGRAM_VALUE: 
+@GIMP_HISTOGRAM_RED: 
+@GIMP_HISTOGRAM_GREEN: 
+@GIMP_HISTOGRAM_BLUE: 
+@GIMP_HISTOGRAM_ALPHA: 
+
+<!-- ##### ENUM GimpHueRange ##### -->
+<para>
+
+</para>
+
+@GIMP_ALL_HUES: 
+@GIMP_RED_HUES: 
+@GIMP_YELLOW_HUES: 
+@GIMP_GREEN_HUES: 
+@GIMP_CYAN_HUES: 
+@GIMP_BLUE_HUES: 
+@GIMP_MAGENTA_HUES: 
+
+<!-- ##### ENUM GimpLayerModeEffects ##### -->
+<para>
+
+</para>
+
+@GIMP_NORMAL_MODE: 
+@GIMP_DISSOLVE_MODE: 
+@GIMP_BEHIND_MODE: 
+@GIMP_MULTIPLY_MODE: 
+@GIMP_SCREEN_MODE: 
+@GIMP_OVERLAY_MODE: 
+@GIMP_DIFFERENCE_MODE: 
+@GIMP_ADDITION_MODE: 
+@GIMP_SUBTRACT_MODE: 
+@GIMP_DARKEN_ONLY_MODE: 
+@GIMP_LIGHTEN_ONLY_MODE: 
+@GIMP_HUE_MODE: 
+@GIMP_SATURATION_MODE: 
+@GIMP_COLOR_MODE: 
+@GIMP_VALUE_MODE: 
+@GIMP_DIVIDE_MODE: 
+@GIMP_DODGE_MODE: 
+@GIMP_BURN_MODE: 
+@GIMP_HARDLIGHT_MODE: 
+@GIMP_SOFTLIGHT_MODE: 
+@GIMP_GRAIN_EXTRACT_MODE: 
+@GIMP_GRAIN_MERGE_MODE: 
+@GIMP_COLOR_ERASE_MODE: 
+
+<!-- ##### ENUM GimpMaskApplyMode ##### -->
+<para>
+
+</para>
+
+@GIMP_MASK_APPLY: 
+@GIMP_MASK_DISCARD: 
+
+<!-- ##### ENUM GimpMergeType ##### -->
+<para>
+
+</para>
+
+@GIMP_EXPAND_AS_NECESSARY: 
+@GIMP_CLIP_TO_IMAGE: 
+@GIMP_CLIP_TO_BOTTOM_LAYER: 
+@GIMP_FLATTEN_IMAGE: 
+
+<!-- ##### ENUM GimpOffsetType ##### -->
+<para>
+
+</para>
+
+@GIMP_OFFSET_BACKGROUND: 
+@GIMP_OFFSET_TRANSPARENT: 
+
+<!-- ##### ENUM GimpOrientationType ##### -->
+<para>
+Orientation values for all kinds of purposes, like guides.
+</para>
+
+@GIMP_ORIENTATION_HORIZONTAL: Horizontal ortientation.
+@GIMP_ORIENTATION_VERTICAL:   Vertical orientation.
+@GIMP_ORIENTATION_UNKNOWN:    Undetermined orientation.
+
+<!-- ##### ENUM GimpRotationType ##### -->
+<para>
+Steps for simple rotation based on multpiles of 90 degrees.
+</para>
+
+@GIMP_ROTATE_90:  Rotate by 90 degrees.
+@GIMP_ROTATE_180: Rotate by 180 degrees.
+@GIMP_ROTATE_270: Rotate by 270 degrees.
+
+<!-- ##### ENUM GimpSelectCriterion ##### -->
+<para>
+
+</para>
+
+@GIMP_SELECT_CRITERION_COMPOSITE: 
+@GIMP_SELECT_CRITERION_R: 
+@GIMP_SELECT_CRITERION_G: 
+@GIMP_SELECT_CRITERION_B: 
+@GIMP_SELECT_CRITERION_H: 
+@GIMP_SELECT_CRITERION_S: 
+@GIMP_SELECT_CRITERION_V: 
+
+<!-- ##### FUNCTION gimp_enums_get_type_names ##### -->
+<para>
+
+</para>
+
+@n_type_names: 
+@Returns: 
+
+

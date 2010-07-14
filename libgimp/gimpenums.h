@@ -35,14 +35,6 @@ typedef enum
 } GimpBrushApplicationMode;
 
 
-/**
- * GimpBrushGeneratedShape:
- * @GIMP_BRUSH_GENERATED_CIRCLE:  The brush has a circle shape.
- * @GIMP_BRUSH_GENERATED_SQUARE:  The brush has a square shape.
- * @GIMP_BRUSH_GENERATED_DIAMOND: The brush has a diamond shape.
- *
- * The possible shapes generated brushes can take.
- **/
 #define GIMP_TYPE_BRUSH_GENERATED_SHAPE (gimp_brush_generated_shape_get_type ())
 
 GType gimp_brush_generated_shape_get_type (void) G_GNUC_CONST;
@@ -94,13 +86,6 @@ typedef enum
 } GimpConvolutionType;
 
 
-/**
- * GimpConvolveMode:
- * @GIMP_BLUR_CONVOLVE:    Blur the drawable.
- * @GIMP_SHARPEN_CONVOLVE: Sharpen the drawable.
- *
- * Operation modes of the convolve tool.
- **/
 #define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
 
 GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
@@ -249,14 +234,6 @@ typedef enum
 } GimpOffsetType;
 
 
-/**
- * GimpOrientationType:
- * @GIMP_ORIENTATION_HORIZONTAL: Horizontal ortientation.
- * @GIMP_ORIENTATION_VERTICAL:   Vertical orientation.
- * @GIMP_ORIENTATION_UNKNOWN:    Undetermined orientation.
- *
- * Orientation values for all kinds of purposes, like guides.
- **/
 #define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
 
 GType gimp_orientation_type_get_type (void) G_GNUC_CONST;
@@ -269,14 +246,6 @@ typedef enum
 } GimpOrientationType;
 
 
-/**
- * GimpRotationType:
- * @GIMP_ROTATE_90:   Rotate by 90 degrees.
- * @GIMP_ROTATE_180:  Rotate by 180 degrees.
- * @GIMP_ROTATE_270:  Rotate by 270 degrees.
- *
- * Steps for simple rotation based on multpiles of 90 degrees.
- **/
 #define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
 
 GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
