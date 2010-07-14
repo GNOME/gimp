@@ -1,15 +1,15 @@
 # Romanian GIMP translation
 # Copyright (C) YEAR Free Software Foundation, Inc.
 # Robert Claudiu Gheorghe <rgheorghe AT writeme DOT com>, 2001.
-# Cristian Secară <cristi AT secarica DOT ro>, 2008-2009.
+# Cristian Secară <cristi AT secarica DOT ro>, 2008-2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-02-07 10:16+0000\n"
-"PO-Revision-Date: 2010-02-07 01:57+0200\n"
+"POT-Creation-Date: 2010-07-12 21:28+0000\n"
+"PO-Revision-Date: 2010-07-13 18:23+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -18,50 +18,50 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Consolă Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Bun venit la TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Dezvoltare de schemă interactivă"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_Răsfoiește..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Salvează ieșirea consolei Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nu s-a putut deschide „%s” pentru scriere: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigator de procedură Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Modul de evaluare Script-Fu permite numai invocare neinteractivă"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu nu poate procesa două scripturi în același timp."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Rulați deja scriptul „%s”."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -69,146 +69,146 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Selecție culoare Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "Selecție de fișier Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "Selecție de dosar Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "Selecție de font Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "Selecție de paletă Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "Selecție de model Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Selecție degrade Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
 msgstr "Selecție penel Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Eroare în timpul execuției %s:"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "Prea puține argumente pentru apelul „script-fu-register”"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:609
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Eroare în timpul încărcării %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:804
 msgid "Script-Fu Server Options"
 msgstr "Opțiuni de server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:809
 msgid "_Start Server"
 msgstr "Pornește _serverul"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "Server port:"
 msgstr "Port server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:843
 msgid "Server logfile:"
 msgstr "Fișier de jurnal de server:"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Consolă interactivă pentru dezvoltare Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "_Consolă"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Server pentru operare Script-Fu de la distanță"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "Pornește _serverul..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "Manual de _utilizare"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "_Butoane"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr "Sig_le"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "_Modele"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
 msgstr "Teme pentru pagini _web"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "Strălucire exterio_ară"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "_Model ieșit în relief"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_classic.gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "A_lfa la siglă"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Citește din nou toate scripturile Script-Fu disponibile"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Reîmprospătează scripturile"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -223,16 +223,16 @@ msgstr "Contur _3D..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Rază de neclaritate hartă de stampare (bumpmap) (strat alfa)"
+msgstr "Rază de neclaritate pentru harta de protuberanțe (strat alfa)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
-msgstr "Creează o siglă cu text conturat și umbră de perspectivă"
+msgstr "Creează un logo cu text conturat și umbră de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
-msgstr "Configurări implicite hartă de stampare (bumpmap)"
+msgstr "Configurări implicite pentru harta de protuberanțe"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -253,8 +253,6 @@ msgstr "Configurări implicite hartă de stampare (bumpmap)"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -292,8 +290,6 @@ msgstr "Font"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -368,8 +364,6 @@ msgstr "Rază de neclaritate umbră"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -407,7 +401,6 @@ msgstr "Truchet 3_D..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
@@ -472,7 +465,7 @@ msgstr "Adaugă la imagine o bordură teșită"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
-msgstr "Păstrează stratul de stampare"
+msgstr "Păstrează stratul de protuberanță"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -626,8 +619,6 @@ msgstr "Umplere"
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -778,7 +769,6 @@ msgstr ""
 "pagini web"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -1297,7 +1287,7 @@ msgstr "Nori de diferență..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Zgomot solid aplicat cu modul strat de diferență"
+msgstr "Zgomot solid aplicat cu módul de strat diferență"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1352,12 +1342,10 @@ msgid "Color"
 msgstr "Culoare"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "Decalaj X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Decalaj Y"
 
@@ -1545,117 +1533,69 @@ msgstr "Încărcare umbră (%)"
 msgid "_Fuzzy Border..."
 msgstr "Bordură di_fuză..."
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "Decupează automat"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "Semn de carte către saitul web GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr ""
-"Creeză o imagine a unui antet mare folosind tema paginii Web de la classic."
-"gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Semn de carte către manualul de utilizare"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr ""
-"Creeză o imagine a unui antet mic folosind tema paginii Web de la classic."
-"gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Crearea și utilizarea _selecțiilor"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "Culoare întunecată"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Crearea, deschiderea și salvarea _fișierelor"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "Culoare luminoasă"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Desenarea obiectelor _simple"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "Indexează imaginea"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Cum se utilizează _dialogurile"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "Număr de culori"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "_Registrul de plugin-uri"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "Elimină fundalul"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "_Folosirea traseelor"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "Prag de selecție per culoare"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "Concepte de _bază"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "Culoare de umbră"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "Saitul web pentru _dezvoltatori"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "_Antet mare..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "Saitul _web principal"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "A_ntet mic..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Prepararea imaginilor pentru web"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid ""
-"Create an image of a Tube Button Label Header using the gimp.org webpage "
-"theme"
-msgstr ""
-"Creează o imagine a unui antet cu etichetă de buton tubular folosind tema "
-"paginii Web de la classic.gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "Saitul web al manualului de _utilizare"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr ""
-"Creează o imagine a unei etichete de buton tubular folosind tema paginii Web "
-"de la classic.gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"Create an image of a second level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr ""
-"Creează o imagine a unei etichete de buton tubular de nivel secundar "
-"folosind tema paginii Web de la classic.gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid ""
-"Create an image of a third level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr ""
-"Creează o imagine a unei etichete de buton tubular de nivel terțiar folosind "
-"tema paginii Web de la classic.gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "Etichetă de buton tubular sec_undar..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Etichetă de buton tubular t_erțiar..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "Etichete tubulare _generale..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "Etichetă de buton _tubular..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "_Lucrul cu camere foto digitale"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"Adaugă degradeuri, modele, umbre și hărți de stampare (bumpmaps) la zona "
-"selectată (sau alfa)"
+"Adaugă degradeuri, modele, umbre și hărți de protuberanțe la zona selectată "
+"(sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1667,8 +1607,7 @@ msgstr "Degrade de amestec (text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr ""
-"Creează o siglă cu degradeuri, modele, umbre și hărți de stampare (bumpmaps)"
+msgstr "Creează o siglă cu degradeuri, modele, umbre și hărți de protuberanțe"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -2013,6 +1952,60 @@ msgstr "Sepia"
 msgid "_Old Photo..."
 msgstr "F_otografie veche..."
 
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Toate caracterele în numele de fișier sunt fie spații albe, fie caractere "
+"care nu pot apărea în nume de fișier:"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Exportă paleta activă ca o listă de foaie de stil CSS, cu numele de culoare "
+"ca numele lor de clasă și cu culoarea în sine ca atribut de culoare"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Exportă paleta activă ca dicționar PHP (nume => culoare)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Exportă paleta activă ca dicționar Python (nume: culoare)"
+
+# hm ?
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Exportă paleta activă ca java.util.Hashtable<String, Color>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid "Folder for the output file"
+msgstr "Dosar pentru fișierul de ieșire"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+"Numele de fișier introdus nu este un nume adecvat pentru un nume de fișier."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Numele fișierului de creat (dacă există deja un fișier cu acest nume, acela "
+"va fi înlocuit)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Scrie toate culorile dintr-o paletă ca fișier text, cu o valoare "
+"hexazecimală per linie (fără nume)"
+
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "Brush name"
@@ -2231,14 +2224,13 @@ msgstr "_Rotunjire de colțuri..."
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Schimbă harta de culori a unei imagini cu culorile dintr-o paletă "
+"Schimbă paleta de culori a unei imagini cu culorile dintr-o paletă "
 "specificată."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
 msgstr "Paletă"
 
-# hm ? este mai în ton cu (i) ce face și (ii) ce apare în lista de operații
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
 msgstr "S_tabilește paleta de culori..."
@@ -2691,7 +2683,7 @@ msgid ""
 "bump map"
 msgstr ""
 "Creează un strat nou umplut cu un efect de împletitură pentru a fi folosit "
-"ca suprapunere, sau ca hartă de stampare (bumpmap)"
+"ca suprapunere, sau ca hartă de protuberanțe"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2725,62 +2717,6 @@ msgstr "Lungime fir"
 msgid "_Weave..."
 msgstr "Î_mpletitură..."
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "Semn de carte către saitul web GIMP"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Semn de carte către manualul de utilizare"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Creează și folosește _selecțiile"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Crearea, deschiderea și salvarea _fișierelor"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Desenarea obiectelor _simple"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Cum să fie utilizate _dialogurile"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "_Registrul de plugin-uri"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "_Folosirea traseelor"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "Concepte de _bază"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "Saitul web pentru _dezvoltatori"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "_Saitul web principal"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Prepararea imaginilor pentru web"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "Saitul web al manualului de _utilizare"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "_Lucrul cu camere foto digitale"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Adaugă un efect 3D translucid subtil la zona selectată (sau alfa)"
@@ -2813,6 +2749,10 @@ msgstr "Decalajul X al părții luminoase"
 msgid "Highlight Y offset"
 msgstr "Decalajul Y al părții luminoase"
 
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "Culoare luminoasă"
+
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Opacitatea părții luminoase"
@@ -2820,85 +2760,3 @@ msgstr "Opacitatea părții luminoase"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efect _Xach..."
-
-#~ msgid "_Misc"
-#~ msgstr "_Diverse"
-
-#~ msgid "_Utilities"
-#~ msgstr "_Utilitare"
-
-#~ msgid "An_imation"
-#~ msgstr "An_imație"
-
-#, fuzzy
-#~ msgid "_Animators"
-#~ msgstr "_Animators"
-
-#~ msgid "_Artistic"
-#~ msgstr "_Artistic"
-
-#~ msgid "_Blur"
-#~ msgstr "_Neclaritate"
-
-#~ msgid "_Decor"
-#~ msgstr "_Decorațiune"
-
-#~ msgid "_Effects"
-#~ msgstr "_Efecte"
-
-#~ msgid "En_hance"
-#~ msgstr "_Ameliorare"
-
-#~ msgid "_Light and Shadow"
-#~ msgstr "_Lumină și umbră"
-
-#~ msgid "S_hadow"
-#~ msgstr "_Umbră"
-
-#~ msgid "_Render"
-#~ msgstr "_Render"
-
-#~ msgid "_Alchemy"
-#~ msgstr "_Alchimie"
-
-#, fuzzy
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Decalaj X:"
-
-#, fuzzy
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Decalaj X:"
-
-#~ msgid "Create a simple sphere with a drop shadow"
-#~ msgstr "Creează o sferă simplă cu o umbră de perspectivă"
-
-#~ msgid "Lighting (degrees)"
-#~ msgstr "Iluminare (grade)"
-
-#~ msgid "Radius (pixels)"
-#~ msgstr "Rază (pixeli)"
-
-#~ msgid "Sphere color"
-#~ msgstr "Culoare sferă"
-
-#~ msgid "_Sphere..."
-#~ msgstr "_Sferă..."
-
-#, fuzzy
-#~ msgid "Burst color"
-#~ msgstr "Culoare RGB"
-
-#, fuzzy
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Decalaj X:"
-
-#, fuzzy
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Decalaj X:"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
-#~ "glow, and shadow"
-#~ msgstr ""
-#~ "Umple zona selectată (sau alfa) cu o textură cu aspect de piatră, o "
-#~ "luminescență nova și umbră"
