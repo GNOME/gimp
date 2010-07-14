@@ -22,6 +22,7 @@
 
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-filter.h>
+#include "core/gimpcage.h"
 
 #define GIMP_TYPE_OPERATION_CAGE            (gimp_operation_cage_get_type ())
 #define GIMP_OPERATION_CAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_CAGE, GimpOperationCage))
@@ -36,6 +37,10 @@ typedef struct _GimpOperationCageClass GimpOperationCageClass;
 struct _GimpOperationCage
 {
   GeglOperationFilter  parent_instance;
+  
+  /* FIXME: for test */
+  GimpCage             *cage;
+  GimpCage             *deformedCage;
 };
 
 struct _GimpOperationCageClass
