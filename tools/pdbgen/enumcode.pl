@@ -162,14 +162,13 @@ print ENUMFILE <<CODE;
 static gboolean enums_initialized = FALSE;
 
 /**
- * gimp_enums_init
+ * gimp_enums_init:
  *
  * This function makes sure all the enum types are registered
- * with the GObject type system. This is intended for use by
- * language bindings that need the symbols early, before gimp_main
- * is run. It's not necessary for plug-ins to call this directly,
- * as the normal plug-in initialization code will handle it
- * implicitly.
+ * with the #GType system. This is intended for use by language
+ * bindings that need the symbols early, before gimp_main is run.
+ * It's not necessary for plug-ins to call this directly, because
+ * the normal plug-in initialization code will handle it implicitly.
  *
  * Since: GIMP 2.4
  **/
