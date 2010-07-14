@@ -100,7 +100,7 @@ PF_VALUE       = PF_STRING
 #PF_STRINGARRAY = PDB_STRINGARRAY
 PF_COLOR       = PDB_COLOR
 PF_COLOUR      = PF_COLOR
-PF_REGION      = PDB_REGION
+PF_ITEM        = PDB_ITEM
 PF_DISPLAY     = PDB_DISPLAY
 PF_IMAGE       = PDB_IMAGE
 PF_LAYER       = PDB_LAYER
@@ -142,7 +142,7 @@ _type_mapping = {
     #PF_FLOATARRAY  : PDB_FLOATARRAY,
     #PF_STRINGARRAY : PDB_STRINGARRAY,
     PF_COLOR       : PDB_COLOR,
-    PF_REGION      : PDB_REGION,
+    PF_ITEM        : PDB_ITEM,
     PF_DISPLAY     : PDB_DISPLAY,
     PF_IMAGE       : PDB_IMAGE,
     PF_LAYER       : PDB_LAYER,
@@ -179,7 +179,7 @@ _obj_mapping = {
     #PF_FLOATARRAY  : list,
     #PF_STRINGARRAY : list,
     PF_COLOR       : gimpcolor.RGB,
-    PF_REGION      : int,
+    PF_ITEM        : int,
     PF_DISPLAY     : gimp.Display,
     PF_IMAGE       : gimp.Image,
     PF_LAYER       : gimp.Layer,
@@ -624,7 +624,7 @@ def _interact(proc_name, start_params):
             #PF_FLOATARRAY  : ArrayEntry,
             #PF_STRINGARRAY : ArrayEntry,
             PF_COLOR       : gimpui.ColorSelector,
-            PF_REGION      : IntEntry,  # should handle differently ...
+            PF_ITEM        : IntEntry,  # should handle differently ...
             PF_IMAGE       : gimpui.ImageSelector,
             PF_LAYER       : gimpui.LayerSelector,
             PF_CHANNEL     : gimpui.ChannelSelector,
