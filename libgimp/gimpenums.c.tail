@@ -1,0 +1,167 @@
+
+typedef GType (* GimpGetTypeFunc) (void);
+
+static const GimpGetTypeFunc get_type_funcs[] =
+{
+  gimp_add_mask_type_get_type,
+  gimp_blend_mode_get_type,
+  gimp_brush_application_mode_get_type,
+  gimp_brush_generated_shape_get_type,
+  gimp_bucket_fill_mode_get_type,
+  gimp_channel_ops_get_type,
+  gimp_channel_type_get_type,
+  gimp_clone_type_get_type,
+  gimp_convert_dither_type_get_type,
+  gimp_convert_palette_type_get_type,
+  gimp_convolution_type_get_type,
+  gimp_convolve_type_get_type,
+  gimp_desaturate_mode_get_type,
+  gimp_dodge_burn_type_get_type,
+  gimp_fill_type_get_type,
+  gimp_foreground_extract_mode_get_type,
+  gimp_gradient_segment_color_get_type,
+  gimp_gradient_segment_type_get_type,
+  gimp_gradient_type_get_type,
+  gimp_grid_style_get_type,
+  gimp_histogram_channel_get_type,
+  gimp_hue_range_get_type,
+  gimp_icon_type_get_type,
+  gimp_image_base_type_get_type,
+  gimp_image_type_get_type,
+  gimp_interpolation_type_get_type,
+  gimp_layer_mode_effects_get_type,
+  gimp_mask_apply_mode_get_type,
+  gimp_merge_type_get_type,
+  gimp_message_handler_type_get_type,
+  gimp_offset_type_get_type,
+  gimp_orientation_type_get_type,
+  gimp_pdb_arg_type_get_type,
+  gimp_pdb_error_handler_get_type,
+  gimp_pdb_proc_type_get_type,
+  gimp_pdb_status_type_get_type,
+  gimp_paint_application_mode_get_type,
+  gimp_progress_command_get_type,
+  gimp_repeat_mode_get_type,
+  gimp_rotation_type_get_type,
+  gimp_run_mode_get_type,
+  gimp_select_criterion_get_type,
+  gimp_size_type_get_type,
+  gimp_stack_trace_mode_get_type,
+  gimp_text_direction_get_type,
+  gimp_text_hint_style_get_type,
+  gimp_text_justification_get_type,
+  gimp_transfer_mode_get_type,
+  gimp_transform_direction_get_type,
+  gimp_transform_resize_get_type,
+  gimp_user_directory_get_type,
+  gimp_vectors_stroke_type_get_type
+};
+
+static const gchar * const type_names[] =
+{
+  "GimpAddMaskType",
+  "GimpBlendMode",
+  "GimpBrushApplicationMode",
+  "GimpBrushGeneratedShape",
+  "GimpBucketFillMode",
+  "GimpChannelOps",
+  "GimpChannelType",
+  "GimpCloneType",
+  "GimpConvertDitherType",
+  "GimpConvertPaletteType",
+  "GimpConvolutionType",
+  "GimpConvolveType",
+  "GimpDesaturateMode",
+  "GimpDodgeBurnType",
+  "GimpFillType",
+  "GimpForegroundExtractMode",
+  "GimpGradientSegmentColor",
+  "GimpGradientSegmentType",
+  "GimpGradientType",
+  "GimpGridStyle",
+  "GimpHistogramChannel",
+  "GimpHueRange",
+  "GimpIconType",
+  "GimpImageBaseType",
+  "GimpImageType",
+  "GimpInterpolationType",
+  "GimpLayerModeEffects",
+  "GimpMaskApplyMode",
+  "GimpMergeType",
+  "GimpMessageHandlerType",
+  "GimpOffsetType",
+  "GimpOrientationType",
+  "GimpPDBArgType",
+  "GimpPDBErrorHandler",
+  "GimpPDBProcType",
+  "GimpPDBStatusType",
+  "GimpPaintApplicationMode",
+  "GimpProgressCommand",
+  "GimpRepeatMode",
+  "GimpRotationType",
+  "GimpRunMode",
+  "GimpSelectCriterion",
+  "GimpSizeType",
+  "GimpStackTraceMode",
+  "GimpTextDirection",
+  "GimpTextHintStyle",
+  "GimpTextJustification",
+  "GimpTransferMode",
+  "GimpTransformDirection",
+  "GimpTransformResize",
+  "GimpUserDirectory",
+  "GimpVectorsStrokeType"
+};
+
+static gboolean enums_initialized = FALSE;
+
+/**
+ * gimp_enums_init:
+ *
+ * This function makes sure all the enum types are registered
+ * with the #GType system. This is intended for use by language
+ * bindings that need the symbols early, before gimp_main is run.
+ * It's not necessary for plug-ins to call this directly, because
+ * the normal plug-in initialization code will handle it implicitly.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_enums_init (void)
+{
+  const GimpGetTypeFunc *funcs = get_type_funcs;
+  gint                   i;
+
+  if (enums_initialized)
+    return;
+
+  for (i = 0; i < G_N_ELEMENTS (get_type_funcs); i++, funcs++)
+    {
+      GType type = (*funcs) ();
+
+      g_type_class_ref (type);
+    }
+
+  enums_initialized = TRUE;
+}
+
+/**
+ * gimp_enums_get_type_names:
+ * @n_type_names: return location for the number of names
+ *
+ * This function gives access to the list of enums registered by libgimp.
+ * The returned array is static and must not be modified.
+ *
+ * Return value: an array with type names
+ *
+ * Since: GIMP 2.2
+ **/
+const gchar **
+gimp_enums_get_type_names (gint *n_type_names)
+{
+  g_return_val_if_fail (n_type_names != NULL, NULL);
+
+  *n_type_names = G_N_ELEMENTS (type_names);
+
+  return (const gchar **) type_names;
+}
