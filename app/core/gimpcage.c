@@ -31,7 +31,7 @@ G_DEFINE_TYPE (GimpCage, gimp_cage, G_TYPE_OBJECT)
 
 #define N_ITEMS_PER_ALLOC       10
 
-static void       gimp_cage_finalize (GObject *object);
+static void       gimp_cage_finalize      (GObject *object);
 
 static void
 gimp_cage_class_init (GimpCageClass *klass)
@@ -86,6 +86,7 @@ gimp_cage_compute_coefficient (GimpCage *gc)
   gint edge, vertice,j;
   
   g_return_if_fail (GIMP_IS_CAGE (gc));
+  
   
   format = babl_format_n(babl_type("float"), gc->cage_vertice_number);
 
@@ -169,40 +170,40 @@ gimp_cage_compute_coefficient (GimpCage *gc)
 }
   
 void
-gimp_cage_add_cage_point  (GimpCage    *cage,
+gimp_cage_add_cage_point  (GimpCage    *gc,
                            gdouble      x,
                            gdouble      y)
 {
-  g_return_if_fail (GIMP_IS_CAGE (cage));
+  g_return_if_fail (GIMP_IS_CAGE (gc));
   
-  if (cage->cage_vertice_number >= cage->cage_vertices_max)
+  if (gc->cage_vertice_number >= gc->cage_vertices_max)
   {
-    cage->cage_vertices_max += N_ITEMS_PER_ALLOC;
+    gc->cage_vertices_max += N_ITEMS_PER_ALLOC;
 
-    cage->cage_vertices = g_renew(GimpVector2,
-                                cage->cage_vertices,
-                                cage->cage_vertices_max);
+    gc->cage_vertices = g_renew(GimpVector2,
+                                gc->cage_vertices,
+                                gc->cage_vertices_max);
   }
 
-  cage->cage_vertices[cage->cage_vertice_number].x = x;
-  cage->cage_vertices[cage->cage_vertice_number].y = y;
+  gc->cage_vertices[gc->cage_vertice_number].x = x;
+  gc->cage_vertices[gc->cage_vertice_number].y = y;
 
-  cage->cage_vertice_number++;
+  gc->cage_vertice_number++;
 }
 
 void
-gimp_cage_remove_last_cage_point (GimpCage    *cage)
+gimp_cage_remove_last_cage_point (GimpCage    *gc)
 {
-  g_return_if_fail (GIMP_IS_CAGE (cage));
+  g_return_if_fail (GIMP_IS_CAGE (gc));
   
-  if (cage->cage_vertice_number >= 1)
-    cage->cage_vertice_number--;
+  if (gc->cage_vertice_number >= 1)
+    gc->cage_vertice_number--;
 }
 
 
 
 gint
-gimp_cage_is_on_handle  (GimpCage    *cage,
+gimp_cage_is_on_handle  (GimpCage    *gc,
                          gdouble      x,
                          gdouble      y,
                          gint         handle_size)
@@ -210,15 +211,15 @@ gimp_cage_is_on_handle  (GimpCage    *cage,
   gint i;
   gdouble vert_x, vert_y;
   
-  g_return_val_if_fail (GIMP_IS_CAGE (cage), -1);
+  g_return_val_if_fail (GIMP_IS_CAGE (gc), -1);
   
-  if (cage->cage_vertice_number == 0)
+  if (gc->cage_vertice_number == 0)
     return -1;
   
-  for (i = 0; i < cage->cage_vertice_number; i++)
+  for (i = 0; i < gc->cage_vertice_number; i++)
   {
-    vert_x = cage->cage_vertices[i].x;
-    vert_y = cage->cage_vertices[i].y;
+    vert_x = gc->cage_vertices[i].x;
+    vert_y = gc->cage_vertices[i].y;
     
     if (x < vert_x + handle_size / 2 && x > vert_x -handle_size / 2 &&
         y < vert_y + handle_size / 2 && y > vert_y -handle_size / 2)
@@ -231,14 +232,31 @@ gimp_cage_is_on_handle  (GimpCage    *cage,
 }
 
 void
-gimp_cage_move_cage_point  (GimpCage    *cage,
+gimp_cage_move_cage_point  (GimpCage    *gc,
                             gint         point_number,
                             gdouble      x,
                             gdouble      y)
 {
-  g_return_if_fail (GIMP_IS_CAGE (cage));
-  g_return_if_fail (point_number < cage->cage_vertice_number);
+  g_return_if_fail (GIMP_IS_CAGE (gc));
+  g_return_if_fail (point_number < gc->cage_vertice_number);
   
-  cage->cage_vertices[point_number].x = x;
-  cage->cage_vertices[point_number].y = y;
+  gc->cage_vertices[point_number].x = x;
+  gc->cage_vertices[point_number].y = y;
+}
+
+GimpVector2
+gimp_cage_get_edge_normal  (GimpCage *gc,
+                            gint      edge_index)
+{
+  GimpVector2 result;
+  
+  g_return_val_if_fail (GIMP_IS_CAGE (gc), gimp_vector2_new(1,0));
+  g_return_val_if_fail (edge_index >= 0, gimp_vector2_new(1,0));
+  g_return_val_if_fail (edge_index < gc->cage_vertice_number, gimp_vector2_new(1,0));
+  
+  gimp_vector2_sub (&result,
+                    &gc->cage_vertices[(edge_index+1) % gc->cage_vertice_number],
+                    &gc->cage_vertices[edge_index]);
+  
+  return gimp_vector2_normal (&result);
 }

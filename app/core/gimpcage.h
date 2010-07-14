@@ -68,22 +68,25 @@ GType         gimp_cage_get_type          (void) G_GNUC_CONST;
  * 
  * Add a new point in the polygon of the cage, and make allocation if needed.
  */
-void      gimp_cage_add_cage_point         (GimpCage    *cage,
-                                            gdouble      x,
-                                            gdouble      y);
+void        gimp_cage_add_cage_point         (GimpCage    *cage,
+                                              gdouble      x,
+                                              gdouble      y);
                            
-void      gimp_cage_remove_last_cage_point (GimpCage    *cage);
+void        gimp_cage_remove_last_cage_point (GimpCage    *cage);
 
-gint      gimp_cage_is_on_handle           (GimpCage    *cage,
-                                            gdouble      x,
-                                            gdouble      y,
-                                            gint         handle_size);
+gint        gimp_cage_is_on_handle           (GimpCage    *cage,
+                                              gdouble      x,
+                                              gdouble      y,
+                                              gint         handle_size);
                                             
-void      gimp_cage_move_cage_point        (GimpCage    *cage,
-                                            gint         point_number,
-                                            gdouble      x,
-                                            gdouble      y);
+void        gimp_cage_move_cage_point        (GimpCage    *cage,
+                                              gint         point_number,
+                                              gdouble      x,
+                                              gdouble      y);
 
-void      gimp_cage_compute_coefficient    (GimpCage *gc);
+void        gimp_cage_compute_coefficient    (GimpCage *gc);
+
+GimpVector2 gimp_cage_get_edge_normal        (GimpCage *gc,
+                                              gint      edge_index);
 
 #endif /* __GIMP_CAGE_H__ */
