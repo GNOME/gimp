@@ -161,7 +161,7 @@ query (void)
     { GIMP_PDB_INT32,    "do-y",           "Displace in Y or tangent direction?" },
     { GIMP_PDB_DRAWABLE, "displace-map-x", "Displacement map for X or radial direction" },
     { GIMP_PDB_DRAWABLE, "displace-map-y", "Displacement map for Y or tangent direction" },
-    { GIMP_PDB_INT32,    "displace-type",  "Edge behavior { WRAP (0), SMEAR (1), BLACK (2) }" }
+    { GIMP_PDB_INT32,    "displace-type",  "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
