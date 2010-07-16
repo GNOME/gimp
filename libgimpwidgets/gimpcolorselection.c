@@ -87,7 +87,7 @@ static void   gimp_color_selection_set_property      (GObject            *object
                                                       GParamSpec         *pspec);
 
 static void   gimp_color_selection_switch_page       (GtkWidget          *widget,
-                                                      GtkNotebookPage    *page,
+                                                      gpointer            page,
                                                       guint               page_num,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_notebook_changed  (GimpColorSelector  *selector,
@@ -539,7 +539,7 @@ gimp_color_selection_set_config (GimpColorSelection *selection,
 
 static void
 gimp_color_selection_switch_page (GtkWidget          *widget,
-                                  GtkNotebookPage    *page,
+                                  gpointer            page,
                                   guint               page_num,
                                   GimpColorSelection *selection)
 {

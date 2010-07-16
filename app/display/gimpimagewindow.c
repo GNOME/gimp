@@ -163,7 +163,7 @@ static gboolean  gimp_image_window_shell_events        (GtkWidget           *wid
                                                         GimpImageWindow     *window);
 
 static void      gimp_image_window_switch_page         (GtkNotebook         *notebook,
-                                                        GtkNotebookPage     *page,
+                                                        gpointer             page,
                                                         gint                 page_num,
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_page_removed        (GtkNotebook         *notebook,
@@ -1236,7 +1236,7 @@ gimp_image_window_shell_events (GtkWidget       *widget,
 
 static void
 gimp_image_window_switch_page (GtkNotebook     *notebook,
-                               GtkNotebookPage *page,
+                               gpointer         page,
                                gint             page_num,
                                GimpImageWindow *window)
 {

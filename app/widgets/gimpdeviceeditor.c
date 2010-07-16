@@ -98,7 +98,7 @@ static void      gimp_device_editor_select_device  (GimpContainerView     *view,
                                                     GimpDeviceEditor      *editor);
 
 static void      gimp_device_editor_switch_page    (GtkNotebook           *notebook,
-                                                    GtkNotebookPage       *page,
+                                                    gpointer               page,
                                                     guint                  page_num,
                                                     GimpDeviceEditor      *editor);
 static void      gimp_device_editor_delete_clicked (GtkWidget             *button,
@@ -398,7 +398,7 @@ gimp_device_editor_select_device (GimpContainerView *view,
 
 static void
 gimp_device_editor_switch_page (GtkNotebook      *notebook,
-                                GtkNotebookPage  *page,
+                                gpointer          page,
                                 guint             page_num,
                                 GimpDeviceEditor *editor)
 {

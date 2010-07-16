@@ -72,7 +72,7 @@ static void   gimp_color_notebook_set_config      (GimpColorSelector *selector,
 
 
 static void   gimp_color_notebook_switch_page     (GtkNotebook       *gtk_notebook,
-                                                   GtkNotebookPage   *page,
+                                                   gpointer           page,
                                                    guint              page_num,
                                                    GimpColorNotebook *notebook);
 
@@ -319,7 +319,7 @@ gimp_color_notebook_set_config (GimpColorSelector *selector,
 
 static void
 gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
-                                 GtkNotebookPage   *page,
+                                 gpointer           page,
                                  guint              page_num,
                                  GimpColorNotebook *notebook)
 {
