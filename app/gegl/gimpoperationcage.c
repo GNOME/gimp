@@ -138,7 +138,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
   Babl *format_io = babl_format ("RGBA float");
   Babl *format_coef = babl_format_n (babl_type ("float"), op_cage->cage->cage_vertice_number);
   
-  gint in, out, coef_vertices, coef_edges;
+  gint in, coef_vertices, coef_edges;
   gint i;
   GeglRectangle rect;
   GeglBufferIterator *it;
@@ -148,11 +148,14 @@ gimp_operation_cage_process (GeglOperation       *operation,
   
   gimp_cage_compute_coefficient (cage);
   
-  it = gegl_buffer_iterator_new (in_buf, roi, format_io, GEGL_BUFFER_READ);
+  it = gegl_buffer_iterator_new (in_buf, &cage->bounding_box, format_io, GEGL_BUFFER_READ);
   in = 0;
   
-  coef_vertices = gegl_buffer_iterator_add (it, cage->cage_vertices_coef, roi, format_coef, GEGL_BUFFER_READ);
-  coef_edges = gegl_buffer_iterator_add (it, cage->cage_edges_coef, roi, format_coef, GEGL_BUFFER_READ);
+  coef_vertices = gegl_buffer_iterator_add (it, cage->cage_vertices_coef, &cage->bounding_box, format_coef, GEGL_BUFFER_READ);
+  coef_edges = gegl_buffer_iterator_add (it, cage->cage_edges_coef, &cage->bounding_box, format_coef, GEGL_BUFFER_READ);
+  
+  /* pre-copy the input buffer to the out buffer */
+  gegl_buffer_copy (in_buf, roi, out_buf, roi);
   
   /* iterate on GeglBuffer */
   while (gegl_buffer_iterator_next (it))

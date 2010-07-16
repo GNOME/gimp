@@ -306,14 +306,14 @@ gimp_cage_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  /*
+  
   if (ct->handle_moved >= 0)
   {
     gimp_cage_move_cage_point  (cage,
                                 ct->handle_moved,
                                 coords->x,
                                 coords->y);
-  } */
+  }
 
   gimp_draw_tool_resume (draw_tool);
 }
