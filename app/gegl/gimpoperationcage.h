@@ -40,7 +40,6 @@ struct _GimpOperationCage
   
   /* FIXME: for test */
   GimpCage             *cage;
-  GimpCage             *deformedCage;
 };
 
 struct _GimpOperationCageClass

@@ -28,6 +28,8 @@
 
 #include "gimpoperationcage.h"
 
+// FIXME: for test
+#include <stdio.h>
 
 static gboolean       gimp_operation_cage_process                   (GeglOperation       *operation,
                                                                      GeglBuffer          *in_buf,
@@ -66,17 +68,18 @@ gimp_operation_cage_init (GimpOperationCage *self)
 {
   //FIXME: for test
   self->cage = g_object_new (GIMP_TYPE_CAGE, NULL);
-  self->deformedCage = g_object_new (GIMP_TYPE_CAGE, NULL);
   
   #if 0
   
     #if 1
-    gimp_cage_add_cage_point(self->cage, 20, 20);
-    gimp_cage_add_cage_point(self->cage, 50, 50);
-    gimp_cage_add_cage_point(self->cage, 200, 80);
-    gimp_cage_add_cage_point(self->cage, 70, 200);
-    gimp_cage_add_cage_point(self->cage, 25, 80);
+    gimp_cage_add_cage_point(self->cage, 70, 20);
+    gimp_cage_add_cage_point(self->cage, 70, 300);
+    gimp_cage_add_cage_point(self->cage, 450, 300);
+    gimp_cage_add_cage_point(self->cage, 450, 20);
+    
+    gimp_cage_move_cage_point_d (self->cage, 1, 100, 250);
     #else
+    
     gimp_cage_add_cage_point(self->cage, 25, 80);
     gimp_cage_add_cage_point(self->cage, 70, 200);
     gimp_cage_add_cage_point(self->cage, 200, 80);
@@ -86,33 +89,31 @@ gimp_operation_cage_init (GimpOperationCage *self)
   
   #else
   
-    #if 0
-    gimp_cage_add_cage_point(self->cage, 20, 20); /* need reverse */
-    gimp_cage_add_cage_point(self->cage, 50, 20);
-    gimp_cage_add_cage_point(self->cage, 50, 60);
-    gimp_cage_add_cage_point(self->cage, 80, 60);
-    gimp_cage_add_cage_point(self->cage, 80, 20);
-    gimp_cage_add_cage_point(self->cage, 110, 20);
-    gimp_cage_add_cage_point(self->cage, 110, 120);
-    gimp_cage_add_cage_point(self->cage, 20, 120);
-    #else
-    gimp_cage_add_cage_point(self->cage, 40, 240);
-    gimp_cage_add_cage_point(self->cage, 220, 240);
-    gimp_cage_add_cage_point(self->cage, 220, 40);
-    gimp_cage_add_cage_point(self->cage, 160, 40);
-    gimp_cage_add_cage_point(self->cage, 160, 120);
-    gimp_cage_add_cage_point(self->cage, 100, 120);
-    gimp_cage_add_cage_point(self->cage, 100, 40);
-    gimp_cage_add_cage_point(self->cage, 40, 40);
+    #if 1
+    gimp_cage_add_cage_point(self->cage, 160, 160); /* need reverse */
+    gimp_cage_add_cage_point(self->cage, 250, 160);
+    gimp_cage_add_cage_point(self->cage, 250, 280);
+    gimp_cage_add_cage_point(self->cage, 340, 280);
+    gimp_cage_add_cage_point(self->cage, 340, 160);
+    gimp_cage_add_cage_point(self->cage, 430, 160);
+    gimp_cage_add_cage_point(self->cage, 430, 460);
+    gimp_cage_add_cage_point(self->cage, 160, 460);
     
-    gimp_cage_add_cage_point(self->deformedCage, 40, 240);
-    gimp_cage_add_cage_point(self->deformedCage, 320, 320);
-    gimp_cage_add_cage_point(self->deformedCage, 220, 40);
-    gimp_cage_add_cage_point(self->deformedCage, 160, 40);
-    gimp_cage_add_cage_point(self->deformedCage, 160, 120);
-    gimp_cage_add_cage_point(self->deformedCage, 100, 120);
-    gimp_cage_add_cage_point(self->deformedCage, 100, 40);
-    gimp_cage_add_cage_point(self->deformedCage, 40, 40);
+    gimp_cage_move_cage_point_d (self->cage, 1, 500, 500);
+    
+    #else
+    
+    gimp_cage_add_cage_point(self->cage, 160, 460);
+    gimp_cage_add_cage_point(self->cage, 430, 460);
+    gimp_cage_add_cage_point(self->cage, 430, 160);
+    gimp_cage_add_cage_point(self->cage, 340, 160);
+    gimp_cage_add_cage_point(self->cage, 340, 280);
+    gimp_cage_add_cage_point(self->cage, 250, 280);
+    gimp_cage_add_cage_point(self->cage, 250, 160);
+    gimp_cage_add_cage_point(self->cage, 160, 160);
+    
+    gimp_cage_move_cage_point_d (self->cage, 1, 500, 500);
+    
     #endif
     
   #endif
@@ -133,7 +134,6 @@ gimp_operation_cage_process (GeglOperation       *operation,
 {
   GimpOperationCage *op_cage  = GIMP_OPERATION_CAGE (operation);
   GimpCage *cage = op_cage->cage;
-  GimpCage *deformedCage = op_cage->deformedCage;
   
   Babl *format_io = babl_format ("RGBA float");
   Babl *format_coef = babl_format_n (babl_type ("float"), op_cage->cage->cage_vertice_number);
@@ -173,25 +173,33 @@ gimp_operation_cage_process (GeglOperation       *operation,
     while(n_pixels--)
     {
       /* computing of the final position of the source pixel */
-      gfloat pos_x, pos_y;
+      gdouble pos_x, pos_y;
       
       pos_x = 0;
       pos_y = 0;
       
-      for(i = 0; i < deformedCage->cage_vertice_number; i++)
+      for(i = 0; i < cage->cage_vertice_number; i++)
       {
-        pos_x += coef_v[i] * deformedCage->cage_vertices[i].x;
-        pos_y += coef_v[i] * deformedCage->cage_vertices[i].y;
+        pos_x += coef_v[i] * cage->cage_vertices_d[i].x;
+        pos_y += coef_v[i] * cage->cage_vertices_d[i].y;
       }
       
-      for(i = 0; i < deformedCage->cage_vertice_number; i++)
+      for(i = 0; i < cage->cage_vertice_number; i++)
       {
-        pos_x += coef_e[i] * gimp_cage_get_edge_normal (deformedCage, i).x;
-        pos_y += coef_e[i] * gimp_cage_get_edge_normal (deformedCage, i).y;
+        pos_x += coef_e[i] * cage->scaling_factor[i] * gimp_cage_get_edge_normal (cage, i).x;
+        pos_y += coef_e[i] * cage->scaling_factor[i] * gimp_cage_get_edge_normal (cage, i).y;
       }
       
-      rect.x = pos_x;
-      rect.y = pos_y;      
+      rect.x = (gint) rint(pos_x);
+      rect.y = (gint) rint(pos_y);      
+      
+      /*if (sqrt ((pos_x-x) * (pos_x-x) + (pos_y-y) * (pos_y-y)) < 20)
+      {
+        if (rect.x != x || rect.y != y)
+        {
+          printf("x: %d    y: %d\n", rect.x, rect.y);
+        }
+      }*/
       
       /* copy the source pixel in the out buffer */
       gegl_buffer_set(out_buf,
@@ -201,8 +209,8 @@ gimp_operation_cage_process (GeglOperation       *operation,
                       GEGL_AUTO_ROWSTRIDE);
       
       source += 4;
-      coef_v += op_cage->cage->cage_vertice_number;
-      coef_e += op_cage->cage->cage_vertice_number;
+      coef_v += cage->cage_vertice_number;
+      coef_e += cage->cage_vertice_number;
       
       /* update x and y coordinates */
       x++;
