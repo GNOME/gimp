@@ -26,7 +26,6 @@
 #include <gegl.h>
 #include <gegl-buffer.h>
 
-
 #define GIMP_TYPE_CAGE            (gimp_cage_get_type ())
 #define GIMP_CAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE, GimpCage))
 #define GIMP_CAGE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CAGE, GimpCageClass))
@@ -41,13 +40,16 @@ struct _GimpCage
 {
   GObject         parent_instance;
   
-  gint            cage_vertice_number; //number of vertices used by the cage
-  gint            cage_vertices_max; //number of vertices allocated in memory
-  GimpVector2    *cage_vertices;
+  gint            cage_vertice_number; /* number of vertices used by the cage */
+  gint            cage_vertices_max; /* number of vertices allocated in memory */
   
+  GimpVector2    *cage_vertices; /* cage before deformation */
+  GimpVector2    *cage_vertices_d; /* cage after deformation */
+    
   GeglBuffer     *cage_vertices_coef;
   GeglBuffer     *cage_edges_coef;
-  
+  gdouble        *scaling_factor;
+
   //test data
   GeglRectangle   extent;
 };
@@ -78,12 +80,22 @@ gint        gimp_cage_is_on_handle           (GimpCage    *cage,
                                               gdouble      x,
                                               gdouble      y,
                                               gint         handle_size);
-                                            
+
+gint        gimp_cage_is_on_handle_d         (GimpCage    *cage,
+                                              gdouble      x,
+                                              gdouble      y,
+                                              gint         handle_size);
+                                              
 void        gimp_cage_move_cage_point        (GimpCage    *cage,
                                               gint         point_number,
                                               gdouble      x,
                                               gdouble      y);
-
+                                              
+void        gimp_cage_move_cage_point_d      (GimpCage    *cage,
+                                              gint         point_number,
+                                              gdouble      x,
+                                              gdouble      y);
+                                              
 void        gimp_cage_compute_coefficient    (GimpCage *gc);
 
 GimpVector2 gimp_cage_get_edge_normal        (GimpCage *gc,
