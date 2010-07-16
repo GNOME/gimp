@@ -69,7 +69,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
   //FIXME: for test
   self->cage = g_object_new (GIMP_TYPE_CAGE, NULL);
   
-  #if 0
+  #if 1
   
     #if 1
     gimp_cage_add_cage_point(self->cage, 70, 20);
@@ -89,7 +89,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
   
   #else
   
-    #if 1
+    #if 0
     gimp_cage_add_cage_point(self->cage, 160, 160); /* need reverse */
     gimp_cage_add_cage_point(self->cage, 250, 160);
     gimp_cage_add_cage_point(self->cage, 250, 280);
@@ -138,7 +138,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
   Babl *format_io = babl_format ("RGBA float");
   Babl *format_coef = babl_format_n (babl_type ("float"), op_cage->cage->cage_vertice_number);
   
-  gint in, coef_vertices, coef_edges;
+  gint in, out, coef_vertices, coef_edges;
   gint i;
   GeglRectangle rect;
   GeglBufferIterator *it;
@@ -146,10 +146,6 @@ gimp_operation_cage_process (GeglOperation       *operation,
   rect.height = 1;
   rect.width = 1;
   
-  cage->extent.height = roi->height;
-  cage->extent.width = roi->width;
-  cage->extent.x = roi->x;
-  cage->extent.y = roi->y;
   gimp_cage_compute_coefficient (cage);
   
   it = gegl_buffer_iterator_new (in_buf, roi, format_io, GEGL_BUFFER_READ);
@@ -207,7 +203,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
                       format_io,
                       source,
                       GEGL_AUTO_ROWSTRIDE);
-      
+                      
       source += 4;
       coef_v += cage->cage_vertice_number;
       coef_e += cage->cage_vertice_number;

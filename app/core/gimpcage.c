@@ -24,16 +24,19 @@
 #include <math.h>
 #include <gegl-buffer-iterator.h>
 
+#include <stdio.h>
 
 G_DEFINE_TYPE (GimpCage, gimp_cage, G_TYPE_OBJECT)
 
 #define parent_class gimp_cage_parent_class
 
 #define N_ITEMS_PER_ALLOC       10
+#define TEST_REVERSE_CAGE 0
 
 static void       gimp_cage_finalize                (GObject *object);
 static void       gimp_cage_reverse_cage_if_needed  (GimpCage *gc);
 static void       gimp_cage_compute_scaling_factor  (GimpCage *gc);
+static void       gimp_cage_compute_bounding_box    (GimpCage   *gc);
 
 
 static void
@@ -52,11 +55,6 @@ gimp_cage_init (GimpCage *self)
   self->cage_vertices = g_new(GimpVector2, self->cage_vertices_max);
   self->cage_vertices_d = g_new(GimpVector2, self->cage_vertices_max);
   self->scaling_factor = g_malloc (self->cage_vertices_max * sizeof(gfloat));
-    
-  self->extent.x = 20;
-  self->extent.y = 20;
-  self->extent.height = 80;
-  self->extent.width = 80;
   
   self->cage_vertices_coef = NULL;
   self->cage_edges_coef = NULL;
@@ -94,6 +92,12 @@ gimp_cage_compute_coefficient (GimpCage *gc)
   
   g_return_if_fail (GIMP_IS_CAGE (gc));
   
+  gimp_cage_compute_bounding_box (gc);
+  
+  #if TEST_REVERSE_CAGE
+    gimp_cage_reverse_cage_if_needed (gc);
+  #endif
+  
   format = babl_format_n(babl_type("float"), gc->cage_vertice_number);
 
   
@@ -107,14 +111,14 @@ gimp_cage_compute_coefficient (GimpCage *gc)
     gegl_buffer_destroy(gc->cage_edges_coef);
   }
   
-  gc->cage_vertices_coef = gegl_buffer_new(&gc->extent, format);
-  gc->cage_edges_coef = gegl_buffer_new(&gc->extent, format);
+  gc->cage_vertices_coef = gegl_buffer_new(&gc->bounding_box, format);
+  gc->cage_edges_coef = gegl_buffer_new(&gc->bounding_box, format);
   
-  gegl_buffer_clear(gc->cage_vertices_coef, &gc->extent);
-  gegl_buffer_clear(gc->cage_edges_coef, &gc->extent);
+  gegl_buffer_clear(gc->cage_vertices_coef, &gc->bounding_box);
+  gegl_buffer_clear(gc->cage_edges_coef, &gc->bounding_box);
   
-  i = gegl_buffer_iterator_new (gc->cage_vertices_coef, &gc->extent, format, GEGL_BUFFER_READWRITE);
-  edge = gegl_buffer_iterator_add (i, gc->cage_edges_coef, &gc->extent, format, GEGL_BUFFER_READWRITE);
+  i = gegl_buffer_iterator_new (gc->cage_vertices_coef, &gc->bounding_box, format, GEGL_BUFFER_READWRITE);
+  edge = gegl_buffer_iterator_add (i, gc->cage_edges_coef, &gc->bounding_box, format, GEGL_BUFFER_READWRITE);
   vertice = 0;
   
   //iterate on GeglBuffer
@@ -351,6 +355,56 @@ gimp_cage_reverse_cage  (GimpCage *gc)
   gimp_cage_compute_scaling_factor (gc);
 }
 
+static void
+gimp_cage_reverse_cage_if_needed (GimpCage *gc)
+{
+  gint i;
+  gdouble sum;
+  
+  g_return_if_fail (GIMP_IS_CAGE (gc));
+  
+  sum = 0.0;
+  
+  /* we sum all the angles in the cage */
+  for (i = 0; i < gc->cage_vertice_number ; i++)
+  {
+    GimpVector2 P1, P2, P3, P12, P23;
+    gdouble sign, angle;
+    
+    P1 = gc->cage_vertices[i];
+    P2 = gc->cage_vertices[(i+1) % gc->cage_vertice_number];
+    P3 = gc->cage_vertices[(i+2) % gc->cage_vertice_number];
+    
+    P12.x = P2.x - P1.x;
+    P12.y = P2.y - P1.y;
+    P23.x = P3.x - P2.x;
+    P23.y = P3.y - P2.y;
+    
+    sign = P23.x * P12.x - P23.y * P12.y;
+    angle = acos( (P12.x * P23.x + P12.y * P23.y) / ( sqrt(P12.x * P12.x + P12.y * P12.y) * sqrt(P23.x * P23.x + P23.y * P23.y)) );
+    
+    printf("sign: %f    angle: %f   sum: %f \n", sign, angle, sum);
+    
+    if (sign > 0)
+    {
+      sum += angle;
+    }
+    else
+    {
+      sum -= angle;
+    }
+  }
+  
+  printf("final sum: %f\n", sum);
+  
+  /* sum < 0 mean a cage defined clockwise, so we reverse it */
+  if (sum < 0)
+  {
+    printf("reverse cage !\n");
+    gimp_cage_reverse_cage (gc);
+  }
+}
+
 GimpVector2
 gimp_cage_get_edge_normal  (GimpCage *gc,
                             gint      edge_index)
@@ -366,4 +420,46 @@ gimp_cage_get_edge_normal  (GimpCage *gc,
                     &gc->cage_vertices_d[edge_index]);
   
   return gimp_vector2_normal (&result);
+}
+
+static void
+gimp_cage_compute_bounding_box  (GimpCage   *gc)
+{
+  gint i;
+  
+  g_return_if_fail (GIMP_IS_CAGE (gc));
+  g_return_if_fail (gc->cage_vertice_number >= 0);
+  
+  gc->bounding_box.x = gc->cage_vertices[0].x;
+  gc->bounding_box.y = gc->cage_vertices[0].y;
+  gc->bounding_box.height = 1;
+  gc->bounding_box.width = 1;
+  
+  for (i = 1; i < gc->cage_vertice_number; i++)
+  {
+    gdouble x,y;
+    
+    x = gc->cage_vertices[i].x;
+    y = gc->cage_vertices[i].y;
+    
+    if (x < gc->bounding_box.x)
+    {
+      gc->bounding_box.x = x;
+    }
+    
+    if (y < gc->bounding_box.y)
+    {
+      gc->bounding_box.y = y;
+    }
+    
+    if (x > gc->bounding_box.x + gc->bounding_box.width)
+    {
+      gc->bounding_box.width = x - gc->bounding_box.x;
+    }
+    
+    if (y > gc->bounding_box.y + gc->bounding_box.height)
+    {
+      gc->bounding_box.height = y - gc->bounding_box.y;
+    }
+  }
 }

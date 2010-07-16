@@ -50,8 +50,7 @@ struct _GimpCage
   GeglBuffer     *cage_edges_coef;
   gdouble        *scaling_factor;
 
-  //test data
-  GeglRectangle   extent;
+  GeglRectangle   bounding_box;
 };
 
 
