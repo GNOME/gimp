@@ -41,9 +41,9 @@
 
 #include "gimp-intl.h"
 
-static gboolean     gimp_cage_tool_initialize     (GimpTool    *tool,
+/*static gboolean     gimp_cage_tool_initialize     (GimpTool    *tool,
                                                    GimpDisplay *display,
-                                                   GError     **error);
+                                                   GError     **error);*/
 static void         gimp_cage_tool_finalize       (GObject *object);
 static void         gimp_cage_tool_start          (GimpCageTool *ct,
                                                    GimpDisplay        *display);
@@ -84,11 +84,11 @@ static void         gimp_cage_tool_draw           (GimpDrawTool *draw_tool);
 static void         gimp_cage_tool_switch_to_deform (GimpCageTool *ct);
 static void         gimp_cage_tool_remove_last_handle (GimpCageTool *ct);
 
-G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_TRANSFORM_TOOL)
+G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_cage_tool_parent_class
 
-#define HANDLE_SIZE             10
+#define HANDLE_SIZE             14
 
 void
 gimp_cage_tool_register (GimpToolRegisterCallback  callback,
@@ -113,11 +113,10 @@ gimp_cage_tool_class_init (GimpCageToolClass *klass)
   GObjectClass           *object_class         = G_OBJECT_CLASS (klass);
   GimpToolClass          *tool_class           = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass      *draw_tool_class      = GIMP_DRAW_TOOL_CLASS (klass);
-  GimpTransformToolClass *transformtool_class  = GIMP_TRANSFORM_TOOL_CLASS (klass);
   
   object_class->finalize          = gimp_cage_tool_finalize;
   
-  tool_class->initialize          = gimp_cage_tool_initialize;
+  /*tool_class->initialize          = gimp_cage_tool_initialize;*/
   tool_class->button_press        = gimp_cage_tool_button_press;
   tool_class->button_release      = gimp_cage_tool_button_release;
   tool_class->key_press           = gimp_cage_tool_key_press;
@@ -139,7 +138,7 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->cage_complete = FALSE;
 }
 
-static gboolean
+/*static gboolean
 gimp_cage_tool_initialize (GimpTool    *tool,
                            GimpDisplay *display,
                            GError     **error)
@@ -147,7 +146,7 @@ gimp_cage_tool_initialize (GimpTool    *tool,
   GimpCageTool *cage_tool = GIMP_CAGE_TOOL (tool);
 
   return GIMP_TOOL_CLASS (parent_class)->initialize(tool, display, error);
-}
+}*/
 
 static void
 gimp_cage_tool_finalize (GObject *object)
@@ -162,14 +161,11 @@ gimp_cage_tool_finalize (GObject *object)
 
 
 static void
-gimp_cage_tool_start (GimpCageTool *ct,
+gimp_cage_tool_start (GimpCageTool       *ct,
                       GimpDisplay        *display)
 {
   GimpTool                  *tool      = GIMP_TOOL (ct);
   GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpCageOptions           *options   = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
-
-  gimp_cage_tool_halt (ct);
 
   gimp_tool_control_activate (tool->control);
 
@@ -210,6 +206,9 @@ gimp_cage_tool_button_press (GimpTool              *tool,
 {
   GimpCageTool    *ct       = GIMP_CAGE_TOOL (tool);
   GimpCage        *cage     = ct->cage;
+
+  g_return_if_fail (GIMP_IS_CAGE_TOOL (ct));
+  g_return_if_fail (GIMP_IS_CAGE (cage));
   
   if (display != tool->display)
   {
@@ -267,7 +266,6 @@ gimp_cage_tool_key_press (GimpTool    *tool,
                           GimpDisplay *display)
 {
   GimpCageTool *ct    = GIMP_CAGE_TOOL (tool);
-  GimpCage     *cage  = ct->cage;
   
   switch (kevent->keyval)
     {
@@ -344,7 +342,7 @@ gimp_cage_tool_cursor_update  (GimpTool         *tool,
                                GimpDisplay      *display)
 {
   GimpCageTool    *ct       = GIMP_CAGE_TOOL (tool);
-  GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (tool);
+  GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
 
   if (tool->display == NULL)
   {
@@ -382,14 +380,13 @@ gimp_cage_tool_oper_update  (GimpTool         *tool,
 {
   GimpCageTool *ct          = GIMP_CAGE_TOOL (tool);
   GimpDrawTool *draw_tool   = GIMP_DRAW_TOOL (tool);
-  GimpCage     *cage        = ct->cage;
   
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_pause (draw_tool);
   
   ct->cursor_position.x = coords->x;
   ct->cursor_position.y = coords->y;
   
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+  gimp_draw_tool_resume (draw_tool);
 }
 
 /**
@@ -402,7 +399,6 @@ static void
 gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpCageTool       *ct      = GIMP_CAGE_TOOL (draw_tool);
-  GimpTool           *tool    = GIMP_TOOL (draw_tool);
   GimpCage           *cage    = ct->cage;
   
   gint i = 0;

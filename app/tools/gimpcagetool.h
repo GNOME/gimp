@@ -20,7 +20,7 @@
 #ifndef __GIMP_CAGE_TOOL_H__
 #define __GIMP_CAGE_TOOL_H__
 
-#include "gimptransformtool.h"
+#include "gimpdrawtool.h"
 #include "libgimpmath/gimpvector.h"
 #include "core/gimpcage.h"
 
@@ -39,7 +39,7 @@ typedef struct _GimpCageTool GimpCageTool;
 
 struct _GimpCageTool
 {
-  GimpTransformTool     parent_instance;
+  GimpDrawTool          parent_instance;
   GimpCage             *cage;
   
   GimpVector2           cursor_position;
@@ -50,7 +50,7 @@ struct _GimpCageTool
 
 struct _GimpCageToolClass
 {
-  GimpTransformToolClass parent_class;
+  GimpDrawToolClass     parent_class;
 };
 
 void    gimp_cage_tool_register (GimpToolRegisterCallback  callback,
