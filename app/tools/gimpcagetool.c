@@ -204,8 +204,9 @@ gimp_cage_tool_button_press (GimpTool              *tool,
                              GimpButtonPressType    press_type,
                              GimpDisplay           *display)
 {
-  GimpCageTool    *ct       = GIMP_CAGE_TOOL (tool);
-  GimpCage        *cage     = ct->cage;
+  GimpCageTool      *ct       = GIMP_CAGE_TOOL (tool);
+  GimpCageOptions   *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  GimpCage          *cage     = ct->cage;
 
   g_return_if_fail (GIMP_IS_CAGE_TOOL (ct));
   g_return_if_fail (GIMP_IS_CAGE (cage));
@@ -218,12 +219,23 @@ gimp_cage_tool_button_press (GimpTool              *tool,
    
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
   
+  
   if (ct->handle_moved < 0)
   {
-    ct->handle_moved = gimp_cage_is_on_handle (cage,
-                                               coords->x,
-                                               coords->y,
-                                               HANDLE_SIZE);
+    if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    {
+      ct->handle_moved = gimp_cage_is_on_handle (cage,
+                                                 coords->x,
+                                                 coords->y,
+                                                 HANDLE_SIZE);
+    }
+    else
+    {
+      ct->handle_moved = gimp_cage_is_on_handle_d (cage,
+                                                   coords->x,
+                                                   coords->y,
+                                                   HANDLE_SIZE);
+    }
   }
   
   if (ct->handle_moved < 0)
@@ -299,6 +311,7 @@ gimp_cage_tool_motion (GimpTool         *tool,
 {
   GimpCageTool        *ct         = GIMP_CAGE_TOOL (tool);
   GimpDrawTool        *draw_tool  = GIMP_DRAW_TOOL (tool);
+  GimpCageOptions     *options    = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
   GimpCage            *cage       = ct->cage;
   
 
@@ -307,10 +320,20 @@ gimp_cage_tool_motion (GimpTool         *tool,
   
   if (ct->handle_moved >= 0)
   {
-    gimp_cage_move_cage_point  (cage,
-                                ct->handle_moved,
-                                coords->x,
-                                coords->y);
+    if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    {
+      gimp_cage_move_cage_point  (cage,
+                                  ct->handle_moved,
+                                  coords->x,
+                                  coords->y);
+    }
+    else
+    {
+      gimp_cage_move_cage_point_d  (cage,
+                                    ct->handle_moved,
+                                    coords->x,
+                                    coords->y);
+    }
   }
 
   gimp_draw_tool_resume (draw_tool);
@@ -398,37 +421,56 @@ gimp_cage_tool_oper_update  (GimpTool         *tool,
 static void
 gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpCageTool       *ct      = GIMP_CAGE_TOOL (draw_tool);
-  GimpCage           *cage    = ct->cage;
+  GimpCageTool        *ct       = GIMP_CAGE_TOOL (draw_tool);
+  GimpCageOptions     *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  GimpCage            *cage     = ct->cage;
   
-  gint i = 0;
-  gint n = 0;
-  gint on_handle = -1;
+  gint                 i = 0;
+  gint                 n = 0;
+  gint                 on_handle = -1;
+  GimpVector2         *vertices;
+  gint               (*is_on_handle)     (GimpCage    *cage,
+                                          gdouble      x,
+                                          gdouble      y,
+                                          gint         handle_size);
   
+
   if (cage->cage_vertice_number <= 0)
   {
     return;
   }
   
+  if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+  {
+    is_on_handle = gimp_cage_is_on_handle;
+    vertices = cage->cage_vertices;
+  }
+  else
+  {
+    is_on_handle = gimp_cage_is_on_handle_d;
+    vertices = cage->cage_vertices_d;
+  }
+  
+  
   gimp_draw_tool_draw_lines (draw_tool,
-                             cage->cage_vertices,
+                             vertices,
                              cage->cage_vertice_number,
                              FALSE, FALSE);
   
   if (ct->cage_complete)
   {
     gimp_draw_tool_draw_line (draw_tool,
-                              cage->cage_vertices[cage->cage_vertice_number - 1].x,
-                              cage->cage_vertices[cage->cage_vertice_number - 1].y,
-                              cage->cage_vertices[0].x,
-                              cage->cage_vertices[0].y,
+                              vertices[cage->cage_vertice_number - 1].x,
+                              vertices[cage->cage_vertice_number - 1].y,
+                              vertices[0].x,
+                              vertices[0].y,
                               FALSE);
   }
   else
   {
     gimp_draw_tool_draw_line (draw_tool,
-                              cage->cage_vertices[cage->cage_vertice_number - 1].x,
-                              cage->cage_vertices[cage->cage_vertice_number - 1].y,
+                              vertices[cage->cage_vertice_number - 1].x,
+                              vertices[cage->cage_vertice_number - 1].y,
                               ct->cursor_position.x,
                               ct->cursor_position.y,
                               FALSE);
@@ -436,14 +478,14 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   
   n = cage->cage_vertice_number;
   
-  on_handle = gimp_cage_is_on_handle (cage,
-                                      ct->cursor_position.x,
-                                      ct->cursor_position.y,
-                                      HANDLE_SIZE);
+  on_handle = is_on_handle (cage,
+                            ct->cursor_position.x,
+                            ct->cursor_position.y,
+                            HANDLE_SIZE);
   
   for(i = 0; i < n; i++)
   {
-    GimpVector2 point = cage->cage_vertices[i];
+    GimpVector2 point = vertices[i];
     
     GimpHandleType handle = GIMP_HANDLE_CIRCLE;
     
