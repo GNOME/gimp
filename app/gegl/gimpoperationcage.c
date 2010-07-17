@@ -71,25 +71,27 @@ gimp_operation_cage_init (GimpOperationCage *self)
   
   #if 1
   
-    #if 1
+    #if 0
     gimp_cage_add_cage_point(self->cage, 70, 20);
     gimp_cage_add_cage_point(self->cage, 70, 300);
     gimp_cage_add_cage_point(self->cage, 450, 300);
     gimp_cage_add_cage_point(self->cage, 450, 20);
     
     gimp_cage_move_cage_point_d (self->cage, 1, 100, 250);
+    
     #else
     
-    gimp_cage_add_cage_point(self->cage, 25, 80);
-    gimp_cage_add_cage_point(self->cage, 70, 200);
-    gimp_cage_add_cage_point(self->cage, 200, 80);
-    gimp_cage_add_cage_point(self->cage, 50, 50);
-    gimp_cage_add_cage_point(self->cage, 20, 20);
+    gimp_cage_add_cage_point(self->cage, 450, 20); /* need reverse */
+    gimp_cage_add_cage_point(self->cage, 450, 300);
+    gimp_cage_add_cage_point(self->cage, 70, 300);
+    gimp_cage_add_cage_point(self->cage, 70, 20);
+    
+    gimp_cage_move_cage_point_d (self->cage, 2, 100, 250);
     #endif
   
   #else
   
-    #if 0
+    #if 1
     gimp_cage_add_cage_point(self->cage, 160, 160); /* need reverse */
     gimp_cage_add_cage_point(self->cage, 250, 160);
     gimp_cage_add_cage_point(self->cage, 250, 280);
@@ -99,7 +101,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
     gimp_cage_add_cage_point(self->cage, 430, 460);
     gimp_cage_add_cage_point(self->cage, 160, 460);
     
-    gimp_cage_move_cage_point_d (self->cage, 1, 500, 500);
+    gimp_cage_move_cage_point_d (self->cage, 6, 500, 500);
     
     #else
     
@@ -155,7 +157,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
   coef_edges = gegl_buffer_iterator_add (it, cage->cage_edges_coef, &cage->bounding_box, format_coef, GEGL_BUFFER_READ);
   
   /* pre-copy the input buffer to the out buffer */
-  gegl_buffer_copy (in_buf, roi, out_buf, roi);
+  /*gegl_buffer_copy (in_buf, roi, out_buf, roi);*/
   
   /* iterate on GeglBuffer */
   while (gegl_buffer_iterator_next (it))
@@ -190,7 +192,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
       }
       
       rect.x = (gint) rint(pos_x);
-      rect.y = (gint) rint(pos_y);      
+      rect.y = (gint) rint(pos_y);
       
       /*if (sqrt ((pos_x-x) * (pos_x-x) + (pos_y-y) * (pos_y-y)) < 20)
       {
@@ -206,7 +208,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
                       format_io,
                       source,
                       GEGL_AUTO_ROWSTRIDE);
-                      
+
       source += 4;
       coef_v += cage->cage_vertice_number;
       coef_e += cage->cage_vertice_number;
