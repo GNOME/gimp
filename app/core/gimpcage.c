@@ -31,7 +31,6 @@ G_DEFINE_TYPE (GimpCage, gimp_cage, G_TYPE_OBJECT)
 #define parent_class gimp_cage_parent_class
 
 #define N_ITEMS_PER_ALLOC       10
-#define TEST_REVERSE_CAGE 0
 
 static void       gimp_cage_finalize                (GObject *object);
 static void       gimp_cage_reverse_cage_if_needed  (GimpCage *gc);
@@ -81,7 +80,6 @@ gimp_cage_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-
                                               
 void
 gimp_cage_compute_coefficient (GimpCage *gc)
@@ -92,12 +90,11 @@ gimp_cage_compute_coefficient (GimpCage *gc)
   
   g_return_if_fail (GIMP_IS_CAGE (gc));
   
+  gimp_cage_reverse_cage_if_needed (gc);
+  
   gimp_cage_compute_bounding_box (gc);
   
-  #if TEST_REVERSE_CAGE
-    gimp_cage_reverse_cage_if_needed (gc);
-  #endif
-  
+
   format = babl_format_n(babl_type("float"), gc->cage_vertice_number);
 
   
@@ -332,7 +329,6 @@ gimp_cage_move_cage_point_d  (GimpCage    *gc,
 /*
  * The cage need to be defined in a counter-clockwise way, so depending on how the user setup it, we may need to reverse the order of the point
  */
-
 static void
 gimp_cage_reverse_cage  (GimpCage *gc)
 {
@@ -340,16 +336,16 @@ gimp_cage_reverse_cage  (GimpCage *gc)
   GimpVector2 temp;
   
   g_return_if_fail (GIMP_IS_CAGE (gc));
-      
-  for (i = 0; i <= gc->cage_vertice_number / 2 ; i++)
+  
+  for (i = 0; i < gc->cage_vertice_number / 2; i++)
   {
     temp = gc->cage_vertices[i];
-    gc->cage_vertices[i] = gc->cage_vertices[gc->cage_vertice_number - i];
-    gc->cage_vertices[gc->cage_vertice_number - i] = temp;
+    gc->cage_vertices[i] = gc->cage_vertices[gc->cage_vertice_number - i -1];
+    gc->cage_vertices[gc->cage_vertice_number - i -1] = temp;
     
     temp = gc->cage_vertices_d[i];
-    gc->cage_vertices_d[i] = gc->cage_vertices_d[gc->cage_vertice_number - i];
-    gc->cage_vertices_d[gc->cage_vertice_number - i] = temp;
+    gc->cage_vertices_d[i] = gc->cage_vertices_d[gc->cage_vertice_number - i -1];
+    gc->cage_vertices_d[gc->cage_vertice_number - i -1] = temp;
   }
   
   gimp_cage_compute_scaling_factor (gc);
@@ -368,39 +364,21 @@ gimp_cage_reverse_cage_if_needed (GimpCage *gc)
   /* we sum all the angles in the cage */
   for (i = 0; i < gc->cage_vertice_number ; i++)
   {
-    GimpVector2 P1, P2, P3, P12, P23;
-    gdouble sign, angle;
+    GimpVector2 P1, P2, P3;
+    gdouble z;
     
     P1 = gc->cage_vertices[i];
     P2 = gc->cage_vertices[(i+1) % gc->cage_vertice_number];
     P3 = gc->cage_vertices[(i+2) % gc->cage_vertice_number];
     
-    P12.x = P2.x - P1.x;
-    P12.y = P2.y - P1.y;
-    P23.x = P3.x - P2.x;
-    P23.y = P3.y - P2.y;
+    z = P1.x * (P2.y - P3.y) + P2.x * (P3.y - P1.y) + P3.x * (P1.y - P2.y);
     
-    sign = P23.x * P12.x - P23.y * P12.y;
-    angle = acos( (P12.x * P23.x + P12.y * P23.y) / ( sqrt(P12.x * P12.x + P12.y * P12.y) * sqrt(P23.x * P23.x + P23.y * P23.y)) );
-    
-    printf("sign: %f    angle: %f   sum: %f \n", sign, angle, sum);
-    
-    if (sign > 0)
-    {
-      sum += angle;
-    }
-    else
-    {
-      sum -= angle;
-    }
+    sum += z;
   }
   
-  printf("final sum: %f\n", sum);
-  
-  /* sum < 0 mean a cage defined clockwise, so we reverse it */
-  if (sum < 0)
+  /* sum > 0 mean a cage defined clockwise, so we reverse it */
+  if (sum > 0)
   {
-    printf("reverse cage !\n");
     gimp_cage_reverse_cage (gc);
   }
 }
