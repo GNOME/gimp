@@ -79,11 +79,6 @@ static void   gimp_channel_tree_view_set_context      (GimpContainerView *view,
                                                        GimpContext       *context);
 static void   gimp_channel_tree_view_set_view_size    (GimpContainerView *view);
 
-static void   gimp_channel_tree_view_channel_clicked  (GimpCellRendererViewable *cell,
-                                                       const gchar              *path_str,
-                                                       GdkModifierType           state,
-                                                       GimpContainerTreeView    *tree_view);
-
 
 G_DEFINE_TYPE_WITH_CODE (GimpChannelTreeView, gimp_channel_tree_view,
                          GIMP_TYPE_DRAWABLE_TREE_VIEW,
@@ -169,10 +164,6 @@ gimp_channel_tree_view_constructor (GType                  type,
   editor    = GIMP_EDITOR (object);
   view      = GIMP_CHANNEL_TREE_VIEW (object);
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
-
-  g_signal_connect (tree_view->renderer_cell, "clicked",
-                    G_CALLBACK (gimp_channel_tree_view_channel_clicked),
-                    view);
 
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER,
                                NULL, tree_view);
@@ -380,38 +371,3 @@ gimp_channel_tree_view_set_view_size (GimpContainerView *view)
     gimp_component_editor_set_view_size (GIMP_COMPONENT_EDITOR (channel_view->priv->component_editor),
                                          view_size);
 }
-
-
-/*  signal handlers  */
-
-static void
-gimp_channel_tree_view_channel_clicked (GimpCellRendererViewable *cell,
-                                        const gchar              *path_str,
-                                        GdkModifierType           state,
-                                        GimpContainerTreeView    *tree_view)
-{
-  if (state & GDK_MOD1_MASK)
-    {
-      GimpUIManager   *ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
-      GimpActionGroup *group;
-      const gchar     *action = "channels-selection-replace";
-
-      group = gimp_ui_manager_get_action_group (ui_manager, "channels");
-
-      if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
-        {
-          action = "channels-selection-intersect";
-        }
-      else if (state & GDK_SHIFT_MASK)
-        {
-          action = "channels-selection-add";
-        }
-      else if (state & GDK_CONTROL_MASK)
-        {
-          action = "channels-selection-subtract";
-        }
-
-      gimp_action_group_activate_action (group, action);
-    }
-}
-
