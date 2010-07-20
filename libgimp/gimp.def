@@ -410,6 +410,20 @@ EXPORTS
 	gimp_install_procedure
 	gimp_install_temp_proc
 	gimp_invert
+	gimp_item_delete
+	gimp_item_get_image
+	gimp_item_get_linked item_set_linked
+	gimp_item_get_lock_content item_set_lock_content
+	gimp_item_get_name item_set_name
+	gimp_item_get_tattoo item_set_tattoo
+	gimp_item_get_visible item_set_visible
+	gimp_item_is_channel
+	gimp_item_is_drawable
+	gimp_item_is_layer
+	gimp_item_is_layer_mask
+	gimp_item_is_selection
+	gimp_item_is_valid
+	gimp_item_is_vectors
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
 	gimp_layer_copy
