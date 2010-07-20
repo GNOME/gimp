@@ -29,7 +29,6 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
@@ -303,17 +302,13 @@ vectors_to_selection_cmd_callback (GtkAction *action,
                                    gint       value,
                                    gpointer   data)
 {
-  GimpChannelOps  op;
-  GimpImage      *image;
-  GimpVectors    *vectors;
+  GimpImage   *image;
+  GimpVectors *vectors;
   return_if_no_vectors (image, vectors, data);
 
-  op = (GimpChannelOps) value;
-
-  gimp_channel_select_vectors (gimp_image_get_mask (image),
-                               _("Path to Selection"),
-                               vectors,
-                               op, TRUE, FALSE, 0, 0, TRUE);
+  gimp_item_to_selection (GIMP_ITEM (vectors),
+                          (GimpChannelOps) value,
+                          TRUE, FALSE, 0, 0);
   gimp_image_flush (image);
 }
 

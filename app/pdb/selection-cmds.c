@@ -23,7 +23,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-select.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -418,11 +417,12 @@ selection_layer_alpha_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-      gimp_channel_select_alpha (gimp_image_get_mask (image),
-                                 GIMP_DRAWABLE (layer),
-                                 GIMP_CHANNEL_OP_REPLACE, FALSE, 0.0, 0.0);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, FALSE, error))
+        gimp_item_to_selection (GIMP_ITEM (layer),
+                                GIMP_CHANNEL_OP_REPLACE,
+                                TRUE, FALSE, 0.0, 0.0);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -444,18 +444,12 @@ selection_load_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image;
-      gint       off_x, off_y;
-
-      image = gimp_item_get_image (GIMP_ITEM (channel));
-      gimp_item_get_offset (GIMP_ITEM (channel), &off_x, &off_y);
-
-      gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   _("Channel to Selection"),
-                                   channel,
-                                   off_x, off_y,
-                                   GIMP_CHANNEL_OP_REPLACE,
-                                   FALSE, 0.0, 0.0);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, FALSE, error))
+        gimp_item_to_selection (GIMP_ITEM (channel),
+                                GIMP_CHANNEL_OP_REPLACE,
+                                TRUE, FALSE, 0.0, 0.0);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -511,18 +505,12 @@ selection_combine_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image;
-      gint       off_x, off_y;
-
-      image = gimp_item_get_image (GIMP_ITEM (channel));
-      gimp_item_get_offset (GIMP_ITEM (channel), &off_x, &off_y);
-
-      gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   _("Channel to Selection"),
-                                   channel,
-                                   off_x, off_y,
-                                   operation,
-                                   FALSE, 0.0, 0.0);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), NULL, FALSE, error))
+        gimp_item_to_selection (GIMP_ITEM (channel),
+                                operation,
+                                TRUE, FALSE, 0.0, 0.0);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

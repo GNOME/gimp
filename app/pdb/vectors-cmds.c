@@ -25,7 +25,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-select.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -1342,18 +1341,13 @@ vectors_to_selection_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (vectors));
-
-      if (image)
-        gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                     _("Path to Selection"),
-                                     vectors,
-                                     operation,
-                                     antialias,
-                                     feather,
-                                     feather_radius_x,
-                                     feather_radius_y,
-                                     TRUE);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, FALSE, error))
+        gimp_item_to_selection (GIMP_ITEM (vectors),
+                                operation,
+                                antialias,
+                                feather,
+                                feather_radius_x,
+                                feather_radius_y);
       else
         success = FALSE;
     }

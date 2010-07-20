@@ -311,10 +311,8 @@ channels_to_selection_cmd_callback (GtkAction *action,
       GimpChannel *channel;
       return_if_no_channel (image, channel, data);
 
-      gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   _("Channel to Selection"),
-                                   channel, 0, 0,
-                                   op, FALSE, 0.0, 0.0);
+      gimp_item_to_selection (GIMP_ITEM (channel),
+                              op, TRUE, FALSE, 0.0, 0.0);
     }
 
   gimp_image_flush (image);

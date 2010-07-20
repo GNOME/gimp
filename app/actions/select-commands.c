@@ -27,7 +27,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpselection.h"
 #include "core/gimpstrokeoptions.h"

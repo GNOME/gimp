@@ -31,7 +31,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
@@ -1953,11 +1952,9 @@ gimp_vector_tool_to_selection_extended (GimpVectorTool *vector_tool,
       operation = GIMP_CHANNEL_OP_SUBTRACT;
     }
 
-  gimp_channel_select_vectors (gimp_image_get_mask (image),
-                               _("Path to selection"),
-                               vector_tool->vectors,
-                               operation,
-                               TRUE, FALSE, 0, 0, TRUE);
+  gimp_item_to_selection (GIMP_ITEM (vector_tool->vectors),
+                          operation,
+                          TRUE, FALSE, 0, 0);
   gimp_image_flush (image);
 }
 

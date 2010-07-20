@@ -192,6 +192,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->rotate                    = NULL;
   klass->transform                 = NULL;
   klass->stroke                    = NULL;
+  klass->to_selection              = NULL;
   klass->get_node                  = gimp_item_real_get_node;
 
   klass->default_name              = NULL;
@@ -1409,6 +1410,26 @@ gimp_item_stroke (GimpItem          *item,
     }
 
   return retval;
+}
+
+void
+gimp_item_to_selection (GimpItem       *item,
+                        GimpChannelOps  op,
+                        gboolean        antialias,
+                        gboolean        feather,
+                        gdouble         feather_radius_x,
+                        gdouble         feather_radius_y)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_attached (item));
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  if (item_class->to_selection)
+    item_class->to_selection (item, op, antialias,
+                              feather, feather_radius_x, feather_radius_y);
 }
 
 GeglNode *

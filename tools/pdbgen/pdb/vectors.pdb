@@ -1282,18 +1282,13 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (vectors));
-
-  if (image)
-    gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                 _("Path to Selection"),
-                                 vectors,
-                                 operation,
-                                 antialias,
-                                 feather,
-                                 feather_radius_x,
-                                 feather_radius_y,
-                                 TRUE);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, FALSE, error))
+    gimp_item_to_selection (GIMP_ITEM (vectors),
+                            operation,
+                            antialias,
+                            feather,
+                            feather_radius_x,
+                            feather_radius_y);
   else
     success = FALSE;
 }
@@ -1502,7 +1497,6 @@ CODE
               "core/gimplist.h"
               "core/gimpimage.h"
               "core/gimpimage-undo-push.h"
-              "core/gimpchannel-select.h"
 	      "text/gimptext-vectors.h"
 	      "text/gimptextlayer.h"
               "vectors/gimpanchor.h"

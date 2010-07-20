@@ -27,7 +27,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
@@ -641,15 +640,12 @@ path_to_selection_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
-        gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                     _("Path to Selection"),
-                                     vectors,
-                                     op,
-                                     antialias,
-                                     feather,
-                                     feather_radius_x,
-                                     feather_radius_y,
-                                     TRUE);
+        gimp_item_to_selection (GIMP_ITEM (vectors),
+                                op,
+                                antialias,
+                                feather,
+                                feather_radius_x,
+                                feather_radius_y);
       else
         success = FALSE;
     }

@@ -29,6 +29,7 @@
 #include "vectors-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-stroke.h"
@@ -111,6 +112,12 @@ static gboolean   gimp_vectors_stroke        (GimpItem          *item,
                                               gboolean           push_undo,
                                               GimpProgress      *progress,
                                               GError           **error);
+static void       gimp_vectors_to_selection  (GimpItem          *item,
+                                              GimpChannelOps     op,
+                                              gboolean           antialias,
+                                              gboolean           feather,
+                                              gdouble            feather_radius_x,
+                                              gdouble            feather_radius_y);
 
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
@@ -191,6 +198,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->rotate               = gimp_vectors_rotate;
   item_class->transform            = gimp_vectors_transform;
   item_class->stroke               = gimp_vectors_stroke;
+  item_class->to_selection         = gimp_vectors_to_selection;
   item_class->default_name         = _("Path");
   item_class->rename_desc          = C_("undo-type", "Rename Path");
   item_class->translate_desc       = C_("undo-type", "Move Path");
@@ -200,6 +208,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->rotate_desc          = C_("undo-type", "Rotate Path");
   item_class->transform_desc       = C_("undo-type", "Transform Path");
   item_class->stroke_desc          = C_("undo-type", "Stroke Path");
+  item_class->to_selection_desc    = C_("undo-type", "Path to Selection");
   item_class->reorder_desc         = C_("undo-type", "Reorder Path");
   item_class->raise_desc           = C_("undo-type", "Raise Path");
   item_class->raise_to_top_desc    = C_("undo-type", "Raise Path to Top");
@@ -564,6 +573,25 @@ gimp_vectors_stroke (GimpItem           *item,
     }
 
   return retval;
+}
+
+static void
+gimp_vectors_to_selection (GimpItem       *item,
+                           GimpChannelOps  op,
+                           gboolean        antialias,
+                           gboolean        feather,
+                           gdouble         feather_radius_x,
+                           gdouble         feather_radius_y)
+{
+  GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpImage   *image   = gimp_item_get_image (item);
+
+  gimp_channel_select_vectors (gimp_image_get_mask (image),
+                               GIMP_ITEM_GET_CLASS (item)->to_selection_desc,
+                               vectors,
+                               op, antialias,
+                               feather, feather_radius_x, feather_radius_x,
+                               TRUE);
 }
 
 static void
