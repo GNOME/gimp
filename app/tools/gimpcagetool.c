@@ -34,6 +34,7 @@
 #include "gimptoolcontrol.h"
 
 #include "core/gimp.h"
+#include "core/gimpprogress.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "display/gimpdisplay.h"
@@ -94,7 +95,7 @@ static void         gimp_cage_tool_switch_to_deform
 static void         gimp_cage_tool_remove_last_handle 
                                                   (GimpCageTool *ct);
 static void         gimp_cage_tool_process        (GimpCageTool *ct,
-                                                   GimpImage    *image);
+                                                   GimpDisplay  *image);
 
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
 
