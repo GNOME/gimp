@@ -424,11 +424,13 @@ gimp_cage_compute_bounding_box  (GimpCage   *gc)
     
     if (x < gc->bounding_box.x)
     {
+      gc->bounding_box.width += gc->bounding_box.x - x;
       gc->bounding_box.x = x;
     }
     
     if (y < gc->bounding_box.y)
     {
+      gc->bounding_box.height += gc->bounding_box.y - y;
       gc->bounding_box.y = y;
     }
     
