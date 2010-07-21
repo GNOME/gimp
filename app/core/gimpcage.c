@@ -228,6 +228,8 @@ gimp_cage_add_cage_point  (GimpCage    *gc,
   gc->cage_vertices_d[gc->cage_vertice_number].y = y;
   
   gc->cage_vertice_number++;
+  
+  gimp_cage_compute_scaling_factor (gc);
 }
 
 void
