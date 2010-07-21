@@ -17,7 +17,6 @@ SUBDIRS = \
 	$(app)
 
 EXTRA_DIST = \
-	ChangeLog			\
 	README				\
 	README.gtkdoc			\
 	bugzilla-milestones.txt		\
