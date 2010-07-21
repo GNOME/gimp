@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -32,7 +33,14 @@
 #include "tools/tools-enums.h"
 #include "gimptoolcontrol.h"
 
+#include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
+#include "display/gimpdisplay.h"
 #include "core/gimp-transform-utils.h"
+
+#include "core/gimpdrawable.h"
+#include "core/gimpdrawable-operation.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -81,8 +89,12 @@ static void         gimp_cage_tool_oper_update    (GimpTool         *tool,
                                                    gboolean          proximity,
                                                    GimpDisplay      *display);
 static void         gimp_cage_tool_draw           (GimpDrawTool *draw_tool);
-static void         gimp_cage_tool_switch_to_deform (GimpCageTool *ct);
-static void         gimp_cage_tool_remove_last_handle (GimpCageTool *ct);
+static void         gimp_cage_tool_switch_to_deform 
+                                                  (GimpCageTool *ct);
+static void         gimp_cage_tool_remove_last_handle 
+                                                  (GimpCageTool *ct);
+static void         gimp_cage_tool_process        (GimpCageTool *ct,
+                                                   GimpImage    *image);
 
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -247,9 +259,11 @@ gimp_cage_tool_button_press (GimpTool              *tool,
   
   // user is clicking on the first handle, we close the cage and switch to deform mode
   if (ct->handle_moved == 0)
-  {
+  {    
     ct->cage_complete = TRUE;
     gimp_cage_tool_switch_to_deform (ct);
+    
+    gimp_cage_tool_process (ct, display);
   }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
@@ -518,4 +532,29 @@ gimp_cage_tool_remove_last_handle (GimpCageTool *ct)
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
   gimp_cage_remove_last_cage_point (cage);
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
+}
+
+static void
+gimp_cage_tool_process (GimpCageTool *ct,
+                        GimpDisplay  *display)
+{  
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpProgress *progress = gimp_progress_start (GIMP_PROGRESS (display),
+                                                _("Blending"),
+                                                FALSE);
+
+
+  if (GIMP_IS_LAYER (drawable))
+  {
+    GeglNode *node;
+
+    node = g_object_new (GEGL_TYPE_NODE,
+                         "operation", "gegl:cage",
+                         NULL);
+
+    gimp_drawable_apply_operation (drawable, progress, _("Cage transform"),
+                                   node, TRUE);
+    g_object_unref (node);
+  }
 }
