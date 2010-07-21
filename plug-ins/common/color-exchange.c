@@ -270,14 +270,15 @@ exchange_dialog (GimpDrawable *drawable)
 {
   GtkWidget    *dialog;
   GtkWidget    *main_vbox;
+  GtkWidget    *hbox;
   GtkWidget    *frame;
   GtkWidget    *preview;
   GtkWidget    *table;
   GtkWidget    *threshold;
   GtkWidget    *colorbutton;
   GtkWidget    *scale;
-  GtkSizeGroup *group;
   GtkObject    *adj;
+  GtkSizeGroup *group;
   gint          framenumber;
   gboolean      run;
 
@@ -306,7 +307,8 @@ exchange_dialog (GimpDrawable *drawable)
                      main_vbox);
   gtk_widget_show (main_vbox);
 
-  frame = gimp_frame_new (_("Middle-Click Inside Preview to Pick \"From Color\""));
+  frame = gimp_frame_new (_("Middle-Click Inside Preview to "
+                            "Pick \"From Color\""));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -337,28 +339,40 @@ exchange_dialog (GimpDrawable *drawable)
                             preview);
 
   /* and our scales */
+
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   for (framenumber = 0; framenumber < 2; framenumber++)
     {
-      GtkWidget *image;
-      gint       row = 0;
+      GtkWidget    *vbox;
+      GtkWidget    *image;
+      gint          row = 0;
 
       frame = gimp_frame_new (framenumber ? _("To Color") : _("From Color"));
-      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
+
+      vbox = gtk_vbox_new (FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
 
       table = gtk_table_new (framenumber ? 4 : 8, 4, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 6);
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 12);
-      if (!framenumber)
+
+      if (! framenumber)
         {
-          gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
-          gtk_table_set_row_spacing (GTK_TABLE (table), 4, 6);
-          gtk_table_set_row_spacing (GTK_TABLE (table), 6, 6);
+          gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
+          gtk_table_set_row_spacing (GTK_TABLE (table), 3, 2);
+          gtk_table_set_row_spacing (GTK_TABLE (table), 5, 2);
         }
-      gtk_container_add (GTK_CONTAINER (frame), table);
+
+      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
 
       colorbutton = gimp_color_button_new (framenumber ?
@@ -382,7 +396,7 @@ exchange_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
-      if (!framenumber)
+      if (! framenumber)
         from_colorbutton = colorbutton;
 
       /*  Red  */
@@ -478,7 +492,7 @@ exchange_dialog (GimpDrawable *drawable)
       gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
-      if (!framenumber)
+      if (! framenumber)
         {
           adj = gimp_scale_entry_new (GTK_TABLE (table), 1, row++,
                                       _("G_reen threshold:"), SCALE_WIDTH, 0,
@@ -566,7 +580,7 @@ exchange_dialog (GimpDrawable *drawable)
           gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
         }
 
-      if (!framenumber)
+      if (! framenumber)
         {
           GtkWidget *button;
 
