@@ -36,8 +36,13 @@ static gboolean       gimp_operation_cage_process                   (GeglOperati
                                                                      GeglBuffer          *out_buf,
                                                                      const GeglRectangle *roi);
 static void           gimp_operation_cage_prepare                   (GeglOperation       *operation);
-
-
+GeglRectangle         gimp_operation_cage_get_cached_region         (GeglOperation        *operation,
+                                                                     const GeglRectangle *roi);
+GeglRectangle
+gimp_operation_cage_get_required_for_output (GeglOperation        *operation,
+                                        const gchar         *input_pad,
+                                        const GeglRectangle *roi);
+                                        
 G_DEFINE_TYPE (GimpOperationCage, gimp_operation_cage,
                GEGL_TYPE_OPERATION_FILTER)
 
@@ -60,6 +65,10 @@ gimp_operation_cage_class_init (GimpOperationCageClass *klass)
 
   operation_class->prepare      = gimp_operation_cage_prepare;
   
+  operation_class->get_required_for_output = gimp_operation_cage_get_required_for_output;
+  operation_class->get_cached_region = gimp_operation_cage_get_cached_region;
+  operation_class->no_cache     = FALSE;
+  
   filter_class->process         = gimp_operation_cage_process;
 }
 
@@ -69,7 +78,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
   //FIXME: for test
   self->cage = g_object_new (GIMP_TYPE_CAGE, NULL);
   
-  #if 1
+  #if 0
   
     #if 0
     gimp_cage_add_cage_point(self->cage, 70, 20);
@@ -87,6 +96,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
     gimp_cage_add_cage_point(self->cage, 70, 20);
     
     gimp_cage_move_cage_point_d (self->cage, 2, 100, 250);
+	gimp_cage_move_cage_point_d (self->cage, 1, 750, 550);
     #endif
   
   #else
@@ -101,7 +111,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
     gimp_cage_add_cage_point(self->cage, 430, 460);
     gimp_cage_add_cage_point(self->cage, 160, 460);
     
-    gimp_cage_move_cage_point_d (self->cage, 6, 500, 500);
+    //gimp_cage_move_cage_point_d (self->cage, 6, 500, 500);
     
     #else
     
@@ -142,6 +152,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
   
   gint in, coef_vertices, coef_edges;
   gint i;
+  
   GeglRectangle rect;
   GeglBufferIterator *it;
   
@@ -150,11 +161,12 @@ gimp_operation_cage_process (GeglOperation       *operation,
   
   gimp_cage_compute_coefficient (cage);
   
-  it = gegl_buffer_iterator_new (in_buf, &cage->bounding_box, format_io, GEGL_BUFFER_READ);
+  it = gegl_buffer_iterator_new (in_buf, roi, format_io, GEGL_BUFFER_READ);
   in = 0;
   
   coef_vertices = gegl_buffer_iterator_add (it, cage->cage_vertices_coef, &cage->bounding_box, format_coef, GEGL_BUFFER_READ);
   coef_edges = gegl_buffer_iterator_add (it, cage->cage_edges_coef, &cage->bounding_box, format_coef, GEGL_BUFFER_READ);
+
   
   /* pre-copy the input buffer to the out buffer */
   /*gegl_buffer_copy (in_buf, roi, out_buf, roi);*/
@@ -208,7 +220,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
                       format_io,
                       source,
                       GEGL_AUTO_ROWSTRIDE);
-
+                      
       source += 4;
       coef_v += cage->cage_vertice_number;
       coef_e += cage->cage_vertice_number;
@@ -224,4 +236,23 @@ gimp_operation_cage_process (GeglOperation       *operation,
     }
   }
   return TRUE;
+}
+
+GeglRectangle
+gimp_operation_cage_get_cached_region  (GeglOperation        *operation,
+                                        const GeglRectangle *roi)
+{
+  GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
+  
+  return result;
+}
+
+GeglRectangle
+gimp_operation_cage_get_required_for_output (GeglOperation        *operation,
+													const gchar         *input_pad,
+													const GeglRectangle *roi)
+{
+  GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
+  
+  return result;
 }
