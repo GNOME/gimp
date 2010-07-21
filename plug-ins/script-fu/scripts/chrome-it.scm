@@ -49,7 +49,9 @@
   )
 
   (define (highlights val)
-    (/ (* 1.108 val) 2.55)
+    ; The result is used as "gimp-color-balance" color parameter
+    ; and thus must be restricted to -100.0 <= highlights <= 100.0.
+    (min (/ (* 1.108 val) 2.55) 100.0)
   )
 
   (define (rval col)
@@ -82,7 +84,7 @@
   )
 
   (let* (
-        (banding-img (car (gimp-file-load 1 env-map env-map)))
+        (banding-img (car (gimp-file-load RUN-NONINTERACTIVE env-map env-map)))
         (banding-layer (car (gimp-image-get-active-drawable banding-img)))
         (banding-height (car (gimp-drawable-height banding-layer)))
         (banding-width (car (gimp-drawable-width banding-layer)))
@@ -151,7 +153,7 @@
     (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    (gimp-curves-spline layer1 0 18 (spline-chrome-it))
+    (gimp-curves-spline layer1 HISTOGRAM-VALUE 18 (spline-chrome-it))
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer1 layer-mask)
@@ -177,14 +179,20 @@
 
     (gimp-image-convert-rgb img)
 
-    (gimp-color-balance layer1 0 TRUE (shadows (rval hc)) (shadows (gval hc)) (shadows (bval hc)))
-    (gimp-color-balance layer1 1 TRUE (midtones (rval hc)) (midtones (gval hc)) (midtones (bval hc)))
-    (gimp-color-balance layer1 2 TRUE (highlights (rval hc)) (highlights (gval hc)) (highlights (bval hc)))
+    (gimp-color-balance layer1 SHADOWS TRUE
+                        (shadows (rval hc)) (shadows (gval hc)) (shadows (bval hc)))
+    (gimp-color-balance layer1 MIDTONES TRUE
+                        (midtones (rval hc)) (midtones (gval hc)) (midtones (bval hc)))
+    (gimp-color-balance layer1 HIGHLIGHTS TRUE
+                        (highlights (rval hc)) (highlights (gval hc)) (highlights (bval hc)))
 
-    (gimp-color-balance layer2 0 TRUE (shadows (rval cc)) (shadows (gval cc)) (shadows (bval cc)))
-    (gimp-color-balance layer2 1 TRUE (midtones (rval cc)) (midtones (gval cc)) (midtones (bval cc)))
-    (gimp-color-balance layer2 2 TRUE (highlights (rval cc)) (highlights (gval cc)) (highlights (bval cc)))
-    (gimp-hue-saturation layer2 0 0 chrome-lightness chrome-saturation)
+    (gimp-color-balance layer2 SHADOWS TRUE
+                        (shadows (rval cc)) (shadows (gval cc)) (shadows (bval cc)))
+    (gimp-color-balance layer2 MIDTONES TRUE
+                        (midtones (rval cc)) (midtones (gval cc)) (midtones (bval cc)))
+    (gimp-color-balance layer2 HIGHLIGHTS TRUE
+                        (highlights (rval cc)) (highlights (gval cc)) (highlights (bval cc)))
+    (gimp-hue-saturation layer2 ALL-HUES 0.0 chrome-lightness chrome-saturation)
 
     (gimp-drawable-set-visible shadow TRUE)
     (gimp-drawable-set-visible bg-layer TRUE)
