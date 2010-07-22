@@ -259,7 +259,7 @@ gimp_cage_tool_button_press (GimpTool              *tool,
   }
   
   // user is clicking on the first handle, we close the cage and switch to deform mode
-  if (ct->handle_moved == 0)
+  if (ct->handle_moved == 0 && cage->cage_vertice_number > 2)
   {    
     ct->cage_complete = TRUE;
     gimp_cage_tool_switch_to_deform (ct);
@@ -557,5 +557,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
     gimp_drawable_apply_operation (drawable, progress, _("Cage transform"),
                                    node, TRUE);
     g_object_unref (node);
+    
+    // TODO: flush
   }
 }
