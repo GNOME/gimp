@@ -94,7 +94,7 @@ static void         gimp_cage_tool_switch_to_deform
                                                   (GimpCageTool *ct);
 static void         gimp_cage_tool_remove_last_handle 
                                                   (GimpCageTool *ct);
-static void         gimp_cage_tool_process        (GimpCageTool *ct,
+static void         gimp_cage_tool_process        (GimpTool     *tool,
                                                    GimpDisplay  *image);
 
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
@@ -264,7 +264,7 @@ gimp_cage_tool_button_press (GimpTool              *tool,
     ct->cage_complete = TRUE;
     gimp_cage_tool_switch_to_deform (ct);
     
-    gimp_cage_tool_process (ct, display);
+    gimp_cage_tool_process (tool, display);
   }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
@@ -536,9 +536,10 @@ gimp_cage_tool_remove_last_handle (GimpCageTool *ct)
 }
 
 static void
-gimp_cage_tool_process (GimpCageTool *ct,
+gimp_cage_tool_process (GimpTool *tool,
                         GimpDisplay  *display)
-{  
+{
+  GimpCageTool *ct       = GIMP_CAGE_TOOL (tool);
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
   GimpProgress *progress = gimp_progress_start (GIMP_PROGRESS (display),
@@ -558,6 +559,11 @@ gimp_cage_tool_process (GimpCageTool *ct,
                                    node, TRUE);
     g_object_unref (node);
     
-    // TODO: flush
+    if (progress)
+        gimp_progress_end (progress);
+        
+    gimp_image_flush (image);
+    
+    gimp_cage_tool_halt (ct);
   }
 }
