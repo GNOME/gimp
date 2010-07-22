@@ -714,7 +714,7 @@ parse_set_property (XMPParseContext     *context,
           tmp_name = g_strconcat (name, " [", value[i], "]", NULL);
           gtk_tree_store_append (GTK_TREE_STORE (xmp_model), &child_iter, &iter);
           gtk_tree_store_set (GTK_TREE_STORE (xmp_model), &child_iter,
-                              COL_XMP_NAME, tmp_name,
+                              COL_XMP_NAME, name,
                               COL_XMP_VALUE, value[i + 1],
                               COL_XMP_VALUE_RAW, value,
                               COL_XMP_TYPE_XREF, property,

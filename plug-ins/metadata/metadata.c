@@ -526,12 +526,11 @@ run (const gchar      *name,
       run_mode = param[0].data.d_int32;
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
-          if (! metadata_dialog (image_ID, xmp_model))
-            status = GIMP_PDB_CANCEL;
+          status = GIMP_PDB_CANCEL;
+          if (metadata_dialog (image_ID, xmp_model))
+            status = GIMP_PDB_SUCCESS;
         }
 
-      g_printerr ("Not implemented yet (EDITOR_PROC)\n");
-      status = GIMP_PDB_EXECUTION_ERROR;
     }
   else
     {

@@ -143,6 +143,7 @@ gimp_xmp_model_widget_constructor (GObject *object)
   GimpXmpModelWidget        *widget = GIMP_XMP_MODEL_WIDGET (object);
   GimpXmpModelWidgetPrivate *priv;
   gchar                     *signal;
+  const gchar               *value;
 
   priv = GIMP_XMP_MODEL_WIDGET_GET_PRIVATE (object);
 
@@ -153,6 +154,13 @@ gimp_xmp_model_widget_constructor (GObject *object)
   g_signal_connect (priv->xmp_model, signal,
                     G_CALLBACK (gimp_xmp_model_widget_xmpmodel_changed),
                     widget);
+
+  // update the widget in case the xmp-model has already a value set
+  value = xmp_model_get_scalar_property (priv->xmp_model,
+                                         priv->schema_uri,
+                                         priv->property_name);
+  if (value != NULL)
+    gimp_xmp_model_widget_set_text (widget, value);
 
   g_free (signal);
 }
