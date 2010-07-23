@@ -23,6 +23,8 @@ libappgegl_a_SOURCES = \
 	\
 	gimpbrightnesscontrastconfig.c	\
 	gimpbrightnesscontrastconfig.h	\
+	gimpcageconfig.c	\
+	gimpcageconfig.h	\
 	gimpcolorbalanceconfig.c	\
 	gimpcolorbalanceconfig.h	\
 	gimpcolorizeconfig.c		\
@@ -51,9 +53,8 @@ libappgegl_a_SOURCES = \
 	gimpoperationcolorbalance.h	\
 	gimpoperationcolorize.c		\
 	gimpoperationcolorize.h		\
-	##right place ?
-	gimpoperationcage.h			\
 	gimpoperationcage.c			\
+	gimpoperationcage.h			\
 	gimpoperationcurves.c		\
 	gimpoperationcurves.h		\
 	gimpoperationdesaturate.c	\

@@ -70,6 +70,7 @@ typedef struct _GimpOperationAntiEraseMode    GimpOperationAntiEraseMode;
 /*  operation config objects  */
 
 typedef struct _GimpBrightnessContrastConfig  GimpBrightnessContrastConfig;
+typedef struct _GimpCageConfig                GimpCageConfig;
 typedef struct _GimpColorBalanceConfig        GimpColorBalanceConfig;
 typedef struct _GimpColorizeConfig            GimpColorizeConfig;
 typedef struct _GimpCurvesConfig              GimpCurvesConfig;

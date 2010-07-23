@@ -29,6 +29,7 @@ OBJECTS = \
 	gimpoperationtilesink.obj \
 	gimpoperationtilesource.obj \
 	gimpbrightnesscontrastconfig.obj \
+	gimpcageconfig.obj	\
 	gimpcolorbalanceconfig.obj \
 	gimpcolorizeconfig.obj \
 	gimpcurvesconfig.obj \
