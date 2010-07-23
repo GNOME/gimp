@@ -21,7 +21,7 @@
 #define __GIMP_CAGE_OPTIONS_H__
 
 #include "tools/gimptransformoptions.h"
-#include "tools/tools-enums.h"
+#include "libgimpbase/gimpbase.h"
 
 
 #define GIMP_TYPE_CAGE_OPTIONS            (gimp_cage_options_get_type ())
