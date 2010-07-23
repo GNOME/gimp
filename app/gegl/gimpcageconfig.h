@@ -60,9 +60,9 @@ GType         gimp_cage_config_get_type          (void) G_GNUC_CONST;
  * Add a new point in the polygon of the cage, and make allocation if needed.
  * Point is added in both source and destination cage
  */
-void        	gimp_cage_config_add_cage_point         (GimpCageConfig	 *gcc,
-																											 gdouble      		x,
-																											 gdouble      		y);
+void          gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
+                                                       gdouble          x,
+                                                       gdouble          y);
 
 /**
  * gimp_cage_config_remove_last_cage_point:
@@ -70,7 +70,7 @@ void        	gimp_cage_config_add_cage_point         (GimpCageConfig	 *gcc,
  * 
  * Remove the last point of the cage, in both source and destination cage
  */
-void        	gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
+void          gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
 
 /**
  * gimp_cage_config_is_on_handle:
@@ -84,11 +84,11 @@ void        	gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
  * 
  * Returns: the number of the handle if the point is on a handle, or -1 if not.
  */
-gint        	gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
-																											 GimpCageMode 		mode,
-																											 gdouble      		x,
-																											 gdouble      		y,
-																											 gint         		handle_size);
+gint          gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
+                                                       GimpCageMode     mode,
+                                                       gdouble          x,
+                                                       gdouble          y,
+                                                       gint             handle_size);
 
 /**
  * gimp_cage_config_move_cage_point:
@@ -100,11 +100,11 @@ gint        	gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
  * 
  * Move a point of the source or destination cage, according to the cage mode provided
  */ 
-void        	gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
-																											 GimpCageMode 		mode,
-																											 gint         		point_number,
-																											 gdouble      		x,
-																											 gdouble      		y);
+void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
+                                                       GimpCageMode     mode,
+                                                       gint             point_number,
+                                                       gdouble          x,
+                                                       gdouble          y);
 
 /**
  * gimp_cage_config_get_edge_normal:
@@ -115,8 +115,8 @@ void        	gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
  * 
  * Returns: The normal vector to the specified edge of the cage. This vector is normalized (length = 1.0)
  */
-GimpVector2 	gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
-                                                    	 gint      				edge_index);
+GimpVector2   gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
+                                                       gint             edge_index);
 
 /**
  * gimp_cage_config_get_bounding_box:
@@ -126,7 +126,7 @@ GimpVector2 	gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
  * 
  * Returns: the bounding box of the destination cage, as a GeglRectangle
  */
-GeglRectangle	gimp_cage_config_get_bounding_box   		(GimpCageConfig  *gcc);
+GeglRectangle gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc);
 
 /**
  * gimp_cage_config_reverse_cage_if_needed:
@@ -135,7 +135,7 @@ GeglRectangle	gimp_cage_config_get_bounding_box   		(GimpCageConfig  *gcc);
  * Since the cage need to be defined counter-clockwise to have the topological inside in the actual 'physical' inside of the cage,
  * this function compute if the cage is clockwise or not, and reverse the cage if needed.
  */
-void       		gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
+void          gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
 
 /**
  * gimp_cage_config_reverse_cage:
@@ -144,6 +144,6 @@ void       		gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
  * When using non-simple cage (like a cage in 8), user may want to manually inverse inside and outside of the cage.
  * This function reverse the cage
  */
-void					gimp_cage_config_reverse_cage  					(GimpCageConfig *gcc);
+void          gimp_cage_config_reverse_cage           (GimpCageConfig *gcc);
 
 #endif /* __GIMP_CAGE_CONFIG_H__ */
