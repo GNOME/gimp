@@ -47,15 +47,15 @@ G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
 
 #define N_ITEMS_PER_ALLOC       10
 
-static void				gimp_cage_config_finalize 									(GObject *object);
-static void				gimp_cage_config_get_property 							(GObject    *object,
-																															 guint       property_id,
-																															 GValue     *value,
-																															 GParamSpec *pspec);
-static void				gimp_cage_config_set_property 							(GObject      *object,
-																															 guint         property_id,
-																															 const GValue *value,
-																															 GParamSpec   *pspec);
+static void       gimp_cage_config_finalize                   (GObject *object);
+static void       gimp_cage_config_get_property               (GObject    *object,
+                                                               guint       property_id,
+                                                               GValue     *value,
+                                                               GParamSpec *pspec);
+static void       gimp_cage_config_set_property               (GObject      *object,
+                                                               guint         property_id,
+                                                               const GValue *value,
+                                                               GParamSpec   *pspec);
 
 /* FIXME: to debug only */
 static void
@@ -84,13 +84,13 @@ gimp_cage_config_class_init (GimpCageConfigClass *klass)
   object_class->set_property       = gimp_cage_config_set_property;
   object_class->get_property       = gimp_cage_config_get_property;
   
-  object_class->finalize					 = gimp_cage_config_finalize;
+  object_class->finalize           = gimp_cage_config_finalize;
 }
 
 static void
 gimp_cage_config_init (GimpCageConfig *self)
 {
-	self->cage_vertice_number = 0;
+  self->cage_vertice_number = 0;
   self->cage_vertices_max = 50; //pre-allocation for 50 vertices for the cage.
   
   self->cage_vertices = g_new(GimpVector2, self->cage_vertices_max);
@@ -110,9 +110,9 @@ gimp_cage_config_finalize (GObject *object)
 
 static void
 gimp_cage_config_get_property (GObject    *object,
-															 guint       property_id,
-															 GValue     *value,
-															 GParamSpec *pspec)
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
 {
   /* GimpCageConfig *gcc = GIMP_CAGE_CONFIG (object); */
 
@@ -127,9 +127,9 @@ gimp_cage_config_get_property (GObject    *object,
 
 static void
 gimp_cage_config_set_property (GObject      *object,
-															 guint         property_id,
-															 const GValue *value,
-															 GParamSpec   *pspec)
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
 {
   /* GimpCageConfig *gcc = GIMP_CAGE_CONFIG (object); */
 
@@ -143,9 +143,9 @@ gimp_cage_config_set_property (GObject      *object,
 }
 
 void
-gimp_cage_config_add_cage_point	(GimpCageConfig	 *gcc,
-																 gdouble      		x,
-																 gdouble      		y)
+gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
+                                 gdouble          x,
+                                 gdouble          y)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   
@@ -172,7 +172,7 @@ gimp_cage_config_add_cage_point	(GimpCageConfig	 *gcc,
   gcc->cage_vertice_number++;
 }
                            
-void        	gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
+void          gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   
@@ -180,11 +180,11 @@ void        	gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
     gcc->cage_vertice_number--;
 }
 
-gint        	gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
-																											 GimpCageMode 		mode,
-																											 gdouble      		x,
-																											 gdouble      		y,
-																											 gint         		handle_size)
+gint          gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
+                                                       GimpCageMode     mode,
+                                                       gdouble          x,
+                                                       gdouble          y,
+                                                       gint             handle_size)
 {
   gint i;
   gdouble vert_x, vert_y;
@@ -196,16 +196,16 @@ gint        	gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
   
   for (i = 0; i < gcc->cage_vertice_number; i++)
   {
-		if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
-		{
-			vert_x = gcc->cage_vertices[i].x;
-    	vert_y = gcc->cage_vertices[i].y;
-		}
-		else
-		{
-			vert_x = gcc->cage_vertices_d[i].x;
-    	vert_y = gcc->cage_vertices_d[i].y;
-		}
+    if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    {
+      vert_x = gcc->cage_vertices[i].x;
+      vert_y = gcc->cage_vertices[i].y;
+    }
+    else
+    {
+      vert_x = gcc->cage_vertices_d[i].x;
+      vert_y = gcc->cage_vertices_d[i].y;
+    }
     
     if (x < vert_x + handle_size / 2 && x > vert_x -handle_size / 2 &&
         y < vert_y + handle_size / 2 && y > vert_y -handle_size / 2)
@@ -217,30 +217,30 @@ gint        	gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
   return -1;
 }
                                               
-void        	gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
-																											 GimpCageMode 		mode,
-																											 gint         		point_number,
-																											 gdouble      		x,
-																											 gdouble      		y)
+void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
+                                                       GimpCageMode     mode,
+                                                       gint             point_number,
+                                                       gdouble          x,
+                                                       gdouble          y)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   g_return_if_fail (point_number < gcc->cage_vertice_number);
   g_return_if_fail (point_number >= 0);
   
   if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
-	{
-  	gcc->cage_vertices[point_number].x = x;
-  	gcc->cage_vertices[point_number].y = y;
-	}
-	else
-	{
-		gcc->cage_vertices_d[point_number].x = x;
-  	gcc->cage_vertices_d[point_number].y = y;
-	}
+  {
+    gcc->cage_vertices[point_number].x = x;
+    gcc->cage_vertices[point_number].y = y;
+  }
+  else
+  {
+    gcc->cage_vertices_d[point_number].x = x;
+    gcc->cage_vertices_d[point_number].y = y;
+  }
 }
                                                                                                    
-GimpVector2 	gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
-                                                    	 gint      				edge_index)
+GimpVector2   gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
+                                                       gint             edge_index)
 {
   GimpVector2 result;
   
@@ -255,7 +255,7 @@ GimpVector2 	gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
   return gimp_vector2_normal (&result);
 }
 
-GeglRectangle	gimp_cage_config_get_bounding_box   		(GimpCageConfig  *gcc)
+GeglRectangle gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc)
 {
   gint i;
   GeglRectangle bounding_box = {0, };
