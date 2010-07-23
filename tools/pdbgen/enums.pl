@@ -53,6 +53,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_BG_BUCKET_FILL => '1',
 		       GIMP_PATTERN_BUCKET_FILL => '2' }
 	},
+    GimpCageMode =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_CAGE_MODE_CAGE_CHANGE GIMP_CAGE_MODE_DEFORM) ],
+	  mapping => { GIMP_CAGE_MODE_CAGE_CHANGE => '0',
+		       GIMP_CAGE_MODE_DEFORM => '1' }
+	},
     GimpChannelOps =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

@@ -74,6 +74,16 @@ typedef enum
   GIMP_PATTERN_BUCKET_FILL  /*< desc="Pattern fill"  >*/
 } GimpBucketFillMode;
 
+#define GIMP_TYPE_CAGE_MODE (gimp_cage_mode_get_type ())
+
+GType gimp_cage_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CAGE_MODE_CAGE_CHANGE,   /*< desc="Create or adjust the cage"            >*/
+  GIMP_CAGE_MODE_DEFORM         /*< desc="Deform the cage to deform the image"  >*/
+} GimpCageMode;
+
 
 #define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
 
