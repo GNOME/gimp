@@ -339,6 +339,32 @@ gimp_pdb_item_is_attached (GimpItem  *item,
 }
 
 gboolean
+gimp_pdb_item_is_in_tree (GimpItem   *item,
+                          GimpImage  *image,
+                          gboolean    writable,
+                          GError    **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_pdb_item_is_attached (item, image, writable, error))
+    return FALSE;
+
+  if (! gimp_item_get_tree (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) can not be used because it is not "
+                     "a direct child of an item tree"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_pdb_item_is_floating (GimpItem  *item,
                            GimpImage *dest_image,
                            GError   **error)
