@@ -21,6 +21,8 @@
 #define __GIMP_CAGE_CONFIG_H__
 
 #include "core/gimpimagemapconfig.h"
+#include <gegl.h>
+#include "gimp-gegl-types.h"
 
 #define GIMP_TYPE_CAGE_CONFIG            (gimp_cage_config_get_type ())
 #define GIMP_CAGE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE_CONFIG, GimpCageConfig))
