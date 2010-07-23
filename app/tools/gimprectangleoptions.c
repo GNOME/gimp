@@ -930,7 +930,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                              "default-fixed-size-height",
                                              "overridden-fixed-size",
                                              TRUE, FALSE,
-                                             "xX*",
+                                             "xX/*",
                                              FALSE,
                                              1, GIMP_MAX_IMAGE_SIZE);
     gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox), entry,
