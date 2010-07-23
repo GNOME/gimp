@@ -29,19 +29,20 @@
 #include "gimpcageconfig.h"
 
 
-static void       gimp_operation_cage_coef_calc_prepare         (GeglOperation        *operation);
-static void       gimp_operation_cage_coef_calc_finalize        (GObject              *object);
-static void       gimp_operation_cage_coef_calc_get_property    (GObject              *object,
-                                                                 guint                 property_id,
-                                                                 GValue               *value,
-                                                                 GParamSpec           *pspec);
-static void       gimp_operation_cage_coef_calc_set_property    (GObject              *object,
-                                                                 guint                 property_id,
-                                                                 const GValue         *value,
-                                                                 GParamSpec           *pspec);
-static gboolean   gimp_operation_cage_coef_calc_process         (GeglOperation        *operation,
-                                                                 GeglBuffer           *output,
-                                                                 const GeglRectangle  *roi);
+static void           gimp_operation_cage_coef_calc_prepare           (GeglOperation        *operation);
+static void           gimp_operation_cage_coef_calc_finalize          (GObject              *object);
+static void           gimp_operation_cage_coef_calc_get_property      (GObject              *object,
+                                                                       guint                 property_id,
+                                                                       GValue               *value,
+                                                                       GParamSpec           *pspec);
+static void           gimp_operation_cage_coef_calc_set_property      (GObject              *object,
+                                                                       guint                 property_id,
+                                                                       const GValue         *value,
+                                                                       GParamSpec           *pspec);
+static GeglRectangle  gimp_operation_cage_coef_calc_get_bounding_box  (GeglOperation        *operation);
+static gboolean       gimp_operation_cage_coef_calc_process           (GeglOperation        *operation,
+                                                                       GeglBuffer           *output,
+                                                                       const GeglRectangle  *roi);
 
                                         
 G_DEFINE_TYPE (GimpOperationCageCoefCalc, gimp_operation_cage_coef_calc,
@@ -63,6 +64,7 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   operation_class->description        = "GIMP cage transform";
 
   operation_class->prepare            = gimp_operation_cage_coef_calc_prepare;
+  operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;
   operation_class->no_cache           = FALSE;
   operation_class->get_cached_region  = NULL;
   
@@ -151,6 +153,14 @@ gimp_operation_cage_coef_calc_set_property  (GObject      *object,
     }
 }
 
+static GeglRectangle
+gimp_operation_cage_coef_calc_get_bounding_box (GeglOperation *operation)
+{
+  GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
+  GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
+  
+  return gimp_cage_config_get_bounding_box (config);
+}
 
 static gboolean
 gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
