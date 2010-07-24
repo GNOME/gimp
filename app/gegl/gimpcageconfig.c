@@ -56,6 +56,7 @@ static void       gimp_cage_config_set_property               (GObject      *obj
                                                                guint         property_id,
                                                                const GValue *value,
                                                                GParamSpec   *pspec);
+static void				gimp_cage_config_compute_scaling_factor 		(GimpCageConfig *gcc);
 
 /* FIXME: to debug only */
 static void
@@ -95,6 +96,7 @@ gimp_cage_config_init (GimpCageConfig *self)
   
   self->cage_vertices = g_new(GimpVector2, self->cage_vertices_max);
   self->cage_vertices_d = g_new(GimpVector2, self->cage_vertices_max);
+  self->scaling_factor = g_malloc (self->cage_vertices_max * sizeof(gfloat));
 }
 
 static void
@@ -104,6 +106,7 @@ gimp_cage_config_finalize (GObject *object)
   
   g_free(gcc->cage_vertices);
   g_free(gcc->cage_vertices_d);
+  g_free(gcc->scaling_factor);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -170,21 +173,27 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
   gcc->cage_vertices_d[gcc->cage_vertice_number].y = y;
   
   gcc->cage_vertice_number++;
+  
+  gimp_cage_config_compute_scaling_factor (gcc);
 }
                            
-void          gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
+void
+gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   
   if (gcc->cage_vertice_number >= 1)
     gcc->cage_vertice_number--;
+  
+  gimp_cage_config_compute_scaling_factor (gcc);
 }
 
-gint          gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
-                                                       GimpCageMode     mode,
-                                                       gdouble          x,
-                                                       gdouble          y,
-                                                       gint             handle_size)
+gint
+gimp_cage_config_is_on_handle	(GimpCageConfig  *gcc,
+															 GimpCageMode     mode,
+															 gdouble          x,
+															 gdouble          y,
+															 gint             handle_size)
 {
   gint i;
   gdouble vert_x, vert_y;
@@ -217,11 +226,12 @@ gint          gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
   return -1;
 }
                                               
-void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
-                                                       GimpCageMode     mode,
-                                                       gint             point_number,
-                                                       gdouble          x,
-                                                       gdouble          y)
+void
+gimp_cage_config_move_cage_point	(GimpCageConfig  *gcc,
+																	 GimpCageMode     mode,
+																	 gint             point_number,
+																	 gdouble          x,
+																	 gdouble          y)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   g_return_if_fail (point_number < gcc->cage_vertice_number);
@@ -237,10 +247,13 @@ void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
     gcc->cage_vertices_d[point_number].x = x;
     gcc->cage_vertices_d[point_number].y = y;
   }
+  
+  gimp_cage_config_compute_scaling_factor (gcc);
 }
                                                                                                    
-GimpVector2   gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
-                                                       gint             edge_index)
+GimpVector2
+gimp_cage_config_get_edge_normal	(GimpCageConfig  *gcc,
+                                   gint             edge_index)
 {
   GimpVector2 result;
   
@@ -255,7 +268,8 @@ GimpVector2   gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
   return gimp_vector2_normal (&result);
 }
 
-GeglRectangle gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc)
+GeglRectangle
+gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc)
 {
   gint i;
   GeglRectangle bounding_box = {0, };
@@ -319,6 +333,8 @@ gimp_cage_config_reverse_cage  (GimpCageConfig *gcc)
     gcc->cage_vertices_d[i] = gcc->cage_vertices_d[gcc->cage_vertice_number - i -1];
     gcc->cage_vertices_d[gcc->cage_vertice_number - i -1] = temp;
   }
+  
+  gimp_cage_config_compute_scaling_factor (gcc);
 }
 
 void
@@ -352,5 +368,26 @@ gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
   {
     gimp_cage_config_reverse_cage (gcc);
     printf("reverse the cage !\n");
+  }
+}
+
+static void
+gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
+{
+  gint i;
+  gdouble length, length_d;
+  GimpVector2 edge;
+  
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+  
+  for (i = 0; i < gcc->cage_vertice_number; i++)
+  {
+    gimp_vector2_sub ( &edge, &gcc->cage_vertices[i], &gcc->cage_vertices[(i+1) % gcc->cage_vertice_number]);
+    length = gimp_vector2_length (&edge);
+    
+    gimp_vector2_sub ( &edge, &gcc->cage_vertices_d[i], &gcc->cage_vertices_d[(i+1) % gcc->cage_vertice_number]);
+    length_d = gimp_vector2_length (&edge);
+    
+    gcc->scaling_factor[i] = length_d / length;
   }
 }
