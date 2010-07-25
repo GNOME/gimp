@@ -798,6 +798,34 @@ gimp_curve_move_point (GimpCurve *curve,
 }
 
 void
+gimp_curve_delete_point (GimpCurve *curve,
+                         gint       point)
+{
+  g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (point >= 0 && point < curve->n_points);
+
+  if (point == 0)
+    {
+      curve->points[0].x = 0.0;
+      curve->points[0].y = 0.0;
+    }
+  else if (point == curve->n_points - 1)
+    {
+      curve->points[curve->n_points - 1].x = 1.0;
+      curve->points[curve->n_points - 1].y = 1.0;
+    }
+  else
+    {
+      curve->points[point].x = -1.0;
+      curve->points[point].y = -1.0;
+    }
+
+  g_object_notify (G_OBJECT (curve), "points");
+
+  gimp_data_dirty (GIMP_DATA (curve));
+}
+
+void
 gimp_curve_get_point (GimpCurve *curve,
                       gint       point,
                       gdouble   *x,

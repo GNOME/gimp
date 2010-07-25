@@ -79,6 +79,8 @@ void            gimp_curve_set_point         (GimpCurve     *curve,
 void            gimp_curve_move_point        (GimpCurve     *curve,
                                               gint           point,
                                               gdouble        y);
+void            gimp_curve_delete_point      (GimpCurve     *curve,
+                                              gint           point);
 void            gimp_curve_get_point         (GimpCurve     *curve,
                                               gint           point,
                                               gdouble       *x,

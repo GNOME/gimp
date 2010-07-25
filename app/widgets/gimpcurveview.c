@@ -1014,6 +1014,10 @@ gimp_curve_view_key_press (GtkWidget   *widget,
             }
           break;
 
+        case GDK_Delete:
+          gimp_curve_delete_point (curve, i);
+          break;
+
         default:
           break;
         }
