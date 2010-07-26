@@ -22,7 +22,7 @@
 
 #include "gimpdrawtool.h"
 #include "libgimpmath/gimpvector.h"
-#include "core/gimpcage.h"
+#include "gegl/gimpcageconfig.h"
 
 
 #define GIMP_TYPE_CAGE_TOOL            (gimp_cage_tool_get_type ())
@@ -40,11 +40,13 @@ typedef struct _GimpCageTool GimpCageTool;
 struct _GimpCageTool
 {
   GimpDrawTool          parent_instance;
-  GimpCage             *cage;
+  GimpCageConfig       *config;
   
   GimpVector2           cursor_position;
   gint                  handle_moved;
   gboolean              cage_complete;
+  
+  GeglBuffer           *coef;
 };
 
 
