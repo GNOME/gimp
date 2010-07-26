@@ -21,8 +21,13 @@
 #define __GIMP_OPERATION_CAGE_H__
 
 #include <gegl-plugin.h>
-#include <operation/gegl-operation-filter.h>
-#include "core/gimpcage.h"
+#include <operation/gegl-operation-composer.h>
+
+enum
+{
+  GIMP_OPERATION_CAGE_PROP_0,
+  GIMP_OPERATION_CAGE_PROP_CONFIG
+};
 
 #define GIMP_TYPE_OPERATION_CAGE            (gimp_operation_cage_get_type ())
 #define GIMP_OPERATION_CAGE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_CAGE, GimpOperationCage))
@@ -36,15 +41,14 @@ typedef struct _GimpOperationCageClass GimpOperationCageClass;
 
 struct _GimpOperationCage
 {
-  GeglOperationFilter  parent_instance;
+  GeglOperationComposer  parent_instance;
   
-  /* FIXME: for test */
-  GimpCage             *cage;
+  GimpCageConfig       *config;
 };
 
 struct _GimpOperationCageClass
 {
-  GeglOperationFilterClass  parent_class;
+  GeglOperationComposerClass  parent_class;
 };
 
 
