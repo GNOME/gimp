@@ -9691,9 +9691,10 @@ msgstr "Gfig"
 msgid "Tool Options"
 msgstr "Werkzeugoptionen"
 
+# Kontext: "If this option is checked, the object will be drawn." (Handbuch)
 #: ../plug-ins/gfig/gfig-dialog.c:353
 msgid "_Stroke"
-msgstr "_Strich"
+msgstr "_Nachziehen"
 
 #. Fill frame on right side
 #: ../plug-ins/gfig/gfig-dialog.c:400
