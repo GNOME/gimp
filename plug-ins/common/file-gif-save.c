@@ -216,7 +216,8 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
       filename    = param[3].data.d_string;
 
-      if (run_mode == GIMP_RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE ||
+          run_mode == GIMP_RUN_WITH_LAST_VALS)
         gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       status = sanity_check (filename, image_ID, &error);
