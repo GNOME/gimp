@@ -582,7 +582,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
   GimpProgress *progress = gimp_progress_start (GIMP_PROGRESS (display),
                                                 _("Blending"),
                                                 FALSE);
-
+  g_return_if_fail (ct->coef);
 
   if (GIMP_IS_LAYER (drawable))
   {
