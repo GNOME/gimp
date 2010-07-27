@@ -588,11 +588,6 @@ gimp_cage_tool_process (GimpCageTool *ct,
   {
     GeglNode *gegl = gegl_node_new ();
     GeglNode *coef, *cage;
-
-    //coef = gegl_node_new_child (gegl,
-                                  //"operation", "gegl:cage_coef_calc",
-                                  //"config", ct->config,
-                                  //NULL);
                                   
     cage = gegl_node_new_child (gegl,
                                   "operation", "gegl:cage",

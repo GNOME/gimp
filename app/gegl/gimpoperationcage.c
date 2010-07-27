@@ -172,7 +172,7 @@ gimp_operation_cage_process (GeglOperation       *operation,
   Babl *format_io = babl_format ("RGBA float");
   Babl *format_coef = babl_format_n (babl_type ("float"), 2 * config->cage_vertice_number);
   
-  gint in_index, coef_index, dest_index;
+  gint in_index, coef_index;
   gint i;
   
   GeglRectangle rect, bb_cage;
@@ -187,7 +187,6 @@ gimp_operation_cage_process (GeglOperation       *operation,
   in_index = 0;
   
   coef_index = gegl_buffer_iterator_add (it, aux_buf, &bb_cage, format_coef, GEGL_BUFFER_READ);
-  dest_index = gegl_buffer_iterator_add (it, out_buf, &bb_cage, format_io, GEGL_BUFFER_WRITE);
   
   /* pre-copy the input buffer to the out buffer */
   //gegl_buffer_copy (aux_buf, roi, out_buf, roi);
@@ -203,7 +202,6 @@ gimp_operation_cage_process (GeglOperation       *operation,
     
     gfloat      *source = it->data[in_index];
     gfloat      *coef = it->data[coef_index];
-    gfloat      *dest = it->data[dest_index];
     
     while(n_pixels--)
     {
@@ -237,18 +235,12 @@ gimp_operation_cage_process (GeglOperation       *operation,
       }*/
       
       /* copy the source pixel in the out buffer */
-      //gegl_buffer_set(out_buf,
-                      //&rect,
-                      //format_io,
-                      //source,
-                      //GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_set(out_buf,
+                      &rect,
+                      format_io,
+                      source,
+                      GEGL_AUTO_ROWSTRIDE);
                       
-      //printf("x: %d  pos_x: %f  y: %d  pos_y: %f \n",x,pos_x,y,pos_y);
-
-      dest[RED] = coef[0];
-      dest[GREEN] = coef[1];
-      dest[BLUE] = coef[2]; //coef[2]; //(pos_x - x) / 500000;
-
       source += 4;
       coef += 2 * cvn;
       
