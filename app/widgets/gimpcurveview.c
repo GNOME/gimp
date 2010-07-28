@@ -481,21 +481,30 @@ gimp_curve_view_expose (GtkWidget      *widget,
   width  = allocation.width  - 2 * border - 1;
   height = allocation.height - 2 * border - 1;
 
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
   if (! gimp_histogram_view_get_histogram (GIMP_HISTOGRAM_VIEW (view)) &&
       ! gimp_histogram_view_get_background (GIMP_HISTOGRAM_VIEW (view)))
     {
+      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+      cairo_rectangle (cr, 0, 0,
+                       allocation.width,
+                       allocation.height);
+      cairo_fill (cr);
 
-      gdk_draw_rectangle (window,
-                          style->base_gc[GTK_STATE_NORMAL], TRUE,
-                          0, 0,
-                          allocation.width,
-                          allocation.height);
+      cairo_translate (cr, 0.5, 0.5);
 
-      /*  Draw the outer border  */
-      gdk_draw_rectangle (window,
-                          style->dark_gc[GTK_STATE_NORMAL], FALSE,
-                          border, border,
-                          width - 1, height - 1);
+      gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+      cairo_rectangle (cr, border, border,
+                       width - 1, height - 1);
+      cairo_stroke (cr);
+    }
+  else
+    {
+      cairo_translate (cr, 0.5, 0.5);
     }
 
   if (gtk_widget_has_focus (widget))
@@ -504,15 +513,8 @@ gimp_curve_view_expose (GtkWidget      *widget,
                        gtk_widget_get_state (widget),
                        &event->area, widget, NULL,
                        border - 2, border - 2,
-                       width + 4, height + 4);
+                       width + 5, height + 5);
     }
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the grid lines  */
   gimp_curve_view_draw_grid (view, style, cr, width, height, border);
