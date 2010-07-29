@@ -207,13 +207,6 @@ gimp_fg_bg_editor_destroy (GtkObject *object)
   if (editor->context)
     gimp_fg_bg_editor_set_context (editor, NULL);
 
-  if (editor->render_buf)
-    {
-      g_free (editor->render_buf);
-      editor->render_buf = NULL;
-      editor->render_buf_size = 0;
-    }
-
   if (editor->default_icon)
     {
       g_object_unref (editor->default_icon);
@@ -229,57 +222,6 @@ gimp_fg_bg_editor_destroy (GtkObject *object)
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-static void
-gimp_fg_bg_editor_draw_rect (GimpFgBgEditor *editor,
-                             GdkDrawable    *drawable,
-                             GdkGC          *gc,
-                             gint            x,
-                             gint            y,
-                             gint            width,
-                             gint            height,
-                             const GimpRGB  *color)
-{
-  gint    rowstride;
-  guchar  r, g, b;
-  gint    xx, yy;
-  guchar *bp;
-
-  g_return_if_fail (width > 0 && height > 0);
-
-  gimp_rgb_get_uchar (color, &r, &g, &b);
-
-  rowstride = 3 * ((width + 3) & -4);
-
-  if (! editor->render_buf || editor->render_buf_size < height * rowstride)
-    {
-      editor->render_buf_size = rowstride * height;
-
-      g_free (editor->render_buf);
-      editor->render_buf = g_malloc (editor->render_buf_size);
-    }
-
-  bp = editor->render_buf;
-  for (xx = 0; xx < width; xx++)
-    {
-      *bp++ = r;
-      *bp++ = g;
-      *bp++ = b;
-    }
-
-  bp = editor->render_buf;
-
-  for (yy = 1; yy < height; yy++)
-    {
-      bp += rowstride;
-      memcpy (bp, editor->render_buf, rowstride);
-    }
-
-  gdk_draw_rgb_image (drawable, gc, x, y, width, height,
-                      GDK_RGB_DITHER_MAX,
-                      editor->render_buf,
-                      rowstride);
-}
-
 static gboolean
 gimp_fg_bg_editor_expose (GtkWidget      *widget,
                           GdkEventExpose *eevent)
@@ -287,6 +229,7 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
+  cairo_t        *cr;
   GtkAllocation   allocation;
   gint            width, height;
   gint            default_w, default_h;
@@ -296,6 +239,11 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
   if (! gtk_widget_is_drawable (widget))
     return FALSE;
+
+  cr = gdk_cairo_create (eevent->window);
+
+  gdk_cairo_region (cr, eevent->region);
+  cairo_clip (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -312,11 +260,15 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   default_h = gdk_pixbuf_get_height (editor->default_icon);
 
   if (default_w < width / 2 && default_h < height / 2)
-    gdk_draw_pixbuf (window, NULL, editor->default_icon,
-                     0, 0, 0, height - default_h, default_w, default_h,
-                     GDK_RGB_DITHER_NORMAL, 0, 0);
+    {
+      gdk_cairo_set_source_pixbuf (cr, editor->default_icon,
+                                   0, height - default_h);
+      cairo_paint (cr);
+    }
   else
-    default_w = default_h = 0;
+    {
+      default_w = default_h = 0;
+    }
 
   /*  draw the swap colors pixbuf  */
   if (! editor->swap_icon)
@@ -328,11 +280,15 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   swap_h = gdk_pixbuf_get_height (editor->swap_icon);
 
   if (swap_w < width / 2 && swap_h < height / 2)
-    gdk_draw_pixbuf (window, NULL, editor->swap_icon,
-                     0, 0, width - swap_w, 0, swap_w, swap_h,
-                     GDK_RGB_DITHER_NORMAL, 0, 0);
+    {
+      gdk_cairo_set_source_pixbuf (cr, editor->swap_icon,
+                                   width - swap_w, 0);
+      cairo_paint (cr);
+    }
   else
-    swap_w = swap_h = 0;
+    {
+      swap_w = swap_h = 0;
+    }
 
   rect_h = height - MAX (default_h, swap_h) - 2;
   rect_w = width  - MAX (default_w, swap_w) - 4;
@@ -350,13 +306,14 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   if (editor->context)
     {
       gimp_context_get_background (editor->context, &color);
-      gimp_fg_bg_editor_draw_rect (editor,
-                                   window,
-                                   style->fg_gc[0],
-                                   (width - rect_w),
-                                   (height - rect_h),
-                                   rect_w, rect_h,
-                                   &color);
+      gimp_cairo_set_source_rgb (cr, &color);
+
+      cairo_rectangle (cr,
+                       width - rect_w,
+                       height - rect_h,
+                       rect_w,
+                       rect_h);
+      cairo_fill (cr);
     }
 
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
@@ -373,12 +330,12 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
   if (editor->context)
     {
       gimp_context_get_foreground (editor->context, &color);
-      gimp_fg_bg_editor_draw_rect (editor,
-                                   window,
-                                   style->fg_gc[0],
-                                   0, 0,
-                                   rect_w, rect_h,
-                                   &color);
+      gimp_cairo_set_source_rgb (cr, &color);
+
+      cairo_rectangle (cr,
+                       0, 0,
+                       rect_w, rect_h);
+      cairo_fill (cr);
     }
 
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
@@ -387,6 +344,8 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
                     NULL, widget, NULL,
                     0, 0,
                     rect_w, rect_h);
+
+  cairo_destroy (cr);
 
   return TRUE;
 }
