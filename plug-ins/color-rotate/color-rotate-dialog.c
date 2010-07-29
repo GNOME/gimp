@@ -373,8 +373,8 @@ rcm_create_main (void)
 {
   GtkWidget *vbox;
 
-  Current.From = rcm_create_one_circle (SUM, _("From:"));
-  Current.To   = rcm_create_one_circle (SUM, _("To:"));
+  Current.From = rcm_create_one_circle (SUM, C_("color-rotate", "From:"));
+  Current.To   = rcm_create_one_circle (SUM, C_("color-rotate", "To:"));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
