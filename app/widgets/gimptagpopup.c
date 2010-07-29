@@ -749,19 +749,25 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
 {
   GdkWindow      *window = gtk_widget_get_window (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
-  GdkGC          *gc;
+  cairo_t        *cr;
   PangoRenderer  *renderer;
   PangoAttribute *attribute;
   PangoAttrList  *attributes;
   gint            i;
 
+  cr = gdk_cairo_create (event->window);
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  gdk_cairo_set_source_color (cr, &popup->combo_entry->selected_item_color);
+
   renderer = gdk_pango_renderer_get_default (gtk_widget_get_screen (widget));
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer),
                              style->black_gc);
   gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), window);
-
-  gc = gdk_gc_new (GDK_DRAWABLE (window));
-  gdk_gc_set_rgb_fg_color (gc, &popup->combo_entry->selected_item_color);
 
   for (i = 0; i < popup->tag_count; i++)
     {
@@ -797,23 +803,32 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
 
       if (tag_data->state == GTK_STATE_SELECTED)
         {
-          gdk_draw_line (window, gc,
+          cairo_rectangle (cr,
+                           tag_data->bounds.x - 1,
+                           tag_data->bounds.y - popup->scroll_y,
+                           tag_data->bounds.width + 2,
+                           tag_data->bounds.height);
+          cairo_fill (cr);
+
+          cairo_translate (cr, 0.5, 0.5);
+
+          cairo_move_to (cr,
                          tag_data->bounds.x,
-                         tag_data->bounds.y - popup->scroll_y - 1,
+                         tag_data->bounds.y - popup->scroll_y - 1);
+          cairo_line_to (cr,
                          tag_data->bounds.x + tag_data->bounds.width - 1,
                          tag_data->bounds.y - popup->scroll_y - 1);
 
-          gdk_draw_rectangle (window, gc, TRUE,
-                              tag_data->bounds.x - 1,
-                              tag_data->bounds.y - popup->scroll_y,
-                              tag_data->bounds.width + 2,
-                              tag_data->bounds.height);
-
-          gdk_draw_line (window, gc,
+          cairo_move_to (cr,
                          tag_data->bounds.x,
-                         tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height,
+                         tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height);
+          cairo_line_to (cr,
                          tag_data->bounds.x + tag_data->bounds.width - 1,
                          tag_data->bounds.y - popup->scroll_y + tag_data->bounds.height);
+
+          cairo_stroke (cr);
+
+          cairo_translate (cr, -0.5, -0.5);
         }
 
       pango_renderer_draw_layout (renderer, popup->layout,
@@ -848,10 +863,10 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
         }
     }
 
-  g_object_unref (gc);
-
   gdk_pango_renderer_set_drawable (GDK_PANGO_RENDERER (renderer), NULL);
   gdk_pango_renderer_set_gc (GDK_PANGO_RENDERER (renderer), NULL);
+
+  cairo_destroy (cr);
 
   return FALSE;
 }
