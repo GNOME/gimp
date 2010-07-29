@@ -214,6 +214,8 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
                     NULL, widget, NULL,
                     x, y, rect_w, rect_h);
 
+  cairo_destroy (cr);
+
   return TRUE;
 }
 
