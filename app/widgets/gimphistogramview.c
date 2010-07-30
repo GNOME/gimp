@@ -297,26 +297,20 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   GdkColor          *bg_color_out;
   GdkColor           rgb_color[3];
 
-  if (! view->histogram && ! view->bg_histogram)
-    return FALSE;
-
   cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
+
+  /*  Draw the background  */
+  gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+  cairo_paint (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
   border = view->border_width;
   width  = allocation.width  - 2 * border;
   height = allocation.height - 2 * border;
-
-  x1 = CLAMP (MIN (view->start, view->end), 0, 255);
-  x2 = CLAMP (MAX (view->start, view->end), 0, 255);
-
-  /*  Draw the background  */
-  gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
-  cairo_paint (cr);
 
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
@@ -327,6 +321,15 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   cairo_rectangle (cr, border, border,
                    width - 1, height - 1);
   cairo_stroke (cr);
+
+  if (! view->histogram && ! view->bg_histogram)
+    {
+      cairo_destroy (cr);
+      return FALSE;
+    }
+
+  x1 = CLAMP (MIN (view->start, view->end), 0, 255);
+  x2 = CLAMP (MAX (view->start, view->end), 0, 255);
 
   if (view->histogram)
     max = gimp_histogram_view_get_maximum (view, view->histogram,
