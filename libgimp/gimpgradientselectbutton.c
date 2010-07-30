@@ -104,9 +104,9 @@ static void gimp_gradient_select_preview_size_allocate
                                                  (GtkWidget                *widget,
                                                   GtkAllocation            *allocation,
                                                   GimpGradientSelectButton *button);
-static void gimp_gradient_select_preview_expose  (GtkWidget                *preview,
-                                                  GdkEventExpose           *event,
-                                                  GimpGradientSelectButton *button);
+static gboolean gimp_gradient_select_preview_expose   (GtkWidget                *preview,
+                                                       GdkEventExpose           *event,
+                                                       GimpGradientSelectButton *button);
 
 static void   gimp_gradient_select_drag_data_received (GimpGradientSelectButton *button,
                                                        GdkDragContext           *context,
@@ -479,78 +479,73 @@ gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
     }
 }
 
-static void
+static gboolean
 gimp_gradient_select_preview_expose (GtkWidget                *widget,
                                      GdkEventExpose           *event,
                                      GimpGradientSelectButton *button)
 {
-  const gdouble                   *src;
-  guchar                          *p0;
-  guchar                          *p1;
-  guchar                          *even;
-  guchar                          *odd;
-  gint                             width;
-  gint                             x, y;
   GimpGradientSelectButtonPrivate *priv;
+  GtkAllocation                    allocation;
+  cairo_t                         *cr;
+  cairo_pattern_t                 *pattern;
+  cairo_surface_t                 *surface;
+  const gdouble                   *src;
+  guchar                          *dest;
+  gint                             width;
+  gint                             x;
 
   priv = GIMP_GRADIENT_SELECT_BUTTON_GET_PRIVATE (button);
 
   src = priv->gradient_data;
   if (! src)
-    return;
+    return FALSE;
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  cr = gdk_cairo_create (event->window);
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM, NULL, NULL);
+  cairo_set_source (cr, pattern);
+  cairo_pattern_destroy (pattern);
+
+  cairo_paint (cr);
 
   width = priv->n_samples / 4;
 
-  p0 = even = g_malloc (width * 3);
-  p1 = odd  = g_malloc (width * 3);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, 1);
 
-  for (x = 0; x < width; x++)
+  for (x = 0, dest = cairo_image_surface_get_data (surface);
+       x < width;
+       x++, src += 4, dest += 4)
     {
-      gdouble  r, g, b, a;
-      gdouble  c0, c1;
+      GimpRGB color;
+      guchar  r, g, b, a;
 
-      r = src[x * 4 + 0];
-      g = src[x * 4 + 1];
-      b = src[x * 4 + 2];
-      a = src[x * 4 + 3];
+      gimp_rgba_set (&color, src[0], src[1], src[2], src[3]);
+      gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
 
-      if ((x / GIMP_CHECK_SIZE_SM) & 1)
-        {
-          c0 = GIMP_CHECK_LIGHT;
-          c1 = GIMP_CHECK_DARK;
-        }
-      else
-        {
-          c0 = GIMP_CHECK_DARK;
-          c1 = GIMP_CHECK_LIGHT;
-        }
-
-      *p0++ = (c0 + (r - c0) * a) * 255.0;
-      *p0++ = (c0 + (g - c0) * a) * 255.0;
-      *p0++ = (c0 + (b - c0) * a) * 255.0;
-
-      *p1++ = (c1 + (r - c1) * a) * 255.0;
-      *p1++ = (c1 + (g - c1) * a) * 255.0;
-      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      GIMP_CAIRO_ARGB32_SET_PIXEL(dest, r, g, b, a);
     }
 
-  for (y = event->area.y; y < event->area.y + event->area.height; y++)
-    {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      guchar   *buf   = ((y / GIMP_CHECK_SIZE_SM) & 1) ? odd : even;
+  cairo_surface_mark_dirty (surface);
 
-      gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                    style->fg_gc[gtk_widget_get_state (widget)],
-                                    event->area.x, y,
-                                    event->area.width, 1,
-                                    GDK_RGB_DITHER_MAX,
-                                    buf + event->area.x * 3,
-                                    width * 3,
-                                    - event->area.x, - y);
-    }
+  pattern = cairo_pattern_create_for_surface (surface);
+  cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REFLECT);
+  cairo_surface_destroy (surface);
 
-  g_free (odd);
-  g_free (even);
+  cairo_scale (cr, (gdouble) allocation.width / (gdouble) width, 1.0);
+
+  cairo_set_source (cr, pattern);
+  cairo_pattern_destroy (pattern);
+
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
+
+  return FALSE;
 }
 
 static void
