@@ -160,7 +160,8 @@ gimp_color_bar_expose (GtkWidget      *widget,
   GtkAllocation    allocation;
   cairo_surface_t *surface;
   cairo_pattern_t *pattern;
-  guchar          *b;
+  guchar          *src;
+  guchar          *dest;
   gint             x, y;
   gint             width, height;
   gint             i;
@@ -186,14 +187,14 @@ gimp_color_bar_expose (GtkWidget      *widget,
 
   surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 256, 1);
 
-  for (i = 0, b = cairo_image_surface_get_data (surface);
+  for (i = 0, src = bar->buf, dest = cairo_image_surface_get_data (surface);
        i < 256;
-       i++, b += 4)
+       i++, src += 3, dest += 4)
     {
-      const guchar *src = bar->buf + 3 * i;
-
-      GIMP_CAIRO_RGB24_SET_PIXEL(b, src[0], src[1], src[2]);
+      GIMP_CAIRO_RGB24_SET_PIXEL(dest, src[0], src[1], src[2]);
     }
+
+  cairo_surface_mark_dirty (surface);
 
   pattern = cairo_pattern_create_for_surface (surface);
   cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REFLECT);
