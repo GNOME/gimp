@@ -1330,8 +1330,14 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
 {
   if (statusbar->icon)
     {
+      cairo_t        *cr;
       PangoRectangle  rect;
       gint            x, y;
+
+      cr = gdk_cairo_create (event->window);
+
+      gdk_cairo_region (cr, event->region);
+      cairo_clip (cr);
 
       gtk_label_get_layout_offsets (GTK_LABEL (widget), &x, &y);
 
@@ -1343,14 +1349,10 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
                                     PANGO_PIXELS (rect.width) : 0);
       y += PANGO_PIXELS (rect.y);
 
-      gdk_draw_pixbuf (gtk_widget_get_window (widget),
-                       gtk_widget_get_style (widget)->black_gc,
-                       statusbar->icon,
-                       0, 0,
-                       x, y,
-                       gdk_pixbuf_get_width (statusbar->icon),
-                       gdk_pixbuf_get_height (statusbar->icon),
-                       GDK_RGB_DITHER_NORMAL, 0, 0);
+      gdk_cairo_set_source_pixbuf (cr, statusbar->icon, x, y);
+      cairo_paint (cr);
+
+      cairo_destroy (cr);
     }
 
   return FALSE;
