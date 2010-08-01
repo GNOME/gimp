@@ -289,7 +289,7 @@ git-version.h: update-git-version-header
 	  rm -f "$@.tmp"; \
 	elif test -f "$@.tmp"; then \
 	  mv "$@.tmp" "$@"; \
-	  echo "  git HEAD changed: git-version.h regenerated"; \
+	  echo "  git HEAD changed: $@ regenerated"; \
 	fi
 
 .PHONY: update-git-version-header
