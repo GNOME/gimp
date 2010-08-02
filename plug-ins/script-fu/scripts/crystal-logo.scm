@@ -122,7 +122,7 @@
     (gimp-selection-none img)
     (gimp-edit-fill layer2 BACKGROUND-FILL)
     (gimp-edit-fill layer3 BACKGROUND-FILL)
-    (gimp-drawable-set-visible text-layer FALSE)
+    (gimp-item-set-visible text-layer FALSE)
 
     (gimp-selection-layer-alpha text-layer)
     (gimp-context-set-background '(0 0 0))
@@ -190,11 +190,11 @@
 
     (gimp-image-remove-channel img disp-map)
 
-    (gimp-drawable-set-visible text-layer TRUE)
-    (gimp-drawable-set-name layer1 "Crystal")
-    (gimp-drawable-set-name layer2 "Interior")
-    (gimp-drawable-set-name bg-layer "Background")
-    (gimp-drawable-set-name text-layer "Shadow")
+    (gimp-item-set-visible text-layer TRUE)
+    (gimp-item-set-name layer1 "Crystal")
+    (gimp-item-set-name layer2 "Interior")
+    (gimp-item-set-name bg-layer "Background")
+    (gimp-item-set-name text-layer "Shadow")
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)

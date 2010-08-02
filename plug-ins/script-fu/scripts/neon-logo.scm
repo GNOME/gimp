@@ -218,7 +218,7 @@
           (gimp-edit-fill shadow-layer BACKGROUND-FILL)))
     (gimp-selection-none img)
 
-    (gimp-drawable-set-name tube-layer "Neon Tubes")
+    (gimp-item-set-name tube-layer "Neon Tubes")
     (gimp-image-remove-channel img selection)
 
     (gimp-context-pop)

@@ -179,12 +179,12 @@
       (set! index (+ index 1))
     )
 
-    (gimp-drawable-set-visible BG-layer 0)
+    (gimp-item-set-visible BG-layer 0)
     (if (not script-fu-text-circle-debug?)
       (begin
         (set! merged-layer
                 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-        (gimp-drawable-set-name merged-layer
+        (gimp-item-set-name merged-layer
                      (if (< (string-length text) 16)
                          (wrap-string text)
                          "Text Circle"
@@ -192,7 +192,7 @@
         )
       )
     )
-    (gimp-drawable-set-visible BG-layer 1)
+    (gimp-item-set-visible BG-layer 1)
     (gimp-image-undo-enable img)
     (gimp-image-clean-all img)
     (gimp-display-new img)

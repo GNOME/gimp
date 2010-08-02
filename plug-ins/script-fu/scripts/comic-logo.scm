@@ -41,9 +41,9 @@
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img black-layer white-layer bg-layer)
     (gimp-layer-translate white-layer posx posy)
-    (gimp-drawable-set-name white-layer "White")
+    (gimp-item-set-name white-layer "White")
     (gimp-layer-translate black-layer posx posy)
-    (gimp-drawable-set-name black-layer "Black")
+    (gimp-item-set-name black-layer "Black")
 
     (gimp-selection-all img)
     (gimp-context-set-background bg-color)

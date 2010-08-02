@@ -95,7 +95,7 @@
     ;; (gimp-layer-remove-mask bands-layer MASK-APPLY)
 
     ; Clean up and exit.
-    (gimp-drawable-set-visible logo-layer 0)
+    (gimp-item-set-visible logo-layer 0)
     (gimp-image-set-active-layer img bands-layer)
     (gimp-displays-flush)
 

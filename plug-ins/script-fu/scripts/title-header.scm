@@ -115,7 +115,7 @@
 
     ; Text layer
 
-    (gimp-drawable-set-visible text-layer TRUE)
+    (gimp-item-set-visible text-layer TRUE)
     (gimp-layer-set-lock-alpha text-layer TRUE)
 
     (gimp-edit-blend text-layer CUSTOM-MODE NORMAL-MODE

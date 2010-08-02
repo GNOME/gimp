@@ -58,7 +58,7 @@
 
     (gimp-layer-translate shadow-layer 3 3)
     (gimp-layer-translate highlight-layer (- posx 2) (- posy 2))
-    (gimp-drawable-set-name highlight-layer "Highlight")
+    (gimp-item-set-name highlight-layer "Highlight")
 
     (gimp-context-pop)
   )
