@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-13 13:31+0200\n"
-"PO-Revision-Date: 2010-06-13 10:51+0200\n"
+"POT-Creation-Date: 2010-08-03 17:48+0200\n"
+"PO-Revision-Date: 2010-08-03 17:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -118,19 +118,19 @@ msgstr "Troppo pochi argomenti per la chiamata \"script-fu-register\""
 msgid "Error while loading %s:"
 msgstr "Errore durante il caricamento di: %s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:804
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:809
 msgid "_Start Server"
 msgstr "Avvia il _server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "Server port:"
 msgstr "Porta del server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:843
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
@@ -2383,7 +2383,7 @@ msgstr "Rapporto buco"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"
-msgstr "Dente interno"
+msgstr "Denti interni"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
@@ -2391,11 +2391,11 @@ msgstr "Lissajous"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
-msgstr "Margine (punti)"
+msgstr "Margine (in pixel)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
-msgstr "Dente esterno"
+msgstr "Denti esterni"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
@@ -2423,7 +2423,7 @@ msgstr "Poligono a 9 lati"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
-msgstr "Disegno spyro"
+msgstr "Disegno spirografo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
