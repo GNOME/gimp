@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-23 12:42+0200\n"
-"PO-Revision-Date: 2010-05-02 02:10+0200\n"
+"POT-Creation-Date: 2010-08-03 17:49+0200\n"
+"PO-Revision-Date: 2010-08-03 17:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2391,7 +2391,7 @@ msgstr "Rapporto buco"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"
-msgstr "Dente interno"
+msgstr "Denti interni"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
@@ -2399,11 +2399,11 @@ msgstr "Lissajous"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Margin (pixels)"
-msgstr "Margine (punti)"
+msgstr "Margine (in pixel)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
-msgstr "Dente esterno"
+msgstr "Denti esterni"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
@@ -2431,7 +2431,7 @@ msgstr "Poligono a 9 lati"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
-msgstr "Disegno spyro"
+msgstr "Disegno spirografo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
