@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-21 15:33+0300\n"
-"PO-Revision-Date: 2010-06-24 14:17+0300\n"
+"PO-Revision-Date: 2010-08-04 02:05+0300\n"
 "Last-Translator: Barak Itkin <lightningismyname@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2564,109 +2564,94 @@ msgstr "ש_מור צבע ימני אל"
 #: ../app/actions/gradient-editor-actions.c:66
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
-msgstr "צבע נקודת קצה ש_מאלית..."
+msgstr "צבע נקודת סיום ש_מאלית..."
 
 #: ../app/actions/gradient-editor-actions.c:71
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
-msgstr "צבע נקודת קצה ימ_נית..."
+msgstr "צבע נקודת סיום ימ_נית..."
 
 #: ../app/actions/gradient-editor-actions.c:111
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
-msgstr "/מיזוג צבעי נקודות הסיום"
+msgstr "מי_זוג צבעי נקודות הסיום"
 
 #: ../app/actions/gradient-editor-actions.c:116
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Blend Endpoints' Opacit_y"
-msgstr "/מיזוג איטום נקודות הסיום"
+msgstr "מי_זוג אטימות נקודות הסיום"
 
 #: ../app/actions/gradient-editor-actions.c:124
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Edit Active Gradient"
-msgstr "/עריכת מדרג צבעים..."
+msgstr "ערוך מדרג פעיל"
 
 #: ../app/actions/gradient-editor-actions.c:155
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Neighbor's Right Endpoint"
-msgstr "/טעינת צבע שמאלי מ.../נקודת סיום ימנית של שכן משמאל"
+msgstr "נקודת קצה ימנית של שכן מ_שמאל"
 
 #: ../app/actions/gradient-editor-actions.c:160
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Right Endpoint"
-msgstr "/צבע נקודת סיום ימנית..."
+msgstr "נקודת-קצה ימנית"
 
 #: ../app/actions/gradient-editor-actions.c:165
 #: ../app/actions/gradient-editor-actions.c:213
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
-msgstr "צבע _קדמה:"
+msgstr "צבע _קדמה"
 
 #: ../app/actions/gradient-editor-actions.c:170
 #: ../app/actions/gradient-editor-actions.c:218
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
 msgstr "צבע _רקע"
 
 #: ../app/actions/gradient-editor-actions.c:203
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Right Neighbor's Left Endpoint"
-msgstr "/טעינת צבע ימני מ.../נקודת סיום שמאלית של שכן מימין"
+msgstr "נקודת סיום שמאלית של שכן מ_ימין"
 
 #: ../app/actions/gradient-editor-actions.c:208
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Endpoint"
-msgstr "/צבע נקודת סיום שמאלית..."
+msgstr "נקודת סיום שמאלית"
 
 #: ../app/actions/gradient-editor-actions.c:257
 #: ../app/actions/gradient-editor-actions.c:287
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
-msgstr "/_קובץ"
+msgstr "_קבוע"
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
-msgstr "צבע _קדמה:"
+msgstr "צבע ק_דמה"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:298
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
-msgstr "צבע הקדמה נקבע ל:"
+msgstr "צבע קד_מה (שקוף)"
 
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:303
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "צבע _רקע"
 
 #: ../app/actions/gradient-editor-actions.c:279
 #: ../app/actions/gradient-editor-actions.c:309
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
-msgstr "צבע הרקע נקבע ל:"
+msgstr "צבע ר_קע (שקוף)"
 
 #: ../app/actions/gradient-editor-actions.c:317
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
-msgstr "קווי"
+msgstr "_קווי"
 
 #: ../app/actions/gradient-editor-actions.c:322
 #, fuzzy
@@ -2677,19 +2662,17 @@ msgstr "עקומות"
 #: ../app/actions/gradient-editor-actions.c:327
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
-msgstr ""
+msgstr "_סינוסודיאלי"
 
 #: ../app/actions/gradient-editor-actions.c:332
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
-msgstr "/פונקציית מיזוג/כדורית (גדלה)"
+msgstr "כדורי (_גדל)"
 
 #: ../app/actions/gradient-editor-actions.c:337
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
-msgstr "/פונקציית מיזוג/כדורית (קטנה)"
+msgstr "כדורי (_קטן)"
 
 #: ../app/actions/gradient-editor-actions.c:342
 msgctxt "gradient-editor-blending"
@@ -2697,22 +2680,19 @@ msgid "(Varies)"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:350
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
-msgstr "RGB"
+msgstr "_RGB"
 
 #: ../app/actions/gradient-editor-actions.c:355
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
-msgstr "/סוג צביעה/HSV (גוון נגד כיוון השעון)"
+msgstr "HSV (גוון _נגד כיוון השעון)"
 
 #: ../app/actions/gradient-editor-actions.c:360
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
-msgstr "/סוג צביעה/HSV (גוון עם כיוון השעון)"
+msgstr "HSV (גוון _עם כיוון השעון)"
 
 #: ../app/actions/gradient-editor-actions.c:365
 msgctxt "gradient-editor-coloring"
@@ -2720,89 +2700,91 @@ msgid "(Varies)"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:373
+#, fuzzy
 msgid "Zoom In"
 msgstr "התמקדות"
 
 #: ../app/actions/gradient-editor-actions.c:374
+#, fuzzy
 #: ../app/actions/palette-editor-actions.c:89
 msgid "Zoom in"
 msgstr "מיקוד צפיה"
 
 #: ../app/actions/gradient-editor-actions.c:379
+#, fuzzy
 msgid "Zoom Out"
 msgstr "התרחקות"
 
 #: ../app/actions/gradient-editor-actions.c:380
+#, fuzzy
 #: ../app/actions/palette-editor-actions.c:95
 msgid "Zoom out"
 msgstr "ריחוק צפיה"
 
 #: ../app/actions/gradient-editor-actions.c:385
+#, fuzzy
 msgid "Zoom All"
 msgstr "מיקוד בהכל"
 
 #: ../app/actions/gradient-editor-actions.c:386
-#: ../app/actions/palette-editor-actions.c:101
 #, fuzzy
+#: ../app/actions/palette-editor-actions.c:101
 msgid "Zoom all"
 msgstr "מיקוד בהכל"
 
 #: ../app/actions/gradient-editor-actions.c:776
 msgid "_Blending Function for Segment"
-msgstr ""
+msgstr "פונקציית _מיזוג למקטע"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "Coloring _Type for Segment"
-msgstr ""
+msgstr "_סוג צביעה למקטע"
 
 #: ../app/actions/gradient-editor-actions.c:781
-#, fuzzy
 msgid "_Flip Segment"
-msgstr "היפוך מקטע"
+msgstr "_הפוך מקטע"
 
 #: ../app/actions/gradient-editor-actions.c:783
-#, fuzzy
 msgid "_Replicate Segment..."
-msgstr "שכפול מקטע..."
+msgstr "_שכפול מקטע..."
 
 #: ../app/actions/gradient-editor-actions.c:785
-#, fuzzy
 msgid "Split Segment at _Midpoint"
-msgstr "פיצול המקטע בנקודת האמצע"
+msgstr "פצל מקטע בנקודת ה_אמצע"
 
 #: ../app/actions/gradient-editor-actions.c:787
-#, fuzzy
 msgid "Split Segment _Uniformly..."
-msgstr "פיצול מקטע באופן אחיד..."
+msgstr "פיצול מקטע באופן _אחיד..."
 
 #: ../app/actions/gradient-editor-actions.c:789
-#, fuzzy
 msgid "_Delete Segment"
-msgstr "מחיקת מקטע"
+msgstr "_מחק מקטע"
 
 #: ../app/actions/gradient-editor-actions.c:791
-#, fuzzy
 msgid "Re-_center Segment's Midpoint"
-msgstr "מרכוז נקודת האמצע של המקטע"
+msgstr "מרכז את נקודת האמצע של המקטע"
 
 #: ../app/actions/gradient-editor-actions.c:793
 #, fuzzy
 msgid "Re-distribute _Handles in Segment"
-msgstr "שכפול מקטע של מדרג הצבעים"
-
-#: ../app/actions/gradient-editor-actions.c:798
-msgid "_Blending Function for Selection"
 msgstr ""
 
+# מחרוזת זו מוצגת כאשר עורכים כמה מקטעים במקביל, ואז מדובר בשינוי הפונקציה לכל הקטעים
+#: ../app/actions/gradient-editor-actions.c:798
+#, fuzzy
+msgid "_Blending Function for Selection"
+msgstr "פונקציית _מיזוג למקטעים הנבחרים"
+
+# מחרוזת זו מוצגת כאשר עורכים כמה מקטעים במקביל, ואז מדובר בשינוי סוג הצביעה לכל הקטעים
 #: ../app/actions/gradient-editor-actions.c:800
 #, fuzzy
 msgid "Coloring _Type for Selection"
-msgstr "מיסגור אזור נבחר"
+msgstr "_סוג צביעה למקטעים הנבחרים"
 
 #: ../app/actions/gradient-editor-actions.c:803
 #, fuzzy
 msgid "_Flip Selection"
-msgstr "היפוך אזור נבחר"
+msgstr "_הפוך מקטעים נבחרים"
 
 #: ../app/actions/gradient-editor-actions.c:805
 #, fuzzy
@@ -2873,22 +2855,29 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
+"בחר את מספר הפעמים\n "
+"אשר יש לשכפל את המקטע הנבחר."
 
 #: ../app/actions/gradient-editor-commands.c:494
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
+"בחר את מספר הפעמים\n "
+"אשר יש לשכפל את הבחירה."
 
 #: ../app/actions/gradient-editor-commands.c:553
+#, fuzzy
 msgid "Split Segment Uniformly"
 msgstr "פיצול המקטע באופן אחיד"
 
 #: ../app/actions/gradient-editor-commands.c:554
+#, fuzzy
 msgid "Split Gradient Segment Uniformly"
 msgstr "פיצול מקטע מדרג באופן אחיד"
 
 #: ../app/actions/gradient-editor-commands.c:558
+#, fuzzy
 msgid "Split Segments Uniformly"
 msgstr "פיצול מקטעים באופן אחיד"
 
@@ -3010,15 +2999,14 @@ msgid "Save '%s' as POV-Ray"
 msgstr "/שמירה כ POV-Ray..."
 
 #: ../app/actions/help-actions.c:37 ../app/actions/help-actions.c:40
-#, fuzzy
 msgctxt "help-action"
 msgid "_Help"
-msgstr "/_עזרה"
+msgstr "_עזרה"
 
 #: ../app/actions/help-actions.c:41
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
-msgstr ""
+msgstr "פתח את מדריך המשתמש של GIMP"
 
 #: ../app/actions/help-actions.c:46
 #, fuzzy
@@ -3038,16 +3026,15 @@ msgid "Image Menu"
 msgstr "/הצגת תפריט תמונה"
 
 #: ../app/actions/image-actions.c:55
-#, fuzzy
 msgctxt "image-action"
 msgid "_Image"
-msgstr "/_תמונה"
+msgstr "_תמונה"
 
 #: ../app/actions/image-actions.c:56
 #, fuzzy
 msgctxt "image-action"
 msgid "_Mode"
-msgstr "מצב"
+msgstr "_מצב"
 
 #: ../app/actions/image-actions.c:57
 #, fuzzy
@@ -3062,10 +3049,9 @@ msgid "_Guides"
 msgstr "מדריך"
 
 #: ../app/actions/image-actions.c:60
-#, fuzzy
 msgctxt "image-action"
 msgid "_Colors"
-msgstr "צבע"
+msgstr "_צבעים"
 
 #: ../app/actions/image-actions.c:61
 #, fuzzy
@@ -14836,9 +14822,8 @@ msgid "Shortcut"
 msgstr ""
 
 #: ../app/widgets/gimpactionview.c:392
-#, fuzzy
 msgid "Name"
-msgstr "שיעור:"
+msgstr "שם"
 
 #: ../app/widgets/gimpactionview.c:632 ../app/widgets/gimpactionview.c:832
 #, fuzzy
@@ -14948,6 +14933,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
+"סימון צבעים הקסדצימלי כפי שמשתמשים ב-HTML ו-CSS.  ניתן להזין גם שמות צבעי "
+"CSS."
 
 #: ../app/widgets/gimpcolorframe.c:508
 msgid "Index:"
@@ -14968,42 +14955,36 @@ msgstr "כחול:"
 #: ../app/widgets/gimpcolorframe.c:536 ../app/widgets/gimpcolorframe.c:569
 #, fuzzy
 msgid "Value:"
-msgstr "ערך"
+msgstr "ערך:"
 
 #: ../app/widgets/gimpcolorframe.c:560
-#, fuzzy
 msgid "Hex:"
-msgstr "_גוון:"
+msgstr "הקסא:"
 
 #: ../app/widgets/gimpcolorframe.c:567
 #, fuzzy
 msgid "Hue:"
-msgstr "_גוון:"
+msgstr "גוון:"
 
 #: ../app/widgets/gimpcolorframe.c:568
-#, fuzzy
 msgid "Sat.:"
-msgstr "מצב:"
+msgstr "רוויה:"
 
 #: ../app/widgets/gimpcolorframe.c:586
-#, fuzzy
 msgid "Cyan:"
-msgstr "תכלת"
+msgstr "תכלת:"
 
 #: ../app/widgets/gimpcolorframe.c:587
-#, fuzzy
 msgid "Magenta:"
-msgstr "ארגמן"
+msgstr "ארגמן:"
 
 #: ../app/widgets/gimpcolorframe.c:588
-#, fuzzy
 msgid "Yellow:"
-msgstr "צהוב"
+msgstr "צהוב:"
 
 #: ../app/widgets/gimpcolorframe.c:589
-#, fuzzy
 msgid "Black:"
-msgstr "שחור"
+msgstr "שחור:"
 
 #: ../app/widgets/gimpcolorframe.c:609
 msgid "Alpha:"
@@ -15015,9 +14996,8 @@ msgid "Color index:"
 msgstr "מפתוח צבעים:"
 
 #: ../app/widgets/gimpcolormapeditor.c:233
-#, fuzzy
 msgid "HTML notation:"
-msgstr "מיקום:"
+msgstr "סימון HTML:"
 
 #: ../app/widgets/gimpcolormapeditor.c:487
 #, fuzzy
@@ -15025,9 +15005,8 @@ msgid "Only indexed images have a colormap."
 msgstr "עריכת צבע ממופתח"
 
 #: ../app/widgets/gimpcolorselectorpalette.c:58
-#, fuzzy
 msgid "Palette"
-msgstr "לוחות צבעים"
+msgstr "לוח צבעים"
 
 #: ../app/widgets/gimpcontainerpopup.c:547
 msgid "Smaller Previews"
@@ -15137,11 +15116,11 @@ msgstr "אור רך"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:177
 msgid "Keyboard"
-msgstr ""
+msgstr "מקלדת"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:221
 msgid "Keyboard Events"
-msgstr ""
+msgstr "אירועי מקלדת"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:222
 #: ../app/widgets/gimpcontrollerwheel.c:224
@@ -15240,7 +15219,7 @@ msgstr "הגדרת התקני קלט"
 #: ../app/widgets/gimpcontrollerwheel.c:89
 #: ../app/widgets/gimpcontrollerwheel.c:92
 msgid "Scroll Up"
-msgstr ""
+msgstr "גלול למעלה"
 
 #: ../app/widgets/gimpcontrollerwheel.c:96
 #: ../app/widgets/gimpcontrollerwheel.c:99
@@ -15251,7 +15230,7 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:114
 #: ../app/widgets/gimpcontrollerwheel.c:117
 msgid "Scroll Down"
-msgstr ""
+msgstr "גלול למטה"
 
 #: ../app/widgets/gimpcontrollerwheel.c:121
 #: ../app/widgets/gimpcontrollerwheel.c:124
@@ -15262,7 +15241,7 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:139
 #: ../app/widgets/gimpcontrollerwheel.c:142
 msgid "Scroll Left"
-msgstr ""
+msgstr "גלול שמאלה"
 
 #: ../app/widgets/gimpcontrollerwheel.c:146
 #: ../app/widgets/gimpcontrollerwheel.c:149
@@ -15272,19 +15251,16 @@ msgstr ""
 #: ../app/widgets/gimpcontrollerwheel.c:161
 #: ../app/widgets/gimpcontrollerwheel.c:164
 #: ../app/widgets/gimpcontrollerwheel.c:167
-#, fuzzy
 msgid "Scroll Right"
-msgstr "אור רך"
+msgstr "גלול ימינה"
 
 #: ../app/widgets/gimpcontrollerwheel.c:179
-#, fuzzy
 msgid "Mouse Wheel"
-msgstr "הזזת ערוץ"
+msgstr "גלגלת עכבר"
 
 #: ../app/widgets/gimpcontrollerwheel.c:223
-#, fuzzy
 msgid "Mouse Wheel Events"
-msgstr "הזזת ערוץ"
+msgstr "אירועי גלגלת עכבר"
 
 #: ../app/widgets/gimpdataeditor.c:221
 msgid "Save"
@@ -15297,17 +15273,16 @@ msgstr "היפוך"
 #: ../app/widgets/gimpdataeditor.c:445
 #, c-format
 msgid "%s (read only)"
-msgstr ""
+msgstr "%s (לקריאה בלבד)"
 
 #: ../app/widgets/gimpdeviceeditor.c:161
-#, fuzzy
 msgid "Delete the selected device"
-msgstr "מחיקת התבנית הנבחרת"
+msgstr "מחק את ההתקן הנבחר"
 
+# מחק עשוי להתפרש פה גם במשמעות השנייה...
 #: ../app/widgets/gimpdeviceeditor.c:469
-#, fuzzy
 msgid "Delete Device Settings"
-msgstr "פעולות קבצים"
+msgstr "מחיקת הגדרות התקן"
 
 #: ../app/widgets/gimpdeviceeditor.c:490
 #, fuzzy, c-format
@@ -15323,9 +15298,8 @@ msgstr ""
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
 #: ../app/widgets/gimpdynamicseditor.c:148
 #: ../app/widgets/gimpdynamicsoutputeditor.c:213
-#, fuzzy
 msgid "Pressure"
-msgstr "לחץ:"
+msgstr "לחץ"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
 msgid "X tilt"
@@ -15338,20 +15312,18 @@ msgstr ""
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
 #: ../app/widgets/gimpdynamicseditor.c:152
 #: ../app/widgets/gimpdynamicsoutputeditor.c:241
-#, fuzzy
 msgid "Wheel"
-msgstr "הזזת ערוץ"
+msgstr "גלגל"
 
 #. the axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:192
-#, fuzzy
 msgid "Axes"
-msgstr "פיקסלים"
+msgstr "צירים"
 
 #. the keys
 #: ../app/widgets/gimpdeviceinfoeditor.c:266
 msgid "Keys"
-msgstr ""
+msgstr "מקשים"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:366
 #: ../app/widgets/gimpdeviceinfoeditor.c:584
@@ -15387,26 +15359,25 @@ msgstr "קדמה: %d, %d, %d"
 #: ../app/widgets/gimpdevicestatus.c:453
 #, c-format
 msgid "Background: %d, %d, %d"
-msgstr ""
+msgstr "רקע: %d, %d, %d"
 
 #: ../app/widgets/gimpdnd-xds.c:203
+#, fuzzy
 msgid "The given filename does not have any known file extension."
-msgstr ""
+msgstr "שם הקובץ שניתן אינו בעל אף סיומת קובץ ידועה."
 
 #: ../app/widgets/gimpdnd-xds.c:221
-#, fuzzy
 msgid "File Exists"
-msgstr "הקובץ קיים!"
+msgstr "הקובץ קיים"
 
 #: ../app/widgets/gimpdnd-xds.c:226
-#, fuzzy
 msgid "_Replace"
-msgstr "שכפול"
+msgstr "_החלף"
 
 #: ../app/widgets/gimpdnd-xds.c:237
 #, c-format
 msgid "A file named '%s' already exists."
-msgstr ""
+msgstr "קובץ בשם \"'%s\" כבר קיים."
 
 #: ../app/widgets/gimpdnd-xds.c:242
 msgid "Do you want to replace it with the image you are saving?"
@@ -15416,7 +15387,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:34
 msgctxt "dock"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. String used to separate books (GtkNotebooks) within a dock,
 #. e.g. "Tool Options, Layers - Brushes"
@@ -15424,7 +15395,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:39
 msgctxt "dock"
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #. String used to separate dock columns,
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
@@ -15432,12 +15403,11 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:44
 msgctxt "dock"
 msgid " | "
-msgstr ""
+msgstr " | "
 
 #: ../app/widgets/gimpdockbook.c:290
-#, fuzzy
 msgid "Configure this tab"
-msgstr "הגדרת רשת"
+msgstr "הגדר לשונית זו"
 
 #. Auto button
 #: ../app/widgets/gimpdockwindow.c:351
@@ -15447,34 +15417,32 @@ msgstr "אוטומטי"
 #: ../app/widgets/gimpdockwindow.c:362
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr ""
+msgstr "כאשר מופעל, תיבת הדו-שיח עוקבת באופן אוטומטי אחר התמונה עליה אתה עובד."
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
-#, fuzzy
 msgid "Lock pixels"
-msgstr "פיקסלים"
+msgstr "נעל פיקסלים"
 
 #: ../app/widgets/gimpdynamicseditor.c:133
 #: ../app/widgets/gimpdynamicseditor.c:139
 msgid "Mapping matrix"
-msgstr ""
+msgstr "מטריצת מיפוי"
 
 #: ../app/widgets/gimpdynamicseditor.c:149
 #: ../app/widgets/gimpdynamicsoutputeditor.c:220
 msgid "Velocity"
-msgstr ""
+msgstr "תאוצה"
 
+# מדובר על ההטייה של עט שמשמשת כקלט למברשות. לכן התרגום הוא לא "שיפוע" ולא "הטה"
 #: ../app/widgets/gimpdynamicseditor.c:151
 #: ../app/widgets/gimpdynamicsoutputeditor.c:234
-#, fuzzy
 msgid "Tilt"
-msgstr "שיפוע:"
+msgstr "הטייה:"
 
 #: ../app/widgets/gimpdynamicseditor.c:153
 #: ../app/widgets/gimpdynamicsoutputeditor.c:248
-#, fuzzy
 msgid "Random"
-msgstr "ביטול פעולה"
+msgstr "אקראי"
 
 #: ../app/widgets/gimpdynamicseditor.c:154
 #: ../app/widgets/gimpdynamicsoutputeditor.c:255
@@ -15484,11 +15452,11 @@ msgstr "עמעום החוצה"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
-msgstr ""
+msgstr "יותר מדי הודעות שגיאה!"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Messages are redirected to stderr."
-msgstr ""
+msgstr "ההודעות נותבו מחדש אל stderr."
 
 #: ../app/widgets/gimperrordialog.c:170
 #, c-format
@@ -15622,9 +15590,9 @@ msgid "Handle position: %0.4f"
 msgstr ""
 
 #: ../app/widgets/gimpgradienteditor.c:1596
-#, fuzzy, c-format
+#, c-format
 msgid "Distance: %0.4f"
-msgstr "מרחק:"
+msgstr "מרחק: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:216
 #, fuzzy
@@ -15758,14 +15726,13 @@ msgid "Querying..."
 msgstr "שאילתה"
 
 #: ../app/widgets/gimpimagepropview.c:122
-#, fuzzy
 msgid "Size in pixels:"
-msgstr "זיכרון מרבי לביטול פעולות:"
+msgstr "גודל בפיקסלים:"
 
 #: ../app/widgets/gimpimagepropview.c:125
 #, fuzzy
 msgid "Print size:"
-msgstr "/תצוגה מוקדמת/ענק"
+msgstr "גודל ההדפסה:"
 
 #: ../app/widgets/gimpimagepropview.c:128
 msgid "Resolution:"
@@ -15777,24 +15744,20 @@ msgid "Color space:"
 msgstr "צבע:"
 
 #: ../app/widgets/gimpimagepropview.c:136
-#, fuzzy
 msgid "File Name:"
-msgstr "שיעור:"
+msgstr "שם קובץ:"
 
 #: ../app/widgets/gimpimagepropview.c:142
-#, fuzzy
 msgid "File Size:"
-msgstr "גודל קבוע"
+msgstr "גודל קובץ:"
 
 #: ../app/widgets/gimpimagepropview.c:145
-#, fuzzy
 msgid "File Type:"
-msgstr "סוג מילוי"
+msgstr "סוג קובץ:"
 
 #: ../app/widgets/gimpimagepropview.c:150
-#, fuzzy
 msgid "Size in memory:"
-msgstr "זיכרון מרבי לביטול פעולות:"
+msgstr "גודל בזיכרון:"
 
 #: ../app/widgets/gimpimagepropview.c:153
 #, fuzzy
@@ -15807,24 +15770,20 @@ msgid "Redo steps:"
 msgstr "_שחזור פעולה %s"
 
 #: ../app/widgets/gimpimagepropview.c:161
-#, fuzzy
 msgid "Number of pixels:"
-msgstr "מספר _צבעים:"
+msgstr "מספר הפיקסלים:"
 
 #: ../app/widgets/gimpimagepropview.c:164
-#, fuzzy
 msgid "Number of layers:"
-msgstr "מספר _צבעים:"
+msgstr "מספר השכבות:"
 
 #: ../app/widgets/gimpimagepropview.c:167
-#, fuzzy
 msgid "Number of channels:"
-msgstr "מספר _צבעים:"
+msgstr "מספר הערוצים:"
 
 #: ../app/widgets/gimpimagepropview.c:170
-#, fuzzy
 msgid "Number of paths:"
-msgstr "מספר _צבעים:"
+msgstr "מספר הנתיבים:"
 
 #. no undo (or redo) steps available
 #: ../app/widgets/gimpimagepropview.c:416
@@ -15832,14 +15791,14 @@ msgid "None"
 msgstr "כלום"
 
 #: ../app/widgets/gimpimagepropview.c:470
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%s"
-msgstr "פיקסלים"
+msgstr "פיקסלים/%s"
 
 #: ../app/widgets/gimpimagepropview.c:472
 #, c-format
 msgid "%g × %g %s"
-msgstr ""
+msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:493
 msgid "colors"
@@ -15861,19 +15820,19 @@ msgstr ""
 msgid "Reorder Layer"
 msgstr "סידור שכבה מחדש"
 
+# תרגום ל"נעל" פשוט לא נראה טוב
 #: ../app/widgets/gimplayertreeview.c:326
-#, fuzzy
 msgid "Lock alpha channel"
-msgstr "ערוץ ה_אלפא של השכבה"
+msgstr "נעילת ערוץ אלפא"
 
 #: ../app/widgets/gimpmessagebox.c:442
 #, c-format
 msgid "Message repeated %d times."
-msgstr ""
+msgstr "ההודעה חזרה %d פעמים."
 
 #: ../app/widgets/gimpmessagebox.c:444
 msgid "Message repeated once."
-msgstr ""
+msgstr "ההודעה חזרה פעם אחת."
 
 #: ../app/widgets/gimppaletteeditor.c:254
 #: ../app/widgets/gimppaletteeditor.c:745
@@ -16141,6 +16100,10 @@ msgid ""
 "The arrows swap colors.\n"
 "Click to open the color selection dialog."
 msgstr ""
+"צבעי הקדמה והרקע\n"
+"הריבוע הלבן והשחור מאפסים את הצבעים.\n"
+"החצים מחליפים את הצבעים.\n"
+"לחץ כדי לפתוח תיבת דו-שיח לבחירת צבעים."
 
 #: ../app/widgets/gimptoolbox-color-area.c:140
 msgid "Change Foreground Color"
@@ -16257,28 +16220,30 @@ msgstr ""
 
 #: ../app/widgets/gimptranslationstore.c:105
 msgid "System Language"
-msgstr ""
+msgstr "שפת המערכת"
 
 #: ../app/widgets/gimptranslationstore.c:107
 msgid "English"
-msgstr ""
+msgstr "אנגלית"
 
 #: ../app/widgets/gimpuimanager.c:750
 msgid "Your GIMP installation is incomplete:"
-msgstr ""
+msgstr "ההתקנה של GIMP שברשותך אינה שלמה."
 
 #: ../app/widgets/gimpuimanager.c:752
 msgid "Please make sure the menu XML files are correctly installed."
-msgstr ""
+msgstr "אנא ודר שקבצי ה-XML של התפריטים מותקנים נכון."
 
 #: ../app/widgets/gimpuimanager.c:758
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
+msgstr "אירעה שגיאה בפענוח הגדרות התפריטים מתוך %s: %s"
 
+# לכל פעולה לביטול יש מחרוזת שמתארת את הפעולה שלה, וזו המחרוזת שמתארת את התמונה ממנה התחלנו. תרגום מילולי ל"תמונת הבסיס" פשוט לא מתאים...
 #: ../app/widgets/gimpundoeditor.c:270
+#, fuzzy
 msgid "[ Base Image ]"
-msgstr ""
+msgstr "[ התמונה התחלתית ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:116
 #, fuzzy
@@ -16291,24 +16256,23 @@ msgstr ""
 
 #: ../app/widgets/gimpviewablebox.c:80
 msgid "Open the brush selection dialog"
-msgstr ""
+msgstr "פתח תיבת דו-שיח לבחירת מברשות"
 
 #: ../app/widgets/gimpviewablebox.c:137
 msgid "Open the pattern selection dialog"
-msgstr ""
+msgstr "פתח תיבת דו-שיח לבחירת דוגמאות"
 
 #: ../app/widgets/gimpviewablebox.c:203
 msgid "Open the gradient selection dialog"
-msgstr "פתיחת תיבת דו-שיח לבחירת מדרג צבעים"
+msgstr "פתח תיבת דו-שיח לבחירת מדרג צבעים"
 
 #: ../app/widgets/gimpviewablebox.c:305
-#, fuzzy
 msgid "Open the palette selection dialog"
-msgstr "פתיחת תיבת דו-שיח לבחירת מדרג צבעים"
+msgstr "פתח תיבת דו-שיח לבחירת לוחות צבעים"
 
 #: ../app/widgets/gimpviewablebox.c:363
 msgid "Open the font selection dialog"
-msgstr ""
+msgstr "פתח תיבת דו-שיח לבחירת גופנים"
 
 #: ../app/widgets/gimpwidgets-utils.c:670
 #, c-format
@@ -16357,12 +16321,12 @@ msgstr "RGB"
 #: ../app/widgets/widgets-enums.c:87
 msgctxt "color-frame-mode"
 msgid "HSV"
-msgstr ""
+msgstr "HSV"
 
 #: ../app/widgets/widgets-enums.c:88
 msgctxt "color-frame-mode"
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:118
 #, fuzzy

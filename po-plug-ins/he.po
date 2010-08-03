@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-21 15:34+0300\n"
+"POT-Creation-Date: 2010-08-04 00:05+0300\n"
 "PO-Revision-Date: 2000-02-02 14:07+0000\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -43,18 +43,27 @@ msgstr ""
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:298
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
-#: ../plug-ins/common/color-to-alpha.c:410 ../plug-ins/file-fli/fli-gimp.c:874
-#: ../plug-ins/file-fli/fli-gimp.c:930
+#: ../plug-ins/file-fli/fli-gimp.c:874 ../plug-ins/file-fli/fli-gimp.c:930
 msgid "From:"
 msgstr ""
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:324
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
 #: ../plug-ins/file-fli/fli-gimp.c:883 ../plug-ins/file-fli/fli-gimp.c:939
 msgid "To:"
 msgstr ""
+
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
+#, fuzzy
+msgctxt "color-rotate"
+msgid "From:"
+msgstr "Colour Mode"
+
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
+#, fuzzy
+msgctxt "color-rotate"
+msgid "To:"
+msgstr "Colour Mode"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:418
 #: ../plug-ins/common/file-ps.c:3226 ../plug-ins/imagemap/imap_menu.c:213
@@ -630,7 +639,7 @@ msgstr "Vertical Colour"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:278 ../plug-ins/common/compose.c:934
-#: ../plug-ins/common/decompose.c:722 ../plug-ins/common/file-cel.c:361
+#: ../plug-ins/common/decompose.c:725 ../plug-ins/common/file-cel.c:361
 #: ../plug-ins/common/file-cel.c:364 ../plug-ins/common/file-dicom.c:609
 #: ../plug-ins/common/file-gif-load.c:927
 #: ../plug-ins/common/file-jp2-load.c:351 ../plug-ins/common/file-pcx.c:418
@@ -1023,7 +1032,7 @@ msgid "Blue"
 msgstr ""
 
 #: ../plug-ins/common/channel-mixer.c:583
-#: ../plug-ins/common/color-exchange.c:398 ../plug-ins/common/compose.c:189
+#: ../plug-ins/common/color-exchange.c:412 ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/diffraction.c:500
 #: ../plug-ins/common/diffraction.c:538 ../plug-ins/common/diffraction.c:576
 #: ../plug-ins/common/noise-rgb.c:532 ../plug-ins/common/noise-rgb.c:539
@@ -1031,7 +1040,7 @@ msgid "_Red:"
 msgstr ""
 
 #: ../plug-ins/common/channel-mixer.c:601
-#: ../plug-ins/common/color-exchange.c:458 ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/color-exchange.c:472 ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:509
 #: ../plug-ins/common/diffraction.c:547 ../plug-ins/common/diffraction.c:585
 #: ../plug-ins/common/noise-rgb.c:533 ../plug-ins/common/noise-rgb.c:540
@@ -1039,7 +1048,7 @@ msgid "_Green:"
 msgstr ""
 
 #: ../plug-ins/common/channel-mixer.c:620
-#: ../plug-ins/common/color-exchange.c:519 ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/color-exchange.c:533 ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:518
 #: ../plug-ins/common/diffraction.c:556 ../plug-ins/common/diffraction.c:594
 #: ../plug-ins/common/noise-rgb.c:534 ../plug-ins/common/noise-rgb.c:541
@@ -1064,11 +1073,11 @@ msgstr "can't read colour entries"
 #: ../plug-ins/common/cml-explorer.c:2177 ../plug-ins/common/curve-bend.c:884
 #: ../plug-ins/common/file-cel.c:311 ../plug-ins/common/file-compressor.c:497
 #: ../plug-ins/common/file-compressor.c:665
-#: ../plug-ins/common/file-dicom.c:339 ../plug-ins/common/file-gbr.c:360
+#: ../plug-ins/common/file-dicom.c:339 ../plug-ins/common/file-gbr.c:367
 #: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:643
 #: ../plug-ins/common/file-jp2-load.c:197
 #: ../plug-ins/common/file-jp2-load.c:206 ../plug-ins/common/file-mng.c:1107
-#: ../plug-ins/common/file-pat.c:329 ../plug-ins/common/file-pcx.c:360
+#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:360
 #: ../plug-ins/common/file-pix.c:342 ../plug-ins/common/file-png.c:720
 #: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
 #: ../plug-ins/common/file-ps.c:3043 ../plug-ins/common/file-psp.c:1703
@@ -1108,11 +1117,11 @@ msgstr "can't read colour entries"
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:1352
-#: ../plug-ins/common/file-gbr.c:652 ../plug-ins/common/file-gif-save.c:779
+#: ../plug-ins/common/file-gbr.c:661 ../plug-ins/common/file-gif-save.c:780
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
-#: ../plug-ins/common/file-pat.c:475 ../plug-ins/common/file-pcx.c:672
-#: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1269
+#: ../plug-ins/common/file-pat.c:484 ../plug-ins/common/file-pcx.c:672
+#: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1270
 #: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:589 ../plug-ins/common/file-raw.c:617
 #: ../plug-ins/common/file-sunras.c:562 ../plug-ins/common/file-tga.c:1169
@@ -1656,43 +1665,43 @@ msgid "_Color Exchange..."
 msgstr "Colour Exchange..."
 
 #: ../plug-ins/common/color-exchange.c:212
-#: ../plug-ins/common/color-exchange.c:286
+#: ../plug-ins/common/color-exchange.c:287
 msgid "Color Exchange"
 msgstr "Colour Exchange"
 
-#: ../plug-ins/common/color-exchange.c:309
+#: ../plug-ins/common/color-exchange.c:310
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr ""
 
-#: ../plug-ins/common/color-exchange.c:347
+#: ../plug-ins/common/color-exchange.c:355
 msgid "To Color"
 msgstr "To Colour"
 
-#: ../plug-ins/common/color-exchange.c:347
+#: ../plug-ins/common/color-exchange.c:355
 msgid "From Color"
 msgstr "From Colour"
 
-#: ../plug-ins/common/color-exchange.c:365
+#: ../plug-ins/common/color-exchange.c:379
 msgid "Color Exchange: To Color"
 msgstr "Colour Exchange: To Colour"
 
-#: ../plug-ins/common/color-exchange.c:366
+#: ../plug-ins/common/color-exchange.c:380
 msgid "Color Exchange: From Color"
 msgstr "Colour Exchange: From Colour"
 
-#: ../plug-ins/common/color-exchange.c:424
+#: ../plug-ins/common/color-exchange.c:438
 msgid "R_ed threshold:"
 msgstr ""
 
-#: ../plug-ins/common/color-exchange.c:484
+#: ../plug-ins/common/color-exchange.c:498
 msgid "G_reen threshold:"
 msgstr ""
 
-#: ../plug-ins/common/color-exchange.c:545
+#: ../plug-ins/common/color-exchange.c:559
 msgid "B_lue threshold:"
 msgstr ""
 
-#: ../plug-ins/common/color-exchange.c:573
+#: ../plug-ins/common/color-exchange.c:587
 msgid "Lock _thresholds"
 msgstr ""
 
@@ -1713,6 +1722,12 @@ msgstr "Rotating the colourmap..."
 #: ../plug-ins/common/color-to-alpha.c:376
 msgid "Color to Alpha"
 msgstr "Colour to Alpha"
+
+#: ../plug-ins/common/color-to-alpha.c:410
+#, fuzzy
+msgctxt "color-to-alpha"
+msgid "From:"
+msgstr "Colour Mode"
 
 #: ../plug-ins/common/color-to-alpha.c:414
 msgid "Color to Alpha Color Picker"
@@ -1967,7 +1982,7 @@ msgstr "Compose: Image is not a grey image (bpp=%d)"
 msgid "Composing"
 msgstr "Colouring"
 
-#: ../plug-ins/common/compose.c:696 ../plug-ins/common/compose.c:1735
+#: ../plug-ins/common/compose.c:696 ../plug-ins/common/compose.c:1729
 msgid "At least one image is needed to compose"
 msgstr ""
 
@@ -1997,26 +2012,26 @@ msgstr "Compose: Image is not a grey image (bpp=%d)"
 msgid "Unable to recompose, source layer not found"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:1487
+#: ../plug-ins/common/compose.c:1481
 msgid "Compose"
 msgstr ""
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1515
+#: ../plug-ins/common/compose.c:1509
 msgid "Compose Channels"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:1525 ../plug-ins/common/decompose.c:1514
+#: ../plug-ins/common/compose.c:1519 ../plug-ins/common/decompose.c:1524
 #, fuzzy
 msgid "Color _model:"
 msgstr "Colour Mode"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1557
+#: ../plug-ins/common/compose.c:1551
 msgid "Channel Representations"
 msgstr ""
 
-#: ../plug-ins/common/compose.c:1620
+#: ../plug-ins/common/compose.c:1614
 #, fuzzy
 msgid "Mask value"
 msgstr "Colour Mode"
@@ -2616,24 +2631,24 @@ msgstr ""
 msgid "Decomposing"
 msgstr ""
 
-#: ../plug-ins/common/decompose.c:1479
+#: ../plug-ins/common/decompose.c:1489
 msgid "Decompose"
 msgstr ""
 
-#: ../plug-ins/common/decompose.c:1502
+#: ../plug-ins/common/decompose.c:1512
 msgid "Extract Channels"
 msgstr ""
 
-#: ../plug-ins/common/decompose.c:1549
+#: ../plug-ins/common/decompose.c:1559
 msgid "_Decompose to layers"
 msgstr ""
 
-#: ../plug-ins/common/decompose.c:1560
+#: ../plug-ins/common/decompose.c:1570
 #, fuzzy
 msgid "_Foreground as registration color"
 msgstr "Use Background Colour"
 
-#: ../plug-ins/common/decompose.c:1561
+#: ../plug-ins/common/decompose.c:1571
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -3138,9 +3153,9 @@ msgstr ""
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
 #: ../plug-ins/common/file-cel.c:316 ../plug-ins/common/file-dicom.c:344
-#: ../plug-ins/common/file-gbr.c:365 ../plug-ins/common/file-gif-load.c:360
+#: ../plug-ins/common/file-gbr.c:372 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:648 ../plug-ins/common/file-jp2-load.c:190
-#: ../plug-ins/common/file-pat.c:334 ../plug-ins/common/file-pcx.c:365
+#: ../plug-ins/common/file-pat.c:341 ../plug-ins/common/file-pcx.c:365
 #: ../plug-ins/common/file-pdf.c:601 ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
 #: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:714
@@ -3151,7 +3166,7 @@ msgstr ""
 #: ../plug-ins/file-bmp/bmp-read.c:160 ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3328
+#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3329
 #, c-format
 msgid "Opening '%s'"
 msgstr ""
@@ -3168,11 +3183,11 @@ msgstr "Unsupported number of colours (%d)"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:657
-#: ../plug-ins/common/file-gif-save.c:786 ../plug-ins/common/file-gih.c:1266
-#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:480
+#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:666
+#: ../plug-ins/common/file-gif-save.c:787 ../plug-ins/common/file-gih.c:1266
+#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:489
 #: ../plug-ins/common/file-pcx.c:633 ../plug-ins/common/file-pix.c:528
-#: ../plug-ins/common/file-png.c:1276 ../plug-ins/common/file-pnm.c:981
+#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:981
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:567
 #: ../plug-ins/common/file-tga.c:1174 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xmc.c:1465
@@ -3293,47 +3308,47 @@ msgstr "xjt: cannot operate on indexed colour images"
 msgid "GIMP brush"
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:391 ../plug-ins/common/file-pat.c:410
+#: ../plug-ins/common/file-gbr.c:398 ../plug-ins/common/file-pat.c:417
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:415 ../plug-ins/common/file-gbr.c:427
+#: ../plug-ins/common/file-gbr.c:422 ../plug-ins/common/file-gbr.c:434
 #, fuzzy
 msgid "Unsupported brush format"
 msgstr "Unsupported number of colours (%d)"
 
-#: ../plug-ins/common/file-gbr.c:439
+#: ../plug-ins/common/file-gbr.c:446
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:447
+#: ../plug-ins/common/file-gbr.c:454
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:453 ../plug-ins/common/file-gih.c:491
+#: ../plug-ins/common/file-gbr.c:460 ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1140
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:642
+#: ../plug-ins/common/file-gbr.c:651
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:759
+#: ../plug-ins/common/file-gbr.c:768
 msgid "Brush"
 msgstr ""
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:773 ../plug-ins/common/grid.c:790
+#: ../plug-ins/common/file-gbr.c:782 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr ""
 
-#: ../plug-ins/common/file-gbr.c:784 ../plug-ins/common/file-gih.c:891
-#: ../plug-ins/common/file-pat.c:557 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:793 ../plug-ins/common/file-gih.c:891
+#: ../plug-ins/common/file-pat.c:566 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr ""
 
@@ -3378,27 +3393,27 @@ msgid ""
 "play or re-save perfectly."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:465
+#: ../plug-ins/common/file-gif-save.c:466
 #, fuzzy
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr ""
 "GIF: Couldn't simply reduce colours further.\n"
 "Saving as opaque.\n"
 
-#: ../plug-ins/common/file-gif-save.c:580
+#: ../plug-ins/common/file-gif-save.c:581
 #, c-format
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
 "more than %d pixels wide or tall."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:691
+#: ../plug-ins/common/file-gif-save.c:692
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:750
+#: ../plug-ins/common/file-gif-save.c:751
 #, fuzzy
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
@@ -3406,56 +3421,56 @@ msgstr ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GREY first.\n"
 
-#: ../plug-ins/common/file-gif-save.c:928
+#: ../plug-ins/common/file-gif-save.c:929
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:968
+#: ../plug-ins/common/file-gif-save.c:969
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:985
+#: ../plug-ins/common/file-gif-save.c:986
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:1121
+#: ../plug-ins/common/file-gif-save.c:1122
 msgid "GIF"
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:1129
+#: ../plug-ins/common/file-gif-save.c:1130
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
 "%s"
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:1182
+#: ../plug-ins/common/file-gif-save.c:1183
 msgid "I don't care"
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:1184
+#: ../plug-ins/common/file-gif-save.c:1185
 msgid "Cumulative layers (combine)"
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:1186
+#: ../plug-ins/common/file-gif-save.c:1187
 msgid "One frame per layer (replace)"
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:1203
+#: ../plug-ins/common/file-gif-save.c:1204
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:2347
+#: ../plug-ins/common/file-gif-save.c:2348
 msgid "Error writing output file."
 msgstr ""
 
-#: ../plug-ins/common/file-gif-save.c:2417
+#: ../plug-ins/common/file-gif-save.c:2418
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr ""
@@ -3713,7 +3728,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:497 ../plug-ins/common/file-png.c:1759
+#: ../plug-ins/common/file-mng.c:497 ../plug-ins/common/file-png.c:1760
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 
@@ -3749,7 +3764,7 @@ msgid "Save creation time"
 msgstr "Centre"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1800
+#: ../plug-ins/common/file-mng.c:1362 ../plug-ins/common/file-png.c:1801
 msgid "PNG"
 msgstr ""
 
@@ -3837,12 +3852,12 @@ msgstr ""
 msgid "GIMP pattern"
 msgstr ""
 
-#: ../plug-ins/common/file-pat.c:370
+#: ../plug-ins/common/file-pat.c:377
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr ""
 
-#: ../plug-ins/common/file-pat.c:542
+#: ../plug-ins/common/file-pat.c:551
 #, fuzzy
 msgid "Pattern"
 msgstr "Vertical Colour"
@@ -3987,12 +4002,12 @@ msgid ""
 "outside the image."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1253
+#: ../plug-ins/common/file-png.c:1254
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
-#: ../plug-ins/common/file-png.c:1817
+#: ../plug-ins/common/file-png.c:1818
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr ""
@@ -4554,25 +4569,25 @@ msgstr "Can't read colour entries"
 msgid "Cannot read header from '%s'"
 msgstr "Can't read colour entries"
 
-#: ../plug-ins/common/file-tga.c:1367
+#: ../plug-ins/common/file-tga.c:1369
 msgid "TGA"
 msgstr ""
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1376
+#: ../plug-ins/common/file-tga.c:1378
 msgid "_RLE compression"
 msgstr ""
 
-#: ../plug-ins/common/file-tga.c:1390
+#: ../plug-ins/common/file-tga.c:1392
 #, fuzzy
 msgid "Or_igin:"
 msgstr "Colour Variation:"
 
-#: ../plug-ins/common/file-tga.c:1394
+#: ../plug-ins/common/file-tga.c:1396
 msgid "Bottom left"
 msgstr ""
 
-#: ../plug-ins/common/file-tga.c:1395
+#: ../plug-ins/common/file-tga.c:1397
 #, fuzzy
 msgid "Top left"
 msgstr "Vertical Colour"
@@ -6645,61 +6660,61 @@ msgstr ""
 msgid "_Plug-In Browser"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:371
+#: ../plug-ins/common/plugin-browser.c:376
 msgid "Searching by name"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:385
+#: ../plug-ins/common/plugin-browser.c:390
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../plug-ins/common/plugin-browser.c:394
+#: ../plug-ins/common/plugin-browser.c:399
 msgid "No matches for your query"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:397
+#: ../plug-ins/common/plugin-browser.c:402
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../plug-ins/common/plugin-browser.c:528
+#: ../plug-ins/common/plugin-browser.c:533
 msgid "No matches"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:554
+#: ../plug-ins/common/plugin-browser.c:559
 msgid "Plug-In Browser"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:597
+#: ../plug-ins/common/plugin-browser.c:602
 msgid "Name"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:605
-#: ../plug-ins/common/plugin-browser.c:668
+#: ../plug-ins/common/plugin-browser.c:610
+#: ../plug-ins/common/plugin-browser.c:673
 msgid "Menu Path"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:613
-#: ../plug-ins/common/plugin-browser.c:677
+#: ../plug-ins/common/plugin-browser.c:618
+#: ../plug-ins/common/plugin-browser.c:682
 #, fuzzy
 msgid "Image Types"
 msgstr "Lightsource colour"
 
-#: ../plug-ins/common/plugin-browser.c:623
-#: ../plug-ins/common/plugin-browser.c:686
+#: ../plug-ins/common/plugin-browser.c:628
+#: ../plug-ins/common/plugin-browser.c:691
 msgid "Installation Date"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:647
+#: ../plug-ins/common/plugin-browser.c:652
 msgid "List View"
 msgstr ""
 
-#: ../plug-ins/common/plugin-browser.c:709
+#: ../plug-ins/common/plugin-browser.c:714
 #, fuzzy
 msgid "Tree View"
 msgstr "Centre"
@@ -8672,28 +8687,28 @@ msgstr ""
 msgid "Alpha channel will be ignored."
 msgstr ""
 
-#: ../plug-ins/file-bmp/bmp-write.c:792
+#: ../plug-ins/file-bmp/bmp-write.c:793
 msgid "BMP"
 msgstr ""
 
-#: ../plug-ins/file-bmp/bmp-write.c:802
+#: ../plug-ins/file-bmp/bmp-write.c:803
 msgid "_Run-Length Encoded"
 msgstr ""
 
-#: ../plug-ins/file-bmp/bmp-write.c:814 ../plug-ins/file-jpeg/jpeg-save.c:892
+#: ../plug-ins/file-bmp/bmp-write.c:815 ../plug-ins/file-jpeg/jpeg-save.c:892
 #, fuzzy
 msgid "_Advanced Options"
 msgstr "Centre"
 
-#: ../plug-ins/file-bmp/bmp-write.c:829
+#: ../plug-ins/file-bmp/bmp-write.c:830
 msgid "16 bits"
 msgstr ""
 
-#: ../plug-ins/file-bmp/bmp-write.c:865
+#: ../plug-ins/file-bmp/bmp-write.c:866
 msgid "24 bits"
 msgstr ""
 
-#: ../plug-ins/file-bmp/bmp-write.c:882
+#: ../plug-ins/file-bmp/bmp-write.c:883
 msgid "32 bits"
 msgstr ""
 
@@ -9298,17 +9313,17 @@ msgstr ""
 msgid "Smoothing:"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:1701 ../plug-ins/file-xjt/xjt.c:3338
+#: ../plug-ins/file-xjt/xjt.c:1701 ../plug-ins/file-xjt/xjt.c:3339
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:3204
+#: ../plug-ins/file-xjt/xjt.c:3205
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr ""
 
-#: ../plug-ins/file-xjt/xjt.c:3211
+#: ../plug-ins/file-xjt/xjt.c:3212
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr ""
@@ -10706,7 +10721,7 @@ msgstr ""
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:649
+#: ../plug-ins/gimpressionist/ppmtool.c:651
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr ""
@@ -10765,8 +10780,9 @@ msgid "_Size"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:108
-msgid "Sizes:"
-msgstr ""
+#, fuzzy
+msgid "Size variants:"
+msgstr "Colour Density"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
@@ -10789,7 +10805,7 @@ msgid "The largest brush to create"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:150
-msgid "Size:"
+msgid "Size depends on:"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:159
