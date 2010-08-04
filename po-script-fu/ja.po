@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-05-02 00:13+0000\n"
-"PO-Revision-Date: 2010-05-04 13:29+0900\n"
+"POT-Creation-Date: 2010-08-03 20:53+0000\n"
+"PO-Revision-Date: 2010-07-29 22:37+0900\n"
 "Last-Translator: Nishibori Kiyotaka <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1119,7 +1119,7 @@ msgstr "クローム明度"
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
-msgstr "クローム色相"
+msgstr "クローム彩度"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome white areas"
