@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-07-12 21:27+0000\n"
-"PO-Revision-Date: 2010-06-30 18:17+0200\n"
+"POT-Creation-Date: 2010-08-04 15:04+0000\n"
+"PO-Revision-Date: 2010-08-02 00:14+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -855,22 +855,25 @@ msgctxt "text-direction"
 msgid "From right to left"
 msgstr "De la dreapta la stânga"
 
+# selecție la hinting
 #: ../libgimpbase/gimpbaseenums.c:1137
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Deloc"
 
+# selecție la hinting
 #: ../libgimpbase/gimpbaseenums.c:1138
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Ușor"
 
+# selecție la hinting
 #: ../libgimpbase/gimpbaseenums.c:1139
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Mediu"
 
-# hm ? sau complet ?
+# selecție la hinting
 #: ../libgimpbase/gimpbaseenums.c:1140
 msgctxt "text-hint-style"
 msgid "Full"
@@ -1218,15 +1221,15 @@ msgstr "Apăsați F1 pentru mai mult ajutor"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:217
 msgid "Kilobytes"
-msgstr "Kilobaiți"
+msgstr "Kibibaiți"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:218
 msgid "Megabytes"
-msgstr "Megabaiți"
+msgstr "Mebibaiți"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:219
 msgid "Gigabytes"
-msgstr "Gigabaiți"
+msgstr "Gibibaiți"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:278
@@ -1571,12 +1574,12 @@ msgstr "_K"
 #: ../modules/color-selector-cmyk-lcms.c:178
 #: ../modules/color-selector-cmyk.c:134
 msgid "Cyan"
-msgstr "Azuriu"
+msgstr "Cyan"
 
 #: ../modules/color-selector-cmyk-lcms.c:179
 #: ../modules/color-selector-cmyk.c:135
 msgid "Magenta"
-msgstr "Purpuriu"
+msgstr "Magenta"
 
 #: ../modules/color-selector-cmyk-lcms.c:180
 #: ../modules/color-selector-cmyk.c:136
@@ -1754,17 +1757,17 @@ msgstr "Vedere Y a punctului de vedere %d"
 msgid "POV %d Return"
 msgstr "Revenirea punctului de vedere %d"
 
-#: ../modules/controller-dx-dinput.c:1083
+#: ../modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "Evenimente DirectInput"
 
-#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-dx-dinput.c:1093
 #: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Niciun dispozitiv configurat"
 
 # hm ? titlu ?
-#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-dx-dinput.c:1118
 #: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "Dispozitiv indisponibil"
@@ -1963,17 +1966,15 @@ msgstr ""
 msgid "MIDI"
 msgstr "MIDI"
 
-# hm ? conform es, mesajele MIDI nu se traduc
 #: ../modules/controller-midi.c:354
 #, c-format
 msgid "Note %02x on"
-msgstr "Note %02x on"
+msgstr "Nota %02x activată"
 
-# hm ? conform es, mesajele MIDI nu se traduc
 #: ../modules/controller-midi.c:357
 #, c-format
 msgid "Note %02x off"
-msgstr "Note %02x off"
+msgstr "Nota %02x dezactivată"
 
 #: ../modules/controller-midi.c:360
 #, c-format
@@ -2061,7 +2062,7 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Acest filtru își ia configurația din secțiunea „Gestiune de culori” din "
+"Acest filtru își ia configurația din secțiunea Gestiune de culori în "
 "dialogul Preferințe."
 
 #: ../modules/display-filter-lcms.c:225
