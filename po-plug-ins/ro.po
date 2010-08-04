@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-07-13 20:20+0000\n"
-"PO-Revision-Date: 2010-07-13 19:41+0200\n"
+"POT-Creation-Date: 2010-08-04 15:05+0000\n"
+"PO-Revision-Date: 2010-08-03 15:49+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -51,16 +51,23 @@ msgstr "Context"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:298
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
-#: ../plug-ins/common/color-to-alpha.c:410 ../plug-ins/file-fli/fli-gimp.c:874
-#: ../plug-ins/file-fli/fli-gimp.c:930
+#: ../plug-ins/file-fli/fli-gimp.c:874 ../plug-ins/file-fli/fli-gimp.c:930
 msgid "From:"
 msgstr "De la:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:324
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
 #: ../plug-ins/file-fli/fli-gimp.c:883 ../plug-ins/file-fli/fli-gimp.c:939
+msgid "To:"
+msgstr "La:"
+
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
+msgctxt "color-rotate"
+msgid "From:"
+msgstr "De la:"
+
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
+msgctxt "color-rotate"
 msgid "To:"
 msgstr "La:"
 
@@ -283,11 +290,13 @@ msgstr "Aliniază straturile vizi_bile..."
 msgid "There are not enough layers to align."
 msgstr "Nu sunt suficiente straturi de aliniat."
 
+# titlu pe bară
 #: ../plug-ins/common/align-layers.c:399
 msgid "Align Visible Layers"
-msgstr "Aliniază straturile vizibile"
+msgstr "Aliniere straturi vizibile"
 
-# (și) la deschiderea unui .ps, la selecția anticrenelare
+# apare în dropdown la dialogul de aliniere straturi
+# apare la deschiderea unui .ps, la selecția anticrenelare
 #. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:423 ../plug-ins/common/align-layers.c:454
 #: ../plug-ins/common/cml-explorer.c:165 ../plug-ins/common/file-ps.c:3242
@@ -301,35 +310,42 @@ msgstr "Aliniază straturile vizibile"
 msgid "None"
 msgstr "Fără"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
 msgid "Collect"
-msgstr "Colectează"
+msgstr "Colectare"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:425
 msgid "Fill (left to right)"
-msgstr "Umple (de la stânga la dreapta)"
+msgstr "Umplere (de la stânga la dreapta)"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:426
 msgid "Fill (right to left)"
-msgstr "Umple (de la dreapta la stânga)"
+msgstr "Umplere (de la dreapta la stânga)"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:427 ../plug-ins/common/align-layers.c:458
 msgid "Snap to grid"
-msgstr "Acroșează la grilă"
+msgstr "Acroșare la grilă"
 
 #: ../plug-ins/common/align-layers.c:436
 msgid "_Horizontal style:"
 msgstr "_Stil orizontal:"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:440
 msgid "Left edge"
 msgstr "Marginea din stânga"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:441 ../plug-ins/common/align-layers.c:471
 #: ../plug-ins/gradient-flare/gradient-flare.c:2712
 msgid "Center"
 msgstr "Centru"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:442
 msgid "Right edge"
 msgstr "Marginea din dreapta"
@@ -338,22 +354,26 @@ msgstr "Marginea din dreapta"
 msgid "Ho_rizontal base:"
 msgstr "Bază o_rizontală:"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:456
 msgid "Fill (top to bottom)"
-msgstr "Umple (de sus în jos)"
+msgstr "Umplere (de sus în jos)"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:457
 msgid "Fill (bottom to top)"
-msgstr "Umple (de jos în sus)"
+msgstr "Umplere (de jos în sus)"
 
 #: ../plug-ins/common/align-layers.c:467
 msgid "_Vertical style:"
 msgstr "Stil _vertical:"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:470
 msgid "Top edge"
 msgstr "Marginea de sus"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:472
 msgid "Bottom edge"
 msgstr "Marginea de jos"
@@ -807,7 +827,7 @@ msgstr "Atenuare claritate"
 
 #: ../plug-ins/common/border-average.c:98
 msgid "Set foreground to the average color of the image border"
-msgstr "Stabilește culoarea de prim plan la culoarea medie a bordurii imaginii"
+msgstr "Stabilește culoarea de prim-plan la culoarea medie a bordurii imaginii"
 
 #: ../plug-ins/common/border-average.c:103
 msgid "_Border Average..."
@@ -841,7 +861,7 @@ msgstr "_Dimensiune găleată:"
 
 #: ../plug-ins/common/bump-map.c:256
 msgid "Create an embossing effect using a bump map"
-msgstr "Creează un efect de reliefare folosind o hartă de protuberanțe"
+msgstr "Creează un efect de stampare folosind o hartă de protuberanțe"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/bump-map.c:266
@@ -989,7 +1009,7 @@ msgid "Blue"
 msgstr "Albastru"
 
 #: ../plug-ins/common/channel-mixer.c:583
-#: ../plug-ins/common/color-exchange.c:398 ../plug-ins/common/compose.c:189
+#: ../plug-ins/common/color-exchange.c:412 ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/diffraction.c:500
 #: ../plug-ins/common/diffraction.c:538 ../plug-ins/common/diffraction.c:576
 #: ../plug-ins/common/noise-rgb.c:532 ../plug-ins/common/noise-rgb.c:539
@@ -997,7 +1017,7 @@ msgid "_Red:"
 msgstr "_Roșu:"
 
 #: ../plug-ins/common/channel-mixer.c:601
-#: ../plug-ins/common/color-exchange.c:458 ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/color-exchange.c:472 ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:509
 #: ../plug-ins/common/diffraction.c:547 ../plug-ins/common/diffraction.c:585
 #: ../plug-ins/common/noise-rgb.c:533 ../plug-ins/common/noise-rgb.c:540
@@ -1005,7 +1025,7 @@ msgid "_Green:"
 msgstr "_Verde:"
 
 #: ../plug-ins/common/channel-mixer.c:620
-#: ../plug-ins/common/color-exchange.c:519 ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/color-exchange.c:533 ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:518
 #: ../plug-ins/common/diffraction.c:556 ../plug-ins/common/diffraction.c:594
 #: ../plug-ins/common/noise-rgb.c:534 ../plug-ins/common/noise-rgb.c:541
@@ -1029,11 +1049,11 @@ msgstr "Încarcă configurările mixerului de canale"
 #: ../plug-ins/common/cml-explorer.c:2177 ../plug-ins/common/curve-bend.c:884
 #: ../plug-ins/common/file-cel.c:311 ../plug-ins/common/file-compressor.c:497
 #: ../plug-ins/common/file-compressor.c:665
-#: ../plug-ins/common/file-dicom.c:339 ../plug-ins/common/file-gbr.c:365
+#: ../plug-ins/common/file-dicom.c:339 ../plug-ins/common/file-gbr.c:367
 #: ../plug-ins/common/file-gif-load.c:355 ../plug-ins/common/file-gih.c:643
 #: ../plug-ins/common/file-jp2-load.c:197
 #: ../plug-ins/common/file-jp2-load.c:206 ../plug-ins/common/file-mng.c:1107
-#: ../plug-ins/common/file-pat.c:334 ../plug-ins/common/file-pcx.c:360
+#: ../plug-ins/common/file-pat.c:336 ../plug-ins/common/file-pcx.c:360
 #: ../plug-ins/common/file-pix.c:342 ../plug-ins/common/file-png.c:720
 #: ../plug-ins/common/file-pnm.c:493 ../plug-ins/common/file-ps.c:1036
 #: ../plug-ins/common/file-ps.c:3043 ../plug-ins/common/file-psp.c:1703
@@ -1072,10 +1092,10 @@ msgstr "Salvează configurările mixerului de canale"
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
 #: ../plug-ins/common/file-csource.c:406 ../plug-ins/common/file-dicom.c:1352
-#: ../plug-ins/common/file-gbr.c:659 ../plug-ins/common/file-gif-save.c:780
+#: ../plug-ins/common/file-gbr.c:661 ../plug-ins/common/file-gif-save.c:780
 #: ../plug-ins/common/file-gih.c:1261 ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609 ../plug-ins/common/file-mng.c:943
-#: ../plug-ins/common/file-pat.c:482 ../plug-ins/common/file-pcx.c:672
+#: ../plug-ins/common/file-pat.c:484 ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523 ../plug-ins/common/file-png.c:1270
 #: ../plug-ins/common/file-pnm.c:976 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:589 ../plug-ins/common/file-raw.c:617
@@ -1615,46 +1635,46 @@ msgid "_Color Exchange..."
 msgstr "Schimb de _culori..."
 
 #: ../plug-ins/common/color-exchange.c:212
-#: ../plug-ins/common/color-exchange.c:286
+#: ../plug-ins/common/color-exchange.c:287
 msgid "Color Exchange"
 msgstr "Schimb de culori"
 
-#: ../plug-ins/common/color-exchange.c:309
+#: ../plug-ins/common/color-exchange.c:310
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr ""
 "Clic mijloc în interiorul previzualizării pentru a alege „De la culoarea”"
 
-#: ../plug-ins/common/color-exchange.c:347
+#: ../plug-ins/common/color-exchange.c:355
 msgid "To Color"
 msgstr "La culoarea"
 
-#: ../plug-ins/common/color-exchange.c:347
+#: ../plug-ins/common/color-exchange.c:355
 msgid "From Color"
 msgstr "De la culoarea"
 
 # hm ? sau culoare destinație ?
-#: ../plug-ins/common/color-exchange.c:365
+#: ../plug-ins/common/color-exchange.c:379
 msgid "Color Exchange: To Color"
 msgstr "Schimb de culori: la culoarea"
 
 # hm ? sau culoare sursă ?
-#: ../plug-ins/common/color-exchange.c:366
+#: ../plug-ins/common/color-exchange.c:380
 msgid "Color Exchange: From Color"
 msgstr "Schimb de culori: de la culoarea"
 
-#: ../plug-ins/common/color-exchange.c:424
+#: ../plug-ins/common/color-exchange.c:438
 msgid "R_ed threshold:"
 msgstr "Prag la _roșu:"
 
-#: ../plug-ins/common/color-exchange.c:484
+#: ../plug-ins/common/color-exchange.c:498
 msgid "G_reen threshold:"
 msgstr "Prag la ve_rde:"
 
-#: ../plug-ins/common/color-exchange.c:545
+#: ../plug-ins/common/color-exchange.c:559
 msgid "B_lue threshold:"
 msgstr "Prag la a_lbastru:"
 
-#: ../plug-ins/common/color-exchange.c:573
+#: ../plug-ins/common/color-exchange.c:587
 msgid "Lock _thresholds"
 msgstr "_Blochează pragurile"
 
@@ -1673,6 +1693,11 @@ msgstr "Eliminare culoare"
 #: ../plug-ins/common/color-to-alpha.c:376
 msgid "Color to Alpha"
 msgstr "Culoare la alfa"
+
+#: ../plug-ins/common/color-to-alpha.c:410
+msgctxt "color-to-alpha"
+msgid "From:"
+msgstr "De la:"
 
 # hm ?
 #: ../plug-ins/common/color-to-alpha.c:414
@@ -1718,7 +1743,7 @@ msgstr "Rearanjează paleta de culori"
 # apare la contextul lui undo
 #: ../plug-ins/common/colormap-remap.c:103
 msgid "R_earrange Colormap..."
-msgstr "R_earanjează paleta de culori..."
+msgstr "R_earanjare paletă de culori..."
 
 #: ../plug-ins/common/colormap-remap.c:115
 msgid "Swap two colors in the colormap"
@@ -2572,16 +2597,16 @@ msgstr "_Descompune în straturi"
 
 #: ../plug-ins/common/decompose.c:1570
 msgid "_Foreground as registration color"
-msgstr "_Folosește prim planul drept culoare de înregistrare"
+msgstr "_Folosește prim-planul drept culoare de înregistrare"
 
 #: ../plug-ins/common/decompose.c:1571
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
-"Pixelii în culoarea de prim plan vor apărea negri în toate imaginile de "
-"ieșire. Aceasta poate fi folosit pentru lucruri precum markerii de decupare "
-"care trebuie să rămână vizibili pe toate canalele."
+"Pixelii în culoarea de prim-plan vor apărea negri în toate imaginile "
+"rezultate. Aceasta poate fi folosit pentru lucruri precum markerii de "
+"decupare care trebuie să rămână vizibili pe toate canalele."
 
 #: ../plug-ins/common/deinterlace.c:90
 msgid "Fix images where every other row is missing"
@@ -2980,18 +3005,18 @@ msgstr "_Cantitate:"
 
 #: ../plug-ins/common/emboss.c:124
 msgid "Simulate an image created by embossing"
-msgstr "Simulează o imagine creată prin reliefare"
+msgstr "Simulează o imagine creată prin stampare"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/emboss.c:130
 msgid "_Emboss..."
-msgstr "R_elief..."
+msgstr "Stampar_e..."
 
 # titlu pe bară
 # apare pe bara de progres
 #: ../plug-ins/common/emboss.c:384 ../plug-ins/common/emboss.c:446
 msgid "Emboss"
-msgstr "Relief"
+msgstr "Stampare"
 
 #: ../plug-ins/common/emboss.c:475
 msgid "Function"
@@ -3005,7 +3030,7 @@ msgstr "Hartă de protu_beranțe"
 # radio buton în dialogul de relief
 #: ../plug-ins/common/emboss.c:480
 msgid "_Emboss"
-msgstr "R_elief"
+msgstr "Stampar_e"
 
 #: ../plug-ins/common/emboss.c:512
 msgid "E_levation:"
@@ -3070,9 +3095,9 @@ msgstr "Încarcă o paletă KISS"
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
 #: ../plug-ins/common/file-cel.c:316 ../plug-ins/common/file-dicom.c:344
-#: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:360
+#: ../plug-ins/common/file-gbr.c:372 ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:648 ../plug-ins/common/file-jp2-load.c:190
-#: ../plug-ins/common/file-pat.c:339 ../plug-ins/common/file-pcx.c:365
+#: ../plug-ins/common/file-pat.c:341 ../plug-ins/common/file-pcx.c:365
 #: ../plug-ins/common/file-pdf.c:601 ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727 ../plug-ins/common/file-pnm.c:498
 #: ../plug-ins/common/file-ps.c:1042 ../plug-ins/common/file-raw.c:714
@@ -3083,7 +3108,7 @@ msgstr "Încarcă o paletă KISS"
 #: ../plug-ins/file-bmp/bmp-read.c:160 ../plug-ins/file-faxg3/faxg3.c:216
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:645
 #: ../plug-ins/file-jpeg/jpeg-load.c:114 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3328
+#: ../plug-ins/file-sgi/sgi.c:329 ../plug-ins/file-xjt/xjt.c:3329
 #, c-format
 msgid "Opening '%s'"
 msgstr "Deschidere „%s”"
@@ -3099,9 +3124,9 @@ msgstr "Adâncime de bit nesuportată (%d) !"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:664
+#: ../plug-ins/common/file-cel.c:587 ../plug-ins/common/file-gbr.c:666
 #: ../plug-ins/common/file-gif-save.c:787 ../plug-ins/common/file-gih.c:1266
-#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:487
+#: ../plug-ins/common/file-html-table.c:255 ../plug-ins/common/file-pat.c:489
 #: ../plug-ins/common/file-pcx.c:633 ../plug-ins/common/file-pix.c:528
 #: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:981
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:567
@@ -3221,47 +3246,47 @@ msgstr "Nu se poate opera pe tipuri de imagine necunoscute"
 msgid "GIMP brush"
 msgstr "penel GIMP"
 
-#: ../plug-ins/common/file-gbr.c:396 ../plug-ins/common/file-pat.c:415
+#: ../plug-ins/common/file-gbr.c:398 ../plug-ins/common/file-pat.c:417
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "Antet nevalid în „%s”: lățime=%lu, înălțime=%lu, baiți=%lu"
 
-#: ../plug-ins/common/file-gbr.c:420 ../plug-ins/common/file-gbr.c:432
+#: ../plug-ins/common/file-gbr.c:422 ../plug-ins/common/file-gbr.c:434
 msgid "Unsupported brush format"
 msgstr "Format de penel nesuportat"
 
 # hm ? sau fără de ?
-#: ../plug-ins/common/file-gbr.c:444
+#: ../plug-ins/common/file-gbr.c:446
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Eroare în fișierul de penel „%s” al GIMP"
 
-#: ../plug-ins/common/file-gbr.c:452
+#: ../plug-ins/common/file-gbr.c:454
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Șir UTF-8 nevalid în fișierul penel „%s”."
 
-#: ../plug-ins/common/file-gbr.c:458 ../plug-ins/common/file-gih.c:491
+#: ../plug-ins/common/file-gbr.c:460 ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1140
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "Nedenumit"
 
-#: ../plug-ins/common/file-gbr.c:649
+#: ../plug-ins/common/file-gbr.c:651
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Penelurile GIMP sunt ori SCALĂ DE GRI, ori RGBA"
 
-#: ../plug-ins/common/file-gbr.c:766
+#: ../plug-ins/common/file-gbr.c:768
 msgid "Brush"
 msgstr "Penel"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:780 ../plug-ins/common/grid.c:790
+#: ../plug-ins/common/file-gbr.c:782 ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "Spațiere:"
 
-#: ../plug-ins/common/file-gbr.c:791 ../plug-ins/common/file-gih.c:891
-#: ../plug-ins/common/file-pat.c:564 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:793 ../plug-ins/common/file-gih.c:891
+#: ../plug-ins/common/file-pat.c:566 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Descriere:"
 
@@ -3356,7 +3381,7 @@ msgid ""
 "of the layers to the image borders, or cancel this save."
 msgstr ""
 "Formatul de fișier GIF nu permite acest lucru. Puteți alege ca toate "
-"straturile să fie decupate la marginea imaginii, sau să anulați această "
+"straturile să fie decupate la marginea imaginii, sau să renunțați la această "
 "salvare."
 
 #: ../plug-ins/common/file-gif-save.c:1122
@@ -3801,12 +3826,12 @@ msgid "GIMP pattern"
 msgstr "model GIMP"
 
 # hm ?
-#: ../plug-ins/common/file-pat.c:375
+#: ../plug-ins/common/file-pat.c:377
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Șir UTF-8 nevalid în fișierul model „%s”."
 
-#: ../plug-ins/common/file-pat.c:549
+#: ../plug-ins/common/file-pat.c:551
 msgid "Pattern"
 msgstr "Model"
 
@@ -4494,7 +4519,7 @@ msgstr "Im_portă trasee"
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
-"Importă elementele de trasee ale SVG în așa fel încât să poată fi folosite "
+"Importă elementele de traseu din SVG în așa fel încât să poată fi folosite "
 "de instrumentul trasee de la GIMP"
 
 #: ../plug-ins/common/file-svg.c:973
@@ -4721,15 +4746,15 @@ msgstr "Prefix _identificator:"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1240
 msgid "_Write hot spot values"
-msgstr "Scrie _valorile de Hot Spot"
+msgstr "Scrie _valorile punctului activ"
 
 #: ../plug-ins/common/file-xbm.c:1262 ../plug-ins/common/file-xmc.c:1094
 msgid "Hot spot _X:"
-msgstr "Hot spot _X:"
+msgstr "Punct activ _X:"
 
 #: ../plug-ins/common/file-xbm.c:1272
 msgid "Hot spot _Y:"
-msgstr "Hot spot _Y:"
+msgstr "Punct activ _Y:"
 
 #. mask file
 #: ../plug-ins/common/file-xbm.c:1279
@@ -4755,7 +4780,7 @@ msgid ""
 "Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
-"Nu se poate stabili hotspotul!\n"
+"Nu se poate stabili punctul activ !\n"
 "Trebuie să aranjați straturile în așa fel încât toate să aibă o intersecție."
 
 #: ../plug-ins/common/file-xmc.c:673
@@ -4803,12 +4828,14 @@ msgstr "Opțiuni XMC"
 #: ../plug-ins/common/file-xmc.c:1090
 msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
 msgstr ""
-"Introduceți coordonata X a hotspotului. Originea este colțul din stânga sus."
+"Introduceți coordonata X a punctului activ. Originea este colțul din stânga "
+"sus."
 
 #: ../plug-ins/common/file-xmc.c:1108
 msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
 msgstr ""
-"Introduceți coordonata Y a hotspotului. Originea este colțul din stânga sus."
+"Introduceți coordonata Y a punctului activ. Originea este colțul din stânga "
+"sus."
 
 #: ../plug-ins/common/file-xmc.c:1119
 msgid "_Auto-Crop all frames."
@@ -4824,7 +4851,7 @@ msgstr ""
 "Elimină bordurile goale din toate cadrele.\n"
 "Acest lucru reduce dimensiunea fișierului și ar putea rezolva problema în "
 "care unele cursoare mari zăpăcesc ecranul.\n"
-"Debifați opțiunea dacă intenționați să editați cursorul exportat cu "
+"Debifați opțiunea dacă aveți în vedere să editați cursorul exportat cu "
 "ajutorul altor programe."
 
 # hm ? actuală sau momentană ?
@@ -4871,7 +4898,7 @@ msgstr "Î_ntârziere:"
 #: ../plug-ins/common/file-xmc.c:1217
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr ""
-"Folosește această valoare n_umai pentru un cadru al cărui întârziere nu este "
+"Folosiți această valoare n_umai pentru un cadru al cărui întârziere nu este "
 "specificată."
 
 #: ../plug-ins/common/file-xmc.c:1220
@@ -4947,7 +4974,7 @@ msgstr "Înălțimea pentru „%s” este prea mare. Reduceți mai mult de %dpx.
 #: ../plug-ins/common/file-xmc.c:1526
 #, c-format
 msgid "The size of '%s' is zero!"
-msgstr "Dimensiunea fișierului „%s” este zero!"
+msgstr "Dimensiunea fișierului „%s” este zero !"
 
 #: ../plug-ins/common/file-xmc.c:1566
 #, c-format
@@ -4956,9 +4983,9 @@ msgid ""
 "Try to change the hot spot position, layer geometry or save without auto-"
 "crop."
 msgstr ""
-"Nu se poate salva cursorul deoarece hotspotul nu este pe „%s”.\n"
-"Încercați să schimbați poziția hotspotului, geometria stratului, sau salvați "
-"fără decupare automată."
+"Nu se poate salva cursorul deoarece punctul activ nu este pe „%s”.\n"
+"Încercați să schimbați poziția punctului activ, geometria stratului, sau "
+"salvați fără decupare automată."
 
 # hm ? sisteme sau medii ?
 #: ../plug-ins/common/file-xmc.c:1721
@@ -5435,20 +5462,20 @@ msgid ""
 "Horizontal\n"
 "Lines"
 msgstr ""
-"Orizontal\n"
-"Linii"
+"Linii\n"
+"orizontale"
 
 #: ../plug-ins/common/grid.c:719
 msgid ""
 "Vertical\n"
 "Lines"
 msgstr ""
-"Vertical\n"
-"Linii"
+"Linii\n"
+"verticale"
 
 #: ../plug-ins/common/grid.c:721
 msgid "Intersection"
-msgstr "Intersecție"
+msgstr "Intersecții"
 
 #. attach labels
 #: ../plug-ins/common/grid.c:857
@@ -6115,7 +6142,7 @@ msgstr "Supra_fețe poroase"
 
 #: ../plug-ins/common/mosaic.c:782
 msgid "_FG/BG lighting"
-msgstr "_Iluminează cu culorile de prim plan și fundal"
+msgstr "_Iluminează cu culorile de prim-plan și de fundal"
 
 #: ../plug-ins/common/newsprint.c:117
 msgid "Round"
@@ -6599,11 +6626,11 @@ msgstr "Afișează informații despre plugin-uri"
 msgid "_Plug-In Browser"
 msgstr "Navigator de _plugin-uri"
 
-#: ../plug-ins/common/plugin-browser.c:371
+#: ../plug-ins/common/plugin-browser.c:376
 msgid "Searching by name"
 msgstr "Căutare după nume"
 
-#: ../plug-ins/common/plugin-browser.c:385
+#: ../plug-ins/common/plugin-browser.c:390
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
@@ -6611,11 +6638,11 @@ msgstr[0] "%d plug-in"
 msgstr[1] "%d plugin-uri"
 msgstr[2] "%d de plugin-uri"
 
-#: ../plug-ins/common/plugin-browser.c:394
+#: ../plug-ins/common/plugin-browser.c:399
 msgid "No matches for your query"
 msgstr "Nu sunt potriviri pentru interogarea dumneavoastră"
 
-#: ../plug-ins/common/plugin-browser.c:397
+#: ../plug-ins/common/plugin-browser.c:402
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -6623,39 +6650,39 @@ msgstr[0] "%d plug-in se potrivește cu interogarea dumneavoastră"
 msgstr[1] "%d plugin-uri se potrivesc cu interogarea dumneavoastră"
 msgstr[2] "%d de plugin-uri se potrivesc cu interogarea dumneavoastră"
 
-#: ../plug-ins/common/plugin-browser.c:528
+#: ../plug-ins/common/plugin-browser.c:533
 msgid "No matches"
 msgstr "Nicio potrivire"
 
-#: ../plug-ins/common/plugin-browser.c:554
+#: ../plug-ins/common/plugin-browser.c:559
 msgid "Plug-In Browser"
 msgstr "Plug-in navigator"
 
-#: ../plug-ins/common/plugin-browser.c:597
+#: ../plug-ins/common/plugin-browser.c:602
 msgid "Name"
 msgstr "Nume"
 
 # hm ? despre ce path este vorba ?
-#: ../plug-ins/common/plugin-browser.c:605
-#: ../plug-ins/common/plugin-browser.c:668
+#: ../plug-ins/common/plugin-browser.c:610
+#: ../plug-ins/common/plugin-browser.c:673
 msgid "Menu Path"
 msgstr "Cale meniu"
 
-#: ../plug-ins/common/plugin-browser.c:613
-#: ../plug-ins/common/plugin-browser.c:677
+#: ../plug-ins/common/plugin-browser.c:618
+#: ../plug-ins/common/plugin-browser.c:682
 msgid "Image Types"
 msgstr "Tipuri de imagine"
 
-#: ../plug-ins/common/plugin-browser.c:623
-#: ../plug-ins/common/plugin-browser.c:686
+#: ../plug-ins/common/plugin-browser.c:628
+#: ../plug-ins/common/plugin-browser.c:691
 msgid "Installation Date"
 msgstr "Dată de instalare"
 
-#: ../plug-ins/common/plugin-browser.c:647
+#: ../plug-ins/common/plugin-browser.c:652
 msgid "List View"
 msgstr "Vizualizare sub formă de listă"
 
-#: ../plug-ins/common/plugin-browser.c:709
+#: ../plug-ins/common/plugin-browser.c:714
 msgid "Tree View"
 msgstr "Vizualizare sub formă de arbore"
 
@@ -7386,7 +7413,7 @@ msgstr "Culoare _naturală"
 
 #: ../plug-ins/common/sparkle.c:550
 msgid "_Foreground color"
-msgstr "Culoare de _prim plan"
+msgstr "Culoare de _prim-plan"
 
 #: ../plug-ins/common/sparkle.c:551
 msgid "_Background color"
@@ -7398,7 +7425,7 @@ msgstr "Folosește culoarea imaginii"
 
 #: ../plug-ins/common/sparkle.c:559
 msgid "Use the foreground color"
-msgstr "Folosește culoarea de prim plan"
+msgstr "Folosește culoarea de prim-plan"
 
 #: ../plug-ins/common/sparkle.c:560
 msgid "Use the background color"
@@ -7684,7 +7711,7 @@ msgstr "Im_aginea curentă"
 
 #: ../plug-ins/common/tile-paper.c:390
 msgid "Fo_reground color"
-msgstr "Culoarea de p_rim plan"
+msgstr "Culoarea de p_rim-plan"
 
 #: ../plug-ins/common/tile-paper.c:392
 msgid "Bac_kground color"
@@ -7989,11 +8016,11 @@ msgstr "Valori de _mijloc spre vârfuri"
 
 #: ../plug-ins/common/value-propagate.c:197
 msgid "_Foreground to peaks"
-msgstr "Prim plan la vâr_furi"
+msgstr "Prim-plan la vâr_furi"
 
 #: ../plug-ins/common/value-propagate.c:200
 msgid "O_nly foreground"
-msgstr "_Numai prim plan"
+msgstr "_Numai prim-plan"
 
 #: ../plug-ins/common/value-propagate.c:203
 msgid "Only b_ackground"
@@ -8262,7 +8289,7 @@ msgstr "Negru"
 
 #: ../plug-ins/common/warp.c:516
 msgid "Foreground color"
-msgstr "Culoare de prim plan"
+msgstr "Culoare de prim-plan"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -8752,7 +8779,7 @@ msgstr "Previzualizare JPEG"
 #: ../plug-ins/file-jpeg/jpeg-save.c:201
 #, c-format
 msgid "File size: %s"
-msgstr "Dimensiune fișier: %s"
+msgstr "Dimensiune de fișier: %s"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:686
 msgid "Calculating file size..."
@@ -9208,17 +9235,17 @@ msgstr "Calitate:"
 msgid "Smoothing:"
 msgstr "Netezire:"
 
-#: ../plug-ins/file-xjt/xjt.c:1701 ../plug-ins/file-xjt/xjt.c:3338
+#: ../plug-ins/file-xjt/xjt.c:1701 ../plug-ins/file-xjt/xjt.c:3339
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Nu s-a putut crea dosarul de lucru „%s”: %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3204
+#: ../plug-ins/file-xjt/xjt.c:3205
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Eroare: nu s-a putut citi fișierul „%s” de proprietăți XJT."
 
-#: ../plug-ins/file-xjt/xjt.c:3211
+#: ../plug-ins/file-xjt/xjt.c:3212
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Eroare: fișierul „%s” de proprietăți XJT este gol."
@@ -9978,7 +10005,7 @@ msgstr "Transparent"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1285
 msgid "Foreground"
-msgstr "Prim Plan "
+msgstr "Prim-plan "
 
 #: ../plug-ins/gfig/gfig-dialog.c:1287 ../plug-ins/imagemap/imap_cmd_copy.c:53
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:54
@@ -10172,7 +10199,7 @@ msgstr "Relief:"
 #: ../plug-ins/gimpressionist/brush.c:615
 #: ../plug-ins/gimpressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Specifică cantitatea de reliefare aplicată la imagine (în procente)"
+msgstr "Specifică cantitatea de stampare aplicată la imagine (în procente)"
 
 #: ../plug-ins/gimpressionist/color.c:59
 msgid "Co_lor"
@@ -10537,7 +10564,7 @@ msgstr "_Suprapune"
 
 #: ../plug-ins/gimpressionist/paper.c:181
 msgid "Applies the paper as it is (without embossing it)"
-msgstr "Aplică hârtia așa cum este (fără reliefare)"
+msgstr "Aplică hârtia așa cum este (fără să fie stampată)"
 
 #: ../plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -10587,7 +10614,7 @@ msgstr "Densitatea relativă a tușelor penelului"
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:649
+#: ../plug-ins/gimpressionist/ppmtool.c:651
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Salvarea fișierului PPM „%s” a eșuat: %s"
@@ -10595,15 +10622,16 @@ msgstr "Salvarea fișierului PPM „%s” a eșuat: %s"
 # titlu pe bară
 #: ../plug-ins/gimpressionist/presets.c:639
 msgid "Save Current"
-msgstr "Salvează configurările curente"
+msgstr "Salvare configurări curente"
 
 #: ../plug-ins/gimpressionist/presets.c:894
 msgid "Gimpressionist Defaults"
 msgstr "Configurări implicite GIMPresionist"
 
+# titlu pe tab
 #: ../plug-ins/gimpressionist/presets.c:1015
 msgid "_Presets"
-msgstr "_Prestabiliri"
+msgstr "_Preconfigurări"
 
 #: ../plug-ins/gimpressionist/presets.c:1030
 msgid "Save Current..."
@@ -10615,15 +10643,15 @@ msgstr "Salvează configurările curente în fișierul specificat"
 
 #: ../plug-ins/gimpressionist/presets.c:1066
 msgid "Reads the selected Preset into memory"
-msgstr "Citește în memorie configurarea selectată"
+msgstr "Citește în memorie preconfigurarea selectată"
 
 #: ../plug-ins/gimpressionist/presets.c:1072
 msgid "Deletes the selected Preset"
-msgstr "Șterge configurarea selectată"
+msgstr "Șterge preconfigurarea selectată"
 
 #: ../plug-ins/gimpressionist/presets.c:1078
 msgid "Reread the folder of Presets"
-msgstr "Citește din nou dosarul cu configurări prestabilite"
+msgstr "Recitește dosarul preconfigurărilor"
 
 #: ../plug-ins/gimpressionist/preview.c:173
 #: ../plug-ins/gimpressionist/repaint.c:1183
@@ -11865,11 +11893,12 @@ msgstr "_Cartografiere"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Edit Map Info..."
-msgstr "Editare informații hartă..."
+msgstr "Editează informațiile hărții..."
 
+# tooltip
 #: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Edit Map Info"
-msgstr "Editare informații hartă"
+msgstr "Editează informațiile hărții"
 
 #: ../plug-ins/imagemap/imap_menu.c:190
 msgid "_Tools"
@@ -12262,7 +12291,7 @@ msgstr "I_zolat"
 
 #: ../plug-ins/lighting/lighting-ui.c:574
 msgid "Lighting preset:"
-msgstr "Prestabilire iluminare:"
+msgstr "Preconfigurări de iluminare:"
 
 #: ../plug-ins/lighting/lighting-ui.c:620
 msgid "Material Properties"
@@ -12393,13 +12422,15 @@ msgid "Enable/disable real time preview of changes"
 msgstr ""
 "Activează sau dezactivează previzualizarea în timp real a modificărilor"
 
+# titlu pe bară
 #: ../plug-ins/lighting/lighting-ui.c:1136
 msgid "Save Lighting Preset"
-msgstr "Salvare prestabilire iluminare"
+msgstr "Salvare preconfigurări de iluminare"
 
+# titlu pe bară
 #: ../plug-ins/lighting/lighting-ui.c:1280
 msgid "Load Lighting Preset"
-msgstr "Încărcare prestabilire iluminare"
+msgstr "Încărcare preconfigurări de iluminare"
 
 #: ../plug-ins/map-object/map-object-apply.c:276
 msgid "Map to plane"
@@ -12829,7 +12860,7 @@ msgstr "Degrade curent"
 
 #: ../plug-ins/pagecurl/pagecurl.c:590
 msgid "Foreground / background colors"
-msgstr "Culori de prim plan / fundal"
+msgstr "Culori de prim-plan și de fundal"
 
 #: ../plug-ins/pagecurl/pagecurl.c:610
 msgid "_Opacity:"
@@ -12932,7 +12963,7 @@ msgstr "Capturează o imagine dintr-o sursă de date TWAIN"
 
 #: ../plug-ins/twain/twain.c:351
 msgid "_Scanner/Camera..."
-msgstr "_Scaner / Cameră..."
+msgstr "_Scaner sau cameră..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:485
