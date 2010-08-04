@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-07-12 21:28+0000\n"
-"PO-Revision-Date: 2010-07-13 18:23+0200\n"
+"POT-Creation-Date: 2010-08-04 15:05+0000\n"
+"PO-Revision-Date: 2010-08-02 15:19+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -174,7 +174,7 @@ msgstr "_Butoane"
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
-msgstr "Sig_le"
+msgstr "_Logouri"
 
 #: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
@@ -198,7 +198,7 @@ msgstr "_classic.gimp.org"
 
 #: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
-msgstr "A_lfa la siglă"
+msgstr "Alfa la _logo"
 
 #: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
@@ -636,7 +636,7 @@ msgstr "Străl_ucire exterioară..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
-msgstr "Creează o siglă cu strălucire exterioară în jurul textului"
+msgstr "Creează un logo cu strălucire exterioară în jurul textului"
 
 # hm ? sau să las * ?
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
@@ -653,7 +653,7 @@ msgstr "_Neon extern..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr "Creează o siglă cu contur psihedelic în jurul textului"
+msgstr "Creează un logo cu contur psihedelic în jurul textului"
 
 # hm ?
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
@@ -685,7 +685,7 @@ msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
 msgstr ""
-"Creează o siglă de text simplu cu efect de degrade, o umbră de perspectivă "
+"Creează un logo de text simplu cu efect de degrade, o umbră de perspectivă "
 "și un fundal"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
@@ -702,7 +702,7 @@ msgstr "Ba_zic II..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "Create a simple logo with a shadow and a highlight"
-msgstr "Creează o siglă simplă cu o umbră și o parte luminoasă"
+msgstr "Creează un logo simplu cu o umbră și o parte luminoasă"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
@@ -828,7 +828,7 @@ msgstr "Mod de amestec"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr "Creează o siglă cu fundaluri amestecate, părți luminoase și umbre"
+msgstr "Creează un logo cu fundaluri amestecate, părți luminoase și umbre"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -884,7 +884,7 @@ msgstr "Bă_lțat..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr "Creează o siglă cu text în stilul „vacilor bălțate” din reclame"
+msgstr "Creează un logo cu text în stilul „vacilor bălțate” din reclame"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -941,7 +941,7 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"Scriptul pentru arsură necesită în total două straturi: un strat de prim "
+"Scriptul pentru arsură necesită în total două straturi: un strat de prim-"
 "plan cu transparență și un strat de fundal."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
@@ -1008,7 +1008,7 @@ msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
-"Creează o siglă cu text scos în relief, sau sculptat în interiorul imaginii "
+"Creează un logo cu text scos în relief, sau sculptat în interiorul imaginii "
 "de fundal specificate"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
@@ -1025,8 +1025,7 @@ msgstr "Creează un efect de desen cu cretă pentru zona selectată (sau alfa)"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr ""
-"Creează o siglă asemănătoare cu o mâzgăleală de cretă pe o tablă neagră"
+msgstr "Creează un logo asemănător cu o mâzgăleală de cretă pe o tablă neagră"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1051,7 +1050,7 @@ msgstr "Cantitate de cioplitură"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr "Creează o siglă care seamănă cu o sculptură în lemn cioplit"
+msgstr "Creează un logo care seamănă cu o sculptură în lemn cioplit"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
@@ -1128,7 +1127,7 @@ msgstr "Cr_om..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
-msgstr "Creează o siglă cromată simplistă, dar de efect"
+msgstr "Creează un logo cromat, simplist, dar de efect"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1232,7 +1231,7 @@ msgstr "_Scris de benzi comice..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
 msgstr ""
-"Creează o siglă în stilul scrisului de la benzile desenate comice, prin "
+"Creează un logo în stilul scrisului de la benzile desenate comice, prin "
 "conturarea și umplerea cu un degrade"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
@@ -1258,7 +1257,7 @@ msgstr "_Metal rece..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr "Creează o siglă metalică cu reflexii și umbre de perspectivă"
+msgstr "Creează un logo metalic cu reflexii și umbre de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1274,7 +1273,7 @@ msgstr "Imagine de fundal"
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
 msgstr ""
-"Creează o siglă cu un efect de cristal sau gel, prin care imaginea de "
+"Creează un logo cu un efect de cristal sau gel, prin care imaginea de "
 "dedesubt se vede translucid"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
@@ -1497,7 +1496,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
-msgstr "Creează o siglă înghețată cu umbră de perspectivă adăugată"
+msgstr "Creează un logo înghețat cu umbră de perspectivă adăugată"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
@@ -1607,7 +1606,7 @@ msgstr "Degrade de amestec (text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr "Creează o siglă cu degradeuri, modele, umbre și hărți de protuberanțe"
+msgstr "Creează un logo cu degradeuri, modele, umbre și hărți de protuberanțe"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1656,7 +1655,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
-msgstr "Creează o siglă cu aspect de incandescența metalului încins"
+msgstr "Creează un logo cu aspect de incandescența metalului încins"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
@@ -1680,7 +1679,7 @@ msgstr "Dimensiune bordură (pixeli)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr "Creează o siglă simplă cu o alură strălucitoare și margini teșite"
+msgstr "Creează un logo simplu cu o alură strălucitoare și margini teșite"
 
 # hm ? sau în degrade ?
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
@@ -1772,7 +1771,7 @@ msgstr "_Elimină toate ghidajele"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
-msgstr "Creează o siglă cu text tremurat, în două culori"
+msgstr "Creează un logo cu text tremurat, în două culori"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
@@ -1828,7 +1827,7 @@ msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
 "Umple un strat cu raze care emană din centrul lui înspre exterior, folosind "
-"culoarea de prim plan"
+"culoarea de prim-plan"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -1904,7 +1903,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
-msgstr "Creează o siglă în stilul unei reclame cu neon"
+msgstr "Creează un logo în stilul unei reclame cu neon"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
@@ -1920,7 +1919,7 @@ msgstr "Dimensiune celulă (pixeli)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style of newspaper printing"
-msgstr "Creează o siglă în stilul tipăriturilor de ziar"
+msgstr "Creează un logo în stilul tipăriturilor de ziar"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -2305,7 +2304,7 @@ msgstr "Crom SOTA..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
-msgstr "Creează o siglă cu un efect de text în viteză"
+msgstr "Creează un logo cu un efect de text în viteză"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
@@ -2461,7 +2460,7 @@ msgstr "_Spirogimp..."
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
-"Creează o siglă folosind o textură cu aspect de piatră, o strălucire de novă "
+"Creează un logo folosind o textură cu aspect de piatră, o strălucire de novă "
 "și o umbră"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
@@ -2512,7 +2511,7 @@ msgstr "Culoare de bază"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr "Creează o siglă folosind un efect de urmă de particule"
+msgstr "Creează un logo folosind un efect de urmă de particule"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
@@ -2538,7 +2537,7 @@ msgstr "Anticrenelează"
 msgid ""
 "Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr ""
-"Creează o siglă prin randarea textului specificat de-a lungul perimetrului "
+"Creează un logo prin randarea textului specificat de-a lungul perimetrului "
 "unui cerc"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
@@ -2553,7 +2552,7 @@ msgstr "_Cerc de text..."
 msgid ""
 "Create a textured logo with highlights, shadows, and a mosaic background"
 msgstr ""
-"Creează o siglă texturată cu părți luminoase, umbre și un fundal de mozaic"
+"Creează un logo texturat cu părți luminoase, umbre și un fundal de mozaic"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2640,7 +2639,7 @@ msgstr "Creează o imagine umplută cu un model Truchet"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
-msgstr "Culoare de prim plan"
+msgstr "Culoare de prim-plan"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
@@ -2743,19 +2742,19 @@ msgstr "Opacitatea umbrei de perspectivă"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight X offset"
-msgstr "Decalajul X al părții luminoase"
+msgstr "Decalajul X al evidențierii"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Y offset"
-msgstr "Decalajul Y al părții luminoase"
+msgstr "Decalajul Y al evidențierii"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight color"
-msgstr "Culoare luminoasă"
+msgstr "Culoarea de evidențiere"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
-msgstr "Opacitatea părții luminoase"
+msgstr "Opacitatea de evidențiere"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
