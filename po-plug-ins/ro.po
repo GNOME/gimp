@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-plugins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-05-10 06:50+0000\n"
-"PO-Revision-Date: 2010-03-22 18:06+0200\n"
+"POT-Creation-Date: 2010-08-04 15:23+0000\n"
+"PO-Revision-Date: 2010-08-05 20:11+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -283,11 +283,13 @@ msgstr "Aliniază straturile vizi_bile..."
 msgid "There are not enough layers to align."
 msgstr "Nu sunt suficiente straturi de aliniat."
 
+# titlu pe bară
 #: ../plug-ins/common/align-layers.c:400
 msgid "Align Visible Layers"
-msgstr "Aliniază straturile vizibile"
+msgstr "Aliniere straturi vizibile"
 
-# (și) la deschiderea unui .ps, la selecția anticrenelare
+# apare în dropdown la dialogul de aliniere straturi
+# apare la deschiderea unui .ps, la selecția anticrenelare
 #. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
 #: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3247
@@ -301,35 +303,42 @@ msgstr "Aliniază straturile vizibile"
 msgid "None"
 msgstr "Fără"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
 msgid "Collect"
-msgstr "Colectează"
+msgstr "Colectare"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:426
 msgid "Fill (left to right)"
-msgstr "Umple (de la stânga la dreapta)"
+msgstr "Umplere (de la stânga la dreapta)"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:427
 msgid "Fill (right to left)"
-msgstr "Umple (de la dreapta la stânga)"
+msgstr "Umplere (de la dreapta la stânga)"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
 msgid "Snap to grid"
-msgstr "Acroșează la grilă"
+msgstr "Acroșare la grilă"
 
 #: ../plug-ins/common/align-layers.c:437
 msgid "_Horizontal style:"
 msgstr "_Stil orizontal:"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:441
 msgid "Left edge"
 msgstr "Marginea din stânga"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:442 ../plug-ins/common/align-layers.c:472
 #: ../plug-ins/gradient-flare/gradient-flare.c:2713
 msgid "Center"
 msgstr "Centru"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:443
 msgid "Right edge"
 msgstr "Marginea din dreapta"
@@ -338,22 +347,26 @@ msgstr "Marginea din dreapta"
 msgid "Ho_rizontal base:"
 msgstr "Bază o_rizontală:"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:457
 msgid "Fill (top to bottom)"
-msgstr "Umple (de sus în jos)"
+msgstr "Umplere (de sus în jos)"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:458
 msgid "Fill (bottom to top)"
-msgstr "Umple (de jos în sus)"
+msgstr "Umplere (de jos în sus)"
 
 #: ../plug-ins/common/align-layers.c:468
 msgid "_Vertical style:"
 msgstr "Stil _vertical:"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:471
 msgid "Top edge"
 msgstr "Marginea de sus"
 
+# apare în dropdown la dialogul de aliniere straturi
 #: ../plug-ins/common/align-layers.c:473
 msgid "Bottom edge"
 msgstr "Marginea de jos"
@@ -667,7 +680,7 @@ msgstr "Delta _max.:"
 #: ../plug-ins/common/blur-gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
 msgstr ""
-"Calea cea mai simplă de atenuare a claritîății, folosită cel mai frecvent"
+"Calea cea mai simplă de atenuare a clarității, folosită cel mai frecvent"
 
 #: ../plug-ins/common/blur-gauss.c:172
 msgid "_Gaussian Blur..."
@@ -830,26 +843,26 @@ msgstr "_Dimensiune găleată:"
 
 #: ../plug-ins/common/bump-map.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr "Creează un efect de reliefare folosind o hartă de stampare"
+msgstr "Creează un efect de stampare folosind o hartă de protuberanțe"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/bump-map.c:267
 msgid "_Bump Map..."
-msgstr "Hartă de stampare (_Bumpmap)..."
+msgstr "Hartă de protu_beranțe..."
 
 # apare pe bara de progres
 #: ../plug-ins/common/bump-map.c:415
 msgid "Bump-mapping"
-msgstr "Hartă de stampare"
+msgstr "Hartă de protuberanțe"
 
 # titlu pe bară
 #: ../plug-ins/common/bump-map.c:766
 msgid "Bump Map"
-msgstr "Hartă de stampare"
+msgstr "Hartă de protuberanțe"
 
 #: ../plug-ins/common/bump-map.c:832
 msgid "_Bump map:"
-msgstr "_Hartă de stampare:"
+msgstr "Hartă de protu_beranțe:"
 
 #. Map type menu
 #: ../plug-ins/common/bump-map.c:835 ../plug-ins/flame/flame.c:748
@@ -879,13 +892,12 @@ msgstr "Co_mpensează întunecarea"
 #. Invert bumpmap
 #: ../plug-ins/common/bump-map.c:863
 msgid "I_nvert bumpmap"
-msgstr "I_nversează harta de stampare"
+msgstr "I_nversează harta de protuberanțe"
 
-# hm ?
 #. Tile bumpmap
 #: ../plug-ins/common/bump-map.c:877
 msgid "_Tile bumpmap"
-msgstr "Hartă de stampare pava_tă"
+msgstr "Hartă de pro_tuberanțe pavată"
 
 #: ../plug-ins/common/bump-map.c:892 ../plug-ins/common/emboss.c:499
 msgid "_Azimuth:"
@@ -913,7 +925,7 @@ msgstr "Decalaj _Y:"
 
 #: ../plug-ins/common/bump-map.c:958
 msgid "_Waterlevel:"
-msgstr "_Nivel de apă:"
+msgstr "_Nivelul mării:"
 
 #: ../plug-ins/common/bump-map.c:970
 msgid "A_mbient:"
@@ -1065,7 +1077,7 @@ msgstr "Salvează configurările mixerului de canale"
 #: ../plug-ins/common/file-gih.c:1275 ../plug-ins/common/file-html-table.c:236
 #: ../plug-ins/common/file-mng.c:610 ../plug-ins/common/file-mng.c:944
 #: ../plug-ins/common/file-pat.c:476 ../plug-ins/common/file-pcx.c:673
-#: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1270
+#: ../plug-ins/common/file-pix.c:524 ../plug-ins/common/file-png.c:1271
 #: ../plug-ins/common/file-pnm.c:977 ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:548 ../plug-ins/common/file-raw.c:576
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
@@ -1707,7 +1719,7 @@ msgstr "Rearanjează paleta de culori"
 # apare la contextul lui undo
 #: ../plug-ins/common/colormap-remap.c:104
 msgid "R_earrange Colormap..."
-msgstr "R_earanjează paleta de culori..."
+msgstr "R_earanjare paletă de culori..."
 
 #: ../plug-ins/common/colormap-remap.c:116
 msgid "Swap two colors in the colormap"
@@ -1917,7 +1929,7 @@ msgstr "Nu s-au putut obține straturile pentru imaginea %d"
 msgid "Composing"
 msgstr "Compunere"
 
-#: ../plug-ins/common/compose.c:697 ../plug-ins/common/compose.c:1735
+#: ../plug-ins/common/compose.c:697 ../plug-ins/common/compose.c:1728
 msgid "At least one image is needed to compose"
 msgstr "Este necesară cel puțin o imagine pentru a compune"
 
@@ -1949,25 +1961,25 @@ msgid "Unable to recompose, source layer not found"
 msgstr "Nu se poate reconstitui, stratul sursă nu a fost găsit"
 
 # titlu
-#: ../plug-ins/common/compose.c:1488
+#: ../plug-ins/common/compose.c:1481
 msgid "Compose"
 msgstr "Compunere"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1515
+#: ../plug-ins/common/compose.c:1508
 msgid "Compose Channels"
 msgstr "Compunere de canale"
 
-#: ../plug-ins/common/compose.c:1525 ../plug-ins/common/decompose.c:1515
+#: ../plug-ins/common/compose.c:1518 ../plug-ins/common/decompose.c:1522
 msgid "Color _model:"
 msgstr "_Model de culoare:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1557
+#: ../plug-ins/common/compose.c:1550
 msgid "Channel Representations"
 msgstr "Reprezentări de canal"
 
-#: ../plug-ins/common/compose.c:1620
+#: ../plug-ins/common/compose.c:1613
 msgid "Mask value"
 msgstr "Valoare de mască"
 
@@ -2542,30 +2554,30 @@ msgid "Decomposing"
 msgstr "Descompunere"
 
 # titlu pe bară
-#: ../plug-ins/common/decompose.c:1480
+#: ../plug-ins/common/decompose.c:1487
 msgid "Decompose"
 msgstr "Descompunere"
 
-#: ../plug-ins/common/decompose.c:1503
+#: ../plug-ins/common/decompose.c:1510
 msgid "Extract Channels"
 msgstr "Extragere de canale"
 
-#: ../plug-ins/common/decompose.c:1550
+#: ../plug-ins/common/decompose.c:1557
 msgid "_Decompose to layers"
 msgstr "_Descompune în straturi"
 
-#: ../plug-ins/common/decompose.c:1561
+#: ../plug-ins/common/decompose.c:1568
 msgid "_Foreground as registration color"
 msgstr "_Folosește prim-planul drept culoare de înregistrare"
 
-#: ../plug-ins/common/decompose.c:1562
+#: ../plug-ins/common/decompose.c:1569
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
-"Pixelii în culoarea de prim-plan vor apărea negri în toate imaginile de "
-"ieșire. Aceasta poate fi folosit pentru lucruri precum markerii de decupare "
-"care trebuie să rămână vizibili pe toate canalele."
+"Pixelii în culoarea de prim-plan vor apărea negri în toate imaginile "
+"rezultate. Aceasta poate fi folosit pentru lucruri precum markerii de "
+"decupare care trebuie să rămână vizibili pe toate canalele."
 
 #: ../plug-ins/common/deinterlace.c:91
 msgid "Fix images where every other row is missing"
@@ -2964,18 +2976,18 @@ msgstr "_Cantitate:"
 
 #: ../plug-ins/common/emboss.c:124
 msgid "Simulate an image created by embossing"
-msgstr "Simulează o imagine creată prin reliefare"
+msgstr "Simulează o imagine creată prin stampare"
 
 # apare la contextul lui undo
 #: ../plug-ins/common/emboss.c:130
 msgid "_Emboss..."
-msgstr "R_elief..."
+msgstr "Stampar_e..."
 
 # titlu pe bară
 # apare pe bara de progres
 #: ../plug-ins/common/emboss.c:384 ../plug-ins/common/emboss.c:446
 msgid "Emboss"
-msgstr "Relief"
+msgstr "Stampare"
 
 #: ../plug-ins/common/emboss.c:474
 msgid "Function"
@@ -2984,12 +2996,12 @@ msgstr "Funcție"
 # radio buton în dialogul de relief
 #: ../plug-ins/common/emboss.c:478
 msgid "_Bumpmap"
-msgstr "Hartă de stampare (_Bumpmap)"
+msgstr "Hartă de protu_beranțe"
 
 # radio buton în dialogul de relief
 #: ../plug-ins/common/emboss.c:479
 msgid "_Emboss"
-msgstr "R_elief"
+msgstr "Stampar_e"
 
 #: ../plug-ins/common/emboss.c:511
 msgid "E_levation:"
@@ -3086,7 +3098,7 @@ msgstr "Adâncime de bit nesuportată (%d) !"
 #: ../plug-ins/common/file-gif-save.c:768 ../plug-ins/common/file-gih.c:1280
 #: ../plug-ins/common/file-html-table.c:256 ../plug-ins/common/file-pat.c:481
 #: ../plug-ins/common/file-pcx.c:634 ../plug-ins/common/file-pix.c:529
-#: ../plug-ins/common/file-png.c:1277 ../plug-ins/common/file-pnm.c:982
+#: ../plug-ins/common/file-png.c:1278 ../plug-ins/common/file-pnm.c:982
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
@@ -3341,7 +3353,7 @@ msgid ""
 "of the layers to the image borders, or cancel this save."
 msgstr ""
 "Formatul de fișier GIF nu permite acest lucru. Puteți alege ca toate "
-"straturile să fie decupate la marginea imaginii, sau să anulați această "
+"straturile să fie decupate la marginea imaginii, sau să renunțați la această "
 "salvare."
 
 #: ../plug-ins/common/file-gif-save.c:1008
@@ -3626,7 +3638,7 @@ msgstr "Cantitatea de spațiere a celulei."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:498 ../plug-ins/common/file-png.c:1760
+#: ../plug-ins/common/file-mng.c:498 ../plug-ins/common/file-png.c:1761
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Nu s-a putut salva transparența, se va salva opacitatea în loc."
 
@@ -3703,7 +3715,7 @@ msgstr "Dispunere implicită de cardu:"
 msgid "PNG compression level:"
 msgstr "Nivel de compresie PNG:"
 
-#: ../plug-ins/common/file-mng.c:1430 ../plug-ins/common/file-png.c:1908
+#: ../plug-ins/common/file-mng.c:1430 ../plug-ins/common/file-png.c:1909
 msgid "Choose a high compression level for small file size"
 msgstr "Alegeți un nivel de compresie mare pentru o dimensiune mică de fișier"
 
@@ -3883,57 +3895,57 @@ msgstr ""
 "Fișierul PNG a specificat un decalaj care a determinat stratul să fie "
 "poziționat în afara imaginii."
 
-#: ../plug-ins/common/file-png.c:1254
+#: ../plug-ins/common/file-png.c:1255
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Eroare la salvarea „%s”. Nu s-a putut salva imaginea."
 
-#: ../plug-ins/common/file-png.c:1785
+#: ../plug-ins/common/file-png.c:1786
 msgid "Save as PNG"
 msgstr "Salvare ca PNG"
 
-#: ../plug-ins/common/file-png.c:1817
+#: ../plug-ins/common/file-png.c:1818
 msgid "_Interlacing (Adam7)"
 msgstr "Î_ntrețese (Adam7)"
 
-#: ../plug-ins/common/file-png.c:1828
+#: ../plug-ins/common/file-png.c:1829
 msgid "Save _background color"
 msgstr "Salvează culoarea de _fundal"
 
-#: ../plug-ins/common/file-png.c:1836
+#: ../plug-ins/common/file-png.c:1837
 msgid "Save _gamma"
 msgstr "Salvează _gama"
 
 # hm ? pe baza discuției de aici http://groups.google.com/group/diacritice/browse_frm/thread/dfc96c0f3c9d13b
-#: ../plug-ins/common/file-png.c:1846
+#: ../plug-ins/common/file-png.c:1847
 msgid "Save layer o_ffset"
 msgstr "Salvează _poziția straturilor"
 
-#: ../plug-ins/common/file-png.c:1855
+#: ../plug-ins/common/file-png.c:1856
 msgid "Save _resolution"
 msgstr "Salvează rez_oluția"
 
-#: ../plug-ins/common/file-png.c:1865
+#: ../plug-ins/common/file-png.c:1866
 msgid "Save creation _time"
 msgstr "Salvează _timpul de creare"
 
-#: ../plug-ins/common/file-png.c:1874
+#: ../plug-ins/common/file-png.c:1875
 msgid "Save comme_nt"
 msgstr "Salvează comentar_iul"
 
-#: ../plug-ins/common/file-png.c:1890
+#: ../plug-ins/common/file-png.c:1891
 msgid "Save color _values from transparent pixels"
 msgstr "Salvează _valorile de culoare din pixelii transparenți"
 
-#: ../plug-ins/common/file-png.c:1904
+#: ../plug-ins/common/file-png.c:1905
 msgid "Co_mpression level:"
 msgstr "Nivel de co_mpresie:"
 
-#: ../plug-ins/common/file-png.c:1922 ../plug-ins/file-jpeg/jpeg-save.c:1186
+#: ../plug-ins/common/file-png.c:1923 ../plug-ins/file-jpeg/jpeg-save.c:1186
 msgid "_Load Defaults"
 msgstr "Încarcă va_lorile implicite"
 
-#: ../plug-ins/common/file-png.c:1930
+#: ../plug-ins/common/file-png.c:1931
 msgid "S_ave Defaults"
 msgstr "Salvea_ză ca valori implicite"
 
@@ -4467,7 +4479,7 @@ msgstr "Im_portă trasee"
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
-"Importă elementele de trasee ale SVG în așa fel încât să poată fi folosite "
+"Importă elementele de traseu din SVG în așa fel încât să poată fi folosite "
 "de instrumentul trasee de la GIMP"
 
 #: ../plug-ins/common/file-svg.c:974
@@ -4493,24 +4505,24 @@ msgstr "Nu se poate citi extensia din „%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Nu se poate citi antetul din „%s”"
 
-#: ../plug-ins/common/file-tga.c:1368
+#: ../plug-ins/common/file-tga.c:1370
 msgid "Save as TGA"
 msgstr "Salvare ca TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1391
+#: ../plug-ins/common/file-tga.c:1393
 msgid "_RLE compression"
 msgstr "Compresie _RLE"
 
-#: ../plug-ins/common/file-tga.c:1405
+#: ../plug-ins/common/file-tga.c:1407
 msgid "Or_igin:"
 msgstr "Or_igine:"
 
-#: ../plug-ins/common/file-tga.c:1409
+#: ../plug-ins/common/file-tga.c:1411
 msgid "Bottom left"
 msgstr "Stânga jos"
 
-#: ../plug-ins/common/file-tga.c:1410
+#: ../plug-ins/common/file-tga.c:1412
 msgid "Top left"
 msgstr "Stânga sus"
 
@@ -4694,15 +4706,15 @@ msgstr "Prefix _identificator:"
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1254
 msgid "_Write hot spot values"
-msgstr "Scrie _valorile de Hot Spot"
+msgstr "Scrie _valorile punctului activ"
 
 #: ../plug-ins/common/file-xbm.c:1276
 msgid "Hot spot _X:"
-msgstr "Hot spot _X:"
+msgstr "Punct activ _X:"
 
 #: ../plug-ins/common/file-xbm.c:1286
 msgid "Hot spot _Y:"
-msgstr "Hot spot _Y:"
+msgstr "Punct activ _Y:"
 
 #. mask file
 #: ../plug-ins/common/file-xbm.c:1293
@@ -5427,7 +5439,7 @@ msgstr "Ev_idențiere:"
 
 #: ../plug-ins/common/jigsaw.c:2522
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Cantitatea de evidențiere pe margini a fiecărei piese"
+msgstr "Cantitatea de evidențiere pe marginile fiecărei piese"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2539
@@ -7181,7 +7193,7 @@ msgstr "Textură"
 # apare în zona locală de editare straturi
 #: ../plug-ins/common/sphere-designer.c:1744
 msgid "Bumpmap"
-msgstr "Hartă de stampare (Bumpmap)"
+msgstr "Hartă de protuberanțe"
 
 # apare în meniul desfășurabil
 # apare în zona locală de editare straturi
@@ -7216,7 +7228,7 @@ msgstr "Proprietăți"
 # apare în meniul desfășurabil
 #: ../plug-ins/common/sphere-designer.c:2691
 msgid "Bump"
-msgstr "Stampare"
+msgstr "Protuberanță"
 
 #. row labels
 #: ../plug-ins/common/sphere-designer.c:2699
@@ -8281,28 +8293,28 @@ msgid "Alpha channel will be ignored."
 msgstr "Canalul alfa va fi ignorat."
 
 # titlu pe bară
-#: ../plug-ins/file-bmp/bmp-write.c:793
+#: ../plug-ins/file-bmp/bmp-write.c:794
 msgid "Save as BMP"
 msgstr "Salvare ca BMP"
 
 # hm ? acronimul RLE este foarte cunoscut
-#: ../plug-ins/file-bmp/bmp-write.c:816
+#: ../plug-ins/file-bmp/bmp-write.c:817
 msgid "_Run-Length Encoded"
 msgstr "Codare _Run-Length-Encoding"
 
-#: ../plug-ins/file-bmp/bmp-write.c:828 ../plug-ins/file-jpeg/jpeg-save.c:900
+#: ../plug-ins/file-bmp/bmp-write.c:829 ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "_Advanced Options"
 msgstr "Opțiuni a_vansate"
 
-#: ../plug-ins/file-bmp/bmp-write.c:843
+#: ../plug-ins/file-bmp/bmp-write.c:844
 msgid "16 bits"
 msgstr "16 biți"
 
-#: ../plug-ins/file-bmp/bmp-write.c:879
+#: ../plug-ins/file-bmp/bmp-write.c:880
 msgid "24 bits"
 msgstr "24 de biți"
 
-#: ../plug-ins/file-bmp/bmp-write.c:896
+#: ../plug-ins/file-bmp/bmp-write.c:897
 msgid "32 bits"
 msgstr "32 de biți"
 
@@ -9926,7 +9938,7 @@ msgstr "Relief:"
 #: ../plug-ins/gimpressionist/brush.c:616
 #: ../plug-ins/gimpressionist/paper.c:210
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr "Specifică cantitatea de reliefare aplicată la imagine (în procente)"
+msgstr "Specifică cantitatea de stampare aplicată la imagine (în procente)"
 
 #: ../plug-ins/gimpressionist/color.c:60
 msgid "Co_lor"
@@ -10008,7 +10020,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:222
 msgid "Drop shadow"
-msgstr "Umbră de perspectivă"
+msgstr "Umbră detașată"
 
 #: ../plug-ins/gimpressionist/general.c:227
 msgid "Adds a shadow effect to each brush stroke"
@@ -10028,7 +10040,7 @@ msgstr "Întunecare umbră:"
 
 #: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to \"darken\" the drop shadow"
-msgstr "Cât de mult să fie întunecată umbra de perspectivă"
+msgstr "Cât de mult să fie întunecată umbra detașată"
 
 #: ../plug-ins/gimpressionist/general.c:258
 msgid "Shadow depth:"
@@ -10037,8 +10049,7 @@ msgstr "Adâncime umbră:"
 #: ../plug-ins/gimpressionist/general.c:262
 msgid ""
 "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"Adâncimea umbrei de perspectivă, i.e. cât să fie de diferită față de obiect"
+msgstr "Adâncimea umbrei detașate, i.e. cât de diferită să fie față de obiect"
 
 #: ../plug-ins/gimpressionist/general.c:267
 msgid "Shadow blur:"
@@ -10046,7 +10057,7 @@ msgstr "Neclaritate umbră:"
 
 #: ../plug-ins/gimpressionist/general.c:271
 msgid "How much to blur the drop shadow"
-msgstr "Cât de mult să fie atenuată claritatea umbrei de perspectivă"
+msgstr "Cât de mult să fie atenuată claritatea umbrei detașate"
 
 #: ../plug-ins/gimpressionist/general.c:276
 msgid "Deviation threshold:"
@@ -10291,7 +10302,7 @@ msgstr "_Suprapune"
 
 #: ../plug-ins/gimpressionist/paper.c:182
 msgid "Applies the paper as it is (without embossing it)"
-msgstr "Aplică hârtia așa cum este (fără reliefare)"
+msgstr "Aplică hârtia așa cum este (fără să fie stampată)"
 
 #: ../plug-ins/gimpressionist/paper.c:198
 msgid "Specifies the scale of the texture (in percent of original file)"
@@ -11862,6 +11873,7 @@ msgstr "Efecte de i_luminare..."
 msgid "General Options"
 msgstr "Opțiuni generale"
 
+# tooltip descriptiv
 #: ../plug-ins/lighting/lighting-ui.c:303
 msgid "T_ransparent background"
 msgstr "Fundal t_ransparent"
@@ -11869,8 +11881,8 @@ msgstr "Fundal t_ransparent"
 #: ../plug-ins/lighting/lighting-ui.c:313
 msgid "Make destination image transparent where bump height is zero"
 msgstr ""
-"Fă imaginea de destinație transparentă acolo unde înălțimea de stampare este "
-"zero"
+"Face imaginea de destinație transparentă acolo unde înălțimea protuberanței "
+"este zero"
 
 #: ../plug-ins/lighting/lighting-ui.c:316
 msgid "Cre_ate new image"
@@ -12066,17 +12078,17 @@ msgstr "_Metalic"
 
 #: ../plug-ins/lighting/lighting-ui.c:803
 msgid "E_nable bump mapping"
-msgstr "Activează efectul de _hartă de stampare"
+msgstr "Activează efectul hărții de protubera_nțe"
 
 #: ../plug-ins/lighting/lighting-ui.c:817
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr ""
-"Activează sau dezactivează efectul de hartă de stampare (adâncimea de "
+"Activează sau dezactivează efectul hărții de protuberanțe (adâncimea de "
 "imagine)"
 
 #: ../plug-ins/lighting/lighting-ui.c:839
 msgid "Bumpm_ap image:"
-msgstr "Imagine pentru h_arta de stampare:"
+msgstr "Imagine pentru h_arta de protuberanțe:"
 
 #: ../plug-ins/lighting/lighting-ui.c:843
 msgid "Logarithmic"
@@ -12092,7 +12104,7 @@ msgstr "Înălțime ma_ximă:"
 
 #: ../plug-ins/lighting/lighting-ui.c:870
 msgid "Maximum height for bumps"
-msgstr "Înălțime maximă pentru stampări"
+msgstr "Înălțime maximă pentru protuberanțe"
 
 #: ../plug-ins/lighting/lighting-ui.c:894
 msgid "E_nable environment mapping"
@@ -12126,7 +12138,7 @@ msgstr "_Material"
 
 #: ../plug-ins/lighting/lighting-ui.c:962
 msgid "_Bump Map"
-msgstr "Hartă de stampare (_Bumpmap)"
+msgstr "Hartă de protu_beranțe"
 
 #: ../plug-ins/lighting/lighting-ui.c:966
 msgid "_Environment Map"
@@ -12672,7 +12684,7 @@ msgstr "Capturează o imagine dintr-o sursă de date TWAIN"
 
 #: ../plug-ins/twain/twain.c:352
 msgid "_Scanner/Camera..."
-msgstr "_Scaner / Cameră..."
+msgstr "_Scaner sau cameră..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:486
@@ -12714,109 +12726,3 @@ msgstr "_Captură de ecran..."
 #: ../plug-ins/win-snap/winsnap.c:1142
 msgid "No data captured"
 msgstr "Nicio dată capturată"
-
-#, fuzzy
-#~ msgid "Email the image"
-#~ msgstr "Scalează imaginea"
-
-#, fuzzy
-#~ msgid "_Mail Image..."
-#~ msgstr "/Imagine/Scalare..."
-
-#, fuzzy
-#~ msgid "Encapsulation:"
-#~ msgstr "Saturare:"
-
-#, fuzzy
-#~ msgid "_Uuencode"
-#~ msgstr "Extins"
-
-#, fuzzy
-#~ msgid "_Recipient:"
-#~ msgstr "Repetă:"
-
-#, fuzzy
-#~ msgid "_Sender:"
-#~ msgstr "Centru X:"
-
-#, fuzzy
-#~ msgid "Comm_ent:"
-#~ msgstr "Numar:"
-
-#, fuzzy
-#~ msgid "First Source Color"
-#~ msgstr "Culoare adevărată"
-
-#, fuzzy
-#~ msgid "Second Destination Color"
-#~ msgstr "Culoare Statica"
-
-#, fuzzy
-#~ msgid "Adjust _Foreground & Background"
-#~ msgstr "Fundal"
-
-#, fuzzy
-#~ msgid "Color Range _Mapping..."
-#~ msgstr "Balanța de culori"
-
-#, fuzzy
-#~ msgid "Cannot operate on gray or indexed color images."
-#~ msgstr "Invert nu funcționează pe imagini indexate."
-
-#, fuzzy
-#~ msgid "Adjusting foreground and background colors"
-#~ msgstr "Fundal"
-
-#, fuzzy
-#~ msgid "Mapping colors"
-#~ msgstr "culori"
-
-#, fuzzy
-#~ msgid "Map Color Range"
-#~ msgstr "Balanța de culori"
-
-#, fuzzy
-#~ msgid "Source Color Range"
-#~ msgstr "Balanța de culori"
-
-#, fuzzy
-#~ msgid "Destination Color Range"
-#~ msgstr "Simulare pozițională de nuanțe"
-
-#, fuzzy
-#~ msgid "Cannot handle PSD file with more than %d channels"
-#~ msgstr ""
-#~ "Nu pot să adaug un strat de tip mască\n"
-#~ "unui strat fără canal alfa(transparență)."
-
-#, fuzzy
-#~ msgid "This is not an Adobe Photoshop PSD file"
-#~ msgstr ""
-#~ "%s a eșuat.\n"
-#~ "%s nu este un fișier obișnuit."
-
-#, fuzzy
-#~ msgid "checkbutton|Snap to grid"
-#~ msgstr "/Vizualizare/Agață-te de gidaje"
-
-#~ msgid "The GIMP help files are not found."
-#~ msgstr "Fișierele de ajutor GIMP nu au fost găsite."
-
-#, fuzzy
-#~ msgid "Please check your installation."
-#~ msgstr "Instalare utilizator a GIMP"
-
-#, fuzzy
-#~ msgid "Document not found"
-#~ msgstr "Index document"
-
-# hm ?
-#~ msgid "_Smoothing:"
-#~ msgstr "_Netezire:"
-
-#, fuzzy
-#~ msgid "Printable area:"
-#~ msgstr "Tip cursor:"
-
-#~ msgid "Could not open output file for writing"
-#~ msgstr "Nu s-a putut deschide fișierul de ieșire pentru scriere"
