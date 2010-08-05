@@ -129,7 +129,7 @@ gimp_version_show (gboolean be_verbose)
 
   if (be_verbose)
     {
-      g_print (_("git commit %s"), GIMP_GIT_VERSION);
+      g_print ("git commit %s", GIMP_GIT_VERSION);
       g_print ("\n");
 
       g_print ("\n");
