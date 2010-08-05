@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-07-12 21:28+0000\n"
-"PO-Revision-Date: 2010-06-30 18:18+0200\n"
+"POT-Creation-Date: 2010-08-05 19:25+0000\n"
+"PO-Revision-Date: 2010-08-05 22:44+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Română <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -290,12 +290,11 @@ msgstr "_Consolă"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
-"Adaugă o umbră de perspectivă la un strat și opțional scoate-l în relief"
+msgstr "Adaugă o umbră detașată la un strat și opțional scoate-l în relief"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Umbră de perspectivă și scoatere în relief..."
+msgstr "_Umbră detașată și scoatere în relief..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
@@ -308,15 +307,15 @@ msgstr "Î_n relief"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
-msgstr "_Umbră de perspectivă"
+msgstr "_Umbră detașată"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "Deplasare pe axa _X a umbrei de perspectivă"
+msgstr "Deplasare pe axa _X a umbrei detașate"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "Deplasare pe axa _Y a umbrei de perspectivă"
+msgstr "Deplasare pe axa _Y a umbrei detașate"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
