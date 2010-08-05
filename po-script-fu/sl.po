@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.8 scriptfu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2010-04-02 13:21+0000\n"
-"PO-Revision-Date: 2010-04-03 16:13+0100\n"
+"POT-Creation-Date: 2010-08-04 23:28+0000\n"
+"PO-Revision-Date: 2010-08-05 19:00+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -122,19 +122,19 @@ msgstr "Premalo argumentov za klic 'script-fu-register'"
 msgid "Error while loading %s:"
 msgstr "Napaka pri nalaganju %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:804
 msgid "Script-Fu Server Options"
 msgstr "Možnosti strežnika Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:809
 msgid "_Start Server"
 msgstr "_Zaženi strežnik"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "Server port:"
 msgstr "Vrata strežnika:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:843
 msgid "Server logfile:"
 msgstr "Dnevniška datoteka strežnika:"
 
@@ -1860,6 +1860,42 @@ msgstr "Sepija"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "_Stara fotografija ..."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid "All characters in the name are either white-spaces or characters which can not appear in filenames."
+msgstr "Vsi znaki v imenu so presledki ali znaki, ki se ne smejo pojaviti v imenih datotek."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid "Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute"
+msgstr "Izvozi aktivno paleto kot predlogo CSS vnosom imena barve kot njihovim imenom razreda ter barvo samo kot barvni atribut"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Izvozi aktivno paleto kot slovar PHP (ime => barva)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Izvozi aktivno paleto kot slovar Python (ime: barva)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Izvozi aktivno paleto kot java.util.Hashtable<Niz, Barva>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid "Folder for the output file"
+msgstr "Mapa za izhodno datoteko"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Ime datoteke, ki ste ga vnesli, ni primerno za datoteko."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
+msgid "The name of the file to create (if a file with this name already exist, it will be replaced)"
+msgstr "Ime datoteke, ki jo želite ustvariti (če datoteka s tem imenom že obstaja, bo zamenjana)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
+msgid "Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
+msgstr "Zapiši vse barve v paleti v besedilno datoteko, eno šestnajstiško vrednost na vrstico (brez imen)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
