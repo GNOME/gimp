@@ -44,6 +44,7 @@ struct _GimpOperationCageTransform
   GeglOperationFilter  parent_instance;
   
   GimpCageConfig       *config;
+  Babl                 *format_coords;
 };
 
 struct _GimpOperationCageTransformClass

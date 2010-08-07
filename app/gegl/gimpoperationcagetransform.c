@@ -101,7 +101,7 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 static void
 gimp_operation_cage_transform_init (GimpOperationCageTransform *self)
 {
-  
+  self->format_coords = babl_format_n(babl_type("float"), 2);
 }
 
 static void
@@ -229,7 +229,6 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs  (GimpOperationCa
 {
   gint xmin, xmax, ymin, ymax;
   GeglRectangle rect = {0, 0, 1, 1};
-  Babl *format = babl_format_n(babl_type("float"), 2);
   gfloat *coords;  
   
   coords = g_malloc( 2 * sizeof (gfloat));
@@ -266,23 +265,48 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs  (GimpOperationCa
   if (xmin == xmax || ymin == ymax)
     return;
   
-  /* test if there is only one pixel left in the triangle */
+  /* test if the triangle is small enough.
+   * if yes, we compute the coefficient of the barycenter for the pixel (x,y) and see if a pixel is inside (ie the 3 coef have the same sign).
+   */
   if (xmax - xmin == 1 && ymax - ymin == 1)
   {
+    gfloat a, b, c, denom, x, y;
+    
     rect.x = xmax;
     rect.y = ymax;
     
-    coords[0] = p1_s.x;
-    coords[1] = p1_s.y;
-    gegl_buffer_set(out_buf,
-                    &rect,
-                    format,
-                    coords,
-                    GEGL_AUTO_ROWSTRIDE);
+    x = (gfloat) xmax;
+    y = (gfloat) ymax;
+    
+    denom = (p2_d.x - p1_d.x) * p3_d.y + (p1_d.x - p3_d.x) * p2_d.y + (p3_d.x - p2_d.x) * p1_d.y;
+    a = ((p2_d.x - x) * p3_d.y + (x - p3_d.x) * p2_d.y + (p3_d.x - p2_d.x) * y) / denom;
+    b = - ((p1_d.x - x) * p3_d.y + (x - p3_d.x) * p1_d.y + (p3_d.x - p1_d.x) * y) / denom;
+    c = 1.0 - a - b;
+    
+    /* if a pixel is inside, we compute his source coordinate and set it in the output buffer */
+    if ((a > 0 && b > 0 && c > 0) || (a < 0 && b < 0 && c < 0))
+    {
+      coords[0] = (a * p1_s.x + b * p2_s.x + c * p3_s.x);
+      coords[1] = (a * p1_s.y + b * p2_s.y + c * p3_s.y);
+      
+      gegl_buffer_set(out_buf,
+                      &rect,
+                      oct->format_coords,
+                      coords,
+                      GEGL_AUTO_ROWSTRIDE);
+    }
   }
   else
   {
     /* we cut the triangle in 4 sub-triangle and treat it recursively */
+    /*
+     *       /\
+     *      /__\
+     *     /\  /\
+     *    /__\/__\
+     * 
+     */
+    
     GimpCoords pm1_d, pm2_d, pm3_d;
     GimpCoords pm1_s, pm2_s, pm3_s;
     
