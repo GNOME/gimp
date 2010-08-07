@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-08-04 15:22+0000\n"
-"PO-Revision-Date: 2010-08-05 22:22+0200\n"
+"POT-Creation-Date: 2010-08-05 21:41+0000\n"
+"PO-Revision-Date: 2010-08-07 16:12+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -242,7 +242,7 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Numele directorului care ține configurția de utilizator GIMP nu poate fi "
+"Numele directorului care ține configurația de utilizator GIMP nu poate fi "
 "convertit la UTF-8: %s\n"
 "\n"
 "Probabil că sistemul de fișiere stochează fișierele într-o altă codare decât "
@@ -311,7 +311,7 @@ msgstr "Doc"
 
 #: ../app/actions/actions.c:134
 msgid "Dockable"
-msgstr "Docabil"
+msgstr "Andocabil"
 
 #. Document History
 #: ../app/actions/actions.c:137 ../app/dialogs/dialogs.c:171
@@ -1147,7 +1147,7 @@ msgstr "_Mută pe un anumit ecran"
 
 #: ../app/actions/dock-actions.c:47
 msgid "Close Dock"
-msgstr "Închide fereastra docată"
+msgstr "Închide fereastra andocată"
 
 # hm ?
 #: ../app/actions/dock-actions.c:52 ../app/actions/view-actions.c:123
@@ -1248,7 +1248,7 @@ msgstr "St_are și text"
 
 #: ../app/actions/dockable-actions.c:108
 msgid "Loc_k Tab to Dock"
-msgstr "Bl_ochează tabul la fereastra docată"
+msgstr "Bl_ochează tabul la fereastra andocată"
 
 #: ../app/actions/dockable-actions.c:109
 msgid "Protect this tab from being dragged with the mouse pointer"
@@ -4104,7 +4104,7 @@ msgstr "Culoare de um_plere"
 
 #: ../app/actions/view-actions.c:71
 msgid "Move to Screen"
-msgstr "_Mută pe un anumit ecran"
+msgstr "Mută pe un anumit ecran"
 
 #: ../app/actions/view-actions.c:76
 msgid "Create another view on this image"
@@ -4449,11 +4449,11 @@ msgstr "Fe_restre"
 
 #: ../app/actions/windows-actions.c:80
 msgid "_Recently Closed Docks"
-msgstr "Fe_restre docate închise recent"
+msgstr "Fe_restre andocate închise recent"
 
 #: ../app/actions/windows-actions.c:81
 msgid "_Dockable Dialogs"
-msgstr "_Dialoguri docabile"
+msgstr "_Dialoguri andocabile"
 
 #: ../app/actions/windows-actions.c:84
 msgid "Tool_box"
@@ -4733,7 +4733,7 @@ msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
 msgstr ""
-"Sugestia pentru tipul de ferestră care este folosit pe ferestrele docate. "
+"Sugestia pentru tipul de ferestră care este folosit pe ferestrele andocate. "
 "Aceasta poate afecta modul în care gestionarul de ferestre decorează și "
 "tratează ferestrele docabile."
 
@@ -5086,7 +5086,7 @@ msgid ""
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
 msgstr ""
-"Când opțiunea este activată, ferestrele docate (trusa de instrumente și "
+"Când opțiunea este activată, ferestrele andocate (trusa de instrumente și "
 "paletele) sunt declarate ca tranzitare la fereastra de imagine activă. Cele "
 "mai multe gestionare de ferestre vor păstra atunci ferestrele docabile "
 "deasupra ferestrei de imagine, dar ar putea avea de asemenea și alte efecte."
@@ -8209,13 +8209,13 @@ msgstr "Indiciu pentru _trusa de instrumente:"
 
 #: ../app/dialogs/preferences-dialog.c:2636
 msgid "Hint for other _docks:"
-msgstr "Indiciu pentru alte ferestre _docate:"
+msgstr "Indiciu pentru alte ferestre an_docate:"
 
 #: ../app/dialogs/preferences-dialog.c:2641
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr ""
-"Trusa de instrumente și alte ferestre docate sunt tranzitare la fereastra de "
-"imagine activă"
+"Trusa de instrumente și alte ferestre andocate sunt tranzitare la fereastra "
+"de imagine activă"
 
 #: ../app/dialogs/preferences-dialog.c:2646
 msgid "Focus"
@@ -12258,7 +12258,7 @@ msgstr "Configurează acest tab"
 
 #: ../app/widgets/gimpdockseparator.c:44
 msgid "You can drop dockable dialogs here"
-msgstr "Puteți trge aici dialogurile docabile"
+msgstr "Puteți trge aici dialogurile andocabile"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
