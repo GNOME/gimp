@@ -39,6 +39,7 @@ OBJECTS = \
 	gimpoperationcolorbalance.obj \
 	gimpoperationcage.obj  \
 	gimpoperationcagecoefcalc.obj	\
+	gimpoperationcagetransform.obj \
 	gimpoperationcurves.obj \
 	gimpoperationhuesaturation.obj \
 	gimpoperationlevels.obj \

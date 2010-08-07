@@ -1,0 +1,424 @@
+/* GIMP - The GNU Image Manipulation Program
+ *
+ * gimpoperationcage.c
+ * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gegl.h>
+#include "gimp-gegl-types.h"
+#include <gegl-buffer-iterator.h>
+
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
+
+#include "gimpoperationcagetransform.h"
+#include "gimpcageconfig.h"
+
+static void           gimp_operation_cage_transform_finalize                  (GObject              *object);
+static void           gimp_operation_cage_transform_get_property              (GObject              *object,
+                                                                               guint                 property_id,
+                                                                               GValue               *value,
+                                                                               GParamSpec           *pspec);
+static void           gimp_operation_cage_transform_set_property              (GObject              *object,
+                                                                               guint                 property_id,
+                                                                               const GValue         *value,
+                                                                               GParamSpec           *pspec);
+static void           gimp_operation_cage_transform_prepare                   (GeglOperation       *operation);
+static gboolean       gimp_operation_cage_transform_process                   (GeglOperation       *operation,
+                                                                               GeglBuffer          *in_buf,
+                                                                               GeglBuffer          *out_buf,
+                                                                               const GeglRectangle *roi);
+static void           gimp_operation_cage_transform_interpolate_source_coords_recurs  (GimpOperationCageTransform  *oct,
+                                                                                GeglBuffer *out_buf,
+                                                                                const GeglRectangle *roi,
+                                                                                GimpCoords p1_s, GimpCoords p1_d,
+                                                                                GimpCoords p2_s, GimpCoords p2_d,
+                                                                                GimpCoords p3_s, GimpCoords p3_d);
+static GimpCoords     gimp_cage_transform_compute_destination                 (GimpCageConfig *config,
+                                                                               GeglBuffer *coef_buf,
+                                                                               GimpCoords coords);
+GeglRectangle         gimp_operation_cage_transform_get_cached_region         (GeglOperation        *operation,
+                                                                               const GeglRectangle *roi);
+GeglRectangle         gimp_operation_cage_transform_get_required_for_output   (GeglOperation        *operation,
+                                                                               const gchar         *input_pad,
+                                                                               const GeglRectangle *roi);
+                                        
+G_DEFINE_TYPE (GimpOperationCageTransform, gimp_operation_cage_transform, 
+                      GEGL_TYPE_OPERATION_FILTER)
+
+#define parent_class gimp_operation_cage_transform_parent_class
+
+
+
+
+static void
+gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass)
+{
+  GObjectClass                    *object_class     = G_OBJECT_CLASS (klass);
+  GeglOperationClass              *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GeglOperationFilterClass        *filter_class   = GEGL_OPERATION_FILTER_CLASS (klass);
+
+  object_class->get_property          = gimp_operation_cage_transform_get_property;
+  object_class->set_property          = gimp_operation_cage_transform_set_property;
+  object_class->finalize              = gimp_operation_cage_transform_finalize;
+
+  /* FIXME: wrong categories and name, to appears in the gegl tool */
+  operation_class->name         = "gegl:cage_transform";
+  operation_class->categories   = "color";
+  operation_class->description  = "GIMP cage reverse transform";
+
+  operation_class->prepare      = gimp_operation_cage_transform_prepare;
+  
+  operation_class->get_required_for_output = gimp_operation_cage_transform_get_required_for_output;
+  operation_class->get_cached_region = gimp_operation_cage_transform_get_cached_region;
+  operation_class->no_cache     = FALSE;
+  
+  filter_class->process         = gimp_operation_cage_transform_process;
+  
+  g_object_class_install_property (object_class,
+                                 GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG,
+                                 g_param_spec_object ("config", NULL, NULL,
+                                                      GIMP_TYPE_CAGE_CONFIG,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+}
+
+static void
+gimp_operation_cage_transform_init (GimpOperationCageTransform *self)
+{
+  self->source = g_malloc( 3 * sizeof (GimpCoords));
+  self->dest = g_malloc( 3 * sizeof (GimpCoords));
+}
+
+static void
+gimp_operation_cage_transform_finalize  (GObject  *object)
+{
+  GimpOperationCageTransform *self = GIMP_OPERATION_CAGE_TRANSFORM (object);
+
+  if (self->config)
+    {
+      g_object_unref (self->config);
+      self->config = NULL;
+    }
+
+  g_free (self->source);
+  g_free (self->dest);
+  
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_operation_cage_transform_get_property  (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec)
+{
+  GimpOperationCageTransform *self = GIMP_OPERATION_CAGE_TRANSFORM (object);
+
+  switch (property_id)
+    {
+    case GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG:
+      g_value_set_object (value, self->config);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_operation_cage_transform_set_property  (GObject        *object,
+                                             guint           property_id,
+                                             const GValue   *value,
+                                             GParamSpec     *pspec)
+{
+  GimpOperationCageTransform *self = GIMP_OPERATION_CAGE_TRANSFORM (object);
+
+  switch (property_id)
+    {
+    case GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG:
+      if (self->config)
+        g_object_unref (self->config);
+      self->config = g_value_dup_object (value);
+      break;
+
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+
+static void
+gimp_operation_cage_transform_prepare (GeglOperation  *operation)
+{
+  GimpOperationCageTransform    *oct    = GIMP_OPERATION_CAGE_TRANSFORM (operation);
+  GimpCageConfig                *config = GIMP_CAGE_CONFIG (oct->config);
+  
+  gegl_operation_set_format (operation, "input", babl_format_n (babl_type ("float"), 2 * config->cage_vertice_number));
+  gegl_operation_set_format (operation, "output", babl_format_n (babl_type ("float"), 2));
+}
+
+static gboolean
+gimp_operation_cage_transform_process (GeglOperation       *operation,
+                                       GeglBuffer          *in_buf,
+                                       GeglBuffer          *out_buf,
+                                       const GeglRectangle *roi)
+{
+  GimpOperationCageTransform    *oct    = GIMP_OPERATION_CAGE_TRANSFORM (operation);
+  GimpCageConfig                *config = GIMP_CAGE_CONFIG (oct->config);
+  
+  gint x, y;
+  GeglRectangle bounding_box = gimp_cage_config_get_bounding_box (config);
+  
+  for (x = bounding_box.x; x < bounding_box.x + bounding_box.width - 1; x++)
+  {
+    for (y = bounding_box.y; y < bounding_box.y + bounding_box.height - 1; y++)
+    {
+      GimpCoords p1_s = {x, y, };
+      GimpCoords p2_s = {x+1, y, };
+      GimpCoords p3_s = {x+1, y+1, };
+      GimpCoords p4_s = {x, y+1, };
+      
+      GimpCoords p1_d, p2_d, p3_d, p4_d;
+      
+      p1_d = gimp_cage_transform_compute_destination (config, in_buf, p1_s);
+      p2_d = gimp_cage_transform_compute_destination (config, in_buf, p2_s);
+      p3_d = gimp_cage_transform_compute_destination (config, in_buf, p3_s);
+      p4_d = gimp_cage_transform_compute_destination (config, in_buf, p4_s);
+      
+      gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
+                                                                      out_buf,
+                                                                      roi,
+                                                                      p1_s, p1_d,
+                                                                      p2_s, p2_d,
+                                                                      p3_s, p3_d);
+      
+      gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
+                                                                      out_buf,
+                                                                      roi,
+                                                                      p1_s, p1_d,
+                                                                      p3_s, p3_d,
+                                                                      p4_s, p4_d);
+    }
+  }
+
+  return TRUE;
+}
+
+
+static void
+gimp_operation_cage_transform_interpolate_source_coords_recurs  (GimpOperationCageTransform  *oct,
+                                                                GeglBuffer *out_buf,
+                                                                const GeglRectangle *roi,
+                                                                GimpCoords p1_s, GimpCoords p1_d,
+                                                                GimpCoords p2_s, GimpCoords p2_d,
+                                                                GimpCoords p3_s, GimpCoords p3_d)
+{
+  gint xmin, xmax, ymin, ymax;
+  GeglRectangle rect = {0, 0, 1, 1};
+  Babl *format = babl_format_n(babl_type("float"), 2);
+  gfloat *coords;  
+  
+  coords = g_malloc( 2 * sizeof (gfloat));
+  
+  if (p1_d.x > roi->width) return;
+  if (p2_d.x > roi->width) return;
+  if (p3_d.x > roi->width) return;
+  if (p1_d.x < 0) return;
+  if (p2_d.x < 0) return;
+  if (p3_d.x < 0) return;
+  if (p1_d.y > roi->height) return;
+  if (p2_d.y > roi->height) return;
+  if (p3_d.y > roi->height) return;
+  if (p1_d.y < 0) return;
+  if (p2_d.y < 0) return;
+  if (p3_d.y < 0) return;
+  
+  xmin = xmax = p1_d.x;
+  ymin = ymax = p1_d.y;
+  
+  if (xmin > p2_d.x) xmin = p2_d.x;
+  if (xmin > p3_d.x) xmin = p3_d.x;
+  
+  if (xmax < p2_d.x) xmax = p2_d.x;
+  if (xmax < p3_d.x) xmax = p3_d.x;
+  
+  if (ymin > p2_d.y) ymin = p2_d.y;
+  if (ymin > p3_d.y) ymin = p3_d.y;
+  
+  if (ymax < p2_d.y) ymax = p2_d.y;
+  if (ymax < p3_d.y) ymax = p3_d.y;
+  
+  /* test if there is no more pixel in the triangle */
+  if (xmin == xmax || ymin == ymax)
+    return;
+  
+  /* test if there is only one pixel left in the triangle */
+  if (xmax - xmin == 1 && ymax - ymin == 1)
+  {
+    rect.x = xmax;
+    rect.y = ymax;
+    
+    coords[0] = p1_s.x;
+    coords[1] = p1_s.y;
+    gegl_buffer_set(out_buf,
+                    &rect,
+                    format,
+                    coords,
+                    GEGL_AUTO_ROWSTRIDE);
+  }
+  else
+  {
+    /* we cut the triangle in 4 sub-triangle and treat it recursively */
+    GimpCoords pm1_d, pm2_d, pm3_d;
+    GimpCoords pm1_s, pm2_s, pm3_s;
+    
+    pm1_d.x = (p1_d.x + p2_d.x) / 2.0;
+    pm1_d.y = (p1_d.y + p2_d.y) / 2.0;
+    
+    pm2_d.x = (p2_d.x + p3_d.x) / 2.0;
+    pm2_d.y = (p2_d.y + p3_d.y) / 2.0;
+    
+    pm3_d.x = (p3_d.x + p1_d.x) / 2.0;
+    pm3_d.y = (p3_d.y + p1_d.y) / 2.0;
+    
+    pm1_s.x = (p1_s.x + p2_s.x) / 2.0;
+    pm1_s.y = (p1_s.y + p2_s.y) / 2.0;
+    
+    pm2_s.x = (p2_s.x + p3_s.x) / 2.0;
+    pm2_s.y = (p2_s.y + p3_s.y) / 2.0;
+    
+    pm3_s.x = (p3_s.x + p1_s.x) / 2.0;
+    pm3_s.y = (p3_s.y + p1_s.y) / 2.0;
+    
+    gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
+                                                                    out_buf,
+                                                                    roi,
+                                                                    p1_s, p1_d,
+                                                                    pm1_s, pm1_d,
+                                                                    pm3_s, pm3_d);
+                                                                    
+    gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
+                                                                    out_buf,
+                                                                    roi,
+                                                                    pm1_s, pm1_d,
+                                                                    p2_s, p2_d,
+                                                                    pm2_s, pm2_d);
+
+    gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
+                                                                    out_buf,
+                                                                    roi,
+                                                                    pm1_s, pm1_d,
+                                                                    pm2_s, pm2_d,
+                                                                    pm3_s, pm3_d);
+                                                                  
+    gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
+                                                                    out_buf,
+                                                                    roi,
+                                                                    pm3_s, pm3_d,
+                                                                    pm2_s, pm2_d,
+                                                                    p3_s, p3_d);
+  }
+      
+  g_free (coords);
+}
+
+static GimpCoords
+gimp_cage_transform_compute_destination (GimpCageConfig *config,
+                                         GeglBuffer *coef_buf,
+                                         GimpCoords coords)
+{
+  gfloat     *coef;
+  gdouble     pos_x, pos_y;
+  gint i;
+  GeglRectangle rect;
+  GimpCoords result;
+  gint cvn = config->cage_vertice_number;
+  Babl *format_coef = babl_format_n (babl_type ("float"), 2 * cvn);
+  
+  gfloat coefeu;
+  
+  
+  rect.height = 1;
+  rect.width = 1;
+  rect.x = coords.x;
+  rect.y = coords.y;
+  
+  coef = g_malloc (config->cage_vertice_number * 2 * sizeof(gfloat));
+  
+  gegl_buffer_get (coef_buf, 1, &rect, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
+  
+  pos_x = 0;
+  pos_y = 0;
+  
+  for(i = 0; i < cvn; i++)
+  {
+    coefeu = coef[i];
+    
+    if (!isnan(coef[i]))
+    {
+      pos_x += coef[i] * config->cage_vertices_d[i].x;
+      pos_y += coef[i] * config->cage_vertices_d[i].y;
+    }
+    
+    g_assert (!isnan(pos_x));
+    g_assert (!isnan(pos_y));
+  }
+  
+  for(i = 0; i < cvn; i++)
+  {
+    coefeu = coef[i + cvn];
+    
+    if (!isnan(coef[i]))
+    {
+      pos_x += coef[i + cvn] * config->scaling_factor[i] * gimp_cage_config_get_edge_normal (config, i).x;
+      pos_y += coef[i + cvn] * config->scaling_factor[i] * gimp_cage_config_get_edge_normal (config, i).y;
+    }
+    
+    g_assert (!isnan(pos_x));
+    g_assert (!isnan(pos_y));
+  }
+  
+  result.x = pos_x;
+  result.y = pos_y;
+  
+  g_free (coef);
+  
+  return result;
+}
+
+GeglRectangle
+gimp_operation_cage_transform_get_cached_region  (GeglOperation        *operation,
+                                                  const GeglRectangle *roi)
+{
+  GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
+  
+  return result;
+}
+
+GeglRectangle
+gimp_operation_cage_transform_get_required_for_output (GeglOperation        *operation,
+                                                       const gchar         *input_pad,
+                                                       const GeglRectangle *roi)
+{
+  GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
+  
+  return result;
+}
