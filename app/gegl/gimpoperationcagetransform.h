@@ -44,9 +44,6 @@ struct _GimpOperationCageTransform
   GeglOperationFilter  parent_instance;
   
   GimpCageConfig       *config;
-  
-  GimpCoords           *source; /* used when interpolating coordinates */
-  GimpCoords           *dest;
 };
 
 struct _GimpOperationCageTransformClass

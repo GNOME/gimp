@@ -101,8 +101,7 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 static void
 gimp_operation_cage_transform_init (GimpOperationCageTransform *self)
 {
-  self->source = g_malloc( 3 * sizeof (GimpCoords));
-  self->dest = g_malloc( 3 * sizeof (GimpCoords));
+  
 }
 
 static void
@@ -115,9 +114,6 @@ gimp_operation_cage_transform_finalize  (GObject  *object)
       g_object_unref (self->config);
       self->config = NULL;
     }
-
-  g_free (self->source);
-  g_free (self->dest);
   
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
