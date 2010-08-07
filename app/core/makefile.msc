@@ -58,7 +58,6 @@ OBJECTS = \
 	gimpbrushpipe-load.obj \
 	gimpbrushpipe.obj \
 	gimpbuffer.obj \
-	gimpcage.obj \
 	gimpchannel-combine.obj \
 	gimpchannel-select.obj \
 	gimpchannel.obj \
