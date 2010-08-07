@@ -30,8 +30,8 @@
 #include "gimpcageconfig.h"
 
 
-static void           gimp_operation_cage_finalize          				(GObject              *object);
-static void           gimp_operation_cage_get_property      				(GObject              *object,
+static void           gimp_operation_cage_finalize                  (GObject              *object);
+static void           gimp_operation_cage_get_property              (GObject              *object,
                                                                      guint                 property_id,
                                                                      GValue               *value,
                                                                      GParamSpec           *pspec);
@@ -60,9 +60,9 @@ G_DEFINE_TYPE (GimpOperationCage, gimp_operation_cage,
 static void
 gimp_operation_cage_class_init (GimpOperationCageClass *klass)
 {
-  GObjectClass                    *object_class    	= G_OBJECT_CLASS (klass);
-  GeglOperationClass              *operation_class 	= GEGL_OPERATION_CLASS (klass);
-  GeglOperationComposerClass      *composer_class		= GEGL_OPERATION_COMPOSER_CLASS (klass);
+  GObjectClass                    *object_class     = G_OBJECT_CLASS (klass);
+  GeglOperationClass              *operation_class  = GEGL_OPERATION_CLASS (klass);
+  GeglOperationComposerClass      *composer_class   = GEGL_OPERATION_COMPOSER_CLASS (klass);
 
   object_class->get_property          = gimp_operation_cage_get_property;
   object_class->set_property          = gimp_operation_cage_set_property;
@@ -96,7 +96,7 @@ gimp_operation_cage_init (GimpOperationCage *self)
 }
 
 static void
-gimp_operation_cage_finalize	(GObject	*object)
+gimp_operation_cage_finalize  (GObject  *object)
 {
   GimpOperationCage *self = GIMP_OPERATION_CAGE (object);
 

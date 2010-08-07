@@ -43,7 +43,7 @@ struct _GimpCageConfig
   
   GimpVector2              *cage_vertices; /* cage before deformation */
   GimpVector2              *cage_vertices_d; /* cage after deformation */
-  gdouble        					 *scaling_factor;
+  gdouble                  *scaling_factor;
 };
 
 
