@@ -36,7 +36,9 @@
 #include "gimpimage-private.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-sample-points.h"
+#include "gimpitemstack.h"
 #include "gimplayer.h"
+#include "gimplayermask.h"
 #include "gimplayer-floating-sel.h"
 #include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
@@ -51,15 +53,12 @@ static void          gimp_image_duplicate_save_source_uri (GimpImage     *image,
 static void          gimp_image_duplicate_colormap        (GimpImage     *image,
                                                            GimpImage     *new_image);
 static GimpLayer   * gimp_image_duplicate_layers          (GimpImage     *image,
-                                                           GimpImage     *new_image,
-                                                           GimpLayer    **new_floating_layer,
-                                                           GimpDrawable **floating_sel_drawable,
-                                                           GimpDrawable **new_floating_sel_drawable);
+                                                           GimpImage     *new_image);
 static GimpChannel * gimp_image_duplicate_channels        (GimpImage     *image,
-                                                           GimpImage     *new_image,
-                                                           GimpDrawable  *floating_sel_drawable,
-                                                           GimpDrawable **new_floating_sel_drawable);
+                                                           GimpImage     *new_image);
 static GimpVectors * gimp_image_duplicate_vectors         (GimpImage     *image,
+                                                           GimpImage     *new_image);
+static void          gimp_image_duplicate_floating_sel    (GimpImage     *image,
                                                            GimpImage     *new_image);
 static void          gimp_image_duplicate_mask            (GimpImage     *image,
                                                            GimpImage     *new_image);
@@ -84,9 +83,6 @@ gimp_image_duplicate (GimpImage *image)
   GimpLayer    *active_layer;
   GimpChannel  *active_channel;
   GimpVectors  *active_vectors;
-  GimpLayer    *new_floating_layer        = NULL;
-  GimpDrawable *floating_sel_drawable     = NULL;
-  GimpDrawable *new_floating_sel_drawable = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -111,24 +107,19 @@ gimp_image_duplicate (GimpImage *image)
   gimp_image_duplicate_resolution (image, new_image);
 
   /*  Copy the layers  */
-  active_layer = gimp_image_duplicate_layers (image, new_image,
-                                              &new_floating_layer,
-                                              &floating_sel_drawable,
-                                              &new_floating_sel_drawable);
+  active_layer = gimp_image_duplicate_layers (image, new_image);
 
   /*  Copy the channels  */
-  active_channel = gimp_image_duplicate_channels (image, new_image,
-                                                  floating_sel_drawable,
-                                                  &new_floating_sel_drawable);
+  active_channel = gimp_image_duplicate_channels (image, new_image);
 
   /*  Copy any vectors  */
   active_vectors = gimp_image_duplicate_vectors (image, new_image);
 
+  /*  Copy floating layer  */
+  gimp_image_duplicate_floating_sel (image, new_image);
+
   /*  Copy the selection mask  */
   gimp_image_duplicate_mask (image, new_image);
-
-  if (new_floating_layer)
-    floating_sel_attach (new_floating_layer, new_floating_sel_drawable);
 
   /*  Set active layer, active channel, active vectors  */
   if (active_layer)
@@ -196,22 +187,12 @@ gimp_image_duplicate_colormap (GimpImage *image,
 }
 
 static GimpLayer *
-gimp_image_duplicate_layers (GimpImage     *image,
-                             GimpImage     *new_image,
-                             GimpLayer    **floating_layer,
-                             GimpDrawable **floating_sel_drawable,
-                             GimpDrawable **new_floating_sel_drawable)
+gimp_image_duplicate_layers (GimpImage *image,
+                             GimpImage *new_image)
 {
   GimpLayer *active_layer = NULL;
-  GimpLayer *floating_selection;
   GList     *list;
   gint       count;
-
-  /*  Copy floating layer  */
-  floating_selection = gimp_image_get_floating_selection (image);
-
-  if (floating_selection)
-    *floating_sel_drawable = gimp_layer_get_floating_sel_drawable (floating_selection);
 
   for (list = gimp_image_get_layer_iter (image), count = 0;
        list;
@@ -219,6 +200,9 @@ gimp_image_duplicate_layers (GimpImage     *image,
     {
       GimpLayer *layer = list->data;
       GimpLayer *new_layer;
+
+      if (gimp_layer_is_floating_sel (layer))
+        continue;
 
       new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
                                                  new_image,
@@ -238,25 +222,16 @@ gimp_image_duplicate_layers (GimpImage     *image,
       if (gimp_image_get_active_layer (image) == layer)
         active_layer = new_layer;
 
-      if (gimp_image_get_floating_selection (image) == layer)
-        *floating_layer = new_layer;
-
-      if (*floating_sel_drawable == GIMP_DRAWABLE (layer))
-        *new_floating_sel_drawable = GIMP_DRAWABLE (new_layer);
-
-      if (*floating_layer != new_layer)
-        gimp_image_add_layer (new_image, new_layer,
-                              NULL, count++, FALSE);
+      gimp_image_add_layer (new_image, new_layer,
+                            NULL, count++, FALSE);
     }
 
   return active_layer;
 }
 
 static GimpChannel *
-gimp_image_duplicate_channels (GimpImage     *image,
-                               GimpImage     *new_image,
-                               GimpDrawable  *floating_sel_drawable,
-                               GimpDrawable **new_floating_sel_drawable)
+gimp_image_duplicate_channels (GimpImage *image,
+                               GimpImage *new_image)
 {
   GimpChannel *active_channel = NULL;
   GList       *list;
@@ -279,9 +254,6 @@ gimp_image_duplicate_channels (GimpImage     *image,
 
       if (gimp_image_get_active_channel (image) == channel)
         active_channel = new_channel;
-
-      if (floating_sel_drawable == GIMP_DRAWABLE (channel))
-        *new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
       gimp_image_add_channel (new_image, new_channel,
                               NULL, count++, FALSE);
@@ -321,6 +293,81 @@ gimp_image_duplicate_vectors (GimpImage *image,
     }
 
   return active_vectors;
+}
+
+static void
+gimp_image_duplicate_floating_sel (GimpImage *image,
+                                   GimpImage *new_image)
+{
+  GimpLayer     *floating_sel;
+  GimpDrawable  *floating_sel_drawable;
+  GList         *floating_sel_path;
+  GimpItemStack *new_item_stack;
+  GimpLayer     *new_floating_sel;
+  GimpDrawable  *new_floating_sel_drawable;
+
+  floating_sel = gimp_image_get_floating_selection (image);
+
+  if (! floating_sel)
+    return;
+
+  floating_sel_drawable = gimp_layer_get_floating_sel_drawable (floating_sel);
+
+  if (GIMP_IS_LAYER_MASK (floating_sel_drawable))
+    {
+      GimpLayer *layer;
+
+      layer = gimp_layer_mask_get_layer (GIMP_LAYER_MASK (floating_sel_drawable));
+
+      floating_sel_path = gimp_item_get_path (GIMP_ITEM (layer));
+
+      new_item_stack = GIMP_ITEM_STACK (gimp_image_get_layers (new_image));
+    }
+  else
+    {
+      floating_sel_path = gimp_item_get_path (GIMP_ITEM (floating_sel_drawable));
+
+      if (GIMP_IS_LAYER (floating_sel_drawable))
+        new_item_stack = GIMP_ITEM_STACK (gimp_image_get_layers (new_image));
+      else
+        new_item_stack = GIMP_ITEM_STACK (gimp_image_get_channels (new_image));
+    }
+
+  /*  adjust path[0] for the floating layer missing in new_image  */
+  floating_sel_path->data =
+    GUINT_TO_POINTER (GPOINTER_TO_UINT (floating_sel_path->data) - 1);
+
+  if (GIMP_IS_LAYER (floating_sel_drawable))
+    {
+      new_floating_sel = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (floating_sel),
+                                                        new_image,
+                                                        G_TYPE_FROM_INSTANCE (floating_sel)));
+    }
+  else
+    {
+      /*  can't use gimp_item_convert() for floating selections of channels
+       *  or layer masks because they maybe don't have a normal layer's type
+       */
+      new_floating_sel = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (floating_sel),
+                                                          G_TYPE_FROM_INSTANCE (floating_sel)));
+      gimp_item_set_image (GIMP_ITEM (new_floating_sel), new_image);
+    }
+
+  /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
+  gimp_object_set_name (GIMP_OBJECT (new_floating_sel),
+                        gimp_object_get_name (floating_sel));
+
+  new_floating_sel_drawable =
+    GIMP_DRAWABLE (gimp_item_stack_get_item_by_path (new_item_stack,
+                                                     floating_sel_path));
+
+  if (GIMP_IS_LAYER_MASK (floating_sel_drawable))
+    new_floating_sel_drawable =
+      GIMP_DRAWABLE (gimp_layer_get_mask (GIMP_LAYER (new_floating_sel_drawable)));
+
+  floating_sel_attach (new_floating_sel, new_floating_sel_drawable);
+
+  g_list_free (floating_sel_path);
 }
 
 static void
