@@ -215,6 +215,9 @@ gimp_cage_tool_halt (GimpCageTool *ct)
   ct->cursor_position.y = 0;
   ct->handle_moved = -1;
   ct->cage_complete = FALSE;
+  
+  gegl_buffer_destroy (ct->coef);
+  ct->coef = NULL;
 }
 
 static void 
@@ -604,7 +607,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
                               "tile-manager", gimp_drawable_get_tiles (drawable),
                               "linear",       TRUE,
                               NULL);
-                                
+
     cage = gegl_node_new_child (gegl,
                                   "operation", "gegl:cage_transform",
                                   "config", ct->config,
@@ -625,7 +628,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
     gegl_node_connect_to (cage, "output",
                           render, "aux");
     
-                                
+
 /*    render = gegl_node_new_child (gegl,
                                   "operation", "gegl:debugit",
                                   NULL);*/
@@ -669,3 +672,5 @@ gimp_cage_tool_process (GimpCageTool *ct,
     gimp_cage_tool_halt (ct);
   }
 }
+
+
