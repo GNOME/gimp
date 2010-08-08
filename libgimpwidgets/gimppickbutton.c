@@ -25,6 +25,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpcairo-utils.h"
 #include "gimphelpui.h"
 #include "gimppickbutton.h"
 #include "gimpstock.h"
@@ -387,25 +388,28 @@ gimp_pick_button_pick (GdkScreen      *screen,
                        gint            y_root,
                        GimpPickButton *button)
 {
-  GdkColormap *colormap    = gdk_screen_get_system_colormap (screen);
-  GdkWindow   *root_window = gdk_screen_get_root_window (screen);
-  GdkImage    *image;
-  guint32      pixel;
-  GdkColor     color;
-  GimpRGB      rgb;
+  GdkWindow       *root_window = gdk_screen_get_root_window (screen);
+  cairo_surface_t *image;
+  cairo_t         *cr;
+  guchar          *data;
+  guchar           color[3];
+  GimpRGB          rgb;
 
-  image = gdk_drawable_get_image (GDK_DRAWABLE (root_window),
-                                  x_root, y_root, 1, 1);
-  pixel = gdk_image_get_pixel (image, 0, 0);
-  g_object_unref (image);
+  image = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 1, 1);
 
-  gdk_colormap_query_color (colormap, pixel, &color);
+  cr = cairo_create (image);
 
-  gimp_rgba_set (&rgb,
-                 color.red   / 65535.0,
-                 color.green / 65535.0,
-                 color.blue  / 65535.0,
-                 1.0);
+  gdk_cairo_set_source_pixmap (cr, root_window, -x_root, -y_root);
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
+
+  data = cairo_image_surface_get_data (image);
+  GIMP_CAIRO_RGB24_GET_PIXEL (data, color[0], color[1], color[2]);
+
+  cairo_surface_destroy (image);
+
+  gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 1.0);
 
   g_signal_emit (button, pick_button_signals[COLOR_PICKED], 0, &rgb);
 }
