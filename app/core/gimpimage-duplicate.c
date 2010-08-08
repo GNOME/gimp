@@ -52,6 +52,8 @@ static void          gimp_image_duplicate_save_source_uri (GimpImage     *image,
                                                            GimpImage     *new_image);
 static void          gimp_image_duplicate_colormap        (GimpImage     *image,
                                                            GimpImage     *new_image);
+static GimpItem    * gimp_image_duplicate_item            (GimpItem      *item,
+                                                           GimpImage     *new_image);
 static GimpLayer   * gimp_image_duplicate_layers          (GimpImage     *image,
                                                            GimpImage     *new_image);
 static GimpChannel * gimp_image_duplicate_channels        (GimpImage     *image,
@@ -186,6 +188,22 @@ gimp_image_duplicate_colormap (GimpImage *image,
                              FALSE);
 }
 
+static GimpItem *
+gimp_image_duplicate_item (GimpItem  *item,
+                           GimpImage *new_image)
+{
+  GimpItem *new_item;
+
+  new_item = gimp_item_convert (item, new_image,
+                                G_TYPE_FROM_INSTANCE (item));
+
+  /*  Make sure the copied item doesn't say: "<old item> copy"  */
+  gimp_object_set_name (GIMP_OBJECT (new_item),
+                        gimp_object_get_name (item));
+
+  return new_item;
+}
+
 static GimpLayer *
 gimp_image_duplicate_layers (GimpImage *image,
                              GimpImage *new_image)
@@ -204,13 +222,8 @@ gimp_image_duplicate_layers (GimpImage *image,
       if (gimp_layer_is_floating_sel (layer))
         continue;
 
-      new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (layer),
-                                                 new_image,
-                                                 G_TYPE_FROM_INSTANCE (layer)));
-
-      /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
-      gimp_object_set_name (GIMP_OBJECT (new_layer),
-                            gimp_object_get_name (layer));
+      new_layer = GIMP_LAYER (gimp_image_duplicate_item (GIMP_ITEM (layer),
+                                                         new_image));
 
       /*  Make sure that if the layer has a layer mask,
        *  its name isn't screwed up
@@ -244,13 +257,8 @@ gimp_image_duplicate_channels (GimpImage *image,
       GimpChannel  *channel = list->data;
       GimpChannel  *new_channel;
 
-      new_channel = GIMP_CHANNEL (gimp_item_convert (GIMP_ITEM (channel),
-                                                     new_image,
-                                                     G_TYPE_FROM_INSTANCE (channel)));
-
-      /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
-      gimp_object_set_name (GIMP_OBJECT (new_channel),
-                            gimp_object_get_name (channel));
+      new_channel = GIMP_CHANNEL (gimp_image_duplicate_item (GIMP_ITEM (channel),
+                                                             new_image));
 
       if (gimp_image_get_active_channel (image) == channel)
         active_channel = new_channel;
@@ -277,13 +285,8 @@ gimp_image_duplicate_vectors (GimpImage *image,
       GimpVectors  *vectors = list->data;
       GimpVectors  *new_vectors;
 
-      new_vectors = GIMP_VECTORS (gimp_item_convert (GIMP_ITEM (vectors),
-                                                     new_image,
-                                                     G_TYPE_FROM_INSTANCE (vectors)));
-
-      /*  Make sure the copied vectors doesn't say: "<old vectors> copy"  */
-      gimp_object_set_name (GIMP_OBJECT (new_vectors),
-                            gimp_object_get_name (vectors));
+      new_vectors = GIMP_VECTORS (gimp_image_duplicate_item (GIMP_ITEM (vectors),
+                                                             new_image));
 
       if (gimp_image_get_active_vectors (image) == vectors)
         active_vectors = new_vectors;
@@ -339,18 +342,22 @@ gimp_image_duplicate_floating_sel (GimpImage *image,
 
   if (GIMP_IS_LAYER (floating_sel_drawable))
     {
-      new_floating_sel = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (floating_sel),
-                                                        new_image,
-                                                        G_TYPE_FROM_INSTANCE (floating_sel)));
+      new_floating_sel =
+        GIMP_LAYER (gimp_image_duplicate_item (GIMP_ITEM (floating_sel),
+                                               new_image));
     }
   else
     {
       /*  can't use gimp_item_convert() for floating selections of channels
        *  or layer masks because they maybe don't have a normal layer's type
        */
-      new_floating_sel = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (floating_sel),
-                                                          G_TYPE_FROM_INSTANCE (floating_sel)));
+      new_floating_sel =
+        GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (floating_sel),
+                                         G_TYPE_FROM_INSTANCE (floating_sel)));
       gimp_item_set_image (GIMP_ITEM (new_floating_sel), new_image);
+
+      gimp_object_set_name (GIMP_OBJECT (new_floating_sel),
+                            gimp_object_get_name (floating_sel));
     }
 
   /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
