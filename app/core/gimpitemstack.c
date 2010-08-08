@@ -234,6 +234,39 @@ gimp_item_stack_get_item_by_tattoo (GimpItemStack *stack,
 }
 
 GimpItem *
+gimp_item_stack_get_item_by_path (GimpItemStack *stack,
+                                  GList         *path)
+{
+  GimpContainer *container;
+  GimpItem      *item = NULL;
+
+  g_return_val_if_fail (GIMP_IS_ITEM_STACK (stack), NULL);
+  g_return_val_if_fail (path != NULL, NULL);
+
+  container = GIMP_CONTAINER (stack);
+
+  while (path)
+    {
+      guint32 i = GPOINTER_TO_UINT (path->data);
+
+      item = GIMP_ITEM (gimp_container_get_child_by_index (container, i));
+
+      g_return_val_if_fail (GIMP_IS_ITEM (item), item);
+
+      if (path->next)
+        {
+          container = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+          g_return_val_if_fail (GIMP_IS_ITEM_STACK (container), item);
+        }
+
+      path = path->next;
+    }
+
+  return item;
+}
+
+GimpItem *
 gimp_item_stack_get_parent_by_path (GimpItemStack *stack,
                                     GList         *path,
                                     gint          *index)
