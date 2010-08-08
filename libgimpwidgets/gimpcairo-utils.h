@@ -62,6 +62,26 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 
 
 /**
+ * GIMP_CAIRO_RGB24_GET_PIXEL:
+ * @s: pointer to the source buffer
+ * @r: red component
+ * @g: green component
+ * @b: blue component
+ *
+ * Gets a single pixel from a Cairo image surface in %CAIRO_FORMAT_RGB24.
+ *
+ * Since: GIMP 2.8
+ **/
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+#define GIMP_CAIRO_RGB24_GET_PIXEL(s, r, g, b) \
+  G_STMT_START { (b) = s[0]; (g) = s[1]; (r) = s[2]; } G_STMT_END
+#else
+#define GIMP_CAIRO_RGB24_GET_PIXEL(s, r, g, b) \
+  G_STMT_START { (r) = s[1]; (g) = s[2]; (b) = s[3]; } G_STMT_END
+#endif
+
+
+/**
  * GIMP_CAIRO_ARGB32_SET_PIXEL:
  * @d: pointer to the destination buffer
  * @r: red component, not pre-multiplied
