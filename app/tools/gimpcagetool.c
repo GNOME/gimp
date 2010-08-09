@@ -261,7 +261,7 @@ gimp_cage_tool_button_press (GimpTool              *tool,
                                                        HANDLE_SIZE);
   }
   
-  if (ct->handle_moved < 0)
+  if (ct->handle_moved < 0 && !ct->cage_complete)
   {
     gimp_cage_config_add_cage_point (config,
                                     coords->x,
