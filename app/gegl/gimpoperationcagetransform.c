@@ -188,6 +188,37 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GeglRectangle cage_bb = gimp_cage_config_get_bounding_box (config);
   GeglRectangle buffer_bb = *gegl_operation_source_get_bounding_box (operation, "input");
   
+  
+  /* pre-fill the out buffer with no-displacement coordinate */
+  GeglBufferIterator *it = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
+  
+  while (gegl_buffer_iterator_next (it))
+  {
+    /* iterate inside the roi */
+    gint        n_pixels = it->length;
+    gint        x = it->roi->x; /* initial x                   */
+    gint        y = it->roi->y; /*           and y coordinates */
+    
+    gfloat      *output = it->data[0];
+    
+    while(n_pixels--)
+    {
+      output[0] = x;
+      output[1] = y;
+
+      output += 2;
+      
+      /* update x and y coordinates */
+      x++;
+      if (x >= (it->roi->x + it->roi->width))
+      {
+        x = it->roi->x;
+        y++;
+      }
+    }
+  }
+  
+  /* compute, reverse and interpolate the transformation */
   for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
   {
     for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
