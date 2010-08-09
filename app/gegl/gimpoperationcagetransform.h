@@ -21,7 +21,7 @@
 #define __GIMP_OPERATION_CAGE_TRANSFORM_H__
 
 #include <gegl-plugin.h>
-#include <operation/gegl-operation-filter.h>
+#include <operation/gegl-operation-composer.h>
 
 enum
 {
@@ -41,15 +41,15 @@ typedef struct _GimpOperationCageTransformClass GimpOperationCageTransformClass;
 
 struct _GimpOperationCageTransform
 {
-  GeglOperationFilter  parent_instance;
+  GeglOperationComposer  parent_instance;
   
-  GimpCageConfig       *config;
-  Babl                 *format_coords;
+  GimpCageConfig        *config;
+  Babl                  *format_coords;
 };
 
 struct _GimpOperationCageTransformClass
 {
-  GeglOperationFilterClass  parent_class;
+  GeglOperationComposerClass  parent_class;
 };
 
 

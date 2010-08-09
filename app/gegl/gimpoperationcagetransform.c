@@ -41,6 +41,7 @@ static void           gimp_operation_cage_transform_set_property              (G
 static void           gimp_operation_cage_transform_prepare                   (GeglOperation       *operation);
 static gboolean       gimp_operation_cage_transform_process                   (GeglOperation       *operation,
                                                                                GeglBuffer          *in_buf,
+                                                                               GeglBuffer          *aux_buf,
                                                                                GeglBuffer          *out_buf,
                                                                                const GeglRectangle *roi);
 static void           gimp_operation_cage_transform_interpolate_source_coords_recurs  (GimpOperationCageTransform  *oct,
@@ -57,9 +58,10 @@ GeglRectangle         gimp_operation_cage_transform_get_cached_region         (G
 GeglRectangle         gimp_operation_cage_transform_get_required_for_output   (GeglOperation        *operation,
                                                                                const gchar         *input_pad,
                                                                                const GeglRectangle *roi);
-                                        
+GeglRectangle         gimp_operation_cage_get_bounding_box                    (GeglOperation *operation);
+
 G_DEFINE_TYPE (GimpOperationCageTransform, gimp_operation_cage_transform, 
-                      GEGL_TYPE_OPERATION_FILTER)
+                      GEGL_TYPE_OPERATION_COMPOSER)
 
 #define parent_class gimp_operation_cage_transform_parent_class
 
@@ -71,7 +73,7 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 {
   GObjectClass                    *object_class     = G_OBJECT_CLASS (klass);
   GeglOperationClass              *operation_class  = GEGL_OPERATION_CLASS (klass);
-  GeglOperationFilterClass        *filter_class   = GEGL_OPERATION_FILTER_CLASS (klass);
+  GeglOperationComposerClass      *filter_class     = GEGL_OPERATION_COMPOSER_CLASS (klass);
 
   object_class->get_property          = gimp_operation_cage_transform_get_property;
   object_class->set_property          = gimp_operation_cage_transform_set_property;
@@ -87,6 +89,7 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   operation_class->get_required_for_output = gimp_operation_cage_transform_get_required_for_output;
   operation_class->get_cached_region = gimp_operation_cage_transform_get_cached_region;
   operation_class->no_cache     = FALSE;
+  operation_class->get_bounding_box = gimp_operation_cage_get_bounding_box;
   
   filter_class->process         = gimp_operation_cage_transform_process;
   
@@ -174,6 +177,7 @@ gimp_operation_cage_transform_prepare (GeglOperation  *operation)
 static gboolean
 gimp_operation_cage_transform_process (GeglOperation       *operation,
                                        GeglBuffer          *in_buf,
+                                       GeglBuffer          *aux_buf,
                                        GeglBuffer          *out_buf,
                                        const GeglRectangle *roi)
 {
@@ -181,11 +185,12 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GimpCageConfig                *config = GIMP_CAGE_CONFIG (oct->config);
   
   gint x, y;
-  GeglRectangle bounding_box = gimp_cage_config_get_bounding_box (config);
+  GeglRectangle cage_bb = gimp_cage_config_get_bounding_box (config);
+  GeglRectangle buffer_bb = *gegl_operation_source_get_bounding_box (operation, "input");
   
-  for (x = bounding_box.x; x < bounding_box.x + bounding_box.width - 1; x++)
+  for (x = cage_bb.x; x < cage_bb.x + cage_bb.width - 1; x++)
   {
-    for (y = bounding_box.y; y < bounding_box.y + bounding_box.height - 1; y++)
+    for (y = cage_bb.y; y < cage_bb.y + cage_bb.height - 1; y++)
     {
       GimpCoords p1_s = {x, y, };
       GimpCoords p2_s = {x+1, y, };
@@ -194,21 +199,21 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
       
       GimpCoords p1_d, p2_d, p3_d, p4_d;
       
-      p1_d = gimp_cage_transform_compute_destination (config, in_buf, p1_s);
-      p2_d = gimp_cage_transform_compute_destination (config, in_buf, p2_s);
-      p3_d = gimp_cage_transform_compute_destination (config, in_buf, p3_s);
-      p4_d = gimp_cage_transform_compute_destination (config, in_buf, p4_s);
+      p1_d = gimp_cage_transform_compute_destination (config, aux_buf, p1_s);
+      p2_d = gimp_cage_transform_compute_destination (config, aux_buf, p2_s);
+      p3_d = gimp_cage_transform_compute_destination (config, aux_buf, p3_s);
+      p4_d = gimp_cage_transform_compute_destination (config, aux_buf, p4_s);
       
       gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
                                                                       out_buf,
-                                                                      roi,
+                                                                      &buffer_bb,
                                                                       p1_s, p1_d,
                                                                       p2_s, p2_d,
                                                                       p3_s, p3_d);
       
       gimp_operation_cage_transform_interpolate_source_coords_recurs  (oct,
                                                                       out_buf,
-                                                                      roi,
+                                                                      &buffer_bb,
                                                                       p1_s, p1_d,
                                                                       p3_s, p3_d,
                                                                       p4_s, p4_d);
@@ -362,8 +367,8 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs  (GimpOperationCa
 
 static GimpCoords
 gimp_cage_transform_compute_destination (GimpCageConfig *config,
-                                         GeglBuffer *coef_buf,
-                                         GimpCoords coords)
+                                         GeglBuffer     *coef_buf,
+                                         GimpCoords      coords)
 {
   gfloat     *coef;
   gdouble     pos_x, pos_y;
@@ -372,9 +377,6 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   GimpCoords result;
   gint cvn = config->cage_vertice_number;
   Babl *format_coef = babl_format_n (babl_type ("float"), 2 * cvn);
-  
-  gfloat coefeu;
-  
   
   rect.height = 1;
   rect.width = 1;
@@ -390,7 +392,6 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   
   for(i = 0; i < cvn; i++)
   {
-    coefeu = coef[i];
     
     if (!isnan(coef[i]))
     {
@@ -404,7 +405,6 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   
   for(i = 0; i < cvn; i++)
   {
-    coefeu = coef[i + cvn];
     
     if (!isnan(coef[i]))
     {
@@ -426,7 +426,17 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
 
 GeglRectangle
 gimp_operation_cage_transform_get_cached_region  (GeglOperation        *operation,
-                                                  const GeglRectangle *roi)
+                                                  const GeglRectangle  *roi)
+{
+  GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
+
+  return result;
+}
+
+GeglRectangle
+gimp_operation_cage_transform_get_required_for_output (GeglOperation        *operation,
+                                                       const gchar          *input_pad,
+                                                       const GeglRectangle  *roi)
 {
   GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
   
@@ -434,9 +444,7 @@ gimp_operation_cage_transform_get_cached_region  (GeglOperation        *operatio
 }
 
 GeglRectangle
-gimp_operation_cage_transform_get_required_for_output (GeglOperation        *operation,
-                                                       const gchar         *input_pad,
-                                                       const GeglRectangle *roi)
+gimp_operation_cage_get_bounding_box  (GeglOperation *operation)
 {
   GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
   

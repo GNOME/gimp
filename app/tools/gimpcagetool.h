@@ -46,7 +46,9 @@ struct _GimpCageTool
   gint                  handle_moved;
   gboolean              cage_complete;
   
-  GeglBuffer					 *coef;
+  GeglBuffer           *coef;
+  
+  GimpImageMap         *image_map;
 };
 
 
