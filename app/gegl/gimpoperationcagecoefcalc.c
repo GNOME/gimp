@@ -44,7 +44,7 @@ static gboolean       gimp_operation_cage_coef_calc_process           (GeglOpera
                                                                        GeglBuffer           *output,
                                                                        const GeglRectangle  *roi);
 
-                                        
+
 G_DEFINE_TYPE (GimpOperationCageCoefCalc, gimp_operation_cage_coef_calc,
                GEGL_TYPE_OPERATION_SOURCE)
 
@@ -57,7 +57,7 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
-  
+
   /* FIXME: wrong categories and name, to appears in the gegl tool */
   operation_class->name               = "gegl:cage_coef_calc";
   operation_class->categories         = "color";
@@ -67,13 +67,13 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;
   operation_class->no_cache           = FALSE;
   operation_class->get_cached_region  = NULL;
-  
+
   source_class->process               = gimp_operation_cage_coef_calc_process;
 
   object_class->get_property          = gimp_operation_cage_coef_calc_get_property;
   object_class->set_property          = gimp_operation_cage_coef_calc_set_property;
   object_class->finalize              = gimp_operation_cage_coef_calc_finalize;
-  
+
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_CAGE_COEF_CALC_PROP_CONFIG,
                                    g_param_spec_object ("config", NULL, NULL,
@@ -93,7 +93,7 @@ gimp_operation_cage_coef_calc_prepare (GeglOperation *operation)
 {
   GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
-  
+
   gegl_operation_set_format (operation, "output", babl_format_n (babl_type ("float"), 2 * config->cage_vertice_number));
 }
 
@@ -158,7 +158,7 @@ gimp_operation_cage_coef_calc_get_bounding_box (GeglOperation *operation)
 {
   GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
-  
+
   return gimp_cage_config_get_bounding_box (config);
 }
 
@@ -169,16 +169,16 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
 {
   GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
-  
+
   Babl *format = babl_format_n (babl_type ("float"), 2 * config->cage_vertice_number);
-  
+
   GeglBufferIterator *it;
-  
+
   if (! config)
     return FALSE;
-  
+
   it = gegl_buffer_iterator_new (output, roi, format, GEGL_BUFFER_READWRITE);
-  
+
   while (gegl_buffer_iterator_next (it))
   {
     /* iterate inside the roi */
@@ -186,41 +186,49 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
     gint  x = it->roi->x; /* initial x                   */
     gint  y = it->roi->y; /*           and y coordinates */
     gint  j;
-    
+
     gfloat      *coef = it->data[0];
-  
+
     while(n_pixels--)
     {
-      for( j = 0; j < config->cage_vertice_number; j++)
+      if (gimp_cage_config_point_inside(config, x, y))
       {
-        GimpVector2 v1,v2,a,b;
-        gfloat Q,S,R,BA,SRT,L0,L1,A0,A1,A10,L10;
-      
-        v1 = config->cage_vertices[j];
-        v2 = config->cage_vertices[(j+1)%config->cage_vertice_number];
-      
-        a.x = v2.x - v1.x;
-        a.y = v2.y - v1.y;
-        b.x = v1.x - x;
-        b.y = v1.y - y;
-        Q = a.x * a.x + a.y * a.y;
-        S = b.x * b.x + b.y * b.y;
-        R = 2.0 * (a.x * b.x + a.y * b.y);
-        BA = b.x * a.y - b.y * a.x;
-        SRT = sqrt(4.0 * S * Q - R * R);
-        L0 = log(S);
-        L1 = log(S + Q + R);
-        A0 = atan2(R, SRT) / SRT;
-        A1 = atan2(2.0 * Q + R, SRT) / SRT;
-        A10 = A1 - A0;
-        L10 = L1 - L0;
-        
-        coef[j + config->cage_vertice_number] = 1.0 / (4.0 * M_PI) * ((4.0*S-R*R/Q) * A10 + R / (2.0 * Q) * L10 + L1 - 2.0);
-        
-        coef[j] += BA / (2.0 * M_PI) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
-        coef[(j+1)%config->cage_vertice_number] -= BA / (2.0 * M_PI) * (L10 / (2.0 * Q) - A10 * R / Q);
+        for( j = 0; j < config->cage_vertice_number; j++)
+        {
+          GimpVector2 v1,v2,a,b,p;
+          gfloat Q,S,R,BA,SRT,L0,L1,A0,A1,A10,L10;
+
+          v1 = config->cage_vertices[j];
+          v2 = config->cage_vertices[(j+1)%config->cage_vertice_number];
+          p.x = x;
+          p.y = y;
+
+
+          a.x = v2.x - v1.x;
+          a.y = v2.y - v1.y;
+          b.x = v1.x - x;
+          b.y = v1.y - y;
+          Q = a.x * a.x + a.y * a.y;
+          S = b.x * b.x + b.y * b.y;
+          R = 2.0 * (a.x * b.x + a.y * b.y);
+          BA = b.x * a.y - b.y * a.x;
+          SRT = sqrt(4.0 * S * Q - R * R);
+          L0 = log(S);
+          L1 = log(S + Q + R);
+          A0 = atan2(R, SRT) / SRT;
+          A1 = atan2(2.0 * Q + R, SRT) / SRT;
+          A10 = A1 - A0;
+          L10 = L1 - L0;
+
+          /* edge coef */
+          coef[j + config->cage_vertice_number] = 1.0 / (4.0 * M_PI) * ((4.0*S-R*R/Q) * A10 + R / (2.0 * Q) * L10 + L1 - 2.0);
+
+          /* vertice coef */
+          coef[j] += BA / (2.0 * M_PI) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
+          coef[(j+1)%config->cage_vertice_number] -= BA / (2.0 * M_PI) * (L10 / (2.0 * Q) - A10 * R / Q);
+        }
       }
-      
+
       coef += 2 * config->cage_vertice_number;
 
       /* update x and y coordinates */
@@ -232,6 +240,6 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
       }
     }
   }
-  
+
   return TRUE;
 }
