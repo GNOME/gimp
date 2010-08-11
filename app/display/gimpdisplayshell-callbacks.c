@@ -2216,12 +2216,18 @@ static void
 gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
                                         GdkEventExpose   *eevent)
 {
+  cairo_t      *cr;
   GdkRegion    *clear_region;
   GdkRegion    *image_region;
   GdkRectangle  image_rect;
   GdkRectangle *rects;
   gint          n_rects;
   gint          i;
+
+  cr = gdk_cairo_create (eevent->window);
+
+  gdk_cairo_region (cr, eevent->region);
+  cairo_clip (cr);
 
   /*  first, clear the exposed part of the region that is outside the
    *  image, which is the exposed region minus the image rectangle
@@ -2286,7 +2292,9 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_display_shell_preview_transform (shell);
 
   /* draw the grid */
-  gimp_display_shell_draw_grid (shell, eevent->region);
+  cairo_save (cr);
+  gimp_display_shell_draw_grid (shell, cr);
+  cairo_restore (cr);
 
   /* draw the guides */
   gimp_display_shell_draw_guides (shell, eevent->region);
@@ -2299,6 +2307,8 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   /* restart (and recalculate) the selection boundaries */
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
+
+  cairo_destroy (cr);
 }
 
 static void

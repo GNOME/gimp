@@ -34,7 +34,7 @@ void   gimp_display_shell_draw_guide                 (GimpDisplayShell   *shell,
 void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
                                                       const GdkRegion    *region);
 void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
-                                                      const GdkRegion    *region);
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
                                                       const GimpVector2  *points,
                                                       gint                num_points,

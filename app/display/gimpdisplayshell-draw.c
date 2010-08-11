@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -56,11 +57,12 @@
 
 /*  local function prototypes  */
 
-static GdkGC * gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
-                                               GimpGrid         *grid);
-static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
-                                               GimpContext      *context,
-                                               GimpActiveColor   active);
+static void    gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
+                                                  GimpGrid         *grid,
+                                                  cairo_t          *cr);
+static GdkGC * gimp_display_shell_get_pen_gc     (GimpDisplayShell *shell,
+                                                  GimpContext      *context,
+                                                  GimpActiveColor   active);
 
 
 /*  public functions  */
@@ -226,27 +228,25 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_draw_grid (GimpDisplayShell *shell,
-                              const GdkRegion  *region)
+                              cairo_t          *cr)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (region != NULL);
+  g_return_if_fail (cr != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_grid (shell))
     {
-      GimpCanvas   *canvas = GIMP_CANVAS (shell->canvas);
-      GimpGrid     *grid;
-      GdkRectangle  area;
-      GdkGC        *grid_gc;
-      gdouble       x, y;
-      gint          x0, x1, x2, x3;
-      gint          y0, y1, y2, y3;
-      gint          x_real, y_real;
-      gdouble       x_offset, y_offset;
-      gint          width, height;
+      GimpGrid *grid;
+      gdouble   x, y;
+      gdouble   dx1, dy1, dx2, dy2;
+      gint      x0, x1, x2, x3;
+      gint      y0, y1, y2, y3;
+      gint      x_real, y_real;
+      gdouble   x_offset, y_offset;
+      gint      width, height;
 
 #define CROSSHAIR 2
 
@@ -256,12 +256,12 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
 
       g_return_if_fail (grid->xspacing > 0 && grid->yspacing > 0);
 
-      gdk_region_get_clipbox (region, &area);
+      cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
 
-      x1 = area.x;
-      y1 = area.y;
-      x2 = area.x + area.width;
-      y2 = area.y + area.height;
+      x1 = floor (dx1);
+      y1 = floor (dy1);
+      x2 = ceil (dx2);
+      y2 = ceil (dy2);
 
       width  = gimp_image_get_width  (image);
       height = gimp_image_get_height (image);
@@ -274,10 +274,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
       while (y_offset > 0)
         y_offset -= grid->yspacing;
 
-      grid_gc = gimp_display_shell_get_grid_gc (shell, grid);
-
-      gdk_gc_set_clip_region (grid_gc, region);
-      gimp_canvas_set_custom_gc (canvas, grid_gc);
+      gimp_display_shell_set_grid_style (shell, grid, cr);
 
       switch (grid->style)
         {
@@ -304,9 +301,10 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                                                    FALSE);
 
                   if (y_real >= y1 && y_real < y2)
-                    gimp_canvas_draw_point (GIMP_CANVAS (shell->canvas),
-                                            GIMP_CANVAS_STYLE_CUSTOM,
-                                            x_real, y_real);
+                    {
+                      cairo_move_to (cr, x_real,     y_real + 0.5);
+                      cairo_line_to (cr, x_real + 1, y_real + 0.5);
+                    }
                 }
             }
           break;
@@ -337,21 +335,28 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                     continue;
 
                   if (x_real >= x1 && x_real < x2)
-                    gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                           x_real,
-                                           CLAMP (y_real - CROSSHAIR,
-                                                  y1, y2 - 1),
-                                           x_real,
-                                           CLAMP (y_real + CROSSHAIR,
-                                                  y1, y2 - 1));
+                    {
+                      cairo_move_to (cr,
+                                     x_real + 0.5,
+                                     CLAMP (y_real - CROSSHAIR,
+                                            y1, y2 - 1));
+                      cairo_line_to (cr,
+                                     x_real + 0.5,
+                                     CLAMP (y_real + CROSSHAIR,
+                                            y1, y2 - 1) + 1);
+                    }
+
                   if (y_real >= y1 && y_real < y2)
-                    gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                           CLAMP (x_real - CROSSHAIR,
-                                                  x1, x2 - 1),
-                                           y_real,
-                                           CLAMP (x_real + CROSSHAIR,
-                                                  x1, x2 - 1),
-                                           y_real);
+                    {
+                      cairo_move_to (cr,
+                                     CLAMP (x_real - CROSSHAIR,
+                                            x1, x2 - 1),
+                                     y_real + 0.5);
+                      cairo_line_to (cr,
+                                     CLAMP (x_real + CROSSHAIR,
+                                            x1, x2 - 1) + 1,
+                                     y_real + 0.5);
+                    }
                 }
             }
           break;
@@ -376,8 +381,10 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                                                FALSE);
 
               if (x_real >= x1 && x_real < x2)
-                gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                       x_real, y0, x_real, y3 - 1);
+                {
+                  cairo_move_to (cr, x_real + 0.5, y0);
+                  cairo_line_to (cr, x_real + 0.5, y3 + 1);
+                }
             }
 
           for (y = y_offset; y < height; y += grid->yspacing)
@@ -390,14 +397,15 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                                                FALSE);
 
               if (y_real >= y1 && y_real < y2)
-                gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                       x0, y_real, x3 - 1, y_real);
+                {
+                  cairo_move_to (cr, x0,     y_real + 0.5);
+                  cairo_line_to (cr, x3 + 1, y_real + 0.5);
+                }
             }
           break;
         }
 
-      gimp_canvas_set_custom_gc (canvas, NULL);
-      gdk_gc_set_clip_region (grid_gc, NULL);
+      cairo_stroke (cr);
     }
 }
 
@@ -692,46 +700,71 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
 /*  private functions  */
 
-static GdkGC *
-gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
-                                GimpGrid         *grid)
+static void
+gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
+                                   GimpGrid         *grid,
+                                   cairo_t          *cr)
 {
-  GdkGCValues  values;
-  GdkColor     fg, bg;
-
-  if (shell->grid_gc)
-    return shell->grid_gc;
+  cairo_set_line_width (cr, 1.0);
 
   switch (grid->style)
     {
     case GIMP_GRID_ON_OFF_DASH:
-      values.line_style = GDK_LINE_ON_OFF_DASH;
-      break;
-
     case GIMP_GRID_DOUBLE_DASH:
-      values.line_style = GDK_LINE_DOUBLE_DASH;
+      {
+        guchar *data = g_malloc0 (8 * 8 * 4);
+        guchar  fg_r, fg_g, fg_b, fg_a;
+        guchar  bg_r, bg_g, bg_b, bg_a;
+        gint    x, y;
+        guchar *d;
+        cairo_surface_t *surface;
+        static cairo_user_data_key_t data_key;
+
+        gimp_rgba_get_uchar (&grid->fgcolor, &fg_r, &fg_g, &fg_b, &fg_a);
+
+        if (grid->style == GIMP_GRID_DOUBLE_DASH)
+          gimp_rgba_get_uchar (&grid->bgcolor, &bg_r, &bg_g, &bg_b, &bg_a);
+        else
+          bg_r = bg_g = bg_b = bg_a = 0;
+
+        d = data;
+
+        for (y = 0; y < 8; y++)
+          {
+            for (x = 0; x < 8; x++)
+              {
+                if ((y < 4 && x < 4) || (y >= 4 && x >= 4))
+                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
+                else
+                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
+
+                d += 4;
+              }
+          }
+
+        surface = cairo_image_surface_create_for_data (data,
+                                                       CAIRO_FORMAT_ARGB32,
+                                                       8, 8, 8 * 4);
+        cairo_surface_set_user_data (surface, &data_key,
+                                     data, (cairo_destroy_func_t) g_free);
+
+        cairo_set_source_surface (cr, surface, 0, 0);
+        cairo_surface_destroy (surface);
+
+        cairo_pattern_set_extend (cairo_get_source (cr),
+                                  CAIRO_EXTEND_REPEAT);
+      }
       break;
 
     case GIMP_GRID_DOTS:
     case GIMP_GRID_INTERSECTIONS:
     case GIMP_GRID_SOLID:
-      values.line_style = GDK_LINE_SOLID;
+      cairo_set_source_rgb (cr,
+                            grid->fgcolor.r,
+                            grid->fgcolor.g,
+                            grid->fgcolor.b);
       break;
     }
-
-  values.join_style = GDK_JOIN_MITER;
-
-  shell->grid_gc = gdk_gc_new_with_values (gtk_widget_get_window (shell->canvas),
-                                           &values, (GDK_GC_LINE_STYLE |
-                                                     GDK_GC_JOIN_STYLE));
-
-  gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
-  gdk_gc_set_rgb_fg_color (shell->grid_gc, &fg);
-
-  gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
-  gdk_gc_set_rgb_bg_color (shell->grid_gc, &bg);
-
-  return shell->grid_gc;
 }
 
 static GdkGC *

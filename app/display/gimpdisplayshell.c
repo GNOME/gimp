@@ -938,12 +938,6 @@ gimp_display_shell_unrealize (GtkWidget *widget)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
 
-  if (shell->grid_gc)
-    {
-      g_object_unref (shell->grid_gc);
-      shell->grid_gc = NULL;
-    }
-
   if (shell->pen_gc)
     {
       g_object_unref (shell->pen_gc);
