@@ -266,7 +266,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
       while (y_offset > 0)
         y_offset -= grid->yspacing;
 
-      gimp_display_shell_set_grid_style (shell, grid, cr);
+      gimp_display_shell_set_grid_style (shell, cr, grid);
 
       switch (grid->style)
         {

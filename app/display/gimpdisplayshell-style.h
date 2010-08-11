@@ -23,8 +23,8 @@
 
 
 void   gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
-                                          GimpGrid         *grid,
-                                          cairo_t          *cr);
+                                          cairo_t          *cr,
+                                          GimpGrid         *grid);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

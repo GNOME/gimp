@@ -36,12 +36,12 @@
 
 void
 gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
-                                   GimpGrid         *grid,
-                                   cairo_t          *cr)
+                                   cairo_t          *cr,
+                                   GimpGrid         *grid)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_GRID (grid));
   g_return_if_fail (cr != NULL);
+  g_return_if_fail (GIMP_IS_GRID (grid));
 
   cairo_set_line_width (cr, 1.0);
 
