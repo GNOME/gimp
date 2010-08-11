@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-27 18:18+0200\n"
-"PO-Revision-Date: 2010-08-03 22:40+0200\n"
+"PO-Revision-Date: 2010-08-11 09:30+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -11084,7 +11084,7 @@ msgstr "Scala valore di:"
 #. Full color control section
 #: ../plug-ins/ifs-compose/ifs-compose.c:687
 msgid "Full"
-msgstr "Tutto"
+msgstr "Completa"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:695
 msgid "IFS Fractal: Red"
