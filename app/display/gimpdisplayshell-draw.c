@@ -132,89 +132,80 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 
 void
 gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
+                               cairo_t            *cr,
                                GimpGuide          *guide,
-                               const GdkRectangle *area,
                                gboolean            active)
 {
-  gint  position;
-  gint  x1, y1, x2, y2;
-  gint  x, y;
+  gint    position;
+  gdouble dx1, dy1, dx2, dy2;
+  gint    x1, y1, x2, y2;
+  gint    x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_GUIDE (guide));
 
   position = gimp_guide_get_position (guide);
-
   if (position < 0)
     return;
 
-  x1 = 0;
-  y1 = 0;
+  cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
 
-  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &x2, &y2);
+  x1 = floor (dx1);
+  y1 = floor (dy1);
+  x2 = ceil (dx2);
+  y2 = ceil (dy2);
+
+  gimp_display_shell_set_guide_style (shell, cr, active);
 
   switch (gimp_guide_get_orientation (guide))
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
-      if (area && (y < area->y || y >= area->y + area->height))
-        return;
-      if (y < y1 || y >= y2)
-        return;
-      y1 = y2 = y;
+      if (y >= y1 && y < y2)
+        {
+          cairo_move_to (cr, x1, y + 0.5);
+          cairo_line_to (cr, x2, y + 0.5);
+        }
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
-      if (area && (x < area->x || x >= area->x + area->width))
-        return;
-      if (x < x1 || x >= x2)
-        return;
-      x1 = x2 = x;
+      if (x >= x1 && x < x2)
+        {
+          cairo_move_to (cr, x + 0.5, y1);
+          cairo_line_to (cr, x + 0.5, y2);
+        }
       break;
 
     case GIMP_ORIENTATION_UNKNOWN:
       return;
     }
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                         (active ?
-                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
-                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x1, y1, x2, y2);
+  cairo_stroke (cr);
 }
 
 void
 gimp_display_shell_draw_guides (GimpDisplayShell *shell,
-                                const GdkRegion  *region)
+                                cairo_t          *cr)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (region != NULL);
+  g_return_if_fail (cr != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_guides (shell))
     {
-      GdkRectangle  area;
-      GList        *list;
-
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-                                   region);
-      gdk_region_get_clipbox (region, &area);
+      GList *list;
 
       for (list = gimp_image_get_guides (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_guide (shell, list->data,
-                                         &area, FALSE);
+          gimp_display_shell_draw_guide (shell, cr, list->data, FALSE);
         }
-
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-                                   NULL);
     }
 }
 

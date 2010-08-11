@@ -2297,7 +2297,9 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   cairo_restore (cr);
 
   /* draw the guides */
-  gimp_display_shell_draw_guides (shell, eevent->region);
+  cairo_save (cr);
+  gimp_display_shell_draw_guides (shell, cr);
+  cairo_restore (cr);
 
   /* draw the sample points */
   gimp_display_shell_draw_sample_points (shell, eevent->region);

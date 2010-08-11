@@ -22,9 +22,12 @@
 #define __GIMP_DISPLAY_SHELL_STYLE_H__
 
 
-void   gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
-                                          cairo_t          *cr,
-                                          GimpGrid         *grid);
+void   gimp_display_shell_set_guide_style (GimpDisplayShell *shell,
+                                           cairo_t          *cr,
+                                           gboolean          active);
+void   gimp_display_shell_set_grid_style  (GimpDisplayShell *shell,
+                                           cairo_t          *cr,
+                                           GimpGrid         *grid);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

@@ -28,11 +28,11 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
                                                       gint               *w,
                                                       gint               *h);
 void   gimp_display_shell_draw_guide                 (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       GimpGuide          *guide,
-                                                      const GdkRectangle *area,
                                                       gboolean            active);
 void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
-                                                      const GdkRegion    *region);
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
 void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,

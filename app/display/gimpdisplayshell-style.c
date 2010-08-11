@@ -34,6 +34,41 @@
 #include "gimpdisplayshell-style.h"
 
 
+static const GimpRGB guide_normal_fg = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_normal_bg = { 0.0, 0.5, 1.0, 1.0 };
+static const GimpRGB guide_active_fg = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_active_bg = { 1.0, 0.0, 0.0, 1.0 };
+
+
+/*  local function prototypes  */
+
+static void   gimp_display_shell_set_stipple_style (cairo_t       *cr,
+                                                    const GimpRGB *fg,
+                                                    const GimpRGB *bg);
+
+
+/*  public functions  */
+
+void
+gimp_display_shell_set_guide_style (GimpDisplayShell *shell,
+                                    cairo_t          *cr,
+                                    gboolean          active)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+
+  if (active)
+    gimp_display_shell_set_stipple_style (cr,
+                                          &guide_active_fg,
+                                          &guide_active_bg);
+  else
+    gimp_display_shell_set_stipple_style (cr,
+                                          &guide_normal_fg,
+                                          &guide_normal_bg);
+}
+
 void
 gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
                                    cairo_t          *cr,
@@ -49,49 +84,20 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
     {
     case GIMP_GRID_ON_OFF_DASH:
     case GIMP_GRID_DOUBLE_DASH:
-      {
-        guchar *data = g_malloc0 (8 * 8 * 4);
-        guchar  fg_r, fg_g, fg_b, fg_a;
-        guchar  bg_r, bg_g, bg_b, bg_a;
-        gint    x, y;
-        guchar *d;
-        cairo_surface_t *surface;
-        static cairo_user_data_key_t data_key;
+      if (grid->style == GIMP_GRID_DOUBLE_DASH)
+        {
+          gimp_display_shell_set_stipple_style (cr,
+                                                &grid->fgcolor,
+                                                &grid->bgcolor);
+        }
+      else
+        {
+          GimpRGB bg = { 0.0, 0.0, 0.0, 0.0 };
 
-        gimp_rgba_get_uchar (&grid->fgcolor, &fg_r, &fg_g, &fg_b, &fg_a);
-
-        if (grid->style == GIMP_GRID_DOUBLE_DASH)
-          gimp_rgba_get_uchar (&grid->bgcolor, &bg_r, &bg_g, &bg_b, &bg_a);
-        else
-          bg_r = bg_g = bg_b = bg_a = 0;
-
-        d = data;
-
-        for (y = 0; y < 8; y++)
-          {
-            for (x = 0; x < 8; x++)
-              {
-                if ((y < 4 && x < 4) || (y >= 4 && x >= 4))
-                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
-                else
-                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
-
-                d += 4;
-              }
-          }
-
-        surface = cairo_image_surface_create_for_data (data,
-                                                       CAIRO_FORMAT_ARGB32,
-                                                       8, 8, 8 * 4);
-        cairo_surface_set_user_data (surface, &data_key,
-                                     data, (cairo_destroy_func_t) g_free);
-
-        cairo_set_source_surface (cr, surface, 0, 0);
-        cairo_surface_destroy (surface);
-
-        cairo_pattern_set_extend (cairo_get_source (cr),
-                                  CAIRO_EXTEND_REPEAT);
-      }
+          gimp_display_shell_set_stipple_style (cr,
+                                                &grid->fgcolor,
+                                                &bg);
+        }
       break;
 
     case GIMP_GRID_DOTS:
@@ -103,4 +109,51 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
                             grid->fgcolor.b);
       break;
     }
+}
+
+
+/*  private functions  */
+
+static cairo_user_data_key_t surface_data_key = { 0, };
+
+static void
+gimp_display_shell_set_stipple_style (cairo_t       *cr,
+                                      const GimpRGB *fg,
+                                      const GimpRGB *bg)
+{
+  cairo_surface_t *surface;
+  guchar          *data = g_malloc0 (8 * 8 * 4);
+  guchar           fg_r, fg_g, fg_b, fg_a;
+  guchar           bg_r, bg_g, bg_b, bg_a;
+  gint             x, y;
+  guchar          *d;
+
+  gimp_rgba_get_uchar (fg, &fg_r, &fg_g, &fg_b, &fg_a);
+  gimp_rgba_get_uchar (bg, &bg_r, &bg_g, &bg_b, &bg_a);
+
+  d = data;
+
+  for (y = 0; y < 8; y++)
+    {
+      for (x = 0; x < 8; x++)
+        {
+          if ((y < 4 && x < 4) || (y >= 4 && x >= 4))
+            GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
+          else
+            GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
+
+          d += 4;
+        }
+    }
+
+  surface = cairo_image_surface_create_for_data (data,
+                                                 CAIRO_FORMAT_ARGB32,
+                                                 8, 8, 8 * 4);
+  cairo_surface_set_user_data (surface, &surface_data_key,
+                               data, (cairo_destroy_func_t) g_free);
+
+  cairo_set_source_surface (cr, surface, 0, 0);
+  cairo_surface_destroy (surface);
+
+  cairo_pattern_set_extend (cairo_get_source (cr), CAIRO_EXTEND_REPEAT);
 }
