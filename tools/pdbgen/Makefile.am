@@ -52,16 +52,17 @@ pdb_sources = \
 	pdb/vectors.pdb
 
 EXTRA_DIST = \
-	README		\
-	app.pl		\
-	enumcode.pl	\
-	enumgen.pl	\
-	groups.pl	\
-	lib.pl		\
-	pdb.pl		\
-	pdbgen.pl	\
-	stddefs.pdb	\
-	util.pl		\
+	README			\
+	README_NEW_PDB_PROC	\
+	app.pl			\
+	enumcode.pl		\
+	enumgen.pl		\
+	groups.pl		\
+	lib.pl			\
+	pdb.pl			\
+	pdbgen.pl		\
+	stddefs.pdb		\
+	util.pl			\
 	$(pdb_sources)
 
 enum_headers = \
