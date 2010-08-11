@@ -149,4 +149,18 @@ void          gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
  */
 void          gimp_cage_config_reverse_cage           (GimpCageConfig *gcc);
 
+
+/**
+ * gimp_cage_config_point_inside:
+ * @gcc: the cage config
+ * @x: x coordinate of the point to test
+ * @y: y coordinate of the point to test
+ * 
+ * Check if the given point is inside the cage. This test is done in the regard of the topological inside of the cage.
+ * 
+ * Returns: TRUE if the point is inside, FALSE if not.
+ */
+gboolean      gimp_cage_config_point_inside           (GimpCageConfig *gcc,
+                                                       gfloat          x,
+                                                       gfloat          y);
 #endif /* __GIMP_CAGE_CONFIG_H__ */

@@ -401,3 +401,66 @@ gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 
   print_cage (gcc);
 }
+
+gboolean
+gimp_cage_config_point_inside (GimpCageConfig *gcc,
+                               gfloat          x,
+                               gfloat          y)
+{
+  gint i, j;
+  gboolean inside = FALSE;
+  GimpVector2 *cv = gcc->cage_vertices;
+  
+  g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), FALSE);
+  
+  for (i = 0, j = gcc->cage_vertice_number - 1; i < gcc->cage_vertice_number; j = i++)
+  {
+    if ((((cv[i].y <= y) && (y < cv[j].y))
+        || ((cv[j].y <= y) && (y < cv[i].y)))
+        && (x < (cv[j].x - cv[i].x) * (y - cv[i].y) / (cv[j].y - cv[i].y) + cv[i].x))
+    {
+      inside = !inside;
+    }
+  }
+  
+  return inside;
+}
+
+
+/*static inline gint
+gimp_cage_config_is_left (GimpVector2 *p0, GimpVector2 *p1, GimpVector2 *p2)
+{
+  return ( (p1->x - p0->x) * (p2->y - p0->y) - (p2->x - p0->x) * (p1->y - p0->y) );
+}
+
+gboolean
+gimp_cage_config_point_inside (GimpCageConfig *gcc,
+                               gfloat          x,
+                               gfloat          y)
+{
+  gint wn = 0;
+  gint i;
+  gint cvn = gcc->cage_vertice_number;
+  GimpVector2 *cv = gcc->cage_vertices;
+  GimpVector2 p = {x, y};
+  
+  for (i = 0; i < gcc->cage_vertice_number; i++)
+  {
+    if (cv[i].y <= y)
+    {
+      if ((cv[(i+1) % cvn].y > y) && gimp_cage_config_is_left (&cv[i], &cv[(i+1) % cvn], &p) > 0)
+      {
+        wn++;
+      }
+    }
+    else
+    {
+      if ((cv[(i+1) % cvn].y <= y) && gimp_cage_config_is_left (&cv[i], &cv[(i+1) % cvn], &p) < 0)
+      {
+        wn--;
+      }
+    }
+  }
+  
+  return (wn > 0);
+}*/
