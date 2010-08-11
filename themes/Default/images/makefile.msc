@@ -80,6 +80,8 @@ STOCK_VARIABLES = \
 	stock_display_filter_proof_16	stock-display-filter-proof-16.png \
 	stock_display_filter_proof_24	stock-display-filter-proof-24.png \
 	stock_duplicate_16		stock-duplicate-16.png	\
+	stock_dynamics_16	stock-dynamics-16.png	\
+	stock_dynamics_22	stock-dynamics-22.png	\
 	stock_edit_16		stock-edit-16.png	\
 	stock_error_64		stock-error-64.png	\
 	stock_eye_12		stock-eye-12.png	\
@@ -208,6 +210,8 @@ STOCK_VARIABLES = \
 	stock_toilet_paper_16		stock-toilet-paper-16.png	\
 	stock_toilet_paper_24		stock-toilet-paper-24.png	\
 	stock_tool_options_16		stock-tool-options-16.png	\
+	stock_tool_preset_16		stock-tool-preset-16.png	\
+	stock_tool_preset_22		stock-tool-preset-22.png        \
 	stock_tool_options_24		stock-tool-options-24.png	\
 	stock_tools_16		stock-tools-16.png \
 	stock_tools_24		stock-tools-24.png \

@@ -14,7 +14,7 @@ CORE_VARIABLES = \
 	stock_question_64 $(srcdir)/stock-question-64.png
 
 
-## Compiled in stock icons 
+## Compiled in stock icons
 
 STOCK_MENU_IMAGES = \
 	stock-cap-butt-16.png				\
@@ -48,6 +48,8 @@ STOCK_MENU_IMAGES = \
 	stock-display-filter-gamma-16.png		\
 	stock-display-filter-lcms-16.png		\
 	stock-display-filter-proof-16.png		\
+	stock-dynamics-16.png				\
+	stock-dynamics-22.png				\
 	stock-eye-12.png				\
 	stock-flip-horizontal-16.png			\
 	stock-flip-vertical-16.png			\
@@ -115,6 +117,8 @@ STOCK_MENU_IMAGES = \
 	stock-text-layer-16.png				\
 	stock-toilet-paper-16.png			\
 	stock-tool-options-16.png			\
+	stock-tool-preset-16.png			\
+	stock-tool-preset-22.png			\
 	stock-tools-16.png				\
 	stock-transparency-16.png			\
 	stock-undo-history-16.png			\
