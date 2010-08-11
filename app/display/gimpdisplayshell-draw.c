@@ -202,27 +202,22 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell,
       GdkRectangle  area;
       GList        *list;
 
-      if (region)
-        {
-          gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                       GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-                                       region);
-          gdk_region_get_clipbox (region, &area);
-        }
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_GUIDE_NORMAL,
+                                   region);
+      gdk_region_get_clipbox (region, &area);
 
       for (list = gimp_image_get_guides (image);
            list;
            list = g_list_next (list))
         {
           gimp_display_shell_draw_guide (shell, list->data,
-                                         region ? &area : NULL,
-                                         FALSE);
+                                         &area, FALSE);
         }
 
-      if (region)
-        gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                     GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-                                     NULL);
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_GUIDE_NORMAL,
+                                   NULL);
     }
 }
 
@@ -545,27 +540,22 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell,
       GdkRectangle  area;
       GList        *list;
 
-      if (region)
-        {
-          gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                       GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-                                       region);
-          gdk_region_get_clipbox (region, &area);
-        }
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
+                                   region);
+      gdk_region_get_clipbox (region, &area);
 
       for (list = gimp_image_get_sample_points (image);
            list;
            list = g_list_next (list))
         {
           gimp_display_shell_draw_sample_point (shell, list->data,
-                                                region ? &area : NULL,
-                                                FALSE);
+                                                &area, FALSE);
         }
 
-      if (region)
-        gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                     GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-                                     region);
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
+                                   NULL);
     }
 }
 
