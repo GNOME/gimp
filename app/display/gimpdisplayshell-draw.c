@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -52,17 +51,15 @@
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-style.h"
 #include "gimpdisplayshell-transform.h"
 
 
 /*  local function prototypes  */
 
-static void    gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
-                                                  GimpGrid         *grid,
-                                                  cairo_t          *cr);
-static GdkGC * gimp_display_shell_get_pen_gc     (GimpDisplayShell *shell,
-                                                  GimpContext      *context,
-                                                  GimpActiveColor   active);
+static GdkGC * gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
+                                              GimpContext      *context,
+                                              GimpActiveColor   active);
 
 
 /*  public functions  */
@@ -689,73 +686,6 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
 
 /*  private functions  */
-
-static void
-gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
-                                   GimpGrid         *grid,
-                                   cairo_t          *cr)
-{
-  cairo_set_line_width (cr, 1.0);
-
-  switch (grid->style)
-    {
-    case GIMP_GRID_ON_OFF_DASH:
-    case GIMP_GRID_DOUBLE_DASH:
-      {
-        guchar *data = g_malloc0 (8 * 8 * 4);
-        guchar  fg_r, fg_g, fg_b, fg_a;
-        guchar  bg_r, bg_g, bg_b, bg_a;
-        gint    x, y;
-        guchar *d;
-        cairo_surface_t *surface;
-        static cairo_user_data_key_t data_key;
-
-        gimp_rgba_get_uchar (&grid->fgcolor, &fg_r, &fg_g, &fg_b, &fg_a);
-
-        if (grid->style == GIMP_GRID_DOUBLE_DASH)
-          gimp_rgba_get_uchar (&grid->bgcolor, &bg_r, &bg_g, &bg_b, &bg_a);
-        else
-          bg_r = bg_g = bg_b = bg_a = 0;
-
-        d = data;
-
-        for (y = 0; y < 8; y++)
-          {
-            for (x = 0; x < 8; x++)
-              {
-                if ((y < 4 && x < 4) || (y >= 4 && x >= 4))
-                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
-                else
-                  GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
-
-                d += 4;
-              }
-          }
-
-        surface = cairo_image_surface_create_for_data (data,
-                                                       CAIRO_FORMAT_ARGB32,
-                                                       8, 8, 8 * 4);
-        cairo_surface_set_user_data (surface, &data_key,
-                                     data, (cairo_destroy_func_t) g_free);
-
-        cairo_set_source_surface (cr, surface, 0, 0);
-        cairo_surface_destroy (surface);
-
-        cairo_pattern_set_extend (cairo_get_source (cr),
-                                  CAIRO_EXTEND_REPEAT);
-      }
-      break;
-
-    case GIMP_GRID_DOTS:
-    case GIMP_GRID_INTERSECTIONS:
-    case GIMP_GRID_SOLID:
-      cairo_set_source_rgb (cr,
-                            grid->fgcolor.r,
-                            grid->fgcolor.g,
-                            grid->fgcolor.b);
-      break;
-    }
-}
 
 static GdkGC *
 gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
