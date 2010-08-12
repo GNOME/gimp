@@ -59,9 +59,9 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
 
   /* FIXME: wrong categories and name, to appears in the gegl tool */
-  operation_class->name               = "gegl:cage_coef_calc";
-  operation_class->categories         = "color";
-  operation_class->description        = "GIMP cage transform";
+  operation_class->name               = "gimp:cage_coef_calc";
+  operation_class->categories         = "transform";
+  operation_class->description        = "GIMP cage transform coefficient calc";
 
   operation_class->prepare            = gimp_operation_cage_coef_calc_prepare;
   operation_class->get_bounding_box   = gimp_operation_cage_coef_calc_get_bounding_box;

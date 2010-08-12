@@ -86,8 +86,8 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   object_class->finalize              = gimp_operation_cage_transform_finalize;
 
   /* FIXME: wrong categories and name, to appears in the gegl tool */
-  operation_class->name         = "gegl:cage_transform";
-  operation_class->categories   = "color";
+  operation_class->name         = "gimp:cage_transform";
+  operation_class->categories   = "transform";
   operation_class->description  = "GIMP cage reverse transform";
 
   operation_class->prepare      = gimp_operation_cage_transform_prepare;
@@ -292,12 +292,12 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
   if (p2_d.y > roi->height) return;
   if (p3_d.y > roi->height) return;
 
-  if (p1_d.x < 0) return;
-  if (p2_d.x < 0) return;
-  if (p3_d.x < 0) return;
-  if (p1_d.y < 0) return;
-  if (p2_d.y < 0) return;
-  if (p3_d.y < 0) return;
+  if (p1_d.x <= 0) return;
+  if (p2_d.x <= 0) return;
+  if (p3_d.x <= 0) return;
+  if (p1_d.y <= 0) return;
+  if (p2_d.y <= 0) return;
+  if (p3_d.y <= 0) return;
 
   xmin = xmax = p1_d.x;
   ymin = ymax = p1_d.y;
@@ -427,7 +427,6 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
                                                                     coords);
   }
 
-
 }
 
 static GimpCoords
@@ -457,28 +456,14 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
 
   for(i = 0; i < cvn; i++)
   {
-
-    if (!isnan(coef[i]))
-    {
-      pos_x += coef[i] * config->cage_vertices_d[i].x;
-      pos_y += coef[i] * config->cage_vertices_d[i].y;
-    }
-
-    g_assert (!isnan(pos_x));
-    g_assert (!isnan(pos_y));
+    pos_x += coef[i] * config->cage_vertices_d[i].x;
+    pos_y += coef[i] * config->cage_vertices_d[i].y;
   }
 
   for(i = 0; i < cvn; i++)
   {
-
-    if (!isnan(coef[i]))
-    {
       pos_x += coef[i + cvn] * config->scaling_factor[i] * gimp_cage_config_get_edge_normal (config, i).x;
       pos_y += coef[i + cvn] * config->scaling_factor[i] * gimp_cage_config_get_edge_normal (config, i).y;
-    }
-
-    g_assert (!isnan(pos_x));
-    g_assert (!isnan(pos_y));
   }
 
   result.x = pos_x;

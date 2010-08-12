@@ -50,12 +50,12 @@ static void gimp_cage_options_set_property  (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
                                              GParamSpec   *pspec);
-                                 
+
 static void gimp_cage_options_get_property  (GObject    *object,
                                              guint       property_id,
                                              GValue     *value,
                                              GParamSpec *pspec);
-                                 
+
 G_DEFINE_TYPE (GimpCageOptions, gimp_cage_options,
                GIMP_TYPE_TRANSFORM_OPTIONS)
 
@@ -80,7 +80,7 @@ gimp_cage_options_class_init (GimpCageOptionsClass *klass)
 static void
 gimp_cage_options_init (GimpCageOptions *options)
 {
-	
+
 }
 
 static void

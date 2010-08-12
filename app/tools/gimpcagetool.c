@@ -583,7 +583,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   gegl = gegl_node_new ();
 
   input = gegl_node_new_child (gegl,
-                                "operation", "gegl:cage_coef_calc",
+                                "operation", "gimp:cage_coef_calc",
                                 "config", ct->config,
                                 NULL);
 
@@ -671,7 +671,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
                                   NULL);
 
     cage = gegl_node_new_child (gegl,
-                                "operation", "gegl:cage_transform",
+                                "operation", "gimp:cage_transform",
                                 "config", ct->config,
                                 NULL);
     
@@ -752,7 +752,7 @@ gimp_cage_tool_prepare_preview (GimpCageTool *ct,
                               NULL);
 
   cage = gegl_node_new_child (gegl,
-                                "operation", "gegl:cage",
+                                "operation", "gimp:cage_preview",
                                 "config", ct->config,
                                 NULL);
 
