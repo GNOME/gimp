@@ -153,6 +153,27 @@ gimp_operation_cage_coef_calc_set_property  (GObject      *object,
     }
 }
 
+static gboolean
+gimp_operation_cage_coef_calc_is_on_straight (GimpVector2 *d1,
+                                              GimpVector2 *d2,
+                                              GimpVector2 *p)
+{
+  GimpVector2 v1, v2;
+  gfloat deter;
+
+  v1.x = p->x - d1->x;
+  v1.y = p->y - d1->y;
+  v2.x = d2->x - d1->x;
+  v2.y = d2->y - d1->y;
+
+  gimp_vector2_normalize (&v1);
+  gimp_vector2_normalize (&v2);
+
+  deter = v1.x * v2.y - v2.x * v1.y;
+
+  return (deter < 0.000000001) && (deter > -0.000000001);
+}
+
 static GeglRectangle
 gimp_operation_cage_coef_calc_get_bounding_box (GeglOperation *operation)
 {
@@ -203,7 +224,6 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
           p.x = x;
           p.y = y;
 
-
           a.x = v2.x - v1.x;
           a.y = v2.y - v1.y;
           b.x = v1.x - x;
@@ -213,6 +233,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
           R = 2.0 * (a.x * b.x + a.y * b.y);
           BA = b.x * a.y - b.y * a.x;
           SRT = sqrt(4.0 * S * Q - R * R);
+
           L0 = log(S);
           L1 = log(S + Q + R);
           A0 = atan2(R, SRT) / SRT;
@@ -221,11 +242,19 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
           L10 = L1 - L0;
 
           /* edge coef */
-          coef[j + config->cage_vertice_number] = 1.0 / (4.0 * M_PI) * ((4.0*S-R*R/Q) * A10 + R / (2.0 * Q) * L10 + L1 - 2.0);
+          coef[j + config->cage_vertice_number] = (1.0 / (4.0 * M_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
+
+          if (isnan(coef[j + config->cage_vertice_number]))
+          {
+            coef[j + config->cage_vertice_number] = 0.0;
+          }
 
           /* vertice coef */
-          coef[j] += BA / (2.0 * M_PI) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
-          coef[(j+1)%config->cage_vertice_number] -= BA / (2.0 * M_PI) * (L10 / (2.0 * Q) - A10 * R / Q);
+          if (!gimp_operation_cage_coef_calc_is_on_straight (&v1, &v2, &p))
+          {
+            coef[j] += (BA / (2.0 * M_PI)) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
+            coef[(j+1)%config->cage_vertice_number] -= (BA / (2.0 * M_PI)) * (L10 / (2.0 * Q) - A10 * (R / Q));
+          }
         }
       }
 
