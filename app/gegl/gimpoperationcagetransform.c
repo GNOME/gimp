@@ -38,12 +38,12 @@ static void           gimp_operation_cage_transform_set_property              (G
                                                                                guint                 property_id,
                                                                                const GValue         *value,
                                                                                GParamSpec           *pspec);
-static void           gimp_operation_cage_transform_prepare                   (GeglOperation       *operation);
-static gboolean       gimp_operation_cage_transform_process                   (GeglOperation       *operation,
-                                                                               GeglBuffer          *in_buf,
-                                                                               GeglBuffer          *aux_buf,
-                                                                               GeglBuffer          *out_buf,
-                                                                               const GeglRectangle *roi);
+static void           gimp_operation_cage_transform_prepare                   (GeglOperation        *operation);
+static gboolean       gimp_operation_cage_transform_process                   (GeglOperation        *operation,
+                                                                               GeglBuffer           *in_buf,
+                                                                               GeglBuffer           *aux_buf,
+                                                                               GeglBuffer           *out_buf,
+                                                                               const GeglRectangle  *roi);
 static void           gimp_operation_cage_transform_interpolate_source_coords_recurs
                                                                               (GimpOperationCageTransform  *oct,
                                                                                GeglBuffer *out_buf,
@@ -56,15 +56,15 @@ static void           gimp_operation_cage_transform_interpolate_source_coords_re
                                                                                GimpCoords p3_d,
                                                                                gint recursion_depth,
                                                                                gfloat *coords);
-static GimpCoords     gimp_cage_transform_compute_destination                 (GimpCageConfig *config,
-                                                                               GeglBuffer *coef_buf,
-                                                                               GimpCoords coords);
+static GimpCoords     gimp_cage_transform_compute_destination                 (GimpCageConfig       *config,
+                                                                               GeglBuffer           *coef_buf,
+                                                                               GimpCoords            coords);
 GeglRectangle         gimp_operation_cage_transform_get_cached_region         (GeglOperation        *operation,
-                                                                               const GeglRectangle *roi);
+                                                                               const GeglRectangle  *roi);
 GeglRectangle         gimp_operation_cage_transform_get_required_for_output   (GeglOperation        *operation,
-                                                                               const gchar         *input_pad,
-                                                                               const GeglRectangle *roi);
-GeglRectangle         gimp_operation_cage_get_bounding_box                    (GeglOperation *operation);
+                                                                               const gchar          *input_pad,
+                                                                               const GeglRectangle  *roi);
+GeglRectangle         gimp_operation_cage_transform_get_bounding_box          (GeglOperation        *operation);
 
 G_DEFINE_TYPE (GimpOperationCageTransform, gimp_operation_cage_transform,
                       GEGL_TYPE_OPERATION_COMPOSER)
@@ -92,19 +92,19 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   operation_class->prepare      = gimp_operation_cage_transform_prepare;
 
-  operation_class->get_required_for_output = gimp_operation_cage_transform_get_required_for_output;
-  operation_class->get_cached_region = gimp_operation_cage_transform_get_cached_region;
-  operation_class->no_cache     = FALSE;
-  operation_class->get_bounding_box = gimp_operation_cage_get_bounding_box;
+  operation_class->get_required_for_output  = gimp_operation_cage_transform_get_required_for_output;
+  operation_class->get_cached_region        = gimp_operation_cage_transform_get_cached_region;
+  operation_class->no_cache                 = FALSE;
+  operation_class->get_bounding_box         = gimp_operation_cage_transform_get_bounding_box;
 
   filter_class->process         = gimp_operation_cage_transform_process;
 
   g_object_class_install_property (object_class,
-                                 GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG,
-                                 g_param_spec_object ("config", NULL, NULL,
-                                                      GIMP_TYPE_CAGE_CONFIG,
-                                                      G_PARAM_READWRITE |
-                                                      G_PARAM_CONSTRUCT));
+                                   GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG,
+                                   g_param_spec_object ("config", NULL, NULL,
+                                                        GIMP_TYPE_CAGE_CONFIG,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -494,7 +494,7 @@ gimp_operation_cage_transform_get_required_for_output (GeglOperation        *ope
 }
 
 GeglRectangle
-gimp_operation_cage_get_bounding_box  (GeglOperation *operation)
+gimp_operation_cage_transform_get_bounding_box  (GeglOperation *operation)
 {
   GeglRectangle result = *gegl_operation_source_get_bounding_box (operation, "input");
 
