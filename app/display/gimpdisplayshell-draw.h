@@ -42,11 +42,11 @@ void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
                                                       GimpActiveColor     color,
                                                       gint                width);
 void   gimp_display_shell_draw_sample_point          (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       GimpSamplePoint    *sample_point,
-                                                      const GdkRectangle *area,
                                                       gboolean            active);
 void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
-                                                      const GdkRegion    *region);
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell);

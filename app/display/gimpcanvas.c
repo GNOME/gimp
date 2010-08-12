@@ -371,8 +371,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     {
     case GIMP_CANVAS_STYLE_BLACK:
     case GIMP_CANVAS_STYLE_WHITE:
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL:
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE:
       break;
 
     case GIMP_CANVAS_STYLE_RENDER:
@@ -488,18 +486,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       bg.red   = 0x0;
       bg.green = 0xffff;
       bg.blue  = 0x0;
-      break;
-
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL:
-      fg.red   = 0x0;
-      fg.green = 0x7f7f;
-      fg.blue  = 0xffff;
-      break;
-
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE:
-      fg.red   = 0xffff;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
       break;
     }
 
@@ -805,27 +791,23 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
 /**
  * gimp_canvas_draw_text:
  * @canvas:  a #GimpCanvas widget
- * @style:   one of the enumerated #GimpCanvasStyle's.
- * @x:       X coordinate of the left of the layout.
- * @y:       Y coordinate of the top of the layout.
  * @format:  a standard printf() format string.
  * @Varargs: the parameters to insert into the format string.
  *
- * Draws a layout, in the specified style.
+ * Returns a layout which can be used for
+ * pango_cairo_show_layout(). The layout belongs to the canvas and
+ * should not be freed, not should a pointer to it be kept around
+ * after drawing.
+ *
+ * Returns: a #PangoLayout owned by the canvas.
  **/
-void
-gimp_canvas_draw_text (GimpCanvas      *canvas,
-                       GimpCanvasStyle  style,
-                       gint             x,
-                       gint             y,
-                       const gchar     *format,
-                       ...)
+PangoLayout *
+gimp_canvas_get_layout (GimpCanvas  *canvas,
+                        const gchar *format,
+                        ...)
 {
   va_list  args;
   gchar   *text;
-
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
 
   if (! canvas->layout)
     canvas->layout = gtk_widget_create_pango_layout (GTK_WIDGET (canvas),
@@ -838,9 +820,7 @@ gimp_canvas_draw_text (GimpCanvas      *canvas,
   pango_layout_set_text (canvas->layout, text, -1);
   g_free (text);
 
-  gdk_draw_layout (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                   canvas->gc[style],
-                   x, y, canvas->layout);
+  return canvas->layout;
 }
 
 /**

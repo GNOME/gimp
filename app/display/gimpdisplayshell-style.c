@@ -34,10 +34,13 @@
 #include "gimpdisplayshell-style.h"
 
 
-static const GimpRGB guide_normal_fg = { 0.0, 0.0, 0.0, 1.0 };
-static const GimpRGB guide_normal_bg = { 0.0, 0.5, 1.0, 1.0 };
-static const GimpRGB guide_active_fg = { 0.0, 0.0, 0.0, 1.0 };
-static const GimpRGB guide_active_bg = { 1.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_normal_fg     = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_normal_bg     = { 0.0, 0.5, 1.0, 1.0 };
+static const GimpRGB guide_active_fg     = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB guide_active_bg     = { 1.0, 0.0, 0.0, 1.0 };
+
+static const GimpRGB sample_point_normal = { 0.0, 0.5, 1.0, 1.0 };
+static const GimpRGB sample_point_active = { 1.0, 0.0, 0.0, 1.0 };
 
 
 /*  local function prototypes  */
@@ -67,6 +70,28 @@ gimp_display_shell_set_guide_style (GimpDisplayShell *shell,
     gimp_display_shell_set_stipple_style (cr,
                                           &guide_normal_fg,
                                           &guide_normal_bg);
+}
+
+void
+gimp_display_shell_set_sample_point_style (GimpDisplayShell *shell,
+                                           cairo_t          *cr,
+                                           gboolean          active)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+
+  if (active)
+    cairo_set_source_rgb (cr,
+                          sample_point_active.r,
+                          sample_point_active.g,
+                          sample_point_active.b);
+  else
+    cairo_set_source_rgb (cr,
+                          sample_point_normal.r,
+                          sample_point_normal.g,
+                          sample_point_normal.b);
 }
 
 void

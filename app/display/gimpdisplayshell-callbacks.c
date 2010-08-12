@@ -2302,7 +2302,9 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   cairo_restore (cr);
 
   /* draw the sample points */
-  gimp_display_shell_draw_sample_points (shell, eevent->region);
+  cairo_save (cr);
+  gimp_display_shell_draw_sample_points (shell, cr);
+  cairo_restore (cr);
 
   /* and the cursor (if we have a software cursor) */
   gimp_display_shell_draw_cursor (shell);

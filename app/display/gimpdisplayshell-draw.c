@@ -438,18 +438,19 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 
 void
 gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
+                                      cairo_t            *cr,
                                       GimpSamplePoint    *sample_point,
-                                      const GdkRectangle *area,
                                       gboolean            active)
 {
-  GimpImage       *image;
-  GimpCanvasStyle  style;
-  gdouble          x, y;
-  gint             x1, x2;
-  gint             y1, y2;
-  gint             w, h;
+  GimpImage   *image;
+  gdouble      dx1, dy1, dx2, dy2;
+  gint         x1, x2, y1, y2;
+  gint         sx1, sx2, sy1, sy2;
+  gdouble      x, y;
+  PangoLayout *layout;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (sample_point != NULL);
 
   if (sample_point->x < 0)
@@ -457,93 +458,82 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
 
   image = gimp_display_get_image (shell->display);
 
+  cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
+
+  x1 = floor (dx1);
+  y1 = floor (dy1);
+  x2 = ceil (dx2);
+  y2 = ceil (dy2);
+
   gimp_display_shell_transform_xy_f (shell,
                                      sample_point->x + 0.5,
                                      sample_point->y + 0.5,
                                      &x, &y, FALSE);
 
-  x1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  x2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
-  y1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  y2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sx1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sx2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sy1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sy2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
 
-  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &w, &h);
-
-  if (x < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
-      y < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
-      x > w + GIMP_SAMPLE_POINT_DRAW_SIZE ||
-      y > h + GIMP_SAMPLE_POINT_DRAW_SIZE)
+  if (sx1 > x2 ||
+      sx2 < x1 ||
+      sy1 > y2 ||
+      sy2 < y1)
     return;
 
-  if (area && (x + GIMP_SAMPLE_POINT_DRAW_SIZE <  area->x               ||
-               y + GIMP_SAMPLE_POINT_DRAW_SIZE <  area->y               ||
-               x - GIMP_SAMPLE_POINT_DRAW_SIZE >= area->x + area->width ||
-               y - GIMP_SAMPLE_POINT_DRAW_SIZE >= area->y + area->height))
-    return;
-
-  if (active)
-    style = GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE;
-  else
-    style = GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL;
+  gimp_display_shell_set_sample_point_style (shell, cr, active);
 
 #define HALF_SIZE (GIMP_SAMPLE_POINT_DRAW_SIZE / 2)
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x, y1, x, y1 + HALF_SIZE);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x, y2 - HALF_SIZE, x, y2);
+  cairo_move_to (cr, x + 0.5, sy1);
+  cairo_line_to (cr, x + 0.5, sy1 + HALF_SIZE);
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x1, y, x1 + HALF_SIZE, y);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x2 - HALF_SIZE, y, x2, y);
+  cairo_move_to (cr, x + 0.5, sy2);
+  cairo_line_to (cr, x + 0.5, sy2 - HALF_SIZE);
 
-  gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), style,
-                        FALSE,
-                        x - HALF_SIZE, y - HALF_SIZE,
-                        GIMP_SAMPLE_POINT_DRAW_SIZE,
-                        GIMP_SAMPLE_POINT_DRAW_SIZE,
-                        0, 64 * 270);
+  cairo_move_to (cr, sx1,             y + 0.5);
+  cairo_line_to (cr, sx1 + HALF_SIZE, y + 0.5);
 
-  gimp_canvas_draw_text (GIMP_CANVAS (shell->canvas), style,
-                         x + 2, y + 2,
-                         "%d",
-                         g_list_index (gimp_image_get_sample_points (image),
-                                       sample_point) + 1);
+  cairo_move_to (cr, sx2,             y + 0.5);
+  cairo_line_to (cr, sx2 - HALF_SIZE, y + 0.5);
+
+  cairo_arc_negative (cr, x + 0.5, y + 0.5, HALF_SIZE, 0.0, 0.5 * G_PI);
+
+  cairo_stroke (cr);
+
+  layout =
+    gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas),
+                            "%d",
+                            g_list_index (gimp_image_get_sample_points (image),
+                                          sample_point) + 1);
+
+  cairo_move_to (cr, x + 2, y + 2);
+  pango_cairo_show_layout (cr, layout);
+
+  cairo_fill (cr);
 }
 
 void
 gimp_display_shell_draw_sample_points (GimpDisplayShell *shell,
-                                       const GdkRegion  *region)
+                                       cairo_t          *cr)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (region != NULL);
+  g_return_if_fail (cr != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_sample_points (shell))
     {
-      GdkRectangle  area;
-      GList        *list;
-
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-                                   region);
-      gdk_region_get_clipbox (region, &area);
+      GList *list;
 
       for (list = gimp_image_get_sample_points (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_sample_point (shell, list->data,
-                                                &area, FALSE);
+          gimp_display_shell_draw_sample_point (shell, cr, list->data, FALSE);
         }
-
-      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                   GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-                                   NULL);
     }
 }
 
