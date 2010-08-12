@@ -217,7 +217,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
         for( j = 0; j < config->cage_vertice_number; j++)
         {
           GimpVector2 v1,v2,a,b,p;
-          gfloat Q,S,R,BA,SRT,L0,L1,A0,A1,A10,L10;
+          gdouble BA,SRT,L0,L1,A0,A1,A10,L10, Q,S,R;
 
           v1 = config->cage_vertices[j];
           v2 = config->cage_vertices[(j+1)%config->cage_vertice_number];
@@ -247,6 +247,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
           if (isnan(coef[j + config->cage_vertice_number]))
           {
             coef[j + config->cage_vertice_number] = 0.0;
+            printf("NAN SRT: %f\n", SRT);
           }
 
           /* vertice coef */
