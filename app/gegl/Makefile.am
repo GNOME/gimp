@@ -53,10 +53,10 @@ libappgegl_a_SOURCES = \
 	gimpoperationcolorbalance.h	\
 	gimpoperationcolorize.c		\
 	gimpoperationcolorize.h		\
-	gimpoperationcage.c			\
-	gimpoperationcage.h			\
 	gimpoperationcagecoefcalc.c	\
 	gimpoperationcagecoefcalc.h	\
+	gimpoperationcagepreview.c	\
+	gimpoperationcagepreview.h	\
 	gimpoperationcagetransform.c	\
 	gimpoperationcagetransform.h	\
 	gimpoperationcurves.c		\

@@ -37,8 +37,8 @@ OBJECTS = \
 	gimphuesaturationconfig.obj \
 	gimplevelsconfig.obj \
 	gimpoperationcolorbalance.obj \
-	gimpoperationcage.obj  \
 	gimpoperationcagecoefcalc.obj	\
+	gimpoperationcagepreview.obj  \
 	gimpoperationcagetransform.obj \
 	gimpoperationcurves.obj \
 	gimpoperationhuesaturation.obj \
