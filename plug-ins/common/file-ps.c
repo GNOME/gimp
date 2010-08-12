@@ -1748,7 +1748,9 @@ ps_open (const gchar      *filename,
 #else
 
   /* Use a real outputfile. Wait until ghostscript has finished */
-  flags = G_SPAWN_SEARCH_PATH;
+  flags = G_SPAWN_SEARCH_PATH |
+          G_SPAWN_STDOUT_TO_DEV_NULL |
+          G_SPAWN_STDERR_TO_DEV_NULL;
 
   if ( !g_spawn_sync (NULL,       /* working dir */
                       pcmdA,      /* command array */
