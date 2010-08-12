@@ -1,5 +1,7 @@
 /Makefile.in
 /Makefile
-/twain
 /.deps
 /.libs
+/_libs
+/twain
+/twain.exe

@@ -1,5 +1,7 @@
 /Makefile.in
 /Makefile
-/print
-/.libs
 /.deps
+/.libs
+/_libs
+/print
+/print.exe

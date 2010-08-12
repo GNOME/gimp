@@ -3,5 +3,8 @@
 /.deps
 /.libs
 /metadata
+/metadata.exe
 /testbase64
+/testbase64.exe
 /xmpdump
+/xmpdump.exe

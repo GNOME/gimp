@@ -4,5 +4,7 @@
 /_libs
 /.libs
 /gimp-help-lookup
+/gimp-help-lookup.exe
 /help
+/help.exe
 /libgimphelp.a

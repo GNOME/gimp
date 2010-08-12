@@ -3,4 +3,6 @@
 /Makefile
 /Makefile.in
 /file-psd-load
+/file-psd-load.exe
 /file-psd-save
+/file-psd-save.exe

@@ -1,4 +1,7 @@
 /Makefile.in
 /Makefile
-/winsnap
 /.deps
+/_libs
+/.libs
+/win-snap
+/win-snap.exe
