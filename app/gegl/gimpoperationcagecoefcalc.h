@@ -43,7 +43,7 @@ typedef struct _GimpOperationCageCoefCalcClass GimpOperationCageCoefCalcClass;
 struct _GimpOperationCageCoefCalc
 {
   GeglOperationSource   parent_instance;
-  
+
   GimpCageConfig       *config;
 };
 

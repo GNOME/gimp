@@ -42,7 +42,7 @@ typedef struct _GimpOperationCagePreviewClass GimpOperationCagePreviewClass;
 struct _GimpOperationCagePreview
 {
   GeglOperationComposer  parent_instance;
-  
+
   GimpCageConfig       *config;
 };
 

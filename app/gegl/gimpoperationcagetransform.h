@@ -42,7 +42,7 @@ typedef struct _GimpOperationCageTransformClass GimpOperationCageTransformClass;
 struct _GimpOperationCageTransform
 {
   GeglOperationComposer  parent_instance;
-  
+
   GimpCageConfig        *config;
   Babl                  *format_coords;
 };

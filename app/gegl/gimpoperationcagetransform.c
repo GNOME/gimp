@@ -46,16 +46,16 @@ static gboolean       gimp_operation_cage_transform_process                   (G
                                                                                const GeglRectangle  *roi);
 static void           gimp_operation_cage_transform_interpolate_source_coords_recurs
                                                                               (GimpOperationCageTransform  *oct,
-                                                                               GeglBuffer *out_buf,
-                                                                               const GeglRectangle *roi,
-                                                                               GimpCoords p1_s,
-                                                                               GimpCoords p1_d,
-                                                                               GimpCoords p2_s,
-                                                                               GimpCoords p2_d,
-                                                                               GimpCoords p3_s,
-                                                                               GimpCoords p3_d,
-                                                                               gint recursion_depth,
-                                                                               gfloat *coords);
+                                                                               GeglBuffer           *out_buf,
+                                                                               const GeglRectangle  *roi,
+                                                                               GimpCoords            p1_s,
+                                                                               GimpCoords            p1_d,
+                                                                               GimpCoords            p2_s,
+                                                                               GimpCoords            p2_d,
+                                                                               GimpCoords            p3_s,
+                                                                               GimpCoords            p3_d,
+                                                                               gint                  recursion_depth,
+                                                                               gfloat               *coords);
 static GimpCoords     gimp_cage_transform_compute_destination                 (GimpCageConfig       *config,
                                                                                GeglBuffer           *coef_buf,
                                                                                GimpCoords            coords);
