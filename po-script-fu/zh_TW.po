@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-19 19:13+0800\n"
+"POT-Creation-Date: 2010-08-13 20:16+0800\n"
 "PO-Revision-Date: 2010-02-19 09:29+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -25,12 +25,14 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu 訊息視窗"
 
 #: ../plug-ins/script-fu/script-fu-console.c:194
+#, fuzzy
 msgid "Welcome to TinyScheme"
-msgstr ""
+msgstr "歡迎來玩黑白棋！"
 
 #: ../plug-ins/script-fu/script-fu-console.c:200
+#, fuzzy
 msgid "Interactive Scheme Development"
-msgstr ""
+msgstr "整合式開發環境"
 
 #: ../plug-ins/script-fu/script-fu-console.c:236
 msgid "_Browse..."
@@ -41,17 +43,19 @@ msgid "Save Script-Fu Console Output"
 msgstr "儲存 Script-Fu 訊息視窗輸出"
 
 #: ../plug-ins/script-fu/script-fu-console.c:341
-#, c-format
+#, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "無法開啟要寫入的 %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:370
+#, fuzzy
 msgid "Script-Fu Procedure Browser"
-msgstr ""
+msgstr "Script-Fu 伺服程式選項"
 
 #: ../plug-ins/script-fu/script-fu-eval.c:63
+#, fuzzy
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
-msgstr ""
+msgstr "Script-Fu 執行模式只允許以非互動方式執行"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:196
 msgid "Script-Fu cannot process two scripts at the same time."
@@ -227,7 +231,7 @@ msgstr "Bumpmap (透明圖層) 模糊化半徑"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
-msgstr ""
+msgstr "產生一個有文字概述的標誌和滴狀陰影"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -318,7 +322,7 @@ msgstr "輪廓模糊半徑"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr ""
+msgstr "用一圖樣描畫選取區域(或alpha)的輪廓，並添加一個陰影"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -464,12 +468,13 @@ msgstr "加上斜邊(_E)..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
-msgstr ""
+msgstr "添加一個斜面的邊框到圖片上"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
+#, fuzzy
 msgid "Keep bump layer"
-msgstr ""
+msgstr "雙層 DVD+R"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -502,11 +507,11 @@ msgstr "邊框顏色"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
-msgstr ""
+msgstr "顏色的 Delta 數值"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 msgid "Create an arrow graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "產生一個散發光芒的箭頭圖網頁 "
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -575,16 +580,17 @@ msgstr "棒狀圖長度"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Create an Hrule graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "產生一個散發光芒的水平線圖形網頁"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#, fuzzy
 msgid "_Hrule..."
-msgstr ""
+msgstr "瀏覽..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 msgid "Create a bullet graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "產生一個散發光芒的圖形符號網頁 "
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -594,8 +600,9 @@ msgstr "半徑"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#, fuzzy
 msgid "_Bullet..."
-msgstr ""
+msgstr "項目符號"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
@@ -604,7 +611,7 @@ msgstr "按鈕(_U)..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "Create a button graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "產生一個散發光芒的按鈕圖形網頁"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
@@ -632,15 +639,15 @@ msgstr "文字顏色"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
-msgstr ""
+msgstr "添加一個怪異的光芒，圍繞在選定的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
-msgstr ""
+msgstr "異樣發光(_G)..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
-msgstr ""
+msgstr "產生一個包含在文字周圍有異樣發光效果的標誌"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
@@ -648,7 +655,7 @@ msgstr "發光大小(像素×4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
-msgstr ""
+msgstr "加入產生迷幻效果的外框到選取的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
@@ -656,7 +663,7 @@ msgstr "異樣霓虹管(_N)..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr ""
+msgstr "產生一個擁有模糊輪廓文字的標誌"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
@@ -678,7 +685,7 @@ msgstr "間隔寬度"
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr ""
+msgstr "在選定的範圍(或alpha)裡，增加一個漸變的效果，一個陰影和一個背景"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
@@ -692,7 +699,7 @@ msgstr "基本 I (_B)..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
-msgstr ""
+msgstr "添加陰影和強調的效果到選定區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
@@ -700,7 +707,7 @@ msgstr "基本 II(_A)..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 msgid "Create a simple logo with a shadow and a highlight"
-msgstr ""
+msgstr "產生一個簡單的標誌與陰影和強調的效果"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
@@ -781,13 +788,13 @@ msgstr "寬度"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "融合動畫至少需要三個圖層"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr ""
+msgstr "建立中間層以混合在背景上的兩個或兩個以上圖層，作為一個動畫"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -803,13 +810,13 @@ msgstr "最大模糊半徑"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr ""
+msgstr "混合(_B)..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
-msgstr ""
+msgstr "增加混合背景，強調的效果，和陰影到選定的範圍(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -821,7 +828,7 @@ msgstr "混色模式"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr ""
+msgstr "產生一個標誌融合背景，強調突出效果和陰影"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -864,7 +871,7 @@ msgstr "偏移量(像素)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
-msgstr ""
+msgstr "添加乳牛斑紋到選定的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
@@ -873,7 +880,7 @@ msgstr "背景顏色"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
-msgstr ""
+msgstr "乳牛斑紋(_V)..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
@@ -888,42 +895,47 @@ msgid "Spots density Y"
 msgstr "垂直斑點密度"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#, fuzzy
 msgid "Add glowing"
-msgstr ""
+msgstr "加入帳號"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#, fuzzy
 msgid "After glow"
-msgstr ""
+msgstr "是之後的"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "B_urn-In..."
-msgstr ""
+msgstr "擦去(_U)..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#, fuzzy
 msgid "Corona width"
-msgstr ""
+msgstr "視窗寬度"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr ""
+msgstr "創建中間層以產生動畫,利用擦去的方式在兩個圖層間轉換"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "淡出"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#, fuzzy
 msgid "Fadeout width"
-msgstr ""
+msgstr "視窗寬度"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
 msgstr "準備製作 GIF"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#, fuzzy
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "每格的暫停時間(_P):"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid ""
@@ -1006,7 +1018,7 @@ msgstr "粉筆顏色"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr ""
+msgstr "為選定的區域(或alpha)創建一個粉筆繪製效果"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
@@ -1018,7 +1030,7 @@ msgstr "粉筆(_C)..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加有缺口的木雕效果到選定的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1029,8 +1041,9 @@ msgid "Chip Awa_y..."
 msgstr "鑿字(_Y)..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
+#, fuzzy
 msgid "Chip amount"
-msgstr ""
+msgstr "座椅數量"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
@@ -1045,8 +1058,9 @@ msgid "Fill BG with pattern"
 msgstr "以圖樣填充背景"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
+#, fuzzy
 msgid "Invert"
-msgstr ""
+msgstr "反向選擇(_I)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep background"
@@ -1060,24 +1074,28 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+#, fuzzy
 msgid "Chrome balance"
-msgstr ""
+msgstr "重設儲蓄數目(_R)"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+#, fuzzy
 msgid "Chrome factor"
-msgstr ""
+msgstr "放大率(_F):"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+#, fuzzy
 msgid "Chrome lightness"
-msgstr ""
+msgstr "停用 _Javascript chrome"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+#, fuzzy
 msgid "Chrome saturation"
-msgstr ""
+msgstr "影片畫面的飽和度"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome white areas"
@@ -1086,21 +1104,24 @@ msgstr "將白色區域鍍鉻"
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+#, fuzzy
 msgid "Environment map"
-msgstr ""
+msgstr "選擇排列(_S)："
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#, fuzzy
 msgid "Highlight balance"
-msgstr ""
+msgstr "重設儲蓄數目(_R)"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#, fuzzy
 msgid "Stencil C_hrome..."
-msgstr ""
+msgstr "瀏覽..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加一個簡單的鍍鉻效果到選定的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
@@ -1121,7 +1142,7 @@ msgstr "產生電路圖的隨機數來源數字"
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr ""
+msgstr "用像電路板上的紋路填充所選區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1135,8 +1156,9 @@ msgid "No background (only for separate layer)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
+#, fuzzy
 msgid "Oilify mask size"
-msgstr ""
+msgstr "遊戲盤大小"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
@@ -1146,16 +1168,16 @@ msgstr "使用新圖層"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
-msgstr ""
+msgstr "電路條紋(_C)..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+msgstr "添加布料般的質感到選定的區域"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "Azimuth"
-msgstr ""
+msgstr "方位角"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
@@ -1173,19 +1195,20 @@ msgstr "深度"
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:6
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
-msgstr ""
+msgstr "仰角"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
-msgstr ""
+msgstr "布料化(_C)..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "Add realistic looking coffee stains to the image"
-msgstr ""
+msgstr "添加逼真的咖啡污漬到圖片上"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
+#, fuzzy
 msgid "Darken only"
-msgstr ""
+msgstr "唯讀"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1193,13 +1216,13 @@ msgstr "污漬"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
-msgstr ""
+msgstr "咖啡污漬(_C)..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
-msgstr ""
+msgstr "新增一漫畫書效果到選定的區域(或alpha)，用輪廓和漸變填充"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1215,14 +1238,15 @@ msgstr "輪廓顏色"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+#, fuzzy
 msgid "Outline size"
-msgstr ""
+msgstr "棋盤大小(_B):"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
-msgstr ""
+msgstr "添加金屬效果到選定的區域(或Alpha)，用倒影和透視陰影"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1253,43 +1277,48 @@ msgstr "水晶..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr ""
+msgstr "差值雲..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "結實的雜訊應用於差值層模式"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
+#, fuzzy
 msgid "Distress the selection"
-msgstr ""
+msgstr "日曆選擇模式"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
 msgstr "精細度(1 表示低)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
+#, fuzzy
 msgid "Smooth horizontally"
-msgstr ""
+msgstr "已水平最大化"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
+#, fuzzy
 msgid "Smooth vertically"
-msgstr ""
+msgstr "已垂直最大化"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
+#, fuzzy
 msgid "Spread"
-msgstr ""
+msgstr "展開"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "臨界值 [(較大) 1←→255 (較小)]"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
+#, fuzzy
 msgid "_Distort..."
-msgstr ""
+msgstr "產生電路圖的隨機數來源數字"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "添加一落下的陰影到選定區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1328,7 +1357,7 @@ msgstr "透明度"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
 msgid "_Drop Shadow..."
-msgstr ""
+msgstr "陰影效果(_D)..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
@@ -1340,7 +1369,7 @@ msgstr "擦拭"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase every other row or column"
-msgstr ""
+msgstr "擦除每隔一行或列"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1372,7 +1401,7 @@ msgstr "列/行"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
-msgstr ""
+msgstr "隔行清除(_E)..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
@@ -1430,8 +1459,9 @@ msgid "Font _size (pixels)"
 msgstr "字型大小[像素](_S)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+#, fuzzy
 msgid "Render _Font Map..."
-msgstr ""
+msgstr "使用新的排列(_N)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
@@ -1461,7 +1491,7 @@ msgstr "文字(_T)"
 msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
-msgstr ""
+msgstr "添加霜凍效果到選定的區域(或alpha)，附加上陰影"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1473,7 +1503,7 @@ msgstr "結冰(_F)..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
-msgstr ""
+msgstr "添加凹凸不平的模糊邊框到圖片上"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1493,13 +1523,13 @@ msgid "Granularity (1 is Low)"
 msgstr "精細度(1 表示低)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#, no-c-format
+#, fuzzy, no-c-format
 msgid "Shadow weight (%)"
-msgstr ""
+msgstr "字型粗細"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr ""
+msgstr "模糊邊框(_F)..."
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
@@ -1548,12 +1578,14 @@ msgid "Shadow color"
 msgstr "陰影顏色"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
+#, fuzzy
 msgid "_Big Header..."
-msgstr ""
+msgstr "欄位標頭"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
+#, fuzzy
 msgid "_Small Header..."
-msgstr ""
+msgstr "欄位標頭"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
@@ -1578,26 +1610,30 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#, fuzzy
 msgid "T_ube Sub-Button Label..."
-msgstr ""
+msgstr "設定確定按鈕的標籤"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
+#, fuzzy
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr ""
+msgstr "設定確定按鈕的標籤"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
+#, fuzzy
 msgid "_General Tube Labels..."
-msgstr ""
+msgstr "工具列按鈕標籤:"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
+#, fuzzy
 msgid "_Tube Button Label..."
-msgstr ""
+msgstr "設定確定按鈕的標籤"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
-msgstr ""
+msgstr "添加漸變，圖樣，陰影和凹凸貼圖到選定的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1624,8 +1660,9 @@ msgid "Pattern (outline)"
 msgstr "圖樣(輪廓)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:13
+#, fuzzy
 msgid "Pattern (overlay)"
-msgstr ""
+msgstr "移除圖樣(_R)..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 msgid "Pattern (text)"
@@ -1648,12 +1685,13 @@ msgid "Use pattern for text instead of gradient"
 msgstr "使用圖樣而不是漸層來繪畫文字"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:22
+#, fuzzy
 msgid "Use pattern overlay"
-msgstr ""
+msgstr "設定 %s 使用樣式字串"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加發光發熱的金屬效果到選定的區域(或alpha) "
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
@@ -1665,11 +1703,12 @@ msgstr "發光文字(_W)..."
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加一個閃亮的外觀和斜角效果到選定的區域(或alpha) "
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#, fuzzy
 msgid "Bevel height (sharpness)"
-msgstr ""
+msgstr "自選遊戲盤縱向格數"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
@@ -1690,8 +1729,9 @@ msgid "Create an image filled with an example of the current gradient"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#, fuzzy
 msgid "Custom _Gradient..."
-msgstr ""
+msgstr "事件漸層效果"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
@@ -1713,8 +1753,9 @@ msgid "_Grid..."
 msgstr "格線(_G)..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+#, fuzzy
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "從壓縮檔中將已選的刪除"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -1722,47 +1763,53 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
+#, fuzzy
 msgid "Direction"
-msgstr ""
+msgstr "Direction"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
+#, fuzzy
 msgid "Horizontal"
-msgstr ""
+msgstr "水平"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#, no-c-format
+#, fuzzy, no-c-format
 msgid "Position (in %)"
-msgstr ""
+msgstr "在 druid 中的位置"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
+#, fuzzy
 msgid "Vertical"
-msgstr ""
+msgstr "垂直"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#, fuzzy
 msgid "New _Guide..."
-msgstr ""
+msgstr "新密碼"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
+#, fuzzy
 msgid "Position"
-msgstr ""
+msgstr "位置"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
+#, fuzzy
 msgid "_Remove all Guides"
-msgstr ""
+msgstr "清除全部中斷點"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
@@ -1773,8 +1820,9 @@ msgid "Frame color"
 msgstr "邊框顏色"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+#, fuzzy
 msgid "Frame size"
-msgstr ""
+msgstr "棋盤大小(_B):"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
@@ -1798,7 +1846,7 @@ msgstr "陸地(_L)..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "用火山熔岩濾鏡填滿目前的選取區域"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1815,44 +1863,48 @@ msgstr "使用目前的漸層"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
-msgstr ""
+msgstr "火山熔岩(_L)..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
-msgstr ""
+msgstr "用放射狀線條從中心向外放射,使用前景顏色填充圖層"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
-msgstr ""
+msgstr "新星發射光線(_N)..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
 msgstr "線條數目"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
+#, fuzzy
 msgid "Offset radius"
-msgstr ""
+msgstr "捲動偏移"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
 msgstr "隨機程度"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
+#, fuzzy
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "十進位經緯度"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
+#, fuzzy
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "只是建立金鑰(_J)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#, fuzzy
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "只是建立金鑰(_J)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
@@ -1867,12 +1919,14 @@ msgid "Feathering"
 msgstr "羽化"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#, fuzzy
 msgid "Name"
-msgstr ""
+msgstr "名稱"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#, fuzzy
 msgid "Re_ctangular, Feathered..."
-msgstr ""
+msgstr "%s！ ─ 輪到您了。"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
@@ -1890,7 +1944,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr ""
+msgstr "轉換選定的區域(或alpha)成類似霓虹燈招牌的物體"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
@@ -1905,8 +1959,9 @@ msgid "N_eon..."
 msgstr "霓虹管(_E)..."
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:3
+#, fuzzy
 msgid "Cell size (pixels)"
-msgstr ""
+msgstr "儲存格指標大小"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style of newspaper printing"
@@ -1928,7 +1983,7 @@ msgstr "散焦"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "使圖片看起來像舊照片"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
@@ -1940,7 +1995,7 @@ msgstr "深褐色"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
-msgstr ""
+msgstr "舊照片(_O)..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -1982,19 +2037,21 @@ msgstr "圖樣名稱"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "添加一有角度的陰影到選取的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
 msgstr "角度"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+#, fuzzy
 msgid "Interpolation"
-msgstr ""
+msgstr "插入補間"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+#, fuzzy
 msgid "Relative distance of horizon"
-msgstr ""
+msgstr "km"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative length of shadow"
@@ -2002,11 +2059,11 @@ msgstr "陰影相對長度"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
-msgstr ""
+msgstr "透視(_P)..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加一個電影中掠食者眼中所見世界的效果到選定的區域"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2022,7 +2079,7 @@ msgstr "打格子"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
-msgstr ""
+msgstr "掠食者之眼(_P)..."
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
@@ -2069,12 +2126,14 @@ msgid "Upper color (active)"
 msgstr "頂部顏色(有輸入焦點)"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
+#, fuzzy
 msgid "_Round Button..."
-msgstr ""
+msgstr "單選按鈕"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:1
+#, fuzzy
 msgid "Behavior"
-msgstr ""
+msgstr "行為"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Create an image filled with an Earth-like map pattern"
@@ -2093,12 +2152,14 @@ msgid "Tile"
 msgstr "可鋪排"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+#, fuzzy
 msgid "Reverse Layer Order"
-msgstr ""
+msgstr "清單以相反次序排列"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+#, fuzzy
 msgid "Reverse the order of layers in the image"
-msgstr ""
+msgstr "在新的視窗中以相反次序排列"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
@@ -2107,11 +2168,12 @@ msgstr "黑色"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current image"
-msgstr ""
+msgstr "建立多層圖片，藉由加入漣漪效果到目前的圖片"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
 msgid "Edge behavior"
-msgstr ""
+msgstr "項目行為"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
@@ -2120,11 +2182,11 @@ msgstr "畫格數目"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling strength"
-msgstr "漣漪高度"
+msgstr "漣波起伏高度"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr ""
+msgstr "塗抹"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
@@ -2132,7 +2194,7 @@ msgstr "繞到另一邊"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
-msgstr ""
+msgstr "漣波起伏(_R)..."
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "Add background"
@@ -2143,74 +2205,88 @@ msgid "Add drop-shadow"
 msgstr "加上影子"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
+#, fuzzy
 msgid "Edge radius"
-msgstr ""
+msgstr "貼齊邊緣"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr ""
+msgstr "讓圖片的四個角變圓，並且選擇性地添加一個下拉陰影和背景"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr ""
+msgstr "圓角化(_R)..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+#, fuzzy
 msgid "Palette"
-msgstr ""
+msgstr "元件一覽表"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+#, fuzzy
 msgid "Se_t Colormap..."
-msgstr ""
+msgstr "伺服器(_R):"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#, fuzzy
 msgid "Convert a selection to a brush"
-msgstr ""
+msgstr "轉換為 PS 等級 1"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#, fuzzy
 msgid "To _Brush..."
-msgstr ""
+msgstr "面對面"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
+#, fuzzy
 msgid "Convert a selection to an image"
 msgstr ""
+"無法載入圖片:\n"
+"%s"
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
+#, fuzzy
 msgid "To _Image"
-msgstr ""
+msgstr "正儲存圖片到 %s"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+#, fuzzy
 msgid "Convert a selection to a pattern"
-msgstr ""
+msgstr "轉換為 PS 等級 1"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#, fuzzy
 msgid "To _Pattern..."
-msgstr ""
+msgstr "移除圖樣(_R)..."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:1
+#, fuzzy
 msgid "Concave"
-msgstr ""
+msgstr "取消"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
-#, no-c-format
+#, fuzzy, no-c-format
 msgid "Radius (%)"
-msgstr ""
+msgstr "半徑"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+#, fuzzy
 msgid "Round the corners of the current selection"
-msgstr ""
+msgstr "目前的選擇區域（預設為文件）"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
+#, fuzzy
 msgid "Rounded R_ectangle..."
-msgstr ""
+msgstr "圓角按鈕"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
+msgstr "添加幻燈片的模樣到圖像上,如框架,鏈輪孔和標記"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2242,7 +2318,7 @@ msgstr "動感文字..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
+msgstr "建立一個動畫由目前的圖像映射到一個旋轉的球"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2258,12 +2334,12 @@ msgstr "由左至右旋轉"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
-msgstr ""
+msgstr "轉動的球體(_S)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid ""
 "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
+msgstr "添加螺線圖，外旋輪線，和李沙傑曲線到目前圖層"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2286,36 +2362,42 @@ msgid "Epitrochoid"
 msgstr "外旋輪線"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+#, fuzzy
 msgid "Frame"
-msgstr ""
+msgstr "Frame"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+#, fuzzy
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "OpenStreetBugs 下載迴圈"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+#, fuzzy
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "OpenStreetBugs 下載迴圈"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
 msgstr "正六邊形"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+#, fuzzy
 msgid "Hole ratio"
-msgstr ""
+msgstr "壓縮率："
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#, fuzzy
 msgid "Inner teeth"
-msgstr ""
+msgstr "內部框線"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
 msgstr "Lissajous"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+#, fuzzy
 msgid "Margin (pixels)"
-msgstr ""
+msgstr "左邊界"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
@@ -2346,8 +2428,9 @@ msgid "Polygon: 9 sides"
 msgstr "正九邊形"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+#, fuzzy
 msgid "Rendering Spyro"
-msgstr ""
+msgstr "描繪字型的設定細節"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2384,7 +2467,7 @@ msgstr "類型"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
-msgstr ""
+msgstr "螺線圖(_S)..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
@@ -2403,8 +2486,9 @@ msgid "Swirl-_Tile..."
 msgstr "可鋪排式旋渦(_T)..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
+#, fuzzy
 msgid "Whirl amount"
-msgstr ""
+msgstr "座椅數量"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "Create an image filled with a swirly pattern"
@@ -2428,23 +2512,26 @@ msgstr "旋渦圖案(_S)..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加微量的粒子效果所選取的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#, fuzzy
 msgid "Base color"
-msgstr ""
+msgstr "不明的顏色"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+#, fuzzy
 msgid "Edge only"
-msgstr ""
+msgstr "唯讀"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#, fuzzy
 msgid "Edge width"
-msgstr ""
+msgstr "視窗寬度"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
@@ -2485,6 +2572,7 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
+"填充選取的區域(或alpha)，用一紋理，並且加入高亮度，陰影，以及一馬賽克背景"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2520,7 +2608,7 @@ msgstr "水平方向模糊化"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
+msgstr "模糊圖片的邊緣，以便無縫地鋪排"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2540,7 +2628,7 @@ msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
-msgstr ""
+msgstr "可鋪排式模糊化(_T)..."
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "Create a decorative web title header"
@@ -2578,7 +2666,7 @@ msgstr "波幅"
 msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
-msgstr ""
+msgstr "建立多層圖片，就像一塊石頭被扔進當前圖像的效果"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2590,13 +2678,13 @@ msgstr "波長"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr ""
+msgstr "同心圓波浪(W)..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr ""
+msgstr "用編織效果創建一個新圖層，用作重疊或凹凸貼圖"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2619,8 +2707,9 @@ msgid "Thread density"
 msgstr "線條密度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:7
+#, fuzzy
 msgid "Thread intensity"
-msgstr ""
+msgstr "下一封相關郵件(_T)"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread length"
@@ -2628,67 +2717,79 @@ msgstr "線條長度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr ""
+msgstr "編織(_W)..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "建立書籤以連結到 GIMP 網站"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+#, fuzzy
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "切換為手動排列方式？"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+#, fuzzy
 msgid "Create and Use _Selections"
-msgstr ""
+msgstr "建立及設定(_C)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
+#, fuzzy
 msgid "Create, Open and Save _Files"
-msgstr ""
+msgstr "進行 diff 前儲存開啟的檔案"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
+#, fuzzy
 msgid "Drawing _Simple Objects"
-msgstr ""
+msgstr "刪除選定的物件"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+#, fuzzy
 msgid "How to Use _Dialogs"
-msgstr ""
+msgstr "代表遊戲規則的檔案"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
+#, fuzzy
 msgid "Plug-in _Registry"
-msgstr ""
+msgstr "AT-SPI 註冊表"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
+#, fuzzy
 msgid "Using _Paths"
-msgstr ""
+msgstr "隱藏路徑(_H)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+#, fuzzy
 msgid "_Basic Concepts"
-msgstr ""
+msgstr "基本拉丁文"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
+#, fuzzy
 msgid "_Developer Web Site"
-msgstr ""
+msgstr "Nautilus 網站"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+#, fuzzy
 msgid "_Main Web Site"
-msgstr ""
+msgstr "Nautilus 網站"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr ""
+msgstr "準備您要上傳至網站的圖片(_P)"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
+#, fuzzy
 msgid "_User Manual Web Site"
-msgstr ""
+msgstr "GNOME Games 網站"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
+#, fuzzy
 msgid "_Working with Digital Camera Photos"
-msgstr ""
+msgstr "您剛剛放入了內含數位相片的媒體。"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr ""
+msgstr "添加一個不易察覺的半透明3D效果到選定的區域(或alpha)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2724,4 +2825,4 @@ msgstr "高亮度區透明度"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
-msgstr ""
+msgstr "_Xach 效果..."

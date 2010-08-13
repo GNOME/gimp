@@ -1,4 +1,4 @@
-# traditional Chinese translation of gimp-libgimp.
+# Chinese (Hong Kong) translation of gimp-libgimp.
 # Copyright (C) 2001, 03, 04, 05 Free Software Foundation, Inc.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-13 20:02+0800\n"
-"PO-Revision-Date: 2010-02-20 08:30+0800\n"
+"PO-Revision-Date: 2010-08-13 20:04+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -222,7 +222,7 @@ msgstr "Sans"
 
 #: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
-msgstr "漸層選擇"
+msgstr "漸變色選擇"
 
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
@@ -244,7 +244,7 @@ msgstr "以名稱"
 #: ../libgimp/gimpprocbrowserdialog.c:141
 #, fuzzy
 msgid "by description"
-msgstr "正依描述搜尋"
+msgstr "正根據描述搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:142
 #, fuzzy
@@ -264,7 +264,7 @@ msgstr "版權資訊"
 #: ../libgimp/gimpprocbrowserdialog.c:145
 #, fuzzy
 msgid "by date"
-msgstr "依修改日期(_D)"
+msgstr "根據修改日期(_D)"
 
 #: ../libgimp/gimpprocbrowserdialog.c:146
 #, fuzzy
@@ -277,36 +277,36 @@ msgstr "正在搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
-msgstr "正依名稱搜尋"
+msgstr "正根據名稱搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
-msgstr "正依描述搜尋"
+msgstr "正根據描述搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:416
 #, fuzzy
 msgid "Searching by help"
-msgstr "正依名稱搜尋"
+msgstr "正根據名稱搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:423
 #, fuzzy
 msgid "Searching by author"
-msgstr "正依名稱搜尋"
+msgstr "正根據名稱搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
 #, fuzzy
 msgid "Searching by copyright"
-msgstr "正依名稱搜尋"
+msgstr "正根據名稱搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
 #, fuzzy
 msgid "Searching by date"
-msgstr "依修改日期(_D)"
+msgstr "根據修改日期(_D)"
 
 #: ../libgimp/gimpprocbrowserdialog.c:444
 #, fuzzy
 msgid "Searching by type"
-msgstr "正依名稱搜尋"
+msgstr "正根據名稱搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
@@ -408,7 +408,7 @@ msgstr "前景色至透明"
 
 #: ../libgimpbase/gimpbaseenums.c:67
 msgid "Custom gradient"
-msgstr "自選漸層"
+msgstr "自選漸變色"
 
 #: ../libgimpbase/gimpbaseenums.c:96
 msgid "FG color fill"
@@ -562,15 +562,15 @@ msgstr "圓錐形(不對稱)"
 
 #: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (angular)"
-msgstr "依形狀擴展(菱角)"
+msgstr "根據形狀擴展(菱角)"
 
 #: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (spherical)"
-msgstr "依形狀擴展(球狀)"
+msgstr "根據形狀擴展(球狀)"
 
 #: ../libgimpbase/gimpbaseenums.c:397
 msgid "Shaped (dimpled)"
-msgstr "依形狀擴展(酒渦)"
+msgstr "根據形狀擴展(酒渦)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (cw)"
@@ -606,7 +606,7 @@ msgstr "固定顏色(_S)"
 #: ../libgimpbase/gimpbaseenums.c:463
 #, fuzzy
 msgid "Stock ID"
-msgstr "內建圖示代碼"
+msgstr "內置圖示代碼"
 
 #: ../libgimpbase/gimpbaseenums.c:464
 #, fuzzy
@@ -870,7 +870,7 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 #, fuzzy
 msgid "Relative colorimetric"
-msgstr "相對溼度："
+msgstr "相對濕度："
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 #, fuzzy
@@ -891,7 +891,7 @@ msgstr "%s 的值不是有效的 UTF-8 字串"
 #: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "%s 布林值應該是‘yes’或者‘no’，但實際上是‘%s’"
+msgstr "%s 邏輯值應該是‘yes’或者‘no’，但實際上是‘%s’"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
@@ -1119,12 +1119,12 @@ msgstr "全部選取(_A)"
 #: ../libgimpwidgets/gimppageselector.c:307
 #, fuzzy
 msgid "Select _range:"
-msgstr "列印頁數範圍"
+msgstr "打印頁數範圍"
 
 #: ../libgimpwidgets/gimppageselector.c:319
 #, fuzzy
 msgid "Open _pages as"
-msgstr "簽署訊息的金鑰(_S):"
+msgstr "簽署訊息的密碼匙(_S):"
 
 #: ../libgimpwidgets/gimppageselector.c:420
 #, fuzzy
@@ -1275,8 +1275,7 @@ msgstr "比例"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
-"使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
+msgstr "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
 #: ../libgimpwidgets/gimpwidgets.c:515
 msgid "_New Seed"
@@ -1951,7 +1950,7 @@ msgstr "將 ~a 移離桌面"
 #: ../modules/controller-midi.c:361
 #, fuzzy, c-format
 msgid "Controller %03d"
-msgstr "控制著"
+msgstr "控制着"
 
 #: ../modules/controller-midi.c:408
 #, fuzzy
