@@ -41,14 +41,16 @@ struct _GimpCageTool
 {
   GimpDrawTool          parent_instance;
   GimpCageConfig       *config;
-  
+
   GimpVector2           cursor_position;
   gint                  handle_moved;
   gboolean              cage_complete;
-  
+
   GeglBuffer           *coef;
-  
+
   GimpImageMap         *image_map;
+
+  GeglNode             *node_preview;
 };
 
 

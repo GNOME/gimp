@@ -37,13 +37,17 @@
 #include "core/gimpprogress.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "display/gimpdisplay.h"
 #include "core/gimp-transform-utils.h"
-
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable-shadow.h"
 #include "core/gimpimagemap.h"
+#include "core/gimpprojection.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
+
 #include "base/tile-manager.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -158,6 +162,8 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->cage_complete = FALSE;
 
   self->coef = NULL;
+  self->image_map = NULL;
+  self->node_preview = NULL;
 }
 
 /*static gboolean
@@ -176,18 +182,6 @@ gimp_cage_tool_finalize (GObject *object)
   GimpCageTool        *ct  = GIMP_CAGE_TOOL (object);
 
   gimp_cage_tool_halt (ct);
-
-  if (ct->config)
-  {
-    g_object_unref (ct->config);
-    ct->config = NULL;
-  }
-
-  if (ct->coef)
-  {
-    gegl_buffer_destroy (ct->coef);
-    ct->coef = NULL;
-  }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -208,16 +202,19 @@ gimp_cage_tool_start (GimpCageTool       *ct,
   if (ct->config)
   {
     g_object_unref (ct->config);
-    ct->config = NULL;
   }
-  
+
+  if (ct->image_map)
+  {
+    gimp_image_map_abort (ct->image_map);
+    g_object_unref (ct->image_map);
+  }
+
   ct->config = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   ct->cursor_position.x = -1000;
   ct->cursor_position.y = -1000;
   ct->handle_moved = -1;
   ct->cage_complete = FALSE;
-
-  //gimp_cage_tool_prepare_preview (ct, display);
 
   gimp_draw_tool_start (draw_tool, display);
 }
@@ -234,10 +231,38 @@ gimp_cage_tool_halt (GimpCageTool *ct)
   if (gimp_tool_control_is_active (tool->control))
     gimp_tool_control_halt (tool->control);
 
-  tool->display              = NULL;
+  if (ct->config)
+  {
+    g_object_unref (ct->config);
+    ct->config = NULL;
+  }
 
-  //g_object_unref (ct->image_map);
-  //ct->image_map = NULL;
+  if (ct->coef)
+  {
+    gegl_buffer_destroy (ct->coef);
+    ct->coef = NULL;
+  }
+
+  if (ct->image_map)
+  {
+    gimp_tool_control_set_preserve (tool->control, TRUE);
+
+    gimp_image_map_abort (ct->image_map);
+    g_object_unref (ct->image_map);
+    ct->image_map = NULL;
+
+    gimp_tool_control_set_preserve (tool->control, FALSE);
+
+    gimp_image_flush (gimp_display_get_image (tool->display));
+  }
+
+  if (ct->node_preview)
+  {
+    g_object_unref (ct->node_preview);
+    ct->node_preview = NULL;
+  }
+
+  tool->display  = NULL;
 }
 
 static void 
@@ -281,13 +306,14 @@ gimp_cage_tool_button_press (GimpTool              *tool,
   }
 
   // user is clicking on the first handle, we close the cage and switch to deform mode
-  if (ct->handle_moved == 0 && config->cage_vertice_number > 2)
+  if (ct->handle_moved == 0 && config->cage_vertice_number > 2 && !ct->coef)
   {    
     ct->cage_complete = TRUE;
     gimp_cage_tool_switch_to_deform (ct);
 
     gimp_cage_config_reverse_cage_if_needed (config);
     gimp_cage_tool_compute_coef (ct, display);
+    gimp_cage_tool_prepare_preview (ct, display);
   }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
@@ -303,16 +329,9 @@ gimp_cage_tool_button_release (GimpTool              *tool,
                                GimpDisplay           *display)
 {
   GimpCageTool      *ct       = GIMP_CAGE_TOOL (tool);
-  GimpCageOptions   *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
   ct->handle_moved = -1;
-
-  if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
-  {
-    //gimp_cage_config_reverse_cage_if_needed (ct->config);
-    //gimp_cage_tool_compute_coef (ct, display);
-  }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
 }
@@ -335,7 +354,12 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_KP_Enter:
     case GDK_ISO_Enter:
       if (ct->cage_complete)
-      gimp_cage_tool_process (ct, display); /*RUN IT BABY*/
+      {
+        gimp_image_map_abort (ct->image_map);
+        g_object_unref (ct->image_map);
+        ct->image_map = NULL;
+        gimp_cage_tool_process (ct, display); /*RUN IT BABY*/
+      }
       return TRUE;
 
     case GDK_Escape:
@@ -374,10 +398,38 @@ gimp_cage_tool_motion (GimpTool         *tool,
                                       coords->y);
   }
 
-/*  {
-    GeglRectangle rect = {0, 0, 300, 300};
-    gimp_image_map_apply (ct->image_map, &rect);
-  }*/
+  if (ct->coef)
+  {
+    GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
+    GimpImage *image = gimp_display_get_image (tool->display);
+    GimpItem         *item  = GIMP_ITEM (tool->drawable);
+    gint              x, y;
+    gint              w, h;
+    gint              off_x, off_y;
+    GeglRectangle     visible;
+
+    gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+    gimp_item_get_offset (item, &off_x, &off_y);
+
+    gimp_rectangle_intersect (x, y, w, h,
+                              off_x,
+                              off_y,
+                              gimp_item_get_width  (item),
+                              gimp_item_get_height (item),
+                              &visible.x,
+                              &visible.y,
+                              &visible.width,
+                              &visible.height);
+
+    visible.x -= off_x;
+    visible.y -= off_y;
+
+    gimp_image_map_apply (ct->image_map, &visible);
+
+    gimp_projection_flush_now (gimp_image_get_projection (image));
+    gimp_display_flush_now (tool->display);
+  }
 
 
   gimp_draw_tool_resume (draw_tool);
@@ -676,7 +728,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
                                   "operation", "gimp:cage_transform",
                                   "config", ct->config,
                                   NULL);
-      
+
       coef = gegl_node_new_child (gegl,
                                   "operation", "gegl:buffer-source",
                                   "buffer",    ct->coef,
@@ -721,7 +773,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
                                   "operation", "gimp:cage_preview",
                                   "config", ct->config,
                                   NULL);
-      
+
       coef = gegl_node_new_child (gegl,
                                   "operation", "gegl:buffer-source",
                                   "buffer",    ct->coef,
@@ -778,17 +830,23 @@ gimp_cage_tool_prepare_preview (GimpCageTool *ct,
 {
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  GimpImageMap *image_map;
 
-  GeglNode *gegl = gegl_node_new ();
   GeglNode *coef, *cage;
 
-  coef = gegl_node_new_child (gegl,
+  if (ct->node_preview)
+  {
+    g_object_unref (ct->node_preview);
+    ct->node_preview = NULL;
+  }
+
+  ct->node_preview  = gegl_node_new ();
+
+  coef = gegl_node_new_child (ct->node_preview,
                               "operation", "gegl:buffer-source",
                               "buffer",    ct->coef,
                               NULL);
 
-  cage = gegl_node_new_child (gegl,
+  cage = gegl_node_new_child (ct->node_preview,
                                 "operation", "gimp:cage_preview",
                                 "config", ct->config,
                                 NULL);
@@ -796,11 +854,9 @@ gimp_cage_tool_prepare_preview (GimpCageTool *ct,
   gegl_node_connect_to (coef, "output",
                         cage, "aux");
 
-  image_map = gimp_image_map_new (drawable,
-                                  _("Cage transform"),
-                                  cage,
-                                  NULL,
-                                  NULL);
-
-  g_object_unref (gegl);
+  ct->image_map = gimp_image_map_new (drawable,
+                                      _("Cage transform"),
+                                      cage,
+                                      NULL,
+                                      NULL);
 }
