@@ -217,15 +217,16 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
         for( j = 0; j < config->cage_vertice_number; j++)
         {
           GimpVector2 v1,v2,a,b,p;
-          gdouble BA,SRT,L0,L1,A0,A1,A10,L10, Q,S,R;
+          gdouble BA,SRT,L0,L1,A0,A1,A10,L10, Q,S,R, absa;
 
           v1 = config->cage_vertices[j];
           v2 = config->cage_vertices[(j+1)%config->cage_vertice_number];
           p.x = x;
           p.y = y;
-
           a.x = v2.x - v1.x;
           a.y = v2.y - v1.y;
+          absa = gimp_vector2_length (&a);
+
           b.x = v1.x - x;
           b.y = v1.y - y;
           Q = a.x * a.x + a.y * a.y;
@@ -242,7 +243,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
           L10 = L1 - L0;
 
           /* edge coef */
-          coef[j + config->cage_vertice_number] = (1.0 / (4.0 * M_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
+          coef[j + config->cage_vertice_number] = (-absa / (4.0 * M_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
 
           if (isnan(coef[j + config->cage_vertice_number]))
           {
