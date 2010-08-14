@@ -180,8 +180,8 @@ gimp_operation_cage_preview_process (GeglOperation       *operation,
   GeglRectangle rect, bb_cage;
   GeglBufferIterator *it;
 
-  rect.height = 1;
-  rect.width = 1;
+  rect.height = 3;
+  rect.width = 3;
 
   bb_cage = gimp_cage_config_get_bounding_box (config);
 
