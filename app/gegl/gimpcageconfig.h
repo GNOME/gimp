@@ -44,6 +44,7 @@ struct _GimpCageConfig
   GimpVector2              *cage_vertices; /* cage before deformation */
   GimpVector2              *cage_vertices_d; /* cage after deformation */
   gdouble                  *scaling_factor;
+  GimpVector2              *normal_d;
 };
 
 
@@ -108,18 +109,6 @@ void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
                                                        gint             point_number,
                                                        gdouble          x,
                                                        gdouble          y);
-
-/**
- * gimp_cage_config_get_edge_normal:
- * @gcc: the cage config
- * @edge_index: the index of the edge considered
- * 
- * Compute the normal vector to an edge of the cage
- * 
- * Returns: The normal vector to the specified edge of the cage. This vector is normalized (length = 1.0)
- */
-GimpVector2   gimp_cage_config_get_edge_normal        (GimpCageConfig  *gcc,
-                                                       gint             edge_index);
 
 /**
  * gimp_cage_config_get_bounding_box:

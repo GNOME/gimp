@@ -462,8 +462,8 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
 
   for(i = 0; i < cvn; i++)
   {
-      pos_x += coef[i + cvn] * config->scaling_factor[i] * gimp_cage_config_get_edge_normal (config, i).x;
-      pos_y += coef[i + cvn] * config->scaling_factor[i] * gimp_cage_config_get_edge_normal (config, i).y;
+      pos_x += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].x;
+      pos_y += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].y;
   }
 
   result.x = pos_x;
