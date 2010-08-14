@@ -301,7 +301,7 @@ gimp_cage_tool_button_press (GimpTool              *tool,
                                                        coords->x,
                                                        coords->y,
                                                        HANDLE_SIZE);
-    if (ct->handle_moved > 0)
+    if (ct->handle_moved > 0 && ct->idle_id > 0)
       {
         g_source_remove(ct->idle_id);
         ct->idle_id = 0; /*Stop preview update for now*/
@@ -433,8 +433,11 @@ gimp_cage_tool_key_press (GimpTool    *tool,
         gimp_image_map_abort (ct->image_map);
         g_object_unref (ct->image_map);
         ct->image_map = NULL;
-        g_source_remove(ct->idle_id);
-        ct->idle_id = 0; /*Stop preview update for now*/
+        if (ct->idle_id)
+          {
+            g_source_remove(ct->idle_id);
+            ct->idle_id = 0; /*Stop preview update for now*/
+          }
         gimp_cage_tool_process (ct, display); /*RUN IT BABY*/
       }
       return TRUE;
@@ -544,13 +547,14 @@ gimp_cage_tool_oper_update  (GimpTool         *tool,
   GimpDrawTool    *draw_tool   = GIMP_DRAW_TOOL (tool);
   GimpCageOptions *options     = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
   GimpCageConfig  *config      = ct->config;
-  gint             active_handle;
+  gint             active_handle = -1;
 
-  active_handle = gimp_cage_config_is_on_handle (config,
-                                             options->cage_mode,
-                                             coords->x,
-                                             coords->y,
-                                             HANDLE_SIZE);
+  if (config)
+    active_handle = gimp_cage_config_is_on_handle (config,
+                                                   options->cage_mode,
+                                                   coords->x,
+                                                   coords->y,
+                                                   HANDLE_SIZE);
   if (!ct->cage_complete || (active_handle > -1))
     {
       gimp_draw_tool_pause (draw_tool);
