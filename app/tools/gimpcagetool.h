@@ -51,6 +51,9 @@ struct _GimpCageTool
   GimpImageMap         *image_map;
 
   GeglNode             *node_preview;
+
+  guint                  idle_id;
+
 };
 
 
