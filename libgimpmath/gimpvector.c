@@ -463,12 +463,12 @@ GimpVector2
 gimp_vector2_normal (GimpVector2  *vector)
 {
   GimpVector2 result;
-  
-  result.x = vector->y;
-  result.y = - vector->x;
-  
-  gimp_vector2_normalize (vector);
-  
+
+  result.x = - vector->y;
+  result.y = vector->x;
+
+  gimp_vector2_normalize (&result);
+
   return result;
 }
 
@@ -485,12 +485,12 @@ GimpVector2
 gimp_vector2_normal_val (GimpVector2  vector)
 {
   GimpVector2 result;
-  
-  result.x = vector.y;
-  result.y = - vector.x;
-  
+
+  result.x = - vector.y;
+  result.y = vector.x;
+
   gimp_vector2_normalize (&result);
-  
+
   return result;
 }
 /**************************************/
