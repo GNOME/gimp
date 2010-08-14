@@ -207,34 +207,36 @@ gimp_operation_cage_preview_process (GeglOperation       *operation,
 
     while(n_pixels--)
     {
-      /* computing of the final position of the source pixel */
-      gdouble pos_x, pos_y;
-
-      pos_x = 0;
-      pos_y = 0;
-
-      
-      for(i = 0; i < cvn; i++)
+      if (gimp_cage_config_point_inside(config, x, y))
       {
-        pos_x += coef[i] * config->cage_vertices_d[i].x;
-        pos_y += coef[i] * config->cage_vertices_d[i].y;
+        /* computing of the final position of the source pixel */
+        gdouble pos_x, pos_y;
+
+        pos_x = 0;
+        pos_y = 0;
+
+        for(i = 0; i < cvn; i++)
+        {
+          pos_x += coef[i] * config->cage_vertices_d[i].x;
+          pos_y += coef[i] * config->cage_vertices_d[i].y;
+        }
+
+        for(i = 0; i < cvn; i++)
+        {
+          pos_x += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].x;
+          pos_y += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].y;
+        }
+
+        rect.x = (gint) rint(pos_x) - 1;
+        rect.y = (gint) rint(pos_y) - 1;
+
+        /* copy the source pixel in the out buffer */
+        gegl_buffer_set(out_buf,
+                        &rect,
+                        format_io,
+                        source,
+                        GEGL_AUTO_ROWSTRIDE);
       }
-
-      for(i = 0; i < cvn; i++)
-      {
-        pos_x += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].x;
-        pos_y += coef[i + cvn] * config->scaling_factor[i] * config->normal_d[i].y;
-      }
-
-      rect.x = (gint) rint(pos_x) - 1;
-      rect.y = (gint) rint(pos_y) - 1;
-
-      /* copy the source pixel in the out buffer */
-      gegl_buffer_set(out_buf,
-                      &rect,
-                      format_io,
-                      source,
-                      GEGL_AUTO_ROWSTRIDE);
 
       source  += 4;
       coef    += 2 * cvn;
