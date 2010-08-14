@@ -62,4 +62,7 @@ void           gimp_image_map_clear        (GimpImageMap          *image_map);
 void           gimp_image_map_abort        (GimpImageMap          *image_map);
 
 
+gboolean       gimp_image_map_is_busy      (GimpImageMap        *image_map);
+
+
 #endif /* __GIMP_IMAGE_MAP_H__ */
