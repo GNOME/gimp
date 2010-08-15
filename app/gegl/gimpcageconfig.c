@@ -198,6 +198,7 @@ gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
     gcc->cage_vertice_number--;
 
   gimp_cage_config_compute_scaling_factor (gcc);
+  gimp_cage_config_compute_edge_normal (gcc);
 }
 
 gint
@@ -331,6 +332,7 @@ gimp_cage_config_reverse_cage  (GimpCageConfig *gcc)
   }
 
   gimp_cage_config_compute_scaling_factor (gcc);
+  gimp_cage_config_compute_edge_normal (gcc);
 }
 
 void
