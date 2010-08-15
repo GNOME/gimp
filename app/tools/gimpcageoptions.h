@@ -41,6 +41,7 @@ struct _GimpCageOptions
   GimpTransformOptions    parent_instance;
   
   GimpCageMode            cage_mode;
+  gboolean                fill_plain_color;
 };
 
 

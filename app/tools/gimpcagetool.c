@@ -673,7 +673,6 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   GimpCageConfig    *config   = ct->config;
 
   Babl *format;
-  GeglRectangle rect;
   GeglNode *gegl, *input, *output;
   GeglProcessor *processor;
   GimpProgress *progress;
@@ -687,7 +686,10 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   }
 
   format = babl_format_n(babl_type("float"), config->cage_vertice_number * 2);
-  rect = gimp_cage_config_get_bounding_box (config);
+
+  progress = gimp_progress_start (GIMP_PROGRESS (display),
+                                _("Coefficient computation"),
+                                FALSE);
 
   gegl = gegl_node_new ();
 
@@ -704,11 +706,6 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 
   gegl_node_connect_to (input, "output",
                           output, "input");
-
-
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                _("Coefficient computation"),
-                                FALSE);
 
   processor = gegl_node_new_processor (output, NULL);
 
@@ -728,8 +725,9 @@ static void
 gimp_cage_tool_process (GimpCageTool *ct,
                         GimpDisplay  *display)
 {
-  TileManager  *new_tiles;
-  GeglRectangle rect;
+  GimpCageOptions   *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  TileManager       *new_tiles;
+  GeglRectangle      rect;
 
   GimpImage     *image    = gimp_display_get_image (display);
   GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
@@ -783,6 +781,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
       cage = gegl_node_new_child (gegl,
                                   "operation", "gimp:cage_transform",
                                   "config", ct->config,
+                                  "fill_plain_color", options->fill_plain_color,
                                   NULL);
 
       coef = gegl_node_new_child (gegl,

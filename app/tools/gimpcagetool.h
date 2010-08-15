@@ -52,7 +52,7 @@ struct _GimpCageTool
 
   GeglNode             *node_preview;
 
-  guint                  idle_id;
+  guint                 idle_id;
 
 };
 

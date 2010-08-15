@@ -43,7 +43,8 @@
 enum
 {
   PROP_0,
-  PROP_CAGE_MODE
+  PROP_CAGE_MODE,
+  PROP_FILL_PLAIN_COLOR
 };
 
 static void gimp_cage_options_set_property  (GObject      *object,
@@ -75,6 +76,11 @@ gimp_cage_options_class_init (GimpCageOptionsClass *klass)
                                  GIMP_TYPE_CAGE_MODE,
                                  GIMP_CAGE_MODE_CAGE_CHANGE,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_PLAIN_COLOR,
+                                    "fill-plain-color", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -97,6 +103,10 @@ gimp_cage_options_set_property  (GObject      *object,
       options->cage_mode = g_value_get_enum (value);
       break;
 
+    case PROP_FILL_PLAIN_COLOR:
+      options->fill_plain_color = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -117,6 +127,10 @@ gimp_cage_options_get_property  (GObject    *object,
       g_value_set_enum (value, options->cage_mode);
       break;
 
+    case PROP_FILL_PLAIN_COLOR:
+      g_value_set_boolean (value, options->fill_plain_color);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -130,6 +144,7 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *hbox;
   GtkWidget *mode;
+  GtkWidget *button;
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -139,6 +154,12 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
   mode = gimp_prop_enum_radio_box_new (config, "cage-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
   gtk_widget_show (mode);
+
+
+  button = gimp_prop_check_button_new (config, "fill-plain-color",
+                                       _("Fill the original cage position with a plain color"));
+  gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
   
   return vbox;
 }
