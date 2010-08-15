@@ -99,7 +99,7 @@ gimp_cage_config_init (GimpCageConfig *self)
 
   self->cage_vertices = g_new(GimpVector2, self->cage_vertices_max);
   self->cage_vertices_d = g_new(GimpVector2, self->cage_vertices_max);
-  self->scaling_factor = g_malloc (self->cage_vertices_max * sizeof(gfloat));
+  self->scaling_factor = g_malloc (self->cage_vertices_max * sizeof(gdouble));
   self->normal_d = g_new(GimpVector2, self->cage_vertices_max);
 }
 
@@ -171,7 +171,7 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                                    gcc->cage_vertices_max);
 
     gcc->scaling_factor = g_realloc (gcc->scaling_factor,
-                                     gcc->cage_vertices_max * sizeof(gfloat));
+                                     gcc->cage_vertices_max * sizeof(gdouble));
 
     gcc->normal_d = g_renew(GimpVector2,
                             gcc->normal_d,
