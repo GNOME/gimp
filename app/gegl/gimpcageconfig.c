@@ -47,6 +47,7 @@ G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
 #define parent_class gimp_cage_config_parent_class
 
 #define N_ITEMS_PER_ALLOC       10
+#define DELTA                   0.010309278351
 
 static void       gimp_cage_config_finalize                   (GObject *object);
 static void       gimp_cage_config_get_property               (GObject    *object,
@@ -177,11 +178,11 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                             gcc->cage_vertices_max);
   }
 
-  gcc->cage_vertices[gcc->cage_vertice_number].x = x;
-  gcc->cage_vertices[gcc->cage_vertice_number].y = y;
+  gcc->cage_vertices[gcc->cage_vertice_number].x = x + DELTA;
+  gcc->cage_vertices[gcc->cage_vertice_number].y = y + DELTA;
 
-  gcc->cage_vertices_d[gcc->cage_vertice_number].x = x;
-  gcc->cage_vertices_d[gcc->cage_vertice_number].y = y;
+  gcc->cage_vertices_d[gcc->cage_vertice_number].x = x + DELTA;
+  gcc->cage_vertices_d[gcc->cage_vertice_number].y = y + DELTA;
 
   gcc->cage_vertice_number++;
 
@@ -252,13 +253,13 @@ gimp_cage_config_move_cage_point  (GimpCageConfig  *gcc,
 
   if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
   {
-    gcc->cage_vertices[point_number].x = x;
-    gcc->cage_vertices[point_number].y = y;
+    gcc->cage_vertices[point_number].x = x + DELTA;
+    gcc->cage_vertices[point_number].y = y + DELTA;
   }
   else
   {
-    gcc->cage_vertices_d[point_number].x = x;
-    gcc->cage_vertices_d[point_number].y = y;
+    gcc->cage_vertices_d[point_number].x = x + DELTA;
+    gcc->cage_vertices_d[point_number].y = y + DELTA;
   }
 
   gimp_cage_config_compute_scaling_factor (gcc);
