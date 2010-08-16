@@ -183,7 +183,7 @@ Specify a default brush.  The brush is searched for in the specified brush
 path.  This is a string value.
 
 .TP
-(default-dynamics "Basic Dynamics")
+(default-dynamics "Dynamics Off")
 
 Specify a default dynamics.  The dynamics is searched for in the specified
 dynamics path.  This is a string value.
