@@ -33,6 +33,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "actions.h"
 #include "image-commands.h"
@@ -414,6 +415,41 @@ static const GimpEnumActionEntry layers_mode_actions[] =
     GIMP_HELP_LAYER_MODE }
 };
 
+/**
+ * layers_actions_fix_tooltip:
+ * @group:
+ * @action:
+ * @modifiers:
+ *
+ * Make layer alpha to selection click-shortcuts discoverable, at
+ * least in theory.
+ **/
+static void
+layers_actions_fix_tooltip (GimpActionGroup *group,
+                            const gchar     *action,
+                            GdkModifierType  modifiers)
+{
+  const gchar *old_hint;
+  gchar       *new_hint;
+
+  old_hint = gimp_action_group_get_action_tooltip (group,
+                                                   action);
+  new_hint = g_strconcat (old_hint,
+                          "\n",
+                          /* Will be followed with e.g. "Shift-Click
+                             on thumbnail"
+                           */
+                          _("Shortcut: "),
+                          gimp_get_mod_string (modifiers),
+                          /* Will be prepended with a modifier key
+                             string, e.g. "Shift"
+                           */
+                          _("-Click on thumbnail in Layers dockable"),
+                          NULL);
+
+  gimp_action_group_set_action_tooltip (group, action, new_hint);
+  g_free (new_hint);
+}
 
 void
 layers_actions_setup (GimpActionGroup *group)
@@ -440,6 +476,14 @@ layers_actions_setup (GimpActionGroup *group)
                                       layers_alpha_to_selection_actions,
                                       G_N_ELEMENTS (layers_alpha_to_selection_actions),
                                       G_CALLBACK (layers_alpha_to_selection_cmd_callback));
+  layers_actions_fix_tooltip (group, "layers-alpha-selection-replace",
+                              GDK_MOD1_MASK);
+  layers_actions_fix_tooltip (group, "layers-alpha-selection-add",
+                              GDK_SHIFT_MASK | GDK_MOD1_MASK);
+  layers_actions_fix_tooltip (group, "layers-alpha-selection-subtract",
+                              GDK_CONTROL_MASK | GDK_MOD1_MASK);
+  layers_actions_fix_tooltip (group, "layers-alpha-selection-intersect",
+                              GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK);
 
   gimp_action_group_add_enum_actions (group, "layers-action",
                                       layers_select_actions,
