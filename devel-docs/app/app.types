@@ -104,7 +104,6 @@ gimp_display_options_no_image_get_type
 gimp_display_options_get_type
 gimp_display_shell_get_type
 gimp_dock_get_type
-gimp_dock_separator_get_type
 gimp_dock_window_get_type
 gimp_dockable_get_type
 gimp_dockbook_get_type
@@ -372,5 +371,4 @@ gimp_viewable_dialog_get_type
 gimp_viewable_get_type
 gimp_window_get_type
 gtk_hwrap_box_get_type
-gtk_vwrap_box_get_type
 gtk_wrap_box_get_type
