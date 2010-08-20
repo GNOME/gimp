@@ -1795,7 +1795,11 @@ AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 # Checks for gtk-doc and docbook-tools
 ######################################
 
+# Check for GTK_DOC_CHECK availability. The GTK_DOC_CHECK invocation
+# must be on its own line, gtkdocize relies on it
+m4_ifdef([GTK_DOC_CHECK], [
 GTK_DOC_CHECK([1.0])
+])
 
 # NOTE: We need to use a separate automake conditional for this
 #       to make this work with the tarballs.
