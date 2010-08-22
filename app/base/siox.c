@@ -182,15 +182,15 @@ static void
 stageone (lab          *points,
           gint          left,
           gint          right,
-          gint          depth,
+          const gint    depth,
           gint         *clusters,
           const gfloat *limits,
           const gint    dims)
 {
-  gint    curdim = depth % dims;
-  gfloat  min, max;
-  gfloat  curval;
-  gint    i;
+  const gint curdim = depth % dims;
+  gfloat     min, max;
+  gfloat     curval;
+  gint       i;
 
   min = CURRENT_VALUE (points, left, curdim);
   max = min;
@@ -208,20 +208,21 @@ stageone (lab          *points,
   /* Split according to Rubner-Rule */
   if (max - min > limits[curdim])
     {
-      gfloat pivot = (min + max) / 2.0;
-      gint   l     = left;
-      gint   r     = right - 1;
-      lab    tmp;
+      const gfloat pivot = (min + max) / 2.0;
+      gint         l     = left;
+      gint         r     = right - 1;
+      lab          tmp;
 
       while (TRUE)
         {
-          while ( CURRENT_VALUE (points, l, curdim) <= pivot )
+          while (CURRENT_VALUE (points, l, curdim) <= pivot)
             ++l;
-          while ( CURRENT_VALUE (points, r, curdim) > pivot )
+
+          while (CURRENT_VALUE (points, r, curdim) > pivot)
             --r;
 
           if (l > r)
-                break;
+            break;
 
           tmp = points[l];
           points[l] = points[r];
@@ -268,16 +269,16 @@ static void
 stagetwo (lab           *points,
           gint           left,
           gint           right,
-          gint           depth,
+          const gint     depth,
           gint          *clusters,
           const gfloat  *limits,
           const gfloat   threshold,
           const gint     dims)
 {
-  gint    curdim = depth % dims;
-  gfloat  min, max;
-  gfloat  curval;
-  gint    i;
+  const gint curdim = depth % dims;
+  gfloat     min, max;
+  gfloat     curval;
+  gint       i;
 
   min = CURRENT_VALUE (points, left, curdim);
   max = min;
@@ -295,20 +296,21 @@ stagetwo (lab           *points,
   /* Split according to Rubner-Rule */
   if (max - min > limits[curdim])
     {
-      gfloat pivot = (min + max) / 2.0;
-      gint   l     = left;
-      gint   r     = right - 1;
-      lab    tmp;
+      const gfloat pivot = (min + max) / 2.0;
+      gint         l     = left;
+      gint         r     = right - 1;
+      lab          tmp;
 
       while (TRUE)
         {
-          while ( CURRENT_VALUE (points, l, curdim) <= pivot )
+          while (CURRENT_VALUE (points, l, curdim) <= pivot)
             ++l;
-          while ( CURRENT_VALUE (points, r, curdim) > pivot )
+
+          while (CURRENT_VALUE (points, r, curdim) > pivot)
             --r;
 
           if (l > r)
-                break;
+            break;
 
           tmp = points[l];
           points[l] = points[r];
@@ -332,9 +334,9 @@ stagetwo (lab           *points,
       if (sum >= threshold)
         {
           const gint c = right - left;
-          gfloat l = 0;
-          gfloat a = 0;
-          gfloat b = 0;
+          gfloat     l = 0;
+          gfloat     a = 0;
+          gfloat     b = 0;
 
           for (; left < right; ++left)
             {
@@ -866,6 +868,10 @@ siox_foreground_extract (SioxState          *state,
   limits[1] = sensitivity[1];
   limits[2] = sensitivity[2];
 
+#ifdef SIOX_DEBUG
+  g_printerr ("siox.c: limits %f %f %f\n", limits[0], limits[1], limits[2]);
+#endif
+
   clustersize = get_clustersize (limits);
 
   siox_progress_update (progress_callback, progress_data, 0.0);
@@ -940,7 +946,6 @@ siox_foreground_extract (SioxState          *state,
 
       if (refinement & SIOX_REFINEMENT_ADD_BACKGROUND)
         surebg = g_new (lab, surebgcount);
-
 
       /* create inputs for color signatures */
       pixel_region_init (&srcPR, state->pixels,
