@@ -132,7 +132,7 @@ static const GimpEnumActionEntry file_save_actions[] =
   { "file-save-a-copy", NULL,
     NC_("file-action", "Save a Cop_y..."), NULL,
     NC_("file-action",
-        "Save this image with a different name, but keep its current name"),
+        "Save a copy of this image, without affecting the source file (if any) or the current state of the image"),
     GIMP_SAVE_MODE_SAVE_A_COPY, FALSE,
     GIMP_HELP_FILE_SAVE_A_COPY },
 
