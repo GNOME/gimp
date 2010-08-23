@@ -50,7 +50,8 @@ void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_area                  (GimpDisplayShell   *shell,
                                                       gint                x,
                                                       gint                y,

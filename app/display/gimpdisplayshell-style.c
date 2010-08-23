@@ -136,6 +136,18 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
     }
 }
 
+void
+gimp_display_shell_set_cursor_style (GimpDisplayShell *shell,
+                                     cairo_t          *cr)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  cairo_translate (cr, 0.5, 0.5);
+}
+
 
 /*  private functions  */
 

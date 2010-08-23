@@ -605,13 +605,44 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
+gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
+                                cairo_t          *cr)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
 
   if (shell->have_cursor)
-    gimp_canvas_draw_cursor (GIMP_CANVAS (shell->canvas),
-                             shell->cursor_x, shell->cursor_y);
+    {
+      gimp_display_shell_set_cursor_style (shell, cr);
+
+#define CURSOR_SIZE 14
+
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+
+      cairo_move_to (cr, shell->cursor_x - CURSOR_SIZE, shell->cursor_y - 1);
+      cairo_line_to (cr, shell->cursor_x + CURSOR_SIZE, shell->cursor_y - 1);
+
+      cairo_move_to (cr, shell->cursor_x - CURSOR_SIZE, shell->cursor_y + 1);
+      cairo_line_to (cr, shell->cursor_x + CURSOR_SIZE, shell->cursor_y + 1);
+
+      cairo_move_to (cr, shell->cursor_x - 1, shell->cursor_y - CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x - 1, shell->cursor_y + CURSOR_SIZE);
+
+      cairo_move_to (cr, shell->cursor_x + 1, shell->cursor_y - CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x + 1, shell->cursor_y + CURSOR_SIZE);
+
+      cairo_stroke (cr);
+
+      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+
+      cairo_move_to (cr, shell->cursor_x - CURSOR_SIZE, shell->cursor_y);
+      cairo_line_to (cr, shell->cursor_x + CURSOR_SIZE, shell->cursor_y);
+
+      cairo_move_to (cr, shell->cursor_x, shell->cursor_y - CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x, shell->cursor_y + CURSOR_SIZE);
+
+      cairo_stroke (cr);
+    }
 }
 
 void

@@ -534,41 +534,6 @@ gimp_canvas_new (GimpDisplayConfig *config)
 }
 
 /**
- * gimp_canvas_draw_cursor:
- * @canvas: the #GimpCanvas widget to draw on.
- * @x: x coordinate
- * @y: y coordinate
- *
- * Draws a plus-shaped black and white cursor, centered at the point
- * @x, @y.
- **/
-void
-gimp_canvas_draw_cursor (GimpCanvas *canvas,
-                         gint        x,
-                         gint        y)
-{
-  GtkWidget *widget = GTK_WIDGET (canvas);
-  GdkWindow *window = gtk_widget_get_window (widget);
-
-  if (! (gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_BLACK) &&
-         gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_WHITE)) )
-    return;
-
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x - 7, y - 1, x + 7, y - 1);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
-                 x - 7, y,     x + 7, y    );
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x - 7, y + 1, x + 7, y + 1);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x - 1, y - 7, x - 1, y + 7);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
-                 x,     y - 7, x,     y + 7);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x + 1, y - 7, x + 1, y + 7);
-}
-
-/**
  * gimp_canvas_draw_point:
  * @canvas: a #GimpCanvas widget
  * @style:  one of the enumerated #GimpCanvasStyle's.
