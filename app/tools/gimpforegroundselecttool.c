@@ -571,7 +571,10 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->stroke)
     {
+      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
       gimp_display_shell_draw_pen (gimp_display_get_shell (draw_tool->display),
+                                   cr,
                                    (const GimpVector2 *)fg_select->stroke->data,
                                    fg_select->stroke->len,
                                    GIMP_CONTEXT (options),
@@ -579,6 +582,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
                                     GIMP_ACTIVE_COLOR_BACKGROUND :
                                     GIMP_ACTIVE_COLOR_FOREGROUND),
                                    options->stroke_width);
+      cairo_destroy (cr);
     }
 
   if (fg_select->mask)

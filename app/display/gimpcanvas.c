@@ -407,7 +407,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       values.stipple   = canvas->stipple[0];
       break;
 
-    case GIMP_CANVAS_STYLE_CUSTOM:
     default:
       return NULL;
     }
@@ -951,32 +950,6 @@ gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
     }
 
   gdk_gc_set_stipple (canvas->gc[style], canvas->stipple[index]);
-}
-
-/**
- * gimp_canvas_set_custom_gc:
- * @canvas: a #GimpCanvas widget
- * @gc:     a #GdkGC;
- *
- * The #GimpCanvas widget has an extra style for a custom #GdkGC. This
- * function allows you to set the @gc for the %GIMP_CANVAS_STYLE_CUSTOM.
- * Drawing with the custom style only works if you set a #GdkGC
- * earlier.  Since the custom #GdkGC can under certain circumstances
- * be destroyed by #GimpCanvas, you should always set the custom gc
- * before calling a #GimpCanvas drawing function with
- * %GIMP_CANVAS_STYLE_CUSTOM.
- **/
-void
-gimp_canvas_set_custom_gc (GimpCanvas *canvas,
-                           GdkGC      *gc)
-{
-  if (gc)
-    g_object_ref (gc);
-
-  if (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM])
-    g_object_unref (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM]);
-
-  canvas->gc[GIMP_CANVAS_STYLE_CUSTOM] = gc;
 }
 
 /**

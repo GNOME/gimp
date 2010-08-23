@@ -36,8 +36,9 @@ void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
 void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
 void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       const GimpVector2  *points,
-                                                      gint                num_points,
+                                                      gint                n_points,
                                                       GimpContext        *context,
                                                       GimpActiveColor     color,
                                                       gint                width);

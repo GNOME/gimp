@@ -115,7 +115,6 @@ struct _GimpDisplayShell
   GList             *children;
 
   GtkWidget         *canvas;           /*  GimpCanvas widget                  */
-  GdkGC             *pen_gc;           /*  GC for felt pen drawing            */
 
   GtkAdjustment     *hsbdata;          /*  adjustments                        */
   GtkAdjustment     *vsbdata;

@@ -55,13 +55,6 @@
 #include "gimpdisplayshell-transform.h"
 
 
-/*  local function prototypes  */
-
-static GdkGC * gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
-                                              GimpContext      *context,
-                                              GimpActiveColor   active);
-
-
 /*  public functions  */
 
 /**
@@ -394,46 +387,45 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
+                             cairo_t           *cr,
                              const GimpVector2 *points,
-                             gint               num_points,
+                             gint               n_points,
                              GimpContext       *context,
                              GimpActiveColor    color,
                              gint               width)
 {
-  GimpCanvas  *canvas;
-  GdkGC       *gc;
-  GdkGCValues  values;
-  GdkPoint    *coords;
+  gint i;
+  gint x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (num_points == 0 || points != NULL);
+  g_return_if_fail (n_points == 0 || points != NULL);
 
-  canvas = GIMP_CANVAS (shell->canvas);
+  if (n_points == 0)
+    return;
 
-  coords = g_new (GdkPoint, MAX (2, num_points));
+  gimp_display_shell_set_pen_style (shell, cr, context, color, width);
 
-  gimp_display_shell_transform_points (shell,
-                                       points, coords, num_points, FALSE);
+  gimp_display_shell_transform_xy (shell,
+                                   points[0].x, points[0].y,
+                                   &x, &y, FALSE);
 
-  if (num_points == 1)
+  cairo_move_to (cr, x, y);
+
+  for (i = 1; i < n_points; i++)
     {
-      coords[1] = coords[0];
-      num_points = 2;
+      gimp_display_shell_transform_xy (shell,
+                                       points[i].x, points[i].y,
+                                       &x, &y, FALSE);
+
+      cairo_line_to (cr, x, y);
     }
 
-  gc = gimp_display_shell_get_pen_gc (shell, context, color);
+  if (i == 1)
+    cairo_line_to (cr, x, y);
 
-  values.line_width = MAX (1, width);
-  gdk_gc_set_values (gc, &values, GDK_GC_LINE_WIDTH);
-
-  gimp_canvas_set_custom_gc (canvas, gc);
-
-  gimp_canvas_draw_lines (canvas, GIMP_CANVAS_STYLE_CUSTOM, coords, num_points);
-
-  gimp_canvas_set_custom_gc (canvas, NULL);
-
-  g_free (coords);
+  cairo_stroke (cr);
 }
 
 void
@@ -694,52 +686,4 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                      shell->highlight ? &rect : NULL);
         }
     }
-}
-
-
-/*  private functions  */
-
-static GdkGC *
-gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
-                               GimpContext      *context,
-                               GimpActiveColor   active)
-{
-  GdkGCValues  values;
-  GimpRGB      rgb;
-  GdkColor     color;
-
-  if (shell->pen_gc)
-    return shell->pen_gc;
-
-  values.line_style = GDK_LINE_SOLID;
-  values.cap_style  = GDK_CAP_ROUND;
-  values.join_style = GDK_JOIN_ROUND;
-
-  shell->pen_gc = gdk_gc_new_with_values (gtk_widget_get_window (shell->canvas),
-                                          &values, (GDK_GC_LINE_STYLE |
-                                                    GDK_GC_CAP_STYLE  |
-                                                    GDK_GC_JOIN_STYLE));
-
-  switch (active)
-    {
-    case GIMP_ACTIVE_COLOR_FOREGROUND:
-      gimp_context_get_foreground (context, &rgb);
-      break;
-
-    case GIMP_ACTIVE_COLOR_BACKGROUND:
-      gimp_context_get_background (context, &rgb);
-      break;
-    }
-
-  gimp_rgb_get_gdk_color (&rgb, &color);
-  gdk_gc_set_rgb_fg_color (shell->pen_gc, &color);
-
-  g_object_add_weak_pointer (G_OBJECT (shell->pen_gc),
-                             (gpointer) &shell->pen_gc);
-
-  g_signal_connect_object (context, "notify",
-                           G_CALLBACK (g_object_unref),
-                           shell->pen_gc, G_CONNECT_SWAPPED);
-
-  return shell->pen_gc;
 }

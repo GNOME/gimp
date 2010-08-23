@@ -33,6 +33,11 @@ void   gimp_display_shell_set_grid_style         (GimpDisplayShell *shell,
                                                   GimpGrid         *grid);
 void   gimp_display_shell_set_cursor_style       (GimpDisplayShell *shell,
                                                   cairo_t          *cr);
+void   gimp_display_shell_set_pen_style          (GimpDisplayShell *shell,
+                                                  cairo_t          *cr,
+                                                  GimpContext      *context,
+                                                  GimpActiveColor   active,
+                                                  gint              width);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

@@ -938,12 +938,6 @@ gimp_display_shell_unrealize (GtkWidget *widget)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
 
-  if (shell->pen_gc)
-    {
-      g_object_unref (shell->pen_gc);
-      shell->pen_gc = NULL;
-    }
-
   if (shell->nav_popup)
     gtk_widget_unrealize (shell->nav_popup);
 

@@ -304,12 +304,6 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimp_display_shell_icon_update_stop (shell);
 
-  if (shell->pen_gc)
-    {
-      g_object_unref (shell->pen_gc);
-      shell->pen_gc = NULL;
-    }
-
   g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_quality_notify_handler,
                                         shell);

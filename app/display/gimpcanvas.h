@@ -35,7 +35,6 @@ typedef enum
   GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
   GIMP_CANVAS_STYLE_LAYER_GROUP_BOUNDARY,
   GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE,
-  GIMP_CANVAS_STYLE_CUSTOM,
   GIMP_CANVAS_NUM_STYLES
 } GimpCanvasStyle;
 
@@ -154,8 +153,6 @@ void         gimp_canvas_set_clip_region   (GimpCanvas         *canvas,
 void         gimp_canvas_set_stipple_index (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             guint               index);
-void         gimp_canvas_set_custom_gc     (GimpCanvas         *canvas,
-                                            GdkGC              *gc);
 void         gimp_canvas_set_bg_color      (GimpCanvas         *canvas,
                                             GimpRGB            *color);
 
