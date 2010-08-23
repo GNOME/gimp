@@ -318,12 +318,9 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
   /*  put it to the screen  */
   {
     gint disp_xoffset, disp_yoffset;
-    gint offset_x, offset_y;
 
     gimp_display_shell_scroll_get_disp_offset (shell,
 					       &disp_xoffset, &disp_yoffset);
-    gimp_display_shell_scroll_get_render_start_offset (shell,
-						       &offset_x, &offset_y);
 
     gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas),
 			  GIMP_CANVAS_STYLE_RENDER,
