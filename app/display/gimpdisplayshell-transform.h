@@ -68,6 +68,11 @@ void  gimp_display_shell_transform_segments_old (const GimpDisplayShell *shell,
                                                  GdkSegment             *dest_segs,
                                                  gint                    n_segs,
                                                  gboolean                use_offsets);
+void  gimp_display_shell_transform_segments     (const GimpDisplayShell *shell,
+                                                 const BoundSeg         *src_segs,
+                                                 BoundSeg               *dest_segs,
+                                                 gint                    n_segs,
+                                                 gboolean                use_offsets);
 
 void  gimp_display_shell_untransform_viewport   (const GimpDisplayShell *shell,
                                                  gint                   *x,

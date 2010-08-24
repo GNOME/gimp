@@ -431,6 +431,64 @@ gimp_display_shell_transform_segments_old (const GimpDisplayShell *shell,
 }
 
 /**
+ * gimp_display_shell_transform_segments:
+ * @shell:       a #GimpDisplayShell
+ * @src_segs:    array of segments in image coordinates
+ * @dest_segs:   returns the corresponding segments in display coordinates
+ * @n_segs:      number of segments
+ * @use_offsets: if %TRUE, the source coordinates are in the coordinate
+ *               system of the active drawable instead of the image
+ *
+ * Transforms from image coordinates to display coordinates, so that
+ * objects can be rendered at the correct points on the display.
+ **/
+void
+gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
+                                       const BoundSeg         *src_segs,
+                                       BoundSeg               *dest_segs,
+                                       gint                    n_segs,
+                                       gboolean                use_offsets)
+{
+  gint offset_x = 0;
+  gint offset_y = 0;
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (use_offsets)
+    {
+      GimpImage *image = gimp_display_get_image (shell->display);
+      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
+
+      gimp_item_get_offset (item, &offset_x, &offset_y);
+    }
+
+  for (i = 0; i < n_segs ; i++)
+    {
+      gint64 x1, x2;
+      gint64 y1, y2;
+
+      x1 = src_segs[i].x1 + offset_x;
+      x2 = src_segs[i].x2 + offset_x;
+      y1 = src_segs[i].y1 + offset_y;
+      y2 = src_segs[i].y2 + offset_y;
+
+      x1 = (x1 * shell->x_src_dec) / shell->x_dest_inc;
+      x2 = (x2 * shell->x_src_dec) / shell->x_dest_inc;
+      y1 = (y1 * shell->y_src_dec) / shell->y_dest_inc;
+      y2 = (y2 * shell->y_src_dec) / shell->y_dest_inc;
+
+      dest_segs[i].x1 = CLAMP (x1 - shell->offset_x, G_MININT, G_MAXINT);
+      dest_segs[i].x2 = CLAMP (x2 - shell->offset_x, G_MININT, G_MAXINT);
+      dest_segs[i].y1 = CLAMP (y1 - shell->offset_y, G_MININT, G_MAXINT);
+      dest_segs[i].y2 = CLAMP (y2 - shell->offset_y, G_MININT, G_MAXINT);
+
+      dest_segs[i].open    = src_segs[i].open;
+      dest_segs[i].visited = FALSE;
+    }
+}
+
+/**
  * gimp_display_shell_untransform_viewport:
  * @shell:  a #GimpDisplayShell
  * @x:      returns image x coordinate of display upper left corner

@@ -52,16 +52,13 @@ struct _Selection
   GimpDisplayShell *shell;            /*  shell that owns the selection     */
 
   GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
-  gint              n_segs_in;        /*  number of segments in segs1       */
+  gint              n_segs_in;        /*  number of segments in segs_in     */
 
   GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
-  gint              n_segs_out;       /*  number of segments in segs2       */
+  gint              n_segs_out;       /*  number of segments in segs_out    */
 
-  BoundSeg         *bound_segs_layer;
-  gint              n_bound_segs_layer;
-
-  GdkSegment       *segs_layer;       /*  gdk segments of layer boundary    */
-  gint              n_segs_layer;     /*  number of segments in segs3       */
+  BoundSeg         *segs_layer;       /*  segments of layer boundary        */
+  gint              n_segs_layer;     /*  number of segments in segs_layer  */
 
   guint             index;            /*  index of current stipple pattern  */
   gint              paused;           /*  count of pause requests           */
@@ -94,9 +91,13 @@ static void      selection_add_point      (GdkPoint       *points[8],
                                            gint            y);
 static void      selection_render_points  (Selection      *selection);
 
-static void      selection_transform_segs (Selection      *selection,
+static void  selection_transform_segs_old (Selection      *selection,
                                            const BoundSeg *src_segs,
                                            GdkSegment     *dest_segs,
+                                           gint            n_segs);
+static void      selection_transform_segs (Selection      *selection,
+                                           const BoundSeg *src_segs,
+                                           BoundSeg       *dest_segs,
                                            gint            n_segs);
 static void      selection_generate_segs  (Selection      *selection);
 static void      selection_free_segs      (Selection      *selection);
@@ -398,8 +399,8 @@ selection_layer_draw (Selection *selection)
       cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
 
       gimp_display_shell_draw_layer_boundary (selection->shell, cr, drawable,
-                                              selection->bound_segs_layer,
-                                              selection->n_bound_segs_layer);
+                                              selection->segs_layer,
+                                              selection->n_segs_layer);
 
       cairo_destroy (cr);
     }
@@ -573,10 +574,10 @@ selection_render_points (Selection *selection)
 }
 
 static void
-selection_transform_segs (Selection      *selection,
-                          const BoundSeg *src_segs,
-                          GdkSegment     *dest_segs,
-                          gint            n_segs)
+selection_transform_segs_old (Selection      *selection,
+                              const BoundSeg *src_segs,
+                              GdkSegment     *dest_segs,
+                              gint            n_segs)
 {
   gint xclamp = selection->shell->disp_width + 1;
   gint yclamp = selection->shell->disp_height + 1;
@@ -616,6 +617,49 @@ selection_transform_segs (Selection      *selection,
 }
 
 static void
+selection_transform_segs (Selection      *selection,
+                          const BoundSeg *src_segs,
+                          BoundSeg       *dest_segs,
+                          gint            n_segs)
+{
+  gint xclamp = selection->shell->disp_width + 1;
+  gint yclamp = selection->shell->disp_height + 1;
+  gint i;
+
+  gimp_display_shell_transform_segments (selection->shell,
+                                         src_segs, dest_segs, n_segs, FALSE);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      dest_segs[i].x1 = CLAMP (dest_segs[i].x1, -1, xclamp);
+      dest_segs[i].y1 = CLAMP (dest_segs[i].y1, -1, yclamp);
+
+      dest_segs[i].x2 = CLAMP (dest_segs[i].x2, -1, xclamp);
+      dest_segs[i].y2 = CLAMP (dest_segs[i].y2, -1, yclamp);
+
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (! dest_segs[i].open)
+        {
+          /*  If it is vertical  */
+          if (dest_segs[i].x1 == dest_segs[i].x2)
+            {
+              dest_segs[i].x1 -= 1;
+              dest_segs[i].x2 -= 1;
+            }
+          else
+            {
+              dest_segs[i].y1 -= 1;
+              dest_segs[i].y2 -= 1;
+            }
+        }
+    }
+}
+
+static void
 selection_generate_segs (Selection *selection)
 {
   GimpImage      *image = gimp_display_get_image (selection->shell->display);
@@ -634,8 +678,8 @@ selection_generate_segs (Selection *selection)
   if (selection->n_segs_in)
     {
       selection->segs_in = g_new (GdkSegment, selection->n_segs_in);
-      selection_transform_segs (selection, segs_in,
-                                selection->segs_in, selection->n_segs_in);
+      selection_transform_segs_old (selection, segs_in,
+                                    selection->segs_in, selection->n_segs_in);
 
 #ifdef USE_DRAWPOINTS
       selection_render_points (selection);
@@ -650,8 +694,8 @@ selection_generate_segs (Selection *selection)
   if (selection->n_segs_out)
     {
       selection->segs_out = g_new (GdkSegment, selection->n_segs_out);
-      selection_transform_segs (selection, segs_out,
-                                selection->segs_out, selection->n_segs_out);
+      selection_transform_segs_old (selection, segs_out,
+                                    selection->segs_out, selection->n_segs_out);
     }
   else
     {
@@ -662,20 +706,21 @@ selection_generate_segs (Selection *selection)
 
   if (layer)
     {
-      selection->bound_segs_layer =
-        gimp_layer_boundary (layer, &selection->n_bound_segs_layer);
+      BoundSeg *segs;
 
-      if (selection->n_bound_segs_layer)
+      segs = gimp_layer_boundary (layer, &selection->n_segs_layer);
+
+      if (selection->n_segs_layer)
         {
-          selection->segs_layer   = g_new (GdkSegment,
-                                           selection->n_bound_segs_layer);
-          selection->n_segs_layer = selection->n_bound_segs_layer;
+          selection->segs_layer = g_new (BoundSeg, selection->n_segs_layer);
 
           selection_transform_segs (selection,
-                                    selection->bound_segs_layer,
+                                    segs,
                                     selection->segs_layer,
                                     selection->n_segs_layer);
         }
+
+      g_free (segs);
     }
 }
 
@@ -696,13 +741,6 @@ selection_free_segs (Selection *selection)
       g_free (selection->segs_out);
       selection->segs_out   = NULL;
       selection->n_segs_out = 0;
-    }
-
-  if (selection->bound_segs_layer)
-    {
-      g_free (selection->bound_segs_layer);
-      selection->bound_segs_layer   = NULL;
-      selection->n_bound_segs_layer = 0;
     }
 
   if (selection->segs_layer)

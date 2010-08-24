@@ -549,47 +549,15 @@ gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
 
   for (i = 0; i < n_segs; i++)
     {
-      gint xclamp = shell->disp_width  + 1;
-      gint yclamp = shell->disp_height + 1;
-      gint x1, y1;
-      gint x2, y2;
-
-      gimp_display_shell_transform_xy (shell,
-                                       segs[i].x1, segs[i].y1,
-                                       &x1, &y1,
-                                       FALSE);
-      gimp_display_shell_transform_xy (shell,
-                                       segs[i].x2, segs[i].y2,
-                                       &x2, &y2,
-                                       FALSE);
-
-      x1 = CLAMP (x1, -1, xclamp);
-      y1 = CLAMP (y1, -1, yclamp);
-
-      x2 = CLAMP (x2, -1, xclamp);
-      y2 = CLAMP (y2, -1, yclamp);
-
-      if (x1 == x2)
+      if (segs[i].x1 == segs[i].x2)
         {
-          if (! segs[i].open)
-            {
-              x1 -= 1;
-              x2 -= 1;
-            }
-
-          cairo_move_to (cr, x1 + 0.5, y1);
-          cairo_line_to (cr, x2 + 0.5, y2);
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
         }
       else
         {
-          if (! segs[i].open)
-            {
-              y1 -= 1;
-              y2 -= 1;
-            }
-
-          cairo_move_to (cr, x1, y1 + 0.5);
-          cairo_line_to (cr, x2, y2 + 0.5);
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
         }
     }
 
