@@ -376,7 +376,7 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_transform_segments:
+ * gimp_display_shell_transform_segments_old:
  * @shell:       a #GimpDisplayShell
  * @src_segs:    array of segments in image coordinates
  * @dest_segs:   returns the corresponding segments in display coordinates
@@ -388,11 +388,11 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
-                                       const BoundSeg         *src_segs,
-                                       GdkSegment             *dest_segs,
-                                       gint                    n_segs,
-                                       gboolean                use_offsets)
+gimp_display_shell_transform_segments_old (const GimpDisplayShell *shell,
+                                           const BoundSeg         *src_segs,
+                                           GdkSegment             *dest_segs,
+                                           gint                    n_segs,
+                                           gboolean                use_offsets)
 {
   gint offset_x = 0;
   gint offset_y = 0;

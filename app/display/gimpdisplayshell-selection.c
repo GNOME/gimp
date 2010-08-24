@@ -582,8 +582,8 @@ selection_transform_segs (Selection      *selection,
   gint yclamp = selection->shell->disp_height + 1;
   gint i;
 
-  gimp_display_shell_transform_segments (selection->shell,
-                                         src_segs, dest_segs, n_segs, FALSE);
+  gimp_display_shell_transform_segments_old (selection->shell,
+                                             src_segs, dest_segs, n_segs, FALSE);
 
   for (i = 0; i < n_segs; i++)
     {
