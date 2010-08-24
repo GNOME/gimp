@@ -26,9 +26,11 @@
 
 #include "display-types.h"
 
+#include "base/boundary.h"
 #include "base/tile-manager.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
@@ -527,6 +529,71 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell,
           gimp_display_shell_draw_sample_point (shell, cr, list->data, FALSE);
         }
     }
+}
+
+void
+gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
+                                        cairo_t          *cr,
+                                        GimpDrawable     *drawable,
+                                        BoundSeg         *segs,
+                                        gint              n_segs)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (segs != NULL && n_segs == 4);
+
+  gimp_display_shell_set_layer_style (shell, cr, drawable);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      gint xclamp = shell->disp_width  + 1;
+      gint yclamp = shell->disp_height + 1;
+      gint x1, y1;
+      gint x2, y2;
+
+      gimp_display_shell_transform_xy (shell,
+                                       segs[i].x1, segs[i].y1,
+                                       &x1, &y1,
+                                       FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       segs[i].x2, segs[i].y2,
+                                       &x2, &y2,
+                                       FALSE);
+
+      x1 = CLAMP (x1, -1, xclamp);
+      y1 = CLAMP (y1, -1, yclamp);
+
+      x2 = CLAMP (x2, -1, xclamp);
+      y2 = CLAMP (y2, -1, yclamp);
+
+      if (x1 == x2)
+        {
+          if (! segs[i].open)
+            {
+              x1 -= 1;
+              x2 -= 1;
+            }
+
+          cairo_move_to (cr, x1 + 0.5, y1);
+          cairo_line_to (cr, x2 + 0.5, y2);
+        }
+      else
+        {
+          if (! segs[i].open)
+            {
+              y1 -= 1;
+              y2 -= 1;
+            }
+
+          cairo_move_to (cr, x1, y1 + 0.5);
+          cairo_line_to (cr, x2, y2 + 0.5);
+        }
+    }
+
+  cairo_stroke (cr);
 }
 
 void

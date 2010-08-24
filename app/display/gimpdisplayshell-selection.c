@@ -35,6 +35,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-transform.h"
@@ -55,6 +56,9 @@ struct _Selection
 
   GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
   gint              n_segs_out;       /*  number of segments in segs2       */
+
+  BoundSeg         *bound_segs_layer;
+  gint              n_bound_segs_layer;
 
   GdkSegment       *segs_layer;       /*  gdk segments of layer boundary    */
   gint              n_segs_layer;     /*  number of segments in segs3       */
@@ -384,21 +388,20 @@ selection_layer_draw (Selection *selection)
 {
   if (selection->segs_layer)
     {
-      GimpCanvas     *canvas   = GIMP_CANVAS (selection->shell->canvas);
-      GimpImage      *image    = gimp_display_get_image (selection->shell->display);
-      GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
-      GimpCanvasStyle style;
+      GimpImage    *image;
+      GimpDrawable *drawable;
+      cairo_t      *cr;
 
-      if (GIMP_IS_LAYER_MASK (drawable))
-        style = GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE;
-      else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-        style = GIMP_CANVAS_STYLE_LAYER_GROUP_BOUNDARY;
-      else
-        style = GIMP_CANVAS_STYLE_LAYER_BOUNDARY;
+      image    = gimp_display_get_image (selection->shell->display);
+      drawable = gimp_image_get_active_drawable (image);
 
-      gimp_canvas_draw_segments (canvas, style,
-                                 selection->segs_layer,
-                                 selection->n_segs_layer);
+      cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+
+      gimp_display_shell_draw_layer_boundary (selection->shell, cr, drawable,
+                                              selection->bound_segs_layer,
+                                              selection->n_bound_segs_layer);
+
+      cairo_destroy (cr);
     }
 }
 
@@ -659,19 +662,19 @@ selection_generate_segs (Selection *selection)
 
   if (layer)
     {
-      BoundSeg *segs;
+      selection->bound_segs_layer =
+        gimp_layer_boundary (layer, &selection->n_bound_segs_layer);
 
-      segs = gimp_layer_boundary (layer, &selection->n_segs_layer);
-
-      if (selection->n_segs_layer)
+      if (selection->n_bound_segs_layer)
         {
-          selection->segs_layer = g_new (GdkSegment, selection->n_segs_layer);
+          selection->segs_layer   = g_new (GdkSegment,
+                                           selection->n_bound_segs_layer);
+          selection->n_segs_layer = selection->n_bound_segs_layer;
 
-          selection_transform_segs (selection, segs,
+          selection_transform_segs (selection,
+                                    selection->bound_segs_layer,
                                     selection->segs_layer,
                                     selection->n_segs_layer);
-
-          g_free (segs);
         }
     }
 }
@@ -693,6 +696,13 @@ selection_free_segs (Selection *selection)
       g_free (selection->segs_out);
       selection->segs_out   = NULL;
       selection->n_segs_out = 0;
+    }
+
+  if (selection->bound_segs_layer)
+    {
+      g_free (selection->bound_segs_layer);
+      selection->bound_segs_layer   = NULL;
+      selection->n_bound_segs_layer = 0;
     }
 
   if (selection->segs_layer)

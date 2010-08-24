@@ -48,6 +48,11 @@ void   gimp_display_shell_draw_sample_point          (GimpDisplayShell   *shell,
                                                       gboolean            active);
 void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
+void   gimp_display_shell_draw_layer_boundary        (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      GimpDrawable       *drawable,
+                                                      BoundSeg           *segs,
+                                                      gint                n_segs);
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell);

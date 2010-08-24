@@ -38,6 +38,9 @@ void   gimp_display_shell_set_pen_style          (GimpDisplayShell *shell,
                                                   GimpContext      *context,
                                                   GimpActiveColor   active,
                                                   gint              width);
+void   gimp_display_shell_set_layer_style        (GimpDisplayShell *shell,
+                                                  cairo_t          *cr,
+                                                  GimpDrawable     *drawable);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

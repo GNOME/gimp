@@ -30,6 +30,7 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
+#include "core/gimplayermask.h"
 
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"
@@ -42,6 +43,15 @@ static const GimpRGB guide_active_bg     = { 1.0, 0.0, 0.0, 1.0 };
 
 static const GimpRGB sample_point_normal = { 0.0, 0.5, 1.0, 1.0 };
 static const GimpRGB sample_point_active = { 1.0, 0.0, 0.0, 1.0 };
+
+static const GimpRGB layer_fg            = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB layer_bg            = { 1.0, 1.0, 0.0, 1.0 };
+
+static const GimpRGB layer_group_fg      = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB layer_group_bg      = { 0.0, 1.0, 1.0, 1.0 };
+
+static const GimpRGB layer_mask_fg       = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB layer_mask_bg       = { 0.0, 1.0, 0.0, 1.0 };
 
 
 /*  local function prototypes  */
@@ -180,6 +190,37 @@ gimp_display_shell_set_pen_style (GimpDisplayShell *shell,
     }
 
   cairo_set_source_rgb (cr, rgb.r, rgb.g, rgb.b);
+}
+
+void
+gimp_display_shell_set_layer_style (GimpDisplayShell *shell,
+                                    cairo_t          *cr,
+                                    GimpDrawable     *drawable)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  cairo_set_line_width (cr, 1.0);
+
+  if (GIMP_IS_LAYER_MASK (drawable))
+    {
+      gimp_display_shell_set_stipple_style (cr,
+                                            &layer_mask_fg,
+                                            &layer_mask_bg);
+    }
+  else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+    {
+      gimp_display_shell_set_stipple_style (cr,
+                                            &layer_group_fg,
+                                            &layer_group_bg);
+    }
+  else
+    {
+      gimp_display_shell_set_stipple_style (cr,
+                                            &layer_fg,
+                                            &layer_bg);
+    }
 }
 
 
