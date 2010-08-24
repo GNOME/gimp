@@ -210,8 +210,6 @@ xcf_save_choose_format (XcfInfo   *info,
         save_version = MAX (3, save_version);
     }
 
-  g_printerr ("%s: version = %d\n", G_STRFUNC, save_version);
-
   info->file_version = save_version;
 }
 
