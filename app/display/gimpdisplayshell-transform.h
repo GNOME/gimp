@@ -63,14 +63,9 @@ void  gimp_display_shell_transform_coords       (const GimpDisplayShell *shell,
                                                  GdkPoint               *disp_coords,
                                                  gint                    n_coords,
                                                  gboolean                use_offsets);
-void  gimp_display_shell_transform_segments_old (const GimpDisplayShell *shell,
-                                                 const BoundSeg         *src_segs,
-                                                 GdkSegment             *dest_segs,
-                                                 gint                    n_segs,
-                                                 gboolean                use_offsets);
 void  gimp_display_shell_transform_segments     (const GimpDisplayShell *shell,
                                                  const BoundSeg         *src_segs,
-                                                 BoundSeg               *dest_segs,
+                                                 GdkSegment             *dest_segs,
                                                  gint                    n_segs,
                                                  gboolean                use_offsets);
 
