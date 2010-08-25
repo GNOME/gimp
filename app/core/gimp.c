@@ -660,7 +660,7 @@ gimp_real_initialize (Gimp               *gimp,
                            tool_preset_loader_entries,
                            G_N_ELEMENTS (tool_preset_loader_entries),
                            gimp_tool_preset_new,
-                           gimp_tool_preset_get_standard);
+                           NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_preset_factory),
                                "tool preset factory");
 
