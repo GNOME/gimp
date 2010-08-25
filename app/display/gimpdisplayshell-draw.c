@@ -408,6 +408,7 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
     return;
 
   gimp_display_shell_set_pen_style (shell, cr, context, color, width);
+  cairo_translate (cr, 0.5, 0.5);
 
   gimp_display_shell_transform_xy (shell,
                                    points[0].x, points[0].y,
@@ -641,6 +642,7 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
   if (shell->have_cursor)
     {
       gimp_display_shell_set_cursor_style (shell, cr);
+      cairo_translate (cr, 0.5, 0.5);
 
 #define CURSOR_SIZE 14
 

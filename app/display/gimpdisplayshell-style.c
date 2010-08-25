@@ -156,7 +156,6 @@ gimp_display_shell_set_cursor_style (GimpDisplayShell *shell,
 
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
-  cairo_translate (cr, 0.5, 0.5);
 }
 
 void
@@ -176,7 +175,6 @@ gimp_display_shell_set_pen_style (GimpDisplayShell *shell,
   cairo_set_line_width (cr, width);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
   cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
-  cairo_translate (cr, 0.5, 0.5);
 
   switch (active)
     {
