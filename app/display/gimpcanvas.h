@@ -78,14 +78,6 @@ GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_canvas_new               (GimpDisplayConfig  *config);
 
-void         gimp_canvas_draw_point        (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gint                x,
-                                            gint                y);
-void         gimp_canvas_draw_points       (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            GdkPoint           *points,
-                                            gint                num_points);
 void         gimp_canvas_draw_line         (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             gint                x1,

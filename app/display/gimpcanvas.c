@@ -350,54 +350,6 @@ gimp_canvas_new (GimpDisplayConfig *config)
 }
 
 /**
- * gimp_canvas_draw_point:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @x:      x coordinate
- * @y:      y coordinate
- *
- * Draw a single pixel at the specified location in the specified
- * style.
- **/
-void
-gimp_canvas_draw_point (GimpCanvas      *canvas,
-                        GimpCanvasStyle  style,
-                        gint             x,
-                        gint             y)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_point (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                  canvas->gc[style],
-                  x, y);
-}
-
-/**
- * gimp_canvas_draw_points:
- * @canvas:     a #GimpCanvas widget
- * @style:      one of the enumerated #GimpCanvasStyle's.
- * @points:     an array of GdkPoint x-y pairs.
- * @num_points: the number of points in the array
- *
- * Draws a set of one-pixel points at the locations given in the
- * @points argument, in the specified style.
- **/
-void
-gimp_canvas_draw_points (GimpCanvas      *canvas,
-                         GimpCanvasStyle  style,
-                         GdkPoint        *points,
-                         gint             num_points)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_points (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                   canvas->gc[style],
-                   points, num_points);
-}
-
-/**
  * gimp_canvas_draw_line:
  * @canvas: a #GimpCanvas widget
  * @style:  one of the enumerated #GimpCanvasStyle's.
