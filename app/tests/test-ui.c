@@ -683,6 +683,19 @@ window_roles (GimpTestFixture *fixture,
    */
 }
 
+static void
+paintbrush_is_standard_tool (GimpTestFixture *fixture,
+                             gconstpointer    data)
+{
+  Gimp         *gimp         = GIMP (data);
+  GimpContext  *user_context = gimp_get_user_context (gimp);
+  GimpToolInfo *tool_info    = gimp_context_get_tool (user_context);
+
+  g_assert_cmpstr (tool_info->help_id,
+                   ==,
+                   "gimp-tool-paintbrush");
+}
+
 static GimpUIManager *
 gimp_ui_get_ui_manager (Gimp *gimp)
 {
@@ -839,7 +852,11 @@ int main(int argc, char **argv)
   gimp = gimp_init_for_gui_testing (FALSE, TRUE);
   gimp_test_run_mainloop_until_idle ();
 
-  /* Add tests */
+  /* Add tests. Note that the order matters. For example,
+   * 'paintbrush_is_standard_tool' can't be after
+   * 'tool_options_editor_updates'
+   */
+  ADD_TEST (paintbrush_is_standard_tool);
   ADD_TEST (tool_options_editor_updates);
   ADD_TEST (automatic_tab_style);
   ADD_TEST (create_new_image_via_dialog);
