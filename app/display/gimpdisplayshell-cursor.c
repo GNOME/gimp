@@ -141,17 +141,15 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 
   /* Erase old cursor, if necessary */
 
-#define CURSOR_SIZE 14
-
   if (shell->have_cursor && (! new_cursor                 ||
                              display_x != shell->cursor_x ||
                              display_y != shell->cursor_y))
     {
       gimp_display_shell_expose_area (shell,
-                                      shell->cursor_x - CURSOR_SIZE,
-                                      shell->cursor_y - CURSOR_SIZE,
-                                      2 * CURSOR_SIZE + 1,
-                                      2 * CURSOR_SIZE + 1);
+                                      shell->cursor_x - GIMP_CURSOR_SIZE,
+                                      shell->cursor_y - GIMP_CURSOR_SIZE,
+                                      2 * GIMP_CURSOR_SIZE + 1,
+                                      2 * GIMP_CURSOR_SIZE + 1);
     }
 
   shell->have_cursor = new_cursor;
@@ -161,10 +159,10 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
   if (shell->have_cursor)
     {
       gimp_display_shell_expose_area (shell,
-                                      shell->cursor_x - CURSOR_SIZE,
-                                      shell->cursor_y - CURSOR_SIZE,
-                                      2 * CURSOR_SIZE + 1,
-                                      2 * CURSOR_SIZE + 1);
+                                      shell->cursor_x - GIMP_CURSOR_SIZE,
+                                      shell->cursor_y - GIMP_CURSOR_SIZE,
+                                      2 * GIMP_CURSOR_SIZE + 1,
+                                      2 * GIMP_CURSOR_SIZE + 1);
     }
 
   /*  use the passed image_coords for the statusbar because they are

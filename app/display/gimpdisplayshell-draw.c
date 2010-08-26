@@ -49,6 +49,7 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
@@ -707,31 +708,29 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
       gimp_display_shell_set_cursor_style (shell, cr);
       cairo_translate (cr, 0.5, 0.5);
 
-#define CURSOR_SIZE 14
-
       cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
 
-      cairo_move_to (cr, shell->cursor_x - CURSOR_SIZE, shell->cursor_y - 1);
-      cairo_line_to (cr, shell->cursor_x + CURSOR_SIZE, shell->cursor_y - 1);
+      cairo_move_to (cr, shell->cursor_x - GIMP_CURSOR_SIZE, shell->cursor_y - 1);
+      cairo_line_to (cr, shell->cursor_x + GIMP_CURSOR_SIZE, shell->cursor_y - 1);
 
-      cairo_move_to (cr, shell->cursor_x - CURSOR_SIZE, shell->cursor_y + 1);
-      cairo_line_to (cr, shell->cursor_x + CURSOR_SIZE, shell->cursor_y + 1);
+      cairo_move_to (cr, shell->cursor_x - GIMP_CURSOR_SIZE, shell->cursor_y + 1);
+      cairo_line_to (cr, shell->cursor_x + GIMP_CURSOR_SIZE, shell->cursor_y + 1);
 
-      cairo_move_to (cr, shell->cursor_x - 1, shell->cursor_y - CURSOR_SIZE);
-      cairo_line_to (cr, shell->cursor_x - 1, shell->cursor_y + CURSOR_SIZE);
+      cairo_move_to (cr, shell->cursor_x - 1, shell->cursor_y - GIMP_CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x - 1, shell->cursor_y + GIMP_CURSOR_SIZE);
 
-      cairo_move_to (cr, shell->cursor_x + 1, shell->cursor_y - CURSOR_SIZE);
-      cairo_line_to (cr, shell->cursor_x + 1, shell->cursor_y + CURSOR_SIZE);
+      cairo_move_to (cr, shell->cursor_x + 1, shell->cursor_y - GIMP_CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x + 1, shell->cursor_y + GIMP_CURSOR_SIZE);
 
       cairo_stroke (cr);
 
       cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
 
-      cairo_move_to (cr, shell->cursor_x - CURSOR_SIZE, shell->cursor_y);
-      cairo_line_to (cr, shell->cursor_x + CURSOR_SIZE, shell->cursor_y);
+      cairo_move_to (cr, shell->cursor_x - GIMP_CURSOR_SIZE, shell->cursor_y);
+      cairo_line_to (cr, shell->cursor_x + GIMP_CURSOR_SIZE, shell->cursor_y);
 
-      cairo_move_to (cr, shell->cursor_x, shell->cursor_y - CURSOR_SIZE);
-      cairo_line_to (cr, shell->cursor_x, shell->cursor_y + CURSOR_SIZE);
+      cairo_move_to (cr, shell->cursor_x, shell->cursor_y - GIMP_CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x, shell->cursor_y + GIMP_CURSOR_SIZE);
 
       cairo_stroke (cr);
     }
