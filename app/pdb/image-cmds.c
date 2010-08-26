@@ -946,7 +946,7 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
         gimp_image_remove_layer (image, layer, TRUE, NULL);
       else
         success = FALSE;
@@ -1009,7 +1009,10 @@ image_raise_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_layer (image, layer, error);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
+        success = gimp_image_raise_item (image, GIMP_ITEM (layer), error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1033,7 +1036,10 @@ image_lower_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_layer (image, layer, error);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
+        success = gimp_image_lower_item (image, GIMP_ITEM (layer), error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1057,7 +1063,10 @@ image_raise_layer_to_top_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_layer_to_top (image, layer);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
+        success = gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1081,7 +1090,10 @@ image_lower_layer_to_bottom_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_layer_to_bottom (image, layer);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
+        success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1140,7 +1152,7 @@ image_remove_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
         gimp_image_remove_channel (image, channel, TRUE, NULL);
       else
         success = FALSE;
@@ -1203,7 +1215,10 @@ image_raise_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_channel (image, channel, error);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
+        success = gimp_image_raise_item (image, GIMP_ITEM (channel), error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1227,7 +1242,10 @@ image_lower_channel_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_channel (image, channel, error);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
+        success = gimp_image_lower_item (image, GIMP_ITEM (channel), error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1286,7 +1304,7 @@ image_remove_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
         gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
@@ -1349,7 +1367,10 @@ image_raise_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_vectors (image, vectors, error);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
+        success = gimp_image_raise_item (image, GIMP_ITEM (vectors), error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1373,7 +1394,10 @@ image_lower_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_vectors (image, vectors, error);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
+        success = gimp_image_lower_item (image, GIMP_ITEM (vectors), error);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1397,7 +1421,10 @@ image_raise_vectors_to_top_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_raise_vectors_to_top (image, vectors);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
+        success = gimp_image_raise_item_to_top (image, GIMP_ITEM (vectors));
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1421,7 +1448,10 @@ image_lower_vectors_to_bottom_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      success = gimp_image_lower_vectors_to_bottom (image, vectors);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
+        success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (vectors));
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1515,7 +1545,7 @@ image_merge_down_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), FALSE, error))
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (merge_layer), image, FALSE, error))
         {
           layer = gimp_image_merge_down (image, merge_layer, context, merge_type,
                                          error);
@@ -1585,7 +1615,7 @@ image_remove_layer_mask_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), mode == GIMP_MASK_APPLY, error) &&
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, mode == GIMP_MASK_APPLY, error) &&
           gimp_layer_get_mask (layer))
         gimp_layer_apply_mask (layer, mode, TRUE);
       else
@@ -2773,8 +2803,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-free-shadow");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-free-shadow",
-                                     "This procedure is deprecated! Use 'gimp-drawable-free-shadow' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-free-shadow' instead.",
+                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
+                                     "Deprecated: Use 'gimp-drawable-free-shadow' instead.",
                                      "",
                                      "",
                                      "",
@@ -4069,8 +4099,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-layer-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-layer-mask",
-                                     "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
-                                     "This procedure is deprecated! Use 'gimp-layer-add-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-add-mask' instead.",
                                      "",
                                      "",
                                      "",
@@ -4104,8 +4134,8 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-remove-layer-mask");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-remove-layer-mask",
-                                     "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
-                                     "This procedure is deprecated! Use 'gimp-layer-remove-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
+                                     "Deprecated: Use 'gimp-layer-remove-mask' instead.",
                                      "",
                                      "",
                                      "",

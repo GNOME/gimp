@@ -126,6 +126,15 @@ package Gimp::CodeGen::pdb;
 		     set_value_func => 'gimp_value_set_image ($value, $var)',
 		     headers        => [ qw("core/gimpimage.h") ] },
 
+    item        => { name           => 'ITEM',
+		     type           => 'GimpItem *', 
+		     const_type     => 'GimpItem *', 
+		     id             => 1,
+		     init_value     => 'NULL',
+		     get_value_func => '$var = gimp_value_get_item ($value, gimp)',
+		     set_value_func => 'gimp_value_set_item ($value, $var)',
+		     headers        => [ qw("core/gimpitem.h") ] },
+
     layer       => { name           => 'LAYER',
 		     type           => 'GimpLayer *', 
 		     const_type     => 'GimpLayer *', 

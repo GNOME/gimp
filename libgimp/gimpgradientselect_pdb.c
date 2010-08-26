@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpgradientselect
+ * @title: gimpgradientselect
+ * @short_description: Functions providing a gradient selection dialog.
+ *
+ * Functions providing a gradient selection dialog.
+ **/
+
+
 /**
  * gimp_gradients_popup:
  * @gradient_callback: The callback PDB proc to call when gradient selection is made.

@@ -26,6 +26,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpgradient
+ * @title: gimpgradient
+ * @short_description: Functions operating on a single gradient.
+ *
+ * Functions operating on a single gradient.
+ **/
+
+
 /**
  * gimp_gradient_new:
  * @name: The requested name of the new gradient.

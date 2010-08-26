@@ -119,7 +119,7 @@ tools_color_average_radius_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "average-radius",
-                              1.0, 1.0, 10.0, FALSE);
+                              1.0, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -140,7 +140,7 @@ tools_paint_brush_scale_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-scale",
-                              0.01, 0.1, 1.0, FALSE);
+                              0.01, 0.1, 1.0, 0.1, FALSE);
     }
 }
 
@@ -161,7 +161,7 @@ tools_paint_brush_angle_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-angle",
-                              0.1, 1.0, 15.0, TRUE);
+                              0.1, 1.0, 15.0, 0.1, TRUE);
     }
 }
 
@@ -182,7 +182,7 @@ tools_paint_brush_aspect_ratio_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-aspect-ratio",
-                              0.01, 0.1, 1.0, TRUE);
+                              0.01, 0.1, 1.0, 0.1, TRUE);
     }
 }
 
@@ -203,7 +203,7 @@ tools_ink_blob_size_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "size",
-                              1.0, 1.0, 10.0, FALSE);
+                              1.0, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -224,7 +224,7 @@ tools_ink_blob_aspect_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "blob-aspect",
-                              1.0, 0.1, 1.0, FALSE);
+                              1.0, 0.1, 1.0, 0.1, FALSE);
     }
 }
 
@@ -245,7 +245,7 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "blob-angle",
-                              1.0, 1.0, 15.0, TRUE);
+                              1.0, 1.0, 15.0, 0.1, TRUE);
     }
 }
 
@@ -266,7 +266,7 @@ tools_fg_select_brush_size_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "stroke-width",
-                              1.0, 4.0, 16.0, FALSE);
+                              1.0, 4.0, 16.0, 0.1, FALSE);
     }
 }
 
@@ -287,7 +287,7 @@ tools_transform_preview_opacity_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "preview-opacity",
-                              0.01, 0.1, 0.5, FALSE);
+                              0.01, 0.1, 0.5, 0.1, FALSE);
     }
 }
 

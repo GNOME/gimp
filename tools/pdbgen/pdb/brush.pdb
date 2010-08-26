@@ -864,5 +864,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush';
+$doc_title = 'gimpbrush';
+$doc_short_desc = 'Functions operating on a single brush.';
+$doc_long_desc = 'Functions operating on a single brush.';
 
 1;

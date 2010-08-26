@@ -27,6 +27,16 @@
 #undef __GIMP_TEXT_TOOL_PDB_H__
 #include "gimptexttool_pdb.h"
 
+
+/**
+ * SECTION: gimptexttool
+ * @title: gimptexttool
+ * @short_description: Functions for controlling the text tool.
+ *
+ * Functions for controlling the text tool.
+ **/
+
+
 /**
  * gimp_text_fontname:
  * @image_ID: The image.
@@ -182,7 +192,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
  * @registry: The font registry.
  * @encoding: The font encoding.
  *
- * This procedure is deprecated! Use gimp_text_fontname() instead.
+ * Deprecated: Use gimp_text_fontname() instead.
  *
  * Returns: The new text layer or -1 if no layer was created.
  */
@@ -256,8 +266,7 @@ gimp_text (gint32        image_ID,
  * @ascent: The ascent of the specified font.
  * @descent: The descent of the specified font.
  *
- * This procedure is deprecated! Use gimp_text_get_extents_fontname()
- * instead.
+ * Deprecated: Use gimp_text_get_extents_fontname() instead.
  *
  * Returns: TRUE on success.
  */

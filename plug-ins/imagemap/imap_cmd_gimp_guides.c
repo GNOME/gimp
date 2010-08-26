@@ -67,7 +67,7 @@ gimp_guides_ok_cb(gpointer data)
    GSList *vguides, *vg;
    gboolean all;
    const gchar *url;
-   gint32 image_ID = gimp_drawable_get_image (param->drawable->drawable_id);
+   gint32 image_ID = gimp_item_get_image (param->drawable->drawable_id);
 
    /* First get some dialog values */
 

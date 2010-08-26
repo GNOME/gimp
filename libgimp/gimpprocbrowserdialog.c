@@ -35,6 +35,15 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpprocbrowserdialog
+ * @title: GimpProcBrowserDialog
+ * @short_description: The dialog for the procedure and plugin browsers.
+ *
+ * The dialog for the procedure and plugin browsers.
+ **/
+
+
 #define DBL_LIST_WIDTH 250
 #define DBL_WIDTH      (DBL_LIST_WIDTH + 400)
 #define DBL_HEIGHT     250

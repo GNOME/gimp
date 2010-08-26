@@ -167,7 +167,7 @@ CODE
 }
 
 sub path_set_points {
-    &std_pdb_deprecated('vectors-stroke-new-from-points');
+    &std_pdb_deprecated('gimp-vectors-stroke-new-from-points');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -556,15 +556,12 @@ sub path_to_selection {
   GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
   if (vectors)
-    gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                 _("Path to Selection"),
-                                 vectors,
-                                 op,
-                                 antialias,
-                                 feather,
-                                 feather_radius_x,
-                                 feather_radius_y,
-                                 TRUE);
+    gimp_item_to_selection (GIMP_ITEM (vectors),
+                            op,
+                            antialias,
+                            feather,
+                            feather_radius_x,
+                            feather_radius_y);
   else
     success = FALSE;
 }
@@ -573,7 +570,7 @@ CODE
 }
 
 sub path_import {
-    &std_pdb_deprecated('vectors-import-from-file');
+    &std_pdb_deprecated('gimp-vectors-import-from-file');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -601,7 +598,6 @@ CODE
 @headers = qw(<string.h>
               "libgimpmath/gimpmath.h"
               "core/gimplist.h"
-              "core/gimpchannel-select.h"
               "vectors/gimpanchor.h"
               "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h"
@@ -619,5 +615,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';
+$doc_title = 'gimppaths';
+$doc_short_desc = 'Deprecated operations related to paths.';
+$doc_long_desc = 'Deprecated operations related to paths.';
 
 1;

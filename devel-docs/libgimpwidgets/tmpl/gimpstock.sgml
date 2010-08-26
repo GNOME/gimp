@@ -2,18 +2,11 @@
 GimpStock
 
 <!-- ##### SECTION Short_Description ##### -->
-Prebuilt common menu/toolbar items and corresponding icons
+
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-GIMP registers a set of menu/toolbar items and corresponding icons in
-addition to the standard GTK+ stock items. These can be used just like
-GTK+ stock items. GIMP also overrides a few of the GTK+ icons (namely
-the ones in dialog size).
-</para>
-<para>
-Stock icons may have a RTL variant which gets used for right-to-left
-locales.
+
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -24,11 +17,15 @@ locales.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_stock_init ##### -->
 <para>
 
 </para>
 
+@void: 
 
 
 <!-- ##### MACRO GIMP_STOCK_ANCHOR ##### -->

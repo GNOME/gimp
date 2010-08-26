@@ -32,6 +32,15 @@
 #include "gimppalettemenu.h"
 
 
+/**
+ * SECTION: gimppalettemenu
+ * @title: gimppalettemenu
+ * @short_description: A widget for selecting palettes.
+ *
+ * A widget for selecting palettes.
+ **/
+
+
 typedef struct
 {
   GimpRunPaletteCallback callback;
@@ -104,7 +113,7 @@ gimp_palette_select_widget_close (GtkWidget *widget)
 }
 
 /**
- * gimp_palette_select_widget_set;
+ * gimp_palette_select_widget_set:
  * @widget:       A palette select widget.
  * @palette_name: Palette name to set; %NULL means no change.
  *

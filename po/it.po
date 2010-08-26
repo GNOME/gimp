@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-25 00:11+0200\n"
-"PO-Revision-Date: 2010-06-29 10:53+0200\n"
+"PO-Revision-Date: 2010-08-13 14:54+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4350,7 +4350,7 @@ msgstr "_Seleziona"
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "Zoom _totale"
+msgstr "_Tutto"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -4360,7 +4360,7 @@ msgstr "Seleziona tutto"
 #: ../app/actions/select-actions.c:56
 msgctxt "select-action"
 msgid "_None"
-msgstr "_Nessuna"
+msgstr "_Niente"
 
 #: ../app/actions/select-actions.c:57
 msgctxt "select-action"

@@ -26,6 +26,16 @@
 #include "gimp.h"
 
 
+/**
+ * SECTION: gimppixelrgn
+ * @title: gimppixelrgn
+ * @short_description: Functions for operating on pixel regions.
+ *
+ * Functions for operating on pixel regions. These functions provide
+ * fast ways of accessing and modifying portions of a drawable.
+ **/
+
+
 #define TILE_WIDTH  gimp_tile_width()
 #define TILE_HEIGHT gimp_tile_height()
 

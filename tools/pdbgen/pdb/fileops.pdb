@@ -637,5 +637,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs[0..3,5..11]]);
 
 $desc = 'File Operations';
+$doc_title = 'gimpfileops';
+$doc_short_desc = 'File operations (load, save, etc.)';
+$doc_long_desc = 'File operations (load, save, etc.)';
 
 1;

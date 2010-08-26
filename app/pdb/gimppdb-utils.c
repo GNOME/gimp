@@ -304,10 +304,12 @@ gimp_pdb_get_paint_info (Gimp         *gimp,
 
 gboolean
 gimp_pdb_item_is_attached (GimpItem  *item,
+                           GimpImage *image,
                            gboolean   writable,
                            GError   **error)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (! gimp_item_is_attached (item))
@@ -320,8 +322,44 @@ gimp_pdb_item_is_attached (GimpItem  *item,
       return FALSE;
     }
 
+  if (image && image != gimp_item_get_image (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) can not be used because it is "
+                     "attached to another image"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
   if (writable)
     return gimp_pdb_item_is_writable (item, error);
+
+  return TRUE;
+}
+
+gboolean
+gimp_pdb_item_is_in_tree (GimpItem   *item,
+                          GimpImage  *image,
+                          gboolean    writable,
+                          GError    **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_pdb_item_is_attached (item, image, writable, error))
+    return FALSE;
+
+  if (! gimp_item_get_tree (item))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) can not be used because it is not "
+                     "a direct child of an item tree"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
 
   return TRUE;
 }
@@ -414,7 +452,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
       return FALSE;
     }
 
-  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), writable, error);
+  return gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, writable, error);
 }
 
 static const gchar *

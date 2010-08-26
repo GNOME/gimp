@@ -65,8 +65,8 @@
           (set! source-layer-width (car (gimp-drawable-width  source-layer)))
 
           ;--- hide layers, cause we want to "merge visible layers" later
-          (gimp-drawable-set-visible source-layer FALSE)
-          (gimp-drawable-set-visible bg-source-layer     FALSE)
+          (gimp-item-set-visible source-layer FALSE)
+          (gimp-item-set-visible bg-source-layer     FALSE)
 
           ;--- process image horizontal with pixel-speed
           (while (< bl-x (+ source-layer-width bl-width))
@@ -75,8 +75,8 @@
                                                  (number->string frame-nr 10) ) )
 
               (gimp-image-add-layer img bl-layer -2)
-              (gimp-drawable-set-name bl-layer bl-layer-name)
-              (gimp-drawable-set-visible bl-layer TRUE)
+              (gimp-item-set-name bl-layer bl-layer-name)
+              (gimp-item-set-visible bl-layer TRUE)
               (gimp-layer-set-lock-alpha bl-layer TRUE)
               (gimp-layer-add-alpha bl-layer)
 
@@ -168,12 +168,12 @@
               (gimp-image-lower-layer img bg-layer)
               (set! bg-layer-name (string-append "bg-"
                                                  (number->string frame-nr 10)))
-              (gimp-drawable-set-name bg-layer bg-layer-name)
-              (gimp-drawable-set-visible bg-layer TRUE)
+              (gimp-item-set-name bg-layer bg-layer-name)
+              (gimp-item-set-visible bg-layer TRUE)
               (set! blended-layer (car (gimp-image-merge-visible-layers img
                                         CLIP-TO-IMAGE)))
               ;(set! blended-layer bl-layer)
-              (gimp-drawable-set-visible blended-layer FALSE)
+              (gimp-item-set-visible blended-layer FALSE)
 
               ;--- end of "while" loop
               (set! frame-nr (+ frame-nr 1))
@@ -196,7 +196,7 @@
               )
           )
 
-          (gimp-drawable-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
+          (gimp-item-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
                                   TRUE)
           (gimp-image-undo-enable img)
           (gimp-image-clean-all img)

@@ -31,6 +31,15 @@
 #include "gimpdrawablepreview.h"
 
 
+/**
+ * SECTION: gimpdrawablepreview
+ * @title: GimpDrawablePreview
+ * @short_description: A widget providing a preview of a #GimpDrawable.
+ *
+ * A widget providing a preview of a #GimpDrawable.
+ **/
+
+
 #define SELECTION_BORDER  8
 
 enum
@@ -379,7 +388,7 @@ gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
   GimpDrawable *drawable     = preview->drawable;
   gint32        image_id;
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable->drawable_id);
 
   if (gimp_selection_is_empty (image_id))
     {
@@ -485,7 +494,7 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 
   if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
-      guint32  image = gimp_drawable_get_image (drawable->drawable_id);
+      guint32  image = gimp_item_get_image (drawable->drawable_id);
       guchar  *cmap;
       gint     num_colors;
 

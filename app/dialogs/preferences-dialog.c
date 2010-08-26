@@ -90,7 +90,7 @@ static void        prefs_message                  (GtkMessageType  type,
                                                    const gchar    *message);
 
 static void   prefs_notebook_page_callback        (GtkNotebook      *notebook,
-                                                   GtkNotebookPage  *page,
+                                                   gpointer          page,
                                                    guint             page_num,
                                                    GtkTreeSelection *sel);
 static void   prefs_resolution_source_callback    (GtkWidget  *widget,
@@ -801,7 +801,7 @@ prefs_tree_select_callback (GtkTreeSelection *sel,
 
 static void
 prefs_notebook_page_callback (GtkNotebook      *notebook,
-                              GtkNotebookPage  *page,
+                              gpointer          page,
                               guint             page_num,
                               GtkTreeSelection *sel)
 {

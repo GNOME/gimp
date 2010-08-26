@@ -553,7 +553,7 @@ update_preview (GimpPreview  *preview,
 {
   update_values ();
 
-  grid (gimp_drawable_get_image (drawable->drawable_id), drawable, preview);
+  grid (gimp_item_get_image (drawable->drawable_id), drawable, preview);
 }
 
 static void

@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include <cairo/cairo.h>
 #include <fontconfig/fontconfig.h>
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
@@ -31,6 +32,7 @@
 
 static gchar * sanity_check_gimp              (void);
 static gchar * sanity_check_glib              (void);
+static gchar * sanity_check_cairo             (void);
 static gchar * sanity_check_pango             (void);
 static gchar * sanity_check_fontconfig        (void);
 static gchar * sanity_check_freetype          (void);
@@ -48,6 +50,9 @@ sanity_check (void)
 
   if (! abort_message)
     abort_message = sanity_check_glib ();
+
+  if (! abort_message)
+    abort_message = sanity_check_cairo ();
 
   if (! abort_message)
     abort_message = sanity_check_pango ();
@@ -145,6 +150,36 @@ sanity_check_glib (void)
 #undef GLIB_REQUIRED_MAJOR
 #undef GLIB_REQUIRED_MINOR
 #undef GLIB_REQUIRED_MICRO
+
+  return NULL;
+}
+
+static gchar *
+sanity_check_cairo (void)
+{
+#define CAIRO_REQUIRED_MAJOR 1
+#define CAIRO_REQUIRED_MINOR 8
+#define CAIRO_REQUIRED_MICRO 0
+
+  if (cairo_version () < CAIRO_VERSION_ENCODE (CAIRO_REQUIRED_MAJOR,
+                                               CAIRO_REQUIRED_MINOR,
+                                               CAIRO_REQUIRED_MICRO))
+    {
+      return g_strdup_printf
+        ("The Cairo version being used is too old!\n\n"
+         "GIMP requires Cairo version %d.%d.%d or later.\n"
+         "Installed Cairo version is %s.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older Cairo version.\n\n"
+         "Please upgrade to Cairo version %d.%d.%d or later.",
+         CAIRO_REQUIRED_MAJOR, CAIRO_REQUIRED_MINOR, CAIRO_REQUIRED_MICRO,
+         cairo_version_string (),
+         CAIRO_REQUIRED_MAJOR, CAIRO_REQUIRED_MINOR, CAIRO_REQUIRED_MICRO);
+    }
+
+#undef CAIRO_REQUIRED_MAJOR
+#undef CAIRO_REQUIRED_MINOR
+#undef CAIRO_REQUIRED_MICRO
 
   return NULL;
 }

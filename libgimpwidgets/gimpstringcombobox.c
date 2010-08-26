@@ -30,6 +30,15 @@
 #include "gimpstringcombobox.h"
 
 
+/**
+ * SECTION: gimpstringcombobox
+ * @title: GimpStringComboBox
+ * @short_description: A #GtkComboBox subclass to select strings.
+ *
+ * A #GtkComboBox subclass to select strings.
+ **/
+
+
 enum
 {
   PROP_0,
@@ -282,7 +291,7 @@ gimp_string_combo_box_new (GtkTreeModel *model,
 /**
  * gimp_string_combo_box_set_active:
  * @combo_box: a #GimpStringComboBox
- * @id:
+ * @id:        the ID of the item to select
  *
  * Looks up the item that belongs to the given @id and makes it the
  * selected item in the @combo_box.

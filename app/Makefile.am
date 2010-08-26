@@ -283,12 +283,12 @@ gimp-console.rc.o: gimp.rc
 		gimp.rc gimp-console.rc.o
 
 # If git is available, always check if git-version.h should be
-# updated. If git is not avaialbe, don't do anything if git-version.h
+# updated. If git is not available, don't do anything if git-version.h
 # already exists because then we are probably working with a tarball
 # in which case the git-version.h we ship is correct.
 git-version.h: update-git-version-header
 	@if test -d "$(top_srcdir)/.git"; then \
-	  echo "#define GIMP_GIT_VERSION \"`git log HEAD^..HEAD --pretty=format:%H`\"" > "$@.tmp"; \
+	  echo "#define GIMP_GIT_VERSION \"`git log -n1 --reverse --pretty=%H`\"" > "$@.tmp"; \
 	elif test ! -f "$@"; then \
 	  echo "#define GIMP_GIT_VERSION \"Unknown, shouldn't happen\"" > "$@.tmp"; \
 	fi
@@ -296,7 +296,7 @@ git-version.h: update-git-version-header
 	  rm -f "$@.tmp"; \
 	elif test -f "$@.tmp"; then \
 	  mv "$@.tmp" "$@"; \
-	  echo "  git HEAD changed: git-version.h regenerated"; \
+	  echo "  git HEAD changed: $@ regenerated"; \
 	fi
 
 .PHONY: update-git-version-header

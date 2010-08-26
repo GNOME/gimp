@@ -265,6 +265,8 @@ run (const gchar      *name,
 
           strncpy (info.description, name, sizeof (info.description));
           info.description[sizeof (info.description) - 1] = '\0';
+
+          g_free (name);
         }
 
       switch (run_mode)
@@ -310,10 +312,14 @@ run (const gchar      *name,
 
       if (info.description && strlen (info.description))
         {
-          gimp_image_attach_new_parasite (orig_image_ID, "gimp-brush-name",
-                                          GIMP_PARASITE_PERSISTENT,
-                                          strlen (info.description) + 1,
-                                          info.description);
+          GimpParasite *parasite;
+
+          parasite = gimp_parasite_new ("gimp-brush-name",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (info.description) + 1,
+                                        info.description);
+          gimp_image_parasite_attach (orig_image_ID, parasite);
+          gimp_parasite_free (parasite);
         }
       else
         {
@@ -345,6 +351,7 @@ load_image (const gchar  *filename,
   guchar            *brush_buf = NULL;
   gint32             image_ID;
   gint32             layer_ID;
+  GimpParasite      *parasite;
   GimpDrawable      *drawable;
   GimpPixelRgn       pixel_rgn;
   gint               bn_size;
@@ -577,9 +584,11 @@ load_image (const gchar  *filename,
   image_ID = gimp_image_new (bh.width, bh.height, base_type);
   gimp_image_set_filename (image_ID, filename);
 
-  gimp_image_attach_new_parasite (image_ID, "gimp-brush-name",
-                                  GIMP_PARASITE_PERSISTENT,
-                                  strlen (name) + 1, name);
+  parasite = gimp_parasite_new ("gimp-brush-name",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (name) + 1, name);
+  gimp_image_parasite_attach (image_ID, parasite);
+  gimp_parasite_free (parasite);
 
   layer_ID = gimp_layer_new (image_ID, name, bh.width, bh.height,
                              image_type, 100, GIMP_NORMAL_MODE);

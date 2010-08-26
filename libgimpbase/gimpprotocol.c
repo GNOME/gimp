@@ -1435,7 +1435,11 @@ _gp_params_read (GIOChannel  *channel,
             goto cleanup;
           break;
 
-        case GIMP_PDB_REGION:
+        case GIMP_PDB_ITEM:
+          if (! _gimp_wire_read_int32 (channel,
+                                       (guint32 *) &(*params)[i].data.d_item, 1,
+                                       user_data))
+            goto cleanup;
           break;
 
         case GIMP_PDB_DISPLAY:
@@ -1658,7 +1662,11 @@ _gp_params_write (GIOChannel *channel,
             return;
           break;
 
-        case GIMP_PDB_REGION:
+        case GIMP_PDB_ITEM:
+          if (! _gimp_wire_write_int32 (channel,
+                                        (const guint32 *) &params[i].data.d_item, 1,
+                                        user_data))
+            return;
           break;
 
         case GIMP_PDB_DISPLAY:
@@ -1772,7 +1780,7 @@ gp_params_destroy (GPParam *params,
         case GIMP_PDB_INT8:
         case GIMP_PDB_FLOAT:
         case GIMP_PDB_COLOR:
-        case GIMP_PDB_REGION:
+        case GIMP_PDB_ITEM:
         case GIMP_PDB_DISPLAY:
         case GIMP_PDB_IMAGE:
         case GIMP_PDB_LAYER:

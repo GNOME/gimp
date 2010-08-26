@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpmisc
+ * @title: gimpmisc
+ * @short_description: Miscellaneous procedures
+ *
+ * Miscellaneous procedures not fitting in any category.
+ **/
+
+
 /**
  * gimp_version:
  *

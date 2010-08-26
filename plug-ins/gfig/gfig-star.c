@@ -209,6 +209,8 @@ d_paint_star (GfigObject *obj)
 #ifdef DEBUG
       g_warning ("Internal error in star - no outer vertice point \n");
 #endif /* DEBUG */
+      g_free (line_pnts);
+      g_free (min_max);
       return;
     }
 
@@ -219,6 +221,8 @@ d_paint_star (GfigObject *obj)
 #ifdef DEBUG
       g_warning ("Internal error in star - no inner vertice point \n");
 #endif /* DEBUG */
+      g_free (line_pnts);
+      g_free (min_max);
       return;
     }
 

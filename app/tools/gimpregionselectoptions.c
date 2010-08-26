@@ -86,7 +86,7 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
-                                    N_("Base region_select on all visible layers"),
+                                    N_("Base selection on all visible layers"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 

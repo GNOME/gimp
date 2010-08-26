@@ -27,29 +27,76 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-/*  query box callback prototypes  */
+/**
+ * GimpQueryStringCallback:
+ * @query_box: The query box.
+ * @string:    The entered string.
+ * @data:      The user data.
+ *
+ * Note that you must not g_free() the passed string.
+ **/
 typedef void (* GimpQueryStringCallback)  (GtkWidget   *query_box,
                                            const gchar *string,
                                            gpointer     data);
 
+/**
+ * GimpQueryIntCallback:
+ * @query_box: The query box.
+ * @value:     The entered integer value.
+ * @data:      The user data.
+ *
+ * The callback for an int query box.
+ **/
 typedef void (* GimpQueryIntCallback)     (GtkWidget   *query_box,
                                            gint         value,
                                            gpointer     data);
 
+/**
+ * GimpQueryDoubleCallback:
+ * @query_box: The query box.
+ * @value:     The entered double value.
+ * @data:      The user data.
+ *
+ * The callback for a double query box.
+ **/
 typedef void (* GimpQueryDoubleCallback)  (GtkWidget   *query_box,
                                            gdouble      value,
                                            gpointer     data);
 
+/**
+ * GimpQuerySizeCallback:
+ * @query_box: The query box.
+ * @size:      The entered size in pixels.
+ * @unit:      The selected unit from the #GimpUnitMenu.
+ * @data:      The user data.
+ *
+ * The callback for a size query box.
+ **/
 typedef void (* GimpQuerySizeCallback)    (GtkWidget   *query_box,
                                            gdouble      size,
                                            GimpUnit     unit,
                                            gpointer     data);
 
+/**
+ * GimpQueryBooleanCallback:
+ * @query_box: The query box.
+ * @value:     The entered boolean value.
+ * @data:      The user data.
+ *
+ * The callback for a boolean query box.
+ **/
 typedef void (* GimpQueryBooleanCallback) (GtkWidget   *query_box,
                                            gboolean     value,
                                            gpointer     data);
 
 
+/**
+ * GIMP_QUERY_BOX_VBOX:
+ * @qbox: The query box.
+ *
+ * A macro to access the #GtkVBox in a #libgimpwidgets-gimpquerybox.
+ * Useful if you want to add more widgets.
+ **/
 #define GIMP_QUERY_BOX_VBOX(qbox) g_object_get_data (G_OBJECT (qbox), \
                                                      "gimp-query-box-vbox")
 

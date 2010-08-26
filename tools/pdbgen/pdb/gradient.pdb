@@ -1459,5 +1459,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient';
+$doc_title = 'gimpgradient';
+$doc_short_desc = 'Functions operating on a single gradient.';
+$doc_long_desc = 'Functions operating on a single gradient.';
 
 1;

@@ -263,18 +263,19 @@ about_dialog_anim_expose (GtkWidget       *widget,
                           GimpAboutDialog *dialog)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
+  cairo_t       *cr;
   GtkAllocation  allocation;
-  GdkGC         *text_gc;
   gint           x, y;
   gint           width, height;
 
   if (! dialog->visible)
     return FALSE;
 
+  cr = gdk_cairo_create (event->window);
+
+  gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+
   gtk_widget_get_allocation (widget, &allocation);
-
-  text_gc = style->text_gc[GTK_STATE_NORMAL];
-
   pango_layout_get_pixel_size (dialog->layout, &width, &height);
 
   x = (allocation.width  - width)  / 2;
@@ -282,26 +283,25 @@ about_dialog_anim_expose (GtkWidget       *widget,
 
   if (dialog->textrange[1] > 0)
     {
-      GdkRegion *covered_region = NULL;
-      GdkRegion *rect_region;
+      GdkRegion *covered_region;
 
       covered_region = gdk_pango_layout_get_clip_region (dialog->layout,
                                                          x, y,
                                                          dialog->textrange, 1);
 
-      rect_region = gdk_region_rectangle (&event->area);
+      gdk_region_intersect (covered_region, event->region);
 
-      gdk_region_intersect (covered_region, rect_region);
-      gdk_region_destroy (rect_region);
+      gdk_cairo_region (cr, covered_region);
+      cairo_clip (cr);
 
-      gdk_gc_set_clip_region (text_gc, covered_region);
       gdk_region_destroy (covered_region);
     }
 
-  gdk_draw_layout (gtk_widget_get_window (widget),
-                   text_gc, x, y, dialog->layout);
+  cairo_move_to (cr, x, y);
 
-  gdk_gc_set_clip_region (text_gc, NULL);
+  pango_cairo_show_layout (cr, dialog->layout);
+
+  cairo_destroy (cr);
 
   return FALSE;
 }

@@ -229,7 +229,7 @@ drw_parasite_find(PyGimpDrawable *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
 
-    return pygimp_parasite_new(gimp_drawable_parasite_find(self->ID, name));
+    return pygimp_parasite_new(gimp_item_parasite_find(self->ID, name));
 }
 
 static PyObject *
@@ -241,7 +241,7 @@ drw_parasite_attach(PyGimpDrawable *self, PyObject *args)
 			  &parasite))
 	return NULL;
 
-    if (!gimp_drawable_parasite_attach(self->ID, parasite->para)) {
+    if (!gimp_item_parasite_attach(self->ID, parasite->para)) {
 	PyErr_Format(pygimp_error,
 		     "could not attach parasite '%s' on drawable (ID %d)",
 		     gimp_parasite_name(parasite->para), self->ID);
@@ -255,9 +255,11 @@ drw_parasite_attach(PyGimpDrawable *self, PyObject *args)
 static PyObject *
 drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
-    char *name;
-    int flags, size;
-    guint8 *data;
+    char         *name;
+    int           flags, size;
+    guint8       *data;
+    GimpParasite *parasite;
+    gboolean      success;
 
     static char *kwlist[] = { "name", "flags", "data", NULL };
 
@@ -266,7 +268,12 @@ drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &name, &flags, &data, &size))
 	return NULL;
 
-    if (!gimp_drawable_attach_new_parasite(self->ID, name, flags, size, data)) {
+    parasite = gimp_parasite_new (name,
+                                  flags, size + 1, data);
+    success = gimp_image_parasite_attach (self->ID, parasite);
+    gimp_parasite_free (parasite);
+
+    if (!success) {
 	PyErr_Format(pygimp_error,
 		     "could not attach new parasite '%s' to drawable (ID %d)",
 		     name, self->ID);
@@ -284,7 +291,7 @@ drw_parasite_detach(PyGimpDrawable *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
 	return NULL;
 
-    if (!gimp_drawable_parasite_detach(self->ID, name)) {
+    if (!gimp_item_parasite_detach(self->ID, name)) {
 	PyErr_Format(pygimp_error,
 		     "could not detach parasite '%s' from drawable (ID %d)",
 		     name, self->ID);
@@ -301,7 +308,7 @@ drw_parasite_list(PyGimpDrawable *self)
     gint num_parasites;
     gchar **parasites;
 
-    if (gimp_drawable_parasite_list(self->ID, &num_parasites, &parasites)) {
+    if (gimp_item_parasite_list(self->ID, &num_parasites, &parasites)) {
 	PyObject *ret;
 	gint i;
 
@@ -943,7 +950,7 @@ drw_get_ID(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_name(PyGimpDrawable *self, void *closure)
 {
-    return PyString_FromString(gimp_drawable_get_name(self->ID));
+    return PyString_FromString(gimp_item_get_name(self->ID));
 }
 
 static int
@@ -959,7 +966,7 @@ drw_set_name(PyGimpDrawable *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_drawable_set_name(self->ID, PyString_AsString(value));
+    gimp_item_set_name(self->ID, PyString_AsString(value));
 
     return 0;
 }
@@ -985,7 +992,7 @@ drw_get_height(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_image(PyGimpDrawable *self, void *closure)
 {
-    return pygimp_image_new(gimp_drawable_get_image(self->ID));
+    return pygimp_image_new(gimp_item_get_image(self->ID));
 }
 
 static PyObject *
@@ -1009,7 +1016,7 @@ drw_get_is_indexed(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_is_layer_mask(PyGimpDrawable *self, void *closure)
 {
-    return PyBool_FromLong(gimp_drawable_is_layer_mask(self->ID));
+    return PyBool_FromLong(gimp_item_is_layer_mask(self->ID));
 }
 
 static PyObject *
@@ -1052,7 +1059,7 @@ drw_get_width(PyGimpDrawable *self, void *closure)
 static PyObject *
 drw_get_linked(PyGimpDrawable *self, void *closure)
 {
-    return PyBool_FromLong(gimp_drawable_get_linked(self->ID));
+    return PyBool_FromLong(gimp_item_get_linked(self->ID));
 }
 
 static int
@@ -1068,7 +1075,7 @@ drw_set_linked(PyGimpDrawable *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    gimp_drawable_set_linked(self->ID, PyInt_AsLong(value));
+    gimp_item_set_linked(self->ID, PyInt_AsLong(value));
 
     return 0;
 }
@@ -1076,7 +1083,7 @@ drw_set_linked(PyGimpDrawable *self, PyObject *value, void *closure)
 static PyObject *
 drw_get_tattoo(PyGimpDrawable *self, void *closure)
 {
-    return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
+    return PyInt_FromLong(gimp_item_get_tattoo(self->ID));
 }
 
 static int
@@ -1092,7 +1099,7 @@ drw_set_tattoo(PyGimpDrawable *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_drawable_set_tattoo(self->ID, PyInt_AsLong(value));
+    gimp_item_set_tattoo(self->ID, PyInt_AsLong(value));
 
     return 0;
 }
@@ -1100,7 +1107,7 @@ drw_set_tattoo(PyGimpDrawable *self, PyObject *value, void *closure)
 static PyObject *
 drw_get_visible(PyGimpDrawable *self, void *closure)
 {
-    return PyBool_FromLong(gimp_drawable_get_visible(self->ID));
+    return PyBool_FromLong(gimp_item_get_visible(self->ID));
 }
 
 static int
@@ -1116,7 +1123,7 @@ drw_set_visible(PyGimpDrawable *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_drawable_set_visible(self->ID, PyInt_AsLong(value));
+    gimp_item_set_visible(self->ID, PyInt_AsLong(value));
 
     return 0;
 }
@@ -1159,7 +1166,7 @@ drw_repr(PyGimpDrawable *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_drawable_get_name(self->ID);
+    name = gimp_item_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Drawable '%s'>", name ? name : "(null)");
     g_free(name);
 
@@ -1228,13 +1235,13 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
     if (drawable != NULL)
     ID = drawable->drawable_id;
 
-    if (!gimp_drawable_is_valid(ID)) {
+    if (!gimp_item_is_valid(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }
 
     /* create the appropriate object type */
-    if (gimp_drawable_is_layer(ID))
+    if (gimp_item_is_layer(ID))
 	self = pygimp_layer_new(ID);
     else
 	self = pygimp_channel_new(ID);
@@ -1724,7 +1731,7 @@ lay_repr(PyGimpLayer *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_drawable_get_name(self->ID);
+    name = gimp_item_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Layer '%s'>", name ? name : "(null)");
     g_free(name);
 
@@ -1811,7 +1818,7 @@ pygimp_layer_new(gint32 ID)
 {
     PyGimpLayer *self;
 
-    if (!gimp_drawable_is_valid(ID) || !gimp_drawable_is_layer(ID)) {
+    if (!gimp_item_is_valid(ID) || !gimp_item_is_layer(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }
@@ -2003,7 +2010,7 @@ chn_repr(PyGimpChannel *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_drawable_get_name(self->ID);
+    name = gimp_item_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Channel '%s'>", name ? name : "(null)");
     g_free(name);
 
@@ -2099,7 +2106,7 @@ pygimp_channel_new(gint32 ID)
 {
     PyGimpChannel *self;
 
-    if (!gimp_drawable_is_valid(ID) || !gimp_drawable_is_channel(ID)) {
+    if (!gimp_item_is_valid(ID) || !gimp_item_is_channel(ID)) {
 	Py_INCREF(Py_None);
 	return Py_None;
     }

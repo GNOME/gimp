@@ -345,7 +345,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   for (i = 1; i < view->grid_rows; i++)
     {
-      gint y = i * height / view->grid_rows;
+      gint y = i * (height - 1) / view->grid_rows;
 
       if ((view->grid_rows % 2) == 0 && (i == view->grid_rows / 2))
         continue;
@@ -356,7 +356,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   for (i = 1; i < view->grid_columns; i++)
     {
-      gint x = i * width / view->grid_columns;
+      gint x = i * (width - 1) / view->grid_columns;
 
       if ((view->grid_columns % 2) == 0 && (i == view->grid_columns / 2))
         continue;
@@ -376,7 +376,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   if ((view->grid_rows % 2) == 0)
     {
-      gint y = height / 2;
+      gint y = (height - 1) / 2;
 
       cairo_move_to (cr, border,             border + y);
       cairo_line_to (cr, border + width - 1, border + y);
@@ -384,7 +384,7 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   if ((view->grid_columns % 2) == 0)
     {
-      gint x = width / 2;
+      gint x = (width - 1) / 2;
 
       cairo_move_to (cr, border + x, border);
       cairo_line_to (cr, border + x, border + height - 1);
@@ -414,11 +414,11 @@ gimp_curve_view_draw_point (GimpCurveView *view,
 #define RADIUS 3
 
   cairo_move_to (cr,
-                 border + (gdouble) width  * x + RADIUS,
-                 border + (gdouble) height * y);
+                 border + (gdouble) (width  - 1) * x + RADIUS,
+                 border + (gdouble) (height - 1) * y);
   cairo_arc (cr,
-             border + (gdouble) width  * x,
-             border + (gdouble) height * y,
+             border + (gdouble) (width  - 1) * x,
+             border + (gdouble) (height - 1) * y,
              RADIUS,
              0, 2 * G_PI);
 }
@@ -438,8 +438,8 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
   y = 1.0 - gimp_curve_map_value (curve, 0.0);
 
   cairo_move_to (cr,
-                 border + (gdouble) width  * x,
-                 border + (gdouble) height * y);
+                 border + (gdouble) (width  - 1) * x,
+                 border + (gdouble) (height - 1)* y);
 
   for (i = 1; i < 256; i++)
     {
@@ -447,8 +447,8 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
       y = 1.0 - gimp_curve_map_value (curve, x);
 
       cairo_line_to (cr,
-                     border + (gdouble) width  * x,
-                     border + (gdouble) height * y);
+                     border + (gdouble) (width  - 1) * x,
+                     border + (gdouble) (height - 1) * y);
     }
 
   cairo_stroke (cr);
@@ -478,25 +478,17 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gtk_widget_get_allocation (widget, &allocation);
 
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
-  width  = allocation.width  - 2 * border - 1;
-  height = allocation.height - 2 * border - 1;
+  width  = allocation.width  - 2 * border;
+  height = allocation.height - 2 * border;
 
-  if (! gimp_histogram_view_get_histogram (GIMP_HISTOGRAM_VIEW (view)) &&
-      ! gimp_histogram_view_get_background (GIMP_HISTOGRAM_VIEW (view)))
-    {
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
-      gdk_draw_rectangle (window,
-                          style->base_gc[GTK_STATE_NORMAL], TRUE,
-                          0, 0,
-                          allocation.width,
-                          allocation.height);
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
 
-      /*  Draw the outer border  */
-      gdk_draw_rectangle (window,
-                          style->dark_gc[GTK_STATE_NORMAL], FALSE,
-                          border, border,
-                          width - 1, height - 1);
-    }
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  cairo_translate (cr, 0.5, 0.5);
 
   if (gtk_widget_has_focus (widget))
     {
@@ -506,13 +498,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
                        border - 2, border - 2,
                        width + 4, height + 4);
     }
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the grid lines  */
   gimp_curve_view_draw_grid (view, style, cr, width, height, border);
@@ -573,10 +558,10 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
       /* draw the color line */
       cairo_move_to (cr,
-                     border + ROUND ((gdouble) width * view->xpos),
-                     border);
+                     border + ROUND ((gdouble) (width - 1) * view->xpos),
+                     border + 1);
       cairo_line_to (cr,
-                     border + ROUND ((gdouble) width * view->xpos),
+                     border + ROUND ((gdouble) (width - 1) * view->xpos),
                      border + height - 1);
       cairo_stroke (cr);
 
@@ -1012,6 +997,10 @@ gimp_curve_view_key_press (GtkWidget   *widget,
 
               handled = TRUE;
             }
+          break;
+
+        case GDK_Delete:
+          gimp_curve_delete_point (curve, i);
           break;
 
         default:

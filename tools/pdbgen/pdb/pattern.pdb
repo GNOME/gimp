@@ -124,5 +124,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern';
+$doc_title = 'gimppattern';
+$doc_short_desc = 'Functions operating on a single pattern.';
+$doc_long_desc = 'Functions operating on a single pattern.';
 
 1;

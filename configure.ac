@@ -45,7 +45,7 @@ m4_define([gegl_required_version], [0.1.2])
 m4_define([glib_required_version], [2.24.0])
 m4_define([gtk_required_version], [2.20.0])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
-m4_define([cairo_required_version], [1.6.0])
+m4_define([cairo_required_version], [1.8.0])
 m4_define([pangocairo_required_version], [1.20.1])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
@@ -622,13 +622,14 @@ AC_CHECK_FUNC(rint, AC_DEFINE(HAVE_RINT, 1,
     AC_DEFINE(HAVE_RINT)])])
 
 
-########################################################
-# Check for extra libs needed for getnameinfo and socket
-########################################################
+#####################################################################
+# Check for extra libs needed for getaddrinfo, getnameinfo and socket
+#####################################################################
 
 gimp_save_LIBS=$LIBS
 LIBS=""
 
+AC_CHECK_FUNCS(getaddrinfo, , AC_CHECK_LIB(nsl, getaddrinfo))
 AC_CHECK_FUNCS(getnameinfo, , AC_CHECK_LIB(nsl, getnameinfo))
 AC_CHECK_LIB(socket, socket)
 
@@ -1794,7 +1795,11 @@ AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 # Checks for gtk-doc and docbook-tools
 ######################################
 
+# Check for GTK_DOC_CHECK availability. The GTK_DOC_CHECK invocation
+# must be on its own line, gtkdocize relies on it
+m4_ifdef([GTK_DOC_CHECK], [
 GTK_DOC_CHECK([1.0])
+])
 
 # NOTE: We need to use a separate automake conditional for this
 #       to make this work with the tarballs.

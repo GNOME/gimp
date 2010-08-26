@@ -68,7 +68,7 @@
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
 
-    (gimp-drawable-set-visible logo-layer 0)
+    (gimp-item-set-visible logo-layer 0)
     (gimp-image-set-active-layer img sparkle-layer)
 
     (gimp-context-pop)

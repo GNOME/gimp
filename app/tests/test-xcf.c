@@ -30,6 +30,7 @@
 #include "core/gimpchannel-select.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
@@ -71,6 +72,16 @@
 #define GIMP_MAINIMAGE_LAYER2_TYPE      GIMP_RGB_IMAGE
 #define GIMP_MAINIMAGE_LAYER2_OPACITY   0.0
 #define GIMP_MAINIMAGE_LAYER2_MODE      GIMP_MULTIPLY_MODE
+
+#define GIMP_MAINIMAGE_GROUP1_NAME      "group1"
+
+#define GIMP_MAINIMAGE_LAYER3_NAME      "layer3"
+
+#define GIMP_MAINIMAGE_LAYER4_NAME      "layer4"
+
+#define GIMP_MAINIMAGE_GROUP2_NAME      "group2"
+
+#define GIMP_MAINIMAGE_LAYER5_NAME      "layer5"
 
 #define GIMP_MAINIMAGE_VGUIDE1_POS      42
 #define GIMP_MAINIMAGE_VGUIDE2_POS      82
@@ -545,7 +556,78 @@ gimp_create_mainimage (gboolean with_unusual_stuff,
   /* Adds stuff like layer groups */
   if (use_gimp_2_8_features)
     {
-      /* TODO: mitch? ;) */
+      GimpLayer *parent;
+
+      /* Add a layer group and some layers:
+       *
+       *  group1
+       *    layer3
+       *    layer4
+       *    group2
+       *      layer5
+       */
+
+      /* group1 */
+      layer = gimp_group_layer_new (image);
+      gimp_object_set_name (GIMP_OBJECT (layer), GIMP_MAINIMAGE_GROUP1_NAME);
+      gimp_image_add_layer (image,
+                            layer,
+                            NULL /*parent*/,
+                            -1 /*position*/,
+                            FALSE /*push_undo*/);
+      parent = layer;
+
+      /* layer3 */
+      layer = gimp_layer_new (image,
+                              GIMP_MAINIMAGE_LAYER1_WIDTH,
+                              GIMP_MAINIMAGE_LAYER1_HEIGHT,
+                              GIMP_MAINIMAGE_LAYER1_TYPE,
+                              GIMP_MAINIMAGE_LAYER3_NAME,
+                              GIMP_MAINIMAGE_LAYER1_OPACITY,
+                              GIMP_MAINIMAGE_LAYER1_MODE);
+      gimp_image_add_layer (image,
+                            layer,
+                            parent,
+                            -1 /*position*/,
+                            FALSE /*push_undo*/);
+
+      /* layer4 */
+      layer = gimp_layer_new (image,
+                              GIMP_MAINIMAGE_LAYER1_WIDTH,
+                              GIMP_MAINIMAGE_LAYER1_HEIGHT,
+                              GIMP_MAINIMAGE_LAYER1_TYPE,
+                              GIMP_MAINIMAGE_LAYER4_NAME,
+                              GIMP_MAINIMAGE_LAYER1_OPACITY,
+                              GIMP_MAINIMAGE_LAYER1_MODE);
+      gimp_image_add_layer (image,
+                            layer,
+                            parent,
+                            -1 /*position*/,
+                            FALSE /*push_undo*/);
+
+      /* group2 */
+      layer = gimp_group_layer_new (image);
+      gimp_object_set_name (GIMP_OBJECT (layer), GIMP_MAINIMAGE_GROUP2_NAME);
+      gimp_image_add_layer (image,
+                            layer,
+                            parent,
+                            -1 /*position*/,
+                            FALSE /*push_undo*/);
+      parent = layer;
+
+      /* layer5 */
+      layer = gimp_layer_new (image,
+                              GIMP_MAINIMAGE_LAYER1_WIDTH,
+                              GIMP_MAINIMAGE_LAYER1_HEIGHT,
+                              GIMP_MAINIMAGE_LAYER1_TYPE,
+                              GIMP_MAINIMAGE_LAYER5_NAME,
+                              GIMP_MAINIMAGE_LAYER1_OPACITY,
+                              GIMP_MAINIMAGE_LAYER1_MODE);
+      gimp_image_add_layer (image,
+                            layer,
+                            parent,
+                            -1 /*position*/,
+                            FALSE /*push_undo*/);
     }
 
   /* Todo, should be tested somehow:
@@ -848,7 +930,20 @@ gimp_assert_mainimage (GimpImage *image,
 
   if (use_gimp_2_8_features)
     {
-      /* TODO: mitch? ;) */
+      /* Only verify the parent relationships, the layer attributes
+       * are tested above
+       */
+      GimpItem *group1 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_GROUP1_NAME));
+      GimpItem *layer3 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_LAYER3_NAME));
+      GimpItem *layer4 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_LAYER4_NAME));
+      GimpItem *group2 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_GROUP2_NAME));
+      GimpItem *layer5 = GIMP_ITEM (gimp_image_get_layer_by_name (image, GIMP_MAINIMAGE_LAYER5_NAME));
+
+      g_assert (gimp_item_get_parent (group1) == NULL);
+      g_assert (gimp_item_get_parent (layer3) == group1);
+      g_assert (gimp_item_get_parent (layer4) == group1);
+      g_assert (gimp_item_get_parent (group2) == group1);
+      g_assert (gimp_item_get_parent (layer5) == group2);
     }
 }
 

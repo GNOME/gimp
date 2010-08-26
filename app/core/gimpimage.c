@@ -3246,6 +3246,127 @@ gimp_image_get_vectors_by_name (const GimpImage *image,
 }
 
 
+/*  items  */
+
+gboolean
+gimp_image_reorder_item (GimpImage   *image,
+                         GimpItem    *item,
+                         GimpItem    *new_parent,
+                         gint         new_index,
+                         gboolean     push_undo,
+                         const gchar *undo_desc)
+{
+  GimpItemTree *tree;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_get_image (item) == image, FALSE);
+
+  tree = gimp_item_get_tree (item);
+
+  g_return_val_if_fail (tree != NULL, FALSE);
+
+  if (push_undo && ! undo_desc)
+    undo_desc = GIMP_ITEM_GET_CLASS (item)->reorder_desc;
+
+  /*  item and new_parent are type-checked in GimpItemTree
+   */
+  return gimp_item_tree_reorder_item (tree, item,
+                                      new_parent, new_index,
+                                      push_undo, undo_desc);
+}
+
+gboolean
+gimp_image_raise_item (GimpImage *image,
+                       GimpItem  *item,
+                       GError    **error)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  index = gimp_item_get_index (item);
+
+  g_return_val_if_fail (index != -1, FALSE);
+
+  if (index == 0)
+    {
+      g_set_error_literal (error,  GIMP_ERROR, GIMP_FAILED,
+			   GIMP_ITEM_GET_CLASS (item)->raise_failed);
+      return FALSE;
+    }
+
+  return gimp_image_reorder_item (image, item,
+                                  gimp_item_get_parent (item), index - 1,
+                                  TRUE, GIMP_ITEM_GET_CLASS (item)->raise_desc);
+}
+
+gboolean
+gimp_image_raise_item_to_top (GimpImage *image,
+                              GimpItem  *item)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return gimp_image_reorder_item (image, item,
+                                  gimp_item_get_parent (item), 0,
+                                  TRUE, GIMP_ITEM_GET_CLASS (item)->raise_to_top_desc);
+}
+
+gboolean
+gimp_image_lower_item (GimpImage *image,
+                       GimpItem  *item,
+                       GError    **error)
+{
+  GimpContainer *container;
+  gint           index;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  container = gimp_item_get_container (item);
+
+  g_return_val_if_fail (container != NULL, FALSE);
+
+  index = gimp_item_get_index (item);
+
+  if (index == gimp_container_get_n_children (container) - 1)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			   GIMP_ITEM_GET_CLASS (item)->lower_failed);
+      return FALSE;
+    }
+
+  return gimp_image_reorder_item (image, item,
+                                  gimp_item_get_parent (item), index + 1,
+                                  TRUE, GIMP_ITEM_GET_CLASS (item)->lower_desc);
+}
+
+gboolean
+gimp_image_lower_item_to_bottom (GimpImage *image,
+                                  GimpItem *item)
+{
+  GimpContainer *container;
+  gint           length;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  container = gimp_item_get_container (item);
+
+  g_return_val_if_fail (container != NULL, FALSE);
+
+  length = gimp_container_get_n_children (container);
+
+  return gimp_image_reorder_item (image, item,
+                                  gimp_item_get_parent (item), length - 1,
+                                  TRUE, GIMP_ITEM_GET_CLASS (item)->lower_to_bottom_desc);
+}
+
+
 /*  layers  */
 
 gboolean
@@ -3484,109 +3605,6 @@ gimp_image_add_layers (GimpImage   *image,
   gimp_image_undo_group_end (image);
 }
 
-gboolean
-gimp_image_raise_layer (GimpImage  *image,
-                        GimpLayer  *layer,
-                        GError    **error)
-{
-  gint index;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  index = gimp_item_get_index (GIMP_ITEM (layer));
-
-  if (index == 0)
-    {
-      g_set_error_literal (error,  GIMP_ERROR, GIMP_FAILED,
-			   _("Layer cannot be raised higher."));
-      return FALSE;
-    }
-
-  return gimp_image_reorder_layer (image, layer,
-                                   gimp_layer_get_parent (layer), index - 1,
-                                   TRUE, C_("undo-type", "Raise Layer"));
-}
-
-gboolean
-gimp_image_raise_layer_to_top (GimpImage *image,
-                               GimpLayer *layer)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  return gimp_image_reorder_layer (image, layer,
-                                   gimp_layer_get_parent (layer), 0,
-                                   TRUE, C_("undo-type", "Raise Layer to Top"));
-}
-
-gboolean
-gimp_image_lower_layer (GimpImage  *image,
-                        GimpLayer  *layer,
-                        GError    **error)
-{
-  GimpContainer *container;
-  gint           index;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  container = gimp_item_get_container (GIMP_ITEM (layer));
-
-  index = gimp_item_get_index (GIMP_ITEM (layer));
-
-  if (index == gimp_container_get_n_children (container) - 1)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Layer cannot be lowered more."));
-      return FALSE;
-    }
-
-  return gimp_image_reorder_layer (image, layer,
-                                   gimp_layer_get_parent (layer), index + 1,
-                                   TRUE, C_("undo-type", "Lower Layer"));
-}
-
-gboolean
-gimp_image_lower_layer_to_bottom (GimpImage *image,
-                                  GimpLayer *layer)
-{
-  GimpContainer *container;
-  gint           length;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  container = gimp_item_get_container (GIMP_ITEM (layer));
-
-  length = gimp_container_get_n_children (container);
-
-  return gimp_image_reorder_layer (image, layer,
-                                   gimp_layer_get_parent (layer), length - 1,
-                                   TRUE, C_("undo-type", "Lower Layer to Bottom"));
-}
-
-gboolean
-gimp_image_reorder_layer (GimpImage   *image,
-                          GimpLayer   *layer,
-                          GimpLayer   *new_parent,
-                          gint         new_index,
-                          gboolean     push_undo,
-                          const gchar *undo_desc)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  /*  item and new_parent are type-checked in GimpItemTree
-   */
-  return gimp_item_tree_reorder_item (GIMP_IMAGE_GET_PRIVATE (image)->layers,
-                                      (GimpItem *) layer,
-                                      (GimpItem *) new_parent,
-                                      new_index,
-                                      push_undo, undo_desc);
-}
-
 
 /*  channels  */
 
@@ -3684,110 +3702,6 @@ gimp_image_remove_channel (GimpImage   *image,
     gimp_image_undo_group_end (image);
 }
 
-gboolean
-gimp_image_raise_channel (GimpImage    *image,
-                          GimpChannel  *channel,
-                          GError      **error)
-{
-  gint index;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  index = gimp_item_get_index (GIMP_ITEM (channel));
-
-  if (index == 0)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Channel cannot be raised higher."));
-      return FALSE;
-    }
-
-  return gimp_image_reorder_channel (image, channel,
-                                     gimp_channel_get_parent (channel), index - 1,
-                                     TRUE, C_("undo-type", "Raise Channel"));
-}
-
-gboolean
-gimp_image_raise_channel_to_top (GimpImage   *image,
-                                 GimpChannel *channel)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-
-  return gimp_image_reorder_channel (image, channel,
-                                     gimp_channel_get_parent (channel), 0,
-                                     TRUE, C_("undo-type", "Raise Channel to Top"));
-}
-
-
-gboolean
-gimp_image_lower_channel (GimpImage    *image,
-                          GimpChannel  *channel,
-                          GError      **error)
-{
-  GimpContainer *container;
-  gint           index;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  container = gimp_item_get_container (GIMP_ITEM (channel));
-
-  index = gimp_item_get_index (GIMP_ITEM (channel));
-
-  if (index == gimp_container_get_n_children (container) - 1)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Channel cannot be lowered more."));
-      return FALSE;
-    }
-
-  return gimp_image_reorder_channel (image, channel,
-                                     gimp_channel_get_parent (channel), index + 1,
-                                     TRUE, C_("undo-type", "Lower Channel"));
-}
-
-gboolean
-gimp_image_lower_channel_to_bottom (GimpImage   *image,
-                                    GimpChannel *channel)
-{
-  GimpContainer *container;
-  gint           length;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-
-  container = gimp_item_get_container (GIMP_ITEM (channel));
-
-  length = gimp_container_get_n_children (container);
-
-  return gimp_image_reorder_channel (image, channel,
-                                     gimp_channel_get_parent (channel), length - 1,
-                                     TRUE, C_("undo-type", "Lower Channel to Bottom"));
-}
-
-gboolean
-gimp_image_reorder_channel (GimpImage   *image,
-                            GimpChannel *channel,
-                            GimpChannel *new_parent,
-                            gint         new_index,
-                            gboolean     push_undo,
-                            const gchar *undo_desc)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  /*  item and new_parent are type-checked in GimpItemTree
-   */
-  return gimp_item_tree_reorder_item (GIMP_IMAGE_GET_PRIVATE (image)->channels,
-                                      (GimpItem *) channel,
-                                      (GimpItem *) new_parent,
-                                      new_index,
-                                      push_undo, undo_desc);
-}
-
 
 /*  vectors  */
 
@@ -3856,109 +3770,6 @@ gimp_image_remove_vectors (GimpImage   *image,
 
   if (vectors == active_vectors)
     gimp_image_set_active_vectors (image, new_active);
-}
-
-gboolean
-gimp_image_raise_vectors (GimpImage    *image,
-                          GimpVectors  *vectors,
-                          GError      **error)
-{
-  gint index;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  index = gimp_item_get_index (GIMP_ITEM (vectors));
-
-  if (index == 0)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Path cannot be raised higher."));
-      return FALSE;
-    }
-
-  return gimp_image_reorder_vectors (image, vectors,
-                                     gimp_vectors_get_parent (vectors), index - 1,
-                                     TRUE, C_("undo-type", "Raise Path"));
-}
-
-gboolean
-gimp_image_raise_vectors_to_top (GimpImage   *image,
-                                 GimpVectors *vectors)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-
-  return gimp_image_reorder_vectors (image, vectors,
-                                     gimp_vectors_get_parent (vectors), 0,
-                                     TRUE, C_("undo-type", "Raise Path to Top"));
-}
-
-gboolean
-gimp_image_lower_vectors (GimpImage    *image,
-                          GimpVectors  *vectors,
-                          GError      **error)
-{
-  GimpContainer *container;
-  gint           index;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  container = gimp_item_get_container (GIMP_ITEM (vectors));
-
-  index = gimp_item_get_index (GIMP_ITEM (vectors));
-
-  if (index == gimp_container_get_n_children (container) - 1)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			   _("Path cannot be lowered more."));
-      return FALSE;
-    }
-
-  return gimp_image_reorder_vectors (image, vectors,
-                                     gimp_vectors_get_parent (vectors), index + 1,
-                                     TRUE, C_("undo-type", "Lower Path"));
-}
-
-gboolean
-gimp_image_lower_vectors_to_bottom (GimpImage   *image,
-                                    GimpVectors *vectors)
-{
-  GimpContainer *container;
-  gint           length;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-
-  container = gimp_item_get_container (GIMP_ITEM (vectors));
-
-  length = gimp_container_get_n_children (container);
-
-  return gimp_image_reorder_vectors (image, vectors,
-                                     gimp_vectors_get_parent (vectors), length - 1,
-                                     TRUE, C_("undo-type", "Lower Path to Bottom"));
-}
-
-gboolean
-gimp_image_reorder_vectors (GimpImage   *image,
-                            GimpVectors *vectors,
-                            GimpVectors *new_parent,
-                            gint         new_index,
-                            gboolean     push_undo,
-                            const gchar *undo_desc)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-
-  /*  item and new_parent are type-checked in GimpItemTree
-   */
-  return gimp_item_tree_reorder_item (GIMP_IMAGE_GET_PRIVATE (image)->vectors,
-                                      (GimpItem *) vectors,
-                                      (GimpItem *) new_parent,
-                                      new_index,
-                                      push_undo, undo_desc);
 }
 
 gboolean

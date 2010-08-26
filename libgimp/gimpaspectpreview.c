@@ -33,6 +33,15 @@
 #include "gimpaspectpreview.h"
 
 
+/**
+ * SECTION: gimpaspectpreview
+ * @title: GimpAspectPreview
+ * @short_description: A widget providing a preview with fixed aspect ratio.
+ *
+ * A widget providing a preview with fixed aspect ratio.
+ **/
+
+
 enum
 {
   PROP_0,
@@ -265,7 +274,7 @@ gimp_aspect_preview_draw_buffer (GimpPreview  *preview,
   GimpDrawable *drawable = GIMP_ASPECT_PREVIEW (preview)->drawable;
   gint32        image_id;
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable->drawable_id);
 
   if (gimp_selection_is_empty (image_id))
     {
@@ -374,6 +383,8 @@ gimp_aspect_preview_set_drawable (GimpAspectPreview *preview,
  * the scroll offset.
  *
  * Since: GIMP 2.2
+ *
+ * Returns: a new #GimpAspectPreview.
  **/
 GtkWidget *
 gimp_aspect_preview_new (GimpDrawable *drawable,

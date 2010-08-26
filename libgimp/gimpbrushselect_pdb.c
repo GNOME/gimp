@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpbrushselect
+ * @title: gimpbrushselect
+ * @short_description: Functions providing a brush selection dialog.
+ *
+ * Functions providing a brush selection dialog.
+ **/
+
+
 /**
  * gimp_brushes_popup:
  * @brush_callback: The callback PDB proc to call when brush selection is made.

@@ -1,29 +1,30 @@
-# translation of gimp-script-fu.HEAD.pl.po to Polish
+# translation of gimp-script-fu.master.pl.po to Polish
 # Copyright (C) 2001-2007 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnomepl.org
-# (:pserver:anonymous@cvs.gnomepl.org:/home/cvs, puste hasło)
+# Aviary.pl
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
-# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
-# translators@gnomepl.org
+# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
+# gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999,2000.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005, 2007.
+# Łukasz Jernaś <deejay1@srem.org>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD.pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-21 19:49+0200\n"
-"PO-Revision-Date: 2007-09-14 12:49+0200\n"
-"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
+"PO-Revision-Date: 2010-08-07 18:37+0200\n"
+"Last-Translator: Łukasz Jernaś <deejay1@srem.org>\n"
+"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.6.1\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: POLAND\n"
 
@@ -166,7 +167,7 @@ msgstr "_GIMP Online"
 
 #: ../plug-ins/script-fu/script-fu.c:299
 msgid "_User Manual"
-msgstr "_Podręcznik użytkowanika"
+msgstr "_Podręcznik użytkownika"
 
 #: ../plug-ins/script-fu/script-fu.c:302
 msgid "_Script-Fu"

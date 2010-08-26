@@ -2115,8 +2115,8 @@ register_text_layer_procs (GimpPDB *pdb)
                                "gimp-text-layer-get-hinting");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-layer-get-hinting",
-                                     "This procedure is deprecated! Use 'gimp-text-layer-get-hint-style' instead.",
-                                     "This procedure is deprecated! Use 'gimp-text-layer-get-hint-style' instead.",
+                                     "Deprecated: Use 'gimp-text-layer-get-hint-style' instead.",
+                                     "Deprecated: Use 'gimp-text-layer-get-hint-style' instead.",
                                      "",
                                      "",
                                      "",

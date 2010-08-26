@@ -32,6 +32,15 @@
 #include "gimpcellrenderercolor.h"
 
 
+/**
+ * SECTION: gimpcellrenderercolor
+ * @title: GimpCellRendererColor
+ * @short_description: A #GtkCellRenderer to display a #GimpRGB color.
+ *
+ * A #GtkCellRenderer to display a #GimpRGB color.
+ **/
+
+
 #define DEFAULT_ICON_SIZE  GTK_ICON_SIZE_MENU
 
 

@@ -29,6 +29,17 @@
 #undef __GIMP_IMAGE_PDB_H__
 #include "gimpimage_pdb.h"
 
+
+/**
+ * SECTION: gimpimage
+ * @title: gimpimage
+ * @short_description: Operations on complete images.
+ *
+ * Operations on complete images: creation, resizing/rescaling, and
+ * operations involving multiple layers.
+ **/
+
+
 /**
  * gimp_image_is_valid:
  * @image_ID: The image to check.
@@ -302,8 +313,7 @@ gimp_image_height (gint32 image_ID)
  * gimp_image_free_shadow:
  * @image_ID: The image.
  *
- * This procedure is deprecated! Use gimp_drawable_free_shadow()
- * instead.
+ * Deprecated: Use gimp_drawable_free_shadow() instead.
  *
  * Returns: TRUE on success.
  */

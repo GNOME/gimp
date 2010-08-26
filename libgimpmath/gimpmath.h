@@ -39,31 +39,78 @@
 
 G_BEGIN_DECLS
 
-/* Some portability enhancing stuff. For use both by the gimp app
- * as well as plug-ins and modules.
- *
- * Include this instead of just <math.h>.
- */
 
-/* Use RINT() instead of rint() */
+/**
+ * SECTION: gimpmath
+ * @title: GimpMath
+ * @short_description: Mathematical definitions and macros.
+ *
+ * Mathematical definitions and macros for use both by the GIMP
+ * application and plug-ins. These macros should be used rather than
+ * the ones from &lt;math.h&gt; for enhanced portability.
+ **/
+
+
+/**
+ * RINT:
+ * @x: the value to be rounded
+ *
+ * This macro rounds its argument @x to an integer value in floating
+ * point format. Use RINT() instead of rint().
+ **/
 #ifdef HAVE_RINT
 #define RINT(x) rint(x)
 #else
 #define RINT(x) floor ((x) + 0.5)
 #endif
 
+/**
+ * ROUND:
+ * @x: the value to be rounded.
+ *
+ * This macro rounds its argument @x to the nearest integer.
+ **/
 #define ROUND(x) ((int) ((x) + 0.5))
 
-/* Square */
+/**
+ * SQR:
+ * @x: the value to be squared.
+ *
+ * This macro squares its argument @x.
+ **/
 #define SQR(x) ((x) * (x))
 
-/* Limit a (0->511) int to 255 */
+/**
+ * MAX255:
+ * @a: the value to be limited.
+ *
+ * This macro limits it argument @a, an (0-511) int, to 255.
+ **/
 #define MAX255(a)  ((a) | (((a) & 256) - (((a) & 256) >> 8)))
 
-/* Clamp a >>int32<<-range int between 0 and 255 inclusive */
+/**
+ * CLAMP0255:
+ * @a: the value to be clamped.
+ *
+ * This macro clamps its argument @a, an int32-range int, between 0
+ * and 255 inclusive.
+ **/
 #define CLAMP0255(a)  CLAMP(a,0,255)
 
+/**
+ * gimp_deg_to_rad:
+ * @angle: the angle to be converted.
+ *
+ * This macro converts its argument @angle from degree to radian.
+ **/
 #define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
+
+/**
+ * gimp_rad_to_deg:
+ * @angle: the angle to be converted.
+ *
+ * This macro converts its argument @angle from radian to degree.
+ **/
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
 
 

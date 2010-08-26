@@ -216,6 +216,10 @@ run (const gchar      *name,
       drawable_ID = param[2].data.d_int32;
       filename    = param[3].data.d_string;
 
+      if (run_mode == GIMP_RUN_INTERACTIVE ||
+          run_mode == GIMP_RUN_WITH_LAST_VALS)
+        gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
       status = sanity_check (filename, image_ID, &error);
 
       /* Get the export options */
@@ -224,8 +228,6 @@ run (const gchar      *name,
           switch (run_mode)
             {
             case GIMP_RUN_INTERACTIVE:
-              gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
               /*  Possibly retrieve data  */
               gimp_get_data (SAVE_PROC, &gsvals);
 
@@ -900,7 +902,7 @@ save_image (const gchar *filename,
         {
           if (i > 0 && ! gsvals.always_use_default_dispose)
             {
-              layer_name = gimp_drawable_get_name (layers[i - 1]);
+              layer_name = gimp_item_get_name (layers[i - 1]);
               Disposal = parse_disposal_tag (layer_name);
               g_free (layer_name);
             }
@@ -909,7 +911,7 @@ save_image (const gchar *filename,
               Disposal = gsvals.default_dispose;
             }
 
-          layer_name = gimp_drawable_get_name (layers[i]);
+          layer_name = gimp_item_get_name (layers[i]);
           Delay89 = parse_ms_tag (layer_name);
           g_free (layer_name);
 

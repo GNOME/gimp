@@ -29,12 +29,6 @@ typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *image);
 typedef GimpItem      * (* GimpGetItemFunc)      (const GimpImage *image);
 typedef void            (* GimpSetItemFunc)      (GimpImage       *image,
                                                   GimpItem        *item);
-typedef void            (* GimpReorderItemFunc)  (GimpImage       *image,
-                                                  GimpItem        *item,
-                                                  GimpItem        *new_parent,
-                                                  gint             new_index,
-                                                  gboolean         push_undo,
-                                                  const gchar     *undo_desc);
 typedef void            (* GimpAddItemFunc)      (GimpImage       *image,
                                                   GimpItem        *item,
                                                   GimpItem        *parent,
@@ -80,7 +74,6 @@ struct _GimpItemTreeViewClass
   GimpGetContainerFunc  get_container;
   GimpGetItemFunc       get_active_item;
   GimpSetItemFunc       set_active_item;
-  GimpReorderItemFunc   reorder_item;
   GimpAddItemFunc       add_item;
   GimpRemoveItemFunc    remove_item;
   GimpNewItemFunc       new_item;
@@ -97,9 +90,6 @@ struct _GimpItemTreeViewClass
   const gchar          *lower_bottom_action;
   const gchar          *duplicate_action;
   const gchar          *delete_action;
-
-  /*  undo descriptions  */
-  const gchar          *reorder_desc;
 
   /*  lock content button appearance  */
   const gchar          *lock_content_stock_id;

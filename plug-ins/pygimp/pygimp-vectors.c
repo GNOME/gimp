@@ -290,7 +290,7 @@ vs_repr(PyGimpVectorsStroke *self)
     PyObject *s;
     char *name;
 
-    name = gimp_vectors_get_name(self->vectors_ID);
+    name = gimp_item_get_name(self->vectors_ID);
     s = PyString_FromFormat("<gimp.VectorsStroke %d of gimp.Vectors '%s'>",
                             self->stroke, name ? name : "(null)");
     g_free(name);
@@ -470,7 +470,7 @@ vbs_repr(PyGimpVectorsStroke *self)
     PyObject *s;
     char *name;
 
-    name = gimp_vectors_get_name(self->vectors_ID);
+    name = gimp_item_get_name(self->vectors_ID);
     s = PyString_FromFormat("<gimp.VectorsBezierStroke %d of gimp.Vectors '%s'>",
                             self->stroke, name ? name : "(null)");
     g_free(name);
@@ -646,7 +646,7 @@ vectors_parasite_find(PyGimpVectors *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
         return NULL;
 
-    return pygimp_parasite_new(gimp_vectors_parasite_find(self->ID, name));
+    return pygimp_parasite_new(gimp_item_parasite_find(self->ID, name));
 }
 
 static PyObject *
@@ -658,7 +658,7 @@ vectors_parasite_attach(PyGimpVectors *self, PyObject *args)
                           &parasite))
         return NULL;
 
-    if (!gimp_vectors_parasite_attach(self->ID, parasite->para)) {
+    if (!gimp_item_parasite_attach(self->ID, parasite->para)) {
         PyErr_Format(pygimp_error,
                      "could not attach parasite '%s' to vectors (ID %d)",
                      parasite->para->name, self->ID);
@@ -677,7 +677,7 @@ vectors_parasite_detach(PyGimpVectors *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
         return NULL;
 
-    if (!gimp_vectors_parasite_detach(self->ID, name)) {
+    if (!gimp_item_parasite_detach(self->ID, name)) {
         PyErr_Format(pygimp_error,
                      "could not detach parasite '%s' from vectors (ID %d)",
                      name, self->ID);
@@ -694,7 +694,7 @@ vectors_parasite_list(PyGimpVectors *self)
     gint num_parasites;
     gchar **parasites;
 
-    if (gimp_vectors_parasite_list(self->ID, &num_parasites, &parasites)) {
+    if (gimp_item_parasite_list(self->ID, &num_parasites, &parasites)) {
         PyObject *ret;
         gint i;
 
@@ -739,7 +739,7 @@ static PyMethodDef vectors_methods[] = {
 static PyObject *
 vectors_get_image(PyGimpVectors *self, void *closure)
 {
-    return pygimp_image_new(gimp_vectors_get_image(self->ID));
+    return pygimp_image_new(gimp_item_get_image(self->ID));
 }
 
 static PyObject *
@@ -751,7 +751,7 @@ vectors_get_ID(PyGimpVectors *self, void *closure)
 static PyObject *
 vectors_get_name(PyGimpVectors *self, void *closure)
 {
-    return PyString_FromString(gimp_vectors_get_name(self->ID));
+    return PyString_FromString(gimp_item_get_name(self->ID));
 }
 
 static int
@@ -767,7 +767,7 @@ vectors_set_name(PyGimpVectors *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_vectors_set_name(self->ID, PyString_AsString(value));
+    gimp_item_set_name(self->ID, PyString_AsString(value));
 
     return 0;
 }
@@ -775,7 +775,7 @@ vectors_set_name(PyGimpVectors *self, PyObject *value, void *closure)
 static PyObject *
 vectors_get_visible(PyGimpVectors *self, void *closure)
 {
-    return PyBool_FromLong(gimp_vectors_get_visible(self->ID));
+    return PyBool_FromLong(gimp_item_get_visible(self->ID));
 }
 
 static int
@@ -791,7 +791,7 @@ vectors_set_visible(PyGimpVectors *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_vectors_set_visible(self->ID, PyInt_AsLong(value));
+    gimp_item_set_visible(self->ID, PyInt_AsLong(value));
 
     return 0;
 }
@@ -799,7 +799,7 @@ vectors_set_visible(PyGimpVectors *self, PyObject *value, void *closure)
 static PyObject *
 vectors_get_linked(PyGimpVectors *self, void *closure)
 {
-    return PyBool_FromLong(gimp_vectors_get_linked(self->ID));
+    return PyBool_FromLong(gimp_item_get_linked(self->ID));
 }
 
 static int
@@ -815,7 +815,7 @@ vectors_set_linked(PyGimpVectors *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_vectors_set_linked(self->ID, PyInt_AsLong(value));
+    gimp_item_set_linked(self->ID, PyInt_AsLong(value));
 
     return 0;
 }
@@ -823,7 +823,7 @@ vectors_set_linked(PyGimpVectors *self, PyObject *value, void *closure)
 static PyObject *
 vectors_get_tattoo(PyGimpVectors *self, void *closure)
 {
-    return PyInt_FromLong(gimp_vectors_get_tattoo(self->ID));
+    return PyInt_FromLong(gimp_item_get_tattoo(self->ID));
 }
 
 static int
@@ -839,7 +839,7 @@ vectors_set_tattoo(PyGimpVectors *self, PyObject *value, void *closure)
         return -1;
     }
 
-    gimp_vectors_set_tattoo(self->ID, PyInt_AsLong(value));
+    gimp_item_set_tattoo(self->ID, PyInt_AsLong(value));
 
     return 0;
 }
@@ -888,7 +888,7 @@ vectors_repr(PyGimpVectors *self)
     PyObject *s;
     char *name;
 
-    name = gimp_vectors_get_name(self->ID);
+    name = gimp_item_get_name(self->ID);
     s = PyString_FromFormat("<gimp.Vectors '%s'>", name ? name : "(null)");
     g_free(name);
 
@@ -979,7 +979,7 @@ pygimp_vectors_new(gint32 ID)
 {
     PyGimpVectors *self;
 
-    if (!gimp_vectors_is_valid(ID)) {
+    if (!gimp_item_is_valid(ID)) {
         Py_INCREF(Py_None);
         return Py_None;
     }

@@ -26,40 +26,6 @@
 #include "gimpimage.h"
 
 /**
- * gimp_image_get_cmap:
- * @image_ID:   The image.
- * @num_colors: Number of colors in the colormap array.
- *
- * This procedure is deprecated! Use gimp_image_get_colormap() instead.
- *
- * Returns: The image's colormap.
- */
-guchar *
-gimp_image_get_cmap (gint32  image_ID,
-                     gint   *num_colors)
-{
-  return gimp_image_get_colormap (image_ID, num_colors);
-}
-
-/**
- * gimp_image_set_cmap:
- * @image_ID:   The image.
- * @cmap:       The new colormap values.
- * @num_colors: Number of colors in the colormap array.
- *
- * This procedure is deprecated! Use gimp_image_set_colormap() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_image_set_cmap (gint32        image_ID,
-                     const guchar *cmap,
-                     gint          num_colors)
-{
-  return gimp_image_set_colormap (image_ID, cmap, num_colors);
-}
-
-/**
  * gimp_image_get_colormap:
  * @image_ID:   The image.
  * @num_colors: Returns the number of colors in the colormap array.
@@ -137,6 +103,40 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 }
 
 /**
+ * gimp_image_get_cmap:
+ * @image_ID:   The image.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * This procedure is deprecated! Use gimp_image_get_colormap() instead.
+ *
+ * Returns: The image's colormap.
+ */
+guchar *
+gimp_image_get_cmap (gint32  image_ID,
+                     gint   *num_colors)
+{
+  return gimp_image_get_colormap (image_ID, num_colors);
+}
+
+/**
+ * gimp_image_set_cmap:
+ * @image_ID:   The image.
+ * @cmap:       The new colormap values.
+ * @num_colors: Number of colors in the colormap array.
+ *
+ * This procedure is deprecated! Use gimp_image_set_colormap() instead.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_set_cmap (gint32        image_ID,
+                     const guchar *cmap,
+                     gint          num_colors)
+{
+  return gimp_image_set_colormap (image_ID, cmap, num_colors);
+}
+
+/**
  * gimp_image_attach_new_parasite:
  * @image_ID: the ID of the image to attach the #GimpParasite to.
  * @name: the name of the #GimpParasite to create and attach.
@@ -146,6 +146,8 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  *
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
+ *
+ * Deprecated: Use gimp_image_parasite_attach() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.

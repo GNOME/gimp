@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpprogress
+ * @title: gimpprogress
+ * @short_description: Functions for embedding the progress bar into a plug-in's GUI.
+ *
+ * Functions for embedding the progress bar into a plug-in's GUI.
+ **/
+
+
 /**
  * _gimp_progress_init:
  * @message: Message to use in the progress dialog.

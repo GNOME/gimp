@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpbuffer
+ * @title: gimpbuffer
+ * @short_description: Functions for manipulating cut buffers.
+ *
+ * Functions related to named cut buffers.
+ **/
+
+
 /**
  * gimp_buffers_get_list:
  * @filter: An optional regular expression used to filter the list.

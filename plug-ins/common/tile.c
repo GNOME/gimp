@@ -285,7 +285,7 @@ tile (gint32  image_id,
                          tvals.new_width, tvals.new_height,
                          0, 0);
 
-      if (gimp_drawable_is_layer (drawable_id))
+      if (gimp_item_is_layer (drawable_id))
         gimp_layer_resize (drawable_id,
                            tvals.new_width, tvals.new_height,
                            0, 0);

@@ -510,5 +510,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Procedural database';
+$doc_title = 'gimpproceduraldb';
+$doc_short_desc = 'Functions for querying and changing procedural database (PDB) entries.';
+$doc_long_desc = 'Functions for querying and changing procedural database (PDB) entries.';
 
 1;

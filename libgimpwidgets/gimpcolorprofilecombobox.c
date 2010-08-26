@@ -30,6 +30,15 @@
 #include "gimpcolorprofilestore-private.h"
 
 
+/**
+ * SECTION: gimpcolorprofilecombobox
+ * @title: GimpColorProfileComboBox
+ * @short_description: A combo box for selecting color profiles.
+ *
+ * A combo box for selecting color profiles.
+ **/
+
+
 enum
 {
   PROP_0,

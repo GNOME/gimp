@@ -56,12 +56,12 @@
     (gimp-layer-set-lock-alpha logo-layer FALSE)
     (plug-in-gauss-iir RUN-NONINTERACTIVE img logo-layer outline-blur-radius TRUE TRUE)
 
-    (gimp-drawable-set-visible pattern-layer FALSE)
+    (gimp-item-set-visible pattern-layer FALSE)
     (set! alpha-layer (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (plug-in-edge RUN-NONINTERACTIVE img alpha-layer 2 1 0)
-    (gimp-drawable-set-name alpha-layer "Bump map")
+    (gimp-item-set-name alpha-layer "Bump map")
     (set! shadow-layer (car (gimp-layer-copy alpha-layer TRUE)))
-    (gimp-drawable-set-name shadow-layer "Edges")
+    (gimp-item-set-name shadow-layer "Edges")
     (script-fu-util-image-add-layers img shadow-layer)
     (plug-in-gauss-iir RUN-NONINTERACTIVE img alpha-layer bump-map-blur-radius TRUE TRUE)
 
@@ -82,14 +82,14 @@
 
     (gimp-layer-remove-mask pattern-layer MASK-APPLY)
     (gimp-invert shadow-layer)
-    (gimp-drawable-set-name shadow-layer "Drop shadow")
+    (gimp-item-set-name shadow-layer "Drop shadow")
     (plug-in-gauss-iir RUN-NONINTERACTIVE img shadow-layer shadow-blur-radius TRUE TRUE)
 
     (gimp-drawable-offset shadow-layer
                           FALSE OFFSET-BACKGROUND s-offset-x s-offset-y)
 
-    (gimp-drawable-set-visible alpha-layer FALSE)
-    (gimp-drawable-set-visible pattern-layer TRUE)
+    (gimp-item-set-visible alpha-layer FALSE)
+    (gimp-item-set-visible pattern-layer TRUE)
     ;;(set! final (car (gimp-image-flatten img)))
 
     (gimp-context-pop)

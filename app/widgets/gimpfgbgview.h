@@ -37,9 +37,6 @@ struct _GimpFgBgView
   GtkWidget    parent_instance;
 
   GimpContext *context;
-
-  guchar      *render_buf;
-  gint         render_buf_size;
 };
 
 struct _GimpFgBgViewClass

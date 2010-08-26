@@ -518,11 +518,10 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
 {
   if (editor->shell)
     {
-      GimpDisplayShell *shell = editor->shell;
-
-      gimp_display_shell_scroll_center_image_coordinate (shell,
-                                                         x + width / 2,
-                                                         y + height / 2);
+      if (gimp_display_get_image (editor->shell->display))
+        gimp_display_shell_scroll_center_image_coordinate (editor->shell,
+                                                           x + width / 2,
+                                                           y + height / 2);
     }
 }
 
@@ -535,10 +534,11 @@ gimp_navigation_editor_zoom (GimpNavigationView   *view,
 
   if (editor->shell)
     {
-      gimp_display_shell_scale (editor->shell,
-                                direction,
-                                0.0,
-                                GIMP_ZOOM_FOCUS_BEST_GUESS);
+      if (gimp_display_get_image (editor->shell->display))
+        gimp_display_shell_scale (editor->shell,
+                                  direction,
+                                  0.0,
+                                  GIMP_ZOOM_FOCUS_BEST_GUESS);
     }
 }
 
@@ -595,10 +595,11 @@ static void
 gimp_navigation_editor_zoom_adj_changed (GtkAdjustment        *adj,
                                          GimpNavigationEditor *editor)
 {
-  gimp_display_shell_scale (editor->shell,
-                            GIMP_ZOOM_TO,
-                            pow (2.0, gtk_adjustment_get_value (adj)),
-                            GIMP_ZOOM_FOCUS_BEST_GUESS);
+  if (gimp_display_get_image (editor->shell->display))
+    gimp_display_shell_scale (editor->shell,
+                              GIMP_ZOOM_TO,
+                              pow (2.0, gtk_adjustment_get_value (adj)),
+                              GIMP_ZOOM_FOCUS_BEST_GUESS);
 }
 
 static void

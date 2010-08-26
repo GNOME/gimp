@@ -244,7 +244,7 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
       guchar       *cmap;
       gint          num_colors;
 
-      image = gimp_drawable_get_image (layer);
+      image = gimp_item_get_image (layer);
 
       tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
       gimp_image_undo_disable (tmp_image);
@@ -337,7 +337,7 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
       GimpParam    *return_vals;
       gint          n_return_vals;
 
-      image = gimp_drawable_get_image (layer);
+      image = gimp_item_get_image (layer);
 
       tmp_image = gimp_image_new (w, h, gimp_image_base_type (image));
       gimp_image_undo_disable (tmp_image);
@@ -485,9 +485,9 @@ ico_dialog_check_compat (GtkWidget   *dialog,
 
   for (i = 0; i < info->num_icons; i++)
     {
-      if (gimp_drawable_width (info->layers[i]) > 255
-          || gimp_drawable_height (info->layers[i]) > 255
-          || info->compress[i])
+      if (gimp_drawable_width (info->layers[i]) > 255  ||
+          gimp_drawable_height (info->layers[i]) > 255 ||
+          info->compress[i])
         {
           warn = TRUE;
           break;

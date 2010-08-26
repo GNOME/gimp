@@ -35,6 +35,16 @@
 #include "gimppixbuf.h"
 
 
+/**
+ * SECTION: gimpitemcombobox
+ * @title: GimpItemComboBox
+ * @short_description: Widgets providing popup menus of items.
+ *
+ * Widgets providing popup menus of items (layers, channels,
+ * drawables, vectors).
+ **/
+
+
 #define THUMBNAIL_SIZE  24
 #define WIDTH_REQUEST  200
 
@@ -411,14 +421,9 @@ gimp_item_combo_box_model_add (GtkListStore           *store,
       if (! constraint || (* constraint) (image, items[i], data))
         {
           gchar     *image_name = gimp_image_get_name (image);
-          gchar     *item_name;
+          gchar     *item_name  = gimp_item_get_name (items[i]);
           gchar     *label;
           GdkPixbuf *thumb;
-
-          if (type == VECTORS_COMBO_BOX)
-            item_name = gimp_vectors_get_name (items[i]);
-          else
-            item_name = gimp_drawable_get_name (items[i]);
 
           label = g_strdup_printf ("%s-%d/%s-%d",
                                    image_name, image,

@@ -31,6 +31,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpenumcombobox
+ * @title: GimpEnumComboBox
+ * @short_description: A #GimpIntComboBox subclass for selecting an enum value.
+ *
+ * A #GtkComboBox subclass for selecting an enum value.
+ **/
+
+
 enum
 {
   PROP_0,
@@ -179,7 +188,8 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
  * @stock_prefix: a prefix to create icon stock ID from enum values
  *
  * Attempts to create stock icons for all items in the @combo_box. See
- * gimp_enum_store_set_icons() to find out what to use as @stock_prefix.
+ * gimp_enum_store_set_stock_prefix() to find out what to use as
+ * @stock_prefix.
  *
  * Since: GIMP 2.4
  **/

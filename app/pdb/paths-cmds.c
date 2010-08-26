@@ -27,7 +27,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
@@ -641,15 +640,12 @@ path_to_selection_invoker (GimpProcedure      *procedure,
       GimpVectors *vectors = gimp_image_get_vectors_by_name (image, name);
 
       if (vectors)
-        gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                     _("Path to Selection"),
-                                     vectors,
-                                     op,
-                                     antialias,
-                                     feather,
-                                     feather_radius_x,
-                                     feather_radius_y,
-                                     TRUE);
+        gimp_item_to_selection (GIMP_ITEM (vectors),
+                                op,
+                                antialias,
+                                feather,
+                                feather_radius_x,
+                                feather_radius_y);
       else
         success = FALSE;
     }
@@ -700,8 +696,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-list");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-list",
-                                     "This procedure is deprecated! Use 'gimp-image-get-vectors' instead.",
-                                     "This procedure is deprecated! Use 'gimp-image-get-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-get-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-get-vectors' instead.",
                                      "",
                                      "",
                                      "",
@@ -734,8 +730,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-get-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-current",
-                                     "This procedure is deprecated! Use 'gimp-image-get-active-vectors' instead.",
-                                     "This procedure is deprecated! Use 'gimp-image-get-active-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-get-active-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-get-active-vectors' instead.",
                                      "",
                                      "",
                                      "",
@@ -764,8 +760,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-set-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-current",
-                                     "This procedure is deprecated! Use 'gimp-image-set-active-vectors' instead.",
-                                     "This procedure is deprecated! Use 'gimp-image-set-active-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-set-active-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-set-active-vectors' instead.",
                                      "",
                                      "",
                                      "",
@@ -794,8 +790,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-delete");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-delete",
-                                     "This procedure is deprecated! Use 'gimp-image-remove-vectors' instead.",
-                                     "This procedure is deprecated! Use 'gimp-image-remove-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-remove-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-remove-vectors' instead.",
                                      "",
                                      "",
                                      "",
@@ -824,8 +820,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-get-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-points",
-                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-points' instead.",
+                                     "Deprecated: Use 'gimp-vectors-stroke-get-points' instead.",
+                                     "Deprecated: Use 'gimp-vectors-stroke-get-points' instead.",
                                      "",
                                      "",
                                      "",
@@ -877,12 +873,12 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-set-points");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-points",
-                                     "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
-                                     "This procedure is deprecated! Use 'vectors-stroke-new-from-points' instead.",
+                                     "Deprecated: Use 'gimp-vectors-stroke-new-from-points' instead.",
+                                     "Deprecated: Use 'gimp-vectors-stroke-new-from-points' instead.",
                                      "",
                                      "",
                                      "",
-                                     "vectors-stroke-new-from-points");
+                                     "gimp-vectors-stroke-new-from-points");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -924,8 +920,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-stroke-current");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-stroke-current",
-                                     "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
-                                     "This procedure is deprecated! Use 'gimp-edit-stroke-vectors' instead.",
+                                     "Deprecated: Use 'gimp-edit-stroke-vectors' instead.",
+                                     "Deprecated: Use 'gimp-edit-stroke-vectors' instead.",
                                      "",
                                      "",
                                      "",
@@ -947,8 +943,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-get-point-at-dist");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-point-at-dist",
-                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
+                                     "Deprecated: Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
+                                     "Deprecated: Use 'gimp-vectors-stroke-get-point-at-dist' instead.",
                                      "",
                                      "",
                                      "",
@@ -994,8 +990,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-tattoo",
-                                     "This procedure is deprecated! Use 'gimp-vectors-get-tattoo' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-get-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-vectors-get-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-vectors-get-tattoo' instead.",
                                      "",
                                      "",
                                      "",
@@ -1030,8 +1026,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-tattoo",
-                                     "This procedure is deprecated! Use 'gimp-vectors-set-tattoo' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-set-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-vectors-set-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-vectors-set-tattoo' instead.",
                                      "",
                                      "",
                                      "",
@@ -1066,8 +1062,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-get-path-by-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-get-path-by-tattoo",
-                                     "This procedure is deprecated! Use 'gimp-image-get-vectors-by-tattoo' instead.",
-                                     "This procedure is deprecated! Use 'gimp-image-get-vectors-by-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-image-get-vectors-by-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-image-get-vectors-by-tattoo' instead.",
                                      "",
                                      "",
                                      "",
@@ -1102,8 +1098,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-get-locked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-get-locked",
-                                     "This procedure is deprecated! Use 'gimp-vectors-get-linked' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-get-linked' instead.",
+                                     "Deprecated: Use 'gimp-vectors-get-linked' instead.",
+                                     "Deprecated: Use 'gimp-vectors-get-linked' instead.",
                                      "",
                                      "",
                                      "",
@@ -1138,8 +1134,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-set-locked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-set-locked",
-                                     "This procedure is deprecated! Use 'gimp-vectors-set-linked' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-set-linked' instead.",
+                                     "Deprecated: Use 'gimp-vectors-set-linked' instead.",
+                                     "Deprecated: Use 'gimp-vectors-set-linked' instead.",
                                      "",
                                      "",
                                      "",
@@ -1174,8 +1170,8 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-to-selection");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-to-selection",
-                                     "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
-                                     "This procedure is deprecated! Use 'gimp-vectors-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-vectors-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-vectors-to-selection' instead.",
                                      "",
                                      "",
                                      "",
@@ -1235,12 +1231,12 @@ register_paths_procs (GimpPDB *pdb)
                                "gimp-path-import");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-path-import",
-                                     "This procedure is deprecated! Use 'vectors-import-from-file' instead.",
-                                     "This procedure is deprecated! Use 'vectors-import-from-file' instead.",
+                                     "Deprecated: Use 'gimp-vectors-import-from-file' instead.",
+                                     "Deprecated: Use 'gimp-vectors-import-from-file' instead.",
                                      "",
                                      "",
                                      "",
-                                     "vectors-import-from-file");
+                                     "gimp-vectors-import-from-file");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

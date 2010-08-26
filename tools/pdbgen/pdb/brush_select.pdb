@@ -129,5 +129,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush UI';
+$doc_title = 'gimpbrushselect';
+$doc_short_desc = 'Functions providing a brush selection dialog.';
+$doc_long_desc = 'Functions providing a brush selection dialog.';
 
 1;

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP - standard plug-ins\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2010-04-02 13:21+0000\n"
-"PO-Revision-Date: 2010-04-03 16:46+0100\n"
+"POT-Creation-Date: 2010-08-04 23:26+0000\n"
+"PO-Revision-Date: 2010-08-05 18:47+0100\n"
 "Last-Translator: Martin Srebotnjak  <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -55,8 +55,6 @@ msgstr "Kontekst"
 
 #. spinbutton 1
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:298
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
-#: ../plug-ins/common/color-to-alpha.c:410
 #: ../plug-ins/file-fli/fli-gimp.c:874
 #: ../plug-ins/file-fli/fli-gimp.c:930
 msgid "From:"
@@ -64,11 +62,22 @@ msgstr "Iz:"
 
 #. spinbutton 2
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:324
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
 #: ../plug-ins/file-fli/fli-gimp.c:883
 #: ../plug-ins/file-fli/fli-gimp.c:939
 msgid "To:"
-msgstr "Do:"
+msgstr "V:"
+
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
+#| msgid "From:"
+msgctxt "color-rotate"
+msgid "From:"
+msgstr "Iz:"
+
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
+#| msgid "To:"
+msgctxt "color-rotate"
+msgid "To:"
+msgstr "V:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:418
 #: ../plug-ins/common/file-ps.c:3226
@@ -438,91 +447,91 @@ msgstr "Iskanje ozadja animacije ..."
 msgid "Optimizing animation"
 msgstr "Optimiziranje animacije ..."
 
-#: ../plug-ins/common/animation-play.c:170
+#: ../plug-ins/common/animation-play.c:167
 msgid "Preview a GIMP layer-based animation"
 msgstr "Pokaži predogled animacije, ki temelji na plasteh GIMP"
 
-#: ../plug-ins/common/animation-play.c:175
+#: ../plug-ins/common/animation-play.c:172
 msgid "_Playback..."
 msgstr "_Predvajaj ..."
 
-#: ../plug-ins/common/animation-play.c:454
+#: ../plug-ins/common/animation-play.c:451
 msgid "_Step"
 msgstr "_Korak"
 
-#: ../plug-ins/common/animation-play.c:454
+#: ../plug-ins/common/animation-play.c:451
 msgid "Step to next frame"
 msgstr "Napreduj na naslednjo sličico"
 
-#: ../plug-ins/common/animation-play.c:458
+#: ../plug-ins/common/animation-play.c:455
 msgid "Rewind the animation"
 msgstr "Previj animacijo"
 
-#: ../plug-ins/common/animation-play.c:476
+#: ../plug-ins/common/animation-play.c:473
 msgid "Faster"
 msgstr "Hitreje"
 
-#: ../plug-ins/common/animation-play.c:476
+#: ../plug-ins/common/animation-play.c:473
 msgid "Increase the speed of the animation"
 msgstr "Povečaj hitrost animacije"
 
-#: ../plug-ins/common/animation-play.c:481
+#: ../plug-ins/common/animation-play.c:478
 msgid "Slower"
 msgstr "Počasneje"
 
-#: ../plug-ins/common/animation-play.c:481
+#: ../plug-ins/common/animation-play.c:478
 msgid "Decrease the speed of the animation"
 msgstr "Zmanjšaj hitrost animacije"
 
-#: ../plug-ins/common/animation-play.c:486
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset speed"
 msgstr "Ponastavi hitrost"
 
-#: ../plug-ins/common/animation-play.c:486
+#: ../plug-ins/common/animation-play.c:483
 msgid "Reset the speed of the animation"
 msgstr "Ponastavi hitrost animacije"
 
-#: ../plug-ins/common/animation-play.c:494
-#: ../plug-ins/common/animation-play.c:1475
+#: ../plug-ins/common/animation-play.c:491
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Start playback"
 msgstr "Začni predvajanje"
 
-#: ../plug-ins/common/animation-play.c:498
+#: ../plug-ins/common/animation-play.c:495
 msgid "Detach"
 msgstr "Loči"
 
-#: ../plug-ins/common/animation-play.c:499
+#: ../plug-ins/common/animation-play.c:496
 msgid "Detach the animation from the dialog window"
 msgstr "Loči animacijo od pogovornega okna"
 
-#: ../plug-ins/common/animation-play.c:591
+#: ../plug-ins/common/animation-play.c:588
 msgid "Animation Playback:"
 msgstr "Predvajanje animacije:"
 
 #. list is given in "fps" - frames per second
-#: ../plug-ins/common/animation-play.c:664
+#: ../plug-ins/common/animation-play.c:661
 #, c-format
 msgid "%d fps"
 msgstr "%d sl/s"
 
-#: ../plug-ins/common/animation-play.c:675
+#: ../plug-ins/common/animation-play.c:672
 msgid "Default framerate"
 msgstr "Privzeta hitrost sličic"
 
-#: ../plug-ins/common/animation-play.c:696
+#: ../plug-ins/common/animation-play.c:693
 msgid "Playback speed"
 msgstr "Hitrost predvajanja"
 
-#: ../plug-ins/common/animation-play.c:832
+#: ../plug-ins/common/animation-play.c:829
 msgid "Tried to display an invalid layer."
 msgstr "Poskus prikaza neveljavne plasti."
 
-#: ../plug-ins/common/animation-play.c:1352
+#: ../plug-ins/common/animation-play.c:1349
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Sličica %d od %d-ih"
 
-#: ../plug-ins/common/animation-play.c:1475
+#: ../plug-ins/common/animation-play.c:1472
 msgid "Stop playback"
 msgstr "Ustavi predvajanje"
 
@@ -628,10 +637,10 @@ msgstr "_Navpične"
 #.
 #: ../plug-ins/common/blinds.c:278
 #: ../plug-ins/common/compose.c:934
-#: ../plug-ins/common/decompose.c:722
+#: ../plug-ins/common/decompose.c:725
 #: ../plug-ins/common/file-cel.c:361
 #: ../plug-ins/common/file-cel.c:364
-#: ../plug-ins/common/file-dicom.c:556
+#: ../plug-ins/common/file-dicom.c:609
 #: ../plug-ins/common/file-gif-load.c:927
 #: ../plug-ins/common/file-jp2-load.c:351
 #: ../plug-ins/common/file-pcx.c:418
@@ -1041,7 +1050,7 @@ msgid "Blue"
 msgstr "Modra"
 
 #: ../plug-ins/common/channel-mixer.c:583
-#: ../plug-ins/common/color-exchange.c:398
+#: ../plug-ins/common/color-exchange.c:412
 #: ../plug-ins/common/compose.c:189
 #: ../plug-ins/common/compose.c:200
 #: ../plug-ins/common/diffraction.c:500
@@ -1053,7 +1062,7 @@ msgid "_Red:"
 msgstr "_Rdeča:"
 
 #: ../plug-ins/common/channel-mixer.c:601
-#: ../plug-ins/common/color-exchange.c:458
+#: ../plug-ins/common/color-exchange.c:472
 #: ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201
 #: ../plug-ins/common/diffraction.c:509
@@ -1065,7 +1074,7 @@ msgid "_Green:"
 msgstr "_Zelena:"
 
 #: ../plug-ins/common/channel-mixer.c:620
-#: ../plug-ins/common/color-exchange.c:519
+#: ../plug-ins/common/color-exchange.c:533
 #: ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202
 #: ../plug-ins/common/diffraction.c:518
@@ -1095,16 +1104,15 @@ msgstr "Naloži nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-cel.c:311
 #: ../plug-ins/common/file-compressor.c:497
 #: ../plug-ins/common/file-compressor.c:665
-#: ../plug-ins/common/file-dicom.c:324
-#: ../plug-ins/common/file-gbr.c:360
+#: ../plug-ins/common/file-dicom.c:339
+#: ../plug-ins/common/file-gbr.c:367
 #: ../plug-ins/common/file-gif-load.c:355
 #: ../plug-ins/common/file-gih.c:643
 #: ../plug-ins/common/file-jp2-load.c:197
 #: ../plug-ins/common/file-jp2-load.c:206
 #: ../plug-ins/common/file-mng.c:1107
-#: ../plug-ins/common/file-pat.c:329
+#: ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:360
-#: ../plug-ins/common/file-pdf.c:550
 #: ../plug-ins/common/file-pix.c:342
 #: ../plug-ins/common/file-png.c:720
 #: ../plug-ins/common/file-pnm.c:493
@@ -1160,18 +1168,18 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/common/file-compressor.c:507
 #: ../plug-ins/common/file-compressor.c:589
 #: ../plug-ins/common/file-compressor.c:676
-#: ../plug-ins/common/file-csource.c:405
-#: ../plug-ins/common/file-dicom.c:800
-#: ../plug-ins/common/file-gbr.c:652
-#: ../plug-ins/common/file-gif-save.c:779
+#: ../plug-ins/common/file-csource.c:406
+#: ../plug-ins/common/file-dicom.c:1352
+#: ../plug-ins/common/file-gbr.c:661
+#: ../plug-ins/common/file-gif-save.c:780
 #: ../plug-ins/common/file-gih.c:1261
 #: ../plug-ins/common/file-html-table.c:235
 #: ../plug-ins/common/file-mng.c:609
 #: ../plug-ins/common/file-mng.c:943
-#: ../plug-ins/common/file-pat.c:475
+#: ../plug-ins/common/file-pat.c:484
 #: ../plug-ins/common/file-pcx.c:672
 #: ../plug-ins/common/file-pix.c:523
-#: ../plug-ins/common/file-png.c:1269
+#: ../plug-ins/common/file-png.c:1270
 #: ../plug-ins/common/file-pnm.c:976
 #: ../plug-ins/common/file-ps.c:1213
 #: ../plug-ins/common/file-raw.c:589
@@ -1195,7 +1203,7 @@ msgstr "Shrani nastavitve mešalca kanalov"
 #: ../plug-ins/flame/flame.c:440
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:793
-#: ../plug-ins/ifs-compose/ifs-compose.c:2398
+#: ../plug-ins/ifs-compose/ifs-compose.c:2395
 #: ../plug-ins/lighting/lighting-ui.c:1210
 #, c-format
 msgid "Could not open '%s' for writing: %s"
@@ -1717,43 +1725,43 @@ msgid "_Color Exchange..."
 msgstr "_Izmenjava barv ..."
 
 #: ../plug-ins/common/color-exchange.c:212
-#: ../plug-ins/common/color-exchange.c:286
+#: ../plug-ins/common/color-exchange.c:287
 msgid "Color Exchange"
 msgstr "Izmenjava barv"
 
-#: ../plug-ins/common/color-exchange.c:309
+#: ../plug-ins/common/color-exchange.c:310
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr "Klik s srednjo tipko miške v predogledu izbere barvo \"Iz barve\""
 
-#: ../plug-ins/common/color-exchange.c:347
+#: ../plug-ins/common/color-exchange.c:355
 msgid "To Color"
 msgstr "V barvo"
 
-#: ../plug-ins/common/color-exchange.c:347
+#: ../plug-ins/common/color-exchange.c:355
 msgid "From Color"
 msgstr "Iz barve"
 
-#: ../plug-ins/common/color-exchange.c:365
+#: ../plug-ins/common/color-exchange.c:379
 msgid "Color Exchange: To Color"
 msgstr "Izmenjava barv: v barvo"
 
-#: ../plug-ins/common/color-exchange.c:366
+#: ../plug-ins/common/color-exchange.c:380
 msgid "Color Exchange: From Color"
 msgstr "Izmenjava barv: iz barve"
 
-#: ../plug-ins/common/color-exchange.c:424
+#: ../plug-ins/common/color-exchange.c:438
 msgid "R_ed threshold:"
 msgstr "Prag rd_eče:"
 
-#: ../plug-ins/common/color-exchange.c:484
+#: ../plug-ins/common/color-exchange.c:498
 msgid "G_reen threshold:"
 msgstr "Prag _rdeče:"
 
-#: ../plug-ins/common/color-exchange.c:545
+#: ../plug-ins/common/color-exchange.c:559
 msgid "B_lue threshold:"
 msgstr "Prag _modre:"
 
-#: ../plug-ins/common/color-exchange.c:573
+#: ../plug-ins/common/color-exchange.c:587
 msgid "Lock _thresholds"
 msgstr "Zakleni _pragove"
 
@@ -1772,6 +1780,12 @@ msgstr "Odstranjevanje barve ..."
 #: ../plug-ins/common/color-to-alpha.c:376
 msgid "Color to Alpha"
 msgstr "Barva v alfo"
+
+#: ../plug-ins/common/color-to-alpha.c:410
+#| msgid "From:"
+msgctxt "color-to-alpha"
+msgid "From:"
+msgstr "Iz:"
 
 #: ../plug-ins/common/color-to-alpha.c:414
 msgid "Color to Alpha Color Picker"
@@ -2022,7 +2036,7 @@ msgid "Composing"
 msgstr "Sestavljanje"
 
 #: ../plug-ins/common/compose.c:696
-#: ../plug-ins/common/compose.c:1735
+#: ../plug-ins/common/compose.c:1729
 msgid "At least one image is needed to compose"
 msgstr "Za sestavljanje je potrebna najmanj ena slika"
 
@@ -2053,26 +2067,26 @@ msgstr "Slika ni sivinska slika (bpp=%d)"
 msgid "Unable to recompose, source layer not found"
 msgstr "Ni mogoče ponovno sestaviti slike, izvorne plasti ni mogoče najti"
 
-#: ../plug-ins/common/compose.c:1487
+#: ../plug-ins/common/compose.c:1481
 msgid "Compose"
 msgstr "Skladaj"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1515
+#: ../plug-ins/common/compose.c:1509
 msgid "Compose Channels"
 msgstr "Skladaj kanale"
 
-#: ../plug-ins/common/compose.c:1525
-#: ../plug-ins/common/decompose.c:1514
+#: ../plug-ins/common/compose.c:1519
+#: ../plug-ins/common/decompose.c:1524
 msgid "Color _model:"
 msgstr "Barvni _model:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1557
+#: ../plug-ins/common/compose.c:1551
 msgid "Channel Representations"
 msgstr "Predstavitve kanalov"
 
-#: ../plug-ins/common/compose.c:1620
+#: ../plug-ins/common/compose.c:1614
 msgid "Mask value"
 msgstr "Vrednost maske"
 
@@ -2669,23 +2683,23 @@ msgstr "_Razstavi ..."
 msgid "Decomposing"
 msgstr "Razstavljanje ..."
 
-#: ../plug-ins/common/decompose.c:1479
+#: ../plug-ins/common/decompose.c:1489
 msgid "Decompose"
 msgstr "Razstavi"
 
-#: ../plug-ins/common/decompose.c:1502
+#: ../plug-ins/common/decompose.c:1512
 msgid "Extract Channels"
 msgstr "Izloči kanale"
 
-#: ../plug-ins/common/decompose.c:1549
+#: ../plug-ins/common/decompose.c:1559
 msgid "_Decompose to layers"
 msgstr "Razstavi sliko na p_lasti"
 
-#: ../plug-ins/common/decompose.c:1560
+#: ../plug-ins/common/decompose.c:1570
 msgid "_Foreground as registration color"
 msgstr "_Ospredje kot barva registracije"
 
-#: ../plug-ins/common/decompose.c:1561
+#: ../plug-ins/common/decompose.c:1571
 msgid "Pixels in the foreground color will appear black in all output images.  This can be used for things like crop marks that have to show up on all channels."
 msgstr "Slikovne točke barve ospredja bodo v vseh izhodnih slikah črne.  To je uporabno za oznake obrezovanja, ki se morajo pojaviti na vseh kanalih."
 
@@ -3184,14 +3198,14 @@ msgstr "Naloži paleto KISS"
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
 #: ../plug-ins/common/file-cel.c:316
-#: ../plug-ins/common/file-dicom.c:329
-#: ../plug-ins/common/file-gbr.c:365
+#: ../plug-ins/common/file-dicom.c:344
+#: ../plug-ins/common/file-gbr.c:372
 #: ../plug-ins/common/file-gif-load.c:360
 #: ../plug-ins/common/file-gih.c:648
 #: ../plug-ins/common/file-jp2-load.c:190
-#: ../plug-ins/common/file-pat.c:334
+#: ../plug-ins/common/file-pat.c:341
 #: ../plug-ins/common/file-pcx.c:365
-#: ../plug-ins/common/file-pdf.c:595
+#: ../plug-ins/common/file-pdf.c:601
 #: ../plug-ins/common/file-pix.c:347
 #: ../plug-ins/common/file-png.c:727
 #: ../plug-ins/common/file-pnm.c:498
@@ -3212,7 +3226,7 @@ msgstr "Naloži paleto KISS"
 #: ../plug-ins/file-jpeg/jpeg-load.c:114
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-sgi/sgi.c:329
-#: ../plug-ins/file-xjt/xjt.c:3328
+#: ../plug-ins/file-xjt/xjt.c:3329
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje '%s' ..."
@@ -3229,14 +3243,14 @@ msgstr "Nepodprta bitna globina (%d)!"
 #. init the progress meter
 #. And let's begin the progress
 #: ../plug-ins/common/file-cel.c:587
-#: ../plug-ins/common/file-gbr.c:657
-#: ../plug-ins/common/file-gif-save.c:786
+#: ../plug-ins/common/file-gbr.c:666
+#: ../plug-ins/common/file-gif-save.c:787
 #: ../plug-ins/common/file-gih.c:1266
 #: ../plug-ins/common/file-html-table.c:255
-#: ../plug-ins/common/file-pat.c:480
+#: ../plug-ins/common/file-pat.c:489
 #: ../plug-ins/common/file-pcx.c:633
 #: ../plug-ins/common/file-pix.c:528
-#: ../plug-ins/common/file-png.c:1276
+#: ../plug-ins/common/file-png.c:1277
 #: ../plug-ins/common/file-pnm.c:981
 #: ../plug-ins/common/file-ps.c:1218
 #: ../plug-ins/common/file-sunras.c:567
@@ -3274,53 +3288,53 @@ msgstr "Končnica datoteke ni znana, poteka shranjevanje v stisnjeni XCF."
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Končnica ni smiselna, nalaganje poteka s pomočjo čarovnika za datoteke."
 
-#: ../plug-ins/common/file-csource.c:111
+#: ../plug-ins/common/file-csource.c:112
 msgid "C source code"
 msgstr "Izvorna koda C"
 
-#: ../plug-ins/common/file-csource.c:659
+#: ../plug-ins/common/file-csource.c:703
 msgid "C-Source"
 msgstr "Izvorna koda C"
 
-#: ../plug-ins/common/file-csource.c:677
+#: ../plug-ins/common/file-csource.c:721
 msgid "_Prefixed name:"
 msgstr "_Predpona imena:"
 
-#: ../plug-ins/common/file-csource.c:686
+#: ../plug-ins/common/file-csource.c:730
 msgid "Co_mment:"
 msgstr "Ko_mentar:"
 
 #. Use Comment
 #.
-#: ../plug-ins/common/file-csource.c:693
+#: ../plug-ins/common/file-csource.c:737
 msgid "_Save comment to file"
 msgstr "_Shrani komentar v datoteko"
 
 #. GLib types
 #.
-#: ../plug-ins/common/file-csource.c:705
+#: ../plug-ins/common/file-csource.c:749
 msgid "_Use GLib types (guint8*)"
 msgstr "_Uporabi vrste GLib (guint8*)"
 
-#. Use Macros
-#.
-#: ../plug-ins/common/file-csource.c:717
+#: ../plug-ins/common/file-csource.c:762
 msgid "Us_e macros instead of struct"
 msgstr "Up_orabi makre namesto struct"
 
-#. Use RLE
-#.
-#: ../plug-ins/common/file-csource.c:729
+#: ../plug-ins/common/file-csource.c:775
 msgid "Use _1 byte Run-Length-Encoding"
 msgstr "Uporabi _1-bajtno kodiranje tekoče dolžine (RLE)"
 
-#. Alpha
-#.
-#: ../plug-ins/common/file-csource.c:741
+#: ../plug-ins/common/file-csource.c:788
 msgid "Sa_ve alpha channel (RGBA/RGB)"
 msgstr "Shra_ni kanal alfa (RGBA/RGB)"
 
-#: ../plug-ins/common/file-csource.c:759
+#. RGB-565
+#.
+#: ../plug-ins/common/file-csource.c:800
+msgid "Save as _RGB565 (16-bit)"
+msgstr "Shrani kot _RGB565 (16-bitno)"
+
+#: ../plug-ins/common/file-csource.c:823
 msgid "Op_acity:"
 msgstr "Pre_krivnost:"
 
@@ -3333,26 +3347,26 @@ msgstr "Namizna povezava"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Napaka pri nalaganju namizne datoteke '%s': %s"
 
-#: ../plug-ins/common/file-dicom.c:145
+#: ../plug-ins/common/file-dicom.c:138
 msgid "DICOM image"
 msgstr "Slika DICOM"
 
-#: ../plug-ins/common/file-dicom.c:170
+#: ../plug-ins/common/file-dicom.c:163
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Slika Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/file-dicom.c:351
+#: ../plug-ins/common/file-dicom.c:366
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' ni datoteka DICOM."
 
-#: ../plug-ins/common/file-dicom.c:768
+#: ../plug-ins/common/file-dicom.c:1320
 #: ../plug-ins/common/file-pcx.c:665
 #: ../plug-ins/common/file-pnm.c:966
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: ../plug-ins/common/file-dicom.c:783
+#: ../plug-ins/common/file-dicom.c:1335
 #: ../plug-ins/common/file-ps.c:1203
 #: ../plug-ins/common/file-xwd.c:603
 #: ../plug-ins/file-fits/fits.c:465
@@ -3365,51 +3379,51 @@ msgstr "S slikami neznane vrste ni mogoče delovati."
 msgid "GIMP brush"
 msgstr "Čopič GIMP"
 
-#: ../plug-ins/common/file-gbr.c:391
-#: ../plug-ins/common/file-pat.c:410
+#: ../plug-ins/common/file-gbr.c:398
+#: ../plug-ins/common/file-pat.c:417
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "Neveljavni podatki glave v '%s': širina=%lu, višina=%lu, bajti=%lu"
 
-#: ../plug-ins/common/file-gbr.c:415
-#: ../plug-ins/common/file-gbr.c:427
+#: ../plug-ins/common/file-gbr.c:422
+#: ../plug-ins/common/file-gbr.c:434
 msgid "Unsupported brush format"
 msgstr "Nepodprta vrsta čopiča"
 
-#: ../plug-ins/common/file-gbr.c:439
+#: ../plug-ins/common/file-gbr.c:446
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Napaka v datoteki čopiča GIMP '%s'"
 
-#: ../plug-ins/common/file-gbr.c:447
+#: ../plug-ins/common/file-gbr.c:454
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neveljaven niz UTF-8 v datoteki čopiča '%s'."
 
-#: ../plug-ins/common/file-gbr.c:453
+#: ../plug-ins/common/file-gbr.c:460
 #: ../plug-ins/common/file-gih.c:491
 #: ../plug-ins/common/file-gih.c:1140
 #: ../plug-ins/gradient-flare/gradient-flare.c:3062
 msgid "Unnamed"
 msgstr "Neimenovano"
 
-#: ../plug-ins/common/file-gbr.c:642
+#: ../plug-ins/common/file-gbr.c:651
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "Čopiči GIMP so ali SIVINSKI (GREYSCALE) ali RGBA"
 
-#: ../plug-ins/common/file-gbr.c:759
+#: ../plug-ins/common/file-gbr.c:768
 msgid "Brush"
 msgstr "Čopič"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:773
+#: ../plug-ins/common/file-gbr.c:782
 #: ../plug-ins/common/grid.c:790
 msgid "Spacing:"
 msgstr "Razmik:"
 
-#: ../plug-ins/common/file-gbr.c:784
+#: ../plug-ins/common/file-gbr.c:793
 #: ../plug-ins/common/file-gih.c:891
-#: ../plug-ins/common/file-pat.c:557
+#: ../plug-ins/common/file-pat.c:566
 #: ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Opis:"
@@ -3454,40 +3468,40 @@ msgstr "Sličica %d (%d%s)"
 msgid "GIF: Undocumented GIF composite type %d is not handled.  Animation might not play or re-save perfectly."
 msgstr "GIF: Nedokumentiran sestavek GIF vrste %d ni podprt. Animacija se morda ne bo predvajala ali shranila pravilno."
 
-#: ../plug-ins/common/file-gif-save.c:465
+#: ../plug-ins/common/file-gif-save.c:466
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Nadaljnja redukcija barv ni možna. Shranjeno kot prekrivno."
 
-#: ../plug-ins/common/file-gif-save.c:580
+#: ../plug-ins/common/file-gif-save.c:581
 #, c-format
 msgid "Unable to save '%s'.  The GIF file format does not support images that are more than %d pixels wide or tall."
 msgstr "Shranjevanje '%s' ni uspelo.  Vrsta datotek GIF ne podpira slik, ki so daljše ali širše od %d slikovnih točk."
 
-#: ../plug-ins/common/file-gif-save.c:691
+#: ../plug-ins/common/file-gif-save.c:692
 msgid "The GIF format only supports comments in 7bit ASCII encoding. No comment is saved."
 msgstr "Zapis GIF podpira komentarje le v 7-bitni kodni tabeli ASCII. Komentar ne bo shranjen."
 
-#: ../plug-ins/common/file-gif-save.c:750
+#: ../plug-ins/common/file-gif-save.c:751
 msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr "Barvnih slik RGB ni mogoče shraniti. Najprej pretvorite v indeksirano ali sivinsko sliko."
 
-#: ../plug-ins/common/file-gif-save.c:928
+#: ../plug-ins/common/file-gif-save.c:929
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Zaradi preprečitve preobremenitve CPE pri animaciji je vstavljena zakasnitev."
 
-#: ../plug-ins/common/file-gif-save.c:968
+#: ../plug-ins/common/file-gif-save.c:969
 msgid "The image you are trying to save as a GIF contains layers which extend beyond the actual borders of the image."
 msgstr "Slika, ki jo želite shraniti kot GIF, vsebuje plasti, ki se raztezajo prek dejanskih meja slike."
 
-#: ../plug-ins/common/file-gif-save.c:985
+#: ../plug-ins/common/file-gif-save.c:986
 msgid "The GIF file format does not allow this.  You may choose whether to crop all of the layers to the image borders, or cancel this save."
 msgstr "Datotečni zapis GIF tega ne podpira.  Izberite, ali želite vse plasti porezati na robove slike ali pa preklicati shranjevanje."
 
-#: ../plug-ins/common/file-gif-save.c:1121
+#: ../plug-ins/common/file-gif-save.c:1122
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1129
+#: ../plug-ins/common/file-gif-save.c:1130
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -3496,27 +3510,27 @@ msgstr ""
 "Napaka pri nalaganju datoteke up. vmesnika '%s':\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1182
+#: ../plug-ins/common/file-gif-save.c:1183
 msgid "I don't care"
 msgstr "vseeno mi je"
 
-#: ../plug-ins/common/file-gif-save.c:1184
+#: ../plug-ins/common/file-gif-save.c:1185
 msgid "Cumulative layers (combine)"
 msgstr "kumulativne plasti (združuj)"
 
-#: ../plug-ins/common/file-gif-save.c:1186
+#: ../plug-ins/common/file-gif-save.c:1187
 msgid "One frame per layer (replace)"
 msgstr "ena sličica na plast (zamenjaj)"
 
-#: ../plug-ins/common/file-gif-save.c:1203
+#: ../plug-ins/common/file-gif-save.c:1204
 msgid "You can only export as animation when the image has more than one layer. The image you are trying to export only has one layer."
 msgstr "Kot animacijo lahko sliko izvozite le, če ima več kot eno plast. Slika, ki jo skušate izvoziti, ima le eno plast."
 
-#: ../plug-ins/common/file-gif-save.c:2347
+#: ../plug-ins/common/file-gif-save.c:2348
 msgid "Error writing output file."
 msgstr "Napaka pri zapisovanju izhodne datoteke."
 
-#: ../plug-ins/common/file-gif-save.c:2417
+#: ../plug-ins/common/file-gif-save.c:2418
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Privzeti komentar je omejen na %d znakov."
@@ -3741,8 +3755,11 @@ msgstr "Slika '%s' je v neznanem barvnem prostoru."
 
 #: ../plug-ins/common/file-jp2-load.c:320
 #, c-format
-msgid "Image component %d of image '%s' did not have the same size as the image which is currently not supported."
-msgstr "Barvna komponenta %d slike '%s' nima enake velikosti kot slika, kar trenutno ni podprto."
+#| msgid ""
+#| "Image component %d of image '%s' did not have the same size as the image "
+#| "which is currently not supported."
+msgid "Image component %d of image '%s' does not have the same size as the image. This is currently not supported."
+msgstr "Barvna komponenta %d slike '%s' nima enake velikosti kot slika. To trenutno ni podprto."
 
 #: ../plug-ins/common/file-jp2-load.c:331
 #, c-format
@@ -3751,13 +3768,16 @@ msgstr "Barvna komponenta %d slike '%s' nima hkrati parametrov hstep in vstep."
 
 #: ../plug-ins/common/file-jp2-load.c:340
 #, c-format
-msgid "Image component %d of image '%s' is signed which is currently not supported by GIMP."
-msgstr "Barvna komponenta %d slike '%s' je podpisana, kar trenutno ni podprto."
+#| msgid ""
+#| "Image component %d of image '%s' is signed which is currently not "
+#| "supported by GIMP."
+msgid "Image component %d of image '%s' is signed. This is currently not supported."
+msgstr "Barvna komponenta %d slike '%s' je podpisana. To trenutno ni podprto."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:497
-#: ../plug-ins/common/file-png.c:1759
+#: ../plug-ins/common/file-png.c:1760
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Prosojnosti ni mogoče shraniti brez izgub, zato bo shranjena prekrivnost."
 
@@ -3791,7 +3811,7 @@ msgstr "Shrani čas nastanka"
 
 #. Dialog init
 #: ../plug-ins/common/file-mng.c:1362
-#: ../plug-ins/common/file-png.c:1800
+#: ../plug-ins/common/file-png.c:1801
 msgid "PNG"
 msgstr "PNG"
 
@@ -3876,12 +3896,12 @@ msgstr "Animacija MNG"
 msgid "GIMP pattern"
 msgstr "Vzorec GIMP"
 
-#: ../plug-ins/common/file-pat.c:370
+#: ../plug-ins/common/file-pat.c:377
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neveljaven niz UTF-8 v datoteki vzorca '%s'."
 
-#: ../plug-ins/common/file-pat.c:542
+#: ../plug-ins/common/file-pat.c:551
 msgid "Pattern"
 msgstr "Vzorec"
 
@@ -3956,40 +3976,46 @@ msgstr "Pisanje v datoteko '%s' ni uspelo: %s"
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
-#: ../plug-ins/common/file-pdf.c:629
+#: ../plug-ins/common/file-pdf.c:556
+#, c-format
+#| msgid "Could not write '%s': %s"
+msgid "Could not load '%s': %s"
+msgstr "'%s' ni mogoče naložiti: %s"
+
+#: ../plug-ins/common/file-pdf.c:635
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf.c:631
+#: ../plug-ins/common/file-pdf.c:637
 #: ../plug-ins/common/file-ps.c:1125
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strani"
 
-#: ../plug-ins/common/file-pdf.c:817
+#: ../plug-ins/common/file-pdf.c:823
 msgid "Import from PDF"
 msgstr "Uvozi iz PDF"
 
-#: ../plug-ins/common/file-pdf.c:822
+#: ../plug-ins/common/file-pdf.c:828
 #: ../plug-ins/common/file-ps.c:3095
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Uvozi"
 
-#: ../plug-ins/common/file-pdf.c:890
+#: ../plug-ins/common/file-pdf.c:896
 msgid "_Width (pixels):"
 msgstr "_Širina (slik. točke):"
 
-#: ../plug-ins/common/file-pdf.c:891
+#: ../plug-ins/common/file-pdf.c:897
 msgid "_Height (pixels):"
 msgstr "_Višina (slik. točke):"
 
-#: ../plug-ins/common/file-pdf.c:893
+#: ../plug-ins/common/file-pdf.c:899
 msgid "_Resolution:"
 msgstr "_Ločljivost:"
 
-#: ../plug-ins/common/file-pdf.c:1167
+#: ../plug-ins/common/file-pdf.c:1173
 #, c-format
 msgid "pixels/%s"
 msgstr "slik. točk/%s"
@@ -4025,12 +4051,12 @@ msgstr "Neznan barvni model v datoteki PNG '%s'."
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
 msgstr "Datoteka PNG navaja zamik, ki je povzročil, da je plast vzpostavljena zunaj slike."
 
-#: ../plug-ins/common/file-png.c:1253
+#: ../plug-ins/common/file-png.c:1254
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Napaka pri shranjevanju '%s'. Slike ni mogoče shraniti."
 
-#: ../plug-ins/common/file-png.c:1817
+#: ../plug-ins/common/file-png.c:1818
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Napaka pri nalaganju datoteke up. vmesnika '%s': %s"
@@ -4620,24 +4646,24 @@ msgstr "Iz '%s' ni mogoče prebrati razširitve"
 msgid "Cannot read header from '%s'"
 msgstr "Glave datoteke '%s' ni mogoče prebrati"
 
-#: ../plug-ins/common/file-tga.c:1367
+#: ../plug-ins/common/file-tga.c:1369
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1376
+#: ../plug-ins/common/file-tga.c:1378
 msgid "_RLE compression"
 msgstr "Stiskanje _RLE"
 
-#: ../plug-ins/common/file-tga.c:1390
+#: ../plug-ins/common/file-tga.c:1392
 msgid "Or_igin:"
 msgstr "Izvi_rnik:"
 
-#: ../plug-ins/common/file-tga.c:1394
+#: ../plug-ins/common/file-tga.c:1396
 msgid "Bottom left"
 msgstr "Levo spodaj"
 
-#: ../plug-ins/common/file-tga.c:1395
+#: ../plug-ins/common/file-tga.c:1397
 msgid "Top left"
 msgstr "Levo zgoraj"
 
@@ -4819,6 +4845,7 @@ msgid "_Write hot spot values"
 msgstr "_Zapiši vrednosti vroče točke"
 
 #: ../plug-ins/common/file-xbm.c:1262
+#: ../plug-ins/common/file-xmc.c:1094
 msgid "Hot spot _X:"
 msgstr "Vroča točka _X:"
 
@@ -4847,8 +4874,11 @@ msgstr "Miškin kazalec X11"
 
 #: ../plug-ins/common/file-xmc.c:480
 #, c-format
+#| msgid ""
+#| "Cannot set the hotspot!\n"
+#| "You must arrange layers so that all of them have an intersection."
 msgid ""
-"Cannot set the hotspot!\n"
+"Cannot set the hot spot!\n"
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "Vroče točke ni mogoče nastaviti!\n"
@@ -4897,15 +4927,13 @@ msgid "XMC Options"
 msgstr "Možnosti XMC"
 
 #: ../plug-ins/common/file-xmc.c:1090
-msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
+#| msgid "Enter the X coordinate of the hotspot.The origin is top left corner."
+msgid "Enter the X coordinate of the hot spot.The origin is top left corner."
 msgstr "Vnesite koordinato X vroče točke. Izhodišče je levi zgornji kot."
 
-#: ../plug-ins/common/file-xmc.c:1094
-msgid "Hotspot _X:"
-msgstr "Vroča točka _X:"
-
 #: ../plug-ins/common/file-xmc.c:1108
-msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
+#| msgid "Enter the Y coordinate of the hotspot.The origin is top left corner."
+msgid "Enter the Y coordinate of the hot spot.The origin is top left corner."
 msgstr "Vnesite koordinato Y vroče točke. Izhodišče je levi zgornji kot."
 
 #: ../plug-ins/common/file-xmc.c:1119
@@ -5007,13 +5035,15 @@ msgstr "Ta vtičnik lahko obdeluje le slike RGBA z 8-bitno barvno globino."
 
 #: ../plug-ins/common/file-xmc.c:1512
 #, c-format
-msgid "Width of '%s' is too large. Please reduce more than %dpx)"
-msgstr "Širina '%s' je prevelika. Zmanjšajte jo več kot %dpx)"
+#| msgid "Width of '%s' is too large. Please reduce more than %dpx)"
+msgid "Width of '%s' is too large. Please reduce more than %dpx."
+msgstr "Širina '%s' je prevelika. Zmanjšajte jo več kot %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1519
 #, c-format
-msgid "Height of '%s' is too large. Please reduce more than %dpx)"
-msgstr "Višina '%s' je prevelika. Zmanjšajte jo več kot %dpx)"
+#| msgid "Height of '%s' is too large. Please reduce more than %dpx)"
+msgid "Height of '%s' is too large. Please reduce more than %dpx."
+msgstr "Višina '%s' je prevelika. Zmanjšajte jo več kot %dpx."
 
 #: ../plug-ins/common/file-xmc.c:1526
 #, c-format
@@ -5022,9 +5052,13 @@ msgstr "Velikost '%s' je nič!"
 
 #: ../plug-ins/common/file-xmc.c:1566
 #, c-format
+#| msgid ""
+#| "Cannot save the cursor because the hotspot is not on '%s'.\n"
+#| "Try to change the hotspot position, layer geometry or save without auto-"
+#| "crop."
 msgid ""
-"Cannot save the cursor because the hotspot is not on '%s'.\n"
-"Try to change the hotspot position, layer geometry or save without auto-crop."
+"Cannot save the cursor because the hot spot is not on '%s'.\n"
+"Try to change the hot spot position, layer geometry or save without auto-crop."
 msgstr ""
 "Kazalca ni mogoče shraniti, ker vroča točka ni na '%s'.\n"
 "Poskusite spremeniti položaj vroče točke, geometrijo plasti ali pa shranite s samo-obrezavo."
@@ -6661,11 +6695,11 @@ msgstr "Pokaži podatke o vstavkih"
 msgid "_Plug-In Browser"
 msgstr "Brskalnik _vstavkov"
 
-#: ../plug-ins/common/plugin-browser.c:371
+#: ../plug-ins/common/plugin-browser.c:376
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
-#: ../plug-ins/common/plugin-browser.c:385
+#: ../plug-ins/common/plugin-browser.c:390
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
@@ -6674,11 +6708,11 @@ msgstr[1] "%d vstavek"
 msgstr[2] "%d vstavka"
 msgstr[3] "%d vstavki"
 
-#: ../plug-ins/common/plugin-browser.c:394
+#: ../plug-ins/common/plugin-browser.c:399
 msgid "No matches for your query"
 msgstr "Ni zadetkov"
 
-#: ../plug-ins/common/plugin-browser.c:397
+#: ../plug-ins/common/plugin-browser.c:402
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -6687,38 +6721,38 @@ msgstr[1] "%d vstavek ustreza povpraševanju"
 msgstr[2] "%d vstavka ustrezata povpraševanju"
 msgstr[3] "%d vstavki ustrezajo povpraševanju"
 
-#: ../plug-ins/common/plugin-browser.c:528
+#: ../plug-ins/common/plugin-browser.c:533
 msgid "No matches"
 msgstr "Ni zadetkov"
 
-#: ../plug-ins/common/plugin-browser.c:554
+#: ../plug-ins/common/plugin-browser.c:559
 msgid "Plug-In Browser"
 msgstr "Brskalnik vstavkov"
 
-#: ../plug-ins/common/plugin-browser.c:597
+#: ../plug-ins/common/plugin-browser.c:602
 msgid "Name"
 msgstr "Ime"
 
-#: ../plug-ins/common/plugin-browser.c:605
-#: ../plug-ins/common/plugin-browser.c:668
+#: ../plug-ins/common/plugin-browser.c:610
+#: ../plug-ins/common/plugin-browser.c:673
 msgid "Menu Path"
 msgstr "Pot menija"
 
-#: ../plug-ins/common/plugin-browser.c:613
-#: ../plug-ins/common/plugin-browser.c:677
+#: ../plug-ins/common/plugin-browser.c:618
+#: ../plug-ins/common/plugin-browser.c:682
 msgid "Image Types"
 msgstr "Vrste slik"
 
-#: ../plug-ins/common/plugin-browser.c:623
-#: ../plug-ins/common/plugin-browser.c:686
+#: ../plug-ins/common/plugin-browser.c:628
+#: ../plug-ins/common/plugin-browser.c:691
 msgid "Installation Date"
 msgstr "Datum namestitve"
 
-#: ../plug-ins/common/plugin-browser.c:647
+#: ../plug-ins/common/plugin-browser.c:652
 msgid "List View"
 msgstr "Seznamski pogled"
 
-#: ../plug-ins/common/plugin-browser.c:709
+#: ../plug-ins/common/plugin-browser.c:714
 msgid "Tree View"
 msgstr "Drevesni pogled"
 
@@ -7535,7 +7569,7 @@ msgstr "Pogovorno okno izbire barve"
 #. Scale
 #: ../plug-ins/common/sphere-designer.c:2748
 #: ../plug-ins/gimpressionist/paper.c:193
-#: ../plug-ins/ifs-compose/ifs-compose.c:556
+#: ../plug-ins/ifs-compose/ifs-compose.c:553
 msgid "Scale:"
 msgstr "Merilo:"
 
@@ -7772,7 +7806,7 @@ msgstr "Majhni tlakovci"
 #. Area for buttons etc
 #. Flip
 #: ../plug-ins/common/tile-small.c:413
-#: ../plug-ins/ifs-compose/ifs-compose.c:612
+#: ../plug-ins/ifs-compose/ifs-compose.c:609
 msgid "Flip"
 msgstr "Prezrcali"
 
@@ -8232,7 +8266,7 @@ msgstr "Velikost koraka:"
 
 #: ../plug-ins/common/warp.c:433
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:769
-#: ../plug-ins/ifs-compose/ifs-compose.c:1214
+#: ../plug-ins/ifs-compose/ifs-compose.c:1211
 msgid "Iterations:"
 msgstr "Ponovitve:"
 
@@ -8313,7 +8347,7 @@ msgstr "Mag. vektor:"
 
 #. Angle
 #: ../plug-ins/common/warp.c:683
-#: ../plug-ins/ifs-compose/ifs-compose.c:570
+#: ../plug-ins/ifs-compose/ifs-compose.c:567
 msgid "Angle:"
 msgstr "Kot:"
 
@@ -8426,8 +8460,9 @@ msgid "A sharing violation occurred."
 msgstr "Prišlo je do kršitve skupne rabe."
 
 #: ../plug-ins/common/web-browser.c:175
-msgid "Unknown Windows error."
-msgstr "Neznana napaka Windows."
+#| msgid "Unknown Windows error."
+msgid "Unknown Microsoft Windows error."
+msgstr "Neznana napaka Microsoft Windows."
 
 #: ../plug-ins/common/web-browser.c:178
 #, c-format
@@ -8585,28 +8620,28 @@ msgstr "Indeksirane slike s prosojnostjo ni mogoče shraniti v zapisu BMP."
 msgid "Alpha channel will be ignored."
 msgstr "Kanal alfa ne bo upoštevan."
 
-#: ../plug-ins/file-bmp/bmp-write.c:792
+#: ../plug-ins/file-bmp/bmp-write.c:793
 msgid "BMP"
 msgstr "BMP"
 
-#: ../plug-ins/file-bmp/bmp-write.c:802
+#: ../plug-ins/file-bmp/bmp-write.c:803
 msgid "_Run-Length Encoded"
 msgstr "_Kodirano s tekočo dolžino (RLE)"
 
-#: ../plug-ins/file-bmp/bmp-write.c:814
+#: ../plug-ins/file-bmp/bmp-write.c:815
 #: ../plug-ins/file-jpeg/jpeg-save.c:892
 msgid "_Advanced Options"
 msgstr "_Napredne možnosti"
 
-#: ../plug-ins/file-bmp/bmp-write.c:829
+#: ../plug-ins/file-bmp/bmp-write.c:830
 msgid "16 bits"
 msgstr "16-bitno"
 
-#: ../plug-ins/file-bmp/bmp-write.c:865
+#: ../plug-ins/file-bmp/bmp-write.c:866
 msgid "24 bits"
 msgstr "24-bitno"
 
-#: ../plug-ins/file-bmp/bmp-write.c:882
+#: ../plug-ins/file-bmp/bmp-write.c:883
 msgid "32 bits"
 msgstr "32-bitno"
 
@@ -9206,17 +9241,17 @@ msgid "Smoothing:"
 msgstr "Glajenje:"
 
 #: ../plug-ins/file-xjt/xjt.c:1701
-#: ../plug-ins/file-xjt/xjt.c:3338
+#: ../plug-ins/file-xjt/xjt.c:3339
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Delovne mape '%s' ni mogoče ustvariti: %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3204
+#: ../plug-ins/file-xjt/xjt.c:3205
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Napaka: datoteke lastnosti XJT '%s' ni mogoče brati."
 
-#: ../plug-ins/file-xjt/xjt.c:3211
+#: ../plug-ins/file-xjt/xjt.c:3212
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Napaka: datoteka lastnosti XJT '%s' je prazna."
@@ -10547,7 +10582,7 @@ msgstr "Relativna gostota potez čopiča"
 #. * gimp_filename_to_utf8 () and g_strerror () return temporary strings
 #. * that need not and should not be freed. So this call is OK.
 #. *
-#: ../plug-ins/gimpressionist/ppmtool.c:649
+#: ../plug-ins/gimpressionist/ppmtool.c:651
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Datoteke '%s' ni mogoče shraniti kot PPM: %s"
@@ -10604,8 +10639,9 @@ msgid "_Size"
 msgstr "_Velikost"
 
 #: ../plug-ins/gimpressionist/size.c:108
-msgid "Sizes:"
-msgstr "Mere:"
+#| msgid "Sp_ike points:"
+msgid "Size variants:"
+msgstr "Različice velikosti:"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
@@ -10628,8 +10664,8 @@ msgid "The largest brush to create"
 msgstr "Največji ustvarjeni čopič"
 
 #: ../plug-ins/gimpressionist/size.c:150
-msgid "Size:"
-msgstr "Velikost:"
+msgid "Size depends on:"
+msgstr "Velikost je odvisna od:"
 
 #: ../plug-ins/gimpressionist/size.c:159
 msgid "Let the value (brightness) of the region determine the size of the stroke"
@@ -11100,16 +11136,16 @@ msgstr ""
 "Napaka razčlenjevanja v '%s':\n"
 "%s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:336
+#: ../plug-ins/ifs-compose/ifs-compose.c:333
 msgid "Create an Iterated Function System (IFS) fractal"
 msgstr "Ustvari fraktal IFS (iterirani sistem funkcij)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:348
+#: ../plug-ins/ifs-compose/ifs-compose.c:345
 msgid "_IFS Fractal..."
 msgstr "Fraktal _IFS ..."
 
 #. X
-#: ../plug-ins/ifs-compose/ifs-compose.c:528
+#: ../plug-ins/ifs-compose/ifs-compose.c:525
 #: ../plug-ins/lighting/lighting-ui.c:526
 #: ../plug-ins/map-object/map-object-ui.c:675
 #: ../plug-ins/map-object/map-object-ui.c:729
@@ -11119,7 +11155,7 @@ msgid "X:"
 msgstr "X:"
 
 #. Y
-#: ../plug-ins/ifs-compose/ifs-compose.c:542
+#: ../plug-ins/ifs-compose/ifs-compose.c:539
 #: ../plug-ins/lighting/lighting-ui.c:540
 #: ../plug-ins/map-object/map-object-ui.c:689
 #: ../plug-ins/map-object/map-object-ui.c:742
@@ -11130,149 +11166,149 @@ msgid "Y:"
 msgstr "Y:"
 
 #. Asym
-#: ../plug-ins/ifs-compose/ifs-compose.c:584
+#: ../plug-ins/ifs-compose/ifs-compose.c:581
 msgid "Asymmetry:"
 msgstr "Asimetričnost:"
 
 #. Shear
-#: ../plug-ins/ifs-compose/ifs-compose.c:598
+#: ../plug-ins/ifs-compose/ifs-compose.c:595
 msgid "Shear:"
 msgstr "Nagni:"
 
 #. Simple color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:643
+#: ../plug-ins/ifs-compose/ifs-compose.c:640
 msgid "Simple"
 msgstr "Enostavno"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:652
+#: ../plug-ins/ifs-compose/ifs-compose.c:649
 msgid "IFS Fractal: Target"
 msgstr "Fraktal IFS: cilj"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:658
+#: ../plug-ins/ifs-compose/ifs-compose.c:655
 msgid "Scale hue by:"
 msgstr "Spremeni merilo obarvanosti za:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:673
+#: ../plug-ins/ifs-compose/ifs-compose.c:670
 msgid "Scale value by:"
 msgstr "Spremeni merilo vrednosti za:"
 
 #. Full color control section
-#: ../plug-ins/ifs-compose/ifs-compose.c:690
+#: ../plug-ins/ifs-compose/ifs-compose.c:687
 msgid "Full"
 msgstr "Polno"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:698
+#: ../plug-ins/ifs-compose/ifs-compose.c:695
 msgid "IFS Fractal: Red"
 msgstr "Fraktal IFS: rdeča"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:706
+#: ../plug-ins/ifs-compose/ifs-compose.c:703
 msgid "IFS Fractal: Green"
 msgstr "Fraktal IFS: zelena"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:714
+#: ../plug-ins/ifs-compose/ifs-compose.c:711
 msgid "IFS Fractal: Blue"
 msgstr "Fraktal IFS: modra"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:722
+#: ../plug-ins/ifs-compose/ifs-compose.c:719
 msgid "IFS Fractal: Black"
 msgstr "Fraktal IFS: črna"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:772
+#: ../plug-ins/ifs-compose/ifs-compose.c:769
 msgid "IFS Fractal"
 msgstr "Fraktal IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:870
+#: ../plug-ins/ifs-compose/ifs-compose.c:867
 msgid "Spatial Transformation"
 msgstr "Prostorska transformacija"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:876
+#: ../plug-ins/ifs-compose/ifs-compose.c:873
 msgid "Color Transformation"
 msgstr "Barvna transformacija"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:886
+#: ../plug-ins/ifs-compose/ifs-compose.c:883
 msgid "Relative probability:"
 msgstr "Relativna verjetnost:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1061
+#: ../plug-ins/ifs-compose/ifs-compose.c:1058
 #: ../plug-ins/imagemap/imap_menu.c:162
 msgid "Select _All"
 msgstr "Izberi _vse"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1065
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Re_center"
 msgstr "Ponovno poravnaj na _sredino"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1065
+#: ../plug-ins/ifs-compose/ifs-compose.c:1062
 msgid "Recompute Center"
 msgstr "Ponovno izračunaj središče"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1069
+#: ../plug-ins/ifs-compose/ifs-compose.c:1066
 msgid "Render Options"
 msgstr "Možnosti upodabljanja"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1075
+#: ../plug-ins/ifs-compose/ifs-compose.c:1072
 #: ../plug-ins/imagemap/imap_cmd_move.c:85
 #: ../plug-ins/imagemap/imap_cmd_object_move.c:56
 msgid "Move"
 msgstr "Premakni"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1078
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate"
 msgstr "Zasukaj"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1078
+#: ../plug-ins/ifs-compose/ifs-compose.c:1075
 msgid "Rotate / Scale"
 msgstr "Zasukaj / Spremeni merilo"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1081
+#: ../plug-ins/ifs-compose/ifs-compose.c:1078
 msgid "Stretch"
 msgstr "Raztegni"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1179
+#: ../plug-ins/ifs-compose/ifs-compose.c:1176
 msgid "IFS Fractal Render Options"
 msgstr "Možnosti upodabljanja fraktalov IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1201
+#: ../plug-ins/ifs-compose/ifs-compose.c:1198
 msgid "Max. memory:"
 msgstr "Največja velikost spomina:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1228
+#: ../plug-ins/ifs-compose/ifs-compose.c:1225
 msgid "Subdivide:"
 msgstr "Podrazdeli:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1241
+#: ../plug-ins/ifs-compose/ifs-compose.c:1238
 msgid "Spot radius:"
 msgstr "Radij točke:"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1306
+#: ../plug-ins/ifs-compose/ifs-compose.c:1303
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Upodabljanje IFS (%d/%d)"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:1472
+#: ../plug-ins/ifs-compose/ifs-compose.c:1469
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformacija %s"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2403
+#: ../plug-ins/ifs-compose/ifs-compose.c:2400
 msgid "Save failed"
 msgstr "Shranjevanje neuspešno"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2486
-#: ../plug-ins/ifs-compose/ifs-compose.c:2499
+#: ../plug-ins/ifs-compose/ifs-compose.c:2483
+#: ../plug-ins/ifs-compose/ifs-compose.c:2496
 msgid "Open failed"
 msgstr "Odpiranje neuspešno"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2494
+#: ../plug-ins/ifs-compose/ifs-compose.c:2491
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Datoteka '%s' najbrž ni fraktalska datoteka IFS."
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2534
+#: ../plug-ins/ifs-compose/ifs-compose.c:2531
 msgid "Save as IFS Fractal file"
 msgstr "Shrani kot datoteko fraktala IFS"
 
-#: ../plug-ins/ifs-compose/ifs-compose.c:2571
+#: ../plug-ins/ifs-compose/ifs-compose.c:2568
 msgid "Open IFS Fractal file"
 msgstr "Odpri datoteko fraktala IFS"
 

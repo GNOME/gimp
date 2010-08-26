@@ -88,7 +88,7 @@
     (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer bump-layer
                       135.00 25.0 60 0 0 0 0 TRUE invert 1)
 
-    (gimp-drawable-set-visible bump-layer FALSE)
+    (gimp-item-set-visible bump-layer FALSE)
 
      (if (= drop-shadow TRUE)
         (begin

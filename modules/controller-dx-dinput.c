@@ -653,13 +653,12 @@ dx_dinput_event_dispatch (GSource     *source,
   gint                             i;
   GimpControllerEvent              cevent = { 0, };
 
-  data = g_malloc (format->dwDataSize);
+  data = g_alloca (format->dwDataSize);
 
   if (FAILED ((hresult = IDirectInputDevice8_GetDeviceState (input->didevice8,
                                                              format->dwDataSize,
                                                              data))))
     {
-      g_free (data);
       return TRUE;
     }
 

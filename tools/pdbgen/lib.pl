@@ -433,13 +433,14 @@ CODE
 
 	if ($proc->{deprecated}) {
             if ($proc->{deprecated} eq 'NONE') {
-		$procdesc = &desc_wrap("This procedure is deprecated!");
+		$procdesc = &desc_wrap("Deprecated: There is no replacement " .
+                                       "for this procedure.");
 	    }
 	    else {
 		my $underscores = $proc->{deprecated};
 		$underscores =~ s/-/_/g;
 
-		$procdesc = &desc_wrap("This procedure is deprecated! " .
+		$procdesc = &desc_wrap("Deprecated: " .
 				       "Use $underscores() instead.");
 	    }
 	}
@@ -655,6 +656,19 @@ HEADER
 	    print CFILE "#undef __GIMP_\U$group\E_PDB_H__\n";
 	    print CFILE qq/#include "${hname}"\n/;
 	}
+	$long_desc = &desc_wrap($main::grp{$group}->{doc_long_desc});
+	print CFILE <<SECTION_DOCS;
+
+
+/**
+ * SECTION: $main::grp{$group}->{doc_title}
+ * \@title: $main::grp{$group}->{doc_title}
+ * \@short_description: $main::grp{$group}->{doc_short_desc}
+ *
+${long_desc}
+ **/
+
+SECTION_DOCS
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
 	print CFILE $out->{code};
 	close CFILE;

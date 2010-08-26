@@ -144,7 +144,7 @@ render_indexed_image(Preview_t *preview_base, GimpPixelRgn *srcrgn)
    if (has_alpha)
       alpha--;
 
-   cmap = gimp_image_get_colormap (gimp_drawable_get_image (srcrgn->drawable->drawable_id),
+   cmap = gimp_image_get_colormap (gimp_item_get_image (srcrgn->drawable->drawable_id),
                                    &ncols);
 
    src_row = g_new(guchar, dwidth * bpp);

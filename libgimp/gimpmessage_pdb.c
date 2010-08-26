@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpmessage
+ * @title: gimpmessage
+ * @short_description: Display a dialog box with a message.
+ *
+ * Display a dialog box with a message.
+ **/
+
+
 /**
  * gimp_message:
  * @message: Message to display in the dialog.

@@ -31,6 +31,18 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpmemsizeentry
+ * @title: GimpMemSizeEntry
+ * @short_description: A composite widget that allows to enter a memory size.
+ *
+ * Similar to a #GimpSizeEntry but instead of lengths, this widget is
+ * used to let the user enter memory sizes. An option menu allows to
+ * switch between Kilobytes, Megabytes and Gigabytes. Used in the GIMP
+ * preferences dialog.
+ **/
+
+
 enum
 {
   VALUE_CHANGED,

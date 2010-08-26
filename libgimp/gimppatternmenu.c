@@ -32,6 +32,15 @@
 #include "gimppatternmenu.h"
 
 
+/**
+ * SECTION: gimppatternmenu
+ * @title: gimppatternmenu
+ * @short_description: A widget for selecting patterns.
+ *
+ * A widget for selecting patterns.
+ **/
+
+
 typedef struct
 {
   GimpRunPatternCallback callback;

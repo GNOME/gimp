@@ -115,6 +115,9 @@ static gboolean        xcf_load_vectors       (XcfInfo      *info,
 static gboolean        xcf_load_vector        (XcfInfo      *info,
                                                GimpImage    *image);
 
+static gboolean        xcf_skip_unknown_prop  (XcfInfo      *info,
+                                               gsize         size);
+
 
 #define xcf_progress_update(info) G_STMT_START  \
   {                                             \
@@ -661,21 +664,8 @@ xcf_load_image_props (XcfInfo   *info,
           g_printerr ("unexpected/unknown image property: %d (skipping)\n",
                       prop_type);
 #endif
-          {
-            gsize  size = prop_size;
-            guint8 buf[16];
-            guint  amount;
-
-            while (size > 0)
-              {
-                if (feof (info->fp))
-                  return FALSE;
-
-                amount = MIN (16, size);
-                info->cp += xcf_read_int8 (info->fp, buf, amount);
-                size -= MIN (16, amount);
-              }
-          }
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
           break;
         }
     }
@@ -873,21 +863,8 @@ xcf_load_layer_props (XcfInfo    *info,
           g_printerr ("unexpected/unknown layer property: %d (skipping)\n",
                       prop_type);
 #endif
-          {
-            gsize  size = prop_size;
-            guint8 buf[16];
-            guint  amount;
-
-            while (size > 0)
-              {
-                if (feof (info->fp))
-                  return FALSE;
-
-                amount = MIN (16, size);
-                info->cp += xcf_read_int8 (info->fp, buf, amount);
-                size -= MIN (16, amount);
-              }
-          }
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
           break;
         }
     }
@@ -1031,21 +1008,8 @@ xcf_load_channel_props (XcfInfo      *info,
           g_printerr ("unexpected/unknown channel property: %d (skipping)\n",
                       prop_type);
 #endif
-          {
-            gsize  size = prop_size;
-            guint8 buf[16];
-            guint  amount;
-
-            while (size > 0)
-              {
-                if (feof (info->fp))
-                  return FALSE;
-
-                amount = MIN (16, size);
-                info->cp += xcf_read_int8 (info->fp, buf, amount);
-                size -= MIN (16, amount);
-              }
-          }
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
           break;
         }
     }
@@ -1979,6 +1943,26 @@ xcf_load_vector (XcfInfo   *info,
                           NULL, /* FIXME tree */
                           gimp_container_get_n_children (gimp_image_get_vectors (image)),
                           FALSE);
+
+  return TRUE;
+}
+
+static gboolean
+xcf_skip_unknown_prop (XcfInfo *info,
+                       gsize   size)
+{
+  guint8 buf[16];
+  guint  amount;
+
+  while (size > 0)
+    {
+      if (feof (info->fp))
+        return FALSE;
+
+      amount = MIN (16, size);
+      info->cp += xcf_read_int8 (info->fp, buf, amount);
+      size -= MIN (16, amount);
+    }
 
   return TRUE;
 }

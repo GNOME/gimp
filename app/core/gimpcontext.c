@@ -1675,7 +1675,6 @@ gimp_context_copy_property (GimpContext         *src,
     case GIMP_CONTEXT_PROP_TOOL_PRESET:
       gimp_context_real_set_tool_preset (dest, src->tool_preset);
       object          = src->tool_preset;
-      standard_object = gimp_tool_preset_get_standard (src);
       src_name        = src->tool_preset_name;
       dest_name_loc   = &dest->tool_preset_name;
       break;
@@ -3105,12 +3104,8 @@ gimp_context_tool_preset_list_thaw (GimpContainer *container,
 {
   GimpToolPreset *tool_preset;
 
-  if (! context->tool_preset_name)
-    context->tool_preset_name = g_strdup (context->gimp->config->default_tool_preset);
-
   tool_preset = gimp_context_find_object (context, container,
-                                          context->tool_preset_name,
-                                          gimp_tool_preset_get_standard (context));
+                                          context->tool_preset_name, NULL);
 
   gimp_context_real_set_tool_preset (context, tool_preset);
 }
@@ -3122,8 +3117,7 @@ gimp_context_real_set_tool_preset (GimpContext    *context,
   if (context->tool_preset == tool_preset)
     return;
 
-  if (context->tool_preset_name &&
-      tool_preset != GIMP_TOOL_PRESET (gimp_tool_preset_get_standard (context)))
+  if (context->tool_preset_name)
     {
       g_free (context->tool_preset_name);
       context->tool_preset_name = NULL;
@@ -3149,8 +3143,7 @@ gimp_context_real_set_tool_preset (GimpContext    *context,
                                context,
                                0);
 
-      if (tool_preset != GIMP_TOOL_PRESET (gimp_tool_preset_get_standard (context)))
-        context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
+      context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
     }
 
   g_object_notify (G_OBJECT (context), "tool-preset");

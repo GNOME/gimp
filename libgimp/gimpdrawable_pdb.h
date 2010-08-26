@@ -28,11 +28,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_drawable_is_valid           (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_layer           (gint32                      drawable_ID);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_drawable_is_text_layer      (gint32                      drawable_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_drawable_is_layer_mask      (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_channel         (gint32                      drawable_ID);
+#endif /* GIMP_DISABLE_DEPRECATED */
 GimpImageType            gimp_drawable_type               (gint32                      drawable_ID);
 GimpImageType            gimp_drawable_type_with_alpha    (gint32                      drawable_ID);
 gboolean                 gimp_drawable_has_alpha          (gint32                      drawable_ID);
@@ -45,12 +49,11 @@ gint                     gimp_drawable_height             (gint32               
 gboolean                 gimp_drawable_offsets            (gint32                      drawable_ID,
                                                            gint                       *offset_x,
                                                            gint                       *offset_y);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_drawable_delete             (gint32                      drawable_ID);
 gint32                   gimp_drawable_get_image          (gint32                      drawable_ID);
-#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_drawable_set_image          (gint32                      drawable_ID,
                                                            gint32                      image_ID);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gchar*                   gimp_drawable_get_name           (gint32                      drawable_ID);
 gboolean                 gimp_drawable_set_name           (gint32                      drawable_ID,
                                                            const gchar                *name);
@@ -60,12 +63,10 @@ gboolean                 gimp_drawable_set_visible        (gint32               
 gboolean                 gimp_drawable_get_linked         (gint32                      drawable_ID);
 gboolean                 gimp_drawable_set_linked         (gint32                      drawable_ID,
                                                            gboolean                    linked);
-gboolean                 gimp_drawable_get_lock_content   (gint32                      drawable_ID);
-gboolean                 gimp_drawable_set_lock_content   (gint32                      drawable_ID,
-                                                           gboolean                    lock_content);
 gint                     gimp_drawable_get_tattoo         (gint32                      drawable_ID);
 gboolean                 gimp_drawable_set_tattoo         (gint32                      drawable_ID,
                                                            gint                        tattoo);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_drawable_mask_bounds        (gint32                      drawable_ID,
                                                            gint                       *x1,
                                                            gint                       *y1,

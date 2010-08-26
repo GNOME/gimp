@@ -453,7 +453,7 @@ nova_center_create (GimpDrawable *drawable,
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  image_ID = gimp_drawable_get_image (drawable->drawable_id);
+  image_ID = gimp_item_get_image (drawable->drawable_id);
   gimp_image_get_resolution (image_ID, &res_x, &res_y);
 
   center->coords = gimp_coordinates_new (GIMP_UNIT_PIXEL, "%p", TRUE, TRUE, -1,

@@ -30,13 +30,13 @@ struct _GimpPixelRgn
 {
   guchar       *data;          /* pointer to region data */
   GimpDrawable *drawable;      /* pointer to drawable */
-  guint         bpp;           /* bytes per pixel */
-  guint         rowstride;     /* bytes per pixel row */
-  guint         x, y;          /* origin */
-  guint         w, h;          /* width and height of region */
-  guint         dirty : 1;     /* will this region be dirtied? */
-  guint         shadow : 1;    /* will this region use the shadow or normal tiles */
-  guint         process_count; /* used internally */
+  gint          bpp;           /* bytes per pixel */
+  gint          rowstride;     /* bytes per pixel row */
+  gint          x, y;          /* origin */
+  gint          w, h;          /* width and height of region */
+  gint          dirty : 1;     /* will this region be dirtied? */
+  gint          shadow : 1;    /* will this region use the shadow or normal tiles */
+  gint          process_count; /* used internally */
 };
 
 

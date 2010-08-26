@@ -149,17 +149,44 @@ GtkWidget * gimp_spin_button_new   (/* return value: */
                                     gdouble             climb_rate,
                                     guint               digits);
 
+/**
+ * GIMP_RANDOM_SEED_SPINBUTTON:
+ * @hbox: The #GtkHBox returned by gimp_random_seed_new().
+ *
+ * Returns: the random_seed's #GtkSpinButton.
+ **/
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
         (g_object_get_data (G_OBJECT (hbox), "spinbutton"))
-#define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox) \
+
+/**
+ * GIMP_RANDOM_SEED_SPINBUTTON_ADJ:
+ * @hbox: The #GtkHBox returned by gimp_random_seed_new().
+ *
+ * Returns: the #GtkAdjustment of the random_seed's #GtkSpinButton.
+ **/
+#define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox)       \
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (hbox), "spinbutton")))
+
+/**
+ * GIMP_RANDOM_SEED_TOGGLE:
+ * @hbox: The #GtkHBox returned by gimp_random_seed_new().
+ *
+ * Returns: the random_seed's #GtkToggleButton.
+ **/
 #define GIMP_RANDOM_SEED_TOGGLE(hbox) \
         (g_object_get_data (G_OBJECT(hbox), "toggle"))
 
 GtkWidget * gimp_random_seed_new   (guint32            *seed,
                                     gboolean           *random_seed);
 
+/**
+ * GIMP_COORDINATES_CHAINBUTTON:
+ * @sizeentry: The #GimpSizeEntry returned by gimp_coordinates_new().
+ *
+ * Returns: the #GimpChainButton which is attached to the
+ *          #GimpSizeEntry.
+ **/
 #define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
         (g_object_get_data (G_OBJECT (sizeentry), "chainbutton"))
 

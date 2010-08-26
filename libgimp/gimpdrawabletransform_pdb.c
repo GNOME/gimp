@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpdrawabletransform
+ * @title: gimpdrawabletransform
+ * @short_description: Functions to perform transformatrions on drawables.
+ *
+ * Functions to perform transformatrions on drawables.
+ **/
+
+
 /**
  * gimp_drawable_transform_flip_simple:
  * @drawable_ID: The affected drawable.

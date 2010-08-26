@@ -1241,5 +1241,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Text layer procedures';
+$doc_title = 'gimptextlayer';
+$doc_short_desc = 'Functions for querying and manipulating text layers.';
+$doc_long_desc = 'Functions for querying and manipulating text layers.';
 
 1;

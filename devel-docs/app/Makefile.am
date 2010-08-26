@@ -71,6 +71,7 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/errors.o					     \
         $(top_builddir)/app/sanity.o					     \
         $(top_builddir)/app/units.o					     \
+	$(top_builddir)/app/gimp-debug.o				     \
 	$(top_builddir)/app/gimp-log.o					     \
         $(top_builddir)/app/gui/libappgui.a				     \
 	$(top_builddir)/app/actions/libappactions.a			     \

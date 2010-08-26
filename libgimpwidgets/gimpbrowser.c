@@ -33,6 +33,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpbrowser
+ * @title: GimpBrowser
+ * @short_description: A base class for a documentation browser.
+ *
+ * A base class for a documentation browser.
+ **/
+
+
 enum
 {
   SEARCH,

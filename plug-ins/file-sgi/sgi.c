@@ -127,7 +127,7 @@ query (void)
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-sgi");
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "sgi,rgb,bw,icon",
+                                    "sgi,rgb,rgba,bw,icon",
                                     "",
                                     "0,short,474");
 
@@ -146,7 +146,7 @@ query (void)
                           NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-sgi");
-  gimp_register_save_handler (SAVE_PROC, "sgi,rgb,bw,icon", "");
+  gimp_register_save_handler (SAVE_PROC, "sgi,rgb,rgba,bw,icon", "");
 }
 
 static void

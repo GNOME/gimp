@@ -30,6 +30,15 @@
 #include "gimppixbuf.h"
 
 
+/**
+ * SECTION: gimppixbuf
+ * @title: gimppixbuf
+ * @short_description: Get a thumbnail pixbuf for a drawable or image.
+ *
+ * Get a thumbnail pixbuf for a drawable or image.
+ **/
+
+
 static GdkPixbuf * gimp_pixbuf_from_data (guchar                 *data,
                                           gint                    width,
                                           gint                    height,

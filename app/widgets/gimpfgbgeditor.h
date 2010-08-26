@@ -39,9 +39,6 @@ struct _GimpFgBgEditor
   GimpContext     *context;
   GimpActiveColor  active_color;
 
-  guchar          *render_buf;
-  gint             render_buf_size;
-
   GdkPixbuf       *default_icon;
   GdkPixbuf       *swap_icon;
 

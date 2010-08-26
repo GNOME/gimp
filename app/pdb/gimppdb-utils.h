@@ -49,6 +49,11 @@ GimpPaintInfo * gimp_pdb_get_paint_info         (Gimp               *gimp,
                                                  GError            **error);
 
 gboolean        gimp_pdb_item_is_attached       (GimpItem           *item,
+                                                 GimpImage          *image,
+                                                 gboolean            writable,
+                                                 GError            **error);
+gboolean        gimp_pdb_item_is_in_tree        (GimpItem           *item,
+                                                 GimpImage          *image,
                                                  gboolean            writable,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,

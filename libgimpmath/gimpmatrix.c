@@ -26,6 +26,24 @@
 #include "gimpmath.h"
 
 
+/**
+ * SECTION: gimpmatrix
+ * @title: GimpMatrix
+ * @short_description: Utilities to set up and manipulate 3x3
+ *                     transformation matrices.
+ * @see_also: #GimpVector2, #GimpVector3, #GimpVector4
+ *
+ * When doing image manipulation you will often need 3x3
+ * transformation matrices that define translation, rotation, scaling,
+ * shearing and arbitrary perspective transformations using a 3x3
+ * matrix. Here you'll find a set of utility functions to set up those
+ * matrices and to perform basic matrix manipulations and tests.
+ *
+ * Each matrix class has a 2 dimensional gdouble coeff member. The
+ * element for row r and column c of the matrix is coeff[r][c].
+ **/
+
+
 #define EPSILON 1e-6
 
 
@@ -445,12 +463,12 @@ gimp_matrix3_yshear (GimpMatrix3 *matrix,
 /**
  * gimp_matrix3_affine:
  * @matrix: The input matrix.
- * @a:
- * @b:
- * @c:
- * @d:
- * @e:
- * @f:
+ * @a: the 'a' coefficient
+ * @b: the 'b' coefficient
+ * @c: the 'c' coefficient
+ * @d: the 'd' coefficient
+ * @e: the 'e' coefficient
+ * @f: the 'f' coefficient
  *
  * Applies the affine transformation given by six values to @matrix.
  * The six values form define an affine transformation matrix as

@@ -34,6 +34,15 @@
 #include "libgimp-intl.h"
 
 
+/**
+ * SECTION: gimppatternselectbutton
+ * @title: GimpPatternSelectButton
+ * @short_description: A button which pops up a pattern select dialog.
+ *
+ * A button which pops up a pattern select dialog.
+ **/
+
+
 #define CELL_SIZE 20
 
 

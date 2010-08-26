@@ -28,14 +28,28 @@
 G_BEGIN_DECLS
 
 
+/**
+ * GimpThumbError:
+ * @GIMP_THUMB_ERROR_OPEN:         there was a problem opening the file
+ * @GIMP_THUMB_ERROR_OPEN_ENOENT:  the file doesn't exist
+ * @GIMP_THUMB_ERROR_MKDIR:        there was a problem creating a directory
+ *
+ * These are the possible error codes used when a #GError is set by
+ * libgimpthumb.
+ **/
 typedef enum
 {
-  GIMP_THUMB_ERROR_OPEN,         /*  open failed                            */
-  GIMP_THUMB_ERROR_OPEN_ENOENT,  /*  file does not exist                    */
-  GIMP_THUMB_ERROR_MKDIR         /*  mkdir failed                           */
+  GIMP_THUMB_ERROR_OPEN,
+  GIMP_THUMB_ERROR_OPEN_ENOENT,
+  GIMP_THUMB_ERROR_MKDIR
 } GimpThumbError;
 
 
+/**
+ * GIMP_THUMB_ERROR:
+ *
+ * Identifier for the libgimpthumb error domain.
+ **/
 #define GIMP_THUMB_ERROR (gimp_thumb_error_quark ())
 
 GQuark  gimp_thumb_error_quark (void) G_GNUC_CONST;

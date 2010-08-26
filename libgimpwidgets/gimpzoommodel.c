@@ -33,6 +33,15 @@
 #include "gimpzoommodel.h"
 
 
+/**
+ * SECTION: gimpzoommodel
+ * @title: GimpZoomModel
+ * @short_description: A model for zoom values.
+ *
+ * A model for zoom values.
+ **/
+
+
 #define ZOOM_MIN  (1.0 / 256.0)
 #define ZOOM_MAX  (256.0)
 
@@ -569,7 +578,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
 
 /**
  * gimp_zoom_model_zoom_step:
- * @zoom_type:
+ * @zoom_type: the zoom type
  * @scale:     ignored unless @zoom_type == %GIMP_ZOOM_TO
  *
  * Utility function to calculate a new scale factor.

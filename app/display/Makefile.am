@@ -71,6 +71,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-scroll.h		\
 	gimpdisplayshell-selection.c		\
 	gimpdisplayshell-selection.h		\
+	gimpdisplayshell-style.c		\
+	gimpdisplayshell-style.h		\
 	gimpdisplayshell-title.c		\
 	gimpdisplayshell-title.h		\
 	gimpdisplayshell-transform.c		\

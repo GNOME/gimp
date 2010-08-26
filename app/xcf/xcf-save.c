@@ -181,11 +181,12 @@ xcf_save_choose_format (XcfInfo   *info,
   GList *list;
   gint   save_version = 0;  /* default to oldest */
 
+  /* need version 1 for colormaps */
   if (gimp_image_get_colormap (image))
-    save_version = 1;  /* need version 1 for colormaps */
+    save_version = 1;
 
   for (list = gimp_image_get_layer_iter (image);
-       list && save_version < 2;
+       list && save_version < 3;
        list = g_list_next (list))
     {
       GimpLayer *layer = GIMP_LAYER (list->data);
@@ -197,12 +198,16 @@ xcf_save_choose_format (XcfInfo   *info,
         case GIMP_GRAIN_EXTRACT_MODE:
         case GIMP_GRAIN_MERGE_MODE:
         case GIMP_COLOR_ERASE_MODE:
-          save_version = 2;
+          save_version = MAX (2, save_version);
           break;
 
         default:
           break;
         }
+
+      /* need version 3 for layer trees */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+        save_version = MAX (3, save_version);
     }
 
   info->file_version = save_version;

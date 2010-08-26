@@ -25,15 +25,25 @@
 #include <string.h>
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_VECTORS_PDB_H__
+#include "gimpvectors_pdb.h"
+
+
+/**
+ * SECTION: gimpvectors
+ * @title: gimpvectors
+ * @short_description: Functions for querying and manipulating vectors.
+ *
+ * Functions for querying and manipulating vectors.
+ **/
+
 
 /**
  * gimp_vectors_is_valid:
  * @vectors_ID: The vectors object to check.
  *
- * Returns TRUE if the vectors object is valid.
- *
- * This procedure checks if the given vectors ID is valid and refers to
- * an existing vectors object.
+ * Deprecated: Use gimp_item_is_valid() instead.
  *
  * Returns: Whether the vectors ID is valid.
  *
@@ -168,9 +178,7 @@ gimp_vectors_copy (gint32 vectors_ID)
  * gimp_vectors_get_image:
  * @vectors_ID: The vectors object.
  *
- * Returns the vectors objects image.
- *
- * Returns the vectors objects image.
+ * Deprecated: Use gimp_item_get_image() instead.
  *
  * Returns: The vectors image.
  *
@@ -200,9 +208,7 @@ gimp_vectors_get_image (gint32 vectors_ID)
  * gimp_vectors_get_name:
  * @vectors_ID: The vectors object.
  *
- * Gets the name of the vectors object.
- *
- * Gets the name of the vectors object.
+ * Deprecated: Use gimp_item_get_name() instead.
  *
  * Returns: The name of the vectors object.
  *
@@ -233,9 +239,7 @@ gimp_vectors_get_name (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @name: the new name of the path.
  *
- * Sets the name of the vectors object.
- *
- * Sets the name of the vectors object.
+ * Deprecated: Use gimp_item_set_name() instead.
  *
  * Returns: TRUE on success.
  *
@@ -266,9 +270,7 @@ gimp_vectors_set_name (gint32       vectors_ID,
  * gimp_vectors_get_visible:
  * @vectors_ID: The vectors object.
  *
- * Gets the visibility of the vectors object.
- *
- * Gets the visibility of the vectors object.
+ * Deprecated: Use gimp_item_get_visible() instead.
  *
  * Returns: TRUE if the path is visible, FALSE otherwise.
  *
@@ -299,9 +301,7 @@ gimp_vectors_get_visible (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @visible: Whether the path is visible.
  *
- * Sets the visibility of the vectors object.
- *
- * Sets the visibility of the vectors object.
+ * Deprecated: Use gimp_item_set_visible() instead.
  *
  * Returns: TRUE on success.
  *
@@ -332,9 +332,7 @@ gimp_vectors_set_visible (gint32   vectors_ID,
  * gimp_vectors_get_linked:
  * @vectors_ID: The vectors object.
  *
- * Gets the linked state of the vectors object.
- *
- * Gets the linked state of the vectors object.
+ * Deprecated: Use gimp_item_get_linked() instead.
  *
  * Returns: TRUE if the path is linked, FALSE otherwise.
  *
@@ -365,9 +363,7 @@ gimp_vectors_get_linked (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @linked: Whether the path is linked.
  *
- * Sets the linked state of the vectors object.
- *
- * Sets the linked state of the vectors object.
+ * Deprecated: Use gimp_item_set_linked() instead.
  *
  * Returns: TRUE on success.
  *
@@ -395,78 +391,10 @@ gimp_vectors_set_linked (gint32   vectors_ID,
 }
 
 /**
- * gimp_vectors_get_lock_content:
- * @vectors_ID: The vectors object.
- *
- * Gets the 'lock content' state of the vectors object.
- *
- * Gets the 'lock content' state of the vectors object.
- *
- * Returns: Whether the path's strokes are locked.
- *
- * Since: GIMP 2.8
- */
-gboolean
-gimp_vectors_get_lock_content (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean lock_content = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-get-lock-content",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    lock_content = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return lock_content;
-}
-
-/**
- * gimp_vectors_set_lock_content:
- * @vectors_ID: The vectors object.
- * @lock_content: Whether the path's strokes are locked.
- *
- * Sets the 'lock content' state of the vectors object.
- *
- * Sets the 'lock content' state of the vectors object.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.8
- */
-gboolean
-gimp_vectors_set_lock_content (gint32   vectors_ID,
-                               gboolean lock_content)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-set-lock-content",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_INT32, lock_content,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_vectors_get_tattoo:
  * @vectors_ID: The vectors object.
  *
- * Get the tattoo of the vectors object.
- *
- * Get the tattoo state of the vectors object.
+ * Deprecated: Use gimp_item_get_tattoo() instead.
  *
  * Returns: The vectors tattoo.
  *
@@ -497,9 +425,7 @@ gimp_vectors_get_tattoo (gint32 vectors_ID)
  * @vectors_ID: The vectors object.
  * @tattoo: the new tattoo.
  *
- * Set the tattoo of the vectors object.
- *
- * Set the tattoo of the vectors object.
+ * Deprecated: Use gimp_item_set_tattoo() instead.
  *
  * Returns: TRUE on success.
  *
@@ -1546,7 +1472,7 @@ gimp_vectors_export_to_file (gint32       image_ID,
  * Save a path as an SVG string.
  *
  * This procedure works like gimp_vectors_export_to_file() but creates
- * a string rather than a file. The contents are a %NUL-terminated
+ * a string rather than a file. The contents are a NUL-terminated
  * string that holds a complete XML document. If you pass 0 as the
  * 'vectors' argument, then all paths in the image will be exported.
  *

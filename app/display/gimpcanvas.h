@@ -32,14 +32,6 @@ typedef enum
   GIMP_CANVAS_STYLE_XOR_DOTTED,
   GIMP_CANVAS_STYLE_SELECTION_IN,
   GIMP_CANVAS_STYLE_SELECTION_OUT,
-  GIMP_CANVAS_STYLE_LAYER_BOUNDARY,
-  GIMP_CANVAS_STYLE_LAYER_GROUP_BOUNDARY,
-  GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-  GIMP_CANVAS_STYLE_GUIDE_ACTIVE,
-  GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-  GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE,
-  GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE,
-  GIMP_CANVAS_STYLE_CUSTOM,
   GIMP_CANVAS_NUM_STYLES
 } GimpCanvasStyle;
 
@@ -90,9 +82,6 @@ GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_canvas_new               (GimpDisplayConfig  *config);
 
-void         gimp_canvas_draw_cursor       (GimpCanvas         *canvas,
-                                            gint                x,
-                                            gint                y);
 void         gimp_canvas_draw_point        (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             gint                x,
@@ -136,12 +125,9 @@ void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             GdkSegment         *segments,
                                             gint                num_segments);
-void         gimp_canvas_draw_text         (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gint                x,
-                                            gint                y,
+PangoLayout *gimp_canvas_get_layout        (GimpCanvas         *canvas,
                                             const gchar        *format,
-                                            ...) G_GNUC_PRINTF (5, 6);
+                                            ...) G_GNUC_PRINTF (2, 3);
 void         gimp_canvas_draw_rgb          (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             gint                x,
@@ -164,8 +150,6 @@ void         gimp_canvas_set_clip_region   (GimpCanvas         *canvas,
 void         gimp_canvas_set_stipple_index (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             guint               index);
-void         gimp_canvas_set_custom_gc     (GimpCanvas         *canvas,
-                                            GdkGC              *gc);
 void         gimp_canvas_set_bg_color      (GimpCanvas         *canvas,
                                             GimpRGB            *color);
 

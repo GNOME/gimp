@@ -41,6 +41,22 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolorbutton
+ * @title: GimpColorButton
+ * @short_description: Widget for selecting a color from a simple button.
+ * @see_also: #libgimpcolor-gimpcolorspace
+ *
+ * This widget provides a simple button with a preview showing the
+ * color.
+ *
+ * On click a color selection dialog is opened. Additionally the
+ * button supports Drag and Drop and has a right-click menu that
+ * allows to choose the color from the current FG or BG color. If the
+ * user changes the color, the "color-changed" signal is emitted.
+ **/
+
+
 #define COLOR_SELECTION_KEY "gimp-color-selection"
 #define RESPONSE_RESET      1
 
@@ -532,11 +548,11 @@ gimp_color_button_get_action_type (GimpColorButton *button)
 
 /**
  * gimp_color_button_new:
- * @title: String that will be used as title for the color_selector.
- * @width: Width of the colorpreview in pixels.
+ * @title:  String that will be used as title for the color_selector.
+ * @width:  Width of the colorpreview in pixels.
  * @height: Height of the colorpreview in pixels.
- * @color: A pointer to a #GimpRGB color.
- * @type:
+ * @color:  A pointer to a #GimpRGB color.
+ * @type:   The type of transparency to be displayed.
  *
  * Creates a new #GimpColorButton widget.
  *
@@ -573,7 +589,7 @@ gimp_color_button_new (const gchar       *title,
 /**
  * gimp_color_button_set_color:
  * @button: Pointer to a #GimpColorButton.
- * @color: Pointer to the new #GimpRGB color.
+ * @color:  Pointer to the new #GimpRGB color.
  *
  * Sets the @button to the given @color.
  **/
@@ -592,7 +608,7 @@ gimp_color_button_set_color (GimpColorButton *button,
 /**
  * gimp_color_button_get_color:
  * @button: Pointer to a #GimpColorButton.
- * @color: Pointer to a #GimpRGB struct used to return the color.
+ * @color:  Pointer to a #GimpRGB struct used to return the color.
  *
  * Retrieves the currently set color from the @button.
  **/

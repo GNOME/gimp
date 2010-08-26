@@ -32,6 +32,16 @@
 #include "gimpframe.h"
 
 
+/**
+ * SECTION: gimpframe
+ * @title: GimpFrame
+ * @short_description: A widget providing a HIG-compliant subclass
+ *                     of #GtkFrame.
+ *
+ * A widget providing a HIG-compliant subclass of #GtkFrame.
+ **/
+
+
 #define DEFAULT_LABEL_SPACING       6
 #define DEFAULT_LABEL_BOLD          TRUE
 

@@ -60,7 +60,7 @@ struct _ColorselWaterClass
 
 GType             colorsel_water_get_type (void);
 
-static void       select_area_expose      (GtkWidget          *widget,
+static gboolean   select_area_expose      (GtkWidget          *widget,
                                            GdkEventExpose     *event);
 static gboolean   button_press_event      (GtkWidget          *widget,
                                            GdkEventButton     *event,
@@ -199,23 +199,34 @@ calc (gdouble x,
   return 128 + (x - 0.5) * c - (y - 0.5) * s;
 }
 
-static void
+static gboolean
 select_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event)
 {
-  GtkStyle      *style  = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  gdouble        dx;
-  gdouble        dy;
-  guchar        *buf    = g_alloca (3 * event->area.width * event->area.height);
-  guchar        *dest   = buf;
-  gdouble        y;
-  gint           i, j;
+  cairo_t         *cr;
+  GtkAllocation    allocation;
+  gdouble          dx;
+  gdouble          dy;
+  cairo_surface_t *surface;
+  guchar          *dest;
+  gdouble          y;
+  gint             j;
+
+  cr = gdk_cairo_create (event->window);
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
   dx = 1.0 / allocation.width;
   dy = 1.0 / allocation.height;
+
+  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                        event->area.width,
+                                        event->area.height);
+
+  dest = cairo_image_surface_get_data (surface);
 
   for (j = 0, y = event->area.y / allocation.height;
        j < event->area.height;
@@ -231,33 +242,39 @@ select_area_expose (GtkWidget      *widget,
       gdouble  dg = calc (dx, y, 120) - g;
       gdouble  db = calc (dx, y, 240) - b;
 
+      gint     i;
+
       r += event->area.x * dr;
       g += event->area.x * dg;
       b += event->area.x * db;
 
       for (i = 0; i < event->area.width; i++)
         {
-          d[0] = CLAMP ((gint) r, 0, 255);
-          d[1] = CLAMP ((gint) g, 0, 255);
-          d[2] = CLAMP ((gint) b, 0, 255);
+          GIMP_CAIRO_RGB24_SET_PIXEL (d,
+                                      CLAMP ((gint) r, 0, 255),
+                                      CLAMP ((gint) g, 0, 255),
+                                      CLAMP ((gint) b, 0, 255));
 
           r += dr;
           g += dg;
           b += db;
 
-          d += 3;
+          d += 4;
         }
 
-      dest += event->area.width * 3;
+      dest += cairo_image_surface_get_stride (surface);
     }
 
-  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                style->fg_gc[gtk_widget_get_state (widget)],
-                                event->area.x, event->area.y,
-                                event->area.width, event->area.height,
-                                GDK_RGB_DITHER_MAX,
-                                buf, 3 * event->area.width,
-                                -event->area.x, -event->area.y);
+  cairo_surface_mark_dirty (surface);
+  cairo_set_source_surface (cr, surface,
+                            event->area.x, event->area.y);
+  cairo_surface_destroy (surface);
+
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
+
+  return FALSE;
 }
 
 static void

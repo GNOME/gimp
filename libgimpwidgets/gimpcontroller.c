@@ -34,6 +34,16 @@
 #include "gimpcontroller.h"
 #include "gimpstock.h"
 
+
+/**
+ * SECTION: gimpcontroller
+ * @title: GimpController
+ * @short_description: Pluggable GIMP input controller modules.
+ *
+ * An abstract interface for implementing arbitrary input controllers.
+ **/
+
+
 enum
 {
   PROP_0,

@@ -540,5 +540,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Selection Tool procedures';
+$doc_title = 'gimpselectiontools';
+$doc_short_desc = 'Access to toolbox selection tools.';
+$doc_long_desc = 'Functions giving access to toolbox selection tools.';
 
 1;

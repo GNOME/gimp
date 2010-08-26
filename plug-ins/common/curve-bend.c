@@ -670,7 +670,7 @@ run (const gchar      *name,
   l_image_id = param[1].data.d_int32;
   l_layer_id = param[2].data.d_drawable;
 
-  if (! gimp_drawable_is_layer (l_layer_id))
+  if (! gimp_item_is_layer (l_layer_id))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Can operate on layers only "
@@ -2664,7 +2664,7 @@ p_create_pv_image (GimpDrawable *src_drawable,
   t_GDRW        l_dst_gdrw;
 
   l_new_image_id = gimp_image_new (PREVIEW_SIZE_X, PREVIEW_SIZE_Y,
-                   gimp_image_base_type (gimp_drawable_get_image (src_drawable->drawable_id)));
+                   gimp_image_base_type (gimp_item_get_image (src_drawable->drawable_id)));
   gimp_image_undo_disable (l_new_image_id);
 
   l_type = gimp_drawable_type(src_drawable->drawable_id);
@@ -2734,14 +2734,14 @@ p_add_layer (gint       width,
   gint32     image_id;
   gint       stack_position;
 
-  image_id = gimp_drawable_get_image (src_drawable->drawable_id);
+  image_id = gimp_item_get_image (src_drawable->drawable_id);
   stack_position = 0;                                  /* TODO:  should be same as src_layer */
 
   /* copy type, name, opacity and mode from src_drawable */
   l_type     = gimp_drawable_type (src_drawable->drawable_id);
-  l_visible  = gimp_drawable_get_visible (src_drawable->drawable_id);
+  l_visible  = gimp_item_get_visible (src_drawable->drawable_id);
 
-  l_name2 = gimp_drawable_get_name (src_drawable->drawable_id);
+  l_name2 = gimp_item_get_name (src_drawable->drawable_id);
   l_name = g_strdup_printf ("%s_b", l_name2);
   g_free (l_name2);
 
@@ -2772,7 +2772,7 @@ p_add_layer (gint       width,
   gimp_image_add_layer (image_id, l_new_layer_id, stack_position);
 
   /* copy visiblity state */
-  gimp_drawable_set_visible (l_new_layer_id, l_visible);
+  gimp_item_set_visible (l_new_layer_id, l_visible);
 
   return l_new_drawable;
 }
@@ -3196,7 +3196,7 @@ p_main_bend (BenderDialog *cd,
    gint32    xmax, ymax;
 
    l_interpolation = cd->smoothing;
-   l_image_id = gimp_drawable_get_image (original_drawable->drawable_id);
+   l_image_id = gimp_item_get_image (original_drawable->drawable_id);
    gimp_drawable_offsets(original_drawable->drawable_id, &l_offset_x, &l_offset_y);
 
    l_center_x = l_offset_x + (gimp_drawable_width  (original_drawable->drawable_id) / 2 );
@@ -3210,8 +3210,8 @@ p_main_bend (BenderDialog *cd,
     *  that the layer was part of the image)
     */
    gimp_image_add_layer (l_image_id, l_tmp_layer_id, 0);
-   gimp_drawable_set_visible (l_tmp_layer_id, FALSE);
-   gimp_drawable_set_name (l_tmp_layer_id, "curve_bend_dummylayer");
+   gimp_item_set_visible (l_tmp_layer_id, FALSE);
+   gimp_item_set_name (l_tmp_layer_id, "curve_bend_dummylayer");
 
    if(gb_debug) printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);
 

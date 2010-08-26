@@ -43,6 +43,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolorselection
+ * @title: GimpColorSelection
+ * @short_description: Widget for doing a color selection.
+ *
+ * Widget for doing a color selection.
+ **/
+
+
 #define COLOR_AREA_SIZE  20
 
 
@@ -78,7 +87,7 @@ static void   gimp_color_selection_set_property      (GObject            *object
                                                       GParamSpec         *pspec);
 
 static void   gimp_color_selection_switch_page       (GtkWidget          *widget,
-                                                      GtkNotebookPage    *page,
+                                                      gpointer            page,
                                                       guint               page_num,
                                                       GimpColorSelection *selection);
 static void   gimp_color_selection_notebook_changed  (GimpColorSelector  *selector,
@@ -506,8 +515,8 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
 
 /**
  * gimp_color_selection_set_config:
- * @selection:
- * @config:
+ * @selection: A #GimpColorSelection widget.
+ * @config:    A #GimpColorConfig object.
  *
  * Sets the color management configuration to use with this color selection.
  *
@@ -530,7 +539,7 @@ gimp_color_selection_set_config (GimpColorSelection *selection,
 
 static void
 gimp_color_selection_switch_page (GtkWidget          *widget,
-                                  GtkNotebookPage    *page,
+                                  gpointer            page,
                                   guint               page_num,
                                   GimpColorSelection *selection)
 {

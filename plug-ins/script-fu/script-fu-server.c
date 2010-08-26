@@ -35,7 +35,15 @@
 #include <glib.h>
 
 #ifdef G_OS_WIN32
+#define _WIN32_WINNT 0x0502
 #include <winsock2.h>
+#include <ws2tcpip.h>
+#ifndef AI_ADDRCONFIG
+/* Missing from mingw headers, but value is publicly documented 
+ * on http://msdn.microsoft.com/en-us/library/ms737530%28v=VS.85%29.aspx
+ */
+#define AI_ADDRCONFIG 0x0400
+#endif
 #include <libgimpbase/gimpwin32-io.h>
 #else
 #include <sys/socket.h>
@@ -107,7 +115,7 @@
 #define RSP_LEN_L_BYTE  3
 
 /*
- *  Local Structures
+ *  Local Types
  */
 
 typedef struct
@@ -127,6 +135,15 @@ typedef struct
 
   gboolean   run;
 } ServerInterface;
+
+typedef union
+{
+  sa_family_t              family;
+  struct sockaddr_storage  ss;
+  struct sockaddr          sa;
+  struct sockaddr_in       sa_in;
+  struct sockaddr_in6      sa_in6;
+} sa_union;
 
 /*
  *  Local Functions
@@ -317,9 +334,7 @@ script_fu_server_listen (gint timeout)
   /* Service the server sockets if any has input pending. */
   for (sockno = 0; sockno < server_socks_used; sockno++)
     {
-      struct sockaddr_storage  client;
-      struct sockaddr_in      *client_in;
-      struct sockaddr_in6     *client_in6;
+      sa_union                 client;
       gchar                    clientname[NI_MAXHOST];
 
       /* Connection request on original socket. */
@@ -332,7 +347,7 @@ script_fu_server_listen (gint timeout)
           continue;
         }
 
-      new = accept (server_socks[sockno], (struct sockaddr *) &client, &size);
+      new = accept (server_socks[sockno], &(client.sa), &size);
 
       if (new < 0)
         {
@@ -346,22 +361,20 @@ script_fu_server_listen (gint timeout)
       strncpy (clientname, "(error during host address lookup)", NI_MAXHOST-1);
 
       /* Lookup address */
-      (void) getnameinfo ((struct sockaddr *) &client, size, clientname,
-                          sizeof (clientname), NULL, 0, NI_NUMERICHOST);
+      (void) getnameinfo (&(client.sa), size, clientname, sizeof (clientname),
+                          NULL, 0, NI_NUMERICHOST);
 
       g_hash_table_insert (clients, GINT_TO_POINTER (new),
                            g_strdup (clientname));
 
       /* Determine port number */
-      switch (client.ss_family)
+      switch (client.family)
         {
           case AF_INET:
-            client_in = (struct sockaddr_in *) &client;
-            portno = (guint) g_ntohs (client_in->sin_port);
+            portno = (guint) g_ntohs (client.sa_in.sin_port);
             break;
           case AF_INET6:
-            client_in6 = (struct sockaddr_in6 *) &client;
-            portno = (guint) g_ntohs (client_in6->sin6_port);
+            portno = (guint) g_ntohs (client.sa_in6.sin6_port);
             break;
           default:
             portno = 0;

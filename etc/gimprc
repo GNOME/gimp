@@ -141,7 +141,7 @@
 # Specify a default dynamics.  The dynamics is searched for in the specified
 # dynamics path.  This is a string value.
 # 
-# (default-dynamics "Basic Dynamics")
+# (default-dynamics "Dynamics Off")
 
 # Specify a default pattern.  This is a string value.
 # 

@@ -1,0 +1,575 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub item_is_valid {
+    $blurb = 'Returns TRUE if the item is valid.';
+
+    $help = <<'HELP';
+This procedure checks if the given item ID is valid and refers to an
+existing item.
+HELP
+
+    &neo_pdb_misc('2007', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item', no_validate => 1,
+	  desc => 'The item to check' }
+    );
+
+    @outargs = (
+	{ name => 'valid', type => 'boolean',
+	  desc => 'Whether the item ID is valid' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  valid = (GIMP_IS_ITEM (item) &&
+           ! gimp_item_is_removed (GIMP_ITEM (item)));
+}
+CODE
+    );
+}
+
+sub item_get_image {
+    $blurb = "Returns the item's image.";
+
+    $help = "This procedure returns the item's image.";
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'image', type => 'image',
+	  desc => "The item's image" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  image = gimp_item_get_image (GIMP_ITEM (item));
+}
+CODE
+    );
+}
+
+sub item_delete {
+    $blurb = 'Delete a item.';
+
+    $help = <<'HELP';
+This procedure deletes the specified item. This must not be done if the
+image containing this item was already deleted or if the item was
+already removed from the image. The only case in which this procedure is
+useful is if you want to get rid of a item which has not yet been
+added to an image.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item to delete' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (g_object_is_floating (item))
+    {
+      g_object_ref_sink (item);
+      g_object_unref (item);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub item_is_drawable {
+    $blurb = 'Returns whether the item is a drawable.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is a drawable.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'drawable', type => 'boolean',
+	  desc => 'TRUE if the item is a drawable, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  drawable = GIMP_IS_DRAWABLE (item);
+}
+CODE
+    );
+}
+
+sub item_is_layer {
+    $blurb = 'Returns whether the item is a layer.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is a layer.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'layer', type => 'boolean',
+	  desc => 'TRUE if the item is a layer, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  layer = GIMP_IS_LAYER (item);
+}
+CODE
+    );
+}
+
+sub item_is_channel {
+    $blurb = 'Returns whether the item is a channel.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is a channel.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'channel', type => 'boolean',
+	  desc => 'TRUE if the item is a channel, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  channel = GIMP_IS_CHANNEL (item);
+}
+CODE
+    );
+}
+
+sub item_is_layer_mask {
+    $blurb = 'Returns whether the item is a layer mask.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is a layer mask.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'layer_mask', type => 'boolean',
+	  desc => 'TRUE if the item is a layer mask, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  layer_mask = GIMP_IS_LAYER_MASK (item);
+}
+CODE
+    );
+}
+
+sub item_is_selection {
+    $blurb = 'Returns whether the item is a selection.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is a selection.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'selection', type => 'boolean',
+	  desc => 'TRUE if the item is a selection, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  selection = GIMP_IS_SELECTION (item);
+}
+CODE
+    );
+}
+
+sub item_is_vectors {
+    $blurb = 'Returns whether the item is a vectors.';
+
+    $help = <<HELP;
+This procedure returns TRUE if the specified item is a vectors.
+HELP
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'vectors', type => 'boolean',
+	  desc => 'TRUE if the item is a vectors, FALSE otherwise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  vectors = GIMP_IS_VECTORS (item);
+}
+CODE
+    );
+}
+
+sub item_get_name {
+    $blurb = "Get the name of the specified item.";
+
+    $help = "This procedure returns the specified item's name.";
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The item name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  name = g_strdup (gimp_object_get_name (item));
+}
+CODE
+    );
+}
+
+sub item_set_name {
+    $blurb = "Set the name of the specified item.";
+
+    $help = "This procedure sets the specified item's name.";
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'name', type => 'string',
+	  desc => "The new item name" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gimp_item_rename (GIMP_ITEM (item), name, error);
+}
+CODE
+    );
+}
+
+sub item_get_visible {
+    $blurb = "Get the visibility of the specified item.";
+
+    $help = "This procedure returns the specified item's visibility.";
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'visible', type => 'boolean',
+	  desc => "The item visibility" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  visible = gimp_item_get_visible (GIMP_ITEM (item));
+}
+CODE
+    );
+}
+
+sub item_set_visible {
+    $blurb = "Set the visibility of the specified item.";
+
+    $help = "This procedure sets the specified item's visibility.";
+
+    &std_pdb_misc;
+    $since = '2.8';
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'visible', type => 'boolean',
+	  desc => "The new item visibility" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_set_visible (GIMP_ITEM (item), visible, TRUE);
+}
+CODE
+    );
+}
+
+sub item_get_linked {
+    $blurb = "Get the linked state of the specified item.";
+
+    $help = "This procedure returns the specified item's linked state.";
+
+    &wolfgang_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'linked', type => 'boolean',
+	  desc => "The item linked state (for moves)" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  linked = gimp_item_get_linked (GIMP_ITEM (item));
+}
+CODE
+    );
+}
+
+sub item_set_linked {
+    $blurb = "Set the linked state of the specified item.";
+
+    $help = "This procedure sets the specified item's linked state.";
+
+    &wolfgang_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'linked', type => 'boolean',
+	  desc => "The new item linked state" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_set_linked (GIMP_ITEM (item), linked, TRUE);
+}
+CODE
+    );
+}
+
+sub item_get_lock_content {
+    $blurb = "Get the 'lock content' state of the specified item.";
+
+    $help = "This procedure returns the specified item's lock content state.";
+
+    &mitch_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'lock_content', type => 'boolean',
+	  desc => "Whether the item's contents are locked" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  lock_content = gimp_item_get_lock_content (GIMP_ITEM (item));
+}
+CODE
+    );
+}
+
+sub item_set_lock_content {
+    $blurb = "Set the 'lock content' state of the specified item.";
+
+    $help = "This procedure sets the specified item's lock content state.";
+
+    &mitch_pdb_misc('2009', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'lock_content', type => 'boolean',
+	  desc => "The new item 'lock content' state" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_item_can_lock_content (GIMP_ITEM (item)))
+    gimp_item_set_lock_content (GIMP_ITEM (item), lock_content, TRUE);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub item_get_tattoo {
+    $blurb = "Get the tattoo of the specified item.";
+
+    $help = <<'HELP';
+This procedure returns the specified item's tattoo. A tattoo is a
+unique and permanent identifier attached to a item that can be
+used to uniquely identify a item within an image even between
+sessions.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => "The item tattoo" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  tattoo = gimp_item_get_tattoo (GIMP_ITEM (item));
+}
+CODE
+    );
+}
+
+sub item_set_tattoo {
+    $blurb = "Set the tattoo of the specified item.";
+
+    $help = <<'HELP';
+This procedure sets the specified item's tattoo. A tattoo is a
+unique and permanent identifier attached to a item that can be
+used to uniquely identify a item within an image even between
+sessions.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'tattoo', type => 'tattoo',
+	  desc => "The new item tattoo" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_set_tattoo (GIMP_ITEM (item), tattoo);
+}
+CODE
+    );
+}
+
+@headers = qw("core/gimplayermask.h"
+              "core/gimpselection.h"
+              "text/gimptextlayer.h"
+	      "vectors/gimpvectors.h"
+              "gimppdb-utils.h"
+              "gimp-intl.h");
+
+@procs = qw(item_is_valid
+            item_get_image
+            item_delete
+            item_is_drawable
+            item_is_layer
+	    item_is_channel
+	    item_is_layer_mask
+	    item_is_selection
+	    item_is_vectors
+            item_get_name item_set_name
+            item_get_visible item_set_visible
+            item_get_linked item_set_linked
+            item_get_lock_content item_set_lock_content
+            item_get_tattoo item_set_tattoo);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Item procedures';
+$doc_title = 'gimpitem';
+$doc_short_desc = 'Functions to manipulate items.';
+$doc_long_desc = 'Functions to manipulate items.';
+
+1;

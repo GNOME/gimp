@@ -32,6 +32,16 @@
 #include "gimpwidgetsmarshal.h"
 
 
+/**
+ * SECTION: gimpcolordisplaystack
+ * @title: GimpColorDisplayStack
+ * @short_description: A stack of color correction modules.
+ * @see_also: #GimpColorDisplay
+ *
+ * A stack of color correction modules.
+ **/
+
+
 enum
 {
   CHANGED,

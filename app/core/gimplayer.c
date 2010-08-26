@@ -36,6 +36,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpcontainer.h"
 #include "gimpdrawable-convert.h"
@@ -140,8 +141,14 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
                                                  gint                recursion_level,
-                                                 GimpTransformResize    clip_result,
+                                                 GimpTransformResize clip_result,
                                                  GimpProgress       *progress);
+static void       gimp_layer_to_selection       (GimpItem           *item,
+                                                 GimpChannelOps      op,
+                                                 gboolean            antialias,
+                                                 gboolean            feather,
+                                                 gdouble             feather_radius_x,
+                                                 gdouble             feather_radius_y);
 static GeglNode * gimp_layer_get_node           (GimpItem           *item);
 
 static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
@@ -253,6 +260,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->flip                    = gimp_layer_flip;
   item_class->rotate                  = gimp_layer_rotate;
   item_class->transform               = gimp_layer_transform;
+  item_class->to_selection            = gimp_layer_to_selection;
   item_class->get_node                = gimp_layer_get_node;
   item_class->default_name            = _("Layer");
   item_class->rename_desc             = C_("undo-type", "Rename Layer");
@@ -262,6 +270,14 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->flip_desc               = C_("undo-type", "Flip Layer");
   item_class->rotate_desc             = C_("undo-type", "Rotate Layer");
   item_class->transform_desc          = C_("undo-type", "Transform Layer");
+  item_class->to_selection_desc       = C_("undo-type", "Alpha to Selection");
+  item_class->reorder_desc            = C_("undo-type", "Reorder Layer");
+  item_class->raise_desc              = C_("undo-type", "Raise Layer");
+  item_class->raise_to_top_desc       = C_("undo-type", "Raise Layer to Top");
+  item_class->lower_desc              = C_("undo-type", "Lower Layer");
+  item_class->lower_to_bottom_desc    = C_("undo-type", "Lower Layer to Bottom");
+  item_class->raise_failed            = _("Layer cannot be raised higher.");
+  item_class->lower_failed            = _("Layer cannot be lowered more.");
 
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
@@ -744,6 +760,23 @@ gimp_layer_transform (GimpItem               *item,
                          matrix, direction,
                          interpolation_type, recursion_level,
                          clip_result, progress);
+}
+
+static void
+gimp_layer_to_selection (GimpItem       *item,
+                         GimpChannelOps  op,
+                         gboolean        antialias,
+                         gboolean        feather,
+                         gdouble         feather_radius_x,
+                         gdouble         feather_radius_y)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+  GimpImage *image = gimp_item_get_image (item);
+
+  gimp_channel_select_alpha (gimp_image_get_mask (image),
+                             GIMP_DRAWABLE (layer),
+                             op,
+                             feather, feather_radius_x, feather_radius_y);
 }
 
 static GeglNode *

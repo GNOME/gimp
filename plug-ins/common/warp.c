@@ -932,7 +932,7 @@ diff (GimpDrawable *drawable,
         16-bit pixel value. This is either clever, or a kluge,
         depending on your point of view.  */
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable->drawable_id);
   layer_active = gimp_image_get_active_layer (image_id);
 
   /* create new image for X,Y diff */
@@ -1249,7 +1249,7 @@ warp (GimpDrawable *orig_draw)
   map_x = gimp_drawable_get (xdlayer);
   map_y = gimp_drawable_get (ydlayer);
 
-  orig_image_id = gimp_drawable_get_image (orig_draw->drawable_id);
+  orig_image_id = gimp_item_get_image (orig_draw->drawable_id);
 
   for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
     {
@@ -1268,7 +1268,7 @@ warp (GimpDrawable *orig_draw)
       first_time = FALSE;
     }
 
-  image_ID = gimp_drawable_get_image (map_x->drawable_id);
+  image_ID = gimp_item_get_image (map_x->drawable_id);
 
   gimp_drawable_detach (map_x);
   gimp_drawable_detach (map_y);

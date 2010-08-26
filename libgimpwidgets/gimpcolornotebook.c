@@ -37,6 +37,17 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolornotebook
+ * @title: GimpColorNotebook
+ * @short_description: A #GimpColorSelector implementation.
+ *
+ * The #GimpColorNotebook widget is an implementation of a
+ * #GimpColorSelector. It serves as a container for
+ * #GimpColorSelectors.
+ **/
+
+
 #define DEFAULT_TAB_BORDER     0
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
@@ -61,7 +72,7 @@ static void   gimp_color_notebook_set_config      (GimpColorSelector *selector,
 
 
 static void   gimp_color_notebook_switch_page     (GtkNotebook       *gtk_notebook,
-                                                   GtkNotebookPage   *page,
+                                                   gpointer           page,
                                                    guint              page_num,
                                                    GimpColorNotebook *notebook);
 
@@ -308,7 +319,7 @@ gimp_color_notebook_set_config (GimpColorSelector *selector,
 
 static void
 gimp_color_notebook_switch_page (GtkNotebook       *gtk_notebook,
-                                 GtkNotebookPage   *page,
+                                 gpointer           page,
                                  guint              page_num,
                                  GimpColorNotebook *notebook)
 {

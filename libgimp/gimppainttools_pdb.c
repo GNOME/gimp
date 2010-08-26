@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimppainttools
+ * @title: gimppainttools
+ * @short_description: Access to toolbox paint tools.
+ *
+ * Functions giving access to toolbox paint tools.
+ **/
+
+
 /**
  * gimp_airbrush:
  * @drawable_ID: The affected drawable.

@@ -27,6 +27,16 @@
 #undef __GIMP_COLOR_PDB_H__
 #include "gimpcolor_pdb.h"
 
+
+/**
+ * SECTION: gimpcolor
+ * @title: gimpcolor
+ * @short_description: Functions for manipulating color.
+ *
+ * Functions for manipulating color, including curves and histograms.
+ **/
+
+
 /**
  * gimp_brightness_contrast:
  * @drawable_ID: The drawable.
@@ -126,7 +136,7 @@ gimp_levels (gint32               drawable_ID,
  * gimp_levels_auto:
  * @drawable_ID: The drawable.
  *
- * This procedure is deprecated! Use gimp_levels_stretch() instead.
+ * Deprecated: Use gimp_levels_stretch() instead.
  *
  * Returns: TRUE on success.
  */

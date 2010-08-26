@@ -1643,7 +1643,7 @@ get_frame_disposal (guint whichframe)
   DisposeType  disposal;
   gchar       *layer_name;
 
-  layer_name = gimp_drawable_get_name (layers[total_frames-(whichframe+1)]);
+  layer_name = gimp_item_get_name (layers[total_frames-(whichframe+1)]);
   disposal = parse_disposal_tag (layer_name);
   g_free (layer_name);
 
@@ -1656,7 +1656,7 @@ get_frame_duration (guint whichframe)
   gchar *layer_name;
   gint   duration = 0;
 
-  layer_name = gimp_drawable_get_name (layers[total_frames-(whichframe+1)]);
+  layer_name = gimp_item_get_name (layers[total_frames-(whichframe+1)]);
   if (layer_name)
     {
       duration = parse_ms_tag (layer_name);

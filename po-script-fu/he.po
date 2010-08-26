@@ -2,21 +2,23 @@
 # translation of gimp-script-fy-he.po to Hebrew
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# dovix <dovix2003@yahoo.com>, 2003
-# Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2003
 #
+# dovix <dovix2003@yahoo.com>, 2003.
+# Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2003.
+# Barak Itkin <lightningismyname@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-21 15:35+0300\n"
-"PO-Revision-Date: 2003-08-13 22:11+0300\n"
-"Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
+"POT-Creation-Date: 2010-08-04 00:05+0300\n"
+"PO-Revision-Date: 2010-08-04 02:17+0300\n"
+"Last-Translator: Barak Itkin <lightningismyname@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -72,7 +74,7 @@ msgstr ""
 #: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
-msgstr ""
+msgstr "%s:"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
@@ -120,19 +122,19 @@ msgstr ""
 msgid "Error while loading %s:"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:804
 msgid "Script-Fu Server Options"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:809
 msgid "_Start Server"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "Server port:"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:843
 msgid "Server logfile:"
 msgstr ""
 
@@ -171,16 +173,15 @@ msgstr "טקסט"
 
 #: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
-msgstr ""
+msgstr "_כפתורים"
 
 #: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:314
-#, fuzzy
 msgid "_Patterns"
-msgstr "דוגמה"
+msgstr "_דוגמאות"
 
 #: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
@@ -775,14 +776,14 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
-msgstr ""
+msgstr "גובה"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
 msgid "Width"
-msgstr ""
+msgstr "רוחב"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
@@ -1167,16 +1168,16 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
-msgstr ""
+msgstr "טשטוש X"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
-msgstr ""
+msgstr "טשטוש Y"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:5
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
-msgstr ""
+msgstr "עומק"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:6
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
@@ -1474,9 +1475,8 @@ msgid "_Labels"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:11
-#, fuzzy
 msgid "_Text"
-msgstr "טקסט"
+msgstr "_טקסט"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid ""
@@ -2175,7 +2175,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr ""
+msgstr "מריחה"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
@@ -2213,9 +2213,8 @@ msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
-#, fuzzy
 msgid "Palette"
-msgstr "דוגמה"
+msgstr "לוח צבעים"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 #, fuzzy
@@ -2252,34 +2251,34 @@ msgid "Concave"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Radius (%)"
-msgstr "מחוג"
+msgstr "רדיוס (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Round the corners of the current selection"
-msgstr ""
+msgstr "עגל את הפינות של הבחירה הנוכחית"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
-msgstr ""
+msgstr "מ_לבן מעוגל..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
+#, fuzzy
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
+msgstr "הוסף מסגרת סרט צילום, חורים של גלגלי שיניים ותוויות לתמונה"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
-#, fuzzy
 msgid "Font color"
-msgstr "צבע טקסט"
+msgstr "צבע גופן"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
-msgstr ""
+msgstr "מספר"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
-msgstr ""
+msgstr "_שקופית..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
@@ -2324,15 +2323,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
-msgstr ""
+msgstr "מברשת אוויר"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
-msgstr ""
+msgstr "מברשת"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
-msgstr ""
+msgstr "מעגל"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 #, fuzzy
@@ -2357,7 +2356,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
-msgstr ""
+msgstr "משושה"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hole ratio"
@@ -2381,27 +2380,27 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
-msgstr ""
+msgstr "עיפרון"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pentagon"
-msgstr ""
+msgstr "מחומש"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "מצולע: 10 צלעות"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "מצולע: 7 צלעות"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "מצולע: 8 צלעות"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "מצולע: 9 צלעות"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
@@ -2409,7 +2408,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
-msgstr ""
+msgstr "Shape"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
@@ -2421,24 +2420,24 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
-msgstr ""
+msgstr "מרובע"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
-msgstr ""
+msgstr "זווית התחלה"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
-msgstr ""
+msgstr "כלי"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
-msgstr ""
+msgstr "משולש"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
-msgstr ""
+msgstr "סוג"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
@@ -2543,40 +2542,40 @@ msgstr ""
 msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
-msgstr ""
+msgstr "מלא את האזור (או האלפא) הנבחר במרקם והוסף ברק, הצללה ורקע פסיפס"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
-msgstr ""
+msgstr "משושים"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic tile type"
-msgstr ""
+msgstr "סוג אריחי פסיפס"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
-msgstr ""
+msgstr "מתומנים"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
-msgstr ""
+msgstr "ריבועים"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting blend"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
-#, fuzzy
 msgid "Text pattern"
-msgstr "דוגמה"
+msgstr "דוגמת הטקסט"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
+#, fuzzy
 msgid "_Textured..."
-msgstr ""
+msgstr "_מרקם..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
-msgstr ""
+msgstr "טשטש אופקית"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
@@ -2584,19 +2583,19 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
-msgstr ""
+msgstr "סוג טשטוש"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur vertically"
-msgstr ""
+msgstr "טשטש אנכית"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
@@ -2615,26 +2614,24 @@ msgid "Create an image filled with a Truchet pattern"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
-#, fuzzy
 msgid "Foreground color"
-msgstr "צבע גבול"
+msgstr "צבע קדמה"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
-#, fuzzy
 msgid "Mask opacity"
-msgstr "אטימות"
+msgstr "אטימות מסכה"
 
 #: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask size"
-msgstr ""
+msgstr "גדול מסכה"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
-msgstr ""
+msgstr "משרעת"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid ""
@@ -2644,15 +2641,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
-msgstr ""
+msgstr "הפוך כיוון"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
-msgstr ""
+msgstr "אורך גל"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr ""
+msgstr "_גלים..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
 msgid ""

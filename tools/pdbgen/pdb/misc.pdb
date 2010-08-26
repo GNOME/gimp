@@ -99,5 +99,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs[0..1]]);
 
 $desc = 'Miscellaneous';
+$doc_title = 'gimpmisc';
+$doc_short_desc = 'Miscellaneous procedures';
+$doc_long_desc = 'Miscellaneous procedures not fitting in any category.';
 
 1;

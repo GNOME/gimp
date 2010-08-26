@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpconvert
+ * @title: gimpconvert
+ * @short_description: Conversions between RGB, indexed, and grayscale modes.
+ *
+ * Conversions between RGB, indexed, and grayscale modes.
+ **/
+
+
 /**
  * gimp_image_convert_rgb:
  * @image_ID: The image.

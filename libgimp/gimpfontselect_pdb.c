@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpfontselect
+ * @title: gimpfontselect
+ * @short_description: Functions providing a font selection dialog.
+ *
+ * Functions providing a font selection dialog.
+ **/
+
+
 /**
  * gimp_fonts_popup:
  * @font_callback: The callback PDB proc to call when font selection is made.

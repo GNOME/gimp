@@ -169,7 +169,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  if (! gimp_drawable_is_layer (param[2].data.d_drawable))
+  if (! gimp_item_is_layer (param[2].data.d_drawable))
     {
       g_set_error (&error, 0, 0, "%s",
                    _("Can operate on layers only "
@@ -466,13 +466,13 @@ dog (gint32        image_ID,
   gimp_drawable_flush (drawable);
 
   layer1 = gimp_layer_copy (drawable_id);
-  gimp_drawable_set_visible (layer1, FALSE);
-  gimp_drawable_set_name (layer1, "dog_scratch_layer1");
+  gimp_item_set_visible (layer1, FALSE);
+  gimp_item_set_name (layer1, "dog_scratch_layer1");
   gimp_image_add_layer (image_ID, layer1, 0);
 
   layer2 = gimp_layer_copy (drawable_id);
-  gimp_drawable_set_visible (layer2, FALSE);
-  gimp_drawable_set_name (layer2, "dog_scratch_layer2");
+  gimp_item_set_visible (layer2, FALSE);
+  gimp_item_set_name (layer2, "dog_scratch_layer2");
   gimp_image_add_layer (image_ID, layer2, 0);
 
   drawable1 = gimp_drawable_get (layer1);
@@ -977,7 +977,7 @@ preview_update_preview (GimpPreview  *preview,
                            x1, y1, width, height);
 
   /* set up gimp drawable for rendering preview into */
-  src_image_id = gimp_drawable_get_image (drawable->drawable_id);
+  src_image_id = gimp_item_get_image (drawable->drawable_id);
   image_id = gimp_image_new (width, height,
                              gimp_image_base_type (src_image_id));
   preview_id = gimp_layer_new (image_id, "preview", width, height,

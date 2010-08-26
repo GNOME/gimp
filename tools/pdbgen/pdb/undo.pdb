@@ -299,5 +299,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Undo';
+$doc_title = 'gimpundo';
+$doc_short_desc = 'Control of undo/redo.';
+$doc_long_desc = 'Control of undo/redo.';
 
 1;

@@ -26,6 +26,17 @@
 #include "gimpregioniterator.h"
 
 
+/**
+ * SECTION: gimpregioniterator
+ * @title: gimpregioniterator
+ * @short_description: Functions to traverse a pixel regions.
+ *
+ * The GimpRgnIterator functions provide a variety of common ways to
+ * traverse a PixelRegion, using a pre-defined function pointer per
+ * pixel.
+ **/
+
+
 struct _GimpRgnIterator
 {
   GimpDrawable *drawable;

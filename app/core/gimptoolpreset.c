@@ -421,6 +421,8 @@ gimp_tool_preset_new (GimpContext *context,
 
   tool_info = gimp_context_get_tool (context);
 
+  g_return_val_if_fail (tool_info != NULL, NULL);
+
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
   return g_object_new (GIMP_TYPE_TOOL_PRESET,
@@ -429,28 +431,6 @@ gimp_tool_preset_new (GimpContext *context,
                        "gimp",         context->gimp,
                        "tool-options", tool_info->tool_options,
                        NULL);
-}
-
-GimpData *
-gimp_tool_preset_get_standard (GimpContext *context)
-{
-  static GimpData *standard_tool_preset = NULL;
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  if (! standard_tool_preset)
-    {
-      standard_tool_preset = gimp_tool_preset_new (context,
-                                                   "Standard tool preset");
-
-      gimp_data_clean (standard_tool_preset);
-      gimp_data_make_internal (standard_tool_preset, "gimp-tool-preset-standard");
-
-      g_object_add_weak_pointer (G_OBJECT (standard_tool_preset),
-                                 (gpointer *) &standard_tool_preset);
-    }
-
-  return standard_tool_preset;
 }
 
 GimpContextPropMask

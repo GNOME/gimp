@@ -28,6 +28,24 @@
 G_BEGIN_DECLS
 
 
+/**
+ * SECTION: gimpthumb-enums
+ * @title: GimpThumb-enums
+ * @short_description: Enumerations used by libgimpthumb
+ *
+ * Enumerations used by libgimpthumb
+ **/
+
+
+/**
+ * GimpThumbFileType:
+ * @GIMP_THUMB_FILE_TYPE_NONE:    file does not exist
+ * @GIMP_THUMB_FILE_TYPE_REGULAR: a regular file
+ * @GIMP_THUMB_FILE_TYPE_FOLDER:  a directory
+ * @GIMP_THUMB_FILE_TYPE_SPECIAL: a special file (device node, fifo, socket, ...)
+ *
+ * File types as returned by gimp_thumb_file_test().
+ **/
 #define GIMP_TYPE_THUMB_FILE_TYPE (gimp_thumb_file_type_get_type ())
 
 GType gimp_thumb_file_type_get_type (void) G_GNUC_CONST;
@@ -41,6 +59,16 @@ typedef enum
 } GimpThumbFileType;
 
 
+/**
+ * GimpThumbSize:
+ * @GIMP_THUMB_SIZE_FAIL:   special size used to indicate a thumbnail
+ *                          creation failure
+ * @GIMP_THUMB_SIZE_NORMAL: normal thumbnail size (128 pixels)
+ * @GIMP_THUMB_SIZE_LARGE:  large thumbnail size (256 pixels)
+ *
+ * Possible thumbnail sizes as defined by the Thumbnail Managaging
+ * Standard.
+ **/
 #define GIMP_TYPE_THUMB_SIZE (gimp_thumb_size_get_type ())
 
 GType gimp_thumb_size_get_type (void) G_GNUC_CONST;
@@ -53,6 +81,20 @@ typedef enum
 } GimpThumbSize;
 
 
+/**
+ * GimpThumbState:
+ * @GIMP_THUMB_STATE_UNKNOWN:   nothing is known about the file/thumbnail
+ * @GIMP_THUMB_STATE_REMOTE:    the file is on a remote file system
+ * @GIMP_THUMB_STATE_FOLDER:    the file is a directory
+ * @GIMP_THUMB_STATE_SPECIAL:   the file is a special file
+ * @GIMP_THUMB_STATE_NOT_FOUND: the file/thumbnail doesn't exist
+ * @GIMP_THUMB_STATE_EXISTS:    the file/thumbnail exists
+ * @GIMP_THUMB_STATE_OLD:       the thumbnail may be outdated
+ * @GIMP_THUMB_STATE_FAILED:    the thumbnail couldn't be created
+ * @GIMP_THUMB_STATE_OK:        the thumbnail exists and matches the image
+ *
+ * Possible image and thumbnail file states used by libgimpthumb.
+ **/
 #define GIMP_TYPE_THUMB_STATE (gimp_thumb_state_get_type ())
 
 GType gimp_thumb_state_get_type (void) G_GNUC_CONST;

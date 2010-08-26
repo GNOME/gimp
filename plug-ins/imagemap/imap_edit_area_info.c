@@ -433,7 +433,7 @@ edit_area_cancel_cb(gpointer data)
 }
 
 static void
-switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num,
+switch_page(GtkWidget *widget, gpointer page, gint page_num,
 	    gpointer data)
 {
    AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;

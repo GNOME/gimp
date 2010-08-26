@@ -1495,7 +1495,7 @@ save_image (const gchar *filename,
           return FALSE;
         }
       /* get framename of this layer */
-      framename = gimp_drawable_get_name (layers[nlayers - 1 - i]);
+      framename = gimp_item_get_name (layers[nlayers - 1 - i]);
       /* get offset of this layer. */
       gimp_drawable_offsets (layers[nlayers - 1 - i], &layer_xoffset, &layer_yoffset);
 
@@ -1649,7 +1649,7 @@ save_image (const gchar *filename,
       if (!framename)
         return FALSE;
 
-      gimp_drawable_set_name (orig_layers[nlayers - 1 - i], framename);
+      gimp_item_set_name (orig_layers[nlayers - 1 - i], framename);
       g_free (framename);
 
       gimp_progress_update ((i + 1) / imagesp->nimage);

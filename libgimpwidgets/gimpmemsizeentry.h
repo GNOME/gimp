@@ -39,6 +39,7 @@ struct _GimpMemsizeEntry
 {
   GtkHBox            parent_instance;
 
+  /*< private >*/
   guint64            value;
   guint64            lower;
   guint64            upper;

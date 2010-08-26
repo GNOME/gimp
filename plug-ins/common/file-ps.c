@@ -1133,10 +1133,10 @@ load_image (const gchar  *filename,
 
               tmp_ID = gimp_image_get_active_drawable (image_list[k]);
 
-              name = gimp_drawable_get_name (tmp_ID);
+              name = gimp_item_get_name (tmp_ID);
 
               current_layer = gimp_layer_new_from_drawable (tmp_ID, image_ID);
-              gimp_drawable_set_name (current_layer, name);
+              gimp_item_set_name (current_layer, name);
               gimp_image_add_layer (image_ID, current_layer, -1);
               gimp_image_delete (image_list[k]);
 
@@ -1748,7 +1748,9 @@ ps_open (const gchar      *filename,
 #else
 
   /* Use a real outputfile. Wait until ghostscript has finished */
-  flags = G_SPAWN_SEARCH_PATH;
+  flags = G_SPAWN_SEARCH_PATH |
+          G_SPAWN_STDOUT_TO_DEV_NULL |
+          G_SPAWN_STDERR_TO_DEV_NULL;
 
   if ( !g_spawn_sync (NULL,       /* working dir */
                       pcmdA,      /* command array */
@@ -2437,7 +2439,7 @@ save_ps_preview (FILE   *ofp,
 
   cmap = NULL;     /* Check if we need a colour table */
   if (gimp_drawable_type (drawable_ID) == GIMP_INDEXED_IMAGE)
-    cmap = gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID),
+    cmap = gimp_image_get_colormap (gimp_item_get_image (drawable_ID),
                                     &ncols);
 
   for (y = 0; y < height; y++)

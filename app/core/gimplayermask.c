@@ -108,6 +108,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   item_class->duplicate         = gimp_layer_mask_duplicate;
   item_class->rename            = gimp_layer_mask_rename;
   item_class->translate_desc    = C_("undo-type", "Move Layer Mask");
+  item_class->to_selection_desc = C_("undo-type", "Layer Mask to Selection");
 }
 
 static void

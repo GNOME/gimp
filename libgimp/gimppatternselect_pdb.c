@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimppatternselect
+ * @title: gimppatternselect
+ * @short_description: Functions providing a pattern selection dialog.
+ *
+ * Functions providing a pattern selection dialog.
+ **/
+
+
 /**
  * gimp_patterns_popup:
  * @pattern_callback: The callback PDB proc to call when pattern selection is made.

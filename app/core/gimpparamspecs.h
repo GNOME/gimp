@@ -278,13 +278,11 @@ GParamSpec * gimp_param_spec_item_id     (const gchar  *name,
                                           const gchar  *nick,
                                           const gchar  *blurb,
                                           Gimp         *gimp,
-                                          GType         item_type,
                                           gboolean      none_ok,
                                           GParamFlags   flags);
 
 GimpItem   * gimp_value_get_item         (const GValue *value,
-                                          Gimp         *gimp,
-                                          GType         item_type);
+                                          Gimp         *gimp);
 void         gimp_value_set_item         (GValue       *value,
                                           GimpItem     *item);
 

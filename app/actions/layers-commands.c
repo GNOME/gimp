@@ -31,7 +31,6 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
@@ -416,7 +415,7 @@ layers_raise_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_raise_layer (image, layer, NULL);
+  gimp_image_raise_item (image, GIMP_ITEM (layer), NULL);
   gimp_image_flush (image);
 }
 
@@ -428,7 +427,7 @@ layers_raise_to_top_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_raise_layer_to_top (image, layer);
+  gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
   gimp_image_flush (image);
 }
 
@@ -440,7 +439,7 @@ layers_lower_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_lower_layer (image, layer, NULL);
+  gimp_image_lower_item (image, GIMP_ITEM (layer), NULL);
   gimp_image_flush (image);
 }
 
@@ -452,7 +451,7 @@ layers_lower_to_bottom_cmd_callback (GtkAction *action,
   GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  gimp_image_lower_layer_to_bottom (image, layer);
+  gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
   gimp_image_flush (image);
 }
 
@@ -821,27 +820,18 @@ layers_mask_to_selection_cmd_callback (GtkAction *action,
                                        gint       value,
                                        gpointer   data)
 {
-  GimpChannelOps  op;
-  GimpImage      *image;
-  GimpLayer      *layer;
-  GimpLayerMask  *mask;
+  GimpImage     *image;
+  GimpLayer     *layer;
+  GimpLayerMask *mask;
   return_if_no_layer (image, layer, data);
-
-  op = (GimpChannelOps) value;
 
   mask = gimp_layer_get_mask (layer);
 
   if (mask)
     {
-      gint off_x, off_y;
-
-      gimp_item_get_offset (GIMP_ITEM (mask), &off_x, &off_y);
-
-      gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   _("Layer Mask to Selection"),
-                                   GIMP_CHANNEL (mask),
-                                   off_x, off_y,
-                                   op, FALSE, 0.0, 0.0);
+      gimp_item_to_selection (GIMP_ITEM (mask),
+                              (GimpChannelOps) value,
+                              TRUE, FALSE, 0.0, 0.0);
       gimp_image_flush (image);
     }
 }
@@ -881,16 +871,13 @@ layers_alpha_to_selection_cmd_callback (GtkAction *action,
                                         gint       value,
                                         gpointer   data)
 {
-  GimpChannelOps  op;
-  GimpImage      *image;
-  GimpLayer      *layer;
+  GimpImage *image;
+  GimpLayer *layer;
   return_if_no_layer (image, layer, data);
 
-  op = (GimpChannelOps) value;
-
-  gimp_channel_select_alpha (gimp_image_get_mask (image),
-                             GIMP_DRAWABLE (layer),
-                             op, FALSE, 0.0, 0.0);
+  gimp_item_to_selection (GIMP_ITEM (layer),
+                          (GimpChannelOps) value,
+                          TRUE, FALSE, 0.0, 0.0);
   gimp_image_flush (image);
 }
 

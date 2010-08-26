@@ -32,7 +32,6 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
@@ -152,10 +151,6 @@ static void       gimp_layer_tree_view_update_borders             (GimpLayerTree
                                                                    GtkTreeIter                *iter);
 static void       gimp_layer_tree_view_mask_callback              (GimpLayerMask              *mask,
                                                                    GimpLayerTreeView          *view);
-static gboolean   gimp_layer_tree_view_layer_pre_clicked          (GimpCellRendererViewable   *cell,
-                                                                   const gchar                *path_str,
-                                                                   GdkModifierType             state,
-                                                                   GimpLayerTreeView          *layer_view);
 static void       gimp_layer_tree_view_layer_clicked              (GimpCellRendererViewable   *cell,
                                                                    const gchar                *path,
                                                                    GdkModifierType             state,
@@ -207,7 +202,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->get_container   = gimp_image_get_layers;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
-  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_reorder_layer;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_layer;
   item_view_class->new_item        = gimp_layer_tree_view_item_new;
@@ -223,7 +217,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->lower_bottom_action = "layers-lower-to-bottom";
   item_view_class->duplicate_action    = "layers-duplicate";
   item_view_class->delete_action       = "layers-delete";
-  item_view_class->reorder_desc        = _("Reorder Layer");
 
   g_type_class_add_private (klass, sizeof (GimpLayerTreeViewPriv));
 }
@@ -367,9 +360,6 @@ gimp_layer_tree_view_constructor (GType                  type,
   gimp_container_tree_view_add_renderer_cell (tree_view,
                                               layer_view->priv->mask_cell);
 
-  g_signal_connect (tree_view->renderer_cell, "pre-clicked",
-                    G_CALLBACK (gimp_layer_tree_view_layer_pre_clicked),
-                    layer_view);
   g_signal_connect (tree_view->renderer_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_layer_clicked),
                     layer_view);
@@ -1305,69 +1295,6 @@ gimp_layer_tree_view_mask_callback (GimpLayerMask     *mask,
                                      gimp_layer_mask_get_layer (mask));
 
   gimp_layer_tree_view_update_borders (layer_view, iter);
-}
-
-static gboolean
-gimp_layer_tree_view_layer_pre_clicked (GimpCellRendererViewable   *cell,
-                                        const gchar                *path_str,
-                                        GdkModifierType             state,
-                                        GimpLayerTreeView          *layer_view)
-{
-  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (layer_view);
-  GtkTreePath           *path;
-  GtkTreeIter            iter;
-  gboolean               handled = FALSE;
-
-  path = gtk_tree_path_new_from_string (path_str);
-
-  if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
-      state & GDK_MOD1_MASK)
-    {
-      GimpItemTreeView *item_view      = GIMP_ITEM_TREE_VIEW (tree_view);
-      GimpImage        *image          = gimp_item_tree_view_get_image (item_view);
-      GimpViewRenderer *layer_renderer = NULL;
-      GimpDrawable     *layer          = NULL;
-      GimpChannelOps    op;
-
-      gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &layer_renderer,
-                          -1);
-
-      if (layer_renderer)
-        layer = GIMP_DRAWABLE (layer_renderer->viewable);
-
-      op = GIMP_CHANNEL_OP_REPLACE;
-
-      if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
-        {
-          op = GIMP_CHANNEL_OP_INTERSECT;
-        }
-      else if (state & GDK_SHIFT_MASK)
-        {
-          op = GIMP_CHANNEL_OP_ADD;
-        }
-      else if (state & GDK_CONTROL_MASK)
-        {
-          op = GIMP_CHANNEL_OP_SUBTRACT;
-        }
-
-      gimp_channel_select_alpha (gimp_image_get_mask (image),
-                                 layer,
-                                 op,
-                                 FALSE /*feather*/,
-                                 0.0, 0.0 /*feather_radius_x,y*/);
-      gimp_image_flush (image);
-
-      if (layer_renderer)
-        g_object_unref (layer_renderer);
-
-      /* Don't select the clicked layer */
-      handled = TRUE;
-    }
-
-  gtk_tree_path_free (path);
-
-  return handled;
 }
 
 static void

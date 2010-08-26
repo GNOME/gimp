@@ -306,8 +306,8 @@ register_brushes_procs (GimpPDB *pdb)
                                "gimp-brushes-get-brush");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-brush",
-                                     "This procedure is deprecated! Use 'gimp-context-get-brush' instead.",
-                                     "This procedure is deprecated! Use 'gimp-context-get-brush' instead.",
+                                     "Deprecated: Use 'gimp-context-get-brush' instead.",
+                                     "Deprecated: Use 'gimp-context-get-brush' instead.",
                                      "",
                                      "",
                                      "",
@@ -348,8 +348,8 @@ register_brushes_procs (GimpPDB *pdb)
                                "gimp-brushes-get-spacing");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-spacing",
-                                     "This procedure is deprecated! Use 'gimp-brush-get-spacing' instead.",
-                                     "This procedure is deprecated! Use 'gimp-brush-get-spacing' instead.",
+                                     "Deprecated: Use 'gimp-brush-get-spacing' instead.",
+                                     "Deprecated: Use 'gimp-brush-get-spacing' instead.",
                                      "",
                                      "",
                                      "",
@@ -371,8 +371,8 @@ register_brushes_procs (GimpPDB *pdb)
                                "gimp-brushes-set-spacing");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-set-spacing",
-                                     "This procedure is deprecated! Use 'gimp-brush-set-spacing' instead.",
-                                     "This procedure is deprecated! Use 'gimp-brush-set-spacing' instead.",
+                                     "Deprecated: Use 'gimp-brush-set-spacing' instead.",
+                                     "Deprecated: Use 'gimp-brush-set-spacing' instead.",
                                      "",
                                      "",
                                      "",
@@ -394,8 +394,8 @@ register_brushes_procs (GimpPDB *pdb)
                                "gimp-brushes-get-brush-data");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-brushes-get-brush-data",
-                                     "This procedure is deprecated! Use 'gimp-brush-get-pixels' instead.",
-                                     "This procedure is deprecated! Use 'gimp-brush-get-pixels' instead.",
+                                     "Deprecated: Use 'gimp-brush-get-pixels' instead.",
+                                     "Deprecated: Use 'gimp-brush-get-pixels' instead.",
                                      "",
                                      "",
                                      "",

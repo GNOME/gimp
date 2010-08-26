@@ -104,5 +104,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Font UI';
+$doc_title = 'gimpfontselect';
+$doc_short_desc = 'Functions providing a font selection dialog.';
+$doc_long_desc = 'Functions providing a font selection dialog.';
 
 1;

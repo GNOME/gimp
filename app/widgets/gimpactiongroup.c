@@ -808,6 +808,28 @@ gimp_action_group_set_action_tooltip (GimpActionGroup     *group,
   gtk_action_set_tooltip (action, tooltip);
 }
 
+const gchar *
+gimp_action_group_get_action_tooltip (GimpActionGroup     *group,
+                                      const gchar         *action_name)
+{
+  GtkAction *action;
+
+  g_return_val_if_fail (GIMP_IS_ACTION_GROUP (group), NULL);
+  g_return_val_if_fail (action_name != NULL, NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to get tooltip of action "
+                 "which doesn't exist: %s",
+                 G_STRFUNC, action_name);
+      return NULL;
+    }
+
+  return gtk_action_get_tooltip (action);
+}
+
 void
 gimp_action_group_set_action_color (GimpActionGroup *group,
                                     const gchar     *action_name,

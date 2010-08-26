@@ -48,6 +48,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
 #include "gimpchannel-project.h"
+#include "gimpchannel-select.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
 #include "gimpmarshal.h"
@@ -123,6 +124,12 @@ static gboolean   gimp_channel_stroke        (GimpItem          *item,
                                               gboolean           push_undo,
                                               GimpProgress      *progress,
                                               GError           **error);
+static void       gimp_channel_to_selection  (GimpItem          *item,
+                                              GimpChannelOps     op,
+                                              gboolean           antialias,
+                                              gboolean           feather,
+                                              gdouble            feather_radius_x,
+                                              gdouble            feather_radius_y);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -259,6 +266,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->rotate               = gimp_channel_rotate;
   item_class->transform            = gimp_channel_transform;
   item_class->stroke               = gimp_channel_stroke;
+  item_class->to_selection         = gimp_channel_to_selection;
   item_class->get_node             = gimp_channel_get_node;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = C_("undo-type", "Rename Channel");
@@ -269,6 +277,14 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->rotate_desc          = C_("undo-type", "Rotate Channel");
   item_class->transform_desc       = C_("undo-type", "Transform Channel");
   item_class->stroke_desc          = C_("undo-type", "Stroke Channel");
+  item_class->to_selection_desc    = C_("undo-type", "Channel to Selection");
+  item_class->reorder_desc         = C_("undo-type", "Reorder Channel");
+  item_class->raise_desc           = C_("undo-type", "Raise Channel");
+  item_class->raise_to_top_desc    = C_("undo-type", "Raise Channel to Top");
+  item_class->lower_desc           = C_("undo-type", "Lower Channel");
+  item_class->lower_to_bottom_desc = C_("undo-type", "Lower Channel to Bottom");
+  item_class->raise_failed         = _("Channel cannot be raised higher.");
+  item_class->lower_failed         = _("Channel cannot be lowered more.");
 
   drawable_class->invalidate_boundary   = gimp_channel_invalidate_boundary;
   drawable_class->get_active_components = gimp_channel_get_active_components;
@@ -751,6 +767,27 @@ gimp_channel_stroke (GimpItem           *item,
     }
 
   return retval;
+}
+
+static void
+gimp_channel_to_selection (GimpItem       *item,
+                           GimpChannelOps  op,
+                           gboolean        antialias,
+                           gboolean        feather,
+                           gdouble         feather_radius_x,
+                           gdouble         feather_radius_y)
+{
+  GimpChannel *channel = GIMP_CHANNEL (item);
+  GimpImage   *image   = gimp_item_get_image (item);
+  gint         off_x, off_y;
+
+  gimp_item_get_offset (item, &off_x, &off_y);
+
+  gimp_channel_select_channel (gimp_image_get_mask (image),
+                               GIMP_ITEM_GET_CLASS (item)->to_selection_desc,
+                               channel, off_x, off_y,
+                               op,
+                               feather, feather_radius_x, feather_radius_x);
 }
 
 static void

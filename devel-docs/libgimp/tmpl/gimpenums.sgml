@@ -7,7 +7,6 @@ Enums and definitions.
 <!-- ##### SECTION Long_Description ##### -->
 <para>
 Enums and definitions.
-
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -18,11 +17,15 @@ Enums and definitions.
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### FUNCTION gimp_enums_init ##### -->
 <para>
 
 </para>
 
+@void: 
 
 
 <!-- ##### ENUM GimpBrushApplicationMode ##### -->
@@ -35,12 +38,12 @@ Enums and definitions.
 
 <!-- ##### ENUM GimpBrushGeneratedShape ##### -->
 <para>
-
+The possible shapes generated brushes can take.
 </para>
 
-@GIMP_BRUSH_GENERATED_CIRCLE: 
-@GIMP_BRUSH_GENERATED_SQUARE: 
-@GIMP_BRUSH_GENERATED_DIAMOND: 
+@GIMP_BRUSH_GENERATED_CIRCLE:  The brush has a circle shape.
+@GIMP_BRUSH_GENERATED_SQUARE:  The brush has a square shape.
+@GIMP_BRUSH_GENERATED_DIAMOND: The brush has a diamond shape.
 
 <!-- ##### ENUM GimpConvertDitherType ##### -->
 <para>
@@ -74,11 +77,11 @@ Enums and definitions.
 
 <!-- ##### ENUM GimpConvolveType ##### -->
 <para>
-
+Operation modes of the convolve tool.
 </para>
 
-@GIMP_BLUR_CONVOLVE: 
-@GIMP_SHARPEN_CONVOLVE: 
+@GIMP_BLUR_CONVOLVE:    Blur the drawable.
+@GIMP_SHARPEN_CONVOLVE: Sharpen the drawable.
 
 <!-- ##### ENUM GimpFillType ##### -->
 <para>
@@ -192,21 +195,21 @@ Enums and definitions.
 
 <!-- ##### ENUM GimpOrientationType ##### -->
 <para>
-
+Orientation values for all kinds of purposes, like guides.
 </para>
 
-@GIMP_ORIENTATION_HORIZONTAL: 
-@GIMP_ORIENTATION_VERTICAL: 
-@GIMP_ORIENTATION_UNKNOWN: 
+@GIMP_ORIENTATION_HORIZONTAL: Horizontal ortientation.
+@GIMP_ORIENTATION_VERTICAL:   Vertical orientation.
+@GIMP_ORIENTATION_UNKNOWN:    Undetermined orientation.
 
 <!-- ##### ENUM GimpRotationType ##### -->
 <para>
-
+Steps for simple rotation based on multpiles of 90 degrees.
 </para>
 
-@GIMP_ROTATE_90: 
-@GIMP_ROTATE_180: 
-@GIMP_ROTATE_270: 
+@GIMP_ROTATE_90:  Rotate by 90 degrees.
+@GIMP_ROTATE_180: Rotate by 180 degrees.
+@GIMP_ROTATE_270: Rotate by 270 degrees.
 
 <!-- ##### ENUM GimpSelectCriterion ##### -->
 <para>

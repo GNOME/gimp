@@ -32,6 +32,15 @@
 #include "gimpgradientmenu.h"
 
 
+/**
+ * SECTION: gimpgradientmenu
+ * @title: gimpgradientmenu
+ * @short_description: A widget for selecting gradients.
+ *
+ * A widget for selecting gradients.
+ **/
+
+
 typedef struct
 {
   GimpRunGradientCallback callback;
@@ -104,7 +113,7 @@ gimp_gradient_select_widget_close (GtkWidget *widget)
 }
 
 /**
- * gimp_gradient_select_widget_set;
+ * gimp_gradient_select_widget_set:
  * @widget:        A gradient select widget.
  * @gradient_name: Gradient name to set.
  *

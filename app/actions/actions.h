@@ -50,6 +50,7 @@ void               action_select_property  (GimpActionSelectType  select_type,
                                             gdouble               small_inc,
                                             gdouble               inc,
                                             gdouble               skip_inc,
+                                            gdouble               delta_factor,
                                             gboolean              wrap);
 GimpObject       * action_select_object    (GimpActionSelectType  select_type,
                                             GimpContainer        *container,

@@ -368,5 +368,9 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Units';
+$doc_title = 'gimpunit';
+$doc_short_desc = 'Provides a collection of predefined units and functions for creating user-defined units.';
+$doc_long_desc = 'Provides a collection of predefined units and functions for creating user-defined units.';
+$doc_see_also = '#GimpUnitMenu, #GimpSizeEntry';
 
 1;

@@ -116,5 +116,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradient UI';
+$doc_title = 'gimpgradientselect';
+$doc_short_desc = 'Functions providing a gradient selection dialog.';
+$doc_long_desc = 'Functions providing a gradient selection dialog.';
 
 1;

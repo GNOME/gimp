@@ -27,6 +27,16 @@
 #undef __GIMP_TEXT_LAYER_PDB_H__
 #include "gimptextlayer_pdb.h"
 
+
+/**
+ * SECTION: gimptextlayer
+ * @title: gimptextlayer
+ * @short_description: Functions for querying and manipulating text layers.
+ *
+ * Functions for querying and manipulating text layers.
+ **/
+
+
 /**
  * gimp_text_layer_new:
  * @image_ID: The image.
@@ -1048,8 +1058,7 @@ gimp_text_layer_resize (gint32  layer_ID,
  * @layer_ID: The text layer.
  * @autohint: A flag which is true if the text layer is forced to use the autohinter from FreeType.
  *
- * This procedure is deprecated! Use gimp_text_layer_get_hint_style()
- * instead.
+ * Deprecated: Use gimp_text_layer_get_hint_style() instead.
  *
  * Returns: A flag which is true if hinting is used on the font.
  */
@@ -1083,8 +1092,7 @@ gimp_text_layer_get_hinting (gint32    layer_ID,
  * @hinting: Enable/disable the use of hinting on the text.
  * @autohint: Force the use of the autohinter provided through FreeType.
  *
- * This procedure is deprecated! Use gimp_text_layer_set_hint_style()
- * instead.
+ * Deprecated: Use gimp_text_layer_set_hint_style() instead.
  *
  * Returns: TRUE on success.
  *

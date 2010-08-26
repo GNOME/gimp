@@ -61,10 +61,6 @@ static void      gimp_vectors_tree_view_drop_svg      (GimpContainerTreeView    
                                                        GimpViewable             *dest_viewable,
                                                        GtkTreeViewDropPosition   drop_pos);
 static GimpItem * gimp_vectors_tree_view_item_new     (GimpImage                *image);
-static void   gimp_vectors_tree_view_vectors_clicked  (GimpCellRendererViewable *cell,
-                                                       const gchar              *path_str,
-                                                       GdkModifierType           state,
-                                                       GimpContainerTreeView    *tree_view);
 static guchar  * gimp_vectors_tree_view_drag_svg      (GtkWidget                *widget,
                                                        gsize                    *svg_data_len,
                                                        gpointer                  data);
@@ -97,7 +93,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->get_container   = gimp_image_get_vectors;
   iv_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
   iv_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
-  iv_class->reorder_item    = (GimpReorderItemFunc) gimp_image_reorder_vectors;
   iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
   iv_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
   iv_class->new_item        = gimp_vectors_tree_view_item_new;
@@ -113,7 +108,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->lower_bottom_action   = "vectors-lower-to-bottom";
   iv_class->duplicate_action      = "vectors-duplicate";
   iv_class->delete_action         = "vectors-delete";
-  iv_class->reorder_desc          = _("Reorder path");
   iv_class->lock_content_stock_id = GIMP_STOCK_TOOL_PATH;
   iv_class->lock_content_tooltip  = _("Lock path strokes");
 }
@@ -146,10 +140,6 @@ gimp_vectors_tree_view_constructor (GType                  type,
   editor    = GIMP_EDITOR (object);
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   view      = GIMP_VECTORS_TREE_VIEW (object);
-
-  g_signal_connect (tree_view->renderer_cell, "clicked",
-                    G_CALLBACK (gimp_vectors_tree_view_vectors_clicked),
-                    view);
 
   /*  hide basically useless edit button  */
   gtk_widget_hide (gimp_item_tree_view_get_edit_button (GIMP_ITEM_TREE_VIEW (view)));
@@ -265,37 +255,6 @@ gimp_vectors_tree_view_item_new (GimpImage *image)
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
 
   return GIMP_ITEM (new_vectors);
-}
-
-static void
-gimp_vectors_tree_view_vectors_clicked (GimpCellRendererViewable *cell,
-                                        const gchar              *path_str,
-                                        GdkModifierType           state,
-                                        GimpContainerTreeView    *tree_view)
-{
-  if (state & GDK_MOD1_MASK)
-    {
-      GimpUIManager   *ui_manager = GIMP_EDITOR (tree_view)->ui_manager;
-      GimpActionGroup *group;
-      const gchar     *action = "vectors-selection-replace";
-
-      group = gimp_ui_manager_get_action_group (ui_manager, "vectors");
-
-      if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
-        {
-          action = "vectors-selection-intersect";
-        }
-      else if (state & GDK_SHIFT_MASK)
-        {
-          action = "vectors-selection-add";
-        }
-      else if (state & GDK_CONTROL_MASK)
-        {
-          action = "vectors-selection-subtract";
-        }
-
-      gimp_action_group_activate_action (group, action);
-    }
 }
 
 static guchar *

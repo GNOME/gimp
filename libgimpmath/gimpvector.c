@@ -33,6 +33,16 @@
 #include "gimpmath.h"
 
 
+/**
+ * SECTION: gimpvector
+ * @title: GimpVector
+ * @short_description: Utilities to set up and manipulate vectors.
+ * @see_also: #GimpMatrix2, #GimpMatrix3, #GimpMatrix4
+ *
+ * Utilities to set up and manipulate vectors.
+ **/
+
+
 /*************************/
 /* Some useful constants */
 /*************************/

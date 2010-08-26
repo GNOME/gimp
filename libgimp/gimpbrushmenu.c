@@ -32,6 +32,15 @@
 #include "gimpbrushmenu.h"
 
 
+/**
+ * SECTION: gimpbrushmenu
+ * @title: gimpbrushmenu
+ * @short_description: A widget for selecting brushes.
+ *
+ * A widget for selecting brushes.
+ **/
+
+
 typedef struct
 {
   GimpRunBrushCallback callback;
@@ -113,7 +122,7 @@ gimp_brush_select_widget_close (GtkWidget *widget)
 }
 
 /**
- * gimp_brush_select_widget_set;
+ * gimp_brush_select_widget_set:
  * @widget:     A brush select widget.
  * @brush_name: Brush name to set; %NULL means no change.
  * @opacity:    Opacity to set. -1.0 means no change.

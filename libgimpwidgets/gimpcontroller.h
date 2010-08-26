@@ -31,11 +31,19 @@ G_BEGIN_DECLS
 /* For information look at the html documentation */
 
 
+/**
+ * GimpControllerEventType:
+ * @GIMP_CONTROLLER_EVENT_TRIGGER: the event is a simple trigger
+ * @GIMP_CONTROLLER_EVENT_VALUE:   the event carries a double value
+ *
+ * Event types for #GimpController.
+ **/
 typedef enum
 {
   GIMP_CONTROLLER_EVENT_TRIGGER,
   GIMP_CONTROLLER_EVENT_VALUE
 } GimpControllerEventType;
+
 
 typedef struct _GimpControllerEventAny     GimpControllerEventAny;
 typedef struct _GimpControllerEventTrigger GimpControllerEventTrigger;

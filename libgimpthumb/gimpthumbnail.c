@@ -51,6 +51,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpthumbnail
+ * @title: GimpThumbnail
+ * @short_description: The GimpThumbnail object
+ *
+ * The GimpThumbnail object
+ **/
+
+
 /*  #define GIMP_THUMB_DEBUG  */
 
 
@@ -159,6 +168,8 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
                                                        GIMP_PARAM_READWRITE));
   /**
    * GimpThumbnail::image-mimetype:
+   *
+   * Image mimetype
    *
    * Since: GIMP 2.2
    **/

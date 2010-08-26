@@ -121,6 +121,12 @@ struct _GimpItemClass
                                           gboolean                push_undo,
                                           GimpProgress           *progress,
                                           GError                **error);
+  void            (* to_selection)       (GimpItem               *item,
+                                          GimpChannelOps          op,
+                                          gboolean                antialias,
+                                          gboolean                feather,
+                                          gdouble                 feather_radius_x,
+                                          gdouble                 feather_radius_y);
   GeglNode      * (* get_node)           (GimpItem               *item);
 
 
@@ -132,7 +138,17 @@ struct _GimpItemClass
   const gchar *flip_desc;
   const gchar *rotate_desc;
   const gchar *transform_desc;
+  const gchar *to_selection_desc;
   const gchar *stroke_desc;
+
+  const gchar *reorder_desc;
+  const gchar *raise_desc;
+  const gchar *raise_to_top_desc;
+  const gchar *lower_desc;
+  const gchar *lower_to_bottom_desc;
+
+  const gchar *raise_failed;
+  const gchar *lower_failed;
 };
 
 
@@ -245,6 +261,13 @@ gboolean        gimp_item_stroke             (GimpItem           *item,
                                               gboolean            push_undo,
                                               GimpProgress       *progress,
                                               GError            **error);
+
+void            gimp_item_to_selection       (GimpItem           *item,
+                                              GimpChannelOps      op,
+                                              gboolean            antialias,
+                                              gboolean            feather,
+                                              gdouble             feather_radius_x,
+                                              gdouble             feather_radius_y);
 
 GeglNode      * gimp_item_get_node           (GimpItem           *item);
 GeglNode      * gimp_item_peek_node          (GimpItem           *item);

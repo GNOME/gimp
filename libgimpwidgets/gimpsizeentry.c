@@ -36,6 +36,35 @@
 #include "gimpsizeentry.h"
 
 
+/**
+ * SECTION: gimpsizeentry
+ * @title: GimpSizeEntry
+ * @short_description: Widget for entering pixel values and resolutions.
+ * @see_also: #GimpUnit, #GimpUnitMenu, gimp_coordinates_new()
+ *
+ * This widget is used to enter pixel distances/sizes and resolutions.
+ *
+ * You can specify the number of fields the widget should provide. For
+ * each field automatic mappings are performed between the field's
+ * "reference value" and its "value".
+ *
+ * There is a #GimpUnitMenu right of the entry fields which lets you
+ * specify the #GimpUnit of the displayed values.
+ *
+ * For each field, there can be one or two #GtkSpinButton's to enter
+ * "value" and "reference value". If you specify @show_refval as
+ * #FALSE in gimp_size_entry_new() there will be only one
+ * #GtkSpinButton and the #GimpUnitMenu will contain an item for
+ * selecting GIMP_UNIT_PIXEL.
+ *
+ * The "reference value" is either of GIMP_UNIT_PIXEL or dpi,
+ * depending on which #GimpSizeEntryUpdatePolicy you specify in
+ * gimp_size_entry_new().  The "value" is either the size in pixels
+ * mapped to the size in a real-world-unit (see #GimpUnit) or the dpi
+ * value mapped to pixels per real-world-unit.
+ **/
+
+
 #define SIZE_MAX_VALUE 500000.0
 
 #define GIMP_SIZE_ENTRY_DIGITS(unit) (MIN (gimp_unit_get_digits (unit), 5) + 1)
@@ -684,7 +713,7 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
 }
 
 /**
- * gimp_size_entry_get_value;
+ * gimp_size_entry_get_value:
  * @gse:   The sizeentry you want to know a value of.
  * @field: The index of the field you want to know the value of.
  *
@@ -767,7 +796,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
 }
 
 /**
- * gimp_size_entry_set_value;
+ * gimp_size_entry_set_value:
  * @gse:   The sizeentry you want to set a value for.
  * @field: The index of the field you want to set a value for.
  * @value: The new value for @field.
@@ -947,7 +976,7 @@ gimp_size_entry_set_refval_digits (GimpSizeEntry *gse,
 }
 
 /**
- * gimp_size_entry_get_refval;
+ * gimp_size_entry_get_refval:
  * @gse:   The sizeentry you want to know a reference value of.
  * @field: The index of the field you want to know the reference value of.
  *
@@ -1025,7 +1054,7 @@ gimp_size_entry_update_refval (GimpSizeEntryField *gsef,
 }
 
 /**
- * gimp_size_entry_set_refval;
+ * gimp_size_entry_set_refval:
  * @gse:    The sizeentry you want to set a reference value for.
  * @field:  The index of the field you want to set the reference value for.
  * @refval: The new reference value for @field.
@@ -1173,8 +1202,8 @@ gimp_size_entry_unit_callback (GtkWidget     *widget,
 
 /**
  * gimp_size_entry_attach_eevl:
- * @spin_button:
- * @gsef:
+ * @spin_button: one of the size_entry's spinbuttons.
+ * @gsef:        a size entry field.
  *
  * Hooks in the GimpEevl unit expression parser into the
  * #GtkSpinButton of the #GimpSizeEntryField.
@@ -1183,10 +1212,9 @@ static void
 gimp_size_entry_attach_eevl (GtkSpinButton      *spin_button,
                              GimpSizeEntryField *gsef)
 {
-  gtk_spin_button_set_numeric (spin_button,
-                               FALSE);
-  gtk_spin_button_set_update_policy (spin_button,
-                                     GTK_UPDATE_IF_VALID);
+  gtk_spin_button_set_numeric (spin_button, FALSE);
+  gtk_spin_button_set_update_policy (spin_button, GTK_UPDATE_IF_VALID);
+
   g_signal_connect (spin_button, "input",
                     G_CALLBACK (gimp_size_entry_eevl_input_callback),
                     gsef);
@@ -1404,7 +1432,7 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
 
 /**
  * gimp_size_entry_set_activates_default:
- * @gse: A #GimpSizeEntr
+ * @gse:     A #GimpSizeEntry
  * @setting: %TRUE to activate window's default widget on Enter keypress
  *
  * Iterates over all entries in the #GimpSizeEntry and calls

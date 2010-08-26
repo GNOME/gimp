@@ -186,6 +186,11 @@ static void   gimp_item_tree_view_lock_content_toggled
 static void   gimp_item_tree_view_update_options    (GimpItemTreeView  *view,
                                                      GimpItem          *item);
 
+static gboolean gimp_item_tree_view_item_pre_clicked(GimpCellRendererViewable *cell,
+                                                     const gchar              *path_str,
+                                                     GdkModifierType           state,
+                                                     GimpItemTreeView         *item_view);
+
 /*  utility function to avoid code duplication  */
 static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *toggle,
                                                      gchar             *path_str,
@@ -250,7 +255,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->get_container           = NULL;
   klass->get_active_item         = NULL;
   klass->set_active_item         = NULL;
-  klass->reorder_item            = NULL;
   klass->add_item                = NULL;
   klass->remove_item             = NULL;
   klass->new_item                = NULL;
@@ -265,8 +269,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->lower_bottom_action     = NULL;
   klass->duplicate_action        = NULL;
   klass->delete_action           = NULL;
-
-  klass->reorder_desc            = NULL;
 
   klass->lock_content_stock_id   = NULL;
   klass->lock_content_tooltip    = NULL;
@@ -348,6 +350,10 @@ gimp_item_tree_view_constructor (GType                  type,
   g_signal_connect (tree_view->view, "row-expanded",
                     G_CALLBACK (gimp_item_tree_view_row_expanded),
                     tree_view);
+
+  g_signal_connect (tree_view->renderer_cell, "pre-clicked",
+                    G_CALLBACK (gimp_item_tree_view_item_pre_clicked),
+                    item_view);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
@@ -1106,12 +1112,11 @@ gimp_item_tree_view_drop_viewable (GimpContainerTreeView   *tree_view,
             dest_index--;
         }
 
-      item_view_class->reorder_item (item_view->priv->image,
-                                     GIMP_ITEM (src_viewable),
-                                     dest_parent,
-                                     dest_index,
-                                     TRUE,
-                                     item_view_class->reorder_desc);
+      gimp_image_reorder_item (item_view->priv->image,
+                               GIMP_ITEM (src_viewable),
+                               dest_parent,
+                               dest_index,
+                               TRUE, NULL);
     }
 
   gimp_image_flush (item_view->priv->image);
@@ -1356,6 +1361,65 @@ gimp_item_tree_view_lock_content_toggled (GtkWidget         *widget,
           gimp_image_flush (image);
         }
     }
+}
+
+static gboolean
+gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
+                                      const gchar              *path_str,
+                                      GdkModifierType           state,
+                                      GimpItemTreeView         *item_view)
+{
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+  gboolean               handled = FALSE;
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path) &&
+      state & GDK_MOD1_MASK)
+    {
+      GimpImage        *image    = gimp_item_tree_view_get_image (item_view);
+      GimpViewRenderer *renderer = NULL;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      if (renderer)
+        {
+          GimpItem       *item;
+          GimpChannelOps  op = GIMP_CHANNEL_OP_REPLACE;
+
+          item = GIMP_ITEM (renderer->viewable);
+
+          if ((state & GDK_SHIFT_MASK) && (state & GDK_CONTROL_MASK))
+            {
+              op = GIMP_CHANNEL_OP_INTERSECT;
+            }
+          else if (state & GDK_SHIFT_MASK)
+            {
+              op = GIMP_CHANNEL_OP_ADD;
+            }
+          else if (state & GDK_CONTROL_MASK)
+            {
+              op = GIMP_CHANNEL_OP_SUBTRACT;
+            }
+
+          gimp_item_to_selection (item, op,
+                                  TRUE, FALSE, 0.0, 0.0);
+          gimp_image_flush (image);
+
+          g_object_unref (renderer);
+
+          /* Don't select the clicked layer */
+          handled = TRUE;
+        }
+    }
+
+  gtk_tree_path_free (path);
+
+  return handled;
 }
 
 static void

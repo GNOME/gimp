@@ -702,7 +702,7 @@ compose (const gchar  *compose_type,
   /* Check image sizes */
   if (compose_by_drawable)
     {
-      if (! gimp_drawable_is_valid (inputs[first_ID].comp.ID))
+      if (! gimp_item_is_valid (inputs[first_ID].comp.ID))
         {
           g_message (_("Specified layer %d not found"),
                      inputs[first_ID].comp.ID);
@@ -716,7 +716,7 @@ compose (const gchar  *compose_type,
         {
           if (inputs[j].is_ID)
             {
-              if (! gimp_drawable_is_valid (inputs[j].comp.ID))
+              if (! gimp_item_is_valid (inputs[j].comp.ID))
                 {
                   g_message (_("Specified layer %d not found"),
                              inputs[j].comp.ID);
@@ -818,7 +818,7 @@ compose (const gchar  *compose_type,
     {
       layer_ID_dst = composevals.source_layer_ID;
 
-      if (! gimp_drawable_is_valid (layer_ID_dst))
+      if (! gimp_item_is_valid (layer_ID_dst))
         {
           g_message (_("Unable to recompose, source layer not found"));
           return -1;
@@ -831,7 +831,7 @@ compose (const gchar  *compose_type,
       gimp_pixel_rgn_init (&pixel_rgn_dst_read, drawable_dst,
                            0, 0, drawable_dst->width, drawable_dst->height,
                            FALSE, FALSE);
-      image_ID_dst = gimp_drawable_get_image (layer_ID_dst);
+      image_ID_dst = gimp_item_get_image (layer_ID_dst);
     }
   else
     {
@@ -1152,39 +1152,33 @@ compose_cmyk (guchar **src,
   register const guchar *black_src   = src[3];
   register       guchar *rgb_dst     = dst;
   register       gint    count       = numpix;
-  gint cyan, magenta, yellow, black;
-  gint cyan_incr    = incr_src[0];
-  gint magenta_incr = incr_src[1];
-  gint yellow_incr  = incr_src[2];
-  gint black_incr   = incr_src[3];
+  gint    cyan_incr    = incr_src[0];
+  gint    magenta_incr = incr_src[1];
+  gint    yellow_incr  = incr_src[2];
+  gint    black_incr   = incr_src[3];
+  GimpRGB grgb;
+
+  gimp_rgb_set(&grgb, 0, 0, 0);
 
   while (count-- > 0)
     {
-      black = (gint)*black_src;
-      if (black)
-        {
-          cyan    = (gint) *cyan_src;
-          magenta = (gint) *magenta_src;
-          yellow  = (gint) *yellow_src;
+      GimpCMYK gcmyk;
+      guchar   r, g, b;
 
-          cyan    += black; if (cyan > 255) cyan = 255;
-          magenta += black; if (magenta > 255) magenta = 255;
-          yellow  += black; if (yellow > 255) yellow = 255;
+      gimp_cmyk_set_uchar (&gcmyk,
+                           *cyan_src, *magenta_src, *yellow_src,
+                           *black_src);
+      gimp_cmyk_to_rgb (&gcmyk, &grgb);
+      gimp_rgb_get_uchar (&grgb, &r, &g, &b);
 
-          *(rgb_dst++) = 255 - cyan;
-          *(rgb_dst++) = 255 - magenta;
-          *(rgb_dst++) = 255 - yellow;
-        }
-      else
-        {
-          *(rgb_dst++) = 255 - *cyan_src;
-          *(rgb_dst++) = 255 - *magenta_src;
-          *(rgb_dst++) = 255 - *yellow_src;
-        }
-      cyan_src += cyan_incr;
+      *rgb_dst++ = r;
+      *rgb_dst++ = g;
+      *rgb_dst++ = b;
+
+      cyan_src    += cyan_incr;
       magenta_src += magenta_incr;
-      yellow_src += yellow_incr;
-      black_src += black_incr;
+      yellow_src  += yellow_incr;
+      black_src   += black_incr;
 
       if (dst_has_alpha)
         rgb_dst++;
@@ -1481,7 +1475,7 @@ compose_dialog (const gchar *compose_type,
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  layer_list = gimp_image_get_layers (gimp_drawable_get_image (drawable_ID),
+  layer_list = gimp_image_get_layers (gimp_item_get_image (drawable_ID),
                                       &nlayers);
 
   dialog = gimp_dialog_new (_("Compose"), PLUG_IN_BINARY,

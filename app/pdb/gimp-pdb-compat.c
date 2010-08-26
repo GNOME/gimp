@@ -108,7 +108,10 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
                                    G_PARAM_READWRITE);
       break;
 
-    case GIMP_PDB_REGION:
+    case GIMP_PDB_ITEM:
+      pspec = gimp_param_spec_item_id (name, name, desc,
+                                       gimp, TRUE,
+                                       G_PARAM_READWRITE);
       break;
 
     case GIMP_PDB_DISPLAY:
@@ -220,8 +223,8 @@ gimp_pdb_compat_arg_type_to_gtype (GimpPDBArgType  type)
     case GIMP_PDB_COLOR:
       return GIMP_TYPE_RGB;
 
-    case GIMP_PDB_REGION:
-      break;
+    case GIMP_PDB_ITEM:
+      return GIMP_TYPE_ITEM_ID;
 
     case GIMP_PDB_DISPLAY:
       return GIMP_TYPE_DISPLAY_ID;

@@ -35,6 +35,30 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpfileentry
+ * @title: GimpFileEntry
+ * @short_description: Widget for entering a filename.
+ * @see_also: #GimpPathEditor
+ *
+ * This widget is used to enter filenames or directories.
+ *
+ * There is a #GtkEntry for entering the filename manually and a "..."
+ * button which will pop up a #GtkFileChooserDialog.
+ *
+ * You can restrict the #GimpFileEntry to directories. In this
+ * case the filename listbox of the #GtkFileChooser dialog will be
+ * set to directory mode.
+ *
+ * If you specify @check_valid as #TRUE in gimp_file_entry_new() the
+ * entered filename will be checked for validity and a pixmap will be
+ * shown which indicates if the file exists or not.
+ *
+ * Whenever the user changes the filename, the "filename_changed"
+ * signal will be emitted.
+ **/
+
+
 enum
 {
   FILENAME_CHANGED,
@@ -144,7 +168,7 @@ gimp_file_entry_destroy (GtkObject *object)
 
 /**
  * gimp_file_entry_new:
- * @title:       The title of the #GtkFileEntry dialog.
+ * @title:       The title of the #GimpFileEntry dialog.
  * @filename:    The initial filename.
  * @dir_only:    %TRUE if the file entry should accept directories only.
  * @check_valid: %TRUE if the widget should check if the entered file

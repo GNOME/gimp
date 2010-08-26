@@ -15,13 +15,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 sub vectors_is_valid {
-    $blurb = 'Returns TRUE if the vectors object is valid.';
-
-    $help = <<'HELP';
-This procedure checks if the given vectors ID is valid and refers to an
-existing vectors object.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-is-valid');
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
@@ -157,9 +151,7 @@ CODE
 }
 
 sub vectors_get_image {
-    $blurb = 'Returns the vectors objects image.';
-    $help  = 'Returns the vectors objects image.';
-
+    &std_pdb_deprecated ('gimp-item-get-image');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -182,9 +174,7 @@ CODE
 }
 
 sub vectors_get_name {
-    $blurb = 'Gets the name of the vectors object.';
-    $help  = 'Gets the name of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-name');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -207,9 +197,7 @@ CODE
 }
 
 sub vectors_set_name {
-    $blurb = 'Sets the name of the vectors object.';
-    $help  = 'Sets the name of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-name');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -229,9 +217,7 @@ CODE
 }
 
 sub vectors_get_visible {
-    $blurb = 'Gets the visibility of the vectors object.';
-    $help  = 'Gets the visibility of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-visible');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -254,9 +240,7 @@ CODE
 }
 
 sub vectors_set_visible {
-    $blurb = 'Sets the visibility of the vectors object.';
-    $help  = 'Sets the visibility of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-visible');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -276,9 +260,7 @@ CODE
 }
 
 sub vectors_get_linked {
-    $blurb = 'Gets the linked state of the vectors object.';
-    $help  = 'Gets the linked state of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-linked');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -301,9 +283,7 @@ CODE
 }
 
 sub vectors_set_linked {
-    $blurb = 'Sets the linked state of the vectors object.';
-    $help  = 'Sets the linked state of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-linked');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -322,60 +302,8 @@ CODE
     );
 }
 
-sub vectors_get_lock_content {
-    $blurb = "Gets the 'lock content' state of the vectors object.";
-    $help  = "Gets the 'lock content' state of the vectors object.";
-
-    &mitch_pdb_misc('2009', '2.8');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-        { name => 'lock_content', type => 'boolean',
-          desc => "Whether the path's strokes are locked" }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  lock_content = gimp_item_get_lock_content (GIMP_ITEM (vectors));
-}
-CODE
-    );
-}
-
-sub vectors_set_lock_content {
-    $blurb = "Sets the 'lock content' state of the vectors object.";
-    $help  = "Sets the 'lock content' state of the vectors object.";
-
-    &mitch_pdb_misc('2009', '2.8');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
-	{ name => 'lock_content', type => 'boolean',
-	  desc => "Whether the path's strokes are locked" }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  if (gimp_item_can_lock_content (GIMP_ITEM (vectors)))
-    gimp_item_set_lock_content (GIMP_ITEM (vectors), lock_content, TRUE);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub vectors_get_tattoo {
-    $blurb = 'Get the tattoo of the vectors object.';
-    $help  = 'Get the tattoo state of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-get-tattoo');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -398,9 +326,7 @@ CODE
 }
 
 sub vectors_set_tattoo {
-    $blurb = 'Set the tattoo of the vectors object.';
-    $help  = 'Set the tattoo of the vectors object.';
-
+    &std_pdb_deprecated ('gimp-item-set-tattoo');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -1356,18 +1282,13 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (vectors));
-
-  if (image)
-    gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                 _("Path to Selection"),
-                                 vectors,
-                                 operation,
-                                 antialias,
-                                 feather,
-                                 feather_radius_x,
-                                 feather_radius_y,
-                                 TRUE);
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, FALSE, error))
+    gimp_item_to_selection (GIMP_ITEM (vectors),
+                            operation,
+                            antialias,
+                            feather,
+                            feather_radius_x,
+                            feather_radius_y);
   else
     success = FALSE;
 }
@@ -1540,7 +1461,7 @@ sub vectors_export_to_string {
 
     $help = <<'HELP';
 This procedure works like gimp_vectors_export_to_file() but creates a string
-rather than a file. The contents are a %NUL-terminated string that holds a 
+rather than a file. The contents are a NUL-terminated string that holds a 
 complete XML document.  If you pass 0 as the 'vectors' argument, then all
 paths in the image will be exported.
 HELP
@@ -1576,7 +1497,6 @@ CODE
               "core/gimplist.h"
               "core/gimpimage.h"
               "core/gimpimage-undo-push.h"
-              "core/gimpchannel-select.h"
 	      "text/gimptext-vectors.h"
 	      "text/gimptextlayer.h"
               "vectors/gimpanchor.h"
@@ -1594,7 +1514,6 @@ CODE
             vectors_get_name vectors_set_name
             vectors_get_visible vectors_set_visible
             vectors_get_linked vectors_set_linked
-            vectors_get_lock_content vectors_set_lock_content
             vectors_get_tattoo vectors_set_tattoo
             vectors_get_strokes 
             vectors_stroke_get_length
@@ -1623,5 +1542,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Vectors';
+$doc_title = 'gimpvectors';
+$doc_short_desc = 'Functions for querying and manipulating vectors.';
+$doc_long_desc = 'Functions for querying and manipulating vectors.';
 
 1;

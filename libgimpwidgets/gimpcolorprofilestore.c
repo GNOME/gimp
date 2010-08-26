@@ -36,6 +36,15 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpcolorprofilestore
+ * @title: GimpColorProfileStore
+ * @short_description: A #GtkListStore subclass that keep color profiles.
+ *
+ * A #GtkListStore subclass that keep color profiles.
+ **/
+
+
 #define HISTORY_SIZE  8
 
 enum

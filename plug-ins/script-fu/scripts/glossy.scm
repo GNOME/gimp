@@ -53,7 +53,7 @@
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (script-fu-util-image-add-layers img grow-me bg-layer)
-    (gimp-drawable-set-name grow-me "Grow-me")
+    (gimp-item-set-name grow-me "Grow-me")
     (gimp-layer-translate grow-me posx posy)
 
     (gimp-context-set-background bg-color)

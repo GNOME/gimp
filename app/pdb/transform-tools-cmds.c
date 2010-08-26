@@ -62,7 +62,7 @@ flip_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -117,7 +117,7 @@ perspective_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -187,7 +187,7 @@ rotate_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -262,7 +262,7 @@ scale_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error) &&
+      success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error) &&
                  x0 < x1 && y0 < y1);
 
       if (success &&
@@ -334,7 +334,7 @@ shear_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -415,7 +415,7 @@ transform_2d_invoker (GimpProcedure      *procedure,
     {
       gint x, y, width, height;
 
-      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), TRUE, error);
+      success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
@@ -469,8 +469,8 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-flip");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-flip",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-flip-simple' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-flip-simple' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-flip-simple' instead.",
                                      "",
                                      "",
                                      "",
@@ -507,8 +507,8 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-perspective");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-perspective",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-perspective-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-perspective-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-perspective-default' instead.",
                                      "",
                                      "",
                                      "",
@@ -590,8 +590,8 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-rotate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rotate",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-rotate-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-rotate-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-rotate-default' instead.",
                                      "",
                                      "",
                                      "",
@@ -631,8 +631,8 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-scale",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-scale-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-scale-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-scale-default' instead.",
                                      "",
                                      "",
                                      "",
@@ -690,8 +690,8 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-shear");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-shear",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-shear-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-shear-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-shear-default' instead.",
                                      "",
                                      "",
                                      "",
@@ -740,8 +740,8 @@ register_transform_tools_procs (GimpPDB *pdb)
                                "gimp-transform-2d");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-transform-2d",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",
-                                     "This procedure is deprecated! Use 'gimp-drawable-transform-2d-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-2d-default' instead.",
+                                     "Deprecated: Use 'gimp-drawable-transform-2d-default' instead.",
                                      "",
                                      "",
                                      "",

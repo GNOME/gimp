@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpgrid
+ * @title: gimpgrid
+ * @short_description: Functions manuipulating an image's grid.
+ *
+ * Functions manuipulating an image's grid.
+ **/
+
+
 /**
  * gimp_image_grid_get_spacing:
  * @image_ID: The image.

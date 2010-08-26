@@ -172,7 +172,7 @@ static const GOptionEntry main_entries[] =
   {
     "no-splash", 's', 0,
     G_OPTION_ARG_NONE, &no_splash,
-    N_("Do not show a startup window"), NULL
+    N_("Do not show a splash screen"), NULL
   },
   {
     "no-shm", 0, G_OPTION_FLAG_REVERSE,

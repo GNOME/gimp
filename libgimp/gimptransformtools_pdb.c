@@ -27,13 +27,22 @@
 #undef __GIMP_TRANSFORM_TOOLS_PDB_H__
 #include "gimptransformtools_pdb.h"
 
+
+/**
+ * SECTION: gimptransformtools
+ * @title: gimptransformtools
+ * @short_description: Access to toolbox transform tools.
+ *
+ * Functions giving access to toolbox transform tools.
+ **/
+
+
 /**
  * gimp_flip:
  * @drawable_ID: The affected drawable.
  * @flip_type: Type of flip.
  *
- * This procedure is deprecated! Use
- * gimp_drawable_transform_flip_simple() instead.
+ * Deprecated: Use gimp_drawable_transform_flip_simple() instead.
  *
  * Returns: The flipped drawable.
  */
@@ -72,8 +81,8 @@ gimp_flip (gint32              drawable_ID,
  * @x3: The new x coordinate of lower-right corner of original bounding box.
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  *
- * This procedure is deprecated! Use
- * gimp_drawable_transform_perspective_default() instead.
+ * Deprecated: Use gimp_drawable_transform_perspective_default()
+ * instead.
  *
  * Returns: The newly mapped drawable.
  */
@@ -121,8 +130,7 @@ gimp_perspective (gint32   drawable_ID,
  * @interpolation: Whether to use interpolation.
  * @angle: The angle of rotation (radians).
  *
- * This procedure is deprecated! Use
- * gimp_drawable_transform_rotate_default() instead.
+ * Deprecated: Use gimp_drawable_transform_rotate_default() instead.
  *
  * Returns: The rotated drawable.
  */
@@ -159,8 +167,7 @@ gimp_rotate (gint32   drawable_ID,
  * @x1: The new x coordinate of the lower-right corner of the scaled region.
  * @y1: The new y coordinate of the lower-right corner of the scaled region.
  *
- * This procedure is deprecated! Use
- * gimp_drawable_transform_scale_default() instead.
+ * Deprecated: Use gimp_drawable_transform_scale_default() instead.
  *
  * Returns: The scaled drawable.
  */
@@ -201,8 +208,7 @@ gimp_scale (gint32   drawable_ID,
  * @shear_type: Type of shear.
  * @magnitude: The magnitude of the shear.
  *
- * This procedure is deprecated! Use
- * gimp_drawable_transform_shear_default() instead.
+ * Deprecated: Use gimp_drawable_transform_shear_default() instead.
  *
  * Returns: The sheared drawable.
  */
@@ -244,8 +250,7 @@ gimp_shear (gint32              drawable_ID,
  * @dest_x: X coordinate of where the centre goes.
  * @dest_y: Y coordinate of where the centre goes.
  *
- * This procedure is deprecated! Use
- * gimp_drawable_transform_2d_default() instead.
+ * Deprecated: Use gimp_drawable_transform_2d_default() instead.
  *
  * Returns: The transformed drawable.
  */

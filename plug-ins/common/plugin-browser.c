@@ -326,7 +326,10 @@ insert_into_tree_view (PluginBrowser *browser,
   str_ptr = strrchr (tmp_ptr, '/');
 
   if (str_ptr == NULL)
+  {
+    g_free (tmp_ptr);
     return; /* No node */
+  }
 
   leaf_ptr = g_strdup (str_ptr + 1);
 
@@ -352,6 +355,8 @@ insert_into_tree_view (PluginBrowser *browser,
                       TREE_COLUMN_DATE_STRING, xtimestr,
                       TREE_COLUMN_PINFO,       pinfo,
                       -1);
+
+  g_free (leaf_ptr);
 }
 
 static void

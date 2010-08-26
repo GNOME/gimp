@@ -19,6 +19,9 @@
 #define __GIMP_DISPLAY_SHELL_CURSOR_H__
 
 
+#define GIMP_CURSOR_SIZE 7
+
+
 void   gimp_display_shell_set_cursor            (GimpDisplayShell    *shell,
                                                  GimpCursorType       cursor_type,
                                                  GimpToolCursorType   tool_cursor,

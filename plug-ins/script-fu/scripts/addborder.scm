@@ -97,7 +97,7 @@
       n_array)
   )
 
-  (let* ((img (car (gimp-drawable-get-image adraw)))
+  (let* ((img (car (gimp-item-get-image adraw)))
          (owidth (car (gimp-image-width img)))
          (oheight (car (gimp-image-height img)))
          (width (+ owidth (* 2 xsize)))

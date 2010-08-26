@@ -99,10 +99,22 @@
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimp.h"
 #include "gimpunitcache.h"
 
 #include "libgimp-intl.h"
+
+
+/**
+ * SECTION: gimp
+ * @title: Gimp
+ * @short_description: Main functions needed for building a GIMP plug-in.
+ *                     This header includes all other GIMP Library headers.
+ *
+ * Main functions needed for building a GIMP plug-in. This header
+ * includes all other GIMP Library headers.
+ **/
 
 
 #define TILE_MAP_SIZE (_tile_width * _tile_height * 4)
@@ -222,7 +234,8 @@ static gchar             *pdb_error_message  = NULL;
  * The main procedure that must be called with the PLUG_IN_INFO structure
  * and the 'argc' and 'argv' that are passed to "main".
  *
- * Return value:
+ * Returns: an exit status as defined by the C library,
+ *          on success %EXIT_SUCCESS.
  **/
 gint
 gimp_main (const GimpPlugInInfo *info,
@@ -738,6 +751,7 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_INT32:
         case GIMP_PDB_DISPLAY:
         case GIMP_PDB_IMAGE:
+        case GIMP_PDB_ITEM:
         case GIMP_PDB_LAYER:
         case GIMP_PDB_CHANNEL:
         case GIMP_PDB_DRAWABLE:
@@ -779,8 +793,6 @@ gimp_run_procedure (const gchar *name,
           break;
         case GIMP_PDB_PARASITE:
           (void) va_arg (args, GimpParasite *);
-          break;
-        case GIMP_PDB_REGION:
           break;
         case GIMP_PDB_END:
           break;
@@ -836,7 +848,8 @@ gimp_run_procedure (const gchar *name,
         case GIMP_PDB_COLOR:
           params[i].data.d_color = *va_arg (args, GimpRGB *);
           break;
-        case GIMP_PDB_REGION:
+        case GIMP_PDB_ITEM:
+          params[i].data.d_item = va_arg (args, gint32);
           break;
         case GIMP_PDB_DISPLAY:
           params[i].data.d_display = va_arg (args, gint32);
@@ -1473,6 +1486,8 @@ gimp_extension_process (guint timeout)
  *
  * Convenience function that creates a parasite and attaches it
  * to GIMP.
+ *
+ * Deprecated: Use gimp_parasite_attach() instead.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.

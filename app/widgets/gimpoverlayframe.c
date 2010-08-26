@@ -178,10 +178,8 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
                  DEG_TO_RAD (90),
                  DEG_TO_RAD (180));
       cairo_close_path (cr);
-    }
-  else
-    {
-      gdk_cairo_region (cr, eevent->region);
+
+      cairo_clip (cr);
     }
 
 /* #define BLING 1 */
@@ -238,17 +236,11 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
     cairo_set_source (cr, gradient);
 
     cairo_pattern_destroy (gradient);
-
-    cairo_clip (cr);
   }
 
+#endif /* BLING */
+
   cairo_paint (cr);
-
-#else
-
-  cairo_fill (cr);
-
-#endif
 
   cairo_destroy (cr);
 

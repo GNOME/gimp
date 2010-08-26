@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-06-27 18:18+0200\n"
-"PO-Revision-Date: 2010-06-27 18:14+0200\n"
+"PO-Revision-Date: 2010-08-13 00:53+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2076,7 +2076,7 @@ msgstr "_Estendi"
 #: ../plug-ins/common/displace.c:472 ../plug-ins/common/edge.c:705
 #: ../plug-ins/common/fractal-trace.c:736 ../plug-ins/common/ripple.c:582
 msgid "_Wrap"
-msgstr "_Avvolgi"
+msgstr "_Avvolto"
 
 #: ../plug-ins/common/convolution-matrix.c:74
 msgid "Cro_p"
@@ -7557,7 +7557,7 @@ msgstr "_Max (%):"
 
 #: ../plug-ins/common/tile-paper.c:369
 msgid "_Wrap around"
-msgstr "_A capo"
+msgstr "_Avvolto"
 
 #: ../plug-ins/common/tile-paper.c:379
 msgid "Background Type"
@@ -8131,7 +8131,7 @@ msgstr "Sui contorni:"
 
 #: ../plug-ins/common/warp.c:471
 msgid "Wrap"
-msgstr "Avvolgi"
+msgstr "Avvolto"
 
 #: ../plug-ins/common/warp.c:486
 msgid "Smear"
@@ -9283,7 +9283,7 @@ msgstr "Sovracampionamen_to spaziale:"
 
 #: ../plug-ins/flame/flame.c:1142
 msgid "Spatial _filter radius:"
-msgstr "Raggio spaziale _filtro:"
+msgstr "Raggio _filtro spaziale:"
 
 #: ../plug-ins/flame/flame.c:1161
 msgid "Color_map:"
@@ -11084,7 +11084,7 @@ msgstr "Scala valore di:"
 #. Full color control section
 #: ../plug-ins/ifs-compose/ifs-compose.c:687
 msgid "Full"
-msgstr "Tutto"
+msgstr "Completa"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:695
 msgid "IFS Fractal: Red"

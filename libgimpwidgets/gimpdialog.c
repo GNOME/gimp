@@ -29,6 +29,17 @@
 #include "gimphelpui.h"
 
 
+/**
+ * SECTION: gimpdialog
+ * @title: GimpDialog
+ * @short_description: Constructors for #GtkDialog's and action_areas as
+ *                     well as other dialog-related stuff.
+ *
+ * Constructors for #GtkDialog's and action_areas as well as other
+ * dialog-related stuff.
+ **/
+
+
 enum
 {
   PROP_0,

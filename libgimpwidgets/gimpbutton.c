@@ -28,6 +28,17 @@
 #include "gimpbutton.h"
 
 
+/**
+ * SECTION: gimpbutton
+ * @title: GimpButton
+ * @short_description: A #GtkButton with a little extra functionality.
+ *
+ * #GimpButton adds an extra signal to the #GtkButton widget that
+ * allows to distinguish a normal click from a click that was
+ * performed with modifier keys pressed.
+ **/
+
+
 enum
 {
   EXTENDED_CLICKED,
@@ -53,6 +64,14 @@ gimp_button_class_init (GimpButtonClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
+  /**
+   * GimpButton::extended-clicked:
+   * @gimpbutton: the object that received the signal.
+   * @arg1: the state of modifier keys when the button was clicked
+   *
+   * This signal is emitted when the button is clicked with a modifier
+   * key pressed.
+   **/
   button_signals[EXTENDED_CLICKED] =
     g_signal_new ("extended-clicked",
                   G_TYPE_FROM_CLASS (klass),

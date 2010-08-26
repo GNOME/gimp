@@ -250,5 +250,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gimprc procedures';
+$doc_title = 'gimpgimprc';
+$doc_short_desc = 'Interactions with settings from gimprc.';
+$doc_long_desc = 'Interactions with settings from gimprc.';
 
 1;

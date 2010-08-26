@@ -120,9 +120,10 @@ print_utils_key_file_save_as_parasite (GKeyFile    *key_file,
                                        gint32       image_ID,
                                        const gchar *parasite_name)
 {
-  gchar  *contents;
-  gsize   length;
-  GError *error = NULL;
+  GimpParasite *parasite;
+  gchar        *contents;
+  gsize         length;
+  GError       *error = NULL;
 
   g_return_if_fail (parasite_name != NULL);
 
@@ -136,6 +137,9 @@ print_utils_key_file_save_as_parasite (GKeyFile    *key_file,
       return;
     }
 
-  gimp_image_attach_new_parasite (image_ID, parasite_name, 0, length, contents);
+  parasite = gimp_parasite_new (parasite_name, 0, length, contents);
   g_free (contents);
+
+  gimp_image_parasite_attach (image_ID, parasite);
+  gimp_parasite_free (parasite);
 }

@@ -351,7 +351,7 @@
                          thread-density
                          thread-intensity)
   (let* (
-        (d-img (car (gimp-drawable-get-image drawable)))
+        (d-img (car (gimp-item-get-image drawable)))
         (d-width (car (gimp-drawable-width drawable)))
         (d-height (car (gimp-drawable-height drawable)))
         (d-offsets (gimp-drawable-offsets drawable))

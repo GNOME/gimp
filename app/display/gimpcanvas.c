@@ -371,8 +371,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     {
     case GIMP_CANVAS_STYLE_BLACK:
     case GIMP_CANVAS_STYLE_WHITE:
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL:
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE:
       break;
 
     case GIMP_CANVAS_STYLE_RENDER:
@@ -400,18 +398,12 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
     case GIMP_CANVAS_STYLE_SELECTION_IN:
     case GIMP_CANVAS_STYLE_SELECTION_OUT:
-    case GIMP_CANVAS_STYLE_LAYER_BOUNDARY:
-    case GIMP_CANVAS_STYLE_LAYER_GROUP_BOUNDARY:
-    case GIMP_CANVAS_STYLE_GUIDE_NORMAL:
-    case GIMP_CANVAS_STYLE_GUIDE_ACTIVE:
-    case GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE:
       mask |= GDK_GC_CAP_STYLE | GDK_GC_FILL | GDK_GC_STIPPLE;
       values.cap_style = GDK_CAP_NOT_LAST;
       values.fill      = GDK_OPAQUE_STIPPLED;
       values.stipple   = canvas->stipple[0];
       break;
 
-    case GIMP_CANVAS_STYLE_CUSTOM:
     default:
       return NULL;
     }
@@ -461,68 +453,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       bg.green = 0x7f7f;
       bg.blue  = 0x7f7f;
       break;
-
-    case GIMP_CANVAS_STYLE_LAYER_BOUNDARY:
-      fg.red   = 0x0;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
-
-      bg.red   = 0xffff;
-      bg.green = 0xffff;
-      bg.blue  = 0x0;
-      break;
-
-    case GIMP_CANVAS_STYLE_LAYER_GROUP_BOUNDARY:
-      fg.red   = 0x0;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
-
-      bg.red   = 0x0;
-      bg.green = 0xffff;
-      bg.blue  = 0xffff;
-      break;
-
-    case GIMP_CANVAS_STYLE_GUIDE_NORMAL:
-      fg.red   = 0x0;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
-
-      bg.red   = 0x0;
-      bg.green = 0x7f7f;
-      bg.blue  = 0xffff;
-      break;
-
-    case GIMP_CANVAS_STYLE_GUIDE_ACTIVE:
-      fg.red   = 0x0;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
-
-      bg.red   = 0xffff;
-      bg.green = 0x0;
-      bg.blue  = 0x0;
-      break;
-
-    case GIMP_CANVAS_STYLE_LAYER_MASK_ACTIVE:
-      fg.red   = 0x0;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
-
-      bg.red   = 0x0;
-      bg.green = 0xffff;
-      bg.blue  = 0x0;
-      break;
-
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL:
-      fg.red   = 0x0;
-      fg.green = 0x7f7f;
-      fg.blue  = 0xffff;
-      break;
-
-    case GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE:
-      fg.red   = 0xffff;
-      fg.green = 0x0;
-      fg.blue  = 0x0;
-      break;
     }
 
   gdk_gc_set_rgb_fg_color (gc, &fg);
@@ -567,41 +497,6 @@ gimp_canvas_new (GimpDisplayConfig *config)
                        "name",   "gimp-canvas",
                        "config", config,
                        NULL);
-}
-
-/**
- * gimp_canvas_draw_cursor:
- * @canvas: the #GimpCanvas widget to draw on.
- * @x: x coordinate
- * @y: y coordinate
- *
- * Draws a plus-shaped black and white cursor, centered at the point
- * @x, @y.
- **/
-void
-gimp_canvas_draw_cursor (GimpCanvas *canvas,
-                         gint        x,
-                         gint        y)
-{
-  GtkWidget *widget = GTK_WIDGET (canvas);
-  GdkWindow *window = gtk_widget_get_window (widget);
-
-  if (! (gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_BLACK) &&
-         gimp_canvas_ensure_style (canvas, GIMP_CANVAS_STYLE_WHITE)) )
-    return;
-
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x - 7, y - 1, x + 7, y - 1);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
-                 x - 7, y,     x + 7, y    );
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x - 7, y + 1, x + 7, y + 1);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x - 1, y - 7, x - 1, y + 7);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_BLACK],
-                 x,     y - 7, x,     y + 7);
-  gdk_draw_line (window, canvas->gc[GIMP_CANVAS_STYLE_WHITE],
-                 x + 1, y - 7, x + 1, y + 7);
 }
 
 /**
@@ -827,27 +722,23 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
 /**
  * gimp_canvas_draw_text:
  * @canvas:  a #GimpCanvas widget
- * @style:   one of the enumerated #GimpCanvasStyle's.
- * @x:       X coordinate of the left of the layout.
- * @y:       Y coordinate of the top of the layout.
  * @format:  a standard printf() format string.
  * @Varargs: the parameters to insert into the format string.
  *
- * Draws a layout, in the specified style.
+ * Returns a layout which can be used for
+ * pango_cairo_show_layout(). The layout belongs to the canvas and
+ * should not be freed, not should a pointer to it be kept around
+ * after drawing.
+ *
+ * Returns: a #PangoLayout owned by the canvas.
  **/
-void
-gimp_canvas_draw_text (GimpCanvas      *canvas,
-                       GimpCanvasStyle  style,
-                       gint             x,
-                       gint             y,
-                       const gchar     *format,
-                       ...)
+PangoLayout *
+gimp_canvas_get_layout (GimpCanvas  *canvas,
+                        const gchar *format,
+                        ...)
 {
   va_list  args;
   gchar   *text;
-
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
 
   if (! canvas->layout)
     canvas->layout = gtk_widget_create_pango_layout (GTK_WIDGET (canvas),
@@ -860,9 +751,7 @@ gimp_canvas_draw_text (GimpCanvas      *canvas,
   pango_layout_set_text (canvas->layout, text, -1);
   g_free (text);
 
-  gdk_draw_layout (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                   canvas->gc[style],
-                   x, y, canvas->layout);
+  return canvas->layout;
 }
 
 /**
@@ -1028,32 +917,6 @@ gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
     }
 
   gdk_gc_set_stipple (canvas->gc[style], canvas->stipple[index]);
-}
-
-/**
- * gimp_canvas_set_custom_gc:
- * @canvas: a #GimpCanvas widget
- * @gc:     a #GdkGC;
- *
- * The #GimpCanvas widget has an extra style for a custom #GdkGC. This
- * function allows you to set the @gc for the %GIMP_CANVAS_STYLE_CUSTOM.
- * Drawing with the custom style only works if you set a #GdkGC
- * earlier.  Since the custom #GdkGC can under certain circumstances
- * be destroyed by #GimpCanvas, you should always set the custom gc
- * before calling a #GimpCanvas drawing function with
- * %GIMP_CANVAS_STYLE_CUSTOM.
- **/
-void
-gimp_canvas_set_custom_gc (GimpCanvas *canvas,
-                           GdkGC      *gc)
-{
-  if (gc)
-    g_object_ref (gc);
-
-  if (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM])
-    g_object_unref (canvas->gc[GIMP_CANVAS_STYLE_CUSTOM]);
-
-  canvas->gc[GIMP_CANVAS_STYLE_CUSTOM] = gc;
 }
 
 /**

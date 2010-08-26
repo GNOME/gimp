@@ -69,7 +69,8 @@ $evalcode = <<'CODE';
 		      $deprecated @inargs @outargs %invoke $canonical_name);
 
     # These are attached to the group structure
-    my @groupvars = qw($desc @headers %extra);
+    my @groupvars = qw($desc $doc_title $doc_short_desc $doc_long_desc
+                       @headers %extra);
 
     # Hook some variables into the top-level namespace
     *pdb = \%main::pdb;

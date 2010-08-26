@@ -29,6 +29,21 @@
 #include "libgimpwidgets/gimpwidgets-private.h"
 
 
+/**
+ * SECTION: gimpui
+ * @title: gimpui
+ * @short_description: Common user interface functions. This header includes
+ *                     all other GIMP User Interface Library headers.
+ * @see_also: gtk_init(), gdk_set_use_xshm(), gdk_rgb_set_min_colors(),
+ *            gdk_rgb_set_install(), gdk_rgb_get_visual(),
+ *            gdk_rgb_get_cmap(), gtk_widget_set_default_visual(),
+ *            gtk_widget_set_default_colormap(), gtk_preview_set_gamma().
+ *
+ * Common user interface functions. This header includes all other
+ * GIMP User Interface Library headers.
+ **/
+
+
 /*  local function prototypes  */
 
 static void  gimp_ui_help_func              (const gchar *help_id,
@@ -129,6 +144,7 @@ gimp_ui_init (const gchar *prog_name,
 
 /**
  * gimp_ui_get_display_window:
+ * @gdisp_ID: a #GimpDisplay ID.
  *
  * Returns the #GdkWindow of a display window. The purpose is to allow
  * to make plug-in dialogs transient to the image display as explained

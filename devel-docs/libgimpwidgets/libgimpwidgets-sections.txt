@@ -938,6 +938,7 @@ gimp_unit_menu_update
 gimp_table_attach_aligned
 gimp_label_set_attributes
 GIMP_WIDGETS_ERROR
+gimp_widgets_error_quark
 </SECTION>
 
 <SECTION>

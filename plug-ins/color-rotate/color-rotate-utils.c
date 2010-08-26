@@ -226,7 +226,7 @@ rcm_reduce_image (GimpDrawable *drawable,
   /* clamp to image size since this is the size of the mask */
 
   gimp_drawable_offsets (drawable->drawable_id, &offx, &offy);
-  image = gimp_drawable_get_image (drawable->drawable_id);
+  image = gimp_item_get_image (drawable->drawable_id);
 
   x1 = CLAMP (x1, - offx, gimp_image_width (image) - offx);
   x2 = CLAMP (x2, - offx, gimp_image_width (image) - offx);

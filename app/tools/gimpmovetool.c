@@ -190,12 +190,20 @@ gimp_move_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       if (move->guide && gimp_display_shell_get_show_guides (shell))
-        gimp_display_shell_draw_guide (shell, move->guide, NULL, TRUE);
+        {
+          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+          gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
+          cairo_destroy (cr);
+        }
       break;
 
     case GIMP_TOOL_ACTION_HALT:
       if (move->guide && gimp_display_shell_get_show_guides (shell))
-        gimp_display_shell_draw_guide (shell, move->guide, NULL, FALSE);
+        {
+          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+          gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
+          cairo_destroy (cr);
+        }
       break;
     }
 
@@ -446,7 +454,11 @@ gimp_move_tool_button_release (GimpTool              *tool,
       gimp_image_flush (image);
 
       if (move->guide)
-        gimp_display_shell_draw_guide (shell, move->guide, NULL, TRUE);
+        {
+          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+          gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
+          cairo_destroy (cr);
+        }
 
       move->moving_guide      = FALSE;
       move->guide_position    = -1;
@@ -667,12 +679,20 @@ gimp_move_tool_oper_update (GimpTool         *tool,
     }
 
   if (move->guide && move->guide != guide)
-    gimp_display_shell_draw_guide (shell, move->guide, NULL, FALSE);
+    {
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+      gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
+      cairo_destroy (cr);
+    }
 
   move->guide = guide;
 
   if (move->guide)
-    gimp_display_shell_draw_guide (shell, move->guide, NULL, TRUE);
+    {
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+      gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
+      cairo_destroy (cr);
+    }
 }
 
 static void
@@ -818,8 +838,12 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
   if (move->guide)
-    gimp_display_shell_draw_guide (gimp_display_get_shell (display),
-                                   move->guide, NULL, FALSE);
+    {
+      GimpDisplayShell *shell = gimp_display_get_shell (display);
+      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+      gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
+      cairo_destroy (cr);
+    }
 
   move->guide             = NULL;
   move->moving_guide      = TRUE;

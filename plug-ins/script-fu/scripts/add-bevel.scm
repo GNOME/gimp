@@ -159,7 +159,7 @@
     ; clean up
     (gimp-image-remove-channel image selection)
     (if (= keep-bump-layer TRUE)
-        (gimp-drawable-set-visible bump-layer 0)
+        (gimp-item-set-visible bump-layer 0)
         (gimp-image-remove-layer image bump-layer)
     )
 

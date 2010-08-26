@@ -30,6 +30,15 @@
 #include "gimpenumstore.h"
 
 
+/**
+ * SECTION: gimpenumstore
+ * @title: GimpEnumStore
+ * @short_description: A #GimpIntStore subclass that keeps enum values.
+ *
+ * A #GimpIntStore subclass that keeps enum values.
+ **/
+
+
 enum
 {
   PROP_0,

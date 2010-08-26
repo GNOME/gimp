@@ -2122,7 +2122,11 @@ find_poly_dir (Polygon *poly,
     }
 
   if (!total)
-    return;
+    {
+      g_free (max_scanlines);
+      g_free (min_scanlines);
+      return;
+    }
 
   if ((gdouble) count / (gdouble) total > COUNT_THRESHOLD)
     {

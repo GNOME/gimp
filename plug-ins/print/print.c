@@ -278,8 +278,8 @@ print_image (gint32     image_ID,
 
   g_object_unref (operation);
 
-  if (gimp_drawable_is_valid (layer))
-    gimp_drawable_delete (layer);
+  if (gimp_item_is_valid (layer))
+    gimp_item_delete (layer);
 
   switch (result)
     {
@@ -379,9 +379,9 @@ end_print (GtkPrintOperation *operation,
            gint32            *layer_ID)
 {
   /* we don't need the print layer any longer, delete it */
-  if (gimp_drawable_is_valid (*layer_ID))
+  if (gimp_item_is_valid (*layer_ID))
     {
-      gimp_drawable_delete (*layer_ID);
+      gimp_item_delete (*layer_ID);
       *layer_ID = -1;
     }
 

@@ -26,9 +26,11 @@
 
 #include "display-types.h"
 
+#include "base/boundary.h"
 #include "base/tile-manager.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
@@ -47,20 +49,13 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
+#include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
+#include "gimpdisplayshell-style.h"
 #include "gimpdisplayshell-transform.h"
-
-
-/*  local function prototypes  */
-
-static GdkGC * gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
-                                               GimpGrid         *grid);
-static GdkGC * gimp_display_shell_get_pen_gc  (GimpDisplayShell *shell,
-                                               GimpContext      *context,
-                                               GimpActiveColor   active);
 
 
 /*  public functions  */
@@ -133,120 +128,104 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 
 void
 gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
+                               cairo_t            *cr,
                                GimpGuide          *guide,
-                               const GdkRectangle *area,
                                gboolean            active)
 {
-  gint  position;
-  gint  x1, y1, x2, y2;
-  gint  x, y;
+  gint    position;
+  gdouble dx1, dy1, dx2, dy2;
+  gint    x1, y1, x2, y2;
+  gint    x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_GUIDE (guide));
 
   position = gimp_guide_get_position (guide);
-
   if (position < 0)
     return;
 
-  x1 = 0;
-  y1 = 0;
+  cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
 
-  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &x2, &y2);
+  x1 = floor (dx1);
+  y1 = floor (dy1);
+  x2 = ceil (dx2);
+  y2 = ceil (dy2);
+
+  gimp_display_shell_set_guide_style (shell, cr, active);
 
   switch (gimp_guide_get_orientation (guide))
     {
     case GIMP_ORIENTATION_HORIZONTAL:
       gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
-      if (area && (y < area->y || y >= area->y + area->height))
-        return;
-      if (y < y1 || y >= y2)
-        return;
-      y1 = y2 = y;
+      if (y >= y1 && y < y2)
+        {
+          cairo_move_to (cr, x1, y + 0.5);
+          cairo_line_to (cr, x2, y + 0.5);
+        }
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
       gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
-      if (area && (x < area->x || x >= area->x + area->width))
-        return;
-      if (x < x1 || x >= x2)
-        return;
-      x1 = x2 = x;
+      if (x >= x1 && x < x2)
+        {
+          cairo_move_to (cr, x + 0.5, y1);
+          cairo_line_to (cr, x + 0.5, y2);
+        }
       break;
 
     case GIMP_ORIENTATION_UNKNOWN:
       return;
     }
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                         (active ?
-                          GIMP_CANVAS_STYLE_GUIDE_ACTIVE :
-                          GIMP_CANVAS_STYLE_GUIDE_NORMAL), x1, y1, x2, y2);
+  cairo_stroke (cr);
 }
 
 void
 gimp_display_shell_draw_guides (GimpDisplayShell *shell,
-                                const GdkRegion  *region)
+                                cairo_t          *cr)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (region != NULL);
+  g_return_if_fail (cr != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_guides (shell))
     {
-      GdkRectangle  area;
-      GList        *list;
-
-      if (region)
-        {
-          gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                       GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-                                       region);
-          gdk_region_get_clipbox (region, &area);
-        }
+      GList *list;
 
       for (list = gimp_image_get_guides (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_guide (shell, list->data,
-                                         region ? &area : NULL,
-                                         FALSE);
+          gimp_display_shell_draw_guide (shell, cr, list->data, FALSE);
         }
-
-      if (region)
-        gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                     GIMP_CANVAS_STYLE_GUIDE_NORMAL,
-                                     NULL);
     }
 }
 
 void
 gimp_display_shell_draw_grid (GimpDisplayShell *shell,
-                              const GdkRegion  *region)
+                              cairo_t          *cr)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (region != NULL);
+  g_return_if_fail (cr != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_grid (shell))
     {
-      GimpCanvas   *canvas = GIMP_CANVAS (shell->canvas);
-      GimpGrid     *grid;
-      GdkRectangle  area;
-      GdkGC        *grid_gc;
-      gdouble       x, y;
-      gint          x0, x1, x2, x3;
-      gint          y0, y1, y2, y3;
-      gint          x_real, y_real;
-      gdouble       x_offset, y_offset;
-      gint          width, height;
+      GimpGrid *grid;
+      gdouble   x, y;
+      gdouble   dx1, dy1, dx2, dy2;
+      gint      x0, x1, x2, x3;
+      gint      y0, y1, y2, y3;
+      gint      x_real, y_real;
+      gdouble   x_offset, y_offset;
+      gint      width, height;
 
 #define CROSSHAIR 2
 
@@ -256,12 +235,12 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
 
       g_return_if_fail (grid->xspacing > 0 && grid->yspacing > 0);
 
-      gdk_region_get_clipbox (region, &area);
+      cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
 
-      x1 = area.x;
-      y1 = area.y;
-      x2 = area.x + area.width;
-      y2 = area.y + area.height;
+      x1 = floor (dx1);
+      y1 = floor (dy1);
+      x2 = ceil (dx2);
+      y2 = ceil (dy2);
 
       width  = gimp_image_get_width  (image);
       height = gimp_image_get_height (image);
@@ -274,10 +253,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
       while (y_offset > 0)
         y_offset -= grid->yspacing;
 
-      grid_gc = gimp_display_shell_get_grid_gc (shell, grid);
-
-      gdk_gc_set_clip_region (grid_gc, region);
-      gimp_canvas_set_custom_gc (canvas, grid_gc);
+      gimp_display_shell_set_grid_style (shell, cr, grid);
 
       switch (grid->style)
         {
@@ -304,9 +280,10 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                                                    FALSE);
 
                   if (y_real >= y1 && y_real < y2)
-                    gimp_canvas_draw_point (GIMP_CANVAS (shell->canvas),
-                                            GIMP_CANVAS_STYLE_CUSTOM,
-                                            x_real, y_real);
+                    {
+                      cairo_move_to (cr, x_real,     y_real + 0.5);
+                      cairo_line_to (cr, x_real + 1, y_real + 0.5);
+                    }
                 }
             }
           break;
@@ -337,21 +314,28 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                     continue;
 
                   if (x_real >= x1 && x_real < x2)
-                    gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                           x_real,
-                                           CLAMP (y_real - CROSSHAIR,
-                                                  y1, y2 - 1),
-                                           x_real,
-                                           CLAMP (y_real + CROSSHAIR,
-                                                  y1, y2 - 1));
+                    {
+                      cairo_move_to (cr,
+                                     x_real + 0.5,
+                                     CLAMP (y_real - CROSSHAIR,
+                                            y1, y2 - 1));
+                      cairo_line_to (cr,
+                                     x_real + 0.5,
+                                     CLAMP (y_real + CROSSHAIR,
+                                            y1, y2 - 1) + 1);
+                    }
+
                   if (y_real >= y1 && y_real < y2)
-                    gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                           CLAMP (x_real - CROSSHAIR,
-                                                  x1, x2 - 1),
-                                           y_real,
-                                           CLAMP (x_real + CROSSHAIR,
-                                                  x1, x2 - 1),
-                                           y_real);
+                    {
+                      cairo_move_to (cr,
+                                     CLAMP (x_real - CROSSHAIR,
+                                            x1, x2 - 1),
+                                     y_real + 0.5);
+                      cairo_line_to (cr,
+                                     CLAMP (x_real + CROSSHAIR,
+                                            x1, x2 - 1) + 1,
+                                     y_real + 0.5);
+                    }
                 }
             }
           break;
@@ -376,8 +360,10 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                                                FALSE);
 
               if (x_real >= x1 && x_real < x2)
-                gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                       x_real, y0, x_real, y3 - 1);
+                {
+                  cairo_move_to (cr, x_real + 0.5, y0);
+                  cairo_line_to (cr, x_real + 0.5, y3 + 1);
+                }
             }
 
           for (y = y_offset; y < height; y += grid->yspacing)
@@ -390,75 +376,77 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                                                FALSE);
 
               if (y_real >= y1 && y_real < y2)
-                gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                       x0, y_real, x3 - 1, y_real);
+                {
+                  cairo_move_to (cr, x0,     y_real + 0.5);
+                  cairo_line_to (cr, x3 + 1, y_real + 0.5);
+                }
             }
           break;
         }
 
-      gimp_canvas_set_custom_gc (canvas, NULL);
-      gdk_gc_set_clip_region (grid_gc, NULL);
+      cairo_stroke (cr);
     }
 }
 
 void
 gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
+                             cairo_t           *cr,
                              const GimpVector2 *points,
-                             gint               num_points,
+                             gint               n_points,
                              GimpContext       *context,
                              GimpActiveColor    color,
                              gint               width)
 {
-  GimpCanvas  *canvas;
-  GdkGC       *gc;
-  GdkGCValues  values;
-  GdkPoint    *coords;
+  gint i;
+  gint x, y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (num_points == 0 || points != NULL);
+  g_return_if_fail (n_points == 0 || points != NULL);
 
-  canvas = GIMP_CANVAS (shell->canvas);
+  if (n_points == 0)
+    return;
 
-  coords = g_new (GdkPoint, MAX (2, num_points));
+  gimp_display_shell_set_pen_style (shell, cr, context, color, width);
+  cairo_translate (cr, 0.5, 0.5);
 
-  gimp_display_shell_transform_points (shell,
-                                       points, coords, num_points, FALSE);
+  gimp_display_shell_transform_xy (shell,
+                                   points[0].x, points[0].y,
+                                   &x, &y, FALSE);
 
-  if (num_points == 1)
+  cairo_move_to (cr, x, y);
+
+  for (i = 1; i < n_points; i++)
     {
-      coords[1] = coords[0];
-      num_points = 2;
+      gimp_display_shell_transform_xy (shell,
+                                       points[i].x, points[i].y,
+                                       &x, &y, FALSE);
+
+      cairo_line_to (cr, x, y);
     }
 
-  gc = gimp_display_shell_get_pen_gc (shell, context, color);
+  if (i == 1)
+    cairo_line_to (cr, x, y);
 
-  values.line_width = MAX (1, width);
-  gdk_gc_set_values (gc, &values, GDK_GC_LINE_WIDTH);
-
-  gimp_canvas_set_custom_gc (canvas, gc);
-
-  gimp_canvas_draw_lines (canvas, GIMP_CANVAS_STYLE_CUSTOM, coords, num_points);
-
-  gimp_canvas_set_custom_gc (canvas, NULL);
-
-  g_free (coords);
+  cairo_stroke (cr);
 }
 
 void
 gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
+                                      cairo_t            *cr,
                                       GimpSamplePoint    *sample_point,
-                                      const GdkRectangle *area,
                                       gboolean            active)
 {
-  GimpImage       *image;
-  GimpCanvasStyle  style;
-  gdouble          x, y;
-  gint             x1, x2;
-  gint             y1, y2;
-  gint             w, h;
+  GimpImage   *image;
+  gdouble      dx1, dy1, dx2, dy2;
+  gint         x1, x2, y1, y2;
+  gint         sx1, sx2, sy1, sy2;
+  gdouble      x, y;
+  PangoLayout *layout;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (sample_point != NULL);
 
   if (sample_point->x < 0)
@@ -466,99 +454,179 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
 
   image = gimp_display_get_image (shell->display);
 
+  cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
+
+  x1 = floor (dx1);
+  y1 = floor (dy1);
+  x2 = ceil (dx2);
+  y2 = ceil (dy2);
+
   gimp_display_shell_transform_xy_f (shell,
                                      sample_point->x + 0.5,
                                      sample_point->y + 0.5,
                                      &x, &y, FALSE);
 
-  x1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  x2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
-  y1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  y2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sx1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sx2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sy1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  sy2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
 
-  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &w, &h);
-
-  if (x < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
-      y < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
-      x > w + GIMP_SAMPLE_POINT_DRAW_SIZE ||
-      y > h + GIMP_SAMPLE_POINT_DRAW_SIZE)
+  if (sx1 > x2 ||
+      sx2 < x1 ||
+      sy1 > y2 ||
+      sy2 < y1)
     return;
 
-  if (area && (x + GIMP_SAMPLE_POINT_DRAW_SIZE <  area->x               ||
-               y + GIMP_SAMPLE_POINT_DRAW_SIZE <  area->y               ||
-               x - GIMP_SAMPLE_POINT_DRAW_SIZE >= area->x + area->width ||
-               y - GIMP_SAMPLE_POINT_DRAW_SIZE >= area->y + area->height))
-    return;
-
-  if (active)
-    style = GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE;
-  else
-    style = GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL;
+  gimp_display_shell_set_sample_point_style (shell, cr, active);
 
 #define HALF_SIZE (GIMP_SAMPLE_POINT_DRAW_SIZE / 2)
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x, y1, x, y1 + HALF_SIZE);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x, y2 - HALF_SIZE, x, y2);
+  cairo_move_to (cr, x + 0.5, sy1);
+  cairo_line_to (cr, x + 0.5, sy1 + HALF_SIZE);
 
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x1, y, x1 + HALF_SIZE, y);
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), style,
-                         x2 - HALF_SIZE, y, x2, y);
+  cairo_move_to (cr, x + 0.5, sy2);
+  cairo_line_to (cr, x + 0.5, sy2 - HALF_SIZE);
 
-  gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), style,
-                        FALSE,
-                        x - HALF_SIZE, y - HALF_SIZE,
-                        GIMP_SAMPLE_POINT_DRAW_SIZE,
-                        GIMP_SAMPLE_POINT_DRAW_SIZE,
-                        0, 64 * 270);
+  cairo_move_to (cr, sx1,             y + 0.5);
+  cairo_line_to (cr, sx1 + HALF_SIZE, y + 0.5);
 
-  gimp_canvas_draw_text (GIMP_CANVAS (shell->canvas), style,
-                         x + 2, y + 2,
-                         "%d",
-                         g_list_index (gimp_image_get_sample_points (image),
-                                       sample_point) + 1);
+  cairo_move_to (cr, sx2,             y + 0.5);
+  cairo_line_to (cr, sx2 - HALF_SIZE, y + 0.5);
+
+  cairo_arc_negative (cr, x + 0.5, y + 0.5, HALF_SIZE, 0.0, 0.5 * G_PI);
+
+  cairo_stroke (cr);
+
+  layout =
+    gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas),
+                            "%d",
+                            g_list_index (gimp_image_get_sample_points (image),
+                                          sample_point) + 1);
+
+  cairo_move_to (cr, x + 2, y + 2);
+  pango_cairo_show_layout (cr, layout);
+
+  cairo_fill (cr);
 }
 
 void
 gimp_display_shell_draw_sample_points (GimpDisplayShell *shell,
-                                       const GdkRegion  *region)
+                                       cairo_t          *cr)
 {
   GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (region != NULL);
+  g_return_if_fail (cr != NULL);
 
   image = gimp_display_get_image (shell->display);
 
   if (image && gimp_display_shell_get_show_sample_points (shell))
     {
-      GdkRectangle  area;
-      GList        *list;
-
-      if (region)
-        {
-          gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                       GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-                                       region);
-          gdk_region_get_clipbox (region, &area);
-        }
+      GList *list;
 
       for (list = gimp_image_get_sample_points (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_sample_point (shell, list->data,
-                                                region ? &area : NULL,
-                                                FALSE);
+          gimp_display_shell_draw_sample_point (shell, cr, list->data, FALSE);
         }
-
-      if (region)
-        gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
-                                     GIMP_CANVAS_STYLE_SAMPLE_POINT_NORMAL,
-                                     region);
     }
+}
+
+void
+gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
+                                        cairo_t          *cr,
+                                        GimpDrawable     *drawable,
+                                        GdkSegment       *segs,
+                                        gint              n_segs)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (segs != NULL && n_segs == 4);
+
+  gimp_display_shell_set_layer_style (shell, cr, drawable);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      if (segs[i].x1 == segs[i].x2)
+        {
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+        }
+      else
+        {
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+        }
+    }
+
+  cairo_stroke (cr);
+}
+
+void
+gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
+                                       cairo_t          *cr,
+                                       GdkSegment       *segs,
+                                       gint              n_segs)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (segs != NULL && n_segs > 0);
+
+  gimp_display_shell_set_selection_out_style (shell, cr);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      if (segs[i].x1 == segs[i].x2)
+        {
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+        }
+      else
+        {
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+        }
+    }
+
+  cairo_stroke (cr);
+}
+
+void
+gimp_display_shell_draw_selection_in (GimpDisplayShell *shell,
+                                      cairo_t          *cr,
+                                      GdkSegment       *segs,
+                                      gint              n_segs,
+                                      gint              index)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (segs != NULL && n_segs > 0);
+
+  gimp_display_shell_set_selection_in_style (shell, cr, index);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      if (segs[i].x1 == segs[i].x2)
+        {
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+        }
+      else
+        {
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+        }
+    }
+
+  cairo_stroke (cr);
 }
 
 void
@@ -629,13 +697,43 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
+gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
+                                cairo_t          *cr)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
 
   if (shell->have_cursor)
-    gimp_canvas_draw_cursor (GIMP_CANVAS (shell->canvas),
-                             shell->cursor_x, shell->cursor_y);
+    {
+      gimp_display_shell_set_cursor_style (shell, cr);
+      cairo_translate (cr, 0.5, 0.5);
+
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+
+      cairo_move_to (cr, shell->cursor_x - GIMP_CURSOR_SIZE, shell->cursor_y - 1);
+      cairo_line_to (cr, shell->cursor_x + GIMP_CURSOR_SIZE, shell->cursor_y - 1);
+
+      cairo_move_to (cr, shell->cursor_x - GIMP_CURSOR_SIZE, shell->cursor_y + 1);
+      cairo_line_to (cr, shell->cursor_x + GIMP_CURSOR_SIZE, shell->cursor_y + 1);
+
+      cairo_move_to (cr, shell->cursor_x - 1, shell->cursor_y - GIMP_CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x - 1, shell->cursor_y + GIMP_CURSOR_SIZE);
+
+      cairo_move_to (cr, shell->cursor_x + 1, shell->cursor_y - GIMP_CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x + 1, shell->cursor_y + GIMP_CURSOR_SIZE);
+
+      cairo_stroke (cr);
+
+      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+
+      cairo_move_to (cr, shell->cursor_x - GIMP_CURSOR_SIZE, shell->cursor_y);
+      cairo_line_to (cr, shell->cursor_x + GIMP_CURSOR_SIZE, shell->cursor_y);
+
+      cairo_move_to (cr, shell->cursor_x, shell->cursor_y - GIMP_CURSOR_SIZE);
+      cairo_line_to (cr, shell->cursor_x, shell->cursor_y + GIMP_CURSOR_SIZE);
+
+      cairo_stroke (cr);
+    }
 }
 
 void
@@ -687,94 +785,4 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                      shell->highlight ? &rect : NULL);
         }
     }
-}
-
-
-/*  private functions  */
-
-static GdkGC *
-gimp_display_shell_get_grid_gc (GimpDisplayShell *shell,
-                                GimpGrid         *grid)
-{
-  GdkGCValues  values;
-  GdkColor     fg, bg;
-
-  if (shell->grid_gc)
-    return shell->grid_gc;
-
-  switch (grid->style)
-    {
-    case GIMP_GRID_ON_OFF_DASH:
-      values.line_style = GDK_LINE_ON_OFF_DASH;
-      break;
-
-    case GIMP_GRID_DOUBLE_DASH:
-      values.line_style = GDK_LINE_DOUBLE_DASH;
-      break;
-
-    case GIMP_GRID_DOTS:
-    case GIMP_GRID_INTERSECTIONS:
-    case GIMP_GRID_SOLID:
-      values.line_style = GDK_LINE_SOLID;
-      break;
-    }
-
-  values.join_style = GDK_JOIN_MITER;
-
-  shell->grid_gc = gdk_gc_new_with_values (gtk_widget_get_window (shell->canvas),
-                                           &values, (GDK_GC_LINE_STYLE |
-                                                     GDK_GC_JOIN_STYLE));
-
-  gimp_rgb_get_gdk_color (&grid->fgcolor, &fg);
-  gdk_gc_set_rgb_fg_color (shell->grid_gc, &fg);
-
-  gimp_rgb_get_gdk_color (&grid->bgcolor, &bg);
-  gdk_gc_set_rgb_bg_color (shell->grid_gc, &bg);
-
-  return shell->grid_gc;
-}
-
-static GdkGC *
-gimp_display_shell_get_pen_gc (GimpDisplayShell *shell,
-                               GimpContext      *context,
-                               GimpActiveColor   active)
-{
-  GdkGCValues  values;
-  GimpRGB      rgb;
-  GdkColor     color;
-
-  if (shell->pen_gc)
-    return shell->pen_gc;
-
-  values.line_style = GDK_LINE_SOLID;
-  values.cap_style  = GDK_CAP_ROUND;
-  values.join_style = GDK_JOIN_ROUND;
-
-  shell->pen_gc = gdk_gc_new_with_values (gtk_widget_get_window (shell->canvas),
-                                          &values, (GDK_GC_LINE_STYLE |
-                                                    GDK_GC_CAP_STYLE  |
-                                                    GDK_GC_JOIN_STYLE));
-
-  switch (active)
-    {
-    case GIMP_ACTIVE_COLOR_FOREGROUND:
-      gimp_context_get_foreground (context, &rgb);
-      break;
-
-    case GIMP_ACTIVE_COLOR_BACKGROUND:
-      gimp_context_get_background (context, &rgb);
-      break;
-    }
-
-  gimp_rgb_get_gdk_color (&rgb, &color);
-  gdk_gc_set_rgb_fg_color (shell->pen_gc, &color);
-
-  g_object_add_weak_pointer (G_OBJECT (shell->pen_gc),
-                             (gpointer) &shell->pen_gc);
-
-  g_signal_connect_object (context, "notify",
-                           G_CALLBACK (g_object_unref),
-                           shell->pen_gc, G_CONNECT_SWAPPED);
-
-  return shell->pen_gc;
 }

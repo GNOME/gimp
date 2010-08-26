@@ -25,7 +25,6 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpchannel-select.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -361,62 +360,6 @@ vectors_set_linked_invoker (GimpProcedure      *procedure,
   if (success)
     {
       gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
-vectors_get_lock_content_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpVectors *vectors;
-  gboolean lock_content = FALSE;
-
-  vectors = gimp_value_get_vectors (&args->values[0], gimp);
-
-  if (success)
-    {
-      lock_content = gimp_item_get_lock_content (GIMP_ITEM (vectors));
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], lock_content);
-
-  return return_vals;
-}
-
-static GValueArray *
-vectors_set_lock_content_invoker (GimpProcedure      *procedure,
-                                  Gimp               *gimp,
-                                  GimpContext        *context,
-                                  GimpProgress       *progress,
-                                  const GValueArray  *args,
-                                  GError            **error)
-{
-  gboolean success = TRUE;
-  GimpVectors *vectors;
-  gboolean lock_content;
-
-  vectors = gimp_value_get_vectors (&args->values[0], gimp);
-  lock_content = g_value_get_boolean (&args->values[1]);
-
-  if (success)
-    {
-      if (gimp_item_can_lock_content (GIMP_ITEM (vectors)))
-        gimp_item_set_lock_content (GIMP_ITEM (vectors), lock_content, TRUE);
-      else
-        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1398,18 +1341,13 @@ vectors_to_selection_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (vectors));
-
-      if (image)
-        gimp_channel_select_vectors (gimp_image_get_mask (image),
-                                     _("Path to Selection"),
-                                     vectors,
-                                     operation,
-                                     antialias,
-                                     feather,
-                                     feather_radius_x,
-                                     feather_radius_y,
-                                     TRUE);
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), NULL, FALSE, error))
+        gimp_item_to_selection (GIMP_ITEM (vectors),
+                                operation,
+                                antialias,
+                                feather,
+                                feather_radius_x,
+                                feather_radius_y);
       else
         success = FALSE;
     }
@@ -1616,12 +1554,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-is-valid");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-is-valid",
-                                     "Returns TRUE if the vectors object is valid.",
-                                     "This procedure checks if the given vectors ID is valid and refers to an existing vectors object.",
+                                     "Deprecated: Use 'gimp-item-is-valid' instead.",
+                                     "Deprecated: Use 'gimp-item-is-valid' instead.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2007",
-                                     NULL);
+                                     "gimp-item-is-valid");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1745,12 +1683,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-get-image");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-image",
-                                     "Returns the vectors objects image.",
-                                     "Returns the vectors objects image.",
+                                     "Deprecated: Use 'gimp-item-get-image' instead.",
+                                     "Deprecated: Use 'gimp-item-get-image' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-get-image");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1774,12 +1712,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-get-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-name",
-                                     "Gets the name of the vectors object.",
-                                     "Gets the name of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-get-name' instead.",
+                                     "Deprecated: Use 'gimp-item-get-name' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-get-name");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1804,12 +1742,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-set-name");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-name",
-                                     "Sets the name of the vectors object.",
-                                     "Sets the name of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-set-name' instead.",
+                                     "Deprecated: Use 'gimp-item-set-name' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-set-name");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1834,12 +1772,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-get-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-visible",
-                                     "Gets the visibility of the vectors object.",
-                                     "Gets the visibility of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-get-visible' instead.",
+                                     "Deprecated: Use 'gimp-item-get-visible' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-get-visible");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1863,12 +1801,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-set-visible");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-visible",
-                                     "Sets the visibility of the vectors object.",
-                                     "Sets the visibility of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-set-visible' instead.",
+                                     "Deprecated: Use 'gimp-item-set-visible' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-set-visible");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1892,12 +1830,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-get-linked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-linked",
-                                     "Gets the linked state of the vectors object.",
-                                     "Gets the linked state of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-get-linked' instead.",
+                                     "Deprecated: Use 'gimp-item-get-linked' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-get-linked");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1921,12 +1859,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-set-linked");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-linked",
-                                     "Sets the linked state of the vectors object.",
-                                     "Sets the linked state of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-set-linked' instead.",
+                                     "Deprecated: Use 'gimp-item-set-linked' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-set-linked");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -1943,64 +1881,6 @@ register_vectors_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-vectors-get-lock-content
-   */
-  procedure = gimp_procedure_new (vectors_get_lock_content_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-get-lock-content");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-get-lock-content",
-                                     "Gets the 'lock content' state of the vectors object.",
-                                     "Gets the 'lock content' state of the vectors object.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2009",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("lock-content",
-                                                         "lock content",
-                                                         "Whether the path's strokes are locked",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-vectors-set-lock-content
-   */
-  procedure = gimp_procedure_new (vectors_set_lock_content_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-vectors-set-lock-content");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-vectors-set-lock-content",
-                                     "Sets the 'lock content' state of the vectors object.",
-                                     "Sets the 'lock content' state of the vectors object.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2009",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_vectors_id ("vectors",
-                                                           "vectors",
-                                                           "The vectors object",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("lock-content",
-                                                     "lock content",
-                                                     "Whether the path's strokes are locked",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-vectors-get-tattoo
    */
   procedure = gimp_procedure_new (vectors_get_tattoo_invoker);
@@ -2008,12 +1888,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-get-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-get-tattoo",
-                                     "Get the tattoo of the vectors object.",
-                                     "Get the tattoo state of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-get-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-item-get-tattoo' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-get-tattoo");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -2037,12 +1917,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-set-tattoo");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-set-tattoo",
-                                     "Set the tattoo of the vectors object.",
-                                     "Set the tattoo of the vectors object.",
+                                     "Deprecated: Use 'gimp-item-set-tattoo' instead.",
+                                     "Deprecated: Use 'gimp-item-set-tattoo' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-item-set-tattoo");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
@@ -3110,7 +2990,7 @@ register_vectors_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-export-to-string",
                                      "Save a path as an SVG string.",
-                                     "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The contents are a %NUL-terminated string that holds a complete XML document. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
+                                     "This procedure works like 'gimp-vectors-export-to-file' but creates a string rather than a file. The contents are a NUL-terminated string that holds a complete XML document. If you pass 0 as the 'vectors' argument, then all paths in the image will be exported.",
                                      "Bill Skaggs <weskaggs@primate.ucdavis.edu>",
                                      "Bill Skaggs",
                                      "2007",

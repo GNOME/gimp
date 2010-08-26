@@ -222,14 +222,14 @@ align_layers (gint32 image_id)
 
   for (index = 0; index < layer_num; index++)
     {
-      if (gimp_drawable_get_visible (layers[index]))
+      if (gimp_item_get_visible (layers[index]))
         visible_layer_num++;
     }
 
   if (VALS.ignore_bottom)
     {
       layer_num--;
-      if (gimp_drawable_get_visible (layers[bg_index]))
+      if (gimp_item_get_visible (layers[bg_index]))
         visible_layer_num--;
     }
 
@@ -243,7 +243,7 @@ align_layers (gint32 image_id)
       /* 0 is the top layer */
       for (index = 0; index < layer_num; index++)
         {
-          if (gimp_drawable_get_visible (layers[index]))
+          if (gimp_item_get_visible (layers[index]))
             {
               gimp_drawable_offsets (layers[index], &orig_x, &orig_y);
               align_layers_get_align_offsets (layers[index], &offset_x,
@@ -286,7 +286,7 @@ align_layers (gint32 image_id)
 
   for (vindex = -1, index = 0; index < layer_num; index++)
     {
-      if (gimp_drawable_get_visible (layers[index]))
+      if (gimp_item_get_visible (layers[index]))
         vindex++;
       else
         continue;

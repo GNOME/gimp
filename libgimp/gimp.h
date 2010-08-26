@@ -80,23 +80,21 @@ typedef void (* GimpRunProc)   (const gchar      *name,
                                 GimpParam       **return_vals);
 
 
+/**
+ * GimpPlugInInfo:
+ * @init_proc:  called when the gimp application initially starts up
+ * @quit_proc:  called when the gimp application exits
+ * @query_proc: called by gimp so that the plug-in can inform the
+ *              gimp of what it does. (ie. installing a procedure database
+ *              procedure).
+ * @run_proc:   called to run a procedure the plug-in installed in the
+ *              procedure database.
+ **/
 struct _GimpPlugInInfo
 {
-  /* called when the gimp application initially starts up */
   GimpInitProc  init_proc;
-
-  /* called when the gimp application exits */
   GimpQuitProc  quit_proc;
-
-  /* called by gimp so that the plug-in can inform the
-   *  gimp of what it does. (ie. installing a procedure database
-   *  procedure).
-   */
   GimpQueryProc query_proc;
-
-  /* called to run a procedure the plug-in installed in the
-   *  procedure database.
-   */
   GimpRunProc   run_proc;
 };
 
@@ -129,9 +127,10 @@ union _GimpParamData
   gchar           **d_stringarray;
   GimpRGB          *d_colorarray;
   GimpRGB           d_color;
-  GimpParamRegion   d_region;
+  GimpParamRegion   d_region; /* deprecated */
   gint32            d_display;
   gint32            d_image;
+  gint32            d_item;
   gint32            d_layer;
   gint32            d_layer_mask;
   gint32            d_channel;
@@ -155,15 +154,14 @@ struct _GimpParam
 
 
 /**
- * MAIN():
+ * MAIN:
  *
  * A macro that expands to the appropriate main() function for the
  * platform being compiled for.
  *
  * To use this macro, simply place a line that contains just the code
  * MAIN() at the toplevel of your file.  No semicolon should be used.
- *
- */
+ **/
 
 #ifdef G_OS_WIN32
 
@@ -332,10 +330,12 @@ guint32        gimp_user_time           (void) G_GNUC_CONST;
 
 const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean       gimp_attach_new_parasite (const gchar    *name,
                                          gint            flags,
                                          gint            size,
                                          gconstpointer   data);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

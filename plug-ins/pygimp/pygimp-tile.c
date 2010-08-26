@@ -130,7 +130,7 @@ tile_repr(PyGimpTile *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_drawable_get_name(self->tile->drawable->drawable_id);
+    name = gimp_item_get_name(self->tile->drawable->drawable_id);
 
     if (self->tile->shadow)
 	s = PyString_FromFormat("<gimp.Tile for drawable '%s' (shadow)>", name);
@@ -689,7 +689,7 @@ pr_repr(PyGimpPixelRgn *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_drawable_get_name(self->drawable->drawable->drawable_id);
+    name = gimp_item_get_name(self->drawable->drawable->drawable_id);
     s = PyString_FromFormat("<gimp.PixelRgn for drawable '%s'>", name);
     g_free(name);
 
@@ -950,7 +950,7 @@ pf_repr(PyGimpPixelFetcher *self)
     PyObject *s;
     char *name;
 
-    name = gimp_drawable_get_name(self->drawable->drawable->drawable_id);
+    name = gimp_item_get_name(self->drawable->drawable->drawable_id);
 
     if (self->shadow)
         s = PyString_FromFormat("<gimp.PixelFetcher for drawable '%s' (shadow)>", name);

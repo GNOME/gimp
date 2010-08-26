@@ -221,5 +221,8 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Display procedures';
+$doc_title = 'gimpdisplay';
+$doc_short_desc = 'Functions to create, delete and flush displays (views) on an image.';
+$doc_long_desc = 'Functions to create, delete and flush displays (views) on an image.';
 
 1;

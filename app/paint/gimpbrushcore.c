@@ -325,7 +325,7 @@ gimp_brush_core_finalize (GObject *object)
   if (core->transformed_brush_bound_segs)
     {
       g_free (core->transformed_brush_bound_segs);
-      core->transformed_brush_bound_segs   = NULL;
+      core->transformed_brush_bound_segs = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -963,12 +963,15 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
     {
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
-      /* Generated brushes are a bit special*/
+      /* Generated brushes are a bit special */
       if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
         {
-          GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
+          GimpBrushGenerated *generated_brush;
+          gdouble             ratio;
 
-          gdouble ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
+          generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
+
+          ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
 
           gimp_brush_generated_set_aspect_ratio (generated_brush, 1.0);
 
@@ -978,8 +981,10 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
           gimp_brush_generated_set_aspect_ratio (generated_brush, ratio);
         }
       else
-        mask = gimp_brush_transform_mask (core->main_brush,
-                                          1.0, 1.0, 0.0, 1.0);
+        {
+          mask = gimp_brush_transform_mask (core->main_brush,
+                                            1.0, 1.0, 0.0, 1.0);
+        }
     }
 
   if (mask)
@@ -1043,9 +1048,13 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
   /* Generated brushes have their angle applied on top of base angle */
   if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
     {
-      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
+      GimpBrushGenerated *generated_brush;
+      gdouble             base_angle;
 
-      gdouble base_angle = gimp_brush_generated_get_angle (generated_brush);
+      generated_brush = GIMP_BRUSH_GENERATED (core->main_brush);
+
+      base_angle = gimp_brush_generated_get_angle (generated_brush);
+
       angle = angle + base_angle / 360;
 
       if (aspect_ratio == 1.0)
@@ -1057,8 +1066,8 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
 
   if (aspect_ratio < 1.0)
     {
-        scale_x = scale * aspect_ratio;
-        scale_y = scale;
+      scale_x = scale * aspect_ratio;
+      scale_y = scale;
     }
   else
     {
@@ -1069,29 +1078,25 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
   if (core->transformed_brush_bound_segs)
     {
       g_free (core->transformed_brush_bound_segs);
-      core->transformed_brush_bound_segs   = NULL;
+      core->transformed_brush_bound_segs = NULL;
     }
-
 
   if ((scale > 0.0) && (aspect_ratio > 0.0))
     {
-
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
-
 
       gimp_brush_transform_matrix (height, width,
                                    scale, aspect_ratio, angle, &matrix);
 
-      core->transformed_brush_bound_segs
-                      = boundary_transform (core->brush_bound_segs,
-                                            &core->n_brush_bound_segs,
-                                            &matrix);
+      core->transformed_brush_bound_segs =
+        boundary_transform (core->brush_bound_segs,
+                            &core->n_brush_bound_segs,
+                            &matrix);
 
       /* FIXME. Do noy use scale_x/scale_y */
-      core->transformed_brush_bound_width = core->brush_bound_width * scale_x;
+      core->transformed_brush_bound_width  = core->brush_bound_width  * scale_x;
       core->transformed_brush_bound_height = core->brush_bound_height * scale_y;
     }
-
 }
 
 void

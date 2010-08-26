@@ -43,6 +43,20 @@ static void                  pixel_region_configure  (PixelRegionHolder   *PRH,
 /**************************/
 /*  Function definitions  */
 
+/**
+ * pixel_region_init:
+ * @PR:    Pointer to PixelRegion struct, typically allocated on the
+ *         stack
+ * @tiles: Tiles
+ * @x:     X of region
+ * @y:     Y of region
+ * @w:     Width of region
+ * @h:     Height of region
+ * @dirty: %TRUE if there will be changes to the pixel region that
+ *         shall be written back to the tiles, %FALSE otherwise
+ *
+ * Initializes a pixel region over a set of tiles.
+ **/
 void
 pixel_region_init (PixelRegion *PR,
                    TileManager *tiles,

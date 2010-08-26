@@ -33,6 +33,17 @@
 #include "libgimp/libgimp-intl.h"
 
 
+/**
+ * SECTION: gimpmodule
+ * @title: GimpModule
+ * @short_description: A #GTypeModule subclass which implements module
+ *                     loading using #GModule.
+ * @see_also: #GModule, #GTypeModule
+ *
+ * A #GTypeModule subclass which implements module loading using #GModule.
+ **/
+
+
 enum
 {
   MODIFIED,
@@ -385,9 +396,9 @@ gimp_module_state_name (GimpModuleState state)
 
 /**
  * gimp_module_register_enum:
- * @module:
- * @name:
- * @const_static_values:
+ * @module:              a module
+ * @name:                the name of the new enum type
+ * @const_static_values: the enum values
  *
  * This function is deprecated! Use g_type_module_register_enum() instead.
  *

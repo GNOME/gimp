@@ -34,6 +34,15 @@
 #include "gimpcolorhexentry.h"
 
 
+/**
+ * SECTION: gimpcolorhexentry
+ * @title: GimpColorHexEntry
+ * @short_description: Widget for entering a color's hex triplet.
+ *
+ * Widget for entering a color's hex triplet.
+ **/
+
+
 enum
 {
   COLOR_CHANGED,

@@ -60,7 +60,7 @@
           )
     (gimp-layer-set-lock-alpha waves-layer FALSE)
     (gimp-image-add-layer image waves-layer -1)
-    (gimp-drawable-set-name waves-layer layer-name)
+    (gimp-item-set-name waves-layer layer-name)
 
     (plug-in-waves RUN-NONINTERACTIVE
                    image
@@ -76,7 +76,7 @@
     )
   )
 
-  (gimp-drawable-set-name source-layer "Frame 1")
+  (gimp-item-set-name source-layer "Frame 1")
   (plug-in-waves RUN-NONINTERACTIVE
                  image
                  source-layer

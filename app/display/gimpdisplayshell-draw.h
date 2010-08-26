@@ -28,29 +28,45 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
                                                       gint               *w,
                                                       gint               *h);
 void   gimp_display_shell_draw_guide                 (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       GimpGuide          *guide,
-                                                      const GdkRectangle *area,
                                                       gboolean            active);
 void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
-                                                      const GdkRegion    *region);
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
-                                                      const GdkRegion    *region);
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       const GimpVector2  *points,
-                                                      gint                num_points,
+                                                      gint                n_points,
                                                       GimpContext        *context,
                                                       GimpActiveColor     color,
                                                       gint                width);
 void   gimp_display_shell_draw_sample_point          (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       GimpSamplePoint    *sample_point,
-                                                      const GdkRectangle *area,
                                                       gboolean            active);
 void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
-                                                      const GdkRegion    *region);
+                                                      cairo_t            *cr);
+void   gimp_display_shell_draw_layer_boundary        (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      GimpDrawable       *drawable,
+                                                      GdkSegment         *segs,
+                                                      gint                n_segs);
+void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      GdkSegment         *segs,
+                                                      gint                n_segs);
+void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      GdkSegment         *segs,
+                                                      gint                n_segs,
+                                                      gint                index);
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell);
-void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell);
+void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_area                  (GimpDisplayShell   *shell,
                                                       gint                x,
                                                       gint                y,

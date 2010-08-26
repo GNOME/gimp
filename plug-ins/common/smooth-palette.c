@@ -424,7 +424,7 @@ dialog (GimpDrawable *drawable)
 
   gimp_window_set_transient (GTK_WINDOW (dlg));
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_item_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
   gimp_image_get_resolution (image_id, &xres, &yres);
 

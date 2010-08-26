@@ -24,6 +24,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimppaletteselect
+ * @title: gimppaletteselect
+ * @short_description: Functions providing a palette selection dialog.
+ *
+ * Functions providing a palette selection dialog.
+ **/
+
+
 /**
  * gimp_palettes_popup:
  * @palette_callback: The callback PDB proc to call when palette selection is made.

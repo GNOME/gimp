@@ -44,7 +44,7 @@ typedef struct
   gint            width;
   gint            height;
   GtkWidget      *progress;
-  GdkGC          *gc;
+  GdkColor        color;
   PangoLayout    *upper;
   gint            upper_x;
   gint            upper_y;
@@ -97,7 +97,6 @@ splash_create (gboolean be_verbose)
   GtkWidget          *vbox;
   GdkPixbufAnimation *pixbuf;
   GdkScreen          *screen;
-  GdkGCValues         values;
 
   g_return_if_fail (splash == NULL);
 
@@ -165,19 +164,16 @@ splash_create (gboolean be_verbose)
 
   splash_average_text_area (splash,
                             gdk_pixbuf_animation_get_static_image (pixbuf),
-                            &values.foreground);
+                            &splash->color);
 
   gtk_widget_realize (splash->area);
-  splash->gc = gdk_gc_new_with_values (gtk_widget_get_window (splash->area),
-                                       &values,
-                                       GDK_GC_FOREGROUND);
 
   if (gdk_pixbuf_animation_is_static_image (pixbuf))
     {
       GdkPixmap *pixmap = gdk_pixmap_new (gtk_widget_get_window (splash->area),
 					  splash->width, splash->height, -1);
 
-      gdk_draw_pixbuf (pixmap, splash->gc,
+      gdk_draw_pixbuf (pixmap, gtk_widget_get_style (splash->area)->black_gc,
 		       gdk_pixbuf_animation_get_static_image (pixbuf),
 		       0, 0, 0, 0, splash->width, splash->height,
 		       GDK_RGB_DITHER_NORMAL, 0, 0);
@@ -212,7 +208,6 @@ splash_destroy (void)
 
   gtk_widget_destroy (splash->window);
 
-  g_object_unref (splash->gc);
   g_object_unref (splash->upper);
   g_object_unref (splash->lower);
 
@@ -264,13 +259,20 @@ splash_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event,
                     GimpSplash     *splash)
 {
-  gdk_gc_set_clip_region (splash->gc, event->region);
+  cairo_t *cr = gdk_cairo_create (event->window);
 
-  gdk_draw_layout (gtk_widget_get_window (widget), splash->gc,
-                   splash->upper_x, splash->upper_y, splash->upper);
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
 
-  gdk_draw_layout (gtk_widget_get_window (widget), splash->gc,
-                   splash->lower_x, splash->lower_y, splash->lower);
+  gdk_cairo_set_source_color (cr, &splash->color);
+
+  cairo_move_to (cr, splash->upper_x, splash->upper_y);
+  pango_cairo_show_layout (cr, splash->upper);
+
+  cairo_move_to (cr, splash->lower_x, splash->lower_y);
+  pango_cairo_show_layout (cr, splash->lower);
+
+  cairo_destroy (cr);
 
   return FALSE;
 }

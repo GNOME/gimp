@@ -57,6 +57,7 @@ libappinternal_procs_a_SOURCES = \
 	guides-cmds.c			\
 	help-cmds.c			\
 	image-cmds.c			\
+	item-cmds.c			\
 	layer-cmds.c			\
 	message-cmds.c			\
 	misc-cmds.c			\

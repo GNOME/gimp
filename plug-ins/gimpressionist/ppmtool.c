@@ -358,6 +358,8 @@ ppm_load (const char *fn, ppm_t *p)
     for (y = 0; y < p->width * p->height * 3; y++) {
       p->col[y] = tmpcol[y / 3];
     }
+
+    g_free (tmpcol);
   }
   fclose (f);
 }

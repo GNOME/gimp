@@ -29,6 +29,15 @@
 #include "gimpoffsetarea.h"
 
 
+/**
+ * SECTION: gimpoffsetarea
+ * @title: GimpOffsetArea
+ * @short_description: Widget to control image offsets.
+ *
+ * Widget to control image offsets.
+ **/
+
+
 #define DRAWING_AREA_SIZE 200
 
 

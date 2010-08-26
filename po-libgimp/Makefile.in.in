@@ -64,7 +64,7 @@ USE_LINGUAS=$(shell if test -n "$(USER_LINGUAS)"; then LLINGUAS="$(USER_LINGUAS)
 
 POFILES=$(shell LINGUAS="$(USE_LINGUAS)"; for lang in $$LINGUAS; do printf "$$lang.po "; done)
 
-DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(POFILES)
+DISTFILES = Makefile.in.in POTFILES.in $(POFILES)
 EXTRA_DISTFILES = POTFILES.skip Makevars LINGUAS
 
 POTFILES = \

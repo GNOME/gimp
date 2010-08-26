@@ -181,7 +181,7 @@ channels_raise_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_raise_channel (image, channel, NULL);
+  gimp_image_raise_item (image, GIMP_ITEM (channel), NULL);
   gimp_image_flush (image);
 }
 
@@ -193,7 +193,7 @@ channels_raise_to_top_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_raise_channel_to_top (image, channel);
+  gimp_image_raise_item_to_top (image, GIMP_ITEM (channel));
   gimp_image_flush (image);
 }
 
@@ -205,7 +205,7 @@ channels_lower_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_lower_channel (image, channel, NULL);
+  gimp_image_lower_item (image, GIMP_ITEM (channel), NULL);
   gimp_image_flush (image);
 }
 
@@ -217,7 +217,7 @@ channels_lower_to_bottom_cmd_callback (GtkAction *action,
   GimpChannel *channel;
   return_if_no_channel (image, channel, data);
 
-  gimp_image_lower_channel_to_bottom (image, channel);
+  gimp_image_lower_item_to_bottom (image, GIMP_ITEM (channel));
   gimp_image_flush (image);
 }
 
@@ -311,10 +311,8 @@ channels_to_selection_cmd_callback (GtkAction *action,
       GimpChannel *channel;
       return_if_no_channel (image, channel, data);
 
-      gimp_channel_select_channel (gimp_image_get_mask (image),
-                                   _("Channel to Selection"),
-                                   channel, 0, 0,
-                                   op, FALSE, 0.0, 0.0);
+      gimp_item_to_selection (GIMP_ITEM (channel),
+                              op, TRUE, FALSE, 0.0, 0.0);
     }
 
   gimp_image_flush (image);

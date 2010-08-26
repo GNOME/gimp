@@ -26,6 +26,16 @@
 
 #include "gimp.h"
 
+
+/**
+ * SECTION: gimpbrush
+ * @title: gimpbrush
+ * @short_description: Functions operating on a single brush.
+ *
+ * Functions operating on a single brush.
+ **/
+
+
 /**
  * gimp_brush_new:
  * @name: The requested name of the new brush.

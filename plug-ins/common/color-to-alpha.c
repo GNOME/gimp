@@ -164,7 +164,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS &&
       gimp_drawable_is_rgb (drawable->drawable_id) &&
-      gimp_drawable_is_layer (drawable->drawable_id))
+      gimp_item_is_layer (drawable->drawable_id))
     {
       gboolean lock_alpha;
 
@@ -407,7 +407,7 @@ color_to_alpha_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("From:"));
+  label = gtk_label_new (C_("color-to-alpha", "From:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
