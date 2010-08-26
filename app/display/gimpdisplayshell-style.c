@@ -304,16 +304,6 @@ gimp_display_shell_set_stipple_style (cairo_t       *cr,
         }
     }
 
-  if (FALSE)//index > 0)
-    {
-      gint    move = index * 4;
-      guchar *buf  = g_alloca (8 * 8 * 4);
-
-      memcpy (buf, data, 8 * 8 * 4);
-      memcpy (data, buf + 8 * 8 * 4 - move, move);
-      memcpy (data + move, buf, 8 * 8 * 4 - move);
-    }
-
   surface = cairo_image_surface_create_for_data (data,
                                                  CAIRO_FORMAT_ARGB32,
                                                  8, 8, 8 * 4);
