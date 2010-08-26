@@ -566,6 +566,69 @@ gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
 }
 
 void
+gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
+                                       cairo_t          *cr,
+                                       GdkSegment       *segs,
+                                       gint              n_segs)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (segs != NULL && n_segs > 0);
+
+  gimp_display_shell_set_selection_out_style (shell, cr);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      if (segs[i].x1 == segs[i].x2)
+        {
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+        }
+      else
+        {
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+        }
+    }
+
+  cairo_stroke (cr);
+}
+
+void
+gimp_display_shell_draw_selection_in (GimpDisplayShell *shell,
+                                      cairo_t          *cr,
+                                      GdkSegment       *segs,
+                                      gint              n_segs,
+                                      gint              index)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (segs != NULL && n_segs > 0);
+
+  gimp_display_shell_set_selection_in_style (shell, cr, index);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      if (segs[i].x1 == segs[i].x2)
+        {
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+        }
+      else
+        {
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+        }
+    }
+
+  cairo_stroke (cr);
+}
+
+void
 gimp_display_shell_draw_vector (GimpDisplayShell *shell,
                                 GimpVectors      *vectors)
 {

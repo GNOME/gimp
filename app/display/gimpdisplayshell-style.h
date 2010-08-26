@@ -22,25 +22,30 @@
 #define __GIMP_DISPLAY_SHELL_STYLE_H__
 
 
-void   gimp_display_shell_set_guide_style        (GimpDisplayShell *shell,
-                                                  cairo_t          *cr,
-                                                  gboolean          active);
-void   gimp_display_shell_set_sample_point_style (GimpDisplayShell *shell,
-                                                  cairo_t          *cr,
-                                                  gboolean          active);
-void   gimp_display_shell_set_grid_style         (GimpDisplayShell *shell,
-                                                  cairo_t          *cr,
-                                                  GimpGrid         *grid);
-void   gimp_display_shell_set_cursor_style       (GimpDisplayShell *shell,
-                                                  cairo_t          *cr);
-void   gimp_display_shell_set_pen_style          (GimpDisplayShell *shell,
-                                                  cairo_t          *cr,
-                                                  GimpContext      *context,
-                                                  GimpActiveColor   active,
-                                                  gint              width);
-void   gimp_display_shell_set_layer_style        (GimpDisplayShell *shell,
-                                                  cairo_t          *cr,
-                                                  GimpDrawable     *drawable);
+void   gimp_display_shell_set_guide_style         (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   gboolean          active);
+void   gimp_display_shell_set_sample_point_style  (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   gboolean          active);
+void   gimp_display_shell_set_grid_style          (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   GimpGrid         *grid);
+void   gimp_display_shell_set_cursor_style        (GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
+void   gimp_display_shell_set_pen_style           (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   GimpContext      *context,
+                                                   GimpActiveColor   active,
+                                                   gint              width);
+void   gimp_display_shell_set_layer_style         (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   GimpDrawable     *drawable);
+void   gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
+void   gimp_display_shell_set_selection_in_style  (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   gint              index);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

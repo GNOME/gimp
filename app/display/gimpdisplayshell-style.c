@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -53,12 +55,19 @@ static const GimpRGB layer_group_bg      = { 0.0, 1.0, 1.0, 1.0 };
 static const GimpRGB layer_mask_fg       = { 0.0, 0.0, 0.0, 1.0 };
 static const GimpRGB layer_mask_bg       = { 0.0, 1.0, 0.0, 1.0 };
 
+static const GimpRGB selection_out_fg    = { 1.0, 1.0, 1.0, 1.0 };
+static const GimpRGB selection_out_bg    = { 0.5, 0.5, 0.5, 1.0 };
+
+static const GimpRGB selection_in_fg     = { 0.0, 0.0, 0.0, 1.0 };
+static const GimpRGB selection_in_bg     = { 1.0, 1.0, 1.0, 1.0 };
+
 
 /*  local function prototypes  */
 
 static void   gimp_display_shell_set_stipple_style (cairo_t       *cr,
                                                     const GimpRGB *fg,
-                                                    const GimpRGB *bg);
+                                                    const GimpRGB *bg,
+                                                    gint           index);
 
 
 /*  public functions  */
@@ -76,11 +85,13 @@ gimp_display_shell_set_guide_style (GimpDisplayShell *shell,
   if (active)
     gimp_display_shell_set_stipple_style (cr,
                                           &guide_active_fg,
-                                          &guide_active_bg);
+                                          &guide_active_bg,
+                                          0);
   else
     gimp_display_shell_set_stipple_style (cr,
                                           &guide_normal_fg,
-                                          &guide_normal_bg);
+                                          &guide_normal_bg,
+                                          0);
 }
 
 void
@@ -124,7 +135,8 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
         {
           gimp_display_shell_set_stipple_style (cr,
                                                 &grid->fgcolor,
-                                                &grid->bgcolor);
+                                                &grid->bgcolor,
+                                                0);
         }
       else
         {
@@ -132,7 +144,8 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
 
           gimp_display_shell_set_stipple_style (cr,
                                                 &grid->fgcolor,
-                                                &bg);
+                                                &bg,
+                                                0);
         }
       break;
 
@@ -205,20 +218,54 @@ gimp_display_shell_set_layer_style (GimpDisplayShell *shell,
     {
       gimp_display_shell_set_stipple_style (cr,
                                             &layer_mask_fg,
-                                            &layer_mask_bg);
+                                            &layer_mask_bg,
+                                            0);
     }
   else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
     {
       gimp_display_shell_set_stipple_style (cr,
                                             &layer_group_fg,
-                                            &layer_group_bg);
+                                            &layer_group_bg,
+                                            0);
     }
   else
     {
       gimp_display_shell_set_stipple_style (cr,
                                             &layer_fg,
-                                            &layer_bg);
+                                            &layer_bg,
+                                            0);
     }
+}
+
+void
+gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
+                                            cairo_t          *cr)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+
+  gimp_display_shell_set_stipple_style (cr,
+                                        &selection_out_fg,
+                                        &selection_out_bg,
+                                        0);
+}
+
+void
+gimp_display_shell_set_selection_in_style (GimpDisplayShell *shell,
+                                           cairo_t          *cr,
+                                           gint              index)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+
+  gimp_display_shell_set_stipple_style (cr,
+                                        &selection_in_fg,
+                                        &selection_in_bg,
+                                        index);
 }
 
 
@@ -229,7 +276,8 @@ static cairo_user_data_key_t surface_data_key = { 0, };
 static void
 gimp_display_shell_set_stipple_style (cairo_t       *cr,
                                       const GimpRGB *fg,
-                                      const GimpRGB *bg)
+                                      const GimpRGB *bg,
+                                      gint           index)
 {
   cairo_surface_t *surface;
   guchar          *data = g_malloc0 (8 * 8 * 4);
@@ -247,13 +295,23 @@ gimp_display_shell_set_stipple_style (cairo_t       *cr,
     {
       for (x = 0; x < 8; x++)
         {
-          if ((y < 4 && x < 4) || (y >= 4 && x >= 4))
+          if ((x + y + index) % 8 >= 4)
             GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
           else
             GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
 
           d += 4;
         }
+    }
+
+  if (FALSE)//index > 0)
+    {
+      gint    move = index * 4;
+      guchar *buf  = g_alloca (8 * 8 * 4);
+
+      memcpy (buf, data, 8 * 8 * 4);
+      memcpy (data, buf + 8 * 8 * 4 - move, move);
+      memcpy (data + move, buf, 8 * 8 * 4 - move);
     }
 
   surface = cairo_image_surface_create_for_data (data,

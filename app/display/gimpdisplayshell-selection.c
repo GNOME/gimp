@@ -51,6 +51,8 @@ struct _Selection
 {
   GimpDisplayShell *shell;            /*  shell that owns the selection     */
 
+  gboolean          use_cairo;        /*  temp hack                         */
+
   GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
   gint              n_segs_in;        /*  number of segments in segs_in     */
 
@@ -122,6 +124,7 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
   selection = g_slice_new0 (Selection);
 
   selection->shell        = shell;
+  selection->use_cairo    = g_getenv ("CAIRO_SELECTION") != NULL;
   selection->visible      = TRUE;
   selection->hidden       = ! gimp_display_shell_get_show_selection (shell);
   selection->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
@@ -295,70 +298,105 @@ selection_resume (Selection *selection)
     selection_start (selection);
 }
 
+/* #define BENCHMARK 1 */
+
 static void
 selection_draw (Selection *selection)
 {
   GimpCanvas *canvas = GIMP_CANVAS (selection->shell->canvas);
+#ifdef BENCHMARK
+  GTimer     *timer  = g_timer_new ();
+  gint        test;
 
+  for (test = 0; test < 20; test++)
+    {
+#endif /* BENCHMARK */
+  if (selection->use_cairo)
+    {
+      if (selection->segs_in)
+        {
+          cairo_t *cr;
+
+          cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+
+          gimp_display_shell_draw_selection_in (selection->shell, cr,
+                                                selection->segs_in,
+                                                selection->n_segs_in,
+                                                selection->index % 8);
+
+          cairo_destroy (cr);
+        }
+    }
+  else
+    {
 #ifdef USE_DRAWPOINTS
 
 #ifdef VERBOSE
-  {
-    gint j, sum;
+      {
+        gint j, sum;
 
-    sum = 0;
-    for (j = 0; j < 8; j++)
-      sum += selection->num_points_in[j];
+        sum = 0;
+        for (j = 0; j < 8; j++)
+          sum += selection->num_points_in[j];
 
-    g_print ("%d segments, %d points\n", selection->n_segs_in, sum);
-  }
+        g_print ("%d segments, %d points\n", selection->n_segs_in, sum);
+      }
 #endif
 
-  if (selection->segs_in)
-    {
-      gint i;
-
-      if (selection->index == 0)
+      if (selection->segs_in)
         {
-          for (i = 0; i < 4; i++)
-            if (selection->num_points_in[i])
-              gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
-                                       selection->points_in[i],
-                                       selection->num_points_in[i]);
+          gint i;
 
-          for (i = 4; i < 8; i++)
-            if (selection->num_points_in[i])
-              gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
-                                       selection->points_in[i],
-                                       selection->num_points_in[i]);
-        }
-      else
-        {
-          i = ((selection->index + 3) & 7);
-          if (selection->num_points_in[i])
-            gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
-                                     selection->points_in[i],
-                                     selection->num_points_in[i]);
+          if (selection->index == 0)
+            {
+              for (i = 0; i < 4; i++)
+                if (selection->num_points_in[i])
+                  gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
+                                           selection->points_in[i],
+                                           selection->num_points_in[i]);
 
-          i = ((selection->index + 7) & 7);
-          if (selection->num_points_in[i])
-            gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
-                                     selection->points_in[i],
-                                     selection->num_points_in[i]);
+              for (i = 4; i < 8; i++)
+                if (selection->num_points_in[i])
+                  gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
+                                           selection->points_in[i],
+                                           selection->num_points_in[i]);
+            }
+          else
+            {
+              i = ((selection->index + 3) & 7);
+              if (selection->num_points_in[i])
+                gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
+                                         selection->points_in[i],
+                                         selection->num_points_in[i]);
+
+              i = ((selection->index + 7) & 7);
+              if (selection->num_points_in[i])
+                gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
+                                         selection->points_in[i],
+                                         selection->num_points_in[i]);
+            }
         }
-    }
 
 #else  /*  ! USE_DRAWPOINTS  */
 
-  gimp_canvas_set_stipple_index (canvas,
-                                 GIMP_CANVAS_STYLE_SELECTION_IN,
-                                 selection->index);
-  if (selection->segs_in)
-    gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_IN,
-                               selection->segs_in,
-                               selection->n_segs_in);
+      gimp_canvas_set_stipple_index (canvas,
+                                     GIMP_CANVAS_STYLE_SELECTION_IN,
+                                     selection->index);
+      if (selection->segs_in)
+        gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_IN,
+                                   selection->segs_in,
+                                   selection->n_segs_in);
 
 #endif  /*  USE_DRAWPOINTS  */
+    }
+#ifdef BENCHMARK
+    }
+
+  g_printerr ("drawing 20 selections took %f seconds\n",
+              g_timer_elapsed (timer, NULL));
+
+  g_timer_destroy (timer);
+#endif /* BENCHMARK */
 }
 
 static void
@@ -739,10 +777,26 @@ selection_start_timeout (Selection *selection)
       selection_draw (selection);
 
       if (selection->segs_out)
-        gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
-                                   selection->segs_out,
-                                   selection->n_segs_out);
+        {
+          if (selection->use_cairo)
+            {
+              cairo_t *cr;
 
+              cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+
+              gimp_display_shell_draw_selection_out (selection->shell, cr,
+                                                     selection->segs_out,
+                                                     selection->n_segs_out);
+
+              cairo_destroy (cr);
+            }
+          else
+            {
+              gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
+                                         selection->segs_out,
+                                         selection->n_segs_out);
+            }
+        }
 
       if (selection->segs_in && selection->visible)
         selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,

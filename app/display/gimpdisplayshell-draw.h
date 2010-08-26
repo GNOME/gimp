@@ -53,6 +53,15 @@ void   gimp_display_shell_draw_layer_boundary        (GimpDisplayShell   *shell,
                                                       GimpDrawable       *drawable,
                                                       GdkSegment         *segs,
                                                       gint                n_segs);
+void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      GdkSegment         *segs,
+                                                      gint                n_segs);
+void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      GdkSegment         *segs,
+                                                      gint                n_segs,
+                                                      gint                index);
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell);
