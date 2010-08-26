@@ -2017,7 +2017,6 @@ libgimpmath/Makefile
 libgimpmodule/Makefile
 libgimpthumb/Makefile
 libgimpwidgets/Makefile
-app/gimp.rc
 app/Makefile
 app/actions/Makefile
 app/base/Makefile
@@ -2049,6 +2048,9 @@ app/tests/gimpdir/Makefile
 app/tests/gimpdir/brushes/Makefile
 app/tests/gimpdir/gradients/Makefile
 app/tests/gimpdir/patterns/Makefile
+build/Makefile
+build/windows/Makefile
+build/windows/gimp.rc
 plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
