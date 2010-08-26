@@ -41,17 +41,9 @@
 #include "gimpdisplayshell-transform.h"
 
 
-#undef  VERBOSE
-
-#define MAX_POINTS_INC    2048
-#define USE_DRAWPOINTS    TRUE
-
-
 struct _Selection
 {
   GimpDisplayShell *shell;            /*  shell that owns the selection     */
-
-  gboolean          use_cairo;        /*  temp hack                         */
 
   GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
   gint              n_segs_in;        /*  number of segments in segs_in     */
@@ -68,8 +60,7 @@ struct _Selection
   gboolean          hidden;           /*  is the selection hidden?          */
   gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout;          /*  timer for successive draws        */
-  GdkPoint         *points_in[8];     /*  points of segs_in for fast ants   */
-  gint              num_points_in[8]; /*  number of points in points_in     */
+  cairo_pattern_t  *segs_in_mask;     /*  cache for rendered segments       */
 };
 
 
@@ -86,12 +77,7 @@ static void      selection_undraw         (Selection      *selection);
 static void      selection_layer_undraw   (Selection      *selection);
 static void      selection_layer_draw     (Selection      *selection);
 
-static void      selection_add_point      (GdkPoint       *points[8],
-                                           gint            max_npoints[8],
-                                           gint            npoints[8],
-                                           gint            x,
-                                           gint            y);
-static void      selection_render_points  (Selection      *selection);
+static void      selection_render_mask    (Selection      *selection);
 
 static void      selection_transform_segs (Selection      *selection,
                                            const BoundSeg *src_segs,
@@ -124,7 +110,6 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
   selection = g_slice_new0 (Selection);
 
   selection->shell        = shell;
-  selection->use_cairo    = g_getenv ("CAIRO_SELECTION") != NULL;
   selection->visible      = TRUE;
   selection->hidden       = ! gimp_display_shell_get_show_selection (shell);
   selection->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
@@ -298,105 +283,21 @@ selection_resume (Selection *selection)
     selection_start (selection);
 }
 
-/* #define BENCHMARK 1 */
-
 static void
 selection_draw (Selection *selection)
 {
-  GimpCanvas *canvas = GIMP_CANVAS (selection->shell->canvas);
-#ifdef BENCHMARK
-  GTimer     *timer  = g_timer_new ();
-  gint        test;
-
-  for (test = 0; test < 20; test++)
+  if (selection->segs_in)
     {
-#endif /* BENCHMARK */
-  if (selection->use_cairo)
-    {
-      if (selection->segs_in)
-        {
-          cairo_t *cr;
+      cairo_t *cr;
 
-          cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+      cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
 
-          gimp_display_shell_draw_selection_in (selection->shell, cr,
-                                                selection->segs_in,
-                                                selection->n_segs_in,
-                                                selection->index % 8);
+      gimp_display_shell_draw_selection_in_mask (selection->shell, cr,
+                                                 selection->segs_in_mask,
+                                                 selection->index % 8);
 
-          cairo_destroy (cr);
-        }
+      cairo_destroy (cr);
     }
-  else
-    {
-#ifdef USE_DRAWPOINTS
-
-#ifdef VERBOSE
-      {
-        gint j, sum;
-
-        sum = 0;
-        for (j = 0; j < 8; j++)
-          sum += selection->num_points_in[j];
-
-        g_print ("%d segments, %d points\n", selection->n_segs_in, sum);
-      }
-#endif
-
-      if (selection->segs_in)
-        {
-          gint i;
-
-          if (selection->index == 0)
-            {
-              for (i = 0; i < 4; i++)
-                if (selection->num_points_in[i])
-                  gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
-                                           selection->points_in[i],
-                                           selection->num_points_in[i]);
-
-              for (i = 4; i < 8; i++)
-                if (selection->num_points_in[i])
-                  gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
-                                           selection->points_in[i],
-                                           selection->num_points_in[i]);
-            }
-          else
-            {
-              i = ((selection->index + 3) & 7);
-              if (selection->num_points_in[i])
-                gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_WHITE,
-                                         selection->points_in[i],
-                                         selection->num_points_in[i]);
-
-              i = ((selection->index + 7) & 7);
-              if (selection->num_points_in[i])
-                gimp_canvas_draw_points (canvas, GIMP_CANVAS_STYLE_BLACK,
-                                         selection->points_in[i],
-                                         selection->num_points_in[i]);
-            }
-        }
-
-#else  /*  ! USE_DRAWPOINTS  */
-
-      gimp_canvas_set_stipple_index (canvas,
-                                     GIMP_CANVAS_STYLE_SELECTION_IN,
-                                     selection->index);
-      if (selection->segs_in)
-        gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_IN,
-                                   selection->segs_in,
-                                   selection->n_segs_in);
-
-#endif  /*  USE_DRAWPOINTS  */
-    }
-#ifdef BENCHMARK
-    }
-
-  g_printerr ("drawing 20 selections took %f seconds\n",
-              g_timer_elapsed (timer, NULL));
-
-  g_timer_destroy (timer);
-#endif /* BENCHMARK */
 }
 
 static void
@@ -474,137 +375,21 @@ selection_layer_undraw (Selection *selection)
 }
 
 static void
-selection_add_point (GdkPoint *points[8],
-                     gint      max_npoints[8],
-                     gint      npoints[8],
-                     gint      x,
-                     gint      y)
+selection_render_mask (Selection *selection)
 {
-  gint i, j;
+  cairo_t *cr;
 
-  j = (x - y) & 7;
+  cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
 
-  i = npoints[j]++;
-  if (i == max_npoints[j])
-    {
-      max_npoints[j] += 2048;
-      points[j] = g_realloc (points[j], sizeof (GdkPoint) * max_npoints[j]);
-    }
+  cairo_push_group_with_content (cr, CAIRO_CONTENT_ALPHA);
 
-  points[j][i].x = x;
-  points[j][i].y = y;
-}
+  gimp_display_shell_draw_selection_segments (selection->shell, cr,
+                                              selection->segs_in,
+                                              selection->n_segs_in);
 
+  selection->segs_in_mask = cairo_pop_group (cr);
 
-/* Render the segs_in array into points_in */
-
-static void
-selection_render_points (Selection *selection)
-{
-  gint max_npoints[8];
-  gint i;
-
-  if (selection->segs_in == NULL)
-    return;
-
-  for (i = 0; i < 8; i++)
-    {
-      max_npoints[i] = MAX_POINTS_INC;
-      selection->points_in[i] = g_new (GdkPoint, max_npoints[i]);
-      selection->num_points_in[i] = 0;
-    }
-
-  for (i = 0; i < selection->n_segs_in; i++)
-    {
-      gint x, y;
-      gint dx, dy;
-      gint dxa, dya;
-      gint r;
-
-#ifdef VERBOSE
-      g_print ("%2d: (%d, %d) - (%d, %d)\n", i,
-               selection->segs_in[i].x1,
-               selection->segs_in[i].y1,
-               selection->segs_in[i].x2,
-               selection->segs_in[i].y2);
-#endif
-
-      x = selection->segs_in[i].x1;
-      dxa = selection->segs_in[i].x2 - x;
-
-      if (dxa > 0)
-        {
-          dx = 1;
-        }
-      else
-        {
-          dxa = -dxa;
-          dx = -1;
-        }
-
-      y = selection->segs_in[i].y1;
-      dya = selection->segs_in[i].y2 - y;
-
-      if (dya > 0)
-        {
-          dy = 1;
-        }
-      else
-        {
-          dya = -dya;
-          dy = -1;
-        }
-
-      if (dxa > dya)
-        {
-          r = dya;
-
-          do
-            {
-              selection_add_point (selection->points_in,
-                                   max_npoints,
-                                   selection->num_points_in,
-                                   x, y);
-              x += dx;
-              r += dya;
-
-              if (r >= (dxa << 1))
-                {
-                  y += dy;
-                  r -= (dxa << 1);
-                }
-            }
-          while (x != selection->segs_in[i].x2);
-        }
-      else if (dxa < dya)
-        {
-          r = dxa;
-
-          do
-            {
-              selection_add_point (selection->points_in,
-                                   max_npoints,
-                                   selection->num_points_in,
-                                   x, y);
-              y += dy;
-              r += dxa;
-
-              if (r >= (dya << 1))
-                {
-                  x += dx;
-                  r -= (dya << 1);
-                }
-            }
-          while (y != selection->segs_in[i].y2);
-        }
-      else
-        {
-          selection_add_point (selection->points_in,
-                               max_npoints,
-                               selection->num_points_in,
-                               x, y);
-        }
-    }
+  cairo_destroy (cr);
 }
 
 static void
@@ -672,9 +457,7 @@ selection_generate_segs (Selection *selection)
       selection_transform_segs (selection, segs_in,
                                 selection->segs_in, selection->n_segs_in);
 
-#ifdef USE_DRAWPOINTS
-      selection_render_points (selection);
-#endif
+      selection_render_mask (selection);
     }
   else
     {
@@ -718,8 +501,6 @@ selection_generate_segs (Selection *selection)
 static void
 selection_free_segs (Selection *selection)
 {
-  gint j;
-
   if (selection->segs_in)
     {
       g_free (selection->segs_in);
@@ -741,14 +522,10 @@ selection_free_segs (Selection *selection)
       selection->n_segs_layer = 0;
     }
 
-  for (j = 0; j < 8; j++)
+  if (selection->segs_in_mask)
     {
-      if (selection->points_in[j])
-        {
-          g_free (selection->points_in[j]);
-          selection->points_in[j]     = NULL;
-          selection->num_points_in[j] = 0;
-        }
+      cairo_pattern_destroy (selection->segs_in_mask);
+      selection->segs_in_mask = NULL;
     }
 }
 
@@ -771,31 +548,21 @@ selection_start_timeout (Selection *selection)
   /*  Draw the ants  */
   if (! selection->hidden)
     {
-      GimpCanvas        *canvas = GIMP_CANVAS (selection->shell->canvas);
       GimpDisplayConfig *config = selection->shell->display->config;
 
       selection_draw (selection);
 
       if (selection->segs_out)
         {
-          if (selection->use_cairo)
-            {
-              cairo_t *cr;
+          cairo_t *cr;
 
-              cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
+          cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
 
-              gimp_display_shell_draw_selection_out (selection->shell, cr,
-                                                     selection->segs_out,
-                                                     selection->n_segs_out);
+          gimp_display_shell_draw_selection_out (selection->shell, cr,
+                                                 selection->segs_out,
+                                                 selection->n_segs_out);
 
-              cairo_destroy (cr);
-            }
-          else
-            {
-              gimp_canvas_draw_segments (canvas, GIMP_CANVAS_STYLE_SELECTION_OUT,
-                                         selection->segs_out,
-                                         selection->n_segs_out);
-            }
+          cairo_destroy (cr);
         }
 
       if (selection->segs_in && selection->visible)

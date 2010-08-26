@@ -598,11 +598,10 @@ gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_selection_in (GimpDisplayShell *shell,
-                                      cairo_t          *cr,
-                                      GdkSegment       *segs,
-                                      gint              n_segs,
-                                      gint              index)
+gimp_display_shell_draw_selection_segments (GimpDisplayShell *shell,
+                                            cairo_t          *cr,
+                                            GdkSegment       *segs,
+                                            gint              n_segs)
 {
   gint i;
 
@@ -610,7 +609,7 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
-  gimp_display_shell_set_selection_in_style (shell, cr, index);
+  cairo_set_line_width (cr, 1.0);
 
   for (i = 0; i < n_segs; i++)
     {
@@ -627,6 +626,21 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell *shell,
     }
 
   cairo_stroke (cr);
+}
+
+void
+gimp_display_shell_draw_selection_in_mask (GimpDisplayShell   *shell,
+                                           cairo_t            *cr,
+                                           cairo_pattern_t    *mask,
+                                           gint                index)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (mask != NULL);
+
+  gimp_display_shell_set_selection_in_style (shell, cr, index);
+
+  cairo_mask (cr, mask);
 }
 
 void

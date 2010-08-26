@@ -24,14 +24,10 @@
 
 typedef enum
 {
-  GIMP_CANVAS_STYLE_BLACK,
-  GIMP_CANVAS_STYLE_WHITE,
   GIMP_CANVAS_STYLE_RENDER,
   GIMP_CANVAS_STYLE_XOR,
   GIMP_CANVAS_STYLE_XOR_DASHED,
   GIMP_CANVAS_STYLE_XOR_DOTTED,
-  GIMP_CANVAS_STYLE_SELECTION_IN,
-  GIMP_CANVAS_STYLE_SELECTION_OUT,
   GIMP_CANVAS_NUM_STYLES
 } GimpCanvasStyle;
 
@@ -147,9 +143,6 @@ void         gimp_canvas_set_clip_rect     (GimpCanvas         *canvas,
 void         gimp_canvas_set_clip_region   (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             const GdkRegion    *region);
-void         gimp_canvas_set_stipple_index (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            guint               index);
 void         gimp_canvas_set_bg_color      (GimpCanvas         *canvas,
                                             GimpRGB            *color);
 
