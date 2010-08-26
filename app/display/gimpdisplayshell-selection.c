@@ -348,15 +348,15 @@ selection_layer_undraw (Selection *selection)
 
   if (selection->segs_layer && selection->n_segs_layer == 4)
     {
-      gint x1 = selection->segs_layer[0].x1 - 1;
-      gint y1 = selection->segs_layer[0].y1 - 1;
-      gint x2 = selection->segs_layer[3].x2 + 1;
-      gint y2 = selection->segs_layer[3].y2 + 1;
+      const gint x1 = selection->segs_layer[0].x1 - 1;
+      const gint y1 = selection->segs_layer[0].y1 - 1;
+      const gint x2 = selection->segs_layer[3].x2 + 1;
+      const gint y2 = selection->segs_layer[3].y2 + 1;
 
-      gint x3 = selection->segs_layer[0].x1 + 1;
-      gint y3 = selection->segs_layer[0].y1 + 1;
-      gint x4 = selection->segs_layer[3].x2 - 1;
-      gint y4 = selection->segs_layer[3].y2 - 1;
+      const gint x3 = selection->segs_layer[0].x1 + 1;
+      const gint y3 = selection->segs_layer[0].y1 + 1;
+      const gint x4 = selection->segs_layer[3].x2 - 1;
+      const gint y4 = selection->segs_layer[3].y2 - 1;
 
       /*  expose the region, this will restart the selection  */
       gimp_display_shell_expose_area (selection->shell,
@@ -398,9 +398,9 @@ selection_transform_segs (Selection      *selection,
                           GdkSegment     *dest_segs,
                           gint            n_segs)
 {
-  gint xclamp = selection->shell->disp_width + 1;
-  gint yclamp = selection->shell->disp_height + 1;
-  gint i;
+  const gint xclamp = selection->shell->disp_width + 1;
+  const gint yclamp = selection->shell->disp_height + 1;
+  gint       i;
 
   gimp_display_shell_transform_segments (selection->shell,
                                          src_segs, dest_segs, n_segs, FALSE);
@@ -418,7 +418,7 @@ selection_transform_segs (Selection      *selection,
        *  lie outside the region...
        *  we need to transform it by one display pixel
        */
-      if (!src_segs[i].open)
+      if (! src_segs[i].open)
         {
           /*  If it is vertical  */
           if (dest_segs[i].x1 == dest_segs[i].x2)
