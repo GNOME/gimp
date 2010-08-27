@@ -44,6 +44,7 @@
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage.h"
+#include "core/gimpitem.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
@@ -957,6 +958,272 @@ image_remove_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+image_add_channel_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpChannel *channel;
+  gint32 position;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  channel = gimp_value_get_channel (&args->values[1], gimp);
+  position = g_value_get_int (&args->values[2]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
+        {
+          /* FIXME tree */
+          success = gimp_image_add_channel (image, channel,
+                                            NULL, MAX (position, -1), TRUE);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_remove_channel_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpChannel *channel;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  channel = gimp_value_get_channel (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
+        gimp_image_remove_channel (image, channel, TRUE, NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_add_vectors_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpVectors *vectors;
+  gint32 position;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+  position = g_value_get_int (&args->values[2]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
+        {
+          /* FIXME tree */
+          success = gimp_image_add_vectors (image, vectors,
+                                            NULL, MAX (position, -1), TRUE);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_remove_vectors_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpVectors *vectors;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
+        gimp_image_remove_vectors (image, vectors, TRUE, NULL);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_get_item_position_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpItem *item;
+  gint32 position = 0;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  item = gimp_value_get_item (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+        position = gimp_item_get_index (item);
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_int (&return_vals->values[1], position);
+
+  return return_vals;
+}
+
+static GValueArray *
+image_raise_item_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpItem *item;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  item = gimp_value_get_item (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+        success = gimp_image_raise_item (image, item, error);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_lower_item_invoker (GimpProcedure      *procedure,
+                          Gimp               *gimp,
+                          GimpContext        *context,
+                          GimpProgress       *progress,
+                          const GValueArray  *args,
+                          GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpItem *item;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  item = gimp_value_get_item (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+        success = gimp_image_lower_item (image, item, error);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_raise_item_to_top_invoker (GimpProcedure      *procedure,
+                                 Gimp               *gimp,
+                                 GimpContext        *context,
+                                 GimpProgress       *progress,
+                                 const GValueArray  *args,
+                                 GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpItem *item;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  item = gimp_value_get_item (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+        success = gimp_image_raise_item_to_top (image, item);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_lower_item_to_bottom_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpItem *item;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  item = gimp_value_get_item (&args->values[1], gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+        success = gimp_image_lower_item_to_bottom (image, item);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 image_get_layer_position_invoker (GimpProcedure      *procedure,
                                   Gimp               *gimp,
                                   GimpContext        *context,
@@ -1101,68 +1368,6 @@ image_lower_layer_to_bottom_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-image_add_channel_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpChannel *channel;
-  gint32 position;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  channel = gimp_value_get_channel (&args->values[1], gimp);
-  position = g_value_get_int (&args->values[2]);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
-        {
-          /* FIXME tree */
-          success = gimp_image_add_channel (image, channel,
-                                            NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
-image_remove_channel_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpChannel *channel;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  channel = gimp_value_get_channel (&args->values[1], gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
-        gimp_image_remove_channel (image, channel, TRUE, NULL);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
 image_get_channel_position_invoker (GimpProcedure      *procedure,
                                     Gimp               *gimp,
                                     GimpContext        *context,
@@ -1244,68 +1449,6 @@ image_lower_channel_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
         success = gimp_image_lower_item (image, GIMP_ITEM (channel), error);
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
-image_add_vectors_invoker (GimpProcedure      *procedure,
-                           Gimp               *gimp,
-                           GimpContext        *context,
-                           GimpProgress       *progress,
-                           const GValueArray  *args,
-                           GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpVectors *vectors;
-  gint32 position;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  vectors = gimp_value_get_vectors (&args->values[1], gimp);
-  position = g_value_get_int (&args->values[2]);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
-        {
-          /* FIXME tree */
-          success = gimp_image_add_vectors (image, vectors,
-                                            NULL, MAX (position, -1), TRUE);
-        }
-      else
-        {
-          success = FALSE;
-        }
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
-image_remove_vectors_invoker (GimpProcedure      *procedure,
-                              Gimp               *gimp,
-                              GimpContext        *context,
-                              GimpProgress       *progress,
-                              const GValueArray  *args,
-                              GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpVectors *vectors;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  vectors = gimp_value_get_vectors (&args->values[1], gimp);
-
-  if (success)
-    {
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
-        gimp_image_remove_vectors (image, vectors, TRUE, NULL);
       else
         success = FALSE;
     }
@@ -3458,157 +3601,6 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-layer-position
-   */
-  procedure = gimp_procedure_new (image_get_layer_position_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-layer-position");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-layer-position",
-                                     "Returns the position of the layer in the layer stack.",
-                                     "This procedure determines the position of the specified layer in the images layer stack. If the layer doesn't exist in the image, an error is returned.",
-                                     "Simon Budig",
-                                     "Simon Budig",
-                                     "2006",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("position",
-                                                          "position",
-                                                          "The position of the layer in the layer stack",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-raise-layer
-   */
-  procedure = gimp_procedure_new (image_raise_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-raise-layer");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-layer",
-                                     "Raise the specified layer in the image's layer stack",
-                                     "This procedure raises the specified layer one step in the existing layer stack. The procecure call will fail if there is no layer above it.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer to raise",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-lower-layer
-   */
-  procedure = gimp_procedure_new (image_lower_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-lower-layer");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-layer",
-                                     "Lower the specified layer in the image's layer stack",
-                                     "This procedure lowers the specified layer one step in the existing layer stack. The procecure call will fail if there is no layer below it.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer to lower",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-raise-layer-to-top
-   */
-  procedure = gimp_procedure_new (image_raise_layer_to_top_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-raise-layer-to-top");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-layer-to-top",
-                                     "Raise the specified layer in the image's layer stack to top of stack",
-                                     "This procedure raises the specified layer to top of the existing layer stack. It will not move the layer if there is no layer above it.",
-                                     "Wolfgang Hofer, Sven Neumann",
-                                     "Wolfgang Hofer",
-                                     "1998",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer to raise to top",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-lower-layer-to-bottom
-   */
-  procedure = gimp_procedure_new (image_lower_layer_to_bottom_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-lower-layer-to-bottom");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-layer-to-bottom",
-                                     "Lower the specified layer in the image's layer stack to bottom of stack",
-                                     "This procedure lowers the specified layer to bottom of the existing layer stack. It will not move the layer if there is no layer below it.",
-                                     "Wolfgang Hofer, Sven Neumann",
-                                     "Wolfgang Hofer",
-                                     "1998",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer_id ("layer",
-                                                         "layer",
-                                                         "The layer to lower to bottom",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
    * gimp-image-add-channel
    */
   procedure = gimp_procedure_new (image_add_channel_invoker);
@@ -3667,99 +3659,6 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_channel_id ("channel",
                                                            "channel",
                                                            "The channel",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-get-channel-position
-   */
-  procedure = gimp_procedure_new (image_get_channel_position_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-channel-position");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-channel-position",
-                                     "Returns the position of the channel in the channel stack.",
-                                     "This procedure determines the position of the specified channel in the images channel stack. If the channel doesn't exist in the image, an error is returned.",
-                                     "Simon Budig",
-                                     "Simon Budig",
-                                     "2006",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_int32 ("position",
-                                                          "position",
-                                                          "The position of the channel in the channel stack",
-                                                          G_MININT32, G_MAXINT32, 0,
-                                                          GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-raise-channel
-   */
-  procedure = gimp_procedure_new (image_raise_channel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-raise-channel");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-raise-channel",
-                                     "Raise the specified channel in the image's channel stack",
-                                     "This procedure raises the specified channel one step in the existing channel stack. The procecure call will fail if there is no channel above it.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel to raise",
-                                                           pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-lower-channel
-   */
-  procedure = gimp_procedure_new (image_lower_channel_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-lower-channel");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-lower-channel",
-                                     "Lower the specified channel in the image's channel stack",
-                                     "This procedure lowers the specified channel one step in the existing channel stack. The procecure call will fail if there is no channel below it.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_channel_id ("channel",
-                                                           "channel",
-                                                           "The channel to lower",
                                                            pdb->gimp, FALSE,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3830,6 +3729,401 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
+   * gimp-image-get-item-position
+   */
+  procedure = gimp_procedure_new (image_get_item_position_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-item-position");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-item-position",
+                                     "Returns the position of the item in its level of its item tree.",
+                                     "This procedure determines the position of the specified item in its level in its item tree in the image. If the item doesn't exist in the image, or the item is not part of an item tree, an error is returned.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The position of the item in its level in the item tree",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-raise-item
+   */
+  procedure = gimp_procedure_new (image_raise_item_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-raise-item");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-raise-item",
+                                     "Raise the specified item in its level in its item tree",
+                                     "This procedure raises the specified item one step in the item tree. The procecure call will fail if there is no item above it.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to raise",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-lower-item
+   */
+  procedure = gimp_procedure_new (image_lower_item_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-lower-item");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-lower-item",
+                                     "Lower the specified item in its level in its item tree",
+                                     "This procedure lowers the specified item one step in the item tree. The procecure call will fail if there is no item below it.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to lower",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-raise-item-to-top
+   */
+  procedure = gimp_procedure_new (image_raise_item_to_top_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-raise-item-to-top");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-raise-item-to-top",
+                                     "Raise the specified item to the top of its level in its item tree",
+                                     "This procedure raises the specified item to top of its level in the item tree. It will not move the item if there is no item above it.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to raise to top",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-lower-item-to-bottom
+   */
+  procedure = gimp_procedure_new (image_lower_item_to_bottom_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-lower-item-to-bottom");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-lower-item-to-bottom",
+                                     "Lower the specified item to the bottom of its level in its item tree",
+                                     "This procedure lowers the specified item to bottom of its level in the item tree. It will not move the layer if there is no layer below it.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to lower to bottom",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-layer-position
+   */
+  procedure = gimp_procedure_new (image_get_layer_position_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-layer-position");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-layer-position",
+                                     "Deprecated: Use 'gimp-image-get-item-position' instead.",
+                                     "Deprecated: Use 'gimp-image-get-item-position' instead.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     "gimp-image-get-item-position");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The position of the layer in the layer stack",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-raise-layer
+   */
+  procedure = gimp_procedure_new (image_raise_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-raise-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-raise-layer",
+                                     "Deprecated: Use 'gimp-image-raise-item' instead.",
+                                     "Deprecated: Use 'gimp-image-raise-item' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-raise-item");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to raise",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-lower-layer
+   */
+  procedure = gimp_procedure_new (image_lower_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-lower-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-lower-layer",
+                                     "Deprecated: Use 'gimp-image-lower-item' instead.",
+                                     "Deprecated: Use 'gimp-image-lower-item' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-lower-item");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to lower",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-raise-layer-to-top
+   */
+  procedure = gimp_procedure_new (image_raise_layer_to_top_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-raise-layer-to-top");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-raise-layer-to-top",
+                                     "Deprecated: Use 'gimp-image-raise-item-to-top' instead.",
+                                     "Deprecated: Use 'gimp-image-raise-item-to-top' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-raise-item-to-top");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to raise to top",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-lower-layer-to-bottom
+   */
+  procedure = gimp_procedure_new (image_lower_layer_to_bottom_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-lower-layer-to-bottom");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-lower-layer-to-bottom",
+                                     "Deprecated: Use 'gimp-image-lower-item-to-bottom' instead.",
+                                     "Deprecated: Use 'gimp-image-lower-item-to-bottom' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-lower-item-to-bottom");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer to lower to bottom",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-channel-position
+   */
+  procedure = gimp_procedure_new (image_get_channel_position_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-channel-position");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-channel-position",
+                                     "Deprecated: Use 'gimp-image-get-item-position' instead.",
+                                     "Deprecated: Use 'gimp-image-get-item-position' instead.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2006",
+                                     "gimp-image-get-item-position");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_channel_id ("channel",
+                                                           "channel",
+                                                           "The channel",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("position",
+                                                          "position",
+                                                          "The position of the channel in the channel stack",
+                                                          G_MININT32, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-raise-channel
+   */
+  procedure = gimp_procedure_new (image_raise_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-raise-channel");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-raise-channel",
+                                     "Deprecated: Use 'gimp-image-raise-item' instead.",
+                                     "Deprecated: Use 'gimp-image-raise-item' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-raise-item");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_channel_id ("channel",
+                                                           "channel",
+                                                           "The channel to raise",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-lower-channel
+   */
+  procedure = gimp_procedure_new (image_lower_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-lower-channel");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-lower-channel",
+                                     "Deprecated: Use 'gimp-image-lower-item' instead.",
+                                     "Deprecated: Use 'gimp-image-lower-item' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-lower-item");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_channel_id ("channel",
+                                                           "channel",
+                                                           "The channel to lower",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
    * gimp-image-get-vectors-position
    */
   procedure = gimp_procedure_new (image_get_vectors_position_invoker);
@@ -3837,12 +4131,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-get-vectors-position");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-vectors-position",
-                                     "Returns the position of the vectors object in the vectors objects stack.",
-                                     "This procedure determines the position of the specified vectors object in the images vectors object stack. If the vectors object doesn't exist in the image, an error is returned.",
+                                     "Deprecated: Use 'gimp-image-get-item-position' instead.",
+                                     "Deprecated: Use 'gimp-image-get-item-position' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
-                                     NULL);
+                                     "gimp-image-get-item-position");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3872,12 +4166,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-raise-vectors");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-vectors",
-                                     "Raise the specified vectors in the image's vectors stack",
-                                     "This procedure raises the specified vectors one step in the existing vectors stack. The procecure call will fail if there is no vectors above it.",
+                                     "Deprecated: Use 'gimp-image-raise-item' instead.",
+                                     "Deprecated: Use 'gimp-image-raise-item' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-image-raise-item");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3901,12 +4195,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-lower-vectors");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-vectors",
-                                     "Lower the specified vectors in the image's vectors stack",
-                                     "This procedure lowers the specified vectors one step in the existing vectors stack. The procecure call will fail if there is no vectors below it.",
+                                     "Deprecated: Use 'gimp-image-lower-item' instead.",
+                                     "Deprecated: Use 'gimp-image-lower-item' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-image-lower-item");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3930,12 +4224,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-raise-vectors-to-top");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-raise-vectors-to-top",
-                                     "Raise the specified vectors in the image's vectors stack to top of stack",
-                                     "This procedure raises the specified vectors to top of the existing vectors stack. It will not move the vectors if there is no vectors above it.",
+                                     "Deprecated: Use 'gimp-image-raise-item-to-top' instead.",
+                                     "Deprecated: Use 'gimp-image-raise-item-to-top' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-image-raise-item-to-top");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3959,12 +4253,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-lower-vectors-to-bottom");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-lower-vectors-to-bottom",
-                                     "Lower the specified vectors in the image's vectors stack to bottom of stack",
-                                     "This procedure lowers the specified vectors to bottom of the existing vectors stack. It will not move the vectors if there is no vectors below it.",
+                                     "Deprecated: Use 'gimp-image-lower-item-to-bottom' instead.",
+                                     "Deprecated: Use 'gimp-image-lower-item-to-bottom' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2005",
-                                     NULL);
+                                     "gimp-image-lower-item-to-bottom");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
