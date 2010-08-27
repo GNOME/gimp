@@ -31,6 +31,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpcairo.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -291,9 +293,9 @@ selection_draw (Selection *selection)
 
       cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
 
-      gimp_display_shell_draw_selection_in_mask (selection->shell, cr,
-                                                 selection->segs_in_mask,
-                                                 selection->index % 8);
+      gimp_display_shell_draw_selection_in (selection->shell, cr,
+                                            selection->segs_in_mask,
+                                            selection->index % 8);
 
       cairo_destroy (cr);
     }
@@ -383,9 +385,12 @@ selection_render_mask (Selection *selection)
 
   cairo_push_group_with_content (cr, CAIRO_CONTENT_ALPHA);
 
-  gimp_display_shell_draw_selection_segments (selection->shell, cr,
-                                              selection->segs_in,
-                                              selection->n_segs_in);
+  cairo_set_line_width (cr, 1.0);
+
+  gimp_cairo_add_segments (cr,
+                           selection->segs_in,
+                           selection->n_segs_in);
+  cairo_stroke (cr);
 
   selection->segs_in_mask = cairo_pop_group (cr);
 
