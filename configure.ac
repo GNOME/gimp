@@ -1317,7 +1317,7 @@ have_poppler=no
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
     poppler-glib >= poppler_required_version gthread-2.0,
-    FILE_PDF='file-pdf$(EXEEXT)'
+    FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
     AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
     have_poppler=yes,
     have_poppler="Using PostScript plug-in (libpoppler not found)")
@@ -1325,7 +1325,7 @@ else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
 fi
 
-AC_SUBST(FILE_PDF)
+AC_SUBST(FILE_PDF_LOAD)
 
 
 ################################
@@ -2194,7 +2194,7 @@ Optional Plug-Ins:
   JPEG:                $jpeg_ok
   JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
-  PDF:                 $have_poppler
+  PDF (import):        $have_poppler
   PNG:                 $have_libpng
   Print:               $enable_print
   PSP:                 $have_zlib

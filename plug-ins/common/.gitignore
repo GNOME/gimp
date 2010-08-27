@@ -130,8 +130,8 @@
 /file-pat.exe
 /file-pcx
 /file-pcx.exe
-/file-pdf
-/file-pdf.exe
+/file-pdf-load
+/file-pdf-load.exe
 /file-pix
 /file-pix.exe
 /file-png

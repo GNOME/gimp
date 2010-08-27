@@ -101,7 +101,7 @@ libexec_PROGRAMS = \
 	$(FILE_MNG) \
 	file-pat \
 	file-pcx \
-	$(FILE_PDF) \
+	$(FILE_PDF_LOAD) \
 	file-pix \
 	$(FILE_PNG) \
 	file-pnm \
@@ -186,7 +186,7 @@ EXTRA_PROGRAMS = \
 	file-aa \
 	file-jp2-load \
 	file-mng \
-	file-pdf \
+	file-pdf-load \
 	file-png \
 	file-psp \
 	file-svg \
@@ -1198,12 +1198,12 @@ file_pcx_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-file_pdf_CFLAGS = $(POPPLER_CFLAGS)
+file_pdf_load_CFLAGS = $(POPPLER_CFLAGS)
 
-file_pdf_SOURCES = \
-	file-pdf.c
+file_pdf_load_SOURCES = \
+	file-pdf-load.c
 
-file_pdf_LDADD = \
+file_pdf_load_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
