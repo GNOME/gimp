@@ -31,7 +31,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
-#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -333,7 +332,8 @@ selection_layer_draw (Selection *selection)
 
       cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
 
-      gimp_display_shell_draw_layer_boundary (selection->shell, cr, drawable,
+      gimp_display_shell_draw_layer_boundary (selection->shell, cr,
+                                              drawable,
                                               selection->segs_layer,
                                               selection->n_segs_layer);
 
