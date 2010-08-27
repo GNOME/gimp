@@ -1338,7 +1338,7 @@ have_cairo_pdf=no
 if test "x$with_cairo_pdf" != xno; then
   have_cairo_pdf=yes
   PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf >= cairo_pdf_required_version,
-    FILE_PDF_LOAD='file-pdf-load$(EXEEXT)',
+    FILE_PDF_SAVE='file-pdf-save$(EXEEXT)',
     have_cairo_pdf="no (cairo-pdf not found)")
 else
    have_cairo_pdf="no (cairo-pdf support disabled)"

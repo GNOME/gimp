@@ -184,7 +184,7 @@ static void               del_image_call             (GtkWidget *widget,
 static void               remove_call                (GtkTreeModel *tree_model,
                                                       GtkTreePath  *path,
                                                       gpointer      user_data);
-static void               recount_pages              ();
+static void               recount_pages              (void);
 
 static cairo_surface_t   *get_drawable_image         (GimpDrawable *drawable);
 static GimpRGB            get_layer_color            (GimpDrawable *layer,
@@ -349,9 +349,9 @@ run (const gchar      *name,
   GimpRGB                 layer_color;
   gboolean                single_color;
 
-  gint32                  mask_id;
-  GimpDrawable           *mask;
-  cairo_surface_t        *mask_image;
+  gint32                  mask_id = -1;
+  GimpDrawable           *mask = NULL;
+  cairo_surface_t        *mask_image = NULL;
 
   /* Setting mandatory output values */
   *nreturn_vals = 1;
@@ -464,7 +464,7 @@ run (const gchar      *name,
             }
 
           if (gimp_item_get_visible (layer->drawable_id)
-              && (! optimize.ignore || optimize.ignore && opacity > 0.0))
+              && (! optimize.ignore || (optimize.ignore && opacity > 0.0)))
             {
               mask_id = gimp_layer_get_mask (layer->drawable_id);
               if (mask_id != -1)
@@ -706,15 +706,15 @@ gui_single (void)
 
   ignore_c = gtk_check_button_new_with_label ("Don't Save layers which are hidden or have their opacity set to zero?");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_c), optimize.ignore);
-  gtk_box_pack_end_defaults (GTK_BOX (vbox), ignore_c);
+  gtk_box_pack_end (GTK_BOX (vbox), ignore_c, TRUE, TRUE, 0);
 
   convert_c = gtk_check_button_new_with_label ("Convert bitmaps to vector where possible?");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_c), optimize.convert);
-  gtk_box_pack_end_defaults (GTK_BOX (vbox), convert_c);
+  gtk_box_pack_end (GTK_BOX (vbox), convert_c, TRUE, TRUE, 0);
 
   apply_c = gtk_check_button_new_with_label ("Apply layer masks before saving? (Keeping the masks will not change the final result)");
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c), optimize.apply_masks);
-  gtk_box_pack_end_defaults (GTK_BOX (vbox), apply_c);
+  gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
 
   gtk_widget_show_all (window);
 
@@ -779,10 +779,10 @@ gui_multi (void)
                                              NULL);
 
   gtk_box_pack_start (GTK_BOX (file_hbox), file_label, FALSE, FALSE, 0);
-  gtk_box_pack_start_defaults (GTK_BOX (file_hbox), file_entry);
+  gtk_box_pack_start (GTK_BOX (file_hbox), file_entry, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (file_hbox), file_browse, FALSE, FALSE, 0);
 
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), file_hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), file_hbox, TRUE, TRUE, 0);
 
   page_view = gtk_icon_view_new ();
   model = create_model ();
@@ -800,13 +800,13 @@ gui_multi (void)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
   gtk_container_add (GTK_CONTAINER (scroll), page_view);
 
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), scroll);
+  gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 0);
 
   h_but_box = gtk_hbutton_box_new ();
   gtk_button_box_set_layout (GTK_BUTTON_BOX (h_but_box), GTK_BUTTONBOX_START);
 
   del = gtk_button_new_with_label ("Remove the selected pages");
-  gtk_box_pack_start_defaults (GTK_BOX (h_but_box), del);
+  gtk_box_pack_start (GTK_BOX (h_but_box), del, TRUE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (vbox), h_but_box, FALSE, FALSE, 0);
 
@@ -1023,7 +1023,7 @@ del_image_call (GtkWidget *widget,
           gtk_list_store_remove (GTK_LIST_STORE (model), &item);
 
           /* Now you can free the data */
-          gdk_pixbuf_unref (thumb);
+          g_object_unref(thumb);
           g_free (name);
 
           gtk_tree_path_free (item_path);
@@ -1098,7 +1098,7 @@ get_drawable_image (GimpDrawable *drawable)
   gint             width;
   gint             height;
 
-  guchar*          colors;
+  guchar*          colors = NULL;
   gint             num_colors;
   gboolean         indexed;
 
@@ -1343,7 +1343,7 @@ drawText (GimpDrawable *text_layer,
   /* Color */
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */
-  if (type = GIMP_RGB)
+  if (type == GIMP_RGB)
     gimp_text_layer_get_color (text_id, &color);
   else
     gimp_image_pick_color (gimp_item_get_image (text_id), text_id, x, y, FALSE, FALSE, 0, &color);
