@@ -67,6 +67,7 @@ void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell)
 void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
 void   gimp_display_shell_draw_area                  (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       gint                x,
                                                       gint                y,
                                                       gint                w,

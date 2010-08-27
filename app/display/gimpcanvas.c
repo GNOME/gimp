@@ -258,11 +258,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
   switch (style)
     {
-    case GIMP_CANVAS_STYLE_RENDER:
-      mask |= GDK_GC_EXPOSURES;
-      values.graphics_exposures = TRUE;
-      break;
-
     case GIMP_CANVAS_STYLE_XOR_DOTTED:
     case GIMP_CANVAS_STYLE_XOR_DASHED:
       mask |= GDK_GC_LINE_STYLE;
@@ -554,43 +549,6 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
   g_free (text);
 
   return canvas->layout;
-}
-
-/**
- * gimp_canvas_draw_rgb:
- * @canvas:    a #GimpCanvas widget
- * @style:     one of the enumerated #GimpCanvasStyle's.
- * @x:         X coordinate of the upper left corner.
- * @y:         Y coordinate of the upper left corner.
- * @width:     width of the rectangle to be drawn.
- * @height:    height of the rectangle to be drawn.
- * @rgb_buf:   pixel data for the image to be drawn.
- * @rowstride: the rowstride in @rgb_buf.
- * @xdith:     x offset for dither alignment.
- * @ydith:     y offset for dither alignment.
- *
- * Draws an RGB image on the canvas in the specified style.
- **/
-void
-gimp_canvas_draw_rgb (GimpCanvas      *canvas,
-                      GimpCanvasStyle  style,
-                      gint             x,
-                      gint             y,
-                      gint             width,
-                      gint             height,
-                      guchar          *rgb_buf,
-                      gint             rowstride,
-                      gint             xdith,
-                      gint             ydith)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                                canvas->gc[style],
-                                x, y, width, height,
-                                GDK_RGB_DITHER_MAX,
-                                rgb_buf, rowstride, xdith, ydith);
 }
 
 void

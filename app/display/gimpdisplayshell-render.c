@@ -76,7 +76,6 @@ struct _RenderInfo
   gint              src_y;
   gint              dest_bpp;
   gint              dest_bpl;
-  gint              dest_width;
 
   gint              zoom_quality;
 
@@ -195,6 +194,7 @@ static const guchar * render_image_tile_fault    (RenderInfo         *info);
 
 
 static void  gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
+                                                  RenderInfo         *info,
                                                   gint                x,
                                                   gint                y,
                                                   gint                w,
@@ -213,6 +213,7 @@ static void  gimp_display_shell_render_mask      (GimpDisplayShell   *shell,
 
 void
 gimp_display_shell_render (GimpDisplayShell   *shell,
+                           cairo_t            *cr,
                            gint                x,
                            gint                y,
                            gint                w,
@@ -227,6 +228,7 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
   gint            offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (w > 0 && h > 0);
 
   image = gimp_display_get_image (shell->display);
@@ -239,16 +241,15 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
   /* Initialize RenderInfo with values that don't change during the
    * call of this function.
    */
-  info.shell      = shell;
+  info.shell    = shell;
 
-  info.x          = x + offset_x;
-  info.y          = y + offset_y;
-  info.w          = w;
-  info.h          = h;
+  info.x        = x + offset_x;
+  info.y        = y + offset_y;
+  info.w        = w;
+  info.h        = h;
 
-  info.dest_bpp   = 3;
-  info.dest_bpl   = info.dest_bpp * GIMP_DISPLAY_RENDER_BUF_WIDTH;
-  info.dest_width = info.dest_bpp * info.w;
+  info.dest_bpp = 4;
+  info.dest_bpl = cairo_image_surface_get_stride (shell->render_surface);
 
   switch (shell->display->config->zoom_quality)
     {
@@ -293,17 +294,19 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
     }
 
   /*  apply filters to the rendered projection  */
+#if 0
   if (shell->filter_stack)
     gimp_color_display_stack_convert (shell->filter_stack,
                                       shell->render_buf,
                                       w, h,
                                       3,
                                       3 * GIMP_DISPLAY_RENDER_BUF_WIDTH);
+#endif
 
   /*  dim pixels outside the highlighted rectangle  */
   if (highlight)
     {
-      gimp_display_shell_render_highlight (shell, x, y, w, h, highlight);
+      gimp_display_shell_render_highlight (shell, &info, x, y, w, h, highlight);
     }
   else if (shell->mask)
     {
@@ -315,6 +318,8 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
       gimp_display_shell_render_mask (shell, &info);
     }
 
+  cairo_surface_mark_dirty (shell->render_surface);
+
   /*  put it to the screen  */
   {
     gint disp_xoffset, disp_yoffset;
@@ -322,35 +327,43 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
     gimp_display_shell_scroll_get_disp_offset (shell,
 					       &disp_xoffset, &disp_yoffset);
 
-    gimp_canvas_draw_rgb (GIMP_CANVAS (shell->canvas),
-			  GIMP_CANVAS_STYLE_RENDER,
-			  x + disp_xoffset, y + disp_yoffset,
-			  w, h,
-			  shell->render_buf,
-			  3 * GIMP_DISPLAY_RENDER_BUF_WIDTH,
-			  offset_x, offset_y);
+    cairo_set_source_surface (cr, shell->render_surface,
+                              x + disp_xoffset, y + disp_yoffset);
+    cairo_rectangle (cr, x + disp_xoffset, y + disp_yoffset, w, h);
+    cairo_fill (cr);
   }
 }
 
 
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+#define CAIRO_RGB24_RED_PIXEL   2
+#define CAIRO_RGB24_GREEN_PIXEL 1
+#define CAIRO_RGB24_BLUE_PIXEL  0
+#else
+#define CAIRO_RGB24_RED_PIXEL   1
+#define CAIRO_RGB24_GREEN_PIXEL 2
+#define CAIRO_RGB24_BLUE_PIXEL  3
+#endif
+
 #define GIMP_DISPLAY_SHELL_DIM_PIXEL(buf,x) \
 { \
-  buf[3 * (x) + 0] >>= 1; \
-  buf[3 * (x) + 1] >>= 1; \
-  buf[3 * (x) + 2] >>= 1; \
+  buf[4 * (x) + CAIRO_RGB24_RED_PIXEL]   >>= 1; \
+  buf[4 * (x) + CAIRO_RGB24_GREEN_PIXEL] >>= 1; \
+  buf[4 * (x) + CAIRO_RGB24_BLUE_PIXEL]  >>= 1; \
 }
 
 /*  This function highlights the given area by dimming all pixels outside. */
 
 static void
 gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
+                                     RenderInfo         *info,
                                      gint                x,
                                      gint                y,
                                      gint                w,
                                      gint                h,
                                      const GdkRectangle *highlight)
 {
-  guchar       *buf  = shell->render_buf;
+  guchar       *buf = cairo_image_surface_get_data (shell->render_surface);
   GdkRectangle  rect;
   gint          offset_x;
   gint          offset_y;
@@ -373,7 +386,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
+          buf += info->dest_bpl;
         }
 
       for ( ; y < rect.y + rect.height; y++)
@@ -384,7 +397,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
           for (x += rect.width; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
+          buf += info->dest_bpl;
         }
 
       for ( ; y < h; y++)
@@ -392,7 +405,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
+          buf += info->dest_bpl;
         }
     }
   else
@@ -402,7 +415,7 @@ gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
           for (x = 0; x < w; x++)
             GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
 
-          buf += 3 * GIMP_DISPLAY_RENDER_BUF_WIDTH;
+          buf += info->dest_bpl;
         }
     }
 }
@@ -429,35 +442,35 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
       switch (shell->mask_color)
         {
         case GIMP_RED_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += 3)
+          for (x = info->x; x < xe; x++, src++, dest += info->dest_bpp)
             {
               if (*src & 0x80)
                 continue;
 
-              dest[1] = dest[1] >> 2;
-              dest[2] = dest[2] >> 2;
+              dest[CAIRO_RGB24_GREEN_PIXEL] >>= 2;
+              dest[CAIRO_RGB24_BLUE_PIXEL]  >>= 2;
             }
           break;
 
         case GIMP_GREEN_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += 3)
+          for (x = info->x; x < xe; x++, src++, dest += info->dest_bpp)
             {
               if (*src & 0x80)
                 continue;
 
-              dest[0] = dest[0] >> 2;
-              dest[2] = dest[2] >> 2;
+              dest[CAIRO_RGB24_RED_PIXEL]  >>= 2;
+              dest[CAIRO_RGB24_BLUE_PIXEL] >>= 2;
             }
           break;
 
         case GIMP_BLUE_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += 3)
+          for (x = info->x; x < xe; x++, src++, dest += info->dest_bpp)
             {
               if (*src & 0x80)
                 continue;
 
-              dest[0] = dest[0] >> 2;
-              dest[1] = dest[1] >> 2;
+              dest[CAIRO_RGB24_RED_PIXEL]   >>= 2;
+              dest[CAIRO_RGB24_GREEN_PIXEL] >>= 2;
             }
           break;
 
@@ -504,7 +517,7 @@ render_image_gray_a (RenderInfo *info)
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
 
-      for (x = info->x; x < xe; x++, src += 2, dest += 3)
+      for (x = info->x; x < xe; x++, src += 2, dest += info->dest_bpp)
         {
           guint v;
 
@@ -513,7 +526,7 @@ render_image_gray_a (RenderInfo *info)
           else
             v = ((src[0] << 8) + check_light * (256 - src[1])) >> 8;
 
-          dest[0] = dest[1] = dest[2] = v;
+          GIMP_CAIRO_RGB24_SET_PIXEL (dest, v, v, v);
 
           if (((x + 1) & check_mod) == 0)
             dark_light += 1;
@@ -553,7 +566,7 @@ render_image_rgb_a (RenderInfo *info)
 
       dark_light = (y >> check_shift) + (info->x >> check_shift);
 
-      for (x = info->x; x < xe; x++, src += 4, dest += 3)
+      for (x = info->x; x < xe; x++, src += 4, dest += info->dest_bpp)
         {
           guint r, g, b;
 
@@ -570,9 +583,7 @@ render_image_rgb_a (RenderInfo *info)
               b = ((src[2] << 8) + check_light * (256 - src[3])) >> 8;
             }
 
-          dest[0] = r;
-          dest[1] = g;
-          dest[2] = b;
+          GIMP_CAIRO_RGB24_SET_PIXEL (dest, r, g, b);
 
           if (((x + 1) & check_mod) == 0)
             dark_light += 1;
@@ -605,7 +616,7 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   /* We must reset info->dest because this member is modified in render
    * functions.
    */
-  info->dest     = shell->render_buf;
+  info->dest     = cairo_image_surface_get_data (shell->render_surface);
 
   info->scalex   = shell->scale_x * (1 << level);
   info->scaley   = shell->scale_y * (1 << level);

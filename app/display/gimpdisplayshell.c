@@ -289,9 +289,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->x_src_dec   = 1;
   shell->y_src_dec   = 1;
 
-  shell->render_buf = g_new (guchar,
-                             GIMP_DISPLAY_RENDER_BUF_WIDTH  *
-                             GIMP_DISPLAY_RENDER_BUF_HEIGHT * 3);
+  shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                                      GIMP_DISPLAY_RENDER_BUF_WIDTH,
+                                                      GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
   shell->icon_size  = 32;
 
@@ -868,10 +868,10 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->filter_idle_id = 0;
     }
 
-  if (shell->render_buf)
+  if (shell->render_surface)
     {
-      g_free (shell->render_buf);
-      shell->render_buf = NULL;
+      cairo_surface_destroy (shell->render_surface);
+      shell->render_surface = NULL;
     }
 
   if (shell->highlight)

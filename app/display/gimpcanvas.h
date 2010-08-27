@@ -24,7 +24,6 @@
 
 typedef enum
 {
-  GIMP_CANVAS_STYLE_RENDER,
   GIMP_CANVAS_STYLE_XOR,
   GIMP_CANVAS_STYLE_XOR_DASHED,
   GIMP_CANVAS_STYLE_XOR_DOTTED,
@@ -116,16 +115,6 @@ void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
 PangoLayout *gimp_canvas_get_layout        (GimpCanvas         *canvas,
                                             const gchar        *format,
                                             ...) G_GNUC_PRINTF (2, 3);
-void         gimp_canvas_draw_rgb          (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gint                x,
-                                            gint                y,
-                                            gint                width,
-                                            gint                height,
-                                            guchar             *rgb_buf,
-                                            gint                rowstride,
-                                            gint                xdith,
-                                            gint                ydith);
 void         gimp_canvas_draw_drop_zone    (GimpCanvas         *canvas,
                                             cairo_t            *cr);
 

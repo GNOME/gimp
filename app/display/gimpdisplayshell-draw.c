@@ -692,6 +692,7 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_draw_area (GimpDisplayShell *shell,
+                              cairo_t          *cr,
                               gint              x,
                               gint              y,
                               gint              w,
@@ -703,6 +704,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (gimp_display_get_image (shell->display));
+  g_return_if_fail (cr != NULL);
 
   x2 = x + w;
   y2 = y + h;
@@ -732,7 +734,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                                      &disp_xoffset,
                                                      &disp_yoffset);
 
-          gimp_display_shell_render (shell,
+          gimp_display_shell_render (shell, cr,
                                      j - disp_xoffset,
                                      i - disp_yoffset,
                                      dx, dy,
