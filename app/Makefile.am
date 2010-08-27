@@ -97,8 +97,8 @@ endif
 
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc.rule
-GIMPRC = gimp.rc.o
-GIMPCONSOLERC = gimp-console.rc.o
+GIMPRC = gimp-$(GIMP_APP_VERSION).rc.o
+GIMPCONSOLERC = gimp-console-$(GIMP_APP_VERSION).rc.o
 endif
 
 AM_CPPFLAGS = \
