@@ -35,6 +35,7 @@
 
 static cairo_user_data_key_t surface_data_key = { 0, };
 
+
 cairo_pattern_t *
 gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
                                    const GimpRGB *bg,
@@ -42,11 +43,11 @@ gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
 {
   cairo_surface_t *surface;
   cairo_pattern_t *pattern;
-  guchar          *data = g_malloc0 (8 * 8 * 4);
+  guchar          *data;
+  guchar          *d;
   guchar           fg_r, fg_g, fg_b, fg_a;
   guchar           bg_r, bg_g, bg_b, bg_a;
   gint             x, y;
-  guchar          *d;
 
   g_return_val_if_fail (fg != NULL, NULL);
   g_return_val_if_fail (bg != NULL, NULL);
