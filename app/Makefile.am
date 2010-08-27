@@ -96,6 +96,7 @@ munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
 if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc.rule
 GIMPRC = gimp.rc.o
 GIMPCONSOLERC = gimp-console.rc.o
 endif
@@ -277,12 +278,5 @@ git-version.h: update-git-version-header
 	  mv "$@.tmp" "$@"; \
 	  echo "  git HEAD changed: $@ regenerated"; \
 	fi
-
-# Version resources for Microsoft Windows
-%.rc.o: $(top_srcdir)/build/windows/gimp.rc
-	$(WINDRES) --define ORIGINALFILENAME_STR="$*$(EXEEXT)" \
-		--define INTERNALNAME_STR="$*" \
-		--define TOP_SRCDIR="$(top_srcdir)" \
-		$< $@
 
 .PHONY: update-git-version-header

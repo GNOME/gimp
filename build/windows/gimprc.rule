@@ -1,0 +1,6 @@
+# Version resources for Microsoft Windows
+%.rc.o: $(top_srcdir)/build/windows/gimp.rc
+	$(WINDRES) --define ORIGINALFILENAME_STR="$*$(EXEEXT)" \
+		--define INTERNALNAME_STR="$*" \
+		--define TOP_SRCDIR="$(top_srcdir)" \
+		$< $@
