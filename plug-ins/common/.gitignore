@@ -132,6 +132,8 @@
 /file-pcx.exe
 /file-pdf-load
 /file-pdf-load.exe
+/file-pdf-save
+/file-pdf-save.exe
 /file-pix
 /file-pix.exe
 /file-png
