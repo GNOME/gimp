@@ -103,9 +103,11 @@ static GdkModifierType
 static GdkEvent * gimp_display_shell_compress_motion          (GimpDisplayShell *shell);
 
 static void       gimp_display_shell_canvas_expose_image      (GimpDisplayShell *shell,
-                                                               GdkEventExpose   *eevent);
+                                                               GdkEventExpose   *eevent,
+                                                               cairo_t          *cr);
 static void       gimp_display_shell_canvas_expose_drop_zone  (GimpDisplayShell *shell,
-                                                               GdkEventExpose   *eevent);
+                                                               GdkEventExpose   *eevent,
+                                                               cairo_t          *cr);
 static void       gimp_display_shell_process_tool_event_queue (GimpDisplayShell *shell,
                                                                GdkModifierType   state,
                                                                guint32           time);
@@ -392,19 +394,30 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   /*  ignore events on overlays  */
   if (eevent->window == gtk_widget_get_window (widget))
     {
+      cairo_t *cr;
+
       if (gimp_display_get_image (shell->display))
         {
           gimp_display_shell_pause (shell);
 
           if (gimp_display_shell_is_double_buffered (shell))
             gdk_window_begin_paint_region (eevent->window, eevent->region);
+        }
 
-          gimp_display_shell_canvas_expose_image (shell, eevent);
+      cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
+      gdk_cairo_region (cr, eevent->region);
+      cairo_clip (cr);
+
+      if (gimp_display_get_image (shell->display))
+        {
+          gimp_display_shell_canvas_expose_image (shell, eevent, cr);
         }
       else
         {
-          gimp_display_shell_canvas_expose_drop_zone (shell, eevent);
+          gimp_display_shell_canvas_expose_drop_zone (shell, eevent, cr);
         }
+
+      cairo_destroy (cr);
     }
 
   return FALSE;
@@ -2078,7 +2091,7 @@ gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
                                       GimpDisplayShell *shell)
 {
   /* If we are panning with mouse, scrollbars are to be ignored
-   * or they will cause jitter in motion 
+   * or they will cause jitter in motion
    */
   if (! shell->scrolling)
     gimp_display_shell_scroll (shell,
@@ -2214,20 +2227,15 @@ gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 
 static void
 gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
-                                        GdkEventExpose   *eevent)
+                                        GdkEventExpose   *eevent,
+                                        cairo_t          *cr)
 {
-  cairo_t      *cr;
   GdkRegion    *clear_region;
   GdkRegion    *image_region;
   GdkRectangle  image_rect;
   GdkRectangle *rects;
   gint          n_rects;
   gint          i;
-
-  cr = gdk_cairo_create (eevent->window);
-
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
 
   /*  first, clear the exposed part of the region that is outside the
    *  image, which is the exposed region minus the image rectangle
@@ -2317,15 +2325,13 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   /* restart (and recalculate) the selection boundaries */
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
-
-  cairo_destroy (cr);
 }
 
 static void
 gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
-                                            GdkEventExpose   *eevent)
+                                            GdkEventExpose   *eevent,
+                                            cairo_t          *cr)
 {
-  cairo_t      *cr;
   GdkRectangle *rects;
   gint          n_rects;
   gint          i;
@@ -2343,11 +2349,5 @@ gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
 
   g_free (rects);
 
-  cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
-
   gimp_canvas_draw_drop_zone (GIMP_CANVAS (shell->canvas), cr);
-
-  cairo_destroy (cr);
 }
