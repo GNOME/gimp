@@ -1,0 +1,86 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpcairo.c
+ * Copyright (C) 2010  Michael Natterer <mitch@gimp.org>
+ *
+ * Some code here is based on code from librsvg that was originally
+ * written by Raph Levien <raph@artofcode.com> for Gill.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "widgets-types.h"
+
+#include "gimpcairo.h"
+
+
+static cairo_user_data_key_t surface_data_key = { 0, };
+
+cairo_pattern_t *
+gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
+                                   const GimpRGB *bg,
+                                   gint           index)
+{
+  cairo_surface_t *surface;
+  cairo_pattern_t *pattern;
+  guchar          *data = g_malloc0 (8 * 8 * 4);
+  guchar           fg_r, fg_g, fg_b, fg_a;
+  guchar           bg_r, bg_g, bg_b, bg_a;
+  gint             x, y;
+  guchar          *d;
+
+  g_return_val_if_fail (fg != NULL, NULL);
+  g_return_val_if_fail (bg != NULL, NULL);
+
+  data = g_malloc (8 * 8 * 4);
+
+  gimp_rgba_get_uchar (fg, &fg_r, &fg_g, &fg_b, &fg_a);
+  gimp_rgba_get_uchar (bg, &bg_r, &bg_g, &bg_b, &bg_a);
+
+  d = data;
+
+  for (y = 0; y < 8; y++)
+    {
+      for (x = 0; x < 8; x++)
+        {
+          if ((x + y + index) % 8 >= 4)
+            GIMP_CAIRO_ARGB32_SET_PIXEL (d, fg_r, fg_g, fg_b, fg_a);
+          else
+            GIMP_CAIRO_ARGB32_SET_PIXEL (d, bg_r, bg_g, bg_b, bg_a);
+
+          d += 4;
+        }
+    }
+
+  surface = cairo_image_surface_create_for_data (data,
+                                                 CAIRO_FORMAT_ARGB32,
+                                                 8, 8, 8 * 4);
+  cairo_surface_set_user_data (surface, &surface_data_key,
+                               data, (cairo_destroy_func_t) g_free);
+
+  pattern = cairo_pattern_create_for_surface (surface);
+  cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+
+  cairo_surface_destroy (surface);
+
+  return pattern;
+}
