@@ -1,0 +1,13 @@
+app
+data/tips
+desktop
+desktop/gimp.desktop.in
+libgimp
+libgimpbase
+libgimpconfig
+libgimpmodule
+libgimpthumb
+libgimpwidgets
+modules
+plug-ins
+tools
