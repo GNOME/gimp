@@ -84,3 +84,28 @@ gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
 
   return pattern;
 }
+
+void
+gimp_cairo_add_segments (cairo_t    *cr,
+                         GdkSegment *segs,
+                         gint        n_segs)
+{
+  gint i;
+
+  g_return_if_fail (cr != NULL);
+  g_return_if_fail (segs != NULL && n_segs > 0);
+
+  for (i = 0; i < n_segs; i++)
+    {
+      if (segs[i].x1 == segs[i].x2)
+        {
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+        }
+      else
+        {
+          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+        }
+    }
+}

@@ -43,6 +43,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimpcairo.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
@@ -540,8 +541,6 @@ gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
                                         GdkSegment       *segs,
                                         gint              n_segs)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -549,20 +548,7 @@ gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
 
   gimp_display_shell_set_layer_style (shell, cr, drawable);
 
-  for (i = 0; i < n_segs; i++)
-    {
-      if (segs[i].x1 == segs[i].x2)
-        {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
-        }
-      else
-        {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
-        }
-    }
-
+  gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
@@ -572,28 +558,13 @@ gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
                                        GdkSegment       *segs,
                                        gint              n_segs)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
   gimp_display_shell_set_selection_out_style (shell, cr);
 
-  for (i = 0; i < n_segs; i++)
-    {
-      if (segs[i].x1 == segs[i].x2)
-        {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
-        }
-      else
-        {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
-        }
-    }
-
+  gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
@@ -603,28 +574,13 @@ gimp_display_shell_draw_selection_segments (GimpDisplayShell *shell,
                                             GdkSegment       *segs,
                                             gint              n_segs)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
   cairo_set_line_width (cr, 1.0);
 
-  for (i = 0; i < n_segs; i++)
-    {
-      if (segs[i].x1 == segs[i].x2)
-        {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
-        }
-      else
-        {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
-        }
-    }
-
+  gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
