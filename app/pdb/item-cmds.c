@@ -26,6 +26,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplayermask.h"
+#include "core/gimplist.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpselection.h"
 #include "text/gimptextlayer.h"
@@ -289,6 +290,120 @@ item_is_vectors_invoker (GimpProcedure      *procedure,
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], vectors);
+
+  return return_vals;
+}
+
+static GValueArray *
+item_is_group_invoker (GimpProcedure      *procedure,
+                       Gimp               *gimp,
+                       GimpContext        *context,
+                       GimpProgress       *progress,
+                       const GValueArray  *args,
+                       GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpItem *item;
+  gboolean group = FALSE;
+
+  item = gimp_value_get_item (&args->values[0], gimp);
+
+  if (success)
+    {
+      group = (gimp_viewable_get_children (GIMP_VIEWABLE (item)) != NULL);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], group);
+
+  return return_vals;
+}
+
+static GValueArray *
+item_get_parent_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpItem *item;
+  GimpItem *parent = NULL;
+
+  item = gimp_value_get_item (&args->values[0], gimp);
+
+  if (success)
+    {
+      parent = gimp_item_get_parent (item);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_item (&return_vals->values[1], parent);
+
+  return return_vals;
+}
+
+static GValueArray *
+item_get_children_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpItem *item;
+  gint32 num_children = 0;
+  gint32 *child_ids = NULL;
+
+  item = gimp_value_get_item (&args->values[0], gimp);
+
+  if (success)
+    {
+      GimpContainer *children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+      if (children)
+        {
+          num_children = gimp_container_get_n_children (children);
+
+          if (num_children)
+            {
+              GList *list;
+              gint   i;
+
+              child_ids = g_new (gint32, num_children);
+
+              for (list = GIMP_LIST (children)->list, i = 0;
+                   list;
+                   list = g_list_next (list), i++)
+                {
+                  child_ids[i] = gimp_item_get_ID (GIMP_ITEM (list->data));
+                }
+            }
+        }
+      else
+        success = FALSE;
+
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (&return_vals->values[1], num_children);
+      gimp_value_take_int32array (&return_vals->values[2], child_ids, num_children);
+    }
 
   return return_vals;
 }
@@ -818,6 +933,98 @@ register_item_procs (GimpPDB *pdb)
                                                          "TRUE if the item is a vectors, FALSE otherwise",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-is-group
+   */
+  procedure = gimp_procedure_new (item_is_group_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-is-group");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-is-group",
+                                     "Returns whether the item is a group item.",
+                                     "This procedure returns TRUE if the specified item is a group item which can have children.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("group",
+                                                         "group",
+                                                         "TRUE if the item is a group, FALSE otherwise",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-parent
+   */
+  procedure = gimp_procedure_new (item_get_parent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-parent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-get-parent",
+                                     "Returns the item's parent item.",
+                                     "This procedure returns the item's parent item, if any.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_item_id ("parent",
+                                                            "parent",
+                                                            "The item's parent item",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-children
+   */
+  procedure = gimp_procedure_new (item_get_children_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-children");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-get-children",
+                                     "Returns the item's list of children.",
+                                     "This procedure returns the list of items which are children of the specified item. The order is topmost to bottommost.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-children",
+                                                          "num children",
+                                                          "The item's number of children",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32_array ("child-ids",
+                                                                "child ids",
+                                                                "The item's list of children",
+                                                                GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include "gimp.h"
 
 
@@ -324,6 +326,114 @@ gimp_item_is_vectors (gint32 item_ID)
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return vectors;
+}
+
+/**
+ * gimp_item_is_group:
+ * @item_ID: The item.
+ *
+ * Returns whether the item is a group item.
+ *
+ * This procedure returns TRUE if the specified item is a group item
+ * which can have children.
+ *
+ * Returns: TRUE if the item is a group, FALSE otherwise.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_item_is_group (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean group = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-item-is-group",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    group = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return group;
+}
+
+/**
+ * gimp_item_get_parent:
+ * @item_ID: The item.
+ *
+ * Returns the item's parent item.
+ *
+ * This procedure returns the item's parent item, if any.
+ *
+ * Returns: The item's parent item.
+ *
+ * Since: GIMP 2.8
+ */
+gint32
+gimp_item_get_parent (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 parent_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-item-get-parent",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    parent_ID = return_vals[1].data.d_item;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return parent_ID;
+}
+
+/**
+ * gimp_item_get_children:
+ * @item_ID: The item.
+ * @num_children: The item's number of children.
+ *
+ * Returns the item's list of children.
+ *
+ * This procedure returns the list of items which are children of the
+ * specified item. The order is topmost to bottommost.
+ *
+ * Returns: The item's list of children.
+ *
+ * Since: GIMP 2.8
+ */
+gint *
+gimp_item_get_children (gint32  item_ID,
+                        gint   *num_children)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint *child_ids = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-item-get-children",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  *num_children = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_children = return_vals[1].data.d_int32;
+      child_ids = g_new (gint32, *num_children);
+      memcpy (child_ids,
+              return_vals[2].data.d_int32array,
+              *num_children * sizeof (gint32));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return child_ids;
 }
 
 /**
