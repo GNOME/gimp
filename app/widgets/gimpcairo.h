@@ -33,5 +33,10 @@ void              gimp_cairo_add_segments           (cairo_t       *cr,
                                                      GdkSegment    *segs,
                                                      gint           n_segs);
 
+void              gimp_cairo_draw_toolbox_wilber    (GtkWidget     *widget,
+                                                     cairo_t       *cr);
+void              gimp_cairo_draw_drop_wilber       (GtkWidget     *widget,
+                                                     cairo_t       *cr);
+
 
 #endif /* __GIMP_CAIRO_H__ */

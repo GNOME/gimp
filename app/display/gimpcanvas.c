@@ -27,7 +27,6 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "widgets/gimpcairo-wilber.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
@@ -549,52 +548,6 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
   g_free (text);
 
   return canvas->layout;
-}
-
-void
-gimp_canvas_draw_drop_zone (GimpCanvas *canvas,
-                            cairo_t    *cr)
-{
-  GtkWidget    *widget = GTK_WIDGET (canvas);
-  GtkStyle     *style  = gtk_widget_get_style (widget);
-  GtkStateType  state  = gtk_widget_get_state (widget);
-  GtkAllocation allocation;
-  gdouble       wilber_width;
-  gdouble       wilber_height;
-  gdouble       width;
-  gdouble       height;
-  gdouble       side;
-  gdouble       factor;
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
-
-  wilber_width  /= 2;
-  wilber_height /= 2;
-
-  side = MIN (MIN (allocation.width, allocation.height),
-              MAX (allocation.width, allocation.height) / 2);
-
-  width  = MAX (wilber_width,  side);
-  height = MAX (wilber_height, side);
-
-  factor = MIN (width / wilber_width, height / wilber_height);
-
-  cairo_scale (cr, factor, factor);
-
-  /*  magic factors depend on the image used, everything else is generic
-   */
-  gimp_cairo_wilber (cr,
-                     - wilber_width * 0.6,
-                     allocation.height / factor - wilber_height * 1.1);
-
-  cairo_set_source_rgba (cr,
-                         style->fg[state].red   / 65535.0,
-                         style->fg[state].green / 65535.0,
-                         style->fg[state].blue  / 65535.0,
-                         0.15);
-  cairo_fill (cr);
 }
 
 /**

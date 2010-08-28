@@ -48,6 +48,7 @@
 #include "tools/tool_manager.h"
 #include "tools/tools-enums.h"
 
+#include "widgets/gimpcairo.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
 #include "widgets/gimpcontrollerwheel.h"
@@ -2352,5 +2353,5 @@ gimp_display_shell_canvas_expose_drop_zone (GimpDisplayShell *shell,
 
   g_free (rects);
 
-  gimp_canvas_draw_drop_zone (GIMP_CANVAS (shell->canvas), cr);
+  gimp_cairo_draw_drop_wilber (shell->canvas, cr);
 }

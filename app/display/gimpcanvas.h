@@ -115,8 +115,6 @@ void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
 PangoLayout *gimp_canvas_get_layout        (GimpCanvas         *canvas,
                                             const gchar        *format,
                                             ...) G_GNUC_PRINTF (2, 3);
-void         gimp_canvas_draw_drop_zone    (GimpCanvas         *canvas,
-                                            cairo_t            *cr);
 
 void         gimp_canvas_set_clip_rect     (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
