@@ -19,15 +19,12 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 
 #include "config/gimpdisplayconfig.h"
-
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
 

@@ -57,7 +57,6 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
