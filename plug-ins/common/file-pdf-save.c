@@ -100,15 +100,15 @@
  *   Also merged the header and c file into one file, Updated some of the comments
  *   and documentation, and moved this into the main source repository.
  */
+
+#include "config.h"
+
+#include <cairo-pdf.h>
+#include <pango/pangocairo.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include <gtk/gtk.h>
-
-#include <cairo.h>
-#include <cairo-pdf.h>
-#include <pango/pangocairo.h>
-#include <pango/pango.h>
 
 #define SAVE_PROC               "file-pdf-save"
 #define SAVE_DEFAULTS_PROC      "file-pdf-save-defaults"
@@ -126,6 +126,7 @@
 #define THUMB_HEIGHT             120
 
 #define PDF_DEBUG                FALSE
+
 
 typedef struct {
   gboolean convert;
@@ -156,6 +157,7 @@ typedef struct {
   gint32 page_number;
   gchar* image_name;
 } Page;
+
 
 static void               init_vals                  (const gchar *name,
                                                       gint nparams,
