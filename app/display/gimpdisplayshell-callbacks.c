@@ -404,6 +404,9 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
             gdk_window_begin_paint_region (eevent->window, eevent->region);
         }
 
+      /*  create the cairo_t after enabling double buffering, or we
+       *  will get the wrong window destination surface
+       */
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
