@@ -330,6 +330,7 @@ EXPORTS
 	gimp_image_get_floating_sel
 	gimp_image_get_guide_orientation
 	gimp_image_get_guide_position
+	gimp_image_get_item_position
 	gimp_image_get_layer_by_tattoo
 	gimp_image_get_layer_position
 	gimp_image_get_layers
@@ -358,6 +359,8 @@ EXPORTS
 	gimp_image_is_valid
 	gimp_image_list
 	gimp_image_lower_channel
+	gimp_image_lower_item
+	gimp_image_lower_item_to_bottom
 	gimp_image_lower_layer
 	gimp_image_lower_layer_to_bottom
 	gimp_image_lower_vectors
@@ -372,6 +375,8 @@ EXPORTS
 	gimp_image_pick_color
 	gimp_image_pick_correlate_layer
 	gimp_image_raise_channel
+	gimp_image_raise_item
+	gimp_image_raise_item_to_top
 	gimp_image_raise_layer
 	gimp_image_raise_layer_to_top
 	gimp_image_raise_vectors
@@ -409,14 +414,17 @@ EXPORTS
 	gimp_install_temp_proc
 	gimp_invert
 	gimp_item_delete
+	gimp_item_get_children
 	gimp_item_get_image
 	gimp_item_get_linked
 	gimp_item_get_lock_content
 	gimp_item_get_name
+	gimp_item_get_parent
 	gimp_item_get_tattoo
 	gimp_item_get_visible
 	gimp_item_is_channel
 	gimp_item_is_drawable
+	gimp_item_is_group
 	gimp_item_is_layer
 	gimp_item_is_layer_mask
 	gimp_item_is_selection
