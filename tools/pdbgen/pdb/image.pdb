@@ -878,6 +878,50 @@ CODE
     );
 }
 
+sub image_reorder_item {
+    $blurb = "Reorder the specified item within its item tree";
+
+    $help = <<'HELP';
+This procedure reorders the specified item within its item tree.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item to reorder' },
+	{ name => 'parent', type => 'item',
+          desc => 'The new parent item' },
+        { name => 'position', type => 'int32',
+          desc => 'The new position of the item' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error) &&
+      (parent == NULL ||
+       gimp_pdb_item_is_in_tree (parent, image, FALSE, error)) &&
+      (parent == NULL ||
+       gimp_item_get_tree (item) == gimp_item_get_tree (parent)) &&
+      (parent == NULL ||
+       gimp_viewable_get_children (GIMP_VIEWABLE (parent))) &&
+      (parent == NULL ||
+       ! gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
+                                    GIMP_VIEWABLE (parent))))
+    {
+      success = gimp_image_reorder_item (image, item, parent, position,
+                                         TRUE, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub image_get_layer_position {
     &std_pdb_deprecated('gimp-image-get-item-position');
     &simon_pdb_misc('2006', '2.4');
@@ -2783,6 +2827,7 @@ CODE
             image_get_item_position
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
+            image_reorder_item
 	    image_get_layer_position
             image_raise_layer image_lower_layer
             image_raise_layer_to_top image_lower_layer_to_bottom
@@ -2812,7 +2857,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..51,54..82]]);
+%exports = (app => [@procs], lib => [@procs[0..52,55..83]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

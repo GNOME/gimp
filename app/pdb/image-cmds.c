@@ -1224,6 +1224,49 @@ image_lower_item_to_bottom_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+image_reorder_item_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpItem *item;
+  GimpItem *parent;
+  gint32 position;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  item = gimp_value_get_item (&args->values[1], gimp);
+  parent = gimp_value_get_item (&args->values[2], gimp);
+  position = g_value_get_int (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_in_tree (item, image, FALSE, error) &&
+          (parent == NULL ||
+           gimp_pdb_item_is_in_tree (parent, image, FALSE, error)) &&
+          (parent == NULL ||
+           gimp_item_get_tree (item) == gimp_item_get_tree (parent)) &&
+          (parent == NULL ||
+           gimp_viewable_get_children (GIMP_VIEWABLE (parent))) &&
+          (parent == NULL ||
+           ! gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
+                                        GIMP_VIEWABLE (parent))))
+        {
+          success = gimp_image_reorder_item (image, item, parent, position,
+                                             TRUE, NULL);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 image_get_layer_position_invoker (GimpProcedure      *procedure,
                                   Gimp               *gimp,
                                   GimpContext        *context,
@@ -3876,6 +3919,47 @@ register_image_procs (GimpPDB *pdb)
                                                         "The item to lower to bottom",
                                                         pdb->gimp, FALSE,
                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-reorder-item
+   */
+  procedure = gimp_procedure_new (image_reorder_item_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-reorder-item");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-reorder-item",
+                                     "Reorder the specified item within its item tree",
+                                     "This procedure reorders the specified item within its item tree.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to reorder",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("parent",
+                                                        "parent",
+                                                        "The new parent item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("position",
+                                                      "position",
+                                                      "The new position of the item",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

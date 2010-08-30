@@ -1365,6 +1365,46 @@ gimp_image_lower_item_to_bottom (gint32 image_ID,
 }
 
 /**
+ * gimp_image_reorder_item:
+ * @image_ID: The image.
+ * @item_ID: The item to reorder.
+ * @parent_ID: The new parent item.
+ * @position: The new position of the item.
+ *
+ * Reorder the specified item within its item tree
+ *
+ * This procedure reorders the specified item within its item tree.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_image_reorder_item (gint32 image_ID,
+                         gint32 item_ID,
+                         gint32 parent_ID,
+                         gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-reorder-item",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_ITEM, parent_ID,
+                                    GIMP_PDB_INT32, position,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_get_layer_position:
  * @image_ID: The image.
  * @layer_ID: The layer.
