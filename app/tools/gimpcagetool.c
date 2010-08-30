@@ -380,10 +380,6 @@ gimp_cage_tool_button_release (GimpTool              *tool,
 
     ct->idle_id = g_idle_add ((GSourceFunc) gimp_cage_tool_update_preview, tool);
 
-    gimp_projection_flush_now (gimp_image_get_projection (image));
-    gimp_display_flush_now (tool->display);
-
-
     gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
   }
   ct->handle_moved = -1;
@@ -396,14 +392,12 @@ gimp_cage_tool_update_preview (GimpTool *tool)
   GimpCageTool *ct = GIMP_CAGE_TOOL (tool);
   GimpImage *image = gimp_display_get_image (tool->display);
 
-
-    gimp_projection_flush_now (gimp_image_get_projection (image));
-    gimp_display_flush_now (tool->display);
-
     if (!gimp_image_map_is_busy(ct->image_map))
       {
         ct->idle_id = 0;
-        printf ("Preview update complete\n");
+        printf ("Preview render complete, updating\n");
+        gimp_projection_flush_now (gimp_image_get_projection (image));
+        gimp_display_flush_now (tool->display);
 
         return FALSE;
       }

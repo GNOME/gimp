@@ -211,7 +211,11 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   GimpVector2 p1_d, p2_d, p3_d, p4_d;
   GimpVector2 p1_s, p2_s, p3_s, p4_s;
   GimpVector2 plain_color;
-  gboolean plain_color_set = FALSE;
+
+  plain_color.x = (gint) config->cage_vertices[0].x;
+  plain_color.y = (gint) config->cage_vertices[0].y;
+
+  printf ("Color fill picked from (%f, %f)\n", plain_color.x, plain_color.y);
 
   /* pre-fill the out buffer with no-displacement coordinate */
   GeglBufferIterator *it = gegl_buffer_iterator_new (out_buf, roi, NULL, GEGL_BUFFER_WRITE);
@@ -229,12 +233,6 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
     {
       if (oct->fill_plain_color && gimp_cage_config_point_inside(config, x, y))
       {
-        if (!plain_color_set)
-        {
-          plain_color.x = x;
-          plain_color.y = y;
-          plain_color_set = TRUE;
-        }
         output[0] = plain_color.x;
         output[1] = plain_color.y;
       }

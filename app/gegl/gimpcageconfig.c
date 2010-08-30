@@ -95,7 +95,7 @@ static void
 gimp_cage_config_init (GimpCageConfig *self)
 {
   self->cage_vertice_number = 0;
-  self->cage_vertices_max = 50; //pre-allocation for 50 vertices for the cage.
+  self->cage_vertices_max = 50; /*pre-allocation for 50 vertices for the cage.*/
 
   self->cage_vertices = g_new(GimpVector2, self->cage_vertices_max);
   self->cage_vertices_d = g_new(GimpVector2, self->cage_vertices_max);
