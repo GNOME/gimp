@@ -16,7 +16,7 @@
 #define VER_INTERNALNAME_STR        QUOTE(INTERNALNAME_STR)
 #define VER_ORIGINALFILENAME_STR    QUOTE(ORIGINALFILENAME_STR)
 
-#define VER_LEGALCOPYRIGHT_STR      "Copyright © 1995-2009"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright © 1995-2010"
 
 #ifndef DEBUG
 #define VER_DEBUG                   0                 
