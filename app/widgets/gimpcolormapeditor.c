@@ -54,6 +54,7 @@
  *  all changes need to flush colormap lookup cache
  */
 
+#define BORDER 6
 
 enum
 {
@@ -90,14 +91,10 @@ static void   gimp_colormap_editor_clear           (GimpColormapEditor *editor,
                                                     gint                start_row);
 static void   gimp_colormap_editor_update_entries  (GimpColormapEditor *editor);
 
-static void   gimp_colormap_preview_size_allocate  (GtkWidget          *widget,
-                                                    GtkAllocation      *allocation,
-                                                    GimpColormapEditor *editor);
-static void   gimp_colormap_preview_expose         (GtkWidget          *widget,
+static gboolean gimp_colormap_preview_expose       (GtkWidget          *widget,
                                                     GdkEventExpose     *event,
                                                     GimpColormapEditor *editor);
-static gboolean
-              gimp_colormap_preview_button_press   (GtkWidget          *widget,
+static gboolean gimp_colormap_preview_button_press (GtkWidget          *widget,
                                                     GdkEventButton     *bevent,
                                                     GimpColormapEditor *editor);
 static void   gimp_colormap_preview_drag_color     (GtkWidget          *widget,
@@ -162,11 +159,9 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 static void
 gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
-  GtkWidget      *frame;
-  GtkWidget      *table;
-  GtkObject      *adj;
-  gint            width;
-  gint            height;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkObject *adj;
 
   editor->col_index     = 0;
   editor->dnd_col_index = 0;
@@ -188,17 +183,9 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
 
   editor->layout = gimp_colormap_editor_create_layout (editor->preview);
 
-  pango_layout_set_width (editor->layout, 180 * PANGO_SCALE);
-  pango_layout_get_pixel_size (editor->layout, &width, &height);
-  gtk_widget_set_size_request (editor->preview, width, height);
-
-  g_signal_connect_after (editor->preview, "size-allocate",
-                          G_CALLBACK (gimp_colormap_preview_size_allocate),
-                          editor);
-
-  g_signal_connect_after (editor->preview, "expose-event",
-                          G_CALLBACK (gimp_colormap_preview_expose),
-                          editor);
+  g_signal_connect (editor->preview, "expose-event",
+                    G_CALLBACK (gimp_colormap_preview_expose),
+                    editor);
 
   g_signal_connect (editor->preview, "button-press-event",
                     G_CALLBACK (gimp_colormap_preview_button_press),
@@ -486,6 +473,7 @@ gimp_colormap_editor_create_layout (GtkWidget *widget)
   layout = gtk_widget_create_pango_layout (widget,
                                            _("Only indexed images have "
                                              "a colormap."));
+
   pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
   attrs = pango_attr_list_new ();
@@ -526,7 +514,8 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
 
   cellsize = sqrt (allocation.width * allocation.height / ncol);
   while (cellsize >= MIN_CELL_SIZE
-         && (xn = allocation.width / cellsize) * (yn = allocation.height / cellsize) < ncol)
+         && ((xn = allocation.width / cellsize) *
+             (yn = allocation.height / cellsize) < ncol))
     cellsize--;
 
   if (cellsize < MIN_CELL_SIZE)
@@ -560,7 +549,9 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
         }
 
       if (j * cellsize < allocation.width)
-        memset (row + j * cellsize * 3, 255, 3 * (allocation.width - j * cellsize));
+        memset (row + j * cellsize * 3,
+                255,
+                3 * (allocation.width - j * cellsize));
 
       for (k = 0; k < cellsize; k++)
         {
@@ -647,31 +638,45 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
                               cellsize, cellsize);
 }
 
-static void
+static gboolean
 gimp_colormap_preview_expose (GtkWidget          *widget,
                               GdkEventExpose     *event,
                               GimpColormapEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+  GtkStyle        *style;
+  cairo_t         *cr;
   GtkAllocation    allocation;
-  gint             x, y;
   gint             width, height;
+  gint             y;
 
   if (image_editor->image == NULL ||
       gimp_image_base_type (image_editor->image) == GIMP_INDEXED)
-    return;
+    return FALSE;
+
+  cr = gdk_cairo_create (event->window);
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  style = gtk_widget_get_style (widget);
+  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
 
   gtk_widget_get_allocation (widget, &allocation);
+  pango_layout_set_width (editor->layout,
+                          PANGO_SCALE * (allocation.width - 2 * BORDER));
 
   pango_layout_get_pixel_size (editor->layout, &width, &height);
 
-  x = (allocation.width - width) / 2;
   y = (allocation.height - height) / 2;
 
-  gdk_draw_layout (gtk_widget_get_window (editor->preview),
-                   gtk_widget_get_style (editor->preview)->fg_gc[gtk_widget_get_state (widget)],
-                   MAX (x, 0), MAX (y, 0),
-                   editor->layout);
+  cairo_move_to (cr, BORDER, MAX (y, 0));
+  pango_cairo_show_layout (cr, editor->layout);
+  cairo_fill (cr);
+
+  cairo_destroy (cr);
+
+  return TRUE;
 }
 
 static void
@@ -733,20 +738,6 @@ gimp_colormap_editor_update_entries (GimpColormapEditor *editor)
       gtk_widget_set_sensitive (editor->color_entry, TRUE);
     }
 }
-
-static void
-gimp_colormap_preview_size_allocate (GtkWidget          *widget,
-                                     GtkAllocation      *alloc,
-                                     GimpColormapEditor *editor)
-{
-  GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
-
-  if (HAVE_COLORMAP (image))
-    gimp_colormap_editor_draw (editor);
-  else
-    gimp_colormap_editor_clear (editor, -1);
-}
-
 
 static gboolean
 gimp_colormap_preview_button_press (GtkWidget          *widget,
