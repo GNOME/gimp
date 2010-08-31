@@ -384,6 +384,7 @@ EXPORTS
 	gimp_image_remove_channel
 	gimp_image_remove_layer
 	gimp_image_remove_vectors
+	gimp_image_reorder_item
 	gimp_image_resize
 	gimp_image_resize_to_layers
 	gimp_image_rotate
