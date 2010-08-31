@@ -26,6 +26,8 @@
 
 #include "config/gimpdisplayconfig.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "gimpcanvas.h"
 
 #include "gimp-intl.h"
