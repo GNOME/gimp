@@ -56,10 +56,19 @@ gboolean        gimp_pdb_item_is_in_tree        (GimpItem           *item,
                                                  GimpImage          *image,
                                                  gboolean            writable,
                                                  GError            **error);
+gboolean        gimp_pdb_item_is_in_same_tree   (GimpItem           *item,
+                                                 GimpItem           *item2,
+                                                 GimpImage          *image,
+                                                 GError            **error);
+gboolean        gimp_pdb_item_is_not_ancestor   (GimpItem           *item,
+                                                 GimpItem           *not_descendant,
+                                                 GError            **error);
 gboolean        gimp_pdb_item_is_floating       (GimpItem           *item,
                                                  GimpImage          *dest_image,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_writable       (GimpItem           *item,
+                                                 GError            **error);
+gboolean        gimp_pdb_item_is_group          (GimpItem           *item,
                                                  GError            **error);
 gboolean        gimp_pdb_item_is_not_group      (GimpItem           *item,
                                                  GError            **error);

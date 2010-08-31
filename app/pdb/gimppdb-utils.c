@@ -315,7 +315,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
   if (! gimp_item_is_attached (item))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Item '%s' (%d) can not be used because it has not "
+                   _("Item '%s' (%d) cannot be used because it has not "
                      "been added to an image"),
                    gimp_object_get_name (item),
                    gimp_item_get_ID (item));
@@ -325,7 +325,7 @@ gimp_pdb_item_is_attached (GimpItem  *item,
   if (image && image != gimp_item_get_image (item))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Item '%s' (%d) can not be used because it is "
+                   _("Item '%s' (%d) cannot be used because it is "
                      "attached to another image"),
                    gimp_object_get_name (item),
                    gimp_item_get_ID (item));
@@ -354,10 +354,65 @@ gimp_pdb_item_is_in_tree (GimpItem   *item,
   if (! gimp_item_get_tree (item))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Item '%s' (%d) can not be used because it is not "
+                   _("Item '%s' (%d) cannot be used because it is not "
                      "a direct child of an item tree"),
                    gimp_object_get_name (item),
                    gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
+gimp_pdb_item_is_in_same_tree (GimpItem   *item,
+                               GimpItem   *item2,
+                               GimpImage  *image,
+                               GError    **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item2), FALSE);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_pdb_item_is_in_tree (item, image, FALSE, error) ||
+      ! gimp_pdb_item_is_in_tree (item2, image, FALSE, error))
+    return FALSE;
+
+  if (gimp_item_get_tree (item) != gimp_item_get_tree (item2))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Items '%s' (%d) and '%s' (%d) cannot be used "
+                     "because they are not part of the same item tree"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item),
+                   gimp_object_get_name (item2),
+                   gimp_item_get_ID (item2));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
+gimp_pdb_item_is_not_ancestor (GimpItem  *item,
+                               GimpItem  *not_descendant,
+                               GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (not_descendant), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
+                                 GIMP_VIEWABLE (not_descendant)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) must not be an ancestor of "
+                     "'%s' (%d)"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item),
+                   gimp_object_get_name (not_descendant),
+                   gimp_item_get_ID (not_descendant));
       return FALSE;
     }
 
@@ -414,6 +469,26 @@ gimp_pdb_item_is_writable (GimpItem  *item,
 }
 
 gboolean
+gimp_pdb_item_is_group (GimpItem  *item,
+                        GError   **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_viewable_get_children (GIMP_VIEWABLE (item)))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
+                   _("Item '%s' (%d) cannot be used because it is "
+                     "not a group item"),
+                   gimp_object_get_name (item),
+                   gimp_item_get_ID (item));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_pdb_item_is_not_group (GimpItem  *item,
                             GError   **error)
 {
@@ -444,7 +519,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
   if (! gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
-                   _("Layer '%s' (%d) can not be used because it is not "
+                   _("Layer '%s' (%d) cannot be used because it is not "
                      "a text layer"),
                    gimp_object_get_name (layer),
                    gimp_item_get_ID (GIMP_ITEM (layer)));

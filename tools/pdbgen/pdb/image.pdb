@@ -903,14 +903,9 @@ HELP
 {
   if (gimp_pdb_item_is_in_tree (item, image, FALSE, error) &&
       (parent == NULL ||
-       gimp_pdb_item_is_in_tree (parent, image, FALSE, error)) &&
-      (parent == NULL ||
-       gimp_item_get_tree (item) == gimp_item_get_tree (parent)) &&
-      (parent == NULL ||
-       gimp_viewable_get_children (GIMP_VIEWABLE (parent))) &&
-      (parent == NULL ||
-       ! gimp_viewable_is_ancestor (GIMP_VIEWABLE (item),
-                                    GIMP_VIEWABLE (parent))))
+       (gimp_pdb_item_is_in_same_tree (item, parent, image, error) &&
+        gimp_pdb_item_is_group (parent, error) &&
+        gimp_pdb_item_is_not_ancestor (item, parent, error))))
     {
       success = gimp_image_reorder_item (image, item, parent, position,
                                          TRUE, NULL);
