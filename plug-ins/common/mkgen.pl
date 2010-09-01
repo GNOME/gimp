@@ -8,11 +8,15 @@ require 'util.pl';
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
 $ignorefile = ".gitignore";
+$rcfile     = "gimprc.common";
 
 $outmk = "Makefile.am$FILE_EXT";
 $outignore = "$ignorefile$FILE_EXT";
+$outrc = "$rcfile$FILE_EXT";
+
 open MK, "> $outmk";
 open IGNORE, "> $outignore";
+open RC, "> $outrc";
 
 require 'plugin-defs.pl';
 
@@ -57,6 +61,11 @@ else
 libm = -lm
 endif
 
+if HAVE_WINDRES
+include \$(top_srcdir)/build/windows/gimprc-plug-ins.rule
+include $rcfile
+endif
+
 libgimp = \$(top_builddir)/libgimp/libgimp-\$(GIMP_API_VERSION).la
 libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
 libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
@@ -73,7 +82,8 @@ libexecdir = \$(gimpplugindir)/plug-ins
 
 EXTRA_DIST = \\
 	mkgen.pl	\\
-	plugin-defs.pl$extra
+	plugin-defs.pl$extra	\\
+	$rcfile
 
 INCLUDES = \\
 	-I\$(top_srcdir)	\\
@@ -160,6 +170,8 @@ EOT
 	}
     }
 
+    my $rclib = "\$(${makename}_RC)";
+
     print MK <<EOT;
 
 ${makename}_SOURCES = \\
@@ -168,16 +180,23 @@ ${makename}_SOURCES = \\
 ${makename}_LDADD = \\
 	$libgimp		\\
 	$glib		\\$optlib
-	$deplib
+	$deplib		\\
+	$rclib
+EOT
+
+     print RC <<EOT;
+${makename}_RC = $_.rc.o
 EOT
 
     print IGNORE "/$_\n";
     print IGNORE "/$_.exe\n";
 }
 
+close RC;
 close MK;
 close IGNORE;
 
 &write_file($outmk);
 &write_file($outignore);
+&write_file($outrc);
 

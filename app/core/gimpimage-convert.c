@@ -2531,7 +2531,7 @@ find_best_colors (QuantizeObj *quantobj,
   int inR, inG, inB;    /* initial values for increments */
 
   /* This array holds the distance to the nearest-so-far color for each cell */
-  int bestdist[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS];
+  int bestdist[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
 
   /* Initialize best-distance for each cell of the update box */
   bptr = bestdist;

@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+fractal_explorer_RC = fractal-explorer.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = examples
@@ -41,4 +46,5 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(fractal_explorer_RC)

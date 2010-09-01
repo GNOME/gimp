@@ -24,14 +24,9 @@
 
 typedef enum
 {
-  GIMP_CANVAS_STYLE_BLACK,
-  GIMP_CANVAS_STYLE_WHITE,
-  GIMP_CANVAS_STYLE_RENDER,
   GIMP_CANVAS_STYLE_XOR,
   GIMP_CANVAS_STYLE_XOR_DASHED,
   GIMP_CANVAS_STYLE_XOR_DOTTED,
-  GIMP_CANVAS_STYLE_SELECTION_IN,
-  GIMP_CANVAS_STYLE_SELECTION_OUT,
   GIMP_CANVAS_NUM_STYLES
 } GimpCanvasStyle;
 
@@ -82,14 +77,6 @@ GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
 GtkWidget  * gimp_canvas_new               (GimpDisplayConfig  *config);
 
-void         gimp_canvas_draw_point        (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gint                x,
-                                            gint                y);
-void         gimp_canvas_draw_points       (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            GdkPoint           *points,
-                                            gint                num_points);
 void         gimp_canvas_draw_line         (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             gint                x1,
@@ -128,18 +115,6 @@ void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
 PangoLayout *gimp_canvas_get_layout        (GimpCanvas         *canvas,
                                             const gchar        *format,
                                             ...) G_GNUC_PRINTF (2, 3);
-void         gimp_canvas_draw_rgb          (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gint                x,
-                                            gint                y,
-                                            gint                width,
-                                            gint                height,
-                                            guchar             *rgb_buf,
-                                            gint                rowstride,
-                                            gint                xdith,
-                                            gint                ydith);
-void         gimp_canvas_draw_drop_zone    (GimpCanvas         *canvas,
-                                            cairo_t            *cr);
 
 void         gimp_canvas_set_clip_rect     (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
@@ -147,9 +122,6 @@ void         gimp_canvas_set_clip_rect     (GimpCanvas         *canvas,
 void         gimp_canvas_set_clip_region   (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             const GdkRegion    *region);
-void         gimp_canvas_set_stipple_index (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            guint               index);
 void         gimp_canvas_set_bg_color      (GimpCanvas         *canvas,
                                             GimpRGB            *color);
 

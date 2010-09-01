@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+file_jpeg_RC = file-jpeg.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -55,7 +60,8 @@ file_jpeg_LDADD = \
 	$(GTK_LIBS)		\
 	$(EXIF_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(file_jpeg_RC)
 
 
 noinst_PROGRAMS = jpegqual

@@ -46,6 +46,7 @@ m4_define([glib_required_version], [2.24.0])
 m4_define([gtk_required_version], [2.20.0])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.8.0])
+m4_define([cairo_pdf_required_version], [1.8.0])
 m4_define([pangocairo_required_version], [1.20.1])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
@@ -1317,7 +1318,7 @@ have_poppler=no
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
     poppler-glib >= poppler_required_version gthread-2.0,
-    FILE_PDF='file-pdf$(EXEEXT)'
+    FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
     AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
     have_poppler=yes,
     have_poppler="Using PostScript plug-in (libpoppler not found)")
@@ -1325,7 +1326,30 @@ else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
 fi
 
-AC_SUBST(FILE_PDF)
+AC_SUBST(FILE_PDF_LOAD)
+
+
+#####################
+# Check for cairo-pdf
+#####################
+
+AC_ARG_WITH(cairo_pdf,[  --without-cairo-pdf       build without cairo-pdf support])
+have_cairo_pdf=no
+if test "x$with_cairo_pdf" != xno; then
+  have_cairo_pdf=yes
+  PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf >= cairo_pdf_required_version,
+    FILE_PDF_SAVE='file-pdf-save$(EXEEXT)',
+    have_cairo_pdf="no (cairo-pdf not found)")
+else
+   have_cairo_pdf="no (cairo-pdf support disabled)"
+fi
+
+AC_SUBST(FILE_PDF_SAVE)
+
+## If both poppler and cairo-pdf are enabled then we have complete PDF support
+if test "x$have_cairo_pdf" = xyes && test "x$have_poppler" = xyes; then
+  MIME_TYPES="$MIME_TYPES;application/pdf"
+fi
 
 
 ################################
@@ -2017,7 +2041,6 @@ libgimpmath/Makefile
 libgimpmodule/Makefile
 libgimpthumb/Makefile
 libgimpwidgets/Makefile
-app/gimp.rc
 app/Makefile
 app/actions/Makefile
 app/base/Makefile
@@ -2049,6 +2072,10 @@ app/tests/gimpdir/Makefile
 app/tests/gimpdir/brushes/Makefile
 app/tests/gimpdir/gradients/Makefile
 app/tests/gimpdir/patterns/Makefile
+build/Makefile
+build/windows/Makefile
+build/windows/gimp.rc
+build/windows/gimp-plug-ins.rc
 plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
@@ -2192,7 +2219,8 @@ Optional Plug-Ins:
   JPEG:                $jpeg_ok
   JPEG 2000:           $have_jp2
   MNG:                 $have_libmng
-  PDF:                 $have_poppler
+  PDF (import):        $have_poppler
+  PDF (export):        $have_cairo_pdf
   PNG:                 $have_libpng
   Print:               $enable_print
   PSP:                 $have_zlib

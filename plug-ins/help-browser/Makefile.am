@@ -14,6 +14,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+help_browser_RC = help-browser.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -38,7 +43,8 @@ LDADD = \
 	$(GIO_LIBS)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(help_browser_RC)
 
 help_browser_SOURCES = \
 	gimpthrobber.c		\

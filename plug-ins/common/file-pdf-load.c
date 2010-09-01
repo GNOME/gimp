@@ -1,6 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  *
- * file-pdf.c - PDF file loader
+ * file-pdf-load.c - PDF file loader
  *
  * Copyright (C) 2005 Nathan Summers
  *
@@ -34,7 +34,7 @@
 
 #define LOAD_PROC       "file-pdf-load"
 #define LOAD_THUMB_PROC "file-pdf-load-thumb"
-#define PLUG_IN_BINARY  "file-pdf"
+#define PLUG_IN_BINARY  "file-pdf-load"
 
 #define THUMBNAIL_SIZE  128
 

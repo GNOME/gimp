@@ -131,7 +131,7 @@ struct _GimpDisplayShell
 
   GtkWidget         *statusbar;        /*  statusbar                          */
 
-  guchar            *render_buf;       /*  buffer for rendering the image     */
+  cairo_surface_t   *render_surface;   /*  buffer for rendering the image     */
 
   guint              title_idle_id;    /*  title update idle ID               */
   gchar             *title;            /*  current title                      */

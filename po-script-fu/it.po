@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-08-03 17:48+0200\n"
-"PO-Revision-Date: 2010-08-03 17:47+0200\n"
+"PO-Revision-Date: 2010-08-27 11:26+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
-msgstr "Altezza rilievo (definizione)"
+msgstr "Altezza rilievo (nitidezza)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
@@ -1851,7 +1851,7 @@ msgstr "Casualità"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
 msgid "Sharpness (degrees)"
-msgstr "Affilatura (gradi)"
+msgstr "Nitidezza (gradi)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "Create a rectangular brush"

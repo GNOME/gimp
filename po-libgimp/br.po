@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2009-08-03 20:31+0000\n"
-"PO-Revision-Date: 2009-08-04 11:13+0100\n"
+"POT-Creation-Date: 2010-08-18 05:18+0000\n"
+"PO-Revision-Date: 2010-08-25 16:44+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,113 +17,113 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1044
+#: ../libgimp/gimp.c:1057
 msgid "success"
 msgstr "taol berzh"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1048
+#: ../libgimp/gimp.c:1061
 msgid "execution error"
 msgstr "fazi gant an erounit"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1052
+#: ../libgimp/gimp.c:1065
 msgid "calling error"
 msgstr "fazi gervel"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1056
+#: ../libgimp/gimp.c:1069
 msgid "cancelled"
 msgstr "dilezet"
 
-#: ../libgimp/gimpbrushselectbutton.c:169
+#: ../libgimp/gimpbrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "Diuzad ar broustoù"
 
-#: ../libgimp/gimpbrushselectbutton.c:915
-#: ../libgimp/gimppatternselectbutton.c:716
+#: ../libgimp/gimpbrushselectbutton.c:927
+#: ../libgimp/gimppatternselectbutton.c:725
 msgid "_Browse..."
 msgstr "_Kantreal..."
 
-#: ../libgimp/gimpexport.c:223
-#: ../libgimp/gimpexport.c:259
+#: ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "An enlugellad %s n'eo ket evit dornata treuzfollennoù"
 
-#: ../libgimp/gimpexport.c:224
-#: ../libgimp/gimpexport.c:233
-#: ../libgimp/gimpexport.c:242
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:244
+#: ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:262
+#: ../libgimp/gimpexport.c:280
 msgid "Merge Visible Layers"
 msgstr "Toueziañ an treuzfollennoù hewel"
 
-#: ../libgimp/gimpexport.c:232
+#: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "An enlugellad %s  n'hall ket dornata linkadurioù, ment pe demerez an treuzfollenn"
 
-#: ../libgimp/gimpexport.c:241
-#: ../libgimp/gimpexport.c:250
+#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "An enlugellad %s a c'hall dornata an treuzfollennoù evel skeudennoù ur bliverezh nemetken"
 
-#: ../libgimp/gimpexport.c:242
-#: ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:262
+#: ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
 msgstr "Enrollañ evel bliverezh"
 
-#: ../libgimp/gimpexport.c:251
-#: ../libgimp/gimpexport.c:260
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271
+#: ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
 msgstr "Pladañ ar skeudenn"
 
-#: ../libgimp/gimpexport.c:268
+#: ../libgimp/gimpexport.c:288
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "An enlugellad %s n'hall ket dornata an treuzweluster"
 
-#: ../libgimp/gimpexport.c:277
+#: ../libgimp/gimpexport.c:297
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "An enlugellad %s n'hall ket dornata ar maskloù treuzfollenn"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
 msgstr "Arloañ ar maskloù treuzfollennoù"
 
-#: ../libgimp/gimpexport.c:286
+#: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Dornataet e vez ar skeudennoù RGG hepken gant %s"
 
-#: ../libgimp/gimpexport.c:287
-#: ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:354
 msgid "Convert to RGB"
 msgstr "Amdreiñ da RGG"
 
-#: ../libgimp/gimpexport.c:295
+#: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Dornataet e vez ar skeudennoù dre liveoù louedoù hepken gant %s"
 
-#: ../libgimp/gimpexport.c:296
-#: ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
 msgstr "Amdreiñ da liveoù louedoù"
 
-#: ../libgimp/gimpexport.c:304
+#: ../libgimp/gimpexport.c:324
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Dornataet e vez ar skeudennoù ibiliet hepken gant %s"
 
-#: ../libgimp/gimpexport.c:305
-#: ../libgimp/gimpexport.c:334
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -133,12 +133,12 @@ msgstr ""
 "(Da ober gant an dorn\n"
 "evit gwellaat an disoc'h)"
 
-#: ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "Dornataet e vez ar bitmapoù (2 liv) ibiliet hepken gant %s"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:335
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -148,63 +148,63 @@ msgstr ""
 "(Da ober gant an dorn\n"
 "evit gwellaat an disoc'h)"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Dornataet e vez ar skeudennoù RGG pe dre liveoù louedoù hepken gant %s"
 
-#: ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:353
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "Dornataet e vez ar skeudennoù RGG pe skeudennoù ibliet gant %s"
 
-#: ../libgimp/gimpexport.c:343
+#: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "Dornataet e vez al liveoù louedoù pe skeudennoù ibiliet hepken gant %s"
 
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:374
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "An enlugellad %s en deus ezhomm eus ur sanell alfa"
 
-#: ../libgimp/gimpexport.c:355
+#: ../libgimp/gimpexport.c:375
 msgid "Add Alpha Channel"
 msgstr "Ouzhpennañ ur sanell alfa"
 
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:430
 msgid "Confirm Save"
 msgstr "Kadarnaat an enrolladur"
 
-#: ../libgimp/gimpexport.c:416
+#: ../libgimp/gimpexport.c:436
 msgid "Confirm"
 msgstr "Kadarnaat"
 
-#: ../libgimp/gimpexport.c:492
+#: ../libgimp/gimpexport.c:512
 msgid "Export File"
 msgstr "Ezporzhiañ ar restr"
 
-#: ../libgimp/gimpexport.c:496
+#: ../libgimp/gimpexport.c:516
 msgid "_Ignore"
 msgstr "_Leuskel a-gostez"
 
-#: ../libgimp/gimpexport.c:498
-#: ../libgimp/gimpexport.c:969
+#: ../libgimp/gimpexport.c:518
+#: ../libgimp/gimpexport.c:989
 msgid "_Export"
 msgstr "_Ezporzhiañ"
 
 #. the headline
-#: ../libgimp/gimpexport.c:528
+#: ../libgimp/gimpexport.c:548
 #, c-format
 msgid "Your image should be exported before it can be saved as %s for the following reasons:"
 msgstr "Gwell e vefe d'ho skeudenn bezañ ezporzhiet kent bezañ enrollet dindan %s en abeg da :"
 
 #. the footline
-#: ../libgimp/gimpexport.c:602
+#: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
 msgstr "An emdroadur ezporzhiañ ne gemmo ket ho skeudenn orin."
 
-#: ../libgimp/gimpexport.c:705
+#: ../libgimp/gimpexport.c:725
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -213,7 +213,7 @@ msgstr ""
 "Emaoc'h oc'h enrollañ ur maskl treuzfollenn evel %s.\n"
 "Ne vo ket enrollet an treuzfollennoù hewel ganti."
 
-#: ../libgimp/gimpexport.c:711
+#: ../libgimp/gimpexport.c:731
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -222,145 +222,145 @@ msgstr ""
 "Emaoc'h oc'h enrollañ ur sanell (diuzad enrollet) evel %s.\n"
 "Ne vo ket enrollet an treuzfollennoù hewel ganti."
 
-#: ../libgimp/gimpexport.c:960
+#: ../libgimp/gimpexport.c:980
 msgid "Export Image as "
 msgstr "Ezporzhiañ ar skeudenn evel "
 
-#: ../libgimp/gimpfontselectbutton.c:129
+#: ../libgimp/gimpfontselectbutton.c:138
 msgid "Font Selection"
 msgstr "Diuzad nodrezhoù"
 
-#: ../libgimp/gimpfontselectbutton.c:144
+#: ../libgimp/gimpfontselectbutton.c:153
 msgid "Sans"
 msgstr "Hep"
 
-#: ../libgimp/gimpgradientselectbutton.c:147
+#: ../libgimp/gimpgradientselectbutton.c:156
 msgid "Gradient Selection"
 msgstr "Diuzad ilrezennoù"
 
-#: ../libgimp/gimpmenu.c:449
-#: ../libgimpwidgets/gimpintstore.c:238
+#: ../libgimp/gimpmenu.c:459
+#: ../libgimpwidgets/gimpintstore.c:248
 msgid "(Empty)"
 msgstr "(Goullo)"
 
-#: ../libgimp/gimppaletteselectbutton.c:129
+#: ../libgimp/gimppaletteselectbutton.c:138
 msgid "Palette Selection"
 msgstr "Diuzad livaouegoù"
 
-#: ../libgimp/gimppatternselectbutton.c:155
+#: ../libgimp/gimppatternselectbutton.c:164
 msgid "Pattern Selection"
 msgstr "Diuzad gousturioù"
 
-#: ../libgimp/gimpprocbrowserdialog.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:149
 msgid "by name"
 msgstr "dre anv"
 
-#: ../libgimp/gimpprocbrowserdialog.c:141
+#: ../libgimp/gimpprocbrowserdialog.c:150
 msgid "by description"
 msgstr "dre an deskrivadur"
 
-#: ../libgimp/gimpprocbrowserdialog.c:142
+#: ../libgimp/gimpprocbrowserdialog.c:151
 msgid "by help"
 msgstr "dre skoazell"
 
-#: ../libgimp/gimpprocbrowserdialog.c:143
+#: ../libgimp/gimpprocbrowserdialog.c:152
 msgid "by author"
 msgstr "dre an aozer"
 
-#: ../libgimp/gimpprocbrowserdialog.c:144
+#: ../libgimp/gimpprocbrowserdialog.c:153
 msgid "by copyright"
 msgstr "dre copyright"
 
-#: ../libgimp/gimpprocbrowserdialog.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:154
 msgid "by date"
 msgstr "dre an deiziad"
 
-#: ../libgimp/gimpprocbrowserdialog.c:146
+#: ../libgimp/gimpprocbrowserdialog.c:155
 msgid "by type"
 msgstr "dre ar rizh"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:385
-#: ../libgimp/gimpprocbrowserdialog.c:536
-#: ../libgimpwidgets/gimpbrowser.c:130
+#: ../libgimp/gimpprocbrowserdialog.c:394
+#: ../libgimp/gimpprocbrowserdialog.c:545
+#: ../libgimpwidgets/gimpbrowser.c:139
 msgid "No matches"
 msgstr "Kenglotadenn ebet"
 
-#: ../libgimp/gimpprocbrowserdialog.c:388
+#: ../libgimp/gimpprocbrowserdialog.c:397
 msgid "Search term invalid or incomplete"
 msgstr "Termen da glask didalvoudek pe diglok"
 
-#: ../libgimp/gimpprocbrowserdialog.c:397
+#: ../libgimp/gimpprocbrowserdialog.c:406
 msgid "Searching"
 msgstr "O klask"
 
-#: ../libgimp/gimpprocbrowserdialog.c:408
+#: ../libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by name"
 msgstr "O klask dre an anv"
 
-#: ../libgimp/gimpprocbrowserdialog.c:429
+#: ../libgimp/gimpprocbrowserdialog.c:438
 msgid "Searching by description"
 msgstr "O klask dre an deskrivadur"
 
-#: ../libgimp/gimpprocbrowserdialog.c:436
+#: ../libgimp/gimpprocbrowserdialog.c:445
 msgid "Searching by help"
 msgstr "O klask dre ar skoazell"
 
-#: ../libgimp/gimpprocbrowserdialog.c:443
+#: ../libgimp/gimpprocbrowserdialog.c:452
 msgid "Searching by author"
 msgstr "O klask dre an aozer"
 
-#: ../libgimp/gimpprocbrowserdialog.c:450
+#: ../libgimp/gimpprocbrowserdialog.c:459
 msgid "Searching by copyright"
 msgstr "O klask dre ar c'hopyright"
 
-#: ../libgimp/gimpprocbrowserdialog.c:457
+#: ../libgimp/gimpprocbrowserdialog.c:466
 msgid "Searching by date"
 msgstr "O klask dre an deiziad"
 
-#: ../libgimp/gimpprocbrowserdialog.c:464
+#: ../libgimp/gimpprocbrowserdialog.c:473
 msgid "Searching by type"
 msgstr "O klask dre ar rizh"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: ../libgimp/gimpprocbrowserdialog.c:483
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d treugennad"
 msgstr[1] "%d a dreugennadoù"
 
-#: ../libgimp/gimpprocbrowserdialog.c:483
+#: ../libgimp/gimpprocbrowserdialog.c:492
 msgid "No matches for your query"
 msgstr "Kenglotadenn ebet evit ho koulenn"
 
-#: ../libgimp/gimpprocbrowserdialog.c:487
+#: ../libgimp/gimpprocbrowserdialog.c:496
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d treugennad a glot gant ho koulenn"
 msgstr[1] "%d a dreugennadoù a glot gant ho koulenn"
 
-#: ../libgimp/gimpprocview.c:162
+#: ../libgimp/gimpprocview.c:172
 msgid "Parameters"
 msgstr "Arventennoù"
 
-#: ../libgimp/gimpprocview.c:175
+#: ../libgimp/gimpprocview.c:185
 msgid "Return Values"
 msgstr "Gwerzhioù distreiñ"
 
-#: ../libgimp/gimpprocview.c:188
+#: ../libgimp/gimpprocview.c:198
 msgid "Additional Information"
 msgstr "Stlennoù ouzhpenn"
 
-#: ../libgimp/gimpprocview.c:228
+#: ../libgimp/gimpprocview.c:238
 msgid "Author:"
 msgstr "Aozer :"
 
-#: ../libgimp/gimpprocview.c:240
+#: ../libgimp/gimpprocview.c:250
 msgid "Date:"
 msgstr "Deiziad :"
 
-#: ../libgimp/gimpprocview.c:252
+#: ../libgimp/gimpprocview.c:262
 msgid "Copyright:"
 msgstr "Copyright :"
 
@@ -893,51 +893,58 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Leuniet"
 
-#: ../libgimpbase/gimputils.c:169
-#: ../libgimpbase/gimputils.c:174
-#: ../modules/color-selector-cmyk-lcms.c:406
-#: ../modules/color-selector-cmyk-lcms.c:412
+#: ../libgimpbase/gimputils.c:178
+#: ../libgimpbase/gimputils.c:183
+#: ../modules/color-selector-cmyk-lcms.c:424
+#: ../modules/color-selector-cmyk-lcms.c:430
 #: ../modules/display-filter-lcms.c:182
 msgid "(invalid UTF-8 string)"
 msgstr "(hedad nodoù UTF-8 didalvoudek)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:41
+#. *
+#. * SECTION: gimpcolorconfig
+#. * @title: GimpColorConfig
+#. * @short_description: Color management settings.
+#. *
+#. * Color management settings.
+#. *
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "Mode of operation for color management."
 msgstr "Mod gwezhiañ evit an ardeiñ liv."
 
-#: ../libgimpconfig/gimpcolorconfig.c:43
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile of your (primary) monitor."
 msgstr "Aelad liv ho skramm (pennañ)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:45
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
 msgstr "Mar gweredekaet e vo klasket gant GIMP arverañ aelad ar skrammañ liv  diouzh ar reizhiad prenestrañ. Arveret e vo neuze aelad ar skramm kefluniet evel un adaelad."
 
-#: ../libgimpconfig/gimpcolorconfig.c:49
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid "The default RGB working space color profile."
 msgstr "Aelad liv an egor labourat RGG dre ziouer."
 
-#: ../libgimpconfig/gimpcolorconfig.c:51
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "An aelad liv SMMD averet evit amdreiñ an RGG da SMMD."
 
-#: ../libgimpconfig/gimpcolorconfig.c:53
+#: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "An aelad liv arveret evit darvanañ un handelv moullet (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "Sets how colors are mapped for your display."
 msgstr "Arventennañ a ra penaos e vo glennet al livioù evit ar skrammañ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:66
 msgid "Sets how colors are converted from RGB working space to the print simulation device."
 msgstr "Arventennañ a ra penaos e vez amdroet al livioù diouzh an egor livventerezhel war arver en trevnad da zarvanañ ar moullañ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:69
 msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
 msgstr "Mar gweredekaet e vo merket al livioù na vint ket evit bezañ krouet en egor livventerezhel gant an darvanad moullañ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libgimpconfig/gimpcolorconfig.c:72
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Al liv da arverañ evit ober livioù er-maez eus an dirïad livioù."
 
@@ -978,63 +985,63 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Livverk dizave"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:105
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "ar werzh evit ar reveziadenn %s n'eo ket un hedad UTF-8 talvoudek"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:435
+#: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "'yes' pe 'no' gortozet evit ar reveziadenn volean %s, bet '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:509
+#: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "gwerzh didalvoudek '%s' evit ar reveziadenn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:524
+#: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "gwerzh didalvoudek '%ld' evit ar reveziadenn %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:593
+#: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "e-pad ma oa o tezrannañ ar reveziadenn '%s' : %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:473
-#: ../libgimpconfig/gimpconfig-iface.c:486
-#: ../libgimpconfig/gimpscanner.c:501
-#: ../libgimpconfig/gimpscanner.c:582
-#: ../libgimpwidgets/gimpcolorprofilestore.c:655
+#: ../libgimpconfig/gimpconfig-iface.c:482
+#: ../libgimpconfig/gimpconfig-iface.c:495
+#: ../libgimpconfig/gimpscanner.c:506
+#: ../libgimpconfig/gimpscanner.c:587
+#: ../libgimpwidgets/gimpcolorprofilestore.c:664
 msgid "fatal parse error"
 msgstr "fazi dezrannañ lazhus"
 
-#: ../libgimpconfig/gimpconfig-path.c:378
+#: ../libgimpconfig/gimpconfig-path.c:387
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "N'haller ket astenn ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:77
-#: ../libgimpconfig/gimpconfigwriter.c:718
+#: ../libgimpconfig/gimpconfigwriter.c:87
+#: ../libgimpconfig/gimpconfigwriter.c:728
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fazi e-pad ma oa o skrivañ '%s' : %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "N'haller ket krouiñ ur restr padennek evit '%s' : %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "N'haller ket digeriñ '%s' evit skrivañ : %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:679
-#: ../libgimpconfig/gimpconfigwriter.c:699
+#: ../libgimpconfig/gimpconfigwriter.c:689
+#: ../libgimpconfig/gimpconfigwriter.c:709
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1043,7 +1050,7 @@ msgstr ""
 "Ur fazi zo bet e-pad ma oa o skrivañ ar restr padennek evit '%s' : %s\n"
 "N'eo ket bet daskemmet ar restr orin."
 
-#: ../libgimpconfig/gimpconfigwriter.c:707
+#: ../libgimpconfig/gimpconfigwriter.c:717
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1052,47 +1059,47 @@ msgstr ""
 "Ur fazi zo bet e-pad ma oa o skrivañ ar restr padennek evit '%s' : %s\n"
 "Restr ebet zo bet krouet."
 
-#: ../libgimpconfig/gimpconfigwriter.c:731
+#: ../libgimpconfig/gimpconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "N'haller ket krouiñ '%s' : %s"
 
-#: ../libgimpconfig/gimpscanner.c:258
+#: ../libgimpconfig/gimpscanner.c:263
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "Hedad UTF-8 didalvoudek."
 
-#: ../libgimpconfig/gimpscanner.c:609
+#: ../libgimpconfig/gimpscanner.c:614
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fazi e-pad dezrannadur '%s' war an arroudenn %d : %s"
 
-#: ../libgimpmodule/gimpmodule.c:152
-#: ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279
-#: ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:432
+#: ../libgimpmodule/gimpmodule.c:163
+#: ../libgimpmodule/gimpmodule.c:181
+#: ../libgimpmodule/gimpmodule.c:290
+#: ../libgimpmodule/gimpmodule.c:317
+#: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Fazi e-pad kargadur ar mollad '%s' : %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:385
 msgid "Module error"
 msgstr "Fazi mollad"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:386
 msgid "Loaded"
 msgstr "Karget"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:387
 msgid "Load failed"
 msgstr "C'hwitadenn war ar c'hargañ"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:388
 msgid "Not loaded"
 msgstr "Ket karget"
 
-#: ../libgimpthumb/gimpthumb-utils.c:122
+#: ../libgimpthumb/gimpthumb-utils.c:131
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1101,280 +1108,297 @@ msgstr ""
 "N'haller ket despizañ ur c'havlec'hiad personel talvoudek.\n"
 "Kadavet e vo ar melvennoù e teuliad ar restroù padennek (%s) neuze."
 
-#: ../libgimpthumb/gimpthumb-utils.c:246
-#: ../libgimpthumb/gimpthumb-utils.c:314
+#: ../libgimpthumb/gimpthumb-utils.c:255
+#: ../libgimpthumb/gimpthumb-utils.c:323
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "C'hwitadenn war krouadur teuliad '%s' ar melvennoù."
 
-#: ../libgimpthumb/gimpthumbnail.c:497
+#: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "N'eus skeudennig ebet er valvenn :: ivinell URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:893
+#: ../libgimpthumb/gimpthumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "N'haller ket krouiñ ar malvennoù evit %s : %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:103
+#: ../libgimpwidgets/gimpbrowser.c:112
 msgid "_Search:"
 msgstr "_Klask :"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:117
+#: ../libgimpwidgets/gimpcolorbutton.c:133
 msgid "_Foreground Color"
 msgstr "Liv ar _rakva"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:121
+#: ../libgimpwidgets/gimpcolorbutton.c:137
 msgid "_Background Color"
 msgstr "Liv an _drekva"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:125
+#: ../libgimpwidgets/gimpcolorbutton.c:141
 msgid "Blac_k"
 msgstr "_Du"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:129
+#: ../libgimpwidgets/gimpcolorbutton.c:145
 msgid "_White"
 msgstr "_Gwenn"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:143
+#: ../libgimpwidgets/gimpcolorprofilestore.c:152
 msgid "Select color profile from disk..."
 msgstr "Diuzañ un aelad liv diwar ar gantenn..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:279
+#: ../libgimpwidgets/gimpcolorprofilestore.c:288
 msgctxt "profile"
 msgid "None"
 msgstr "Tra ebet"
 
-#: ../libgimpwidgets/gimpcolorscales.c:97
+#: ../libgimpwidgets/gimpcolorscales.c:108
 msgid "Scales"
 msgstr "Skeulioù"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:217
 msgid "Current:"
 msgstr "Bremanel :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:231
+#: ../libgimpwidgets/gimpcolorselection.c:226
 msgid "Old:"
 msgstr "Kozh :"
 
-#: ../libgimpwidgets/gimpcolorselection.c:285
+#: ../libgimpwidgets/gimpcolorselection.c:311
 msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
 msgstr "Notennadur liv c'hwezekredel  evel ma 'z eo arveret e HTML ha CSS. Degemeret e vez an anvioù liv CSS gant an enmoned-mañ."
 
-#: ../libgimpwidgets/gimpcolorselection.c:291
+#: ../libgimpwidgets/gimpcolorselection.c:317
 msgid "HTML _notation:"
 msgstr "_Notennadur HTML :"
 
-#: ../libgimpwidgets/gimpfileentry.c:173
+#: ../libgimpwidgets/gimpfileentry.c:197
 msgid "Open a file selector to browse your folders"
 msgstr "Digeriñ un diuzer restroù evit furchal e-touez ho teuliadoù"
 
-#: ../libgimpwidgets/gimpfileentry.c:174
+#: ../libgimpwidgets/gimpfileentry.c:198
 msgid "Open a file selector to browse your files"
 msgstr "Digeriñ un diuzer restroù evit furchal e-touez ho restroù"
 
-#: ../libgimpwidgets/gimpfileentry.c:334
+#: ../libgimpwidgets/gimpfileentry.c:358
 msgid "Select Folder"
 msgstr "Diuzañ un teuliad"
 
-#: ../libgimpwidgets/gimpfileentry.c:336
+#: ../libgimpwidgets/gimpfileentry.c:360
 msgid "Select File"
 msgstr "Diuzañ ur restr"
 
-#: ../libgimpwidgets/gimphelpui.c:419
+#: ../libgimpwidgets/gimphelpui.c:430
 msgid "Press F1 for more help"
 msgstr "Pouezañ war F1 evit bezañ skoazellet muioc'h"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:217
 msgid "Kilobytes"
 msgstr "Kiloeizhbitoù"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:206
+#: ../libgimpwidgets/gimpmemsizeentry.c:218
 msgid "Megabytes"
 msgstr "a vegaeizhbitoù"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:207
+#: ../libgimpwidgets/gimpmemsizeentry.c:219
 msgid "Gigabytes"
 msgstr "Gigaeizhbitoù"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:268
-#: ../libgimpwidgets/gimppageselector.c:1165
+#: ../libgimpwidgets/gimppageselector.c:278
+#: ../libgimpwidgets/gimppageselector.c:1176
 msgid "Nothing selected"
 msgstr "Netra bet diuzet"
 
-#: ../libgimpwidgets/gimppageselector.c:286
+#: ../libgimpwidgets/gimppageselector.c:296
 msgid "Select _All"
 msgstr "Diuz_añ pep tra"
 
-#: ../libgimpwidgets/gimppageselector.c:306
+#: ../libgimpwidgets/gimppageselector.c:316
 msgid "Select _range:"
 msgstr "Diuzañ al l_edad :"
 
-#: ../libgimpwidgets/gimppageselector.c:318
+#: ../libgimpwidgets/gimppageselector.c:328
 msgid "Open _pages as"
 msgstr "Digeriñ ar _bajenn evel"
 
-#: ../libgimpwidgets/gimppageselector.c:419
+#: ../libgimpwidgets/gimppageselector.c:429
 msgid "Page 000"
 msgstr "Pajenn 000"
 
-#: ../libgimpwidgets/gimppageselector.c:507
-#: ../libgimpwidgets/gimppageselector.c:743
+#: ../libgimpwidgets/gimppageselector.c:517
+#: ../libgimpwidgets/gimppageselector.c:754
 #, c-format
 msgid "Page %d"
 msgstr "Pajenn %d"
 
-#: ../libgimpwidgets/gimppageselector.c:1170
+#: ../libgimpwidgets/gimppageselector.c:1181
 msgid "One page selected"
 msgstr "Ur bajenn diuzet"
 
-#: ../libgimpwidgets/gimppageselector.c:1177
-#: ../libgimpwidgets/gimppageselector.c:1181
+#: ../libgimpwidgets/gimppageselector.c:1188
+#: ../libgimpwidgets/gimppageselector.c:1192
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
 msgstr[0] "%d bajenn diuzet"
 msgstr[1] "An holl e-touez %d a bajennoù diuzet"
 
-#: ../libgimpwidgets/gimppatheditor.c:213
+#: ../libgimpwidgets/gimppatheditor.c:234
 msgid "Writable"
 msgstr "Daskemmus"
 
-#: ../libgimpwidgets/gimppatheditor.c:222
+#: ../libgimpwidgets/gimppatheditor.c:243
 msgid "Folder"
 msgstr "Renkell"
 
-#: ../libgimpwidgets/gimppickbutton.c:106
+#: ../libgimpwidgets/gimppickbutton.c:125
 msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
 msgstr "Klikañ war ar gorzennig, ha klikañ war ul liv n'eus forzh pelec'h war ar skramm evit diuzañ al liv-mañ."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:276
+#: ../libgimpwidgets/gimppreview.c:287
 msgid "_Preview"
 msgstr "_Alberz"
 
-#: ../libgimpwidgets/gimppreviewarea.c:93
+#: ../libgimpwidgets/gimppreviewarea.c:103
 msgid "Check Size"
 msgstr "Ment an damer"
 
-#: ../libgimpwidgets/gimppreviewarea.c:100
+#: ../libgimpwidgets/gimppreviewarea.c:110
 msgid "Check Style"
 msgstr "Stil an damer"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1859
+#: ../libgimpwidgets/gimppropwidgets.c:1868
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Bevennet eo ar maez da enankañ testenn betek %d arouezenn."
 msgstr[1] "Bevennet eo ar maez da enankañ testenn betek %d a arouezennoù."
 
-#: ../libgimpwidgets/gimpstock.c:111
+#: ../libgimpwidgets/gimpstock.c:127
 msgid "Anchor"
 msgstr "Eor"
 
-#: ../libgimpwidgets/gimpstock.c:112
+#: ../libgimpwidgets/gimpstock.c:128
 msgid "C_enter"
 msgstr "Kr_eizañ"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:129
 msgid "_Duplicate"
 msgstr "Arre_daoliñ"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:130
 msgid "_Edit"
 msgstr "_Embann"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:131
 msgid "Linked"
 msgstr "Ereet"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:132
 msgid "Paste as New"
 msgstr "Pegañ evel un hini nevez"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:133
 msgid "Paste Into"
 msgstr "Pegañ e"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:134
 msgid "_Reset"
 msgstr "Adde_raouekaat"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:135
 msgid "Visible"
 msgstr "Hewel"
 
-#: ../libgimpwidgets/gimpstock.c:155
-#: ../libgimpwidgets/gimpstock.c:159
+#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
 msgstr "_Tresañ"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:187
 msgid "L_etter Spacing"
 msgstr "_Esaouiñ al lizherennoù"
 
-#: ../libgimpwidgets/gimpstock.c:172
+#: ../libgimpwidgets/gimpstock.c:188
 msgid "L_ine Spacing"
 msgstr "Esaouiñ al l_inennoù"
 
-#: ../libgimpwidgets/gimpstock.c:188
+#: ../libgimpwidgets/gimpstock.c:204
 msgid "_Resize"
 msgstr "Ad_mentañ"
 
-#: ../libgimpwidgets/gimpstock.c:189
-#: ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:205
+#: ../libgimpwidgets/gimpstock.c:339
 msgid "_Scale"
 msgstr "_Skeulaat"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "Cr_op"
 msgstr "Didr_oc'hañ"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:334
 msgid "_Transform"
 msgstr "_Treuzfurmiñ"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libgimpwidgets/gimpstock.c:338
 msgid "_Rotate"
 msgstr "_C'hwelañ"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:340
 msgid "_Shear"
 msgstr "_Sizailhañ"
 
-#: ../libgimpwidgets/gimpunitmenu.c:265
+#: ../libgimpwidgets/gimpunitmenu.c:288
 msgid "More..."
 msgstr "Muioc'h..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:580
+#: ../libgimpwidgets/gimpunitmenu.c:603
 msgid "Unit Selection"
 msgstr "Diuzad an unanennoù"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:652
 msgid "Unit"
 msgstr "Unanenn"
 
-#: ../libgimpwidgets/gimpunitmenu.c:633
+#: ../libgimpwidgets/gimpunitmenu.c:656
 msgid "Factor"
 msgstr "Parenn"
 
-#: ../libgimpwidgets/gimpwidgets.c:510
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
 msgstr "Arverañ ar werzh-mañ evel hadenn ar grouerez niveroù dargouezhek - reiñ a ra tu deoc'h da adober ur riñvadenn \"dargouezhek\" lavaret"
 
-#: ../libgimpwidgets/gimpwidgets.c:514
+#: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
 msgstr "Hadenn _nevez"
 
-#: ../libgimpwidgets/gimpwidgets.c:527
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "Hadennañ ar grouerez niveroù dargouezhek gant un niver dargouezek bet krouet"
 
-#: ../libgimpwidgets/gimpwidgets.c:531
+#: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
 msgstr "Da_rgouezhezkaat"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:49
+#| msgid "Visible"
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "Diweredekaet"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+#| msgid "Green"
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "Skramm"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+msgctxt "input-mode"
+msgid "Window"
+msgstr "Prenestr"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
 msgctxt "aspect-type"
@@ -1527,11 +1551,11 @@ msgstr "Melen"
 msgid "Black"
 msgstr "Du"
 
-#: ../modules/color-selector-cmyk-lcms.c:394
+#: ../modules/color-selector-cmyk-lcms.c:412
 msgid "Profile: (none)"
 msgstr "Aelad : (tra ebet)"
 
-#: ../modules/color-selector-cmyk-lcms.c:415
+#: ../modules/color-selector-cmyk-lcms.c:433
 #, c-format
 msgid "Profile: %s"
 msgstr "Aelad : %s"
@@ -1682,17 +1706,17 @@ msgstr "Gwel POV %d Y"
 msgid "POV %d Return"
 msgstr "Distro POV %d"
 
-#: ../modules/controller-dx-dinput.c:1083
+#: ../modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "Dargouezhioù DirectInput"
 
-#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-dx-dinput.c:1093
 #: ../modules/controller-linux-input.c:524
 #: ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "Trevnad ebet bet kefluniet"
 
-#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-dx-dinput.c:1118
 #: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "N'eo ket hegerz an trevnad"

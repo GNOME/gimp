@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
-"POT-Creation-Date: 2010-04-14 16:40+0000\n"
-"PO-Revision-Date: 2010-04-19 11:46+0100\n"
+"POT-Creation-Date: 2010-08-25 11:03+0000\n"
+"PO-Revision-Date: 2010-08-25 16:43+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
 "Language-Team: An Drouizig <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,10 @@ msgstr "Goulev da zornata skeudennoù GNU"
 
 #: ../app/about.h:29
 msgid ""
-"Copyright © 1995-2009\n"
+"Copyright © 1995-2010\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright © 1995-2009\n"
+"Copyright © 1995-2010\n"
 "Spencer Kimball, Peter Mattis ha pare diorren GIMP"
 
 #: ../app/about.h:33
@@ -47,7 +47,7 @@ msgstr ""
 "\n"
 "Degemeret hoc'h eus un eilad eus  al Lañvaz Foran Hollek GNU gant GIMP ; ma n'hoc'h eus ket, skrivit da : Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app.c:219
+#: ../app/app.c:220
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -102,10 +102,10 @@ msgstr "Na gargañ ar broustoù, ilrezennoù, livaouegoù, gousturioù..."
 
 #: ../app/main.c:170
 msgid "Do not load any fonts"
-msgstr "Ne gargit nodrezh ebet"
+msgstr "Na gargañ nodrezh ebet"
 
 #: ../app/main.c:175
-msgid "Do not show a startup window"
+msgid "Do not show a splash screen"
 msgstr "Na ziskouez ar skrammad loc'hañ"
 
 #: ../app/main.c:180
@@ -191,7 +191,7 @@ msgstr "(Biziata ne vern pe arouezenn evit serriñ ar prenestr-mañ)\n"
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Ec'hankad GIMP. Bihanaet e vez ar prenestr-mañ, na serrit ket eñ avat."
 
-#: ../app/sanity.c:363
+#: ../app/sanity.c:398
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -202,7 +202,7 @@ msgstr ""
 "\n"
 "Gwiriit gwerzh an argemmenn amva G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:382
+#: ../app/sanity.c:417
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be converted to UTF-8: %s\n"
@@ -214,12 +214,12 @@ msgstr ""
 "Morvat e vez kadavet ar restroù gant ho reizhiad restroù dre un enrinegañ disheñvel diouzh UTF-8 ha n'eo ket bet disklêriet ganeoc'h da GLib. Mar plij, grit war-dro ar werzh amva G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
-#: ../app/version.c:63
+#: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "oc'h arverañ %s handelv %s (kempunet dreist an handelv %s)"
 
-#: ../app/version.c:126
+#: ../app/version.c:127
 #: ../tools/gimp-remote.c:94
 #, c-format
 msgid "%s version %s"
@@ -233,7 +233,7 @@ msgstr "Embanner broustoù"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112
-#: ../app/core/gimp.c:951
+#: ../app/core/gimp.c:953
 #: ../app/dialogs/dialogs.c:282
 #: ../app/dialogs/preferences-dialog.c:2720
 msgid "Brushes"
@@ -334,7 +334,7 @@ msgstr "Embanner an ilrezennoù"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:172
-#: ../app/core/gimp.c:971
+#: ../app/core/gimp.c:973
 #: ../app/dialogs/dialogs.c:286
 #: ../app/dialogs/preferences-dialog.c:2736
 msgid "Gradients"
@@ -342,15 +342,14 @@ msgstr "Ilrezennoù"
 
 #. initialize the list of gimp tool presets
 #: ../app/actions/actions.c:175
-#: ../app/core/gimp.c:981
+#: ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:302
-#| msgid "Pre_sets:"
 msgid "Tool Presets"
 msgstr "Ragarventennoù ar benveg"
 
 #: ../app/actions/actions.c:178
 #: ../app/dialogs/dialogs.c:369
-#| msgid "Text Editor"
+#: ../app/widgets/gimptoolpreseteditor.c:75
 msgid "Tool Preset Editor"
 msgstr "Embanner ragarventennoù ar benveg"
 
@@ -382,7 +381,7 @@ msgstr "Embanner al livaouegoù"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:196
-#: ../app/core/gimp.c:966
+#: ../app/core/gimp.c:968
 #: ../app/dialogs/dialogs.c:288
 #: ../app/dialogs/preferences-dialog.c:2732
 msgid "Palettes"
@@ -390,7 +389,7 @@ msgstr "Livaouegoù"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:199
-#: ../app/core/gimp.c:961
+#: ../app/core/gimp.c:963
 #: ../app/dialogs/dialogs.c:284
 #: ../app/dialogs/preferences-dialog.c:2728
 msgid "Patterns"
@@ -402,7 +401,7 @@ msgid "Plug-Ins"
 msgstr "Enlugelladoù"
 
 #: ../app/actions/actions.c:205
-#: ../app/core/gimpchannel.c:369
+#: ../app/core/gimpchannel.c:385
 msgid "Quick Mask"
 msgstr "Maskl herrek"
 
@@ -417,7 +416,7 @@ msgstr "Diuzad"
 
 #. initialize the template list
 #: ../app/actions/actions.c:214
-#: ../app/core/gimp.c:986
+#: ../app/core/gimp.c:988
 #: ../app/dialogs/dialogs.c:296
 msgid "Templates"
 msgstr "Patromoù"
@@ -438,12 +437,13 @@ msgid "Tool Options"
 msgstr "Dibarzhioù ar binvioù"
 
 #: ../app/actions/actions.c:226
+#: ../app/widgets/gimptoolbox.c:952
 msgid "Tools"
 msgstr "Binvioù"
 
 #: ../app/actions/actions.c:229
 #: ../app/dialogs/dialogs.c:315
-#: ../app/tools/gimpvectortool.c:162
+#: ../app/tools/gimpvectortool.c:161
 msgid "Paths"
 msgstr "Treugoù"
 
@@ -456,13 +456,13 @@ msgid "Windows"
 msgstr "Prenestroù"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:583
+#: ../app/actions/actions.c:584
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:609
+#: ../app/actions/actions.c:610
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -733,7 +733,7 @@ msgid "Intersect this channel with the current selection"
 msgstr "Kenskejañ ar sanell-mañ gant an diuzad bremanel"
 
 #: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:404
+#: ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "Doareennoù ar sanell"
 
@@ -751,14 +751,14 @@ msgid "_Fill opacity:"
 msgstr "_Demerez al leuniadur :"
 
 #: ../app/actions/channels-commands.c:116
-#: ../app/core/gimpchannel.c:263
-#: ../app/widgets/gimpchanneltreeview.c:345
+#: ../app/core/gimpchannel.c:271
+#: ../app/widgets/gimpchanneltreeview.c:334
 msgid "Channel"
 msgstr "Sanell"
 
 #: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:159
-#: ../app/widgets/gimpchanneltreeview.c:340
+#: ../app/widgets/gimpchanneltreeview.c:329
 msgid "New Channel"
 msgstr "Sanell nevez"
 
@@ -771,20 +771,13 @@ msgid "New Channel Color"
 msgstr "Sanell liv nevez"
 
 #: ../app/actions/channels-commands.c:244
-#: ../app/core/gimpimage-new.c:180
+#: ../app/core/gimpimage-new.c:252
 #: ../app/display/gimpdisplayshell-dnd.c:599
-#: ../app/widgets/gimpchanneltreeview.c:272
-#: ../app/widgets/gimplayertreeview.c:808
+#: ../app/widgets/gimpchanneltreeview.c:261
+#: ../app/widgets/gimplayertreeview.c:785
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Eilañ ar sanell %s"
-
-#: ../app/actions/channels-commands.c:315
-#: ../app/core/gimpselection.c:583
-#: ../app/pdb/selection-cmds.c:454
-#: ../app/pdb/selection-cmds.c:521
-msgid "Channel to Selection"
-msgstr "Sanell etrezek an diuzad"
 
 #: ../app/actions/colormap-actions.c:44
 msgctxt "colormap-action"
@@ -977,15 +970,15 @@ msgstr "Arverañ al liv kedaozet eus an holl dreuzfollennoù hewel"
 
 #: ../app/actions/data-commands.c:104
 #: ../app/actions/documents-commands.c:343
-#: ../app/actions/file-commands.c:193
-#: ../app/dialogs/file-open-dialog.c:221
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/actions/file-commands.c:194
+#: ../app/dialogs/file-open-dialog.c:233
+#: ../app/dialogs/file-open-dialog.c:278
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
-#: ../app/widgets/gimplayertreeview.c:768
+#: ../app/widgets/gimplayertreeview.c:745
 #: ../app/widgets/gimptoolbox-dnd.c:178
-#: ../app/widgets/gimptoolbox.c:1220
+#: ../app/widgets/gimptoolbox.c:1247
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1001,9 +994,9 @@ msgstr ""
 #: ../app/core/gimpimage.c:1522
 #: ../app/core/gimppalette-import.c:210
 #: ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:378
+#: ../app/core/gimppalette.c:379
 #: ../app/dialogs/palette-import-dialog.c:771
-#: ../app/widgets/gimpdnd-xds.c:92
+#: ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Hep titl"
 
@@ -1247,14 +1240,11 @@ msgid "Open the palette editor"
 msgstr "Digeriñ embanner al livaoueg"
 
 #: ../app/actions/dialogs-actions.c:182
-#| msgid "Tool Options"
 msgctxt "dialogs-action"
 msgid "Tool presets"
 msgstr "Ragarventennoù ar benveg"
 
 #: ../app/actions/dialogs-actions.c:183
-#| msgctxt "dialogs-action"
-#| msgid "Open the tool options dialog"
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Digeriñ boestad emziviz ragarventennoù ar benveg"
@@ -1330,14 +1320,11 @@ msgid "Open the preferences dialog"
 msgstr "Digeriñ boestad emziviz ar gwellvezioù"
 
 #: ../app/actions/dialogs-actions.c:235
-#| msgid "Input Devices"
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Trobarzhelloù _enankañ"
 
 #: ../app/actions/dialogs-actions.c:236
-#| msgctxt "dialogs-action"
-#| msgid "Open the paint dynamics editor"
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Digeriñ embanner an trobarzhelloù enankañ"
@@ -1384,24 +1371,19 @@ msgstr "A-zivout GIMP"
 
 #: ../app/actions/dialogs-actions.c:304
 #: ../app/dialogs/preferences-dialog.c:1943
-#: ../app/widgets/gimptoolbox.c:774
+#: ../app/widgets/gimptoolbox.c:795
 msgid "Toolbox"
 msgstr "Boestad binvioù"
 
 #: ../app/actions/dialogs-actions.c:305
-#| msgctxt "windows-action"
-#| msgid "Raise the toolbox"
 msgid "Raise the toolbox"
 msgstr "Sevel ar voestad binvioù"
 
 #: ../app/actions/dialogs-actions.c:309
-#| msgid "Toolbox"
 msgid "New Toolbox"
 msgstr "Boestad binvioù nevez"
 
 #: ../app/actions/dialogs-actions.c:310
-#| msgctxt "brushes-action"
-#| msgid "Create a new brush"
 msgid "Create a new toolbox"
 msgstr "Krouiñ ur voestad binvioù nevez"
 
@@ -1535,27 +1517,33 @@ msgctxt "tab-style"
 msgid "St_atus & Text"
 msgstr "St_ad & testenn"
 
-#: ../app/actions/dockable-actions.c:124
+#: ../app/actions/dockable-actions.c:116
+#: ../app/widgets/widgets-enums.c:224
+msgctxt "tab-style"
+msgid "Automatic"
+msgstr "Emgefreek"
+
+#: ../app/actions/dockable-actions.c:126
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
 msgstr "Prennañ an ivinell er voestad stagadus"
 
-#: ../app/actions/dockable-actions.c:126
+#: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
 msgstr "Mirout ouzh an ivinell-mañ da vezañ riklet gant biz al logodenn"
 
-#: ../app/actions/dockable-actions.c:132
+#: ../app/actions/dockable-actions.c:134
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
 msgstr "Diskouez _barrenn an afelloù"
 
-#: ../app/actions/dockable-actions.c:141
+#: ../app/actions/dockable-actions.c:143
 msgctxt "dockable-action"
 msgid "View as _List"
 msgstr "Gwe_llout evel ur roll"
 
-#: ../app/actions/dockable-actions.c:146
+#: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
 msgstr "Gwellout evel ur _gael"
@@ -2275,8 +2263,6 @@ msgid "_File"
 msgstr "_Restr"
 
 #: ../app/actions/file-actions.c:72
-#| msgctxt "file-action"
-#| msgid "Create"
 msgctxt "file-action"
 msgid "Crea_te"
 msgstr "Kr_ouiñ"
@@ -2317,8 +2303,6 @@ msgid "Open an image file from a specified location"
 msgstr "Digeriñ ur restr skeudenn diouzh ul lec'hiadur erspizet"
 
 #: ../app/actions/file-actions.c:94
-#| msgctxt "file-action"
-#| msgid "Create _Template..."
 msgctxt "file-action"
 msgid "Create Template..."
 msgstr "Krouiñ ur patrom..."
@@ -2385,8 +2369,8 @@ msgstr "Enrollañ un e_ilad..."
 
 #: ../app/actions/file-actions.c:135
 msgctxt "file-action"
-msgid "Save this image with a different name, but keep its current name"
-msgstr "Enrollañ ar skeudenn-mañ gant un anv disheñvel, mirout hec'h anv bremanel avat"
+msgid "Save a copy of this image, without affecting the source file (if any) or the current state of the image"
+msgstr "Enrollañ un eilad eus ar skeudenn, hep daskemmañ ar restr tarzh (mar bez unan) pe stad vremanel ar skeudenn"
 
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
@@ -2443,7 +2427,7 @@ msgid "Export to"
 msgstr "Ezporzhiañ betek"
 
 #: ../app/actions/file-commands.c:112
-#: ../app/actions/file-commands.c:474
+#: ../app/actions/file-commands.c:475
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Digeriñ ur skeudenn"
@@ -2452,49 +2436,49 @@ msgstr "Digeriñ ur skeudenn"
 msgid "Open Image as Layers"
 msgstr "Digeriñ ur skeudenn evel treuzfollennoù"
 
-#: ../app/actions/file-commands.c:264
+#: ../app/actions/file-commands.c:265
 msgid "No changes need to be saved"
 msgstr "Kemm ebet da enrollañ"
 
-#: ../app/actions/file-commands.c:271
+#: ../app/actions/file-commands.c:272
 #: ../app/dialogs/file-save-dialog.c:95
 msgid "Save Image"
 msgstr "Enrollañ ar skeudenn"
 
-#: ../app/actions/file-commands.c:277
+#: ../app/actions/file-commands.c:278
 msgid "Save a Copy of the Image"
 msgstr "Enrollañ un eilad eus ar skeudenn"
 
-#: ../app/actions/file-commands.c:337
+#: ../app/actions/file-commands.c:338
 msgid "Create New Template"
 msgstr "Krouiñ ur patrom nevez"
 
-#: ../app/actions/file-commands.c:341
+#: ../app/actions/file-commands.c:342
 msgid "Enter a name for this template"
 msgstr "Enankit un anv evit ar patrom-mañ"
 
-#: ../app/actions/file-commands.c:376
+#: ../app/actions/file-commands.c:377
 msgid "Revert failed. No file name associated with this image."
 msgstr "C'hwitadenn war an distreiñ. N'eus anv restr ebet kevreet ouzh ar skeudenn-mañ."
 
-#: ../app/actions/file-commands.c:389
+#: ../app/actions/file-commands.c:390
 msgid "Revert Image"
 msgstr "Distreiñ d'ar skeudenn"
 
-#: ../app/actions/file-commands.c:420
+#: ../app/actions/file-commands.c:421
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Lakaat  '%s' da zistreiñ da  '%s' ?"
 
-#: ../app/actions/file-commands.c:426
+#: ../app/actions/file-commands.c:427
 msgid "By reverting the image to the state saved on disk, you will lose all changes, including all undo information."
 msgstr "Mar bez distroet betek stad ar skeudenn enrollet war ar gantenn e vo kollet an holl gemmoù, en o zouez holl stlennoù an dizoberioù."
 
-#: ../app/actions/file-commands.c:634
+#: ../app/actions/file-commands.c:638
 msgid "(Unnamed Template)"
 msgstr "(Patrom disanv)"
 
-#: ../app/actions/file-commands.c:686
+#: ../app/actions/file-commands.c:690
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3129,7 +3113,7 @@ msgstr "_Pladañ ar skeudenn"
 #: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Toueziañ an holl dreuzfollennoù e unan ha dilemel an dreuzwelusted"
+msgstr "Toueziañ an holl dreuzfollennoù e unan ha dilemel an treuzweluster"
 
 #: ../app/actions/image-actions.c:127
 msgctxt "image-action"
@@ -3231,27 +3215,27 @@ msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "C'hwelañ ar skeudenn dre 90 derez war an tu kleiz"
 
-#: ../app/actions/image-commands.c:235
+#: ../app/actions/image-commands.c:236
 msgid "Set Image Canvas Size"
 msgstr "Arventennañ ment ar steuenn"
 
-#: ../app/actions/image-commands.c:264
-#: ../app/actions/image-commands.c:288
-#: ../app/actions/image-commands.c:580
+#: ../app/actions/image-commands.c:265
+#: ../app/actions/image-commands.c:289
+#: ../app/actions/image-commands.c:581
 msgid "Resizing"
 msgstr "Oc'h admentañ"
 
-#: ../app/actions/image-commands.c:315
+#: ../app/actions/image-commands.c:316
 msgid "Set Image Print Resolution"
 msgstr "Arventennañ diarunusted voullañ ar skeudenn"
 
-#: ../app/actions/image-commands.c:377
+#: ../app/actions/image-commands.c:378
 #: ../app/pdb/drawable-transform-cmds.c:147
 #: ../app/pdb/drawable-transform-cmds.c:222
 msgid "Flipping"
 msgstr "O wintañ"
 
-#: ../app/actions/image-commands.c:401
+#: ../app/actions/image-commands.c:402
 #: ../app/pdb/drawable-transform-cmds.c:524
 #: ../app/pdb/drawable-transform-cmds.c:603
 #: ../app/pdb/image-cmds.c:533
@@ -3260,23 +3244,22 @@ msgstr "O wintañ"
 msgid "Rotating"
 msgstr "O c'hwelañ"
 
-#: ../app/actions/image-commands.c:427
-#: ../app/actions/layers-commands.c:683
+#: ../app/actions/image-commands.c:428
+#: ../app/actions/layers-commands.c:691
 msgid "Cannot crop because the current selection is empty."
 msgstr "N'haller ket didroc'hañ rak goullo eo an diuzad bremanel."
 
-#: ../app/actions/image-commands.c:627
+#: ../app/actions/image-commands.c:628
 msgid "Change Print Size"
 msgstr "Kemm ar vent voullañ"
 
-#: ../app/actions/image-commands.c:668
-#: ../app/core/gimpimage-scale.c:87
+#: ../app/actions/image-commands.c:669
 msgid "Scale Image"
 msgstr "Skeulaat ar skeudenn"
 
 #. Scaling
-#: ../app/actions/image-commands.c:679
-#: ../app/actions/layers-commands.c:1149
+#: ../app/actions/image-commands.c:680
+#: ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:681
 #: ../app/pdb/drawable-transform-cmds.c:757
@@ -3324,527 +3307,506 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "Dilemel ar skeudenn-mañ"
 
-#: ../app/actions/layers-actions.c:48
+#: ../app/actions/layers-actions.c:49
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "Lañser Treuzfollennoù"
 
-#: ../app/actions/layers-actions.c:52
+#: ../app/actions/layers-actions.c:53
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "_Treuzfollenn"
 
-#: ../app/actions/layers-actions.c:54
+#: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "Be_rn"
 
-#: ../app/actions/layers-actions.c:56
-msgctxt "layers-action"
-msgid "Te_xt to Selection"
-msgstr "Te_stenn da ziuzad"
-
-#: ../app/actions/layers-actions.c:58
+#: ../app/actions/layers-actions.c:57
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_Maskl"
 
-#: ../app/actions/layers-actions.c:60
+#: ../app/actions/layers-actions.c:59
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "_Boullder"
 
-#: ../app/actions/layers-actions.c:62
+#: ../app/actions/layers-actions.c:61
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "_Treuzfurmiñ"
 
-#: ../app/actions/layers-actions.c:64
+#: ../app/actions/layers-actions.c:63
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "_Perzhioù"
 
-#: ../app/actions/layers-actions.c:66
+#: ../app/actions/layers-actions.c:65
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "_Demerez"
 
-#: ../app/actions/layers-actions.c:68
+#: ../app/actions/layers-actions.c:67
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "_Mod an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:71
+#: ../app/actions/layers-actions.c:70
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "Benveg Te_stenn"
 
-#: ../app/actions/layers-actions.c:72
+#: ../app/actions/layers-actions.c:71
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "Gweredekaat ar benveg testenn war an dreuzfollenn destenn-mañ"
 
-#: ../app/actions/layers-actions.c:77
+#: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "_Embann doareennoù an dreuzfollenn..."
 
-#: ../app/actions/layers-actions.c:78
+#: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "Embann anv an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:83
-#: ../app/actions/layers-actions.c:591
+#: ../app/actions/layers-actions.c:82
+#: ../app/actions/layers-actions.c:598
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "Treuzfollenn _nevez..."
 
-#: ../app/actions/layers-actions.c:84
+#: ../app/actions/layers-actions.c:83
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "Krouiñ un dreuzfollenn nevez hag ouzhpennañ hi er skeudenn-mañ"
 
-#: ../app/actions/layers-actions.c:89
-#: ../app/actions/layers-actions.c:592
+#: ../app/actions/layers-actions.c:88
+#: ../app/actions/layers-actions.c:599
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "Treuzfollenn _nevez"
 
-#: ../app/actions/layers-actions.c:90
+#: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "Krouiñ un dreuzfollenn nevez gant ar gwerzhioù diwezhañ arveret"
 
-#: ../app/actions/layers-actions.c:95
+#: ../app/actions/layers-actions.c:94
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "Unan nevez diouzh an hini he_wel"
 
-#: ../app/actions/layers-actions.c:97
+#: ../app/actions/layers-actions.c:96
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "Krouiñ un dreuzfollenn nevez diouzh pezh a zo hewel war ar skeudenn"
 
-#: ../app/actions/layers-actions.c:102
+#: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "New Layer _Group..."
 msgstr "Strollad treuzfollennoù _nevez..."
 
-#: ../app/actions/layers-actions.c:103
+#: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
 msgstr "Krouiñ ur strollad treuzfollennoù nevez hag ouzhpennañ eñ er skeudenn-mañ"
 
-#: ../app/actions/layers-actions.c:108
+#: ../app/actions/layers-actions.c:107
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "Arre_daoliñ an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:109
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Krouiñ un eilad eus an dreuzfollenn hag ouzhpennañ eñ war ar skeudenn"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "_Dilemel an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "Dilemel an dreuzfollenn-mañ"
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:120
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "_Sevel an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "Sevel an dreuzfollenn-mañ dre ur paz e bern an treuzfollennoù"
 
-#: ../app/actions/layers-actions.c:127
+#: ../app/actions/layers-actions.c:126
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "Treuzfollenn d'an _uhelañ"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "Sevel an dreuzfollenn-mañ betek lein bern an treuzfollennoù"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:132
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "_Diskenn an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:134
+#: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "Diskenn an dreuzfollenn-mañ dre ur paz e bern an treuzfollennoù"
 
-#: ../app/actions/layers-actions.c:139
+#: ../app/actions/layers-actions.c:138
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "Treuzfollenn d'an _izelañ"
 
-#: ../app/actions/layers-actions.c:140
+#: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "Diskenn an dreuzfollenn-mañ betek traoñ bern an treuzfollennoù"
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:144
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "_Eoriañ an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "Eoriañ an dreuzfollenn war neuñv"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:150
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "_Toueziañ etrezek an traoñ"
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
-msgid "Merge this layer with the one below it"
-msgstr "Toueziañ an dreuzfollenn-mañ gant an hini a zo dindan"
+msgid "Merge this layer with the first visible layer below it"
+msgstr "Toueziañ an dreuzfollenn-mañ gant an hini gentañ hewel a zo dindan"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:156
 msgctxt "layers-action"
 msgid "Merge Layer Group"
 msgstr "Toueziañ ar strollad treuzfollennoù"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
 msgstr "Toueziañ ar strollad treuzfollennoù en un dreuzfollenn reizh"
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "Toueziañ an treuzfollennoù _hewel..."
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Toueziañ an holl dreuzfollennoù hewel en un dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:168
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "_Pladañ ar skeudenn"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr "Toueziañ an holl dreuzfollennoù e unan ha dilemel an dreuzwelusted"
+msgstr "Toueziañ an holl dreuzfollennoù e unan ha dilemel an treuzweluster"
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:174
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "_Diskar an destenn gelaouiñ"
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "Treiñ an dreuzfollenn destenn-mañ d'un dreuzfollenn skoueriek"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:180
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "Testenn da _dreug"
 
-#: ../app/actions/layers-actions.c:182
+#: ../app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "Krouiñ un treug diouzh an dreuzfollenn destenn"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:186
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "Testenn a-hed an treu_g"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "Distummañ an dreuzfollenn destenn-mañ a-hed an treug bremanel"
 
-#: ../app/actions/layers-actions.c:193
+#: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "Ment bevenn_où an dreuzfollenn..."
 
-#: ../app/actions/layers-actions.c:194
+#: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "Kengeidañ mentoù an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:199
+#: ../app/actions/layers-actions.c:198
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "Treuzfollenn ouzh ment ar _skeudenn"
 
-#: ../app/actions/layers-actions.c:200
+#: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "Admentañ an dreuzfollenn betek ment ar skeudenn"
 
-#: ../app/actions/layers-actions.c:205
+#: ../app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "_Skeulaat an dreuzfollenn..."
 
-#: ../app/actions/layers-actions.c:206
+#: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "Kemmañ ment an dreuzfollennad"
 
-#: ../app/actions/layers-actions.c:211
+#: ../app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "Didro_c'hañ an diuzad"
 
-#: ../app/actions/layers-actions.c:212
+#: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "Admentañ an dreuzfollenn betek astennadoù an diuzad"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "Ouzhpennañ ur _maskl treuzfollenn..."
 
-#: ../app/actions/layers-actions.c:219
+#: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr "Ouzhpennañ ur maskl oc'h aotren un embann dizistrujus eus an dreuzwelusted"
+msgstr "Ouzhpennañ ur maskl oc'h aotren un embann dizistrujus eus an treuzweluster"
 
-#: ../app/actions/layers-actions.c:224
+#: ../app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "Ouz_hpennañ ur sanell alfa"
 
-#: ../app/actions/layers-actions.c:225
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
-msgstr "Ouzhpennañ ar stlennoù a-fet treuzwelusted d'an dreuzfollenn"
+msgstr "Ouzhpennañ ar stlennoù a-fet treuzweluster d'an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "_Dilemel ar sanell Alfa"
 
-#: ../app/actions/layers-actions.c:231
+#: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
-msgstr "Dilemel ar stlennoù a-fet treuzwelusted diouzh an dreuzfollenn"
+msgstr "Dilemel ar stlennoù a-fet treuzweluster diouzh an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:239
+#: ../app/actions/layers-actions.c:238
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "Prennañ ar sanell _alfa"
 
-#: ../app/actions/layers-actions.c:241
+#: ../app/actions/layers-actions.c:240
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
-msgstr "Mirout ar stlennoù treuzwelusted war an dreuzfollenn-mañ ouzh bezañ daskemmet"
+msgstr "Mirout ar stlennoù a-fet treuzweluster war an dreuzfollenn-mañ ouzh bezañ daskemmet"
 
-#: ../app/actions/layers-actions.c:247
+#: ../app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "Embann ar maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:248
+#: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "Labourat war ar maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:254
+#: ../app/actions/layers-actions.c:253
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "Diskouez ar _maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:259
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "_Diweredekaat ar maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:261
+#: ../app/actions/layers-actions.c:260
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "Argas efed ar maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:270
+#: ../app/actions/layers-actions.c:269
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "Arloañ ar _maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:271
+#: ../app/actions/layers-actions.c:270
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "Arloañ efed maskl an dreuzfollenn ha dilemel eñ"
 
-#: ../app/actions/layers-actions.c:276
+#: ../app/actions/layers-actions.c:275
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "Dilemel ar mas_kl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:277
+#: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "Arloañ efed maskl an dreuzfollenn ha dilemel eñ"
 
-#: ../app/actions/layers-actions.c:285
+#: ../app/actions/layers-actions.c:284
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "_Maskl ouzh an diuzad"
 
-#: ../app/actions/layers-actions.c:286
+#: ../app/actions/layers-actions.c:285
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "Amsaviñ an diuzad ouzh ar maskl treuzfollenn"
 
-#: ../app/actions/layers-actions.c:291
+#: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "Ouzhpenn_añ d'an diuzad"
 
-#: ../app/actions/layers-actions.c:292
+#: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "Ouzhpennañ ar maskl treuzfollenn d'an diuzad bremanel"
 
-#: ../app/actions/layers-actions.c:297
-#: ../app/actions/layers-actions.c:326
-#: ../app/actions/layers-actions.c:356
+#: ../app/actions/layers-actions.c:296
+#: ../app/actions/layers-actions.c:325
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "Tennañ kuit diouzh an diuzad"
 
-#: ../app/actions/layers-actions.c:298
+#: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "Dilemel ar maskl treuzfollenn diouzh an diuzad bremanel"
 
-#: ../app/actions/layers-actions.c:303
-#: ../app/actions/layers-actions.c:333
-#: ../app/actions/layers-actions.c:363
+#: ../app/actions/layers-actions.c:302
+#: ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "_Kenskejadur gant an diuzad"
 
-#: ../app/actions/layers-actions.c:304
+#: ../app/actions/layers-actions.c:303
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "Kenskejañ ar maskl treuzfollenn gant an diuzad bremanel"
 
-#: ../app/actions/layers-actions.c:312
+#: ../app/actions/layers-actions.c:311
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "Al_fa ouzh an diuzad"
 
-#: ../app/actions/layers-actions.c:314
+#: ../app/actions/layers-actions.c:313
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "Amsaviñ an diuzad ouzh sanell alfa an dreuzfollenn"
 
-#: ../app/actions/layers-actions.c:319
-#: ../app/actions/layers-actions.c:349
+#: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "Ouzhpennañ d'an _diuzad"
 
-#: ../app/actions/layers-actions.c:321
+#: ../app/actions/layers-actions.c:320
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "Ouzhpennañ sanell alfa an dreuzfollenn d'an diuzad bremanel"
 
-#: ../app/actions/layers-actions.c:328
+#: ../app/actions/layers-actions.c:327
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Lemel sanell alfa an dreuzfollenn diouzh an diuzad bremanel"
 
-#: ../app/actions/layers-actions.c:335
+#: ../app/actions/layers-actions.c:334
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Kenskejañ sanell alfa an dreuzfollenn gant an diuzad bremanel"
 
-#: ../app/actions/layers-actions.c:343
-msgctxt "layers-action"
-msgid "_Text to Selection"
-msgstr "_Testenn da ziuzad"
-
-#: ../app/actions/layers-actions.c:344
-msgctxt "layers-action"
-msgid "Replace the selection with the text layer's outline"
-msgstr "Amsaviñ an diuzad gant trolinenn an dreuzfollenn destenn"
-
-#: ../app/actions/layers-actions.c:351
-msgctxt "layers-action"
-msgid "Add the text layer's outline to the current selection"
-msgstr "Ouzhpennañ trolinenn testenn an dreuzfollenn d'an diuzad bremanel"
-
-#: ../app/actions/layers-actions.c:358
-msgctxt "layers-action"
-msgid "Subtract the text layer's outline from the current selection"
-msgstr "Lemel trolinenn testenn an dreuzfollenn diouzh an diuzad bremanel"
-
-#: ../app/actions/layers-actions.c:365
-msgctxt "layers-action"
-msgid "Intersect the text layer's outline with the current selection"
-msgstr "Kenskejañ trolinenn testenn an dreuzfollenn gant an diuzad bremanel"
-
-#: ../app/actions/layers-actions.c:373
+#: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Diuzañ an dreuzfollenn e _lein"
 
-#: ../app/actions/layers-actions.c:374
+#: ../app/actions/layers-actions.c:343
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Diuzañ an dreuzfollenn el lein"
 
-#: ../app/actions/layers-actions.c:379
+#: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Diuzañ an dreuzfollenn en _traoñ"
 
-#: ../app/actions/layers-actions.c:380
+#: ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Diuzañ an dreuzfollenn en traoñ"
 
-#: ../app/actions/layers-actions.c:385
+#: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "Diuzañ an dreuzfollenn gent"
 
-#: ../app/actions/layers-actions.c:386
+#: ../app/actions/layers-actions.c:355
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "Diuzañ an dreuzfollenn a-us d'an dreuzfollenn oberiant"
 
-#: ../app/actions/layers-actions.c:391
+#: ../app/actions/layers-actions.c:360
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "Diuzañ an dreuzfollenn war-lerc'h"
 
-#: ../app/actions/layers-actions.c:392
+#: ../app/actions/layers-actions.c:361
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "Diuzañ an dreuzfollenn dindan an dreuzfollenn oberiant"
 
-#: ../app/actions/layers-actions.c:586
-#: ../app/actions/layers-actions.c:587
-#| msgctxt "layers-action"
-#| msgid "_New Layer"
+#. Will be followed with e.g. "Shift-Click
+#. on thumbnail"
+#.
+#: ../app/actions/layers-actions.c:442
+msgid "Shortcut: "
+msgstr "Berradenn glavier :"
+
+#. Will be prepended with a modifier key
+#. string, e.g. "Shift"
+#.
+#: ../app/actions/layers-actions.c:447
+msgid "-Click on thumbnail in Layers dockable"
+msgstr "- Klikañ war ar velvenn a zo war an treuzfollennoù stagus"
+
+#: ../app/actions/layers-actions.c:593
+#: ../app/actions/layers-actions.c:594
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "D'un dreuzfollenn _nevez"
@@ -3858,14 +3820,14 @@ msgid "Edit Layer Attributes"
 msgstr "Embann doareennoù an dreuzfollenn"
 
 #: ../app/actions/layers-commands.c:250
-#: ../app/core/gimplayer.c:257
+#: ../app/core/gimplayer.c:265
 msgid "Layer"
 msgstr "Treuzfollenn"
 
 #: ../app/actions/layers-commands.c:252
 #: ../app/actions/layers-commands.c:320
 #: ../app/widgets/gimpdrawabletreeview.c:337
-#: ../app/widgets/gimplayertreeview.c:869
+#: ../app/widgets/gimplayertreeview.c:846
 msgid "New Layer"
 msgstr "Treuzfollenn nevez"
 
@@ -3877,29 +3839,23 @@ msgstr "Krouiñ un dreuzfollenn nevez"
 msgid "Visible"
 msgstr "Hewelus"
 
-#: ../app/actions/layers-commands.c:614
+#: ../app/actions/layers-commands.c:618
 msgid "Set Layer Boundary Size"
 msgstr "Arventennañ ment an dreuzfollenn"
 
-#: ../app/actions/layers-commands.c:655
-#: ../app/core/gimplayer.c:260
+#: ../app/actions/layers-commands.c:663
 msgid "Scale Layer"
 msgstr "Skeulaat an dreuzfollenn"
 
-#: ../app/actions/layers-commands.c:693
+#: ../app/actions/layers-commands.c:701
 msgid "Crop Layer"
 msgstr "Didroc'hañ riblennoù an dreuzfollenn"
 
-#: ../app/actions/layers-commands.c:832
-msgid "Layer Mask to Selection"
-msgstr "Maskl treuzfollenn ouzh an diuzad"
-
-#: ../app/actions/layers-commands.c:1084
+#: ../app/actions/layers-commands.c:1080
 msgid "Please select a channel first"
 msgstr "Diuzañ ur sanell da gentañ"
 
-#: ../app/actions/layers-commands.c:1092
-#: ../app/core/gimplayer.c:1399
+#: ../app/actions/layers-commands.c:1088
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Ouzhpennañ ur maskl treuzfollenn"
@@ -4059,11 +4015,11 @@ msgctxt "palettes-action"
 msgid "Edit palette"
 msgstr "Embann al livaoueg"
 
-#: ../app/actions/palettes-commands.c:71
+#: ../app/actions/palettes-commands.c:72
 msgid "Merge Palette"
 msgstr "Toueziañ al livaoueg"
 
-#: ../app/actions/palettes-commands.c:75
+#: ../app/actions/palettes-commands.c:76
 msgid "Enter a name for the merged palette"
 msgstr "Enankit un anv evit al livaoueg toueziet"
 
@@ -4484,66 +4440,61 @@ msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "Tresañ an diuzad gant ar gwerzhioù diwezhañ"
 
-#: ../app/actions/select-commands.c:156
-#: ../app/core/gimpselection.c:171
+#: ../app/actions/select-commands.c:155
 msgid "Feather Selection"
 msgstr "Kuñvsaat an diuzad"
 
-#: ../app/actions/select-commands.c:160
+#: ../app/actions/select-commands.c:159
 msgid "Feather selection by"
 msgstr "Kuñvsaat an diuzad dre"
 
-#: ../app/actions/select-commands.c:197
-#: ../app/core/gimpselection.c:178
+#: ../app/actions/select-commands.c:196
 msgid "Shrink Selection"
 msgstr "Bihanaat an diuzad"
 
-#: ../app/actions/select-commands.c:201
+#: ../app/actions/select-commands.c:200
 msgid "Shrink selection by"
 msgstr "Bihanaat an diuzad dre"
 
-#: ../app/actions/select-commands.c:209
+#: ../app/actions/select-commands.c:208
 msgid "_Shrink from image border"
 msgstr "Bihanaat diouzh riblenn ar _skeudenn"
 
-#: ../app/actions/select-commands.c:237
-#: ../app/core/gimpselection.c:177
+#: ../app/actions/select-commands.c:236
 msgid "Grow Selection"
 msgstr "Kreskaat an diuzad"
 
-#: ../app/actions/select-commands.c:241
+#: ../app/actions/select-commands.c:240
 msgid "Grow selection by"
 msgstr "Kreskaat an diuzad dre"
 
-#: ../app/actions/select-commands.c:267
-#: ../app/core/gimpselection.c:176
+#: ../app/actions/select-commands.c:266
 msgid "Border Selection"
 msgstr "Riblenniñ an diuzad"
 
-#: ../app/actions/select-commands.c:271
+#: ../app/actions/select-commands.c:270
 msgid "Border selection by"
 msgstr "Riblenniñ an diuzad dre"
 
 #. Feather button
-#: ../app/actions/select-commands.c:280
+#: ../app/actions/select-commands.c:279
 msgid "_Feather border"
 msgstr "K_uñvaat ar riblennoù"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:293
+#: ../app/actions/select-commands.c:292
 msgid "_Lock selection to image edges"
 msgstr "_Prennañ an diuzad ouzh riblennoù ar skeudenn"
 
-#: ../app/actions/select-commands.c:343
-#: ../app/actions/select-commands.c:376
-#: ../app/actions/vectors-commands.c:391
-#: ../app/actions/vectors-commands.c:425
+#: ../app/actions/select-commands.c:342
+#: ../app/actions/select-commands.c:375
+#: ../app/actions/vectors-commands.c:386
+#: ../app/actions/vectors-commands.c:420
 #: ../app/dialogs/stroke-dialog.c:289
 msgid "There is no active layer or channel to stroke to."
 msgstr "N'eus treuzfollenn pe sanell oberiant ebet a vefe treset warno."
 
-#: ../app/actions/select-commands.c:349
-#: ../app/core/gimpselection.c:155
+#: ../app/actions/select-commands.c:348
 msgid "Stroke Selection"
 msgstr "Tresañ an diuzad"
 
@@ -4687,7 +4638,7 @@ msgstr "Digeriñ ur restr testenn (UTF-8)"
 #: ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:637
 #: ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:328
+#: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "N'haller ket digeriñ '%s' evit he lenn : %s"
@@ -4840,15 +4791,14 @@ msgid "Enter a new name for the saved options"
 msgstr "Enankit un anv nevez evit an dibarzhioù enrollet"
 
 #: ../app/actions/tool-options-commands.c:185
-msgid "Reset Tool Options"
-msgstr "Adderaouekaat dibarzhioù ar binvioù"
+msgid "Reset All Tool Options"
+msgstr "Adder_aouekaat holl zibarzhioù ar binvioù"
 
 #: ../app/actions/tool-options-commands.c:208
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "Ha fellout a ra deoc'h adderaouekaat holl zibarzhioù ar binvioù betek o gwerzh dre ziouer ?"
 
 #: ../app/actions/tool-preset-actions.c:44
-#| msgid "Tools Menu"
 msgctxt "tool-preset-action"
 msgid "Tool Preset Menu"
 msgstr "Lañser ragarventenn ar benveg"
@@ -4859,81 +4809,69 @@ msgid "_New Tool Preset"
 msgstr "Ragarventenn ar benveg _nevez"
 
 #: ../app/actions/tool-preset-actions.c:49
-#| msgctxt "palettes-action"
-#| msgid "Create a new palette"
 msgctxt "tool-preset-action"
 msgid "Create a new tool preset"
 msgstr "Krouiñ ur ragarventenn nevez evit ar benveg"
 
 #: ../app/actions/tool-preset-actions.c:54
-#| msgctxt "vectors-action"
-#| msgid "D_uplicate Path"
 msgctxt "tool-preset-action"
 msgid "D_uplicate Tool Preset"
 msgstr "Arre_daoliñ ragarventenn ar benveg"
 
 #: ../app/actions/tool-preset-actions.c:55
-#| msgctxt "vectors-action"
-#| msgid "Duplicate this path"
 msgctxt "tool-preset-action"
 msgid "Duplicate this tool preset"
 msgstr "Arredaoliñ ragarventenn ar benveg-mañ"
 
 #: ../app/actions/tool-preset-actions.c:60
-#| msgctxt "palettes-action"
-#| msgid "Copy Palette _Location"
 msgctxt "tool-preset-action"
 msgid "Copy Tool Preset _Location"
 msgstr "Eilañ _lec'hiadur ragarventenn ar benveg-mañ"
 
 #: ../app/actions/tool-preset-actions.c:61
-#| msgctxt "palettes-action"
-#| msgid "Copy palette file location to clipboard"
 msgctxt "tool-preset-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Eilañ lec'hiadur ar restr evit ragarventennoù ar benveg er golver"
 
 #: ../app/actions/tool-preset-actions.c:66
-#| msgctxt "palette-editor-action"
-#| msgid "_Delete Color"
 msgctxt "tool-preset-action"
 msgid "_Delete Tool Preset"
 msgstr "_Dilemel ragarventenn ar benveg"
 
 #: ../app/actions/tool-preset-actions.c:67
-#| msgctxt "vectors-action"
-#| msgid "Delete this path"
 msgctxt "tool-preset-action"
 msgid "Delete this tool preset"
 msgstr "Dilemel ragarventenn ar benveg-mañ"
 
 #: ../app/actions/tool-preset-actions.c:72
-#| msgctxt "brushes-action"
-#| msgid "_Refresh Brushes"
 msgctxt "tool-preset-action"
 msgid "_Refresh Tool Presets"
 msgstr "Azg_renaat ragarventenn ar benveg-mañ"
 
 #: ../app/actions/tool-preset-actions.c:73
-#| msgctxt "brushes-action"
-#| msgid "Refresh brushes"
 msgctxt "tool-preset-action"
 msgid "Refresh tool presets"
 msgstr "Azgrenaat ragarventenn ar benveg-mañ"
 
 #: ../app/actions/tool-preset-actions.c:81
-#| msgctxt "colormap-action"
-#| msgid "_Edit Color..."
 msgctxt "tool-preset-action"
 msgid "_Edit Tool Preset..."
 msgstr "_Embann ragarventenn ar benveg..."
 
 #: ../app/actions/tool-preset-actions.c:82
-#| msgctxt "colormap-action"
-#| msgid "Edit this color"
 msgctxt "tool-preset-action"
 msgid "Edit this tool preset"
 msgstr "Embann ragarventenn ar benveg-mañ"
+
+#: ../app/actions/tool-preset-editor-actions.c:42
+msgctxt "tool-preset-editor-action"
+msgid "Tool Preset Editor Menu"
+msgstr "Lañser embanner ragarventennoù ar benveg"
+
+#: ../app/actions/tool-preset-editor-actions.c:50
+msgctxt "tool-preset-editor-action"
+msgid "Edit Active Tool Preset"
+msgstr "Embann ragarventenn ar benveg oberiant-mañ"
 
 #: ../app/actions/tools-actions.c:45
 msgctxt "tools-action"
@@ -5217,38 +5155,31 @@ msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "Dibarzhioù kempleshoc'h"
 
-#: ../app/actions/vectors-commands.c:138
+#: ../app/actions/vectors-commands.c:137
 msgid "Path Attributes"
 msgstr "Doareennoù an treug"
 
-#: ../app/actions/vectors-commands.c:141
+#: ../app/actions/vectors-commands.c:140
 msgid "Edit Path Attributes"
 msgstr "Embann doareennoù an treug"
 
-#: ../app/actions/vectors-commands.c:165
-#: ../app/vectors/gimpvectors.c:194
-#: ../app/widgets/gimpvectorstreeview.c:262
+#: ../app/actions/vectors-commands.c:164
+#: ../app/vectors/gimpvectors.c:202
+#: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "Treug"
 
-#: ../app/actions/vectors-commands.c:166
+#: ../app/actions/vectors-commands.c:165
 msgid "New Path"
 msgstr "Treug nevez"
 
-#: ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:168
 msgid "New Path Options"
 msgstr "Dibarzhioù an treug nevez"
 
-#: ../app/actions/vectors-commands.c:314
-#: ../app/pdb/paths-cmds.c:645
-#: ../app/pdb/vectors-cmds.c:1405
-msgid "Path to Selection"
-msgstr "Treug etrezek an diuzad"
-
-#: ../app/actions/vectors-commands.c:397
+#: ../app/actions/vectors-commands.c:392
 #: ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1990
-#: ../app/vectors/gimpvectors.c:202
+#: ../app/tools/gimpvectortool.c:1987
 msgid "Stroke Path"
 msgstr "Tresañ an treug"
 
@@ -5757,8 +5688,6 @@ msgid "When enabled docks and other dialogs are hidden, leaving only image windo
 msgstr "Mar gweredekaet ez eo kuzhet ar boestadoù stagadus hag ar boestadoù emziviz o leuskel ar skeudenn nemetken."
 
 #: ../app/actions/windows-actions.c:109
-#| msgctxt "windows-action"
-#| msgid "Single-window mode"
 msgctxt "windows-action"
 msgid "Single-Window Mode"
 msgstr "Mod dre brenestr eeun"
@@ -6052,7 +5981,7 @@ msgstr "Faltazi"
 #: ../app/tools/gimpcurvestool.c:690
 #: ../app/tools/gimplevelstool.c:800
 #: ../app/vectors/gimpvectors-export.c:81
-#: ../app/xcf/xcf.c:421
+#: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "N'haller ket digeriñ '%s' evit skrivañ : %s"
@@ -6171,7 +6100,6 @@ msgid "Sets the level of interpolation used for scaling and other transformation
 msgstr "Despizañ a ra al live etreletodiñ arveret evit ar skeulaat hag an treuzfurmadurioù all."
 
 #: ../app/config/gimprc-blurbs.h:211
-#| msgid "Sets the pixel format to use for mouse pointers."
 msgid "Specifies the language to use for the user interface."
 msgstr "Erspizañ ar ra ar yezh da arverañ evit ketal an arveriaded."
 
@@ -6365,11 +6293,11 @@ msgstr "Diskouez ar skeudenn oberiant bremanel war ar voestad vinvioù."
 
 #: ../app/config/gimprc-blurbs.h:439
 msgid "Sets the manner in which transparency is displayed in images."
-msgstr "Arventennañ a ra an doare ma vo skrammet ar boullder er skeudennoù."
+msgstr "Arventennañ a ra an doare ma vo skrammet an treuzweluster er skeudennoù."
 
 #: ../app/config/gimprc-blurbs.h:442
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "Arventennañ a ra ment an damer arveret evit skrammañ ar boullder."
+msgstr "Arventennañ a ra ment an damer arveret evit skrammañ an treuzweluster."
 
 #: ../app/config/gimprc-blurbs.h:445
 msgid "When enabled, GIMP will not save an image if it has not been changed since it was opened."
@@ -6492,7 +6420,7 @@ msgstr "Gwenn"
 #: ../app/core/core-enums.c:256
 msgctxt "fill-type"
 msgid "Transparency"
-msgstr "Demerez"
+msgstr "Treuzweluster"
 
 #: ../app/core/core-enums.c:257
 msgctxt "fill-type"
@@ -6791,6 +6719,7 @@ msgstr "Maskl herrek"
 
 #: ../app/core/core-enums.c:881
 #: ../app/core/core-enums.c:911
+#: ../app/core/gimpimage-grid.c:62
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Kael"
@@ -6892,11 +6821,13 @@ msgid "Anchor floating selection"
 msgstr "Eoriañ an diuzad war neuñv"
 
 #: ../app/core/core-enums.c:899
+#: ../app/core/gimp-edit.c:261
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Pegañ"
 
 #: ../app/core/core-enums.c:900
+#: ../app/core/gimp-edit.c:500
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Troc'hañ"
@@ -6908,6 +6839,7 @@ msgstr "Testenn"
 
 #: ../app/core/core-enums.c:902
 #: ../app/core/core-enums.c:944
+#: ../app/core/gimpdrawable-transform.c:566
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Treuzfurmiñ"
@@ -6961,8 +6893,6 @@ msgid "Change indexed palette"
 msgstr "Kemm al livaoueg ibiliet"
 
 #: ../app/core/core-enums.c:918
-#| msgctxt "undo-type"
-#| msgid "Remove item"
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Adurzhiañ an ergorenn"
@@ -7143,116 +7073,103 @@ msgid "Convert to RGB workspace"
 msgstr "Amdreiñ ar skeudenn da livioù RGG"
 
 #: ../app/core/core-enums.c:1327
-#| msgid "Opacity"
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Demerez"
 
 #: ../app/core/core-enums.c:1328
-#| msgid "Size"
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Ment"
 
 #: ../app/core/core-enums.c:1329
-#| msgid "Angle"
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Korn"
 
 #: ../app/core/core-enums.c:1330
-#| msgid "Color"
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Liv"
 
 #: ../app/core/core-enums.c:1331
-#| msgid "Hardness"
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Kaleted"
 
 #: ../app/core/core-enums.c:1332
-#| msgid "Source"
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Nerzh"
 
 #: ../app/core/core-enums.c:1333
-#| msgid "Aspect ratio"
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Feur an neuz"
 
 #: ../app/core/core-enums.c:1334
-#| msgid "Spacing"
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Esaouadur"
 
 #: ../app/core/core-enums.c:1335
-#| msgid "Rate"
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Feur"
 
 #: ../app/core/core-enums.c:1336
-#| msgid "Yellow"
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Lanv"
 
 #: ../app/core/core-enums.c:1337
-#| msgid "Jitter"
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Distabilder"
 
 #: ../app/core/gimp-contexts.c:154
-#: ../app/core/gimptooloptions.c:232
+#: ../app/core/gimptooloptions.c:344
 #: ../app/gui/session.c:349
 #: ../app/menus/menus.c:464
-#: ../app/widgets/gimpdevices.c:267
+#: ../app/widgets/gimpdevices.c:269
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "C'hwitadenn war ziverkadur eus \"%s\" : %s"
 
 #: ../app/core/gimp-edit.c:190
-#: ../app/core/gimpimage-new.c:232
+#: ../app/core/gimpimage-new.c:304
 msgid "Pasted Layer"
 msgstr "Treuzfollenn bet peget"
 
-#: ../app/core/gimp-edit.c:261
-msgid "Paste"
-msgstr "Pegañ"
-
 #: ../app/core/gimp-edit.c:388
+msgctxt "undo-type"
 msgid "Clear"
 msgstr "Skarzhañ"
 
 #: ../app/core/gimp-edit.c:407
+msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Leuniañ gant liv ar rakva"
 
 #: ../app/core/gimp-edit.c:411
+msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Leuniañ gant liv an drekleur"
 
 #: ../app/core/gimp-edit.c:415
+msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Leuniañ gant gwenn"
 
 #: ../app/core/gimp-edit.c:419
+msgctxt "undo-type"
 msgid "Fill with Transparency"
-msgstr "Leuniañ gant boullder"
+msgstr "Leuniañ gant treuzweluster"
 
 #: ../app/core/gimp-edit.c:423
+msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Leuniañ gant ur goustur"
-
-#: ../app/core/gimp-edit.c:500
-msgid "Cut"
-msgstr "Troc'hañ"
 
 #: ../app/core/gimp-edit.c:512
 msgid "Global Buffer"
@@ -7276,7 +7193,7 @@ msgstr "RV etrezek DV (APG e tu an nadozioù)"
 
 #: ../app/core/gimp-gradients.c:103
 msgid "FG to Transparent"
-msgstr "RV da voullder"
+msgstr "RV da dreuzweluster"
 
 #. This is a special string to specify the language identifier to
 #. * look for in the gimp-tags-default.xml file. Please translate the
@@ -7315,43 +7232,43 @@ msgstr "O krouiñ ar renkell '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "N'haller ket krouiñ ar renkell '%s' : %s"
 
-#: ../app/core/gimp.c:595
+#: ../app/core/gimp.c:597
 msgid "Initialization"
 msgstr "Deraouekaat"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:696
+#: ../app/core/gimp.c:698
 msgid "Internal Procedures"
 msgstr "Treugennadoù diabarzh"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:947
+#: ../app/core/gimp.c:949
 msgid "Looking for data files"
 msgstr "O klask restroù roadennoù"
 
-#: ../app/core/gimp.c:947
+#: ../app/core/gimp.c:949
 msgid "Parasites"
 msgstr "Arvedadoù"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:956
+#: ../app/core/gimp.c:958
 #: ../app/dialogs/preferences-dialog.c:2724
 msgid "Dynamics"
 msgstr "Dialuskoù"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:976
+#: ../app/core/gimp.c:978
 msgid "Fonts (this may take a while)"
 msgstr "Nodrezhoù (padout a ray ur mareig moarvat)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:990
+#: ../app/core/gimp.c:992
 #: ../app/dialogs/preferences-dialog.c:2752
 msgid "Modules"
 msgstr "Molladoù"
 
 #. update tag cache
-#: ../app/core/gimp.c:994
+#: ../app/core/gimp.c:996
 msgid "Updating tag cache"
 msgstr "Hizivadur krubuilh ar c'hlav"
 
@@ -7402,7 +7319,7 @@ msgstr "Hedad nodoù UTF-8 didalvoudek e restr ar broust '%s'."
 #: ../app/core/gimpbrush-load.c:284
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:82
-#: ../app/tools/gimpvectortool.c:319
+#: ../app/tools/gimpvectortool.c:318
 msgid "Unnamed"
 msgstr "Hep anv"
 
@@ -7476,12 +7393,12 @@ msgid "Brush Hardness"
 msgstr "Kaleted ar broust"
 
 #: ../app/core/gimpbrushgenerated.c:159
-#: ../app/paint/gimppaintoptions.c:141
+#: ../app/paint/gimppaintoptions.c:143
 msgid "Brush Aspect Ratio"
 msgstr "Parenn neuz ar broust"
 
 #: ../app/core/gimpbrushgenerated.c:166
-#: ../app/paint/gimppaintoptions.c:145
+#: ../app/paint/gimppaintoptions.c:147
 msgid "Brush Angle"
 msgstr "Korn ar broust"
 
@@ -7493,128 +7410,186 @@ msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fazi dezrannañ lazhus e restr ar broust '%s' : kontronet eo bet ar restr."
 
 #: ../app/core/gimpchannel-select.c:59
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Diuzad reizhkornek"
 
 #: ../app/core/gimpchannel-select.c:110
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Diuzad elipsennek"
 
 #: ../app/core/gimpchannel-select.c:164
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
-msgstr "Diuzañ ar reizhkorn rontaet"
+msgstr "Diuzañ dre ur reizhkorn rontaet"
 
 #: ../app/core/gimpchannel-select.c:433
+#: ../app/core/gimplayer.c:273
+msgctxt "undo-type"
 msgid "Alpha to Selection"
-msgstr "Alfa etrezek an diuzad"
+msgstr "Alfa d'an diuzad"
 
 #: ../app/core/gimpchannel-select.c:471
 #, c-format
+msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "Sanell %s etrezek an diuzad"
 
 #: ../app/core/gimpchannel-select.c:519
-#: ../app/tools/gimpfuzzyselecttool.c:80
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Diuzad dispis"
 
 #: ../app/core/gimpchannel-select.c:566
-#: ../app/tools/gimpbycolorselecttool.c:82
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Diuzañ dre liv"
 
-#: ../app/core/gimpchannel.c:264
+#: ../app/core/gimpchannel.c:272
+msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "Adenvel ar sanell"
 
-#: ../app/core/gimpchannel.c:265
+#: ../app/core/gimpchannel.c:273
+msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "Dilec'hiañ ar sanell"
 
-#: ../app/core/gimpchannel.c:266
+#: ../app/core/gimpchannel.c:274
+msgctxt "undo-type"
 msgid "Scale Channel"
-msgstr "Skeul ar sanell"
+msgstr "Skeulaat ar sanell"
 
-#: ../app/core/gimpchannel.c:267
+#: ../app/core/gimpchannel.c:275
+msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "Admentañ ar sanell"
 
-#: ../app/core/gimpchannel.c:268
+#: ../app/core/gimpchannel.c:276
+msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "Gwintañ ar sanell"
 
-#: ../app/core/gimpchannel.c:269
+#: ../app/core/gimpchannel.c:277
+msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "C'hwelañ ar sanell"
 
-#: ../app/core/gimpchannel.c:270
+#: ../app/core/gimpchannel.c:278
 #: ../app/core/gimpdrawable-transform.c:885
+msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Treuzfurmiñ ar sanell"
 
-#: ../app/core/gimpchannel.c:271
+#: ../app/core/gimpchannel.c:279
+msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Tresañ ar sanell"
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:280
+#: ../app/core/gimpselection.c:583
+msgctxt "undo-type"
+msgid "Channel to Selection"
+msgstr "Sanell etrezek an diuzad"
+
+#: ../app/core/gimpchannel.c:281
+msgctxt "undo-type"
+msgid "Reorder Channel"
+msgstr "Adurzhiañ ar sanell"
+
+#: ../app/core/gimpchannel.c:282
+msgctxt "undo-type"
+msgid "Raise Channel"
+msgstr "Sevel ar sanell"
+
+#: ../app/core/gimpchannel.c:283
+msgctxt "undo-type"
+msgid "Raise Channel to Top"
+msgstr "Sevel ar sanell d'an uhelañ"
+
+#: ../app/core/gimpchannel.c:284
+msgctxt "undo-type"
+msgid "Lower Channel"
+msgstr "Diskenn ar sanell"
+
+#: ../app/core/gimpchannel.c:285
+msgctxt "undo-type"
+msgid "Lower Channel to Bottom"
+msgstr "Diskenn ar sanell d'an izelañ"
+
+#: ../app/core/gimpchannel.c:286
+msgid "Channel cannot be raised higher."
+msgstr "N'haller ket sevel ar sanell uheloc'h."
+
+#: ../app/core/gimpchannel.c:287
+msgid "Channel cannot be lowered more."
+msgstr "N'haller ket diskenn ar sanell izeloc'h."
+
+#: ../app/core/gimpchannel.c:309
+msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "Kuñvaat ar sanell"
 
-#: ../app/core/gimpchannel.c:294
+#: ../app/core/gimpchannel.c:310
+msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "Lemmaat ar sanell"
 
-#: ../app/core/gimpchannel.c:295
+#: ../app/core/gimpchannel.c:311
+msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "Skarzhañ ar sanell"
 
-#: ../app/core/gimpchannel.c:296
+#: ../app/core/gimpchannel.c:312
+msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "Leuniañ ar sanell"
 
-#: ../app/core/gimpchannel.c:297
+#: ../app/core/gimpchannel.c:313
+msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "Tuginañ ar sanell"
 
-#: ../app/core/gimpchannel.c:298
+#: ../app/core/gimpchannel.c:314
+msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "Riblenn ar sanell"
 
-#: ../app/core/gimpchannel.c:299
+#: ../app/core/gimpchannel.c:315
+msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "Kreskaat ar sanell"
 
-#: ../app/core/gimpchannel.c:300
+#: ../app/core/gimpchannel.c:316
+msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "Bihanaat ar sanell"
 
-#: ../app/core/gimpchannel.c:712
+#: ../app/core/gimpchannel.c:728
 msgid "Cannot stroke empty channel."
 msgstr "N'haller ket tresañ ur sanell c'houllo"
 
-#: ../app/core/gimpchannel.c:1715
+#: ../app/core/gimpchannel.c:1752
+msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Arventennañ liv ar sanell"
 
-#: ../app/core/gimpchannel.c:1781
+#: ../app/core/gimpchannel.c:1818
+msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Arventennañ demerez ar sanell"
 
-#: ../app/core/gimpchannel.c:1889
+#: ../app/core/gimpchannel.c:1926
 #: ../app/core/gimpselection.c:532
 msgid "Selection Mask"
 msgstr "Maskl diuzañ"
 
-#: ../app/core/gimpcontext.c:650
+#: ../app/core/gimpcontext.c:640
 msgid "Opacity"
 msgstr "Demerez"
 
-#: ../app/core/gimpcontext.c:658
+#: ../app/core/gimpcontext.c:648
 msgid "Paint Mode"
 msgstr "Mod pentañ"
 
@@ -7640,32 +7615,24 @@ msgstr ""
 
 #: ../app/core/gimpdatafactory.c:536
 #: ../app/core/gimpdatafactory.c:539
-#: ../app/core/gimpitem.c:423
-#: ../app/core/gimpitem.c:426
+#: ../app/core/gimpitem.c:425
+#: ../app/core/gimpitem.c:428
 msgid "copy"
 msgstr "eilañ"
 
 #: ../app/core/gimpdatafactory.c:548
-#: ../app/core/gimpitem.c:435
+#: ../app/core/gimpitem.c:437
 #, c-format
 msgid "%s copy"
 msgstr "Eilañ %s"
 
 #: ../app/core/gimpdatafactory.c:741
 #, c-format
-#| msgid ""
-#| "You have a writable data folder configured (%s), but this folder does not "
-#| "exist. Please create the folder or fix your configuation in the "
-#| "preferences dialog's 'folders' section."
 msgid "You have a writable data folder configured (%s), but this folder does not exist. Please create the folder or fix your configuation in the Preferences dialog's 'Folders' section."
 msgstr "Un teuliad roadennoù skrivus kefluniet (%s) hoc'h eus, koulskoude n'eus ket eus an teuliad-mañ. Mar plij, krouit an teuliad pe ratreit ho kefluniadur en ur vont er gwellvezioù, rann 'Teuliadoù'."
 
 #: ../app/core/gimpdatafactory.c:762
 #, c-format
-#| msgid ""
-#| "You have a writable data folder configured, but this folder is not part "
-#| "of your data search path. This can only happen if you edited gimprc "
-#| "manually, please fix it in the preferences dialog's 'folders' section."
 msgid "You have a writable data folder configured, but this folder is not part of your data search path. You probably edited the gimprc file manually, please fix it in the Preferences dialog's 'Folders' section."
 msgstr "Un teuliad roadennoù skrivus kefluniet hoc'h eus, koulskoude n'eo ket an teuliad-mañ ul lod eus ho treug da glask roadennoù. Moarvat hoc'h eus embannet gimprc dre zorn, mar plij ratreit an dra-se en ur vont er gwellvezioù, rann 'Teuliadoù'."
 
@@ -7686,16 +7653,17 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpdrawable-blend.c:244
-#: ../app/tools/gimpblendtool.c:109
+msgctxt "undo-type"
 msgid "Blend"
 msgstr "Kemmeskad"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
+msgctxt "undo-type"
 msgid "Brightness_Contrast"
 msgstr "Lintr_Dargemm"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:81
-#: ../app/tools/gimpbrightnesscontrasttool.c:111
+msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "Lintr-Dargemm"
 
@@ -7704,25 +7672,25 @@ msgid "No patterns available for this operation."
 msgstr "Goustur hegerz ebet evit ar gwezhiadur-mañ."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:286
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Bucket Fill"
-msgstr "Sailh leuniañ"
+msgstr "Leuniañ"
 
 #: ../app/core/gimpdrawable-color-balance.c:79
 #: ../app/core/gimpdrawable-color-balance.c:89
-#: ../app/tools/gimpcolorbalancetool.c:94
+msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "Mentel al livioù"
 
 #: ../app/core/gimpdrawable-colorize.c:72
 #: ../app/core/gimpdrawable-colorize.c:84
-#: ../app/tools/gimpcolorizetool.c:90
+msgctxt "undo-type"
 msgid "Colorize"
 msgstr "Livañ"
 
 #: ../app/core/gimpdrawable-curves.c:162
 #: ../app/core/gimpdrawable-curves.c:179
-#: ../app/tools/gimpcurvestool.c:140
+msgctxt "undo-type"
 msgid "Curves"
 msgstr "Krommennoù"
 
@@ -7733,6 +7701,7 @@ msgid "Desaturate"
 msgstr "Dibeurvec'hiañ"
 
 #: ../app/core/gimpdrawable-equalize.c:52
+msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Kevatalaat"
 
@@ -7761,6 +7730,7 @@ msgid "Levels"
 msgstr "Liveoù"
 
 #: ../app/core/gimpdrawable-offset.c:315
+msgctxt "undo-type"
 msgid "Offset Drawable"
 msgstr "Linkañ an tresad"
 
@@ -7771,8 +7741,9 @@ msgid "Posterize"
 msgstr "Skritellaat"
 
 #: ../app/core/gimpdrawable-stroke.c:435
+msgctxt "undo-type"
 msgid "Render Stroke"
-msgstr "Deouez an tres"
+msgstr "Lakaat deouez war an tres"
 
 #: ../app/core/gimpdrawable-threshold.c:70
 #: ../app/core/gimpdrawable-threshold.c:81
@@ -7780,24 +7751,19 @@ msgstr "Deouez an tres"
 msgid "Threshold"
 msgstr "Gwehin"
 
-#: ../app/core/gimpdrawable-transform.c:566
-msgid "Transform"
-msgstr "Treuzfurmiñ"
-
 #: ../app/core/gimpdrawable-transform.c:644
-#: ../app/tools/gimpfliptool.c:116
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Flip"
 msgstr "Gwintañ"
 
 #: ../app/core/gimpdrawable-transform.c:744
-#: ../app/tools/gimprotatetool.c:121
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Rotate"
 msgstr "C'hwelañ"
 
 #: ../app/core/gimpdrawable-transform.c:883
-#: ../app/core/gimplayer.c:264
+#: ../app/core/gimplayer.c:272
+msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Treuzfurmiñ an dreuzfollenn"
 
@@ -7805,8 +7771,12 @@ msgstr "Treuzfurmiñ an dreuzfollenn"
 msgid "Transformation"
 msgstr "Treuzfurmadur"
 
+#: ../app/core/gimpdrawable.c:486
+msgctxt "undo-type"
+msgid "Scale"
+msgstr "Skeulaat"
+
 #: ../app/core/gimpdynamicsoutput.c:106
-#| msgid "Output Levels"
 msgid "Output type"
 msgstr "Rizh an ec'hankañ"
 
@@ -7889,46 +7859,57 @@ msgid "Layer Group"
 msgstr "Strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:179
+msgctxt "undo-type"
 msgid "Rename Layer Group"
 msgstr "Adenvel ar strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:180
+msgctxt "undo-type"
 msgid "Move Layer Group"
 msgstr "Dilec'hiañ ar strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:181
+msgctxt "undo-type"
 msgid "Scale Layer Group"
 msgstr "Skeulaat ar strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:182
+msgctxt "undo-type"
 msgid "Resize Layer Group"
 msgstr "Admentañ ar strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:183
+msgctxt "undo-type"
 msgid "Flip Layer Group"
 msgstr "Gwintañ ar strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:184
+msgctxt "undo-type"
 msgid "Rotate Layer Group"
 msgstr "C'hwelañ ar strollad treuzfollennoù"
 
 #: ../app/core/gimpgrouplayer.c:185
+msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Treuzfurmiñ ar strollad treuzfollennoù"
 
 #: ../app/core/gimpimage-arrange.c:142
+msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Kempenn an ergorennoù"
 
 #: ../app/core/gimpimage-colormap.c:67
+msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Arventennañ al livaoueg"
 
 #: ../app/core/gimpimage-colormap.c:132
+msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Kemmañ enankad al livaoueg"
 
 #: ../app/core/gimpimage-colormap.c:157
+msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Ouzhpennañ al liv d'al livaoueg"
 
@@ -7937,14 +7918,17 @@ msgid "Cannot convert image: palette is empty."
 msgstr "N'haller ket amdreiñ ar skeudenn : goullo eo al livaoueg."
 
 #: ../app/core/gimpimage-convert.c:807
+msgctxt "undo-type"
 msgid "Convert Image to RGB"
-msgstr "Amdreiñ ar skeudenn da RVB"
+msgstr "Amdreiñ ar skeudenn da vod RVB"
 
 #: ../app/core/gimpimage-convert.c:811
+msgctxt "undo-type"
 msgid "Convert Image to Grayscale"
 msgstr "Amdreiñ ar skeudenn da liveoù louedoù"
 
 #: ../app/core/gimpimage-convert.c:815
+msgctxt "undo-type"
 msgid "Convert Image to Indexed"
 msgstr "Amdreiñ ar skeudenn da livioù ibiliet"
 
@@ -7957,59 +7941,64 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Oc'h amdreiñ da livioù ibiliet (pazenn 3)"
 
 #: ../app/core/gimpimage-crop.c:129
-msgctxt "command"
+msgctxt "undo-type"
 msgid "Crop Image"
 msgstr "Didroc'hañ ar skeudenn"
 
 #: ../app/core/gimpimage-crop.c:132
 #: ../app/core/gimpimage-resize.c:86
+msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "Admentañ ar skeudenn"
 
-#: ../app/core/gimpimage-grid.c:62
-#: ../app/dialogs/grid-dialog.c:152
-msgid "Grid"
-msgstr "Kael"
-
 #: ../app/core/gimpimage-guides.c:51
+msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "Ouzhpennañ un dealf a-zremm"
 
 #: ../app/core/gimpimage-guides.c:74
+msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "Ouzhpennañ un dealf a-serzh"
 
 #: ../app/core/gimpimage-guides.c:117
-#: ../app/tools/gimpmovetool.c:563
+msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "Dilemel an dealf"
 
 #: ../app/core/gimpimage-guides.c:142
+msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "Dilec'hiañ an dealf"
 
 #: ../app/core/gimpimage-item-list.c:51
+msgctxt "undo-type"
 msgid "Translate Items"
-msgstr "Treiñ an ergorennoù"
+msgstr "Treiñ an elfennoù"
 
 #: ../app/core/gimpimage-item-list.c:78
+msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Gwintañ an ergorennoù"
 
 #: ../app/core/gimpimage-item-list.c:105
+msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "C'hwelañ an ergorennoù"
 
 #: ../app/core/gimpimage-item-list.c:135
+msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Treuzfurmiñ an ergorennoù"
 
 #: ../app/core/gimpimage-merge.c:108
 #: ../app/core/gimpimage-merge.c:122
+msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Toueziañ an treuzfollennoù hewel"
 
 #: ../app/core/gimpimage-merge.c:176
+msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Pladañ ar skeudenn"
 
@@ -8026,14 +8015,17 @@ msgid "There is no visible layer to merge down to."
 msgstr "N'eus treuzfollenn hewel ebet da doueziañ."
 
 #: ../app/core/gimpimage-merge.c:255
+msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Toueziañ etrezek an traoñ"
 
 #: ../app/core/gimpimage-merge.c:277
+msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Toueziañ ar strollad treuzfollennoù"
 
 #: ../app/core/gimpimage-merge.c:330
+msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Toueziañ an treugoù hewel"
 
@@ -8041,26 +8033,39 @@ msgstr "Toueziañ an treugoù hewel"
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr "N'eus ket treugoù hewel a-walc'h evit un toueziadur. Daou anezho zo ret da vihanañ."
 
+#: ../app/core/gimpimage-new.c:135
+msgid "Background"
+msgstr "Drekva"
+
 #: ../app/core/gimpimage-quick-mask.c:85
+msgctxt "undo-type"
 msgid "Enable Quick Mask"
 msgstr "Gweredekaat ar maskl herrek"
 
 #: ../app/core/gimpimage-quick-mask.c:135
+msgctxt "undo-type"
 msgid "Disable Quick Mask"
 msgstr "Diweredekaat ar maskl herrek"
 
 #: ../app/core/gimpimage-sample-points.c:53
+msgctxt "undo-type"
 msgid "Add Sample Point"
 msgstr "Ouzhpennañ poentoù standilhonañ"
 
 #: ../app/core/gimpimage-sample-points.c:101
-#: ../app/tools/gimpcolortool.c:432
+msgctxt "undo-type"
 msgid "Remove Sample Point"
 msgstr "Dilemel ar poent standilhonañ"
 
 #: ../app/core/gimpimage-sample-points.c:138
+msgctxt "undo-type"
 msgid "Move Sample Point"
 msgstr "Dilec'hiañ ar poent standilhonañ"
+
+#: ../app/core/gimpimage-scale.c:87
+msgctxt "undo-type"
+msgid "Scale Image"
+msgstr "Skeulaat ar skeudenn"
 
 #: ../app/core/gimpimage-undo-push.c:862
 #, c-format
@@ -8068,122 +8073,61 @@ msgid "Can't undo %s"
 msgstr "N'haller ket dizober %s"
 
 #: ../app/core/gimpimage.c:1632
+msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Kemmañ diarunusted ar skeudenn"
 
 #: ../app/core/gimpimage.c:1684
+msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Kemmañ unanenn ar skeudenn"
 
 #: ../app/core/gimpimage.c:2654
+msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Stagañ un arvevad ouzh ar skeudenn"
 
 #: ../app/core/gimpimage.c:2695
+msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Dilemel an arvevad diouzh ar skeudenn"
 
-#: ../app/core/gimpimage.c:3283
+#: ../app/core/gimpimage.c:3404
+msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Ouzhpennañ un dreuzfollenn"
 
-#: ../app/core/gimpimage.c:3333
-#: ../app/core/gimpimage.c:3353
+#: ../app/core/gimpimage.c:3454
+#: ../app/core/gimpimage.c:3474
+msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Dilemel an dreuzfollenn"
 
-#: ../app/core/gimpimage.c:3346
+#: ../app/core/gimpimage.c:3467
+msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Dilemel an diuzad war neuñv"
 
-#: ../app/core/gimpimage.c:3503
-msgid "Layer cannot be raised higher."
-msgstr "N'haller ket sevel an dreuzfollenn uheloc'h."
-
-#: ../app/core/gimpimage.c:3509
-msgid "Raise Layer"
-msgstr "Sevel an dreuzfollenn"
-
-#: ../app/core/gimpimage.c:3521
-msgid "Raise Layer to Top"
-msgstr "Sevel an dreuzfollenn d'an uhelañ"
-
-#: ../app/core/gimpimage.c:3543
-msgid "Layer cannot be lowered more."
-msgstr "N'haller ket diskenn an dreuzfollenn izeloc'h."
-
-#: ../app/core/gimpimage.c:3549
-msgid "Lower Layer"
-msgstr "Diskenn an dreuzfollenn"
-
-#: ../app/core/gimpimage.c:3568
-msgid "Lower Layer to Bottom"
-msgstr "Diskenn an dreuzfollenn d'an izelañ"
-
-#: ../app/core/gimpimage.c:3615
+#: ../app/core/gimpimage.c:3633
+msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Ouzhpennañ ur sanell"
 
-#: ../app/core/gimpimage.c:3653
-#: ../app/core/gimpimage.c:3665
+#: ../app/core/gimpimage.c:3671
+#: ../app/core/gimpimage.c:3683
+msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Dilemel ar sanell"
 
-#: ../app/core/gimpimage.c:3703
-msgid "Channel cannot be raised higher."
-msgstr "N'haller ket sevel ar sanell uheloc'h."
-
-#: ../app/core/gimpimage.c:3709
-msgid "Raise Channel"
-msgstr "Sevel ar sanell"
-
-#: ../app/core/gimpimage.c:3721
-msgid "Raise Channel to Top"
-msgstr "Sevel ar sanell d'an uhelañ"
-
-#: ../app/core/gimpimage.c:3744
-msgid "Channel cannot be lowered more."
-msgstr "N'haller ket diskenn ar sanell izeloc'h."
-
-#: ../app/core/gimpimage.c:3750
-msgid "Lower Channel"
-msgstr "Diskenn ar sanell"
-
-#: ../app/core/gimpimage.c:3769
-msgid "Lower Channel to Bottom"
-msgstr "Diskenn ar sanell d'an izelañ"
-
-#: ../app/core/gimpimage.c:3816
+#: ../app/core/gimpimage.c:3730
+msgctxt "undo-type"
 msgid "Add Path"
-msgstr "Ouzhpennañ un treug"
+msgstr "Ouzhpennañ un dreuzfollenn"
 
-#: ../app/core/gimpimage.c:3847
+#: ../app/core/gimpimage.c:3761
+msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Dilemel an treug"
-
-#: ../app/core/gimpimage.c:3877
-msgid "Path cannot be raised higher."
-msgstr "N'haller ket sevel an treug uheloc'h."
-
-#: ../app/core/gimpimage.c:3883
-msgid "Raise Path"
-msgstr "Sevel an treug"
-
-#: ../app/core/gimpimage.c:3895
-msgid "Raise Path to Top"
-msgstr "Sevel an treug d'an uhelañ"
-
-#: ../app/core/gimpimage.c:3917
-msgid "Path cannot be lowered more."
-msgstr "N'haller ket diskenn an treug izeloc'h."
-
-#: ../app/core/gimpimage.c:3923
-msgid "Lower Path"
-msgstr "Diskenn an treug"
-
-#: ../app/core/gimpimage.c:3942
-msgid "Lower Path to Bottom"
-msgstr "Diskenn an treug d'an izelañ"
 
 #: ../app/core/gimpimagefile.c:534
 #: ../app/dialogs/preferences-dialog.c:1711
@@ -8242,62 +8186,108 @@ msgstr[1] "%d a dreuzfollennoù"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "N'haller ket digeriñ ar velvenn '%s' : %s"
 
-#: ../app/core/gimpitem.c:1542
+#: ../app/core/gimpitem.c:1564
+msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Stagañ un arvevad"
 
-#: ../app/core/gimpitem.c:1552
+#: ../app/core/gimpitem.c:1574
+msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Stagañ un arvevad ouzh an ergorenn"
 
-#: ../app/core/gimpitem.c:1594
-#: ../app/core/gimpitem.c:1601
+#: ../app/core/gimpitem.c:1616
+#: ../app/core/gimpitem.c:1623
+msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Dilemel un arvevad ouzh an ergorenn"
 
 #: ../app/core/gimplayer-floating-sel.c:95
+msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Eoriañ an diuzad war neuñv"
 
 #: ../app/core/gimplayer-floating-sel.c:126
-#: ../app/core/gimplayer.c:579
+#: ../app/core/gimplayer.c:595
 msgid "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
 msgstr "N'haller ket krouiñ un dreuzfollenn nevez diwar an diuzad war neuñv rak d'ur sanell pe d'ur maskl treuzfollenn eo an diuzad-mañ."
 
 #: ../app/core/gimplayer-floating-sel.c:133
+msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Diuzad war neuñv etrezek an dreuzfollenn"
 
-#: ../app/core/gimplayer.c:258
+#: ../app/core/gimplayer.c:266
+msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Adenvel an dreuzfollenn"
 
-#: ../app/core/gimplayer.c:259
-#: ../app/pdb/layer-cmds.c:443
-#: ../app/pdb/layer-cmds.c:481
+#: ../app/core/gimplayer.c:267
+msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Dilec'hiañ an dreuzfollenn"
 
-#: ../app/core/gimplayer.c:261
+#: ../app/core/gimplayer.c:268
+msgctxt "undo-type"
+msgid "Scale Layer"
+msgstr "Skeulaat an dreuzfollenn"
+
+#: ../app/core/gimplayer.c:269
+msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Admentañ an dreuzfollenn"
 
-#: ../app/core/gimplayer.c:262
+#: ../app/core/gimplayer.c:270
+msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Gwintañ an dreuzfollenn"
 
-#: ../app/core/gimplayer.c:263
+#: ../app/core/gimplayer.c:271
+msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "C'hwelañ an dreuzfollenn"
 
-#: ../app/core/gimplayer.c:421
-#: ../app/core/gimplayer.c:1458
-#: ../app/core/gimplayermask.c:234
+#: ../app/core/gimplayer.c:274
+msgctxt "undo-type"
+msgid "Reorder Layer"
+msgstr "Adurzhiañ an dreuzfollenn"
+
+#: ../app/core/gimplayer.c:275
+msgctxt "undo-type"
+msgid "Raise Layer"
+msgstr "Sevel an dreuzfollenn"
+
+#: ../app/core/gimplayer.c:276
+msgctxt "undo-type"
+msgid "Raise Layer to Top"
+msgstr "Sevel an dreuzfollenn d'an uhelañ"
+
+#: ../app/core/gimplayer.c:277
+msgctxt "undo-type"
+msgid "Lower Layer"
+msgstr "Diskenn an dreuzfollenn"
+
+#: ../app/core/gimplayer.c:278
+msgctxt "undo-type"
+msgid "Lower Layer to Bottom"
+msgstr "Diskenn an dreuzfollenn d'an izelañ"
+
+#: ../app/core/gimplayer.c:279
+msgid "Layer cannot be raised higher."
+msgstr "N'haller ket sevel an dreuzfollenn uheloc'h."
+
+#: ../app/core/gimplayer.c:280
+msgid "Layer cannot be lowered more."
+msgstr "N'haller ket diskenn an dreuzfollenn izeloc'h."
+
+#: ../app/core/gimplayer.c:437
+#: ../app/core/gimplayer.c:1491
+#: ../app/core/gimplayermask.c:235
 #, c-format
 msgid "%s mask"
 msgstr "maskl %s"
 
-#: ../app/core/gimplayer.c:460
+#: ../app/core/gimplayer.c:476
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -8306,53 +8296,71 @@ msgstr ""
 "Diuzad war neuñv\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1382
+#: ../app/core/gimplayer.c:1415
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "N'haller ket ouzhpennañ ur maskl\n"
 "d'an dreuzfollenn rak unan zo gantañ endeo."
 
-#: ../app/core/gimplayer.c:1393
+#: ../app/core/gimplayer.c:1426
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "N'haller ket ouzhpennañ ur maskl\n"
 "e ventoù disheñvel diouzh re an dreuzfollenn."
 
-#: ../app/core/gimplayer.c:1513
+#: ../app/core/gimplayer.c:1432
+msgctxt "undo-type"
+msgid "Add Layer Mask"
+msgstr "Ouzhpennañ ur maskl treuzfollenn"
+
+#: ../app/core/gimplayer.c:1546
+msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Treuzdougen ar sanell alfa etrezek ar maskl"
 
-#: ../app/core/gimplayer.c:1683
-#: ../app/core/gimplayermask.c:260
+#: ../app/core/gimplayer.c:1716
+#: ../app/core/gimplayermask.c:261
+msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Arloañ ar maskl treuzfollenn"
 
-#: ../app/core/gimplayer.c:1684
+#: ../app/core/gimplayer.c:1717
+msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Dilemel ar maskl treuzfollenn"
 
-#: ../app/core/gimplayer.c:1803
+#: ../app/core/gimplayer.c:1836
+msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Ouzhpennañ ur sanell alfa"
 
-#: ../app/core/gimplayer.c:1857
+#: ../app/core/gimplayer.c:1890
+msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Dilemel ar sanell alfa"
 
-#: ../app/core/gimplayer.c:1877
+#: ../app/core/gimplayer.c:1910
+msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Treuzfollenn ouzh mentoù ar skeudenn"
 
 #: ../app/core/gimplayermask.c:110
+msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "Dilec'hiañ ar maskl treuzfollenn"
 
-#: ../app/core/gimplayermask.c:184
+#: ../app/core/gimplayermask.c:111
+msgctxt "undo-type"
+msgid "Layer Mask to Selection"
+msgstr "Maskl treuzfollenn ouzh an diuzad"
+
+#: ../app/core/gimplayermask.c:185
 #, c-format
 msgid "Cannot rename layer masks."
 msgstr "N'haller ket adenvel ar maskloù treuzfollenn."
 
-#: ../app/core/gimplayermask.c:328
+#: ../app/core/gimplayermask.c:329
+msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Diskouez ar maskl treuzfollenn"
 
@@ -8459,25 +8467,54 @@ msgid "Please wait"
 msgstr "Gortozit, mar plij..."
 
 #: ../app/core/gimpselection.c:154
-#: ../app/tools/gimpeditselectiontool.c:241
+msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Dilec'hiañ an diuzad"
 
+#: ../app/core/gimpselection.c:155
+msgctxt "undo-type"
+msgid "Stroke Selection"
+msgstr "Tresañ an diuzad"
+
+#: ../app/core/gimpselection.c:171
+msgctxt "undo-type"
+msgid "Feather Selection"
+msgstr "Kuñvaat an diuzad"
+
 #: ../app/core/gimpselection.c:172
+msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Lemmaat an diuzad"
 
 #: ../app/core/gimpselection.c:173
+msgctxt "undo-type"
 msgid "Select None"
 msgstr "Na diuzañ netra"
 
 #: ../app/core/gimpselection.c:174
+msgctxt "undo-type"
 msgid "Select All"
 msgstr "Diuzañ pep tra"
 
 #: ../app/core/gimpselection.c:175
+msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Tuginañ an diuzad"
+
+#: ../app/core/gimpselection.c:176
+msgctxt "undo-type"
+msgid "Border Selection"
+msgstr "Riblenniñ an diuzad"
+
+#: ../app/core/gimpselection.c:177
+msgctxt "undo-type"
+msgid "Grow Selection"
+msgstr "Kreskaat an diuzad"
+
+#: ../app/core/gimpselection.c:178
+msgctxt "undo-type"
+msgid "Shrink Selection"
+msgstr "Bihanaat an diuzad"
 
 #: ../app/core/gimpselection.c:285
 msgid "There is no selection to stroke."
@@ -8492,6 +8529,7 @@ msgid "Cannot float selection because the selected region is empty."
 msgstr "N'haller ket krouiñ un diuzad war neuñv rak goullo eo ar maez bet diuzet."
 
 #: ../app/core/gimpselection.c:851
+msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Diuzad war neuñv"
 
@@ -8503,21 +8541,17 @@ msgstr "Treuzfollenn war neuñv"
 msgid "Convert a mitered join to a bevelled join if the miter would extend to a distance of more than miter-limit * line-width from the actual join point."
 msgstr "Amdreiñ ur c'hevre dre c'haran (90°) d'ur c'hevre a-veskell ma 'z afe ar c'haran dreist ur pellder kevatal da muioc'h eget : (bevenn ar c'haran * tevder al linenn) diouzh ar poent kevreañ bremanel."
 
-#: ../app/core/gimptemplate.c:106
+#: ../app/core/gimptemplate.c:100
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "An unanenn evit skrammañ an daveennoù pa ne vez ket ar mod pikenn ouzh pikenn."
 
-#: ../app/core/gimptemplate.c:113
+#: ../app/core/gimptemplate.c:107
 msgid "The horizontal image resolution."
 msgstr "Diarunusted a-zremm ar skeudenn."
 
-#: ../app/core/gimptemplate.c:119
+#: ../app/core/gimptemplate.c:113
 msgid "The vertical image resolution."
 msgstr "Diarunusted a-serzh ar skeudenn."
-
-#: ../app/core/gimptemplate.c:405
-msgid "Background"
-msgstr "Drekva"
 
 #: ../app/core/gimpunit.c:56
 msgctxt "unit-singular"
@@ -8641,7 +8675,7 @@ msgstr "_Iriennañ liv :"
 
 #: ../app/dialogs/convert-dialog.c:260
 msgid "Enable dithering of _transparency"
-msgstr "Gweredekaat iriennañ ar _boullder"
+msgstr "Gweredekaat iriennañ an _treuzweluster"
 
 #: ../app/dialogs/convert-dialog.c:287
 msgid "Converting to indexed colors"
@@ -8652,7 +8686,7 @@ msgstr "Oc'h amdreiñ da livioù ibiliet"
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "N'haller ket amdreiñ d'ul livaoueg gant muioc'h a 265 liv."
 
-#: ../app/dialogs/dialogs-constructors.c:218
+#: ../app/dialogs/dialogs-constructors.c:212
 #: ../app/gui/gui.c:164
 #: ../app/gui/gui-message.c:145
 msgid "GIMP Message"
@@ -8736,7 +8770,7 @@ msgstr "_Mod :"
 msgid "_Opacity:"
 msgstr "De_merez :"
 
-#: ../app/dialogs/file-open-dialog.c:255
+#: ../app/dialogs/file-open-dialog.c:267
 msgid "Open layers"
 msgstr "Digeriñ treuzfollennoù"
 
@@ -8789,7 +8823,7 @@ msgid "Saving canceled"
 msgstr "Enrolladur dilezet"
 
 #: ../app/dialogs/file-save-dialog.c:705
-#: ../app/widgets/gimpdnd-xds.c:183
+#: ../app/widgets/gimpdnd-xds.c:185
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -8807,6 +8841,10 @@ msgstr "Kefluniañ ar gael"
 #: ../app/dialogs/grid-dialog.c:86
 msgid "Configure Image Grid"
 msgstr "Kefluniañ skeudenn ar gael"
+
+#: ../app/dialogs/grid-dialog.c:152
+msgid "Grid"
+msgstr "Kael"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:64
 msgid "Merge Layers"
@@ -9271,7 +9309,6 @@ msgid "Interface"
 msgstr "Ketal"
 
 #: ../app/dialogs/preferences-dialog.c:1598
-#| msgid "Language:"
 msgid "Language"
 msgstr "Yezh"
 
@@ -9591,7 +9628,7 @@ msgstr "Skrammañ"
 #. Transparency
 #: ../app/dialogs/preferences-dialog.c:2298
 msgid "Transparency"
-msgstr "Demerez"
+msgstr "Treuzweluster"
 
 #: ../app/dialogs/preferences-dialog.c:2302
 msgid "_Check style:"
@@ -9978,19 +10015,19 @@ msgstr "Ment an dreuzfollenn"
 msgid "Resize _layers:"
 msgstr "Admentañ an treuzfollennoù :"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:72
+#: ../app/dialogs/resolution-calibrate-dialog.c:69
 msgid "Calibrate Monitor Resolution"
 msgstr "Stalonañ diarunusted ar skramm"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:131
+#: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
 msgstr "Muzuliañ ar reolennoù hag enankañ o led :"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:156
+#: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
 msgstr "A-_zremm :"
 
-#: ../app/dialogs/resolution-calibrate-dialog.c:161
+#: ../app/dialogs/resolution-calibrate-dialog.c:158
 msgid "_Vertical:"
 msgstr "A-_serzh :"
 
@@ -10181,25 +10218,25 @@ msgstr "S"
 msgid "_Sample Merged"
 msgstr "Standilhonoù toueziet"
 
-#: ../app/display/gimpdisplayshell.c:500
+#: ../app/display/gimpdisplayshell.c:502
 msgid "Access the image menu"
 msgstr "Tizhout lañser ar skeudennoù"
 
-#: ../app/display/gimpdisplayshell.c:611
+#: ../app/display/gimpdisplayshell.c:616
 msgid "Zoom image when window size changes"
 msgstr "Zoumañ a ra ar skeudenn pa gemm ment ar prenestr"
 
-#: ../app/display/gimpdisplayshell.c:640
+#: ../app/display/gimpdisplayshell.c:645
 msgid "Toggle Quick Mask"
 msgstr "(Diw)gweredekaat ar maskl herrek"
 
-#: ../app/display/gimpdisplayshell.c:663
+#: ../app/display/gimpdisplayshell.c:668
 msgid "Navigate the image display"
 msgstr "Merdeiñ war skrammad ar skeudenn"
 
-#: ../app/display/gimpdisplayshell.c:731
-#: ../app/display/gimpdisplayshell.c:1316
-#: ../app/widgets/gimptoolbox.c:311
+#: ../app/display/gimpdisplayshell.c:736
+#: ../app/display/gimpdisplayshell.c:1315
+#: ../app/widgets/gimptoolbox.c:315
 msgid "Drop image files here to open them"
 msgstr "Riklañ ar restroù skeudennoù amañ a-benn o digeriñ"
 
@@ -10270,13 +10307,13 @@ msgid "The active layer's pixels are locked."
 msgstr "Prennet eo pikselioù an dreuzfollenn oberiant."
 
 #: ../app/display/gimpdisplayshell-dnd.c:512
-#: ../app/widgets/gimplayertreeview.c:757
+#: ../app/widgets/gimplayertreeview.c:734
 msgid "Drop layers"
 msgstr "Lakaat treuzfollennoù"
 
 #: ../app/display/gimpdisplayshell-dnd.c:635
 #: ../app/display/gimpdisplayshell-dnd.c:657
-#: ../app/widgets/gimplayertreeview.c:834
+#: ../app/widgets/gimplayertreeview.c:811
 #: ../app/widgets/gimptoolbox-dnd.c:274
 msgid "Dropped Buffer"
 msgstr "Skurzer lakaet"
@@ -10289,12 +10326,12 @@ msgstr "Siloù skrammañ al livioù"
 msgid "Configure Color Display Filters"
 msgstr "Kefluniañ siloù skrammañ al livioù"
 
-#: ../app/display/gimpdisplayshell-handlers.c:605
+#: ../app/display/gimpdisplayshell-handlers.c:587
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Skeudenn bet enrollet e '%s'"
 
-#: ../app/display/gimpdisplayshell-handlers.c:619
+#: ../app/display/gimpdisplayshell-handlers.c:601
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Skeudenn bet ezporzhiet e '%s'"
@@ -10329,7 +10366,7 @@ msgstr "(skarzhañ)"
 
 #: ../app/display/gimpdisplayshell-title.c:356
 #: ../app/display/gimpdisplayshell-title.c:369
-#: ../app/widgets/gimpactiongroup.c:848
+#: ../app/widgets/gimpactiongroup.c:870
 msgid "(none)"
 msgstr "(Tra ebet)"
 
@@ -10345,7 +10382,7 @@ msgstr "(erlec'hiet)"
 msgid " (imported)"
 msgstr "(enporzhiet)"
 
-#: ../app/display/gimpstatusbar.c:375
+#: ../app/display/gimpstatusbar.c:361
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Dilezel <i>%s</i>"
@@ -10415,7 +10452,7 @@ msgstr "ket ur restr Liveoù mod GIMP"
 msgid "Documents"
 msgstr "Teulioù"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:114
 msgid "GIMP Startup"
 msgstr "Loc'hadur eus GIMP"
 
@@ -10424,11 +10461,11 @@ msgstr "Loc'hadur eus GIMP"
 msgid "Airbrush"
 msgstr "Aervroust"
 
-#: ../app/paint/gimpbrushcore.c:431
+#: ../app/paint/gimpbrushcore.c:435
 msgid "No brushes available for use with this tool."
 msgstr "N'eus broust hegerz ebet da arverañ gant ar benveg-mañ."
 
-#: ../app/paint/gimpbrushcore.c:438
+#: ../app/paint/gimpbrushcore.c:442
 msgid "No paint dynamics available for use with this tool."
 msgstr "N'eus dialusk broust hegerz ebet da arverañ gant ar benveg-mañ."
 
@@ -10493,7 +10530,7 @@ msgstr "N'eus ket pikoù a-walc'h gant an tres"
 msgid "Paint"
 msgstr "Pentañ"
 
-#: ../app/paint/gimppaintoptions.c:136
+#: ../app/paint/gimppaintoptions.c:138
 msgid "Brush Scale"
 msgstr "Skeul ar broust"
 
@@ -10564,7 +10601,7 @@ msgstr "Lemmaat"
 msgid "Combine Masks"
 msgstr "Kedaozañ ar maskloù"
 
-#: ../app/pdb/drawable-cmds.c:941
+#: ../app/pdb/drawable-cmds.c:885
 msgid "Plug-In"
 msgstr "Enlugellad"
 
@@ -10700,47 +10737,57 @@ msgstr "Anv hentenn bentañ goullo didalvoudek"
 msgid "Paint method '%s' does not exist"
 msgstr "An hentenn bentañ '%s' n'eus ket anezhi"
 
-#: ../app/pdb/gimppdb-utils.c:316
+#: ../app/pdb/gimppdb-utils.c:318
 #, c-format
 msgid "Item '%s' (%d) can not be used because it has not been added to an image"
 msgstr "An ergorenn '%s' (%d) n'hall ket bezañ arveret rak n'eo ket bet ouzhpennet d'ar skeudenn"
 
-#: ../app/pdb/gimppdb-utils.c:341
+#: ../app/pdb/gimppdb-utils.c:328
+#, c-format
+msgid "Item '%s' (%d) can not be used because it is attached to another image"
+msgstr "An ergorenn '%s' (%d) n'hall ket bezañ arveret rak staget eo d'ur skeudenn all"
+
+#: ../app/pdb/gimppdb-utils.c:357
+#, c-format
+msgid "Item '%s' (%d) can not be used because it is not a direct child of an item tree"
+msgstr "An ergorenn '%s' (%d) n'hall ket bezañ arveret rak n'eo ket ur bugel war-eeun eus gwezennad an ergorennoù"
+
+#: ../app/pdb/gimppdb-utils.c:379
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "An ergorenn '%s' (%d) zo ket ouzhpennet d'ar skeudenn endeo"
 
-#: ../app/pdb/gimppdb-utils.c:349
+#: ../app/pdb/gimppdb-utils.c:387
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "O klask da ouzhpennañ an ergorenn '%s' (%d) d'ar skeudenn fall"
 
-#: ../app/pdb/gimppdb-utils.c:368
+#: ../app/pdb/gimppdb-utils.c:406
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "An ergorenn '%s' (%d) n'hall ket bezañ daskemmet rak prennet eo hec'h endalc'had"
 
-#: ../app/pdb/gimppdb-utils.c:388
+#: ../app/pdb/gimppdb-utils.c:426
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "An ergorenn '%s' (%d) n'hall ket bezañ daskemmet rak ur strollad eo"
 
-#: ../app/pdb/gimppdb-utils.c:409
+#: ../app/pdb/gimppdb-utils.c:447
 #, c-format
 msgid "Layer '%s' (%d) can not be used because it is not a text layer"
 msgstr "An dreuzfollenn '%s' (%d) n'hall ket bezañ arveret rak n'eo ket un dreuzfollennad testenn"
 
-#: ../app/pdb/gimppdb-utils.c:450
+#: ../app/pdb/gimppdb-utils.c:488
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "Ar skeudenn '%s' (%d) zo he rizh '%s' met ur skeudenn he rizh '%s\" a oa gortozet"
 
-#: ../app/pdb/gimppdb-utils.c:473
+#: ../app/pdb/gimppdb-utils.c:511
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "Ar skeudenn '%s' (%d) zo he rizh '%s' endeo"
 
-#: ../app/pdb/gimppdb-utils.c:501
+#: ../app/pdb/gimppdb-utils.c:539
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "An ergorenn dre sturiadelloù %d n'he deus ket tresoù dre naoudioù (ID) %d enni."
@@ -10796,9 +10843,14 @@ msgstr "An treugennad '%s' en deus distroet '%s' evel ur werzh distreiñ  '%s' (
 msgid "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This value is out of range."
 msgstr "An treugennad '%s' zo bet galvet gant ar werzh '%s' evit un arguzenn '%s' (#%d, rizh %s). Er maez eus al ledad emañ ar werzh-mañ."
 
-#: ../app/pdb/image-cmds.c:2311
+#: ../app/pdb/image-cmds.c:2341
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Dreist ar bevennoù emañ diarunusted ar skeudenn, diarunusted dre ziouer en he lec'h."
+
+#: ../app/pdb/layer-cmds.c:443
+#: ../app/pdb/layer-cmds.c:481
+msgid "Move Layer"
+msgstr "Dilec'hiañ an dreuzfollenn"
 
 #: ../app/pdb/selection-tools-cmds.c:217
 #: ../app/tools/gimpfreeselecttool.c:198
@@ -10811,57 +10863,57 @@ msgid "Failed to create text layer"
 msgstr "C'hwitadenn war krouiñ an dreuzfolennad testenn"
 
 #: ../app/pdb/text-layer-cmds.c:162
-#: ../app/pdb/text-layer-cmds.c:234
-#: ../app/pdb/text-layer-cmds.c:313
-#: ../app/pdb/text-layer-cmds.c:386
-#: ../app/pdb/text-layer-cmds.c:458
-#: ../app/pdb/text-layer-cmds.c:530
-#: ../app/pdb/text-layer-cmds.c:602
-#: ../app/pdb/text-layer-cmds.c:674
-#: ../app/pdb/text-layer-cmds.c:746
-#: ../app/pdb/text-layer-cmds.c:816
-#: ../app/pdb/text-layer-cmds.c:888
-#: ../app/pdb/text-layer-cmds.c:960
-#: ../app/pdb/text-layer-cmds.c:1032
-#: ../app/pdb/text-layer-cmds.c:1068
-#: ../app/pdb/text-layer-cmds.c:1147
+#: ../app/pdb/text-layer-cmds.c:272
+#: ../app/pdb/text-layer-cmds.c:351
+#: ../app/pdb/text-layer-cmds.c:424
+#: ../app/pdb/text-layer-cmds.c:496
+#: ../app/pdb/text-layer-cmds.c:568
+#: ../app/pdb/text-layer-cmds.c:640
+#: ../app/pdb/text-layer-cmds.c:712
+#: ../app/pdb/text-layer-cmds.c:784
+#: ../app/pdb/text-layer-cmds.c:854
+#: ../app/pdb/text-layer-cmds.c:926
+#: ../app/pdb/text-layer-cmds.c:998
+#: ../app/pdb/text-layer-cmds.c:1070
+#: ../app/pdb/text-layer-cmds.c:1106
+#: ../app/pdb/text-layer-cmds.c:1185
 msgid "Set text layer attribute"
 msgstr "Arventennañ doareenn an dreuzfolennad testenn"
 
-#: ../app/pdb/vectors-cmds.c:644
+#: ../app/pdb/vectors-cmds.c:587
 msgid "Remove path stroke"
 msgstr "Dilemel tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:680
+#: ../app/pdb/vectors-cmds.c:623
 msgid "Close path stroke"
 msgstr "Serriñ tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:720
+#: ../app/pdb/vectors-cmds.c:663
 msgid "Translate path stroke"
 msgstr "Treiñ tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:760
+#: ../app/pdb/vectors-cmds.c:703
 msgid "Scale path stroke"
 msgstr "Skeulaat tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:802
+#: ../app/pdb/vectors-cmds.c:745
 msgid "Rotate path stroke"
 msgstr "C'hwelañ tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:842
-#: ../app/pdb/vectors-cmds.c:886
+#: ../app/pdb/vectors-cmds.c:785
+#: ../app/pdb/vectors-cmds.c:829
 msgid "Flip path stroke"
 msgstr "Gwintañ tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:1015
-#: ../app/pdb/vectors-cmds.c:1137
-#: ../app/pdb/vectors-cmds.c:1356
+#: ../app/pdb/vectors-cmds.c:958
+#: ../app/pdb/vectors-cmds.c:1080
+#: ../app/pdb/vectors-cmds.c:1299
 msgid "Add path stroke"
 msgstr "Ouzhpennañ tresadur un treug"
 
-#: ../app/pdb/vectors-cmds.c:1189
-#: ../app/pdb/vectors-cmds.c:1242
-#: ../app/pdb/vectors-cmds.c:1303
+#: ../app/pdb/vectors-cmds.c:1132
+#: ../app/pdb/vectors-cmds.c:1185
+#: ../app/pdb/vectors-cmds.c:1246
 msgid "Extend path stroke"
 msgstr "Ledanaat tresadur an treug"
 
@@ -11075,19 +11127,16 @@ msgstr ""
 "Direizh eo perzhioù testenn zo, moarvat. Keit ha ma chomo diembann an destenn n'eus abeg ebet da vezañ nec'het diwar he fenn."
 
 #: ../app/text/text-enums.c:23
-#| msgid "Dynamics"
 msgctxt "text-box-mode"
 msgid "Dynamic"
 msgstr "Dialusk"
 
 #: ../app/text/text-enums.c:24
-#| msgctxt "source-align-mode"
-#| msgid "Fixed"
 msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Ratreet"
 
-#: ../app/tools/gimp-tools.c:325
+#: ../app/tools/gimp-tools.c:352
 msgid ""
 "This tool has\n"
 "no options."
@@ -11104,8 +11153,6 @@ msgid "_Airbrush"
 msgstr "_Aervroust"
 
 #: ../app/tools/gimpairbrushtool.c:88
-#| msgctxt "layer-mode-effects"
-#| msgid "Lighten only"
 msgid "Motion only"
 msgstr "Fiñval hepken"
 
@@ -11116,7 +11163,6 @@ msgid "Rate:"
 msgstr "Feur :"
 
 #: ../app/tools/gimpairbrushtool.c:103
-#| msgid "Yellow:"
 msgid "Flow:"
 msgstr "Lanv :"
 
@@ -11251,6 +11297,10 @@ msgstr "Donder uc'hek :"
 msgid "Threshold:"
 msgstr "Gwehin :"
 
+#: ../app/tools/gimpblendtool.c:109
+msgid "Blend"
+msgstr "Kemmeskad"
+
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Benveg Meskañ : Leuniañ ar maez diuzet gant un ilrezenn liv"
@@ -11277,6 +11327,10 @@ msgstr "%s evit dilec'hiañ al linenn a-bezh"
 #: ../app/tools/gimpblendtool.c:428
 msgid "Blend: "
 msgstr "Meskañ : "
+
+#: ../app/tools/gimpbrightnesscontrasttool.c:111
+msgid "Brightness-Contrast"
+msgstr "Lintr-Dargemm"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:112
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
@@ -11392,6 +11446,11 @@ msgstr "Benveg Diuzañ dre Liv : Diuzañ maezioù gant livioù damheñvel"
 msgid "_By Color Select"
 msgstr "Diuz_ad  dre liv"
 
+#: ../app/tools/gimpbycolorselecttool.c:82
+msgctxt "command"
+msgid "Select by Color"
+msgstr "Diuzañ dre liv"
+
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr "Benveg Klonañ : eilañ dre ziuz ur skeudenn pe ur goustur en ur arverañ ur broust"
@@ -11425,6 +11484,10 @@ msgstr "Tarzh"
 #: ../app/tools/gimpperspectiveclonetool.c:967
 msgid "Alignment:"
 msgstr "Desteudadur :"
+
+#: ../app/tools/gimpcolorbalancetool.c:94
+msgid "Color Balance"
+msgstr "Mentel al livioù"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
@@ -11496,6 +11559,10 @@ msgstr "Adderaouekaat an _etremez"
 #: ../app/tools/gimpcolorbalancetool.c:331
 msgid "Preserve _luminosity"
 msgstr "Mirout al _lintr"
+
+#: ../app/tools/gimpcolorizetool.c:90
+msgid "Colorize"
+msgstr "Livañ"
 
 #: ../app/tools/gimpcolorizetool.c:91
 msgid "Colorize Tool: Colorize the image"
@@ -11602,16 +11669,20 @@ msgstr "Klikañ war ar skeudenn evit ouzhpennañ al liv war al livaoueg"
 msgid "Color Picker Information"
 msgstr "Stlennoù ar c'harrennig livioù"
 
-#: ../app/tools/gimpcolortool.c:260
-#: ../app/tools/gimpcolortool.c:440
+#: ../app/tools/gimpcolortool.c:268
+#: ../app/tools/gimpcolortool.c:452
 msgid "Move Sample Point: "
 msgstr "Dilec'hiañ ar poent standilhonañ : "
 
-#: ../app/tools/gimpcolortool.c:433
+#: ../app/tools/gimpcolortool.c:444
+msgid "Remove Sample Point"
+msgstr "Dilemel ar poent standilhonañ"
+
+#: ../app/tools/gimpcolortool.c:445
 msgid "Cancel Sample Point"
 msgstr "Dilezel ur poent standilhonañ"
 
-#: ../app/tools/gimpcolortool.c:441
+#: ../app/tools/gimpcolortool.c:453
 msgid "Add Sample Point: "
 msgstr "Ouzhpennañ ur poent standilhonañ : "
 
@@ -11687,6 +11758,10 @@ msgstr "Klikañ pe bouezañ war Enankañ evit didroc'hañ"
 msgid "There is no active layer to crop."
 msgstr "N'eus treuzfollenn oberiant ebet da zidroc'hañ."
 
+#: ../app/tools/gimpcurvestool.c:140
+msgid "Curves"
+msgstr "Krommennoù"
+
 #: ../app/tools/gimpcurvestool.c:141
 msgid "Curves Tool: Adjust color curves"
 msgstr "Benveg Krommennoù : Kengeidañ krommennoù liv"
@@ -11761,8 +11836,8 @@ msgid "Desaturate (Remove Colors)"
 msgstr "Dibeurvec'hiañ (Dilemel al livioù)"
 
 #: ../app/tools/gimpdesaturatetool.c:124
-msgid "Desaturate does only operate on RGB layers."
-msgstr "War treuzfollennoù RGG e wered an dibeurvec'hiañ nemetken."
+msgid "Desaturate only operates on RGB layers."
+msgstr "War treuzfollennoù mod RGG e wered an dibeurvec'hiañ nemetken."
 
 #: ../app/tools/gimpdesaturatetool.c:193
 msgid "Choose shade of gray based on:"
@@ -11821,6 +11896,10 @@ msgstr "Etremez"
 msgid "Exposure:"
 msgstr "Kizadur :"
 
+#: ../app/tools/gimpeditselectiontool.c:241
+msgid "Move Selection"
+msgstr "Dilec'hiañ an diuzad"
+
 #: ../app/tools/gimpeditselectiontool.c:245
 #: ../app/tools/gimpeditselectiontool.c:1249
 msgid "Move Floating Selection"
@@ -11845,7 +11924,7 @@ msgstr "Diuzañ _elipsenn"
 
 #: ../app/tools/gimperasertool.c:66
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Benveg Diverkell : Diverkañ betek an drekva pe treuzwelusted un ur arverañ ur broust"
+msgstr "Benveg Diverkell : Diverkañ an drekva pe an treuzweluster en ur arverañ ur broust"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "_Eraser"
@@ -11891,6 +11970,11 @@ msgstr "Benveg Gwintañ : Tuginañ an dreuzfollenn, an diuzad pe an treug a-zrem
 #: ../app/tools/gimpfliptool.c:82
 msgid "_Flip"
 msgstr "_Gwintañ"
+
+#: ../app/tools/gimpfliptool.c:116
+msgctxt "command"
+msgid "Flip"
+msgstr "Gwintañ"
 
 #: ../app/tools/gimpforegroundselectoptions.c:78
 #: ../app/tools/gimpselectionoptions.c:78
@@ -11985,7 +12069,7 @@ msgstr "Merkañ ar rakva dre bentañ an ergorenn da eztennañ"
 msgid "Roughly outline the object to extract"
 msgstr "Sevel dre vras trolinenn an ergorenn da eztennañ"
 
-#: ../app/tools/gimpforegroundselecttool.c:769
+#: ../app/tools/gimpforegroundselecttool.c:773
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Diuzad ar rakva"
@@ -12031,6 +12115,11 @@ msgstr "Benveg Diuzañ amspis : Diuzañ ur maez kevelek war diazez al liv"
 msgid "Fu_zzy Select"
 msgstr "Diu_zad dispis"
 
+#: ../app/tools/gimpfuzzyselecttool.c:80
+msgctxt "command"
+msgid "Fuzzy Select"
+msgstr "Diuzad dispis"
+
 #: ../app/tools/gimpgegltool.c:93
 #: ../app/tools/gimpgegltool.c:112
 msgid "GEGL Operation"
@@ -12058,8 +12147,6 @@ msgid "Operation Settings"
 msgstr "Arventennoù gwezhiañ"
 
 #: ../app/tools/gimpgegltool.c:435
-#| msgctxt "edit-action"
-#| msgid "Remove all operations from the undo history"
 msgid "Select an operation from the list above"
 msgstr "Diuzañ ur gwezhadur diwar roll a-us"
 
@@ -12183,7 +12270,7 @@ msgstr "Kengeidañ"
 #: ../app/tools/gimpinkoptions-gui.c:67
 #: ../app/tools/gimpinkoptions-gui.c:92
 #: ../app/tools/gimprectangleoptions.c:972
-#: ../app/tools/gimptextoptions.c:471
+#: ../app/tools/gimptextoptions.c:489
 msgid "Size:"
 msgstr "Ment :"
 
@@ -12457,16 +12544,20 @@ msgstr "Benveg Dilec'hiañ : Dilec'hiañ an treuzfollennoù, an diuzadoù hag an
 msgid "_Move"
 msgstr "_Dilec'hiañ"
 
-#: ../app/tools/gimpmovetool.c:277
-#: ../app/tools/gimpmovetool.c:569
+#: ../app/tools/gimpmovetool.c:285
+#: ../app/tools/gimpmovetool.c:581
 msgid "Move Guide: "
 msgstr "Dilec'hiañ un dealf : "
 
-#: ../app/tools/gimpmovetool.c:563
+#: ../app/tools/gimpmovetool.c:575
+msgid "Remove Guide"
+msgstr "Dilemel an dealf"
+
+#: ../app/tools/gimpmovetool.c:575
 msgid "Cancel Guide"
 msgstr "Nullañ an dealf"
 
-#: ../app/tools/gimpmovetool.c:569
+#: ../app/tools/gimpmovetool.c:581
 msgid "Add Guide: "
 msgstr "Ouzhpennañ un dealf : "
 
@@ -12481,14 +12572,14 @@ msgstr "_Barr livañ"
 #: ../app/tools/gimppaintoptions-gui.c:90
 #: ../app/tools/gimpselectionoptions.c:210
 #: ../app/widgets/gimpbrushselect.c:193
-#: ../app/widgets/gimplayertreeview.c:289
+#: ../app/widgets/gimplayertreeview.c:266
 msgid "Mode:"
 msgstr "Mod :"
 
 #: ../app/tools/gimppaintoptions-gui.c:105
 #: ../app/tools/gimptransformoptions.c:347
 #: ../app/widgets/gimpbrushselect.c:180
-#: ../app/widgets/gimplayertreeview.c:312
+#: ../app/widgets/gimplayertreeview.c:289
 msgid "Opacity:"
 msgstr "Demerez :"
 
@@ -12671,7 +12762,7 @@ msgid "_Rectangle Select"
 msgstr "Diuzad _reizhkornek"
 
 #: ../app/tools/gimprectangletool.c:1156
-#: ../app/tools/gimprectangletool.c:2103
+#: ../app/tools/gimprectangletool.c:2130
 msgid "Rectangle: "
 msgstr "Reizhkorn : "
 
@@ -12680,8 +12771,8 @@ msgid "Allow completely transparent regions to be selected"
 msgstr "Aotren ar maezioù treuzwelus da vat da vezañ diuzet"
 
 #: ../app/tools/gimpregionselectoptions.c:89
-msgid "Base region_select on all visible layers"
-msgstr "Diuzad ur maez diazez war an holl dreuzfollennoù hewel"
+msgid "Base selection on all visible layers"
+msgstr "Diuzad ur maez diazezet war an holl dreuzfollennoù hewel"
 
 #: ../app/tools/gimpregionselectoptions.c:201
 msgid "Select transparent areas"
@@ -12706,6 +12797,11 @@ msgstr "Benveg c'hwelañ : C'hwelañ an dreuzfollenn an treug pe an diuzad"
 #: ../app/tools/gimprotatetool.c:92
 msgid "_Rotate"
 msgstr "_C'hwelañ"
+
+#: ../app/tools/gimprotatetool.c:121
+msgctxt "command"
+msgid "Rotate"
+msgstr "C'hwelañ"
 
 #: ../app/tools/gimprotatetool.c:188
 msgid "_Angle:"
@@ -12737,7 +12833,7 @@ msgid "Scale"
 msgstr "Skeulaat"
 
 #: ../app/tools/gimpselectionoptions.c:257
-#: ../app/tools/gimptextoptions.c:484
+#: ../app/tools/gimptextoptions.c:502
 msgid "Antialiasing"
 msgstr "Lufrañ"
 
@@ -12822,63 +12918,63 @@ msgstr "Klikañ evit ledanaat"
 msgid "Click to smudge the line"
 msgstr "Klikañ evit ledanaat al linenn"
 
-#: ../app/tools/gimptextoptions.c:133
+#: ../app/tools/gimptextoptions.c:137
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "Ar feurioù kengeidañ a veka an nodrezhoù evit kaout lizherennoù spis gant ar mentoù bihan."
 
-#: ../app/tools/gimptextoptions.c:141
+#: ../app/tools/gimptextoptions.c:145
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Marteze e vo un efed war deouez an destenn e-keñver yezh an destenn."
 
-#: ../app/tools/gimptextoptions.c:157
+#: ../app/tools/gimptextoptions.c:161
 msgid "Indentation of the first line"
 msgstr "Dentadur al linenn gentañ"
 
-#: ../app/tools/gimptextoptions.c:163
+#: ../app/tools/gimptextoptions.c:167
 msgid "Adjust line spacing"
 msgstr "Kengeidañ esaouiñ al linennoù"
 
-#: ../app/tools/gimptextoptions.c:169
+#: ../app/tools/gimptextoptions.c:173
 msgid "Adjust letter spacing"
 msgstr "Kengeidañ esaouiñ al lizherennoù"
 
-#: ../app/tools/gimptextoptions.c:175
+#: ../app/tools/gimptextoptions.c:179
 msgid "Text box resize mode"
 msgstr "Mod admentañ ar voestad testenn"
 
-#: ../app/tools/gimptextoptions.c:182
+#: ../app/tools/gimptextoptions.c:186
 msgid "Use an external editor window for text entry, instead of direct-on-canvas editing"
 msgstr "Arverit prenestr un embanner diavaez evit an enankad testenn e-lec'h embann war-eeun war ar steuenn"
 
-#: ../app/tools/gimptextoptions.c:464
+#: ../app/tools/gimptextoptions.c:482
 msgid "Font:"
 msgstr "Nodrezh :"
 
-#: ../app/tools/gimptextoptions.c:480
+#: ../app/tools/gimptextoptions.c:498
 msgid "Use editor"
 msgstr "Arverañ an embanner"
 
-#: ../app/tools/gimptextoptions.c:500
+#: ../app/tools/gimptextoptions.c:518
 msgid "Hinting:"
 msgstr "Feurioù kengeidañ :"
 
-#: ../app/tools/gimptextoptions.c:504
+#: ../app/tools/gimptextoptions.c:522
 msgid "Text Color"
 msgstr "Liv an destenn"
 
-#: ../app/tools/gimptextoptions.c:509
+#: ../app/tools/gimptextoptions.c:527
 msgid "Color:"
 msgstr "Liv :"
 
-#: ../app/tools/gimptextoptions.c:515
+#: ../app/tools/gimptextoptions.c:533
 msgid "Justify:"
 msgstr "Marzekaat :"
 
-#: ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimptextoptions.c:556
 msgid "Box:"
 msgstr "Boest :"
 
-#: ../app/tools/gimptextoptions.c:552
+#: ../app/tools/gimptextoptions.c:570
 msgid "Language:"
 msgstr "Yezh :"
 
@@ -12917,7 +13013,7 @@ msgstr ""
 "\n"
 "Embann an dreuzfollenn pe grouiñ unan nevez diwar he doareennoù testennek a vez graet."
 
-#: ../app/tools/gimptexttool-editor.c:1111
+#: ../app/tools/gimptexttool-editor.c:1118
 msgid "GIMP Text Editor"
 msgstr "Embanner testennoù GIMP"
 
@@ -13032,303 +13128,365 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "Diuzad diouzh an treug"
 
-#: ../app/tools/gimpvectortool.c:163
+#: ../app/tools/gimpvectortool.c:162
 msgid "Paths Tool: Create and edit paths"
 msgstr "Benveg an treugoù : Krouiñ ha daskemmañ treugoù"
 
-#: ../app/tools/gimpvectortool.c:164
+#: ../app/tools/gimpvectortool.c:163
 msgid "Pat_hs"
 msgstr "Treu_goù"
 
-#: ../app/tools/gimpvectortool.c:254
+#: ../app/tools/gimpvectortool.c:253
 msgid "The active path is locked."
 msgstr "Prennet eo an treug oberiant."
 
-#: ../app/tools/gimpvectortool.c:342
+#: ../app/tools/gimpvectortool.c:341
 msgid "Add Stroke"
 msgstr "Ouzhpennañ un tresadur"
 
-#: ../app/tools/gimpvectortool.c:366
+#: ../app/tools/gimpvectortool.c:365
 msgid "Add Anchor"
 msgstr "Ouzhpennañ un eor"
 
-#: ../app/tools/gimpvectortool.c:392
+#: ../app/tools/gimpvectortool.c:391
 msgid "Insert Anchor"
 msgstr "Enlakaat un eor"
 
-#: ../app/tools/gimpvectortool.c:423
+#: ../app/tools/gimpvectortool.c:422
 msgid "Drag Handle"
 msgstr "Sachañ war un dornell"
 
-#: ../app/tools/gimpvectortool.c:453
+#: ../app/tools/gimpvectortool.c:452
 msgid "Drag Anchor"
 msgstr "Sachañ war un eor"
 
-#: ../app/tools/gimpvectortool.c:471
+#: ../app/tools/gimpvectortool.c:470
 msgid "Drag Anchors"
 msgstr "Sachañ war eorioù"
 
-#: ../app/tools/gimpvectortool.c:494
+#: ../app/tools/gimpvectortool.c:493
 msgid "Drag Curve"
 msgstr "Drag krommennoù"
 
-#: ../app/tools/gimpvectortool.c:523
+#: ../app/tools/gimpvectortool.c:522
 msgid "Connect Strokes"
 msgstr "Kennaskañ an tresadurioù"
 
-#: ../app/tools/gimpvectortool.c:555
+#: ../app/tools/gimpvectortool.c:554
 msgid "Drag Path"
 msgstr "Sachañ war an treug"
 
-#: ../app/tools/gimpvectortool.c:566
+#: ../app/tools/gimpvectortool.c:565
 msgid "Convert Edge"
 msgstr "Amdreiñ ur riblenn"
 
-#: ../app/tools/gimpvectortool.c:597
+#: ../app/tools/gimpvectortool.c:596
 msgid "Delete Anchor"
 msgstr "Dilemel un eor"
 
-#: ../app/tools/gimpvectortool.c:620
+#: ../app/tools/gimpvectortool.c:619
 msgid "Delete Segment"
 msgstr "Dilemel ur regenn"
 
-#: ../app/tools/gimpvectortool.c:839
+#: ../app/tools/gimpvectortool.c:838
 msgid "Move Anchors"
 msgstr "Dilec'hiañ eorioù"
 
-#: ../app/tools/gimpvectortool.c:1199
+#: ../app/tools/gimpvectortool.c:1198
 msgid "Click to pick path to edit"
 msgstr "Klikañ evit diuzañ un treug da zaskemmañ"
 
-#: ../app/tools/gimpvectortool.c:1203
+#: ../app/tools/gimpvectortool.c:1202
 msgid "Click to create a new path"
 msgstr "Klikañ evit krouiñ un treug nevez"
 
-#: ../app/tools/gimpvectortool.c:1207
+#: ../app/tools/gimpvectortool.c:1206
 msgid "Click to create a new component of the path"
 msgstr "Klikañ evit krouiñ ur parzh nevez eus an treug"
 
-#: ../app/tools/gimpvectortool.c:1211
+#: ../app/tools/gimpvectortool.c:1210
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klikañ pe klikañ-riklañ evit krouiñ un eor nevez"
 
-#: ../app/tools/gimpvectortool.c:1221
-#: ../app/tools/gimpvectortool.c:1228
+#: ../app/tools/gimpvectortool.c:1220
+#: ../app/tools/gimpvectortool.c:1227
 msgid "Click-Drag to move the anchor around"
 msgstr "Klikañ-riklañ evit dilec'hiañ an eor tro-dro dezhi"
 
-#: ../app/tools/gimpvectortool.c:1232
-#: ../app/tools/gimpvectortool.c:1255
+#: ../app/tools/gimpvectortool.c:1231
+#: ../app/tools/gimpvectortool.c:1254
 msgid "Click-Drag to move the anchors around"
 msgstr "Klikañ-riklañ evit dilec'hiañ an eorioù tro-dro dezhi"
 
-#: ../app/tools/gimpvectortool.c:1238
+#: ../app/tools/gimpvectortool.c:1237
 msgid "Click-Drag to move the handle around"
 msgstr "Klikañ-riklañ evit dilec'hiañ an dornelloù tro-dro dezhi"
 
-#: ../app/tools/gimpvectortool.c:1245
-#| msgid "Click-Drag to move the handle around"
+#: ../app/tools/gimpvectortool.c:1244
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Klikañ-riklañ evit dilec'hiañ an dornelloù tro-dro dezhi gant un doare kemparzhel"
 
-#: ../app/tools/gimpvectortool.c:1260
+#: ../app/tools/gimpvectortool.c:1259
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klikañ-riklañ evit kemmañ stumm ar grommenn"
 
-#: ../app/tools/gimpvectortool.c:1263
+#: ../app/tools/gimpvectortool.c:1262
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s : kemparzhek"
 
-#: ../app/tools/gimpvectortool.c:1268
+#: ../app/tools/gimpvectortool.c:1267
 msgid "Click-Drag to move the component around"
 msgstr "Klikañ-riklañ evit dilec'hiañ ar parzh dro dro dezhañ"
 
-#: ../app/tools/gimpvectortool.c:1276
+#: ../app/tools/gimpvectortool.c:1275
 msgid "Click-Drag to move the path around"
 msgstr "Klikañ-riklañ evit dilec'hiañ an treug dro dro dezhañ"
 
-#: ../app/tools/gimpvectortool.c:1280
+#: ../app/tools/gimpvectortool.c:1279
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klikañ-riklañ evit enlakaat un eor war an treug"
 
-#: ../app/tools/gimpvectortool.c:1288
+#: ../app/tools/gimpvectortool.c:1287
 msgid "Click to delete this anchor"
 msgstr "Klikañ evit dilemel an eor-mañ"
 
-#: ../app/tools/gimpvectortool.c:1292
+#: ../app/tools/gimpvectortool.c:1291
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klikañ evit kennaskañ an eor-mañ ouzh ar poent dibenn bet dibabet"
 
-#: ../app/tools/gimpvectortool.c:1297
+#: ../app/tools/gimpvectortool.c:1296
 msgid "Click to open up the path"
 msgstr "Klikañ evit digeriñ an treug"
 
-#: ../app/tools/gimpvectortool.c:1301
+#: ../app/tools/gimpvectortool.c:1300
 msgid "Click to make this node angular"
 msgstr "Klikañ a-benn ma yay ar c'hlom-mañ da gornek"
 
-#: ../app/tools/gimpvectortool.c:1811
+#: ../app/tools/gimpvectortool.c:1810
 msgid "Delete Anchors"
 msgstr "Dilemel an eorioù"
 
-#: ../app/tools/gimpvectortool.c:1957
-msgid "Path to selection"
-msgstr "Treug etrezek an diuzad"
-
-#: ../app/tools/gimpvectortool.c:1984
+#: ../app/tools/gimpvectortool.c:1981
 msgid "There is no active layer or channel to stroke to"
 msgstr "N'eus treuzfollenn pe sanell oberiant ebet da dresañ warno."
 
-#: ../app/tools/tools-enums.c:91
+#: ../app/tools/tools-enums.c:92
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "Dealf ebet"
 
-#: ../app/tools/tools-enums.c:92
+#: ../app/tools/tools-enums.c:93
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "Kreizañ al linennoù"
 
-#: ../app/tools/tools-enums.c:93
+#: ../app/tools/tools-enums.c:94
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
 msgstr "Reolenn an trederennoù"
 
-#: ../app/tools/tools-enums.c:94
+#: ../app/tools/tools-enums.c:95
+msgctxt "rectangle-guide"
+msgid "Rule of fifths"
+msgstr "Reolenn ar pempvedennoù"
+
+#: ../app/tools/tools-enums.c:96
 msgctxt "rectangle-guide"
 msgid "Golden sections"
 msgstr "Diuzadoù alaouret"
 
-#: ../app/tools/tools-enums.c:95
+#: ../app/tools/tools-enums.c:97
 msgctxt "rectangle-guide"
 msgid "Diagonal lines"
 msgstr "Beskelloù"
 
-#: ../app/tools/tools-enums.c:185
+#: ../app/tools/tools-enums.c:187
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "Parenn an neuz"
 
-#: ../app/tools/tools-enums.c:186
+#: ../app/tools/tools-enums.c:188
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "Led"
 
-#: ../app/tools/tools-enums.c:187
+#: ../app/tools/tools-enums.c:189
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "Sav"
 
-#: ../app/tools/tools-enums.c:188
+#: ../app/tools/tools-enums.c:190
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "Ment"
 
-#: ../app/tools/tools-enums.c:217
+#: ../app/tools/tools-enums.c:219
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "Diuzad gant an dorn"
 
-#: ../app/tools/tools-enums.c:218
+#: ../app/tools/tools-enums.c:220
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "Ment fest"
 
-#: ../app/tools/tools-enums.c:219
+#: ../app/tools/tools-enums.c:221
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "Parenn neuz fest"
 
-#: ../app/tools/tools-enums.c:248
+#: ../app/tools/tools-enums.c:250
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "Treuzfollenn"
 
-#: ../app/tools/tools-enums.c:249
+#: ../app/tools/tools-enums.c:251
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "Diuzad"
 
-#: ../app/tools/tools-enums.c:250
+#: ../app/tools/tools-enums.c:252
 msgctxt "transform-type"
 msgid "Path"
 msgstr "Treug"
 
-#: ../app/tools/tools-enums.c:280
+#: ../app/tools/tools-enums.c:282
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "Trolinenn"
 
-#: ../app/tools/tools-enums.c:281
+#: ../app/tools/tools-enums.c:283
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "Kael"
 
-#: ../app/tools/tools-enums.c:282
+#: ../app/tools/tools-enums.c:284
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "Skeudenn"
 
-#: ../app/tools/tools-enums.c:283
+#: ../app/tools/tools-enums.c:285
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "Skeudenn + Kael"
 
-#: ../app/tools/tools-enums.c:311
+#: ../app/tools/tools-enums.c:313
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "Niver a linennoù er gael"
 
-#: ../app/tools/tools-enums.c:312
+#: ../app/tools/tools-enums.c:314
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "Esaou al linennoù er gael"
 
-#: ../app/tools/tools-enums.c:341
+#: ../app/tools/tools-enums.c:343
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "Ergrafañ"
 
-#: ../app/tools/tools-enums.c:342
+#: ../app/tools/tools-enums.c:344
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "Embann"
 
-#: ../app/tools/tools-enums.c:343
+#: ../app/tools/tools-enums.c:345
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "Dilec'hiañ"
 
-#: ../app/vectors/gimpvectors.c:195
+#: ../app/vectors/gimpvectors.c:203
+msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Adenvel an treug"
 
-#: ../app/vectors/gimpvectors.c:196
-#: ../app/vectors/gimpvectors.c:335
+#: ../app/vectors/gimpvectors.c:204
+msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Dilec'hiañ an treug"
 
-#: ../app/vectors/gimpvectors.c:197
+#: ../app/vectors/gimpvectors.c:205
+msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Skeulaat an treug"
 
-#: ../app/vectors/gimpvectors.c:198
+#: ../app/vectors/gimpvectors.c:206
+msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Admentañ an treug"
 
-#: ../app/vectors/gimpvectors.c:199
-#: ../app/vectors/gimpvectors.c:434
+#: ../app/vectors/gimpvectors.c:207
+msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Gwintañ an treug"
 
-#: ../app/vectors/gimpvectors.c:200
-#: ../app/vectors/gimpvectors.c:465
+#: ../app/vectors/gimpvectors.c:208
+msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "C'hwelañ an treug"
 
-#: ../app/vectors/gimpvectors.c:201
-#: ../app/vectors/gimpvectors.c:495
+#: ../app/vectors/gimpvectors.c:209
+msgctxt "undo-type"
+msgid "Transform Path"
+msgstr "Treuzfurmiñ an treug"
+
+#: ../app/vectors/gimpvectors.c:210
+msgctxt "undo-type"
+msgid "Stroke Path"
+msgstr "Tresañ an treug"
+
+#: ../app/vectors/gimpvectors.c:211
+msgctxt "undo-type"
+msgid "Path to Selection"
+msgstr "Treug d'an diuzad"
+
+#: ../app/vectors/gimpvectors.c:212
+msgctxt "undo-type"
+msgid "Reorder Path"
+msgstr "Adurzhiañ an treug"
+
+#: ../app/vectors/gimpvectors.c:213
+msgctxt "undo-type"
+msgid "Raise Path"
+msgstr "Sevel an treug"
+
+#: ../app/vectors/gimpvectors.c:214
+msgctxt "undo-type"
+msgid "Raise Path to Top"
+msgstr "Sevel an treug d'an uhelañ"
+
+#: ../app/vectors/gimpvectors.c:215
+msgctxt "undo-type"
+msgid "Lower Path"
+msgstr "Diskenn an treug"
+
+#: ../app/vectors/gimpvectors.c:216
+msgctxt "undo-type"
+msgid "Lower Path to Bottom"
+msgstr "Diskenn an treug d'an izelañ"
+
+#: ../app/vectors/gimpvectors.c:217
+msgid "Path cannot be raised higher."
+msgstr "N'haller ket sevel an treug uheloc'h."
+
+#: ../app/vectors/gimpvectors.c:218
+msgid "Path cannot be lowered more."
+msgstr "N'haller ket diskenn an treug izeloc'h."
+
+#: ../app/vectors/gimpvectors.c:351
+msgid "Move Path"
+msgstr "Dilec'hiañ an treug"
+
+#: ../app/vectors/gimpvectors.c:450
+msgid "Flip Path"
+msgstr "Gwintañ an treug"
+
+#: ../app/vectors/gimpvectors.c:481
+msgid "Rotate Path"
+msgstr "C'hwelañ an treug"
+
+#: ../app/vectors/gimpvectors.c:511
 msgid "Transform Path"
 msgstr "Treuzfurmiñ an treug"
 
@@ -13363,7 +13521,7 @@ msgstr "C'hwitadenn war enporzhiañ an treugoù diouzh '%s' : %s"
 msgid "_Search:"
 msgstr "_Klask :"
 
-#: ../app/widgets/gimpactiongroup.c:845
+#: ../app/widgets/gimpactiongroup.c:867
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGGA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -13439,10 +13597,6 @@ msgstr "Dregantad led ar broust"
 #: ../app/widgets/gimpeditor.c:735
 msgid "(None)"
 msgstr "(Tra ebet)"
-
-#: ../app/widgets/gimpchanneltreeview.c:134
-msgid "Reorder Channel"
-msgstr "Adurzhiañ ar sanell"
 
 #: ../app/widgets/gimpcolordialog.c:149
 msgid "Add the current color to the color history"
@@ -13542,15 +13696,15 @@ msgstr "Du :"
 msgid "Alpha:"
 msgstr "Alfa :"
 
-#: ../app/widgets/gimpcolormapeditor.c:225
+#: ../app/widgets/gimpcolormapeditor.c:223
 msgid "Color index:"
 msgstr "Ibil al livioù :"
 
-#: ../app/widgets/gimpcolormapeditor.c:235
+#: ../app/widgets/gimpcolormapeditor.c:233
 msgid "HTML notation:"
 msgstr "Notenniñ HTML :"
 
-#: ../app/widgets/gimpcolormapeditor.c:489
+#: ../app/widgets/gimpcolormapeditor.c:487
 msgid "Only indexed images have a colormap."
 msgstr "Gant ar skeudennoù o livioù ibiliet hepken ez eus ul livaoueg."
 
@@ -13558,11 +13712,11 @@ msgstr "Gant ar skeudennoù o livioù ibiliet hepken ez eus ul livaoueg."
 msgid "Palette"
 msgstr "Livaoueg"
 
-#: ../app/widgets/gimpcontainerpopup.c:547
+#: ../app/widgets/gimpcontainerpopup.c:578
 msgid "Smaller Previews"
 msgstr "Alberzioù bihanoc'h"
 
-#: ../app/widgets/gimpcontainerpopup.c:552
+#: ../app/widgets/gimpcontainerpopup.c:583
 msgid "Larger Previews"
 msgstr "Alberzioù brasoc'h"
 
@@ -13816,23 +13970,20 @@ msgstr "Distreiñ"
 msgid "%s (read only)"
 msgstr "%s (mod lenn nemetken)"
 
-#: ../app/widgets/gimpdeviceeditor.c:160
-#| msgid "Delete the selected settings"
+#: ../app/widgets/gimpdeviceeditor.c:161
 msgid "Delete the selected device"
 msgstr "Dilemel an drobarzhell diuzet"
 
-#: ../app/widgets/gimpdeviceeditor.c:468
-#| msgid "Delete the selected settings"
+#: ../app/widgets/gimpdeviceeditor.c:469
 msgid "Delete Device Settings"
 msgstr "Dilemel arventennoù an drobarzhell"
 
-#: ../app/widgets/gimpdeviceeditor.c:489
+#: ../app/widgets/gimpdeviceeditor.c:490
 #, c-format
-#| msgid "Delete '%s'?"
 msgid "Delete \"%s\"?"
 msgstr "Dilemel \"%s\"?"
 
-#: ../app/widgets/gimpdeviceeditor.c:492
+#: ../app/widgets/gimpdeviceeditor.c:493
 msgid ""
 "You are about to delete this device's stored settings.\n"
 "The next time this device is plugged, default settings will be used."
@@ -13847,25 +13998,21 @@ msgid "Pressure"
 msgstr "Gwask"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:143
-#| msgid "Tilt"
 msgid "X tilt"
 msgstr "Stouadur X"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:144
-#| msgid "Tilt"
 msgid "Y tilt"
 msgstr "Stouadur Y"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
 #: ../app/widgets/gimpdynamicseditor.c:152
 #: ../app/widgets/gimpdynamicsoutputeditor.c:241
-#| msgid "Mouse Wheel"
 msgid "Wheel"
 msgstr "Rodig"
 
 #. the axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:192
-#| msgid "Pixels"
 msgid "Axes"
 msgstr "Ahelioù"
 
@@ -13877,19 +14024,16 @@ msgstr "Stokelloù"
 #: ../app/widgets/gimpdeviceinfoeditor.c:366
 #: ../app/widgets/gimpdeviceinfoeditor.c:584
 #, c-format
-#| msgid "(none)"
 msgid "none"
 msgstr "Tra ebet"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:414
 #, c-format
-#| msgid "Curves"
 msgid "%s Curve"
 msgstr "Krommenn %s"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:473
 #: ../app/widgets/gimpdynamicsoutputeditor.c:196
-#| msgid "R_eset Color"
 msgid "_Reset Curve"
 msgstr "Adderaou_ekaat ar c'hrommañ gant un doare kemparzhek"
 
@@ -13898,44 +14042,43 @@ msgstr "Adderaou_ekaat ar c'hrommañ gant un doare kemparzhek"
 msgid "The axis '%s' has no curve"
 msgstr "N'eus ket ur grommenn gant an ahel-mañ '%s' "
 
-#: ../app/widgets/gimpdevicestatus.c:137
+#: ../app/widgets/gimpdevicestatus.c:139
 msgid "Save device status"
 msgstr "Enrollañ stad an drobarzhell"
 
-#: ../app/widgets/gimpdevicestatus.c:446
+#: ../app/widgets/gimpdevicestatus.c:448
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "Rakva : %d, %d, %d"
 
-#: ../app/widgets/gimpdevicestatus.c:451
+#: ../app/widgets/gimpdevicestatus.c:453
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "Drekva : %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:201
+#: ../app/widgets/gimpdnd-xds.c:203
 msgid "The given filename does not have any known file extension."
 msgstr "An anv restr lavaret n'en deus ket un askouezhadenn restr anavezet."
 
-#: ../app/widgets/gimpdnd-xds.c:219
+#: ../app/widgets/gimpdnd-xds.c:221
 msgid "File Exists"
 msgstr "Ar restr zo anezhi"
 
-#: ../app/widgets/gimpdnd-xds.c:224
+#: ../app/widgets/gimpdnd-xds.c:226
 msgid "_Replace"
 msgstr "_Amsaviñ"
 
-#: ../app/widgets/gimpdnd-xds.c:235
+#: ../app/widgets/gimpdnd-xds.c:237
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Ur restr anvet '%s' zo anezhi endeo."
 
-#: ../app/widgets/gimpdnd-xds.c:240
+#: ../app/widgets/gimpdnd-xds.c:242
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Fellout a ra deoc'h hec'h amsaviñ ouzh ar skeudenn emaoc'h oc'h enrollañ ?"
 
 #. String used to separate dockables, e.g. "Tool Options, Layers"
 #: ../app/widgets/gimpdock.h:34
-#| msgid ","
 msgctxt "dock"
 msgid ", "
 msgstr ","
@@ -13956,16 +14099,16 @@ msgctxt "dock"
 msgid " | "
 msgstr " | "
 
-#: ../app/widgets/gimpdockable.c:235
+#: ../app/widgets/gimpdockbook.c:290
 msgid "Configure this tab"
 msgstr "Kefluniañ an ivinell-mañ"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:351
+#: ../app/widgets/gimpdockwindow.c:353
 msgid "Auto"
 msgstr "Emgefreek"
 
-#: ../app/widgets/gimpdockwindow.c:362
+#: ../app/widgets/gimpdockwindow.c:364
 msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr "Mar bez gweredekaet e vo heuliet ar skeudenn emaoc'h o labourat warni gant ar voestad emziviz."
 
@@ -14251,7 +14394,6 @@ msgid "Querying..."
 msgstr "O c'houlenn..."
 
 #: ../app/widgets/gimpimagepropview.c:122
-#| msgid "Size in memory:"
 msgid "Size in pixels:"
 msgstr "Ment e pikselioù :"
 
@@ -14330,19 +14472,15 @@ msgstr "livioù"
 msgid "Lock:"
 msgstr "Prennañ :"
 
-#: ../app/widgets/gimpitemtreeview.c:1423
+#: ../app/widgets/gimpitemtreeview.c:1481
 msgid "Set Item Exclusive Visible"
 msgstr "Arventennañ an ergorenn hewel dispellaus"
 
-#: ../app/widgets/gimpitemtreeview.c:1431
+#: ../app/widgets/gimpitemtreeview.c:1489
 msgid "Set Item Exclusive Linked"
 msgstr "Arventennañ an ergorenn kevreet dispellaus"
 
-#: ../app/widgets/gimplayertreeview.c:235
-msgid "Reorder Layer"
-msgstr "Adurzhiañ an dreuzfollenn"
-
-#: ../app/widgets/gimplayertreeview.c:332
+#: ../app/widgets/gimplayertreeview.c:309
 msgid "Lock alpha channel"
 msgstr "Prennañ ar sanell alfa"
 
@@ -14387,51 +14525,51 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "UTF-8 didalvoudek"
 
-#: ../app/widgets/gimpsettingsbox.c:240
+#: ../app/widgets/gimpsettingsbox.c:241
 msgid "Pick a setting from the list"
 msgstr "Pakañ un arventenn diwar ar roll"
 
-#: ../app/widgets/gimpsettingsbox.c:261
+#: ../app/widgets/gimpsettingsbox.c:262
 msgid "Add settings to favorites"
 msgstr "Ouzhpennañ an arventennoù d'ho re well"
 
-#: ../app/widgets/gimpsettingsbox.c:289
+#: ../app/widgets/gimpsettingsbox.c:290
 msgid "_Import Settings from File..."
 msgstr "Enporzh_iañ an arventennoù diouzh ur restr..."
 
-#: ../app/widgets/gimpsettingsbox.c:295
+#: ../app/widgets/gimpsettingsbox.c:296
 msgid "_Export Settings to File..."
 msgstr "_Ezporzhiañ an arventennoù en ur restr..."
 
-#: ../app/widgets/gimpsettingsbox.c:302
+#: ../app/widgets/gimpsettingsbox.c:303
 msgid "_Manage Settings..."
 msgstr "Ar_deiñ an arventennoù..."
 
-#: ../app/widgets/gimpsettingsbox.c:589
+#: ../app/widgets/gimpsettingsbox.c:590
 msgid "Add Settings to Favorites"
 msgstr "Ouzhpennañ an arventennoù er re well"
 
-#: ../app/widgets/gimpsettingsbox.c:592
+#: ../app/widgets/gimpsettingsbox.c:593
 msgid "Enter a name for the settings"
 msgstr "Roit un anv evit an arventennoù"
 
-#: ../app/widgets/gimpsettingsbox.c:593
+#: ../app/widgets/gimpsettingsbox.c:594
 msgid "Saved Settings"
 msgstr "Arventennoù enrollet"
 
-#: ../app/widgets/gimpsettingsbox.c:629
+#: ../app/widgets/gimpsettingsbox.c:630
 msgid "Manage Saved Settings"
 msgstr "Ardeiñ an arventennoù enrollet"
 
-#: ../app/widgets/gimpsettingseditor.c:173
+#: ../app/widgets/gimpsettingseditor.c:174
 msgid "Import settings from a file"
 msgstr "Enporzhiañ an arventennoù diouzh ur restr"
 
-#: ../app/widgets/gimpsettingseditor.c:182
+#: ../app/widgets/gimpsettingseditor.c:183
 msgid "Export the selected settings to a file"
 msgstr "Ezporzhiañ an arventennoù diuzet en ur restr"
 
-#: ../app/widgets/gimpsettingseditor.c:191
+#: ../app/widgets/gimpsettingseditor.c:192
 msgid "Delete the selected settings"
 msgstr "Dilemel an arventennoù diuzet"
 
@@ -14473,11 +14611,11 @@ msgstr "Goustur ar c'hourzhell :"
 msgid "Dash _preset:"
 msgstr "Ragarventenn ar _gourzhell :"
 
-#: ../app/widgets/gimptagentry.c:45
+#: ../app/widgets/gimptagentry.c:43
 msgid "filter"
 msgstr "sil"
 
-#: ../app/widgets/gimptagentry.c:46
+#: ../app/widgets/gimptagentry.c:44
 msgid "enter tags"
 msgstr "roit klavioù"
 
@@ -14485,7 +14623,7 @@ msgstr "roit klavioù"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1718
+#: ../app/widgets/gimptagentry.c:1716
 msgid ","
 msgstr ","
 
@@ -14547,25 +14685,19 @@ msgstr "Hedad nodoù UTF-8 didalvoudek er restr '%s'."
 msgid "_Use selected font"
 msgstr "Arverañ an nodrezh bet di_uzet"
 
-#: ../app/widgets/gimptextstyleeditor.c:200
-#| msgctxt "layers-action"
-#| msgid "Change the size of the layer content"
+#: ../app/widgets/gimptextstyleeditor.c:192
 msgid "Change size of selected text"
 msgstr "Kemmañ ment an destenn bet diuzet"
 
-#: ../app/widgets/gimptextstyleeditor.c:219
-#| msgctxt "edit-action"
-#| msgid "Clear the selected pixels"
+#: ../app/widgets/gimptextstyleeditor.c:211
 msgid "Clear style of selected text"
 msgstr "Skarzhañ stil an destenn bet diuzet"
 
-#: ../app/widgets/gimptextstyleeditor.c:239
+#: ../app/widgets/gimptextstyleeditor.c:231
 msgid "Change kerning of selected text"
 msgstr "Kemmañ esaouiñ an destenn diuzet"
 
-#: ../app/widgets/gimptextstyleeditor.c:255
-#| msgctxt "layers-action"
-#| msgid "Change the size of the layer content"
+#: ../app/widgets/gimptextstyleeditor.c:247
 msgid "Change baseline of selected text"
 msgstr "Kemmañ linenn diazez an destenn bet diuzet"
 
@@ -14655,45 +14787,72 @@ msgstr ""
 "An ilrezenn oberiant.\n"
 "Klikañ evit digeriñ boestad emziviz an ilrezennoù."
 
-#: ../app/widgets/gimptooleditor.c:294
+#: ../app/widgets/gimptooleditor.c:295
 msgid "Raise this tool"
 msgstr "Sevel ar benveg-mañ"
 
-#: ../app/widgets/gimptooleditor.c:295
+#: ../app/widgets/gimptooleditor.c:296
 msgid "Raise this tool to the top"
 msgstr "Sevel ar benveg-mañ d'an uhelañ"
 
-#: ../app/widgets/gimptooleditor.c:302
+#: ../app/widgets/gimptooleditor.c:303
 msgid "Lower this tool"
 msgstr "Diskenn ar benveg-mañ"
 
-#: ../app/widgets/gimptooleditor.c:303
+#: ../app/widgets/gimptooleditor.c:304
 msgid "Lower this tool to the bottom"
 msgstr "Diskenn ar benveg-mañ d'an izelañ"
 
-#: ../app/widgets/gimptooleditor.c:310
+#: ../app/widgets/gimptooleditor.c:311
 msgid "Reset tool order and visibility"
 msgstr "Adderaouekaat urzh hag hewelusted ar binvioù"
 
-#: ../app/widgets/gimptooloptionseditor.c:206
+#: ../app/widgets/gimptooloptionseditor.c:208
 msgid "Save options to..."
 msgstr "Enrollañ an dibarzhioù e..."
 
-#: ../app/widgets/gimptooloptionseditor.c:214
+#: ../app/widgets/gimptooloptionseditor.c:216
 msgid "Restore options from..."
 msgstr "Assav an dibarzhioù diouzh..."
 
-#: ../app/widgets/gimptooloptionseditor.c:222
+#: ../app/widgets/gimptooloptionseditor.c:224
 msgid "Delete saved options..."
 msgstr "Dilemel an dibarzhioù enrollet..."
 
-#: ../app/widgets/gimptooloptionseditor.c:562
+#: ../app/widgets/gimptooloptionseditor.c:573
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "Fazi en ur enrollañ ragarventennoù dibarzhioù ar binvioù : %s"
 
+#: ../app/widgets/gimptoolpreseteditor.c:109
+msgid "Apply stored FG/BG"
+msgstr "Arloañ ar rakva/drekva enrollet"
+
+#: ../app/widgets/gimptoolpreseteditor.c:115
+msgid "Apply stored brush"
+msgstr "Arloañ ar broust enrollet"
+
+#: ../app/widgets/gimptoolpreseteditor.c:121
+msgid "Apply stored dynamics"
+msgstr "Arloañ an dialuskoù enrollet"
+
+#: ../app/widgets/gimptoolpreseteditor.c:127
+msgid "Apply stored gradient"
+msgstr "Arloañ an ilrezenn enrollet"
+
+#: ../app/widgets/gimptoolpreseteditor.c:133
+msgid "Apply stored pattern"
+msgstr "Arloañ ar goustur enrollet"
+
+#: ../app/widgets/gimptoolpreseteditor.c:139
+msgid "Apply stored pallete"
+msgstr "Arloañ al livaoueg enrollet"
+
+#: ../app/widgets/gimptoolpreseteditor.c:145
+msgid "Apply stored font"
+msgstr "Arloañ an nodrezh enrollet"
+
 #: ../app/widgets/gimptranslationstore.c:105
-#| msgid "Language:"
 msgid "System Language"
 msgstr "Yezh ar reizhiad"
 
@@ -14718,11 +14877,7 @@ msgstr "Ur fazi zo bet e-pad ma oa o tezrannañ despizadur al lañser diouzh %s 
 msgid "[ Base Image ]"
 msgstr "[ skeudenn diazez ]"
 
-#: ../app/widgets/gimpvectorstreeview.c:116
-msgid "Reorder path"
-msgstr "Adurzhiañ an treug"
-
-#: ../app/widgets/gimpvectorstreeview.c:118
+#: ../app/widgets/gimpvectorstreeview.c:112
 msgid "Lock path strokes"
 msgstr "Prennañ tresadurioù an treugoù"
 
@@ -14746,22 +14901,22 @@ msgstr "Digeriñ boestad emziviz diuzañ al livaouegoù"
 msgid "Open the font selection dialog"
 msgstr "Digeriñ boestad emziviz diuzañ an nodrezhoù"
 
-#: ../app/widgets/gimpwidgets-utils.c:649
+#: ../app/widgets/gimpwidgets-utils.c:670
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (klask %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:649
+#: ../app/widgets/gimpwidgets-utils.c:670
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:653
+#: ../app/widgets/gimpwidgets-utils.c:674
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (klask %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:657
+#: ../app/widgets/gimpwidgets-utils.c:678
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (klask %s, %s, %s)"
@@ -14826,55 +14981,60 @@ msgctxt "histogram-scale"
 msgid "Logarithmic histogram"
 msgstr "Tellun treoliek"
 
-#: ../app/widgets/widgets-enums.c:213
+#: ../app/widgets/widgets-enums.c:215
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "Arlun"
 
-#: ../app/widgets/widgets-enums.c:214
+#: ../app/widgets/widgets-enums.c:216
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "Stad vremanel"
 
-#: ../app/widgets/widgets-enums.c:215
+#: ../app/widgets/widgets-enums.c:217
 msgctxt "tab-style"
 msgid "Text"
 msgstr "Testenn"
 
-#: ../app/widgets/widgets-enums.c:216
+#: ../app/widgets/widgets-enums.c:218
 msgctxt "tab-style"
 msgid "Description"
 msgstr "Deskrivadur"
 
-#: ../app/widgets/widgets-enums.c:217
+#: ../app/widgets/widgets-enums.c:219
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "Arlun & testenn"
 
-#: ../app/widgets/widgets-enums.c:218
+#: ../app/widgets/widgets-enums.c:220
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "Arlun & deskriv."
 
-#: ../app/widgets/widgets-enums.c:219
+#: ../app/widgets/widgets-enums.c:221
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "Stad & testenn"
 
-#: ../app/widgets/widgets-enums.c:220
+#: ../app/widgets/widgets-enums.c:222
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stad & deskriv."
 
-#: ../app/xcf/xcf-load.c:329
+#: ../app/widgets/widgets-enums.c:223
+msgctxt "tab-style"
+msgid "Undefined"
+msgstr "Andespizet"
+
+#: ../app/xcf/xcf-load.c:332
 msgid "This XCF file is corrupt!  I have loaded as much of it as I can, but it is incomplete."
 msgstr "Kontronet eo ar restr mod XCF-mañ ! Karget em eus pezh a oa tro d'ober, diglok eo koulskoude."
 
-#: ../app/xcf/xcf-load.c:340
+#: ../app/xcf/xcf-load.c:343
 msgid "This XCF file is corrupt!  I could not even salvage any partial image data from it."
 msgstr "Kontronet eo ar restr mod XCF-mañ ! Ne vin ket gouest da saveteiñ un darn eus roadennoù ar skeudenn diouti."
 
-#: ../app/xcf/xcf-load.c:404
+#: ../app/xcf/xcf-load.c:407
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -14901,27 +15061,27 @@ msgstr "Fazi skrivañ XCF : %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "N'haller ket klask er restr XCF : %s"
 
-#: ../app/xcf/xcf.c:98
-#: ../app/xcf/xcf.c:166
+#: ../app/xcf/xcf.c:99
+#: ../app/xcf/xcf.c:167
 msgid "GIMP XCF image"
 msgstr "Skeudenn GIMP XCF"
 
-#: ../app/xcf/xcf.c:270
+#: ../app/xcf/xcf.c:271
 #, c-format
 msgid "Opening '%s'"
 msgstr "O tigeriñ '%s'"
 
-#: ../app/xcf/xcf.c:312
+#: ../app/xcf/xcf.c:313
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Fazi XCF : Handelv %d eus ar mentrezh XCF anskor bet kejet outi"
 
-#: ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
 msgstr "Oc'h enrollañ '%s'"
 
-#: ../app/xcf/xcf.c:402
+#: ../app/xcf/xcf.c:403
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fazi enrollañ ar restr XCF : %s"
@@ -14972,189 +15132,9 @@ msgstr "Bezit asur ez eo hewel ar Voestad binvioù !"
 msgid "Couldn't start '%s': %s"
 msgstr "N'haller ket loc'hañ '%s' : %s"
 
-#~ msgctxt "undo-type"
-#~ msgid "Reorder layer"
-#~ msgstr "Adurzhiañ an dreuzfollenn"
-#~ msgctxt "undo-type"
-#~ msgid "Reorder channel"
-#~ msgstr "Adurzhiañ ar sanell"
-#~ msgctxt "undo-type"
-#~ msgid "Reorder path"
-#~ msgstr "Adurzhiañ an treug"
-#~ msgid "Pressure:"
-#~ msgstr "Gwask :"
-#~ msgid "Empty Channel"
-#~ msgstr "Sanell c'houllo"
-#~ msgid "Pixel dimensions:"
-#~ msgstr "Mentoù e pikselioù :"
-#~ msgid "Empty Layer"
-#~ msgstr "Treuzfollenn c'houllo"
-#~ msgid "Empty Path"
-#~ msgstr "Treug goullo"
-#~ msgid "You can drop dockable dialogs here"
-#~ msgstr "Amañ e c'hallot lakaat boestadoù emziviz stagus."
-#~ msgid ""
-#~ "The window type hint that is set on the toolbox. This may affect how your "
-#~ "window manager decorates and handles the toolbox window."
+#~ msgctxt "file-action"
+#~ msgid "Save this image with a different name, but keep its current name"
 #~ msgstr ""
-#~ "An erbedadenn evit ar rizh prenestr arventennet e-keñver ar voestad "
-#~ "binvioù. An doare ma vo kinklet ha dornataet ar voestad binvioù a vez "
-#~ "tizhet ganti."
-#~ msgid ""
-#~ "Sets the external web browser to be used.  This can be an absolute path "
-#~ "or the name of an executable to search for in the user's PATH. If the "
-#~ "command contains '%s' it will be replaced with the URL, otherwise the URL "
-#~ "will be appended to the command with a space separating the two."
-#~ msgstr ""
-#~ "Arventennañ a ra ar merdeer web diavaez da vezañ arveret. Un treug dizave "
-#~ "pe anv eus un erounezad da glask e PATH an arveriad eo. Mar bez '%s' en "
-#~ "arc'had e vo amsavet gant an URL,  a-hend-all e vo liammet an URL ouzh an "
-#~ "arc'had gant un esaou etre an eil hag egile."
-#~ msgctxt "undo-type"
-#~ msgid "Reposition layer"
-#~ msgstr "Adlec'hiañ an dreuzfollenn"
-#~ msgctxt "undo-type"
-#~ msgid "Reposition channel"
-#~ msgstr "Adlec'hiañ ar sanell"
-#~ msgctxt "undo-type"
-#~ msgid "Reposition path"
-#~ msgstr "Adlec'hiañ an treug"
-#~ msgid "Web Browser"
-#~ msgstr "Merdeer web"
-#~ msgid "_Web browser to use:"
-#~ msgstr "Merdeer _web da arverañ :"
-#~ msgid "Hint for other _docks:"
-#~ msgstr "Erbe_dadenn evit prenestroù stagus all :"
-#~ msgid "tool|_Zoom"
-#~ msgstr "tool|_Zoum"
-#~ msgid "Direction:"
-#~ msgstr "Roud :"
-#~ msgid "New brush"
-#~ msgstr "Broust nevez"
-#~ msgid "_Aspect"
-#~ msgstr "_Neuz"
-#~ msgid "Sample Merged"
-#~ msgstr "Standilhonoù toueziet"
-#~ msgid "T_ools"
-#~ msgstr "_Binvioù"
-#~ msgid "Open the tools dialog"
-#~ msgstr "Digeriñ boestad emziviz ar binvioù"
-#~ msgid "Remove dangling entries"
-#~ msgstr "Dilemel an e_nankadoù direizh"
-#~ msgid "Copy the selected region to a named buffer"
-#~ msgstr "Eilañ ar maez bet diuzet en ur skurzer anvet"
-#~ msgid "Fill with P_attern"
-#~ msgstr "Leuniañ gant ur _goustur"
-#~ msgid "Save error log"
-#~ msgstr "Enrollañ kerzhlevr ar fazioù"
-#~ msgid "Save selection"
-#~ msgstr "Enrollañ an diuzad"
-#~ msgid "Save as _Template..."
-#~ msgstr "Enrollañ evel _patrom..."
-#~ msgid "Rescan font list"
-#~ msgstr "Adlenn roll an nodrezhoù"
-#~ msgid "New gradient"
-#~ msgstr "Ilrezenn nevez"
-#~ msgid "Set Opacity"
-#~ msgstr "Arventennañ an demerez"
-#~ msgid "Delete color"
-#~ msgstr "Dilemel al liv"
-#~ msgid "New palette"
-#~ msgstr "Livaoueg nevez"
-#~ msgid "New pattern"
-#~ msgstr "Goustur nevez"
-#~ msgid "select|_All"
-#~ msgstr "select|_An holl anezho"
-#~ msgid "select|_None"
-#~ msgstr "select|_netra"
-#~ msgid "Edit the selected template"
-#~ msgstr "Embann ar patrom diuzet"
-#~ msgid "Delete the selected template"
-#~ msgstr "Dilemel ar patrom diuzet"
-#~ msgid "R_aise Tool"
-#~ msgstr "Benveg Se_vel"
-#~ msgid "Raise tool"
-#~ msgstr "Benveg Sevel"
-#~ msgid "Ra_ise to Top"
-#~ msgstr "Sevel betek an uhel_añ"
-#~ msgid "Raise tool to top"
-#~ msgstr "Benveg Sevel betek an uhelañ"
-#~ msgid "L_ower Tool"
-#~ msgstr "Benveg Dis_kenn"
-#~ msgid "Lo_wer to Bottom"
-#~ msgstr "Diskenn betek an i_zelañ"
-#~ msgid "Lower tool to bottom"
-#~ msgstr "Benveg Diskenn betek an izelañ"
-#~ msgid "_Reset Order & Visibility"
-#~ msgstr "Adde_raouekaat an urzh hag an hewelusted"
-#~ msgid "_Show in Toolbox"
-#~ msgstr "Diskouez er voe_stad binvioù"
-#~ msgid "New path..."
-#~ msgstr "Treug nevez..."
-#~ msgid "_New Path"
-#~ msgstr "Treug _nevez"
-#~ msgid "Add"
-#~ msgstr "Ouzhpennañ"
-#~ msgid "Intersect"
-#~ msgstr "Kenskejañ"
-#~ msgid "When enabled, GIMP will show mnemonics in menus."
-#~ msgstr ""
-#~ "Mar bez gweredekaet e vo diskouezet ar berradennoù el lañserioù gant GIMP."
-#~ msgid ""
-#~ "When enabled, dock windows (the toolbox and palettes) are set to be "
-#~ "transient to the active image window. Most window managers will keep the "
-#~ "dock windows above the image window then, but it may also have other "
-#~ "effects."
-#~ msgstr ""
-#~ "Mar gweredekaet e vo arventennet ar prenestroù stagus (boestadoù binvioù "
-#~ "ha livaouegoù) a-benn bezañ dibad e-keñver ar prenestr oberiant. An darn "
-#~ "vrasañ eus an ardoerioù prenestroù a viro ar prenestroù stagus a-us d'ar "
-#~ "skeudenn neuze, met efedoù all a c'hall degouezhout ivez."
-#~ msgid "Remove floating selection"
-#~ msgstr "Dilemel an diuzad war neuñv"
-#~ msgid "Rigor floating selection"
-#~ msgstr "Sonnaat un diuzad war neuñv"
-#~ msgid "Relax floating selection"
-#~ msgstr "Disonnaat un diuzad war neuñv"
-#~ msgid "plural|percent"
-#~ msgstr "plural|dregantad"
-#~ msgid "Show menu _mnemonics (access keys)"
-#~ msgstr "Diskouez ar berradennoù klavier (stokelloù haezhiñ)"
-#~ msgid "Toolbox and other docks are transient to the active image window"
-#~ msgstr ""
-#~ "Ar voestad binvioù ha prenestroù stagus all zo dibad e-keñver prenestr ar "
-#~ "skeudenn oberiant"
-#~ msgid "quality|Low"
-#~ msgstr "quality|izel"
-#~ msgid "quality|High"
-#~ msgstr "quality|uhel"
-#~ msgid "Do_n't Save"
-#~ msgstr "Na e_nrollañ ket"
-#~ msgid "RGB-empty"
-#~ msgstr "RGG-goullo"
-#~ msgid "grayscale-empty"
-#~ msgstr "liveoù louedoù-goullo"
-#~ msgid "grayscale"
-#~ msgstr "liveoù louedoù"
-#~ msgid "indexed-empty"
-#~ msgstr "ibiliet-goullo"
-#~ msgid "indexed"
-#~ msgstr "ibiliet"
-#~ msgid "Cannot rigor this layer because it is not a floating selection."
-#~ msgstr ""
-#~ "N'haller ket sonnaat an dreuzfollenn-mañ rak n'eo ket un diuzad war neuñv."
-#~ msgid "Cannot relax this layer because it is not a floating selection."
-#~ msgstr ""
-#~ "N'haller ket disonnaat an dreuzfollenn-mañ rak n'eo ket un diuzad war "
-#~ "neuñv."
-#~ msgid ""
-#~ "If available, hints from the font are used but you may prefer to always "
-#~ "use the automatic hinter"
-#~ msgstr ""
-#~ "Mar hegerz e vo arveret ar feurioù kengeidañ a zo en nodrezh. Tu zo da "
-#~ "arverañ ar c'hengeidañ emgefreek mar fell deoc'h."
-#~ msgid "Force auto-hinter"
-#~ msgstr "Bountañ war ar c'hengeidañ emgefreek"
-#~ msgid "GIMP Image Editor"
-#~ msgstr "Embanner skeudennoù GIMP"
+#~ "Enrollañ ar skeudenn-mañ gant un anv disheñvel, mirout hec'h anv bremanel "
+#~ "avat"
 

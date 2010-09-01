@@ -37,6 +37,10 @@ gboolean gimp_item_is_channel       (gint32       item_ID);
 gboolean gimp_item_is_layer_mask    (gint32       item_ID);
 gboolean gimp_item_is_selection     (gint32       item_ID);
 gboolean gimp_item_is_vectors       (gint32       item_ID);
+gboolean gimp_item_is_group         (gint32       item_ID);
+gint32   gimp_item_get_parent       (gint32       item_ID);
+gint*    gimp_item_get_children     (gint32       item_ID,
+                                     gint        *num_children);
 gchar*   gimp_item_get_name         (gint32       item_ID);
 gboolean gimp_item_set_name         (gint32       item_ID,
                                      const gchar *name);

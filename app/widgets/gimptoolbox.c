@@ -37,7 +37,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "gimpcairo-wilber.h"
+#include "gimpcairo.h"
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
 #include "gimpdockwindow.h"
@@ -674,38 +674,13 @@ gimp_toolbox_expose_event (GtkWidget      *widget,
                                &header_allocation,
                                &clip_rect))
     {
-      GtkStyle     *style = gtk_widget_get_style (widget);
-      GtkStateType  state = gtk_widget_get_state (widget);
-      cairo_t      *cr;
-      gint          header_height;
-      gint          header_width;
-      gdouble       wilber_width;
-      gdouble       wilber_height;
-      gdouble       factor;
+      cairo_t *cr;
 
       cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdk_cairo_rectangle (cr, &clip_rect);
       cairo_clip (cr);
 
-      header_width  = header_allocation.width;
-      header_height = header_allocation.height;
-
-      gimp_cairo_wilber_get_size (cr, &wilber_width, &wilber_height);
-
-      factor = header_width / wilber_width * 0.9;
-
-      cairo_scale (cr, factor, factor);
-
-      gimp_cairo_wilber (cr,
-                         (header_width  / factor - wilber_width)  / 2.0,
-                         (header_height / factor - wilber_height) / 2.0);
-
-      cairo_set_source_rgba (cr,
-                             style->fg[state].red   / 65535.0,
-                             style->fg[state].green / 65535.0,
-                             style->fg[state].blue  / 65535.0,
-                             0.10);
-      cairo_fill (cr);
+      gimp_cairo_draw_toolbox_wilber (toolbox->p->header, cr);
 
       cairo_destroy (cr);
     }

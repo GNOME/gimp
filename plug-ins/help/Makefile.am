@@ -11,6 +11,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+help_RC = help.rc.o
+endif
+
 AM_CPPFLAGS = -DDATADIR=\""$(gimpdatadir)"\"
 
 AM_LDFLAGS = $(mwindows)
@@ -51,7 +56,8 @@ LDADD = \
 	$(libgimpmath)		\
 	$(GIO_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(help_RC)
 
 
 noinst_PROGRAMS = gimp-help-lookup

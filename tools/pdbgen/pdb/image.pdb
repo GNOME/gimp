@@ -722,15 +722,203 @@ CODE
     );
 }
 
-sub image_get_layer_position {
-    $blurb = 'Returns the position of the layer in the layer stack.';
+sub image_get_item_position {
+    $blurb = 'Returns the position of the item in its level of its item tree.';
 
     $help = <<'HELP';
-This procedure determines the position of the specified layer in the
-images layer stack. If the layer doesn't exist in the image, an error
-is returned.
+This procedure determines the position of the specified item in its
+level in its item tree in the image. If the item doesn't exist in the
+image, or the item is not part of an item tree, an error is returned.
 HELP
 
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'position', type => 'int32',
+	  desc => "The position of the item in its level in the item tree" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+    position = gimp_item_get_index (item);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_raise_item {
+    $blurb = "Raise the specified item in its level in its item tree";
+
+    $help = <<'HELP';
+This procedure raises the specified item one step in the item tree.
+The procecure call will fail if there is no item above it.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item to raise' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+    success = gimp_image_raise_item (image, item, error);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_lower_item {
+    $blurb = "Lower the specified item in its level in its item tree";
+
+    $help = <<'HELP';
+This procedure lowers the specified item one step in the item tree.
+The procecure call will fail if there is no item below it.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item to lower' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+    success = gimp_image_lower_item (image, item, error);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_raise_item_to_top {
+    $blurb = <<'BLURB';
+Raise the specified item to the top of its level in its item tree
+BLURB
+
+    $help = <<'HELP';
+This procedure raises the specified item to top of its level in the
+item tree. It will not move the item if there is no item above it.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item to raise to top' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+    success = gimp_image_raise_item_to_top (image, item);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_lower_item_to_bottom {
+    $blurb = <<'BLURB';
+Lower the specified item to the bottom of its level in its item tree
+BLURB
+
+    $help = <<'HELP';
+This procedure lowers the specified item to bottom of its level in the
+item tree. It will not move the layer if there is no layer below it.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item to lower to bottom' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error))
+    success = gimp_image_lower_item_to_bottom (image, item);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_reorder_item {
+    $blurb = "Reorder the specified item within its item tree";
+
+    $help = <<'HELP';
+This procedure reorders the specified item within its item tree.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'item', type => 'item',
+	  desc => 'The item to reorder' },
+	{ name => 'parent', type => 'item',
+          desc => 'The new parent item' },
+        { name => 'position', type => 'int32',
+          desc => 'The new position of the item' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_in_tree (item, image, FALSE, error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_same_tree (item, parent, image, error) &&
+        gimp_pdb_item_is_group (parent, error) &&
+        gimp_pdb_item_is_not_ancestor (item, parent, error))))
+    {
+      success = gimp_image_reorder_item (image, item, parent, position,
+                                         TRUE, NULL);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_get_layer_position {
+    &std_pdb_deprecated('gimp-image-get-item-position');
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -761,14 +949,7 @@ CODE
 }
 
 sub image_raise_layer {
-    $blurb = "Raise the specified layer in the image's layer stack";
-
-    $help = <<'HELP';
-This procedure raises the specified layer one step in the existing layer stack.
-The procecure call will fail if there is no layer above it.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-image-raise-item');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -790,14 +971,7 @@ CODE
 }
 
 sub image_lower_layer {
-    $blurb = "Lower the specified layer in the image's layer stack";
-
-    $help = <<'HELP';
-This procedure lowers the specified layer one step in the existing layer stack.
-The procecure call will fail if there is no layer below it.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-image-lower-item');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -819,17 +993,7 @@ CODE
 }
 
 sub image_raise_layer_to_top {
-    $blurb = <<'BLURB';
-Raise the specified layer in the image's layer stack to top of stack
-BLURB
-
-    $help = <<'HELP';
-This procedure raises the specified layer to top of the existing layer stack.
-It will not move the layer if there is no layer above it.
-HELP
-
-    &wolfgang_pdb_misc('1998');
-    $author .= ", Sven Neumann";
+    &std_pdb_deprecated('gimp-image-raise-item-to-top');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -851,17 +1015,7 @@ CODE
 }
 
 sub image_lower_layer_to_bottom {
-    $blurb = <<'BLURB';
-Lower the specified layer in the image's layer stack to bottom of stack
-BLURB
-
-    $help = <<'HELP';
-This procedure lowers the specified layer to bottom of the existing layer stack.
-It will not move the layer if there is no layer below it.
-HELP
-
-    &wolfgang_pdb_misc('1998');
-    $author .= ", Sven Neumann";
+    &std_pdb_deprecated('gimp-image-lower-item-to-bottom');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1128,14 +1282,7 @@ CODE
 }
 
 sub image_get_channel_position {
-    $blurb = 'Returns the position of the channel in the channel stack.';
-
-    $help = <<'HELP';
-This procedure determines the position of the specified channel in
-the images channel stack. If the channel doesn't exist in the image,
-an error is returned.
-HELP
-
+    &std_pdb_deprecated('gimp-image-get-item-position');
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -1166,15 +1313,7 @@ CODE
 }
 
 sub image_raise_channel {
-    $blurb = "Raise the specified channel in the image's channel stack";
-
-    $help = <<'HELP';
-This procedure raises the specified channel one step in the existing
-channel stack. The procecure call will fail if there is no channel
-above it.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-image-raise-item');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1196,15 +1335,7 @@ CODE
 }
 
 sub image_lower_channel {
-    $blurb = "Lower the specified channel in the image's channel stack";
-
-    $help = <<'HELP';
-This procedure lowers the specified channel one step in the existing
-channel stack. The procecure call will fail if there is no channel
-below it.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated('gimp-image-lower-item');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1358,14 +1489,7 @@ CODE
 }
 
 sub image_get_vectors_position {
-    $blurb = 'Returns the position of the vectors object in the vectors objects stack.';
-
-    $help = <<'HELP';
-This procedure determines the position of the specified vectors object in the
-images vectors object stack. If the vectors object doesn't exist in the image,
-an error is returned.
-HELP
-
+    &std_pdb_deprecated('gimp-image-get-item-position');
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -1396,14 +1520,7 @@ CODE
 }
 
 sub image_raise_vectors {
-    $blurb = "Raise the specified vectors in the image's vectors stack";
-
-    $help = <<'HELP';
-This procedure raises the specified vectors one step in the existing
-vectors stack. The procecure call will fail if there is no vectors
-above it.
-HELP
-
+    &std_pdb_deprecated('gimp-image-raise-item');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -1426,14 +1543,7 @@ CODE
 }
 
 sub image_lower_vectors {
-    $blurb = "Lower the specified vectors in the image's vectors stack";
-
-    $help = <<'HELP';
-This procedure lowers the specified vectors one step in the existing
-vectors stack. The procecure call will fail if there is no vectors
-below it.
-HELP
-
+    &std_pdb_deprecated('gimp-image-lower-item');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -1456,16 +1566,7 @@ CODE
 }
 
 sub image_raise_vectors_to_top {
-    $blurb = <<'BLURB';
-Raise the specified vectors in the image's vectors stack to top of stack
-BLURB
-
-    $help = <<'HELP';
-This procedure raises the specified vectors to top of the existing
-vectors stack. It will not move the vectors if there is no vectors
-above it.
-HELP
-
+    &std_pdb_deprecated('gimp-image-raise-item-to-top');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -1488,16 +1589,7 @@ CODE
 }
 
 sub image_lower_vectors_to_bottom {
-    $blurb = <<'BLURB';
-Lower the specified vectors in the image's vectors stack to bottom of stack
-BLURB
-
-    $help = <<'HELP';
-This procedure lowers the specified vectors to bottom of the existing
-vectors stack. It will not move the vectors if there is no vectors
-below it.
-HELP
-
+    &std_pdb_deprecated('gimp-image-lower-item-to-bottom');
     &simon_pdb_misc('2005', '2.4');
 
     @inargs = (
@@ -2725,13 +2817,17 @@ CODE
             image_pick_color
             image_pick_correlate_layer
             image_add_layer image_remove_layer
+            image_add_channel image_remove_channel
+            image_add_vectors image_remove_vectors
+            image_get_item_position
+            image_raise_item image_lower_item
+            image_raise_item_to_top image_lower_item_to_bottom
+            image_reorder_item
 	    image_get_layer_position
             image_raise_layer image_lower_layer
             image_raise_layer_to_top image_lower_layer_to_bottom
-            image_add_channel image_remove_channel
 	    image_get_channel_position
             image_raise_channel image_lower_channel
-            image_add_vectors image_remove_vectors
 	    image_get_vectors_position
             image_raise_vectors image_lower_vectors
             image_raise_vectors_to_top image_lower_vectors_to_bottom
@@ -2756,7 +2852,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..46,49..77]]);
+%exports = (app => [@procs], lib => [@procs[0..52,55..83]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

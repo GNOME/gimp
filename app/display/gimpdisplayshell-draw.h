@@ -59,8 +59,7 @@ void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
                                                       gint                n_segs);
 void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
-                                                      GdkSegment         *segs,
-                                                      gint                n_segs,
+                                                      cairo_pattern_t    *mask,
                                                       gint                index);
 void   gimp_display_shell_draw_vector                (GimpDisplayShell   *shell,
                                                       GimpVectors        *vectors);
@@ -68,6 +67,7 @@ void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell)
 void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
 void   gimp_display_shell_draw_area                  (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
                                                       gint                x,
                                                       gint                y,
                                                       gint                w,

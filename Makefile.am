@@ -29,7 +29,8 @@ SUBDIRS = \
 	$(GIMP_PLUGINS)	\
 	etc		\
 	devel-docs	\
-	docs
+	docs		\
+	build
 
 bin_SCRIPTS = @GIMPINSTALL@
 

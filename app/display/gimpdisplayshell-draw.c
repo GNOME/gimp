@@ -43,6 +43,7 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimpcairo.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
@@ -540,8 +541,6 @@ gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
                                         GdkSegment       *segs,
                                         gint              n_segs)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -549,20 +548,7 @@ gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
 
   gimp_display_shell_set_layer_style (shell, cr, drawable);
 
-  for (i = 0; i < n_segs; i++)
-    {
-      if (segs[i].x1 == segs[i].x2)
-        {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
-        }
-      else
-        {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
-        }
-    }
-
+  gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
@@ -572,61 +558,29 @@ gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
                                        GdkSegment       *segs,
                                        gint              n_segs)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (segs != NULL && n_segs > 0);
 
   gimp_display_shell_set_selection_out_style (shell, cr);
 
-  for (i = 0; i < n_segs; i++)
-    {
-      if (segs[i].x1 == segs[i].x2)
-        {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
-        }
-      else
-        {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
-        }
-    }
-
+  gimp_cairo_add_segments (cr, segs, n_segs);
   cairo_stroke (cr);
 }
 
 void
-gimp_display_shell_draw_selection_in (GimpDisplayShell *shell,
-                                      cairo_t          *cr,
-                                      GdkSegment       *segs,
-                                      gint              n_segs,
-                                      gint              index)
+gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
+                                      cairo_t            *cr,
+                                      cairo_pattern_t    *mask,
+                                      gint                index)
 {
-  gint i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
-  g_return_if_fail (segs != NULL && n_segs > 0);
+  g_return_if_fail (mask != NULL);
 
   gimp_display_shell_set_selection_in_style (shell, cr, index);
 
-  for (i = 0; i < n_segs; i++)
-    {
-      if (segs[i].x1 == segs[i].x2)
-        {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
-        }
-      else
-        {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
-        }
-    }
-
-  cairo_stroke (cr);
+  cairo_mask (cr, mask);
 }
 
 void
@@ -738,6 +692,7 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_draw_area (GimpDisplayShell *shell,
+                              cairo_t          *cr,
                               gint              x,
                               gint              y,
                               gint              w,
@@ -749,6 +704,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (gimp_display_get_image (shell->display));
+  g_return_if_fail (cr != NULL);
 
   x2 = x + w;
   y2 = y + h;
@@ -778,7 +734,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                                      &disp_xoffset,
                                                      &disp_yoffset);
 
-          gimp_display_shell_render (shell,
+          gimp_display_shell_render (shell, cr,
                                      j - disp_xoffset,
                                      i - disp_yoffset,
                                      dx, dy,

@@ -1,64 +1,71 @@
-# Breton translation for gimp
-# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
+# French translation of gimp-script-fu.
+# Copyright (C) 2000-2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
-# Alan Monfort <alan.monfort@free.fr>, 2007.
+#
+# David Monniaux <monniaux@arbouse.ens.fr>, 2000.
+# Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2006.
+# maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2002-2006.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
+#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: An Drouizig <drouizig@drouizig.org>\n"
-"POT-Creation-Date: 2009-03-10 06:21+0000\n"
-"PO-Revision-Date: 2009-07-28 04:47+0100\n"
+"Project-Id-Version: gimp-script-fu 2.4\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2010-08-25 11:03+0000\n"
+"PO-Revision-Date: 2010-08-25 20:09+0100\n"
 "Last-Translator: Alan Monfort <alan.monfort@free.fr>\n"
-"Language-Team: An Drouizig <drouizig@drouizig.org>\n"
+"Language-Team: Alan Monfort <drouizig@drouizig.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: breton\n"
+"X-Poedit-Country: france\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:131
-#: ../plug-ins/script-fu/script-fu-console.c:198
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
-msgstr "Penel Skript-Fu"
+msgstr "Penel Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:194
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Degemer mat e TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:200
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Steuñv diorrenn etrewezhiat"
 
-#: ../plug-ins/script-fu/script-fu-console.c:236
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
-msgstr "_Furchal..."
+msgstr "_Kantreal..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:294
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Enrollañ ec'hankad penel Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:341
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "N'haller ket digeriñ '%s' evit skrivañ : %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:370
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Merdeer an treugennadoù Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-eval.c:63
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Aotreet e vez galvadennoù anetrewezhiat hepken gant mod priziañ Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:195
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Skript-Fu n'eo ket gouest da erounit daou skript war un dro."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:198
+#: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Emaoc'h oc'h erounit ar skript \"%s\" ."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:224
+#: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu : %s"
@@ -66,148 +73,148 @@ msgstr "Skript-Fu : %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:287
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:336
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Diuzad al liv evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:444
 msgid "Script-Fu File Selection"
 msgstr "Diuzad ar restr evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:448
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Folder Selection"
 msgstr "Diuzad an teuliad evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu Font Selection"
 msgstr "Diuzad  an nodrezh evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:469
+#: ../plug-ins/script-fu/script-fu-interface.c:468
 msgid "Script-Fu Palette Selection"
 msgstr "Diuzad al livaoueg evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:478
+#: ../plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Pattern Selection"
 msgstr "Diuzad ar goustur evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:487
+#: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
 msgstr "Diuzad an ilrezenn evit Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:496
+#: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
-msgstr "Diuzad ar broust evit Skript-Fu"
+msgstr "Diuzad ar broust evit Skript-Fu "
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fazi e-pad ma oa oc'h erounit %s :"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:150
+#: ../plug-ins/script-fu/script-fu-scripts.c:149
 msgid "Too few arguments to 'script-fu-register' call"
-msgstr "Re nebeut a arguzennoù evit galvadenn 'script-fu-register'"
+msgstr "N'eus ket arguzennoù a-walc'h evit galv 'script-fu-register'"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:609
+#: ../plug-ins/script-fu/script-fu-scripts.c:608
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Fazi e-pad ma oa o kargañ %s :"
 
-#: ../plug-ins/script-fu/script-fu-server.c:713
+#: ../plug-ins/script-fu/script-fu-server.c:804
 msgid "Script-Fu Server Options"
-msgstr "Dibarzhioù an dafariad Skript-Fu"
+msgstr "Dibarzhioù an dafariad Skript-Fu "
 
-#: ../plug-ins/script-fu/script-fu-server.c:718
+#: ../plug-ins/script-fu/script-fu-server.c:809
 msgid "_Start Server"
 msgstr "_Loc'hañ an dafariad"
 
-#: ../plug-ins/script-fu/script-fu-server.c:746
+#: ../plug-ins/script-fu/script-fu-server.c:837
 msgid "Server port:"
 msgstr "Porzh an dafariad :"
 
-#: ../plug-ins/script-fu/script-fu-server.c:752
+#: ../plug-ins/script-fu/script-fu-server.c:843
 msgid "Server logfile:"
-msgstr "Kerzhlevr an dafariad :"
+msgstr "Restr kerzhlevr an dafariad :"
 
-#: ../plug-ins/script-fu/script-fu.c:111
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr "Penel etrewezhiat evit diorren Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:117
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "_Console"
 msgstr "_Penel"
 
-#: ../plug-ins/script-fu/script-fu.c:141
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Dafariad evit gwezhiadurioù Skript-Fu a-bell"
 
-#: ../plug-ins/script-fu/script-fu.c:146
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "_Loc'hañ an dafariad..."
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP enlinenn"
 
-#: ../plug-ins/script-fu/script-fu.c:303
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
-msgstr "Dornlevr an arveriad"
+msgstr "D_ornlevr an arveriad"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
-msgstr "_Script-Fu"
+msgstr "_Skript-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Test"
 msgstr "_Taol arnod"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Buttons"
 msgstr "A_fell"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Logos"
-msgstr "Sie_lloù"
+msgstr "_Sielloù"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Patterns"
 msgstr "_Gousturioù"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Web Page Themes"
-msgstr "Neuzioù ar bajennad _web"
+msgstr "Neuzioù pajennad _web"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Alien Glow"
 msgstr "S_kleur Alien"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Beveled Pattern"
 msgstr "Goustur _beskellet"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Classic.Gimp.Org"
 msgstr "_Gimp.Org Klasel"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:326
 msgid "Alpha to _Logo"
 msgstr "Alfa war ar _siell"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Lenn en-dro an holl skriptoù Script-Fu hegerz"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Refresh Scripts"
 msgstr "_Azbevaat ar skriptoù"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:357
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
-msgstr "N'hallit ket arverañ \"Azbevaat ar skriptoù\" mard eo digor ur voestad emziviz Script-Fu. Serrit prenestroù Script-Fu ha klaskit en-dro."
+msgstr "N'hallit ket arverañ \"Azbevaat ar skriptoù\" mard eo digor ur voestad emziviz Script-Fu. Serrit ar prenestroù Script-Fu ha klaskit en-dro."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -245,8 +252,6 @@ msgstr "Arventennoù ar bosoù dre ziouer"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -284,8 +289,6 @@ msgstr "Nodrezh"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -357,8 +360,6 @@ msgstr "Skin ruzed an disheol"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -396,7 +397,6 @@ msgstr "Truched 3_M..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
@@ -417,7 +417,7 @@ msgstr "Ment ar bloc'had"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 msgid "Create an image filled with a 3D Truchet pattern"
-msgstr "Krouiñ ur skeudenn leuniet gant ur goustur 3M mod Truchet"
+msgstr "Krouiñ ur skeudenn leuniet gant ur goustur 3M Truchet"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -595,7 +595,7 @@ msgstr "A_fell..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "Create a button graphic with an eerie glow for web pages"
-msgstr "Krouiñ un afell gevregat gant ur skleur iskis evit pajennadoù web"
+msgstr "Krouiñ un afell gevregat gant ur skleur iskis evit ajennadoù web"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
@@ -612,8 +612,6 @@ msgstr "Leuniadur"
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -752,7 +750,6 @@ msgid "Create a beveled pattern hrule for webpages"
 msgstr "Krouiñ ur goustur reolennH beskellet evit ar pajennadoù web"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -971,7 +968,7 @@ msgstr "Engravet..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid "Create a logo with text raised above or carved in to the specified background image"
-msgstr "Krouiñ ur siell gant an destenn savet dirak pe zelwennet e-barzh drekva erspizet ar skeudenn"
+msgstr "Krouiñ ur siell gant an destenn savet dirak pe zelwennet e-barzh drekva erspizet ar skeudenn "
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -983,7 +980,7 @@ msgstr "Liv ar c'hleiz"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr "Krouiñ un efed tresañ dre gleiz evit ar maez diuzet (pe an alfa)"
+msgstr "Krouiñ un efed tresañ dre gleiz evit ar maez diuzet (pe d'an alfa)"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
@@ -1062,7 +1059,7 @@ msgstr "Maezioù gwenn ar c'hrom"
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
-msgstr "Kartenn an amva"
+msgstr "Kartennad an amva"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
@@ -1282,12 +1279,10 @@ msgid "Color"
 msgstr "Liv"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "Linkañ X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Linkañ Y"
 
@@ -1392,7 +1387,7 @@ msgstr "Du war wenn"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Create an image filled with previews of fonts matching a fontname filter"
-msgstr "Krouiñ ur skeudenn leuniet gant alberzioù nodrezhoù o klotañ gant sil un anv nodrezh"
+msgstr "Krouiñ ur skeudenn leuniet gant alberzioù nodrezhioù o klotañ gant sil un anv nodrezh"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1468,91 +1463,61 @@ msgstr "Tevder an disheol (%)"
 msgid "_Fuzzy Border..."
 msgstr "Riblenn _dispis..."
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "Didroc'hañ emgefreek"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
+msgid "Bookmark to the GIMP web site"
+msgstr "Merker war lec'hienn web GIMP"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "Krouiñ ur skeudenn eus un talbenn bras en ur arverañ neuz pajennad web gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "Merker war dornlevr an arveriad"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "Krouiñ ur skeudenn eus un talbenn bihan en ur arverañ neuz pajenn web gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "Krouiñ hag arverañ diu_zadoù"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "Liv teñval"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
+msgid "Create, Open and Save _Files"
+msgstr "Krouiñ, digeriñ hag enrollañ _restroù"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "Liv flamm"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Tresañ er_gorennoù eeun"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "Skeudenn ibil"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Penaos arverañ ar _boestadoù emziviz"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "Niver a livioù"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
+msgid "Plug-in _Registry"
+msgstr "Marilh an enlugelladoù"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "Dilemel an drekva"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
+msgid "Using _Paths"
+msgstr "Arverañ _treugoù"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "Gwehin diuzañ dre liv"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
+msgid "_Basic Concepts"
+msgstr "Ergrafoù dia_zez"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "Liv an disheol"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:10
+msgid "_Developer Web Site"
+msgstr "Lec'hienn internet an diorrenourion"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "Tal_benn bras..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:11
+msgid "_Main Web Site"
+msgstr "L_oad internet pennañ"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "Talbenn bi_han..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Prientiñ ho skeudenn evit ar web"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
-msgstr "Krouiñ ur skeudenn eus un talbenn afell e stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "L_ec'hienn internet dornlevr an arveriad"
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "Krouiñ ur skeudenn eus ur skritell afell he stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
-msgstr "Krouiñ ur skeudenn eus un eil skritell afell he stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
-msgstr "Krouiñ ur skeudenn eus un teirvet skritell afell he stumm un duellenn en ur arverañ neuz pajenn web gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "Skritell isafell mod 'Korzenn'..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Skritell is-isafell mod 'Korzenn'..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "Skritell hollek mod 'Korzenn'..."
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "Skritell afell mod 'Korzenn'..."
+#: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
+msgid "_Working with Digital Camera Photos"
+msgstr "_Labourat gant ur benveg luc'hskeudennoù niverel"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
@@ -1898,6 +1863,42 @@ msgstr "Sepia"
 msgid "_Old Photo..."
 msgstr "Luc'hsk. k_ozh..."
 
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid "All characters in the name are either white-spaces or characters which can not appear in filenames."
+msgstr "An holl arouezennoù en anv zo pe egoroù gwenn pe arouezennoù n'hallont ket bezañ en anvioù restr."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid "Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute"
+msgstr "Ezporzhiañ al livaoueg oberiant evel ur follennad stil gant anv enankañ al liv evel o anv rummad, hag al liv e-unan evel doareenn al liv"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Ezporzhiañ al livaoueg oberiant evel ur geriadur PHP (anv => liv)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Ezporzhiañ al livaoueg oberiant evel ur geriadur Python (anv: liv)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Ezporzhiañ al livaoueg oberiant evel ur java.util.Hashtable<Hedad, Liv>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid "Folder for the output file"
+msgstr "Teuliad evit ar restr ec'hankañ"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "An anv restr enanket ganeoc'h n'eo ket un anv dereat evit ur restr."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
+msgid "The name of the file to create (if a file with this name already exist, it will be replaced)"
+msgstr "An anv evit ar restr da grouiñ (mar bez ur restr gant an anv-mañ endeo e vo amsavet)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
+msgid "Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
+msgstr "Skrivañ an holl livioù war al livaoueg en ur restr mod testenn, ur werzh c'hwezekredel gant pep linenn (anv ebet)"
+
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "Brush name"
@@ -1921,7 +1922,7 @@ msgstr "Pegañ ar golverad e-barzh ur broust nevez"
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
 msgid "There is no image data in the clipboard to paste."
-msgstr "N'eus tamm roadenn skeudenn ebet er golver da begañ."
+msgstr "N'eus roadenn skeudenn ebet er golver da begañ."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -1962,7 +1963,7 @@ msgstr "_Diarsell.."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "Ouzhpennañ un efed mod 'Predator' d'ar maez diuzet (pe d'an alfa)"
+msgstr "Ouzhpennañ un efed 'Predator' d'ar maez diuzet (pe d'an alfa)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2042,7 +2043,7 @@ msgstr "Munut e kreiz"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Render _Map..."
-msgstr "Deo_uez..."
+msgstr "Glennad an deo_uez..."
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
@@ -2156,7 +2157,7 @@ msgstr "Skin (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Round the corners of the current selection"
-msgstr "Rontaat kornioù an diuzad bremanel"
+msgstr "Rontaat kornioù an diuzad bremanel."
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
@@ -2164,7 +2165,7 @@ msgstr "R_eizhkorn rontaet..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr "Ouzhpennañ ur frammad heñvel ouzh ur film, toulloù dibunañ ha skritelloù, d'ar skeudenn"
+msgstr "Ouzhpennañ ur frammad heñvel ouzh ur film, toulloù dibunañ ha skritelloù d'ar skeudenn"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2216,7 +2217,7 @@ msgstr "_Boull o treiñ..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "Ouzhpennañ krommennoù epitrokoidel, Lissajous ha mod spirograf d'an dreuzfollennad vremanel"
+msgstr "Ouzhpennañ krommennoù epitrokoidel, Lissajous ha mod spirograf d'an dreuzfollenn vremanel"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2575,62 +2576,6 @@ msgstr "Hed an neudenn"
 msgid "_Weave..."
 msgstr "_Plezhañ..."
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Bookmark to the GIMP web site"
-msgstr "Merker war lec'hienn web GIMP"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Bookmark to the user manual"
-msgstr "Merker war dornlevr an arveriad"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Create and Use _Selections"
-msgstr "Krouiñ hag arverañ diu_zadoù"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Create, Open and Save _Files"
-msgstr "Krouiñ, digeriñ hag enrollañ _restroù"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
-msgid "Drawing _Simple Objects"
-msgstr "Tresañ er_gorennoù eeun"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "How to Use _Dialogs"
-msgstr "Penaos arverañ ar _boestadoù emziviz"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "Plug-in _Registry"
-msgstr "Marilh an enlugelladoù"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
-msgid "Using _Paths"
-msgstr "Arverañ _treugoù"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
-msgid "_Basic Concepts"
-msgstr "Ergrafoù dia_zez"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Developer Web Site"
-msgstr "Load internet an diorrenourion"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
-msgid "_Main Web Site"
-msgstr "L_oad internet pennañ"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
-msgid "_Preparing your Images for the Web"
-msgstr "_Prientiñ ho skeudenn evit ar web"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-msgid "_User Manual Web Site"
-msgstr "L_ec'hienn internet dornlevr an arveriad"
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
-msgid "_Working with Digital Camera Photos"
-msgstr "_Labourat gant ur benveg luc'hskeudennoù niverel"
-
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr "Ouzhpennañ un efed 3M treuzwelus soutil war ar maez bet diuzet (pe d'an alfa)"
@@ -2663,6 +2608,10 @@ msgstr "Linkañ X al lintr"
 msgid "Highlight Y offset"
 msgstr "Linkañ Y al lintr"
 
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "Liv flamm"
+
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Demerez al lintr"
@@ -2670,4 +2619,146 @@ msgstr "Demerez al lintr"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Efed _Xach..."
+
+#~ msgid "_Misc"
+#~ msgstr "_Liesseurt"
+#~ msgid "_Utilities"
+#~ msgstr "_Goulevioù mavek"
+#~ msgid "An_imation"
+#~ msgstr "Bl_iverezh"
+#~ msgid "_Animators"
+#~ msgstr "Bli_vourion"
+#~ msgid "_Artistic"
+#~ msgstr "_Arzel"
+#~ msgid "_Blur"
+#~ msgstr "_Ruzed"
+#~ msgid "_Decor"
+#~ msgstr "_Kinkladur"
+#~ msgid "_Effects"
+#~ msgstr "_Efedoù"
+#~ msgid "En_hance"
+#~ msgstr "Gw_ellekaat"
+#~ msgid "_Light and Shadow"
+#~ msgstr "Skêrijenn ha _disheol"
+#~ msgid "S_hadow"
+#~ msgstr "Dis_heol"
+#~ msgid "_Render"
+#~ msgstr "_Deouez"
+#~ msgid "_Alchemy"
+#~ msgstr "_Alkimiezh"
+#~ msgid "Autocrop"
+#~ msgstr "Didroc'hañ emgefreek"
+#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Krouiñ ur skeudenn eus un talbenn bras en ur arverañ neuz pajenn web gimp."
+#~ "org"
+#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Krouiñ ur skeudenn eus un talbenn bihan en ur arverañ neuz pajenn web "
+#~ "gimp.org"
+#~ msgid "Dark color"
+#~ msgstr "Liv teñval"
+#~ msgid "Index image"
+#~ msgstr "Skeudenn ibil"
+#~ msgid "Number of colors"
+#~ msgstr "Niver a livioù"
+#~ msgid "Remove background"
+#~ msgstr "Dilemel an drekva"
+#~ msgid "Select-by-color threshold"
+#~ msgstr "Gwehin diuzañ dre liv"
+#~ msgid "Shadow color"
+#~ msgstr "Liv an disheol"
+#~ msgid "_Big Header..."
+#~ msgstr "Tal_benn bras..."
+#~ msgid "_Small Header..."
+#~ msgstr "Talbenn bi_han..."
+#~ msgid ""
+#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "theme"
+#~ msgstr ""
+#~ "Krouiñ ur skeudenn eus un talbenn afell e stumm un duellenn en ur arverañ "
+#~ "neuz pajenn web gimp.org"
+#~ msgid ""
+#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Krouiñ ur skeudenn eus ur skritell afell he stumm un duellenn en ur "
+#~ "arverañ neuz pajenn web gimp.org"
+#~ msgid ""
+#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr ""
+#~ "Krouiñ ur skeudenn eus un eil skritell afell he stumm un duellenn en ur "
+#~ "arverañ neuz pajenn web gimp.org"
+#~ msgid ""
+#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr ""
+#~ "Krouiñ ur skeudenn eus un teirvet skritell afell he stumm un duellenn en "
+#~ "ur arverañ neuz pajenn web gimp.org"
+#~ msgid "T_ube Sub-Button Label..."
+#~ msgstr "Skritell isafell mod 'Korzenn'..."
+#~ msgid "Tub_e Sub-Sub-Button Label..."
+#~ msgstr "Skritell is-isafell mod 'Korzenn'..."
+#~ msgid "_General Tube Labels..."
+#~ msgstr "Skritell hollek mod 'Korzenn'..."
+#~ msgid "_Tube Button Label..."
+#~ msgstr "Skritell afell mod 'Korzenn'..."
+#~ msgid "Effect size (pixels * 3)"
+#~ msgstr "Ment an efed (pikselioù * 3)"
+#~ msgid "BG opacity"
+#~ msgstr "Demerez an DV"
+#~ msgid "Create a graph of the Hue, Saturation, and Value distributions"
+#~ msgstr ""
+#~ "Krouiñ ur c'hevregad eus dasparzhadurioù an arliv, ar peurvec'hiañ hag al "
+#~ "lintr"
+#~ msgid "Draw _HSV Graph..."
+#~ msgstr "Tresañ kevregad _APL..."
+#~ msgid "End X"
+#~ msgstr "Dibenn X"
+#~ msgid "End Y"
+#~ msgstr "Dibenn Y"
+#~ msgid "From top-left to bottom-right"
+#~ msgstr "Eus an tu kleiz e lein d'an tu dehou en traoñ"
+#~ msgid "Graph scale"
+#~ msgstr "Skeul ar c'hevregad"
+#~ msgid "Start X"
+#~ msgstr "Derou X"
+#~ msgid "Start Y"
+#~ msgstr "Derou Y"
+#~ msgid "Use selection bounds instead of values below"
+#~ msgstr "Arverañ bevennoù an diuzad e-lec'h re amañ dindan"
+#~ msgid "Effect size (pixels * 5)"
+#~ msgstr "Ment an efed (pikselioù * 5)"
+#~ msgid "Create a simple sphere with a drop shadow"
+#~ msgstr "Krouiñ ur pelenn eeun gant un disheol bannet"
+#~ msgid "Lighting (degrees)"
+#~ msgstr "Lintr (derezioù)"
+#~ msgid "Radius (pixels)"
+#~ msgstr "Skin (pikselioù)"
+#~ msgid "Sphere color"
+#~ msgstr "Liv ar bellenn"
+#~ msgid "_Sphere..."
+#~ msgstr "_Pellenn..."
+#~ msgid "Burst color"
+#~ msgstr "Liv tarzhañ"
+#~ msgid "Create a logo using a starburst gradient"
+#~ msgstr "Krouiñ ur siell oc'h arverañ ilrezenn ur steredenn o tarzhañ"
+#~ msgid "Effect size (pixels * 30)"
+#~ msgstr "Ment an efed (pikselioù * 30)"
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
+#~ "shadow"
+#~ msgstr ""
+#~ "Leuniañ ar maez diuzet (pa an alfa) gant ilrezenn ur steredenn o tarzhañ "
+#~ "hag ouzhpennañ un disheol"
+#~ msgid "Starb_urst..."
+#~ msgstr "Tarzh St_ered..."
+#~ msgid "Effect size (pixels * 4)"
+#~ msgstr "Ment an efed (pikselioù * 4)"
+#~ msgid ""
+#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
+#~ "glow, and shadow"
+#~ msgstr ""
+#~ "Leuniañ ar maez diuzet (pe an alfa) gant ur wiadezh heñvel ouzh maen, ur "
+#~ "skleur nova ha disheol"
 

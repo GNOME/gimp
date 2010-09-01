@@ -85,11 +85,7 @@ gimp_2_7_SOURCES = $(libapp_sources) main.c
 
 
 EXTRA_DIST = \
-	fileicon.ico	\
-	gimp.manifest	\
-	gimp.rc.in	\
-	makefile.msc	\
-	wilber.ico
+	makefile.msc
 
 if OS_WIN32
 win32_ldflags = -mwindows $(WIN32_LARGE_ADDRESS_AWARE)
@@ -100,8 +96,9 @@ munix = -Wl,-rpath '-Wl,$$ORIGIN/../lib'
 endif
 
 if HAVE_WINDRES
-GIMPRC = gimp.rc.o
-GIMPCONSOLERC = gimp-console.rc.o
+include $(top_srcdir)/build/windows/gimprc.rule
+GIMPRC = gimp-$(GIMP_APP_VERSION).rc.o
+GIMPCONSOLERC = gimp-console-$(GIMP_APP_VERSION).rc.o
 endif
 
 AM_CPPFLAGS = \
@@ -271,16 +268,6 @@ dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 		&& rm gimprc.tmp gimprc.tmp2
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc
-
-gimp.rc.o: gimp.rc
-	$(WINDRES) --define ORIGINALFILENAME_STR="gimp-2.7$(EXEEXT)" \
-		--define INTERNALNAME_STR="gimp-2.7" \
-		gimp.rc gimp.rc.o
-
-gimp-console.rc.o: gimp.rc
-	$(WINDRES) --define ORIGINALFILENAME_STR="gimp-console-2.7$(EXEEXT)" \
-		--define INTERNALNAME_STR="gimp-console-2.7" \
-		gimp.rc gimp-console.rc.o
 
 # If git is available, always check if git-version.h should be
 # updated. If git is not available, don't do anything if git-version.h
