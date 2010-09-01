@@ -28,12 +28,15 @@
 #define GIMP_TEXT_PROP_NAME_BASELINE "rise"
 #define GIMP_TEXT_PROP_NAME_KERNING  "rise" /* FIXME */
 #define GIMP_TEXT_PROP_NAME_FONT     "font"
+#define GIMP_TEXT_PROP_NAME_COLOR    "foreground-gdk"
 
 
 gint    gimp_text_tag_get_size     (GtkTextTag *tag);
 gint    gimp_text_tag_get_baseline (GtkTextTag *tag);
 gint    gimp_text_tag_get_kerning  (GtkTextTag *tag);
 gchar * gimp_text_tag_get_font     (GtkTextTag *tag);
+void    gimp_text_tag_get_color    (GtkTextTag *tag,
+                                    GimpRGB    *color);
 
 
 #endif /* __GIMP_TEXT_TAG_H__ */

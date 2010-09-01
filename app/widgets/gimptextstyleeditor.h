@@ -50,6 +50,8 @@ struct _GimpTextStyleEditor
 
   GtkWidget      *font_entry;
 
+  GtkWidget      *color_button;
+
   GtkWidget      *clear_button;
 
   GtkWidget      *size_spinbutton;

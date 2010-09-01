@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -79,6 +80,11 @@ static void      gimp_text_style_editor_font_changed     (GimpContext         *c
                                                           GimpTextStyleEditor *editor);
 static void      gimp_text_style_editor_set_font         (GimpTextStyleEditor *editor,
                                                           GtkTextTag          *font_tag);
+
+static void      gimp_text_style_editor_color_changed    (GimpColorButton     *button,
+                                                          GimpTextStyleEditor *editor);
+static void      gimp_text_style_editor_set_color        (GimpTextStyleEditor *editor,
+                                                          GtkTextTag          *color_tag);
 
 static void      gimp_text_style_editor_tag_toggled      (GtkToggleButton     *toggle,
                                                           GimpTextStyleEditor *editor);
@@ -166,6 +172,7 @@ static void
 gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
+  GimpRGB    color;
 
   /*  upper row  */
 
@@ -193,6 +200,19 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 
   g_signal_connect (editor->size_adjustment, "value-changed",
                     G_CALLBACK (gimp_text_style_editor_size_changed),
+                    editor);
+
+  gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+  editor->color_button = gimp_color_button_new (_("Change color of selected text"),
+                                                20, 20, &color,
+                                                GIMP_COLOR_AREA_FLAT);
+
+  gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->color_button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (editor->color_button);
+
+  g_signal_connect (editor->color_button, "color-changed",
+                    G_CALLBACK (gimp_text_style_editor_color_changed),
                     editor);
 
   /*  lower row  */
@@ -568,6 +588,46 @@ gimp_text_style_editor_set_font (GimpTextStyleEditor *editor,
 }
 
 static void
+gimp_text_style_editor_color_changed (GimpColorButton     *button,
+                                      GimpTextStyleEditor *editor)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
+  GtkTextIter    start, end;
+  GimpRGB        color;
+
+  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
+    {
+      return;
+    }
+
+  gimp_color_button_get_color (button, &color);
+  gimp_text_buffer_set_color (editor->buffer, &start, &end, &color);
+}
+
+static void
+gimp_text_style_editor_set_color (GimpTextStyleEditor *editor,
+                                  GtkTextTag          *color_tag)
+{
+  GimpRGB color;
+
+  if (color_tag)
+    gimp_text_tag_get_color (color_tag, &color);
+  else
+    gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+
+  g_signal_handlers_block_by_func (editor->color_button,
+                                   gimp_text_style_editor_color_changed,
+                                   editor);
+
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (editor->color_button),
+                               &color);
+
+  g_signal_handlers_unblock_by_func (editor->color_button,
+                                     gimp_text_style_editor_color_changed,
+                                     editor);
+}
+
+static void
 gimp_text_style_editor_tag_toggled (GtkToggleButton     *toggle,
                                     GimpTextStyleEditor *editor)
 {
@@ -774,10 +834,12 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       GList       *list;
       gboolean     any_toggle_active = TRUE;
       gboolean     font_differs      = FALSE;
+      gboolean     color_differs     = FALSE;
       gboolean     size_differs      = FALSE;
       gboolean     baseline_differs  = FALSE;
       gboolean     kerning_differs   = FALSE;
       GtkTextTag  *font_tag          = NULL;
+      GtkTextTag  *color_tag         = NULL;
       GtkTextTag  *size_tag          = NULL;
       GtkTextTag  *baseline_tag      = NULL;
       GtkTextTag  *kerning_tag       = NULL;
@@ -796,6 +858,8 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       /*  and get some initial values  */
       font_tag     = gimp_text_buffer_get_iter_font (editor->buffer,
                                                      &start, NULL);
+      color_tag    = gimp_text_buffer_get_iter_color (editor->buffer,
+                                                      &start, NULL);
       size_tag     = gimp_text_buffer_get_iter_size (editor->buffer,
                                                      &start, NULL);
       baseline_tag = gimp_text_buffer_get_iter_baseline (editor->buffer,
@@ -837,6 +901,17 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
               if (tag != font_tag)
                 font_differs = TRUE;
+            }
+
+          if (! color_differs)
+            {
+              GtkTextTag *tag;
+
+              tag = gimp_text_buffer_get_iter_color (editor->buffer, &iter,
+                                                     NULL);
+
+              if (tag != color_tag)
+                color_differs = TRUE;
             }
 
           if (! size_differs)
@@ -881,6 +956,8 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
        }
 
       gimp_text_style_editor_set_font (editor, font_differs ? NULL : font_tag);
+      gimp_text_style_editor_set_color (editor,
+                                        color_differs ? NULL : color_tag);
       gimp_text_style_editor_set_size (editor, size_differs ? NULL : size_tag);
 
       if (baseline_differs)
@@ -923,6 +1000,22 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
 
       if (! list)
         gimp_text_style_editor_set_font (editor, NULL);
+
+      for (list = editor->buffer->color_tags; list; list = g_list_next (list))
+        {
+          GtkTextTag *tag = list->data;
+
+          if ((g_slist_find (tags, tag) &&
+               ! g_slist_find (tags_on, tag)) ||
+              g_slist_find (tags_off, tag))
+            {
+              gimp_text_style_editor_set_color (editor, tag);
+              break;
+            }
+        }
+
+      if (! list)
+        gimp_text_style_editor_set_color (editor, NULL);
 
       for (list = editor->buffer->size_tags; list; list = g_list_next (list))
         {

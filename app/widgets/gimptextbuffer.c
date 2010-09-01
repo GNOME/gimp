@@ -42,12 +42,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "widgets-types.h"
 
 #include "gimptextbuffer.h"
 #include "gimptextbuffer-serialize.h"
 #include "gimptexttag.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -170,6 +172,12 @@ gimp_text_buffer_finalize (GObject *object)
     {
       g_list_free (buffer->font_tags);
       buffer->font_tags = NULL;
+    }
+
+  if (buffer->color_tags)
+    {
+      g_list_free (buffer->color_tags);
+      buffer->color_tags = NULL;
     }
 
   gimp_text_buffer_clear_insert_tags (buffer);
@@ -908,12 +916,112 @@ gimp_text_buffer_set_font (GimpTextBuffer    *buffer,
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 }
 
+GtkTextTag *
+gimp_text_buffer_get_iter_color (GimpTextBuffer    *buffer,
+                                 const GtkTextIter *iter,
+                                 GimpRGB           *color)
+{
+  GList *list;
+
+  for (list = buffer->color_tags; list; list = g_list_next (list))
+    {
+      GtkTextTag *tag = list->data;
+
+      if (gtk_text_iter_has_tag (iter, tag))
+        {
+          if (color)
+            gimp_text_tag_get_color (tag, color);
+
+          return tag;
+        }
+    }
+
+  return NULL;
+}
+
+static GtkTextTag *
+gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
+                                const GimpRGB  *color)
+{
+  GList      *list;
+  GtkTextTag *tag;
+  gchar       name[256];
+  GdkColor    gdk_color;
+
+  for (list = buffer->color_tags; list; list = g_list_next (list))
+    {
+      GimpRGB tag_color;
+
+      tag = list->data;
+
+      gimp_text_tag_get_color (tag, &tag_color);
+
+      /* Do not compare the alpha channel, since it's unused */
+      if (tag_color.r == color->r &&
+          tag_color.g == color->g &&
+          tag_color.b == color->b)
+        {
+          return tag;
+        }
+    }
+
+  g_snprintf (name, sizeof (name), "color-(%0.f,%0.f,%0.f)",
+              color->r, color->g, color->b);
+
+  gimp_rgb_get_gdk_color (color, &gdk_color);
+
+  tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
+                                    name,
+                                    "foreground-gdk", &gdk_color,
+                                    "foreground-set", TRUE,
+                                    NULL);
+
+  buffer->color_tags = g_list_prepend (buffer->color_tags, tag);
+
+  return tag;
+}
+
+void
+gimp_text_buffer_set_color (GimpTextBuffer    *buffer,
+                            const GtkTextIter *start,
+                            const GtkTextIter *end,
+                            const GimpRGB     *color)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TEXT_BUFFER (buffer));
+  g_return_if_fail (start != NULL);
+  g_return_if_fail (end != NULL);
+
+  if (gtk_text_iter_equal (start, end))
+    return;
+
+  gtk_text_buffer_begin_user_action (GTK_TEXT_BUFFER (buffer));
+
+  for (list = buffer->color_tags; list; list = g_list_next (list))
+    {
+      gtk_text_buffer_remove_tag (GTK_TEXT_BUFFER (buffer), list->data,
+                                  start, end);
+    }
+
+  if (color)
+    {
+      GtkTextTag *tag = gimp_text_buffer_get_color_tag (buffer, color);
+
+      gtk_text_buffer_apply_tag (GTK_TEXT_BUFFER (buffer), tag,
+                                 start, end);
+    }
+
+  gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+}
+
 /*  Pango markup attribute names  */
 
 #define GIMP_TEXT_ATTR_NAME_SIZE     "size"
 #define GIMP_TEXT_ATTR_NAME_BASELINE "rise"
 #define GIMP_TEXT_ATTR_NAME_KERNING  "letter_spacing"
 #define GIMP_TEXT_ATTR_NAME_FONT     "font"
+#define GIMP_TEXT_ATTR_NAME_COLOR    "foreground"
 
 const gchar *
 gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
@@ -986,6 +1094,24 @@ gimp_text_buffer_tag_to_name (GimpTextBuffer  *buffer,
 
       return "span";
     }
+  else if (g_list_find (buffer->color_tags, tag))
+    {
+      if (attribute)
+        *attribute = GIMP_TEXT_ATTR_NAME_COLOR;
+
+      if (value)
+        {
+          GimpRGB color;
+          guchar  r, g, b;
+
+          gimp_text_tag_get_color (tag, &color);
+          gimp_rgb_get_uchar (&color, &r, &g, &b);
+
+          *value = g_strdup_printf ("#%02x%02x%02x", r, g, b);
+        }
+
+      return "span";
+    }
 
   return NULL;
 }
@@ -1034,6 +1160,17 @@ gimp_text_buffer_name_to_tag (GimpTextBuffer *buffer,
       else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_FONT))
         {
           return gimp_text_buffer_get_font_tag (buffer, value);
+        }
+      else if (! strcmp (attribute, GIMP_TEXT_ATTR_NAME_COLOR))
+        {
+          GimpRGB color;
+          guint   r, g, b;
+
+          sscanf (value, "#%02x%02x%02x", &r, &g, &b);
+
+          gimp_rgb_set_uchar (&color, r, g, b);
+
+          return gimp_text_buffer_get_color_tag (buffer, &color);
         }
     }
 
