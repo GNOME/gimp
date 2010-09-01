@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+imagemap_RC = imagemap.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = images
@@ -139,7 +144,8 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(imagemap)
 
 CLEANFILES = y.tab.c y.tab.h
 

@@ -12,6 +12,12 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+file_psd_load_RC = file-psd-load.rc.o
+file_psd_save_RC = file-psd-save.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -60,3 +66,11 @@ LDADD = \
 	$(IPTCDATA_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
+
+file_psd_load_LDADD = \
+	$(LDADD)		\
+	$(file_psd_load_RC) 
+
+file_psd_save_LDADD = \
+	$(LDADD)		\
+	$(file_psd_save_RC) 

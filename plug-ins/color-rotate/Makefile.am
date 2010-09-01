@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+color_rotate_RC = color-rotate.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = images
@@ -49,4 +54,5 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(color_rotate_RC)

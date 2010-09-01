@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+ifs_compose_RC = ifs-compose.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -41,4 +46,5 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(ifs_compose_RC)

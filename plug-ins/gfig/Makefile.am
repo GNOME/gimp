@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+gfig_RC = gfig.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = gfig-examples images
@@ -72,4 +77,5 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(gfig_RC)

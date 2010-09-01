@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+print_RC = print.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 INCLUDES = \
@@ -29,7 +34,8 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(print_RC)
 
 libexecdir = $(gimpplugindir)/plug-ins
 

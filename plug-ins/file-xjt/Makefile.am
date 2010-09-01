@@ -8,6 +8,11 @@ libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+file_xjt_RC = file-xjt.rc.o
+endif
+
 libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = file-xjt
@@ -37,4 +42,5 @@ LDADD = \
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(JPEG_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(file_xjt_RC)

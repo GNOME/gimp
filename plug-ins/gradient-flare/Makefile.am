@@ -12,6 +12,11 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+gradient_flare_RC = gradient-flare.rc.o
+endif
+
 AM_LDFLAGS = $(mwindows)
 
 SUBDIRS = flares
@@ -37,4 +42,5 @@ LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(gradient_flare_RC)

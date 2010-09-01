@@ -16,6 +16,11 @@ mwindows = -mwindows
 WINSOCK_LIBS = -lws2_32
 endif
 
+if HAVE_WINDRES
+include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
+script_fu_RC = script-fu.rc.o
+endif
+
 AM_CFLAGS = \
 	-DSTANDALONE=0     \
 	-DUSE_INTERFACE=1  \
@@ -74,4 +79,5 @@ LDADD = \
 	$(SOCKET_LIBS)		\
 	$(WINSOCK_LIBS)		\
 	$(RT_LIBS)		\
-	$(INTLLIBS)
+	$(INTLLIBS)		\
+	$(script_fu_RC)

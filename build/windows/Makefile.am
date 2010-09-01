@@ -1,6 +1,8 @@
 EXTRA_DIST = \
-	gimprc.rule	\
-	gimp.rc		\
-	gimp.manifest	\
-	fileicon.ico	\
+	gimprc.rule		\
+	gimprc-plug-ins.rule	\
+	gimp.rc			\
+	gimp-plug-ins.rc	\
+	gimp.manifest		\
+	fileicon.ico		\
 	wilber.ico

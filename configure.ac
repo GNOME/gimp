@@ -2075,6 +2075,7 @@ app/tests/gimpdir/patterns/Makefile
 build/Makefile
 build/windows/Makefile
 build/windows/gimp.rc
+build/windows/gimp-plug-ins.rc
 plug-ins/Makefile
 plug-ins/color-rotate/Makefile
 plug-ins/color-rotate/images/Makefile
