@@ -202,7 +202,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_size_changed),
                     editor);
 
-  gimp_rgb_set (&color, 0.0, 0.0, 0.0);
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
   editor->color_button = gimp_color_button_new (_("Change color of selected text"),
                                                 20, 20, &color,
                                                 GIMP_COLOR_AREA_FLAT);
@@ -549,20 +549,15 @@ gimp_text_style_editor_font_changed (GimpContext         *context,
                                      GimpTextStyleEditor *editor)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
-  const gchar   *name   = gimp_context_get_font_name (context);
+  GtkTextIter    start, end;
 
-  if (gtk_text_buffer_get_has_selection (buffer))
+  if (! gtk_text_buffer_get_selection_bounds (buffer, &start, &end))
     {
-      GtkTextIter start, end;
-
-      gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
-
-      gtk_text_buffer_begin_user_action (buffer);
-
-      gimp_text_buffer_set_font (editor->buffer, &start, &end, name);
-
-      gtk_text_buffer_end_user_action (buffer);
+      return;
     }
+
+  gimp_text_buffer_set_font (editor->buffer, &start, &end,
+                             gimp_context_get_font_name (context));
 }
 
 static void
