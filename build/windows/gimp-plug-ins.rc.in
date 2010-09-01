@@ -19,7 +19,7 @@
 #define VER_LEGALCOPYRIGHT_STR      "Copyright © 1995-2010"
 
 #ifndef DEBUG
-#define VER_DEBUG                   0                 
+#define VER_DEBUG                   0
 #else
 #define VER_DEBUG                   VS_FF_DEBUG
 #endif
