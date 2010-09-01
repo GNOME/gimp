@@ -28,8 +28,14 @@ void              gimp_cairo_set_source_rgb             (cairo_t       *cr,
 void              gimp_cairo_set_source_rgba            (cairo_t       *cr,
                                                          const GimpRGB *color);
 
+/*  This is a bad hack that allows to include this file from the app's
+ *  non-gui files. I haven't decided yet how to split this header and
+ *  where to move the non-GTK+ part. --Mitch
+ */
+#ifdef __GTK_H__
 gboolean          gimp_cairo_set_focus_line_pattern     (cairo_t       *cr,
                                                          GtkWidget     *widget);
+#endif
 
 cairo_pattern_t * gimp_cairo_checkerboard_create        (cairo_t       *cr,
                                                          gint           size,
@@ -93,7 +99,6 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
  *
  * Since: GIMP 2.6
  **/
-
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
   G_STMT_START {                                   \
