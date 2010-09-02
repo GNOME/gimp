@@ -85,6 +85,7 @@
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 #  define STRICT
+#  define _WIN32_WINNT 0x0601
 #  include <windows.h>
 #  undef RGB
 #  define USE_WIN32_SHM 1
@@ -236,6 +237,28 @@ gimp_main (const GimpPlugInInfo *info,
 
 #ifdef G_OS_WIN32
   gint i, j, k;
+
+  /* Reduce risks */
+  {
+    typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
+    t_SetDllDirectoryA p_SetDllDirectoryA;
+
+    p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
+					 "SetDllDirectoryA");
+    if (p_SetDllDirectoryA)
+      (*p_SetDllDirectoryA) ("");
+  }
+#ifndef _WIN64
+  {
+    typedef BOOL (WINAPI *t_SetProcessDEPPolicy) (DWORD dwFlags);
+    t_SetProcessDEPPolicy p_SetProcessDEPPolicy;
+
+    p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandle ("kernel32.dll"),
+					    "SetProcessDEPPolicy");
+    if (p_SetProcessDEPPolicy)
+      (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
+  }
+#endif
 
   /* Check for exe file name with spaces in the path having been split up
    * by buggy NT C runtime, or something. I don't know why this happens
