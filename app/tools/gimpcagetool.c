@@ -250,6 +250,12 @@ gimp_cage_tool_halt (GimpCageTool *ct)
 
   if (ct->image_map)
   {
+
+    if (ct->idle_id > 0)
+    {
+      g_source_remove(ct->idle_id);
+      ct->idle_id = 0;
+    }
     gimp_tool_control_set_preserve (tool->control, TRUE);
 
     gimp_image_map_abort (ct->image_map);
