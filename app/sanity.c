@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <cairo/cairo.h>
+#include <cairo.h>
 #include <fontconfig/fontconfig.h>
 #include <pango/pango.h>
 #include <pango/pangoft2.h>
