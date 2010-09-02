@@ -58,7 +58,6 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
 
-  /* FIXME: wrong categories and name, to appears in the gegl tool */
   operation_class->name               = "gimp:cage_coef_calc";
   operation_class->categories         = "transform";
   operation_class->description        = "GIMP cage transform coefficient calc";
@@ -94,7 +93,10 @@ gimp_operation_cage_coef_calc_prepare (GeglOperation *operation)
   GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
   GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
 
-  gegl_operation_set_format (operation, "output", babl_format_n (babl_type ("float"), 2 * config->cage_vertice_number));
+  gegl_operation_set_format (operation,
+                             "output",
+                             babl_format_n (babl_type ("float"),
+                                            2 * config->cage_vertice_number));
 }
 
 static void
@@ -248,7 +250,6 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
           if (isnan(coef[j + config->cage_vertice_number]))
           {
             coef[j + config->cage_vertice_number] = 0.0;
-            printf("NAN SRT: %f\n", SRT);
           }
 
           /* vertice coef */
