@@ -268,7 +268,7 @@ dist-hook: dist-check-gimp-console dist-dump-gimprc
 # in which case the git-version.h we ship is correct.
 git-version.h: update-git-version-header
 	@if test -d "$(top_srcdir)/.git"; then \
-	  echo "#define GIMP_GIT_VERSION \"`git log -n1 --reverse --pretty=%H`\"" > "$@.tmp"; \
+	  echo "#define GIMP_GIT_VERSION \"`git describe`\"" > "$@.tmp"; \
 	elif test ! -f "$@"; then \
 	  echo "#define GIMP_GIT_VERSION \"Unknown, shouldn't happen\"" > "$@.tmp"; \
 	fi
