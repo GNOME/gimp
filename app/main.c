@@ -64,6 +64,10 @@
 #include "version.h"
 
 #ifdef G_OS_WIN32
+/* To get PROCESS_DEP_* defined we need _WIN32_WINNT at 0x0601. We still
+ * use the API optionally only if present, though.
+ */
+#define _WIN32_WINNT 0x0601
 #include <windows.h>
 #include <conio.h>
 #endif
@@ -286,6 +290,30 @@ main (int    argc,
    */
   argc = __argc;
   argv = __argv;
+#endif
+
+#ifdef G_OS_WIN32
+  /* Reduce risks */
+  {
+    typedef BOOL (WINAPI *t_SetDllDirectoryA) (LPCSTR lpPathName);
+    t_SetDllDirectoryA p_SetDllDirectoryA;
+
+    p_SetDllDirectoryA = GetProcAddress (GetModuleHandle ("kernel32.dll"),
+					 "SetDllDirectoryA");
+    if (p_SetDllDirectoryA)
+      (*p_SetDllDirectoryA) ("");
+  }
+#ifndef _WIN64
+  {
+    typedef BOOL (WINAPI *t_SetProcessDEPPolicy) (DWORD dwFlags);
+    t_SetProcessDEPPolicy p_SetProcessDEPPolicy;
+
+    p_SetProcessDEPPolicy = GetProcAddress (GetModuleHandle ("kernel32.dll"),
+					    "SetProcessDEPPolicy");
+    if (p_SetProcessDEPPolicy)
+      (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
+  }
+#endif
 #endif
 
   g_thread_init (NULL);
