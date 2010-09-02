@@ -44,6 +44,7 @@ struct _GimpTextBuffer
   GList         *baseline_tags;
   GList         *kerning_tags;
   GList         *font_tags;
+  GList         *color_tags;
 
   gboolean       insert_tags_set;
   GList         *insert_tags;
@@ -115,6 +116,14 @@ void             gimp_text_buffer_set_font          (GimpTextBuffer    *buffer,
                                                      const GtkTextIter *start,
                                                      const GtkTextIter *end,
                                                      const gchar       *font);
+
+GtkTextTag     * gimp_text_buffer_get_iter_color    (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *iter,
+                                                     GimpRGB           *color);
+void             gimp_text_buffer_set_color         (GimpTextBuffer    *buffer,
+                                                     const GtkTextIter *start,
+                                                     const GtkTextIter *end,
+                                                     const GimpRGB     *color);
 
 const gchar    * gimp_text_buffer_tag_to_name       (GimpTextBuffer    *buffer,
                                                      GtkTextTag        *tag,

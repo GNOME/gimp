@@ -22,7 +22,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
+#include "widgets-types.h"
+
 #include "gimptexttag.h"
+#include "gimpwidgets-utils.h"
 
 
 gint
@@ -73,4 +78,19 @@ gimp_text_tag_get_font (GtkTextTag *tag)
                 NULL);
 
   return font;
+}
+
+void
+gimp_text_tag_get_color (GtkTextTag *tag,
+                         GimpRGB    *color)
+{
+  GdkColor *gdk_color;
+
+  g_object_get (tag,
+                GIMP_TEXT_PROP_NAME_COLOR, &gdk_color,
+                NULL);
+
+  gimp_rgb_set_gdk_color (color, gdk_color);
+
+  gdk_color_free (gdk_color);
 }

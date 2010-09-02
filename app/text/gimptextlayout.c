@@ -49,6 +49,7 @@ struct _GimpTextLayout
 static void           gimp_text_layout_finalize   (GObject        *object);
 
 static void           gimp_text_layout_position   (GimpTextLayout *layout);
+static void           gimp_text_layout_set_attrs  (GimpTextLayout *layout);
 
 static PangoContext * gimp_text_get_pango_context (GimpText       *text,
                                                    gdouble         xres,
@@ -189,28 +190,8 @@ gimp_text_layout_new (GimpText  *text,
                             gimp_text_layout_pixel_size (text->line_spacing,
                                                          text->unit,
                                                          yres));
-  if (fabs (text->letter_spacing) > 0.1)
-    {
-      PangoAttrList  *attrs;
-      PangoAttribute *attr;
 
-      attrs = pango_layout_get_attributes (layout->layout);
-      if (attrs)
-        pango_attr_list_ref (attrs);
-      else
-        attrs = pango_attr_list_new ();
-
-      attr = pango_attr_letter_spacing_new (text->letter_spacing * PANGO_SCALE);
-
-      attr->start_index = 0;
-      attr->end_index   = -1;
-
-      pango_attr_list_insert (attrs, attr);
-
-      pango_layout_set_attributes (layout->layout, attrs);
-      pango_attr_list_unref (attrs);
-    }
-
+  gimp_text_layout_set_attrs (layout);
   gimp_text_layout_position (layout);
 
   switch (text->box_mode)
@@ -474,6 +455,42 @@ gimp_text_layout_untransform_distance (GimpTextLayout *layout,
       if (x) *x = _x;
       if (y) *y = _y;
     }
+}
+
+static void
+gimp_text_layout_set_attrs (GimpTextLayout *layout)
+{
+  GimpText       *text = layout->text;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+
+  attrs = pango_layout_get_attributes (layout->layout);
+  if (attrs)
+    pango_attr_list_ref (attrs);
+  else
+    attrs = pango_attr_list_new ();
+
+  attr = pango_attr_foreground_new (text->color.r * 65535,
+                                    text->color.g * 65535,
+                                    text->color.b * 65535);
+
+  attr->start_index = 0;
+  attr->end_index   = -1;
+
+  pango_attr_list_insert (attrs, attr);
+
+  if (fabs (text->letter_spacing) > 0.1)
+    {
+      attr = pango_attr_letter_spacing_new (text->letter_spacing * PANGO_SCALE);
+
+      attr->start_index = 0;
+      attr->end_index   = -1;
+
+      pango_attr_list_insert (attrs, attr);
+    }
+
+  pango_layout_set_attributes (layout->layout, attrs);
+  pango_attr_list_unref (attrs);
 }
 
 static void
