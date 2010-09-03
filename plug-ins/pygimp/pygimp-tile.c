@@ -875,7 +875,7 @@ pf_ass_sub(PyGimpPixelFetcher *self, PyObject *v, PyObject *w)
 }
 
 static PyMappingMethods pf_as_mapping = {
-    (inquiry)pf_length,
+    (lenfunc)pf_length,
     (binaryfunc)pf_subscript,
     (objobjargproc)pf_ass_sub,
 };
