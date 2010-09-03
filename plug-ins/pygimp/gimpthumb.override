@@ -10,8 +10,8 @@ headers
 #include <libgimpthumb/gimpthumb.h>
 
 /* TODO: Add a header for these */
-void gimpui_register_classes(PyObject *d);
-void gimpui_add_constants(PyObject *module, const gchar *strip_prefix);
+void gimpthumb_register_classes(PyObject *d);
+void gimpthumb_add_constants(PyObject *module, const gchar *strip_prefix);
 %%
 modulename gimpthumb
 %%
