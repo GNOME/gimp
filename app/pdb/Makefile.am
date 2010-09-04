@@ -25,6 +25,8 @@ libapppdb_a_SOURCES = \
 	gimppdb-query.h			\
 	gimppdb-utils.c			\
 	gimppdb-utils.h			\
+	gimppdbcontext.c		\
+	gimppdbcontext.h		\
 	gimppdberror.c			\
 	gimppdberror.h			\
 	gimpprocedure.c			\

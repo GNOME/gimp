@@ -24,7 +24,8 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
+
+#include "pdb/gimppdbcontext.h"
 
 #include "gimpplugin.h"
 #include "gimpplugin-context.h"
@@ -47,8 +48,7 @@ gimp_plug_in_context_push (GimpPlugIn *plug_in)
   else
     parent = proc_frame->main_context;
 
-  context = gimp_context_new (plug_in->manager->gimp, "plug-in context", NULL);
-  gimp_context_copy_properties (parent, context, GIMP_CONTEXT_ALL_PROPS_MASK);
+  context = gimp_pdb_context_new (plug_in->manager->gimp, parent, FALSE);
 
   proc_frame->context_stack = g_list_prepend (proc_frame->context_stack,
                                               context);

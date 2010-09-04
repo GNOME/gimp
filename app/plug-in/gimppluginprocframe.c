@@ -25,9 +25,9 @@
 
 #include "plug-in-types.h"
 
-#include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
 
+#include "pdb/gimppdbcontext.h"
 #include "pdb/gimppdberror.h"
 
 #include "gimpplugin.h"
@@ -47,7 +47,7 @@ gimp_plug_in_proc_frame_new (GimpContext         *context,
 {
   GimpPlugInProcFrame *proc_frame;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
 
@@ -67,7 +67,7 @@ gimp_plug_in_proc_frame_init (GimpPlugInProcFrame *proc_frame,
                               GimpPlugInProcedure *procedure)
 {
   g_return_if_fail (proc_frame != NULL);
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_PDB_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (procedure == NULL ||
                     GIMP_IS_PLUG_IN_PROCEDURE (procedure));

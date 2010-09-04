@@ -34,8 +34,9 @@
 #include "composite/gimp-composite.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpprogress.h"
+
+#include "pdb/gimppdbcontext.h"
 
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
@@ -61,7 +62,7 @@ gimp_plug_in_manager_call_query (GimpPlugInManager *manager,
   GimpPlugIn *plug_in;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_PDB_CONTEXT (context));
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
@@ -101,7 +102,7 @@ gimp_plug_in_manager_call_init (GimpPlugInManager *manager,
   GimpPlugIn *plug_in;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_PDB_CONTEXT (context));
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
@@ -146,7 +147,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   GimpPlugIn  *plug_in;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
@@ -292,7 +293,7 @@ gimp_plug_in_manager_call_run_temp (GimpPlugInManager      *manager,
   GimpPlugIn  *plug_in;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (procedure), NULL);
   g_return_val_if_fail (args != NULL, NULL);
