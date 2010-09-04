@@ -18,6 +18,7 @@ file_fits_RC = file-fits.rc.o
 endif
 
 AM_LDFLAGS = $(mwindows)
+AM_CFLAGS = -fno-strict-aliasing
 
 libexecdir = $(gimpplugindir)/plug-ins
 

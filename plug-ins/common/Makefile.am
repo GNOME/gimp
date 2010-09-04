@@ -1073,6 +1073,8 @@ file_desktop_link_LDADD = \
 	$(INTLLIBS)		\
 	$(file_desktop_link_RC)
 
+file_dicom_CFLAGS = -fno-strict-aliasing
+
 file_dicom_SOURCES = \
 	file-dicom.c
 
