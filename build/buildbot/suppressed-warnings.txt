@@ -22,3 +22,8 @@
 # Who cares
 :    .*gimp.desktop: warning: value .* contains .* more than once.*
 :    ^libtool: install: warning:.*
+
+# Annoying plug-ins/imagemap/imagemap warnings in generated files, not
+# easyily fixed properly
+:    <stdout>.* warning: .*yyunput.* defined but not used
+:    <stdout>.* warning: .*input.* defined but not used
