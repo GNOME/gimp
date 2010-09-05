@@ -68,8 +68,11 @@ EXPORTS
 	gimp_clone_default
 	gimp_color_balance
 	gimp_colorize
+	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
+	gimp_context_get_feather
+	gimp_context_get_feather_radius
 	gimp_context_get_font
 	gimp_context_get_foreground
 	gimp_context_get_gradient
@@ -81,9 +84,12 @@ EXPORTS
 	gimp_context_list_paint_methods
 	gimp_context_pop
 	gimp_context_push
+	gimp_context_set_antialias
 	gimp_context_set_background
 	gimp_context_set_brush
 	gimp_context_set_default_colors
+	gimp_context_set_feather
+	gimp_context_set_feather_radius
 	gimp_context_set_font
 	gimp_context_set_foreground
 	gimp_context_set_gradient

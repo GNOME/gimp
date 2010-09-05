@@ -705,15 +705,173 @@ CODE
     );
 }
 
+sub context_get_antialias {
+    $blurb = 'Get the antialias setting.';
+
+    $help = <<'HELP';
+This procedure returns the antialias setting.
+HELP
+
+    &mitch_pdb_misc(2010, 2.8);
+
+    @outargs = (
+        { name => 'antialias', type => 'boolean',
+          desc => 'The antialias setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "antialias", &antialias,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_antialias {
+    $blurb = 'Set the antialias setting.';
+
+    $help = <<'HELP';
+This procedure modifies the antialias setting. This settings affects the
+following procedures: gimp-item-to-selection.
+HELP
+
+    &mitch_pdb_misc(2010, 2.8);
+
+    @inargs = (
+        { name => 'antialias', type => 'boolean',
+          desc => 'The antialias setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "antialias", antialias,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_feather {
+    $blurb = 'Get the feather setting.';
+
+    $help = <<'HELP';
+This procedure returns the feather setting.
+HELP
+
+    &mitch_pdb_misc(2010, 2.8);
+
+    @outargs = (
+        { name => 'feather', type => 'boolean',
+          desc => 'The feather setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "feather", &feather,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_feather {
+    $blurb = 'Set the feather setting.';
+
+    $help = <<'HELP';
+This procedure modifies the feather setting. This settings affects the
+following procedures: gimp-item-to-selection.
+HELP
+
+    &mitch_pdb_misc(2010, 2.8);
+
+    @inargs = (
+        { name => 'feather', type => 'boolean',
+          desc => 'The feather setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "feather", feather,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_feather_radius {
+    $blurb = 'Get the feather radius setting.';
+
+    $help = <<'HELP';
+This procedure returns the feather radius setting.
+HELP
+
+    &mitch_pdb_misc(2010, 2.8);
+
+    @outargs = (
+        { name => 'feather_radius_x', type => '0 <= float <= 1000', void_ret => 1,
+          desc => 'The horizontal feather radius' },
+        { name => 'feather_radius_y', type => '0 <= float <= 1000',
+          desc => 'The vertical feather radius' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "feather-radius-x", &feather_radius_x,
+                "feather-radius-y", &feather_radius_y,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_feather_radius {
+    $blurb = 'Set the feather radius setting.';
+
+    $help = <<'HELP';
+This procedure modifies the feather radius setting. This settings affects
+the following procedures: gimp-item-to-selection.
+HELP
+
+    &mitch_pdb_misc(2010, 2.8);
+
+    @inargs = (
+        { name => 'feather_radius_x', type => '0 <= float <= 1000',
+          desc => 'The horizontal feather radius' },
+        { name => 'feather_radius_y', type => '0 <= float <= 1000',
+          desc => 'The vertical feather radius' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "feather-radius-x", feather_radius_x,
+                "feather-radius-y", feather_radius_y,
+                NULL);
+}
+CODE
+    );
+}
 
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
-              "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimpplugin-context.h"
               "plug-in/gimppluginmanager.h"
-              "gimppdb-utils.h");
+              "gimppdb-utils.h"
+              "gimppdbcontext.h");
 
 @procs = qw(context_push context_pop
             context_list_paint_methods
@@ -728,7 +886,10 @@ CODE
             context_get_pattern context_set_pattern
             context_get_gradient context_set_gradient
             context_get_palette context_set_palette
-            context_get_font context_set_font);
+            context_get_font context_set_font
+            context_get_antialias context_set_antialias
+            context_get_feather context_set_feather
+            context_get_feather_radius context_set_feather_radius);
 
 %exports = (app => [@procs], lib => [@procs]);
 

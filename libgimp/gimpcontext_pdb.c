@@ -865,3 +865,203 @@ gimp_context_set_font (const gchar *name)
 
   return success;
 }
+
+/**
+ * gimp_context_get_antialias:
+ *
+ * Get the antialias setting.
+ *
+ * This procedure returns the antialias setting.
+ *
+ * Returns: The antialias setting.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_get_antialias (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean antialias = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-antialias",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    antialias = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return antialias;
+}
+
+/**
+ * gimp_context_set_antialias:
+ * @antialias: The antialias setting.
+ *
+ * Set the antialias setting.
+ *
+ * This procedure modifies the antialias setting. This settings affects
+ * the following procedures: gimp-item-to-selection.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_antialias (gboolean antialias)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-antialias",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_feather:
+ *
+ * Get the feather setting.
+ *
+ * This procedure returns the feather setting.
+ *
+ * Returns: The feather setting.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_get_feather (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean feather = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-feather",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    feather = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return feather;
+}
+
+/**
+ * gimp_context_set_feather:
+ * @feather: The feather setting.
+ *
+ * Set the feather setting.
+ *
+ * This procedure modifies the feather setting. This settings affects
+ * the following procedures: gimp-item-to-selection.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_feather (gboolean feather)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-feather",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_feather_radius:
+ * @feather_radius_x: The horizontal feather radius.
+ * @feather_radius_y: The vertical feather radius.
+ *
+ * Get the feather radius setting.
+ *
+ * This procedure returns the feather radius setting.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_get_feather_radius (gdouble *feather_radius_x,
+                                 gdouble *feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-feather-radius",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  *feather_radius_x = 0.0;
+  *feather_radius_y = 0.0;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *feather_radius_x = return_vals[1].data.d_float;
+      *feather_radius_y = return_vals[2].data.d_float;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_feather_radius:
+ * @feather_radius_x: The horizontal feather radius.
+ * @feather_radius_y: The vertical feather radius.
+ *
+ * Set the feather radius setting.
+ *
+ * This procedure modifies the feather radius setting. This settings
+ * affects the following procedures: gimp-item-to-selection.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_feather_radius (gdouble feather_radius_x,
+                                 gdouble feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-feather-radius",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

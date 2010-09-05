@@ -54,6 +54,14 @@ gchar*               gimp_context_get_palette        (void);
 gboolean             gimp_context_set_palette        (const gchar            *name);
 gchar*               gimp_context_get_font           (void);
 gboolean             gimp_context_set_font           (const gchar            *name);
+gboolean             gimp_context_get_antialias      (void);
+gboolean             gimp_context_set_antialias      (gboolean                antialias);
+gboolean             gimp_context_get_feather        (void);
+gboolean             gimp_context_set_feather        (gboolean                feather);
+gboolean             gimp_context_get_feather_radius (gdouble                *feather_radius_x,
+                                                      gdouble                *feather_radius_y);
+gboolean             gimp_context_set_feather_radius (gdouble                 feather_radius_x,
+                                                      gdouble                 feather_radius_y);
 
 
 G_END_DECLS

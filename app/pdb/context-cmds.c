@@ -27,7 +27,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpparamspecs.h"
 #include "plug-in/gimpplugin-context.h"
@@ -36,6 +35,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -627,6 +627,148 @@ context_set_font_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
+static GValueArray *
+context_get_antialias_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
+{
+  GValueArray *return_vals;
+  gboolean antialias = FALSE;
+
+  g_object_get (context,
+                "antialias", &antialias,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (&return_vals->values[1], antialias);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_antialias_invoker (GimpProcedure      *procedure,
+                               Gimp               *gimp,
+                               GimpContext        *context,
+                               GimpProgress       *progress,
+                               const GValueArray  *args,
+                               GError            **error)
+{
+  gboolean success = TRUE;
+  gboolean antialias;
+
+  antialias = g_value_get_boolean (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "antialias", antialias,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_feather_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
+{
+  GValueArray *return_vals;
+  gboolean feather = FALSE;
+
+  g_object_get (context,
+                "feather", &feather,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (&return_vals->values[1], feather);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_feather_invoker (GimpProcedure      *procedure,
+                             Gimp               *gimp,
+                             GimpContext        *context,
+                             GimpProgress       *progress,
+                             const GValueArray  *args,
+                             GError            **error)
+{
+  gboolean success = TRUE;
+  gboolean feather;
+
+  feather = g_value_get_boolean (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "feather", feather,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_feather_radius_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
+{
+  GValueArray *return_vals;
+  gdouble feather_radius_x = 0.0;
+  gdouble feather_radius_y = 0.0;
+
+  g_object_get (context,
+                "feather-radius-x", &feather_radius_x,
+                "feather-radius-y", &feather_radius_y,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+
+  g_value_set_double (&return_vals->values[1], feather_radius_x);
+  g_value_set_double (&return_vals->values[2], feather_radius_y);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_feather_radius_invoker (GimpProcedure      *procedure,
+                                    Gimp               *gimp,
+                                    GimpContext        *context,
+                                    GimpProgress       *progress,
+                                    const GValueArray  *args,
+                                    GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
+
+  feather_radius_x = g_value_get_double (&args->values[0]);
+  feather_radius_y = g_value_get_double (&args->values[1]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "feather-radius-x", feather_radius_x,
+                    "feather-radius-y", feather_radius_y,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_context_procs (GimpPDB *pdb)
 {
@@ -1203,6 +1345,156 @@ register_context_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-antialias
+   */
+  procedure = gimp_procedure_new (context_get_antialias_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-antialias");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-antialias",
+                                     "Get the antialias setting.",
+                                     "This procedure returns the antialias setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("antialias",
+                                                         "antialias",
+                                                         "The antialias setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-antialias
+   */
+  procedure = gimp_procedure_new (context_set_antialias_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-antialias");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-antialias",
+                                     "Set the antialias setting.",
+                                     "This procedure modifies the antialias setting. This settings affects the following procedures: gimp-item-to-selection.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("antialias",
+                                                     "antialias",
+                                                     "The antialias setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-feather
+   */
+  procedure = gimp_procedure_new (context_get_feather_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-feather");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-feather",
+                                     "Get the feather setting.",
+                                     "This procedure returns the feather setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("feather",
+                                                         "feather",
+                                                         "The feather setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-feather
+   */
+  procedure = gimp_procedure_new (context_set_feather_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-feather");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-feather",
+                                     "Set the feather setting.",
+                                     "This procedure modifies the feather setting. This settings affects the following procedures: gimp-item-to-selection.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("feather",
+                                                     "feather",
+                                                     "The feather setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-feather-radius
+   */
+  procedure = gimp_procedure_new (context_get_feather_radius_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-feather-radius");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-feather-radius",
+                                     "Get the feather radius setting.",
+                                     "This procedure returns the feather radius setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("feather-radius-x",
+                                                        "feather radius x",
+                                                        "The horizontal feather radius",
+                                                        0, 1000, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("feather-radius-y",
+                                                        "feather radius y",
+                                                        "The vertical feather radius",
+                                                        0, 1000, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-feather-radius
+   */
+  procedure = gimp_procedure_new (context_set_feather_radius_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-feather-radius");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-feather-radius",
+                                     "Set the feather radius setting.",
+                                     "This procedure modifies the feather radius setting. This settings affects the following procedures: gimp-item-to-selection.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-x",
+                                                    "feather radius x",
+                                                    "The horizontal feather radius",
+                                                    0, 1000, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("feather-radius-y",
+                                                    "feather radius y",
+                                                    "The vertical feather radius",
+                                                    0, 1000, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }
