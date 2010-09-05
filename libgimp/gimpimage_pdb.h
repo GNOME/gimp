@@ -84,27 +84,33 @@ gboolean                 gimp_image_pick_color               (gint32            
 gint32                   gimp_image_pick_correlate_layer     (gint32                  image_ID,
                                                               gint                    x,
                                                               gint                    y);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_image_add_layer                (gint32                  image_ID,
                                                               gint32                  layer_ID,
                                                               gint                    position);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_image_insert_layer             (gint32                  image_ID,
                                                               gint32                  layer_ID,
                                                               gint32                  parent_ID,
                                                               gint                    position);
 gboolean                 gimp_image_remove_layer             (gint32                  image_ID,
                                                               gint32                  layer_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_image_add_channel              (gint32                  image_ID,
                                                               gint32                  channel_ID,
                                                               gint                    position);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_image_insert_channel           (gint32                  image_ID,
                                                               gint32                  channel_ID,
                                                               gint32                  parent_ID,
                                                               gint                    position);
 gboolean                 gimp_image_remove_channel           (gint32                  image_ID,
                                                               gint32                  channel_ID);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_image_add_vectors              (gint32                  image_ID,
                                                               gint32                  vectors_ID,
                                                               gint                    position);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_image_insert_vectors           (gint32                  image_ID,
                                                               gint32                  vectors_ID,
                                                               gint32                  parent_ID,

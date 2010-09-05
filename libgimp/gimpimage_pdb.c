@@ -974,12 +974,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
  * @layer_ID: The layer.
  * @position: The layer position.
  *
- * Add the specified layer to the image.
- *
- * This procedure adds the specified layer to the image at the given
- * position. If the position is specified as -1, then the layer is
- * inserted above the active layer. The layer type must be compatible
- * with the image base type.
+ * Deprecated: Use gimp_image_insert_layer() instead.
  *
  * Returns: TRUE on success.
  */
@@ -1089,12 +1084,7 @@ gimp_image_remove_layer (gint32 image_ID,
  * @channel_ID: The channel.
  * @position: The channel position.
  *
- * Add the specified channel to the image.
- *
- * This procedure adds the specified channel to the image at the given
- * position. If the position is specified as -1, then the channel is
- * inserted above the active channel or, if no channel is active, at
- * the top of the channel stack.
+ * Deprecated: Use gimp_image_insert_channel() instead.
  *
  * Returns: TRUE on success.
  */
@@ -1201,11 +1191,7 @@ gimp_image_remove_channel (gint32 image_ID,
  * @vectors_ID: The vectors object.
  * @position: The vectors objects position.
  *
- * Add the specified vectors object to the image.
- *
- * This procedure adds the specified vectors object to the image at the
- * given position. If the position is specified as -1, then the vectors
- * object is inserted at the top of the vectors stack.
+ * Deprecated: Use gimp_image_insert_vectors() instead.
  *
  * Returns: TRUE on success.
  */

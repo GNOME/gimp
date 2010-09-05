@@ -1162,15 +1162,7 @@ CODE
 }
 
 sub image_add_layer {
-    $blurb = 'Add the specified layer to the image.';
-
-    $help = <<'HELP';
-This procedure adds the specified layer to the image at the given position.
-If the position is specified as -1, then the layer is inserted above the
-active layer. The layer type must be compatible with the image base type.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-insert-layer');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1188,7 +1180,6 @@ HELP
 				   GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
 				   error))
     {
-      /* FIXME tree */
       success = gimp_image_add_layer (image, layer,
                                       NULL, MAX (position, -1), TRUE);
     }
@@ -1404,15 +1395,7 @@ CODE
 }
 
 sub image_add_channel {
-    $blurb = 'Add the specified channel to the image.';
-
-    $help = <<'HELP';
-This procedure adds the specified channel to the image at the given position.
-If the position is specified as -1, then the channel is inserted above the
-active channel or, if no channel is active, at the top of the channel stack.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-insert-channel');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1428,7 +1411,6 @@ HELP
 {
   if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
     {
-      /* FIXME tree */
       success = gimp_image_add_channel (image, channel,
                                         NULL, MAX (position, -1), TRUE);
     }
@@ -1515,15 +1497,7 @@ CODE
 }
 
 sub image_add_vectors {
-    $blurb = 'Add the specified vectors object to the image.';
-
-    $help = <<'HELP';
-This procedure adds the specified vectors object to the image at the given
-position. If the position is specified as -1, then the vectors object is
-inserted at the top of the vectors stack.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-insert-vectors');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1538,7 +1512,6 @@ HELP
 {
   if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
     {
-      /* FIXME tree */
       success = gimp_image_add_vectors (image, vectors,
                                         NULL, MAX (position, -1), TRUE);
     }

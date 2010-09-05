@@ -916,7 +916,6 @@ image_add_layer_invoker (GimpProcedure      *procedure,
                                        GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
                                        error))
         {
-          /* FIXME tree */
           success = gimp_image_add_layer (image, layer,
                                           NULL, MAX (position, -1), TRUE);
         }
@@ -1023,7 +1022,6 @@ image_add_channel_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
         {
-          /* FIXME tree */
           success = gimp_image_add_channel (image, channel,
                                             NULL, MAX (position, -1), TRUE);
         }
@@ -1127,7 +1125,6 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
         {
-          /* FIXME tree */
           success = gimp_image_add_vectors (image, vectors,
                                             NULL, MAX (position, -1), TRUE);
         }
@@ -3711,12 +3708,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-layer",
-                                     "Add the specified layer to the image.",
-                                     "This procedure adds the specified layer to the image at the given position. If the position is specified as -1, then the layer is inserted above the active layer. The layer type must be compatible with the image base type.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
+                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-insert-layer");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3816,12 +3813,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-channel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-channel",
-                                     "Add the specified channel to the image.",
-                                     "This procedure adds the specified channel to the image at the given position. If the position is specified as -1, then the channel is inserted above the active channel or, if no channel is active, at the top of the channel stack.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
+                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-insert-channel");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3921,12 +3918,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-vectors");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-vectors",
-                                     "Add the specified vectors object to the image.",
-                                     "This procedure adds the specified vectors object to the image at the given position. If the position is specified as -1, then the vectors object is inserted at the top of the vectors stack.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-insert-vectors");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
