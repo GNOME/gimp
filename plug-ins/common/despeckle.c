@@ -51,98 +51,31 @@
 
 /* List that stores pixels falling in to the same luma bucket */
 #define MAX_LIST_ELEMS SQR(2 * MAX_RADIUS + 1)
-typedef struct 
+
+typedef struct
 {
-  guchar* elems[MAX_LIST_ELEMS];
-  gint start;
-  gint count;
+  const guchar *elems[MAX_LIST_ELEMS];
+  gint          start;
+  gint          count;
 } PixelsList;
 
-static inline 
-void list_add_elem (PixelsList* list, 
-    guchar* elem) 
+typedef struct
 {
-  gint pos = list->start + list->count++;
-  list->elems[pos >= MAX_LIST_ELEMS ? pos - MAX_LIST_ELEMS : pos] = elem;
-}
-
-static inline 
-void list_del_elem (PixelsList* list) 
-{
-  list->count--;
-  list->start++;
-  if (list->start >= MAX_LIST_ELEMS)
-    list->start = 0;
-}
-
-static inline guchar* 
-list_get_random_elem (PixelsList* list) 
-{
-  gint pos = list->start + rand () % list->count;
-  if (pos >= MAX_LIST_ELEMS)
-    return list->elems[pos - MAX_LIST_ELEMS];
-  return list->elems[pos];
-}
-
-typedef struct 
-{
-  gint elems[256]; /* Number of pixels that fall into each luma bucket */
+  gint       elems[256]; /* Number of pixels that fall into each luma bucket */
   PixelsList origs[256]; /* Original pixels */
-  gint xmin, ymin, xmax, ymax; /* Source rect */
+  gint       xmin;
+  gint       ymin;
+  gint       xmax;
+  gint       ymax; /* Source rect */
 } DespeckleHistogram;
 
 /* Number of pixels in actual histogram falling into each category */
-static gint hist0; /* Less than min treshold */
-static gint hist255; /* More than max treshold */
-static gint histrest; /* From min to max */
-DespeckleHistogram histogram;
+static gint                hist0;    /* Less than min treshold */
+static gint                hist255;  /* More than max treshold */
+static gint                histrest; /* From min to max        */
 
-static inline void 
-histogram_add (DespeckleHistogram* hist, 
-    guchar val, 
-    guchar* orig) 
-{
-  hist->elems[val]++;
-  list_add_elem (&hist->origs[val], orig);
-}
+static DespeckleHistogram  histogram;
 
-static inline void 
-histogram_remove (DespeckleHistogram* hist, 
-    guchar val) 
-{
-  hist->elems[val]--;
-  list_del_elem (&hist->origs[val]);
-}
-
-static inline void 
-histogram_clean (DespeckleHistogram* hist) 
-{
-  gint i = 0;
-  for (i = 0; i < 256; i++) 
-    {
-      hist->elems[i] = 0;
-      hist->origs[i].count = 0;
-    }
-}
-
-static inline guchar* 
-histogram_get_median (DespeckleHistogram* hist, 
-    guchar* _default) 
-{
-  gint count = histrest;
-  gint i;
-  gint sum = 0;
-
-  if (!count) 
-    return _default;
-
-  count = (count + 1) / 2;
-  i = 0;
-  while ((sum += hist->elems[i]) < count) 
-    i++;
-
-  return list_get_random_elem (&hist->origs[i]);
-}
 
 /*
  * Local functions...
@@ -699,16 +632,97 @@ dialog_recursive_callback (GtkWidget *widget,
   gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
 
-static inline void 
-add_val (DespeckleHistogram* hist, 
-         guchar* src, 
-         gint width, 
-         gint bpp, 
-         gint x, 
-         gint y) 
+
+
+static inline void
+list_add_elem (PixelsList   *list,
+               const guchar *elem)
 {
-  gint pos = (x + (y * width)) * bpp;
-  gint value = pixel_luminance (src + pos, bpp);
+  const gint pos = list->start + list->count++;
+
+  list->elems[pos >= MAX_LIST_ELEMS ? pos - MAX_LIST_ELEMS : pos] = elem;
+}
+
+static inline void
+list_del_elem (PixelsList* list)
+{
+  list->count--;
+  list->start++;
+
+  if (list->start >= MAX_LIST_ELEMS)
+    list->start = 0;
+}
+
+static inline const guchar *
+list_get_random_elem (PixelsList *list)
+{
+  const gint pos = list->start + rand () % list->count;
+
+  if (pos >= MAX_LIST_ELEMS)
+    return list->elems[pos - MAX_LIST_ELEMS];
+
+  return list->elems[pos];
+}
+
+static inline void
+histogram_add (DespeckleHistogram *hist,
+               guchar              val,
+               const guchar       *orig)
+{
+  hist->elems[val]++;
+  list_add_elem (&hist->origs[val], orig);
+}
+
+static inline void
+histogram_remove (DespeckleHistogram *hist,
+                  guchar              val)
+{
+  hist->elems[val]--;
+  list_del_elem (&hist->origs[val]);
+}
+
+static inline void
+histogram_clean (DespeckleHistogram *hist)
+{
+  gint i;
+
+  for (i = 0; i < 256; i++)
+    {
+      hist->elems[i] = 0;
+      hist->origs[i].count = 0;
+    }
+}
+
+static inline const guchar *
+histogram_get_median (DespeckleHistogram *hist,
+                      const guchar       *_default)
+{
+  gint count = histrest;
+  gint i;
+  gint sum = 0;
+
+  if (! count)
+    return _default;
+
+  count = (count + 1) / 2;
+
+  i = 0;
+  while ((sum += hist->elems[i]) < count)
+    i++;
+
+  return list_get_random_elem (&hist->origs[i]);
+}
+
+static inline void
+add_val (DespeckleHistogram *hist,
+         const guchar       *src,
+         gint                width,
+         gint                bpp,
+         gint                x,
+         gint                y)
+{
+  const gint pos   = (x + (y * width)) * bpp;
+  const gint value = pixel_luminance (src + pos, bpp);
 
   if (value > black_level && value < white_level)
   {
@@ -725,16 +739,16 @@ add_val (DespeckleHistogram* hist,
   }
 }
 
-static inline void 
-del_val (DespeckleHistogram* hist, 
-         guchar* src, 
-         gint width, 
-         gint bpp, 
-         gint x, 
-         gint y) 
+static inline void
+del_val (DespeckleHistogram *hist,
+         const guchar       *src,
+         gint                width,
+         gint                bpp,
+         gint                x,
+         gint                y)
 {
-  gint pos = (x + (y * width)) * bpp;
-  gint value = pixel_luminance (src + pos, bpp);
+  const gint pos   = (x + (y * width)) * bpp;
+  const gint value = pixel_luminance (src + pos, bpp);
 
   if (value > black_level && value < white_level)
   {
@@ -751,74 +765,79 @@ del_val (DespeckleHistogram* hist,
   }
 }
 
-static inline void 
-add_vals (DespeckleHistogram* hist, 
-          guchar* src, 
-          gint width, 
-          gint bpp, 
-          gint xmin, 
-          gint ymin, 
-          gint xmax, 
-          gint ymax) 
+static inline void
+add_vals (DespeckleHistogram *hist,
+          const guchar       *src,
+          gint                width,
+          gint                bpp,
+          gint                xmin,
+          gint                ymin,
+          gint                xmax,
+          gint                ymax)
 {
   gint x;
   gint y;
-  if (xmin > xmax) return;
 
-  for (y = ymin; y <= ymax; y++) 
+  if (xmin > xmax)
+    return;
+
+  for (y = ymin; y <= ymax; y++)
     {
-      for (x = xmin; x <= xmax; x++) 
+      for (x = xmin; x <= xmax; x++)
         {
           add_val (hist, src, width, bpp, x, y);
         }
     }
 }
 
-static inline void 
-del_vals (DespeckleHistogram* hist, 
-          guchar* src, 
-          gint width, 
-          gint bpp, 
-          gint xmin, 
-          gint ymin, 
-          gint xmax, 
-          gint ymax) 
+static inline void
+del_vals (DespeckleHistogram *hist,
+          const guchar       *src,
+          gint                width,
+          gint                bpp,
+          gint                xmin,
+          gint                ymin,
+          gint                xmax,
+          gint                ymax)
 {
   gint x;
   gint y;
-  if (xmin > xmax) return;
 
-  for (y = ymin; y <= ymax; y++) 
+  if (xmin > xmax)
+    return;
+
+  for (y = ymin; y <= ymax; y++)
     {
-      for (x = xmin; x <= xmax; x++) 
+      for (x = xmin; x <= xmax; x++)
         {
           del_val (hist, src, width, bpp, x, y);
         }
     }
 }
 
-static inline void 
-update_histogram (DespeckleHistogram* hist, 
-                  guchar *src, 
-                  gint width, 
-                  gint bpp,
-                  gint xmin, 
-                  gint ymin, 
-                  gint xmax, 
-                  gint ymax) 
+static inline void
+update_histogram (DespeckleHistogram *hist,
+                  const guchar       *src,
+                  gint                width,
+                  gint                bpp,
+                  gint                xmin,
+                  gint                ymin,
+                  gint                xmax,
+                  gint                ymax)
 {
-  /* assuming that radious of the box can change no more than one pixel in each call */
+  /* assuming that radious of the box can change no more than one
+     pixel in each call */
   /* assuming that box is moving either right or down */
 
-  del_vals (hist, src, width, bpp, hist->xmin, hist->ymin, xmin - 1, hist->ymax);
-//  del_vals (hist, src, width, bpp, xmax + 1, hist->ymin, hist->xmax, hist->ymax); // only when moving down (for x for y)
+  del_vals (hist,
+            src, width, bpp, hist->xmin, hist->ymin, xmin - 1, hist->ymax);
   del_vals (hist, src, width, bpp, xmin, hist->ymin, xmax, ymin - 1);
-  del_vals (hist, src, width, bpp, xmin, ymax + 1, xmax, hist->ymax); // only when moving right (for y for x)
+  del_vals (hist, src, width, bpp, xmin, ymax + 1, xmax, hist->ymax);
 
-//  add_vals (hist, src, width, bpp, xmin, ymin, hist->xmin - 1, ymax); // only when moving down (for x for y)
   add_vals (hist, src, width, bpp, hist->xmax + 1, ymin, xmax, ymax);
-  add_vals (hist, src, width, bpp, xmin, ymin, hist->xmax, hist->ymin - 1); // only when moving right (for y for x)
-  add_vals (hist, src, width, bpp, hist->xmin, hist->ymax + 1, hist->xmax, ymax);
+  add_vals (hist, src, width, bpp, xmin, ymin, hist->xmax, hist->ymin - 1);
+  add_vals (hist,
+            src, width, bpp, hist->xmin, hist->ymax + 1, hist->xmax, ymax);
 
   hist->xmin = xmin;
   hist->ymin = ymin;
@@ -869,22 +888,26 @@ despeckle_median (guchar   *src,
       histogram.ymin = ymin;
       histogram.xmax = xmax;
       histogram.ymax = ymax;
-      add_vals (&histogram, src, width, bpp, histogram.xmin, histogram.ymin, histogram.xmax, histogram.ymax);
+      add_vals (&histogram,
+                src, width, bpp,
+                histogram.xmin, histogram.ymin, histogram.xmax, histogram.ymax);
 
       for (x = 0; x < width; x++)
         {
           const guchar *pixel;
+
           ymin = MAX (0, y - radius); /* update ymin, ymax when radius changed (FILTER_ADAPTIVE) */
           ymax = MIN (height - 1, y + radius);
           xmin = MAX (0, x - radius);
           xmax = MIN (width - 1, x + radius);
 
-          update_histogram (&histogram, src, width, bpp, xmin, ymin, xmax, ymax);
+          update_histogram (&histogram,
+                            src, width, bpp, xmin, ymin, xmax, ymax);
 
           pos = (x + (y * width)) * bpp;
           pixel = histogram_get_median (&histogram, src + pos);
 
-          if (filter_type & FILTER_RECURSIVE) 
+          if (filter_type & FILTER_RECURSIVE)
             {
               del_val (&histogram, src, width, bpp, x, y);
               pixel_copy (src + pos, pixel, bpp);
