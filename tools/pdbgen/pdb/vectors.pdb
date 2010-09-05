@@ -43,7 +43,7 @@ sub vectors_new {
 
     $help = <<'HELP';
 Creates a new empty vectors object. The vectors object needs to be added to
-the image using gimp_image_add_vectors().
+the image using gimp_image_insert_vectors().
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -76,7 +76,7 @@ sub vectors_new_from_text_layer {
 
     $help = <<'HELP';
 Creates a new vectors object from a text layer. The vectors object needs to
-be added to the image using gimp_image_add_vectors().
+be added to the image using gimp_image_insert_vectors().
 HELP
 
     &marcus_pdb_misc('2008', '2.6');

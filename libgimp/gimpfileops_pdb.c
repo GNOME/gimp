@@ -88,7 +88,8 @@ gimp_file_load (GimpRunMode  run_mode,
  *
  * This procedure behaves like the file-load procedure but opens the
  * specified image as a layer for an existing image. The returned layer
- * needs to be added to the existing image with gimp_image_add_layer().
+ * needs to be added to the existing image with
+ * gimp_image_insert_layer().
  *
  * Returns: The layer created when loading the image file.
  *
@@ -129,7 +130,8 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  *
  * This procedure behaves like the file-load procedure but opens the
  * specified image as layers for an existing image. The returned layers
- * needs to be added to the existing image with gimp_image_add_layer().
+ * needs to be added to the existing image with
+ * gimp_image_insert_layer().
  *
  * Returns: The list of loaded layers.
  *

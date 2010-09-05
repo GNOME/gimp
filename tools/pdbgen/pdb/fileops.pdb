@@ -116,7 +116,7 @@ sub file_load_layer {
     $help = <<'HELP';
 This procedure behaves like the file-load procedure but opens the specified
 image as a layer for an existing image. The returned layer needs to be
-added to the existing image with gimp_image_add_layer().
+added to the existing image with gimp_image_insert_layer().
 HELP
 
     &neo_pdb_misc('2005', '2.4');
@@ -171,7 +171,7 @@ sub file_load_layers {
     $help = <<'HELP';
 This procedure behaves like the file-load procedure but opens the specified
 image as layers for an existing image. The returned layers needs to be
-added to the existing image with gimp_image_add_layer().
+added to the existing image with gimp_image_insert_layer().
 HELP
 
     &mitch_pdb_misc('2006', '2.4');

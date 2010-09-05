@@ -52,7 +52,7 @@
  * however, can be modified with the appropriate
  * gimp_text_layer_set_*() procedures. The new layer still needs to be
  * added to the image, as this is not automatic. Add the new layer
- * using gimp_image_add_layer().
+ * using gimp_image_insert_layer().
  *
  * Returns: The new text layer.
  *

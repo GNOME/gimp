@@ -1210,7 +1210,7 @@ register_text_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-text-layer-new",
                                      "Creates a new text layer.",
-                                     "This procedure creates a new text layer. The arguments are kept as simple as necessary for the normal case. All text attributes, however, can be modified with the appropriate gimp_text_layer_set_*() procedures. The new layer still needs to be added to the image, as this is not automatic. Add the new layer using 'gimp-image-add-layer'.",
+                                     "This procedure creates a new text layer. The arguments are kept as simple as necessary for the normal case. All text attributes, however, can be modified with the appropriate gimp_text_layer_set_*() procedures. The new layer still needs to be added to the image, as this is not automatic. Add the new layer using 'gimp-image-insert-layer'.",
                                      "Marcus Heese <heese@cip.ifi.lmu.de>",
                                      "Marcus Heese",
                                      "2008",

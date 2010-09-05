@@ -77,7 +77,7 @@ gimp_vectors_is_valid (gint32 vectors_ID)
  * Creates a new empty vectors object.
  *
  * Creates a new empty vectors object. The vectors object needs to be
- * added to the image using gimp_image_add_vectors().
+ * added to the image using gimp_image_insert_vectors().
  *
  * Returns: the current vector object, 0 if no vector exists in the image.
  *
@@ -113,7 +113,7 @@ gimp_vectors_new (gint32       image_ID,
  * Creates a new vectors object from a text layer.
  *
  * Creates a new vectors object from a text layer. The vectors object
- * needs to be added to the image using gimp_image_add_vectors().
+ * needs to be added to the image using gimp_image_insert_vectors().
  *
  * Returns: The vectors of the text layer.
  *

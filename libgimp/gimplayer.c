@@ -40,7 +40,7 @@
  * This procedure creates a new layer with the specified width, height,
  * and type. Name, opacity, and mode are also supplied parameters. The
  * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the 'gimp_image_add_layer'
+ * automatic. Add the new layer with the gimp_image_insert_layer()
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *

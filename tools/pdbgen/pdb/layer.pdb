@@ -20,11 +20,12 @@ sub layer_new {
     $blurb = 'Create a new layer.';
 
     $help = <<'HELP';
-This procedure creates a new layer with the specified width, height, and type.
-Name, opacity, and mode are also supplied parameters. The new layer still needs
-to be added to the image, as this is not automatic. Add the new layer with the
-gimp_image_add_layer() command. Other attributes such as layer mask modes, and
-offsets should be set with explicit procedure calls.
+This procedure creates a new layer with the specified width, height,
+and type.  Name, opacity, and mode are also supplied parameters. The
+new layer still needs to be added to the image, as this is not
+automatic. Add the new layer with the gimp_image_insert_layer()
+command. Other attributes such as layer mask modes, and offsets should
+be set with explicit procedure calls.
 HELP
 
     &std_pdb_misc;
@@ -68,11 +69,11 @@ sub layer_new_from_visible {
     $blurb = 'Create a new layer from what is visible in an image.';
 
     $help = <<'HELP';
-This procedure creates a new layer from what is visible in the given image.
-The new layer still needs to be added to the destination image, as this is
-not automatic. Add the new layer with the gimp_image_add_layer() command.
-Other attributes such as layer mask modes, and offsets should be set with
-explicit procedure calls.
+This procedure creates a new layer from what is visible in the given
+image.  The new layer still needs to be added to the destination
+image, as this is not automatic. Add the new layer with the
+gimp_image_insert_layer() command.  Other attributes such as layer
+mask modes, and offsets should be set with explicit procedure calls.
 HELP
 
     &neo_pdb_misc('2008', '2.6');
@@ -112,10 +113,11 @@ sub layer_new_from_drawable {
     $blurb = 'Create a new layer by copying an existing drawable.';
 
     $help = <<'HELP';
-This procedure creates a new layer as a copy of the specified drawable.  The
-new layer still needs to be added to the image, as this is not automatic.  Add
-the new layer with the gimp_image_add_layer() command. Other attributes such
-as layer mask modes, and offsets should be set with explicit procedure calls.
+This procedure creates a new layer as a copy of the specified
+drawable.  The new layer still needs to be added to the image, as this
+is not automatic.  Add the new layer with the
+gimp_image_insert_layer() command. Other attributes such as layer mask
+modes, and offsets should be set with explicit procedure calls.
 HELP
 
     &std_pdb_misc;
