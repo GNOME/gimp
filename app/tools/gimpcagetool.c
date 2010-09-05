@@ -100,6 +100,14 @@ static void         gimp_cage_tool_oper_update        (GimpTool              *to
                                                        GdkModifierType        state,
                                                        gboolean               proximity,
                                                        GimpDisplay           *display);
+
+static gint         gimp_cage_tool_is_on_handle       (GimpCageConfig  *gcc,
+                                                       GimpDrawTool    *draw_tool,
+                                                       GimpDisplay     *display,
+                                                       GimpCageMode     mode,
+                                                       gdouble          x,
+                                                       gdouble          y,
+                                                       gint             handle_size);
 static void         gimp_cage_tool_draw               (GimpDrawTool          *draw_tool);
 static void         gimp_cage_tool_switch_to_deform   (GimpCageTool          *ct);
 static void         gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
@@ -115,16 +123,16 @@ G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_cage_tool_parent_class
 
-#define HANDLE_SIZE             14
+#define HANDLE_SIZE             25
 
 void
 gimp_cage_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_CAGE_TOOL, //Tool type
-                GIMP_TYPE_CAGE_OPTIONS, //Tool options type
-                gimp_cage_options_gui, //Tool opions gui
-                0, //context_props
+  (* callback) (GIMP_TYPE_CAGE_TOOL, /* Tool type */
+                GIMP_TYPE_CAGE_OPTIONS, /*Tool options type*/
+                gimp_cage_options_gui, /*Tool opions gui*/
+                0, /*context_props*/
                 "gimp-cage-tool",
                 _("Cage Transform"),
                 _("Cage Transform: Deform a selection with a cage"),
@@ -328,11 +336,13 @@ gimp_cage_tool_oper_update  (GimpTool         *tool,
   gint             active_handle = -1;
 
   if (config)
-    active_handle = gimp_cage_config_is_on_handle (config,
-                                                   options->cage_mode,
-                                                   coords->x,
-                                                   coords->y,
-                                                   HANDLE_SIZE);
+    active_handle = gimp_cage_tool_is_on_handle (config,
+                                                 draw_tool,
+                                                 display,
+                                                 options->cage_mode,
+                                                 coords->x,
+                                                 coords->y,
+                                                 HANDLE_SIZE );
   if (!ct->cage_complete || (active_handle > -1))
     {
       gimp_draw_tool_pause (draw_tool);
@@ -371,11 +381,13 @@ gimp_cage_tool_button_press (GimpTool              *tool,
 
   if (ct->handle_moved < 0)
   {
-    ct->handle_moved = gimp_cage_config_is_on_handle  (config,
-                                                       options->cage_mode,
-                                                       coords->x,
-                                                       coords->y,
-                                                       HANDLE_SIZE);
+    ct->handle_moved = gimp_cage_tool_is_on_handle  (config,
+                                                     GIMP_DRAW_TOOL(ct),
+                                                     display,
+                                                     options->cage_mode,
+                                                     coords->x,
+                                                     coords->y,
+                                                     HANDLE_SIZE);
     if (ct->handle_moved > 0 && ct->idle_id > 0)
       {
         g_source_remove(ct->idle_id);
@@ -422,7 +434,6 @@ gimp_cage_tool_button_release (GimpTool              *tool,
   {
 
     GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
-    GimpImage *image = gimp_display_get_image (tool->display);
     GimpItem         *item  = GIMP_ITEM (tool->drawable);
 
     gint              x, y;
@@ -553,11 +564,13 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                               FALSE);
   }
 
-  on_handle = gimp_cage_config_is_on_handle (config,
-                                             options->cage_mode,
-                                             ct->cursor_position.x,
-                                             ct->cursor_position.y,
-                                             HANDLE_SIZE);
+  on_handle = gimp_cage_tool_is_on_handle (config,
+                                           draw_tool,
+                                           draw_tool->display,
+                                           options->cage_mode,
+                                           ct->cursor_position.x,
+                                           ct->cursor_position.y,
+                                           HANDLE_SIZE);
 
   for(i = 0; i < config->cage_vertice_number; i++)
   {
@@ -576,6 +589,54 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                 HANDLE_SIZE, HANDLE_SIZE,
                                 GTK_ANCHOR_CENTER, FALSE);
   }
+}
+
+static gint
+gimp_cage_tool_is_on_handle (GimpCageConfig  *gcc,
+                             GimpDrawTool    *draw_tool,
+                             GimpDisplay     *display,
+                             GimpCageMode     mode,
+                             gdouble          x,
+                             gdouble          y,
+                             gint             handle_size)
+{
+  gint i;
+  gdouble vert_x;
+  gdouble vert_y;
+  gdouble dist = G_MAXDOUBLE;
+
+  g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), -1);
+
+  if (gcc->cage_vertice_number == 0)
+    return -1;
+
+  for (i = 0; i < gcc->cage_vertice_number; i++)
+  {
+    if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    {
+      vert_x = gcc->cage_vertices[i].x;
+      vert_y = gcc->cage_vertices[i].y;
+    }
+    else
+    {
+      vert_x = gcc->cage_vertices_d[i].x;
+      vert_y = gcc->cage_vertices_d[i].y;
+    }
+
+    dist = gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (draw_tool),
+                                                display,
+                                                x,
+                                                y,
+                                                vert_x,
+                                                vert_y);
+
+    if (dist <= (handle_size * handle_size))
+    {
+      return i;
+    }
+  }
+
+  return -1;
 }
 
 static void

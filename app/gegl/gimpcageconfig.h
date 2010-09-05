@@ -76,23 +76,7 @@ void          gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
  */
 void          gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
 
-/**
- * gimp_cage_config_is_on_handle:
- * @gcc: the cage config
- * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
- * @x: x value to check
- * @y: y value to check
- * @handle_size: size of the handle, in pixels
- * 
- * Check if a given point is on a handle of the cage, and return his number if yes.
- * 
- * Returns: the number of the handle if the point is on a handle, or -1 if not.
- */
-gint          gimp_cage_config_is_on_handle           (GimpCageConfig  *gcc,
-                                                       GimpCageMode     mode,
-                                                       gdouble          x,
-                                                       gdouble          y,
-                                                       gint             handle_size);
+
 
 /**
  * gimp_cage_config_move_cage_point:

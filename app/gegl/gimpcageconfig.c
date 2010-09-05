@@ -202,43 +202,7 @@ gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
   gimp_cage_config_compute_edge_normal (gcc);
 }
 
-gint
-gimp_cage_config_is_on_handle (GimpCageConfig  *gcc,
-                               GimpCageMode     mode,
-                               gdouble          x,
-                               gdouble          y,
-                               gint             handle_size)
-{
-  gint i;
-  gdouble vert_x, vert_y;
 
-  g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), -1);
-
-  if (gcc->cage_vertice_number == 0)
-    return -1;
-
-  for (i = 0; i < gcc->cage_vertice_number; i++)
-  {
-    if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
-    {
-      vert_x = gcc->cage_vertices[i].x;
-      vert_y = gcc->cage_vertices[i].y;
-    }
-    else
-    {
-      vert_x = gcc->cage_vertices_d[i].x;
-      vert_y = gcc->cage_vertices_d[i].y;
-    }
-
-    if (x < vert_x + handle_size / 2 && x > vert_x -handle_size / 2 &&
-        y < vert_y + handle_size / 2 && y > vert_y -handle_size / 2)
-    {
-      return i;
-    }
-  }
-
-  return -1;
-}
                                               
 void
 gimp_cage_config_move_cage_point  (GimpCageConfig  *gcc,
