@@ -123,7 +123,7 @@ gimp_image_list (gint *num_images)
  * displayed, or subsequent calls to gimp_display_new() with this image
  * as an argument will fail. Layers can be created using the
  * gimp_layer_new() commands. They can be added to an image using the
- * gimp_image_add_layer() command.
+ * gimp_image_insert_layer() command.
  *
  * Returns: The ID of the newly created image.
  */
@@ -1007,6 +1007,47 @@ gimp_image_add_layer (gint32 image_ID,
 }
 
 /**
+ * gimp_image_insert_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ * @parent_ID: The parent layer.
+ * @position: The layer position.
+ *
+ * Add the specified layer to the image.
+ *
+ * This procedure adds the specified layer to the image at the given
+ * position. If the position is specified as -1 and the parent is
+ * specified as NULL, then the layer is inserted above the active
+ * layer. The layer type must be compatible with the image base type.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_insert_layer (gint32 image_ID,
+                         gint32 layer_ID,
+                         gint32 parent_ID,
+                         gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-insert-layer",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_LAYER, parent_ID,
+                                    GIMP_PDB_INT32, position,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_remove_layer:
  * @image_ID: The image.
  * @layer_ID: The layer.
@@ -1081,6 +1122,47 @@ gimp_image_add_channel (gint32 image_ID,
 }
 
 /**
+ * gimp_image_insert_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ * @parent_ID: The parent channel.
+ * @position: The channel position.
+ *
+ * Add the specified channel to the image.
+ *
+ * This procedure adds the specified channel to the image at the given
+ * position. If the position is specified as -1 and the parent is
+ * specified as NULL, then the channel is inserted above the active
+ * channel.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_insert_channel (gint32 image_ID,
+                           gint32 channel_ID,
+                           gint32 parent_ID,
+                           gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-insert-channel",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_CHANNEL, channel_ID,
+                                    GIMP_PDB_CHANNEL, parent_ID,
+                                    GIMP_PDB_INT32, position,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_remove_channel:
  * @image_ID: The image.
  * @channel_ID: The channel.
@@ -1140,6 +1222,47 @@ gimp_image_add_vectors (gint32 image_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_INT32, position,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_insert_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors.
+ * @parent_ID: The parent vectors.
+ * @position: The vectors position.
+ *
+ * Add the specified vectors to the image.
+ *
+ * This procedure adds the specified vectors to the image at the given
+ * position. If the position is specified as -1 and the parent is
+ * specified as NULL, then the vectors is inserted above the active
+ * vectors.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_insert_vectors (gint32 image_ID,
+                           gint32 vectors_ID,
+                           gint32 parent_ID,
+                           gint   position)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-insert-vectors",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_VECTORS, parent_ID,
                                     GIMP_PDB_INT32, position,
                                     GIMP_PDB_END);
 

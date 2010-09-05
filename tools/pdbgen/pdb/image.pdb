@@ -91,7 +91,7 @@ type. A layer should be created and added before this image is
 displayed, or subsequent calls to gimp_display_new() with this image
 as an argument will fail. Layers can be created using the
 gimp_layer_new() commands. They can be added to an image using the
-gimp_image_add_layer() command.
+gimp_image_insert_layer() command.
 HELP
 
     &std_pdb_misc;
@@ -1200,6 +1200,53 @@ HELP
 CODE
 }
 
+sub image_insert_layer {
+    $blurb = 'Add the specified layer to the image.';
+
+    $help = <<'HELP';
+This procedure adds the specified layer to the image at the given
+position.  If the position is specified as -1 and the parent is
+specified as NULL, then the layer is inserted above the active
+layer. The layer type must be compatible with the image base type.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'parent', type => 'layer',
+          desc => 'The parent layer' },
+	{ name => 'position', type => 'int32',
+	  desc => 'The layer position' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
+      gimp_pdb_image_is_base_type (image,
+				   GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+				   error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+    {
+      if (position == -1 && parent == NULL)
+        parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      success = gimp_image_add_layer (image, layer,
+                                      parent, MAX (position, -1), TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+}
+
 sub image_remove_layer {
     $blurb = 'Remove the specified layer from the image.';
 
@@ -1394,6 +1441,50 @@ CODE
     );
 }
 
+sub image_insert_channel {
+    $blurb = 'Add the specified channel to the image.';
+
+    $help = <<'HELP';
+This procedure adds the specified channel to the image at the given
+position.  If the position is specified as -1 and the parent is
+specified as NULL, then the channel is inserted above the active
+channel.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
+	{ name => 'parent', type => 'channel',
+          desc => 'The parent channel' },
+	{ name => 'position', type => 'int32',
+	  desc => 'The channel position' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+    {
+      if (position == -1 && parent == NULL)
+        parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      success = gimp_image_add_channel (image, channel,
+                                        parent, MAX (position, -1), TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+}
+
 sub image_remove_channel {
     $blurb = 'Remove the specified channel from the image.';
 
@@ -1450,6 +1541,50 @@ HELP
       /* FIXME tree */
       success = gimp_image_add_vectors (image, vectors,
                                         NULL, MAX (position, -1), TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+}
+
+sub image_insert_vectors {
+    $blurb = 'Add the specified vectors to the image.';
+
+    $help = <<'HELP';
+This procedure adds the specified vectors to the image at the given
+position.  If the position is specified as -1 and the parent is
+specified as NULL, then the vectors is inserted above the active
+vectors.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors' },
+	{ name => 'parent', type => 'vectors',
+          desc => 'The parent vectors' },
+	{ name => 'position', type => 'int32',
+	  desc => 'The vectors position' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+    {
+      if (position == -1 && parent == NULL)
+        parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      success = gimp_image_add_vectors (image, vectors,
+                                        parent, MAX (position, -1), TRUE);
     }
   else
     {
@@ -2816,9 +2951,9 @@ CODE
             image_floating_sel_attached_to
             image_pick_color
             image_pick_correlate_layer
-            image_add_layer image_remove_layer
-            image_add_channel image_remove_channel
-            image_add_vectors image_remove_vectors
+            image_add_layer image_insert_layer image_remove_layer
+            image_add_channel image_insert_channel image_remove_channel
+            image_add_vectors image_insert_vectors image_remove_vectors
             image_get_item_position
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
@@ -2852,7 +2987,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..52,55..83]]);
+%exports = (app => [@procs], lib => [@procs[0..55,58..86]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

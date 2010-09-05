@@ -361,6 +361,9 @@ EXPORTS
 	gimp_image_grid_set_spacing
 	gimp_image_grid_set_style
 	gimp_image_height
+	gimp_image_insert_channel
+	gimp_image_insert_layer
+	gimp_image_insert_vectors
 	gimp_image_is_dirty
 	gimp_image_is_valid
 	gimp_image_list
