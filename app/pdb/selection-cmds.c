@@ -937,12 +937,12 @@ register_selection_procs (GimpPDB *pdb)
                                "gimp-selection-layer-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-layer-alpha",
-                                     "Transfer the specified layer's alpha channel to the selection mask.",
-                                     "The alpha channel information is used to create a selection mask such that for any pixel in the image defined in the specified layer, that layer pixel's alpha value is transferred to the selection mask. If the layer is undefined at a particular image pixel, the associated selection mask value is set to 0. A layer without an alpha channel is considered opaque.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-to-selection");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -960,12 +960,12 @@ register_selection_procs (GimpPDB *pdb)
                                "gimp-selection-load");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-load",
-                                     "Transfer the specified channel to the selection mask.",
-                                     "This procedure loads the specified channel into the selection mask.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-to-selection");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel_id ("channel",
                                                            "channel",
@@ -1012,12 +1012,12 @@ register_selection_procs (GimpPDB *pdb)
                                "gimp-selection-combine");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-combine",
-                                     "Combines the specified channel with the selection mask.",
-                                     "This procedure combines the specified channel into the selection mask.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-item-to-selection");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel_id ("channel",
                                                            "channel",

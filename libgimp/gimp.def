@@ -440,6 +440,7 @@ EXPORTS
 	gimp_item_set_name
 	gimp_item_set_tattoo
 	gimp_item_set_visible
+	gimp_item_to_selection
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
 	gimp_layer_copy

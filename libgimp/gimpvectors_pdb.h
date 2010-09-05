@@ -133,12 +133,14 @@ gint                  gimp_vectors_bezier_stroke_new_ellipse (gint32            
                                                               gdouble                 radius_x,
                                                               gdouble                 radius_y,
                                                               gdouble                 angle);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean              gimp_vectors_to_selection              (gint32                  vectors_ID,
                                                               GimpChannelOps          operation,
                                                               gboolean                antialias,
                                                               gboolean                feather,
                                                               gdouble                 feather_radius_x,
                                                               gdouble                 feather_radius_y);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean              gimp_vectors_import_from_file          (gint32                  image_ID,
                                                               const gchar            *filename,
                                                               gboolean                merge,

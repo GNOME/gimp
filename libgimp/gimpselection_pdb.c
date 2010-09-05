@@ -23,6 +23,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_SELECTION_PDB_H__
+#include "gimpselection_pdb.h"
 
 
 /**
@@ -503,14 +506,7 @@ gimp_selection_shrink (gint32 image_ID,
  * gimp_selection_layer_alpha:
  * @layer_ID: Layer with alpha.
  *
- * Transfer the specified layer's alpha channel to the selection mask.
- *
- * The alpha channel information is used to create a selection mask
- * such that for any pixel in the image defined in the specified layer,
- * that layer pixel's alpha value is transferred to the selection mask.
- * If the layer is undefined at a particular image pixel, the
- * associated selection mask value is set to 0. A layer without an
- * alpha channel is considered opaque.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
  */
@@ -537,9 +533,7 @@ gimp_selection_layer_alpha (gint32 layer_ID)
  * gimp_selection_load:
  * @channel_ID: The channel.
  *
- * Transfer the specified channel to the selection mask.
- *
- * This procedure loads the specified channel into the selection mask.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
  */
@@ -599,10 +593,7 @@ gimp_selection_save (gint32 image_ID)
  * @channel_ID: The channel.
  * @operation: The selection operation.
  *
- * Combines the specified channel with the selection mask.
- *
- * This procedure combines the specified channel into the selection
- * mask.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
  */

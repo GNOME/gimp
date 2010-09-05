@@ -1268,10 +1268,7 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
  * @feather_radius_x: Feather radius x.
  * @feather_radius_y: Feather radius y.
  *
- * Transforms the specified vectors object into a selection
- *
- * This procedure renders the desired vectors object into the current
- * selection of the image the vectors object belongs to.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
  *

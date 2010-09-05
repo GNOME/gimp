@@ -769,3 +769,40 @@ gimp_item_set_tattoo (gint32 item_ID,
 
   return success;
 }
+
+/**
+ * gimp_item_to_selection:
+ * @item_ID: The item to render to the selection.
+ * @operation: The desired operation with current selection.
+ *
+ * Transforms the specified item into a selection
+ *
+ * This procedure renders the item's outline into the current selection
+ * of the image the item belongs to. What exactly the item's outline is
+ * depends on the item type: for layers, it's the layer's alpha
+ * channel, for vectors the vector's shape.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_item_to_selection (gint32         item_ID,
+                        GimpChannelOps operation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-item-to-selection",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

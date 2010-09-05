@@ -1255,13 +1255,7 @@ CODE
 }
 
 sub vectors_to_selection {
-    $blurb = 'Transforms the specified vectors object into a selection';
-
-    $help = <<'HELP';
-This procedure renders the desired vectors object into the current selection
-of the image the vectors object belongs to.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-to-selection');
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (

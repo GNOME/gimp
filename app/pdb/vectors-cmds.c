@@ -2787,12 +2787,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-to-selection");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-to-selection",
-                                     "Transforms the specified vectors object into a selection",
-                                     "This procedure renders the desired vectors object into the current selection of the image the vectors object belongs to.",
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
-                                     NULL);
+                                     "gimp-item-to-selection");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
