@@ -78,12 +78,12 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_X,
                                    "feather-radius-x", NULL,
-                                   0.0, 100.0, 10.0,
+                                   0.0, 1000.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS_Y,
                                    "feather-radius-y", NULL,
-                                   0.0, 100.0, 10.0,
+                                   0.0, 1000.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
