@@ -915,7 +915,7 @@ lcms_image_apply_profile (gint32                    image,
 
   if (saved_selection != -1)
     {
-      gimp_selection_load (saved_selection);
+      gimp_item_to_selection (saved_selection, GIMP_CHANNEL_OP_REPLACE);
       gimp_image_remove_channel (image, saved_selection);
     }
 
