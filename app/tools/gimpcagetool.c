@@ -737,7 +737,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
   {
     GeglNode *gegl = gegl_node_new ();
 
-#if FALSE
+#ifdef DEBUG_CAGE
     /* debug coeficient */
     GeglNode *coef, *debug, *output;
 
@@ -763,88 +763,51 @@ gimp_cage_tool_process (GimpCageTool *ct,
     gegl_node_connect_to (debug, "output",
                           output, "input");
 #else
-    #if TRUE
-      /* reverse transform */
-      GeglNode *coef, *cage, *render, *input, *output;
+    /* reverse transform */
+    GeglNode *coef, *cage, *render, *input, *output;
 
-      input  = gegl_node_new_child (gegl,
-                                    "operation",    "gimp:tilemanager-source",
-                                    "tile-manager", gimp_drawable_get_tiles (drawable),
-                                    "linear",       TRUE,
-                                    NULL);
-
-      cage = gegl_node_new_child (gegl,
-                                  "operation", "gimp:cage_transform",
-                                  "config", ct->config,
-                                  "fill_plain_color", options->fill_plain_color,
+    input  = gegl_node_new_child (gegl,
+                                  "operation",    "gimp:tilemanager-source",
+                                  "tile-manager", gimp_drawable_get_tiles (drawable),
+                                  "linear",       TRUE,
                                   NULL);
 
-      coef = gegl_node_new_child (gegl,
-                                  "operation", "gegl:buffer-source",
-                                  "buffer",    ct->coef,
+    cage = gegl_node_new_child (gegl,
+                                "operation", "gimp:cage_transform",
+                                "config", ct->config,
+                                "fill_plain_color", options->fill_plain_color,
+                                NULL);
+
+    coef = gegl_node_new_child (gegl,
+                                "operation", "gegl:buffer-source",
+                                "buffer",    ct->coef,
+                                NULL);
+
+    render = gegl_node_new_child (gegl,
+                                  "operation", "gegl:render_mapping",
                                   NULL);
 
-      render = gegl_node_new_child (gegl,
-                                    "operation", "gegl:render_mapping",
-                                    NULL);
-
-      new_tiles = gimp_drawable_get_shadow_tiles (drawable);
-      output = gegl_node_new_child (gegl,
-                                    "operation",    "gimp:tilemanager-sink",
-                                    "tile-manager", new_tiles,
-                                    "linear",       TRUE,
-                                    NULL);
-
-      gegl_node_connect_to (input, "output",
-                            cage, "input");
-
-      gegl_node_connect_to (input, "output",
-                            render, "input");
-
-      gegl_node_connect_to (coef, "output",
-                            cage, "aux");
-
-      gegl_node_connect_to (cage, "output",
-                            render, "aux");
-
-      gegl_node_connect_to (render, "output",
-                            output, "input");
-    #else
-      /* forward transform */
-      GeglNode *coef, *cage, *input, *output;
-
-      input  = gegl_node_new_child (gegl,
-                                    "operation",    "gimp:tilemanager-source",
-                                    "tile-manager", gimp_drawable_get_tiles (drawable),
-                                    "linear",       TRUE,
-                                    NULL);
-
-      cage = gegl_node_new_child (gegl,
-                                  "operation", "gimp:cage_preview",
-                                  "config", ct->config,
+    new_tiles = gimp_drawable_get_shadow_tiles (drawable);
+    output = gegl_node_new_child (gegl,
+                                  "operation",    "gimp:tilemanager-sink",
+                                  "tile-manager", new_tiles,
+                                  "linear",       TRUE,
                                   NULL);
 
-      coef = gegl_node_new_child (gegl,
-                                  "operation", "gegl:buffer-source",
-                                  "buffer",    ct->coef,
-                                  NULL);
+    gegl_node_connect_to (input, "output",
+                          cage, "input");
 
-      new_tiles = gimp_drawable_get_shadow_tiles (drawable);
-      output = gegl_node_new_child (gegl,
-                                    "operation",    "gimp:tilemanager-sink",
-                                    "tile-manager", new_tiles,
-                                    "linear",       TRUE,
-                                    NULL);
+    gegl_node_connect_to (input, "output",
+                          render, "input");
 
-      gegl_node_connect_to (input, "output",
-                            cage, "input");
+    gegl_node_connect_to (coef, "output",
+                          cage, "aux");
 
-      gegl_node_connect_to (coef, "output",
-                            cage, "aux");
+    gegl_node_connect_to (cage, "output",
+                          render, "aux");
 
-      gegl_node_connect_to (cage, "output",
-                            output, "input");
-    #endif
+    gegl_node_connect_to (render, "output",
+                          output, "input");
 #endif
 
 
