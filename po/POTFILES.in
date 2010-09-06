@@ -270,6 +270,7 @@ app/pdb/floating-sel-cmds.c
 app/pdb/gimppdb-query.c
 app/pdb/gimppdb-utils.c
 app/pdb/gimppdb.c
+app/pdb/gimppdbcontext.c
 app/pdb/gimpprocedure.c
 app/pdb/guides-cmds.c
 app/pdb/image-cmds.c
