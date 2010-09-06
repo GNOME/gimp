@@ -631,8 +631,12 @@ vectors_to_selection(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
                                      &feather_radius_x, &feather_radius_y))
         return NULL;
 
-    gimp_vectors_to_selection(self->ID, operation, antialias, feather,
-                              feather_radius_x, feather_radius_y);
+    gimp_context_push();
+    gimp_context_set_antialias(antialias);
+    gimp_context_set_feather(feather);
+    gimp_context_set_feather_radius(feather_radius_x, feather_radius_y);
+    gimp_item_to_selection(self->ID, operation);
+    gimp_context_pop();
 
     Py_INCREF(Py_None);
     return Py_None;
