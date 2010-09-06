@@ -1153,9 +1153,10 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
  * with an alpha channel, in which case the alpha channel is set to
  * transparent. If the drawable has no alpha channel, it is filled to
  * white. No fill leaves the drawable's contents undefined. This
- * procedure is unlike the bucket fill tool because it fills regardless
- * of a selection. Its main purpose is to fill a newly created drawable
- * before adding it to the image. This operation cannot be undone.
+ * procedure is unlike gimp_edit_fill() or the bucket fill tool because
+ * it fills regardless of a selection. Its main purpose is to fill a
+ * newly created drawable before adding it to the image. This operation
+ * cannot be undone.
  *
  * Returns: TRUE on success.
  */
