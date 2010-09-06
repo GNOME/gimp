@@ -576,7 +576,7 @@ layer_from_pixbuf (gint32        image,
                                              progress_start,
                                              progress_start + progress_scale);
 
-  gimp_image_add_layer (image, layer, position);
+  gimp_image_insert_layer (image, layer, -1, position);
 
   return layer;
 }

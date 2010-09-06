@@ -467,7 +467,7 @@ load_image (const gchar  *filename,
       gimp_drawable_detach (drawable);
     }
 
-  gimp_image_add_layer (image_ID, layer_ID, 0);
+  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
 #ifdef HAVE_EXIF
   jpeg_exif_rotate_query (image_ID, orientation);
@@ -814,7 +814,7 @@ load_thumbnail_image (const gchar  *filename,
    * corrupt-data warnings occurred (test whether
    * jerr.num_warnings is nonzero).
    */
-  gimp_image_add_layer (image_ID, layer_ID, 0);
+  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
 
   /* NOW to get the dimensions of the actual image to return the

@@ -644,7 +644,7 @@ do_optimizations (GimpRunMode run_mode,
                                     100.0,
                                     GIMP_NORMAL_MODE);
 
-      gimp_image_add_layer (new_image_id, new_layer_id, 0);
+      gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
 
       drawable = gimp_drawable_get (new_layer_id);
 
@@ -1068,7 +1068,7 @@ do_optimizations (GimpRunMode run_mode,
                                                GIMP_NORMAL_MODE);
               g_free (newlayer_name);
 
-              gimp_image_add_layer (new_image_id, new_layer_id, 0);
+              gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
 
               drawable = gimp_drawable_get (new_layer_id);
 

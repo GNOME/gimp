@@ -586,7 +586,7 @@ load_image (const gchar  *filename,
                              (pnminfo->np >= 3 ?
                               GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE),
                              100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image_ID, layer_ID, 0);
+  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,

@@ -850,7 +850,7 @@ load_image (const gchar  *filename,
 
   layer = gimp_layer_new (image, _("Background"), info->width, info->height,
                           layer_type, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_insert_layer (image, layer, -1, 0);
 
   /*
    * Find out everything we can about the image resolution

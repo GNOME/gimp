@@ -1155,7 +1155,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   layer_id = gimp_layer_new(image_id, _("Background"),
 			    ROUND4(width), height,
 			    layerType, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer(image_id, layer_id, 0);
+  gimp_image_insert_layer(image_id, layer_id, -1, 0);
 
   /* Get our drawable */
   drawable = gimp_drawable_get(layer_id);

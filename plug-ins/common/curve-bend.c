@@ -2692,7 +2692,7 @@ p_create_pv_image (GimpDrawable *src_drawable,
     gimp_layer_add_alpha(*layer_id);
   }
 
-  gimp_image_add_layer(l_new_image_id, *layer_id, 0);
+  gimp_image_insert_layer(l_new_image_id, *layer_id, -1, 0);
 
   dst_drawable = gimp_drawable_get (*layer_id);
   p_init_gdrw(&l_src_gdrw, src_drawable, FALSE, FALSE);
@@ -2769,7 +2769,7 @@ p_add_layer (gint       width,
     }
 
   /* add the copied layer to the temp. working image */
-  gimp_image_add_layer (image_id, l_new_layer_id, stack_position);
+  gimp_image_insert_layer (image_id, l_new_layer_id, -1, stack_position);
 
   /* copy visiblity state */
   gimp_item_set_visible (l_new_layer_id, l_visible);
@@ -3209,7 +3209,7 @@ p_main_bend (BenderDialog *cd,
     * (for the case of undo GIMP must know,
     *  that the layer was part of the image)
     */
-   gimp_image_add_layer (l_image_id, l_tmp_layer_id, 0);
+   gimp_image_insert_layer (l_image_id, l_tmp_layer_id, -1, 0);
    gimp_item_set_visible (l_tmp_layer_id, FALSE);
    gimp_item_set_name (l_tmp_layer_id, "curve_bend_dummylayer");
 

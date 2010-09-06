@@ -1037,7 +1037,7 @@ load_image (const gchar  *filename,
 
   /* Tell GIMP to display the image.
    */
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_insert_layer (image, layer, -1, 0);
   gimp_drawable_flush (drawable);
 
   return image;

@@ -257,7 +257,7 @@ smooth_palette (GimpDrawable *drawable,
                               config.width, config.height,
                               gimp_drawable_type (drawable->drawable_id),
                               100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (new_image_id, *layer_id, 0);
+  gimp_image_insert_layer (new_image_id, *layer_id, -1, 0);
   new_layer = gimp_drawable_get (*layer_id);
 
   psize = config.width;

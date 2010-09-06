@@ -739,7 +739,9 @@ do_curl_effect (gint32 drawable_id)
 
   curl_layer_id = curl_layer->drawable_id;
 
-  gimp_image_add_layer (image_id, curl_layer->drawable_id, drawable_position);
+  gimp_image_insert_layer (image_id, curl_layer->drawable_id,
+                           gimp_item_get_parent (drawable_id),
+                           drawable_position);
   gimp_drawable_fill (curl_layer->drawable_id, GIMP_TRANSPARENT_FILL);
 
   gimp_drawable_offsets (drawable_id, &x1, &y1);

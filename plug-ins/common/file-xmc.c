@@ -739,7 +739,7 @@ load_image (const gchar *filename, GError **error)
                                  imagesp->images[i]->width,
                                  imagesp->images[i]->height,
                                  GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-      gimp_image_add_layer (image_ID, layer_ID, 0);
+      gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
       /* Adjust layer position to let hotspot sit on the same point. */
       gimp_layer_translate (layer_ID,
@@ -964,7 +964,7 @@ load_thumbnail (const gchar *filename, gint32 thumb_size,
                              GIMP_RGBA_IMAGE, 100,
                              GIMP_NORMAL_MODE);
 
-  gimp_image_add_layer (image_ID, layer_ID, 0);
+  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
   /*
    * Get the drawable and set the pixel region for our load...

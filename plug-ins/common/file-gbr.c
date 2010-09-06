@@ -592,7 +592,7 @@ load_image (const gchar  *filename,
 
   layer_ID = gimp_layer_new (image_ID, name, bh.width, bh.height,
                              image_type, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image_ID, layer_ID, 0);
+  gimp_image_insert_layer (image_ID, layer_ID, -1, 0);
 
   g_free (name);
 

@@ -3455,7 +3455,7 @@ load_xjt_image (const gchar  *filename,
       else
         {
           /* add the layer on top of the images layerstak */
-          gimp_image_add_layer (l_image_id, l_layer_id, 0);
+          gimp_image_insert_layer (l_image_id, l_layer_id, -1, 0);
 
           if(l_layer_prp_ptr->floating_attached)
             {
@@ -3610,7 +3610,7 @@ load_xjt_image (const gchar  *filename,
       else
         {
           /* add channel on top of the channelstack */
-          gimp_image_add_channel (l_image_id, l_channel_id, 0);
+          gimp_image_insert_channel (l_image_id, l_channel_id, -1, 0);
 
           /* adjust offsets and other channelproperties */
           gimp_drawable_set_visible (l_channel_id, l_channel_prp_ptr->visible);
@@ -3639,7 +3639,7 @@ load_xjt_image (const gchar  *filename,
            * (if patches are not installed you'll get the error for sure)
            */
           printf("XJT: floating_selection is added as top-layer (attach failed)\n");
-          gimp_image_add_layer (l_image_id, l_fsel_id, 0);
+          gimp_image_insert_layer (l_image_id, l_fsel_id, -1, 0);
         }
     }
 

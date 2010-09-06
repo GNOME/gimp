@@ -581,7 +581,7 @@ load_image (const gchar  *filename,
       if (cnt > 0)
 	gimp_layer_add_alpha (layer_ID);
 
-      gimp_image_add_layer (image_id, layer_ID, 0);
+      gimp_image_insert_layer (image_id, layer_ID, -1, 0);
 
       if (cnt < to_frame)
 	{

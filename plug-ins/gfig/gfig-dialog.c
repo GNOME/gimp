@@ -247,7 +247,7 @@ gfig_dialog (void)
                                  img_width, img_height,
                                  GIMP_RGBA_IMAGE, 100.0, GIMP_NORMAL_MODE);
       gimp_drawable_fill (newlayer, GIMP_TRANSPARENT_FILL);
-      gimp_image_add_layer (gfig_context->image_id, newlayer, -1);
+      gimp_image_insert_layer (gfig_context->image_id, newlayer, -1, -1);
       gfig_context->drawable_id = newlayer;
       gfig_context->using_new_layer = TRUE;
     }

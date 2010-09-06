@@ -803,7 +803,7 @@ create_image (GdkPixbuf   *pixbuf,
                                       name ? name : _("Screenshot"),
                                       pixbuf,
                                       100, GIMP_NORMAL_MODE, 0.0, 1.0);
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_insert_layer (image, layer, -1, 0);
 
   if (shape && ! gdk_region_empty (shape))
     {
@@ -887,7 +887,7 @@ add_cursor_image (gint32      image,
 
   gimp_drawable_detach (drawable);
 
-  gimp_image_add_layer (image, layer, -1);
+  gimp_image_insert_layer (image, layer, -1, -1);
   gimp_layer_set_offsets (layer,
                           cursor->x - cursor->xhot, cursor->y - cursor->yhot);
 

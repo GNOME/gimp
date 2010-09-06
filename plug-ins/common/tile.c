@@ -271,7 +271,7 @@ tile (gint32  image_id,
       if (*layer_id == -1)
         return -1;
 
-      gimp_image_add_layer (new_image_id, *layer_id, 0);
+      gimp_image_insert_layer (new_image_id, *layer_id, -1, 0);
       new_layer = gimp_drawable_get (*layer_id);
 
       /*  Get the source drawable  */

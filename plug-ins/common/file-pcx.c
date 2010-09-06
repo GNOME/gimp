@@ -425,7 +425,7 @@ load_image (const gchar  *filename,
                              GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
     }
   gimp_image_set_filename (image, filename);
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_insert_layer (image, layer, -1, 0);
   gimp_layer_set_offsets (layer, offset_x, offset_y);
   drawable = gimp_drawable_get (layer);
 

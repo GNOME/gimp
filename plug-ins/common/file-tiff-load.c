@@ -1016,7 +1016,7 @@ load_image (const gchar        *filename,
               channel[i].ID = gimp_channel_new (image, _("TIFF Channel"),
                                                 cols, rows,
                                                 100.0, &color);
-              gimp_image_add_channel (image, channel[i].ID, 0);
+              gimp_image_insert_channel (image, channel[i].ID, -1, 0);
               channel[i].drawable = gimp_drawable_get (channel[i].ID);
             }
         }
@@ -1118,7 +1118,7 @@ load_image (const gchar        *filename,
       if (ilayer > 0 && !alpha)
         gimp_layer_add_alpha (layer);
 
-      gimp_image_add_layer (image, layer, -1);
+      gimp_image_insert_layer (image, layer, -1, -1);
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
@@ -1289,7 +1289,7 @@ load_paths (TIFF *tif, gint image)
           gboolean closed = FALSE;
 
           vectors = gimp_vectors_new (image, name);
-          gimp_image_add_vectors (image, vectors, path_index);
+          gimp_image_insert_vectors (image, vectors, -1, path_index);
           path_index++;
 
           while (rec < pos + len)

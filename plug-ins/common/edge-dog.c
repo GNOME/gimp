@@ -468,12 +468,14 @@ dog (gint32        image_ID,
   layer1 = gimp_layer_copy (drawable_id);
   gimp_item_set_visible (layer1, FALSE);
   gimp_item_set_name (layer1, "dog_scratch_layer1");
-  gimp_image_add_layer (image_ID, layer1, 0);
+  gimp_image_insert_layer (image_ID, layer1,
+                           gimp_item_get_parent (drawable_id), 0);
 
   layer2 = gimp_layer_copy (drawable_id);
   gimp_item_set_visible (layer2, FALSE);
   gimp_item_set_name (layer2, "dog_scratch_layer2");
-  gimp_image_add_layer (image_ID, layer2, 0);
+  gimp_image_insert_layer (image_ID, layer2,
+                           gimp_item_get_parent (drawable_id), 0);
 
   drawable1 = gimp_drawable_get (layer1);
   drawable2 = gimp_drawable_get (layer2);
@@ -985,7 +987,7 @@ preview_update_preview (GimpPreview  *preview,
                                100,
                                GIMP_NORMAL_MODE);
   preview_drawable = gimp_drawable_get (preview_id);
-  gimp_image_add_layer (image_id, preview_id, 0);
+  gimp_image_insert_layer (image_id, preview_id, -1, 0);
   gimp_layer_set_offsets (preview_id, 0, 0);
   gimp_pixel_rgn_init (&preview_rgn, preview_drawable,
                        0, 0, width, height, TRUE, TRUE);
