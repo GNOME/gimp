@@ -160,7 +160,7 @@ def misclassified_pixels (mask, truth):
     copy.name = "Difference"
     copy.mode = DIFFERENCE_MODE
 
-    image.add_layer (copy, -1)
+    image.insert_layer (copy)
 
     # The assumption made here is that the output of
     # foreground_extract is a strict black and white mask. The truth

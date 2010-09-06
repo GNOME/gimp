@@ -165,7 +165,7 @@ def slice(image, drawable, image_path, image_basename, image_extension,
             temp_image = pdb.gimp_image_new (drawable.width, drawable.height,
                                          image.base_type)
             temp_drawable = pdb.gimp_layer_new_from_drawable (drawable, temp_image)
-            temp_image.add_layer (temp_drawable, -1)
+            temp_image.insert_layer (temp_drawable)
 
     temp_image.disable_undo()
     temp_image.crop(right - left, bottom - top, left, top)

@@ -26,7 +26,7 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
 
     # copy the layer
     shadow = drawable.copy(True)
-    img.add_layer(shadow, img.layers.index(drawable)+1)
+    img.insert_layer(shadow, position=img.layers.index(drawable) + 1)
     shadow.name = drawable.name + " shadow"
     shadow.lock_alpha = False
 

@@ -33,7 +33,7 @@ def foggify(img, layer, name, colour, turbulence, opacity):
     fog = gimp.Layer(img, name,
                      layer.width, layer.height, type, opacity, NORMAL_MODE)
     fog.fill(TRANSPARENT_FILL)
-    img.add_layer(fog, 0)
+    img.insert_layer(fog)
 
     gimp.set_background(colour)
     pdb.gimp_edit_fill(fog, BACKGROUND_FILL)
