@@ -3765,7 +3765,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_layer_id ("parent",
                                                          "parent",
                                                          "The parent layer",
-                                                         pdb->gimp, FALSE,
+                                                         pdb->gimp, TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",
@@ -3870,7 +3870,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_channel_id ("parent",
                                                            "parent",
                                                            "The parent channel",
-                                                           pdb->gimp, FALSE,
+                                                           pdb->gimp, TRUE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",
@@ -3975,7 +3975,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_vectors_id ("parent",
                                                            "parent",
                                                            "The parent vectors",
-                                                           pdb->gimp, FALSE,
+                                                           pdb->gimp, TRUE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",
@@ -4196,7 +4196,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_item_id ("parent",
                                                         "parent",
                                                         "The new parent item",
-                                                        pdb->gimp, FALSE,
+                                                        pdb->gimp, TRUE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",

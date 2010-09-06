@@ -892,7 +892,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'item', type => 'item',
 	  desc => 'The item to reorder' },
-	{ name => 'parent', type => 'item',
+	{ name => 'parent', type => 'item', none_ok => 1,
           desc => 'The new parent item' },
         { name => 'position', type => 'int32',
           desc => 'The new position of the item' }
@@ -1208,7 +1208,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'parent', type => 'layer',
+	{ name => 'parent', type => 'layer', none_ok => 1,
           desc => 'The parent layer' },
 	{ name => 'position', type => 'int32',
 	  desc => 'The layer position' }
@@ -1440,7 +1440,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'channel', type => 'channel',
 	  desc => 'The channel' },
-	{ name => 'parent', type => 'channel',
+	{ name => 'parent', type => 'channel', none_ok => 1,
           desc => 'The parent channel' },
 	{ name => 'position', type => 'int32',
 	  desc => 'The channel position' }
@@ -1540,7 +1540,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'vectors', type => 'vectors',
 	  desc => 'The vectors' },
-	{ name => 'parent', type => 'vectors',
+	{ name => 'parent', type => 'vectors', none_ok => 1,
           desc => 'The parent vectors' },
 	{ name => 'position', type => 'int32',
 	  desc => 'The vectors position' }
