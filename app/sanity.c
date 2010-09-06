@@ -188,8 +188,8 @@ static gchar *
 sanity_check_pango (void)
 {
 #define PANGO_REQUIRED_MAJOR 1
-#define PANGO_REQUIRED_MINOR 20
-#define PANGO_REQUIRED_MICRO 1
+#define PANGO_REQUIRED_MINOR 22
+#define PANGO_REQUIRED_MICRO 0
 
   const gchar *mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
                                                PANGO_REQUIRED_MINOR,
