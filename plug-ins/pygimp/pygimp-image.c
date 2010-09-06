@@ -33,7 +33,7 @@ img_add_channel(PyGimpImage *self, PyObject *args)
 	                        &PyGimpChannel_Type, &chn, &pos))
 	return NULL;
 
-    if (!gimp_image_add_channel(self->ID, chn->ID, pos)) {
+    if (!gimp_image_insert_channel(self->ID, chn->ID, -1, pos)) {
 	PyErr_Format(pygimp_error,
 		     "could not add channel (ID %d) to image (ID %d)",
 		     chn->ID, self->ID);
@@ -54,7 +54,7 @@ img_add_layer(PyGimpImage *self, PyObject *args)
 			  &pos))
 	return NULL;
 
-    if (!gimp_image_add_layer(self->ID, lay->ID, pos)) {
+    if (!gimp_image_insert_layer(self->ID, lay->ID, -1, pos)) {
 	PyErr_Format(pygimp_error,
 		     "could not add layer (ID %d) to image (ID %d)",
 		     lay->ID, self->ID);
@@ -133,7 +133,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
         return NULL;
     }
 
-    if (!gimp_image_add_layer(self->ID, layer_id, pos)) {
+    if (!gimp_image_insert_layer(self->ID, layer_id, -1, pos)) {
         gimp_drawable_delete(layer_id);
         PyErr_Format(pygimp_error,
                      "could not add layer (ID %d) to image (ID %d)",
