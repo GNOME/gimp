@@ -45,6 +45,34 @@ img_add_channel(PyGimpImage *self, PyObject *args)
 }
 
 static PyObject *
+img_insert_channel(PyGimpImage *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpChannel *chn;
+    PyGimpChannel *parent = NULL;
+    int pos = -1;
+
+    static char *kwlist[] = { "channel", "parent", "position", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|O!i:insert_channel", kwlist,
+                                     &PyGimpChannel_Type, &chn,
+                                     &PyGimpChannel_Type, &parent,
+                                     &pos))
+	return NULL;
+
+    if (!gimp_image_insert_channel(self->ID,
+                                   chn->ID, parent ? parent->ID : -1, pos)) {
+	PyErr_Format(pygimp_error,
+		     "could not insert channel (ID %d) to image (ID %d)",
+		     chn->ID, self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 img_add_layer(PyGimpImage *self, PyObject *args)
 {
     PyGimpLayer *lay;
@@ -57,6 +85,34 @@ img_add_layer(PyGimpImage *self, PyObject *args)
     if (!gimp_image_insert_layer(self->ID, lay->ID, -1, pos)) {
 	PyErr_Format(pygimp_error,
 		     "could not add layer (ID %d) to image (ID %d)",
+		     lay->ID, self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+img_insert_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpLayer *lay;
+    PyGimpLayer *parent = NULL;
+    int pos = -1;
+
+    static char *kwlist[] = { "layer", "parent", "position", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|O!i:insert_layer", kwlist,
+                                     &PyGimpLayer_Type, &lay,
+                                     &PyGimpLayer_Type, &parent,
+                                     &pos))
+	return NULL;
+
+    if (!gimp_image_insert_layer(self->ID,
+                                 lay->ID, parent ? parent->ID : -1, pos)) {
+	PyErr_Format(pygimp_error,
+		     "could not insert layer (ID %d) to image (ID %d)",
 		     lay->ID, self->ID);
 	return NULL;
     }
@@ -837,7 +893,9 @@ img_undo_group_end(PyGimpImage *self)
 
 static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
+    {"insert_channel",	(PyCFunction)img_insert_channel,	METH_VARARGS | METH_KEYWORDS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
+    {"insert_layer",	(PyCFunction)img_insert_layer,	METH_VARARGS | METH_KEYWORDS},
     {"new_layer",       (PyCFunction)img_new_layer, METH_VARARGS | METH_KEYWORDS},
     {"clean_all",	(PyCFunction)img_clean_all,	METH_NOARGS},
     {"disable_undo",	(PyCFunction)img_disable_undo,	METH_NOARGS},
