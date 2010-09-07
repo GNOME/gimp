@@ -146,7 +146,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable        *drawable,
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
   bytes     = gimp_drawable_bytes (drawable);
-  selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  selection = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
 
   if ((x1 == x2) || (y1 == y2))
     return;

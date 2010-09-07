@@ -348,9 +348,9 @@ gimp_image_map_apply (GimpImageMap        *image_map,
     return;
 
   /*  The application should occur only within selection bounds  */
-  if (! gimp_drawable_mask_intersect (image_map->drawable,
-                                      &rect.x, &rect.y,
-                                      &rect.width, &rect.height))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (image_map->drawable),
+                                  &rect.x, &rect.y,
+                                  &rect.width, &rect.height))
     return;
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */

@@ -62,9 +62,9 @@ gimp_drawable_apply_operation (GimpDrawable *drawable,
   g_return_if_fail (undo_desc != NULL);
   g_return_if_fail (GEGL_IS_NODE (operation));
 
-  if (! gimp_drawable_mask_intersect (drawable,
-                                      &rect.x,     &rect.y,
-                                      &rect.width, &rect.height))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                  &rect.x,     &rect.y,
+                                  &rect.width, &rect.height))
     return;
 
   gimp_drawable_apply_operation_private (drawable,

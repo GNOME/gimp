@@ -200,14 +200,14 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
   mask = NULL;
   mask_offx = mask_offy = 0;
 
-  if (gimp_drawable_mask_bounds (tool->drawable,
-                                 &mask_x1, &mask_y1,
-                                 &mask_x2, &mask_y2))
+  if (gimp_item_mask_bounds (GIMP_ITEM (tool->drawable),
+                             &mask_x1, &mask_y1,
+                             &mask_x2, &mask_y2))
     {
       mask = gimp_image_get_mask (gimp_display_get_image (shell->display));
 
       gimp_item_get_offset (GIMP_ITEM (tool->drawable),
-                         &mask_offx, &mask_offy);
+                            &mask_offx, &mask_offy);
     }
 
   if (GIMP_IS_PERSPECTIVE_TOOL (tr_tool))

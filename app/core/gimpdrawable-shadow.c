@@ -87,7 +87,7 @@ gimp_drawable_merge_shadow_tiles (GimpDrawable *drawable,
    *  extents of the selection mask, as it cannot extend beyond
    *  them.
    */
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       TileManager *tiles = tile_manager_ref (drawable->private->shadow);
       PixelRegion  shadowPR;

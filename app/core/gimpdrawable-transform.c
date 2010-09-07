@@ -830,7 +830,7 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
        * gimp_layer_new_from_tiles() later which assumes that the tiles
        * are either RGB or GRAY.  Eeek!!!              (Sven)
        */
-      if (gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+      if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
         {
           tiles = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
                                           GIMP_PICKABLE (drawable),

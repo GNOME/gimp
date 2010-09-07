@@ -65,7 +65,7 @@ flip_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           success = gimp_drawable_transform_flip (drawable, context,
                                                   flip_type, TRUE, 0.0, FALSE);
@@ -120,7 +120,7 @@ perspective_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -190,7 +190,7 @@ rotate_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -266,7 +266,7 @@ scale_invoker (GimpProcedure      *procedure,
                  x0 < x1 && y0 < y1);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -337,7 +337,7 @@ shear_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -418,7 +418,7 @@ transform_2d_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;

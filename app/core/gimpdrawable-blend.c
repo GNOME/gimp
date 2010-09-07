@@ -214,7 +214,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return;
 
   gimp_set_busy (image->gimp);
@@ -590,7 +590,7 @@ gradient_precalc_shapeburst (GimpImage    *image,
       gint        x, y, width, height;
       gint        off_x, off_y;
 
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height);
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       pixel_region_init (&maskR, gimp_drawable_get_tiles (GIMP_DRAWABLE (mask)),

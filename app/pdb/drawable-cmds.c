@@ -799,7 +799,7 @@ drawable_mask_bounds_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
-        non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+        non_empty = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
       else
         success = FALSE;
     }
@@ -841,8 +841,8 @@ drawable_mask_intersect_invoker (GimpProcedure      *procedure,
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
-        non_empty = gimp_drawable_mask_intersect (drawable,
-                                                  &x, &y, &width, &height);
+        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                              &x, &y, &width, &height);
       else
         success = FALSE;
     }

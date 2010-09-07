@@ -40,7 +40,7 @@ sub flip {
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       success = gimp_drawable_transform_flip (drawable, context,
                                               flip_type, TRUE, 0.0, FALSE);
@@ -97,7 +97,7 @@ sub perspective {
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -161,7 +161,7 @@ sub rotate {
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -235,7 +235,7 @@ sub scale {
              x0 < x1 && y0 < y1);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -301,7 +301,7 @@ sub shear {
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -376,7 +376,7 @@ sub transform_2d {
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;

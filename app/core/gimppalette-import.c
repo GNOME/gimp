@@ -474,7 +474,8 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
 
   if (selection_only)
     {
-      if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      if (! gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                      &x, &y, &width, &height))
         return NULL;
     }
   else

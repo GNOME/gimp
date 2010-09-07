@@ -657,8 +657,8 @@ gimp_selection_extract (GimpSelection *selection,
    *  actual selection mask
    */
   if (GIMP_IS_DRAWABLE (pickable))
-    non_empty = gimp_drawable_mask_bounds (GIMP_DRAWABLE (pickable),
-                                           &x1, &y1, &x2, &y2);
+    non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
+                                       &x1, &y1, &x2, &y2);
   else
     non_empty = gimp_channel_bounds (GIMP_CHANNEL (selection),
                                      &x1, &y1, &x2, &y2);
@@ -837,7 +837,7 @@ gimp_selection_float (GimpSelection *selection,
   image = gimp_item_get_image (GIMP_ITEM (selection));
 
   /*  Make sure there is a region to float...  */
-  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) ||
+  if (! gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2) ||
       (x1 == x2 || y1 == y2))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,

@@ -1540,9 +1540,9 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
             gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
-            gimp_drawable_mask_bounds (drawable,
-                                       &tr_tool->x1, &tr_tool->y1,
-                                       &tr_tool->x2, &tr_tool->y2);
+            gimp_item_mask_bounds (GIMP_ITEM (drawable),
+                                   &tr_tool->x1, &tr_tool->y1,
+                                   &tr_tool->x2, &tr_tool->y2);
             tr_tool->x1 += offset_x;
             tr_tool->y1 += offset_y;
             tr_tool->x2 += offset_x;

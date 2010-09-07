@@ -303,9 +303,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
        *  where the translation will result in floating the selection
        *  mask and translating the resulting layer
        */
-      gimp_drawable_mask_bounds (GIMP_DRAWABLE (active_item),
-                                 &edit_select->x1, &edit_select->y1,
-                                 &edit_select->x2, &edit_select->y2);
+      gimp_item_mask_bounds (active_item,
+                             &edit_select->x1, &edit_select->y1,
+                             &edit_select->x2, &edit_select->y2);
     }
 
   gimp_edit_selection_tool_calc_coords (edit_select,

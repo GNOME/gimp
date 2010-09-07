@@ -38,7 +38,7 @@ sub transform_invoke {
   success = $success_check
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3 matrix;
       gint        off_x, off_y;
@@ -84,7 +84,7 @@ sub transform_default_invoke {
   success = $success_check
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       GimpMatrix3           matrix;
       GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -168,7 +168,7 @@ HELP
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       success = gimp_drawable_transform_flip (drawable, context,
                                               flip_type,
@@ -465,7 +465,7 @@ HELP
   success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error);
 
   if (success &&
-      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       success = gimp_drawable_transform_rotate (drawable, context,
                                                 rotate_type,

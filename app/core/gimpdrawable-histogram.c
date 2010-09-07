@@ -44,7 +44,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (histogram != NULL);
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return;
 
   pixel_region_init (&region, gimp_drawable_get_tiles (drawable),
