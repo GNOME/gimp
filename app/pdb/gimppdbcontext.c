@@ -38,7 +38,11 @@ enum
   PROP_ANTIALIAS,
   PROP_FEATHER,
   PROP_FEATHER_RADIUS_X,
-  PROP_FEATHER_RADIUS_Y
+  PROP_FEATHER_RADIUS_Y,
+  PROP_INTERPOLATION,
+  PROP_TRANSFORM_DIRECTION,
+  PROP_TRANSFORM_RESIZE,
+  PROP_TRANSFORM_RECURSION
 };
 
 
@@ -85,6 +89,29 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                    "feather-radius-y", NULL,
                                    0.0, 1000.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
+                                 "interpolation", NULL,
+                                 GIMP_TYPE_INTERPOLATION_TYPE,
+                                 GIMP_INTERPOLATION_CUBIC,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSFORM_DIRECTION,
+                                 "transform-direction", NULL,
+                                 GIMP_TYPE_TRANSFORM_DIRECTION,
+                                 GIMP_TRANSFORM_FORWARD,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSFORM_RESIZE,
+                                 "transform-resize", NULL,
+                                 GIMP_TYPE_TRANSFORM_RESIZE,
+                                 GIMP_TRANSFORM_RESIZE_ADJUST,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_TRANSFORM_RECURSION,
+                                "transform-recursion", NULL,
+                                1, G_MAXINT32, 3,
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -118,6 +145,22 @@ gimp_pdb_context_set_property (GObject      *object,
       options->feather_radius_y = g_value_get_double (value);
       break;
 
+    case PROP_INTERPOLATION:
+      options->interpolation = g_value_get_enum (value);
+      break;
+
+    case PROP_TRANSFORM_DIRECTION:
+      options->transform_direction = g_value_get_enum (value);
+      break;
+
+    case PROP_TRANSFORM_RESIZE:
+      options->transform_resize = g_value_get_enum (value);
+      break;
+
+    case PROP_TRANSFORM_RECURSION:
+      options->transform_recursion = g_value_get_int (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -148,6 +191,22 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_FEATHER_RADIUS_Y:
       g_value_set_double (value, options->feather_radius_y);
+      break;
+
+    case PROP_INTERPOLATION:
+      g_value_set_enum (value, options->interpolation);
+      break;
+
+    case PROP_TRANSFORM_DIRECTION:
+      g_value_set_enum (value, options->transform_direction);
+      break;
+
+    case PROP_TRANSFORM_RESIZE:
+      g_value_set_enum (value, options->transform_resize);
+      break;
+
+    case PROP_TRANSFORM_RECURSION:
+      g_value_set_int (value, options->transform_recursion);
       break;
 
     default:

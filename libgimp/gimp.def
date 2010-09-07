@@ -76,11 +76,15 @@ EXPORTS
 	gimp_context_get_font
 	gimp_context_get_foreground
 	gimp_context_get_gradient
+	gimp_context_get_interpolation
 	gimp_context_get_opacity
 	gimp_context_get_paint_method
 	gimp_context_get_paint_mode
 	gimp_context_get_palette
 	gimp_context_get_pattern
+	gimp_context_get_transform_direction
+	gimp_context_get_transform_recursion
+	gimp_context_get_transform_resize
 	gimp_context_list_paint_methods
 	gimp_context_pop
 	gimp_context_push
@@ -93,11 +97,15 @@ EXPORTS
 	gimp_context_set_font
 	gimp_context_set_foreground
 	gimp_context_set_gradient
+	gimp_context_set_interpolation
 	gimp_context_set_opacity
 	gimp_context_set_paint_method
 	gimp_context_set_paint_mode
 	gimp_context_set_palette
 	gimp_context_set_pattern
+	gimp_context_set_transform_direction
+	gimp_context_set_transform_recursion
+	gimp_context_set_transform_resize
 	gimp_context_swap_colors
 	gimp_convert_dither_type_get_type
 	gimp_convert_palette_type_get_type

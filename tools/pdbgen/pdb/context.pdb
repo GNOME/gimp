@@ -864,6 +864,219 @@ CODE
     );
 }
 
+sub context_get_interpolation {
+    $blurb = 'Get the interpolation type.';
+
+    $help = <<'HELP';
+This procedure returns the interpolation setting. The return value
+is an integer which corresponds to the values listed in the argument
+description.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @outargs = (
+        { name => 'interpolation', type => 'enum GimpInterpolationType',
+          desc => 'The interpolation type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "interpolation", &interpolation,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_interpolation {
+    $blurb = 'Set the interpolation type.';
+
+    $help = <<'HELP';
+This procedure modifies the interpolation setting. It affects all
+transform procedures which can produce sub-pixel results.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'interpolation', type => 'enum GimpInterpolationType',
+          desc => 'The interpolation type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "interpolation", interpolation,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_transform_direction {
+    $blurb = 'Get the transform direction.';
+
+    $help = <<'HELP';
+This procedure returns the transform direction. The return value
+is an integer which corresponds to the values listed in the argument
+description.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @outargs = (
+        { name => 'transform_direction', type => 'enum GimpTransformDirection',
+          desc => 'The transform direction' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "transform-direction", &transform_direction,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_transform_direction {
+    $blurb = 'Set the transform direction.';
+
+    $help = <<'HELP';
+This procedure modifies the transform direction setting.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'transform_direction', type => 'enum GimpTransformDirection',
+          desc => 'The transform direction' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "transform-direction", transform_direction,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_transform_resize {
+    $blurb = 'Get the transform resize type.';
+
+    $help = <<'HELP';
+This procedure returns the transform resize setting. The return value
+is an integer which corresponds to the values listed in the argument
+description.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @outargs = (
+        { name => 'transform_resize', type => 'enum GimpTransformResize',
+          desc => 'The transform resize type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "transform-resize", &transform_resize,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_transform_resize {
+    $blurb = 'Set the transform resize type.';
+
+    $help = <<'HELP';
+This procedure modifies the transform resize setting. When transforming
+pixels, if the result of a transform operation  has a different size
+than the original area, this setting determines how the resulting area
+is sized.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'transform_resize', type => 'enum GimpTransformResize',
+          desc => 'The transform resize type' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "transform-resize", transform_resize,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_transform_recursion {
+    $blurb = 'Get the transform supersampling recursion.';
+
+    $help = <<'HELP';
+This procedure returns the transform supersampling recursion level.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @outargs = (
+        { name => 'transform_recursion', type => '1 <= int32',
+          desc => 'The transform recursion level' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "transform-recursion", &transform_recursion,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_transform_recursion {
+    $blurb = 'Set the transform supersampling recursion.';
+
+    $help = <<'HELP';
+This procedure modifies the transform supersampling recursion level
+setting. Whether or not a transformation does supersampling is
+determined by the interplolation type. The recursion level defaults
+to 3, which is a nice default value.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'transform_recursion', type => '1 <= int32',
+          desc => 'The transform recursion level' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "transform-recursion", transform_recursion,
+                NULL);
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimp.h"
               "core/gimpcontainer.h"
               "core/gimpdatafactory.h"
@@ -889,7 +1102,11 @@ CODE
             context_get_font context_set_font
             context_get_antialias context_set_antialias
             context_get_feather context_set_feather
-            context_get_feather_radius context_set_feather_radius);
+            context_get_feather_radius context_set_feather_radius
+            context_get_interpolation context_set_interpolation
+            context_get_transform_direction context_set_transform_direction
+            context_get_transform_resize context_set_transform_resize
+            context_get_transform_recursion context_set_transform_recursion);
 
 %exports = (app => [@procs], lib => [@procs]);
 

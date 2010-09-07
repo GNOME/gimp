@@ -37,12 +37,17 @@ typedef struct _GimpPDBContextClass GimpPDBContextClass;
 
 struct _GimpPDBContext
 {
-  GimpContext  parent_instance;
+  GimpContext             parent_instance;
 
-  gboolean     antialias;
-  gboolean     feather;
-  gdouble      feather_radius_x;
-  gdouble      feather_radius_y;
+  gboolean                antialias;
+  gboolean                feather;
+  gdouble                 feather_radius_x;
+  gdouble                 feather_radius_y;
+
+  GimpInterpolationType   interpolation;
+  GimpTransformDirection  transform_direction;
+  GimpTransformResize     transform_resize;
+  gint                    transform_recursion;
 };
 
 struct _GimpPDBContextClass

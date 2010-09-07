@@ -1065,3 +1065,260 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
 
   return success;
 }
+
+/**
+ * gimp_context_get_interpolation:
+ *
+ * Get the interpolation type.
+ *
+ * This procedure returns the interpolation setting. The return value
+ * is an integer which corresponds to the values listed in the argument
+ * description.
+ *
+ * Returns: The interpolation type.
+ *
+ * Since: GIMP 2.8
+ */
+GimpInterpolationType
+gimp_context_get_interpolation (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpInterpolationType interpolation = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-interpolation",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    interpolation = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return interpolation;
+}
+
+/**
+ * gimp_context_set_interpolation:
+ * @interpolation: The interpolation type.
+ *
+ * Set the interpolation type.
+ *
+ * This procedure modifies the interpolation setting. It affects all
+ * transform procedures which can produce sub-pixel results.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_interpolation (GimpInterpolationType interpolation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-interpolation",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_transform_direction:
+ *
+ * Get the transform direction.
+ *
+ * This procedure returns the transform direction. The return value is
+ * an integer which corresponds to the values listed in the argument
+ * description.
+ *
+ * Returns: The transform direction.
+ *
+ * Since: GIMP 2.8
+ */
+GimpTransformDirection
+gimp_context_get_transform_direction (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpTransformDirection transform_direction = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-transform-direction",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    transform_direction = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return transform_direction;
+}
+
+/**
+ * gimp_context_set_transform_direction:
+ * @transform_direction: The transform direction.
+ *
+ * Set the transform direction.
+ *
+ * This procedure modifies the transform direction setting.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_transform_direction (GimpTransformDirection transform_direction)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-transform-direction",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_transform_resize:
+ *
+ * Get the transform resize type.
+ *
+ * This procedure returns the transform resize setting. The return
+ * value is an integer which corresponds to the values listed in the
+ * argument description.
+ *
+ * Returns: The transform resize type.
+ *
+ * Since: GIMP 2.8
+ */
+GimpTransformResize
+gimp_context_get_transform_resize (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpTransformResize transform_resize = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-transform-resize",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    transform_resize = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return transform_resize;
+}
+
+/**
+ * gimp_context_set_transform_resize:
+ * @transform_resize: The transform resize type.
+ *
+ * Set the transform resize type.
+ *
+ * This procedure modifies the transform resize setting. When
+ * transforming pixels, if the result of a transform operation has a
+ * different size than the original area, this setting determines how
+ * the resulting area is sized.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_transform_resize (GimpTransformResize transform_resize)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-transform-resize",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, transform_resize,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_transform_recursion:
+ *
+ * Get the transform supersampling recursion.
+ *
+ * This procedure returns the transform supersampling recursion level.
+ *
+ * Returns: The transform recursion level.
+ *
+ * Since: GIMP 2.8
+ */
+gint
+gimp_context_get_transform_recursion (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint transform_recursion = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-transform-recursion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    transform_recursion = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return transform_recursion;
+}
+
+/**
+ * gimp_context_set_transform_recursion:
+ * @transform_recursion: The transform recursion level.
+ *
+ * Set the transform supersampling recursion.
+ *
+ * This procedure modifies the transform supersampling recursion level
+ * setting. Whether or not a transformation does supersampling is
+ * determined by the interplolation type. The recursion level defaults
+ * to 3, which is a nice default value.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_context_set_transform_recursion (gint transform_recursion)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-transform-recursion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, transform_recursion,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
