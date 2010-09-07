@@ -170,9 +170,12 @@ HELP
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
+      gimp_transform_get_flip_axis (x, y, width, height,
+                                    flip_type, auto_center, &axis);
+
       success = gimp_drawable_transform_flip (drawable, context,
                                               flip_type,
-                                              auto_center, axis,
+                                              axis,
                                               clip_result);
     }
 }
@@ -467,9 +470,15 @@ HELP
   if (success &&
       gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
+      gdouble cx = center_x;
+      gdouble cy = center_y;
+
+      gimp_transform_get_rotate_center (x, y, width, height,
+                                        auto_center, &cx, &cy);
+
       success = gimp_drawable_transform_rotate (drawable, context,
                                                 rotate_type,
-                                                auto_center, center_x, center_y,
+                                                cx, cy,
                                                 clip_result);
     }
 }

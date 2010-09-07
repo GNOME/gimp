@@ -623,7 +623,6 @@ gboolean
 gimp_drawable_transform_flip (GimpDrawable        *drawable,
                               GimpContext         *context,
                               GimpOrientationType  flip_type,
-                              gboolean             auto_center,
                               gdouble              axis,
                               gboolean             clip_result)
 {
@@ -649,31 +648,6 @@ gimp_drawable_transform_flip (GimpDrawable        *drawable,
   if (orig_tiles)
     {
       TileManager *new_tiles = NULL;
-
-      if (auto_center)
-        {
-          gint off_x, off_y;
-          gint width, height;
-
-          tile_manager_get_offsets (orig_tiles, &off_x, &off_y);
-
-          width  = tile_manager_width  (orig_tiles);
-          height = tile_manager_height (orig_tiles);
-
-          switch (flip_type)
-            {
-            case GIMP_ORIENTATION_HORIZONTAL:
-              axis = ((gdouble) off_x + (gdouble) width / 2.0);
-              break;
-
-            case GIMP_ORIENTATION_VERTICAL:
-              axis = ((gdouble) off_y + (gdouble) height / 2.0);
-              break;
-
-            default:
-              break;
-            }
-        }
 
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)
@@ -722,7 +696,6 @@ gboolean
 gimp_drawable_transform_rotate (GimpDrawable     *drawable,
                                 GimpContext      *context,
                                 GimpRotationType  rotate_type,
-                                gboolean          auto_center,
                                 gdouble           center_x,
                                 gdouble           center_y,
                                 gboolean          clip_result)
@@ -749,20 +722,6 @@ gimp_drawable_transform_rotate (GimpDrawable     *drawable,
   if (orig_tiles)
     {
       TileManager *new_tiles;
-
-      if (auto_center)
-        {
-          gint off_x, off_y;
-          gint width, height;
-
-          tile_manager_get_offsets (orig_tiles, &off_x, &off_y);
-
-          width  = tile_manager_width  (orig_tiles);
-          height = tile_manager_height (orig_tiles);
-
-          center_x = (gdouble) off_x + (gdouble) width  / 2.0;
-          center_y = (gdouble) off_y + (gdouble) height / 2.0;
-        }
 
       /*  always clip unfloated tiles so they keep their size  */
       if (GIMP_IS_CHANNEL (drawable) && tile_manager_bpp (orig_tiles) == 1)

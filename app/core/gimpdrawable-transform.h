@@ -68,14 +68,12 @@ gboolean      gimp_drawable_transform_affine       (GimpDrawable           *draw
 gboolean      gimp_drawable_transform_flip         (GimpDrawable           *drawable,
                                                     GimpContext            *context,
                                                     GimpOrientationType     flip_type,
-                                                    gboolean                auto_center,
                                                     gdouble                 axis,
                                                     gboolean                clip_result);
 
 gboolean      gimp_drawable_transform_rotate       (GimpDrawable           *drawable,
                                                     GimpContext            *context,
                                                     GimpRotationType        rotate_type,
-                                                    gboolean                auto_center,
                                                     gdouble                 center_x,
                                                     gdouble                 center_y,
                                                     gboolean                clip_result);

@@ -67,8 +67,13 @@ flip_invoker (GimpProcedure      *procedure,
       if (success &&
           gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
+          gdouble axis;
+
+          gimp_transform_get_flip_axis (x, y, width, height,
+                                        flip_type, TRUE, &axis);
+
           success = gimp_drawable_transform_flip (drawable, context,
-                                                  flip_type, TRUE, 0.0, FALSE);
+                                                  flip_type, axis, FALSE);
         }
     }
 

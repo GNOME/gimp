@@ -19,6 +19,21 @@
 #define __GIMP_TRANSFORM_UTILS_H__
 
 
+void   gimp_transform_get_rotate_center    (gint                 x,
+                                            gint                 y,
+                                            gint                 width,
+                                            gint                 height,
+                                            gboolean             auto_center,
+                                            gdouble             *center_x,
+                                            gdouble             *center_y);
+void   gimp_transform_get_flip_axis        (gint                 x,
+                                            gint                 y,
+                                            gint                 width,
+                                            gint                 height,
+                                            GimpOrientationType  flip_type,
+                                            gboolean             auto_center,
+                                            gdouble             *axis);
+
 void   gimp_transform_matrix_flip          (GimpMatrix3         *matrix,
                                             GimpOrientationType  flip_type,
                                             gdouble              axis);
