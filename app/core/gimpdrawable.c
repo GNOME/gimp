@@ -1827,10 +1827,13 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 
       gimp_item_get_offset (item, &off_x, &off_y);
 
+      tmp_width  -= tmp_x;
+      tmp_height -= tmp_y;
+
       retval = gimp_rectangle_intersect (tmp_x - off_x, tmp_y - off_y,
-                                         tmp_width - tmp_x, tmp_height - tmp_y,
+                                         tmp_width, tmp_height,
                                          0, 0,
-                                         gimp_item_get_width (item),
+                                         gimp_item_get_width  (item),
                                          gimp_item_get_height (item),
                                          &tmp_x, &tmp_y,
                                          &tmp_width, &tmp_height);
