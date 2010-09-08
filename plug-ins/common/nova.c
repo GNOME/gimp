@@ -534,10 +534,11 @@ nova_center_preview_expose (GtkWidget  *widget,
 {
   if (show_cursor)
     {
-      GtkWidget *prvw  = center->preview->area;
-      cairo_t   *cr    = gdk_cairo_create (gtk_widget_get_window (prvw));
-      gint       width, height;
-      gint       x, y;
+      cairo_t *cr;
+      gint     x, y;
+      gint     width, height;
+
+      cr = gdk_cairo_create (gtk_widget_get_window (center->preview->area));
 
       gimp_preview_transform (center->preview,
                               pvals.xcenter, pvals.ycenter,
@@ -545,11 +546,11 @@ nova_center_preview_expose (GtkWidget  *widget,
 
       gimp_preview_get_size (center->preview, &width, &height);
 
-      cairo_move_to (cr, x + 0.5, 1);
-      cairo_line_to (cr, x + 0.5, height - 1);
+      cairo_move_to (cr, x + 0.5, 0);
+      cairo_line_to (cr, x + 0.5, height);
 
-      cairo_move_to (cr, 1,         y + 0.5);
-      cairo_line_to (cr, width - 1, y + 0.5);
+      cairo_move_to (cr, 0,     y + 0.5);
+      cairo_line_to (cr, width, y + 0.5);
 
       cairo_set_line_width (cr, 3.0);
       cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
