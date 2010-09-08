@@ -639,39 +639,25 @@ draw_explict_sel (void)
 {
   if (exp_call.type == EXPLICT)
     {
-      GtkStyle *style = gtk_widget_get_style (tint.preview);
-      gdouble   x,y;
+      cairo_t  *cr     = gdk_cairo_create (gtk_widget_get_window (tint.preview));
       gdouble   width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
       gdouble   height = (gdouble) preview_height / (gdouble) itvals.numtiles;
+      gdouble   x , y;
 
-      x = width * (exp_call.x - 1);
+      x = width  * (exp_call.x - 1);
       y = height * (exp_call.y - 1);
 
-      gdk_gc_set_function (style->black_gc, GDK_INVERT);
+      cairo_rectangle (cr, x + 1.5, y + 1.5, width - 2, height - 2);
 
-      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
-                          style->black_gc,
-                          0,
-                          (gint) x,
-                          (gint) y,
-                          (gint) width,
-                          (gint) height);
-      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
-                          style->black_gc,
-                          0,
-                          (gint) x + 1,
-                          (gint) y + 1,
-                          (gint) width - 2,
-                          (gint) height - 2);
-      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
-                          style->black_gc,
-                          0,
-                          (gint) x + 2,
-                          (gint) y + 2,
-                          (gint) width - 4,
-                          (gint) height - 4);
+      cairo_set_line_width (cr, 3.0);
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+      cairo_stroke_preserve (cr);
 
-      gdk_gc_set_function (style->black_gc, GDK_COPY);
+      cairo_set_line_width (cr, 1.0);
+      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+      cairo_stroke_preserve (cr);
+
+      cairo_destroy (cr);
     }
 }
 
@@ -693,10 +679,9 @@ exp_need_update (gint nx,
 
   if (nx != exp_call.x || ny != exp_call.y)
     {
-      draw_explict_sel (); /* Clear old 'un */
       exp_call.x = nx;
       exp_call.y = ny;
-      draw_explict_sel ();
+      gtk_widget_queue_draw (tint.preview);
 
       g_signal_handlers_block_by_func (exp_call.c_adj,
                                        tileit_exp_update_f,
@@ -1132,6 +1117,7 @@ dialog_update_preview (void)
   guchar *buffer;
 
   buffer = g_new (guchar, preview_width * preview_height * tint.img_bpp);
+
   for (y = 0; y < preview_height; y++)
     {
       do_tiles_preview (tint.preview_row,
@@ -1145,12 +1131,14 @@ dialog_update_preview (void)
               tint.preview_row,
               preview_width * tint.img_bpp);
     }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (tint.preview),
                           0, 0, preview_width, preview_height,
                           (tint.img_bpp>3)?GIMP_RGBA_IMAGE:GIMP_RGB_IMAGE,
                           buffer,
                           preview_width * tint.img_bpp);
+
   g_free (buffer);
-  draw_explict_sel ();
+
   gtk_widget_queue_draw (tint.preview);
 }
