@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 #include "tools/tools-types.h"
@@ -52,63 +53,63 @@
 
 /*  local function prototypes  */
 
-static void    gimp_display_shell_draw_quad          (GimpDrawable *texture,
-                                                      GdkDrawable  *dest,
-                                                      GimpChannel  *mask,
-                                                      gint          mask_offx,
-                                                      gint          mask_offy,
-                                                      gint         *x,
-                                                      gint         *y,
-                                                      gfloat       *u,
-                                                      gfloat       *v,
-                                                      guchar        opacity);
-static void    gimp_display_shell_draw_tri           (GimpDrawable *texture,
-                                                      GdkDrawable  *dest,
-                                                      GdkPixbuf    *area,
-                                                      gint          area_offx,
-                                                      gint          area_offy,
-                                                      GimpChannel  *mask,
-                                                      gint          mask_offx,
-                                                      gint          mask_offy,
-                                                      gint         *x,
-                                                      gint         *y,
-                                                      gfloat       *u,
-                                                      gfloat       *v,
-                                                      guchar        opacity);
-static void    gimp_display_shell_draw_tri_row       (GimpDrawable *texture,
-                                                      GdkDrawable  *dest,
-                                                      GdkPixbuf    *area,
-                                                      gint          area_offx,
-                                                      gint          area_offy,
-                                                      gint          x1,
-                                                      gfloat        u1,
-                                                      gfloat        v1,
-                                                      gint          x2,
-                                                      gfloat        u2,
-                                                      gfloat        v2,
-                                                      gint          y,
-                                                      guchar        opacity);
-static void    gimp_display_shell_draw_tri_row_mask  (GimpDrawable *texture,
-                                                      GdkDrawable  *dest,
-                                                      GdkPixbuf    *area,
-                                                      gint          area_offx,
-                                                      gint          area_offy,
-                                                      GimpChannel  *mask,
-                                                      gint          mask_offx,
-                                                      gint          mask_offy,
-                                                      gint          x1,
-                                                      gfloat        u1,
-                                                      gfloat        v1,
-                                                      gint          x2,
-                                                      gfloat        u2,
-                                                      gfloat        v2,
-                                                      gint          y,
-                                                      guchar        opacity);
-static void    gimp_display_shell_trace_tri_edge     (gint         *dest,
-                                                      gint          x1,
-                                                      gint          y1,
-                                                      gint          x2,
-                                                      gint          y2);
+static void    gimp_display_shell_draw_quad          (GimpDrawable    *texture,
+                                                      cairo_t         *cr,
+                                                      GimpChannel     *mask,
+                                                      gint             mask_offx,
+                                                      gint             mask_offy,
+                                                      gint            *x,
+                                                      gint            *y,
+                                                      gfloat          *u,
+                                                      gfloat          *v,
+                                                      guchar           opacity);
+static void    gimp_display_shell_draw_tri           (GimpDrawable    *texture,
+                                                      cairo_t         *cr,
+                                                      cairo_surface_t *area,
+                                                      gint             area_offx,
+                                                      gint             area_offy,
+                                                      GimpChannel     *mask,
+                                                      gint             mask_offx,
+                                                      gint             mask_offy,
+                                                      gint            *x,
+                                                      gint            *y,
+                                                      gfloat          *u,
+                                                      gfloat          *v,
+                                                      guchar           opacity);
+static void    gimp_display_shell_draw_tri_row       (GimpDrawable    *texture,
+                                                      cairo_t         *cr,
+                                                      cairo_surface_t *area,
+                                                      gint             area_offx,
+                                                      gint             area_offy,
+                                                      gint             x1,
+                                                      gfloat           u1,
+                                                      gfloat           v1,
+                                                      gint             x2,
+                                                      gfloat           u2,
+                                                      gfloat           v2,
+                                                      gint             y,
+                                                      guchar           opacity);
+static void    gimp_display_shell_draw_tri_row_mask  (GimpDrawable    *texture,
+                                                      cairo_t         *cr,
+                                                      cairo_surface_t *area,
+                                                      gint             area_offx,
+                                                      gint             area_offy,
+                                                      GimpChannel     *mask,
+                                                      gint             mask_offx,
+                                                      gint             mask_offy,
+                                                      gint             x1,
+                                                      gfloat           u1,
+                                                      gfloat           v1,
+                                                      gint             x2,
+                                                      gfloat           u2,
+                                                      gfloat           v2,
+                                                      gint             y,
+                                                      guchar           opacity);
+static void    gimp_display_shell_trace_tri_edge     (gint            *dest,
+                                                      gint             x1,
+                                                      gint             y1,
+                                                      gint             x2,
+                                                      gint             y2);
 
 /*  public functions  */
 
@@ -131,7 +132,8 @@ static void    gimp_display_shell_trace_tri_edge     (gint         *dest,
  * except perspective, so approximate it with a few subdivisions.
  **/
 void
-gimp_display_shell_preview_transform (GimpDisplayShell *shell)
+gimp_display_shell_preview_transform (GimpDisplayShell *shell,
+                                      cairo_t          *cr)
 {
   GimpTool          *tool;
   GimpTransformTool *tr_tool;
@@ -157,6 +159,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
   guchar       opacity = 255;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
 
   if (! gimp_display_shell_get_show_transform (shell) || ! shell->canvas)
     return;
@@ -317,8 +320,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 
   k = columns * rows;
   for (j = 0; j < k; j++)
-    gimp_display_shell_draw_quad (tool->drawable,
-                                  GDK_DRAWABLE (gtk_widget_get_window (shell->canvas)),
+    gimp_display_shell_draw_quad (tool->drawable, cr,
                                   mask, mask_offx, mask_offy,
                                   x[j], y[j], u[j], v[j],
                                   opacity);
@@ -330,7 +332,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
 /**
  * gimp_display_shell_draw_quad:
  * @texture:   the #GimpDrawable to be previewed
- * @dest:      the #GdkDrawable for that @texture lives on
+ * @cr:        the #cairo_t to draw to
  * @mask:      a #GimpChannel
  * @opacity:   the opacity of the preview
  *
@@ -339,7 +341,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell)
  **/
 static void
 gimp_display_shell_draw_quad (GimpDrawable *texture,
-                              GdkDrawable  *dest,
+                              cairo_t      *cr,
                               GimpChannel  *mask,
                               gint          mask_offx,
                               gint          mask_offy,
@@ -352,10 +354,8 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
   gint    x2[3], y2[3];
   gfloat  u2[3], v2[3];
   gint    minx, maxx, miny, maxy; /* screen bounds of the quad        */
-  gint    dwidth, dheight;        /* dimensions of dest               */
+  gdouble clip_x1, clip_y1, clip_x2, clip_y2;
   gint    c;
-
-  g_return_if_fail (GDK_IS_DRAWABLE (dest));
 
   x2[0] = x[3];  y2[0] = y[3];  u2[0] = u[3];  v2[0] = v[3];
   x2[1] = x[2];  y2[1] = y[2];  u2[1] = u[2];  v2[1] = v[2];
@@ -365,7 +365,7 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
     * and fill it with the original window contents.
     */
 
-  gdk_drawable_get_size (dest, &dwidth, &dheight);
+  cairo_clip_extents (cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
 
   /* find bounds of quad in order to only grab as much of dest as needed */
 
@@ -379,35 +379,36 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
       if (y[c] < miny) miny = y[c];
       else if (y[c] > maxy) maxy = y[c];
     }
-  if (minx < 0) minx = 0;
-  if (miny < 0) miny = 0;
-  if (maxx > dwidth - 1)  maxx = dwidth  - 1;
-  if (maxy > dheight - 1) maxy = dheight - 1;
+  if (minx < clip_x1) minx = clip_x1;
+  if (miny < clip_y1) miny = clip_y1;
+  if (maxx > clip_x2) maxx = clip_x2;
+  if (maxy > clip_y2) maxy = clip_y2;
 
   if (minx <= maxx && miny <= maxy)
     {
-      GdkPixbuf *area;
+      cairo_surface_t *area;
 
-      area = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8,
-                             maxx - minx + 1, maxy - miny + 1);
+      area = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                         maxx - minx + 1,
+                                         maxy - miny + 1);
 
       g_return_if_fail (area != NULL);
 
-      gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
+      gimp_display_shell_draw_tri (texture, cr, area, minx, miny,
                                    mask, mask_offx, mask_offy,
                                    x, y, u, v, opacity);
-      gimp_display_shell_draw_tri (texture, dest, area, minx, miny,
+      gimp_display_shell_draw_tri (texture, cr, area, minx, miny,
                                    mask, mask_offx, mask_offy,
                                    x2, y2, u2, v2, opacity);
 
-      g_object_unref (area);
+      cairo_surface_destroy (area);
     }
 }
 
 /**
  * gimp_display_shell_draw_tri:
  * @texture:   the thing being transformed
- * @dest:      the #GdkDrawable for that @texture lives on
+ * @cr:        the #cairo_t to draw to
  * @area:      has prefetched pixel data of dest
  * @area_offx: x coordinate of area in dest
  * @area_offy: y coordinate of area in dest
@@ -419,21 +420,21 @@ gimp_display_shell_draw_quad (GimpDrawable *texture,
  * gimp_display_shell_draw_tri_row_mask() to do the actual pixel changing.
  **/
 static void
-gimp_display_shell_draw_tri (GimpDrawable *texture,
-                             GdkDrawable  *dest,
-                             GdkPixbuf    *area,
-                             gint          area_offx,
-                             gint          area_offy,
-                             GimpChannel  *mask,
-                             gint          mask_offx,
-                             gint          mask_offy,
-                             gint         *x,
-                             gint         *y,
-                             gfloat       *u, /* texture coords */
-                             gfloat       *v, /* 0.0 ... tex width, height */
-                             guchar        opacity)
+gimp_display_shell_draw_tri (GimpDrawable    *texture,
+                             cairo_t         *cr,
+                             cairo_surface_t *area,
+                             gint             area_offx,
+                             gint             area_offy,
+                             GimpChannel     *mask,
+                             gint             mask_offx,
+                             gint             mask_offy,
+                             gint            *x,
+                             gint            *y,
+                             gfloat          *u, /* texture coords */
+                             gfloat          *v, /* 0.0 ... tex width, height */
+                             guchar           opacity)
 {
-  gint         dwidth, dheight;    /* clip boundary */
+  gdouble      clip_x1, clip_y1, clip_x2, clip_y2;
   gint         j, k;
   gint         ry;
   gint        *l_edge, *r_edge;    /* arrays holding x-coords of edge pixels */
@@ -442,8 +443,7 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
   gfloat       u_l, v_l, u_r, v_r; /* left and right texture coord pairs  */
 
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
-  g_return_if_fail (GDK_IS_DRAWABLE (dest));
-  g_return_if_fail (GDK_IS_PIXBUF (area));
+  g_return_if_fail (area != NULL);
 
   g_return_if_fail (x != NULL && y != NULL && u != NULL && v != NULL);
 
@@ -451,7 +451,7 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
   dul = dvl = dur = dvr = 0;
   u_l = v_l = u_r = v_r = 0;
 
-  gdk_drawable_get_size (dest, &dwidth, &dheight);
+  cairo_clip_extents (cr, &clip_x1, &clip_y1, &clip_x2, &clip_y2);
 
   /* sort vertices in order of y-coordinate */
 
@@ -497,15 +497,14 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
       if (mask)
         for (ry = y[0]; ry < y[1]; ry++)
           {
-            if (ry >= 0 && ry < dheight)
-              gimp_display_shell_draw_tri_row_mask
-                                                (texture, dest,
-                                                 area, area_offx, area_offy,
-                                                 mask, mask_offx, mask_offy,
-                                                 *left, u_l, v_l,
-                                                 *right, u_r, v_r,
-                                                 ry,
-                                                 opacity);
+            if (ry >= clip_y1 && ry < clip_y2)
+              gimp_display_shell_draw_tri_row_mask (texture, cr,
+                                                    area, area_offx, area_offy,
+                                                    mask, mask_offx, mask_offy,
+                                                    *left, u_l, v_l,
+                                                    *right, u_r, v_r,
+                                                    ry,
+                                                    opacity);
             left ++;      right ++;
             u_l += dul;   v_l += dvl;
             u_r += dur;   v_r += dvr;
@@ -513,8 +512,8 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
       else
         for (ry = y[0]; ry < y[1]; ry++)
           {
-            if (ry >= 0 && ry < dheight)
-              gimp_display_shell_draw_tri_row (texture, dest,
+            if (ry >= clip_y1 && ry < clip_y2)
+              gimp_display_shell_draw_tri_row (texture, cr,
                                                area, area_offx, area_offy,
                                                *left, u_l, v_l,
                                                *right, u_r, v_r,
@@ -539,15 +538,14 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
       if (mask)
         for (ry = y[1]; ry < y[2]; ry++)
           {
-            if (ry >= 0 && ry < dheight)
-              gimp_display_shell_draw_tri_row_mask
-                                              (texture, dest,
-                                               area, area_offx, area_offy,
-                                               mask, mask_offx, mask_offy,
-                                               *left,  u_l, v_l,
-                                               *right, u_r, v_r,
-                                               ry,
-                                               opacity);
+            if (ry >= clip_y1 && ry < clip_y2)
+              gimp_display_shell_draw_tri_row_mask (texture, cr,
+                                                    area, area_offx, area_offy,
+                                                    mask, mask_offx, mask_offy,
+                                                    *left,  u_l, v_l,
+                                                    *right, u_r, v_r,
+                                                    ry,
+                                                    opacity);
             left ++;      right ++;
             u_l += dul;   v_l += dvl;
             u_r += dur;   v_r += dvr;
@@ -555,8 +553,8 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
       else
         for (ry = y[1]; ry < y[2]; ry++)
           {
-            if (ry >= 0 && ry < dheight)
-              gimp_display_shell_draw_tri_row (texture, dest,
+            if (ry >= clip_y1 && ry < clip_y2)
+              gimp_display_shell_draw_tri_row (texture, cr,
                                                area, area_offx, area_offy,
                                                *left,  u_l, v_l,
                                                *right, u_r, v_r,
@@ -575,7 +573,7 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
 /**
  * gimp_display_shell_draw_tri_row:
  * @texture: the thing being transformed
- * @dest:    the #GdkDrawable for that @texture lives on
+ * @cr:      the #cairo_t to draw to
  * @area:    has prefetched pixel data of dest
  *
  * Called from gimp_display_shell_draw_tri(), this draws a single row of a
@@ -583,19 +581,19 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
  * dest corresponds to the run (u1,v1) to (u2,v2) in texture.
  **/
 static void
-gimp_display_shell_draw_tri_row (GimpDrawable *texture,
-                                 GdkDrawable  *dest,
-                                 GdkPixbuf    *area,
-                                 gint          area_offx,
-                                 gint          area_offy,
-                                 gint          x1,
-                                 gfloat        u1,
-                                 gfloat        v1,
-                                 gint          x2,
-                                 gfloat        u2,
-                                 gfloat        v2,
-                                 gint          y,
-                                 guchar        opacity)
+gimp_display_shell_draw_tri_row (GimpDrawable    *texture,
+                                 cairo_t         *cr,
+                                 cairo_surface_t *area,
+                                 gint             area_offx,
+                                 gint             area_offy,
+                                 gint             x1,
+                                 gfloat           u1,
+                                 gfloat           v1,
+                                 gint             x2,
+                                 gfloat           u2,
+                                 gfloat           v2,
+                                 gint             y,
+                                 guchar           opacity)
 {
   TileManager  *tiles;     /* used to get the source texture colors   */
   guchar       *pptr;      /* points into the pixels of a row of area */
@@ -610,10 +608,8 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
     return;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
-  g_return_if_fail (GDK_IS_DRAWABLE (dest));
-  g_return_if_fail (GDK_IS_PIXBUF (area));
-  g_return_if_fail (gdk_pixbuf_get_bits_per_sample (area) == 8);
-  g_return_if_fail (gdk_pixbuf_get_colorspace (area) == GDK_COLORSPACE_RGB);
+  g_return_if_fail (area != NULL);
+  g_return_if_fail (cairo_image_surface_get_format (area) == CAIRO_FORMAT_ARGB32);
 
   /* make sure the pixel run goes in the positive direction */
   if (x1 > x2)
@@ -638,7 +634,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
       v += dv * (area_offx - x1);
       x1 = area_offx;
     }
-  else if (x1 > area_offx + gdk_pixbuf_get_width (area) - 1)
+  else if (x1 > area_offx + cairo_image_surface_get_width (area) - 1)
     {
       return;
     }
@@ -647,18 +643,18 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
     {
       return;
     }
-  else if (x2 > area_offx + gdk_pixbuf_get_width (area) - 1)
+  else if (x2 > area_offx + cairo_image_surface_get_width (area) - 1)
     {
-      x2 = area_offx + gdk_pixbuf_get_width (area) - 1;
+      x2 = area_offx + cairo_image_surface_get_width (area) - 1;
     }
 
   dx = x2 - x1;
   if (! dx)
     return;
 
-  pptr = (gdk_pixbuf_get_pixels (area)
-          + (y - area_offy) * gdk_pixbuf_get_rowstride (area)
-          + (x1 - area_offx) * gdk_pixbuf_get_n_channels (area));
+  pptr = (cairo_image_surface_get_data (area)
+          + (y - area_offy) * cairo_image_surface_get_stride (area)
+          + (x1 - area_offx) * 4);
 
   tiles = gimp_drawable_get_tiles (texture);
 
@@ -673,10 +669,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
           offset = pixel[0] + pixel[0] + pixel[0];
 
-          pptr[0] = cmap[offset + 0];
-          pptr[1] = cmap[offset + 1];
-          pptr[2] = cmap[offset + 2];
-          pptr[3] = opacity;
+          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                       cmap[offset + 0],
+                                       cmap[offset + 1],
+                                       cmap[offset + 2],
+                                       opacity);
 
           pptr += 4;
 
@@ -696,10 +693,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
           offset = pixel[0] + pixel[0] + pixel[0];
 
-          pptr[0] = cmap[offset + 0];
-          pptr[1] = cmap[offset + 1];
-          pptr[2] = cmap[offset + 2];
-          pptr[3] = INT_MULT (opacity, pixel[1], tmp);
+          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                       cmap[offset + 0],
+                                       cmap[offset + 1],
+                                       cmap[offset + 2],
+                                       INT_MULT (opacity, pixel[1], tmp));
 
           pptr += 4;
 
@@ -713,10 +711,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          pptr[0] = pixel[0];
-          pptr[1] = pixel[0];
-          pptr[2] = pixel[0];
-          pptr[3] = opacity;
+          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                       pixel[0],
+                                       pixel[0],
+                                       pixel[0],
+                                       opacity);
 
           pptr += 4;
 
@@ -732,10 +731,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          pptr[0] = pixel[0];
-          pptr[1] = pixel[0];
-          pptr[2] = pixel[0];
-          pptr[3] = INT_MULT (opacity, pixel[1], tmp);
+          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                       pixel[0],
+                                       pixel[0],
+                                       pixel[0],
+                                       INT_MULT (opacity, pixel[1], tmp));
 
           pptr += 4;
 
@@ -749,10 +749,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          pptr[0] = pixel[0];
-          pptr[1] = pixel[1];
-          pptr[2] = pixel[2];
-          pptr[3] = opacity;
+          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                       pixel[0],
+                                       pixel[1],
+                                       pixel[2],
+                                       opacity);
 
           pptr += 4;
 
@@ -768,10 +769,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
-          pptr[0] = pixel[0];
-          pptr[1] = pixel[1];
-          pptr[2] = pixel[2];
-          pptr[3] = INT_MULT (opacity, pixel[3], tmp);
+          GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
+                                       pixel[0],
+                                       pixel[1],
+                                       pixel[2],
+                                       INT_MULT (opacity, pixel[3], tmp));
 
           pptr += 4;
 
@@ -784,9 +786,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
       return;
     }
 
-  gdk_draw_pixbuf (dest, NULL, area, x1 - area_offx, y - area_offy,
-                   x1, y, x2 - x1, 1,
-                   GDK_RGB_DITHER_NONE, 0, 0);
+  cairo_surface_mark_dirty (area);
+
+  cairo_set_source_surface (cr, area, area_offx, area_offy);
+  cairo_rectangle (cr, x1, y, x2 - x1, 1);
+  cairo_fill (cr);
 }
 
 /**
@@ -796,22 +800,22 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
  * triangle onto dest, when there is a mask.
  **/
 static void
-gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
-                                      GdkDrawable  *dest,
-                                      GdkPixbuf    *area,
-                                      gint          area_offx,
-                                      gint          area_offy,
-                                      GimpChannel  *mask,
-                                      gint          mask_offx,
-                                      gint          mask_offy,
-                                      gint          x1,
-                                      gfloat        u1,
-                                      gfloat        v1,
-                                      gint          x2,
-                                      gfloat        u2,
-                                      gfloat        v2,
-                                      gint          y,
-                                      guchar        opacity)
+gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
+                                      cairo_t         *cr,
+                                      cairo_surface_t *area,
+                                      gint             area_offx,
+                                      gint             area_offy,
+                                      GimpChannel     *mask,
+                                      gint             mask_offx,
+                                      gint             mask_offy,
+                                      gint             x1,
+                                      gfloat           u1,
+                                      gfloat           v1,
+                                      gint             x2,
+                                      gfloat           u2,
+                                      gfloat           v2,
+                                      gint             y,
+                                      guchar           opacity)
 {
 
   TileManager  *tiles, *masktiles; /* used to get the source texture colors */
@@ -830,10 +834,8 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-  g_return_if_fail (GDK_IS_DRAWABLE (dest));
-  g_return_if_fail (GDK_IS_PIXBUF (area));
-  g_return_if_fail (gdk_pixbuf_get_bits_per_sample (area) == 8);
-  g_return_if_fail (gdk_pixbuf_get_colorspace (area) == GDK_COLORSPACE_RGB);
+  g_return_if_fail (area != NULL);
+  g_return_if_fail (cairo_image_surface_get_format (area) == CAIRO_FORMAT_ARGB32);
 
   /* make sure the pixel run goes in the positive direction */
   if (x1 > x2)
@@ -858,7 +860,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       v += dv * (area_offx - x1);
       x1 = area_offx;
     }
-  else if (x1 > area_offx + gdk_pixbuf_get_width (area) - 1)
+  else if (x1 > area_offx + cairo_image_surface_get_width (area) - 1)
     {
       return;
     }
@@ -867,9 +869,9 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
     {
       return;
     }
-  else if (x2 > area_offx + gdk_pixbuf_get_width (area) - 1)
+  else if (x2 > area_offx + cairo_image_surface_get_width (area) - 1)
     {
-      x2 = area_offx + gdk_pixbuf_get_width (area) - 1;
+      x2 = area_offx + cairo_image_surface_get_width (area) - 1;
     }
 
   dx = x2 - x1;
@@ -879,9 +881,9 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
   mu = u + mask_offx;
   mv = v + mask_offy;
 
-  pptr = (gdk_pixbuf_get_pixels (area)
-          + (y - area_offy) * gdk_pixbuf_get_rowstride (area)
-          + (x1 - area_offx) * gdk_pixbuf_get_n_channels (area));
+  pptr = (cairo_image_surface_get_data (area)
+          + (y - area_offy) * cairo_image_surface_get_stride (area)
+          + (x1 - area_offx) * 4);
 
   tiles     = gimp_drawable_get_tiles (texture);
   masktiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (mask));
@@ -1032,9 +1034,11 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       return;
     }
 
-  gdk_draw_pixbuf (dest, NULL, area, x1 - area_offx, y - area_offy,
-                   x1, y, x2 - x1, 1,
-                   GDK_RGB_DITHER_NONE, 0, 0);
+  cairo_surface_mark_dirty (area);
+
+  cairo_set_source_surface (cr, area, area_offx, area_offy);
+  cairo_rectangle (cr, x1, y, x2 - x1, 1);
+  cairo_fill (cr);
 }
 
 /**

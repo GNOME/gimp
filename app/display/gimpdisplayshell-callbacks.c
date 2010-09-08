@@ -2304,7 +2304,9 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
    */
 
   /* draw the transform tool preview */
-  gimp_display_shell_preview_transform (shell);
+  cairo_save (cr);
+  gimp_display_shell_preview_transform (shell, cr);
+  cairo_restore (cr);
 
   /* draw the grid */
   cairo_save (cr);
