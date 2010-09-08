@@ -114,7 +114,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[1];
+  static GimpParam   values[2];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
   gboolean           with_specified_preset;
@@ -147,6 +147,29 @@ run (const gchar      *name,
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   random_generator = g_rand_new ();
+
+  /*
+   * Check precondition before we open a dialog: Is there a selection
+   * that intersects, OR is there no selection (use entire drawable.)
+   */
+  {
+    gint x1, y1, width, height; /* Not used. */
+
+    if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                        &x1, &y1, &width, &height))
+      {
+        values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        *nreturn_vals           = 2;
+        values[1].type          = GIMP_PDB_STRING;
+        values[1].data.d_string = _("The selection does not intersect "
+                                    "the active layer or mask.");
+
+        gimp_drawable_detach (drawable);
+
+        return;
+      }
+  }
+
 
   switch (run_mode)
     {
@@ -233,17 +256,16 @@ grabarea (void)
 {
   GimpPixelRgn  src_rgn;
   ppm_t        *p;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1;
   gint          x, y;
   gint          width, height;
   gint          row, col;
   gint          rowstride;
   gpointer      pr;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = x2 - x1;
-  height = y2 - y1;
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
+    return;
 
   ppm_new (&infile, width, height);
   p = &infile;
@@ -350,7 +372,7 @@ gimpressionist_main (void)
 {
   GimpPixelRgn  dest_rgn;
   ppm_t        *p;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1;
   gint          x, y;
   gint          width, height;
   gint          row, col;
@@ -360,10 +382,9 @@ gimpressionist_main (void)
   glong         total;
   gpointer      pr;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = x2 - x1;
-  height = y2 - y1;
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
+    return;
 
   total = width * height;
 
