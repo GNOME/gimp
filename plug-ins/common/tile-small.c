@@ -650,11 +650,11 @@ draw_explict_sel (void)
       cairo_rectangle (cr, x + 1.5, y + 1.5, width - 2, height - 2);
 
       cairo_set_line_width (cr, 3.0);
-      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
       cairo_stroke_preserve (cr);
 
       cairo_set_line_width (cr, 1.0);
-      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
       cairo_stroke_preserve (cr);
 
       cairo_destroy (cr);

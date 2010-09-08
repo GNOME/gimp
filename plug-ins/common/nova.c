@@ -552,11 +552,11 @@ nova_center_preview_expose (GtkWidget  *widget,
       cairo_line_to (cr, width - 1, y + 0.5);
 
       cairo_set_line_width (cr, 3.0);
-      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.3);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
       cairo_stroke_preserve (cr);
 
       cairo_set_line_width (cr, 1.0);
-      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.7);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
       cairo_stroke (cr);
 
       cairo_destroy (cr);
