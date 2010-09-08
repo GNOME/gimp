@@ -25,6 +25,7 @@
     help
     image
     item
+    item_transform
     layer
     message
     misc
