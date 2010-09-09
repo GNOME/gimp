@@ -458,6 +458,15 @@ EXPORTS
 	gimp_item_set_tattoo
 	gimp_item_set_visible
 	gimp_item_to_selection
+	gimp_item_transform_2d
+	gimp_item_transform_flip
+	gimp_item_transform_flip_simple
+	gimp_item_transform_matrix
+	gimp_item_transform_perspective
+	gimp_item_transform_rotate
+	gimp_item_transform_rotate_simple
+	gimp_item_transform_scale
+	gimp_item_transform_shear
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
 	gimp_layer_copy
