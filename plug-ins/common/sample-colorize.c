@@ -920,34 +920,21 @@ update_preview (gint32 *id_ptr)
 }
 
 static void
-levels_draw_slider (GdkWindow *window,
-                    GdkGC     *border_gc,
-                    GdkGC     *fill_gc,
-                    gint       xpos)
+levels_draw_slider (cairo_t  *cr,
+                    GdkColor *border_color,
+                    GdkColor *fill_color,
+                    gint      xpos)
 {
-  gint y;
+  cairo_move_to (cr, xpos, 0);
+  cairo_line_to (cr, xpos - (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
+  cairo_line_to (cr, xpos + (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
+  cairo_line_to (cr, xpos, 0);
 
-  for (y = 0; y < CONTROL_HEIGHT; y++)
-    gdk_draw_line (window, fill_gc, xpos - y / 2, y,
-                   xpos + y / 2, y);
+  gdk_cairo_set_source_color (cr, fill_color);
+  cairo_fill_preserve (cr);
 
-  gdk_draw_line (window, border_gc, xpos, 0,
-                 xpos - (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
-
-  gdk_draw_line (window, border_gc, xpos, 0,
-                 xpos + (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
-
-  gdk_draw_line (window, border_gc,
-                 xpos - (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1,
-                 xpos + (CONTROL_HEIGHT - 1) / 2, CONTROL_HEIGHT - 1);
-}
-
-static void
-levels_erase_slider (GdkWindow *window,
-                     gint       xpos)
-{
-  gdk_window_clear_area (window, xpos - (CONTROL_HEIGHT - 1) / 2, 0,
-                         CONTROL_HEIGHT - 1, CONTROL_HEIGHT);
+  gdk_cairo_set_source_color (cr, border_color);
+  cairo_stroke (cr);
 }
 
 static void
@@ -1018,11 +1005,14 @@ levels_update (gint update)
   if (update & INPUT_SLIDERS)
     {
       GtkStyle *style = gtk_widget_get_style (g_di.in_lvl_drawarea);
+      cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (g_di.in_lvl_drawarea));
       gdouble   width, mid, tmp;
 
-      levels_erase_slider (gtk_widget_get_window (g_di.in_lvl_drawarea), g_di.slider_pos[0]);
-      levels_erase_slider (gtk_widget_get_window (g_di.in_lvl_drawarea), g_di.slider_pos[1]);
-      levels_erase_slider (gtk_widget_get_window (g_di.in_lvl_drawarea), g_di.slider_pos[2]);
+      gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+      cairo_paint (cr);
+
+      cairo_translate (cr, 0.5, 0.5);
+      cairo_set_line_width (cr, 1.0);
 
       g_di.slider_pos[0] = DA_WIDTH * ((double) g_values.lvl_in_min / 255.0);
       g_di.slider_pos[2] = DA_WIDTH * ((double) g_values.lvl_in_max / 255.0);
@@ -1032,38 +1022,46 @@ levels_update (gint update)
       tmp = log10 (1.0 / g_values.lvl_in_gamma);
       g_di.slider_pos[1] = (int) (mid + width * tmp + 0.5);
 
-      levels_draw_slider (gtk_widget_get_window (g_di.in_lvl_drawarea),
-                          style->black_gc,
-                          style->dark_gc[GTK_STATE_NORMAL],
+      levels_draw_slider (cr,
+                          &style->black,
+                          &style->dark[GTK_STATE_NORMAL],
                           g_di.slider_pos[1]);
-      levels_draw_slider (gtk_widget_get_window (g_di.in_lvl_drawarea),
-                          style->black_gc,
-                          style->black_gc,
+      levels_draw_slider (cr,
+                          &style->black,
+                          &style->black,
                           g_di.slider_pos[0]);
-      levels_draw_slider (gtk_widget_get_window (g_di.in_lvl_drawarea),
-                          style->black_gc,
-                          style->white_gc,
+      levels_draw_slider (cr,
+                          &style->black,
+                          &style->white,
                           g_di.slider_pos[2]);
+
+      cairo_destroy (cr);
     }
 
   if (update & OUTPUT_SLIDERS)
     {
       GtkStyle *style = gtk_widget_get_style (g_di.sample_drawarea);
+      cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (g_di.sample_drawarea));
 
-      levels_erase_slider (gtk_widget_get_window (g_di.sample_drawarea), g_di.slider_pos[3]);
-      levels_erase_slider (gtk_widget_get_window (g_di.sample_drawarea), g_di.slider_pos[4]);
+      gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+      cairo_paint (cr);
+
+      cairo_translate (cr, 0.5, 0.5);
+      cairo_set_line_width (cr, 1.0);
 
       g_di.slider_pos[3] = DA_WIDTH * ((double) g_values.lvl_out_min / 255.0);
       g_di.slider_pos[4] = DA_WIDTH * ((double) g_values.lvl_out_max / 255.0);
 
-      levels_draw_slider (gtk_widget_get_window (g_di.sample_drawarea),
-                          style->black_gc,
-                          style->black_gc,
+      levels_draw_slider (cr,
+                          &style->black,
+                          &style->black,
                           g_di.slider_pos[3]);
-      levels_draw_slider (gtk_widget_get_window (g_di.sample_drawarea),
-                          style->black_gc,
-                          style->black_gc,
+      levels_draw_slider (cr,
+                          &style->black,
+                          &style->black,
                           g_di.slider_pos[4]);
+
+      cairo_destroy (cr);
     }
 }
 
