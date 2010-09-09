@@ -570,7 +570,7 @@ nova_center_preview_expose (GtkWidget  *widget,
  *    Handle other events on the preview
  */
 
-static gboolean
+static void
 nova_center_update (GtkWidget  *widget,
                     NovaCenter *center,
                     gint        x,
@@ -594,8 +594,6 @@ nova_center_update (GtkWidget  *widget,
   nova_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
 
   gtk_widget_queue_draw (center->preview->area);
-
-  return TRUE;
 }
 
 static gboolean
@@ -611,12 +609,10 @@ nova_center_preview_events (GtkWidget  *widget,
 
         if (mevent->state & GDK_BUTTON1_MASK)
           {
-            gboolean retval = nova_center_update (widget, center,
-                                                  mevent->x, mevent->y);
-
+            nova_center_update (widget, center, mevent->x, mevent->y);
             gdk_event_request_motions (mevent);
 
-            return retval;
+            return TRUE;
           }
       }
       break;
@@ -626,7 +622,11 @@ nova_center_preview_events (GtkWidget  *widget,
         GdkEventButton *bevent = (GdkEventButton *) event;
 
         if (bevent->button == 1)
-          return nova_center_update (widget, center, bevent->x, bevent->y);
+          {
+            nova_center_update (widget, center, bevent->x, bevent->y);
+
+            return TRUE;
+          }
       }
       break;
 
