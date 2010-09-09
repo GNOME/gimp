@@ -76,9 +76,6 @@ typedef struct
   GimpDrawable *drawable;
   GimpPreview  *preview;
   GtkWidget    *coords;
-  gboolean      cursor_drawn;
-  gint          curx, cury;                 /* x,y of cursor in preview */
-  gint          oldx, oldy;
 } FlareCenter;
 
 
@@ -96,10 +93,8 @@ static gboolean    flare_dialog                   (GimpDrawable     *drawable);
 
 static GtkWidget * flare_center_create            (GimpDrawable     *drawable,
                                                    GimpPreview      *preview);
-static void        flare_center_cursor_draw       (FlareCenter      *center);
 static void        flare_center_coords_update     (GimpSizeEntry    *coords,
                                                    FlareCenter      *center);
-static void        flare_center_cursor_update     (FlareCenter      *center);
 static void        flare_center_preview_realize   (GtkWidget        *widget,
                                                    FlareCenter      *center);
 static gboolean    flare_center_preview_expose    (GtkWidget        *widget,
@@ -742,13 +737,8 @@ flare_center_create (GimpDrawable *drawable,
 
   center = g_new0 (FlareCenter, 1);
 
-  center->drawable     = drawable;
-  center->preview      = preview;
-  center->cursor_drawn = FALSE;
-  center->curx         = 0;
-  center->cury         = 0;
-  center->oldx         = 0;
-  center->oldy         = 0;
+  center->drawable = drawable;
+  center->preview  = preview;
 
   frame = gimp_frame_new (_("Center of Flare Effect"));
 
@@ -800,8 +790,8 @@ flare_center_create (GimpDrawable *drawable,
                     G_CALLBACK (gimp_toggle_button_update),
                     &show_cursor);
   g_signal_connect_swapped (check, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            preview->area);
 
   g_signal_connect (preview->area, "realize",
                     G_CALLBACK (flare_center_preview_realize),
@@ -813,64 +803,8 @@ flare_center_create (GimpDrawable *drawable,
                     G_CALLBACK (flare_center_preview_events),
                     center);
 
-  flare_center_cursor_update (center);
-
   return frame;
 }
-
-/*
- *   Drawing CenterFrame
- *   if update & PREVIEW, draw preview
- *   if update & CURSOR,  draw cross cursor
- */
-
-static void
-flare_center_cursor_draw (FlareCenter *center)
-{
-  GtkWidget *prvw  = center->preview->area;
-  GtkStyle  *style = gtk_widget_get_style (prvw);
-  gint       width, height;
-
-  gimp_preview_get_size (center->preview, &width, &height);
-
-  gdk_gc_set_function (style->black_gc, GDK_INVERT);
-
-  if (show_cursor)
-    {
-      if (center->cursor_drawn)
-        {
-          gdk_draw_line (gtk_widget_get_window (prvw),
-                         style->black_gc,
-                         center->oldx, 1,
-                         center->oldx,
-                         height - 1);
-          gdk_draw_line (gtk_widget_get_window (prvw),
-                         style->black_gc,
-                         1, center->oldy,
-                         width - 1,
-                         center->oldy);
-        }
-
-      gdk_draw_line (gtk_widget_get_window (prvw),
-                     style->black_gc,
-                     center->curx, 1,
-                     center->curx,
-                     height - 1);
-      gdk_draw_line (gtk_widget_get_window (prvw),
-                     style->black_gc,
-                     1, center->cury,
-                     width - 1,
-                     center->cury);
-    }
-
-  /* current position of cursor is updated */
-  center->oldx         = center->curx;
-  center->oldy         = center->cury;
-  center->cursor_drawn = TRUE;
-
-  gdk_gc_set_function (style->black_gc, GDK_COPY);
-}
-
 
 /*
  *  CenterFrame entry callback
@@ -882,22 +816,7 @@ flare_center_coords_update (GimpSizeEntry *coords,
   fvals.posx = gimp_size_entry_get_refval (coords, 0);
   fvals.posy = gimp_size_entry_get_refval (coords, 1);
 
-  flare_center_cursor_update (center);
-  flare_center_cursor_draw (center);
-
   gimp_preview_invalidate (center->preview);
-}
-
-/*
- *  Update the cross cursor's coordinates accoding to pvals.[xy]center
- *  but not redraw it
- */
-static void
-flare_center_cursor_update (FlareCenter *center)
-{
-  gimp_preview_transform (center->preview,
-                          fvals.posx, fvals.posy,
-                          &center->curx, &center->cury);
 }
 
 /*
@@ -922,10 +841,36 @@ flare_center_preview_expose (GtkWidget   *widget,
                              GdkEvent    *event,
                              FlareCenter *center)
 {
-  center->cursor_drawn = FALSE;
+  if (show_cursor)
+    {
+      cairo_t *cr;
+      gint     x, y;
+      gint     width, height;
 
-  flare_center_cursor_update (center);
-  flare_center_cursor_draw (center);
+      cr = gdk_cairo_create (gtk_widget_get_window (center->preview->area));
+
+      gimp_preview_transform (center->preview,
+                              fvals.posx, fvals.posy,
+                              &x, &y);
+
+      gimp_preview_get_size (center->preview, &width, &height);
+
+      cairo_move_to (cr, x + 0.5, 0);
+      cairo_line_to (cr, x + 0.5, height);
+
+      cairo_move_to (cr, 0,     y + 0.5);
+      cairo_line_to (cr, width, y + 0.5);
+
+      cairo_set_line_width (cr, 3.0);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+      cairo_stroke_preserve (cr);
+
+      cairo_set_line_width (cr, 1.0);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+      cairo_stroke (cr);
+
+      cairo_destroy (cr);
+    }
 
   return FALSE;
 }
@@ -956,8 +901,6 @@ flare_center_preview_events (GtkWidget   *widget,
                                       bevent->x, bevent->y,
                                       &tx, &ty);
 
-            flare_center_cursor_draw (center);
-
             g_signal_handlers_block_by_func (center->coords,
                                              flare_center_coords_update,
                                              center);
@@ -972,6 +915,10 @@ flare_center_preview_events (GtkWidget   *widget,
                                                center);
 
             flare_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
+
+            gtk_widget_queue_draw (center->preview->area);
+
+            return TRUE;
           }
       }
       break;
