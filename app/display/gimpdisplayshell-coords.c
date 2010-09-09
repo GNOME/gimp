@@ -163,7 +163,9 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           coords->velocity = MIN (coords->velocity, 1.0);
         }
 
-      if ((fabs (delta_x) > DIRECTION_RADIUS) && (fabs (delta_y) > DIRECTION_RADIUS))
+      if (((fabs (delta_x) > DIRECTION_RADIUS) &&
+           (fabs (delta_y) > DIRECTION_RADIUS)) ||
+          (shell->event_history->len < 4))
         {
           dir_delta_x = delta_x;
           dir_delta_y = delta_y;
@@ -173,7 +175,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           gint x = 3;
 
           while (((fabs (dir_delta_x) < DIRECTION_RADIUS) ||
-                  (fabs (dir_delta_y) < DIRECTION_RADIUS)) && (x >= 0))
+                  (fabs (dir_delta_y) < DIRECTION_RADIUS)) &&
+                  (x >= 0))
             {
               const GimpCoords old_event = g_array_index (shell->event_history,
                                                           GimpCoords, x);
