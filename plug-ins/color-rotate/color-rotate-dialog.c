@@ -200,7 +200,6 @@ rcm_create_one_circle (gint         height,
 
   st = g_new (RcmCircle, 1);
 
-  st->action_flag   = VIRGIN;
   st->angle         = g_new (RcmAngle, 1);
   st->angle->alpha  = INITIAL_ALPHA;
   st->angle->beta   = INITIAL_BETA;
@@ -407,9 +406,8 @@ rcm_create_gray (void)
   GtkAdjustment *adj;
 
   Current.Gray = st = g_new (RcmGray, 1);
-  st->hue         = 0;
-  st->satur       = 0;
-  st->action_flag = VIRGIN;
+  st->hue   = 0;
+  st->satur = 0;
 
   top_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (top_vbox), 12);

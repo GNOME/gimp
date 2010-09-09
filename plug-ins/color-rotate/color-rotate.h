@@ -90,7 +90,6 @@ typedef struct
   gfloat     *target;
   gint        mode;
   RcmAngle   *angle;
-  RcmOp       action_flag;
   gfloat      prev_clicked;
 } RcmCircle;
 
