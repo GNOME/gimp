@@ -86,16 +86,6 @@ void        gimp_color_area_set_type        (GimpColorArea     *area,
 void        gimp_color_area_set_draw_border (GimpColorArea     *area,
                                              gboolean           draw_border);
 
-/*  only for private use in libgimpwidgets  */
-G_GNUC_INTERNAL void _gimp_color_area_render_buf (GtkWidget         *widget,
-                                                  gboolean           insensitive,
-                                                  GimpColorAreaType  type,
-                                                  guchar            *buf,
-                                                  guint              width,
-                                                  guint              height,
-                                                  guint              rowstride,
-                                                  GimpRGB           *color);
-
 
 G_END_DECLS
 

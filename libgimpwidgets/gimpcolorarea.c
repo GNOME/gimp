@@ -28,6 +28,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpcairo-utils.h"
 #include "gimpcolorarea.h"
 
 
@@ -77,6 +78,14 @@ static void      gimp_color_area_state_changed (GtkWidget          *widget,
                                                 GtkStateType        previous_state);
 static gboolean  gimp_color_area_expose        (GtkWidget          *widget,
                                                 GdkEventExpose     *event);
+static void      gimp_color_area_render_buf    (GtkWidget          *widget,
+                                                gboolean            insensitive,
+                                                GimpColorAreaType   type,
+                                                guchar             *buf,
+                                                guint               width,
+                                                guint               height,
+                                                guint               rowstride,
+                                                GimpRGB            *color);
 static void      gimp_color_area_render        (GimpColorArea      *area);
 
 static void  gimp_color_area_drag_begin         (GtkWidget        *widget,
@@ -305,7 +314,7 @@ gimp_color_area_size_allocate (GtkWidget     *widget,
       area->width  = allocation->width;
       area->height = allocation->height;
 
-      area->rowstride = (area->width * 3 + 3) & ~0x3;
+      area->rowstride = area->width * 4 + 4;
 
       g_free (area->buf);
       area->buf = g_new (guchar, area->rowstride * area->height);
@@ -332,9 +341,10 @@ static gboolean
 gimp_color_area_expose (GtkWidget      *widget,
                         GdkEventExpose *event)
 {
-  GimpColorArea *area  = GIMP_COLOR_AREA (widget);
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  guchar        *buf;
+  GimpColorArea   *area  = GIMP_COLOR_AREA (widget);
+  GtkStyle        *style = gtk_widget_get_style (widget);
+  cairo_t         *cr;
+  cairo_surface_t *buffer;
 
   if (! area->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
@@ -342,26 +352,33 @@ gimp_color_area_expose (GtkWidget      *widget,
   if (area->needs_render)
     gimp_color_area_render (area);
 
-  buf = area->buf + event->area.y * area->rowstride + event->area.x * 3;
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
-  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                style->black_gc,
-                                event->area.x,
-                                event->area.y,
-                                event->area.width,
-                                event->area.height,
-                                GDK_RGB_DITHER_MAX,
-                                buf,
-                                area->rowstride,
-                                event->area.x,
-                                event->area.y);
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  buffer = cairo_image_surface_create_for_data (area->buf,
+                                                CAIRO_FORMAT_RGB24,
+                                                area->width,
+                                                area->height,
+                                                area->rowstride);
+  cairo_set_source_surface (cr, buffer, 0.0, 0.0);
+  cairo_surface_destroy (buffer);
+
+  cairo_paint (cr);
 
   if (area->draw_border)
-    gdk_draw_rectangle (gtk_widget_get_window (widget),
-                        style->fg_gc[gtk_widget_get_state (widget)],
-                        FALSE,
-                        0, 0,
-                        area->width - 1, area->height - 1);
+    {
+      cairo_set_line_width (cr, 1.0);
+      gdk_cairo_set_source_color (cr,
+                                  &style->fg[gtk_widget_get_state (widget)]);
+
+      cairo_rectangle (cr, 0.5, 0.5, area->width - 1, area->height - 1);
+
+      cairo_stroke (cr);
+    }
+
+  cairo_destroy (cr);
 
   return FALSE;
 }
@@ -505,17 +522,17 @@ gimp_color_area_set_draw_border (GimpColorArea *area,
     }
 }
 
-void
-_gimp_color_area_render_buf (GtkWidget         *widget,
-                             gboolean           insensitive,
-                             GimpColorAreaType  type,
-                             guchar            *buf,
-                             guint              width,
-                             guint              height,
-                             guint              rowstride,
-                             GimpRGB           *color)
+static void
+gimp_color_area_render_buf (GtkWidget         *widget,
+                            gboolean           insensitive,
+                            GimpColorAreaType  type,
+                            guchar            *buf,
+                            guint              width,
+                            guint              height,
+                            guint              rowstride,
+                            GimpRGB           *color)
 {
-  GtkStyle *style;
+  GtkStyle *style = gtk_widget_get_style (widget);
   guint     x, y;
   guint     check_size = 0;
   guchar    light[3];
@@ -524,12 +541,6 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
   guchar    insens[3];
   guchar   *p;
   gdouble   frac;
-
-  g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (buf != NULL);
-  g_return_if_fail (color != NULL);
-
-  style = gtk_widget_get_style (widget);
 
   switch (type)
     {
@@ -562,16 +573,20 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
             {
               if (insensitive && ((x + y) % 2))
                 {
-                  *p++ = insens[0];
-                  *p++ = insens[1];
-                  *p++ = insens[2];
+                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                              insens[0],
+                                              insens[1],
+                                              insens[2]);
                 }
               else
                 {
-                  *p++ = opaque[0];
-                  *p++ = opaque[1];
-                  *p++ = opaque[2];
+                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                              opaque[0],
+                                              opaque[1],
+                                              opaque[2]);
                 }
+
+              p += 4;
             }
         }
 
@@ -600,9 +615,11 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
         {
           if ((width - x) * height > y * width)
             {
-              *p++ = opaque[0];
-              *p++ = opaque[1];
-              *p++ = opaque[2];
+              GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                          opaque[0],
+                                          opaque[1],
+                                          opaque[2]);
+              p += 4;
 
               continue;
             }
@@ -613,53 +630,60 @@ _gimp_color_area_render_buf (GtkWidget         *widget,
             {
               if ((gint) frac)
                 {
-                  *p++ = light[0];
-                  *p++ = light[1];
-                  *p++ = light[2];
+                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                              light[0],
+                                              light[1],
+                                              light[2]);
                 }
               else
                 {
-                  *p++ = ((gdouble) light[0]  * frac +
-                          (gdouble) opaque[0] * (1.0 - frac));
-                  *p++ = ((gdouble) light[1]  * frac +
-                          (gdouble) opaque[1] * (1.0 - frac));
-                  *p++ = ((gdouble) light[2]  * frac +
-                          (gdouble) opaque[2] * (1.0 - frac));
+                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                              ((gdouble) light[0]  * frac +
+                                               (gdouble) opaque[0] * (1.0 - frac)),
+                                              ((gdouble) light[1]  * frac +
+                                               (gdouble) opaque[1] * (1.0 - frac)),
+                                              ((gdouble) light[2]  * frac +
+                                               (gdouble) opaque[2] * (1.0 - frac)));
                 }
             }
           else
             {
               if ((gint) frac)
                 {
-                  *p++ = dark[0];
-                  *p++ = dark[1];
-                  *p++ = dark[2];
+                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                              dark[0],
+                                              dark[1],
+                                              dark[2]);
                 }
               else
                 {
-                  *p++ = ((gdouble) dark[0] * frac +
-                          (gdouble) opaque[0] * (1.0 - frac));
-                  *p++ = ((gdouble) dark[1] * frac +
-                          (gdouble) opaque[1] * (1.0 - frac));
-                  *p++ = ((gdouble) dark[2] * frac +
-                          (gdouble) opaque[2] * (1.0 - frac));
+                  GIMP_CAIRO_RGB24_SET_PIXEL (p,
+                                              ((gdouble) dark[0] * frac +
+                                               (gdouble) opaque[0] * (1.0 - frac)),
+                                              ((gdouble) dark[1] * frac +
+                                               (gdouble) opaque[1] * (1.0 - frac)),
+                                              ((gdouble) dark[2] * frac +
+                                               (gdouble) opaque[2] * (1.0 - frac)));
                 }
             }
+
+          p += 4;
         }
     }
 }
+
 static void
 gimp_color_area_render (GimpColorArea *area)
 {
   if (! area->buf)
     return;
 
-  _gimp_color_area_render_buf (GTK_WIDGET (area),
-                               ! gtk_widget_is_sensitive (GTK_WIDGET (area)),
-                               area->type,
-                               area->buf,
-                               area->width, area->height, area->rowstride,
-                               &area->color);
+  gimp_color_area_render_buf (GTK_WIDGET (area),
+                              ! gtk_widget_is_sensitive (GTK_WIDGET (area)),
+                              area->type,
+                              area->buf,
+                              area->width, area->height, area->rowstride,
+                              &area->color);
 
   area->needs_render = FALSE;
 }
