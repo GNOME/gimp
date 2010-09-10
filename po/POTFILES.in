@@ -274,6 +274,7 @@ app/pdb/gimppdbcontext.c
 app/pdb/gimpprocedure.c
 app/pdb/guides-cmds.c
 app/pdb/image-cmds.c
+app/pdb/item-transform-cmds.c
 app/pdb/layer-cmds.c
 app/pdb/paths-cmds.c
 app/pdb/procedural-db-cmds.c
