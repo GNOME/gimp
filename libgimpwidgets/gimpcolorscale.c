@@ -253,6 +253,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
   GtkRange       *range  = GTK_RANGE (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
+  cairo_t        *cr;
   GtkAllocation   allocation;
   GdkRectangle    range_rect;
   GdkRectangle    expose_area;        /* Relative to widget->allocation */
@@ -266,6 +267,11 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   if (! scale->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
+
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
 
   gtk_widget_style_get (widget,
                         "trough-border", &trough_border,
@@ -382,52 +388,54 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   if (gdk_rectangle_intersect (&event->area, &area, &expose_area))
     {
-      GdkGC *gc;
-
-      gc = (gtk_widget_is_sensitive (widget) ?
-            style->black_gc :
-            style->dark_gc[GTK_STATE_INSENSITIVE]);
-
-      gdk_gc_set_clip_rectangle (gc, &expose_area);
+      if (gtk_widget_is_sensitive (widget))
+        gdk_cairo_set_source_color (cr, &style->black);
+      else
+        gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_INSENSITIVE]);
 
       switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
         {
         case GTK_ORIENTATION_HORIZONTAL:
-          for (w = area.width, x = area.x, y = area.y;
-               w > 0; w -= 2, x++, y++)
-            gdk_draw_line (window, gc, x, y, x + w - 1, y);
+          cairo_move_to (cr, area.x, area.y);
+          cairo_line_to (cr, area.x + area.width, area.y);
+          cairo_line_to (cr, area.x + area.width / 2 + 0.5, area.y + area.height / 2 - 1);
           break;
+
         case GTK_ORIENTATION_VERTICAL:
-          for (h = area.height, x = area.x, y = area.y;
-               h > 0; h -= 2, x++, y++)
-            gdk_draw_line (window, gc, x, y, x, y + h - 1);
+          cairo_move_to (cr, area.x, area.y);
+          cairo_line_to (cr, area.x, area.y + area.height);
+          cairo_line_to (cr, area.x + area.width / 2 - 1, area.y + area.height / 2 + 0.5);
           break;
         }
 
-      gdk_gc_set_clip_rectangle (gc, NULL);
+      cairo_close_path (cr);
+      cairo_fill (cr);
 
-      gc = (gtk_widget_is_sensitive (widget) ?
-            style->white_gc :
-            style->light_gc[GTK_STATE_INSENSITIVE]);
-
-      gdk_gc_set_clip_rectangle (gc, &expose_area);
+      if (gtk_widget_is_sensitive (widget))
+        gdk_cairo_set_source_color (cr, &style->white);
+      else
+        gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_INSENSITIVE]);
 
       switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
         {
         case GTK_ORIENTATION_HORIZONTAL:
-          for (w = area.width, x = area.x, y = area.y + area.height - 1;
-               w > 0; w -= 2, x++, y--)
-            gdk_draw_line (window, gc, x, y, x + w - 1, y);
+          cairo_move_to (cr, area.x, area.y + area.height);
+          cairo_line_to (cr, area.x + area.width, area.y + area.height);
+          cairo_line_to (cr, area.x + area.width / 2 + 0.5, area.y + area.height / 2 + 1);
           break;
+
         case GTK_ORIENTATION_VERTICAL:
-          for (h = area.height, x = area.x + area.width - 1, y = area.y;
-               h > 0; h -= 2, x--, y++)
-            gdk_draw_line (window, gc, x, y, x, y + h - 1);
+          cairo_move_to (cr, area.x + area.width, area.y);
+          cairo_line_to (cr, area.x + area.width, area.y + area.height);
+          cairo_line_to (cr, area.x + area.width / 2 + 1, area.y + area.height / 2 + 1);
           break;
         }
 
-      gdk_gc_set_clip_rectangle (gc, NULL);
+      cairo_close_path (cr);
+      cairo_fill (cr);
     }
+
+  cairo_destroy (cr);
 
   return FALSE;
 }
