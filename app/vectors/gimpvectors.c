@@ -1104,6 +1104,7 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
        cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
     {
       bezdesc = gimp_stroke_make_bezier (cur_stroke);
+
       if (bezdesc)
         {
           cmd_array = g_array_append_vals (cmd_array, bezdesc->data,
