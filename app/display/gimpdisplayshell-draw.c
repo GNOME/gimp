@@ -584,10 +584,40 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
 }
 
 static void
-gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
-                                     cairo_t          *cr,
-                                     GimpVectors      *vectors,
-                                     gdouble           width)
+gimp_display_shell_draw_active_vectors (GimpDisplayShell *shell,
+                                        cairo_t          *cr,
+                                        GimpVectors      *vectors,
+                                        gdouble           width)
+{
+  GimpStroke *stroke = NULL;
+
+  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+    {
+      GimpBezierDesc *desc = gimp_vectors_make_bezier (vectors);
+
+      if (desc)
+        {
+          cairo_append_path (cr, (cairo_path_t *) desc);
+
+          cairo_set_line_width (cr, 1.6 * width);
+          cairo_set_source_rgb (cr, 0.0, 0.7, 1.0);
+          cairo_stroke_preserve (cr);
+
+          cairo_set_line_width (cr, width);
+          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          cairo_stroke (cr);
+
+          g_free (desc->data);
+          g_free (desc);
+        }
+    }
+}
+
+static void
+gimp_display_shell_draw_inactive_vectors (GimpDisplayShell *shell,
+                                          cairo_t          *cr,
+                                          GimpVectors      *vectors,
+                                          gdouble           width)
 {
   GimpStroke *stroke = NULL;
 
@@ -612,6 +642,7 @@ gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
         }
     }
 }
+
 void
 gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
                                  cairo_t          *cr)
@@ -625,6 +656,7 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
   if (image && TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
       GList       *all_vectors = gimp_image_get_vectors_list (image);
+      GimpVectors *active      = gimp_image_get_active_vectors (image);
       const GList *list;
       gdouble      xscale;
       gdouble      yscale;
@@ -646,8 +678,18 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
         {
           GimpVectors *vectors = list->data;
 
-          if (gimp_item_get_visible (GIMP_ITEM (vectors)))
-            gimp_display_shell_draw_one_vectors (shell, cr, vectors, width);
+          if (vectors != active &&
+              gimp_item_get_visible (GIMP_ITEM (vectors)))
+            {
+              gimp_display_shell_draw_inactive_vectors (shell, cr,
+                                                        vectors, width);
+            }
+        }
+
+      /*  the active vector is always rendered on top  */
+      if (active)
+        {
+          gimp_display_shell_draw_active_vectors (shell, cr, active, width);
         }
 
       g_list_free (all_vectors);

@@ -78,8 +78,6 @@ void       gimp_draw_tool_resume                   (GimpDrawTool     *draw_tool)
 
 gboolean   gimp_draw_tool_is_drawn                 (GimpDrawTool     *draw_tool);
 
-void       gimp_draw_tool_set_vectors              (GimpDrawTool     *draw_tool,
-                                                    GList            *vectors);
 void       gimp_draw_tool_set_transform            (GimpDrawTool     *draw_tool,
                                                     GimpMatrix3      *transform);
 

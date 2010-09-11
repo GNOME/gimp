@@ -118,8 +118,6 @@ static void     gimp_vector_tool_vectors_changed (GimpImage             *image,
                                                   GimpVectorTool        *vector_tool);
 static void     gimp_vector_tool_vectors_removed (GimpVectors           *vectors,
                                                   GimpVectorTool        *vector_tool);
-static void     gimp_vector_tool_vectors_visible (GimpVectors           *vectors,
-                                                  GimpVectorTool        *vector_tool);
 static void     gimp_vector_tool_vectors_freeze  (GimpVectors           *vectors,
                                                   GimpVectorTool        *vector_tool);
 static void     gimp_vector_tool_vectors_thaw    (GimpVectors           *vectors,
@@ -1399,18 +1397,15 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpVectorTool  *vector_tool = GIMP_VECTOR_TOOL (draw_tool);
-  GimpAnchor      *cur_anchor  = NULL;
-  GimpStroke      *cur_stroke  = NULL;
-  GimpVectors     *vectors;
-  GArray          *coords;
-  gboolean         closed;
-  GList           *draw_anchors;
-  GList           *list;
+  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (draw_tool);
+  GimpVectors    *vectors     = vector_tool->vectors;
+  GimpAnchor     *cur_anchor  = NULL;
+  GimpStroke     *cur_stroke  = NULL;
+  GArray         *coords;
+  GList          *draw_anchors;
+  GList          *list;
 
-  vectors = vector_tool->vectors;
-
-  if (!vectors)
+  if (! vectors)
     return;
 
   while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
@@ -1483,23 +1478,6 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
               g_array_free (coords, TRUE);
             }
         }
-
-      /* the stroke itself */
-      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
-        {
-          coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
-
-          if (coords)
-            {
-              if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
-
-              g_array_free (coords, TRUE);
-            }
-        }
     }
 }
 
@@ -1516,37 +1494,6 @@ gimp_vector_tool_vectors_removed (GimpVectors    *vectors,
                                   GimpVectorTool *vector_tool)
 {
   gimp_vector_tool_set_vectors (vector_tool, NULL);
-}
-
-static void
-gimp_vector_tool_vectors_visible (GimpVectors    *vectors,
-                                  GimpVectorTool *vector_tool)
-{
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (vector_tool);
-
-  if (gimp_draw_tool_is_active (draw_tool) && draw_tool->paused_count == 0)
-    {
-      GimpStroke *stroke = NULL;
-
-      while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-        {
-          GArray   *coords;
-          gboolean  closed;
-
-          coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
-          if (coords)
-            {
-              if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
-
-              g_array_free (coords, TRUE);
-            }
-        }
-    }
 }
 
 static void
@@ -1611,9 +1558,6 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                                             gimp_vector_tool_vectors_removed,
                                             vector_tool);
       g_signal_handlers_disconnect_by_func (vector_tool->vectors,
-                                            gimp_vector_tool_vectors_visible,
-                                            vector_tool);
-      g_signal_handlers_disconnect_by_func (vector_tool->vectors,
                                             gimp_vector_tool_vectors_freeze,
                                             vector_tool);
       g_signal_handlers_disconnect_by_func (vector_tool->vectors,
@@ -1664,9 +1608,6 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                            vector_tool, 0);
   g_signal_connect_object (vectors, "removed",
                            G_CALLBACK (gimp_vector_tool_vectors_removed),
-                           vector_tool, 0);
-  g_signal_connect_object (vectors, "visibility-changed",
-                           G_CALLBACK (gimp_vector_tool_vectors_visible),
                            vector_tool, 0);
   g_signal_connect_object (vectors, "freeze",
                            G_CALLBACK (gimp_vector_tool_vectors_freeze),

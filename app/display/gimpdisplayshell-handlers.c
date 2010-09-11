@@ -104,6 +104,9 @@ static void   gimp_display_shell_exported_handler           (GimpImage        *i
                                                              const gchar      *uri,
                                                              GimpDisplayShell *shell);
 
+static void   gimp_display_shell_active_vectors_handler     (GimpImage        *image,
+                                                             GimpDisplayShell *shell);
+
 static void   gimp_display_shell_vectors_freeze_handler     (GimpVectors      *vectors,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_vectors_thaw_handler       (GimpVectors      *vectors,
@@ -200,6 +203,10 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (image, "exported",
                     G_CALLBACK (gimp_display_shell_exported_handler),
+                    shell);
+
+  g_signal_connect (image, "active-vectors-changed",
+                    G_CALLBACK (gimp_display_shell_active_vectors_handler),
                     shell);
 
   shell->vectors_freeze_handler =
@@ -344,6 +351,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimp_tree_handler_disconnect (shell->vectors_freeze_handler);
   shell->vectors_freeze_handler = NULL;
+
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_active_vectors_handler,
+                                        shell);
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_exported_handler,
@@ -601,6 +612,13 @@ gimp_display_shell_exported_handler (GimpImage        *image,
                             GTK_STOCK_SAVE, _("Image exported to '%s'"),
                             filename);
   g_free (filename);
+}
+
+static void
+gimp_display_shell_active_vectors_handler (GimpImage        *image,
+                                           GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_full (shell);
 }
 
 static void
