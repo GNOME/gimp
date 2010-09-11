@@ -391,13 +391,17 @@ gimp_color_scale_expose (GtkWidget      *widget,
         case GTK_ORIENTATION_HORIZONTAL:
           cairo_move_to (cr, area.x, area.y);
           cairo_line_to (cr, area.x + area.width, area.y);
-          cairo_line_to (cr, area.x + area.width / 2 + 0.5, area.y + area.height / 2 - 1);
+          cairo_line_to (cr,
+                         area.x + area.width / 2 + 0.5,
+                         area.y + area.width / 2);
           break;
 
         case GTK_ORIENTATION_VERTICAL:
           cairo_move_to (cr, area.x, area.y);
           cairo_line_to (cr, area.x, area.y + area.height);
-          cairo_line_to (cr, area.x + area.width / 2 - 1, area.y + area.height / 2 + 0.5);
+          cairo_line_to (cr,
+                         area.x + area.height / 2,
+                         area.y + area.height / 2 + 0.5);
           break;
         }
 
@@ -414,13 +418,17 @@ gimp_color_scale_expose (GtkWidget      *widget,
         case GTK_ORIENTATION_HORIZONTAL:
           cairo_move_to (cr, area.x, area.y + area.height);
           cairo_line_to (cr, area.x + area.width, area.y + area.height);
-          cairo_line_to (cr, area.x + area.width / 2 + 0.5, area.y + area.height / 2 + 1);
+          cairo_line_to (cr,
+                         area.x + area.width / 2 + 0.5,
+                         area.y + area.height - area.width / 2);
           break;
 
         case GTK_ORIENTATION_VERTICAL:
           cairo_move_to (cr, area.x + area.width, area.y);
           cairo_line_to (cr, area.x + area.width, area.y + area.height);
-          cairo_line_to (cr, area.x + area.width / 2 + 1, area.y + area.height / 2 + 1);
+          cairo_line_to (cr,
+                         area.x + area.width - area.height / 2,
+                         area.y + area.height / 2 + 0.5);
           break;
         }
 
