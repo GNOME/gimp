@@ -400,10 +400,15 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
   GimpOffsetArea *area   = GIMP_OFFSET_AREA (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GdkWindow      *window = gtk_widget_get_window (widget);
+  cairo_t        *cr;
   GtkAllocation   allocation;
   GdkPixbuf      *pixbuf;
   gint            w, h;
   gint            x, y;
+
+  cr = gdk_cairo_create (eevent->window);
+  gdk_cairo_region (cr, eevent->region);
+  cairo_clip (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -427,10 +432,13 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
 
   if (pixbuf)
     {
-      gdk_draw_pixbuf (window, style->black_gc,
-                       pixbuf, 0, 0, x, y, w, h, GDK_RGB_DITHER_NORMAL, 0, 0);
-      gdk_draw_rectangle (window, style->black_gc, FALSE,
-                          x, y, w - 1, h - 1);
+      gdk_cairo_set_source_pixbuf (cr, pixbuf, x, y);
+      cairo_paint (cr);
+
+      cairo_rectangle (cr, x + 0.5, y + 0.5, w - 1, h - 1);
+      cairo_set_line_width (cr, 1.0);
+      gdk_cairo_set_source_color (cr, &style->black);
+      cairo_stroke (cr);
     }
   else
     {
@@ -442,6 +450,8 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
 
   if (area->orig_width > area->width || area->orig_height > area->height)
     {
+      gint line_width;
+
        if (area->orig_width > area->width)
         {
           x = area->display_ratio_x * (area->orig_width - area->width);
@@ -467,30 +477,24 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
       w = MAX (w, 1);
       h = MAX (h, 1);
 
-      if (pixbuf)
-        {
-          GdkGC *gc   = gdk_gc_new (window);
-          gint   line = MIN (3, MIN (w, h));
+      line_width = MIN (3, MIN (w, h));
 
-          gdk_gc_set_function (gc, GDK_INVERT);
-          gdk_gc_set_line_attributes (gc, line,
-                                      GDK_LINE_SOLID, GDK_CAP_BUTT,
-                                      GDK_JOIN_ROUND);
+      cairo_rectangle (cr,
+                       x + line_width / 2.0,
+                       y + line_width / 2.0,
+                       MAX (w - line_width, 1),
+                       MAX (h - line_width, 1));
 
-          gdk_draw_rectangle (window, gc, FALSE,
-                              x + line / 2,
-                              y + line / 2,
-                              MAX (w - line, 1),
-                              MAX (h - line, 1));
+      cairo_set_line_width (cr, line_width);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+      cairo_stroke_preserve (cr);
 
-          g_object_unref (gc);
-       }
-      else
-        {
-          gdk_draw_rectangle (window, style->black_gc, FALSE,
-                              x, y, w, h);
-        }
+      cairo_set_line_width (cr, 1.0);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+      cairo_stroke (cr);
     }
+
+  cairo_destroy (cr);
 
   return FALSE;
 }
