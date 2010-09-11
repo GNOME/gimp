@@ -607,24 +607,22 @@ static void
 gimp_display_shell_vectors_freeze_handler (GimpVectors      *vectors,
                                            GimpDisplayShell *shell)
 {
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
+  /* do nothing */
 }
 
 static void
 gimp_display_shell_vectors_thaw_handler (GimpVectors      *vectors,
                                          GimpDisplayShell *shell)
 {
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_expose_vectors (shell, vectors);
 }
 
 static void
 gimp_display_shell_vectors_visible_handler (GimpVectors      *vectors,
                                             GimpDisplayShell *shell)
 {
-  if (shell->paused_count == 0)
-    gimp_display_shell_draw_vector (shell, vectors);
+  gimp_display_shell_expose_vectors (shell, vectors);
 }
 
 static void
@@ -632,8 +630,8 @@ gimp_display_shell_vectors_add_handler (GimpContainer    *container,
                                         GimpVectors      *vectors,
                                         GimpDisplayShell *shell)
 {
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_expose_vectors (shell, vectors);
 }
 
 static void
@@ -641,8 +639,8 @@ gimp_display_shell_vectors_remove_handler (GimpContainer    *container,
                                            GimpVectors      *vectors,
                                            GimpDisplayShell *shell)
 {
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_display_shell_expose_vectors (shell, vectors);
 }
 
 static void

@@ -583,47 +583,38 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
   cairo_mask (cr, mask);
 }
 
-void
-gimp_display_shell_draw_vector (GimpDisplayShell *shell,
-                                GimpVectors      *vectors)
+static void
+gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
+                                     cairo_t          *cr,
+                                     GimpVectors      *vectors,
+                                     gdouble           width)
 {
   GimpStroke *stroke = NULL;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
-      GArray   *coords;
-      gboolean  closed;
+      GimpBezierDesc *desc = gimp_vectors_make_bezier (vectors);
 
-      coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
-      if (coords && coords->len > 0)
+      if (desc)
         {
-          GdkPoint *gdk_coords = g_new (GdkPoint, coords->len);
+          cairo_append_path (cr, (cairo_path_t *) desc);
 
-          gimp_display_shell_transform_coords (shell,
-                                               &g_array_index (coords,
-                                                               GimpCoords, 0),
-                                               gdk_coords,
-                                               coords->len,
-                                               FALSE);
+          cairo_set_line_width (cr, 1.6 * width);
+          cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+          cairo_stroke_preserve (cr);
 
-          gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                                  GIMP_CANVAS_STYLE_XOR,
-                                  gdk_coords, coords->len);
+          cairo_set_line_width (cr, width);
+          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          cairo_stroke (cr);
 
-          g_free (gdk_coords);
+          g_free (desc->data);
+          g_free (desc);
         }
-
-      if (coords)
-        g_array_free (coords, TRUE);
     }
 }
-
 void
-gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
+gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
+                                 cairo_t          *cr)
 {
   GimpImage *image;
 
@@ -633,17 +624,30 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell)
 
   if (image && TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
-      GList *all_vectors;
-      GList *list;
+      GList       *all_vectors = gimp_image_get_vectors_list (image);
+      const GList *list;
+      gdouble      xscale;
+      gdouble      yscale;
+      gdouble      width;
 
-      all_vectors = gimp_image_get_vectors_list (image);
+      if (! all_vectors)
+        return;
+
+      cairo_translate (cr, - shell->offset_x, - shell->offset_y);
+      cairo_scale (cr, shell->scale_x, shell->scale_y);
+
+      /* determine a reasonable line width */
+      xscale = yscale = 2.0;
+      cairo_device_to_user_distance (cr, &xscale, &yscale);
+      width = MAX (xscale, yscale);
+      width = MIN (width, 2.0);
 
       for (list = all_vectors; list; list = list->next)
         {
           GimpVectors *vectors = list->data;
 
           if (gimp_item_get_visible (GIMP_ITEM (vectors)))
-            gimp_display_shell_draw_vector (shell, vectors);
+            gimp_display_shell_draw_one_vectors (shell, cr, vectors, width);
         }
 
       g_list_free (all_vectors);

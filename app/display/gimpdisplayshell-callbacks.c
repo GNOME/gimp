@@ -268,8 +268,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
-
-  gimp_display_shell_draw_vectors (shell);
 }
 
 void
@@ -2306,6 +2304,11 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   /* draw the transform tool preview */
   cairo_save (cr);
   gimp_display_shell_preview_transform (shell, cr);
+  cairo_restore (cr);
+
+  /* draw the vectors */
+  cairo_save (cr);
+  gimp_display_shell_draw_vectors (shell, cr);
   cairo_restore (cr);
 
   /* draw the grid */

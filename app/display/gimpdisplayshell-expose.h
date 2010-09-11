@@ -28,6 +28,8 @@ void        gimp_display_shell_expose_guide        (GimpDisplayShell   *shell,
                                                     GimpGuide          *guide);
 void        gimp_display_shell_expose_sample_point (GimpDisplayShell   *shell,
                                                     GimpSamplePoint    *sample_point);
+void        gimp_display_shell_expose_vectors      (GimpDisplayShell   *shell,
+                                                    GimpVectors        *vectors);
 void        gimp_display_shell_expose_full         (GimpDisplayShell   *shell);
 
 

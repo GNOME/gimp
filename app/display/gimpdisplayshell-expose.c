@@ -108,6 +108,17 @@ gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
 }
 
 void
+gimp_display_shell_expose_vectors (GimpDisplayShell *shell,
+                                   GimpVectors      *vectors)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (vectors != NULL);
+
+  // FIXME
+  gimp_display_shell_expose_full (shell);
+}
+
+void
 gimp_display_shell_expose_full (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
