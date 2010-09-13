@@ -69,8 +69,10 @@ static void      compute_difference   (GimpDrawable *drawable,
                                        GimpDrawable *drawable2,
                                        guchar       *maxval);
 
-static void      normalize            (GimpDrawable *drawable,
-                                       guint         maxval);
+static void      normalize_invert     (GimpDrawable *drawable,
+                                       gboolean      normalize,
+                                       guint         maxval,
+                                       gboolean      invert);
 
 static void      dog                  (gint32        image_ID,
                                        GimpDrawable *drawable,
@@ -495,16 +497,16 @@ dog (gint32        image_ID,
   gimp_drawable_merge_shadow (drawable_id, TRUE);
   gimp_drawable_update (drawable_id, x1, y1, width, height);
 
-  if (dogvals.normalize)
+  if (dogvals.normalize || dogvals.invert)
+    /* gimp_invert doesn't work properly with previews due to shadow handling
+     * so reimplement it here - see Bug 557380
+     */
     {
-      normalize (drawable, maxval);
+      normalize_invert (drawable, dogvals.normalize, maxval, dogvals.invert);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable_id, TRUE);
       gimp_drawable_update (drawable_id, x1, y1, width, height);
     }
-
-  if (dogvals.invert)
-    gimp_invert (drawable_id);
 }
 
 
@@ -595,8 +597,10 @@ compute_difference (GimpDrawable *drawable,
 
 
 static void
-normalize (GimpDrawable *drawable,
-           guint         maxval)
+normalize_invert (GimpDrawable *drawable,
+                  gboolean      normalize,
+                  guint         maxval,
+                  gboolean      invert)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint         bpp;
@@ -606,10 +610,11 @@ normalize (GimpDrawable *drawable,
   gboolean     has_alpha;
   gdouble      factor;
 
-  if (maxval == 0)
-    return;
+  if (normalize && maxval != 0) {
+      factor = 255.0 / maxval;
+    }
   else
-    factor = 255.0 / maxval;
+    factor = 1.0;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bpp = drawable->bpp;
@@ -642,12 +647,20 @@ normalize (GimpDrawable *drawable,
               if (has_alpha)
                 {
                   for (k = 0; k < bpp-1; k++)
-                    d[k] = factor * s[k];
+                    {
+                      d[k] = factor * s[k];
+                      if (invert)
+                        d[k] = 255 - d[k];
+                    }
                 }
               else
                 {
                   for (k = 0; k < bpp; k++)
-                    d[k] = factor * s[k];
+                    {
+                      d[k] = factor * s[k];
+                      if (invert)
+                        d[k] = 255 - d[k];
+                    }
                 }
 
               s += bpp;
