@@ -121,12 +121,18 @@ CURSOR_IMAGES = \
 	tool-zoom.png				\
 	tool-zoom-bw.png
 
+COLOR_PICKER_IMAGES = \
+	cursor-color-picker.png			\
+	cursor-color-picker-bw.png
+
 EXTRA_DIST = \
 	$(CURSOR_IMAGES)			\
 	gimp-tool-cursors.xcf			\
 	makefile.msc
 
-noinst_DATA = gimp-tool-cursors.h
+noinst_DATA = \
+	gimp-tool-cursors.h			\
+	gimp-color-picker-cursors.h
 
 CLEANFILES = gimp-tool-cursors.h tool-cursors.list
 
@@ -138,5 +144,16 @@ tool-cursors.list: $(CURSOR_IMAGES) Makefile.am
 	    echo "  $(srcdir)/$$image" >> $@; \
 	  done )
 
+color-picker-cursors.list: $(COLOR_PICKER_IMAGES) Makefile.am
+	( rm -f $@; \
+	  for image in $(COLOR_PICKER_IMAGES); do \
+	    echo $$image | \
+	      sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
+	    echo "  $(srcdir)/$$image" >> $@; \
+	  done )
+
 $(srcdir)/gimp-tool-cursors.h: tool-cursors.list
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat tool-cursors.list` > $(@F)
+
+$(srcdir)/gimp-color-picker-cursors.h: color-picker-cursors.list
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat color-picker-cursors.list` > $(@F)
