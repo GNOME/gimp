@@ -1110,3 +1110,38 @@ gimp_layer_set_mode (gint32               layer_ID,
 
   return success;
 }
+
+/**
+ * _gimp_layer_group_new:
+ * @image_ID: The image to which to add the layer group.
+ *
+ * Create a new layer group.
+ *
+ * This procedure creates a new layer group. Attributes such as layer
+ * mode and opacity should be set with explicit procedure calls. Add
+ * the new layer group (which is a kind of layer) with the
+ * gimp_image_insert_layer() command.
+ *
+ * Returns: The newly created layer group.
+ *
+ * Since: GIMP 2.8
+ */
+gint32
+_gimp_layer_group_new (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_group_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-layer-group-new",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_group_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_group_ID;
+}

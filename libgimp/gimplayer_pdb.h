@@ -92,6 +92,7 @@ gboolean               gimp_layer_set_opacity          (gint32                 l
 GimpLayerModeEffects   gimp_layer_get_mode             (gint32                 layer_ID);
 gboolean               gimp_layer_set_mode             (gint32                 layer_ID,
                                                         GimpLayerModeEffects   mode);
+G_GNUC_INTERNAL gint32 _gimp_layer_group_new           (gint32                 image_ID);
 
 
 G_END_DECLS

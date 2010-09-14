@@ -481,6 +481,7 @@ EXPORTS
 	gimp_layer_get_opacity
 	gimp_layer_get_preserve_trans
 	gimp_layer_get_show_mask
+	gimp_layer_group_new
 	gimp_layer_is_floating_sel
 	gimp_layer_mode_effects_get_type
 	gimp_layer_new
