@@ -163,10 +163,7 @@ Note: Setting the markup of a text layer using Pango's markup is not
 supported for now.
 HELP
 
-    $author = 'Barak Itkin <lightningismyname@gmail.com>';
-    $copyright = 'Barak Itkin';
-    $date = '2010';
-    $since = '2.8';
+    barak_pdb_misc('2010', '2.8');
 
     @inargs = (
         { name => 'layer', type => 'layer',
@@ -1162,10 +1159,7 @@ keeping it as a text layer and not converting it to a bitmap like
 gimp_layer_resize() would do.
 HELP
 
-    	$author = 'Barak Itkin <lightningismyname@gmail.com>';
-	$copyright = 'Barak Itkin';
-	$date = '2009';
-	$since = '2.8';
+    barak_pdb_misc('2009', '2.8');
 
     @inargs = (
         { name => 'layer', type => 'layer',

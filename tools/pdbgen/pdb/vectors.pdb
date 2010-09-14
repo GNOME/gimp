@@ -122,10 +122,7 @@ sub vectors_copy {
 This procedure copies the specified vectors object and returns the copy.
 HELP
 
-    $author = 'Barak Itkin <lightningismyname@gmail.com>';
-    $copyright = 'Barak Itkin';
-    $date = '2008';
-    $since = '2.6';
+    barak_pdb_misc('2008', '2.6');
 
     @inargs = (
 	{ name => 'vectors', type => 'vectors',
