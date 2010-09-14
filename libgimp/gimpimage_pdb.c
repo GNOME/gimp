@@ -1011,7 +1011,13 @@ gimp_image_add_layer (gint32 image_ID,
  * Add the specified layer to the image.
  *
  * This procedure adds the specified layer to the image at the given
- * position. If the position is specified as -1 and the parent is
+ * position. If the specified parent is a valid layer group (See
+ * gimp_item_is_group() and gimp_layer_group_new()) then the layer is
+ * added inside the group. If the parent is NULL, the layer is added
+ * inside the main stack, outside of any group. The position argument
+ * specifies the location of the layer inside the stack (or the group,
+ * if a valid parent was supplied), starting from the top (0) and
+ * increasing. If the position is specified as -1 and the parent is
  * specified as NULL, then the layer is inserted above the active
  * layer. The layer type must be compatible with the image base type.
  *
@@ -1121,9 +1127,11 @@ gimp_image_add_channel (gint32 image_ID,
  * Add the specified channel to the image.
  *
  * This procedure adds the specified channel to the image at the given
- * position. If the position is specified as -1 and the parent is
- * specified as NULL, then the channel is inserted above the active
- * channel.
+ * position. Since channel groups are not currently supported, the
+ * parent argument must always be NULL. The position argument specifies
+ * the location of the channel inside the stack, starting from the top
+ * (0) and increasing. If the position is specified as -1, then the
+ * channel is inserted above the active channel.
  *
  * Returns: TRUE on success.
  */
@@ -1228,9 +1236,11 @@ gimp_image_add_vectors (gint32 image_ID,
  * Add the specified vectors to the image.
  *
  * This procedure adds the specified vectors to the image at the given
- * position. If the position is specified as -1 and the parent is
- * specified as NULL, then the vectors is inserted above the active
- * vectors.
+ * position. Since vectors groups are not currently supported, the
+ * parent argument must always be NULL. The position argument specifies
+ * the location of the vectors inside the stack, starting from the top
+ * (0) and increasing. If the position is specified as -1, then the
+ * vectors is inserted above the active vectors.
  *
  * Returns: TRUE on success.
  */
