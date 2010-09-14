@@ -134,7 +134,11 @@ noinst_DATA = \
 	gimp-tool-cursors.h			\
 	gimp-color-picker-cursors.h
 
-CLEANFILES = gimp-tool-cursors.h tool-cursors.list
+CLEANFILES = \
+	gimp-tool-cursors.h			\
+	tool-cursors.list			\
+	gimp-color-picker-cursors.h		\
+	color-picker-cursors.list
 
 tool-cursors.list: $(CURSOR_IMAGES) Makefile.am
 	( rm -f $@; \
