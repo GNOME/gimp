@@ -51,7 +51,7 @@
  * to be issued on gimprc parsing and will not be queryable.
  *
  * Returns: The value associated with the queried token.
- */
+ **/
 gchar *
 gimp_gimprc_query (const gchar *token)
 {
@@ -86,7 +86,7 @@ gimp_gimprc_query (const gchar *token)
  * will accept _only_ string values in UTF-8 encoding.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_gimprc_set (const gchar *token,
                  const gchar *value)
@@ -116,7 +116,7 @@ gimp_gimprc_set (const gchar *token,
  * Returns a copy of the default image comment.
  *
  * Returns: Default image comment.
- */
+ **/
 gchar *
 gimp_get_default_comment (void)
 {
@@ -146,7 +146,7 @@ gimp_get_default_comment (void)
  * Returns: Default unit.
  *
  * Since: GIMP 2.4
- */
+ **/
 GimpUnit
 gimp_get_default_unit (void)
 {
@@ -179,7 +179,7 @@ gimp_get_default_unit (void)
  * reasonable.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_get_monitor_resolution (gdouble *xres,
                              gdouble *yres)
@@ -216,7 +216,7 @@ gimp_get_monitor_resolution (gdouble *xres,
  * Returns a copy of the current GUI theme dir.
  *
  * Returns: The GUI theme dir.
- */
+ **/
 gchar *
 gimp_get_theme_dir (void)
 {
@@ -247,7 +247,7 @@ gimp_get_theme_dir (void)
  * Returns: Serialized color management configuration.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 _gimp_get_color_configuration (void)
 {
@@ -275,7 +275,7 @@ _gimp_get_color_configuration (void)
  * Returns a copy of the list of modules which should not be loaded.
  *
  * Returns: The list of modules.
- */
+ **/
 gchar *
 gimp_get_module_load_inhibit (void)
 {

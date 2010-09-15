@@ -50,7 +50,7 @@
  * there is nothing to copy from.
  *
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
- */
+ **/
 gboolean
 gimp_edit_cut (gint32 drawable_ID)
 {
@@ -87,7 +87,7 @@ gimp_edit_cut (gint32 drawable_ID)
  * nothing to copy from.
  *
  * Returns: TRUE if the cut was successful, FALSE if there was nothing to copy from.
- */
+ **/
 gboolean
 gimp_edit_copy (gint32 drawable_ID)
 {
@@ -124,7 +124,7 @@ gimp_edit_copy (gint32 drawable_ID)
  * Returns: TRUE if the copy was successful.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_edit_copy_visible (gint32 image_ID)
 {
@@ -169,7 +169,7 @@ gimp_edit_copy_visible (gint32 image_ID)
  * not needed.
  *
  * Returns: The new floating selection.
- */
+ **/
 gint32
 gimp_edit_paste (gint32   drawable_ID,
                  gboolean paste_into)
@@ -205,7 +205,7 @@ gimp_edit_paste (gint32   drawable_ID,
  * Returns: The new image.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint32
 gimp_edit_paste_as_new (void)
 {
@@ -240,7 +240,7 @@ gimp_edit_paste_as_new (void)
  * Returns: The real name given to the buffer, or NULL if the cut failed.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 gimp_edit_named_cut (gint32       drawable_ID,
                      const gchar *buffer_name)
@@ -278,7 +278,7 @@ gimp_edit_named_cut (gint32       drawable_ID,
  * Returns: The real name given to the buffer, or NULL if the copy failed.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 gimp_edit_named_copy (gint32       drawable_ID,
                       const gchar *buffer_name)
@@ -316,7 +316,7 @@ gimp_edit_named_copy (gint32       drawable_ID,
  * Returns: The real name given to the buffer, or NULL if the copy failed.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 gimp_edit_named_copy_visible (gint32       image_ID,
                               const gchar *buffer_name)
@@ -353,7 +353,7 @@ gimp_edit_named_copy_visible (gint32       image_ID,
  * Returns: The new floating selection.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint32
 gimp_edit_named_paste (gint32       drawable_ID,
                        const gchar *buffer_name,
@@ -390,7 +390,7 @@ gimp_edit_named_paste (gint32       drawable_ID,
  * Returns: The new image.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint32
 gimp_edit_named_paste_as_new (const gchar *buffer_name)
 {
@@ -424,7 +424,7 @@ gimp_edit_named_paste_as_new (const gchar *buffer_name)
  * a selection if there is a selection active.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_edit_clear (gint32 drawable_ID)
 {
@@ -460,7 +460,7 @@ gimp_edit_clear (gint32 drawable_ID)
  * use gimp_drawable_fill().
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_edit_fill (gint32       drawable_ID,
                 GimpFillType fill_type)
@@ -510,7 +510,7 @@ gimp_edit_fill (gint32       drawable_ID,
  * relative to the drawable's origin.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_edit_bucket_fill (gint32               drawable_ID,
                        GimpBucketFillMode   fill_mode,
@@ -576,7 +576,7 @@ gimp_edit_bucket_fill (gint32               drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_edit_bucket_fill_full (gint32               drawable_ID,
                             GimpBucketFillMode   fill_mode,
@@ -642,7 +642,7 @@ gimp_edit_bucket_fill_full (gint32               drawable_ID,
  * each gradient type.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_edit_blend (gint32               drawable_ID,
                  GimpBlendMode        blend_mode,
@@ -704,7 +704,7 @@ gimp_edit_blend (gint32               drawable_ID,
  * selection.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_edit_stroke (gint32 drawable_ID)
 {
@@ -737,7 +737,7 @@ gimp_edit_stroke (gint32 drawable_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_edit_stroke_vectors (gint32 drawable_ID,
                           gint32 vectors_ID)

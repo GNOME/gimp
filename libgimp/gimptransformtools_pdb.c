@@ -45,7 +45,7 @@
  * Deprecated: Use gimp_drawable_transform_flip_simple() instead.
  *
  * Returns: The flipped drawable.
- */
+ **/
 gint32
 gimp_flip (gint32              drawable_ID,
            GimpOrientationType flip_type)
@@ -85,7 +85,7 @@ gimp_flip (gint32              drawable_ID,
  * instead.
  *
  * Returns: The newly mapped drawable.
- */
+ **/
 gint32
 gimp_perspective (gint32   drawable_ID,
                   gboolean interpolation,
@@ -133,7 +133,7 @@ gimp_perspective (gint32   drawable_ID,
  * Deprecated: Use gimp_drawable_transform_rotate_default() instead.
  *
  * Returns: The rotated drawable.
- */
+ **/
 gint32
 gimp_rotate (gint32   drawable_ID,
              gboolean interpolation,
@@ -170,7 +170,7 @@ gimp_rotate (gint32   drawable_ID,
  * Deprecated: Use gimp_drawable_transform_scale_default() instead.
  *
  * Returns: The scaled drawable.
- */
+ **/
 gint32
 gimp_scale (gint32   drawable_ID,
             gboolean interpolation,
@@ -211,7 +211,7 @@ gimp_scale (gint32   drawable_ID,
  * Deprecated: Use gimp_drawable_transform_shear_default() instead.
  *
  * Returns: The sheared drawable.
- */
+ **/
 gint32
 gimp_shear (gint32              drawable_ID,
             gboolean            interpolation,
@@ -253,7 +253,7 @@ gimp_shear (gint32              drawable_ID,
  * Deprecated: Use gimp_drawable_transform_2d_default() instead.
  *
  * Returns: The transformed drawable.
- */
+ **/
 gint32
 gimp_transform_2d (gint32   drawable_ID,
                    gboolean interpolation,

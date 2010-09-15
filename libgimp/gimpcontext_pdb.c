@@ -46,7 +46,7 @@
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_push (void)
 {
@@ -78,7 +78,7 @@ gimp_context_push (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_pop (void)
 {
@@ -110,7 +110,7 @@ gimp_context_pop (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_context_list_paint_methods (gint    *num_paint_methods,
                                  gchar ***paint_methods)
@@ -153,7 +153,7 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
  * Returns: The name of the active paint method.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 gimp_context_get_paint_method (void)
 {
@@ -189,7 +189,7 @@ gimp_context_get_paint_method (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_context_set_paint_method (const gchar *name)
 {
@@ -222,7 +222,7 @@ gimp_context_set_paint_method (const gchar *name)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_get_foreground (GimpRGB *foreground)
 {
@@ -257,7 +257,7 @@ gimp_context_get_foreground (GimpRGB *foreground)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_foreground (const GimpRGB *foreground)
 {
@@ -290,7 +290,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_get_background (GimpRGB *background)
 {
@@ -326,7 +326,7 @@ gimp_context_get_background (GimpRGB *background)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_background (const GimpRGB *background)
 {
@@ -358,7 +358,7 @@ gimp_context_set_background (const GimpRGB *background)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_default_colors (void)
 {
@@ -389,7 +389,7 @@ gimp_context_set_default_colors (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_swap_colors (void)
 {
@@ -419,7 +419,7 @@ gimp_context_swap_colors (void)
  * Returns: The opacity.
  *
  * Since: GIMP 2.2
- */
+ **/
 gdouble
 gimp_context_get_opacity (void)
 {
@@ -451,7 +451,7 @@ gimp_context_get_opacity (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_opacity (gdouble opacity)
 {
@@ -483,7 +483,7 @@ gimp_context_set_opacity (gdouble opacity)
  * Returns: The paint mode.
  *
  * Since: GIMP 2.2
- */
+ **/
 GimpLayerModeEffects
 gimp_context_get_paint_mode (void)
 {
@@ -514,7 +514,7 @@ gimp_context_get_paint_mode (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
 {
@@ -546,7 +546,7 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
  * Returns: The name of the active brush.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_brush (void)
 {
@@ -581,7 +581,7 @@ gimp_context_get_brush (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_brush (const gchar *name)
 {
@@ -613,7 +613,7 @@ gimp_context_set_brush (const gchar *name)
  * Returns: The name of the active pattern.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_pattern (void)
 {
@@ -649,7 +649,7 @@ gimp_context_get_pattern (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_pattern (const gchar *name)
 {
@@ -679,7 +679,7 @@ gimp_context_set_pattern (const gchar *name)
  * Returns: The name of the active gradient.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_gradient (void)
 {
@@ -715,7 +715,7 @@ gimp_context_get_gradient (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_gradient (const gchar *name)
 {
@@ -745,7 +745,7 @@ gimp_context_set_gradient (const gchar *name)
  * Returns: The name of the active palette.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_palette (void)
 {
@@ -781,7 +781,7 @@ gimp_context_get_palette (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_palette (const gchar *name)
 {
@@ -811,7 +811,7 @@ gimp_context_set_palette (const gchar *name)
  * Returns: The name of the active font.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_font (void)
 {
@@ -846,7 +846,7 @@ gimp_context_get_font (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_font (const gchar *name)
 {
@@ -876,7 +876,7 @@ gimp_context_set_font (const gchar *name)
  * Returns: The antialias setting.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_get_antialias (void)
 {
@@ -908,7 +908,7 @@ gimp_context_get_antialias (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_antialias (gboolean antialias)
 {
@@ -938,7 +938,7 @@ gimp_context_set_antialias (gboolean antialias)
  * Returns: The feather setting.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_get_feather (void)
 {
@@ -970,7 +970,7 @@ gimp_context_get_feather (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_feather (gboolean feather)
 {
@@ -1002,7 +1002,7 @@ gimp_context_set_feather (gboolean feather)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_get_feather_radius (gdouble *feather_radius_x,
                                  gdouble *feather_radius_y)
@@ -1044,7 +1044,7 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_feather_radius (gdouble feather_radius_x,
                                  gdouble feather_radius_y)
@@ -1078,7 +1078,7 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
  * Returns: The interpolation type.
  *
  * Since: GIMP 2.8
- */
+ **/
 GimpInterpolationType
 gimp_context_get_interpolation (void)
 {
@@ -1110,7 +1110,7 @@ gimp_context_get_interpolation (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_interpolation (GimpInterpolationType interpolation)
 {
@@ -1142,7 +1142,7 @@ gimp_context_set_interpolation (GimpInterpolationType interpolation)
  * Returns: The transform direction.
  *
  * Since: GIMP 2.8
- */
+ **/
 GimpTransformDirection
 gimp_context_get_transform_direction (void)
 {
@@ -1173,7 +1173,7 @@ gimp_context_get_transform_direction (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_transform_direction (GimpTransformDirection transform_direction)
 {
@@ -1205,7 +1205,7 @@ gimp_context_set_transform_direction (GimpTransformDirection transform_direction
  * Returns: The transform resize type.
  *
  * Since: GIMP 2.8
- */
+ **/
 GimpTransformResize
 gimp_context_get_transform_resize (void)
 {
@@ -1239,7 +1239,7 @@ gimp_context_get_transform_resize (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_transform_resize (GimpTransformResize transform_resize)
 {
@@ -1269,7 +1269,7 @@ gimp_context_set_transform_resize (GimpTransformResize transform_resize)
  * Returns: The transform recursion level.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint
 gimp_context_get_transform_recursion (void)
 {
@@ -1303,7 +1303,7 @@ gimp_context_get_transform_recursion (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_context_set_transform_recursion (gint transform_recursion)
 {

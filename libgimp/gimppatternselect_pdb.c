@@ -45,7 +45,7 @@
  * This procedure opens the pattern selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_patterns_popup (const gchar *pattern_callback,
                      const gchar *popup_title,
@@ -78,7 +78,7 @@ gimp_patterns_popup (const gchar *pattern_callback,
  * This procedure closes an opened pattern selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_patterns_close_popup (const gchar *pattern_callback)
 {
@@ -108,7 +108,7 @@ gimp_patterns_close_popup (const gchar *pattern_callback)
  * Sets the current pattern in a pattern selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_patterns_set_popup (const gchar *pattern_callback,
                          const gchar *pattern_name)

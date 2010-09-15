@@ -47,7 +47,7 @@
  * Returns: The actual new gradient name.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_gradient_new (const gchar *name)
 {
@@ -79,7 +79,7 @@ gimp_gradient_new (const gchar *name)
  * Returns: The name of the gradient's copy.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_gradient_duplicate (const gchar *name)
 {
@@ -111,7 +111,7 @@ gimp_gradient_duplicate (const gchar *name)
  * Returns: TRUE if the gradient can be edited.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_gradient_is_editable (const gchar *name)
 {
@@ -144,7 +144,7 @@ gimp_gradient_is_editable (const gchar *name)
  * Returns: The actual new name of the gradient.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_gradient_rename (const gchar *name,
                       const gchar *new_name)
@@ -178,7 +178,7 @@ gimp_gradient_rename (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_delete (const gchar *name)
 {
@@ -210,7 +210,7 @@ gimp_gradient_delete (const gchar *name)
  * Returns: Number of segments.
  *
  * Since: GIMP 2.6
- */
+ **/
 gint
 gimp_gradient_get_number_of_segments (const gchar *name)
 {
@@ -252,7 +252,7 @@ gimp_gradient_get_number_of_segments (const gchar *name)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_get_uniform_samples (const gchar  *name,
                                    gint          num_samples,
@@ -311,7 +311,7 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_get_custom_samples (const gchar    *name,
                                   gint            num_samples,
@@ -366,7 +366,7 @@ gimp_gradient_get_custom_samples (const gchar    *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_left_color (const gchar *name,
                                       gint         segment,
@@ -413,7 +413,7 @@ gimp_gradient_segment_get_left_color (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_set_left_color (const gchar   *name,
                                       gint           segment,
@@ -454,7 +454,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_right_color (const gchar *name,
                                        gint         segment,
@@ -501,7 +501,7 @@ gimp_gradient_segment_get_right_color (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_set_right_color (const gchar   *name,
                                        gint           segment,
@@ -541,7 +541,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_left_pos (const gchar *name,
                                     gint         segment,
@@ -587,7 +587,7 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_set_left_pos (const gchar *name,
                                     gint         segment,
@@ -631,7 +631,7 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_middle_pos (const gchar *name,
                                       gint         segment,
@@ -676,7 +676,7 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_set_middle_pos (const gchar *name,
                                       gint         segment,
@@ -720,7 +720,7 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_right_pos (const gchar *name,
                                      gint         segment,
@@ -766,7 +766,7 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_set_right_pos (const gchar *name,
                                      gint         segment,
@@ -810,7 +810,7 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_blending_function (const gchar             *name,
                                              gint                     segment,
@@ -852,7 +852,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_get_coloring_type (const gchar              *name,
                                          gint                      segment,
@@ -895,7 +895,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_set_blending_function (const gchar             *name,
                                                    gint                     start_segment,
@@ -936,7 +936,7 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
                                                gint                      start_segment,
@@ -975,7 +975,7 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_flip (const gchar *name,
                                   gint         start_segment,
@@ -1015,7 +1015,7 @@ gimp_gradient_segment_range_flip (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_replicate (const gchar *name,
                                        gint         start_segment,
@@ -1055,7 +1055,7 @@ gimp_gradient_segment_range_replicate (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_split_midpoint (const gchar *name,
                                             gint         start_segment,
@@ -1094,7 +1094,7 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_split_uniform (const gchar *name,
                                            gint         start_segment,
@@ -1133,7 +1133,7 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_delete (const gchar *name,
                                     gint         start_segment,
@@ -1171,7 +1171,7 @@ gimp_gradient_segment_range_delete (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_redistribute_handles (const gchar *name,
                                                   gint         start_segment,
@@ -1210,7 +1210,7 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_blend_colors (const gchar *name,
                                           gint         start_segment,
@@ -1249,7 +1249,7 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_gradient_segment_range_blend_opacity (const gchar *name,
                                            gint         start_segment,
@@ -1290,7 +1290,7 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
  * Returns: The final delta by which the range moved.
  *
  * Since: GIMP 2.2
- */
+ **/
 gdouble
 gimp_gradient_segment_range_move (const gchar *name,
                                   gint         start_segment,

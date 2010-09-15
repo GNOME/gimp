@@ -48,7 +48,7 @@
  * pattern path and updates all pattern dialogs accordingly.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_patterns_refresh (void)
 {
@@ -79,7 +79,7 @@ gimp_patterns_refresh (void)
  * gimp_context_set_pattern().
  *
  * Returns: The list of pattern names.
- */
+ **/
 gchar **
 gimp_patterns_get_list (const gchar *filter,
                         gint        *num_patterns)
@@ -117,7 +117,7 @@ gimp_patterns_get_list (const gchar *filter,
  * Deprecated: Use gimp_context_get_pattern() instead.
  *
  * Returns: The pattern name.
- */
+ **/
 gchar *
 gimp_patterns_get_pattern (gint *width,
                            gint *height)
@@ -154,7 +154,7 @@ gimp_patterns_get_pattern (gint *width,
  * Deprecated: Use gimp_pattern_get_pixels() instead.
  *
  * Returns: The pattern name.
- */
+ **/
 gchar *
 gimp_patterns_get_pattern_data (const gchar  *name,
                                 gint         *width,

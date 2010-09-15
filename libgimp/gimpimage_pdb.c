@@ -52,7 +52,7 @@
  * Returns: Whether the image ID is valid.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_is_valid (gint32 image_ID)
 {
@@ -82,7 +82,7 @@ gimp_image_is_valid (gint32 image_ID)
  * This procedure returns the list of images currently open in GIMP.
  *
  * Returns: The list of images currently open.
- */
+ **/
 gint *
 gimp_image_list (gint *num_images)
 {
@@ -126,7 +126,7 @@ gimp_image_list (gint *num_images)
  * gimp_image_insert_layer() command.
  *
  * Returns: The ID of the newly created image.
- */
+ **/
 gint32
 gimp_image_new (gint              width,
                 gint              height,
@@ -161,7 +161,7 @@ gimp_image_new (gint              width,
  * channels, and image information.
  *
  * Returns: The new, duplicated image.
- */
+ **/
 gint32
 gimp_image_duplicate (gint32 image_ID)
 {
@@ -196,7 +196,7 @@ gimp_image_duplicate (gint32 image_ID)
  * the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_delete (gint32 image_ID)
 {
@@ -226,7 +226,7 @@ gimp_image_delete (gint32 image_ID)
  * must be of this subtype, but can have an optional alpha channel.
  *
  * Returns: The image's base type.
- */
+ **/
 GimpImageBaseType
 gimp_image_base_type (gint32 image_ID)
 {
@@ -257,7 +257,7 @@ gimp_image_base_type (gint32 image_ID)
  * of any of the layers in this image. This is the \"canvas\" width.
  *
  * Returns: The image's width.
- */
+ **/
 gint
 gimp_image_width (gint32 image_ID)
 {
@@ -288,7 +288,7 @@ gimp_image_width (gint32 image_ID)
  * of any of the layers in this image. This is the \"canvas\" height.
  *
  * Returns: The image's height.
- */
+ **/
 gint
 gimp_image_height (gint32 image_ID)
 {
@@ -316,7 +316,7 @@ gimp_image_height (gint32 image_ID)
  * Deprecated: Use gimp_drawable_free_shadow() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_free_shadow (gint32 image_ID)
 {
@@ -355,7 +355,7 @@ gimp_image_free_shadow (gint32 image_ID)
  * offsets.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_resize (gint32 image_ID,
                    gint   new_width,
@@ -397,7 +397,7 @@ gimp_image_resize (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_image_resize_to_layers (gint32 image_ID)
 {
@@ -432,7 +432,7 @@ gimp_image_resize_to_layers (gint32 image_ID)
  * is used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_scale (gint32 image_ID,
                   gint   new_width,
@@ -474,7 +474,7 @@ gimp_image_scale (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_image_scale_full (gint32                image_ID,
                        gint                  new_width,
@@ -518,7 +518,7 @@ gimp_image_scale_full (gint32                image_ID,
  * range, an error is returned.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_crop (gint32 image_ID,
                  gint   new_width,
@@ -556,7 +556,7 @@ gimp_image_crop (gint32 image_ID,
  * This procedure flips (mirrors) the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_flip (gint32              image_ID,
                  GimpOrientationType flip_type)
@@ -588,7 +588,7 @@ gimp_image_flip (gint32              image_ID,
  * This procedure rotates the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_rotate (gint32           image_ID,
                    GimpRotationType rotate_type)
@@ -621,7 +621,7 @@ gimp_image_rotate (gint32           image_ID,
  * image. The order of layers is from topmost to bottommost.
  *
  * Returns: The list of layers contained in the image.
- */
+ **/
 gint *
 gimp_image_get_layers (gint32  image_ID,
                        gint   *num_layers)
@@ -663,7 +663,7 @@ gimp_image_get_layers (gint32  image_ID,
  * masks. The order is from topmost to bottommost.
  *
  * Returns: The list of channels contained in the image.
- */
+ **/
 gint *
 gimp_image_get_channels (gint32  image_ID,
                          gint   *num_channels)
@@ -706,7 +706,7 @@ gimp_image_get_channels (gint32  image_ID,
  * Returns: The list of vectors contained in the image.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint *
 gimp_image_get_vectors (gint32  image_ID,
                         gint   *num_vectors)
@@ -750,7 +750,7 @@ gimp_image_get_vectors (gint32  image_ID,
  * is the active drawable.
  *
  * Returns: The active drawable.
- */
+ **/
 gint32
 gimp_image_get_active_drawable (gint32 image_ID)
 {
@@ -783,7 +783,7 @@ gimp_image_get_active_drawable (gint32 image_ID)
  * existing active channel.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_unset_active_channel (gint32 image_ID)
 {
@@ -813,7 +813,7 @@ gimp_image_unset_active_channel (gint32 image_ID)
  * If it doesn't exist, -1 is returned as the layer ID.
  *
  * Returns: The image's floating selection.
- */
+ **/
 gint32
 gimp_image_get_floating_sel (gint32 image_ID)
 {
@@ -845,7 +845,7 @@ gimp_image_get_floating_sel (gint32 image_ID)
  * the drawable ID.
  *
  * Returns: The drawable the floating selection is attached to.
- */
+ **/
 gint32
 gimp_image_floating_sel_attached_to (gint32 image_ID)
 {
@@ -892,7 +892,7 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
  * a merged sampling, the supplied drawable is ignored.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_pick_color (gint32    image_ID,
                        gint32    drawable_ID,
@@ -943,7 +943,7 @@ gimp_image_pick_color (gint32    image_ID,
  * layer is found.
  *
  * Returns: The layer found at the specified coordinates.
- */
+ **/
 gint32
 gimp_image_pick_correlate_layer (gint32 image_ID,
                                  gint   x,
@@ -977,7 +977,7 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
  * Deprecated: Use gimp_image_insert_layer() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_add_layer (gint32 image_ID,
                       gint32 layer_ID,
@@ -1022,7 +1022,7 @@ gimp_image_add_layer (gint32 image_ID,
  * layer. The layer type must be compatible with the image base type.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_insert_layer (gint32 image_ID,
                          gint32 layer_ID,
@@ -1062,7 +1062,7 @@ gimp_image_insert_layer (gint32 image_ID,
  * layer.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_remove_layer (gint32 image_ID,
                          gint32 layer_ID)
@@ -1093,7 +1093,7 @@ gimp_image_remove_layer (gint32 image_ID,
  * Deprecated: Use gimp_image_insert_channel() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_add_channel (gint32 image_ID,
                         gint32 channel_ID,
@@ -1134,7 +1134,7 @@ gimp_image_add_channel (gint32 image_ID,
  * channel is inserted above the active channel.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_insert_channel (gint32 image_ID,
                            gint32 channel_ID,
@@ -1171,7 +1171,7 @@ gimp_image_insert_channel (gint32 image_ID,
  * channel doesn't exist, an error is returned.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_remove_channel (gint32 image_ID,
                            gint32 channel_ID)
@@ -1202,7 +1202,7 @@ gimp_image_remove_channel (gint32 image_ID,
  * Deprecated: Use gimp_image_insert_vectors() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_add_vectors (gint32 image_ID,
                         gint32 vectors_ID,
@@ -1243,7 +1243,7 @@ gimp_image_add_vectors (gint32 image_ID,
  * vectors is inserted above the active vectors.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_insert_vectors (gint32 image_ID,
                            gint32 vectors_ID,
@@ -1282,7 +1282,7 @@ gimp_image_insert_vectors (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_remove_vectors (gint32 image_ID,
                            gint32 vectors_ID)
@@ -1319,7 +1319,7 @@ gimp_image_remove_vectors (gint32 image_ID,
  * Returns: The position of the item in its level in the item tree.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint
 gimp_image_get_item_position (gint32 image_ID,
                               gint32 item_ID)
@@ -1355,7 +1355,7 @@ gimp_image_get_item_position (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_image_raise_item (gint32 image_ID,
                        gint32 item_ID)
@@ -1390,7 +1390,7 @@ gimp_image_raise_item (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_image_lower_item (gint32 image_ID,
                        gint32 item_ID)
@@ -1425,7 +1425,7 @@ gimp_image_lower_item (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_image_raise_item_to_top (gint32 image_ID,
                               gint32 item_ID)
@@ -1461,7 +1461,7 @@ gimp_image_raise_item_to_top (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_image_lower_item_to_bottom (gint32 image_ID,
                                  gint32 item_ID)
@@ -1497,7 +1497,7 @@ gimp_image_lower_item_to_bottom (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_image_reorder_item (gint32 image_ID,
                          gint32 item_ID,
@@ -1533,7 +1533,7 @@ gimp_image_reorder_item (gint32 image_ID,
  * Returns: The position of the layer in the layer stack.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_image_get_layer_position (gint32 image_ID,
                                gint32 layer_ID)
@@ -1564,7 +1564,7 @@ gimp_image_get_layer_position (gint32 image_ID,
  * Deprecated: Use gimp_image_raise_item() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_raise_layer (gint32 image_ID,
                         gint32 layer_ID)
@@ -1594,7 +1594,7 @@ gimp_image_raise_layer (gint32 image_ID,
  * Deprecated: Use gimp_image_lower_item() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_lower_layer (gint32 image_ID,
                         gint32 layer_ID)
@@ -1624,7 +1624,7 @@ gimp_image_lower_layer (gint32 image_ID,
  * Deprecated: Use gimp_image_raise_item_to_top() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_raise_layer_to_top (gint32 image_ID,
                                gint32 layer_ID)
@@ -1654,7 +1654,7 @@ gimp_image_raise_layer_to_top (gint32 image_ID,
  * Deprecated: Use gimp_image_lower_item_to_bottom() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_lower_layer_to_bottom (gint32 image_ID,
                                   gint32 layer_ID)
@@ -1686,7 +1686,7 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
  * Returns: The position of the channel in the channel stack.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_image_get_channel_position (gint32 image_ID,
                                  gint32 channel_ID)
@@ -1717,7 +1717,7 @@ gimp_image_get_channel_position (gint32 image_ID,
  * Deprecated: Use gimp_image_raise_item() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_raise_channel (gint32 image_ID,
                           gint32 channel_ID)
@@ -1747,7 +1747,7 @@ gimp_image_raise_channel (gint32 image_ID,
  * Deprecated: Use gimp_image_lower_item() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_lower_channel (gint32 image_ID,
                           gint32 channel_ID)
@@ -1779,7 +1779,7 @@ gimp_image_lower_channel (gint32 image_ID,
  * Returns: The position of the vectors object in the vectors stack.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_image_get_vectors_position (gint32 image_ID,
                                  gint32 vectors_ID)
@@ -1812,7 +1812,7 @@ gimp_image_get_vectors_position (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_raise_vectors (gint32 image_ID,
                           gint32 vectors_ID)
@@ -1844,7 +1844,7 @@ gimp_image_raise_vectors (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_lower_vectors (gint32 image_ID,
                           gint32 vectors_ID)
@@ -1876,7 +1876,7 @@ gimp_image_lower_vectors (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_raise_vectors_to_top (gint32 image_ID,
                                  gint32 vectors_ID)
@@ -1908,7 +1908,7 @@ gimp_image_raise_vectors_to_top (gint32 image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_lower_vectors_to_bottom (gint32 image_ID,
                                     gint32 vectors_ID)
@@ -1942,7 +1942,7 @@ gimp_image_lower_vectors_to_bottom (gint32 image_ID,
  * discarded, and the resulting image is stripped of its alpha channel.
  *
  * Returns: The resulting layer.
- */
+ **/
 gint32
 gimp_image_flatten (gint32 image_ID)
 {
@@ -1978,7 +1978,7 @@ gimp_image_flatten (gint32 image_ID)
  * final layer to the size of the bottommost layer.
  *
  * Returns: The resulting layer.
- */
+ **/
 gint32
 gimp_image_merge_visible_layers (gint32        image_ID,
                                  GimpMergeType merge_type)
@@ -2018,7 +2018,7 @@ gimp_image_merge_visible_layers (gint32        image_ID,
  * bottommost layer.
  *
  * Returns: The resulting layer.
- */
+ **/
 gint32
 gimp_image_merge_down (gint32        image_ID,
                        gint32        merge_layer_ID,
@@ -2057,7 +2057,7 @@ gimp_image_merge_down (gint32        image_ID,
  * returned.
  *
  * Returns: The image's colormap.
- */
+ **/
 guint8 *
 _gimp_image_get_colormap (gint32  image_ID,
                           gint   *num_bytes)
@@ -2102,7 +2102,7 @@ _gimp_image_get_colormap (gint32  image_ID,
  * colormap is 'num-bytes' / 3.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_image_set_colormap (gint32        image_ID,
                           gint          num_bytes,
@@ -2140,7 +2140,7 @@ _gimp_image_set_colormap (gint32        image_ID,
  * call this function themselves after saving the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_clean_all (gint32 image_ID)
 {
@@ -2172,7 +2172,7 @@ gimp_image_clean_all (gint32 image_ID)
  * after calling a save procedure to make the image clean.
  *
  * Returns: TRUE if the image has unsaved changes.
- */
+ **/
 gboolean
 gimp_image_is_dirty (gint32 image_ID)
 {
@@ -2212,7 +2212,7 @@ gimp_image_is_dirty (gint32 image_ID)
  * the number of bits per pixel in the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_image_thumbnail (gint32   image_ID,
                        gint     width,
@@ -2270,7 +2270,7 @@ _gimp_image_thumbnail (gint32   image_ID,
  * mask is active, then this will return the associated layer.
  *
  * Returns: The active layer.
- */
+ **/
 gint32
 gimp_image_get_active_layer (gint32 image_ID)
 {
@@ -2304,7 +2304,7 @@ gimp_image_get_active_layer (gint32 image_ID)
  * procedure will return an execution error.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_active_layer (gint32 image_ID,
                              gint32 active_layer_ID)
@@ -2336,7 +2336,7 @@ gimp_image_set_active_layer (gint32 image_ID,
  * otherwise, -1.
  *
  * Returns: The active channel.
- */
+ **/
 gint32
 gimp_image_get_active_channel (gint32 image_ID)
 {
@@ -2370,7 +2370,7 @@ gimp_image_get_active_channel (gint32 image_ID)
  * this procedure will return an execution error.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_active_channel (gint32 image_ID,
                                gint32 active_channel_ID)
@@ -2401,7 +2401,7 @@ gimp_image_set_active_channel (gint32 image_ID,
  * If there is an active path, its ID will be returned, otherwise, -1.
  *
  * Returns: The active vectors.
- */
+ **/
 gint32
 gimp_image_get_active_vectors (gint32 image_ID)
 {
@@ -2432,7 +2432,7 @@ gimp_image_get_active_vectors (gint32 image_ID)
  * If the path exists, it is set as the active path in the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_active_vectors (gint32 image_ID,
                                gint32 active_vectors_ID)
@@ -2464,7 +2464,7 @@ gimp_image_set_active_vectors (gint32 image_ID,
  * represented as a channel internally.
  *
  * Returns: The selection channel.
- */
+ **/
 gint32
 gimp_image_get_selection (gint32 image_ID)
 {
@@ -2498,7 +2498,7 @@ gimp_image_get_selection (gint32 image_ID)
  * component is not valid for the image type, an error is returned.
  *
  * Returns: Component is active.
- */
+ **/
 gboolean
 gimp_image_get_component_active (gint32          image_ID,
                                  GimpChannelType component)
@@ -2535,7 +2535,7 @@ gimp_image_get_component_active (gint32          image_ID,
  * component is not valid for the image type, an error is returned.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_component_active (gint32          image_ID,
                                  GimpChannelType component,
@@ -2573,7 +2573,7 @@ gimp_image_set_component_active (gint32          image_ID,
  * returned.
  *
  * Returns: Component is visible.
- */
+ **/
 gboolean
 gimp_image_get_component_visible (gint32          image_ID,
                                   GimpChannelType component)
@@ -2610,7 +2610,7 @@ gimp_image_get_component_visible (gint32          image_ID,
  * component is not valid for the image type, an error is returned.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_component_visible (gint32          image_ID,
                                   GimpChannelType component,
@@ -2646,7 +2646,7 @@ gimp_image_set_component_visible (gint32          image_ID,
  * this function returns %NULL. See also gimp_image_get_uri().
  *
  * Returns: The filename.
- */
+ **/
 gchar *
 gimp_image_get_filename (gint32 image_ID)
 {
@@ -2678,7 +2678,7 @@ gimp_image_get_filename (gint32 image_ID)
  * should be in the filesystem encoding.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_filename (gint32       image_ID,
                          const gchar *filename)
@@ -2713,7 +2713,7 @@ gimp_image_set_filename (gint32       image_ID,
  * Returns: The URI.
  *
  * Since: GIMP 2.8
- */
+ **/
 gchar *
 gimp_image_get_uri (gint32 image_ID)
 {
@@ -2745,7 +2745,7 @@ gimp_image_get_uri (gint32 image_ID)
  * path). Otherwise it is the translated string \"Untitled\".
  *
  * Returns: The name.
- */
+ **/
 gchar *
 gimp_image_get_name (gint32 image_ID)
 {
@@ -2778,7 +2778,7 @@ gimp_image_get_name (gint32 image_ID)
  * inch. This value is independent of any of the layers in this image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_get_resolution (gint32   image_ID,
                            gdouble *xresolution,
@@ -2822,7 +2822,7 @@ gimp_image_get_resolution (gint32   image_ID,
  * No scaling or resizing is performed.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_resolution (gint32  image_ID,
                            gdouble xresolution,
@@ -2858,7 +2858,7 @@ gimp_image_set_resolution (gint32  image_ID,
  * and a description of the unit system.
  *
  * Returns: The unit.
- */
+ **/
 GimpUnit
 gimp_image_get_unit (gint32 image_ID)
 {
@@ -2893,7 +2893,7 @@ gimp_image_get_unit (gint32 image_ID)
  * system.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_unit (gint32   image_ID,
                      GimpUnit unit)
@@ -2926,7 +2926,7 @@ gimp_image_set_unit (gint32   image_ID,
  * Using this function at other times will produce unexpected results.
  *
  * Returns: The tattoo state.
- */
+ **/
 gint
 gimp_image_get_tattoo_state (gint32 image_ID)
 {
@@ -2968,7 +2968,7 @@ gimp_image_get_tattoo_state (gint32 image_ID)
  * that all is OK.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_set_tattoo_state (gint32 image_ID,
                              gint   tattoo_state)
@@ -3001,7 +3001,7 @@ gimp_image_set_tattoo_state (gint32 image_ID,
  * specified image.
  *
  * Returns: The layer with the specified tattoo.
- */
+ **/
 gint32
 gimp_image_get_layer_by_tattoo (gint32 image_ID,
                                 gint   tattoo)
@@ -3035,7 +3035,7 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
  * specified image.
  *
  * Returns: The channel with the specified tattoo.
- */
+ **/
 gint32
 gimp_image_get_channel_by_tattoo (gint32 image_ID,
                                   gint   tattoo)
@@ -3071,7 +3071,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
  * Returns: The vectors with the specified tattoo.
  *
  * Since: GIMP 2.6
- */
+ **/
 gint32
 gimp_image_get_vectors_by_tattoo (gint32 image_ID,
                                   gint   tattoo)

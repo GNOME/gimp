@@ -48,7 +48,7 @@
  * gradient path and updates the gradient dialogs accordingly.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_gradients_refresh (void)
 {
@@ -79,7 +79,7 @@ gimp_gradients_refresh (void)
  * to set the active gradient.
  *
  * Returns: The list of gradient names.
- */
+ **/
 gchar **
 gimp_gradients_get_list (const gchar *filter,
                          gint        *num_gradients)
@@ -117,7 +117,7 @@ gimp_gradients_get_list (const gchar *filter,
  * Deprecated: Use gimp_gradient_get_uniform_samples() instead.
  *
  * Returns: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
- */
+ **/
 gdouble *
 gimp_gradients_sample_uniform (gint     num_samples,
                                gboolean reverse)
@@ -156,7 +156,7 @@ gimp_gradients_sample_uniform (gint     num_samples,
  * Deprecated: Use gimp_gradient_get_custom_samples() instead.
  *
  * Returns: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
- */
+ **/
 gdouble *
 gimp_gradients_sample_custom (gint           num_samples,
                               const gdouble *positions,
@@ -199,7 +199,7 @@ gimp_gradients_sample_custom (gint           num_samples,
  * Deprecated: Use gimp_gradient_get_uniform_samples() instead.
  *
  * Returns: The gradient name.
- */
+ **/
 gchar *
 gimp_gradients_get_gradient_data (const gchar  *name,
                                   gint          sample_size,

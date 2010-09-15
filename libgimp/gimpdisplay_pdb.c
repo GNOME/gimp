@@ -46,7 +46,7 @@
  * Returns: Whether the display ID is valid.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_display_is_valid (gint32 display_ID)
 {
@@ -80,7 +80,7 @@ gimp_display_is_valid (gint32 display_ID)
  * procedure only makes sense for use with the GIMP UI.
  *
  * Returns: The new display.
- */
+ **/
 gint32
 gimp_display_new (gint32 image_ID)
 {
@@ -114,7 +114,7 @@ gimp_display_new (gint32 image_ID)
  * procedure.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_display_delete (gint32 display_ID)
 {
@@ -149,7 +149,7 @@ gimp_display_delete (gint32 display_ID)
  * Returns: The native window handle or 0.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_display_get_window_handle (gint32 display_ID)
 {
@@ -181,7 +181,7 @@ gimp_display_get_window_handle (gint32 display_ID)
  * appropriate.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_displays_flush (void)
 {
@@ -213,7 +213,7 @@ gimp_displays_flush (void)
  * without success. You should rarely need to use this function.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_displays_reconnect (gint32 old_image_ID,
                          gint32 new_image_ID)

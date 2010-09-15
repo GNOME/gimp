@@ -46,7 +46,7 @@
  * indexed image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_convert_rgb (gint32 image_ID)
 {
@@ -77,7 +77,7 @@ gimp_image_convert_rgb (gint32 image_ID)
  * RGB or Indexed color mode.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_convert_grayscale (gint32 image_ID)
 {
@@ -124,7 +124,7 @@ gimp_image_convert_grayscale (gint32 image_ID)
  * location ('Fixed' dithering).
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_convert_indexed (gint32                  image_ID,
                             GimpConvertDitherType   dither_type,
@@ -171,7 +171,7 @@ gimp_image_convert_indexed (gint32                  image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_convert_set_dither_matrix (gint          width,
                                       gint          height,

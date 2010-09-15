@@ -48,7 +48,7 @@
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_get_spacing (gint32   image_ID,
                              gdouble *xspacing,
@@ -93,7 +93,7 @@ gimp_image_grid_get_spacing (gint32   image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_set_spacing (gint32  image_ID,
                              gdouble xspacing,
@@ -131,7 +131,7 @@ gimp_image_grid_set_spacing (gint32  image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_get_offset (gint32   image_ID,
                             gdouble *xoffset,
@@ -176,7 +176,7 @@ gimp_image_grid_get_offset (gint32   image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_set_offset (gint32  image_ID,
                             gdouble xoffset,
@@ -212,7 +212,7 @@ gimp_image_grid_set_offset (gint32  image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_get_foreground_color (gint32   image_ID,
                                       GimpRGB *fgcolor)
@@ -248,7 +248,7 @@ gimp_image_grid_get_foreground_color (gint32   image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_set_foreground_color (gint32         image_ID,
                                       const GimpRGB *fgcolor)
@@ -282,7 +282,7 @@ gimp_image_grid_set_foreground_color (gint32         image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_get_background_color (gint32   image_ID,
                                       GimpRGB *bgcolor)
@@ -318,7 +318,7 @@ gimp_image_grid_get_background_color (gint32   image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_set_background_color (gint32         image_ID,
                                       const GimpRGB *bgcolor)
@@ -351,7 +351,7 @@ gimp_image_grid_set_background_color (gint32         image_ID,
  * Returns: The image's grid style.
  *
  * Since: GIMP 2.4
- */
+ **/
 GimpGridStyle
 gimp_image_grid_get_style (gint32 image_ID)
 {
@@ -385,7 +385,7 @@ gimp_image_grid_get_style (gint32 image_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_image_grid_set_style (gint32        image_ID,
                            GimpGridStyle style)

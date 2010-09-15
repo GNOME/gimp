@@ -48,7 +48,7 @@
  * This procedure opens the brush selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_brushes_popup (const gchar          *brush_callback,
                     const gchar          *popup_title,
@@ -87,7 +87,7 @@ gimp_brushes_popup (const gchar          *brush_callback,
  * This procedure closes an opened brush selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_brushes_close_popup (const gchar *brush_callback)
 {
@@ -120,7 +120,7 @@ gimp_brushes_close_popup (const gchar *brush_callback)
  * Sets the current brush in a brush selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_brushes_set_popup (const gchar          *brush_callback,
                         const gchar          *brush_name,

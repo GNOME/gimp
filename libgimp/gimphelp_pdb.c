@@ -49,7 +49,7 @@
  * the help domain of the main GIMP installation is used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_help (const gchar *help_domain,
            const gchar *help_id)

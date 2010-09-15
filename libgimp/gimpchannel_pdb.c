@@ -54,7 +54,7 @@
  * initially.
  *
  * Returns: The newly created channel.
- */
+ **/
 gint32
 _gimp_channel_new (gint32         image_ID,
                    gint           width,
@@ -98,7 +98,7 @@ _gimp_channel_new (gint32         image_ID,
  * Returns: The newly created channel.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint32
 gimp_channel_new_from_component (gint32           image_ID,
                                  GimpChannelType  component,
@@ -132,7 +132,7 @@ gimp_channel_new_from_component (gint32           image_ID,
  * This procedure copies the specified channel and returns the copy.
  *
  * Returns: The newly copied channel.
- */
+ **/
 gint32
 gimp_channel_copy (gint32 channel_ID)
 {
@@ -167,7 +167,7 @@ gimp_channel_copy (gint32 channel_ID)
  * the first channel.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_channel_combine_masks (gint32         channel1_ID,
                             gint32         channel2_ID,
@@ -206,7 +206,7 @@ gimp_channel_combine_masks (gint32         channel1_ID,
  * masked regions are shown. Otherwise, selected regions are shown.
  *
  * Returns: The channel composite method.
- */
+ **/
 gboolean
 gimp_channel_get_show_masked (gint32 channel_ID)
 {
@@ -239,7 +239,7 @@ gimp_channel_get_show_masked (gint32 channel_ID)
  * masked regions are shown. Otherwise, selected regions are shown.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_channel_set_show_masked (gint32   channel_ID,
                               gboolean show_masked)
@@ -270,7 +270,7 @@ gimp_channel_set_show_masked (gint32   channel_ID,
  * This procedure returns the specified channel's opacity.
  *
  * Returns: The channel opacity.
- */
+ **/
 gdouble
 gimp_channel_get_opacity (gint32 channel_ID)
 {
@@ -301,7 +301,7 @@ gimp_channel_get_opacity (gint32 channel_ID)
  * This procedure sets the specified channel's opacity.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_channel_set_opacity (gint32  channel_ID,
                           gdouble opacity)
@@ -333,7 +333,7 @@ gimp_channel_set_opacity (gint32  channel_ID,
  * This procedure returns the specified channel's compositing color.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_channel_get_color (gint32   channel_ID,
                         GimpRGB *color)
@@ -367,7 +367,7 @@ gimp_channel_get_color (gint32   channel_ID,
  * This procedure sets the specified channel's compositing color.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_channel_set_color (gint32         channel_ID,
                         const GimpRGB *color)

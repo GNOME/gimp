@@ -52,7 +52,7 @@
  * it has to be called before any procedure is installed.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_plugin_domain_register (const gchar *domain_name,
                              const gchar *domain_path)
@@ -88,7 +88,7 @@ gimp_plugin_domain_register (const gchar *domain_name,
  * that maps the help IDs to the actual help files.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_plugin_help_register (const gchar *domain_name,
                            const gchar *domain_uri)
@@ -123,7 +123,7 @@ gimp_plugin_help_register (const gchar *domain_name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_plugin_menu_register (const gchar *procedure_name,
                            const gchar *menu_path)
@@ -160,7 +160,7 @@ gimp_plugin_menu_register (const gchar *procedure_name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_plugin_menu_branch_register (const gchar *menu_path,
                                   const gchar *menu_name)
@@ -196,7 +196,7 @@ gimp_plugin_menu_branch_register (const gchar *menu_path,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 _gimp_plugin_icon_register (const gchar  *procedure_name,
                             GimpIconType  icon_type,
@@ -240,7 +240,7 @@ _gimp_plugin_icon_register (const gchar  *procedure_name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
 {
@@ -272,7 +272,7 @@ gimp_plugin_set_pdb_error_handler (GimpPDBErrorHandler handler)
  * Returns: Who is responsible for handling procedure call errors.
  *
  * Since: GIMP 2.6
- */
+ **/
 GimpPDBErrorHandler
 gimp_plugin_get_pdb_error_handler (void)
 {

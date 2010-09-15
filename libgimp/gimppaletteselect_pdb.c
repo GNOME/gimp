@@ -45,7 +45,7 @@
  * This procedure opens the palette selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_palettes_popup (const gchar *palette_callback,
                      const gchar *popup_title,
@@ -78,7 +78,7 @@ gimp_palettes_popup (const gchar *palette_callback,
  * This procedure closes an opened palette selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_palettes_close_popup (const gchar *palette_callback)
 {
@@ -108,7 +108,7 @@ gimp_palettes_close_popup (const gchar *palette_callback)
  * Sets the current palette in a palette selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_palettes_set_popup (const gchar *palette_callback,
                          const gchar *palette_name)

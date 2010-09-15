@@ -46,7 +46,7 @@
  * guaranteed to be unique.
  *
  * Returns: A unique temporary name for a temporary PDB entry.
- */
+ **/
 gchar *
 gimp_procedural_db_temp_name (void)
 {
@@ -77,7 +77,7 @@ gimp_procedural_db_temp_name (void)
  * provided for each registered procedure.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_procedural_db_dump (const gchar *filename)
 {
@@ -126,7 +126,7 @@ gimp_procedural_db_dump (const gchar *filename)
  * entries is 0.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_procedural_db_query (const gchar   *name,
                           const gchar   *blurb,
@@ -184,7 +184,7 @@ gimp_procedural_db_query (const gchar   *name,
  * Returns: Whether a procedure of that name is registered.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_procedural_db_proc_exists (const gchar *procedure_name)
 {
@@ -228,7 +228,7 @@ gimp_procedural_db_proc_exists (const gchar *procedure_name)
  * gimp_procedural_db_proc_val() procedures.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_procedural_db_proc_info (const gchar      *procedure_name,
                                gchar           **blurb,
@@ -292,7 +292,7 @@ _gimp_procedural_db_proc_info (const gchar      *procedure_name,
  * argument. The argument type, name, and a description are retrieved.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_procedural_db_proc_arg (const gchar     *procedure_name,
                              gint             arg_num,
@@ -344,7 +344,7 @@ gimp_procedural_db_proc_arg (const gchar     *procedure_name,
  * retrieved.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_procedural_db_proc_val (const gchar     *procedure_name,
                              gint             val_num,
@@ -394,7 +394,7 @@ gimp_procedural_db_proc_val (const gchar     *procedure_name,
  * is returned.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_procedural_db_get_data (const gchar  *identifier,
                               gint         *bytes,
@@ -439,7 +439,7 @@ _gimp_procedural_db_get_data (const gchar  *identifier,
  * associated with the identifier, an error is returned.
  *
  * Returns: The number of bytes in the data.
- */
+ **/
 gint
 gimp_procedural_db_get_data_size (const gchar *identifier)
 {
@@ -473,7 +473,7 @@ gimp_procedural_db_get_data_size (const gchar *identifier)
  * 'procedural-db-get-data'.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_procedural_db_set_data (const gchar  *identifier,
                               gint          bytes,

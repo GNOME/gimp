@@ -46,7 +46,7 @@
  * palette path and updates the palette dialogs accordingly.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_palettes_refresh (void)
 {
@@ -77,7 +77,7 @@ gimp_palettes_refresh (void)
  * gimp_context_set_palette().
  *
  * Returns: The list of palette names.
- */
+ **/
 gchar **
 gimp_palettes_get_list (const gchar *filter,
                         gint        *num_palettes)
@@ -114,7 +114,7 @@ gimp_palettes_get_list (const gchar *filter,
  * Deprecated: Use gimp_context_get_palette() instead.
  *
  * Returns: The palette name.
- */
+ **/
 gchar *
 gimp_palettes_get_palette (gint *num_colors)
 {
@@ -147,7 +147,7 @@ gimp_palettes_get_palette (gint *num_colors)
  * Deprecated: Use gimp_palette_entry_get_color() instead.
  *
  * Returns: The palette name.
- */
+ **/
 gchar *
 gimp_palettes_get_palette_entry (const gchar *name,
                                  gint         entry_num,

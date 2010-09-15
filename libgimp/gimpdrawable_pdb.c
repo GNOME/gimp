@@ -48,7 +48,7 @@
  * This procedure returns the drawable's type.
  *
  * Returns: The drawable's type.
- */
+ **/
 GimpImageType
 gimp_drawable_type (gint32 drawable_ID)
 {
@@ -81,7 +81,7 @@ gimp_drawable_type (gint32 drawable_ID)
  * the drawable's type is simply returned.
  *
  * Returns: The drawable's type with alpha.
- */
+ **/
 GimpImageType
 gimp_drawable_type_with_alpha (gint32 drawable_ID)
 {
@@ -113,7 +113,7 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
  * will be one of: { RGBA , GRAYA, INDEXEDA }.
  *
  * Returns: Does the drawable have an alpha channel?
- */
+ **/
 gboolean
 gimp_drawable_has_alpha (gint32 drawable_ID)
 {
@@ -144,7 +144,7 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
  * RGB, RGBA }.
  *
  * Returns: TRUE if the drawable is an RGB type.
- */
+ **/
 gboolean
 gimp_drawable_is_rgb (gint32 drawable_ID)
 {
@@ -175,7 +175,7 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
  * Gray, GrayA }.
  *
  * Returns: TRUE if the drawable is a grayscale type.
- */
+ **/
 gboolean
 gimp_drawable_is_gray (gint32 drawable_ID)
 {
@@ -206,7 +206,7 @@ gimp_drawable_is_gray (gint32 drawable_ID)
  * Indexed, IndexedA }.
  *
  * Returns: TRUE if the drawable is an indexed type.
- */
+ **/
 gboolean
 gimp_drawable_is_indexed (gint32 drawable_ID)
 {
@@ -237,7 +237,7 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
  * of channels) for the specified drawable.
  *
  * Returns: Bytes per pixel.
- */
+ **/
 gint
 gimp_drawable_bpp (gint32 drawable_ID)
 {
@@ -267,7 +267,7 @@ gimp_drawable_bpp (gint32 drawable_ID)
  * This procedure returns the specified drawable's width in pixels.
  *
  * Returns: Width of drawable.
- */
+ **/
 gint
 gimp_drawable_width (gint32 drawable_ID)
 {
@@ -297,7 +297,7 @@ gimp_drawable_width (gint32 drawable_ID)
  * This procedure returns the specified drawable's height in pixels.
  *
  * Returns: Height of drawable.
- */
+ **/
 gint
 gimp_drawable_height (gint32 drawable_ID)
 {
@@ -331,7 +331,7 @@ gimp_drawable_height (gint32 drawable_ID)
  * The offsets of a channel will be returned as 0.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_offsets (gint32  drawable_ID,
                        gint   *offset_x,
@@ -370,7 +370,7 @@ gimp_drawable_offsets (gint32  drawable_ID,
  * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_set_image (gint32 drawable_ID,
                          gint32 image_ID)
@@ -417,7 +417,7 @@ gimp_drawable_set_image (gint32 drawable_ID,
  * return value which is more useful in most cases.
  *
  * Returns: TRUE if there is a selection.
- */
+ **/
 gboolean
 gimp_drawable_mask_bounds (gint32  drawable_ID,
                            gint   *x1,
@@ -468,7 +468,7 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
  * Returns: TRUE if the returned area is not empty.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_drawable_mask_intersect (gint32  drawable_ID,
                               gint   *x,
@@ -512,7 +512,7 @@ gimp_drawable_mask_intersect (gint32  drawable_ID,
  * Requesting no undo is useful for such applications as 'auto-apply'.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_merge_shadow (gint32   drawable_ID,
                             gboolean undo)
@@ -548,7 +548,7 @@ gimp_drawable_merge_shadow (gint32   drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_drawable_free_shadow (gint32 drawable_ID)
 {
@@ -584,7 +584,7 @@ gimp_drawable_free_shadow (gint32 drawable_ID)
  * (0, 0, width, height).
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_update (gint32 drawable_ID,
                       gint   x,
@@ -626,7 +626,7 @@ gimp_drawable_update (gint32 drawable_ID,
  * bytes-per-pixel value for the specified drawable.
  *
  * Returns: The pixel value.
- */
+ **/
 guint8 *
 gimp_drawable_get_pixel (gint32  drawable_ID,
                          gint    x_coord,
@@ -677,7 +677,7 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
  * just created yourself.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_set_pixel (gint32        drawable_ID,
                          gint          x_coord,
@@ -725,7 +725,7 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
  * cannot be undone.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_fill (gint32       drawable_ID,
                     GimpFillType fill_type)
@@ -766,7 +766,7 @@ gimp_drawable_fill (gint32       drawable_ID,
  * specified by the 'fill-type' parameter.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_offset (gint32         drawable_ID,
                       gboolean       wrap_around,
@@ -813,7 +813,7 @@ gimp_drawable_offset (gint32         drawable_ID,
  * the number of bytes in the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_drawable_thumbnail (gint32   drawable_ID,
                           gint     width,
@@ -885,7 +885,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
                               gint     src_x,
@@ -954,7 +954,7 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_drawable_foreground_extract (gint32                    drawable_ID,
                                   GimpForegroundExtractMode mode,

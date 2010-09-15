@@ -47,7 +47,7 @@
  * Returns: The actual new palette name.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_palette_new (const gchar *name)
 {
@@ -79,7 +79,7 @@ gimp_palette_new (const gchar *name)
  * Returns: The name of the palette's copy.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_palette_duplicate (const gchar *name)
 {
@@ -112,7 +112,7 @@ gimp_palette_duplicate (const gchar *name)
  * Returns: The actual new name of the palette.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_palette_rename (const gchar *name,
                      const gchar *new_name)
@@ -146,7 +146,7 @@ gimp_palette_rename (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_delete (const gchar *name)
 {
@@ -177,7 +177,7 @@ gimp_palette_delete (const gchar *name)
  * Returns: TRUE if the palette can be edited.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_palette_is_editable (const gchar *name)
 {
@@ -211,7 +211,7 @@ gimp_palette_is_editable (const gchar *name)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_get_info (const gchar *name,
                        gint        *num_colors)
@@ -249,7 +249,7 @@ gimp_palette_get_info (const gchar *name,
  * Returns: The colors in the palette.
  *
  * Since: GIMP 2.6
- */
+ **/
 GimpRGB *
 gimp_palette_get_colors (const gchar *name,
                          gint        *num_colors)
@@ -291,7 +291,7 @@ gimp_palette_get_colors (const gchar *name,
  * Returns: The number of columns used to display this palette.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_palette_get_columns (const gchar *name)
 {
@@ -326,7 +326,7 @@ gimp_palette_get_columns (const gchar *name)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_palette_set_columns (const gchar *name,
                           gint         columns)
@@ -363,7 +363,7 @@ gimp_palette_set_columns (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_add_entry (const gchar   *name,
                         const gchar   *entry_name,
@@ -406,7 +406,7 @@ gimp_palette_add_entry (const gchar   *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_delete_entry (const gchar *name,
                            gint         entry_num)
@@ -443,7 +443,7 @@ gimp_palette_delete_entry (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_entry_get_color (const gchar *name,
                               gint         entry_num,
@@ -484,7 +484,7 @@ gimp_palette_entry_get_color (const gchar *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_entry_set_color (const gchar   *name,
                               gint           entry_num,
@@ -523,7 +523,7 @@ gimp_palette_entry_set_color (const gchar   *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_entry_get_name (const gchar  *name,
                              gint          entry_num,
@@ -566,7 +566,7 @@ gimp_palette_entry_get_name (const gchar  *name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_palette_entry_set_name (const gchar *name,
                              gint         entry_num,

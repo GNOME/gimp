@@ -46,7 +46,7 @@
  * This procedure opens the gradient selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_gradients_popup (const gchar *gradient_callback,
                       const gchar *popup_title,
@@ -81,7 +81,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
  * This procedure closes an opened gradient selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_gradients_close_popup (const gchar *gradient_callback)
 {
@@ -111,7 +111,7 @@ gimp_gradients_close_popup (const gchar *gradient_callback)
  * Sets the current gradient in a gradient selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_gradients_set_popup (const gchar *gradient_callback,
                           const gchar *gradient_name)

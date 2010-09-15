@@ -53,7 +53,7 @@
  * will not look like a URL.\"
  *
  * Returns: The output image.
- */
+ **/
 gint32
 gimp_file_load (GimpRunMode  run_mode,
                 const gchar *filename,
@@ -94,7 +94,7 @@ gimp_file_load (GimpRunMode  run_mode,
  * Returns: The layer created when loading the image file.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint32
 gimp_file_load_layer (GimpRunMode  run_mode,
                       gint32       image_ID,
@@ -136,7 +136,7 @@ gimp_file_load_layer (GimpRunMode  run_mode,
  * Returns: The list of loaded layers.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint *
 gimp_file_load_layers (GimpRunMode  run_mode,
                        gint32       image_ID,
@@ -188,7 +188,7 @@ gimp_file_load_layers (GimpRunMode  run_mode,
  * fetch a URL, and the full pathname will not look like a URL.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_file_save (GimpRunMode  run_mode,
                 gint32       image_ID,
@@ -231,7 +231,7 @@ gimp_file_save (GimpRunMode  run_mode,
  * explicitely save a thumbnail with a file.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_file_save_thumbnail (gint32       image_ID,
                           const gchar *filename)
@@ -263,7 +263,7 @@ gimp_file_save_thumbnail (gint32       image_ID,
  * user's gimprc.
  *
  * Returns: The new temp filename.
- */
+ **/
 gchar *
 gimp_temp_name (const gchar *extension)
 {
@@ -297,7 +297,7 @@ gimp_temp_name (const gchar *extension)
  * of a particular file format using magic file information.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_register_magic_load_handler (const gchar *procedure_name,
                                   const gchar *extensions,
@@ -335,7 +335,7 @@ gimp_register_magic_load_handler (const gchar *procedure_name,
  * of a particular file format.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_register_load_handler (const gchar *procedure_name,
                             const gchar *extensions,
@@ -371,7 +371,7 @@ gimp_register_load_handler (const gchar *procedure_name,
  * in a particular file format.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_register_save_handler (const gchar *procedure_name,
                             const gchar *extensions,
@@ -409,7 +409,7 @@ gimp_register_save_handler (const gchar *procedure_name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_register_file_handler_mime (const gchar *procedure_name,
                                  const gchar *mime_type)
@@ -448,7 +448,7 @@ gimp_register_file_handler_mime (const gchar *procedure_name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_register_thumbnail_loader (const gchar *load_proc,
                                 const gchar *thumb_proc)

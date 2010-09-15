@@ -45,7 +45,7 @@
  * This procedure opens the font selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_fonts_popup (const gchar *font_callback,
                   const gchar *popup_title,
@@ -78,7 +78,7 @@ gimp_fonts_popup (const gchar *font_callback,
  * This procedure closes an opened font selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_fonts_close_popup (const gchar *font_callback)
 {
@@ -108,7 +108,7 @@ gimp_fonts_close_popup (const gchar *font_callback)
  * Sets the current font in a font selection dialog.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_fonts_set_popup (const gchar *font_callback,
                       const gchar *font_name)

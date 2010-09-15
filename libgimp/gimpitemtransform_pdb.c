@@ -56,7 +56,7 @@
  * Returns: The flipped item.
  *
  * Since: GIMP 2.2
- */
+ **/
 gint32
 gimp_item_transform_flip_simple (gint32              item_ID,
                                  GimpOrientationType flip_type,
@@ -106,7 +106,7 @@ gimp_item_transform_flip_simple (gint32              item_ID,
  * Returns: The flipped item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_flip (gint32  item_ID,
                           gdouble x0,
@@ -169,7 +169,7 @@ gimp_item_transform_flip (gint32  item_ID,
  * Returns: The newly mapped item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_perspective (gint32  item_ID,
                                  gdouble x0,
@@ -229,7 +229,7 @@ gimp_item_transform_perspective (gint32  item_ID,
  * Returns: The rotated item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_rotate_simple (gint32           item_ID,
                                    GimpRotationType rotate_type,
@@ -281,7 +281,7 @@ gimp_item_transform_rotate_simple (gint32           item_ID,
  * Returns: The rotated item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_rotate (gint32   item_ID,
                             gdouble  angle,
@@ -332,7 +332,7 @@ gimp_item_transform_rotate (gint32   item_ID,
  * Returns: The scaled item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_scale (gint32  item_ID,
                            gdouble x0,
@@ -385,7 +385,7 @@ gimp_item_transform_scale (gint32  item_ID,
  * Returns: The sheared item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_shear (gint32              item_ID,
                            GimpOrientationType shear_type,
@@ -438,7 +438,7 @@ gimp_item_transform_shear (gint32              item_ID,
  * Returns: The transformed item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_2d (gint32  item_ID,
                         gdouble source_x,
@@ -501,7 +501,7 @@ gimp_item_transform_2d (gint32  item_ID,
  * Returns: The transformed item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_transform_matrix (gint32  item_ID,
                             gdouble coeff_0_0,

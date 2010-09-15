@@ -46,7 +46,7 @@
  * Finds and returns the global parasite that was previously attached.
  *
  * Returns: The found parasite.
- */
+ **/
 GimpParasite *
 gimp_parasite_find (const gchar *name)
 {
@@ -76,7 +76,7 @@ gimp_parasite_find (const gchar *name)
  * This procedure attaches a global parasite. It has no return values.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_parasite_attach (const GimpParasite *parasite)
 {
@@ -106,7 +106,7 @@ gimp_parasite_attach (const GimpParasite *parasite)
  * values.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_parasite_detach (const gchar *name)
 {
@@ -136,7 +136,7 @@ gimp_parasite_detach (const gchar *name)
  * Returns a list of all currently attached global parasites.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_parasite_list (gint    *num_parasites,
                     gchar ***parasites)
@@ -179,7 +179,7 @@ gimp_parasite_list (gint    *num_parasites,
  * image.
  *
  * Returns: The found parasite.
- */
+ **/
 GimpParasite *
 gimp_image_parasite_find (gint32       image_ID,
                           const gchar *name)
@@ -213,7 +213,7 @@ gimp_image_parasite_find (gint32       image_ID,
  * values.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_parasite_attach (gint32              image_ID,
                             const GimpParasite *parasite)
@@ -246,7 +246,7 @@ gimp_image_parasite_attach (gint32              image_ID,
  * values.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_parasite_detach (gint32       image_ID,
                             const gchar *name)
@@ -279,7 +279,7 @@ gimp_image_parasite_detach (gint32       image_ID,
  * Returns a list of all currently attached parasites.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_parasite_list (gint32    image_ID,
                           gint     *num_parasites,
@@ -325,7 +325,7 @@ gimp_image_parasite_list (gint32    image_ID,
  * Returns: The found parasite.
  *
  * Since: GIMP 2.8
- */
+ **/
 GimpParasite *
 gimp_item_parasite_find (gint32       item_ID,
                          const gchar *name)
@@ -361,7 +361,7 @@ gimp_item_parasite_find (gint32       item_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_parasite_attach (gint32              item_ID,
                            const GimpParasite *parasite)
@@ -396,7 +396,7 @@ gimp_item_parasite_attach (gint32              item_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_parasite_detach (gint32       item_ID,
                            const gchar *name)
@@ -431,7 +431,7 @@ gimp_item_parasite_detach (gint32       item_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_parasite_list (gint32    item_ID,
                          gint     *num_parasites,
@@ -473,7 +473,7 @@ gimp_item_parasite_list (gint32    item_ID,
  * Deprecated: Use gimp_item_parasite_find() instead.
  *
  * Returns: The found parasite.
- */
+ **/
 GimpParasite *
 gimp_drawable_parasite_find (gint32       drawable_ID,
                              const gchar *name)
@@ -504,7 +504,7 @@ gimp_drawable_parasite_find (gint32       drawable_ID,
  * Deprecated: Use gimp_item_parasite_attach() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_parasite_attach (gint32              drawable_ID,
                                const GimpParasite *parasite)
@@ -534,7 +534,7 @@ gimp_drawable_parasite_attach (gint32              drawable_ID,
  * Deprecated: Use gimp_item_parasite_detach() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_parasite_detach (gint32       drawable_ID,
                                const gchar *name)
@@ -565,7 +565,7 @@ gimp_drawable_parasite_detach (gint32       drawable_ID,
  * Deprecated: Use gimp_item_parasite_list() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_parasite_list (gint32    drawable_ID,
                              gint     *num_parasites,
@@ -609,7 +609,7 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
  * Returns: The found parasite.
  *
  * Since: GIMP 2.4
- */
+ **/
 GimpParasite *
 gimp_vectors_parasite_find (gint32       vectors_ID,
                             const gchar *name)
@@ -642,7 +642,7 @@ gimp_vectors_parasite_find (gint32       vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_parasite_attach (gint32              vectors_ID,
                               const GimpParasite *parasite)
@@ -674,7 +674,7 @@ gimp_vectors_parasite_attach (gint32              vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_parasite_detach (gint32       vectors_ID,
                               const gchar *name)
@@ -707,7 +707,7 @@ gimp_vectors_parasite_detach (gint32       vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_parasite_list (gint32    vectors_ID,
                             gint     *num_parasites,

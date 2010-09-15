@@ -50,7 +50,7 @@
  * results in a thinner layer.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_airbrush (gint32         drawable_ID,
                gdouble        pressure,
@@ -91,7 +91,7 @@ gimp_airbrush (gint32         drawable_ID,
  * default for the option will be used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_airbrush_default (gint32         drawable_ID,
                        gint           num_strokes,
@@ -141,7 +141,7 @@ gimp_airbrush_default (gint32         drawable_ID,
  * significantly slower.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_clone (gint32         drawable_ID,
             gint32         src_drawable_ID,
@@ -189,7 +189,7 @@ gimp_clone (gint32         drawable_ID,
  * will be used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_clone_default (gint32         drawable_ID,
                     gint           num_strokes,
@@ -229,7 +229,7 @@ gimp_clone_default (gint32         drawable_ID,
  * between the specified stroke coordinates.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_convolve (gint32            drawable_ID,
                gdouble           pressure,
@@ -272,7 +272,7 @@ gimp_convolve (gint32            drawable_ID,
  * been activated then the dialogs default values will be used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_convolve_default (gint32         drawable_ID,
                        gint           num_strokes,
@@ -310,7 +310,7 @@ gimp_convolve_default (gint32         drawable_ID,
  * Dodgeburn. More details here later.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_dodgeburn (gint32             drawable_ID,
                 gdouble            exposure,
@@ -354,7 +354,7 @@ gimp_dodgeburn (gint32             drawable_ID,
  * Dodgeburn. More details here later.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_dodgeburn_default (gint32         drawable_ID,
                         gint           num_strokes,
@@ -395,7 +395,7 @@ gimp_dodgeburn_default (gint32         drawable_ID,
  * tool linearly interpolates between the specified stroke coordinates.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_eraser (gint32                    drawable_ID,
              gint                      num_strokes,
@@ -438,7 +438,7 @@ gimp_eraser (gint32                    drawable_ID,
  * will be used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_eraser_default (gint32         drawable_ID,
                      gint           num_strokes,
@@ -483,7 +483,7 @@ gimp_eraser_default (gint32         drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_heal (gint32         drawable_ID,
            gint32         src_drawable_ID,
@@ -531,7 +531,7 @@ gimp_heal (gint32         drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_heal_default (gint32         drawable_ID,
                    gint           num_strokes,
@@ -578,7 +578,7 @@ gimp_heal_default (gint32         drawable_ID,
  * pixels. If the gradient-length is 0, no gradient is used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_paintbrush (gint32                    drawable_ID,
                  gdouble                   fade_out,
@@ -632,7 +632,7 @@ gimp_paintbrush (gint32                    drawable_ID,
  * is 0, no gradient is used.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_paintbrush_default (gint32         drawable_ID,
                          gint           num_strokes,
@@ -672,7 +672,7 @@ gimp_paintbrush_default (gint32         drawable_ID,
  * white.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_pencil (gint32         drawable_ID,
              gint           num_strokes,
@@ -710,7 +710,7 @@ gimp_pencil (gint32         drawable_ID,
  * lesser smudge.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_smudge (gint32         drawable_ID,
              gdouble        pressure,
@@ -750,7 +750,7 @@ gimp_smudge (gint32         drawable_ID,
  * tools option dialog has not been activated.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_smudge_default (gint32         drawable_ID,
                      gint           num_strokes,

@@ -46,7 +46,7 @@
  * returns the guide ID of the new guide.
  *
  * Returns: The new guide.
- */
+ **/
 gint32
 gimp_image_add_hguide (gint32 image_ID,
                        gint   yposition)
@@ -81,7 +81,7 @@ gimp_image_add_hguide (gint32 image_ID,
  * the guide ID of the new guide.
  *
  * Returns: The new guide.
- */
+ **/
 gint32
 gimp_image_add_vguide (gint32 image_ID,
                        gint   xposition)
@@ -115,7 +115,7 @@ gimp_image_add_vguide (gint32 image_ID,
  * the specified guide from the specified image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_delete_guide (gint32 image_ID,
                          gint32 guide_ID)
@@ -151,7 +151,7 @@ gimp_image_delete_guide (gint32 image_ID,
  * as an argument or the image has no guides.
  *
  * Returns: The next guide's ID.
- */
+ **/
 gint32
 gimp_image_find_next_guide (gint32 image_ID,
                             gint32 guide_ID)
@@ -185,7 +185,7 @@ gimp_image_find_next_guide (gint32 image_ID,
  * the orientations of the guide.
  *
  * Returns: The guide's orientation.
- */
+ **/
 GimpOrientationType
 gimp_image_get_guide_orientation (gint32 image_ID,
                                   gint32 guide_ID)
@@ -219,7 +219,7 @@ gimp_image_get_guide_orientation (gint32 image_ID,
  * the position of the guide relative to the top or left of the image.
  *
  * Returns: The guide's position relative to top or left of image.
- */
+ **/
 gint
 gimp_image_get_guide_position (gint32 image_ID,
                                gint32 guide_ID)
