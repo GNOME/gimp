@@ -151,6 +151,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->flip                    = gimp_selection_flip;
   item_class->rotate                  = gimp_selection_rotate;
   item_class->stroke                  = gimp_selection_stroke;
+  item_class->default_name            = _("Selection Mask");
   item_class->translate_desc          = C_("undo-type", "Move Selection");
   item_class->stroke_desc             = C_("undo-type", "Stroke Selection");
 
@@ -529,7 +530,7 @@ gimp_selection_new (GimpImage *image,
                            image,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE,
-                           _("Selection Mask"));
+                           NULL);
 
   gimp_channel_set_color (channel, &black, FALSE);
   gimp_channel_set_show_masked (channel, TRUE);
