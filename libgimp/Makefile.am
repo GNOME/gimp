@@ -226,6 +226,8 @@ libgimp_2_0_la_sources = \
 	gimptile.h		\
 	gimpunitcache.c		\
 	gimpunitcache.h		\
+	gimpvectors.c		\
+	gimpvectors.h		\
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
@@ -326,6 +328,7 @@ gimpinclude_HEADERS = \
 	gimpregioniterator.h		\
 	gimpselection.h			\
 	gimptile.h			\
+	gimpvectors.h			\
 	\
 	gimpui.h			\
 	gimpuitypes.h			\

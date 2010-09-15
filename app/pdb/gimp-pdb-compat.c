@@ -423,7 +423,19 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
 
     /*  deprecations since 2.2  */
     { "gimp-layer-get-preserve-trans",   "gimp-layer-get-lock-alpha"       },
-    { "gimp-layer-set-preserve-trans",   "gimp-layer-set-lock-alpha"       }
+    { "gimp-layer-set-preserve-trans",   "gimp-layer-set-lock-alpha"       },
+
+    /*  deprecations since 2.6  */
+    { "gimp-vectors-is-valid",           "gimp-item-is-valid"              },
+    { "gimp-vectors-get-image",          "gimp-item-get-image"             },
+    { "gimp-vectors-get-name",           "gimp-item-get-name"              },
+    { "gimp-vectors-set-name",           "gimp-item-set-name"              },
+    { "gimp-vectors-get-visible",        "gimp-item-get-visible"           },
+    { "gimp-vectors-set-visible",        "gimp-item-set-visible"           },
+    { "gimp-vectors-get-linked",         "gimp-item-get-linked"            },
+    { "gimp-vectors-set-linked",         "gimp-item-set-linked"            },
+    { "gimp-vectors-get-tattoo",         "gimp-item-get-tattoo"            },
+    { "gimp-vectors-set-tattoo",         "gimp-item-set-tattoo"            }
   };
 
   g_return_if_fail (GIMP_IS_PDB (pdb));
