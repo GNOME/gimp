@@ -34,7 +34,6 @@ gint32   gimp_layer_new                (gint32                image_ID,
                                         gdouble               opacity,
                                         GimpLayerModeEffects  mode);
 gint32   gimp_layer_copy               (gint32                layer_ID);
-gint32   gimp_layer_group_new          (gint32                image_ID);
 
 
 #ifndef GIMP_DISABLE_DEPRECATED

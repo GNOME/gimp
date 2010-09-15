@@ -179,6 +179,38 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+layer_group_new_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpLayer *layer_group = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+
+  if (success)
+    {
+      layer_group = gimp_group_layer_new (image);
+
+      if (! layer_group)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer_group);
+
+  return return_vals;
+}
+
+static GValueArray *
 layer_copy_invoker (GimpProcedure      *procedure,
                     Gimp               *gimp,
                     GimpContext        *context,
@@ -1027,38 +1059,6 @@ layer_set_mode_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
-static GValueArray *
-layer_group_new_invoker (GimpProcedure      *procedure,
-                         Gimp               *gimp,
-                         GimpContext        *context,
-                         GimpProgress       *progress,
-                         const GValueArray  *args,
-                         GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpImage *image;
-  GimpLayer *layer_group = NULL;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-
-  if (success)
-    {
-      layer_group = gimp_group_layer_new (image);
-
-      if (! layer_group)
-        success = FALSE;
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    gimp_value_set_layer (&return_vals->values[1], layer_group);
-
-  return return_vals;
-}
-
 void
 register_layer_procs (GimpPDB *pdb)
 {
@@ -1204,6 +1204,35 @@ register_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_id ("layer-copy",
                                                              "layer copy",
                                                              "The newly copied layer",
+                                                             pdb->gimp, FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-group-new
+   */
+  procedure = gimp_procedure_new (layer_group_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-group-new");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-group-new",
+                                     "Create a new layer group.",
+                                     "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.",
+                                     "Barak Itkin <lightningismyname@gmail.com>",
+                                     "Barak Itkin",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image to which to add the layer group",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_layer_id ("layer-group",
+                                                             "layer group",
+                                                             "The newly created layer group",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2048,35 +2077,6 @@ register_layer_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_LAYER_MODE_EFFECTS,
                                                   GIMP_NORMAL_MODE,
                                                   GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-layer-group-new
-   */
-  procedure = gimp_procedure_new (layer_group_new_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-layer-group-new");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-layer-group-new",
-                                     "Create a new layer group.",
-                                     "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.",
-                                     "Barak Itkin <lightningismyname@gmail.com>",
-                                     "Barak Itkin",
-                                     "2010",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image to which to add the layer group",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer_id ("layer-group",
-                                                             "layer group",
-                                                             "The newly created layer group",
-                                                             pdb->gimp, FALSE,
-                                                             GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

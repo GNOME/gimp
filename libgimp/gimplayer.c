@@ -83,25 +83,6 @@ gimp_layer_copy (gint32  layer_ID)
 }
 
 /**
- * gimp_layer_group_new:
- * @image_ID: The image to which to add the layer.
- *
- * Create a new layer group.
- *
- * This procedure creates a new layer group. Attributes such as layer
- * mode and opacity should be set with explicit procedure calls. Add
- * the new layer group (which is a kind of layer) with the
- * gimp_image_insert_layer() command.
- *
- * Returns: The newly created layer group.
- */
-gint32
-gimp_layer_group_new (gint32 image_ID)
-{
-  return _gimp_layer_group_new (image_ID);
-}
-
-/**
  * gimp_layer_get_preserve_trans:
  * @layer_ID: The layer.
  *

@@ -159,6 +159,39 @@ CODE
     );
 }
 
+sub layer_group_new {
+    $blurb = 'Create a new layer group.';
+
+    $help = <<'HELP';
+This procedure creates a new layer group. Attributes such as layer mode
+and opacity should be set with explicit procedure calls. Add the new
+layer group (which is a kind of layer) with the
+gimp_image_insert_layer() command.
+HELP
+
+    &barak_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the layer group' }
+    );
+
+    @outargs = (
+	{ name => 'layer_group', type => 'layer',
+	  desc => 'The newly created layer group' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  layer_group = gimp_group_layer_new (image);
+
+  if (! layer_group)
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub layer_copy {
     $blurb = 'Copy a layer.';
 
@@ -1071,39 +1104,6 @@ CODE
     );
 }
 
-sub layer_group_new {
-    $blurb = 'Create a new layer group.';
-
-    $help = <<'HELP';
-This procedure creates a new layer group. Attributes such as layer mode
-and opacity should be set with explicit procedure calls. Add the new
-layer group (which is a kind of layer) with the
-gimp_image_insert_layer() command.
-HELP
-
-    &barak_pdb_misc('2010', '2.8');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image to which to add the layer group' }
-    );
-
-    @outargs = (
-	{ name => 'layer_group', type => 'layer', wrap => 1,
-	  desc => 'The newly created layer group' }
-    );
-    %invoke = (
-	code => <<'CODE'
-{
-  layer_group = gimp_group_layer_new (image);
-
-  if (! layer_group)
-    success = FALSE;
-}
-CODE
-    );
-}
-
 @headers = qw("libgimpbase/gimpbase.h"
               "config/gimpcoreconfig.h"
               "core/gimp.h"
@@ -1117,6 +1117,7 @@ CODE
 @procs = qw(layer_new
             layer_new_from_visible
             layer_new_from_drawable
+            layer_group_new
             layer_copy
             layer_add_alpha
             layer_flatten
@@ -1134,8 +1135,7 @@ CODE
             layer_get_show_mask layer_set_show_mask
             layer_get_edit_mask layer_set_edit_mask
             layer_get_opacity layer_set_opacity
-            layer_get_mode layer_set_mode
-            layer_group_new);
+            layer_get_mode layer_set_mode);
 
 %exports = (app => [@procs], lib => [@procs]);
 

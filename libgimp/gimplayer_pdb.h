@@ -40,6 +40,7 @@ gint32                 gimp_layer_new_from_visible     (gint32                 i
                                                         const gchar           *name);
 gint32                 gimp_layer_new_from_drawable    (gint32                 drawable_ID,
                                                         gint32                 dest_image_ID);
+gint32                 gimp_layer_group_new            (gint32                 image_ID);
 G_GNUC_INTERNAL gint32 _gimp_layer_copy                (gint32                 layer_ID,
                                                         gboolean               add_alpha);
 gboolean               gimp_layer_add_alpha            (gint32                 layer_ID);
@@ -92,7 +93,6 @@ gboolean               gimp_layer_set_opacity          (gint32                 l
 GimpLayerModeEffects   gimp_layer_get_mode             (gint32                 layer_ID);
 gboolean               gimp_layer_set_mode             (gint32                 layer_ID,
                                                         GimpLayerModeEffects   mode);
-G_GNUC_INTERNAL gint32 _gimp_layer_group_new           (gint32                 image_ID);
 
 
 G_END_DECLS
