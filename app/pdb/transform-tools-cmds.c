@@ -72,8 +72,11 @@ flip_invoker (GimpProcedure      *procedure,
           gimp_transform_get_flip_axis (x, y, width, height,
                                         flip_type, TRUE, &axis);
 
-          success = gimp_drawable_transform_flip (drawable, context,
-                                                  flip_type, axis, FALSE);
+          if (! gimp_drawable_transform_flip (drawable, context,
+                                              flip_type, axis, FALSE))
+            {
+              success = FALSE;
+            }
         }
     }
 
@@ -149,12 +152,14 @@ perspective_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Perspective"), FALSE);
 
-          /* Perspective the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -218,12 +223,14 @@ rotate_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Rotating"), FALSE);
 
-          /* Rotate the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -294,12 +301,14 @@ scale_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
-          /* Scale the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -365,12 +374,14 @@ shear_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Shearing"), FALSE);
 
-          /* Shear the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -441,11 +452,13 @@ transform_2d_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transform"), FALSE);
 
-          /* Transform the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix, GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);

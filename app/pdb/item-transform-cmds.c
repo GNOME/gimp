@@ -82,9 +82,16 @@ item_transform_flip_simple_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_flip (GIMP_DRAWABLE (item), context,
-                                                      flip_type, axis,
-                                                      pdb_context->transform_resize);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_flip (GIMP_DRAWABLE (item), context,
+                                                       flip_type, axis,
+                                                       pdb_context->transform_resize);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -152,13 +159,20 @@ item_transform_flip_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -243,13 +257,20 @@ item_transform_perspective_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -318,11 +339,18 @@ item_transform_rotate_simple_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_rotate (GIMP_DRAWABLE (item),
-                                                        context,
-                                                        rotate_type,
-                                                        center_x, center_y,
-                                                        pdb_context->transform_resize);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_rotate (GIMP_DRAWABLE (item),
+                                                         context,
+                                                         rotate_type,
+                                                         center_x, center_y,
+                                                         pdb_context->transform_resize);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -396,13 +424,20 @@ item_transform_rotate_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -478,13 +513,20 @@ item_transform_scale_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -556,13 +598,20 @@ item_transform_shear_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -645,13 +694,20 @@ item_transform_2d_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {
@@ -742,13 +798,20 @@ item_transform_matrix_invoker (GimpProcedure      *procedure,
 
           if (GIMP_IS_DRAWABLE (item))
             {
-              success = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
-                                                        context, &matrix,
-                                                        pdb_context->transform_direction,
-                                                        pdb_context->interpolation,
-                                                        pdb_context->transform_recursion,
-                                                        pdb_context->transform_resize,
-                                                        progress);
+              GimpDrawable *drawable;
+
+              drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                         context, &matrix,
+                                                         pdb_context->transform_direction,
+                                                         pdb_context->interpolation,
+                                                         pdb_context->transform_recursion,
+                                                         pdb_context->transform_resize,
+                                                         progress);
+
+              if (drawable)
+                item = GIMP_ITEM (drawable);
+              else
+                success = FALSE;
             }
           else
             {

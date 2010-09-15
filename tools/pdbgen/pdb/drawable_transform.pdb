@@ -54,11 +54,13 @@ $assemble_matrix
       if (progress)
         gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
 
-      /* Transform the selection */
-      success = gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, transform_direction,
-                                                interpolation, recursion_level,
-                                                clip_result, progress);
+      if (! gimp_drawable_transform_affine (drawable, context,
+                                            &matrix, transform_direction,
+                                            interpolation, recursion_level,
+                                            clip_result, progress))
+        {
+          success = FALSE;
+        }
 
       if (progress)
         gimp_progress_end (progress);
@@ -104,11 +106,13 @@ $assemble_matrix
       if (progress)
         gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
 
-      /* Transform the selection */
-      success = gimp_drawable_transform_affine (drawable, context,
-                                                &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, 3,
-                                                clip_result, progress);
+      if (! gimp_drawable_transform_affine (drawable, context,
+                                            &matrix, GIMP_TRANSFORM_FORWARD,
+                                            interpolation_type, 3,
+                                            clip_result, progress))
+        {
+          success = FALSE;
+        }
 
       if (progress)
         gimp_progress_end (progress);
@@ -173,10 +177,13 @@ HELP
       gimp_transform_get_flip_axis (x, y, width, height,
                                     flip_type, auto_center, &axis);
 
-      success = gimp_drawable_transform_flip (drawable, context,
-                                              flip_type,
-                                              axis,
-                                              clip_result);
+      if (! gimp_drawable_transform_flip (drawable, context,
+                                          flip_type,
+                                          axis,
+                                          clip_result))
+        {
+          success = FALSE;
+        }
     }
 }
 CODE
@@ -476,10 +483,13 @@ HELP
       gimp_transform_get_rotate_center (x, y, width, height,
                                         auto_center, &cx, &cy);
 
-      success = gimp_drawable_transform_rotate (drawable, context,
-                                                rotate_type,
-                                                cx, cy,
-                                                clip_result);
+      if (! gimp_drawable_transform_rotate (drawable, context,
+                                            rotate_type,
+                                            cx, cy,
+                                            clip_result))
+        {
+          success = FALSE;
+        }
     }
 }
 CODE
