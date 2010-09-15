@@ -352,6 +352,22 @@ gimp_drawable_is_layer (gint32 drawable_ID)
 }
 
 /**
+ * gimp_drawable_is_text_layer:
+ * @drawable_ID: The drawable.
+ *
+ * Deprecated: Use gimp_item_is_text_layer() instead.
+ *
+ * Returns: TRUE if the drawable is a text layer, FALSE otherwise.
+ *
+ * Since: GIMP 2.6
+ */
+gboolean
+gimp_drawable_is_text_layer (gint32 drawable_ID)
+{
+  return gimp_item_is_text_layer (drawable_ID);
+}
+
+/**
  * gimp_drawable_is_layer_mask:
  * @drawable_ID: The drawable.
  *

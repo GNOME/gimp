@@ -165,6 +165,35 @@ CODE
     );
 }
 
+sub item_is_text_layer {
+    $blurb = 'Returns whether the item is a text layer.';
+
+    $help = <<'HELP';
+This procedure returns TRUE if the specified item is a text layer.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+        { name => 'text_layer', type => 'boolean',
+	  desc => 'TRUE if the item is a text layer, FALSE otherwise.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  text_layer = (GIMP_IS_DRAWABLE (item) &&
+                gimp_drawable_is_text_layer (GIMP_DRAWABLE (item)));
+}
+CODE
+    );
+}
+
 sub item_is_channel {
     $blurb = 'Returns whether the item is a channel.';
 
@@ -708,6 +737,7 @@ CODE
             item_delete
             item_is_drawable
             item_is_layer
+            item_is_text_layer
 	    item_is_channel
 	    item_is_layer_mask
 	    item_is_selection

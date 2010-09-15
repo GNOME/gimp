@@ -201,6 +201,38 @@ gimp_item_is_layer (gint32 item_ID)
 }
 
 /**
+ * gimp_item_is_text_layer:
+ * @item_ID: The item.
+ *
+ * Returns whether the item is a text layer.
+ *
+ * This procedure returns TRUE if the specified item is a text layer.
+ *
+ * Returns: TRUE if the item is a text layer, FALSE otherwise.
+ *
+ * Since: GIMP 2.8
+ */
+gboolean
+gimp_item_is_text_layer (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean text_layer = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-item-is-text-layer",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    text_layer = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return text_layer;
+}
+
+/**
  * gimp_item_is_channel:
  * @item_ID: The item.
  *

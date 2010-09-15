@@ -428,6 +428,7 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
     /*  deprecations since 2.6  */
     { "gimp-drawable-is-valid",          "gimp-item-is-valid"              },
     { "gimp-drawable-is-layer",          "gimp-item-is-layer"              },
+    { "gimp-drawable-is-text-layer",     "gimp-item-is-text-layer"         },
     { "gimp-drawable-is-layer-mask",     "gimp-item-is-layer-mask"         },
     { "gimp-drawable-is-channel",        "gimp-item-is-channel"            },
     { "gimp-drawable-delete",            "gimp-item-delete"                },

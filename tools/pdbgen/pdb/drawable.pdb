@@ -551,34 +551,6 @@ CODE
     );
 }
 
-sub drawable_is_text_layer {
-    $blurb = 'Returns whether the drawable is a text layer.';
-
-    $help = <<'HELP';
-This procedure returns TRUE if the specified drawable is a text layer.
-HELP
-
-    &marcus_pdb_misc('2008', '2.6');
-
-    @inargs = (
-        { name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-        { name => 'text_layer', type => 'boolean',
-	  desc => 'TRUE if the drawable is a text layer, FALSE otherwise.' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  text_layer = gimp_drawable_is_text_layer (drawable);
-}
-CODE
-    );
-}
-
 sub drawable_get_pixel {
     $blurb = 'Gets the value of the pixel at the specified coordinates.';
 
@@ -973,8 +945,7 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(drawable_is_text_layer
-	    drawable_type
+@procs = qw(drawable_type
             drawable_type_with_alpha
             drawable_has_alpha
             drawable_is_rgb

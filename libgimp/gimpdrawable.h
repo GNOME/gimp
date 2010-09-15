@@ -71,6 +71,7 @@ guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean       gimp_drawable_is_valid               (gint32         drawable_ID);
 gboolean       gimp_drawable_is_layer               (gint32         drawable_ID);
+gboolean       gimp_drawable_is_text_layer          (gint32         drawable_ID);
 gboolean       gimp_drawable_is_layer_mask          (gint32         drawable_ID);
 gboolean       gimp_drawable_is_channel             (gint32         drawable_ID);
 gboolean       gimp_drawable_delete                 (gint32         drawable_ID);

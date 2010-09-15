@@ -51,35 +51,6 @@
 
 
 static GValueArray *
-drawable_is_text_layer_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
-{
-  gboolean success = TRUE;
-  GValueArray *return_vals;
-  GimpDrawable *drawable;
-  gboolean text_layer = FALSE;
-
-  drawable = gimp_value_get_drawable (&args->values[0], gimp);
-
-  if (success)
-    {
-      text_layer = gimp_drawable_is_text_layer (drawable);
-    }
-
-  return_vals = gimp_procedure_get_return_values (procedure, success,
-                                                  error ? *error : NULL);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], text_layer);
-
-  return return_vals;
-}
-
-static GValueArray *
 drawable_type_invoker (GimpProcedure      *procedure,
                        Gimp               *gimp,
                        GimpContext        *context,
@@ -947,35 +918,6 @@ void
 register_drawable_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
-
-  /*
-   * gimp-drawable-is-text-layer
-   */
-  procedure = gimp_procedure_new (drawable_is_text_layer_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-drawable-is-text-layer");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-is-text-layer",
-                                     "Returns whether the drawable is a text layer.",
-                                     "This procedure returns TRUE if the specified drawable is a text layer.",
-                                     "Marcus Heese <heese@cip.ifi.lmu.de>",
-                                     "Marcus Heese",
-                                     "2008",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_drawable_id ("drawable",
-                                                            "drawable",
-                                                            "The drawable",
-                                                            pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_return_value (procedure,
-                                   g_param_spec_boolean ("text-layer",
-                                                         "text layer",
-                                                         "TRUE if the drawable is a text layer, FALSE otherwise.",
-                                                         FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
 
   /*
    * gimp-drawable-type

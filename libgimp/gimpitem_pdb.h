@@ -33,6 +33,7 @@ gint32   gimp_item_get_image        (gint32          item_ID);
 gboolean gimp_item_delete           (gint32          item_ID);
 gboolean gimp_item_is_drawable      (gint32          item_ID);
 gboolean gimp_item_is_layer         (gint32          item_ID);
+gboolean gimp_item_is_text_layer    (gint32          item_ID);
 gboolean gimp_item_is_channel       (gint32          item_ID);
 gboolean gimp_item_is_layer_mask    (gint32          item_ID);
 gboolean gimp_item_is_selection     (gint32          item_ID);

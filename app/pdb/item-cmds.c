@@ -180,6 +180,36 @@ item_is_layer_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+item_is_text_layer_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpItem *item;
+  gboolean text_layer = FALSE;
+
+  item = gimp_value_get_item (&args->values[0], gimp);
+
+  if (success)
+    {
+      text_layer = (GIMP_IS_DRAWABLE (item) &&
+                    gimp_drawable_is_text_layer (GIMP_DRAWABLE (item)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], text_layer);
+
+  return return_vals;
+}
+
+static GValueArray *
 item_is_channel_invoker (GimpProcedure      *procedure,
                          Gimp               *gimp,
                          GimpContext        *context,
@@ -851,6 +881,35 @@ register_item_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("layer",
                                                          "layer",
                                                          "TRUE if the item is a layer, FALSE otherwise",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-is-text-layer
+   */
+  procedure = gimp_procedure_new (item_is_text_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-is-text-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-is-text-layer",
+                                     "Returns whether the item is a text layer.",
+                                     "This procedure returns TRUE if the specified item is a text layer.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("text-layer",
+                                                         "text layer",
+                                                         "TRUE if the item is a text layer, FALSE otherwise.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

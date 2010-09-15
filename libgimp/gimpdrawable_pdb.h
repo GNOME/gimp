@@ -28,7 +28,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean                 gimp_drawable_is_text_layer      (gint32                      drawable_ID);
 GimpImageType            gimp_drawable_type               (gint32                      drawable_ID);
 GimpImageType            gimp_drawable_type_with_alpha    (gint32                      drawable_ID);
 gboolean                 gimp_drawable_has_alpha          (gint32                      drawable_ID);

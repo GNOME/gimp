@@ -446,6 +446,7 @@ EXPORTS
 	gimp_item_is_layer
 	gimp_item_is_layer_mask
 	gimp_item_is_selection
+	gimp_item_is_text_layer
 	gimp_item_is_valid
 	gimp_item_is_vectors
 	gimp_item_parasite_attach

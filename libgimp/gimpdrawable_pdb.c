@@ -40,39 +40,6 @@
 
 
 /**
- * gimp_drawable_is_text_layer:
- * @drawable_ID: The drawable.
- *
- * Returns whether the drawable is a text layer.
- *
- * This procedure returns TRUE if the specified drawable is a text
- * layer.
- *
- * Returns: TRUE if the drawable is a text layer, FALSE otherwise.
- *
- * Since: GIMP 2.6
- */
-gboolean
-gimp_drawable_is_text_layer (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean text_layer = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-is-text-layer",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    text_layer = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return text_layer;
-}
-
-/**
  * gimp_drawable_type:
  * @drawable_ID: The drawable.
  *
