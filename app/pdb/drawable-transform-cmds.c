@@ -1330,12 +1330,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-flip-simple");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip-simple",
-                                     "Flip the specified drawable either vertically or horizontally.",
-                                     "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to TRUE, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
+                                     "Deprecated: Use 'gimp-item-transform-flip-simple' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-flip-simple' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-flip-simple");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1386,12 +1386,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-flip");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip",
-                                     "Flip the specified drawable around a given line.",
-                                     "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable. The clip results parameter specifies wheter current selection will affect the transform.",
+                                     "Deprecated: Use 'gimp-item-transform-flip' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-flip' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-flip");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1471,12 +1471,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-flip-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-flip-default",
-                                     "Flip the specified drawable around a given line.",
-                                     "This procedure is a variant of 'gimp-drawable-transform-flip' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-flip' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-flip' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-flip");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1536,12 +1536,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-perspective");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-perspective",
-                                     "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
-                                     "This procedure performs a possibly non-affine transformation on the specified drawable by allowing the corners of the original bounding box to be arbitrarily remapped to any values. The specified drawable is remapped if no selection exists. However, if a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then remapped as specified. The return value is the ID of the remapped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and remapped drawable. The 4 coordinates specify the new locations of each corner of the original bounding box. By specifying these values, any affine transformation (rotation, scaling, translation) can be affected. Additionally, these values can be specified such that the resulting transformed drawable will appear to have been projected via a perspective transform.",
+                                     "Deprecated: Use 'gimp-item-transform-perspective' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-perspective' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-perspective");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1646,12 +1646,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-perspective-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-perspective-default",
-                                     "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
-                                     "This procedure is a variant of 'gimp-drawable-transform-perspective' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-perspective' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-perspective' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-perspective");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1736,12 +1736,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-rotate-simple");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate-simple",
-                                     "Rotate the specified drawable about given coordinates through the specified angle.",
-                                     "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate-simple' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate-simple' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-rotate-simple");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1796,12 +1796,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-rotate");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate",
-                                     "Rotate the specified drawable about given coordinates through the specified angle.",
-                                     "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-rotate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1882,12 +1882,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-rotate-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-rotate-default",
-                                     "Rotate the specified drawable about given coordinates through the specified angle.",
-                                     "This procedure is a variant of 'gimp-drawable-transform-rotate' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-rotate' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-rotate' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-rotate");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1948,12 +1948,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-scale");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-scale",
-                                     "Scale the specified drawable with extra parameters",
-                                     "This procedure scales the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount. The return value is the ID of the scaled drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and scaled drawable.",
+                                     "Deprecated: Use 'gimp-item-transform-scale' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-scale' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2034,12 +2034,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-scale-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-scale-default",
-                                     "Scale the specified drawable with extra parameters",
-                                     "This procedure is a variant of 'gimp-drawable-transform-scale' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-scale' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-scale' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2100,12 +2100,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-shear");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-shear",
-                                     "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
-                                     "This procedure shears the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount. The return value is the ID of the sheard drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and sheard drawable. The shear type parameter indicates whether the shear will be applied horizontally or vertically. The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.",
+                                     "Deprecated: Use 'gimp-item-transform-shear' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-shear' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-shear");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2177,12 +2177,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-shear-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-shear-default",
-                                     "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
-                                     "This procedure is a variant of 'gimp-drawable-transform-shear' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-shear' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-shear' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-shear");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2234,12 +2234,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-2d");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-2d",
-                                     "Transform the specified drawable in 2d, with extra parameters.",
-                                     "This procedure transforms the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed. The transformation is done by scaling the image by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y). The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and transformed drawable.",
+                                     "Deprecated: Use 'gimp-item-transform-2d' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-2d' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-2d");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2338,12 +2338,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-2d-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-2d-default",
-                                     "Transform the specified drawable in 2d, with extra parameters.",
-                                     "This procedure is a variant of 'gimp-drawable-transform-2d' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-2d' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-2d' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-2d");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2422,12 +2422,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-matrix");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-matrix",
-                                     "Transform the specified drawable in 2d, with extra parameters.",
-                                     "This procedure transforms the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed. The transformation is done by assembling a 3x3 matrix from the coefficients passed. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and transformed drawable.",
+                                     "Deprecated: Use 'gimp-item-transform-matrix' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-matrix' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-matrix");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -2538,12 +2538,12 @@ register_drawable_transform_procs (GimpPDB *pdb)
                                "gimp-drawable-transform-matrix-default");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-transform-matrix-default",
-                                     "Transform the specified drawable in 2d, with extra parameters.",
-                                     "This procedure is a variant of 'gimp-drawable-transform-matrix' which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
+                                     "Deprecated: Use 'gimp-item-transform-matrix' instead.",
+                                     "Deprecated: Use 'gimp-item-transform-matrix' instead.",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "Jo\xc3\xa3o S. O. Bueno",
                                      "2004",
-                                     NULL);
+                                     "gimp-item-transform-matrix");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
