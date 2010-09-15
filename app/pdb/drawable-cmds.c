@@ -34,13 +34,10 @@
 #include "core/gimpdrawable-shadow.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
 #include "plug-in/gimpplugin-cleanup.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
-#include "text/gimptextlayer.h"
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
