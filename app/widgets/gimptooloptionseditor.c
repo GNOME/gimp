@@ -161,11 +161,11 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
   /*  The label containing the tool options title */
   editor->p->title_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (editor->p->title_label), 0.0, 0.0);
+  gimp_label_set_attributes (GTK_LABEL (editor->p->title_label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (editor),
-                      editor->p->title_label,
-                      FALSE /*expand*/,
-                      TRUE /*fill*/,
-                      0 /*padding*/);
+                      editor->p->title_label, FALSE, FALSE, 0);
   gtk_widget_show (editor->p->title_label);
 
   editor->p->scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -534,12 +534,11 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
 
   if (editor->p->title_label != NULL)
     {
-      gchar *plain_title = gimp_docked_get_title (GIMP_DOCKED (editor));
-      gchar *title = g_strconcat ("<b>", plain_title, "</b>", NULL);
-      gtk_label_set_markup (GTK_LABEL (editor->p->title_label),
-                            title);
+      gchar *title;
+
+      title = gimp_docked_get_title (GIMP_DOCKED (editor));
+      gtk_label_set_text (GTK_LABEL (editor->p->title_label), title);
       g_free (title);
-      g_free (plain_title);
     }
 
   gimp_docked_title_changed (GIMP_DOCKED (editor));
