@@ -50,10 +50,12 @@ gboolean                 gimp_image_resize_to_layers         (gint32            
 gboolean                 gimp_image_scale                    (gint32                  image_ID,
                                                               gint                    new_width,
                                                               gint                    new_height);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_image_scale_full               (gint32                  image_ID,
                                                               gint                    new_width,
                                                               gint                    new_height,
                                                               GimpInterpolationType   interpolation);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean                 gimp_image_crop                     (gint32                  image_ID,
                                                               gint                    new_width,
                                                               gint                    new_height,

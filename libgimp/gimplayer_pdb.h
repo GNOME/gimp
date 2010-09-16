@@ -49,11 +49,13 @@ gboolean               gimp_layer_scale                (gint32                 l
                                                         gint                   new_width,
                                                         gint                   new_height,
                                                         gboolean               local_origin);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean               gimp_layer_scale_full           (gint32                 layer_ID,
                                                         gint                   new_width,
                                                         gint                   new_height,
                                                         gboolean               local_origin,
                                                         GimpInterpolationType  interpolation);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean               gimp_layer_resize               (gint32                 layer_ID,
                                                         gint                   new_width,
                                                         gint                   new_height,

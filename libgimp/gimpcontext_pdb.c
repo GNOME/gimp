@@ -1104,8 +1104,9 @@ gimp_context_get_interpolation (void)
  *
  * Set the interpolation type.
  *
- * This procedure modifies the interpolation setting. It affects all
- * transform procedures which can produce sub-pixel results.
+ * This procedure modifies the interpolation setting. It affects the
+ * following procedures: all transform procedures which can produce
+ * sub-pixel results, gimp_image_scale(), gimp_layer_scale().
  *
  * Returns: TRUE on success.
  *

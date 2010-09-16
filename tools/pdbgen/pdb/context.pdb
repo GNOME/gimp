@@ -895,8 +895,9 @@ sub context_set_interpolation {
     $blurb = 'Set the interpolation type.';
 
     $help = <<'HELP';
-This procedure modifies the interpolation setting. It affects all
-transform procedures which can produce sub-pixel results.
+This procedure modifies the interpolation setting. It affects the
+following procedures: all transform procedures which can produce
+sub-pixel results, gimp_image_scale(), gimp_layer_scale().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');

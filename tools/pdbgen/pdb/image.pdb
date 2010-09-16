@@ -261,7 +261,8 @@ sub image_scale {
 This procedure scales the image so that its new width and height are
 equal to the supplied parameters. All layers and channels within the
 image are scaled according to the specified parameters; this includes
-the image selection mask. The default interpolation method is used.
+the image selection mask. The interpolation method used can be set
+with gimp_context_set_interpolation().
 HELP
 
     &std_pdb_misc;
@@ -276,14 +277,16 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
+	headers => [ qw("core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
   if (progress)
     gimp_progress_start (progress, _("Scaling"), FALSE);
 
   gimp_image_scale (image, new_width, new_height,
-                    gimp->config->interpolation_type,
+                    pdb_context->interpolation,
                     progress);
 
   if (progress)
@@ -294,16 +297,7 @@ CODE
 }
 
 sub image_scale_full {
-    $blurb = 'Scale the image using a specific interpolation method.';
-
-    $help = <<'HELP';
-This procedure scales the image so that its new width and height are
-equal to the supplied parameters. All layers and channels within the
-image are scaled according to the specified parameters; this includes
-the image selection mask. This procedure allows you to specify the
-interpolation method explicitly.
-HELP
-
+    &std_pdb_deprecated('gimp-image-scale');
     &neo_pdb_misc('2008', '2.6');
 
     @inargs = (
@@ -318,7 +312,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
+	headers => [ qw("core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
   if (progress)
@@ -2912,6 +2906,7 @@ CODE
               "core/gimpcontainer.h"
               "core/gimpprogress.h"
               "core/gimpunit.h"
+              "gimppdbcontext.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
               "gimp-intl.h");

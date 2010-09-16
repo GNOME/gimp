@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 
 #include "base/temp-buf.h"
-#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -57,6 +56,7 @@
 #include "gimppdb.h"
 #include "gimppdberror.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -402,11 +402,13 @@ image_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
       if (progress)
         gimp_progress_start (progress, _("Scaling"), FALSE);
 
       gimp_image_scale (image, new_width, new_height,
-                        gimp->config->interpolation_type,
+                        pdb_context->interpolation,
                         progress);
 
       if (progress)
@@ -3204,7 +3206,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-scale",
                                      "Scale the image using the default interpolation method.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The default interpolation method is used.",
+                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3238,12 +3240,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-scale-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-scale-full",
-                                     "Scale the image using a specific interpolation method.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Deprecated: Use 'gimp-image-scale' instead.",
+                                     "Deprecated: Use 'gimp-image-scale' instead.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2008",
-                                     NULL);
+                                     "gimp-image-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

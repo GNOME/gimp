@@ -1711,7 +1711,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-interpolation",
                                      "Set the interpolation type.",
-                                     "This procedure modifies the interpolation setting. It affects all transform procedures which can produce sub-pixel results.",
+                                     "This procedure modifies the interpolation setting. It affects the following procedures: all transform procedures which can produce sub-pixel results, 'gimp-image-scale', 'gimp-layer-scale'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",

@@ -362,7 +362,8 @@ This procedure scales the layer so that its new width and height are
 equal to the supplied parameters. The 'local-origin' parameter
 specifies whether to scale from the center of the layer, or from the
 image origin. This operation only works if the layer has been added to
-an image. The default interpolation method is used for scaling.
+an image. The interpolation method used can be set with
+gimp_context_set_interpolation().
 HELP
 
     &std_pdb_misc;
@@ -383,11 +384,13 @@ HELP
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, TRUE, error))
     {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
       if (progress)
         gimp_progress_start (progress, _("Scaling"), FALSE);
 
       gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                 gimp->config->interpolation_type, progress,
+                                 pdb_context->interpolation, progress,
                                  local_origin);
 
       if (progress)
@@ -403,17 +406,7 @@ CODE
 }
 
 sub layer_scale_full {
-    $blurb = 'Scale the layer using a specific interpolation method.';
-
-    $help = <<'HELP';
-This procedure scales the layer so that its new width and height are
-equal to the supplied parameters. The 'local-origin' parameter
-specifies whether to scale from the center of the layer, or from the
-image origin. This operation only works if the layer has been added to
-an image. This procedure allows you to specify the interpolation
-method explicitly.
-HELP
-
+    &std_pdb_deprecated('gimp-layer-scale');
     &neo_pdb_misc('2008', '2.6');
 
     @inargs = (
@@ -1105,12 +1098,12 @@ CODE
 }
 
 @headers = qw("libgimpbase/gimpbase.h"
-              "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
               "core/gimppickable.h"
               "core/gimpprogress.h"
+              "gimppdbcontext.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 

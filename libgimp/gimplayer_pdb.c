@@ -23,6 +23,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_LAYER_PDB_H__
+#include "gimplayer_pdb.h"
 
 
 /**
@@ -319,7 +322,8 @@ gimp_layer_flatten (gint32 layer_ID)
  * equal to the supplied parameters. The 'local-origin' parameter
  * specifies whether to scale from the center of the layer, or from the
  * image origin. This operation only works if the layer has been added
- * to an image. The default interpolation method is used for scaling.
+ * to an image. The interpolation method used can be set with
+ * gimp_context_set_interpolation().
  *
  * Returns: TRUE on success.
  **/
@@ -356,14 +360,7 @@ gimp_layer_scale (gint32   layer_ID,
  * @local_origin: Use a local origin (as opposed to the image origin).
  * @interpolation: Type of interpolation.
  *
- * Scale the layer using a specific interpolation method.
- *
- * This procedure scales the layer so that its new width and height are
- * equal to the supplied parameters. The 'local-origin' parameter
- * specifies whether to scale from the center of the layer, or from the
- * image origin. This operation only works if the layer has been added
- * to an image. This procedure allows you to specify the interpolation
- * method explicitly.
+ * Deprecated: Use gimp_layer_scale() instead.
  *
  * Returns: TRUE on success.
  *

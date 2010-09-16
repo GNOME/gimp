@@ -428,8 +428,8 @@ gimp_image_resize_to_layers (gint32 image_ID)
  * This procedure scales the image so that its new width and height are
  * equal to the supplied parameters. All layers and channels within the
  * image are scaled according to the specified parameters; this
- * includes the image selection mask. The default interpolation method
- * is used.
+ * includes the image selection mask. The interpolation method used can
+ * be set with gimp_context_set_interpolation().
  *
  * Returns: TRUE on success.
  **/
@@ -463,13 +463,7 @@ gimp_image_scale (gint32 image_ID,
  * @new_height: New image height.
  * @interpolation: Type of interpolation.
  *
- * Scale the image using a specific interpolation method.
- *
- * This procedure scales the image so that its new width and height are
- * equal to the supplied parameters. All layers and channels within the
- * image are scaled according to the specified parameters; this
- * includes the image selection mask. This procedure allows you to
- * specify the interpolation method explicitly.
+ * Deprecated: Use gimp_image_scale() instead.
  *
  * Returns: TRUE on success.
  *

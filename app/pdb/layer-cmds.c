@@ -25,7 +25,6 @@
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-undo.h"
@@ -39,6 +38,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -326,11 +326,13 @@ layer_scale_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, TRUE, error))
         {
+          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
           gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                     gimp->config->interpolation_type, progress,
+                                     pdb_context->interpolation, progress,
                                      local_origin);
 
           if (progress)
@@ -1328,7 +1330,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale",
                                      "Scale the layer using the default interpolation method.",
-                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The default interpolation method is used for scaling.",
+                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1368,12 +1370,12 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-scale-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale-full",
-                                     "Scale the layer using a specific interpolation method.",
-                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Deprecated: Use 'gimp-layer-scale' instead.",
+                                     "Deprecated: Use 'gimp-layer-scale' instead.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2008",
-                                     NULL);
+                                     "gimp-layer-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
