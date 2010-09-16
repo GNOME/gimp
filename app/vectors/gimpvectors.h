@@ -35,13 +35,15 @@ typedef struct _GimpVectorsClass  GimpVectorsClass;
 
 struct _GimpVectors
 {
-  GimpItem  parent_instance;
+  GimpItem        parent_instance;
 
-  GList    *strokes;            /* The List of GimpStrokes        */
-  gint      last_stroke_ID;
+  GList          *strokes;        /* The List of GimpStrokes        */
+  gint            last_stroke_ID;
 
-  gint      freeze_count;
-  gdouble   precision;
+  gint            freeze_count;
+  gdouble         precision;
+
+  GimpBezierDesc *bezier_desc;    /* Cached bezier representation   */
 };
 
 struct _GimpVectorsClass
@@ -172,8 +174,8 @@ gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
 
 /* usually overloaded */
 
-/* creates a bezier representation. */
+/* returns a bezier representation */
+const GimpBezierDesc * gimp_vectors_get_bezier  (GimpVectors        *vectors);
 
-GimpBezierDesc * gimp_vectors_make_bezier       (const GimpVectors  *vectors);
 
 #endif /* __GIMP_VECTORS_H__ */

@@ -119,6 +119,7 @@ static void       gimp_vectors_to_selection  (GimpItem          *item,
                                               gdouble            feather_radius_x,
                                               gdouble            feather_radius_y);
 
+static void       gimp_vectors_real_freeze          (GimpVectors       *vectors);
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
                                                      GimpStroke        *stroke);
@@ -144,6 +145,8 @@ static gint       gimp_vectors_real_interpolate     (const GimpVectors *vectors,
                                                      gdouble            precision,
                                                      gint               max_points,
                                                      GimpCoords        *ret_coords);
+
+static GimpBezierDesc * gimp_vectors_make_bezier      (const GimpVectors *vectors);
 static GimpBezierDesc * gimp_vectors_real_make_bezier (const GimpVectors *vectors);
 
 
@@ -217,7 +220,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->raise_failed         = _("Path cannot be raised higher.");
   item_class->lower_failed         = _("Path cannot be lowered more.");
 
-  klass->freeze                    = NULL;
+  klass->freeze                    = gimp_vectors_real_freeze;
   klass->thaw                      = gimp_vectors_real_thaw;
 
   klass->stroke_add                = gimp_vectors_real_stroke_add;
@@ -251,6 +254,13 @@ static void
 gimp_vectors_finalize (GObject *object)
 {
   GimpVectors *vectors = GIMP_VECTORS (object);
+
+  if (vectors->bezier_desc)
+    {
+      g_free (vectors->bezier_desc->data);
+      g_free (vectors->bezier_desc);
+      vectors->bezier_desc = NULL;
+    }
 
   if (vectors->strokes)
     {
@@ -592,6 +602,19 @@ gimp_vectors_to_selection (GimpItem       *item,
                                op, antialias,
                                feather, feather_radius_x, feather_radius_x,
                                TRUE);
+}
+
+static void
+gimp_vectors_real_freeze (GimpVectors *vectors)
+{
+  /*  release cached bezier representation  */
+
+  if (vectors->bezier_desc)
+    {
+      g_free (vectors->bezier_desc->data);
+      g_free (vectors->bezier_desc);
+      vectors->bezier_desc = NULL;
+    }
 }
 
 static void
@@ -1080,12 +1103,22 @@ gimp_vectors_real_interpolate (const GimpVectors *vectors,
   return 0;
 }
 
-
-GimpBezierDesc *
-gimp_vectors_make_bezier (const GimpVectors *vectors)
+const GimpBezierDesc *
+gimp_vectors_get_bezier (GimpVectors *vectors)
 {
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
 
+  if (! vectors->bezier_desc)
+    {
+      vectors->bezier_desc = gimp_vectors_make_bezier (vectors);
+    }
+
+  return  vectors->bezier_desc;
+}
+
+static GimpBezierDesc *
+gimp_vectors_make_bezier (const GimpVectors *vectors)
+{
   return GIMP_VECTORS_GET_CLASS (vectors)->make_bezier (vectors);
 }
 

@@ -5557,13 +5557,13 @@ gimp_stroke_get_distance
 gimp_stroke_get_point_at_dist
 gimp_stroke_interpolate
 gimp_stroke_duplicate
-gimp_stroke_make_bezier
 gimp_stroke_translate
 gimp_stroke_scale
 gimp_stroke_rotate
 gimp_stroke_flip
 gimp_stroke_flip_free
 gimp_stroke_transform
+gimp_stroke_get_bezier
 gimp_stroke_get_draw_anchors
 gimp_stroke_get_draw_controls
 gimp_stroke_get_draw_lines

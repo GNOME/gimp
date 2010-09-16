@@ -593,7 +593,7 @@ gimp_display_shell_draw_active_vectors (GimpDisplayShell *shell,
 
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
-      GimpBezierDesc *desc = gimp_vectors_make_bezier (vectors);
+      const GimpBezierDesc *desc = gimp_vectors_get_bezier (vectors);
 
       if (desc)
         {
@@ -606,9 +606,6 @@ gimp_display_shell_draw_active_vectors (GimpDisplayShell *shell,
           cairo_set_line_width (cr, width);
           cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
           cairo_stroke (cr);
-
-          g_free (desc->data);
-          g_free (desc);
         }
     }
 }
@@ -623,7 +620,7 @@ gimp_display_shell_draw_inactive_vectors (GimpDisplayShell *shell,
 
   while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
     {
-      GimpBezierDesc *desc = gimp_vectors_make_bezier (vectors);
+      const GimpBezierDesc *desc = gimp_vectors_get_bezier (vectors);
 
       if (desc)
         {
@@ -636,9 +633,6 @@ gimp_display_shell_draw_inactive_vectors (GimpDisplayShell *shell,
           cairo_set_line_width (cr, width);
           cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
           cairo_stroke (cr);
-
-          g_free (desc->data);
-          g_free (desc);
         }
     }
 }
