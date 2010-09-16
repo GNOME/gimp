@@ -25,6 +25,8 @@
 
 #include "pdb-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 
 #include "gimppdbcontext.h"
@@ -46,6 +48,7 @@ enum
 };
 
 
+static void   gimp_pdb_context_constructed  (GObject      *object);
 static void   gimp_pdb_context_set_property (GObject      *object,
                                              guint         property_id,
                                              const GValue *value,
@@ -66,6 +69,7 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed  = gimp_pdb_context_constructed;
   object_class->set_property = gimp_pdb_context_set_property;
   object_class->get_property = gimp_pdb_context_get_property;
 
@@ -117,6 +121,26 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
 static void
 gimp_pdb_context_init (GimpPDBContext *options)
 {
+}
+
+static void
+gimp_pdb_context_constructed (GObject *object)
+{
+  GimpInterpolationType  interpolation;
+  GParamSpec            *pspec;
+
+  interpolation = GIMP_CONTEXT (object)->gimp->config->interpolation_type;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                        "interpolation");
+
+  if (pspec)
+    G_PARAM_SPEC_ENUM (pspec)->default_value = interpolation;
+
+  g_object_set (object, "interpolation", interpolation, NULL);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void
