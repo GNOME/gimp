@@ -587,7 +587,6 @@ static void
 gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
                                      cairo_t          *cr,
                                      GimpVectors      *vectors,
-                                     gboolean          active,
                                      gdouble           width)
 {
   GimpStroke *stroke = NULL;
@@ -600,16 +599,11 @@ gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
         {
           cairo_append_path (cr, (cairo_path_t *) desc);
 
-          /* FIXME: need better styles */
-          if (active)
-            cairo_set_source_rgb (cr, 0.3, 0.7, 1.0);
-          else
-            cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-
-          cairo_set_line_width (cr, 1.6 * width);
+          cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+          cairo_set_line_width (cr, 3 * width);
           cairo_stroke_preserve (cr);
 
-          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
           cairo_set_line_width (cr, width);
           cairo_stroke (cr);
         }
@@ -629,7 +623,6 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
   if (image && TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
       GList       *all_vectors = gimp_image_get_vectors_list (image);
-      GimpVectors *active      = gimp_image_get_active_vectors (image);
       const GList *list;
       gdouble      xscale;
       gdouble      yscale;
@@ -642,21 +635,17 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
       cairo_scale (cr, shell->scale_x, shell->scale_y);
 
       /* determine a reasonable line width */
-      xscale = yscale = 2.0;
+      xscale = yscale = 1.0;
       cairo_device_to_user_distance (cr, &xscale, &yscale);
       width = MAX (xscale, yscale);
-      width = MIN (width, 2.0);
+      width = MIN (width, 1.0);
 
       for (list = all_vectors; list; list = list->next)
         {
           GimpVectors *vectors = list->data;
 
-          if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
-            continue;
-
-          gimp_display_shell_draw_one_vectors (shell, cr,
-                                               vectors,
-                                               (vectors == active), width);
+          if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+            gimp_display_shell_draw_one_vectors (shell, cr, vectors, width);
         }
 
       g_list_free (all_vectors);
