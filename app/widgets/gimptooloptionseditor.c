@@ -58,6 +58,7 @@ struct _GimpToolOptionsEditorPrivate
 
   GtkWidget       *scrolled_window;
   GtkWidget       *options_vbox;
+  GtkWidget       *title_label;
 
   GtkWidget       *save_button;
   GtkWidget       *restore_button;
@@ -156,6 +157,16 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
                               GIMP_TYPE_TOOL_INFO,
                               gimp_tool_options_editor_drop_tool,
                               editor);
+
+  /*  The label containing the tool options title */
+  editor->p->title_label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (editor->p->title_label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (editor),
+                      editor->p->title_label,
+                      FALSE /*expand*/,
+                      TRUE /*fill*/,
+                      0 /*padding*/);
+  gtk_widget_show (editor->p->title_label);
 
   editor->p->scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   scrolled_window = GTK_SCROLLED_WINDOW (editor->p->scrolled_window);
@@ -520,6 +531,16 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
     }
 
   gimp_tool_options_editor_presets_update (editor, presets);
+
+  if (editor->p->title_label != NULL)
+    {
+      gchar *plain_title = gimp_docked_get_title (GIMP_DOCKED (editor));
+      gchar *title = g_strconcat ("<b>", plain_title, "</b>", NULL);
+      gtk_label_set_markup (GTK_LABEL (editor->p->title_label),
+                            title);
+      g_free (title);
+      g_free (plain_title);
+    }
 
   gimp_docked_title_changed (GIMP_DOCKED (editor));
 }
