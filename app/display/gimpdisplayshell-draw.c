@@ -584,10 +584,11 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
 }
 
 static void
-gimp_display_shell_draw_active_vectors (GimpDisplayShell *shell,
-                                        cairo_t          *cr,
-                                        GimpVectors      *vectors,
-                                        gdouble           width)
+gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
+                                     cairo_t          *cr,
+                                     GimpVectors      *vectors,
+                                     gboolean          active,
+                                     gdouble           width)
 {
   GimpStroke *stroke = NULL;
 
@@ -599,39 +600,17 @@ gimp_display_shell_draw_active_vectors (GimpDisplayShell *shell,
         {
           cairo_append_path (cr, (cairo_path_t *) desc);
 
-          cairo_set_line_width (cr, 1.6 * width);
-          cairo_set_source_rgb (cr, 0.0, 0.7, 1.0);
-          cairo_stroke_preserve (cr);
-
-          cairo_set_line_width (cr, width);
-          cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
-          cairo_stroke (cr);
-        }
-    }
-}
-
-static void
-gimp_display_shell_draw_inactive_vectors (GimpDisplayShell *shell,
-                                          cairo_t          *cr,
-                                          GimpVectors      *vectors,
-                                          gdouble           width)
-{
-  GimpStroke *stroke = NULL;
-
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
-    {
-      const GimpBezierDesc *desc = gimp_vectors_get_bezier (vectors);
-
-      if (desc)
-        {
-          cairo_append_path (cr, (cairo_path_t *) desc);
+          /* FIXME: need better styles */
+          if (active)
+            cairo_set_source_rgb (cr, 0.3, 0.7, 1.0);
+          else
+            cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
 
           cairo_set_line_width (cr, 1.6 * width);
-          cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
           cairo_stroke_preserve (cr);
 
-          cairo_set_line_width (cr, width);
           cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+          cairo_set_line_width (cr, width);
           cairo_stroke (cr);
         }
     }
@@ -672,18 +651,12 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
         {
           GimpVectors *vectors = list->data;
 
-          if (vectors != active &&
-              gimp_item_get_visible (GIMP_ITEM (vectors)))
-            {
-              gimp_display_shell_draw_inactive_vectors (shell, cr,
-                                                        vectors, width);
-            }
-        }
+          if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
+            continue;
 
-      /*  the active vector is always rendered on top  */
-      if (active)
-        {
-          gimp_display_shell_draw_active_vectors (shell, cr, active, width);
+          gimp_display_shell_draw_one_vectors (shell, cr,
+                                               vectors,
+                                               (vectors == active), width);
         }
 
       g_list_free (all_vectors);
