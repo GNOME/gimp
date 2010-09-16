@@ -599,7 +599,7 @@ gausssmooth (gfloat *in, gfloat *out, gint size, gint rowstride, gauss3_coefs *c
   w2[size+3]= w1[size+3];
   for (i = size, n = i; i >= 0; i--, n--)
     {
-      w2[n]= out[i * rowstride] = (gfloat)(c->B*w1[n] +
+      w2[n]= out[i * rowstride] = (gfloat)(c->B*w1[n+3] +
                                            ((c->b[1]*w2[n+1] +
                                              c->b[2]*w2[n+2] +
                                              c->b[3]*w2[n+3] ) / c->b[0]));
