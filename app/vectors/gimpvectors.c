@@ -168,7 +168,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   gimp_vectors_signals[FREEZE] =
     g_signal_new ("freeze",
                   G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
+                  G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpVectorsClass, freeze),
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
@@ -258,7 +258,7 @@ gimp_vectors_finalize (GObject *object)
   if (vectors->bezier_desc)
     {
       g_free (vectors->bezier_desc->data);
-      g_free (vectors->bezier_desc);
+      g_slice_free (GimpBezierDesc, vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -608,11 +608,10 @@ static void
 gimp_vectors_real_freeze (GimpVectors *vectors)
 {
   /*  release cached bezier representation  */
-
   if (vectors->bezier_desc)
     {
       g_free (vectors->bezier_desc->data);
-      g_free (vectors->bezier_desc);
+      g_slice_free (GimpBezierDesc, vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 }
@@ -1143,13 +1142,13 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
           cmd_array = g_array_append_vals (cmd_array, bezdesc->data,
                                            bezdesc->num_data);
           g_free (bezdesc->data);
-          g_free (bezdesc);
+          g_slice_free (GimpBezierDesc, bezdesc);
         }
     }
 
   if (cmd_array->len > 0)
     {
-      ret_bezdesc = g_new (GimpBezierDesc, 1);
+      ret_bezdesc = g_slice_new (GimpBezierDesc);
       ret_bezdesc->status = CAIRO_STATUS_SUCCESS;
       ret_bezdesc->num_data = cmd_array->len;
       ret_bezdesc->data = (cairo_path_data_t *) cmd_array->data;
