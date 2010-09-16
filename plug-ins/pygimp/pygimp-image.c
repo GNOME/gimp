@@ -20,7 +20,6 @@
 #  include <config.h>
 #endif
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "pygimp.h"
 
 static PyObject *
@@ -510,18 +509,21 @@ img_scale(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 	return NULL;
 
     if (interpolation != -1) {
-        if (!gimp_image_scale_full(self->ID,
-                                   new_width, new_height, interpolation)) {
-            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
-                         self->ID, new_width, new_height);
-            return NULL;
+        gimp_context_push();
+        gimp_context_set_interpolation(interpolation);
+    }
+
+    if (!gimp_image_scale(self->ID, new_width, new_height)) {
+        PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
+                     self->ID, new_width, new_height);
+        if (interpolation != -1) {
+            gimp_context_pop();
         }
-    } else {
-        if (!gimp_image_scale(self->ID, new_width, new_height)) {
-            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
-                         self->ID, new_width, new_height);
-            return NULL;
-        }
+        return NULL;
+    }
+
+    if (interpolation != -1) {
+        gimp_context_pop();
     }
 
     Py_INCREF(Py_None);
