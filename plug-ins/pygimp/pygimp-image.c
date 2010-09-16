@@ -181,7 +181,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     }
 
     if (!gimp_drawable_fill(layer_id, fill_mode)) {
-        gimp_drawable_delete(layer_id);
+        gimp_item_delete(layer_id);
         PyErr_Format(pygimp_error,
                      "could not fill new layer with fill mode %d",
                      fill_mode);
@@ -189,7 +189,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     }
 
     if (!gimp_image_insert_layer(self->ID, layer_id, -1, pos)) {
-        gimp_drawable_delete(layer_id);
+        gimp_item_delete(layer_id);
         PyErr_Format(pygimp_error,
                      "could not add layer (ID %d) to image (ID %d)",
                      layer_id, self->ID);
@@ -247,7 +247,7 @@ img_lower_channel(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:lower_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
-    if (!gimp_image_lower_channel(self->ID, chn->ID)) {
+    if (!gimp_image_lower_item(self->ID, chn->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not lower channel (ID %d) on image (ID %d)",
 		     chn->ID, self->ID);
@@ -266,7 +266,7 @@ img_lower_layer(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:lower_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_lower_layer(self->ID, lay->ID)) {
+    if (!gimp_image_lower_item(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not lower layer (ID %d) on image (ID %d)",
 		     lay->ID, self->ID);
@@ -286,7 +286,7 @@ img_lower_layer_to_bottom(PyGimpImage *self, PyObject *args)
 			  &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_lower_layer_to_bottom(self->ID, lay->ID)) {
+    if (!gimp_image_lower_item_to_bottom(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not lower layer (ID %d) to bottom on image (ID %d)",
 		     lay->ID, self->ID);
@@ -370,7 +370,7 @@ img_raise_channel(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:raise_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
-    if (!gimp_image_raise_channel(self->ID, chn->ID)) {
+    if (!gimp_image_raise_item(self->ID, chn->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not raise channel (ID %d) on image (ID %d)",
 		     chn->ID, self->ID);
@@ -389,7 +389,7 @@ img_raise_layer(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:raise_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_raise_layer(self->ID, lay->ID)) {
+    if (!gimp_image_raise_item(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not raise layer (ID %d) on image (ID %d)",
 		     lay->ID, self->ID);
@@ -409,7 +409,7 @@ img_raise_layer_to_top(PyGimpImage *self, PyObject *args)
 			  &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_raise_layer_to_top(self->ID, lay->ID)) {
+    if (!gimp_image_raise_item_to_top(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not raise layer (ID %d) to top on image (ID %d)",
 		     lay->ID, self->ID);
@@ -557,11 +557,7 @@ img_crop(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 static PyObject *
 img_free_shadow(PyGimpImage *self)
 {
-    if (!gimp_image_free_shadow(self->ID)) {
-	PyErr_Format(pygimp_error, "could not free shadow tiles on image (ID %d)",
-		     self->ID);
-	return NULL;
-    }
+    /* this procedure is deprecated and does absolutely nothing */
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -680,6 +676,8 @@ img_attach_new_parasite(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     char *name;
     int flags, size;
     guint8 *data;
+    GimpParasite *parasite;
+    gboolean success;
 
     static char *kwlist[] = { "name", "flags", "data", NULL };
 
@@ -688,7 +686,11 @@ img_attach_new_parasite(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 				     &name, &flags, &data, &size))
 	return NULL;
 
-    if (!gimp_image_attach_new_parasite(self->ID, name, flags, size, data)) {
+    parasite = gimp_parasite_new (name, flags, size, data);
+    success = gimp_image_parasite_attach (self->ID, parasite);
+    gimp_parasite_free (parasite);
+
+    if (!success) {
 	PyErr_Format(pygimp_error,
 		     "could not attach new parasite '%s' to image (ID %d)",
 		     name, self->ID);
