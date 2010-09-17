@@ -965,10 +965,15 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             g_list_free (linked);
           }
 
+        x1 = floor (x1);
+        y1 = floor (y1);
+        x2 = ceil (x2);
+        y2 = ceil (y2);
+
         gimp_draw_tool_draw_rectangle (draw_tool,
                                        FALSE,
-                                       ROUND (x1), ROUND (y1),
-                                       ROUND (x2 - x1), ROUND (y2 - y1),
+                                       x1, y1,
+                                       x2 - x1, y2 - y1,
                                        FALSE);
       }
       break;
