@@ -248,6 +248,9 @@ gimp_vectors_init (GimpVectors *vectors)
   vectors->last_stroke_ID = 0;
   vectors->freeze_count   = 0;
   vectors->precision      = 0.2;
+
+  vectors->bezier_desc    = NULL;
+  vectors->bounds_valid   = FALSE;
 }
 
 static void
@@ -614,6 +617,9 @@ gimp_vectors_real_freeze (GimpVectors *vectors)
       g_slice_free (GimpBezierDesc, vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
+
+  /*  invalidate bounds  */
+  vectors->bounds_valid = FALSE;
 }
 
 static void
@@ -1026,60 +1032,71 @@ gimp_vectors_real_get_distance (const GimpVectors *vectors,
 }
 
 gboolean
-gimp_vectors_bounds (const GimpVectors  *vectors,
-                     gdouble            *x1,
-                     gdouble            *y1,
-                     gdouble            *x2,
-                     gdouble            *y2)
+gimp_vectors_bounds (GimpVectors *vectors,
+                     gdouble     *x1,
+                     gdouble     *y1,
+                     gdouble     *x2,
+                     gdouble     *y2)
 {
-  GimpStroke *stroke;
-  gboolean    has_strokes = FALSE;
-
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (x1 != NULL, FALSE);
-  g_return_val_if_fail (y1 != NULL, FALSE);
-  g_return_val_if_fail (x2 != NULL, FALSE);
-  g_return_val_if_fail (y2 != NULL, FALSE);
+  g_return_val_if_fail (x1 != NULL && y1 != NULL &&
+                        x2 != NULL && y2 != NULL, FALSE);
 
-  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       stroke;
-       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
+  if (! vectors->bounds_valid)
     {
-      GArray   *stroke_coords;
-      gboolean  closed;
+      GimpStroke *stroke;
 
-      stroke_coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+      vectors->bounds_empty = TRUE;
+      vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
+      vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
 
-      if (stroke_coords)
+      for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+           stroke;
+           stroke = gimp_vectors_stroke_get_next (vectors, stroke))
         {
-          GimpCoords point;
-          gint       i;
+          GArray   *stroke_coords;
+          gboolean  closed;
 
-          if (! has_strokes && stroke_coords->len > 0)
+          stroke_coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+
+          if (stroke_coords)
             {
-              point = g_array_index (stroke_coords, GimpCoords, 0);
+              GimpCoords point;
+              gint       i;
 
-              *x1 = *x2 = point.x;
-              *y1 = *y2 = point.y;
+              if (vectors->bounds_empty && stroke_coords->len > 0)
+                {
+                  point = g_array_index (stroke_coords, GimpCoords, 0);
 
-              has_strokes = TRUE;
+                  vectors->bounds_x1 = vectors->bounds_x2 = point.x;
+                  vectors->bounds_y1 = vectors->bounds_y2 = point.y;
+
+                  vectors->bounds_empty = FALSE;
+                }
+
+              for (i = 0; i < stroke_coords->len; i++)
+                {
+                  point = g_array_index (stroke_coords, GimpCoords, i);
+
+                  vectors->bounds_x1 = MIN (vectors->bounds_x1, point.x);
+                  vectors->bounds_y1 = MIN (vectors->bounds_y1, point.y);
+                  vectors->bounds_x2 = MAX (vectors->bounds_x2, point.x);
+                  vectors->bounds_y2 = MAX (vectors->bounds_y2, point.y);
+                }
+
+              g_array_free (stroke_coords, TRUE);
             }
-
-          for (i = 0; i < stroke_coords->len; i++)
-            {
-              point = g_array_index (stroke_coords, GimpCoords, i);
-
-              *x1 = MIN (*x1, point.x);
-              *y1 = MIN (*y1, point.y);
-              *x2 = MAX (*x2, point.x);
-              *y2 = MAX (*y2, point.y);
-            }
-
-          g_array_free (stroke_coords, TRUE);
         }
+
+      vectors->bounds_valid = TRUE;
     }
 
-  return has_strokes;
+  *x1 = vectors->bounds_x1;
+  *y1 = vectors->bounds_y1;
+  *x2 = vectors->bounds_x2;
+  *y2 = vectors->bounds_y2;
+
+  return (! vectors->bounds_empty);
 }
 
 gint

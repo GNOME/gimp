@@ -37,13 +37,20 @@ struct _GimpVectors
 {
   GimpItem        parent_instance;
 
-  GList          *strokes;        /* The List of GimpStrokes        */
+  GList          *strokes;        /* The List of GimpStrokes      */
   gint            last_stroke_ID;
 
   gint            freeze_count;
   gdouble         precision;
 
-  GimpBezierDesc *bezier_desc;    /* Cached bezier representation   */
+  GimpBezierDesc *bezier_desc;    /* Cached bezier representation */
+
+  gboolean        bounds_valid;   /* Cached bounding box          */
+  gboolean        bounds_empty;
+  gdouble         bounds_x1;
+  gdouble         bounds_y1;
+  gdouble         bounds_x2;
+  gdouble         bounds_y2;
 };
 
 struct _GimpVectorsClass
@@ -158,7 +165,8 @@ gdouble         gimp_vectors_get_length         (const GimpVectors  *vectors,
                                                  const GimpAnchor   *start);
 gdouble         gimp_vectors_get_distance       (const GimpVectors  *vectors,
                                                  const GimpCoords   *coord);
-gboolean        gimp_vectors_bounds             (const GimpVectors  *vectors,
+
+gboolean        gimp_vectors_bounds             (GimpVectors        *vectors,
                                                  gdouble            *x1,
                                                  gdouble            *y1,
                                                  gdouble            *x2,
