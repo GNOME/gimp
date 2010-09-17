@@ -63,6 +63,7 @@
 #include "gimpsamplepoint.h"
 #include "gimpselection.h"
 #include "gimptemplate.h"
+#include "gimptreehandler.h"
 #include "gimpundostack.h"
 
 #include "file/file-utils.h"
@@ -101,6 +102,7 @@ enum
   EXPORTED,
   UPDATE_GUIDE,
   UPDATE_SAMPLE_POINT,
+  UPDATE_VECTORS,
   SAMPLE_POINT_ADDED,
   SAMPLE_POINT_REMOVED,
   PARASITE_ATTACHED,
@@ -188,6 +190,18 @@ static void     gimp_image_channel_remove        (GimpContainer     *container,
 static void     gimp_image_channel_name_changed  (GimpChannel       *channel,
                                                   GimpImage         *image);
 static void     gimp_image_channel_color_changed (GimpChannel       *channel,
+                                                  GimpImage         *image);
+static void     gimp_image_vectors_freeze        (GimpVectors       *vectors,
+                                                  GimpImage         *image);
+static void     gimp_image_vectors_thaw          (GimpVectors       *vectors,
+                                                  GimpImage         *image);
+static void     gimp_image_vectors_visible       (GimpVectors       *vectors,
+                                                  GimpImage         *image);
+static void     gimp_image_vectors_add           (GimpContainer     *container,
+                                                  GimpVectors       *vectors,
+                                                  GimpImage         *image);
+static void     gimp_image_vectors_remove        (GimpContainer     *container,
+                                                  GimpVectors       *vectors,
                                                   GimpImage         *image);
 static void     gimp_image_active_layer_notify   (GimpItemTree      *tree,
                                                   const GParamSpec  *pspec,
@@ -428,6 +442,16 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  gimp_image_signals[UPDATE_VECTORS] =
+    g_signal_new ("update-vectors",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, update_vectors),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_VECTORS);
+
   gimp_image_signals[SAMPLE_POINT_ADDED] =
     g_signal_new ("sample-point-added",
                   G_TYPE_FROM_CLASS (klass),
@@ -529,6 +553,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->exported                     = NULL;
   klass->update_guide                 = NULL;
   klass->update_sample_point          = NULL;
+  klass->update_vectors               = NULL;
   klass->sample_point_added           = NULL;
   klass->sample_point_removed         = NULL;
   klass->parasite_attached            = NULL;
@@ -676,6 +701,26 @@ gimp_image_init (GimpImage *image)
                     image);
   g_signal_connect (private->channels->container, "remove",
                     G_CALLBACK (gimp_image_channel_remove),
+                    image);
+
+  private->vectors_freeze_handler =
+    gimp_tree_handler_connect (private->vectors->container, "freeze",
+                               G_CALLBACK (gimp_image_vectors_freeze),
+                               image);
+  private->vectors_thaw_handler =
+    gimp_tree_handler_connect (private->vectors->container, "thaw",
+                               G_CALLBACK (gimp_image_vectors_thaw),
+                               image);
+  private->vectors_visible_handler =
+    gimp_tree_handler_connect (private->vectors->container, "visibility-changed",
+                               G_CALLBACK (gimp_image_vectors_visible),
+                               image);
+
+  g_signal_connect (private->vectors->container, "add",
+                    G_CALLBACK (gimp_image_vectors_add),
+                    image);
+  g_signal_connect (private->vectors->container, "remove",
+                    G_CALLBACK (gimp_image_vectors_remove),
                     image);
 
   private->floating_sel        = NULL;
@@ -877,6 +922,22 @@ gimp_image_dispose (GObject *object)
                                         image);
   g_signal_handlers_disconnect_by_func (private->channels->container,
                                         gimp_image_channel_remove,
+                                        image);
+
+  gimp_tree_handler_disconnect (private->vectors_freeze_handler);
+  private->vectors_freeze_handler = NULL;
+
+  gimp_tree_handler_disconnect (private->vectors_thaw_handler);
+  private->vectors_thaw_handler = NULL;
+
+  gimp_tree_handler_disconnect (private->vectors_visible_handler);
+  private->vectors_visible_handler = NULL;
+
+  g_signal_handlers_disconnect_by_func (private->vectors->container,
+                                        gimp_image_vectors_add,
+                                        image);
+  g_signal_handlers_disconnect_by_func (private->vectors->container,
+                                        gimp_image_vectors_remove,
                                         image);
 
   gimp_container_foreach (private->layers->container,
@@ -1377,6 +1438,46 @@ gimp_image_channel_color_changed (GimpChannel *channel,
     {
       GIMP_IMAGE_GET_PRIVATE (image)->quick_mask_color = channel->color;
     }
+}
+
+static void
+gimp_image_vectors_freeze (GimpVectors *vectors,
+                           GimpImage   *image)
+{
+  /* do nothing */
+}
+
+static void
+gimp_image_vectors_thaw (GimpVectors *vectors,
+                         GimpImage   *image)
+{
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_image_update_vectors (image, vectors);
+}
+
+static void
+gimp_image_vectors_visible (GimpVectors *vectors,
+                            GimpImage   *image)
+{
+  gimp_image_update_vectors (image, vectors);
+}
+
+static void
+gimp_image_vectors_add (GimpContainer *container,
+                        GimpVectors   *vectors,
+                        GimpImage     *image)
+{
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_image_update_vectors (image, vectors);
+}
+
+static void
+gimp_image_vectors_remove (GimpContainer *container,
+                           GimpVectors   *vectors,
+                           GimpImage     *image)
+{
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_image_update_vectors (image, vectors);
 }
 
 static void
@@ -2006,6 +2107,17 @@ gimp_image_update_sample_point (GimpImage       *image,
 
   g_signal_emit (image, gimp_image_signals[UPDATE_SAMPLE_POINT], 0,
                  sample_point);
+}
+
+void
+gimp_image_update_vectors (GimpImage   *image,
+                           GimpVectors *vectors)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_VECTORS (vectors));
+
+  g_signal_emit (image, gimp_image_signals[UPDATE_VECTORS], 0,
+                 vectors);
 }
 
 void

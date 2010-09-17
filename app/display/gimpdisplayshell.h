@@ -166,10 +166,6 @@ struct _GimpDisplayShell
 
   gint               paused_count;
 
-  GimpTreeHandler   *vectors_freeze_handler;
-  GimpTreeHandler   *vectors_thaw_handler;
-  GimpTreeHandler   *vectors_visible_handler;
-
   gboolean           zoom_on_resize;
   gboolean           show_transform_preview;
 
