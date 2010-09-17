@@ -1032,12 +1032,8 @@ gimp_vectors_bounds (const GimpVectors  *vectors,
                      gdouble            *x2,
                      gdouble            *y2)
 {
-  GArray     *stroke_coords;
-  GimpStroke *cur_stroke;
-  gint        i;
+  GimpStroke *stroke;
   gboolean    has_strokes = FALSE;
-  gboolean    closed;
-  GimpCoords  point;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (x1 != NULL, FALSE);
@@ -1045,30 +1041,40 @@ gimp_vectors_bounds (const GimpVectors  *vectors,
   g_return_val_if_fail (x2 != NULL, FALSE);
   g_return_val_if_fail (y2 != NULL, FALSE);
 
-  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       cur_stroke;
-       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       stroke;
+       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      stroke_coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
+      GArray   *stroke_coords;
+      gboolean  closed;
+
+      stroke_coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
 
       if (stroke_coords)
         {
+          GimpCoords point;
+          gint       i;
+
           if (! has_strokes && stroke_coords->len > 0)
             {
-              has_strokes = TRUE;
               point = g_array_index (stroke_coords, GimpCoords, 0);
+
               *x1 = *x2 = point.x;
               *y1 = *y2 = point.y;
+
+              has_strokes = TRUE;
             }
 
-          for (i=0; i < stroke_coords->len; i++)
+          for (i = 0; i < stroke_coords->len; i++)
             {
               point = g_array_index (stroke_coords, GimpCoords, i);
+
               *x1 = MIN (*x1, point.x);
               *y1 = MIN (*y1, point.y);
               *x2 = MAX (*x2, point.x);
               *y2 = MAX (*y2, point.y);
             }
+
           g_array_free (stroke_coords, TRUE);
         }
     }
