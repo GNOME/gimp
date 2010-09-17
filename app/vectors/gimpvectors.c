@@ -812,25 +812,24 @@ static GimpStroke *
 gimp_vectors_real_stroke_get (const GimpVectors *vectors,
                               const GimpCoords  *coord)
 {
-  GList      *stroke;
-  gdouble     mindist   = G_MAXDOUBLE;
   GimpStroke *minstroke = NULL;
+  gdouble     mindist   = G_MAXDOUBLE;
+  GList      *list;
 
-  for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
+  for (list = vectors->strokes; list; list = g_list_next (list))
     {
-      GimpAnchor *anchor = gimp_stroke_anchor_get (stroke->data, coord);
+      GimpStroke *stroke = list->data;
+      GimpAnchor *anchor = gimp_stroke_anchor_get (stroke, coord);
 
       if (anchor)
         {
-          gdouble dx, dy;
-
-          dx = coord->x - anchor->position.x;
-          dy = coord->y - anchor->position.y;
+          gdouble dx = coord->x - anchor->position.x;
+          gdouble dy = coord->y - anchor->position.y;
 
           if (mindist > dx * dx + dy * dy)
             {
               mindist   = dx * dx + dy * dy;
-              minstroke = GIMP_STROKE (stroke->data);
+              minstroke = stroke;
             }
         }
     }
@@ -842,14 +841,14 @@ GimpStroke *
 gimp_vectors_stroke_get_by_ID (const GimpVectors *vectors,
                                gint               id)
 {
-  GList      *stroke;
+  GList *list;
 
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
 
-  for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
+  for (list = vectors->strokes; list; list = g_list_next (list))
     {
-      if (gimp_stroke_get_ID (stroke->data) == id)
-        return stroke->data;
+      if (gimp_stroke_get_ID (list->data) == id)
+        return list->data;
     }
 
   return NULL;
@@ -925,21 +924,19 @@ gimp_vectors_real_anchor_get (const GimpVectors *vectors,
                               const GimpCoords  *coord,
                               GimpStroke       **ret_stroke)
 {
-  gdouble     dx, dy, mindist;
-  GList      *stroke;
-  GimpAnchor *anchor    = NULL;
   GimpAnchor *minanchor = NULL;
+  gdouble     mindist   = -1;
+  GList      *list;
 
-  mindist = -1;
-
-  for (stroke = vectors->strokes; stroke; stroke = g_list_next (stroke))
+  for (list = vectors->strokes; list; list = g_list_next (list))
     {
-      anchor = gimp_stroke_anchor_get (GIMP_STROKE (stroke->data), coord);
+      GimpStroke *stroke = list->data;
+      GimpAnchor *anchor = gimp_stroke_anchor_get (stroke, coord);
 
       if (anchor)
         {
-          dx = coord->x - anchor->position.x;
-          dy = coord->y - anchor->position.y;
+          gdouble dx = coord->x - anchor->position.x;
+          gdouble dy = coord->y - anchor->position.y;
 
           if (mindist > dx * dx + dy * dy || mindist < 0)
             {
@@ -947,7 +944,7 @@ gimp_vectors_real_anchor_get (const GimpVectors *vectors,
               minanchor = anchor;
 
               if (ret_stroke)
-                *ret_stroke = stroke->data;
+                *ret_stroke = stroke;
             }
         }
     }
@@ -980,13 +977,12 @@ gimp_vectors_anchor_select (GimpVectors *vectors,
                             gboolean     selected,
                             gboolean     exclusive)
 {
-  GList      *stroke_list;
-  GimpStroke *stroke;
+  GList *list;
 
-  for (stroke_list = vectors->strokes; stroke_list;
-       stroke_list = g_list_next (stroke_list))
+  for (list = vectors->strokes; list; list = g_list_next (list))
     {
-      stroke = GIMP_STROKE (stroke_list->data);
+      GimpStroke *stroke = list->data;
+
       gimp_stroke_anchor_select (stroke,
                                  stroke == target_stroke ? anchor : NULL,
                                  selected, exclusive);
@@ -1147,18 +1143,17 @@ gimp_vectors_make_bezier (const GimpVectors *vectors)
 static GimpBezierDesc *
 gimp_vectors_real_make_bezier (const GimpVectors *vectors)
 {
-  GimpStroke     *cur_stroke;
+  GimpStroke     *stroke;
   GArray         *cmd_array;
-  GimpBezierDesc *bezdesc;
   GimpBezierDesc *ret_bezdesc = NULL;
 
   cmd_array = g_array_new (FALSE, FALSE, sizeof (cairo_path_data_t));
 
-  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       cur_stroke;
-       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
+  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       stroke;
+       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      bezdesc = gimp_stroke_make_bezier (cur_stroke);
+      GimpBezierDesc *bezdesc = gimp_stroke_make_bezier (stroke);
 
       if (bezdesc)
         {
@@ -1180,4 +1175,3 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
 
   return ret_bezdesc;
 }
-
