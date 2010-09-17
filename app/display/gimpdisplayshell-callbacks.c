@@ -45,6 +45,7 @@
 #include "tools/gimpmovetool.h"
 #include "tools/gimppainttool.h"
 #include "tools/gimptoolcontrol.h"
+#include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 #include "tools/tools-enums.h"
 
@@ -371,10 +372,12 @@ static gboolean
 gimp_display_shell_is_double_buffered (GimpDisplayShell *shell)
 {
   /*  always double-buffer if there are overlay children or a
-   *  transform preview, or they will flicker badly
+   *  transform preview, or they will flicker badly. Also double
+   *  buffer when we are editing paths.
    */
-  if (GIMP_OVERLAY_BOX (shell->canvas)->children ||
-      gimp_display_shell_get_show_transform (shell))
+  if (GIMP_OVERLAY_BOX (shell->canvas)->children    ||
+      gimp_display_shell_get_show_transform (shell) ||
+      GIMP_IS_VECTOR_TOOL (tool_manager_get_active (shell->display->gimp)))
     return TRUE;
 
   return FALSE;
