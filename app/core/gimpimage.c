@@ -1444,7 +1444,8 @@ static void
 gimp_image_vectors_freeze (GimpVectors *vectors,
                            GimpImage   *image)
 {
-  /* do nothing */
+  if (gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_image_update_vectors (image, vectors);
 }
 
 static void
