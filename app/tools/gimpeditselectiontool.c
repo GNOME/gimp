@@ -376,14 +376,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                 x4 = x3 + gimp_item_get_width  (item);
                 y4 = y3 + gimp_item_get_height (item);
 
-                if (x3 < x1)
-                  x1 = x3;
-                if (y3 < y1)
-                  y1 = y3;
-                if (x4 > x2)
-                  x2 = x4;
-                if (y4 > y2)
-                  y2 = y4;
+                x1 = MIN (x1, x3);
+                y1 = MIN (y1, y3);
+                x2 = MAX (x2, x4);
+                y2 = MAX (y2, y4);
               }
 
             g_list_free (linked);
@@ -420,21 +416,17 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
                   gimp_vectors_bounds (GIMP_VECTORS (item), &x3, &y3, &x4, &y4);
 
-                  if (x3 < xd1)
-                    xd1 = x3;
-                  if (y3 < yd1)
-                    yd1 = y3;
-                  if (x4 > xd2)
-                    xd2 = x4;
-                  if (y4 > yd2)
-                    yd2 = y4;
+                  xd1 = MIN (xd1, x3);
+                  yd1 = MIN (yd1, y3);
+                  xd2 = MAX (xd2, x4);
+                  yd2 = MAX (yd2, y4);
                 }
             }
 
-          x1 = ROUND (xd1);
-          y1 = ROUND (yd1);
-          x2 = ROUND (xd2);
-          y2 = ROUND (yd2);
+          x1 = ROUND (floor (xd1));
+          y1 = ROUND (floor (yd1));
+          x2 = ROUND (ceil (xd2));
+          y2 = ROUND (ceil (yd2));
         }
         break;
       }
@@ -899,14 +891,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                 x4 = x3 + gimp_item_get_width  (item);
                 y4 = y3 + gimp_item_get_height (item);
 
-                if (x3 < x1)
-                  x1 = x3;
-                if (y3 < y1)
-                  y1 = y3;
-                if (x4 > x2)
-                  x2 = x4;
-                if (y4 > y2)
-                  y2 = y4;
+                x1 = MIN (x1, x3);
+                y1 = MIN (y1, y3);
+                x2 = MAX (x2, x4);
+                y2 = MAX (y2, y4);
               }
 
             g_list_free (linked);
@@ -952,14 +940,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
                 gimp_vectors_bounds (GIMP_VECTORS (item), &x3, &y3, &x4, &y4);
 
-                if (x3 < x1)
-                  x1 = x3;
-                if (y3 < y1)
-                  y1 = y3;
-                if (x4 > x2)
-                  x2 = x4;
-                if (y4 > y2)
-                  y2 = y4;
+                x1 = MIN (x1, x3);
+                y1 = MIN (y1, y3);
+                x2 = MAX (x2, x4);
+                y2 = MAX (y2, y4);
               }
 
             g_list_free (linked);
