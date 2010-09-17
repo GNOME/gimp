@@ -589,25 +589,27 @@ gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
                                      GimpVectors      *vectors,
                                      gdouble           width)
 {
-  GimpStroke *stroke = NULL;
+  GimpStroke *stroke;
 
-  while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
+  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       stroke;
+       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
       const GimpBezierDesc *desc = gimp_vectors_get_bezier (vectors);
 
       if (desc)
         {
           cairo_append_path (cr, (cairo_path_t *) desc);
-
-          cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
-          cairo_set_line_width (cr, 3 * width);
-          cairo_stroke_preserve (cr);
-
-          cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
-          cairo_set_line_width (cr, width);
-          cairo_stroke (cr);
         }
     }
+
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+  cairo_set_line_width (cr, 3 * width);
+  cairo_stroke_preserve (cr);
+
+  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+  cairo_set_line_width (cr, width);
+  cairo_stroke (cr);
 }
 
 void
