@@ -587,7 +587,8 @@ static void
 gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
                                      cairo_t          *cr,
                                      GimpVectors      *vectors,
-                                     gdouble           width)
+                                     gdouble           width,
+                                     gboolean          active)
 {
   GimpStroke *stroke;
 
@@ -598,17 +599,13 @@ gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
       const GimpBezierDesc *desc = gimp_vectors_get_bezier (vectors);
 
       if (desc)
-        {
-          cairo_append_path (cr, (cairo_path_t *) desc);
-        }
+        cairo_append_path (cr, (cairo_path_t *) desc);
     }
 
-  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
-  cairo_set_line_width (cr, 3 * width);
+  gimp_display_shell_set_vectors_bg_style (shell, cr, width, active);
   cairo_stroke_preserve (cr);
 
-  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
-  cairo_set_line_width (cr, width);
+  gimp_display_shell_set_vectors_fg_style (shell, cr, width, active);
   cairo_stroke (cr);
 }
 
@@ -647,7 +644,14 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
           GimpVectors *vectors = list->data;
 
           if (gimp_item_get_visible (GIMP_ITEM (vectors)))
-            gimp_display_shell_draw_one_vectors (shell, cr, vectors, width);
+            {
+              gboolean active;
+
+              active = (vectors == gimp_image_get_active_vectors (image));
+
+              gimp_display_shell_draw_one_vectors (shell, cr, vectors,
+                                                   width, active);
+            }
         }
 
       g_list_free (all_vectors);

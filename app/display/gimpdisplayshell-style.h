@@ -46,6 +46,14 @@ void   gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
 void   gimp_display_shell_set_selection_in_style  (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
                                                    gint              index);
+void   gimp_display_shell_set_vectors_bg_style    (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   gdouble           width,
+                                                   gboolean          active);
+void   gimp_display_shell_set_vectors_fg_style    (GimpDisplayShell *shell,
+                                                   cairo_t          *cr,
+                                                   gdouble           width,
+                                                   gboolean          active);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

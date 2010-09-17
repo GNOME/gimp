@@ -63,6 +63,12 @@ static const GimpRGB selection_out_bg    = { 0.5, 0.5, 0.5, 1.0 };
 static const GimpRGB selection_in_fg     = { 0.0, 0.0, 0.0, 1.0 };
 static const GimpRGB selection_in_bg     = { 1.0, 1.0, 1.0, 1.0 };
 
+static const GimpRGB vectors_normal_bg   = { 1.0, 1.0, 1.0, 0.6 };
+static const GimpRGB vectors_normal_fg   = { 0.0, 0.0, 0.0, 0.8 };
+
+static const GimpRGB vectors_active_bg   = { 1.0, 1.0, 1.0, 0.6 };
+static const GimpRGB vectors_active_fg   = { 1.0, 0.0, 0.0, 0.8 };
+
 
 /*  public functions  */
 
@@ -274,4 +280,38 @@ gimp_display_shell_set_selection_in_style (GimpDisplayShell *shell,
                                                index);
   cairo_set_source (cr, pattern);
   cairo_pattern_destroy (pattern);
+}
+
+void
+gimp_display_shell_set_vectors_bg_style (GimpDisplayShell *shell,
+                                         cairo_t          *cr,
+                                         gdouble           width,
+                                         gboolean          active)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, width * 3.0);
+
+  if (active)
+    gimp_cairo_set_source_rgba (cr, &vectors_active_bg);
+  else
+    gimp_cairo_set_source_rgba (cr, &vectors_normal_bg);
+}
+
+void
+gimp_display_shell_set_vectors_fg_style (GimpDisplayShell *shell,
+                                         cairo_t          *cr,
+                                         gdouble           width,
+                                         gboolean          active)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, width);
+
+  if (active)
+    gimp_cairo_set_source_rgba (cr, &vectors_active_fg);
+  else
+    gimp_cairo_set_source_rgba (cr, &vectors_normal_fg);
 }
