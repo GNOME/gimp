@@ -101,10 +101,6 @@ gboolean   gimp_draw_tool_in_radius                (GimpDrawTool     *draw_tool,
                                                     gdouble           y2,
                                                     gint              radius);
 
-void       gimp_draw_tool_set_clip_rect            (GimpDrawTool     *draw_tool,
-                                                    GdkRectangle     *rect,
-                                                    gboolean          use_offsets);
-
 void       gimp_draw_tool_draw_line                (GimpDrawTool     *draw_tool,
                                                     gdouble           x1,
                                                     gdouble           y1,

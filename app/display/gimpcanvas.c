@@ -550,54 +550,6 @@ gimp_canvas_get_layout (GimpCanvas  *canvas,
 }
 
 /**
- * gimp_canvas_set_clip_rect:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @rect:   a #GdkRectangle to set the bounds of the clipping area.
- *
- * Sets a rectangular clipping area for the specified style.
- **/
-void
-gimp_canvas_set_clip_rect (GimpCanvas         *canvas,
-                           GimpCanvasStyle     style,
-                           const GdkRectangle *rect)
-{
-  if (! canvas->gc[style])
-    {
-      if (! rect)
-        return;
-
-      canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-    }
-
-  gdk_gc_set_clip_rectangle (canvas->gc[style], rect);
-}
-
-/**
- * gimp_canvas_set_clip_region:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @region: a #GdkRegion to set the bounds of the clipping area.
- *
- * Sets a clipping region for the specified style.
- **/
-void
-gimp_canvas_set_clip_region (GimpCanvas      *canvas,
-                             GimpCanvasStyle  style,
-                             const GdkRegion *region)
-{
-  if (! canvas->gc[style])
-    {
-      if (! region)
-        return;
-
-      canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
-    }
-
-  gdk_gc_set_clip_region (canvas->gc[style], region);
-}
-
-/**
  * gimp_canvas_set_bg_color:
  * @canvas:   a #GimpCanvas widget
  * @color:    a color in #GimpRGB format

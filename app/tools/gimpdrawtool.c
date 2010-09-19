@@ -383,44 +383,6 @@ gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
                                                x1, y1, x2, y2) < SQR (radius));
 }
 
-void
-gimp_draw_tool_set_clip_rect (GimpDrawTool *draw_tool,
-                              GdkRectangle *rect,
-                              gboolean      use_offsets)
-{
-  GimpDisplayShell *shell;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  if (rect)
-    {
-      GdkRectangle r;
-
-      gimp_display_shell_transform_xy (shell,
-                                       rect->x + rect->width,
-                                       rect->y + rect->height,
-                                       &r.width, &r.height,
-                                       use_offsets);
-      gimp_display_shell_transform_xy (shell,
-                                       rect->x, rect->y,
-                                       &r.x, &r.y,
-                                       use_offsets);
-
-      r.width  -= r.x;
-      r.height -= r.y;
-
-      gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
-                                 GIMP_CANVAS_STYLE_XOR, &r);
-    }
-  else
-    {
-      gimp_canvas_set_clip_rect (GIMP_CANVAS (shell->canvas),
-                                 GIMP_CANVAS_STYLE_XOR, NULL);
-    }
-}
-
 /**
  * gimp_draw_tool_draw_line:
  * @draw_tool:   the #GimpDrawTool
