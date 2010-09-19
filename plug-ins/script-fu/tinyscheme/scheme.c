@@ -1043,11 +1043,11 @@ static char *store_string(scheme *sc, int char_cnt,
        else
           len = q2 - str;
        q=(gchar*)sc->malloc(len+1);
-     }
-     else {
+     } else {
        len = g_unichar_to_utf8(fill, utf8);
        q=(gchar*)sc->malloc(char_cnt*len+1);
      }
+
      if(q==0) {
        sc->no_memory=1;
        return sc->strbuff;
@@ -1565,82 +1565,81 @@ static void port_close(scheme *sc, pointer p, int flag) {
   }
 }
 
+/* This routine will ignore byte sequences that are not valid UTF-8 */
 static gunichar basic_inchar(port *pt) {
-  int  len;
-
   if(pt->kind & port_file) {
-    unsigned char utf8[7];
     int  c;
-    int  i;
 
     c = fgetc(pt->rep.stdio.file);
-    if (c == EOF) return EOF;
-    utf8[0] = c;
 
     while (TRUE)
       {
-        if (utf8[0] <= 0x7f)
-          {
-            return (gunichar) utf8[0];
-          }
+        if (c == EOF) return EOF;
 
-        /* Check for valid lead byte per RFC-3629 */
-        if (utf8[0] >= 0xc2 && utf8[0] <= 0xf4)
+        if (c <= 0x7f)
+            return (gunichar) c;
+
+        /* Is this byte an invalid lead per RFC-3629? */
+        if (c < 0xc2 || c > 0xf4)
           {
-            len = utf8_length[utf8[0] & 0x3F];
+            /* Ignore invalid lead byte and get the next characer */
+            c = fgetc(pt->rep.stdio.file);
+          }
+        else    /* Byte is valid lead */
+          {
+            unsigned char utf8[7];
+            int  len;
+            int  i;
+
+            utf8[0] = c;    /* Save the lead byte */
+
+            len = utf8_length[c & 0x3F];
             for (i = 1; i <= len; i++)
               {
                 c = fgetc(pt->rep.stdio.file);
-                if (c == EOF) return EOF;
-                utf8[i] = c;
-                if ((utf8[i] & 0xc0) != 0x80)
-                  {
+
+                /* Stop reading if this is not a continuation character */
+                if ((c & 0xc0) != 0x80)
                     break;
-                  }
+
+                utf8[i] = c;
               }
 
-            if (i > len)
+            if (i > len)    /* Read the expected number of bytes? */
               {
-                return g_utf8_get_char ((char *) utf8);
+                return g_utf8_get_char_validated ((char *) utf8,
+                                                  sizeof(utf8));
               }
 
-            /* we did not get enough continuation characters. */
-            utf8[0] = utf8[i];          /* ignore and restart */
+            /* Not enough continuation characters so ignore and restart */
           }
-        else
-          {
-            /* Everything else is invalid and will be ignored */
-            c = fgetc(pt->rep.stdio.file);
-            if (c == EOF) return EOF;
-            utf8[0] = c;
-          }
-      }
+      } /* end of while (TRUE) */
   } else {
-    if(*pt->rep.string.curr == 0 ||
-       pt->rep.string.curr == pt->rep.string.past_the_end) {
-      return EOF;
-    } else {
-      gunichar c;
+    gunichar c;
+    int      len;
+
+    while (TRUE)
+    {
+      /* Found NUL or at end of input buffer? */
+      if (*pt->rep.string.curr == 0 ||
+          pt->rep.string.curr == pt->rep.string.past_the_end) {
+        return EOF;
+      }
 
       len = pt->rep.string.past_the_end - pt->rep.string.curr;
       c = g_utf8_get_char_validated(pt->rep.string.curr, len);
 
-      if (c < 0)
+      if (c >= 0)   /* Valid UTF-8 character? */
       {
-        pt->rep.string.curr = g_utf8_find_next_char(pt->rep.string.curr,
-                                                    pt->rep.string.past_the_end);
-        if (pt->rep.string.curr == NULL)
-            pt->rep.string.curr = pt->rep.string.past_the_end;
-        c = ' ';
-      }
-      else
-      {
-        len = g_unichar_to_utf8(c, NULL);
+        len = g_unichar_to_utf8(c, NULL);   /* Length of UTF-8 sequence */
         pt->rep.string.curr += len;
+        return c;
       }
 
-      return c;
-    }
+      /* Look for next valid UTF-8 character in buffer */
+      pt->rep.string.curr = g_utf8_find_next_char(pt->rep.string.curr,
+                                                  pt->rep.string.past_the_end);
+    } /* end of while (TRUE) */
   }
 }
 
@@ -1813,7 +1812,8 @@ static pointer readstrexp(scheme *sc) {
         break;
       case '"':
         *p=0;
-        return mk_counted_string(sc,sc->strbuff,p-sc->strbuff);
+        return mk_counted_string(sc,sc->strbuff,
+                                 g_utf8_strlen(sc->strbuff, sizeof(sc->strbuff)));
       default:
         len = g_unichar_to_utf8(c, p);
         p += len;
@@ -2855,7 +2855,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           s_goto(sc,OP_EVAL);
 
      case OP_DEF1:  /* define */
-       x=find_slot_in_env(sc,sc->envir,sc->code,0);
+          x=find_slot_in_env(sc,sc->envir,sc->code,0);
           if (x != sc->NIL) {
                set_slot_in_env(sc, x, sc->value);
           } else {
