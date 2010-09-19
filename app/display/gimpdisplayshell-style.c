@@ -69,6 +69,9 @@ static const GimpRGB vectors_normal_fg   = { 0.0, 0.0, 1.0, 0.8 };
 static const GimpRGB vectors_active_bg   = { 1.0, 1.0, 1.0, 0.6 };
 static const GimpRGB vectors_active_fg   = { 1.0, 0.0, 0.0, 0.8 };
 
+static const GimpRGB tool_bg             = { 1.0, 1.0, 1.0, 0.6 };
+static const GimpRGB tool_fg             = { 0.0, 0.0, 0.0, 0.8 };
+
 
 /*  public functions  */
 
@@ -314,4 +317,26 @@ gimp_display_shell_set_vectors_fg_style (GimpDisplayShell *shell,
     gimp_cairo_set_source_rgba (cr, &vectors_active_fg);
   else
     gimp_cairo_set_source_rgba (cr, &vectors_normal_fg);
+}
+
+void
+gimp_display_shell_set_tool_bg_style (GimpDisplayShell *shell,
+                                      cairo_t          *cr)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 3.0);
+  gimp_cairo_set_source_rgba (cr, &tool_bg);
+}
+
+void
+gimp_display_shell_set_tool_fg_style (GimpDisplayShell *shell,
+                                      cairo_t          *cr)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  cairo_set_line_width (cr, 1.0);
+  gimp_cairo_set_source_rgba (cr, &tool_fg);
 }
