@@ -223,10 +223,10 @@ gimp_canvas_line_draw (GimpCanvasItem   *item,
   cairo_line_to (cr, x2, y2);
 
   _gimp_canvas_item_set_extents (item,
-                                 MIN (x1, x2) - 0.5,
-                                 MIN (y1, y2) - 0.5,
-                                 ABS (x2 - x1) + 1.0,
-                                 ABS (y2 - y1) + 1.0);
+                                 MIN (x1, x2) - 1.5,
+                                 MIN (y1, y2) - 1.5,
+                                 ABS (x2 - x1) + 3.0,
+                                 ABS (y2 - y1) + 3.0);
 
   _gimp_canvas_item_stroke (item, shell, cr);
 }
