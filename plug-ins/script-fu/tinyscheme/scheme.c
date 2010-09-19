@@ -1025,6 +1025,8 @@ pointer foreign_error (scheme *sc, const char *s, pointer a) {
 /* char_cnt is length of string in chars. */
 /* str points to a NUL terminated string. */
 /* Only uses fill_char if str is NULL.    */
+/* This routine automatically adds 1 byte */
+/* to allow space for terminating NUL.    */
 static char *store_string(scheme *sc, int char_cnt,
                           const char *str, gunichar fill) {
      int  len;
@@ -3532,7 +3534,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 
           free(strvalue(a));
           strvalue(a)=newstr;
-          strlength(a)=newlen;
+          strlength(a)=g_utf8_strlen(newstr, -1);
 
           s_return(sc,a);
      }
@@ -3543,18 +3545,24 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
        pointer newstr;
        pointer car_x;
        char *pos;
+       char *end;
 
        /* compute needed length for new string */
        for (x = sc->args; x != sc->NIL; x = cdr(x)) {
-          len += strlength(car(x));
+          car_x = car(x);
+          end = g_utf8_offset_to_pointer(strvalue(car_x), (long)strlength(car_x));
+          len += end - strvalue(car_x);
        }
        newstr = mk_empty_string(sc, len, ' ');
+
        /* store the contents of the argument strings into the new string */
        pos = strvalue(newstr);
        for (x = sc->args; x != sc->NIL; x = cdr(x)) {
            car_x = car(x);
-           memcpy(pos, strvalue(car_x), strlength(car_x));
-           pos += strlength(car_x);
+           end = g_utf8_offset_to_pointer(strvalue(car_x), (long)strlength(car_x));
+           len = end - strvalue(car_x);
+           memcpy(pos, strvalue(car_x), len);
+           pos += len;
        }
        *pos = '\0';
        s_return(sc, newstr);
@@ -3992,7 +4000,8 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                default:                   break;  /* Quiet the compiler */
           }
           p=port_from_string(sc, strvalue(car(sc->args)),
-                     strvalue(car(sc->args))+strlength(car(sc->args)), prop);
+                     g_utf8_offset_to_pointer(strvalue(car(sc->args)),
+                                              strlength(car(sc->args))), prop);
           if(p==sc->NIL) {
                s_return(sc,sc->F);
           }
