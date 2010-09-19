@@ -22,18 +22,36 @@
 
 #include "display-types.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpcanvasitem.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-style.h"
 
 
+typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
+
+struct _GimpCanvasItemPrivate
+{
+  gdouble extents_x;
+  gdouble extents_y;
+  gdouble extents_width;
+  gdouble extents_height;
+};
+
+#define GET_PRIVATE(item) \
+        G_TYPE_INSTANCE_GET_PRIVATE (item, \
+                                     GIMP_TYPE_CANVAS_ITEM, \
+                                     GimpCanvasItemPrivate)
+
+
 /*  local function prototypes  */
 
-static void   gimp_canvas_item_real_draw       (GimpCanvasItem   *item,
-                                                GimpDisplayShell *shell,
-                                                cairo_t          *cr);
-static void   gimp_canvas_item_real_invalidate (GimpCanvasItem   *item,
-                                                GimpDisplayShell *shell);
+static void        gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
+                                                      GimpDisplayShell *shell,
+                                                      cairo_t          *cr);
+static GdkRegion * gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
+                                                      GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
@@ -45,8 +63,10 @@ G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
 static void
 gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 {
-  klass->draw       = gimp_canvas_item_real_draw;
-  klass->invalidate = gimp_canvas_item_real_invalidate;
+  klass->draw        = gimp_canvas_item_real_draw;
+  klass->get_extents = gimp_canvas_item_real_get_extents;
+
+  g_type_class_add_private (klass, sizeof (GimpCanvasItemPrivate));
 }
 
 static void
@@ -62,11 +82,19 @@ gimp_canvas_item_real_draw (GimpCanvasItem   *item,
   g_warn_if_reached ();
 }
 
-static void
-gimp_canvas_item_real_invalidate (GimpCanvasItem   *item,
-                                  GimpDisplayShell *shell)
+static GdkRegion *
+gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
+                                   GimpDisplayShell *shell)
 {
-  g_warn_if_reached ();
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+  GdkRectangle           rectangle;
+
+  rectangle.x      = floor (private->extents_x);
+  rectangle.y      = floor (private->extents_y);
+  rectangle.width  = ceil (private->extents_width);
+  rectangle.height = ceil (private->extents_height);
+
+  return gdk_region_rectangle (&rectangle);
 }
 
 
@@ -88,14 +116,32 @@ gimp_canvas_item_draw (GimpCanvasItem   *item,
   cairo_restore (cr);
 }
 
-void
-gimp_canvas_item_invalidate (GimpCanvasItem   *item,
-                             GimpDisplayShell *shell)
+GdkRegion *
+gimp_canvas_item_get_extents (GimpCanvasItem   *item,
+                              GimpDisplayShell *shell)
 {
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
-  GIMP_CANVAS_ITEM_GET_CLASS (item)->invalidate (item, shell);
+  return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, shell);
+}
+
+
+/*  protexted functions  */
+
+void
+_gimp_canvas_item_set_extents (GimpCanvasItem *item,
+                               gdouble         x,
+                               gdouble         y,
+                               gdouble         width,
+                               gdouble         height)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  private->extents_x      = x;
+  private->extents_y      = y;
+  private->extents_width  = width;
+  private->extents_height = height;
 }
 
 void

@@ -45,31 +45,36 @@ struct _GimpCanvasItemClass
 {
   GimpObjectClass  parent_class;
 
-  void (* draw)       (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell,
-                       cairo_t          *cr);
-  void (* invalidate) (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell);
+  void        (* draw)        (GimpCanvasItem   *item,
+                               GimpDisplayShell *shell,
+                               cairo_t          *cr);
+  GdkRegion * (* get_extents) (GimpCanvasItem   *item,
+                               GimpDisplayShell *shell);
 };
 
 
-GType   gimp_canvas_item_get_type   (void) G_GNUC_CONST;
+GType       gimp_canvas_item_get_type     (void) G_GNUC_CONST;
 
-void    gimp_canvas_item_draw       (GimpCanvasItem   *item,
-                                     GimpDisplayShell *shell,
-                                     cairo_t          *cr);
-void    gimp_canvas_item_invalidate (GimpCanvasItem   *item,
-                                     GimpDisplayShell *shell);
+void        gimp_canvas_item_draw         (GimpCanvasItem   *item,
+                                           GimpDisplayShell *shell,
+                                           cairo_t          *cr);
+GdkRegion * gimp_canvas_item_get_extents  (GimpCanvasItem   *item,
+                                           GimpDisplayShell *shell);
 
 
 /*  protected  */
 
-void    _gimp_canvas_item_stroke    (GimpCanvasItem   *item,
-                                     GimpDisplayShell *shell,
-                                     cairo_t          *cr);
-void    _gimp_canvas_item_fill      (GimpCanvasItem   *item,
-                                     GimpDisplayShell *shell,
-                                     cairo_t          *cr);
+void        _gimp_canvas_item_set_extents (GimpCanvasItem   *item,
+                                           gdouble           x,
+                                           gdouble           y,
+                                           gdouble           width,
+                                           gdouble           height);
+void        _gimp_canvas_item_stroke      (GimpCanvasItem   *item,
+                                           GimpDisplayShell *shell,
+                                           cairo_t          *cr);
+void        _gimp_canvas_item_fill        (GimpCanvasItem   *item,
+                                           GimpDisplayShell *shell,
+                                           cairo_t          *cr);
 
 
 #endif /* __GIMP_CANVAS_ITEM_H__ */

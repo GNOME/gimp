@@ -61,19 +61,19 @@ struct _GimpCanvasRectanglePrivate
 
 /*  local function prototypes  */
 
-static void   gimp_canvas_rectangle_set_property (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void   gimp_canvas_rectangle_get_property (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
-static void   gimp_canvas_rectangle_draw         (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell,
-                                                  cairo_t          *cr);
-static void   gimp_canvas_rectangle_invalidate   (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell);
+static void        gimp_canvas_rectangle_set_property (GObject          *object,
+                                                       guint             property_id,
+                                                       const GValue     *value,
+                                                       GParamSpec       *pspec);
+static void        gimp_canvas_rectangle_get_property (GObject          *object,
+                                                       guint             property_id,
+                                                       GValue           *value,
+                                                       GParamSpec       *pspec);
+static void        gimp_canvas_rectangle_draw         (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell,
+                                                       cairo_t          *cr);
+static GdkRegion * gimp_canvas_rectangle_get_extents  (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasRectangle, gimp_canvas_rectangle,
@@ -92,7 +92,7 @@ gimp_canvas_rectangle_class_init (GimpCanvasRectangleClass *klass)
   object_class->get_property = gimp_canvas_rectangle_get_property;
 
   item_class->draw           = gimp_canvas_rectangle_draw;
-  item_class->invalidate     = gimp_canvas_rectangle_invalidate;
+  item_class->get_extents    = gimp_canvas_rectangle_get_extents;
 
   g_object_class_install_property (object_class, PROP_X,
                                    g_param_spec_double ("x", NULL, NULL,
@@ -251,25 +251,25 @@ gimp_canvas_rectangle_draw (GimpCanvasItem   *item,
   cairo_rectangle (cr, x, y, w, h);
 
   if (private->filled)
-    _gimp_canvas_item_fill (item, shell, cr);
+    {
+      _gimp_canvas_item_set_extents (item, x, y, w, h);
+      _gimp_canvas_item_fill (item, shell, cr);
+    }
   else
-    _gimp_canvas_item_stroke (item, shell, cr);
+    {
+      _gimp_canvas_item_set_extents (item, x - 1.5, y - 1.5, w + 3.0, h + 3.0);
+      _gimp_canvas_item_stroke (item, shell, cr);
+    }
 }
 
-static void
-gimp_canvas_rectangle_invalidate (GimpCanvasItem   *item,
-                                  GimpDisplayShell *shell)
+static GdkRegion *
+gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
+                                   GimpDisplayShell *shell)
 {
-  GimpCanvasRectanglePrivate *private = GET_PRIVATE (item);
-  gdouble                     x, y;
-  gdouble                     w, h;
-
-  gimp_canvas_rectangle_transform (item, shell, &x, &y, &w, &h);
-
-  if (private->filled)
-    gimp_display_shell_expose_area (shell, x, y, w, h);
-  else
-    gimp_display_shell_expose_area (shell, x - 1.5, y - 1.5, w + 1.5, h + 1.5);
+  /*  TODO: for large unfilled rectangles, construct a region which
+   *  contains only the four sides
+   */
+  return GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
 }
 
 GimpCanvasItem *
