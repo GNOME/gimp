@@ -647,7 +647,7 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
     }
 }
 
-void
+static void
 gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
                                          gboolean        filled,
                                          gdouble         x,
@@ -657,12 +657,8 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
                                          GtkAnchorType   anchor,
                                          gboolean        use_offsets)
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
   gdouble           tx, ty;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
@@ -729,7 +725,7 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                         angle1, angle2);
 }
 
-void
+static void
 gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
                                      gdouble        x,
                                      gdouble        y,
@@ -738,12 +734,8 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
                                      GtkAnchorType  anchor,
                                      gboolean       use_offsets)
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
   gdouble           tx, ty;
-
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,

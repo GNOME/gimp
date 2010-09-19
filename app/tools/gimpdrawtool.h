@@ -133,14 +133,6 @@ void       gimp_draw_tool_draw_arc                 (GimpDrawTool     *draw_tool,
                                                     gint              angle2,
                                                     gboolean          use_offsets);
 
-void       gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool     *draw_tool,
-                                                    gboolean          filled,
-                                                    gdouble           x,
-                                                    gdouble           y,
-                                                    gint              width,
-                                                    gint              height,
-                                                    GtkAnchorType     anchor,
-                                                    gboolean          use_offsets);
 void       gimp_draw_tool_draw_arc_by_anchor       (GimpDrawTool     *draw_tool,
                                                     gboolean          filled,
                                                     gdouble           x,
@@ -149,13 +141,6 @@ void       gimp_draw_tool_draw_arc_by_anchor       (GimpDrawTool     *draw_tool,
                                                     gint              height,
                                                     gint              angle1,
                                                     gint              angle2,
-                                                    GtkAnchorType     anchor,
-                                                    gboolean          use_offsets);
-void       gimp_draw_tool_draw_cross_by_anchor     (GimpDrawTool     *draw_tool,
-                                                    gdouble           x,
-                                                    gdouble           y,
-                                                    gint              width,
-                                                    gint              height,
                                                     GtkAnchorType     anchor,
                                                     gboolean          use_offsets);
 
