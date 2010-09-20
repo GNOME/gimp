@@ -40,6 +40,41 @@ gimp_cursor_precision_get_type (void)
 }
 
 GType
+gimp_handle_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_HANDLE_SQUARE, "GIMP_HANDLE_SQUARE", "square" },
+    { GIMP_HANDLE_FILLED_SQUARE, "GIMP_HANDLE_FILLED_SQUARE", "filled-square" },
+    { GIMP_HANDLE_CIRCLE, "GIMP_HANDLE_CIRCLE", "circle" },
+    { GIMP_HANDLE_FILLED_CIRCLE, "GIMP_HANDLE_FILLED_CIRCLE", "filled-circle" },
+    { GIMP_HANDLE_CROSS, "GIMP_HANDLE_CROSS", "cross" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_HANDLE_SQUARE, "GIMP_HANDLE_SQUARE", NULL },
+    { GIMP_HANDLE_FILLED_SQUARE, "GIMP_HANDLE_FILLED_SQUARE", NULL },
+    { GIMP_HANDLE_CIRCLE, "GIMP_HANDLE_CIRCLE", NULL },
+    { GIMP_HANDLE_FILLED_CIRCLE, "GIMP_HANDLE_FILLED_CIRCLE", NULL },
+    { GIMP_HANDLE_CROSS, "GIMP_HANDLE_CROSS", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpHandleType", values);
+      gimp_type_set_translation_context (type, "handle-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_zoom_focus_get_type (void)
 {
   static const GEnumValue values[] =
