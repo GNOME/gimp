@@ -36,7 +36,6 @@
 #include "composite/gimp-composite.h"
 
 #include "paint-funcs.h"
-#include "layer-modes.h"
 #include "paint-funcs-utils.h"
 #include "paint-funcs-generic.h"
 
@@ -87,39 +86,6 @@ static const LayerMode layer_modes[] =
   { TRUE,  FALSE, TRUE,  },  /*  GIMP_ERASE_MODE         */
   { TRUE,  TRUE,  TRUE,  },  /*  GIMP_REPLACE_MODE       */
   { TRUE,  TRUE,  FALSE, }   /*  GIMP_ANTI_ERASE_MODE    */
-};
-
-
-typedef void (* LayerModeFunc) (struct apply_layer_mode_struct *);
-
-static const LayerModeFunc layer_mode_funcs[] =
-{
-  layer_normal_mode,
-  layer_dissolve_mode,
-  layer_behind_mode,
-  layer_multiply_mode,
-  layer_screen_mode,
-  layer_overlay_mode,
-  layer_difference_mode,
-  layer_addition_mode,
-  layer_subtract_mode,
-  layer_darken_only_mode,
-  layer_lighten_only_mode,
-  layer_hue_mode,
-  layer_saturation_mode,
-  layer_color_mode,
-  layer_value_mode,
-  layer_divide_mode,
-  layer_dodge_mode,
-  layer_burn_mode,
-  layer_hardlight_mode,
-  layer_softlight_mode,
-  layer_grain_extract_mode,
-  layer_grain_merge_mode,
-  layer_color_erase_mode,
-  layer_erase_mode,
-  layer_replace_mode,
-  layer_anti_erase_mode
 };
 
 
@@ -248,7 +214,6 @@ cubic (gdouble dx,
 void
 paint_funcs_setup (void)
 {
-  layer_modes_setup ();
 }
 
 void
@@ -3984,38 +3949,28 @@ initial_sub_region (struct initial_regions_struct *st,
         case INITIAL_INTENSITY:
           if (mode == GIMP_DISSOLVE_MODE)
             {
-              if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)
-                {
-                  GimpCompositeContext ctx;
+              GimpCompositeContext ctx;
 
-                  ctx.A = NULL;
-                  ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
+              ctx.A = NULL;
+              ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
 
-                  ctx.B = s;
-                  ctx.pixelformat_B = (src->bytes   == 1 ? GIMP_PIXELFORMAT_V8
-                                       : src->bytes == 2 ? GIMP_PIXELFORMAT_VA8
-                                       : src->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
-                                       : src->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
-                                       : GIMP_PIXELFORMAT_ANY);
-                  ctx.D = buf;
-                  ctx.pixelformat_D = ctx.pixelformat_B;
+              ctx.B = s;
+              ctx.pixelformat_B = (src->bytes   == 1 ? GIMP_PIXELFORMAT_V8
+                                   : src->bytes == 2 ? GIMP_PIXELFORMAT_VA8
+                                   : src->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
+                                   : src->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
+                                   : GIMP_PIXELFORMAT_ANY);
+              ctx.D = buf;
+              ctx.pixelformat_D = ctx.pixelformat_B;
 
-                  ctx.M = m;
+              ctx.M = m;
 
-                  ctx.n_pixels = src->w;
-                  ctx.op = GIMP_COMPOSITE_DISSOLVE;
-                  ctx.dissolve.x = src->x;
-                  ctx.dissolve.y = src->y + h;
-                  ctx.dissolve.opacity = opacity;
-                  gimp_composite_dispatch (&ctx);
-                }
-              else
-                {
-                  dissolve_pixels (s, m, buf, src->x, src->y + h,
-                                   opacity, src->w,
-                                   src->bytes, src->bytes + 1,
-                                   FALSE);
-                }
+              ctx.n_pixels = src->w;
+              ctx.op = GIMP_COMPOSITE_DISSOLVE;
+              ctx.dissolve.x = src->x;
+              ctx.dissolve.y = src->y + h;
+              ctx.dissolve.opacity = opacity;
+              gimp_composite_dispatch (&ctx);
 
               initial_inten_a_pixels (buf, d, NULL, OPAQUE_OPACITY, affect,
                                       src->w, src->bytes + 1);
@@ -4030,38 +3985,28 @@ initial_sub_region (struct initial_regions_struct *st,
         case INITIAL_INTENSITY_ALPHA:
           if (mode == GIMP_DISSOLVE_MODE)
             {
-              if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)
-                {
-                  GimpCompositeContext ctx;
+              GimpCompositeContext ctx;
 
-                  ctx.A = NULL;
-                  ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
+              ctx.A = NULL;
+              ctx.pixelformat_A = GIMP_PIXELFORMAT_RGBA8;
 
-                  ctx.B = s;
-                  ctx.pixelformat_B = (src->bytes   == 1 ? GIMP_PIXELFORMAT_V8
-                                       : src->bytes == 2 ? GIMP_PIXELFORMAT_VA8
-                                       : src->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
-                                       : src->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
-                                       : GIMP_PIXELFORMAT_ANY);
-                  ctx.D = buf;
-                  ctx.pixelformat_D = ctx.pixelformat_B;
+              ctx.B = s;
+              ctx.pixelformat_B = (src->bytes   == 1 ? GIMP_PIXELFORMAT_V8
+                                   : src->bytes == 2 ? GIMP_PIXELFORMAT_VA8
+                                   : src->bytes == 3 ? GIMP_PIXELFORMAT_RGB8
+                                   : src->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8
+                                   : GIMP_PIXELFORMAT_ANY);
+              ctx.D = buf;
+              ctx.pixelformat_D = ctx.pixelformat_B;
 
-                  ctx.M = m;
+              ctx.M = m;
 
-                  ctx.n_pixels = src->w;
-                  ctx.op = GIMP_COMPOSITE_DISSOLVE;
-                  ctx.dissolve.x = src->x;
-                  ctx.dissolve.y = src->y + h;
-                  ctx.dissolve.opacity = opacity;
-                  gimp_composite_dispatch (&ctx);
-                }
-              else
-                {
-                  dissolve_pixels (s, m, buf, src->x, src->y + h,
-                                   opacity, src->w,
-                                   src->bytes, src->bytes,
-                                   TRUE);
-                }
+              ctx.n_pixels = src->w;
+              ctx.op = GIMP_COMPOSITE_DISSOLVE;
+              ctx.dissolve.x = src->x;
+              ctx.dissolve.y = src->y + h;
+              ctx.dissolve.opacity = opacity;
+              gimp_composite_dispatch (&ctx);
 
               initial_inten_a_pixels (buf, d, NULL, OPAQUE_OPACITY, affect,
                                       src->w, src->bytes);
@@ -4270,73 +4215,44 @@ combine_sub_region (struct combine_regions_struct *st,
           {
             /*  Now, apply the paint mode  */
 
-            if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)
-              {
-                GimpCompositeContext ctx;
+            GimpCompositeContext ctx;
 
-                ctx.A             = s1;
-                ctx.pixelformat_A = (src1->bytes == 1 ? GIMP_PIXELFORMAT_V8    :
-                                     src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8   :
-                                     src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8  :
-                                     src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8 :
-                                     GIMP_PIXELFORMAT_ANY);
+            ctx.A             = s1;
+            ctx.pixelformat_A = (src1->bytes == 1 ? GIMP_PIXELFORMAT_V8    :
+                                 src1->bytes == 2 ? GIMP_PIXELFORMAT_VA8   :
+                                 src1->bytes == 3 ? GIMP_PIXELFORMAT_RGB8  :
+                                 src1->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8 :
+                                 GIMP_PIXELFORMAT_ANY);
 
-                ctx.B             = s2;
-                ctx.pixelformat_B = (src2->bytes == 1 ? GIMP_PIXELFORMAT_V8    :
-                                     src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8   :
-                                     src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8  :
-                                     src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8 :
-                                     GIMP_PIXELFORMAT_ANY);
+            ctx.B             = s2;
+            ctx.pixelformat_B = (src2->bytes == 1 ? GIMP_PIXELFORMAT_V8    :
+                                 src2->bytes == 2 ? GIMP_PIXELFORMAT_VA8   :
+                                 src2->bytes == 3 ? GIMP_PIXELFORMAT_RGB8  :
+                                 src2->bytes == 4 ? GIMP_PIXELFORMAT_RGBA8 :
+                                 GIMP_PIXELFORMAT_ANY);
 
-                ctx.D             = s;
-                ctx.pixelformat_D = ctx.pixelformat_A;
+            ctx.D             = s;
+            ctx.pixelformat_D = ctx.pixelformat_A;
 
-                ctx.M             = layer_mode_mask;
-                ctx.pixelformat_M = GIMP_PIXELFORMAT_ANY;
+            ctx.M             = layer_mode_mask;
+            ctx.pixelformat_M = GIMP_PIXELFORMAT_ANY;
 
-                ctx.n_pixels      = src1->w;
-                ctx.combine       = combine;
-                ctx.op            = mode;
+            ctx.n_pixels      = src1->w;
+            ctx.combine       = combine;
+            ctx.op            = mode;
 
-                ctx.dissolve.x       = src1->x;
-                ctx.dissolve.y       = src1->y + h;
-                ctx.dissolve.opacity = layer_mode_opacity;
+            ctx.dissolve.x       = src1->x;
+            ctx.dissolve.y       = src1->y + h;
+            ctx.dissolve.opacity = layer_mode_opacity;
 
-                mode_affect =
-                  gimp_composite_operation_effects[mode].affect_opacity;
+            mode_affect =
+              gimp_composite_operation_effects[mode].affect_opacity;
 
-                gimp_composite_dispatch (&ctx);
+            gimp_composite_dispatch (&ctx);
 
-                s = ctx.D;
-                combine = (ctx.combine == NO_COMBINATION) ? type : ctx.combine;
-              }
-            else
-              {
-                struct apply_layer_mode_struct alms;
+            s = ctx.D;
+            combine = (ctx.combine == NO_COMBINATION) ? type : ctx.combine;
 
-                alms.src1    = s1;
-                alms.src2    = s2;
-                alms.mask    = layer_mode_mask;
-                alms.dest    = &s;
-                alms.x       = src1->x;
-                alms.y       = src1->y + h;
-                alms.opacity = layer_mode_opacity;
-                alms.combine = combine;
-                alms.length  = src1->w;
-                alms.bytes1  = src1->bytes;
-                alms.bytes2  = src2->bytes;
-
-                /*  Determine whether the alpha channel of the destination
-                 *  can be affected by the specified mode. -- This keeps
-                 *  consistency with varying opacities.
-                 */
-                mode_affect = layer_modes[mode].affect_alpha;
-
-                layer_mode_funcs[mode] (&alms);
-
-                combine = (alms.combine == NO_COMBINATION ?
-                           type : alms.combine);
-              }
           }
           break;
 

@@ -8873,7 +8873,6 @@ gimp_composite_pixelformat_astext
 gimp_composite_mode_astext
 gimp_composite_use_cpu_accel
 GIMP_COMPOSITE_OPTION_NOEXTENSIONS
-GIMP_COMPOSITE_OPTION_USE
 GIMP_COMPOSITE_OPTION_VERBOSE
 </SECTION>
 

@@ -153,7 +153,7 @@ struct GimpCompositeOperationEffects gimp_composite_operation_effects[] =
 
 struct GimpCompositeOptions gimp_composite_options =
   {
-    GIMP_COMPOSITE_OPTION_USE
+    0
   };
 
 const gchar * gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
@@ -338,9 +338,7 @@ gimp_composite_init (gboolean  be_verbose,
     gimp_composite_options.bits |= GIMP_COMPOSITE_OPTION_NOEXTENSIONS;
 
   if (be_verbose)
-    g_printerr ("gimp_composite: use=%s, verbose=%s\n",
-                (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)     ?
-                "yes" : "no",
+    g_printerr ("gimp_composite: verbose=%s\n",
                 (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ?
                 "yes" : "no");
 
