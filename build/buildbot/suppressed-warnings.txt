@@ -1,5 +1,5 @@
 # This is a 'suppressionFile' for buildbot warnings
-# We use isn.*t because UTF-8 ' might be interpreted as ASCII...
+# We use isn.*t because UTF-8 ’ might be interpreted as ASCII...
 
 # Ignore warning from gtk-doc during make
 :    .*html:.*: warning: no link for: .*
@@ -23,7 +23,7 @@
 :    .*gimp.desktop: warning: value .* contains .* more than once.*
 :    ^libtool: install: warning:.*
 
-# Annoying plug-ins/imagemap/imagemap warnings in generated files, not
-# easyily fixed properly
+# Annoying plug-ins/imagemap warnings in generated files, not easily
+# fixed properly
 :    <stdout>.* warning: .*yyunput.* defined but not used
 :    <stdout>.* warning: .*input.* defined but not used
