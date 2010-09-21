@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-13 20:11+0800\n"
+"POT-Creation-Date: 2010-09-21 20:20+0800\n"
 "PO-Revision-Date: 2010-02-20 08:31+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -113,9 +113,8 @@ msgid "_Fog..."
 msgstr "霧(_F)..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
-#, fuzzy
 msgid "_Layer name"
-msgstr "遊戲名稱："
+msgstr "圖層名稱(_L)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
 #, fuzzy
@@ -128,12 +127,11 @@ msgstr "霧的顏色(_F)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
 msgid "_Turbulence"
-msgstr ""
+msgstr "亂流(_T)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:70
-#, fuzzy
 msgid "Op_acity"
-msgstr "透明度(_A)："
+msgstr "透明度(_A)"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 #, fuzzy

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-13 20:02+0800\n"
+"POT-Creation-Date: 2010-09-21 20:21+0800\n"
 "PO-Revision-Date: 2010-02-20 08:30+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
@@ -17,24 +17,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1068
 msgid "success"
 msgstr "成功"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1072
 #, fuzzy
 msgid "execution error"
 msgstr "伺服器錯誤：%s"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1076
 #, fuzzy
 msgid "calling error"
 msgstr "伺服器錯誤：%s"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1080
 msgid "cancelled"
 msgstr "已取消"
 
@@ -74,7 +74,7 @@ msgstr "儲存為動畫"
 #: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
 #: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
-msgstr "圖片平面化"
+msgstr "影像平面化"
 
 #: ../libgimp/gimpexport.c:262
 #, fuzzy, c-format
@@ -93,7 +93,7 @@ msgstr "套用圖層遮罩"
 #: ../libgimp/gimpexport.c:280
 #, fuzzy, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s 只能處理 RGB 圖片"
+msgstr "%s 只能處理 RGB 影像"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -103,7 +103,7 @@ msgstr "轉換成 RGB"
 #: ../libgimp/gimpexport.c:289
 #, fuzzy, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s 只能處理灰階圖片"
+msgstr "%s 只能處理灰階影像"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -113,7 +113,7 @@ msgstr "轉換成灰階"
 #: ../libgimp/gimpexport.c:298
 #, fuzzy, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s 只能處理索引色圖片"
+msgstr "%s 只能處理索引色影像"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -121,7 +121,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"根據預設設定轉換成索引色圖片\n"
+"根據預設設定轉換成索引色影像\n"
 "(請自行調整結果)"
 
 #: ../libgimp/gimpexport.c:308
@@ -134,23 +134,23 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"根據預設的點陣圖設定轉換成索引色圖片\n"
+"根據預設的點陣圖設定轉換成索引色影像\n"
 "(請自行調整結果)"
 
 #: ../libgimp/gimpexport.c:318
 #, fuzzy, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s 只能處理 RGB 或灰階圖片"
+msgstr "%s 只能處理 RGB 或灰階影像"
 
 #: ../libgimp/gimpexport.c:327
 #, fuzzy, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s 只能處理 RGB 或索引色圖片"
+msgstr "%s 只能處理 RGB 或索引色影像"
 
 #: ../libgimp/gimpexport.c:337
 #, fuzzy, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s 只能處理灰階或索引色圖片"
+msgstr "%s 只能處理灰階或索引色影像"
 
 #: ../libgimp/gimpexport.c:348
 #, fuzzy, c-format
@@ -187,12 +187,12 @@ msgstr "匯出(_E)"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "圖片在儲存至 %s 前必須匯出，原因如下："
+msgstr "影像在儲存至 %s 前必須匯出，原因如下："
 
 #. the footline
 #: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "匯出時的圖片轉換程序不會更改原有的圖片。"
+msgstr "匯出時的影像轉換程序不會更改原有的影像。"
 
 #: ../libgimp/gimpexport.c:673
 #, c-format
@@ -237,39 +237,32 @@ msgid "Pattern Selection"
 msgstr "圖樣選擇"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
-#, fuzzy
 msgid "by name"
-msgstr "以名稱"
+msgstr "依名稱"
 
 #: ../libgimp/gimpprocbrowserdialog.c:141
-#, fuzzy
 msgid "by description"
-msgstr "正依描述搜尋"
+msgstr "依描述"
 
 #: ../libgimp/gimpprocbrowserdialog.c:142
-#, fuzzy
 msgid "by help"
-msgstr "/help …… 求助"
+msgstr "依說明"
 
 #: ../libgimp/gimpprocbrowserdialog.c:143
-#, fuzzy
 msgid "by author"
-msgstr "作者電子郵件："
+msgstr "依作者"
 
 #: ../libgimp/gimpprocbrowserdialog.c:144
-#, fuzzy
 msgid "by copyright"
-msgstr "版權資訊"
+msgstr "依版權資訊"
 
 #: ../libgimp/gimpprocbrowserdialog.c:145
-#, fuzzy
 msgid "by date"
-msgstr "依修改日期(_D)"
+msgstr "依修改日期"
 
 #: ../libgimp/gimpprocbrowserdialog.c:146
-#, fuzzy
 msgid "by type"
-msgstr "以類型"
+msgstr "依類型"
 
 #: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
@@ -284,29 +277,24 @@ msgid "Searching by description"
 msgstr "正依描述搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:416
-#, fuzzy
 msgid "Searching by help"
-msgstr "正依名稱搜尋"
+msgstr "正依說明搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:423
-#, fuzzy
 msgid "Searching by author"
-msgstr "正依名稱搜尋"
+msgstr "正依作者搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
-#, fuzzy
 msgid "Searching by copyright"
-msgstr "正依名稱搜尋"
+msgstr "正依版權資訊搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
-#, fuzzy
 msgid "Searching by date"
-msgstr "依修改日期(_D)"
+msgstr "正依修改日期搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:444
-#, fuzzy
 msgid "Searching by type"
-msgstr "正依名稱搜尋"
+msgstr "正依類型搜尋"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
@@ -378,9 +366,8 @@ msgid "Layer's _alpha channel"
 msgstr "圖層的透明色版(_A)"
 
 #: ../libgimpbase/gimpbaseenums.c:31
-#, fuzzy
 msgid "_Transfer layer's alpha channel"
-msgstr "該 pixbuf 是否含有透明度頻道 (alpha channel)"
+msgstr "轉移圖層的透明色版(_T)"
 
 #: ../libgimpbase/gimpbaseenums.c:32
 msgid "_Selection"
@@ -505,14 +492,12 @@ msgid "Black only"
 msgstr "唯讀"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-#, fuzzy
 msgid "Image"
 msgstr "圖片"
 
 #: ../libgimpbase/gimpbaseenums.c:265
-#, fuzzy
 msgid "Pattern"
-msgstr "Pattern"
+msgstr "圖樣"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Lightness"
@@ -719,34 +704,28 @@ msgid "Highlights"
 msgstr "高亮度區域"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-#, fuzzy
 msgid "Normal (Forward)"
-msgstr "往前(_F)"
+msgstr "正常(向前)"
 
 #: ../libgimpbase/gimpbaseenums.c:746
-#, fuzzy
 msgid "Corrective (Backward)"
-msgstr "倒退鍵"
+msgstr "糾正(向後)"
 
 #: ../libgimpbase/gimpbaseenums.c:776
-#, fuzzy
 msgid "Adjust"
-msgstr "調整亮度"
+msgstr "旋轉圖片後，擴大圖層尺寸"
 
 #: ../libgimpbase/gimpbaseenums.c:777
-#, fuzzy
 msgid "Clip"
-msgstr "剪輯"
+msgstr "旋轉圖片後，裁切以符合畫布邊界"
 
 #: ../libgimpbase/gimpbaseenums.c:778
-#, fuzzy
 msgid "Crop to result"
-msgstr "將結果輸出至終端機"
+msgstr "旋轉圖片後，矩形選取不透明區域"
 
 #: ../libgimpbase/gimpbaseenums.c:779
-#, fuzzy
 msgid "Crop with aspect"
-msgstr "編譯時加入了除錯資訊。"
+msgstr "保持長寬比，矩形選取不透明區域"
 
 #: ../libgimpbase/gimpbaseenums.c:909
 msgid "Internal GIMP procedure"
@@ -1042,7 +1021,6 @@ msgid "Select color profile from disk..."
 msgstr ""
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-#, fuzzy
 msgctxt "profile"
 msgid "None"
 msgstr "無"
@@ -1067,9 +1045,8 @@ msgid ""
 msgstr "類似 HTML 和 CSS 所用的 16 進位色彩表示方式"
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
-#, fuzzy
 msgid "HTML _notation:"
-msgstr "html content"
+msgstr "網頁標記(_N):"
 
 #: ../libgimpwidgets/gimphelpui.c:420
 #, fuzzy
@@ -1204,7 +1181,7 @@ msgstr "連結"
 
 #: ../libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
-msgstr "貼上成為新圖片"
+msgstr "貼上成為新影像"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
@@ -1308,11 +1285,11 @@ msgstr "色相"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
-msgstr "彩度(_S)"
+msgstr "飽和度(_S)"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
-msgstr "彩度"
+msgstr "飽和度"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
@@ -1344,7 +1321,7 @@ msgstr "圖層"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
-msgstr "圖片"
+msgstr "影像"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
@@ -1568,9 +1545,8 @@ msgid "HSV color wheel"
 msgstr "色相環的位置。"
 
 #: ../modules/color-selector-wheel.c:134
-#, fuzzy
 msgid "Wheel"
-msgstr "滾輪(_W)："
+msgstr "色環"
 
 #: ../modules/controller-linux-input.c:58
 #, fuzzy
