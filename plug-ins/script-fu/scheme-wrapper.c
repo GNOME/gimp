@@ -1221,10 +1221,9 @@ script_fu_marshal_procedure_call (scheme  *sc,
                   break;
                 }
 
-              args[i].data.d_parasite.size =
-                sc->vptr->ivalue (sc->vptr->pair_car (temp_val));
               args[i].data.d_parasite.data =
                 sc->vptr->string_value (sc->vptr->pair_car (temp_val));
+              args[i].data.d_parasite.size = strlen (args[i].data.d_parasite.data);
 
 #if DEBUG_MARSHALL
               g_printerr (", size %d\n", args[i].data.d_parasite.size);
@@ -1541,6 +1540,8 @@ script_fu_marshal_procedure_call (scheme  *sc,
                 else
                   {
                     GimpParasite *p = &values[i + 1].data.d_parasite;
+                    gchar        *data = g_strndup (p->data, p->size);
+                    gint          char_cnt = g_utf8_strlen (data, p->size);
                     pointer       temp_val;
 
                     /* don't move the mk_foo() calls outside this function call,
@@ -1552,12 +1553,13 @@ script_fu_marshal_procedure_call (scheme  *sc,
                                    sc->vptr->mk_integer (sc, p->flags),
                                    sc->vptr->cons (sc,
                                      sc->vptr->mk_counted_string (sc,
-                                                                  p->data,
-                                                                  p->size),
+                                                                  data,
+                                                                  char_cnt),
                                      sc->NIL)));
                     return_val = sc->vptr->cons (sc,
                                                  temp_val,
                                                  return_val);
+                    g_free (data);
 
 #if DEBUG_MARSHALL
                     g_printerr ("      name '%s'\n", p->name);

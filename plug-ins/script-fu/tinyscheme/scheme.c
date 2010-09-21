@@ -1072,6 +1072,7 @@ INTERFACE pointer mk_string(scheme *sc, const char *str) {
      return mk_counted_string(sc,str,g_utf8_strlen(str, -1));
 }
 
+/* str points to a NUL terminated string. */
 /* len is the length of str in characters */
 INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
@@ -1082,6 +1083,7 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      return (x);
 }
 
+/* len is the length for the empty string in characters */
 INTERFACE pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
@@ -3542,8 +3544,8 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
      case OP_STRAPPEND: { /* string-append */
        /* in 1.29 string-append was in Scheme in init.scm but was too slow */
        int len = 0;
-       pointer newstr;
        pointer car_x;
+       char *newstr;
        char *pos;
        char *end;
 
@@ -3553,10 +3555,15 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           end = g_utf8_offset_to_pointer(strvalue(car_x), (long)strlength(car_x));
           len += end - strvalue(car_x);
        }
-       newstr = mk_empty_string(sc, len, ' ');
+
+       newstr = (char *)sc->malloc(len+1);
+       if (newstr == NULL) {
+          sc->no_memory=1;
+          Error_1(sc,"string-set!: No memory to append strings:",car(sc->args));
+       }
 
        /* store the contents of the argument strings into the new string */
-       pos = strvalue(newstr);
+       pos = newstr;
        for (x = sc->args; x != sc->NIL; x = cdr(x)) {
            car_x = car(x);
            end = g_utf8_offset_to_pointer(strvalue(car_x), (long)strlength(car_x));
@@ -3565,7 +3572,11 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
            pos += len;
        }
        *pos = '\0';
-       s_return(sc, newstr);
+
+       car_x = mk_string(sc, newstr);
+       g_free(newstr);
+
+       s_return(sc, car_x);
      }
 
      case OP_SUBSTR: { /* substring */
@@ -3594,12 +3605,22 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
                index1=g_utf8_strlen(str, -1);
           }
 
+          /* store the contents of the argument strings into the new string */
           beg = g_utf8_offset_to_pointer(str, (long)index0);
           end = g_utf8_offset_to_pointer(str, (long)index1);
           len=end-beg;
-          x=mk_empty_string(sc,len,' ');
-          memcpy(strvalue(x),beg,len);
-          strvalue(x)[len] = '\0';
+
+          str = (char *)sc->malloc(len+1);
+          if (str == NULL) {
+             sc->no_memory=1;
+             Error_1(sc,"string-set!: No memory to extract substring:",car(sc->args));
+          }
+
+          memcpy(str, beg, len);
+          str[len] = '\0';
+
+          x = mk_string(sc, str);
+          g_free(str);
 
           s_return(sc,x);
      }
