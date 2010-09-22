@@ -35,6 +35,9 @@
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpcanvas.h"
+#include "display/gimpcanvashandle.h"
+#include "display/gimpcanvasline.h"
+#include "display/gimpcanvasrectangle.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -53,6 +56,7 @@ static void          gimp_draw_tool_control      (GimpTool       *tool,
                                                   GimpDisplay    *display);
 
 static void          gimp_draw_tool_draw         (GimpDrawTool   *draw_tool);
+static void          gimp_draw_tool_undraw       (GimpDrawTool   *draw_tool);
 static void          gimp_draw_tool_real_draw    (GimpDrawTool   *draw_tool);
 
 static inline void   gimp_draw_tool_shift_to_north_west
@@ -150,11 +154,13 @@ gimp_draw_tool_control (GimpTool       *tool,
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      gimp_draw_tool_pause (draw_tool);
+      if (! draw_tool->use_cairo)
+        gimp_draw_tool_pause (draw_tool);
       break;
 
     case GIMP_TOOL_ACTION_RESUME:
-      gimp_draw_tool_resume (draw_tool);
+      if (! draw_tool->use_cairo)
+        gimp_draw_tool_resume (draw_tool);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -171,9 +177,75 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0 &&
       draw_tool->display)
     {
-      GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+      if (draw_tool->use_cairo)
+        {
+          GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+          GdkWindow        *window = gtk_widget_get_window (shell->canvas);
+          GList            *list;
 
-      draw_tool->is_drawn = ! draw_tool->is_drawn;
+          if (draw_tool->items)
+            {
+              g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
+              g_list_free (draw_tool->items);
+              draw_tool->items = NULL;
+            }
+
+          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+
+          for (list = draw_tool->items; list; list = g_list_next (list))
+            {
+              GimpCanvasItem *item = list->data;
+              GdkRegion      *region;
+
+              region = gimp_canvas_item_get_extents (item, shell);
+              gdk_window_invalidate_region (window, region, TRUE);
+              gdk_region_destroy (region);
+            }
+        }
+      else
+        {
+          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+        }
+
+      draw_tool->is_drawn = TRUE;
+    }
+}
+
+static void
+gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
+{
+  if (draw_tool->paused_count == 0 &&
+      draw_tool->display)
+    {
+      if (draw_tool->use_cairo)
+        {
+          GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+          GdkWindow        *window = gtk_widget_get_window (shell->canvas);
+          GList            *list;
+
+          for (list = draw_tool->items; list; list = g_list_next (list))
+            {
+              GimpCanvasItem *item = list->data;
+              GdkRegion      *region;
+
+              region = gimp_canvas_item_get_extents (item, shell);
+              gdk_window_invalidate_region (window, region, TRUE);
+              gdk_region_destroy (region);
+            }
+
+          if (draw_tool->items)
+            {
+              g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
+              g_list_free (draw_tool->items);
+              draw_tool->items = NULL;
+            }
+        }
+      else
+        {
+          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+        }
+
+      draw_tool->is_drawn = FALSE;
     }
 }
 
@@ -202,7 +274,7 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  gimp_draw_tool_draw (draw_tool);
+  gimp_draw_tool_undraw (draw_tool);
 
   draw_tool->display = NULL;
 }
@@ -220,7 +292,7 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  gimp_draw_tool_draw (draw_tool);
+  gimp_draw_tool_undraw (draw_tool);
 
   draw_tool->paused_count++;
 }
@@ -242,6 +314,34 @@ gimp_draw_tool_is_drawn (GimpDrawTool *draw_tool)
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
 
   return draw_tool->is_drawn;
+}
+
+void
+gimp_draw_tool_draw_items (GimpDrawTool *draw_tool,
+                           cairo_t      *cr)
+{
+  GimpDisplayShell *shell;
+  GdkWindow        *window;
+  GList            *list;
+
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (cr != NULL);
+
+  if (! gimp_draw_tool_is_active (draw_tool) ||
+      ! gimp_draw_tool_is_drawn (draw_tool))
+    return;
+
+  g_printerr ("%s: drawing!\n", G_STRFUNC);
+
+  shell  = gimp_display_get_shell (draw_tool->display);
+  window = gtk_widget_get_window (shell->canvas);
+
+  for (list = draw_tool->items; list; list = g_list_next (list))
+    {
+      GimpCanvasItem *item = list->data;
+
+      gimp_canvas_item_draw (item, shell, cr);
+    }
 }
 
 /**
@@ -363,6 +463,17 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
   gdouble           tx2, ty2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_line_new (x1, y1, x2, y2);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
@@ -498,6 +609,17 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
   guint             w, h;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_rectangle_new (x, y, width, height, filled);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
@@ -724,6 +846,17 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
                             gboolean        use_offsets)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_handle_new (type, anchor, x, y, width, height);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   switch (type)
     {

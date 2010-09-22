@@ -42,6 +42,9 @@ struct _GimpDrawTool
 
   gint            paused_count; /*  count to keep track of multiple pauses  */
   gboolean        is_drawn;     /*  is the stuff we draw currently visible  */
+
+  gboolean        use_cairo;
+  GList          *items;
 };
 
 struct _GimpDrawToolClass
@@ -66,6 +69,9 @@ void       gimp_draw_tool_pause                    (GimpDrawTool     *draw_tool)
 void       gimp_draw_tool_resume                   (GimpDrawTool     *draw_tool);
 
 gboolean   gimp_draw_tool_is_drawn                 (GimpDrawTool     *draw_tool);
+
+void       gimp_draw_tool_draw_items               (GimpDrawTool     *draw_tool,
+                                                    cairo_t          *cr);
 
 gdouble    gimp_draw_tool_calc_distance            (GimpDrawTool     *draw_tool,
                                                     GimpDisplay      *display,
