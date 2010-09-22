@@ -371,6 +371,8 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
 static gboolean
 gimp_display_shell_is_double_buffered (GimpDisplayShell *shell)
 {
+  return TRUE; /* FIXME: repair this after cairo tool drawing is done */
+
   /*  always double-buffer if there are overlay children or a
    *  transform preview, or they will flicker badly. Also double
    *  buffer when we are editing paths.
