@@ -2329,6 +2329,18 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_display_shell_draw_sample_points (shell, cr);
   cairo_restore (cr);
 
+  /* draw tool items */
+  {
+    GimpTool *tool = tool_manager_get_active (shell->display->gimp);
+
+    if (GIMP_IS_DRAW_TOOL (tool))
+      {
+        cairo_save (cr);
+        gimp_draw_tool_draw_items (GIMP_DRAW_TOOL (tool), cr);
+        cairo_restore (cr);
+      }
+  }
+
   /* and the cursor (if we have a software cursor) */
   cairo_save (cr);
   gimp_display_shell_draw_cursor (shell, cr);
