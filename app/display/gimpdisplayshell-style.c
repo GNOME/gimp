@@ -326,6 +326,8 @@ gimp_display_shell_set_tool_bg_style (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
   cairo_set_line_width (cr, 3.0);
   gimp_cairo_set_source_rgba (cr, &tool_bg);
 }
@@ -337,6 +339,8 @@ gimp_display_shell_set_tool_fg_style (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
   cairo_set_line_width (cr, 1.0);
   gimp_cairo_set_source_rgba (cr, &tool_fg);
 }
