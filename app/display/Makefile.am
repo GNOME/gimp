@@ -25,6 +25,8 @@ libappdisplay_a_sources = \
 	gimpcanvasitem.h			\
 	gimpcanvasline.c			\
 	gimpcanvasline.h			\
+	gimpcanvaspolygon.c			\
+	gimpcanvaspolygon.h			\
 	gimpcanvasrectangle.c			\
 	gimpcanvasrectangle.h			\
 	gimpcursorview.c			\
