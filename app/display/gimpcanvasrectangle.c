@@ -110,12 +110,14 @@ gimp_canvas_rectangle_class_init (GimpCanvasRectangleClass *klass)
 
   g_object_class_install_property (object_class, PROP_WIDTH,
                                    g_param_spec_double ("width", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE, 0,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_HEIGHT,
                                    g_param_spec_double ("height", NULL, NULL,
-                                                        0, GIMP_MAX_IMAGE_SIZE, 0,
+                                                        -GIMP_MAX_IMAGE_SIZE,
+                                                        GIMP_MAX_IMAGE_SIZE, 0,
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FILLED,
