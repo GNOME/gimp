@@ -330,9 +330,15 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
       break;
 
     case GIMP_HANDLE_CIRCLE:
+      cairo_arc (cr, x, y, private->width / 2, 0, 2 * G_PI);
+
+      _gimp_canvas_item_stroke (item, shell, cr);
       break;
 
     case GIMP_HANDLE_FILLED_CIRCLE:
+      cairo_arc (cr, x, y, (gdouble) private->width / 2.0, 0, 2 * G_PI);
+
+      _gimp_canvas_item_fill (item, shell, cr);
       break;
 
     case GIMP_HANDLE_CROSS:
