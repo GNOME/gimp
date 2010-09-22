@@ -48,7 +48,7 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE             12
+#define HANDLE_SIZE             13
 #define POINT_GRAB_THRESHOLD_SQ SQR(HANDLE_SIZE / 2)
 #define POINT_SHOW_THRESHOLD_SQ SQR(HANDLE_SIZE * 7)
 #define N_ITEMS_PER_ALLOC       1024
@@ -267,6 +267,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   priv->supress_handles                   = FALSE;
 
   priv->last_click_time                   = NO_CLICK_TIME_AVAILABLE;
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void
