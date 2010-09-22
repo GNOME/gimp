@@ -138,6 +138,10 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
                         GimpDisplayShell *shell,
                         cairo_t          *cr)
 {
+  gimp_display_shell_set_tool_bg_style (shell, cr);
+  cairo_set_line_width (cr, 2.0);
+  cairo_stroke_preserve (cr);
+
   gimp_display_shell_set_tool_fg_style (shell, cr);
   cairo_fill (cr);
 }
