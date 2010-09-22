@@ -42,10 +42,6 @@
 #include "gimpdrawtool.h"
 
 
-#define DRAW_TIMEOUT 4
-#define USE_TIMEOUT  1
-
-
 static void          gimp_draw_tool_dispose      (GObject        *object);
 
 static gboolean      gimp_draw_tool_has_display  (GimpTool       *tool,
@@ -109,14 +105,6 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_dispose (GObject *object)
 {
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (object);
-
-  if (draw_tool->draw_timeout)
-    {
-      g_source_remove (draw_tool->draw_timeout);
-      draw_tool->draw_timeout = 0;
-    }
-
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -177,23 +165,10 @@ gimp_draw_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
-#ifdef USE_TIMEOUT
-static gboolean
-gimp_draw_tool_draw_timeout (GimpDrawTool *draw_tool)
-{
-  draw_tool->draw_timeout = 0;
-
-  gimp_draw_tool_draw (draw_tool);
-
-  return FALSE;
-}
-#endif
-
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (! draw_tool->draw_timeout    &&
-      draw_tool->paused_count == 0 &&
+  if (draw_tool->paused_count == 0 &&
       draw_tool->display)
     {
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
@@ -229,12 +204,6 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_draw (draw_tool);
 
-  if (draw_tool->draw_timeout)
-    {
-      g_source_remove (draw_tool->draw_timeout);
-      draw_tool->draw_timeout = 0;
-    }
-
   draw_tool->display = NULL;
 }
 
@@ -254,12 +223,6 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw (draw_tool);
 
   draw_tool->paused_count++;
-
-  if (draw_tool->draw_timeout)
-    {
-      g_source_remove (draw_tool->draw_timeout);
-      draw_tool->draw_timeout = 0;
-    }
 }
 
 void
@@ -270,16 +233,7 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
 
   draw_tool->paused_count--;
 
-#ifdef USE_TIMEOUT
-  if (draw_tool->paused_count == 0 && ! draw_tool->draw_timeout)
-    draw_tool->draw_timeout =
-      gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
-                                    DRAW_TIMEOUT,
-                                    (GSourceFunc) gimp_draw_tool_draw_timeout,
-                                    draw_tool, NULL);
-#else
   gimp_draw_tool_draw (draw_tool);
-#endif
 }
 
 gboolean

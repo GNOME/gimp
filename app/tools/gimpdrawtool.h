@@ -42,7 +42,6 @@ struct _GimpDrawTool
 
   gint            paused_count; /*  count to keep track of multiple pauses  */
   gboolean        is_drawn;     /*  is the stuff we draw currently visible  */
-  guint           draw_timeout; /*  draw delay timeout ID                   */
 };
 
 struct _GimpDrawToolClass
