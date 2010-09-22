@@ -67,9 +67,6 @@ void       gimp_draw_tool_resume                   (GimpDrawTool     *draw_tool)
 
 gboolean   gimp_draw_tool_is_drawn                 (GimpDrawTool     *draw_tool);
 
-void       gimp_draw_tool_set_transform            (GimpDrawTool     *draw_tool,
-                                                    GimpMatrix3      *transform);
-
 gdouble    gimp_draw_tool_calc_distance            (GimpDrawTool     *draw_tool,
                                                     GimpDisplay      *display,
                                                     gdouble           x1,
