@@ -345,6 +345,8 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_ISCISSORS);
 
   gimp_iscissors_tool_reset (iscissors);
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void
