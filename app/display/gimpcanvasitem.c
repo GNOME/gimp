@@ -36,6 +36,7 @@ typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 
 struct _GimpCanvasItemPrivate
 {
+  gint unused;  /*  gobject doesn't like empty private structs  */
 };
 
 #define GET_PRIVATE(item) \

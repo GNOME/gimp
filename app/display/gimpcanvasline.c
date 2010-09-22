@@ -76,8 +76,7 @@ static GdkRegion * gimp_canvas_line_get_extents  (GimpCanvasItem   *item,
                                                   GimpDisplayShell *shell);
 
 
-G_DEFINE_TYPE (GimpCanvasLine, gimp_canvas_line,
-               GIMP_TYPE_CANVAS_ITEM)
+G_DEFINE_TYPE (GimpCanvasLine, gimp_canvas_line, GIMP_TYPE_CANVAS_ITEM)
 
 #define parent_class gimp_canvas_line_parent_class
 
