@@ -37,6 +37,7 @@
 #include "display/gimpcanvas.h"
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasline.h"
+#include "display/gimpcanvaspolygon.h"
 #include "display/gimpcanvasrectangle.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -1360,8 +1361,19 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (points == NULL || n_points == 0)
+  if (points == NULL || n_points < 2)
     return;
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_polygon_new (points, n_points, filled);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
