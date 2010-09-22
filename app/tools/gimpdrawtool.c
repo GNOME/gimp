@@ -331,8 +331,6 @@ gimp_draw_tool_draw_items (GimpDrawTool *draw_tool,
       ! gimp_draw_tool_is_drawn (draw_tool))
     return;
 
-  g_printerr ("%s: drawing!\n", G_STRFUNC);
-
   shell  = gimp_display_get_shell (draw_tool->display);
   window = gtk_widget_get_window (shell->canvas);
 
