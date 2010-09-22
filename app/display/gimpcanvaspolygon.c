@@ -282,3 +282,30 @@ gimp_canvas_polygon_new (const GimpVector2 *points,
 
   return item;
 }
+
+GimpCanvasItem *
+gimp_canvas_polygon_new_from_coords (const GimpCoords *points,
+                                     gint              n_points,
+                                     gboolean          filled)
+{
+  GimpCanvasItem           *item;
+  GimpCanvasPolygonPrivate *private;
+  gint                      i;
+
+  item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+                       "filled", filled,
+                       NULL);
+  private = GET_PRIVATE (item);
+
+  /* puke */
+  private->points   = g_new (GimpVector2, n_points);
+  private->n_points = n_points;
+
+  for (i = 0; i < n_points; i++)
+    {
+      private->points[i].x = points[i].x;
+      private->points[i].y = points[i].y;
+    }
+
+  return item;
+}

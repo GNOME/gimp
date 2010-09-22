@@ -47,11 +47,14 @@ struct _GimpCanvasPolygonClass
 };
 
 
-GType            gimp_canvas_polygon_get_type (void) G_GNUC_CONST;
+GType            gimp_canvas_polygon_get_type        (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_polygon_new      (const GimpVector2 *points,
-                                               gint               n_points,
-                                               gboolean           filled);
+GimpCanvasItem * gimp_canvas_polygon_new             (const GimpVector2 *points,
+                                                      gint               n_points,
+                                                      gboolean           filled);
+GimpCanvasItem * gimp_canvas_polygon_new_from_coords (const GimpCoords  *points,
+                                                      gint               n_points,
+                                                      gboolean           filled);
 
 
 #endif /* __GIMP_CANVAS_POLYGON_H__ */

@@ -1410,8 +1410,19 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (n_points == 0)
+  if (points == NULL || n_points < 2)
     return;
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_polygon_new_from_coords (points, n_points, filled);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
