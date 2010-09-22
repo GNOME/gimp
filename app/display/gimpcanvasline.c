@@ -222,20 +222,25 @@ gimp_canvas_line_draw (GimpCanvasItem   *item,
   cairo_move_to (cr, x1, y1);
   cairo_line_to (cr, x2, y2);
 
-  _gimp_canvas_item_set_extents (item,
-                                 MIN (x1, x2) - 1.5,
-                                 MIN (y1, y2) - 1.5,
-                                 ABS (x2 - x1) + 3.0,
-                                 ABS (y2 - y1) + 3.0);
-
   _gimp_canvas_item_stroke (item, shell, cr);
 }
 
 static GdkRegion *
 gimp_canvas_line_get_extents (GimpCanvasItem   *item,
-                                   GimpDisplayShell *shell)
+                              GimpDisplayShell *shell)
 {
-  return GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
+  GdkRectangle rectangle;
+  gdouble      x1, y1;
+  gdouble      x2, y2;
+
+  gimp_canvas_line_transform (item, shell, &x1, &y1, &x2, &y2);
+
+  rectangle.x      = MIN (x1, x2) - 1.5;
+  rectangle.y      = MIN (y1, y2) - 1.5;
+  rectangle.width  = ABS (x2 - x1) + 3.0;
+  rectangle.height = ABS (y2 - y1) + 3.0;
+
+  return gdk_region_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

@@ -36,10 +36,6 @@ typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 
 struct _GimpCanvasItemPrivate
 {
-  gdouble extents_x;
-  gdouble extents_y;
-  gdouble extents_width;
-  gdouble extents_height;
 };
 
 #define GET_PRIVATE(item) \
@@ -89,15 +85,7 @@ static GdkRegion *
 gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-  GdkRectangle           rectangle;
-
-  rectangle.x      = floor (private->extents_x);
-  rectangle.y      = floor (private->extents_y);
-  rectangle.width  = ceil (private->extents_width);
-  rectangle.height = ceil (private->extents_height);
-
-  return gdk_region_rectangle (&rectangle);
+  return NULL;
 }
 
 
@@ -131,21 +119,6 @@ gimp_canvas_item_get_extents (GimpCanvasItem   *item,
 
 
 /*  protexted functions  */
-
-void
-_gimp_canvas_item_set_extents (GimpCanvasItem *item,
-                               gdouble         x,
-                               gdouble         y,
-                               gdouble         width,
-                               gdouble         height)
-{
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
-
-  private->extents_x      = x;
-  private->extents_y      = y;
-  private->extents_width  = width;
-  private->extents_height = height;
-}
 
 void
 _gimp_canvas_item_stroke (GimpCanvasItem   *item,

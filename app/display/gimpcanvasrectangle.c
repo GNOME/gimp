@@ -253,25 +253,38 @@ gimp_canvas_rectangle_draw (GimpCanvasItem   *item,
   cairo_rectangle (cr, x, y, w, h);
 
   if (private->filled)
-    {
-      _gimp_canvas_item_set_extents (item, x, y, w, h);
-      _gimp_canvas_item_fill (item, shell, cr);
-    }
+    _gimp_canvas_item_fill (item, shell, cr);
   else
-    {
-      _gimp_canvas_item_set_extents (item, x - 1.5, y - 1.5, w + 3.0, h + 3.0);
-      _gimp_canvas_item_stroke (item, shell, cr);
-    }
+    _gimp_canvas_item_stroke (item, shell, cr);
 }
 
 static GdkRegion *
 gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell)
 {
-  /*  TODO: for large unfilled rectangles, construct a region which
-   *  contains only the four sides
-   */
-  return GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
+  GimpCanvasRectanglePrivate *private = GET_PRIVATE (item);
+  GdkRectangle                rectangle;
+  gdouble                     x, y;
+  gdouble                     w, h;
+
+  gimp_canvas_rectangle_transform (item, shell, &x, &y, &w, &h);
+
+  if (private->filled)
+    {
+      rectangle.x      = floor (x);
+      rectangle.y      = floor (y);
+      rectangle.width  = ceil (w);
+      rectangle.height = ceil (h);
+    }
+  else
+    {
+      rectangle.x      = floor (x - 1.5);
+      rectangle.y      = floor (y - 1.5);
+      rectangle.width  = ceil (w + 3.0);
+      rectangle.height = ceil (h + 3.0);
+    }
+
+  return gdk_region_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

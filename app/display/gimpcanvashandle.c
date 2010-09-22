@@ -342,12 +342,6 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
       cairo_move_to (cr, x, y - private->height / 2);
       cairo_line_to (cr, x, y + private->height / 2);
 
-      _gimp_canvas_item_set_extents (item,
-                                     x - private->width  / 2 - 1.5,
-                                     y - private->height / 2 - 1.5,
-                                     private->width  + 3.0,
-                                     private->height + 3.0);
-
       _gimp_canvas_item_stroke (item, shell, cr);
       break;
 
@@ -360,7 +354,34 @@ static GdkRegion *
 gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
-  return GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
+  GimpCanvasHandlePrivate *private = GET_PRIVATE (item);
+  GdkRectangle             rectangle;
+  gdouble                  x, y;
+
+  gimp_canvas_handle_transform (item, shell, &x, &y);
+
+  switch (private->type)
+    {
+    case GIMP_HANDLE_SQUARE:
+      break;
+
+    case GIMP_HANDLE_FILLED_SQUARE:
+      break;
+
+    case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_FILLED_CIRCLE:
+    case GIMP_HANDLE_CROSS:
+      rectangle.x      = x - private->width  / 2 - 1.5;
+      rectangle.y      = y - private->height / 2 - 1.5;
+      rectangle.width  = private->width  + 3.0;
+      rectangle.height = private->height + 3.0;
+      break;
+
+    default:
+      break;
+    }
+
+  return gdk_region_rectangle (&rectangle);
 }
 
 GimpCanvasItem *

@@ -64,11 +64,6 @@ GdkRegion * gimp_canvas_item_get_extents  (GimpCanvasItem   *item,
 
 /*  protected  */
 
-void        _gimp_canvas_item_set_extents (GimpCanvasItem   *item,
-                                           gdouble           x,
-                                           gdouble           y,
-                                           gdouble           width,
-                                           gdouble           height);
 void        _gimp_canvas_item_stroke      (GimpCanvasItem   *item,
                                            GimpDisplayShell *shell,
                                            cairo_t          *cr);
