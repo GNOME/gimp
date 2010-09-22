@@ -146,6 +146,8 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
                                          "context/context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-gradient-select-set");
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static gboolean
@@ -379,6 +381,14 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
+  /*  Draw the line between the start and end coords  */
+  gimp_draw_tool_draw_line (draw_tool,
+                            blend_tool->start_x,
+                            blend_tool->start_y,
+                            blend_tool->end_x,
+                            blend_tool->end_y,
+                            FALSE);
+
   /*  Draw start target  */
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_CROSS,
@@ -398,14 +408,6 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                               TARGET_SIZE,
                               GTK_ANCHOR_CENTER,
                               FALSE);
-
-  /*  Draw the line between the start and end coords  */
-  gimp_draw_tool_draw_line (draw_tool,
-                            blend_tool->start_x,
-                            blend_tool->start_y,
-                            blend_tool->end_x,
-                            blend_tool->end_y,
-                            FALSE);
 }
 
 static void
