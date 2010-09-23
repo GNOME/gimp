@@ -512,6 +512,18 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_line_new (x1, y1, x2, y2);
+      gimp_canvas_item_set_highlight (item, TRUE);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
+
   shell = gimp_display_get_shell (draw_tool->display);
 
   gimp_display_shell_transform_xy_f (shell,
