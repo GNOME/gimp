@@ -381,10 +381,20 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                          BOUNDARY_HALF_WAY,
                          num_segs);
 
+  if (! options->sample_merged)
+    {
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      gint          off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      boundary_offset (bsegs, *num_segs, off_x, off_y);
+    }
+
   segs = g_new (GdkSegment, *num_segs);
 
-  gimp_display_shell_transform_segments (shell, bsegs, segs, *num_segs,
-                                         ! options->sample_merged);
+  gimp_display_shell_transform_segments (shell, bsegs, segs, *num_segs, FALSE);
   g_free (bsegs);
 
   gimp_display_shell_unset_override_cursor (shell);

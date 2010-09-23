@@ -60,5 +60,11 @@ BoundSeg * boundary_transform (const BoundSeg *segs,
                                gint           *num_segs,
                                GimpMatrix3    *matrix);
 
+/* offsets in-place */
+void       boundary_offset    (BoundSeg       *segs,
+                               gint            num_segs,
+                               gint            off_x,
+                               gint            off_y);
+
 
 #endif  /*  __BOUNDARY_H__  */
