@@ -238,6 +238,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   tr_tool->progress_text    = _("Transforming");
   tr_tool->dialog           = NULL;
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static GObject *
