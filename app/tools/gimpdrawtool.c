@@ -35,6 +35,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpcanvas.h"
+#include "display/gimpcanvasboundary.h"
 #include "display/gimpcanvasguide.h"
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasline.h"
@@ -1470,6 +1471,18 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (n_bound_segs > 0);
   g_return_if_fail (bound_segs != NULL);
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_boundary_new (bound_segs, n_bound_segs,
+                                       offset_x, offset_y);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
