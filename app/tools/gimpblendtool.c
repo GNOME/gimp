@@ -386,8 +386,7 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                             blend_tool->start_x,
                             blend_tool->start_y,
                             blend_tool->end_x,
-                            blend_tool->end_y,
-                            FALSE);
+                            blend_tool->end_y);
 
   /*  Draw start target  */
   gimp_draw_tool_draw_handle (draw_tool,
@@ -396,8 +395,7 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                               blend_tool->start_y,
                               TARGET_SIZE,
                               TARGET_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
+                              GTK_ANCHOR_CENTER);
 
   /*  Draw end target  */
   gimp_draw_tool_draw_handle (draw_tool,
@@ -406,8 +404,7 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                               blend_tool->end_y,
                               TARGET_SIZE,
                               TARGET_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
+                              GTK_ANCHOR_CENTER);
 }
 
 static void

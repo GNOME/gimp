@@ -315,26 +315,22 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x1, y1,
                                square_size, square_size,
-                               90 * 64,  90 * 64,
-                               FALSE);
+                               90 * 64,  90 * 64);
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x2 - square_size, y1,
                                square_size, square_size,
-                               0,        90 * 64,
-                               FALSE);
+                               0,        90 * 64);
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x2 - square_size, y2 - square_size,
                                square_size, square_size,
-                               270 * 64, 90 * 64,
-                               FALSE);
+                               270 * 64, 90 * 64);
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x1, y2 - square_size,
                                square_size, square_size,
-                               180 * 64, 90 * 64,
-                               FALSE);
+                               180 * 64, 90 * 64);
     }
 }
 

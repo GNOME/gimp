@@ -1545,7 +1545,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                         &coords);
   gimp_draw_tool_draw_lines (draw_tool,
                              priv->points, priv->n_points,
-                             FALSE, FALSE);
+                             FALSE);
 
   /* We always show the handle for the first point, even with button1
    * down, since releasing the button on the first point will close
@@ -1598,7 +1598,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                         point->x,
                                         point->y,
                                         HANDLE_SIZE, HANDLE_SIZE,
-                                        GTK_ANCHOR_CENTER, FALSE);
+                                        GTK_ANCHOR_CENTER);
         }
     }
 
@@ -1610,8 +1610,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                 last.x,
                                 last.y,
                                 priv->pending_point.x,
-                                priv->pending_point.y,
-                                FALSE);
+                                priv->pending_point.y);
     }
 }
 

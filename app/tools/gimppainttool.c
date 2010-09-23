@@ -708,38 +708,41 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
-      GimpPaintCore *core       = paint_tool->core;
 
       if (paint_tool->draw_line &&
           ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
         {
+          GimpPaintCore *core       = paint_tool->core;
+          GimpImage     *image      = gimp_display_get_image (draw_tool->display);
+          GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
+          gint           off_x, off_y;
+
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
           /*  Draw start target  */
           gimp_draw_tool_draw_handle (draw_tool,
                                       GIMP_HANDLE_CROSS,
-                                      core->last_coords.x,
-                                      core->last_coords.y,
+                                      core->last_coords.x + off_x,
+                                      core->last_coords.y + off_y,
                                       HANDLE_SIZE,
                                       HANDLE_SIZE,
-                                      GTK_ANCHOR_CENTER,
-                                      TRUE);
+                                      GTK_ANCHOR_CENTER);
 
           /*  Draw end target  */
           gimp_draw_tool_draw_handle (draw_tool,
                                       GIMP_HANDLE_CROSS,
-                                      core->cur_coords.x,
-                                      core->cur_coords.y,
+                                      core->cur_coords.x + off_x,
+                                      core->cur_coords.y + off_y,
                                       HANDLE_SIZE,
                                       HANDLE_SIZE,
-                                      GTK_ANCHOR_CENTER,
-                                      TRUE);
+                                      GTK_ANCHOR_CENTER);
 
           /*  Draw the line between the start and end coords  */
           gimp_draw_tool_draw_line (draw_tool,
-                                    core->last_coords.x,
-                                    core->last_coords.y,
-                                    core->cur_coords.x,
-                                    core->cur_coords.y,
-                                    TRUE);
+                                    core->last_coords.x + off_x,
+                                    core->last_coords.y + off_y,
+                                    core->cur_coords.x + off_x,
+                                    core->cur_coords.y + off_y);
         }
     }
 

@@ -1432,8 +1432,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                           cur_anchor->position.y,
                                           TARGET,
                                           TARGET,
-                                          GTK_ANCHOR_CENTER,
-                                          FALSE);
+                                          GTK_ANCHOR_CENTER);
             }
         }
 
@@ -1454,8 +1453,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                           cur_anchor->position.y,
                                           TARGET - 3,
                                           TARGET - 3,
-                                          GTK_ANCHOR_CENTER,
-                                          FALSE);
+                                          GTK_ANCHOR_CENTER);
             }
 
           g_list_free (draw_anchors);
@@ -1471,12 +1469,12 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
                   for (i = 0; i < coords->len; i += 2)
                     {
-                      gimp_draw_tool_draw_dashed_line (draw_tool,
-                                    g_array_index (coords, GimpCoords, i).x,
-                                    g_array_index (coords, GimpCoords, i).y,
-                                    g_array_index (coords, GimpCoords, i + 1).x,
-                                    g_array_index (coords, GimpCoords, i + 1).y,
-                                    FALSE);
+                      gimp_draw_tool_draw_dashed_line
+                        (draw_tool,
+                         g_array_index (coords, GimpCoords, i).x,
+                         g_array_index (coords, GimpCoords, i).y,
+                         g_array_index (coords, GimpCoords, i + 1).x,
+                         g_array_index (coords, GimpCoords, i + 1).y);
                     }
                 }
 
@@ -1495,7 +1493,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                 gimp_draw_tool_draw_strokes (draw_tool,
                                              &g_array_index (coords,
                                                              GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
+                                             coords->len, FALSE);
 
               g_array_free (coords, TRUE);
             }
@@ -1541,7 +1539,7 @@ gimp_vector_tool_vectors_visible (GimpVectors    *vectors,
                 gimp_draw_tool_draw_strokes (draw_tool,
                                              &g_array_index (coords,
                                                              GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
+                                             coords->len, FALSE);
 
               g_array_free (coords, TRUE);
             }

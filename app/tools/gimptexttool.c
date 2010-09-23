@@ -802,15 +802,18 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       /* If the text buffer has no selection, draw the text cursor */
 
       PangoRectangle cursor_rect;
+      gint           off_x, off_y;
       gboolean       overwrite;
 
       gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect);
 
+      gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
+      cursor_rect.x += off_x;
+      cursor_rect.y += off_y;
+
       overwrite = text_tool->overwrite_mode && cursor_rect.width > 0;
 
-      gimp_draw_tool_draw_text_cursor (draw_tool,
-                                       &cursor_rect, overwrite,
-                                       TRUE);
+      gimp_draw_tool_draw_text_cursor (draw_tool, &cursor_rect, overwrite);
     }
 }
 
@@ -822,6 +825,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   PangoLayout     *layout;
   gint             offset_x;
   gint             offset_y;
+  gint             off_x, off_y;
   PangoLayoutIter *iter;
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
@@ -835,6 +839,10 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
   gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
+
+  gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
+  offset_x += off_x;
+  offset_y += off_y;
 
   iter = pango_layout_get_iter (layout);
 
@@ -865,8 +873,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
           gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
                                          rect.x, rect.y,
-                                         rect.width, rect.height,
-                                         TRUE);
+                                         rect.width, rect.height);
         }
     }
   while (pango_layout_iter_next_char (iter));

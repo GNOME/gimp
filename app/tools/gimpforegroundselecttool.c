@@ -607,14 +607,14 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
               y < y1 + radius || y > y2 - radius)
             {
               gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                             x1, y1, x2 - x1, y2 - y1, FALSE);
+                                             x1, y1,
+                                             x2 - x1, y2 - y1);
             }
         }
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x - radius, y - radius,
-                               2 * radius, 2 * radius, 0, 360 * 64,
-                               FALSE);
+                               2 * radius, 2 * radius, 0, 360 * 64);
     }
   else
     {

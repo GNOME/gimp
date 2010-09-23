@@ -749,46 +749,38 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
       /*  draw the bounding box  */
       gimp_draw_tool_draw_line (draw_tool,
                                 clone_tool->tx1, clone_tool->ty1,
-                                clone_tool->tx2, clone_tool->ty2,
-                                FALSE);
+                                clone_tool->tx2, clone_tool->ty2);
       gimp_draw_tool_draw_line (draw_tool,
                                 clone_tool->tx2, clone_tool->ty2,
-                                clone_tool->tx4, clone_tool->ty4,
-                                FALSE);
+                                clone_tool->tx4, clone_tool->ty4);
       gimp_draw_tool_draw_line (draw_tool,
                                 clone_tool->tx3, clone_tool->ty3,
-                                clone_tool->tx4, clone_tool->ty4,
-                                FALSE);
+                                clone_tool->tx4, clone_tool->ty4);
       gimp_draw_tool_draw_line (draw_tool,
                                 clone_tool->tx3, clone_tool->ty3,
-                                clone_tool->tx1, clone_tool->ty1,
-                                FALSE);
+                                clone_tool->tx1, clone_tool->ty1);
 
       /*  draw the tool handles  */
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_SQUARE,
                                   clone_tool->tx1, clone_tool->ty1,
                                   HANDLE_SIZE, HANDLE_SIZE,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+                                  GTK_ANCHOR_CENTER);
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_SQUARE,
                                   clone_tool->tx2, clone_tool->ty2,
                                   HANDLE_SIZE, HANDLE_SIZE,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+                                  GTK_ANCHOR_CENTER);
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_SQUARE,
                                   clone_tool->tx3, clone_tool->ty3,
                                   HANDLE_SIZE, HANDLE_SIZE,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+                                  GTK_ANCHOR_CENTER);
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_SQUARE,
                                   clone_tool->tx4, clone_tool->ty4,
                                   HANDLE_SIZE, HANDLE_SIZE,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+                                  GTK_ANCHOR_CENTER);
     }
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
@@ -804,8 +796,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
                                   clone_tool->src_x,
                                   clone_tool->src_y,
                                   TARGET_SIZE, TARGET_SIZE,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+                                  GTK_ANCHOR_CENTER);
 
       draw_tool->display = tmp_display;
     }

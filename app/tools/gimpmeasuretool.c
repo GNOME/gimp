@@ -218,8 +218,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
                                         measure->x[i],
                                         measure->y[i],
                                         TARGET * 2, TARGET * 2,
-                                        GTK_ANCHOR_CENTER,
-                                        FALSE))
+                                        GTK_ANCHOR_CENTER))
             {
               if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
                 {
@@ -555,8 +554,7 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
                                         measure->x[i],
                                         measure->y[i],
                                         TARGET * 2, TARGET * 2,
-                                        GTK_ANCHOR_CENTER,
-                                        FALSE))
+                                        GTK_ANCHOR_CENTER))
             {
               in_handle = TRUE;
 
@@ -678,8 +676,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                       measure->y[i],
                                       TARGET,
                                       TARGET,
-                                      GTK_ANCHOR_CENTER,
-                                      FALSE);
+                                      GTK_ANCHOR_CENTER);
         }
       else
         {
@@ -689,8 +686,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                       measure->y[i],
                                       TARGET * 2,
                                       TARGET * 2,
-                                      GTK_ANCHOR_CENTER,
-                                      FALSE);
+                                      GTK_ANCHOR_CENTER);
         }
 
       if (i > 0)
@@ -699,8 +695,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                     measure->x[0],
                                     measure->y[0],
                                     measure->x[i],
-                                    measure->y[i],
-                                    FALSE);
+                                    measure->y[i]);
 
           /*  only draw the arc if the lines are long enough  */
           if (gimp_draw_tool_calc_distance (draw_tool, tool->display,
@@ -733,8 +728,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                              ARC_RADIUS * 2,
                                              ARC_RADIUS * 2,
                                              angle1, angle2,
-                                             GTK_ANCHOR_CENTER,
-                                             FALSE);
+                                             GTK_ANCHOR_CENTER);
 
           if (measure->num_points == 2)
             {
@@ -753,8 +747,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                         (measure->x[1] >= measure->x[0] ?
                                          measure->x[0] + arc_radius + target :
                                          measure->x[0] - arc_radius - target),
-                                        measure->y[0],
-                                        FALSE);
+                                        measure->y[0]);
             }
         }
     }

@@ -816,8 +816,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                           edit_select->segs_in,
                                           edit_select->num_segs_in,
                                           edit_select->cumlx + off_x,
-                                          edit_select->cumly + off_y,
-                                          FALSE);
+                                          edit_select->cumly + off_y);
           }
 
         if (edit_select->segs_out)
@@ -826,8 +825,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                           edit_select->segs_out,
                                           edit_select->num_segs_out,
                                           edit_select->cumlx + off_x,
-                                          edit_select->cumly + off_y,
-                                          FALSE);
+                                          edit_select->cumly + off_y);
           }
         else if (edit_select->edit_mode != GIMP_TRANSLATE_MODE_MASK)
           {
@@ -836,21 +834,26 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                            edit_select->cumlx + off_x,
                                            edit_select->cumly + off_y,
                                            gimp_item_get_width  (active_item),
-                                           gimp_item_get_height (active_item),
-                                           FALSE);
+                                           gimp_item_get_height (active_item));
           }
       }
       break;
 
     case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
     case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-      gimp_draw_tool_draw_rectangle (draw_tool,
-                                     FALSE,
-                                     edit_select->x1,
-                                     edit_select->y1,
-                                     edit_select->x2 - edit_select->x1,
-                                     edit_select->y2 - edit_select->y1,
-                                     TRUE);
+      {
+        gint off_x;
+        gint off_y;
+
+        gimp_item_get_offset (active_item, &off_x, &off_y);
+
+        gimp_draw_tool_draw_rectangle (draw_tool,
+                                       FALSE,
+                                       edit_select->x1 + off_x,
+                                       edit_select->y1 + off_y,
+                                       edit_select->x2 - edit_select->x1,
+                                       edit_select->y2 - edit_select->y1);
+      }
       break;
 
     case GIMP_TRANSLATE_MODE_LAYER:
@@ -900,11 +903,9 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             g_list_free (linked);
           }
 
-        gimp_draw_tool_draw_rectangle (draw_tool,
-                                       FALSE,
+        gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
                                        x1, y1,
-                                       x2 - x1, y2 - y1,
-                                       FALSE);
+                                       x2 - x1, y2 - y1);
       }
       break;
 
@@ -954,11 +955,9 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
         x2 = ceil (x2);
         y2 = ceil (y2);
 
-        gimp_draw_tool_draw_rectangle (draw_tool,
-                                       FALSE,
+        gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
                                        x1, y1,
-                                       x2 - x1, y2 - y1,
-                                       FALSE);
+                                       x2 - x1, y2 - y1);
       }
       break;
 
@@ -967,8 +966,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                     edit_select->segs_in,
                                     edit_select->num_segs_in,
                                     edit_select->cumlx,
-                                    edit_select->cumly,
-                                    FALSE);
+                                    edit_select->cumly);
       break;
     }
 
@@ -979,8 +977,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                               edit_select->center_y + edit_select->cumly,
                               CENTER_CROSS_SIZE,
                               CENTER_CROSS_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
+                              GTK_ANCHOR_CENTER);
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
