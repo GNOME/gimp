@@ -35,6 +35,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpcanvas.h"
+#include "display/gimpcanvasguide.h"
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasline.h"
 #include "display/gimpcanvaspolygon.h"
@@ -544,6 +545,17 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
   gint              x, y;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_guide_new (orientation, position);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
