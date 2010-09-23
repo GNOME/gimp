@@ -173,6 +173,8 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MOVE);
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void
