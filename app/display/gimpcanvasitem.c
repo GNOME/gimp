@@ -36,7 +36,7 @@ typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 
 struct _GimpCanvasItemPrivate
 {
-  gint unused;  /*  gobject doesn't like empty private structs  */
+  gboolean highlight;
 };
 
 #define GET_PRIVATE(item) \
@@ -118,6 +118,17 @@ gimp_canvas_item_get_extents (GimpCanvasItem   *item,
   return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, shell);
 }
 
+void
+gimp_canvas_item_set_highlight (GimpCanvasItem *item,
+                                gboolean        highlight)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private->highlight = highlight ? TRUE : FALSE;
+}
+
 
 /*  protexted functions  */
 
@@ -126,10 +137,12 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
                           GimpDisplayShell *shell,
                           cairo_t          *cr)
 {
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
   gimp_display_shell_set_tool_bg_style (shell, cr);
   cairo_stroke_preserve (cr);
 
-  gimp_display_shell_set_tool_fg_style (shell, cr);
+  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
   cairo_stroke (cr);
 }
 
@@ -138,10 +151,12 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
                         GimpDisplayShell *shell,
                         cairo_t          *cr)
 {
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
   gimp_display_shell_set_tool_bg_style (shell, cr);
   cairo_set_line_width (cr, 2.0);
   cairo_stroke_preserve (cr);
 
-  gimp_display_shell_set_tool_fg_style (shell, cr);
+  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
   cairo_fill (cr);
 }

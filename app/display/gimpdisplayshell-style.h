@@ -57,7 +57,8 @@ void   gimp_display_shell_set_vectors_fg_style    (GimpDisplayShell *shell,
 void   gimp_display_shell_set_tool_bg_style       (GimpDisplayShell *shell,
                                                    cairo_t          *cr);
 void   gimp_display_shell_set_tool_fg_style       (GimpDisplayShell *shell,
-                                                   cairo_t          *cr);
+                                                   cairo_t          *cr,
+                                                   gboolean          highlight);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_STYLE_H__ */

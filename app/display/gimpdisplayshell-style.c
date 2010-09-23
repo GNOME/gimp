@@ -71,6 +71,7 @@ static const GimpRGB vectors_active_fg   = { 1.0, 0.0, 0.0, 0.8 };
 
 static const GimpRGB tool_bg             = { 1.0, 1.0, 1.0, 0.6 };
 static const GimpRGB tool_fg             = { 0.0, 0.0, 0.0, 0.8 };
+static const GimpRGB tool_fg_highlight   = { 0.0, 1.0, 1.0, 0.8 };
 
 
 /*  public functions  */
@@ -337,7 +338,8 @@ gimp_display_shell_set_tool_bg_style (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_set_tool_fg_style (GimpDisplayShell *shell,
-                                      cairo_t          *cr)
+                                      cairo_t          *cr,
+                                      gboolean          highlight)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -346,5 +348,8 @@ gimp_display_shell_set_tool_fg_style (GimpDisplayShell *shell,
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
   cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
 
-  gimp_cairo_set_source_rgba (cr, &tool_fg);
+  if (highlight)
+    gimp_cairo_set_source_rgba (cr, &tool_fg_highlight);
+  else
+    gimp_cairo_set_source_rgba (cr, &tool_fg);
 }
