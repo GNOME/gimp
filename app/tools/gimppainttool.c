@@ -719,6 +719,13 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
+          /*  Draw the line between the start and end coords  */
+          gimp_draw_tool_draw_line (draw_tool,
+                                    core->last_coords.x + off_x,
+                                    core->last_coords.y + off_y,
+                                    core->cur_coords.x + off_x,
+                                    core->cur_coords.y + off_y);
+
           /*  Draw start target  */
           gimp_draw_tool_draw_handle (draw_tool,
                                       GIMP_HANDLE_CROSS,
@@ -736,13 +743,6 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                       HANDLE_SIZE,
                                       HANDLE_SIZE,
                                       GTK_ANCHOR_CENTER);
-
-          /*  Draw the line between the start and end coords  */
-          gimp_draw_tool_draw_line (draw_tool,
-                                    core->last_coords.x + off_x,
-                                    core->last_coords.y + off_y,
-                                    core->cur_coords.x + off_x,
-                                    core->cur_coords.y + off_y);
         }
     }
 
