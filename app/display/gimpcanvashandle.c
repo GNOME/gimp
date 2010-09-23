@@ -211,6 +211,68 @@ gimp_canvas_handle_get_property (GObject    *object,
 }
 
 static inline void
+gimp_canvas_handle_shift_to_north_west (GtkAnchorType  anchor,
+                                        gdouble        x,
+                                        gdouble        y,
+                                        gint           handle_width,
+                                        gint           handle_height,
+                                        gdouble       *shifted_x,
+                                        gdouble       *shifted_y)
+{
+  switch (anchor)
+    {
+    case GTK_ANCHOR_CENTER:
+      x -= handle_width  / 2;
+      y -= handle_height / 2;
+      break;
+
+    case GTK_ANCHOR_NORTH:
+      x -= handle_width / 2;
+      break;
+
+    case GTK_ANCHOR_NORTH_WEST:
+      /*  nothing, this is the default  */
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      x -= handle_width;
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      x -= handle_width / 2;
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      x -= handle_width;
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_WEST:
+      y -= handle_height / 2;
+      break;
+
+    case GTK_ANCHOR_EAST:
+      x -= handle_width;
+      y -= handle_height / 2;
+      break;
+
+    default:
+      break;
+    }
+
+  if (shifted_x)
+    *shifted_x = x;
+
+  if (shifted_y)
+    *shifted_y = y;
+}
+
+static inline void
 gimp_canvas_handle_shift_to_center (GtkAnchorType  anchor,
                                     gdouble        x,
                                     gdouble        y,
@@ -287,9 +349,12 @@ gimp_canvas_handle_transform (GimpCanvasItem   *item,
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
-      break;
-
     case GIMP_HANDLE_FILLED_SQUARE:
+      gimp_canvas_handle_shift_to_north_west (private->anchor,
+                                              *x, *y,
+                                              private->width,
+                                              private->height,
+                                              x, y);
       break;
 
     case GIMP_HANDLE_CIRCLE:
@@ -323,9 +388,15 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
+      cairo_rectangle (cr, x, y, private->width - 1.0, private->height - 1.0);
+
+      _gimp_canvas_item_stroke (item, shell, cr);
       break;
 
     case GIMP_HANDLE_FILLED_SQUARE:
+      cairo_rectangle (cr, x - 0.5, y - 0.5, private->width, private->height);
+
+      _gimp_canvas_item_fill (item, shell, cr);
       break;
 
     case GIMP_HANDLE_CIRCLE:
@@ -368,9 +439,11 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
   switch (private->type)
     {
     case GIMP_HANDLE_SQUARE:
-      break;
-
     case GIMP_HANDLE_FILLED_SQUARE:
+      rectangle.x      = x - 1.5;
+      rectangle.y      = y - 1.5;
+      rectangle.width  = private->width  + 3.0;
+      rectangle.height = private->height + 3.0;
       break;
 
     case GIMP_HANDLE_CIRCLE:
