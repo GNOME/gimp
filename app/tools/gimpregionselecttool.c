@@ -394,7 +394,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
 
   segs = g_new (GdkSegment, *num_segs);
 
-  gimp_display_shell_transform_segments (shell, bsegs, segs, *num_segs, FALSE);
+  gimp_display_shell_transform_segments (shell, bsegs, segs, *num_segs);
   g_free (bsegs);
 
   gimp_display_shell_unset_override_cursor (shell);

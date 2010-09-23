@@ -185,8 +185,7 @@ gimp_canvas_polygon_transform (GimpCanvasItem   *item,
                                          private->points[i].x,
                                          private->points[i].y,
                                          &points[i].x,
-                                         &points[i].y,
-                                         FALSE);
+                                         &points[i].y);
 
       points[i].x = PROJ_ROUND (points[i].x) + 0.5;
       points[i].y = PROJ_ROUND (points[i].y) + 0.5;

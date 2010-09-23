@@ -408,7 +408,7 @@ selection_transform_segs (Selection      *selection,
   gint       i;
 
   gimp_display_shell_transform_segments (selection->shell,
-                                         src_segs, dest_segs, n_segs, FALSE);
+                                         src_segs, dest_segs, n_segs);
 
   for (i = 0; i < n_segs; i++)
     {

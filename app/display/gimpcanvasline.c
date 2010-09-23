@@ -195,12 +195,10 @@ gimp_canvas_line_transform (GimpCanvasItem   *item,
 
   gimp_display_shell_transform_xy_f (shell,
                                      private->x1, private->y1,
-                                     x1, y1,
-                                     FALSE);
+                                     x1, y1);
   gimp_display_shell_transform_xy_f (shell,
                                      private->x2, private->y2,
-                                     x2, y2,
-                                     FALSE);
+                                     x2, y2);
 
   *x1 = PROJ_ROUND (*x1) + 0.5;
   *y1 = PROJ_ROUND (*y1) + 0.5;

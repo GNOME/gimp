@@ -845,8 +845,8 @@ gimp_display_paint_area (GimpDisplay *display,
   h = (y2 - y1);
 
   /*  display the area  */
-  gimp_display_shell_transform_xy_f (shell, x,     y,     &x1_f, &y1_f, FALSE);
-  gimp_display_shell_transform_xy_f (shell, x + w, y + h, &x2_f, &y2_f, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x,     y,     &x1_f, &y1_f);
+  gimp_display_shell_transform_xy_f (shell, x + w, y + h, &x2_f, &y2_f);
 
   /*  make sure to expose a superset of the transformed sub-pixel expose
    *  area, not a subset. bug #126942. --mitch

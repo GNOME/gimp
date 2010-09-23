@@ -1093,8 +1093,7 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
   gimp_display_shell_transform_xy_f (shell,
                                      overlay->image_x,
                                      overlay->image_y,
-                                     x, y,
-                                     FALSE);
+                                     x, y);
 
   gtk_widget_size_request (child, &requisition);
 
@@ -1625,8 +1624,8 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
       return FALSE;
     }
 
-  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1, FALSE);
-  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2, FALSE);
+  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1);
+  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2);
 
   /*  Make sure the extents are within bounds  */
   *x1 = CLAMP (*x1, 0, shell->disp_width);

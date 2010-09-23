@@ -158,7 +158,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
   switch (gimp_guide_get_orientation (guide))
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell, 0, position, &x, &y);
       if (y >= y1 && y < y2)
         {
           cairo_move_to (cr, x1, y + 0.5);
@@ -167,7 +167,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell, position, 0, &x, &y);
       if (x >= x1 && x < x2)
         {
           cairo_move_to (cr, x + 0.5, y1);
@@ -265,8 +265,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                 continue;
 
               gimp_display_shell_transform_xy (shell,
-                                               x, 0, &x_real, &y_real,
-                                               FALSE);
+                                               x, 0, &x_real, &y_real);
 
               if (x_real < x1 || x_real >= x2)
                 continue;
@@ -277,8 +276,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                     continue;
 
                   gimp_display_shell_transform_xy (shell,
-                                                   x, y, &x_real, &y_real,
-                                                   FALSE);
+                                                   x, y, &x_real, &y_real);
 
                   if (y_real >= y1 && y_real < y2)
                     {
@@ -296,8 +294,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                 continue;
 
               gimp_display_shell_transform_xy (shell,
-                                               x, 0, &x_real, &y_real,
-                                               FALSE);
+                                               x, 0, &x_real, &y_real);
 
               if (x_real + CROSSHAIR < x1 || x_real - CROSSHAIR >= x2)
                 continue;
@@ -308,8 +305,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                     continue;
 
                   gimp_display_shell_transform_xy (shell,
-                                                   x, y, &x_real, &y_real,
-                                                   FALSE);
+                                                   x, y, &x_real, &y_real);
 
                   if (y_real + CROSSHAIR < y1 || y_real - CROSSHAIR >= y2)
                     continue;
@@ -345,11 +341,9 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
         case GIMP_GRID_DOUBLE_DASH:
         case GIMP_GRID_SOLID:
           gimp_display_shell_transform_xy (shell,
-                                           0, 0, &x0, &y0,
-                                           FALSE);
+                                           0, 0, &x0, &y0);
           gimp_display_shell_transform_xy (shell,
-                                           width, height, &x3, &y3,
-                                           FALSE);
+                                           width, height, &x3, &y3);
 
           for (x = x_offset; x < width; x += grid->xspacing)
             {
@@ -357,8 +351,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                 continue;
 
               gimp_display_shell_transform_xy (shell,
-                                               x, 0, &x_real, &y_real,
-                                               FALSE);
+                                               x, 0, &x_real, &y_real);
 
               if (x_real >= x1 && x_real < x2)
                 {
@@ -373,8 +366,7 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell,
                 continue;
 
               gimp_display_shell_transform_xy (shell,
-                                               0, y, &x_real, &y_real,
-                                               FALSE);
+                                               0, y, &x_real, &y_real);
 
               if (y_real >= y1 && y_real < y2)
                 {
@@ -414,7 +406,7 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 
   gimp_display_shell_transform_xy (shell,
                                    points[0].x, points[0].y,
-                                   &x, &y, FALSE);
+                                   &x, &y);
 
   cairo_move_to (cr, x, y);
 
@@ -422,7 +414,7 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
     {
       gimp_display_shell_transform_xy (shell,
                                        points[i].x, points[i].y,
-                                       &x, &y, FALSE);
+                                       &x, &y);
 
       cairo_line_to (cr, x, y);
     }
@@ -465,7 +457,7 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
   gimp_display_shell_transform_xy_f (shell,
                                      sample_point->x + 0.5,
                                      sample_point->y + 0.5,
-                                     &x, &y, FALSE);
+                                     &x, &y);
 
   sx1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
   sx2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);

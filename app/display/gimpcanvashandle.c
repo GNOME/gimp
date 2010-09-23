@@ -282,8 +282,7 @@ gimp_canvas_handle_transform (GimpCanvasItem   *item,
 
   gimp_display_shell_transform_xy_f (shell,
                                      private->x, private->y,
-                                     x, y,
-                                     FALSE);
+                                     x, y);
 
   switch (private->type)
     {

@@ -1409,13 +1409,13 @@ gimp_transform_tool_force_expose_preview (GimpTransformTool *tr_tool)
   shell = gimp_display_get_shell (GIMP_DRAW_TOOL (tr_tool)->display);
 
   gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
-                                     dx + 0, dy + 0, FALSE);
+                                     dx + 0, dy + 0);
   gimp_display_shell_transform_xy_f (shell, tr_tool->tx2, tr_tool->ty2,
-                                     dx + 1, dy + 1, FALSE);
+                                     dx + 1, dy + 1);
   gimp_display_shell_transform_xy_f (shell, tr_tool->tx3, tr_tool->ty3,
-                                     dx + 2, dy + 2, FALSE);
+                                     dx + 2, dy + 2);
   gimp_display_shell_transform_xy_f (shell, tr_tool->tx4, tr_tool->ty4,
-                                     dx + 3, dy + 3, FALSE);
+                                     dx + 3, dy + 3);
 
   /* find bounding box around preview */
   area_x = area_w = (gint) dx[0];
@@ -1654,20 +1654,16 @@ gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
 
   gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx1, tr_tool->ty1,
-                                   &dx1, &dy1,
-                                   FALSE);
+                                   &dx1, &dy1);
   gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx2, tr_tool->ty2,
-                                   &dx2, &dy2,
-                                   FALSE);
+                                   &dx2, &dy2);
   gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx3, tr_tool->ty3,
-                                   &dx3, &dy3,
-                                   FALSE);
+                                   &dx3, &dy3);
   gimp_display_shell_transform_xy (gimp_display_get_shell (display),
                                    tr_tool->tx4, tr_tool->ty4,
-                                   &dx4, &dy4,
-                                   FALSE);
+                                   &dx4, &dy4);
 
   x1 = MIN (MIN (dx1, dx2), MIN (dx3, dx4));
   y1 = MIN (MIN (dy1, dy2), MIN (dy3, dy4));

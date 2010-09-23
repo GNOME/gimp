@@ -398,8 +398,7 @@ gimp_color_tool_motion (GimpTool         *tool,
 
       gimp_display_shell_transform_xy (shell,
                                        coords->x, coords->y,
-                                       &tx, &ty,
-                                       FALSE);
+                                       &tx, &ty);
 
       if (tx < 0 || tx > shell->disp_width ||
           ty < 0 || ty > shell->disp_height)

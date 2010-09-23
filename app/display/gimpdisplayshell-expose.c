@@ -83,8 +83,7 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
 
   gimp_display_shell_transform_xy (shell,
                                    position, position,
-                                   &x, &y,
-                                   FALSE);
+                                   &x, &y);
 
   switch (gimp_guide_get_orientation (guide))
     {
@@ -117,8 +116,7 @@ gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
   gimp_display_shell_transform_xy_f (shell,
                                      sample_point->x + 0.5,
                                      sample_point->y + 0.5,
-                                     &x, &y,
-                                     FALSE);
+                                     &x, &y);
 
   x1 = MAX (0, floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE));
   y1 = MAX (0, floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE));
@@ -141,8 +139,8 @@ gimp_display_shell_expose_vectors (GimpDisplayShell *shell,
 
   if (gimp_vectors_bounds (vectors, &x1, &y1, &x2, &y2))
     {
-      gimp_display_shell_transform_xy_f (shell, x1, y1, &x1, &y1, FALSE);
-      gimp_display_shell_transform_xy_f (shell, x2, y2, &x2, &y2, FALSE);
+      gimp_display_shell_transform_xy_f (shell, x1, y1, &x1, &y1);
+      gimp_display_shell_transform_xy_f (shell, x2, y2, &x2, &y2);
 
       gimp_display_shell_expose_region (shell, x1, y1, x2, y2, 2);
     }

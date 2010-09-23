@@ -250,8 +250,7 @@ gimp_display_shell_preview_transform (GimpDisplayShell *shell,
                                                                 \
     gimp_display_shell_transform_xy_f (shell,                   \
                                        tx1, ty1,                \
-                                       &tx2, &ty2,              \
-                                       FALSE);                  \
+                                       &tx2, &ty2);             \
     x[sub][index] = (gint) tx2;                                 \
     y[sub][index] = (gint) ty2;                                 \
                                                                 \

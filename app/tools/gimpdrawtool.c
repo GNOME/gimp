@@ -402,8 +402,8 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
 
   shell = gimp_display_get_shell (display);
 
-  gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1, FALSE);
-  gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1);
+  gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2);
 
   return SQR (tx2 - tx1) + SQR (ty2 - ty1);
 }
@@ -476,12 +476,10 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      x1, y1,
-                                     &tx1, &ty1,
-                                     FALSE);
+                                     &tx1, &ty1);
   gimp_display_shell_transform_xy_f (shell,
                                      x2, y2,
-                                     &tx2, &ty2,
-                                     FALSE);
+                                     &tx2, &ty2);
 
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
                          PROJ_ROUND (tx1), PROJ_ROUND (ty1),
@@ -517,12 +515,10 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      x1, y1,
-                                     &tx1, &ty1,
-                                     FALSE);
+                                     &tx1, &ty1);
   gimp_display_shell_transform_xy_f (shell,
                                      x2, y2,
-                                     &tx2, &ty2,
-                                     FALSE);
+                                     &tx2, &ty2);
 
   gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
                          GIMP_CANVAS_STYLE_XOR_DASHED,
@@ -559,12 +555,12 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
   switch (orientation)
     {
     case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_transform_xy (shell, 0, position, &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell, 0, position, &x, &y);
       y1 = y2 = y;
       break;
 
     case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_transform_xy (shell, position, 0, &x, &y, FALSE);
+      gimp_display_shell_transform_xy (shell, position, 0, &x, &y);
       x1 = x2 = x;
       break;
 
@@ -618,12 +614,10 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      MIN (x, x + width), MIN (y, y + height),
-                                     &tx1, &ty1,
-                                     FALSE);
+                                     &tx1, &ty1);
   gimp_display_shell_transform_xy_f (shell,
                                      MAX (x, x + width), MAX (y, y + height),
-                                     &tx2, &ty2,
-                                     FALSE);
+                                     &tx2, &ty2);
 
   tx1 = CLAMP (tx1, -1, shell->disp_width  + 1);
   ty1 = CLAMP (ty1, -1, shell->disp_height + 1);
@@ -672,12 +666,10 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      MIN (x, x + width), MIN (y, y + height),
-                                     &tx1, &ty1,
-                                     FALSE);
+                                     &tx1, &ty1);
   gimp_display_shell_transform_xy_f (shell,
                                      MAX (x, x + width), MAX (y, y + height),
-                                     &tx2, &ty2,
-                                     FALSE);
+                                     &tx2, &ty2);
 
   tx2 -= tx1;
   ty2 -= ty1;
@@ -729,8 +721,7 @@ gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
-                                     &tx, &ty,
-                                     FALSE);
+                                     &tx, &ty);
 
   gimp_draw_tool_shift_to_north_west (tx, ty,
                                       width, height,
@@ -770,8 +761,7 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
-                                     &tx, &ty,
-                                     FALSE);
+                                     &tx, &ty);
 
   gimp_draw_tool_shift_to_north_west (tx, ty,
                                       width, height,
@@ -804,8 +794,7 @@ gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
-                                     &tx, &ty,
-                                     FALSE);
+                                     &tx, &ty);
 
   gimp_draw_tool_shift_to_center (tx, ty,
                                   width, height,
@@ -942,8 +931,8 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
   shell  = gimp_display_get_shell (draw_tool->display);
   canvas = GIMP_CANVAS (shell->canvas);
 
-  gimp_display_shell_transform_xy (shell, x1, y1, &tx1, &ty1, FALSE);
-  gimp_display_shell_transform_xy (shell, x2, y2, &tx2, &ty2, FALSE);
+  gimp_display_shell_transform_xy (shell, x1, y1, &tx1, &ty1);
+  gimp_display_shell_transform_xy (shell, x2, y2, &tx2, &ty2);
 
   tw = tx2 - tx1;
   th = ty2 - ty1;
@@ -1361,7 +1350,7 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
   coords = g_new (GdkPoint, n_points);
 
   gimp_display_shell_transform_points (shell,
-                                       points, coords, n_points, FALSE);
+                                       points, coords, n_points);
 
   if (filled)
     {
@@ -1409,7 +1398,7 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
   coords = g_new (GdkPoint, n_points);
 
   gimp_display_shell_transform_coords (shell,
-                                       points, coords, n_points, FALSE);
+                                       points, coords, n_points);
 
   if (filled)
     {
@@ -1489,8 +1478,7 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
           gimp_display_shell_transform_xy_f (shell,
                                              bound_segs[i].x1 + offset_x,
                                              bound_segs[i].y1 + offset_y,
-                                             &x, &y,
-                                             FALSE);
+                                             &x, &y);
 
           gdk_points[0].x = PROJ_ROUND (CLAMP (x, -1, xmax));
           gdk_points[0].y = PROJ_ROUND (CLAMP (y, -1, ymax));
@@ -1521,8 +1509,7 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
       gimp_display_shell_transform_xy_f (shell,
                                          bound_segs[i].x2 + offset_x,
                                          bound_segs[i].y2 + offset_y,
-                                         &x, &y,
-                                         FALSE);
+                                         &x, &y);
 
       gdk_points[n_gdk_points].x = PROJ_ROUND (CLAMP (x, -1, xmax));
       gdk_points[n_gdk_points].y = PROJ_ROUND (CLAMP (y, -1, ymax));
@@ -1568,8 +1555,7 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      cursor->x, cursor->y,
-                                     &tx1, &ty1,
-                                     FALSE);
+                                     &tx1, &ty1);
 
   if (overwrite)
     {
@@ -1579,8 +1565,7 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
       gimp_display_shell_transform_xy_f (shell,
                                          cursor->x + cursor->width,
                                          cursor->y + cursor->height,
-                                         &tx2, &ty2,
-                                         FALSE);
+                                         &tx2, &ty2);
 
       x      = PROJ_ROUND (tx1);
       y      = PROJ_ROUND (ty1);
@@ -1601,8 +1586,7 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
       gimp_display_shell_transform_xy_f (shell,
                                          cursor->x,
                                          cursor->y + cursor->height,
-                                         &tx2, &ty2,
-                                         FALSE);
+                                         &tx2, &ty2);
 
       /*  vertical line  */
       gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
@@ -1659,12 +1643,10 @@ gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
 
   gimp_display_shell_transform_xy_f (shell,
                                      x, y,
-                                     &tx, &ty,
-                                     FALSE);
+                                     &tx, &ty);
   gimp_display_shell_transform_xy_f (shell,
                                      handle_x, handle_y,
-                                     &handle_tx, &handle_ty,
-                                     FALSE);
+                                     &handle_tx, &handle_ty);
 
   switch (type)
     {

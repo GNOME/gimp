@@ -212,15 +212,13 @@ gimp_canvas_rectangle_transform (GimpCanvasItem   *item,
                                           private->x + private->width),
                                      MIN (private->y,
                                           private->y + private->height),
-                                     x, y,
-                                     FALSE);
+                                     x, y);
   gimp_display_shell_transform_xy_f (shell,
                                      MAX (private->x,
                                           private->x + private->width),
                                      MAX (private->y,
                                           private->y + private->height),
-                                     w, h,
-                                     FALSE);
+                                     w, h);
 
   *w -= *x;
   *h -= *y;

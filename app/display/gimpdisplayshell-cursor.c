@@ -188,7 +188,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
           /*  ...but use the unsnapped display_coords for the info window  */
           if (display_x >= 0 && display_y >= 0)
             gimp_display_shell_untransform_xy (shell, display_x, display_y,
-                                               &t_x, &t_y, FALSE, FALSE);
+                                               &t_x, &t_y, FALSE);
 
           gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
                                           image, shell->unit,

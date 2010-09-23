@@ -1102,8 +1102,7 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
 
   gimp_display_shell_transform_xy (shell,
                                    0.0, 0.0,
-                                   &image_origin_shell_x, &image_origin_shell_y,
-                                   FALSE /*use_offsets*/);
+                                   &image_origin_shell_x, &image_origin_shell_y);
   gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
                                     GTK_WIDGET (window),
                                     image_origin_shell_x, image_origin_shell_y,
