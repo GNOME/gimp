@@ -158,6 +158,8 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
   edit_selection_tool->first_move = TRUE;
 
   edit_selection_tool->constrain  = FALSE;
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void
