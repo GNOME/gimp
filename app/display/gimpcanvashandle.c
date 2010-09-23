@@ -41,7 +41,9 @@ enum
   PROP_X,
   PROP_Y,
   PROP_WIDTH,
-  PROP_HEIGHT
+  PROP_HEIGHT,
+  PROP_START_ANGLE,
+  PROP_SLICE_ANGLE
 };
 
 
@@ -55,6 +57,8 @@ struct _GimpCanvasHandlePrivate
   gdouble         y;
   gint            width;
   gint            height;
+  gdouble         start_angle;
+  gdouble         slice_angle;;
 };
 
 #define GET_PRIVATE(handle) \
@@ -132,12 +136,26 @@ gimp_canvas_handle_class_init (GimpCanvasHandleClass *klass)
                                                      3, 1001, 7,
                                                      GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_START_ANGLE,
+                                   g_param_spec_double ("start-angle", NULL, NULL,
+                                                        -1000, 1000, 0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SLICE_ANGLE,
+                                   g_param_spec_double ("slice-angle", NULL, NULL,
+                                                        -1000, 1000, 2 * G_PI,
+                                                        GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (klass, sizeof (GimpCanvasHandlePrivate));
 }
 
 static void
 gimp_canvas_handle_init (GimpCanvasHandle *handle)
 {
+  GimpCanvasHandlePrivate *private = GET_PRIVATE (handle);
+
+  private->start_angle = 0.0;
+  private->slice_angle = 2.0 * G_PI;
 }
 
 static void
@@ -167,6 +185,12 @@ gimp_canvas_handle_set_property (GObject      *object,
       break;
     case PROP_HEIGHT:
       private->height = g_value_get_int (value);
+      break;
+    case PROP_START_ANGLE:
+      private->start_angle = g_value_get_double (value);
+      break;
+    case PROP_SLICE_ANGLE:
+      private->slice_angle = g_value_get_double (value);
       break;
 
     default:
@@ -202,6 +226,12 @@ gimp_canvas_handle_get_property (GObject    *object,
       break;
     case PROP_HEIGHT:
       g_value_set_int (value, private->height);
+      break;
+    case PROP_START_ANGLE:
+      g_value_set_double (value, private->start_angle);
+      break;
+    case PROP_SLICE_ANGLE:
+      g_value_set_double (value, private->slice_angle);
       break;
 
     default:
@@ -400,13 +430,37 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
       break;
 
     case GIMP_HANDLE_CIRCLE:
-      cairo_arc (cr, x, y, private->width / 2, 0, 2 * G_PI);
+      if (private->slice_angle >= 0)
+        {
+          cairo_arc_negative (cr, x, y, private->width / 2,
+                              - private->start_angle,
+                              - private->start_angle - private->slice_angle);
+        }
+      else
+        {
+          cairo_arc (cr, x, y, private->width / 2,
+                     - private->start_angle,
+                     - private->start_angle - private->slice_angle);
+        }
 
       _gimp_canvas_item_stroke (item, shell, cr);
       break;
 
     case GIMP_HANDLE_FILLED_CIRCLE:
-      cairo_arc (cr, x, y, (gdouble) private->width / 2.0, 0, 2 * G_PI);
+      cairo_move_to (cr, x, y);
+
+      if (private->slice_angle >= 0)
+        {
+          cairo_arc_negative (cr, x, y, (gdouble) private->width / 2.0,
+                              - private->start_angle,
+                              - private->start_angle - private->slice_angle);
+        }
+      else
+        {
+          cairo_arc (cr, x, y, (gdouble) private->width / 2.0,
+                     - private->start_angle,
+                     - private->start_angle - private->slice_angle);
+        }
 
       _gimp_canvas_item_fill (item, shell, cr);
       break;
@@ -478,4 +532,17 @@ gimp_canvas_handle_new (GimpHandleType  type,
                        "width",  width,
                        "height", height,
                        NULL);
+}
+
+void
+gimp_canvas_handle_set_angles (GimpCanvasHandle *handle,
+                               gdouble           start_angle,
+                               gdouble           slice_angle)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_HANDLE (handle));
+
+  g_object_set (handle,
+                "start-angle", start_angle,
+                "slice-angle", slice_angle,
+                NULL);
 }
