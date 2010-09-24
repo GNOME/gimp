@@ -241,7 +241,9 @@ static void
 gimp_canvas_corner_transform (GimpCanvasItem   *item,
                               GimpDisplayShell *shell,
                               gdouble          *x,
-                              gdouble          *y)
+                              gdouble          *y,
+                              gdouble          *w,
+                              gdouble          *h)
 {
   GimpCanvasCornerPrivate *private = GET_PRIVATE (item);
   gdouble                  rx, ry;
@@ -272,6 +274,9 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
 
   top_and_bottom_handle_x_offset = (rw - private->corner_width)  / 2;
   left_and_right_handle_y_offset = (rh - private->corner_height) / 2;
+
+  *w = private->corner_width;
+  *h = private->corner_height;
 
   switch (private->anchor)
     {
@@ -335,6 +340,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         {
           *x = rx;
           *y = ry - private->corner_height;
+          *w = rw;
         }
       else
         {
@@ -348,6 +354,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         {
           *x = rx;
           *y = ry + rh;
+          *w = rw;
         }
       else
         {
@@ -361,6 +368,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         {
           *x = rx - private->corner_width;
           *y = ry;
+          *h = rh;
         }
       else
         {
@@ -374,6 +382,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         {
           *x = rx + rw;
           *y = ry;
+          *h = rh;
         }
       else
         {
@@ -389,12 +398,12 @@ gimp_canvas_corner_draw (GimpCanvasItem   *item,
                          GimpDisplayShell *shell,
                          cairo_t          *cr)
 {
-  GimpCanvasCornerPrivate *private = GET_PRIVATE (item);
-  gdouble                  x, y;
+  gdouble x, y;
+  gdouble w, h;
 
-  gimp_canvas_corner_transform (item, shell, &x, &y);
+  gimp_canvas_corner_transform (item, shell, &x, &y, &w, &h);
 
-  cairo_rectangle (cr, x, y, private->corner_width, private->corner_height);
+  cairo_rectangle (cr, x, y, w, h);
 
   _gimp_canvas_item_stroke (item, shell, cr);
 }
@@ -403,16 +412,16 @@ static GdkRegion *
 gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
-  GimpCanvasCornerPrivate *private = GET_PRIVATE (item);
-  GdkRectangle             rectangle;
-  gdouble                  x, y;
+  GdkRectangle rectangle;
+  gdouble      x, y;
+  gdouble      w, h;
 
-  gimp_canvas_corner_transform (item, shell, &x, &y);
+  gimp_canvas_corner_transform (item, shell, &x, &y, &w, &h);
 
   rectangle.x      = floor (x - 1.5);
   rectangle.y      = floor (y - 1.5);
-  rectangle.width  = ceil (private->corner_width  + 3.0);
-  rectangle.height = ceil (private->corner_height + 3.0);
+  rectangle.width  = ceil (w + 3.0);
+  rectangle.height = ceil (h + 3.0);
 
   return gdk_region_rectangle (&rectangle);
 }
