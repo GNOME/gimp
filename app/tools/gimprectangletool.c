@@ -65,7 +65,7 @@ enum
 #define MIN_HANDLE_SIZE         15
 #define NARROW_MODE_HANDLE_SIZE 15
 #define NARROW_MODE_THRESHOLD   45
-#define CENTER_CROSS_SIZE       6
+#define CENTER_CROSS_SIZE       7
 
 
 #define SQRT5   2.236067977
