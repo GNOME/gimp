@@ -238,6 +238,8 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_sel_tool)
 
   priv->press_x = 0.0;
   priv->press_y = 0.0;
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static GObject *
@@ -292,8 +294,6 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
   rect_sel_tool = GIMP_RECTANGLE_SELECT_TOOL (draw_tool);
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
-  gimp_rectangle_tool_draw (draw_tool);
-
   if (priv->round_corners)
     {
       gint    x1, y1, x2, y2;
@@ -332,6 +332,8 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
                                square_size, square_size,
                                180 * 64, 90 * 64);
     }
+
+  gimp_rectangle_tool_draw (draw_tool);
 }
 
 static gboolean
