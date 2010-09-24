@@ -37,6 +37,8 @@ libappdisplay_a_sources = \
 	gimpcanvaspolygon.h			\
 	gimpcanvasrectangle.c			\
 	gimpcanvasrectangle.h			\
+	gimpcanvastextcursor.c			\
+	gimpcanvastextcursor.h			\
 	gimpcursorview.c			\
 	gimpcursorview.h			\
 	gimpdisplay.c				\
