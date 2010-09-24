@@ -272,6 +272,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                               GIMP_TOOL_CURSOR_TEXT);
   gimp_tool_control_set_action_object_1      (tool->control,
                                               "context/context-font-select-set");
+
+  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static GObject *
