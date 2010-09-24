@@ -35,6 +35,7 @@
 #include "vectors/gimpvectors.h"
 
 #include "display/gimpcanvas.h"
+#include "display/gimpcanvasarc.h"
 #include "display/gimpcanvasboundary.h"
 #include "display/gimpcanvascorner.h"
 #include "display/gimpcanvasguide.h"
@@ -629,6 +630,26 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
   guint             w, h;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+      gdouble         a1, a2;
+
+      a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
+      a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
+
+      item = gimp_canvas_arc_new (x + width  / 2.0,
+                                  y + height / 2.0,
+                                  width  / 2.0,
+                                  height / 2.0,
+                                  a1, a2,
+                                  FALSE);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell = gimp_display_get_shell (draw_tool->display);
 
