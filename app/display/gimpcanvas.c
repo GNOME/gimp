@@ -257,7 +257,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   switch (style)
     {
     case GIMP_CANVAS_STYLE_XOR_DOTTED:
-    case GIMP_CANVAS_STYLE_XOR_DASHED:
       mask |= GDK_GC_LINE_STYLE;
       values.line_style = GDK_LINE_ON_OFF_DASH;
       /*  fallthrough  */
@@ -293,7 +292,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       return gc;
 
     case GIMP_CANVAS_STYLE_XOR_DOTTED:
-    case GIMP_CANVAS_STYLE_XOR_DASHED:
     case GIMP_CANVAS_STYLE_XOR:
       break;
     }
@@ -454,32 +452,6 @@ gimp_canvas_draw_arc (GimpCanvas      *canvas,
   gdk_draw_arc (gtk_widget_get_window (GTK_WIDGET (canvas)),
                 canvas->gc[style],
                 filled, x, y, width, height, angle1, angle2);
-}
-
-/**
- * gimp_canvas_draw_polygon:
- * @canvas:     a #GimpCanvas widget
- * @style:      one of the enumerated #GimpCanvasStyle's.
- * @filled:     if %TRUE, fill the polygon.
- * @points:     a #GdkPoint array.
- * @num_points: the number of points in the array.
- *
- * Draws a polygon connecting the specified points, in the specified
- * style.
- **/
-void
-gimp_canvas_draw_polygon (GimpCanvas      *canvas,
-                          GimpCanvasStyle  style,
-                          gboolean         filled,
-                          GdkPoint        *points,
-                          gint             num_points)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_polygon (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                    canvas->gc[style],
-                    filled, points, num_points);
 }
 
 /**

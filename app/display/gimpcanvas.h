@@ -25,7 +25,6 @@
 typedef enum
 {
   GIMP_CANVAS_STYLE_XOR,
-  GIMP_CANVAS_STYLE_XOR_DASHED,
   GIMP_CANVAS_STYLE_XOR_DOTTED,
   GIMP_CANVAS_NUM_STYLES
 } GimpCanvasStyle;
@@ -103,11 +102,6 @@ void         gimp_canvas_draw_arc          (GimpCanvas         *canvas,
                                             gint                height,
                                             gint                angle1,
                                             gint                angle2);
-void         gimp_canvas_draw_polygon      (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gboolean            filled,
-                                            GdkPoint           *points,
-                                            gint                num_points);
 void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             GdkSegment         *segments,

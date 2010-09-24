@@ -507,37 +507,14 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
                                  gdouble       x2,
                                  gdouble       y2)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_line_new (x1, y1, x2, y2);
+  gimp_canvas_item_set_highlight (item, TRUE);
 
-      item = gimp_canvas_line_new (x1, y1, x2, y2);
-      gimp_canvas_item_set_highlight (item, TRUE);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     x1, y1,
-                                     &tx1, &ty1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     x2, y2,
-                                     &tx2, &ty2);
-
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                         GIMP_CANVAS_STYLE_XOR_DASHED,
-                         PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                         PROJ_ROUND (tx2), PROJ_ROUND (ty2));
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 /**
@@ -553,48 +530,13 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
                                 GimpOrientationType  orientation,
                                 gint                 position)
 {
-  GimpDisplayShell *shell;
-  gint              x1, y1, x2, y2;
-  gint              x, y;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_guide_new (orientation, position);
 
-      item = gimp_canvas_guide_new (orientation, position);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  x1 = 0;
-  y1 = 0;
-
-  gdk_drawable_get_size (gtk_widget_get_window (shell->canvas), &x2, &y2);
-
-  switch (orientation)
-    {
-    case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_transform_xy (shell, 0, position, &x, &y);
-      y1 = y2 = y;
-      break;
-
-    case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_transform_xy (shell, position, 0, &x, &y);
-      x1 = x2 = x;
-      break;
-
-    case GIMP_ORIENTATION_UNKNOWN:
-      return;
-    }
-
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         x1, y1, x2, y2);
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 /**
@@ -1371,46 +1313,16 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
                            gint               n_points,
                            gboolean           filled)
 {
-  GimpDisplayShell *shell;
-  GdkPoint         *coords;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   if (points == NULL || n_points < 2)
     return;
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_polygon_new (points, n_points, filled);
 
-      item = gimp_canvas_polygon_new (points, n_points, filled);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  coords = g_new (GdkPoint, n_points);
-
-  gimp_display_shell_transform_points (shell,
-                                       points, coords, n_points);
-
-  if (filled)
-    {
-      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
-                                GIMP_CANVAS_STYLE_XOR,
-                                TRUE, coords, n_points);
-    }
-  else
-    {
-      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                              GIMP_CANVAS_STYLE_XOR,
-                              coords, n_points);
-    }
-
-  g_free (coords);
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 void
@@ -1419,46 +1331,16 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
                              gint              n_points,
                              gboolean          filled)
 {
-  GimpDisplayShell *shell;
-  GdkPoint         *coords;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
   if (points == NULL || n_points < 2)
     return;
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_polygon_new_from_coords (points, n_points, filled);
 
-      item = gimp_canvas_polygon_new_from_coords (points, n_points, filled);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  coords = g_new (GdkPoint, n_points);
-
-  gimp_display_shell_transform_coords (shell,
-                                       points, coords, n_points);
-
-  if (filled)
-    {
-      gimp_canvas_draw_polygon (GIMP_CANVAS (shell->canvas),
-                                GIMP_CANVAS_STYLE_XOR,
-                                TRUE, coords, n_points);
-    }
-  else
-    {
-      gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                              GIMP_CANVAS_STYLE_XOR,
-                              coords, n_points);
-    }
-
-  g_free (coords);
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 /**
