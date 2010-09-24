@@ -134,12 +134,12 @@ gimp_canvas_corner_class_init (GimpCanvasCornerClass *klass)
 
   g_object_class_install_property (object_class, PROP_CORNER_WIDTH,
                                    g_param_spec_int ("corner-width", NULL, NULL,
-                                                     3, 1001, 7,
+                                                     3, GIMP_MAX_IMAGE_SIZE, 3,
                                                      GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CORNER_HEIGHT,
                                    g_param_spec_int ("corner-height", NULL, NULL,
-                                                     3, 1001, 7,
+                                                     3, GIMP_MAX_IMAGE_SIZE, 3,
                                                      GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_OUTSIDE,
