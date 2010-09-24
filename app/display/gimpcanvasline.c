@@ -232,10 +232,20 @@ gimp_canvas_line_get_extents (GimpCanvasItem   *item,
 
   gimp_canvas_line_transform (item, shell, &x1, &y1, &x2, &y2);
 
-  rectangle.x      = MIN (x1, x2) - 1.5;
-  rectangle.y      = MIN (y1, y2) - 1.5;
-  rectangle.width  = ABS (x2 - x1) + 3.0;
-  rectangle.height = ABS (y2 - y1) + 3.0;
+  if (x1 == x2 || y1 == y2)
+    {
+      rectangle.x      = MIN (x1, x2) - 1.5;
+      rectangle.y      = MIN (y1, y2) - 1.5;
+      rectangle.width  = ABS (x2 - x1) + 3.0;
+      rectangle.height = ABS (y2 - y1) + 3.0;
+    }
+  else
+    {
+      rectangle.x      = floor (MIN (x1, x2) - 2.5);
+      rectangle.y      = floor (MIN (y1, y2) - 2.5);
+      rectangle.width  = ceil (ABS (x2 - x1) + 5.0);
+      rectangle.height = ceil (ABS (y2 - y1) + 5.0);
+    }
 
   return gdk_region_rectangle (&rectangle);
 }
