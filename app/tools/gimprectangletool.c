@@ -1734,6 +1734,8 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
   if (private->function == GIMP_RECTANGLE_TOOL_INACTIVE)
     return;
 
+  gimp_rectangle_tool_draw_guides (draw_tool);
+
   gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
                                  pub_x1,
                                  pub_y1,
@@ -1824,8 +1826,6 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   gimp_rectangle_tool_get_anchor (private));
       break;
     }
-
-  gimp_rectangle_tool_draw_guides (draw_tool);
 }
 
 static void
@@ -1837,6 +1837,8 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 
   gimp_rectangle_tool_get_public_rect (GIMP_RECTANGLE_TOOL (draw_tool),
                                        &x1, &y1, &x2, &y2);
+  x2 -= 1.0;
+  y2 -= 1.0;
 
   switch (GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool)->guide)
     {
