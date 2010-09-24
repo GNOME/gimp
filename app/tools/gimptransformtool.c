@@ -786,20 +786,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
   if (tr_tool->use_grid)
     {
-      /*  draw the bounding box  */
-      gimp_draw_tool_draw_line (draw_tool,
-                                tr_tool->tx1, tr_tool->ty1,
-                                tr_tool->tx2, tr_tool->ty2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                tr_tool->tx2, tr_tool->ty2,
-                                tr_tool->tx4, tr_tool->ty4);
-      gimp_draw_tool_draw_line (draw_tool,
-                                tr_tool->tx3, tr_tool->ty3,
-                                tr_tool->tx4, tr_tool->ty4);
-      gimp_draw_tool_draw_line (draw_tool,
-                                tr_tool->tx3, tr_tool->ty3,
-                                tr_tool->tx1, tr_tool->ty1);
-
       /* We test if the transformed polygon is convex.
        * if z1 and z2 have the same sign as well as z3 and z4
        * the polygon is convex.
@@ -832,6 +818,21 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                         tr_tool->tgrid_coords[gci + 3]);
             }
         }
+
+      /*  draw the bounding box  */
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx1, tr_tool->ty1,
+                                tr_tool->tx2, tr_tool->ty2);
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx2, tr_tool->ty2,
+                                tr_tool->tx4, tr_tool->ty4);
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx3, tr_tool->ty3,
+                                tr_tool->tx4, tr_tool->ty4);
+      gimp_draw_tool_draw_line (draw_tool,
+                                tr_tool->tx3, tr_tool->ty3,
+                                tr_tool->tx1, tr_tool->ty1);
+
     }
 
   gimp_transform_tool_handles_recalc (tr_tool, tool->display);
