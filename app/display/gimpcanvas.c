@@ -64,9 +64,6 @@ static gboolean   gimp_canvas_focus_out_event (GtkWidget       *widget,
 static gboolean   gimp_canvas_focus           (GtkWidget       *widget,
                                                GtkDirectionType direction);
 
-static GdkGC    * gimp_canvas_gc_new          (GimpCanvas      *canvas,
-                                               GimpCanvasStyle  style);
-
 
 G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GIMP_TYPE_OVERLAY_BOX)
 
@@ -99,15 +96,11 @@ static void
 gimp_canvas_init (GimpCanvas *canvas)
 {
   GtkWidget *widget = GTK_WIDGET (canvas);
-  gint       i;
 
   gtk_widget_set_double_buffered (widget, FALSE);
   gtk_widget_set_can_focus (widget, TRUE);
   gtk_widget_add_events (widget, GIMP_CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);
-
-  for (i = 0; i < GIMP_CANVAS_NUM_STYLES; i++)
-    canvas->gc[i] = NULL;
 }
 
 static void
@@ -123,6 +116,7 @@ gimp_canvas_set_property (GObject      *object,
     case PROP_CONFIG:
       canvas->config = g_value_get_object (value); /* don't dup */
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -142,6 +136,7 @@ gimp_canvas_get_property (GObject    *object,
     case PROP_CONFIG:
       g_value_set_object (value, canvas->config);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -152,16 +147,6 @@ static void
 gimp_canvas_unrealize (GtkWidget *widget)
 {
   GimpCanvas *canvas = GIMP_CANVAS (widget);
-  gint        i;
-
-  for (i = 0; i < GIMP_CANVAS_NUM_STYLES; i++)
-    {
-      if (canvas->gc[i])
-        {
-          g_object_unref (canvas->gc[i]);
-          canvas->gc[i] = NULL;
-        }
-    }
 
   if (canvas->layout)
     {
@@ -225,79 +210,6 @@ gimp_canvas_focus (GtkWidget        *widget,
   return GTK_WIDGET_CLASS (parent_class)->focus (widget, direction);
 }
 
-/* Returns: %TRUE if the XOR color is not white */
-static gboolean
-gimp_canvas_get_xor_color (GimpCanvas *canvas,
-                           GdkColor   *color)
-{
-  guchar r, g, b;
-
-  gimp_rgb_get_uchar (&canvas->config->xor_color, &r, &g, &b);
-
-  color->red   = (r << 8) | r;
-  color->green = (g << 8) | g;
-  color->blue  = (b << 8) | b;
-
-  return (r != 255 || g != 255 || b != 255);
-}
-
-static GdkGC *
-gimp_canvas_gc_new (GimpCanvas      *canvas,
-                    GimpCanvasStyle  style)
-{
-  GdkGC           *gc;
-  GdkGCValues      values;
-  GdkGCValuesMask  mask = 0;
-  GdkColor         fg   = { 0, 0, 0, 0 };
-  GdkColor         bg   = { 0, 0, 0, 0 };
-
-  if (! gtk_widget_get_realized (GTK_WIDGET (canvas)))
-    return NULL;
-
-  switch (style)
-    {
-    case GIMP_CANVAS_STYLE_XOR:
-      mask |= GDK_GC_FUNCTION | GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE;
-
-      if (gimp_canvas_get_xor_color (canvas, &fg))
-        values.function = GDK_XOR;
-      else
-        values.function = GDK_INVERT;
-
-      values.cap_style  = GDK_CAP_NOT_LAST;
-      values.join_style = GDK_JOIN_MITER;
-      break;
-
-    default:
-      return NULL;
-    }
-
-  gc = gdk_gc_new_with_values (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                               &values, mask);
-
-  switch (style)
-    {
-    default:
-      return gc;
-
-    case GIMP_CANVAS_STYLE_XOR:
-      break;
-    }
-
-  gdk_gc_set_rgb_fg_color (gc, &fg);
-  gdk_gc_set_rgb_bg_color (gc, &bg);
-
-  return gc;
-}
-
-static inline gboolean
-gimp_canvas_ensure_style (GimpCanvas      *canvas,
-                          GimpCanvasStyle  style)
-{
-  return (canvas->gc[style] != NULL ||
-          (canvas->gc[style] = gimp_canvas_gc_new (canvas, style)) != NULL);
-}
-
 
 /*  public functions  */
 
@@ -326,95 +238,6 @@ gimp_canvas_new (GimpDisplayConfig *config)
                        "name",   "gimp-canvas",
                        "config", config,
                        NULL);
-}
-
-/**
- * gimp_canvas_draw_line:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @x1:     X coordinate of the first point
- * @y1:     Y coordinate of the first point
- * @x2:     X coordinate of the second point
- * @y2:     Y coordinate of the second point
- *
- * Draw a line connecting the specified points, using the specified
- * style.
- **/
-void
-gimp_canvas_draw_line (GimpCanvas      *canvas,
-                       GimpCanvasStyle  style,
-                       gint             x1,
-                       gint             y1,
-                       gint             x2,
-                       gint             y2)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_line (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                 canvas->gc[style],
-                 x1, y1, x2, y2);
-}
-
-/**
- * gimp_canvas_draw_rectangle:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @filled: %TRUE if the rectangle is to be filled.
- * @x:      X coordinate of the upper left corner.
- * @y:      Y coordinate of the upper left corner.
- * @width:  width of the rectangle.
- * @height: height of the rectangle.
- *
- * Draws a rectangle in the specified style.
- **/
-void
-gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
-                            GimpCanvasStyle  style,
-                            gboolean         filled,
-                            gint             x,
-                            gint             y,
-                            gint             width,
-                            gint             height)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_rectangle (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                      canvas->gc[style],
-                      filled, x, y, width, height);
-}
-
-/**
- * gimp_canvas_draw_segments:
- * @canvas:       a #GimpCanvas widget
- * @style:        one of the enumerated #GimpCanvasStyle's.
- * @segments:     a #GdkSegment array.
- * @num_segments: the number of segments in the array.
- *
- * Draws a set of line segments in the specified style.
- **/
-void
-gimp_canvas_draw_segments (GimpCanvas      *canvas,
-                           GimpCanvasStyle  style,
-                           GdkSegment      *segments,
-                           gint             num_segments)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  while (num_segments >= MAX_BATCH_SIZE)
-    {
-      gdk_draw_segments (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                         canvas->gc[style],
-                         segments, MAX_BATCH_SIZE);
-      num_segments -= MAX_BATCH_SIZE;
-      segments     += MAX_BATCH_SIZE;
-    }
-
-  gdk_draw_segments (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                     canvas->gc[style],
-                     segments, num_segments);
 }
 
 /**

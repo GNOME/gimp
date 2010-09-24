@@ -22,26 +22,18 @@
 #include "widgets/gimpoverlaybox.h"
 
 
-typedef enum
-{
-  GIMP_CANVAS_STYLE_XOR,
-  GIMP_CANVAS_NUM_STYLES
-} GimpCanvasStyle;
-
-
-#define GIMP_CANVAS_NUM_STIPPLES  8
-#define GIMP_CANVAS_EVENT_MASK   (GDK_EXPOSURE_MASK            | \
-                                  GDK_POINTER_MOTION_MASK      |  \
-                                  GDK_POINTER_MOTION_HINT_MASK |  \
-                                  GDK_BUTTON_PRESS_MASK        |  \
-                                  GDK_BUTTON_RELEASE_MASK      |  \
-                                  GDK_STRUCTURE_MASK           |  \
-                                  GDK_ENTER_NOTIFY_MASK        |  \
-                                  GDK_LEAVE_NOTIFY_MASK        |  \
-                                  GDK_FOCUS_CHANGE_MASK        |  \
-                                  GDK_KEY_PRESS_MASK           |  \
-                                  GDK_KEY_RELEASE_MASK         |  \
-                                  GDK_PROXIMITY_OUT_MASK)
+#define GIMP_CANVAS_EVENT_MASK (GDK_EXPOSURE_MASK            | \
+                                GDK_POINTER_MOTION_MASK      |    \
+                                GDK_POINTER_MOTION_HINT_MASK |    \
+                                GDK_BUTTON_PRESS_MASK        |    \
+                                GDK_BUTTON_RELEASE_MASK      |    \
+                                GDK_STRUCTURE_MASK           |    \
+                                GDK_ENTER_NOTIFY_MASK        |    \
+                                GDK_LEAVE_NOTIFY_MASK        |    \
+                                GDK_FOCUS_CHANGE_MASK        |    \
+                                GDK_KEY_PRESS_MASK           |    \
+                                GDK_KEY_RELEASE_MASK         |    \
+                                GDK_PROXIMITY_OUT_MASK)
 
 
 #define GIMP_TYPE_CANVAS            (gimp_canvas_get_type ())
@@ -59,9 +51,6 @@ struct _GimpCanvas
   GimpOverlayBox     parent_instance;
 
   GimpDisplayConfig *config;
-
-  GdkGC             *gc[GIMP_CANVAS_NUM_STYLES];
-  GdkBitmap         *stipple[GIMP_CANVAS_NUM_STIPPLES];
   PangoLayout       *layout;
 };
 
@@ -71,33 +60,16 @@ struct _GimpCanvasClass
 };
 
 
-GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
+GType         gimp_canvas_get_type          (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_canvas_new               (GimpDisplayConfig  *config);
+GtkWidget   * gimp_canvas_new               (GimpDisplayConfig  *config);
 
-void         gimp_canvas_draw_line         (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gint                x1,
-                                            gint                y1,
-                                            gint                x2,
-                                            gint                y2);
-void         gimp_canvas_draw_rectangle    (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gboolean            filled,
-                                            gint                x,
-                                            gint                y,
-                                            gint                width,
-                                            gint                height);
-void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            GdkSegment         *segments,
-                                            gint                num_segments);
-PangoLayout *gimp_canvas_get_layout        (GimpCanvas         *canvas,
-                                            const gchar        *format,
-                                            ...) G_GNUC_PRINTF (2, 3);
+PangoLayout * gimp_canvas_get_layout        (GimpCanvas         *canvas,
+                                             const gchar        *format,
+                                             ...) G_GNUC_PRINTF (2, 3);
 
-void         gimp_canvas_set_bg_color      (GimpCanvas         *canvas,
-                                            GimpRGB            *color);
+void          gimp_canvas_set_bg_color      (GimpCanvas         *canvas,
+                                             GimpRGB            *color);
 
 
 #endif /*  __GIMP_CANVAS_H__  */
