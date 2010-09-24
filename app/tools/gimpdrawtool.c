@@ -26,8 +26,6 @@
 
 #include "tools-types.h"
 
-#include "base/boundary.h"
-
 #include "core/gimpimage.h"
 
 #include "vectors/gimpanchor.h"
@@ -540,57 +538,13 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                gdouble       width,
                                gdouble       height)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
-  guint             w, h;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_rectangle_new (x, y, width, height, filled);
 
-      item = gimp_canvas_rectangle_new (x, y, width, height, filled);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     MIN (x, x + width), MIN (y, y + height),
-                                     &tx1, &ty1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     MAX (x, x + width), MAX (y, y + height),
-                                     &tx2, &ty2);
-
-  tx1 = CLAMP (tx1, -1, shell->disp_width  + 1);
-  ty1 = CLAMP (ty1, -1, shell->disp_height + 1);
-  tx2 = CLAMP (tx2, -1, shell->disp_width  + 1);
-  ty2 = CLAMP (ty2, -1, shell->disp_height + 1);
-
-  tx2 -= tx1;
-  ty2 -= ty1;
-  w = PROJ_ROUND (MAX (0.0, tx2));
-  h = PROJ_ROUND (MAX (0.0, ty2));
-
-  if (w > 0 && h > 0)
-    {
-      if (! filled)
-        {
-          w--;
-          h--;
-        }
-
-      gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
-                                  GIMP_CANVAS_STYLE_XOR,
-                                  filled,
-                                  PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                  w, h);
-    }
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 void
@@ -781,90 +735,13 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
                                  PangoRectangle *cursor,
                                  gboolean        overwrite)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_text_cursor_new (cursor, overwrite);
 
-      item = gimp_canvas_text_cursor_new (cursor, overwrite);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     cursor->x, cursor->y,
-                                     &tx1, &ty1);
-
-  if (overwrite)
-    {
-      gint x, y;
-      gint width, height;
-
-      gimp_display_shell_transform_xy_f (shell,
-                                         cursor->x + cursor->width,
-                                         cursor->y + cursor->height,
-                                         &tx2, &ty2);
-
-      x      = PROJ_ROUND (tx1);
-      y      = PROJ_ROUND (ty1);
-      width  = PROJ_ROUND (tx2 - tx1);
-      height = PROJ_ROUND (ty2 - ty1);
-
-      gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
-                                  GIMP_CANVAS_STYLE_XOR, FALSE,
-                                  x, y,
-                                  width, height);
-      gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
-                                  GIMP_CANVAS_STYLE_XOR, FALSE,
-                                  x + 1, y + 1,
-                                  width - 2, height - 2);
-    }
-  else
-    {
-      gimp_display_shell_transform_xy_f (shell,
-                                         cursor->x,
-                                         cursor->y + cursor->height,
-                                         &tx2, &ty2);
-
-      /*  vertical line  */
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR,
-                             PROJ_ROUND (tx1), PROJ_ROUND (ty1) + 2,
-                             PROJ_ROUND (tx2), PROJ_ROUND (ty2) - 2);
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR,
-                             PROJ_ROUND (tx1) - 1, PROJ_ROUND (ty1) + 2,
-                             PROJ_ROUND (tx2) - 1, PROJ_ROUND (ty2) - 2);
-
-      /*  top serif  */
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR,
-                             PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1),
-                             PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1));
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR,
-                             PROJ_ROUND (tx1) - 3, PROJ_ROUND (ty1) + 1,
-                             PROJ_ROUND (tx1) + 3, PROJ_ROUND (ty1) + 1);
-
-      /*  bottom serif  */
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR,
-                             PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 1,
-                             PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 1);
-      gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas),
-                             GIMP_CANVAS_STYLE_XOR,
-                             PROJ_ROUND (tx2) - 3, PROJ_ROUND (ty2) - 2,
-                             PROJ_ROUND (tx2) + 3, PROJ_ROUND (ty2) - 2);
-    }
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 gboolean
