@@ -170,33 +170,45 @@ gimp_draw_tool_control (GimpTool       *tool,
 }
 
 static void
+gimp_draw_tool_invalidate_items (GimpDrawTool *draw_tool)
+{
+  GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+  GdkWindow        *window = gtk_widget_get_window (shell->canvas);
+  GList            *list;
+
+  for (list = draw_tool->items; list; list = g_list_next (list))
+    {
+      GimpCanvasItem *item = list->data;
+      GdkRegion      *region;
+
+      region = gimp_canvas_item_get_extents (item, shell);
+      gdk_window_invalidate_region (window, region, TRUE);
+      gdk_region_destroy (region);
+    }
+}
+
+static void
+gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
+{
+  if (draw_tool->items)
+    {
+      g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
+      g_list_free (draw_tool->items);
+      draw_tool->items = NULL;
+    }
+}
+
+static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
   if (draw_tool->paused_count == 0 &&
       draw_tool->display)
     {
-      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-      GdkWindow        *window = gtk_widget_get_window (shell->canvas);
-      GList            *list;
-
-      if (draw_tool->items)
-        {
-          g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
-          g_list_free (draw_tool->items);
-          draw_tool->items = NULL;
-        }
+      gimp_draw_tool_clear_items (draw_tool);
 
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
-      for (list = draw_tool->items; list; list = g_list_next (list))
-        {
-          GimpCanvasItem *item = list->data;
-          GdkRegion      *region;
-
-          region = gimp_canvas_item_get_extents (item, shell);
-          gdk_window_invalidate_region (window, region, TRUE);
-          gdk_region_destroy (region);
-        }
+      gimp_draw_tool_invalidate_items (draw_tool);
 
       draw_tool->is_drawn = TRUE;
     }
@@ -208,26 +220,8 @@ gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0 &&
       draw_tool->display)
     {
-      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-      GdkWindow        *window = gtk_widget_get_window (shell->canvas);
-      GList            *list;
-
-      for (list = draw_tool->items; list; list = g_list_next (list))
-        {
-          GimpCanvasItem *item = list->data;
-          GdkRegion      *region;
-
-          region = gimp_canvas_item_get_extents (item, shell);
-          gdk_window_invalidate_region (window, region, TRUE);
-          gdk_region_destroy (region);
-        }
-
-      if (draw_tool->items)
-        {
-          g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
-          g_list_free (draw_tool->items);
-          draw_tool->items = NULL;
-        }
+      gimp_draw_tool_invalidate_items (draw_tool);
+      gimp_draw_tool_clear_items (draw_tool);
 
       draw_tool->is_drawn = FALSE;
     }
