@@ -238,8 +238,6 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_sel_tool)
 
   priv->press_x = 0.0;
   priv->press_y = 0.0;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static GObject *

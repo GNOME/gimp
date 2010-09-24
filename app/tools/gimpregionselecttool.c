@@ -114,8 +114,6 @@ gimp_region_select_tool_init (GimpRegionSelectTool *region_select)
   region_select->region_mask     = NULL;
   region_select->segs            = NULL;
   region_select->n_segs          = 0;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void

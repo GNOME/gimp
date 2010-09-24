@@ -94,8 +94,6 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_ELLIPSE_SELECT);
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void

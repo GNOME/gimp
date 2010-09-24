@@ -146,8 +146,6 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
                                          "context/context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-gradient-select-set");
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static gboolean

@@ -267,8 +267,6 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   priv->supress_handles                   = FALSE;
 
   priv->last_click_time                   = NO_CLICK_TIME_AVAILABLE;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void

@@ -124,8 +124,6 @@ gimp_color_picker_tool_init (GimpColorPickerTool *tool)
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
 
   color_tool->pick_mode = GIMP_COLOR_PICK_MODE_FOREGROUND;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static GObject *

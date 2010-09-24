@@ -43,7 +43,6 @@ struct _GimpDrawTool
   gint            paused_count; /*  count to keep track of multiple pauses  */
   gboolean        is_drawn;     /*  is the stuff we draw currently visible  */
 
-  gboolean        use_cairo;
   GList          *items;
 };
 

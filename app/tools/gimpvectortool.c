@@ -219,8 +219,6 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   vector_tool->sel_stroke     = NULL;
 
   vector_tool->saved_mode     = GIMP_VECTOR_MODE_DESIGN;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 

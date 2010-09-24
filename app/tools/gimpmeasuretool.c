@@ -156,10 +156,8 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MEASURE);
 
-  measure_tool->function = CREATING;
+  measure_tool->function    = CREATING;
   measure_tool->status_help = TRUE;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void

@@ -147,8 +147,6 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   tool->max_coord_smooth  = 0.80;
 
   paint_tool->core        = NULL;
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static GObject *

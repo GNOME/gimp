@@ -158,13 +158,7 @@ gimp_draw_tool_control (GimpTool       *tool,
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      if (! draw_tool->use_cairo)
-        gimp_draw_tool_pause (draw_tool);
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
-      if (! draw_tool->use_cairo)
-        gimp_draw_tool_resume (draw_tool);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -181,34 +175,27 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0 &&
       draw_tool->display)
     {
-      if (draw_tool->use_cairo)
+      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+      GdkWindow        *window = gtk_widget_get_window (shell->canvas);
+      GList            *list;
+
+      if (draw_tool->items)
         {
-          GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-          GdkWindow        *window = gtk_widget_get_window (shell->canvas);
-          GList            *list;
-
-          if (draw_tool->items)
-            {
-              g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
-              g_list_free (draw_tool->items);
-              draw_tool->items = NULL;
-            }
-
-          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
-
-          for (list = draw_tool->items; list; list = g_list_next (list))
-            {
-              GimpCanvasItem *item = list->data;
-              GdkRegion      *region;
-
-              region = gimp_canvas_item_get_extents (item, shell);
-              gdk_window_invalidate_region (window, region, TRUE);
-              gdk_region_destroy (region);
-            }
+          g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
+          g_list_free (draw_tool->items);
+          draw_tool->items = NULL;
         }
-      else
+
+      GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+
+      for (list = draw_tool->items; list; list = g_list_next (list))
         {
-          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+          GimpCanvasItem *item = list->data;
+          GdkRegion      *region;
+
+          region = gimp_canvas_item_get_extents (item, shell);
+          gdk_window_invalidate_region (window, region, TRUE);
+          gdk_region_destroy (region);
         }
 
       draw_tool->is_drawn = TRUE;
@@ -221,32 +208,25 @@ gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0 &&
       draw_tool->display)
     {
-      if (draw_tool->use_cairo)
+      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+      GdkWindow        *window = gtk_widget_get_window (shell->canvas);
+      GList            *list;
+
+      for (list = draw_tool->items; list; list = g_list_next (list))
         {
-          GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-          GdkWindow        *window = gtk_widget_get_window (shell->canvas);
-          GList            *list;
+          GimpCanvasItem *item = list->data;
+          GdkRegion      *region;
 
-          for (list = draw_tool->items; list; list = g_list_next (list))
-            {
-              GimpCanvasItem *item = list->data;
-              GdkRegion      *region;
-
-              region = gimp_canvas_item_get_extents (item, shell);
-              gdk_window_invalidate_region (window, region, TRUE);
-              gdk_region_destroy (region);
-            }
-
-          if (draw_tool->items)
-            {
-              g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
-              g_list_free (draw_tool->items);
-              draw_tool->items = NULL;
-            }
+          region = gimp_canvas_item_get_extents (item, shell);
+          gdk_window_invalidate_region (window, region, TRUE);
+          gdk_region_destroy (region);
         }
-      else
+
+      if (draw_tool->items)
         {
-          GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+          g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
+          g_list_free (draw_tool->items);
+          draw_tool->items = NULL;
         }
 
       draw_tool->is_drawn = FALSE;

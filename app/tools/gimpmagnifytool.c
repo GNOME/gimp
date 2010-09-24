@@ -130,8 +130,6 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
                                                 GIMP_CURSOR_MODIFIER_PLUS);
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
-
-  GIMP_DRAW_TOOL (tool)->use_cairo = TRUE;
 }
 
 static void
