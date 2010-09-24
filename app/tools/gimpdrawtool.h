@@ -41,7 +41,6 @@ struct _GimpDrawTool
                                  */
 
   gint            paused_count; /*  count to keep track of multiple pauses  */
-  gboolean        is_drawn;     /*  is the stuff we draw currently visible  */
 
   GList          *items;
 };
@@ -66,8 +65,6 @@ gboolean   gimp_draw_tool_is_active                (GimpDrawTool     *draw_tool)
 
 void       gimp_draw_tool_pause                    (GimpDrawTool     *draw_tool);
 void       gimp_draw_tool_resume                   (GimpDrawTool     *draw_tool);
-
-gboolean   gimp_draw_tool_is_drawn                 (GimpDrawTool     *draw_tool);
 
 void       gimp_draw_tool_draw_items               (GimpDrawTool     *draw_tool,
                                                     cairo_t          *cr);

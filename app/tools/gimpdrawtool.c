@@ -105,9 +105,8 @@ static void
 gimp_draw_tool_init (GimpDrawTool *draw_tool)
 {
   draw_tool->display      = NULL;
-
   draw_tool->paused_count = 0;
-  draw_tool->is_drawn     = FALSE;
+  draw_tool->items        = NULL;
 }
 
 static void
@@ -201,29 +200,24 @@ gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->paused_count == 0 &&
-      draw_tool->display)
+  if (draw_tool->display && draw_tool->paused_count == 0)
     {
+      gimp_draw_tool_invalidate_items (draw_tool);
       gimp_draw_tool_clear_items (draw_tool);
 
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
       gimp_draw_tool_invalidate_items (draw_tool);
-
-      draw_tool->is_drawn = TRUE;
     }
 }
 
 static void
 gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->paused_count == 0 &&
-      draw_tool->display)
+  if (draw_tool->display)
     {
       gimp_draw_tool_invalidate_items (draw_tool);
       gimp_draw_tool_clear_items (draw_tool);
-
-      draw_tool->is_drawn = FALSE;
     }
 }
 
@@ -270,8 +264,6 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  gimp_draw_tool_undraw (draw_tool);
-
   draw_tool->paused_count++;
 }
 
@@ -286,14 +278,6 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
   gimp_draw_tool_draw (draw_tool);
 }
 
-gboolean
-gimp_draw_tool_is_drawn (GimpDrawTool *draw_tool)
-{
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
-
-  return draw_tool->is_drawn;
-}
-
 void
 gimp_draw_tool_draw_items (GimpDrawTool *draw_tool,
                            cairo_t      *cr)
@@ -306,7 +290,7 @@ gimp_draw_tool_draw_items (GimpDrawTool *draw_tool,
   g_return_if_fail (cr != NULL);
 
   if (! gimp_draw_tool_is_active (draw_tool) ||
-      ! gimp_draw_tool_is_drawn (draw_tool))
+      draw_tool->paused_count > 0)
     return;
 
   shell  = gimp_display_get_shell (draw_tool->display);
