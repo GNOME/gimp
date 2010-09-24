@@ -28,6 +28,8 @@
 
 #include "display-types.h"
 
+#include "widgets/gimpcairo.h"
+
 #include "gimpcanvashandle.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-transform.h"
@@ -430,18 +432,9 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
       break;
 
     case GIMP_HANDLE_CIRCLE:
-      if (private->slice_angle >= 0)
-        {
-          cairo_arc_negative (cr, x, y, private->width / 2,
-                              - private->start_angle,
-                              - private->start_angle - private->slice_angle);
-        }
-      else
-        {
-          cairo_arc (cr, x, y, private->width / 2,
-                     - private->start_angle,
-                     - private->start_angle - private->slice_angle);
-        }
+      gimp_cairo_add_arc (cr, x, y, private->width / 2,
+                          private->start_angle,
+                          private->slice_angle);
 
       _gimp_canvas_item_stroke (item, shell, cr);
       break;
@@ -449,18 +442,9 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
     case GIMP_HANDLE_FILLED_CIRCLE:
       cairo_move_to (cr, x, y);
 
-      if (private->slice_angle >= 0)
-        {
-          cairo_arc_negative (cr, x, y, (gdouble) private->width / 2.0,
-                              - private->start_angle,
-                              - private->start_angle - private->slice_angle);
-        }
-      else
-        {
-          cairo_arc (cr, x, y, (gdouble) private->width / 2.0,
-                     - private->start_angle,
-                     - private->start_angle - private->slice_angle);
-        }
+      gimp_cairo_add_arc (cr, x, y, (gdouble) private->width / 2.0,
+                          private->start_angle,
+                          private->slice_angle);
 
       _gimp_canvas_item_fill (item, shell, cr);
       break;
