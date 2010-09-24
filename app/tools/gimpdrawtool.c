@@ -36,6 +36,7 @@
 
 #include "display/gimpcanvas.h"
 #include "display/gimpcanvasboundary.h"
+#include "display/gimpcanvascorner.h"
 #include "display/gimpcanvasguide.h"
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasline.h"
@@ -914,6 +915,19 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
   gint              left_and_right_handle_y_offset;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+
+  if (draw_tool->use_cairo)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_corner_new (x1, y1, x2 - x1, y2 - y1,
+                                     anchor, width, height, put_outside);
+      gimp_canvas_item_set_highlight (item, highlight);
+
+      draw_tool->items = g_list_append (draw_tool->items, item);
+
+      return;
+    }
 
   shell  = gimp_display_get_shell (draw_tool->display);
   canvas = GIMP_CANVAS (shell->canvas);
