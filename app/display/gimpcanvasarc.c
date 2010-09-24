@@ -298,8 +298,8 @@ gimp_canvas_arc_get_extents (GimpCanvasItem   *item,
 
   rectangle.x      = floor (center_x - radius_x - 1.5);
   rectangle.y      = floor (center_y - radius_y - 1.5);
-  rectangle.width  = ceil (2 * radius_x + 3.0);
-  rectangle.height = ceil (2 * radius_y + 3.0);
+  rectangle.width  = ceil (center_x + radius_x + 1.5) - rectangle.x;
+  rectangle.height = ceil (center_y + radius_y + 1.5) - rectangle.y;
 
   return gdk_region_rectangle (&rectangle);
 }
