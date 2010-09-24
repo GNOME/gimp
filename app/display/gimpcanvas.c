@@ -256,11 +256,6 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
 
   switch (style)
     {
-    case GIMP_CANVAS_STYLE_XOR_DOTTED:
-      mask |= GDK_GC_LINE_STYLE;
-      values.line_style = GDK_LINE_ON_OFF_DASH;
-      /*  fallthrough  */
-
     case GIMP_CANVAS_STYLE_XOR:
       mask |= GDK_GC_FUNCTION | GDK_GC_CAP_STYLE | GDK_GC_JOIN_STYLE;
 
@@ -280,18 +275,11 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
   gc = gdk_gc_new_with_values (gtk_widget_get_window (GTK_WIDGET (canvas)),
                                &values, mask);
 
-  if (style == GIMP_CANVAS_STYLE_XOR_DOTTED)
-    {
-      gint8 one = 1;
-      gdk_gc_set_dashes (gc, 0, &one, 1);
-    }
-
   switch (style)
     {
     default:
       return gc;
 
-    case GIMP_CANVAS_STYLE_XOR_DOTTED:
     case GIMP_CANVAS_STYLE_XOR:
       break;
     }
@@ -369,30 +357,6 @@ gimp_canvas_draw_line (GimpCanvas      *canvas,
 }
 
 /**
- * gimp_canvas_draw_lines:
- * @canvas:     a #GimpCanvas widget
- * @style:      one of the enumerated #GimpCanvasStyle's.
- * @points:     a #GdkPoint array.
- * @num_points: the number of points in the array.
- *
- * Draws a set of lines connecting the specified points, in the
- * specified style.
- **/
-void
-gimp_canvas_draw_lines (GimpCanvas      *canvas,
-                        GimpCanvasStyle  style,
-                        GdkPoint        *points,
-                        gint             num_points)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_lines (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                  canvas->gc[style],
-                  points, num_points);
-}
-
-/**
  * gimp_canvas_draw_rectangle:
  * @canvas: a #GimpCanvas widget
  * @style:  one of the enumerated #GimpCanvasStyle's.
@@ -419,39 +383,6 @@ gimp_canvas_draw_rectangle (GimpCanvas      *canvas,
   gdk_draw_rectangle (gtk_widget_get_window (GTK_WIDGET (canvas)),
                       canvas->gc[style],
                       filled, x, y, width, height);
-}
-
-/**
- * gimp_canvas_draw_arc:
- * @canvas: a #GimpCanvas widget
- * @style:  one of the enumerated #GimpCanvasStyle's.
- * @filled: %TRUE if the arc is to be filled, producing a 'pie slice'.
- * @x:      X coordinate of the left edge of the bounding rectangle.
- * @y:      Y coordinate of the top edge of the bounding rectangle.
- * @width:  width of the bounding rectangle.
- * @height: height of the bounding rectangle.
- * @angle1: the start angle of the arc.
- * @angle2: the end angle of the arc.
- *
- * Draws an arc or pie slice, in the specified style.
- **/
-void
-gimp_canvas_draw_arc (GimpCanvas      *canvas,
-                      GimpCanvasStyle  style,
-                      gboolean         filled,
-                      gint             x,
-                      gint             y,
-                      gint             width,
-                      gint             height,
-                      gint             angle1,
-                      gint             angle2)
-{
-  if (! gimp_canvas_ensure_style (canvas, style))
-    return;
-
-  gdk_draw_arc (gtk_widget_get_window (GTK_WIDGET (canvas)),
-                canvas->gc[style],
-                filled, x, y, width, height, angle1, angle2);
 }
 
 /**
@@ -487,7 +418,7 @@ gimp_canvas_draw_segments (GimpCanvas      *canvas,
 }
 
 /**
- * gimp_canvas_draw_text:
+ * gimp_canvas_get_layout:
  * @canvas:  a #GimpCanvas widget
  * @format:  a standard printf() format string.
  * @Varargs: the parameters to insert into the format string.

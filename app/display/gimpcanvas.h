@@ -25,7 +25,6 @@
 typedef enum
 {
   GIMP_CANVAS_STYLE_XOR,
-  GIMP_CANVAS_STYLE_XOR_DOTTED,
   GIMP_CANVAS_NUM_STYLES
 } GimpCanvasStyle;
 
@@ -82,10 +81,6 @@ void         gimp_canvas_draw_line         (GimpCanvas         *canvas,
                                             gint                y1,
                                             gint                x2,
                                             gint                y2);
-void         gimp_canvas_draw_lines        (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            GdkPoint           *points,
-                                            gint                num_points);
 void         gimp_canvas_draw_rectangle    (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             gboolean            filled,
@@ -93,15 +88,6 @@ void         gimp_canvas_draw_rectangle    (GimpCanvas         *canvas,
                                             gint                y,
                                             gint                width,
                                             gint                height);
-void         gimp_canvas_draw_arc          (GimpCanvas         *canvas,
-                                            GimpCanvasStyle     style,
-                                            gboolean            filled,
-                                            gint                x,
-                                            gint                y,
-                                            gint                width,
-                                            gint                height,
-                                            gint                angle1,
-                                            gint                angle2);
 void         gimp_canvas_draw_segments     (GimpCanvas         *canvas,
                                             GimpCanvasStyle     style,
                                             GdkSegment         *segments,

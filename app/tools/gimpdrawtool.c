@@ -459,35 +459,13 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
                           gdouble       x2,
                           gdouble       y2)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_line_new (x1, y1, x2, y2);
 
-      item = gimp_canvas_line_new (x1, y1, x2, y2);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     x1, y1,
-                                     &tx1, &ty1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     x2, y2,
-                                     &tx2, &ty2);
-
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                         PROJ_ROUND (tx2), PROJ_ROUND (ty2));
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 /**
@@ -624,110 +602,22 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                          gint          angle1,
                          gint          angle2)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
-  guint             w, h;
+  GimpCanvasItem *item;
+  gdouble         a1, a2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
-      gdouble         a1, a2;
+  a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
+  a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
 
-      a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
-      a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
+  item = gimp_canvas_arc_new (x + width  / 2.0,
+                              y + height / 2.0,
+                              width  / 2.0,
+                              height / 2.0,
+                              a1, a2,
+                              FALSE);
 
-      item = gimp_canvas_arc_new (x + width  / 2.0,
-                                  y + height / 2.0,
-                                  width  / 2.0,
-                                  height / 2.0,
-                                  a1, a2,
-                                  FALSE);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     MIN (x, x + width), MIN (y, y + height),
-                                     &tx1, &ty1);
-  gimp_display_shell_transform_xy_f (shell,
-                                     MAX (x, x + width), MAX (y, y + height),
-                                     &tx2, &ty2);
-
-  tx2 -= tx1;
-  ty2 -= ty1;
-  w = PROJ_ROUND (MAX (0.0, tx2));
-  h = PROJ_ROUND (MAX (0.0, ty2));
-
-  if (w > 0 && h > 0)
-    {
-      if (! filled)
-        {
-          w--;
-          h--;
-        }
-
-      if (w != 1 && h != 1)
-        {
-          gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas),
-                                GIMP_CANVAS_STYLE_XOR,
-                                filled,
-                                PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                w, h,
-                                angle1, angle2);
-        }
-      else
-        {
-          /* work around the problem of an 1xN or Nx1 arc not being shown
-           * properly
-           */
-          gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
-                                      GIMP_CANVAS_STYLE_XOR,
-                                      filled,
-                                      PROJ_ROUND (tx1), PROJ_ROUND (ty1),
-                                      w, h);
-        }
-    }
-}
-
-static void
-gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
-                                         gboolean        filled,
-                                         gdouble         x,
-                                         gdouble         y,
-                                         gint            width,
-                                         gint            height,
-                                         GtkAnchorType   anchor)
-{
-  GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
-  gdouble           tx, ty;
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     x, y,
-                                     &tx, &ty);
-
-  gimp_draw_tool_shift_to_north_west (tx, ty,
-                                      width, height,
-                                      anchor,
-                                      &tx, &ty);
-
-  if (! filled)
-    {
-      width  -= 1;
-      height -= 1;
-    }
-
-  gimp_canvas_draw_rectangle (GIMP_CANVAS (shell->canvas),
-                              GIMP_CANVAS_STYLE_XOR,
-                              filled,
-                              PROJ_ROUND (tx), PROJ_ROUND (ty),
-                              width, height);
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 void
@@ -741,85 +631,22 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                    gint           angle2,
                                    GtkAnchorType  anchor)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx, ty;
+  GimpCanvasItem *item;
+  gdouble         a1, a2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
-      gdouble         a1, a2;
+  item = gimp_canvas_handle_new (filled ?
+                                 GIMP_HANDLE_FILLED_CIRCLE :
+                                 GIMP_HANDLE_CIRCLE,
+                                 anchor, x, y, width, height);
 
-      item = gimp_canvas_handle_new (filled ?
-                                     GIMP_HANDLE_FILLED_CIRCLE :
-                                     GIMP_HANDLE_CIRCLE,
-                                     anchor, x, y, width, height);
+  a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
+  a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
 
-      a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
-      a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
+  gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item), a1, a2);
 
-      gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item), a1, a2);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     x, y,
-                                     &tx, &ty);
-
-  gimp_draw_tool_shift_to_north_west (tx, ty,
-                                      width, height,
-                                      anchor,
-                                      &tx, &ty);
-
-  if (! filled)
-    {
-      width  -= 1;
-      height -= 1;
-    }
-
-  gimp_canvas_draw_arc (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                        filled,
-                        PROJ_ROUND (tx), PROJ_ROUND (ty),
-                        width, height,
-                        angle1, angle2);
-}
-
-static void
-gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
-                                     gdouble        x,
-                                     gdouble        y,
-                                     gint           width,
-                                     gint           height,
-                                     GtkAnchorType  anchor)
-{
-  GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
-  gdouble           tx, ty;
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     x, y,
-                                     &tx, &ty);
-
-  gimp_draw_tool_shift_to_center (tx, ty,
-                                  width, height,
-                                  anchor,
-                                  &tx, &ty);
-
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx),
-                         PROJ_ROUND (ty) - (height >> 1),
-                         PROJ_ROUND (tx),
-                         PROJ_ROUND (ty) + ((height + 1) >> 1));
-  gimp_canvas_draw_line (GIMP_CANVAS (shell->canvas), GIMP_CANVAS_STYLE_XOR,
-                         PROJ_ROUND (tx) - (width >> 1),
-                         PROJ_ROUND (ty),
-                         PROJ_ROUND (tx) + ((width + 1) >> 1),
-                         PROJ_ROUND (ty));
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 void
@@ -831,71 +658,13 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
                             gint            height,
                             GtkAnchorType   anchor)
 {
+  GimpCanvasItem *item;
+
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_handle_new (type, anchor, x, y, width, height);
 
-      item = gimp_canvas_handle_new (type, anchor, x, y, width, height);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  switch (type)
-    {
-    case GIMP_HANDLE_SQUARE:
-      gimp_draw_tool_draw_rectangle_by_anchor (draw_tool,
-                                               FALSE,
-                                               x, y,
-                                               width,
-                                               height,
-                                               anchor);
-      break;
-
-    case GIMP_HANDLE_FILLED_SQUARE:
-      gimp_draw_tool_draw_rectangle_by_anchor (draw_tool,
-                                               TRUE,
-                                               x, y,
-                                               width,
-                                               height,
-                                               anchor);
-      break;
-
-    case GIMP_HANDLE_CIRCLE:
-      gimp_draw_tool_draw_arc_by_anchor (draw_tool,
-                                         FALSE,
-                                         x, y,
-                                         width,
-                                         height,
-                                         0, 360 * 64,
-                                         anchor);
-      break;
-
-    case GIMP_HANDLE_FILLED_CIRCLE:
-      gimp_draw_tool_draw_arc_by_anchor (draw_tool,
-                                         TRUE,
-                                         x, y,
-                                         width,
-                                         height,
-                                         0, 360 * 64,
-                                         anchor);
-      break;
-
-    case GIMP_HANDLE_CROSS:
-      gimp_draw_tool_draw_cross_by_anchor (draw_tool,
-                                           x, y,
-                                           width,
-                                           height,
-                                           anchor);
-      break;
-
-    default:
-      g_warning ("%s: invalid handle type %d", G_STRFUNC, type);
-      break;
-    }
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 /**
@@ -927,419 +696,15 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
                             gint            height,
                             GtkAnchorType   anchor)
 {
-  GimpDisplayShell *shell;
-  GimpCanvas       *canvas;
-  gint              tx1, ty1;
-  gint              tx2, ty2;
-  gint              tw,  th;
-  gint              top_and_bottom_handle_x_offset;
-  gint              left_and_right_handle_y_offset;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_corner_new (x1, y1, x2 - x1, y2 - y1,
+                                 anchor, width, height, put_outside);
+  gimp_canvas_item_set_highlight (item, highlight);
 
-      item = gimp_canvas_corner_new (x1, y1, x2 - x1, y2 - y1,
-                                     anchor, width, height, put_outside);
-      gimp_canvas_item_set_highlight (item, highlight);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell  = gimp_display_get_shell (draw_tool->display);
-  canvas = GIMP_CANVAS (shell->canvas);
-
-  gimp_display_shell_transform_xy (shell, x1, y1, &tx1, &ty1);
-  gimp_display_shell_transform_xy (shell, x2, y2, &tx2, &ty2);
-
-  tw = tx2 - tx1;
-  th = ty2 - ty1;
-
-  if ((! put_outside && (tw <= width || th <= height)) ||
-      width <= 2 || height <= 2)
-    return;
-
-  top_and_bottom_handle_x_offset = (tw - width)  / 2;
-  left_and_right_handle_y_offset = (th - height) / 2;
-
-  switch (anchor)
-    {
-    case GTK_ANCHOR_CENTER:
-      break;
-
-    case GTK_ANCHOR_NORTH_WEST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - 1,         ty1,
-                                 tx1 - width + 1, ty1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - width + 1, ty1,
-                                 tx1 - width + 1, ty1 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - width + 1, ty1 - height + 1,
-                                 tx1,             ty1 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1,             ty1 - height + 1,
-                                 tx1,             ty1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + 1,         ty1 + height - 1,
-                                 tx1 + width - 1, ty1 + height - 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + width - 1, ty1 + 1,
-                                 tx1 + width - 1, ty1 + height);
-        }
-      break;
-
-    case GTK_ANCHOR_NORTH_EAST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2,             ty1,
-                                 tx2 + width - 2, ty1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 + width - 2, ty1,
-                                 tx2 + width - 2, ty1 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 + width - 2, ty1 - height + 1,
-                                 tx2 - 1,         ty1 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 1,         ty1 - height + 1,
-                                 tx2 - 1,         ty1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 2,         ty1 + height - 1,
-                                 tx2 - width,     ty1 + height - 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - width,     ty1 + 1,
-                                 tx2 - width,     ty1 + height);
-        }
-      break;
-
-    case GTK_ANCHOR_SOUTH_WEST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - 1,         ty2 - 1,
-                                 tx1 - width + 1, ty2 - 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - width + 1, ty2 - 1,
-                                 tx1 - width + 1, ty2 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - width + 1, ty2 + height - 2,
-                                 tx1,             ty2 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1,             ty2 + height - 2,
-                                 tx1,             ty2 - 1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + 1,         ty2 - height,
-                                 tx1 + width - 1, ty2 - height);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + width - 1, ty2 - height,
-                                 tx1 + width - 1, ty2 - 1);
-        }
-      break;
-
-    case GTK_ANCHOR_SOUTH_EAST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2,             ty2 - 1,
-                                 tx2 + width - 2, ty2 - 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 + width - 2, ty2 - 1,
-                                 tx2 + width - 2, ty2 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 + width - 2, ty2 + height - 2,
-                                 tx2 - 1,         ty2 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 1,         ty2 + height - 2,
-                                 tx2 - 1,         ty2 - 1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 2,         ty2 - height,
-                                 tx2 - width,     ty2 - height);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - width,     ty2 - height,
-                                 tx2 - width,     ty2 - 1);
-        }
-      break;
-
-    case GTK_ANCHOR_NORTH:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1,             ty1 - 1,
-                                 tx1,             ty1 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1,             ty1 - height + 1,
-                                 tx2 - 1,         ty1 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 1,         ty1 - height + 1,
-                                 tx2 - 1,         ty1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + 1, ty1 + height - 1,
-                                 tx2 - 1, ty1 + height - 1);
-        }
-      break;
-
-    case GTK_ANCHOR_SOUTH:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1,             ty2,
-                                 tx1,             ty2 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1,             ty2 + height - 2,
-                                 tx2 - 1,         ty2 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 1,         ty2 + height - 2,
-                                 tx2 - 1,         ty2 - 1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + 1, ty2 - height,
-                                 tx2 - 1, ty2 - height);
-        }
-      break;
-
-    case GTK_ANCHOR_WEST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - 1,         ty1,
-                                 tx1 - width + 1, ty1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - width + 1, ty1,
-                                 tx1 - width + 1, ty2 - 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 - width + 1, ty2 - 1,
-                                 tx1,             ty2 - 1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + width - 1, ty1 + 1,
-                                 tx1 + width - 1, ty2 - 1);
-        }
-      break;
-
-    case GTK_ANCHOR_EAST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2,             ty1,
-                                 tx2 + width - 2, ty1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 + width - 2, ty1,
-                                 tx2 + width - 2, ty2 - 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 + width - 2, ty2 - 1,
-                                 tx2 - 1,         ty2 - 1);
-        }
-      else
-        {
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - width, ty1 + 1,
-                                 tx2 - width, ty2 - 1);
-        }
-      break;
-    }
-
-  if (! highlight)
-    return;
-
-  switch (anchor)
-    {
-    case GTK_ANCHOR_NORTH_WEST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 - width + 2, ty1 - height + 2,
-                                      width - 3,       height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + 1,         ty1 + 1,
-                                      width - 3,       height - 3);
-        }
-      break;
-
-    case GTK_ANCHOR_NORTH_EAST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2,             ty1 - height + 2,
-                                      width - 3,       height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2 - width + 1, ty1 + 1,
-                                      width - 3,       height - 3);
-        }
-      break;
-
-    case GTK_ANCHOR_SOUTH_WEST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 - width + 2, ty2,
-                                      width - 3,       height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + 1,         ty2 - height + 1,
-                                      width - 3,       height - 3);
-        }
-      break;
-
-    case GTK_ANCHOR_SOUTH_EAST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2,             ty2,
-                                      width - 3,       height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2 - width + 1, ty2 - height + 1,
-                                      width - 3,       height - 3);
-        }
-      break;
-
-    case GTK_ANCHOR_NORTH:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + top_and_bottom_handle_x_offset + 1,
-                                      ty1 - height + 2,
-                                      width - 3, height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + top_and_bottom_handle_x_offset,
-                                      ty1 + 1,
-                                      width, height - 3);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + top_and_bottom_handle_x_offset + 1,
-                                 ty1 + 2,
-                                 tx1 + top_and_bottom_handle_x_offset + 1,
-                                 ty1 + height - 2);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + top_and_bottom_handle_x_offset + width - 1,
-                                 ty1 + 2,
-                                 tx1 + top_and_bottom_handle_x_offset + width - 1,
-                                 ty1 + height - 2);
-        }
-      break;
-
-    case GTK_ANCHOR_SOUTH:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + top_and_bottom_handle_x_offset + 1,
-                                      ty2,
-                                      width - 3, height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + top_and_bottom_handle_x_offset,
-                                      ty2 - height + 1,
-                                      width, height - 3);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + top_and_bottom_handle_x_offset + 1,
-                                 ty2 - 3,
-                                 tx1 + top_and_bottom_handle_x_offset + 1,
-                                 ty2 - height + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + top_and_bottom_handle_x_offset + width - 1,
-                                 ty2 - 3,
-                                 tx1 + top_and_bottom_handle_x_offset + width - 1,
-                                 ty2 - height + 1);
-        }
-      break;
-
-    case GTK_ANCHOR_WEST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 - width + 2,
-                                      ty1 + left_and_right_handle_y_offset + 1,
-                                      width - 3, height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx1 + 1,
-                                      ty1 + left_and_right_handle_y_offset,
-                                      width - 3, height);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + 2,
-                                 ty1 + left_and_right_handle_y_offset + 1,
-                                 tx1 + width - 2,
-                                 ty1 + left_and_right_handle_y_offset + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx1 + 2,
-                                 ty1 + left_and_right_handle_y_offset + height - 1,
-                                 tx1 + width - 2,
-                                 ty1 + left_and_right_handle_y_offset + height - 1);
-        }
-      break;
-
-    case GTK_ANCHOR_EAST:
-      if (put_outside)
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2,
-                                      ty1 + left_and_right_handle_y_offset + 1,
-                                      width - 3, height - 3);
-        }
-      else
-        {
-          gimp_canvas_draw_rectangle (canvas, GIMP_CANVAS_STYLE_XOR, FALSE,
-                                      tx2 - width + 1,
-                                      ty1 + left_and_right_handle_y_offset,
-                                      width - 3, height);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 3,
-                                 ty1 + left_and_right_handle_y_offset + 1,
-                                 tx2 - width + 1,
-                                 ty1 + left_and_right_handle_y_offset + 1);
-          gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
-                                 tx2 - 3,
-                                 ty1 + left_and_right_handle_y_offset + height - 1,
-                                 tx2 - width + 1,
-                                 ty1 + left_and_right_handle_y_offset + height - 1);
-        }
-      break;
-
-    default:
-      break;
-    }
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 void
@@ -1398,120 +763,16 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                               gdouble         offset_x,
                               gdouble         offset_y)
 {
-  GimpDisplayShell *shell;
-  GdkPoint         *gdk_points;
-  gint              n_gdk_points;
-  gint              xmax, ymax;
-  gdouble           x, y;
-  gint              i;
+  GimpCanvasItem *item;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (n_bound_segs > 0);
   g_return_if_fail (bound_segs != NULL);
 
-  if (draw_tool->use_cairo)
-    {
-      GimpCanvasItem *item;
+  item = gimp_canvas_boundary_new (bound_segs, n_bound_segs,
+                                   offset_x, offset_y);
 
-      item = gimp_canvas_boundary_new (bound_segs, n_bound_segs,
-                                       offset_x, offset_y);
-
-      draw_tool->items = g_list_append (draw_tool->items, item);
-
-      return;
-    }
-
-  shell = gimp_display_get_shell (draw_tool->display);
-
-  gdk_points = g_new0 (GdkPoint, n_bound_segs + 1);
-  n_gdk_points = 0;
-
-  xmax = shell->disp_width  + 1;
-  ymax = shell->disp_height + 1;
-
-  /* The sorted boundary has sentinel segments inserted at the end of
-   * each group.
-   */
-  for (i = 0; i < n_bound_segs; i++)
-    {
-      if (bound_segs[i].x1 == -1 &&
-          bound_segs[i].y1 == -1 &&
-          bound_segs[i].x2 == -1 &&
-          bound_segs[i].y2 == -1)
-        {
-          /* Group ends */
-          gimp_canvas_draw_lines (GIMP_CANVAS (shell->canvas),
-                                  GIMP_CANVAS_STYLE_XOR_DOTTED,
-                                  gdk_points, n_gdk_points);
-          n_gdk_points = 0;
-          continue;
-        }
-
-      if (n_gdk_points == 0)
-        {
-          gimp_display_shell_transform_xy_f (shell,
-                                             bound_segs[i].x1 + offset_x,
-                                             bound_segs[i].y1 + offset_y,
-                                             &x, &y);
-
-          gdk_points[0].x = PROJ_ROUND (CLAMP (x, -1, xmax));
-          gdk_points[0].y = PROJ_ROUND (CLAMP (y, -1, ymax));
-
-          /*  If this segment is a closing segment && the segments lie inside
-           *  the region, OR if this is an opening segment and the segments
-           *  lie outside the region...
-           *  we need to transform it by one display pixel
-           */
-          if (! bound_segs[i].open)
-            {
-              /*  If it is vertical  */
-              if (bound_segs[i].x1 == bound_segs[i].x2)
-                {
-                  gdk_points[0].x -= 1;
-                }
-              else
-                {
-                  gdk_points[0].y -= 1;
-                }
-            }
-
-          n_gdk_points++;
-        }
-
-      g_assert (n_gdk_points < n_bound_segs + 1);
-
-      gimp_display_shell_transform_xy_f (shell,
-                                         bound_segs[i].x2 + offset_x,
-                                         bound_segs[i].y2 + offset_y,
-                                         &x, &y);
-
-      gdk_points[n_gdk_points].x = PROJ_ROUND (CLAMP (x, -1, xmax));
-      gdk_points[n_gdk_points].y = PROJ_ROUND (CLAMP (y, -1, ymax));
-
-      /*  If this segment is a closing segment && the segments lie inside
-       *  the region, OR if this is an opening segment and the segments
-       *  lie outside the region...
-       *  we need to transform it by one display pixel
-       */
-      if (! bound_segs[i].open)
-        {
-          /*  If it is vertical  */
-          if (bound_segs[i].x1 == bound_segs[i].x2)
-            {
-              gdk_points[n_gdk_points    ].x -= 1;
-              gdk_points[n_gdk_points - 1].x -= 1;
-            }
-          else
-            {
-              gdk_points[n_gdk_points    ].y -= 1;
-              gdk_points[n_gdk_points - 1].y -= 1;
-            }
-        }
-
-      n_gdk_points++;
-    }
-
-  g_free (gdk_points);
+  draw_tool->items = g_list_append (draw_tool->items, item);
 }
 
 void
