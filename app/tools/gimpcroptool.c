@@ -178,6 +178,8 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
 
   crop_tool->current_image = NULL;
+
+  GIMP_DRAW_TOOL (crop_tool)->use_cairo = TRUE;
 }
 
 static GObject *
