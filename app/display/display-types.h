@@ -25,10 +25,10 @@
 
 
 typedef struct _GimpCanvas            GimpCanvas;
+typedef struct _GimpCanvasItem        GimpCanvasItem;
 
 typedef struct _GimpDisplay           GimpDisplay;
 typedef struct _GimpDisplayShell      GimpDisplayShell;
-/* typedef struct _GimpDisplayOptions GimpDisplayOptions; in config-types.h */
 
 typedef struct _GimpImageWindow       GimpImageWindow;
 
