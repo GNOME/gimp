@@ -427,18 +427,27 @@ gimp_config_serialize_value (const GValue *value,
   if (GIMP_VALUE_HOLDS_MATRIX2 (value))
     {
       GimpMatrix2 *trafo;
-      gchar        buf[4][G_ASCII_DTOSTR_BUF_SIZE];
-      gint         i, j, k;
 
       trafo = g_value_get_boxed (value);
 
-      for (i = 0, k = 0; i < 2; i++)
-        for (j = 0; j < 2; j++, k++)
-          g_ascii_formatd (buf[k],
-                           G_ASCII_DTOSTR_BUF_SIZE, "%f", trafo->coeff[i][j]);
+      if (trafo)
+        {
+          gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
+          gint  i, j, k;
 
-      g_string_append_printf (str, "(matrix %s %s %s %s)",
-                              buf[0], buf[1], buf[2], buf[3]);
+          for (i = 0, k = 0; i < 2; i++)
+            for (j = 0; j < 2; j++, k++)
+              g_ascii_formatd (buf[k],
+                               G_ASCII_DTOSTR_BUF_SIZE, "%f", trafo->coeff[i][j]);
+
+          g_string_append_printf (str, "(matrix %s %s %s %s)",
+                                  buf[0], buf[1], buf[2], buf[3]);
+        }
+      else
+        {
+          g_string_append (str, "(matrix 1.0 1.0 1.0 1.0)");
+        }
+
       return TRUE;
     }
 
@@ -494,26 +503,32 @@ gimp_config_serialize_rgb (const GValue *value,
                            gboolean      has_alpha)
 {
   GimpRGB *rgb;
-  gchar    buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
   rgb = g_value_get_boxed (value);
 
-  g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->r);
-  g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->g);
-  g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->b);
-
-  if (has_alpha)
+  if (rgb)
     {
-      g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->a);
+      gchar buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
-      g_string_append_printf (str, "(color-rgba %s %s %s %s)",
-                              buf[0], buf[1], buf[2], buf[3]);
-    }
-  else
-    {
-      g_string_append_printf (str, "(color-rgb %s %s %s)",
-                              buf[0], buf[1], buf[2]);
+      g_ascii_formatd (buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->r);
+      g_ascii_formatd (buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->g);
+      g_ascii_formatd (buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->b);
+
+      if (has_alpha)
+        {
+          g_ascii_formatd (buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", rgb->a);
+
+          g_string_append_printf (str, "(color-rgba %s %s %s %s)",
+                                  buf[0], buf[1], buf[2], buf[3]);
+        }
+      else
+        {
+          g_string_append_printf (str, "(color-rgb %s %s %s)",
+                                  buf[0], buf[1], buf[2]);
+        }
+
+      return TRUE;
     }
 
-  return TRUE;
+  return FALSE;
 }
