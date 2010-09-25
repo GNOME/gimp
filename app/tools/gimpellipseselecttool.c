@@ -110,11 +110,11 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
                 "y2", &y2,
                 NULL);
 
-  gimp_draw_tool_draw_arc (draw_tool,
-                           FALSE,
-                           x1, y1,
-                           x2 - x1, y2 - y1,
-                           0.0, 2 * G_PI);
+  gimp_draw_tool_add_arc (draw_tool,
+                          FALSE,
+                          x1, y1,
+                          x2 - x1, y2 - y1,
+                          0.0, 2 * G_PI);
 }
 
 static void

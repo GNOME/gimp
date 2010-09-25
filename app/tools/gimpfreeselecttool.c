@@ -1541,9 +1541,9 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                         tool->display,
                                         NO_CLICK_TIME_AVAILABLE,
                                         &coords);
-  gimp_draw_tool_draw_lines (draw_tool,
-                             priv->points, priv->n_points,
-                             FALSE);
+  gimp_draw_tool_add_lines (draw_tool,
+                            priv->points, priv->n_points,
+                            FALSE);
 
   /* We always show the handle for the first point, even with button1
    * down, since releasing the button on the first point will close
@@ -1592,11 +1592,11 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
             handle_type = GIMP_HANDLE_CIRCLE;
 
           if (handle_type != -1)
-            gimp_draw_tool_draw_handle (draw_tool, handle_type,
-                                        point->x,
-                                        point->y,
-                                        HANDLE_SIZE, HANDLE_SIZE,
-                                        GTK_ANCHOR_CENTER);
+            gimp_draw_tool_add_handle (draw_tool, handle_type,
+                                       point->x,
+                                       point->y,
+                                       HANDLE_SIZE, HANDLE_SIZE,
+                                       GTK_ANCHOR_CENTER);
         }
     }
 
@@ -1604,11 +1604,11 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpVector2 last = priv->points[priv->n_points - 1];
 
-      gimp_draw_tool_draw_line (draw_tool,
-                                last.x,
-                                last.y,
-                                priv->pending_point.x,
-                                priv->pending_point.y);
+      gimp_draw_tool_add_line (draw_tool,
+                               last.x,
+                               last.y,
+                               priv->pending_point.x,
+                               priv->pending_point.y);
     }
 }
 

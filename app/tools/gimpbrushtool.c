@@ -336,16 +336,16 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
 #undef EPSILON
             }
 
-          gimp_draw_tool_draw_boundary (draw_tool,
-                                        brush_core->transformed_brush_bound_segs,
-                                        brush_core->n_brush_bound_segs,
-                                        x, y);
+          gimp_draw_tool_add_boundary (draw_tool,
+                                       brush_core->transformed_brush_bound_segs,
+                                       brush_core->n_brush_bound_segs,
+                                       x, y);
         }
       else if (draw_fallback)
         {
-          gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CROSS,
-                                      x, y,
-                                      5, 5, GTK_ANCHOR_CENTER);
+          gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
+                                     x, y,
+                                     5, 5, GTK_ANCHOR_CENTER);
         }
     }
 }

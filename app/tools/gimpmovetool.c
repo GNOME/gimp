@@ -794,9 +794,9 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
 
   if (move->moving_guide && move->guide_position != -1)
     {
-      gimp_draw_tool_draw_guide_line (draw_tool,
-                                      move->guide_orientation,
-                                      move->guide_position);
+      gimp_draw_tool_add_guide_line (draw_tool,
+                                     move->guide_orientation,
+                                     move->guide_position);
     }
 }
 

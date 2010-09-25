@@ -362,9 +362,9 @@ gimp_magnify_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMagnifyTool *magnify = GIMP_MAGNIFY_TOOL (draw_tool);
 
-  gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                 magnify->x,
-                                 magnify->y,
-                                 magnify->w,
-                                 magnify->h);
+  gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                magnify->x,
+                                magnify->y,
+                                magnify->w,
+                                magnify->h);
 }

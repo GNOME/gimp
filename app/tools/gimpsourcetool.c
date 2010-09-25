@@ -382,12 +382,12 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
                                     source_tool->src_y + off_y,
                                     FALSE);
 
-      gimp_draw_tool_draw_handle (draw_tool,
-                                  GIMP_HANDLE_CROSS,
-                                  source_tool->src_x + off_x,
-                                  source_tool->src_y + off_y,
-                                  TARGET_SIZE, TARGET_SIZE,
-                                  GTK_ANCHOR_CENTER);
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_CROSS,
+                                 source_tool->src_x + off_x,
+                                 source_tool->src_y + off_y,
+                                 TARGET_SIZE, TARGET_SIZE,
+                                 GTK_ANCHOR_CENTER);
 
       draw_tool->display = tmp_display;
     }

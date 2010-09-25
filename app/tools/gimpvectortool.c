@@ -1424,10 +1424,10 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
           if (coords)
             {
               if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE);
+                gimp_draw_tool_add_strokes (draw_tool,
+                                            &g_array_index (coords,
+                                                            GimpCoords, 0),
+                                            coords->len, FALSE);
 
               g_array_free (coords, TRUE);
             }
@@ -1442,15 +1442,15 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
           if (cur_anchor->type == GIMP_ANCHOR_ANCHOR)
             {
-              gimp_draw_tool_draw_handle (draw_tool,
-                                          cur_anchor->selected ?
-                                          GIMP_HANDLE_CIRCLE :
-                                          GIMP_HANDLE_FILLED_CIRCLE,
-                                          cur_anchor->position.x,
-                                          cur_anchor->position.y,
-                                          TARGET,
-                                          TARGET,
-                                          GTK_ANCHOR_CENTER);
+              gimp_draw_tool_add_handle (draw_tool,
+                                         cur_anchor->selected ?
+                                         GIMP_HANDLE_CIRCLE :
+                                         GIMP_HANDLE_FILLED_CIRCLE,
+                                         cur_anchor->position.x,
+                                         cur_anchor->position.y,
+                                         TARGET,
+                                         TARGET,
+                                         GTK_ANCHOR_CENTER);
             }
         }
 
@@ -1471,7 +1471,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                     {
                       GimpCanvasItem *item;
 
-                      item = gimp_draw_tool_draw_line
+                      item = gimp_draw_tool_add_line
                         (draw_tool,
                          g_array_index (coords, GimpCoords, i).x,
                          g_array_index (coords, GimpCoords, i).y,
@@ -1492,13 +1492,13 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
             {
               cur_anchor = GIMP_ANCHOR (list->data);
 
-              gimp_draw_tool_draw_handle (draw_tool,
-                                          GIMP_HANDLE_SQUARE,
-                                          cur_anchor->position.x,
-                                          cur_anchor->position.y,
-                                          TARGET - 3,
-                                          TARGET - 3,
-                                          GTK_ANCHOR_CENTER);
+              gimp_draw_tool_add_handle (draw_tool,
+                                         GIMP_HANDLE_SQUARE,
+                                         cur_anchor->position.x,
+                                         cur_anchor->position.y,
+                                         TARGET - 3,
+                                         TARGET - 3,
+                                         GTK_ANCHOR_CENTER);
             }
 
           g_list_free (draw_anchors);
@@ -1541,10 +1541,10 @@ gimp_vector_tool_vectors_visible (GimpVectors    *vectors,
           if (coords)
             {
               if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE);
+                gimp_draw_tool_add_strokes (draw_tool,
+                                            &g_array_index (coords,
+                                                            GimpCoords, 0),
+                                            coords->len, FALSE);
 
               g_array_free (coords, TRUE);
             }

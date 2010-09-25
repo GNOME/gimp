@@ -1736,11 +1736,11 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_rectangle_tool_draw_guides (draw_tool);
 
-  gimp_draw_tool_draw_rectangle (draw_tool, FALSE,
-                                 pub_x1,
-                                 pub_y1,
-                                 pub_x2 - pub_x1,
-                                 pub_y2 - pub_y1);
+  gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                pub_x1,
+                                pub_y1,
+                                pub_x2 - pub_x1,
+                                pub_y2 - pub_y1);
 
   switch (private->function)
     {
@@ -1749,13 +1749,13 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       if (gimp_tool_control_is_active (tool->control))
         {
           /* Mark the center because we snap to it */
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_CROSS,
-                                      (pub_x1 + pub_x2) / 2.0,
-                                      (pub_y1 + pub_y2) / 2.0,
-                                      CENTER_CROSS_SIZE,
-                                      CENTER_CROSS_SIZE,
-                                      GTK_ANCHOR_CENTER);
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CROSS,
+                                     (pub_x1 + pub_x2) / 2.0,
+                                     (pub_y1 + pub_y2) / 2.0,
+                                     CENTER_CROSS_SIZE,
+                                     CENTER_CROSS_SIZE,
+                                     GTK_ANCHOR_CENTER);
           break;
         }
       else
@@ -1765,65 +1765,65 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 
     case GIMP_RECTANGLE_TOOL_DEAD:
     case GIMP_RECTANGLE_TOOL_CREATING:
-      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->corner_handle_w,
-                                  private->corner_handle_h,
-                                  GTK_ANCHOR_NORTH_WEST);
-      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->corner_handle_w,
-                                  private->corner_handle_h,
-                                  GTK_ANCHOR_NORTH_EAST);
-      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->corner_handle_w,
-                                  private->corner_handle_h,
-                                  GTK_ANCHOR_SOUTH_WEST);
-      gimp_draw_tool_draw_corner (draw_tool, FALSE, private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->corner_handle_w,
-                                  private->corner_handle_h,
-                                  GTK_ANCHOR_SOUTH_EAST);
+      gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->corner_handle_w,
+                                 private->corner_handle_h,
+                                 GTK_ANCHOR_NORTH_WEST);
+      gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->corner_handle_w,
+                                 private->corner_handle_h,
+                                 GTK_ANCHOR_NORTH_EAST);
+      gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->corner_handle_w,
+                                 private->corner_handle_h,
+                                 GTK_ANCHOR_SOUTH_WEST);
+      gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->corner_handle_w,
+                                 private->corner_handle_h,
+                                 GTK_ANCHOR_SOUTH_EAST);
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
     case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
-      gimp_draw_tool_draw_corner (draw_tool,
-                                  ! gimp_tool_control_is_active (tool->control),
-                                  private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->top_and_bottom_handle_w,
-                                  private->corner_handle_h,
-                                  gimp_rectangle_tool_get_anchor (private));
+      gimp_draw_tool_add_corner (draw_tool,
+                                 ! gimp_tool_control_is_active (tool->control),
+                                 private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->top_and_bottom_handle_w,
+                                 private->corner_handle_h,
+                                 gimp_rectangle_tool_get_anchor (private));
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
     case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
-      gimp_draw_tool_draw_corner (draw_tool,
-                                  ! gimp_tool_control_is_active (tool->control),
-                                  private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->corner_handle_w,
-                                  private->left_and_right_handle_h,
-                                  gimp_rectangle_tool_get_anchor (private));
+      gimp_draw_tool_add_corner (draw_tool,
+                                 ! gimp_tool_control_is_active (tool->control),
+                                 private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->corner_handle_w,
+                                 private->left_and_right_handle_h,
+                                 gimp_rectangle_tool_get_anchor (private));
       break;
 
     default:
-      gimp_draw_tool_draw_corner (draw_tool,
-                                  ! gimp_tool_control_is_active (tool->control),
-                                  private->narrow_mode,
-                                  pub_x1, pub_y1,
-                                  pub_x2, pub_y2,
-                                  private->corner_handle_w,
-                                  private->corner_handle_h,
-                                  gimp_rectangle_tool_get_anchor (private));
+      gimp_draw_tool_add_corner (draw_tool,
+                                 ! gimp_tool_control_is_active (tool->control),
+                                 private->narrow_mode,
+                                 pub_x1, pub_y1,
+                                 pub_x2, pub_y2,
+                                 private->corner_handle_w,
+                                 private->corner_handle_h,
+                                 gimp_rectangle_tool_get_anchor (private));
       break;
     }
 }
@@ -1846,77 +1846,77 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
       break;
 
     case GIMP_RECTANGLE_GUIDE_CENTER_LINES:
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, (y1 + y2) / 2,
-                                x2, (y1 + y2) / 2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                (x1 + x2) / 2, y1,
-                                (x1 + x2) / 2, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, (y1 + y2) / 2,
+                               x2, (y1 + y2) / 2);
+      gimp_draw_tool_add_line (draw_tool,
+                               (x1 + x2) / 2, y1,
+                               (x1 + x2) / 2, y2);
       break;
 
     case GIMP_RECTANGLE_GUIDE_THIRDS:
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, (2 * y1 + y2) / 3,
-                                x2, (2 * y1 + y2) / 3);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, (y1 + 2 * y2) / 3,
-                                x2, (y1 + 2 * y2) / 3);
-      gimp_draw_tool_draw_line (draw_tool,
-                                (2 * x1 + x2) / 3, y1,
-                                (2 * x1 + x2) / 3, y2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                (x1 + 2 * x2) / 3, y1,
-                                (x1 + 2 * x2) / 3, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, (2 * y1 + y2) / 3,
+                               x2, (2 * y1 + y2) / 3);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, (y1 + 2 * y2) / 3,
+                               x2, (y1 + 2 * y2) / 3);
+      gimp_draw_tool_add_line (draw_tool,
+                               (2 * x1 + x2) / 3, y1,
+                               (2 * x1 + x2) / 3, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               (x1 + 2 * x2) / 3, y1,
+                               (x1 + 2 * x2) / 3, y2);
       break;
 
     case GIMP_RECTANGLE_GUIDE_FIFTHS:
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, y1 + (y2 - y1) / 5,
-                                x2, y1 + (y2 - y1) / 5);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, y1 + 2 * (y2 - y1) / 5,
-                                x2, y1 + 2 * (y2 - y1) / 5);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, y1 + 3 * (y2 - y1) / 5,
-                                x2, y1 + 3 * (y2 - y1) / 5);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1, y1 + 4 * (y2 - y1) / 5,
-                                x2, y1 + 4 * (y2 - y1) / 5);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1 + (x2 - x1) / 5, y1,
-                                x1 + (x2 - x1) / 5, y2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1 + 2 * (x2 - x1) / 5, y1,
-                                x1 + 2 * (x2 - x1) / 5, y2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1 + 3 * (x2 - x1) / 5, y1,
-                                x1 + 3 * (x2 - x1) / 5, y2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1 + 4 * (x2 - x1) / 5, y1,
-                                x1 + 4 * (x2 - x1) / 5, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, y1 + (y2 - y1) / 5,
+                               x2, y1 + (y2 - y1) / 5);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, y1 + 2 * (y2 - y1) / 5,
+                               x2, y1 + 2 * (y2 - y1) / 5);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, y1 + 3 * (y2 - y1) / 5,
+                               x2, y1 + 3 * (y2 - y1) / 5);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1, y1 + 4 * (y2 - y1) / 5,
+                               x2, y1 + 4 * (y2 - y1) / 5);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1 + (x2 - x1) / 5, y1,
+                               x1 + (x2 - x1) / 5, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1 + 2 * (x2 - x1) / 5, y1,
+                               x1 + 2 * (x2 - x1) / 5, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1 + 3 * (x2 - x1) / 5, y1,
+                               x1 + 3 * (x2 - x1) / 5, y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1 + 4 * (x2 - x1) / 5, y1,
+                               x1 + 4 * (x2 - x1) / 5, y2);
       break;
 
     case GIMP_RECTANGLE_GUIDE_GOLDEN:
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1,
-                                (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5),
-                                x2,
-                                (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5));
-      gimp_draw_tool_draw_line (draw_tool,
-                                x1,
-                                ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5),
-                                x2,
-                                ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5));
-      gimp_draw_tool_draw_line (draw_tool,
-                                (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
-                                y1,
-                                (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
-                                y2);
-      gimp_draw_tool_draw_line (draw_tool,
-                                ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
-                                y1,
-                                ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
-                                y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               x1,
+                               (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5),
+                               x2,
+                               (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5));
+      gimp_draw_tool_add_line (draw_tool,
+                               x1,
+                               ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5),
+                               x2,
+                               ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5));
+      gimp_draw_tool_add_line (draw_tool,
+                               (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
+                               y1,
+                               (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
+                               y2);
+      gimp_draw_tool_add_line (draw_tool,
+                               ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
+                               y1,
+                               ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
+                               y2);
       break;
 
     /* This code implements the method of diagonals discovered by
@@ -1930,14 +1930,14 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
         const gdouble square_side = MIN (x2 - x1, y2 - y1);
 
         /* diagonal from the top-left edge */
-        gimp_draw_tool_draw_line (draw_tool,
-                                  x1, y1,
-                                  x1 + square_side, y1 + square_side);
+        gimp_draw_tool_add_line (draw_tool,
+                                 x1, y1,
+                                 x1 + square_side, y1 + square_side);
 
         /* diagonal from the top-right edge */
-        gimp_draw_tool_draw_line (draw_tool,
-                                  x2, y1,
-                                  x2 - square_side, y1 + square_side);
+        gimp_draw_tool_add_line (draw_tool,
+                                 x2, y1,
+                                 x2 - square_side, y1 + square_side);
 
         /* If user selected a square, we cannot draw from bottom points
          * as we would erase the guides drawn from the top points
@@ -1945,14 +1945,14 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
         if ((x1 + square_side != x2) || (y1 + square_side != y2))
           {
             /* diagonal from the bottom-left edge */
-            gimp_draw_tool_draw_line (draw_tool,
-                                      x1, y2,
-                                      x1 + square_side, y2 - square_side);
+            gimp_draw_tool_add_line (draw_tool,
+                                     x1, y2,
+                                     x1 + square_side, y2 - square_side);
 
             /* diagonal from the bottom-right edge */
-            gimp_draw_tool_draw_line (draw_tool,
-                                      x2, y2,
-                                      x2 - square_side, y2 - square_side);
+            gimp_draw_tool_add_line (draw_tool,
+                                     x2, y2,
+                                     x2 - square_side, y2 - square_side);
           }
       }
       break;

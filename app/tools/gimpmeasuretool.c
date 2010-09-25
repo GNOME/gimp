@@ -670,32 +670,32 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
     {
       if (i == 0 && measure->num_points == 3)
         {
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_CIRCLE,
-                                      measure->x[i],
-                                      measure->y[i],
-                                      TARGET,
-                                      TARGET,
-                                      GTK_ANCHOR_CENTER);
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CIRCLE,
+                                     measure->x[i],
+                                     measure->y[i],
+                                     TARGET,
+                                     TARGET,
+                                     GTK_ANCHOR_CENTER);
         }
       else
         {
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_CROSS,
-                                      measure->x[i],
-                                      measure->y[i],
-                                      TARGET * 2,
-                                      TARGET * 2,
-                                      GTK_ANCHOR_CENTER);
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CROSS,
+                                     measure->x[i],
+                                     measure->y[i],
+                                     TARGET * 2,
+                                     TARGET * 2,
+                                     GTK_ANCHOR_CENTER);
         }
 
       if (i > 0)
         {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    measure->x[0],
-                                    measure->y[0],
-                                    measure->x[i],
-                                    measure->y[i]);
+          gimp_draw_tool_add_line (draw_tool,
+                                   measure->x[0],
+                                   measure->y[0],
+                                   measure->x[i],
+                                   measure->y[i]);
 
           /*  only draw the arc if the lines are long enough  */
           if (gimp_draw_tool_calc_distance (draw_tool, tool->display,
@@ -724,13 +724,13 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
         {
           GimpCanvasItem *item;
 
-          item = gimp_draw_tool_draw_handle (draw_tool,
-                                             GIMP_HANDLE_CIRCLE,
-                                             measure->x[0],
-                                             measure->y[0],
-                                             ARC_RADIUS * 2 + 1,
-                                             ARC_RADIUS * 2 + 1,
-                                             GTK_ANCHOR_CENTER);
+          item = gimp_draw_tool_add_handle (draw_tool,
+                                            GIMP_HANDLE_CIRCLE,
+                                            measure->x[0],
+                                            measure->y[0],
+                                            ARC_RADIUS * 2 + 1,
+                                            ARC_RADIUS * 2 + 1,
+                                            GTK_ANCHOR_CENTER);
 
           gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
                                          angle1, angle2);
@@ -746,13 +746,13 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
               target     = FUNSCALEX (shell, (TARGET >> 1));
               arc_radius = FUNSCALEX (shell, ARC_RADIUS);
 
-              gimp_draw_tool_draw_line (draw_tool,
-                                        measure->x[0],
-                                        measure->y[0],
-                                        (measure->x[1] >= measure->x[0] ?
-                                         measure->x[0] + arc_radius + target :
-                                         measure->x[0] - arc_radius - target),
-                                        measure->y[0]);
+              gimp_draw_tool_add_line (draw_tool,
+                                       measure->x[0],
+                                       measure->y[0],
+                                       (measure->x[1] >= measure->x[0] ?
+                                        measure->x[0] + arc_radius + target :
+                                        measure->x[0] - arc_radius - target),
+                                       measure->y[0]);
             }
         }
     }

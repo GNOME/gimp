@@ -813,7 +813,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 
       overwrite = text_tool->overwrite_mode && cursor_rect.width > 0;
 
-      gimp_draw_tool_draw_text_cursor (draw_tool, &cursor_rect, overwrite);
+      gimp_draw_tool_add_text_cursor (draw_tool, &cursor_rect, overwrite);
     }
 }
 
@@ -871,9 +871,9 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
           rect.x += offset_x;
           rect.y += offset_y;
 
-          gimp_draw_tool_draw_rectangle (draw_tool, TRUE,
-                                         rect.x, rect.y,
-                                         rect.width, rect.height);
+          gimp_draw_tool_add_rectangle (draw_tool, TRUE,
+                                        rect.x, rect.y,
+                                        rect.width, rect.height);
         }
     }
   while (pango_layout_iter_next_char (iter));

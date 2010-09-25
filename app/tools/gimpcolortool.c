@@ -575,14 +575,14 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
             {
               GimpImage *image = gimp_display_get_image (draw_tool->display);
 
-              gimp_draw_tool_draw_line (draw_tool,
-                                        0, color_tool->sample_point_y + 0.5,
-                                        gimp_image_get_width (image),
-                                        color_tool->sample_point_y + 0.5);
-              gimp_draw_tool_draw_line (draw_tool,
-                                        color_tool->sample_point_x + 0.5, 0,
-                                        color_tool->sample_point_x + 0.5,
-                                        gimp_image_get_height (image));
+              gimp_draw_tool_add_line (draw_tool,
+                                       0, color_tool->sample_point_y + 0.5,
+                                       gimp_image_get_width (image),
+                                       color_tool->sample_point_y + 0.5);
+              gimp_draw_tool_add_line (draw_tool,
+                                       color_tool->sample_point_x + 0.5, 0,
+                                       color_tool->sample_point_x + 0.5,
+                                       gimp_image_get_height (image));
             }
         }
       else
@@ -591,12 +591,12 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
             {
               gdouble radius = color_tool->options->average_radius;
 
-              gimp_draw_tool_draw_rectangle (draw_tool,
-                                             FALSE,
-                                             color_tool->center_x - radius,
-                                             color_tool->center_y - radius,
-                                             2 * radius + 1,
-                                             2 * radius + 1);
+              gimp_draw_tool_add_rectangle (draw_tool,
+                                            FALSE,
+                                            color_tool->center_x - radius,
+                                            color_tool->center_y - radius,
+                                            2 * radius + 1,
+                                            2 * radius + 1);
             }
         }
     }

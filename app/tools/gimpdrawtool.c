@@ -170,16 +170,6 @@ gimp_draw_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
-                         GimpCanvasItem *item)
-{
-  if (! draw_tool->item)
-    draw_tool->item = gimp_canvas_group_new ();
-
-  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
-}
-
-static void
 gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
 {
   if (draw_tool->item)
@@ -371,8 +361,21 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
   return SQR (tx2 - tx1) + SQR (ty2 - ty1);
 }
 
+void
+gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
+                         GimpCanvasItem *item)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (draw_tool));
+
+  if (! draw_tool->item)
+    draw_tool->item = gimp_canvas_group_new ();
+
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
+}
+
 /**
- * gimp_draw_tool_draw_line:
+ * gimp_draw_tool_add_line:
  * @draw_tool:   the #GimpDrawTool
  * @x1:          start point X in image coordinates
  * @y1:          start point Y in image coordinates
@@ -384,11 +387,11 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
  * coordindates.
  **/
 GimpCanvasItem *
-gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
-                          gdouble       x1,
-                          gdouble       y1,
-                          gdouble       x2,
-                          gdouble       y2)
+gimp_draw_tool_add_line (GimpDrawTool *draw_tool,
+                         gdouble       x1,
+                         gdouble       y1,
+                         gdouble       x2,
+                         gdouble       y2)
 {
   GimpCanvasItem *item;
 
@@ -411,9 +414,9 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
  * This function draws a guide line across the canvas.
  **/
 GimpCanvasItem *
-gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
-                                GimpOrientationType  orientation,
-                                gint                 position)
+gimp_draw_tool_add_guide_line (GimpDrawTool        *draw_tool,
+                               GimpOrientationType  orientation,
+                               gint                 position)
 {
   GimpCanvasItem *item;
 
@@ -428,7 +431,7 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
 }
 
 /**
- * gimp_draw_tool_draw_rectangle:
+ * gimp_draw_tool_add_rectangle:
  * @draw_tool:   the #GimpDrawTool
  * @filled:      whether to fill the rectangle
  * @x:           horizontal image coordinate
@@ -440,12 +443,12 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
  * screen window coordinates, then draws the resulting rectangle.
  **/
 GimpCanvasItem *
-gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
-                               gboolean      filled,
-                               gdouble       x,
-                               gdouble       y,
-                               gdouble       width,
-                               gdouble       height)
+gimp_draw_tool_add_rectangle (GimpDrawTool *draw_tool,
+                              gboolean      filled,
+                              gdouble       x,
+                              gdouble       y,
+                              gdouble       width,
+                              gdouble       height)
 {
   GimpCanvasItem *item;
 
@@ -460,14 +463,14 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
-                         gboolean      filled,
-                         gdouble       x,
-                         gdouble       y,
-                         gdouble       width,
-                         gdouble       height,
-                         gdouble       start_angle,
-                         gdouble       slice_angle)
+gimp_draw_tool_add_arc (GimpDrawTool *draw_tool,
+                        gboolean      filled,
+                        gdouble       x,
+                        gdouble       y,
+                        gdouble       width,
+                        gdouble       height,
+                        gdouble       start_angle,
+                        gdouble       slice_angle)
 {
   GimpCanvasItem *item;
 
@@ -488,13 +491,13 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
-                            GimpHandleType  type,
-                            gdouble         x,
-                            gdouble         y,
-                            gint            width,
-                            gint            height,
-                            GtkAnchorType   anchor)
+gimp_draw_tool_add_handle (GimpDrawTool   *draw_tool,
+                           GimpHandleType  type,
+                           gdouble         x,
+                           gdouble         y,
+                           gint            width,
+                           gint            height,
+                           GtkAnchorType   anchor)
 {
   GimpCanvasItem *item;
 
@@ -509,7 +512,7 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
 }
 
 /**
- * gimp_draw_tool_draw_corner:
+ * gimp_draw_tool_add_corner:
  * @draw_tool:   the #GimpDrawTool
  * @highlight:
  * @put_outside: whether to put the handles on the outside of the rectangle
@@ -526,16 +529,16 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
  * rectangle outline, taking care of not drawing over an already drawn line.
  **/
 GimpCanvasItem *
-gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
-                            gboolean        highlight,
-                            gboolean        put_outside,
-                            gdouble         x1,
-                            gdouble         y1,
-                            gdouble         x2,
-                            gdouble         y2,
-                            gint            width,
-                            gint            height,
-                            GtkAnchorType   anchor)
+gimp_draw_tool_add_corner (GimpDrawTool   *draw_tool,
+                           gboolean        highlight,
+                           gboolean        put_outside,
+                           gdouble         x1,
+                           gdouble         y1,
+                           gdouble         x2,
+                           gdouble         y2,
+                           gint            width,
+                           gint            height,
+                           GtkAnchorType   anchor)
 {
   GimpCanvasItem *item;
 
@@ -552,10 +555,10 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
-                           const GimpVector2 *points,
-                           gint               n_points,
-                           gboolean           filled)
+gimp_draw_tool_add_lines (GimpDrawTool      *draw_tool,
+                          const GimpVector2 *points,
+                          gint               n_points,
+                          gboolean           filled)
 {
   GimpCanvasItem *item;
 
@@ -573,10 +576,10 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
-                             const GimpCoords *points,
-                             gint              n_points,
-                             gboolean          filled)
+gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
+                            const GimpCoords *points,
+                            gint              n_points,
+                            gboolean          filled)
 {
   GimpCanvasItem *item;
 
@@ -594,7 +597,7 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
 }
 
 /**
- * gimp_draw_tool_draw_boundary:
+ * gimp_draw_tool_add_boundary:
  * @draw_tool:    a #GimpDrawTool
  * @bound_segs:   the sorted brush outline
  * @n_bound_segs: the number of segments in @bound_segs
@@ -607,11 +610,11 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
  * indicate the end of connected segment sequences (groups) .
  */
 GimpCanvasItem *
-gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
-                              const BoundSeg *bound_segs,
-                              gint            n_bound_segs,
-                              gdouble         offset_x,
-                              gdouble         offset_y)
+gimp_draw_tool_add_boundary (GimpDrawTool   *draw_tool,
+                             const BoundSeg *bound_segs,
+                             gint            n_bound_segs,
+                             gdouble         offset_x,
+                             gdouble         offset_y)
 {
   GimpCanvasItem *item;
 
@@ -629,9 +632,9 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
-                                 PangoRectangle *cursor,
-                                 gboolean        overwrite)
+gimp_draw_tool_add_text_cursor (GimpDrawTool   *draw_tool,
+                                PangoRectangle *cursor,
+                                gboolean        overwrite)
 {
   GimpCanvasItem *item;
 

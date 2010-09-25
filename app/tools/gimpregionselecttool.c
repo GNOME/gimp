@@ -328,10 +328,10 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
           gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
         }
 
-      gimp_draw_tool_draw_boundary (draw_tool,
-                                    region_sel->segs,
-                                    region_sel->n_segs,
-                                    off_x, off_y);
+      gimp_draw_tool_add_boundary (draw_tool,
+                                   region_sel->segs,
+                                   region_sel->n_segs,
+                                   off_x, off_y);
     }
 }
 

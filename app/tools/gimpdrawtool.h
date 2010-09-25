@@ -82,21 +82,23 @@ gdouble          gimp_draw_tool_calc_distance_square (GimpDrawTool     *draw_too
                                                       gdouble           x2,
                                                       gdouble           y2);
 
-GimpCanvasItem * gimp_draw_tool_draw_line            (GimpDrawTool     *draw_tool,
+void             gimp_draw_tool_add_item             (GimpDrawTool     *draw_tool,
+                                                      GimpCanvasItem   *item);
+GimpCanvasItem * gimp_draw_tool_add_line             (GimpDrawTool     *draw_tool,
                                                       gdouble           x1,
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
-GimpCanvasItem * gimp_draw_tool_draw_guide_line      (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_guide_line       (GimpDrawTool     *draw_tool,
                                                       GimpOrientationType  orientation,
                                                       gint              position);
-GimpCanvasItem * gimp_draw_tool_draw_rectangle       (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_rectangle        (GimpDrawTool     *draw_tool,
                                                       gboolean          filled,
                                                       gdouble           x,
                                                       gdouble           y,
                                                       gdouble           width,
                                                       gdouble           height);
-GimpCanvasItem * gimp_draw_tool_draw_arc             (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_arc              (GimpDrawTool     *draw_tool,
                                                       gboolean          filled,
                                                       gdouble           x,
                                                       gdouble           y,
@@ -105,14 +107,14 @@ GimpCanvasItem * gimp_draw_tool_draw_arc             (GimpDrawTool     *draw_too
                                                       gdouble           start_angle,
                                                       gdouble           slice_angle);
 
-GimpCanvasItem * gimp_draw_tool_draw_handle          (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_handle           (GimpDrawTool     *draw_tool,
                                                       GimpHandleType    type,
                                                       gdouble           x,
                                                       gdouble           y,
                                                       gint              width,
                                                       gint              height,
                                                       GtkAnchorType     anchor);
-GimpCanvasItem * gimp_draw_tool_draw_corner          (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_corner           (GimpDrawTool     *draw_tool,
                                                       gboolean          highlight,
                                                       gboolean          put_outside,
                                                       gdouble           x1,
@@ -122,23 +124,23 @@ GimpCanvasItem * gimp_draw_tool_draw_corner          (GimpDrawTool     *draw_too
                                                       gint              width,
                                                       gint              height,
                                                       GtkAnchorType     anchor);
-GimpCanvasItem * gimp_draw_tool_draw_lines           (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_lines            (GimpDrawTool     *draw_tool,
                                                       const GimpVector2 *points,
                                                       gint              n_points,
                                                       gboolean          filled);
 
-GimpCanvasItem * gimp_draw_tool_draw_strokes         (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_strokes          (GimpDrawTool     *draw_tool,
                                                       const GimpCoords *points,
                                                       gint              n_points,
                                                       gboolean          filled);
 
-GimpCanvasItem * gimp_draw_tool_draw_boundary        (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_boundary         (GimpDrawTool     *draw_tool,
                                                       const BoundSeg   *bound_segs,
                                                       gint              n_bound_segs,
                                                       gdouble           offset_x,
                                                       gdouble           offset_y);
 
-GimpCanvasItem * gimp_draw_tool_draw_text_cursor     (GimpDrawTool     *draw_tool,
+GimpCanvasItem * gimp_draw_tool_add_text_cursor      (GimpDrawTool     *draw_tool,
                                                       PangoRectangle   *cursor,
                                                       gboolean          overwrite);
 
