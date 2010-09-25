@@ -117,16 +117,6 @@ GimpCanvasItem * gimp_draw_tool_draw_arc             (GimpDrawTool     *draw_too
                                                       gdouble           start_angle,
                                                       gdouble           slice_angle);
 
-GimpCanvasItem * gimp_draw_tool_draw_arc_by_anchor   (GimpDrawTool     *draw_tool,
-                                                      gboolean          filled,
-                                                      gdouble           x,
-                                                      gdouble           y,
-                                                      gint              width,
-                                                      gint              height,
-                                                      gdouble           start_angle,
-                                                      gdouble           slice_angle,
-                                                      GtkAnchorType     anchor);
-
 GimpCanvasItem * gimp_draw_tool_draw_handle          (GimpDrawTool     *draw_tool,
                                                       GimpHandleType    type,
                                                       gdouble           x,

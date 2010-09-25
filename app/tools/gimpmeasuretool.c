@@ -42,6 +42,7 @@
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvashandle.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
@@ -721,14 +722,18 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
       if (angle2 != 0.0)
         {
-          gimp_draw_tool_draw_arc_by_anchor (draw_tool,
-                                             FALSE,
+          GimpCanvasItem *item;
+
+          item = gimp_draw_tool_draw_handle (draw_tool,
+                                             GIMP_HANDLE_CIRCLE,
                                              measure->x[0],
                                              measure->y[0],
-                                             ARC_RADIUS * 2,
-                                             ARC_RADIUS * 2,
-                                             angle1, angle2,
+                                             ARC_RADIUS * 2 + 1,
+                                             ARC_RADIUS * 2 + 1,
                                              GTK_ANCHOR_CENTER);
+
+          gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
+                                         angle1, angle2);
 
           if (measure->num_points == 2)
             {

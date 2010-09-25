@@ -548,35 +548,6 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 }
 
 GimpCanvasItem *
-gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
-                                   gboolean       filled,
-                                   gdouble        x,
-                                   gdouble        y,
-                                   gint           width,
-                                   gint           height,
-                                   gdouble        start_angle,
-                                   gdouble        slice_angle,
-                                   GtkAnchorType  anchor)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-
-  item = gimp_canvas_handle_new (filled ?
-                                 GIMP_HANDLE_FILLED_CIRCLE :
-                                 GIMP_HANDLE_CIRCLE,
-                                 anchor, x, y, width, height);
-
-  gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
-                                 start_angle, slice_angle);
-
-  gimp_draw_tool_add_item (draw_tool, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-GimpCanvasItem *
 gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
                             GimpHandleType  type,
                             gdouble         x,
