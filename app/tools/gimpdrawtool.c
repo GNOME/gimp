@@ -169,6 +169,24 @@ gimp_draw_tool_control (GimpTool       *tool,
 }
 
 static void
+gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
+                         GimpCanvasItem *item)
+{
+  draw_tool->items = g_list_append (draw_tool->items, g_object_ref (item));
+}
+
+static void
+gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
+{
+  if (draw_tool->items)
+    {
+      g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
+      g_list_free (draw_tool->items);
+      draw_tool->items = NULL;
+    }
+}
+
+static void
 gimp_draw_tool_invalidate_items (GimpDrawTool *draw_tool)
 {
   GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
@@ -183,17 +201,6 @@ gimp_draw_tool_invalidate_items (GimpDrawTool *draw_tool)
       region = gimp_canvas_item_get_extents (item, shell);
       gdk_window_invalidate_region (window, region, TRUE);
       gdk_region_destroy (region);
-    }
-}
-
-static void
-gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
-{
-  if (draw_tool->items)
-    {
-      g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
-      g_list_free (draw_tool->items);
-      draw_tool->items = NULL;
     }
 }
 
@@ -422,7 +429,8 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 
   item = gimp_canvas_line_new (x1, y1, x2, y2);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 /**
@@ -451,7 +459,8 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
   item = gimp_canvas_line_new (x1, y1, x2, y2);
   gimp_canvas_item_set_highlight (item, TRUE);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 /**
@@ -473,7 +482,8 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
 
   item = gimp_canvas_guide_new (orientation, position);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 /**
@@ -502,7 +512,8 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
 
   item = gimp_canvas_rectangle_new (x, y, width, height, filled);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 void
@@ -530,7 +541,8 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                               a1, a2,
                               FALSE);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 void
@@ -559,7 +571,8 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
 
   gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item), a1, a2);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 void
@@ -577,7 +590,8 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
 
   item = gimp_canvas_handle_new (type, anchor, x, y, width, height);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 /**
@@ -617,7 +631,8 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
                                  anchor, width, height, put_outside);
   gimp_canvas_item_set_highlight (item, highlight);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 void
@@ -635,7 +650,8 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
 
   item = gimp_canvas_polygon_new (points, n_points, filled);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 void
@@ -653,7 +669,8 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
 
   item = gimp_canvas_polygon_new_from_coords (points, n_points, filled);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 /**
@@ -685,7 +702,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
   item = gimp_canvas_boundary_new (bound_segs, n_bound_segs,
                                    offset_x, offset_y);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 void
@@ -699,7 +717,8 @@ gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
 
   item = gimp_canvas_text_cursor_new (cursor, overwrite);
 
-  draw_tool->items = g_list_append (draw_tool->items, item);
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
 }
 
 gboolean
