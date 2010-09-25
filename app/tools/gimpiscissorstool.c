@@ -1299,11 +1299,10 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
           ty = coords >> 16;
 
           /*  Is the specified point close enough to the curve?  */
-          if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
-                                        GIMP_TOOL (iscissors)->display,
-                                        tx, ty,
-                                        x, y,
-                                        POINT_WIDTH / 2))
+          if (gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (iscissors),
+                                                   GIMP_TOOL (iscissors)->display,
+                                                   tx, ty,
+                                                   x, y) < SQR (POINT_WIDTH / 2))
             {
               return list;
             }

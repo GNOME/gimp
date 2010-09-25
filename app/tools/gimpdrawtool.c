@@ -372,34 +372,6 @@ gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
 }
 
 /**
- * gimp_draw_tool_in_radius:
- * @draw_tool: a #GimpDrawTool
- * @display:   a #GimpDisplay
- * @x1:        start point X in image coordinates
- * @y1:        start point Y in image coordinates
- * @x2:        end point X in image coordinates
- * @y2:        end point Y in image coordinates
- * @radius:    distance in screen coordinates, not image coordinates
- *
- * The points are in image space coordinates.
- *
- * Returns: %TRUE if the points are within radius of each other,
- *          %FALSE otherwise
- **/
-gboolean
-gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
-                          GimpDisplay  *display,
-                          gdouble       x1,
-                          gdouble       y1,
-                          gdouble       x2,
-                          gdouble       y2,
-                          gint          radius)
-{
-  return (gimp_draw_tool_calc_distance_square (draw_tool, display,
-                                               x1, y1, x2, y2) < SQR (radius));
-}
-
-/**
  * gimp_draw_tool_draw_line:
  * @draw_tool:   the #GimpDrawTool
  * @x1:          start point X in image coordinates

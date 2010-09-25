@@ -81,13 +81,6 @@ gdouble          gimp_draw_tool_calc_distance_square (GimpDrawTool     *draw_too
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
-gboolean         gimp_draw_tool_in_radius            (GimpDrawTool     *draw_tool,
-                                                      GimpDisplay      *display,
-                                                      gdouble           x1,
-                                                      gdouble           y1,
-                                                      gdouble           x2,
-                                                      gdouble           y2,
-                                                      gint              radius);
 
 GimpCanvasItem * gimp_draw_tool_draw_line            (GimpDrawTool     *draw_tool,
                                                       gdouble           x1,
