@@ -94,11 +94,6 @@ GimpCanvasItem * gimp_draw_tool_draw_line            (GimpDrawTool     *draw_too
                                                       gdouble           y1,
                                                       gdouble           x2,
                                                       gdouble           y2);
-GimpCanvasItem * gimp_draw_tool_draw_dashed_line     (GimpDrawTool     *draw_tool,
-                                                      gdouble           x1,
-                                                      gdouble           y1,
-                                                      gdouble           x2,
-                                                      gdouble           y2);
 GimpCanvasItem * gimp_draw_tool_draw_guide_line      (GimpDrawTool     *draw_tool,
                                                       GimpOrientationType  orientation,
                                                       gint              position);

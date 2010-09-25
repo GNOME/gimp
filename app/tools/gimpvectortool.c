@@ -48,6 +48,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
@@ -1468,12 +1469,16 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
                   for (i = 0; i < coords->len; i += 2)
                     {
-                      gimp_draw_tool_draw_dashed_line
+                      GimpCanvasItem *item;
+
+                      item = gimp_draw_tool_draw_line
                         (draw_tool,
                          g_array_index (coords, GimpCoords, i).x,
                          g_array_index (coords, GimpCoords, i).y,
                          g_array_index (coords, GimpCoords, i + 1).x,
                          g_array_index (coords, GimpCoords, i + 1).y);
+
+                      gimp_canvas_item_set_highlight (item, TRUE);
                     }
                 }
 

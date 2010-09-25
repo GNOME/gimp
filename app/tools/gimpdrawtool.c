@@ -431,38 +431,6 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 }
 
 /**
- * gimp_draw_tool_draw_dashed_line:
- * @draw_tool:   the #GimpDrawTool
- * @x1:          start point X in image coordinates
- * @y1:          start point Y in image coordinates
- * @x2:          end point X in image coordinates
- * @y2:          end point Y in image coordinates
- *
- * This function takes image space coordinates and transforms them to
- * screen window coordinates, then draws a dashed line between the
- * resulting coordindates.
- **/
-GimpCanvasItem *
-gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
-                                 gdouble       x1,
-                                 gdouble       y1,
-                                 gdouble       x2,
-                                 gdouble       y2)
-{
-  GimpCanvasItem *item;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
-
-  item = gimp_canvas_line_new (x1, y1, x2, y2);
-  gimp_canvas_item_set_highlight (item, TRUE);
-
-  gimp_draw_tool_add_item (draw_tool, item);
-  g_object_unref (item);
-
-  return item;
-}
-
-/**
  * gimp_draw_tool_draw_guide:
  * @draw_tool:   the #GimpDrawTool
  * @orientation: the orientation of the guide line
