@@ -114,8 +114,8 @@ void       gimp_draw_tool_draw_arc                 (GimpDrawTool     *draw_tool,
                                                     gdouble           y,
                                                     gdouble           width,
                                                     gdouble           height,
-                                                    gint              angle1,
-                                                    gint              angle2);
+                                                    gdouble           start_angle,
+                                                    gdouble           slice_angle);
 
 void       gimp_draw_tool_draw_arc_by_anchor       (GimpDrawTool     *draw_tool,
                                                     gboolean          filled,
@@ -123,8 +123,8 @@ void       gimp_draw_tool_draw_arc_by_anchor       (GimpDrawTool     *draw_tool,
                                                     gdouble           y,
                                                     gint              width,
                                                     gint              height,
-                                                    gint              angle1,
-                                                    gint              angle2,
+                                                    gdouble           start_angle,
+                                                    gdouble           slice_angle,
                                                     GtkAnchorType     anchor);
 
 void       gimp_draw_tool_draw_handle              (GimpDrawTool     *draw_tool,

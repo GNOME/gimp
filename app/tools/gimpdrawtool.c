@@ -518,22 +518,19 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                          gdouble       y,
                          gdouble       width,
                          gdouble       height,
-                         gint          angle1,
-                         gint          angle2)
+                         gdouble       start_angle,
+                         gdouble       slice_angle)
 {
   GimpCanvasItem *item;
-  gdouble         a1, a2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-
-  a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
-  a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
 
   item = gimp_canvas_arc_new (x + width  / 2.0,
                               y + height / 2.0,
                               width  / 2.0,
                               height / 2.0,
-                              a1, a2,
+                              start_angle,
+                              slice_angle,
                               FALSE);
 
   gimp_draw_tool_add_item (draw_tool, item);
@@ -547,12 +544,11 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                    gdouble        y,
                                    gint           width,
                                    gint           height,
-                                   gint           angle1,
-                                   gint           angle2,
+                                   gdouble        start_angle,
+                                   gdouble        slice_angle,
                                    GtkAnchorType  anchor)
 {
   GimpCanvasItem *item;
-  gdouble         a1, a2;
 
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
@@ -561,10 +557,8 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                  GIMP_HANDLE_CIRCLE,
                                  anchor, x, y, width, height);
 
-  a1 = (gdouble) angle1 / 64.0 / 180.0 * G_PI;
-  a2 = (gdouble) angle2 / 64.0 / 180.0 * G_PI;
-
-  gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item), a1, a2);
+  gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
+                                 start_angle, slice_angle);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

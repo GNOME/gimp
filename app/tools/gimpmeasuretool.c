@@ -663,7 +663,6 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (draw_tool);
   GimpTool        *tool    = GIMP_TOOL (draw_tool);
   gint             i;
-  gint             angle1, angle2;
   gint             draw_arc = 0;
 
   for (i = 0; i < measure->num_points; i++)
@@ -711,15 +710,16 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
   if (measure->num_points > 1 && draw_arc == measure->num_points - 1)
     {
-      angle1 = measure->angle2 * 64.0;
-      angle2 = (measure->angle1 - measure->angle2) * 64.0;
+      gdouble angle1 = measure->angle2 / 180.0 * G_PI;
+      gdouble angle2 = (measure->angle1 - measure->angle2) / 180.0 * G_PI;
 
-      if (angle2 > 11520)
-          angle2 -= 23040;
-      if (angle2 < -11520)
-          angle2 += 23040;
+      if (angle2 > G_PI)
+        angle2 -= 2.0 * G_PI;
 
-      if (angle2 != 0)
+      if (angle2 < -G_PI)
+        angle2 += 2.0 * G_PI;
+
+      if (angle2 != 0.0)
         {
           gimp_draw_tool_draw_arc_by_anchor (draw_tool,
                                              FALSE,

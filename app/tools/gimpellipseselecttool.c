@@ -114,7 +114,7 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
                            FALSE,
                            x1, y1,
                            x2 - x1, y2 - y1,
-                           0, 360 * 64);
+                           0.0, 2 * G_PI);
 }
 
 static void

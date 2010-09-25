@@ -614,7 +614,8 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
       gimp_draw_tool_draw_arc (draw_tool, FALSE,
                                x - radius, y - radius,
-                               2 * radius, 2 * radius, 0, 360 * 64);
+                               2 * radius, 2 * radius,
+                               0.0, 2.0 * G_PI);
     }
   else
     {
