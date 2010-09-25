@@ -411,7 +411,7 @@ gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
  * screen window coordinates, then draws a line between the resulting
  * coordindates.
  **/
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
                           gdouble       x1,
                           gdouble       y1,
@@ -420,12 +420,14 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_line_new (x1, y1, x2, y2);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
 /**
@@ -440,7 +442,7 @@ gimp_draw_tool_draw_line (GimpDrawTool *draw_tool,
  * screen window coordinates, then draws a dashed line between the
  * resulting coordindates.
  **/
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
                                  gdouble       x1,
                                  gdouble       y1,
@@ -449,13 +451,15 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_line_new (x1, y1, x2, y2);
   gimp_canvas_item_set_highlight (item, TRUE);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
 /**
@@ -466,19 +470,21 @@ gimp_draw_tool_draw_dashed_line (GimpDrawTool *draw_tool,
  *
  * This function draws a guide line across the canvas.
  **/
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
                                 GimpOrientationType  orientation,
                                 gint                 position)
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_guide_new (orientation, position);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
 /**
@@ -493,7 +499,7 @@ gimp_draw_tool_draw_guide_line (GimpDrawTool        *draw_tool,
  * This function takes image space coordinates and transforms them to
  * screen window coordinates, then draws the resulting rectangle.
  **/
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
                                gboolean      filled,
                                gdouble       x,
@@ -503,15 +509,17 @@ gimp_draw_tool_draw_rectangle (GimpDrawTool *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_rectangle_new (x, y, width, height, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
                          gboolean      filled,
                          gdouble       x,
@@ -523,7 +531,7 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_arc_new (x + width  / 2.0,
                               y + height / 2.0,
@@ -535,9 +543,11 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
                                    gboolean       filled,
                                    gdouble        x,
@@ -550,7 +560,7 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_handle_new (filled ?
                                  GIMP_HANDLE_FILLED_CIRCLE :
@@ -562,9 +572,11 @@ gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
                             GimpHandleType  type,
                             gdouble         x,
@@ -575,12 +587,14 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_handle_new (type, anchor, x, y, width, height);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
 /**
@@ -600,7 +614,7 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
  * screen window coordinates. It draws a corner into an already drawn
  * rectangle outline, taking care of not drawing over an already drawn line.
  **/
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
                             gboolean        highlight,
                             gboolean        put_outside,
@@ -614,7 +628,7 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_corner_new (x1, y1, x2 - x1, y2 - y1,
                                  anchor, width, height, put_outside);
@@ -622,9 +636,11 @@ gimp_draw_tool_draw_corner (GimpDrawTool   *draw_tool,
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
                            const GimpVector2 *points,
                            gint               n_points,
@@ -632,18 +648,20 @@ gimp_draw_tool_draw_lines (GimpDrawTool      *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   if (points == NULL || n_points < 2)
-    return;
+    return NULL;
 
   item = gimp_canvas_polygon_new (points, n_points, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
                              const GimpCoords *points,
                              gint              n_points,
@@ -651,15 +669,17 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   if (points == NULL || n_points < 2)
-    return;
+    return NULL;
 
   item = gimp_canvas_polygon_new_from_coords (points, n_points, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
 /**
@@ -675,7 +695,7 @@ gimp_draw_tool_draw_strokes (GimpDrawTool     *draw_tool,
  * include the sentinel segments inserted by sort_boundary() that
  * indicate the end of connected segment sequences (groups) .
  */
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                               const BoundSeg *bound_segs,
                               gint            n_bound_segs,
@@ -684,30 +704,34 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-  g_return_if_fail (n_bound_segs > 0);
-  g_return_if_fail (bound_segs != NULL);
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+  g_return_val_if_fail (n_bound_segs > 0, NULL);
+  g_return_val_if_fail (bound_segs != NULL, NULL);
 
   item = gimp_canvas_boundary_new (bound_segs, n_bound_segs,
                                    offset_x, offset_y);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
-void
+GimpCanvasItem *
 gimp_draw_tool_draw_text_cursor (GimpDrawTool   *draw_tool,
                                  PangoRectangle *cursor,
                                  gboolean        overwrite)
 {
   GimpCanvasItem *item;
 
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_text_cursor_new (cursor, overwrite);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
+
+  return item;
 }
 
 gboolean
