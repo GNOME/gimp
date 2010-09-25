@@ -36,6 +36,7 @@
 #include "display/gimpcanvasarc.h"
 #include "display/gimpcanvasboundary.h"
 #include "display/gimpcanvascorner.h"
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpcanvasguide.h"
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasline.h"
@@ -106,7 +107,7 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
 {
   draw_tool->display      = NULL;
   draw_tool->paused_count = 0;
-  draw_tool->items        = NULL;
+  draw_tool->item         = NULL;
 }
 
 static void
@@ -172,35 +173,38 @@ static void
 gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
                          GimpCanvasItem *item)
 {
-  draw_tool->items = g_list_append (draw_tool->items, g_object_ref (item));
+  if (! draw_tool->item)
+    draw_tool->item = gimp_canvas_group_new ();
+
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
 }
 
 static void
 gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->items)
+  if (draw_tool->item)
     {
-      g_list_foreach (draw_tool->items, (GFunc) g_object_unref, NULL);
-      g_list_free (draw_tool->items);
-      draw_tool->items = NULL;
+      g_object_unref (draw_tool->item);
+      draw_tool->item = NULL;
     }
 }
 
 static void
 gimp_draw_tool_invalidate_items (GimpDrawTool *draw_tool)
 {
-  GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-  GdkWindow        *window = gtk_widget_get_window (shell->canvas);
-  GList            *list;
-
-  for (list = draw_tool->items; list; list = g_list_next (list))
+  if (draw_tool->item)
     {
-      GimpCanvasItem *item = list->data;
-      GdkRegion      *region;
+      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+      GdkWindow        *window = gtk_widget_get_window (shell->canvas);
+      GdkRegion        *region;
 
-      region = gimp_canvas_item_get_extents (item, shell);
-      gdk_window_invalidate_region (window, region, TRUE);
-      gdk_region_destroy (region);
+      region = gimp_canvas_item_get_extents (draw_tool->item, shell);
+
+      if (region)
+        {
+          gdk_window_invalidate_region (window, region, TRUE);
+          gdk_region_destroy (region);
+        }
     }
 }
 
@@ -289,25 +293,16 @@ void
 gimp_draw_tool_draw_items (GimpDrawTool *draw_tool,
                            cairo_t      *cr)
 {
-  GimpDisplayShell *shell;
-  GdkWindow        *window;
-  GList            *list;
-
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (cr != NULL);
 
-  if (! gimp_draw_tool_is_active (draw_tool) ||
-      draw_tool->paused_count > 0)
-    return;
-
-  shell  = gimp_display_get_shell (draw_tool->display);
-  window = gtk_widget_get_window (shell->canvas);
-
-  for (list = draw_tool->items; list; list = g_list_next (list))
+  if (draw_tool->item                      &&
+      gimp_draw_tool_is_active (draw_tool) &&
+      draw_tool->paused_count == 0)
     {
-      GimpCanvasItem *item = list->data;
+      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-      gimp_canvas_item_draw (item, shell, cr);
+      gimp_canvas_item_draw (draw_tool->item, shell, cr);
     }
 }
 

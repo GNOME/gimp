@@ -42,7 +42,7 @@ struct _GimpDrawTool
 
   gint            paused_count; /*  count to keep track of multiple pauses  */
 
-  GList          *items;
+  GimpCanvasItem *item;
 };
 
 struct _GimpDrawToolClass
