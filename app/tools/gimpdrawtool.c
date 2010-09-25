@@ -366,7 +366,7 @@ gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
                          GimpCanvasItem *item)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (draw_tool));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   if (! draw_tool->item)
     draw_tool->item = gimp_canvas_group_new ();
