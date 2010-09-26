@@ -687,16 +687,18 @@ gimp_display_shell_draw_tri_row (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
           offset = pixel[0] + pixel[0] + pixel[0];
+          alpha  = INT_MULT (opacity, pixel[1], tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        cmap[offset + 0],
                                        cmap[offset + 1],
                                        cmap[offset + 2],
-                                       INT_MULT (opacity, pixel[1], tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -727,14 +729,17 @@ gimp_display_shell_draw_tri_row (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+
+          alpha = INT_MULT (opacity, pixel[1], tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
                                        pixel[0],
                                        pixel[0],
-                                       INT_MULT (opacity, pixel[1], tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -765,14 +770,17 @@ gimp_display_shell_draw_tri_row (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
+
+          alpha = INT_MULT (opacity, pixel[3], tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
                                        pixel[1],
                                        pixel[2],
-                                       INT_MULT (opacity, pixel[3], tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -895,17 +903,19 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
           offset = pixel[0] + pixel[0] + pixel[0];
+          alpha  = INT_MULT (opacity, maskval, tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        cmap[offset + 0],
                                        cmap[offset + 1],
                                        cmap[offset + 2],
-                                       INT_MULT (opacity, maskval, tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -922,17 +932,19 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
 
           offset = pixel[0] + pixel[0] + pixel[0];
+          alpha  = INT_MULT3 (opacity, maskval, pixel[1], tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        cmap[offset + 0],
                                        cmap[offset + 1],
                                        cmap[offset + 2],
-                                       INT_MULT3 (opacity, maskval, pixel[1], tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -947,15 +959,18 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+
+          alpha = INT_MULT (opacity, maskval, tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
                                        pixel[0],
                                        pixel[0],
-                                       INT_MULT (opacity, maskval, tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -970,15 +985,18 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+
+          alpha = INT_MULT3 (opacity, maskval, pixel[1], tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
                                        pixel[0],
                                        pixel[0],
-                                       INT_MULT3 (opacity, maskval, pixel[1], tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -993,15 +1011,18 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+
+          alpha = INT_MULT (opacity, maskval, tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
                                        pixel[1],
                                        pixel[2],
-                                       INT_MULT (opacity, maskval, tmp));
+                                       alpha);
 
           pptr += 4;
 
@@ -1016,15 +1037,18 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable    *texture,
       while (dx--)
         {
           register gulong tmp;
+          guchar          alpha;
 
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
+
+          alpha = INT_MULT3 (opacity, maskval, pixel[3], tmp);
 
           GIMP_CAIRO_ARGB32_SET_PIXEL (pptr,
                                        pixel[0],
                                        pixel[1],
                                        pixel[2],
-                                       INT_MULT3 (opacity, maskval, pixel[3], tmp));
+                                       alpha);
 
           pptr += 4;
 
