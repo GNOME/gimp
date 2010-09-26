@@ -540,28 +540,26 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   }
 
 
-  gimp_draw_tool_draw_lines (draw_tool,
+  gimp_draw_tool_add_lines (draw_tool,
                              vertices,
                              config->cage_vertice_number,
-                             FALSE, FALSE);
+                             FALSE);
 
   if (!ct->cage_complete && ct->cursor_position.x != -1000)
   {
-    gimp_draw_tool_draw_line (draw_tool,
+    gimp_draw_tool_add_line (draw_tool,
                               vertices[config->cage_vertice_number - 1].x,
                               vertices[config->cage_vertice_number - 1].y,
                               ct->cursor_position.x,
-                              ct->cursor_position.y,
-                              FALSE);
+                              ct->cursor_position.y);
   }
   else
   {
-    gimp_draw_tool_draw_line (draw_tool,
+    gimp_draw_tool_add_line (draw_tool,
                               vertices[config->cage_vertice_number - 1].x,
                               vertices[config->cage_vertice_number - 1].y,
                               vertices[0].x,
-                              vertices[0].y,
-                              FALSE);
+                              vertices[0].y);
   }
 
   on_handle = gimp_cage_tool_is_on_handle (config,
@@ -583,11 +581,12 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
       handle = GIMP_HANDLE_FILLED_CIRCLE;
     }
 
-    gimp_draw_tool_draw_handle (draw_tool, handle,
-                                point.x,
-                                point.y,
-                                HANDLE_SIZE, HANDLE_SIZE,
-                                GTK_ANCHOR_CENTER, FALSE);
+    gimp_draw_tool_add_handle (draw_tool,
+                              handle,
+                              point.x,
+                              point.y,
+                              HANDLE_SIZE, HANDLE_SIZE,
+                              GTK_ANCHOR_CENTER);
   }
 }
 
