@@ -52,6 +52,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimptooldialog.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
@@ -780,7 +781,15 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTool          *tool    = GIMP_TOOL (draw_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpImage         *image   = gimp_display_get_image (tool->display);
+  GimpCanvasItem    *stroke_group;
+  GimpCanvasItem    *item;
   gdouble            z1, z2, z3, z4;
+
+  stroke_group = gimp_canvas_group_new ();
+  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
+                                        TRUE);
+  gimp_draw_tool_add_item (draw_tool, stroke_group);
+  g_object_unref (stroke_group);
 
   if (tr_tool->use_grid)
     {
@@ -809,28 +818,41 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
           for (i = 0, gci = 0; i < k; i++, gci += 4)
             {
-              gimp_draw_tool_add_line (draw_tool,
-                                       tr_tool->tgrid_coords[gci],
-                                       tr_tool->tgrid_coords[gci + 1],
-                                       tr_tool->tgrid_coords[gci + 2],
-                                       tr_tool->tgrid_coords[gci + 3]);
+              item = gimp_draw_tool_add_line (draw_tool,
+                                              tr_tool->tgrid_coords[gci],
+                                              tr_tool->tgrid_coords[gci + 1],
+                                              tr_tool->tgrid_coords[gci + 2],
+                                              tr_tool->tgrid_coords[gci + 3]);
+
+              gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+              gimp_draw_tool_remove_item (draw_tool, item);
             }
         }
 
       /*  draw the bounding box  */
-      gimp_draw_tool_add_line (draw_tool,
-                               tr_tool->tx1, tr_tool->ty1,
-                               tr_tool->tx2, tr_tool->ty2);
-      gimp_draw_tool_add_line (draw_tool,
-                               tr_tool->tx2, tr_tool->ty2,
-                               tr_tool->tx4, tr_tool->ty4);
-      gimp_draw_tool_add_line (draw_tool,
-                               tr_tool->tx3, tr_tool->ty3,
-                               tr_tool->tx4, tr_tool->ty4);
-      gimp_draw_tool_add_line (draw_tool,
-                               tr_tool->tx3, tr_tool->ty3,
-                               tr_tool->tx1, tr_tool->ty1);
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      tr_tool->tx1, tr_tool->ty1,
+                                      tr_tool->tx2, tr_tool->ty2);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
 
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      tr_tool->tx2, tr_tool->ty2,
+                                      tr_tool->tx4, tr_tool->ty4);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      tr_tool->tx3, tr_tool->ty3,
+                                      tr_tool->tx4, tr_tool->ty4);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      tr_tool->tx3, tr_tool->ty3,
+                                      tr_tool->tx1, tr_tool->ty1);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
     }
 
   gimp_transform_tool_handles_recalc (tr_tool, tool->display);
