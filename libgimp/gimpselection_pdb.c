@@ -23,6 +23,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_SELECTION_PDB_H__
+#include "gimpselection_pdb.h"
 
 
 /**
@@ -55,7 +58,7 @@
  * (x2 - x1), its height as (y2 - y1).
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_bounds (gint32    image_ID,
                        gboolean *non_empty,
@@ -107,7 +110,7 @@ gimp_selection_bounds (gint32    image_ID,
  * coordinates. If the coordinates lie out of bounds, 0 is returned.
  *
  * Returns: Value of the selection.
- */
+ **/
 gint
 gimp_selection_value (gint32 image_ID,
                       gint   x,
@@ -142,7 +145,7 @@ gimp_selection_value (gint32 image_ID,
  * is empty.
  *
  * Returns: Is the selection empty?
- */
+ **/
 gboolean
 gimp_selection_is_empty (gint32 image_ID)
 {
@@ -178,7 +181,7 @@ gimp_selection_is_empty (gint32 image_ID)
  * because of this call are lost.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_translate (gint32 image_ID,
                           gint   offx,
@@ -218,7 +221,7 @@ gimp_selection_translate (gint32 image_ID,
  * positioning of the new floating selection.
  *
  * Returns: The floated layer.
- */
+ **/
 gint32
 _gimp_selection_float (gint32 drawable_ID,
                        gint   offx,
@@ -253,7 +256,7 @@ _gimp_selection_float (gint32 drawable_ID,
  * selection channel, its new value is calculated as (255 - old-value).
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_invert (gint32 image_ID)
 {
@@ -285,7 +288,7 @@ gimp_selection_invert (gint32 image_ID)
  * might exist in the selection mask's boundary.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_sharpen (gint32 image_ID)
 {
@@ -315,7 +318,7 @@ gimp_selection_sharpen (gint32 image_ID)
  * image. Every pixel in the selection channel is set to 255.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_all (gint32 image_ID)
 {
@@ -345,7 +348,7 @@ gimp_selection_all (gint32 image_ID)
  * selection channel is set to 0.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_none (gint32 image_ID)
 {
@@ -376,7 +379,7 @@ gimp_selection_none (gint32 image_ID)
  * using a gaussian blur.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_feather (gint32  image_ID,
                         gdouble radius)
@@ -410,7 +413,7 @@ gimp_selection_feather (gint32  image_ID,
  * selection at every point within the specified radius.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_border (gint32 image_ID,
                        gint   radius)
@@ -443,7 +446,7 @@ gimp_selection_border (gint32 image_ID,
  * boundary in all directions by the specified pixel amount.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_grow (gint32 image_ID,
                      gint   steps)
@@ -477,7 +480,7 @@ gimp_selection_grow (gint32 image_ID,
  * of pixels.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_shrink (gint32 image_ID,
                        gint   steps)
@@ -503,17 +506,10 @@ gimp_selection_shrink (gint32 image_ID,
  * gimp_selection_layer_alpha:
  * @layer_ID: Layer with alpha.
  *
- * Transfer the specified layer's alpha channel to the selection mask.
- *
- * The alpha channel information is used to create a selection mask
- * such that for any pixel in the image defined in the specified layer,
- * that layer pixel's alpha value is transferred to the selection mask.
- * If the layer is undefined at a particular image pixel, the
- * associated selection mask value is set to 0. A layer without an
- * alpha channel is considered opaque.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_layer_alpha (gint32 layer_ID)
 {
@@ -537,12 +533,10 @@ gimp_selection_layer_alpha (gint32 layer_ID)
  * gimp_selection_load:
  * @channel_ID: The channel.
  *
- * Transfer the specified channel to the selection mask.
- *
- * This procedure loads the specified channel into the selection mask.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_load (gint32 channel_ID)
 {
@@ -573,7 +567,7 @@ gimp_selection_load (gint32 channel_ID)
  * image's list of channels.
  *
  * Returns: The new channel.
- */
+ **/
 gint32
 gimp_selection_save (gint32 image_ID)
 {
@@ -599,13 +593,10 @@ gimp_selection_save (gint32 image_ID)
  * @channel_ID: The channel.
  * @operation: The selection operation.
  *
- * Combines the specified channel with the selection mask.
- *
- * This procedure combines the specified channel into the selection
- * mask.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_selection_combine (gint32         channel_ID,
                         GimpChannelOps operation)

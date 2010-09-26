@@ -184,8 +184,8 @@ gimp_selection_tool_oper_update (GimpTool         *tool,
           if (layer == floating_sel)
             move_floating_sel = TRUE;
         }
-      else if (gimp_drawable_mask_intersect (drawable,
-                                             NULL, NULL, NULL, NULL))
+      else if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                         NULL, NULL, NULL, NULL))
         {
           move_layer = TRUE;
         }

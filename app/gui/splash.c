@@ -170,13 +170,18 @@ splash_create (gboolean be_verbose)
 
   if (gdk_pixbuf_animation_is_static_image (pixbuf))
     {
-      GdkPixmap *pixmap = gdk_pixmap_new (gtk_widget_get_window (splash->area),
-					  splash->width, splash->height, -1);
+      GdkPixbuf *static_pixbuf = gdk_pixbuf_animation_get_static_image (pixbuf);
+      GdkPixmap *pixmap;
+      cairo_t   *cr;
 
-      gdk_draw_pixbuf (pixmap, gtk_widget_get_style (splash->area)->black_gc,
-		       gdk_pixbuf_animation_get_static_image (pixbuf),
-		       0, 0, 0, 0, splash->width, splash->height,
-		       GDK_RGB_DITHER_NORMAL, 0, 0);
+      pixmap = gdk_pixmap_new (gtk_widget_get_window (splash->area),
+                               splash->width, splash->height, -1);
+
+      cr = gdk_cairo_create (pixmap);
+      gdk_cairo_set_source_pixbuf (cr, static_pixbuf, 0.0, 0.0);
+      cairo_paint (cr);
+      cairo_destroy (cr);
+
       gdk_window_set_back_pixmap (gtk_widget_get_window (splash->area),
                                   pixmap, FALSE);
       g_object_unref (pixmap);

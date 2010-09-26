@@ -273,13 +273,8 @@ gimp_color_tool_button_press (GimpTool            *tool,
     }
   else
     {
-      gint off_x, off_y;
-
-      /*  Keep the coordinates of the target  */
-      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
-
-      color_tool->center_x = coords->x - off_x;
-      color_tool->center_y = coords->y - off_y;
+      color_tool->center_x = coords->x;
+      color_tool->center_y = coords->y;
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -403,8 +398,7 @@ gimp_color_tool_motion (GimpTool         *tool,
 
       gimp_display_shell_transform_xy (shell,
                                        coords->x, coords->y,
-                                       &tx, &ty,
-                                       FALSE);
+                                       &tx, &ty);
 
       if (tx < 0 || tx > shell->disp_width ||
           ty < 0 || ty > shell->disp_height)
@@ -459,14 +453,10 @@ gimp_color_tool_motion (GimpTool         *tool,
     }
   else
     {
-      gint off_x, off_y;
-
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
-
-      color_tool->center_x = coords->x - off_x;
-      color_tool->center_y = coords->y - off_y;
+      color_tool->center_x = coords->x;
+      color_tool->center_y = coords->y;
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -585,16 +575,14 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
             {
               GimpImage *image = gimp_display_get_image (draw_tool->display);
 
-              gimp_draw_tool_draw_line (draw_tool,
-                                        0, color_tool->sample_point_y + 0.5,
-                                        gimp_image_get_width (image),
-                                        color_tool->sample_point_y + 0.5,
-                                        FALSE);
-              gimp_draw_tool_draw_line (draw_tool,
-                                        color_tool->sample_point_x + 0.5, 0,
-                                        color_tool->sample_point_x + 0.5,
-                                        gimp_image_get_height (image),
-                                        FALSE);
+              gimp_draw_tool_add_line (draw_tool,
+                                       0, color_tool->sample_point_y + 0.5,
+                                       gimp_image_get_width (image),
+                                       color_tool->sample_point_y + 0.5);
+              gimp_draw_tool_add_line (draw_tool,
+                                       color_tool->sample_point_x + 0.5, 0,
+                                       color_tool->sample_point_x + 0.5,
+                                       gimp_image_get_height (image));
             }
         }
       else
@@ -603,13 +591,12 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
             {
               gdouble radius = color_tool->options->average_radius;
 
-              gimp_draw_tool_draw_rectangle (draw_tool,
-                                             FALSE,
-                                             color_tool->center_x - radius,
-                                             color_tool->center_y - radius,
-                                             2 * radius + 1,
-                                             2 * radius + 1,
-                                             TRUE);
+              gimp_draw_tool_add_rectangle (draw_tool,
+                                            FALSE,
+                                            color_tool->center_x - radius,
+                                            color_tool->center_y - radius,
+                                            2 * radius + 1,
+                                            2 * radius + 1);
             }
         }
     }

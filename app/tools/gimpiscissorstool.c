@@ -608,8 +608,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                                                 GIMP_HANDLE_CIRCLE,
                                                 curve->x1, curve->y1,
                                                 POINT_WIDTH, POINT_WIDTH,
-                                                GTK_ANCHOR_CENTER,
-                                                FALSE))
+                                                GTK_ANCHOR_CENTER))
                     {
                       iscissors->x = curve->x1;
                       iscissors->y = curve->y1;
@@ -750,20 +749,18 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
   /*  Draw the crosshairs target if we're placing a seed  */
   if (iscissors->draw & DRAW_CURRENT_SEED)
     {
-      gimp_draw_tool_draw_handle (draw_tool,
-                                  GIMP_HANDLE_CROSS,
-                                  iscissors->x, iscissors->y,
-                                  TARGET_SIZE, TARGET_SIZE,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_CROSS,
+                                 iscissors->x, iscissors->y,
+                                 TARGET_SIZE, TARGET_SIZE,
+                                 GTK_ANCHOR_CENTER);
 
       /* Draw a line boundary */
       if (! iscissors->first_point && ! (iscissors->draw & DRAW_LIVEWIRE))
         {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    iscissors->ix, iscissors->iy,
-                                    iscissors->x, iscissors->y,
-                                    FALSE);
+          gimp_draw_tool_add_line (draw_tool,
+                                   iscissors->ix, iscissors->iy,
+                                   iscissors->x, iscissors->y);
         }
     }
 
@@ -811,14 +808,13 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
       /*  Draw a point at the init point coordinates  */
       if (! iscissors->connected)
         {
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_FILLED_CIRCLE,
-                                      iscissors->ix,
-                                      iscissors->iy,
-                                      POINT_WIDTH,
-                                      POINT_WIDTH,
-                                      GTK_ANCHOR_CENTER,
-                                      FALSE);
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_FILLED_CIRCLE,
+                                     iscissors->ix,
+                                     iscissors->iy,
+                                     POINT_WIDTH,
+                                     POINT_WIDTH,
+                                     GTK_ANCHOR_CENTER);
         }
 
       /*  Go through the list of icurves, and render each one...  */
@@ -835,14 +831,13 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                 continue;
             }
 
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_FILLED_CIRCLE,
-                                      curve->x1,
-                                      curve->y1,
-                                      POINT_WIDTH,
-                                      POINT_WIDTH,
-                                      GTK_ANCHOR_CENTER,
-                                      FALSE);
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_FILLED_CIRCLE,
+                                     curve->x1,
+                                     curve->y1,
+                                     POINT_WIDTH,
+                                     POINT_WIDTH,
+                                     GTK_ANCHOR_CENTER);
 
           if (iscissors->draw & DRAW_ACTIVE_CURVE)
             {
@@ -861,31 +856,29 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
       /*  plot both curves, and the control point between them  */
       if (iscissors->curve1)
         {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    iscissors->curve1->x2,
-                                    iscissors->curve1->y2,
-                                    iscissors->nx,
-                                    iscissors->ny,
-                                    FALSE);
-        }
-      if (iscissors->curve2)
-        {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    iscissors->curve2->x1,
-                                    iscissors->curve2->y1,
-                                    iscissors->nx,
-                                    iscissors->ny,
-                                    FALSE);
+          gimp_draw_tool_add_line (draw_tool,
+                                   iscissors->curve1->x2,
+                                   iscissors->curve1->y2,
+                                   iscissors->nx,
+                                   iscissors->ny);
         }
 
-      gimp_draw_tool_draw_handle (draw_tool,
-                                  GIMP_HANDLE_FILLED_CIRCLE,
-                                  iscissors->nx,
-                                  iscissors->ny,
-                                  POINT_WIDTH,
-                                  POINT_WIDTH,
-                                  GTK_ANCHOR_CENTER,
-                                  FALSE);
+      if (iscissors->curve2)
+        {
+          gimp_draw_tool_add_line (draw_tool,
+                                   iscissors->curve2->x1,
+                                   iscissors->curve2->y1,
+                                   iscissors->nx,
+                                   iscissors->ny);
+        }
+
+      gimp_draw_tool_add_handle (draw_tool,
+                                 GIMP_HANDLE_FILLED_CIRCLE,
+                                 iscissors->nx,
+                                 iscissors->ny,
+                                 POINT_WIDTH,
+                                 POINT_WIDTH,
+                                 GTK_ANCHOR_CENTER);
     }
 }
 
@@ -913,7 +906,7 @@ iscissors_draw_curve (GimpDrawTool *draw_tool,
       points[i].y = (coords >> 16);
     }
 
-  gimp_draw_tool_draw_lines (draw_tool, points, len, FALSE, FALSE);
+  gimp_draw_tool_add_lines (draw_tool, points, len, FALSE);
 
   g_free (points);
 }
@@ -951,8 +944,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
                                     GIMP_HANDLE_CIRCLE,
                                     curve->x1, curve->y1,
                                     POINT_WIDTH, POINT_WIDTH,
-                                    GTK_ANCHOR_CENTER,
-                                    FALSE))
+                                    GTK_ANCHOR_CENTER))
         {
           gimp_tool_replace_status (tool, display, _("Click to close the"
                                                      " curve"));
@@ -1223,8 +1215,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
                                     GIMP_HANDLE_CIRCLE,
                                     curve->x1, curve->y1,
                                     POINT_WIDTH, POINT_WIDTH,
-                                    GTK_ANCHOR_CENTER,
-                                    FALSE))
+                                    GTK_ANCHOR_CENTER))
         {
           iscissors->curve1 = curve;
 
@@ -1237,8 +1228,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
                                          GIMP_HANDLE_CIRCLE,
                                          curve->x2, curve->y2,
                                          POINT_WIDTH, POINT_WIDTH,
-                                         GTK_ANCHOR_CENTER,
-                                         FALSE))
+                                         GTK_ANCHOR_CENTER))
         {
           iscissors->curve2 = curve;
 
@@ -1310,11 +1300,10 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
           ty = coords >> 16;
 
           /*  Is the specified point close enough to the curve?  */
-          if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
-                                        GIMP_TOOL (iscissors)->display,
-                                        tx, ty,
-                                        x, y,
-                                        POINT_WIDTH / 2))
+          if (gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (iscissors),
+                                                   GIMP_TOOL (iscissors)->display,
+                                                   tx, ty,
+                                                   x, y) < SQR (POINT_WIDTH / 2))
             {
               return list;
             }

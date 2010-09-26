@@ -31,9 +31,9 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 
 #include "pdb/gimppdb.h"
+#include "pdb/gimppdbcontext.h"
 
 #include "gimpinterpreterdb.h"
 #include "gimpplugindef.h"
@@ -93,6 +93,9 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   g_return_if_fail (status_callback != NULL);
 
   gimp = manager->gimp;
+
+  /* need a GimpPDBContext for calling gimp_plug_in_manager_run_foo() */
+  context = gimp_pdb_context_new (gimp, context, TRUE);
 
   /* search for binaries in the plug-in directory path */
   gimp_plug_in_manager_search (manager, status_callback);
@@ -189,6 +192,8 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
                             gimp_plug_in_manager_file_proc_compare, manager);
 
   gimp_plug_in_manager_run_extensions (manager, context, status_callback);
+
+  g_object_unref (context);
 }
 
 

@@ -43,7 +43,7 @@
  * This procedure returns the number of defined units.
  *
  * Returns: The number of units.
- */
+ **/
 gint
 _gimp_unit_get_number_of_units (void)
 {
@@ -71,7 +71,7 @@ _gimp_unit_get_number_of_units (void)
  * This procedure returns the number of defined units built-in to GIMP.
  *
  * Returns: The number of built-in units.
- */
+ **/
 gint
 _gimp_unit_get_number_of_built_in_units (void)
 {
@@ -109,7 +109,7 @@ _gimp_unit_get_number_of_built_in_units (void)
  * make it persistent.
  *
  * Returns: The new unit's ID.
- */
+ **/
 GimpUnit
 _gimp_unit_new (const gchar *identifier,
                 gdouble      factor,
@@ -153,7 +153,7 @@ _gimp_unit_new (const gchar *identifier,
  * file on gimp exit.
  *
  * Returns: The unit's deletion flag.
- */
+ **/
 gboolean
 _gimp_unit_get_deletion_flag (GimpUnit unit_id)
 {
@@ -186,7 +186,7 @@ _gimp_unit_get_deletion_flag (GimpUnit unit_id)
  * saved in the user's unitrc.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_unit_set_deletion_flag (GimpUnit unit_id,
                               gboolean deletion_flag)
@@ -219,7 +219,7 @@ _gimp_unit_set_deletion_flag (GimpUnit unit_id,
  * name. For user-defined units this should equal to the singular form.
  *
  * Returns: The unit's textual identifier.
- */
+ **/
 gchar *
 _gimp_unit_get_identifier (GimpUnit unit_id)
 {
@@ -251,7 +251,7 @@ _gimp_unit_get_identifier (GimpUnit unit_id)
  * will produce an error.
  *
  * Returns: The unit's factor.
- */
+ **/
 gdouble
 _gimp_unit_get_factor (GimpUnit unit_id)
 {
@@ -284,7 +284,7 @@ _gimp_unit_get_factor (GimpUnit unit_id)
  * \"pixels\" will produce an error.
  *
  * Returns: The unit's number of digits.
- */
+ **/
 gint
 _gimp_unit_get_digits (GimpUnit unit_id)
 {
@@ -314,7 +314,7 @@ _gimp_unit_get_digits (GimpUnit unit_id)
  * This procedure returns the symbol of the unit (\"''\" for inches).
  *
  * Returns: The unit's symbol.
- */
+ **/
 gchar *
 _gimp_unit_get_symbol (GimpUnit unit_id)
 {
@@ -345,7 +345,7 @@ _gimp_unit_get_symbol (GimpUnit unit_id)
  * inches).
  *
  * Returns: The unit's abbreviation.
- */
+ **/
 gchar *
 _gimp_unit_get_abbreviation (GimpUnit unit_id)
 {
@@ -375,7 +375,7 @@ _gimp_unit_get_abbreviation (GimpUnit unit_id)
  * This procedure returns the singular form of the unit.
  *
  * Returns: The unit's singular form.
- */
+ **/
 gchar *
 _gimp_unit_get_singular (GimpUnit unit_id)
 {
@@ -405,7 +405,7 @@ _gimp_unit_get_singular (GimpUnit unit_id)
  * This procedure returns the plural form of the unit.
  *
  * Returns: The unit's plural form.
- */
+ **/
 gchar *
 _gimp_unit_get_plural (GimpUnit unit_id)
 {

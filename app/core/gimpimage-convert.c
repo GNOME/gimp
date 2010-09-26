@@ -2652,7 +2652,7 @@ fill_inverse_cmap_rgb (QuantizeObj *quantobj,
   int colorlist[MAXNUMCOLORS];
   int numcolors;                /* number of candidate colors */
   /* This array holds the actually closest colormap index for each cell. */
-  int bestcolor[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS];
+  int bestcolor[BOX_R_ELEMS * BOX_G_ELEMS * BOX_B_ELEMS] = { 0, };
 
   /* Convert cell coordinates to update box id */
   R >>= BOX_R_LOG;

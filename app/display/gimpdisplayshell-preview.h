@@ -19,7 +19,8 @@
 #define __GIMP_DISPLAY_SHELL_PREVIEW_H__
 
 
-void   gimp_display_shell_preview_transform (GimpDisplayShell *shell);
+void   gimp_display_shell_preview_transform (GimpDisplayShell *shell,
+                                             cairo_t          *cr);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_PREVIEW_H__ */

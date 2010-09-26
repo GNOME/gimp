@@ -25,9 +25,9 @@
 
 #include "pdb-types.h"
 
-#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpgrouplayer.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"
@@ -39,6 +39,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -179,6 +180,38 @@ layer_new_from_drawable_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+layer_group_new_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpImage *image;
+  GimpLayer *layer_group = NULL;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+
+  if (success)
+    {
+      layer_group = gimp_group_layer_new (image);
+
+      if (! layer_group)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    gimp_value_set_layer (&return_vals->values[1], layer_group);
+
+  return return_vals;
+}
+
+static GValueArray *
 layer_copy_invoker (GimpProcedure      *procedure,
                     Gimp               *gimp,
                     GimpContext        *context,
@@ -294,11 +327,13 @@ layer_scale_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, TRUE, error))
         {
+          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
           gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                     gimp->config->interpolation_type, progress,
+                                     pdb_context->interpolation, progress,
                                      local_origin);
 
           if (progress)
@@ -1041,7 +1076,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new",
                                      "Create a new layer.",
-                                     "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-add-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                     "This procedure creates a new layer with the specified width, height, and type. Name, opacity, and mode are also supplied parameters. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1109,7 +1144,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new-from-visible",
                                      "Create a new layer from what is visible in an image.",
-                                     "This procedure creates a new layer from what is visible in the given image. The new layer still needs to be added to the destination image, as this is not automatic. Add the new layer with the 'gimp-image-add-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                     "This procedure creates a new layer from what is visible in the given image. The new layer still needs to be added to the destination image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2008",
@@ -1151,7 +1186,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-new-from-drawable",
                                      "Create a new layer by copying an existing drawable.",
-                                     "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-add-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+                                     "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp-image-insert-layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1172,6 +1207,35 @@ register_layer_procs (GimpPDB *pdb)
                                    gimp_param_spec_layer_id ("layer-copy",
                                                              "layer copy",
                                                              "The newly copied layer",
+                                                             pdb->gimp, FALSE,
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-group-new
+   */
+  procedure = gimp_procedure_new (layer_group_new_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-layer-group-new");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-group-new",
+                                     "Create a new layer group.",
+                                     "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.",
+                                     "Barak Itkin <lightningismyname@gmail.com>",
+                                     "Barak Itkin",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image to which to add the layer group",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_layer_id ("layer-group",
+                                                             "layer group",
+                                                             "The newly created layer group",
                                                              pdb->gimp, FALSE,
                                                              GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1267,7 +1331,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale",
                                      "Scale the layer using the default interpolation method.",
-                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The default interpolation method is used for scaling.",
+                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -1307,12 +1371,12 @@ register_layer_procs (GimpPDB *pdb)
                                "gimp-layer-scale-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-scale-full",
-                                     "Scale the layer using a specific interpolation method.",
-                                     "This procedure scales the layer so that its new width and height are equal to the supplied parameters. The 'local-origin' parameter specifies whether to scale from the center of the layer, or from the image origin. This operation only works if the layer has been added to an image. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Deprecated: Use 'gimp-layer-scale' instead.",
+                                     "Deprecated: Use 'gimp-layer-scale' instead.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2008",
-                                     NULL);
+                                     "gimp-layer-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",

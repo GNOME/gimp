@@ -162,13 +162,16 @@ gimp_combo_tag_entry_expose (GtkWidget      *widget,
 
   if (! entry->arrow_pixbuf)
     {
-      GtkStyle  *style  = gtk_widget_get_style (widget);
-      GdkPixmap *pixmap = gdk_pixmap_new (gtk_widget_get_window (widget),
-                                          8, 8, -1);
+      GtkStyle  *style = gtk_widget_get_style (widget);
+      GdkPixmap *pixmap;
+      cairo_t   *cr;
 
-      gdk_draw_rectangle (pixmap,
-                          style->base_gc[GTK_STATE_NORMAL],
-                          TRUE, 0, 0, 8, 8);
+      pixmap = gdk_pixmap_new (gtk_widget_get_window (widget), 8, 8, -1);
+
+      cr = gdk_cairo_create (pixmap);
+      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+      cairo_paint (cr);
+      cairo_destroy (cr);
 
       gtk_paint_arrow (style, pixmap,
                        GTK_STATE_NORMAL,

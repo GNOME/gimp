@@ -151,6 +151,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   item_class->flip                    = gimp_selection_flip;
   item_class->rotate                  = gimp_selection_rotate;
   item_class->stroke                  = gimp_selection_stroke;
+  item_class->default_name            = _("Selection Mask");
   item_class->translate_desc          = C_("undo-type", "Move Selection");
   item_class->stroke_desc             = C_("undo-type", "Stroke Selection");
 
@@ -529,7 +530,7 @@ gimp_selection_new (GimpImage *image,
                            image,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE,
-                           _("Selection Mask"));
+                           NULL);
 
   gimp_channel_set_color (channel, &black, FALSE);
   gimp_channel_set_show_masked (channel, TRUE);
@@ -657,8 +658,8 @@ gimp_selection_extract (GimpSelection *selection,
    *  actual selection mask
    */
   if (GIMP_IS_DRAWABLE (pickable))
-    non_empty = gimp_drawable_mask_bounds (GIMP_DRAWABLE (pickable),
-                                           &x1, &y1, &x2, &y2);
+    non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
+                                       &x1, &y1, &x2, &y2);
   else
     non_empty = gimp_channel_bounds (GIMP_CHANNEL (selection),
                                      &x1, &y1, &x2, &y2);
@@ -837,7 +838,7 @@ gimp_selection_float (GimpSelection *selection,
   image = gimp_item_get_image (GIMP_ITEM (selection));
 
   /*  Make sure there is a region to float...  */
-  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) ||
+  if (! gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2) ||
       (x1 == x2 || y1 == y2))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,

@@ -37,8 +37,6 @@ typedef struct _GimpBezierStrokeClass GimpBezierStrokeClass;
 struct _GimpBezierStroke
 {
   GimpStroke  parent_instance;
-
-  /* Stuff missing? */
 };
 
 struct _GimpBezierStrokeClass

@@ -48,6 +48,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
@@ -61,7 +62,7 @@
 #include "gimp-intl.h"
 
 
-#define TARGET       12
+#define TARGET       13
 
 #define TOGGLE_MASK  GDK_SHIFT_MASK
 #define MOVE_MASK    GDK_MOD1_MASK
@@ -1415,6 +1416,23 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
   while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
     {
+      /* the stroke itself */
+      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
+        {
+          coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
+
+          if (coords)
+            {
+              if (coords->len)
+                gimp_draw_tool_add_strokes (draw_tool,
+                                            &g_array_index (coords,
+                                                            GimpCoords, 0),
+                                            coords->len, FALSE);
+
+              g_array_free (coords, TRUE);
+            }
+        }
+
       /* anchor handles */
       draw_anchors = gimp_stroke_get_draw_anchors (cur_stroke);
 
@@ -1424,16 +1442,15 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
           if (cur_anchor->type == GIMP_ANCHOR_ANCHOR)
             {
-              gimp_draw_tool_draw_handle (draw_tool,
-                                          cur_anchor->selected ?
-                                          GIMP_HANDLE_CIRCLE :
-                                          GIMP_HANDLE_FILLED_CIRCLE,
-                                          cur_anchor->position.x,
-                                          cur_anchor->position.y,
-                                          TARGET,
-                                          TARGET,
-                                          GTK_ANCHOR_CENTER,
-                                          FALSE);
+              gimp_draw_tool_add_handle (draw_tool,
+                                         cur_anchor->selected ?
+                                         GIMP_HANDLE_CIRCLE :
+                                         GIMP_HANDLE_FILLED_CIRCLE,
+                                         cur_anchor->position.x,
+                                         cur_anchor->position.y,
+                                         TARGET,
+                                         TARGET,
+                                         GTK_ANCHOR_CENTER);
             }
         }
 
@@ -1441,25 +1458,6 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
       if (vector_tool->sel_count <= 2)
         {
-          /* control handles */
-          draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
-
-          for (list = draw_anchors; list; list = g_list_next (list))
-            {
-              cur_anchor = GIMP_ANCHOR (list->data);
-
-              gimp_draw_tool_draw_handle (draw_tool,
-                                          GIMP_HANDLE_SQUARE,
-                                          cur_anchor->position.x,
-                                          cur_anchor->position.y,
-                                          TARGET - 3,
-                                          TARGET - 3,
-                                          GTK_ANCHOR_CENTER,
-                                          FALSE);
-            }
-
-          g_list_free (draw_anchors);
-
           /* the lines to the control handles */
           coords = gimp_stroke_get_draw_lines (cur_stroke);
 
@@ -1471,34 +1469,39 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
                   for (i = 0; i < coords->len; i += 2)
                     {
-                      gimp_draw_tool_draw_dashed_line (draw_tool,
-                                    g_array_index (coords, GimpCoords, i).x,
-                                    g_array_index (coords, GimpCoords, i).y,
-                                    g_array_index (coords, GimpCoords, i + 1).x,
-                                    g_array_index (coords, GimpCoords, i + 1).y,
-                                    FALSE);
+                      GimpCanvasItem *item;
+
+                      item = gimp_draw_tool_add_line
+                        (draw_tool,
+                         g_array_index (coords, GimpCoords, i).x,
+                         g_array_index (coords, GimpCoords, i).y,
+                         g_array_index (coords, GimpCoords, i + 1).x,
+                         g_array_index (coords, GimpCoords, i + 1).y);
+
+                      gimp_canvas_item_set_highlight (item, TRUE);
                     }
                 }
 
               g_array_free (coords, TRUE);
             }
-        }
 
-      /* the stroke itself */
-      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
-        {
-          coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
+          /* control handles */
+          draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
 
-          if (coords)
+          for (list = draw_anchors; list; list = g_list_next (list))
             {
-              if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
+              cur_anchor = GIMP_ANCHOR (list->data);
 
-              g_array_free (coords, TRUE);
+              gimp_draw_tool_add_handle (draw_tool,
+                                         GIMP_HANDLE_SQUARE,
+                                         cur_anchor->position.x,
+                                         cur_anchor->position.y,
+                                         TARGET - 3,
+                                         TARGET - 3,
+                                         GTK_ANCHOR_CENTER);
             }
+
+          g_list_free (draw_anchors);
         }
     }
 }
@@ -1538,10 +1541,10 @@ gimp_vector_tool_vectors_visible (GimpVectors    *vectors,
           if (coords)
             {
               if (coords->len)
-                gimp_draw_tool_draw_strokes (draw_tool,
-                                             &g_array_index (coords,
-                                                             GimpCoords, 0),
-                                             coords->len, FALSE, FALSE);
+                gimp_draw_tool_add_strokes (draw_tool,
+                                            &g_array_index (coords,
+                                                            GimpCoords, 0),
+                                            coords->len, FALSE);
 
               g_array_free (coords, TRUE);
             }

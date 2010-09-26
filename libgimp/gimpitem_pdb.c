@@ -48,7 +48,7 @@
  * Returns: Whether the item ID is valid.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_valid (gint32 item_ID)
 {
@@ -80,7 +80,7 @@ gimp_item_is_valid (gint32 item_ID)
  * Returns: The item's image.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_get_image (gint32 item_ID)
 {
@@ -116,7 +116,7 @@ gimp_item_get_image (gint32 item_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_delete (gint32 item_ID)
 {
@@ -147,7 +147,7 @@ gimp_item_delete (gint32 item_ID)
  * Returns: TRUE if the item is a drawable, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_drawable (gint32 item_ID)
 {
@@ -179,7 +179,7 @@ gimp_item_is_drawable (gint32 item_ID)
  * Returns: TRUE if the item is a layer, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_layer (gint32 item_ID)
 {
@@ -201,6 +201,38 @@ gimp_item_is_layer (gint32 item_ID)
 }
 
 /**
+ * gimp_item_is_text_layer:
+ * @item_ID: The item.
+ *
+ * Returns whether the item is a text layer.
+ *
+ * This procedure returns TRUE if the specified item is a text layer.
+ *
+ * Returns: TRUE if the item is a text layer, FALSE otherwise.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_item_is_text_layer (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean text_layer = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-item-is-text-layer",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    text_layer = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return text_layer;
+}
+
+/**
  * gimp_item_is_channel:
  * @item_ID: The item.
  *
@@ -211,7 +243,7 @@ gimp_item_is_layer (gint32 item_ID)
  * Returns: TRUE if the item is a channel, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_channel (gint32 item_ID)
 {
@@ -243,7 +275,7 @@ gimp_item_is_channel (gint32 item_ID)
  * Returns: TRUE if the item is a layer mask, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_layer_mask (gint32 item_ID)
 {
@@ -275,7 +307,7 @@ gimp_item_is_layer_mask (gint32 item_ID)
  * Returns: TRUE if the item is a selection, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_selection (gint32 item_ID)
 {
@@ -307,7 +339,7 @@ gimp_item_is_selection (gint32 item_ID)
  * Returns: TRUE if the item is a vectors, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_vectors (gint32 item_ID)
 {
@@ -340,7 +372,7 @@ gimp_item_is_vectors (gint32 item_ID)
  * Returns: TRUE if the item is a group, FALSE otherwise.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_is_group (gint32 item_ID)
 {
@@ -372,7 +404,7 @@ gimp_item_is_group (gint32 item_ID)
  * Returns: The item's parent item.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint32
 gimp_item_get_parent (gint32 item_ID)
 {
@@ -406,7 +438,7 @@ gimp_item_get_parent (gint32 item_ID)
  * Returns: The item's list of children.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint *
 gimp_item_get_children (gint32  item_ID,
                         gint   *num_children)
@@ -447,7 +479,7 @@ gimp_item_get_children (gint32  item_ID,
  * Returns: The item name.
  *
  * Since: GIMP 2.8
- */
+ **/
 gchar *
 gimp_item_get_name (gint32 item_ID)
 {
@@ -480,7 +512,7 @@ gimp_item_get_name (gint32 item_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_set_name (gint32       item_ID,
                     const gchar *name)
@@ -513,7 +545,7 @@ gimp_item_set_name (gint32       item_ID,
  * Returns: The item visibility.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_get_visible (gint32 item_ID)
 {
@@ -546,7 +578,7 @@ gimp_item_get_visible (gint32 item_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_set_visible (gint32   item_ID,
                        gboolean visible)
@@ -579,7 +611,7 @@ gimp_item_set_visible (gint32   item_ID,
  * Returns: The item linked state (for moves).
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_get_linked (gint32 item_ID)
 {
@@ -612,7 +644,7 @@ gimp_item_get_linked (gint32 item_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_set_linked (gint32   item_ID,
                       gboolean linked)
@@ -645,7 +677,7 @@ gimp_item_set_linked (gint32   item_ID,
  * Returns: Whether the item's contents are locked.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_get_lock_content (gint32 item_ID)
 {
@@ -678,7 +710,7 @@ gimp_item_get_lock_content (gint32 item_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_set_lock_content (gint32   item_ID,
                             gboolean lock_content)
@@ -713,7 +745,7 @@ gimp_item_set_lock_content (gint32   item_ID,
  * Returns: The item tattoo.
  *
  * Since: GIMP 2.8
- */
+ **/
 gint
 gimp_item_get_tattoo (gint32 item_ID)
 {
@@ -748,7 +780,7 @@ gimp_item_get_tattoo (gint32 item_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
- */
+ **/
 gboolean
 gimp_item_set_tattoo (gint32 item_ID,
                       gint   tattoo)
@@ -761,6 +793,43 @@ gimp_item_set_tattoo (gint32 item_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_ITEM, item_ID,
                                     GIMP_PDB_INT32, tattoo,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_item_to_selection:
+ * @item_ID: The item to render to the selection.
+ * @operation: The desired operation with current selection.
+ *
+ * Transforms the specified item into a selection
+ *
+ * This procedure renders the item's outline into the current selection
+ * of the image the item belongs to. What exactly the item's outline is
+ * depends on the item type: for layers, it's the layer's alpha
+ * channel, for vectors the vector's shape.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_item_to_selection (gint32         item_ID,
+                        GimpChannelOps operation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-item-to-selection",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

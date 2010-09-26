@@ -96,7 +96,6 @@ gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
  * @y:
  * @nx:
  * @ny:
- * @use_offsets:
  *
  * Transforms an image coordinate to a shell coordinate.
  **/
@@ -105,28 +104,14 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
                                  gdouble                 x,
                                  gdouble                 y,
                                  gint                   *nx,
-                                 gint                   *ny,
-                                 gboolean                use_offsets)
+                                 gint                   *ny)
 {
-  gint   offset_x = 0;
-  gint   offset_y = 0;
   gint64 tx;
   gint64 ty;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
-
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-
-      x += offset_x;
-      y += offset_y;
-    }
 
   tx = ((gint64) x * shell->x_src_dec) / shell->x_dest_inc;
   ty = ((gint64) y * shell->y_src_dec) / shell->y_dest_inc;
@@ -149,8 +134,6 @@ gimp_display_shell_transform_xy (const GimpDisplayShell *shell,
  * @ny:          returns y coordinate in image coordinates
  * @round:       if %TRUE, round the results to the nearest integer;
  *               if %FALSE, simply cast them to @gint.
- * @use_offsets: if %TRUE, @nx and @ny will be returned in the coordinate
- *               system of the active drawable instead of the image
  *
  * Transform from display coordinates to image coordinates, so that
  * points on the display can be mapped to the corresponding points
@@ -162,25 +145,14 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
                                    gint                    y,
                                    gint                   *nx,
                                    gint                   *ny,
-                                   gboolean                round,
-                                   gboolean                use_offsets)
+                                   gboolean                round)
 {
-  gint   offset_x = 0;
-  gint   offset_y = 0;
   gint64 tx;
   gint64 ty;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
-
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-    }
 
   tx = (gint64) x + shell->offset_x;
   ty = (gint64) y + shell->offset_y;
@@ -194,8 +166,8 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
   tx /= shell->x_src_dec;
   ty /= shell->y_src_dec;
 
-  *nx = CLAMP (tx - offset_x, G_MININT, G_MAXINT);
-  *ny = CLAMP (ty - offset_y, G_MININT, G_MAXINT);
+  *nx = CLAMP (tx, G_MININT, G_MAXINT);
+  *ny = CLAMP (ty, G_MININT, G_MAXINT);
 }
 
 /**
@@ -205,8 +177,6 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
  * @y:           y coordinate of point in image coordinate
  * @nx:          returns the transformed x coordinate
  * @ny:          returns the transformed y coordinate
- * @use_offsets: if %TRUE, the @x and @y coordinates are in the coordinate
- *               system of the active drawable instead of the image
  *
  * This function is identical to gimp_display_shell_transfrom_xy(),
  * except that it returns its results as doubles rather than ints.
@@ -216,26 +186,14 @@ gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
                                     gdouble                 x,
                                     gdouble                 y,
                                     gdouble                *nx,
-                                    gdouble                *ny,
-                                    gboolean                use_offsets)
+                                    gdouble                *ny)
 {
-  gint offset_x = 0;
-  gint offset_y = 0;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-    }
-
-  *nx = SCALEX (shell, x + offset_x) - shell->offset_x;
-  *ny = SCALEY (shell, y + offset_y) - shell->offset_y;
+  *nx = SCALEX (shell, x) - shell->offset_x;
+  *ny = SCALEY (shell, y) - shell->offset_y;
 }
 
 /**
@@ -245,8 +203,6 @@ gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
  * @y:           y coordinate in display coordinates
  * @nx:          place to return x coordinate in image coordinates
  * @ny:          place to return y coordinate in image coordinates
- * @use_offsets: if %TRUE, @nx and @ny will be returned in the coordinate
- *               system of the active drawable instead of the image
  *
  * This function is identical to gimp_display_shell_untransform_xy(),
  * except that the input and output coordinates are doubles rather than
@@ -257,26 +213,14 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
                                      gdouble                 x,
                                      gdouble                 y,
                                      gdouble                *nx,
-                                     gdouble                *ny,
-                                     gboolean                use_offsets)
+                                     gdouble                *ny)
 {
-  gint offset_x = 0;
-  gint offset_y = 0;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
 
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-    }
-
-  *nx = (x + shell->offset_x) / shell->scale_x - offset_x;
-  *ny = (y + shell->offset_y) / shell->scale_y - offset_y;
+  *nx = (x + shell->offset_x) / shell->scale_x;
+  *ny = (y + shell->offset_y) / shell->scale_y;
 }
 
 /**
@@ -285,8 +229,6 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
  * @points:      array of GimpVectors2 coordinate pairs
  * @coords:      returns the corresponding display coordinates
  * @n_points:    number of points
- * @use_offsets: if %TRUE, the source coordinates are in the coordinate
- *               system of the active drawable instead of the image
  *
  * Transforms from image coordinates to display coordinates, so that
  * objects can be rendered at the correct points on the display.
@@ -295,27 +237,16 @@ void
 gimp_display_shell_transform_points (const GimpDisplayShell *shell,
                                      const GimpVector2      *points,
                                      GdkPoint               *coords,
-                                     gint                    n_points,
-                                     gboolean                use_offsets)
+                                     gint                    n_points)
 {
-  gint offset_x = 0;
-  gint offset_y = 0;
   gint i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-    }
-
   for (i = 0; i < n_points ; i++)
     {
-      gdouble x = points[i].x + offset_x;
-      gdouble y = points[i].y + offset_y;
+      gdouble x = points[i].x;
+      gdouble y = points[i].y;
 
       x = x * shell->x_src_dec / shell->x_dest_inc;
       y = y * shell->y_src_dec / shell->y_dest_inc;
@@ -333,8 +264,6 @@ gimp_display_shell_transform_points (const GimpDisplayShell *shell,
  * @image_coords: array of image coordinates
  * @disp_coords:  returns the corresponding display coordinates
  * @n_coords:     number of coordinates
- * @use_offsets:  if %TRUE, the source coordinates are in the coordinate
- *                system of the active drawable instead of the image
  *
  * Transforms from image coordinates to display coordinates, so that
  * objects can be rendered at the correct points on the display.
@@ -343,27 +272,16 @@ void
 gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
                                      const GimpCoords       *image_coords,
                                      GdkPoint               *disp_coords,
-                                     gint                    n_coords,
-                                     gboolean                use_offsets)
+                                     gint                    n_coords)
 {
-  gint offset_x = 0;
-  gint offset_y = 0;
   gint i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  =GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-    }
-
   for (i = 0; i < n_coords ; i++)
     {
-      gdouble x = image_coords[i].x + offset_x;
-      gdouble y = image_coords[i].y + offset_y;
+      gdouble x = image_coords[i].x;
+      gdouble y = image_coords[i].y;
 
       x = x * shell->x_src_dec / shell->x_dest_inc;
       y = y * shell->y_src_dec / shell->y_dest_inc;
@@ -381,8 +299,6 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
  * @src_segs:    array of segments in image coordinates
  * @dest_segs:   returns the corresponding segments in display coordinates
  * @n_segs:      number of segments
- * @use_offsets: if %TRUE, the source coordinates are in the coordinate
- *               system of the active drawable instead of the image
  *
  * Transforms from image coordinates to display coordinates, so that
  * objects can be rendered at the correct points on the display.
@@ -391,32 +307,21 @@ void
 gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
                                        const BoundSeg         *src_segs,
                                        GdkSegment             *dest_segs,
-                                       gint                    n_segs,
-                                       gboolean                use_offsets)
+                                       gint                    n_segs)
 {
-  gint offset_x = 0;
-  gint offset_y = 0;
   gint i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (use_offsets)
-    {
-      GimpImage *image = gimp_display_get_image (shell->display);
-      GimpItem  *item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-
-      gimp_item_get_offset (item, &offset_x, &offset_y);
-    }
 
   for (i = 0; i < n_segs ; i++)
     {
       gint64 x1, x2;
       gint64 y1, y2;
 
-      x1 = src_segs[i].x1 + offset_x;
-      x2 = src_segs[i].x2 + offset_x;
-      y1 = src_segs[i].y1 + offset_y;
-      y2 = src_segs[i].y2 + offset_y;
+      x1 = src_segs[i].x1;
+      x2 = src_segs[i].x2;
+      y1 = src_segs[i].y1;
+      y2 = src_segs[i].y2;
 
       x1 = (x1 * shell->x_src_dec) / shell->x_dest_inc;
       x2 = (x2 * shell->x_src_dec) / shell->x_dest_inc;
@@ -456,11 +361,11 @@ gimp_display_shell_untransform_viewport (const GimpDisplayShell *shell,
   gimp_display_shell_untransform_xy (shell,
                                      0, 0,
                                      &x1, &y1,
-                                     FALSE, FALSE);
+                                     FALSE);
   gimp_display_shell_untransform_xy (shell,
                                      shell->disp_width, shell->disp_height,
                                      &x2, &y2,
-                                     FALSE, FALSE);
+                                     FALSE);
 
   image = gimp_display_get_image (shell->display);
 

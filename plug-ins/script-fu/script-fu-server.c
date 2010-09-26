@@ -38,6 +38,9 @@
 #define _WIN32_WINNT 0x0502
 #include <winsock2.h>
 #include <ws2tcpip.h>
+
+typedef short sa_family_t;	/* Not defined by winsock */
+
 #ifndef AI_ADDRCONFIG
 /* Missing from mingw headers, but value is publicly documented 
  * on http://msdn.microsoft.com/en-us/library/ms737530%28v=VS.85%29.aspx

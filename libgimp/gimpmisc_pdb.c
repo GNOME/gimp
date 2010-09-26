@@ -43,7 +43,7 @@
  * GIMP.
  *
  * Returns: GIMP version number.
- */
+ **/
 gchar *
 gimp_version (void)
 {
@@ -73,7 +73,7 @@ gimp_version (void)
  * Returns: The PID.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_getpid (void)
 {

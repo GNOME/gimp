@@ -1,21 +1,29 @@
-# This is a 'suppressionFile' for buildbot
-# We use isn.*t because UTF-8 ' might be interpreted as ASCII...
+# This is a 'suppressionFile' for buildbot warnings
+# We use isn.*t because UTF-8 ’ might be interpreted as ASCII...
 
 # Ignore warning from gtk-doc during make
-:    .*warning: Value descriptions for .* are missing in source code comment block.*
-:    .*warning: Property .* has no documentation.*
 :    .*html:.*: warning: no link for: .*
-:    .*warning: Field descriptions for .* are missing in source code comment block.*
-:    .*warning: Section .* is not defined in the .* file.*
 :    .*warning: .* unused declarations.*They should be added to .* in the appropriate place.*
+:    .*warning: Field description for .* is missing in source code comment block.*
+:    .*warning: Field descriptions for .* are missing in source code comment block.*
+:    .*warning: Property .* has no documentation.*
+:    .*warning: Section .* is not defined in the .* file.*
+:    .*warning: Value descriptions for .* are missing in source code comment block.*
 
 # This will die in GIMP 3.0, don't bother fixing...
-:    ^gimp-composite-.* warning: function declaration isn.*t a prototype.*
+:    .*gimp-composite-.* warning: function declaration isn.*t a prototype.*
+:    .*gimp-composite-.* warning: unused variable .*
 :    .*gimpcpuaccel.c:182: warning: dereferencing type-punned pointer will break strict-aliasing rules.*
 
 # Well-known harmless warnings
-:    .*gtkitemfactory.h:47: warning: function declaration isn.*t a prototype.*
 :    .*app/core/gimpimagemap.c:.*: warning: implicit declaration of function .*gegl_node_get_pad.*
+:    .*gtkitemfactory.h:47: warning: function declaration isn.*t a prototype.*
 
-# who cares
+# Who cares
 :    .*gimp.desktop: warning: value .* contains .* more than once.*
+:    ^libtool: install: warning:.*
+
+# Annoying plug-ins/imagemap warnings in generated files, not easily
+# fixed properly
+:    <stdout>.* warning: .*yyunput.* defined but not used
+:    <stdout>.* warning: .*input.* defined but not used

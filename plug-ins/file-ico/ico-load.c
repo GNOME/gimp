@@ -615,7 +615,7 @@ ico_load_layer (FILE        *fp,
   g_snprintf (buf, sizeof (buf), _("Icon #%i"), icon_num+1);
   layer = gimp_layer_new (image, buf, width, height,
                           GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image, layer, icon_num);
+  gimp_image_insert_layer (image, layer, -1, icon_num);
   drawable = gimp_drawable_get (layer);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, TRUE, FALSE);

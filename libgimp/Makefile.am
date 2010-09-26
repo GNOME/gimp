@@ -93,6 +93,7 @@ PDB_WRAPPERS_C = \
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
 	gimpitem_pdb.c			\
+	gimpitemtransform_pdb.c		\
 	gimplayer_pdb.c			\
 	gimpmessage_pdb.c		\
 	gimpmisc_pdb.c			\
@@ -144,6 +145,7 @@ PDB_WRAPPERS_H = \
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
 	gimpitem_pdb.h			\
+	gimpitemtransform_pdb.h		\
 	gimplayer_pdb.h			\
 	gimpmessage_pdb.h		\
 	gimpmisc_pdb.h			\
@@ -224,6 +226,8 @@ libgimp_2_0_la_sources = \
 	gimptile.h		\
 	gimpunitcache.c		\
 	gimpunitcache.h		\
+	gimpvectors.c		\
+	gimpvectors.h		\
 	stdplugins-intl.h	\
 	libgimp-intl.h
 
@@ -324,6 +328,7 @@ gimpinclude_HEADERS = \
 	gimpregioniterator.h		\
 	gimpselection.h			\
 	gimptile.h			\
+	gimpvectors.h			\
 	\
 	gimpui.h			\
 	gimpuitypes.h			\

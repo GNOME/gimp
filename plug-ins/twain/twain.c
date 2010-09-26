@@ -570,8 +570,8 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 					   layerType, 100, GIMP_NORMAL_MODE);
 
   /* Add the layer to the image */
-  gimp_image_add_layer(theClientData->image_id,
-		       theClientData->layer_id, 0);
+  gimp_image_insert_layer(theClientData->image_id,
+                          theClientData->layer_id, -1, 0);
 
   /* Update the progress dialog */
   theClientData->totalPixels = imageInfo->ImageWidth * imageInfo->ImageLength;

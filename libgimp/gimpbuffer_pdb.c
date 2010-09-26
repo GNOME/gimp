@@ -47,7 +47,7 @@
  * Returns: The list of buffer names.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar **
 gimp_buffers_get_list (const gchar *filter,
                        gint        *num_buffers)
@@ -89,7 +89,7 @@ gimp_buffers_get_list (const gchar *filter,
  * Returns: The real name given to the buffer.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 gimp_buffer_rename (const gchar *buffer_name,
                     const gchar *new_name)
@@ -123,7 +123,7 @@ gimp_buffer_rename (const gchar *buffer_name,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_buffer_delete (const gchar *buffer_name)
 {
@@ -154,7 +154,7 @@ gimp_buffer_delete (const gchar *buffer_name)
  * Returns: The buffer width.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_buffer_get_width (const gchar *buffer_name)
 {
@@ -186,7 +186,7 @@ gimp_buffer_get_width (const gchar *buffer_name)
  * Returns: The buffer height.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_buffer_get_height (const gchar *buffer_name)
 {
@@ -218,7 +218,7 @@ gimp_buffer_get_height (const gchar *buffer_name)
  * Returns: The buffer bpp.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_buffer_get_bytes (const gchar *buffer_name)
 {
@@ -250,7 +250,7 @@ gimp_buffer_get_bytes (const gchar *buffer_name)
  * Returns: The buffer image type.
  *
  * Since: GIMP 2.4
- */
+ **/
 GimpImageBaseType
 gimp_buffer_get_image_type (const gchar *buffer_name)
 {

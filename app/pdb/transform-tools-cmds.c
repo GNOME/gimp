@@ -65,10 +65,18 @@ flip_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
-          success = gimp_drawable_transform_flip (drawable, context,
-                                                  flip_type, TRUE, 0.0, FALSE);
+          gdouble axis;
+
+          gimp_transform_get_flip_axis (x, y, width, height,
+                                        flip_type, TRUE, &axis);
+
+          if (! gimp_drawable_transform_flip (drawable, context,
+                                              flip_type, axis, FALSE))
+            {
+              success = FALSE;
+            }
         }
     }
 
@@ -120,7 +128,7 @@ perspective_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -144,12 +152,14 @@ perspective_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Perspective"), FALSE);
 
-          /* Perspective the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -190,7 +200,7 @@ rotate_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -213,12 +223,14 @@ rotate_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Rotating"), FALSE);
 
-          /* Rotate the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -266,7 +278,7 @@ scale_invoker (GimpProcedure      *procedure,
                  x0 < x1 && y0 < y1);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -289,12 +301,14 @@ scale_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Scaling"), FALSE);
 
-          /* Scale the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -337,7 +351,7 @@ shear_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -360,12 +374,14 @@ shear_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("Shearing"), FALSE);
 
-          /* Shear the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix,
+                                                GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);
@@ -418,7 +434,7 @@ transform_2d_invoker (GimpProcedure      *procedure,
       success = gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, TRUE, error);
 
       if (success &&
-          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
         {
           GimpMatrix3           matrix;
           GimpInterpolationType interpolation_type = GIMP_INTERPOLATION_NONE;
@@ -436,11 +452,13 @@ transform_2d_invoker (GimpProcedure      *procedure,
           if (progress)
             gimp_progress_start (progress, _("2D Transform"), FALSE);
 
-          /* Transform the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, 3,
-                                                    FALSE, progress);
+          if (! gimp_drawable_transform_affine (drawable, context,
+                                                &matrix, GIMP_TRANSFORM_FORWARD,
+                                                interpolation_type, 3,
+                                                FALSE, progress))
+            {
+              success = FALSE;
+            }
 
           if (progress)
             gimp_progress_end (progress);

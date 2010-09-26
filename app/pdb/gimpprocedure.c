@@ -29,7 +29,6 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
-#include "core/gimpcontext.h"
 #include "core/gimpchannel.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
@@ -37,6 +36,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "gimppdbcontext.h"
 #include "gimppdberror.h"
 #include "gimpprocedure.h"
 
@@ -323,6 +323,11 @@ gimp_procedure_execute (GimpProcedure  *procedure,
       return return_vals;
     }
 
+  if (GIMP_IS_PDB_CONTEXT (context))
+    context = g_object_ref (context);
+  else
+    context = gimp_pdb_context_new (gimp, context, TRUE);
+
   /*  call the procedure  */
   return_vals = GIMP_PROCEDURE_GET_CLASS (procedure)->execute (procedure,
                                                                gimp,
@@ -331,6 +336,7 @@ gimp_procedure_execute (GimpProcedure  *procedure,
                                                                args,
                                                                error);
 
+  g_object_unref (context);
 
   if (return_vals)
     {
@@ -398,9 +404,16 @@ gimp_procedure_execute_async (GimpProcedure  *procedure,
                                     procedure->args, procedure->num_args,
                                     args, FALSE, error))
     {
+      if (GIMP_IS_PDB_CONTEXT (context))
+        context = g_object_ref (context);
+      else
+        context = gimp_pdb_context_new (gimp, context, TRUE);
+
       GIMP_PROCEDURE_GET_CLASS (procedure)->execute_async (procedure, gimp,
                                                            context, progress,
                                                            args, display);
+
+      g_object_unref (context);
     }
 }
 

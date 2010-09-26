@@ -37,10 +37,10 @@
  * This procedure creates a new channel with the specified width and
  * height. Name, opacity, and color are also supplied parameters. The
  * new channel still needs to be added to the image, as this is not
- * automatic. Add the new channel with the 'gimp_image_add_channel'
- * command. Other attributes such as channel show masked, should be set
- * with explicit procedure calls. The channel's contents are undefined
- * initially.
+ * automatic. Add the new channel with the gimp_image_insert_channel()
+ * command. Other attributes such as channel show masked, should be
+ * set with explicit procedure calls. The channel's contents are
+ * undefined initially.
  *
  * Returns: The newly created channel.
  */

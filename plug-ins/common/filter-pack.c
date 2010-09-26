@@ -1451,46 +1451,48 @@ slider_erase (GdkWindow *window,
 }
 
 static void
-draw_slider (GdkWindow *window,
-             GdkGC     *border_gc,
-             GdkGC     *fill_gc,
-             gint       xpos)
+draw_slider (cairo_t  *cr,
+             GdkColor *border_color,
+             GdkColor *fill_color,
+             gint      xpos)
 {
-  gint i;
+  cairo_move_to (cr, MARGIN + xpos, 0);
+  cairo_line_to (cr, MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
+  cairo_line_to (cr, MARGIN + xpos + (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
+  cairo_line_to (cr, MARGIN + xpos, 0);
 
-  for (i = 0; i < RANGE_HEIGHT; i++)
-    gdk_draw_line (window, fill_gc, MARGIN + xpos-i/2, i, MARGIN + xpos+i/2,i);
+  gdk_cairo_set_source_color (cr, fill_color);
+  cairo_fill_preserve (cr);
 
-  gdk_draw_line (window, border_gc, MARGIN + xpos, 0,
-                 MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
-
-  gdk_draw_line (window, border_gc, MARGIN + xpos, 0,
-                 MARGIN + xpos + (RANGE_HEIGHT - 1) / 2, RANGE_HEIGHT - 1);
-
-  gdk_draw_line (window, border_gc, MARGIN + xpos- (RANGE_HEIGHT - 1)/2,
-                 RANGE_HEIGHT-1, MARGIN + xpos + (RANGE_HEIGHT-1)/2,
-                 RANGE_HEIGHT - 1);
+  gdk_cairo_set_source_color (cr, border_color);
+  cairo_stroke (cr);
 }
 
 static void
 draw_it (GtkWidget *widget)
 {
   GtkStyle *style = gtk_widget_get_style (AW.aliasing_graph);
+  cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (AW.aliasing_graph));
 
-  draw_slider (gtk_widget_get_window (AW.aliasing_graph),
-               style->black_gc,
-               style->dark_gc[GTK_STATE_NORMAL],
+  cairo_translate (cr, 0.5, 0.5);
+  cairo_set_line_width (cr, 1.0);
+
+  draw_slider (cr,
+               &style->black,
+               &style->dark[GTK_STATE_NORMAL],
                fpvals.cutoff[SHADOWS]);
 
-  draw_slider (gtk_widget_get_window (AW.aliasing_graph),
-               style->black_gc,
-               style->dark_gc[GTK_STATE_NORMAL],
+  draw_slider (cr,
+               &style->black,
+               &style->dark[GTK_STATE_NORMAL],
                fpvals.cutoff[MIDTONES]);
 
-  draw_slider (gtk_widget_get_window (AW.aliasing_graph),
-               style->black_gc,
-               style->dark_gc[GTK_STATE_SELECTED],
+  draw_slider (cr,
+               &style->black,
+               &style->dark[GTK_STATE_SELECTED],
                fpvals.offset);
+
+  cairo_destroy (cr);
 }
 
 static gboolean

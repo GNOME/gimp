@@ -93,6 +93,9 @@ static void   gimp_display_shell_update_guide_handler       (GimpImage        *i
 static void   gimp_display_shell_update_sample_point_handler(GimpImage        *image,
                                                              GimpSamplePoint  *sample_point,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_update_vectors_handler     (GimpImage        *image,
+                                                             GimpVectors      *vectors,
+                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_profile_changed_handler    (GimpColorManaged *image,
@@ -104,17 +107,7 @@ static void   gimp_display_shell_exported_handler           (GimpImage        *i
                                                              const gchar      *uri,
                                                              GimpDisplayShell *shell);
 
-static void   gimp_display_shell_vectors_freeze_handler     (GimpVectors      *vectors,
-                                                             GimpDisplayShell *shell);
-static void   gimp_display_shell_vectors_thaw_handler       (GimpVectors      *vectors,
-                                                             GimpDisplayShell *shell);
-static void   gimp_display_shell_vectors_visible_handler    (GimpVectors      *vectors,
-                                                             GimpDisplayShell *shell);
-static void   gimp_display_shell_vectors_add_handler        (GimpContainer    *container,
-                                                             GimpVectors      *vectors,
-                                                             GimpDisplayShell *shell);
-static void   gimp_display_shell_vectors_remove_handler     (GimpContainer    *container,
-                                                             GimpVectors      *vectors,
+static void   gimp_display_shell_active_vectors_handler     (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 
 static void   gimp_display_shell_check_notify_handler       (GObject          *config,
@@ -145,14 +138,12 @@ static void   gimp_display_shell_quality_notify_handler     (GObject          *c
 void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
-  GimpImage     *image;
-  GimpContainer *vectors;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
 
-  image   = gimp_display_get_image (shell->display);
-  vectors = gimp_image_get_vectors (image);
+  image = gimp_display_get_image (shell->display);
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
@@ -189,6 +180,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "update-sample-point",
                     G_CALLBACK (gimp_display_shell_update_sample_point_handler),
                     shell);
+  g_signal_connect (image, "update-vectors",
+                    G_CALLBACK (gimp_display_shell_update_vectors_handler),
+                    shell);
   g_signal_connect (image, "invalidate-preview",
                     G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
                     shell);
@@ -202,24 +196,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_exported_handler),
                     shell);
 
-  shell->vectors_freeze_handler =
-    gimp_tree_handler_connect (vectors, "freeze",
-                               G_CALLBACK (gimp_display_shell_vectors_freeze_handler),
-                               shell);
-  shell->vectors_thaw_handler =
-    gimp_tree_handler_connect (vectors, "thaw",
-                               G_CALLBACK (gimp_display_shell_vectors_thaw_handler),
-                               shell);
-  shell->vectors_visible_handler =
-    gimp_tree_handler_connect (vectors, "visibility-changed",
-                               G_CALLBACK (gimp_display_shell_vectors_visible_handler),
-                               shell);
-
-  g_signal_connect (vectors, "add",
-                    G_CALLBACK (gimp_display_shell_vectors_add_handler),
-                    shell);
-  g_signal_connect (vectors, "remove",
-                    G_CALLBACK (gimp_display_shell_vectors_remove_handler),
+  g_signal_connect (image, "active-vectors-changed",
+                    G_CALLBACK (gimp_display_shell_active_vectors_handler),
                     shell);
 
   g_signal_connect (shell->display->config,
@@ -290,8 +268,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 void
 gimp_display_shell_disconnect (GimpDisplayShell *shell)
 {
-  GimpImage     *image;
-  GimpContainer *vectors;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
@@ -299,8 +276,6 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   image = gimp_display_get_image (shell->display);
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  vectors = gimp_image_get_vectors (image);
 
   gimp_display_shell_icon_update_stop (shell);
 
@@ -329,21 +304,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_check_notify_handler,
                                         shell);
 
-  g_signal_handlers_disconnect_by_func (vectors,
-                                        gimp_display_shell_vectors_remove_handler,
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_active_vectors_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (vectors,
-                                        gimp_display_shell_vectors_add_handler,
-                                        shell);
-
-  gimp_tree_handler_disconnect (shell->vectors_visible_handler);
-  shell->vectors_visible_handler = NULL;
-
-  gimp_tree_handler_disconnect (shell->vectors_thaw_handler);
-  shell->vectors_thaw_handler = NULL;
-
-  gimp_tree_handler_disconnect (shell->vectors_freeze_handler);
-  shell->vectors_freeze_handler = NULL;
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_exported_handler,
@@ -362,6 +325,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_update_sample_point_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_update_vectors_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_quick_mask_changed_handler,
@@ -509,6 +475,14 @@ gimp_display_shell_update_sample_point_handler (GimpImage        *image,
 }
 
 static void
+gimp_display_shell_update_vectors_handler (GimpImage        *image,
+                                           GimpVectors      *vectors,
+                                           GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_vectors (shell, vectors);
+}
+
+static void
 gimp_display_shell_size_changed_detailed_handler (GimpImage        *image,
                                                   gint              previous_origin_x,
                                                   gint              previous_origin_y,
@@ -604,45 +578,10 @@ gimp_display_shell_exported_handler (GimpImage        *image,
 }
 
 static void
-gimp_display_shell_vectors_freeze_handler (GimpVectors      *vectors,
+gimp_display_shell_active_vectors_handler (GimpImage        *image,
                                            GimpDisplayShell *shell)
 {
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
-}
-
-static void
-gimp_display_shell_vectors_thaw_handler (GimpVectors      *vectors,
-                                         GimpDisplayShell *shell)
-{
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
-}
-
-static void
-gimp_display_shell_vectors_visible_handler (GimpVectors      *vectors,
-                                            GimpDisplayShell *shell)
-{
-  if (shell->paused_count == 0)
-    gimp_display_shell_draw_vector (shell, vectors);
-}
-
-static void
-gimp_display_shell_vectors_add_handler (GimpContainer    *container,
-                                        GimpVectors      *vectors,
-                                        GimpDisplayShell *shell)
-{
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
-}
-
-static void
-gimp_display_shell_vectors_remove_handler (GimpContainer    *container,
-                                           GimpVectors      *vectors,
-                                           GimpDisplayShell *shell)
-{
-  if (shell->paused_count == 0 && gimp_item_get_visible (GIMP_ITEM (vectors)))
-    gimp_display_shell_draw_vector (shell, vectors);
+  gimp_display_shell_expose_full (shell);
 }
 
 static void

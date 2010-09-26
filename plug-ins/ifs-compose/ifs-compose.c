@@ -126,8 +126,6 @@ typedef struct
   gdouble       op_center_y;
   guint         button_state;
   gint          num_selected;
-
-  GdkGC        *selected_gc;
 } IfsDesignArea;
 
 typedef struct
@@ -983,8 +981,6 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gdk_flush ();
 
-  g_object_unref (ifsDesign->selected_gc);
-
   g_free (ifsD);
 
   return ifscint.run;
@@ -1500,6 +1496,7 @@ design_area_expose (GtkWidget      *widget,
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
   GtkStateType   state = gtk_widget_get_state (widget);
+  cairo_t       *cr;
   GtkAllocation  allocation;
   PangoLayout   *layout;
   gint           i;
@@ -1507,31 +1504,29 @@ design_area_expose (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  if (!ifsDesign->selected_gc)
-    {
-      ifsDesign->selected_gc = gdk_gc_new (gtk_widget_get_window (ifsDesign->area));
-      gdk_gc_set_line_attributes (ifsDesign->selected_gc, 2,
-                                 GDK_LINE_SOLID, GDK_CAP_ROUND,
-                                 GDK_JOIN_ROUND);
-    }
+  cr = gdk_cairo_create (ifsDesign->pixmap);
 
-  gdk_draw_rectangle (ifsDesign->pixmap,
-                      style->bg_gc[state],
-                      TRUE,
-                      event->area.x,
-                      event->area.y,
-                      event->area.width, event->area.height);
+  gdk_cairo_set_source_color (cr, &style->bg[state]);
+  cairo_paint (cr);
+
+  cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
+  cairo_translate (cr, 0.5, 0.5);
 
   /* draw an indicator for the center */
 
   cx = ifsvals.center_x * allocation.width;
   cy = ifsvals.center_y * allocation.width;
-  gdk_draw_line (ifsDesign->pixmap,
-                 style->fg_gc[state],
-                 cx - 10, cy, cx + 10, cy);
-  gdk_draw_line (ifsDesign->pixmap,
-                 style->fg_gc[state],
-                 cx, cy - 10, cx, cy + 10);
+
+  cairo_move_to (cr, cx - 10, cy);
+  cairo_line_to (cr, cx + 10, cy);
+
+  cairo_move_to (cr, cx, cy - 10);
+  cairo_line_to (cr, cx, cy + 10);
+
+  gdk_cairo_set_source_color (cr, &style->fg[state]);
+  cairo_set_line_width (cr, 1.0);
+  cairo_stroke (cr);
 
   layout = gtk_widget_create_pango_layout (widget, NULL);
 
@@ -1540,20 +1535,24 @@ design_area_expose (GtkWidget      *widget,
       aff_element_draw (elements[i], element_selected[i],
                         allocation.width,
                         allocation.height,
-                        ifsDesign->pixmap,
-                        style->fg_gc[state],
-                        ifsDesign->selected_gc,
+                        cr,
+                        &style->fg[state],
                         layout);
     }
 
   g_object_unref (layout);
 
-  gdk_draw_drawable (gtk_widget_get_window (widget),
-                     style->fg_gc[state],
-                     ifsDesign->pixmap,
-                     event->area.x, event->area.y,
-                     event->area.x, event->area.y,
-                     event->area.width, event->area.height);
+  cairo_destroy (cr);
+
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  gdk_cairo_set_source_pixmap (cr, ifsDesign->pixmap, 0.0, 0.0);
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
 
   return FALSE;
 }

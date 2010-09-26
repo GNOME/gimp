@@ -47,7 +47,7 @@ m4_define([gtk_required_version], [2.20.0])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.8.0])
 m4_define([cairo_pdf_required_version], [1.8.0])
-m4_define([pangocairo_required_version], [1.20.1])
+m4_define([pangocairo_required_version], [1.22.0])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([webkit_required_version], [1.1.0])
@@ -71,7 +71,7 @@ AC_INIT([GIMP], [gimp_version],
 AC_CONFIG_SRCDIR([app/core/gimp.c])
 AC_CONFIG_MACRO_DIR([m4macros])
 
-AM_INIT_AUTOMAKE(no-define dist-bzip2)
+AM_INIT_AUTOMAKE(no-define dist-bzip2 no-dist-gzip)
 AM_CONFIG_HEADER(config.h)
 
 # Enable silent build rules by default, requires at least
@@ -520,13 +520,13 @@ CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
-AC_MSG_CHECKING([if Pango is version 1.22.0 or newer])
-if $PKG_CONFIG --atleast-version=1.22.0 pango; then
-  have_pango_1_22=yes
+AC_MSG_CHECKING([if Pango is version 1.30.0 or newer])
+if $PKG_CONFIG --atleast-version=1.30.0 pango; then
+  have_pango_1_30=yes
 else
-  have_pango_1_22=no
+  have_pango_1_30=no
 fi
-AC_MSG_RESULT($have_pango_1_22)
+AC_MSG_RESULT($have_pango_1_30)
 
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
@@ -1917,7 +1917,7 @@ if test "x$have_gtk_2_22" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_pango_1_22" != "xyes"; then
+if test "x$have_pango_1_30" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 

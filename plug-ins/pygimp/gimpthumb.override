@@ -8,6 +8,10 @@ headers
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include <libgimpthumb/gimpthumb.h>
+
+/* TODO: Add a header for these */
+void gimpthumb_register_classes(PyObject *d);
+void gimpthumb_add_constants(PyObject *module, const gchar *strip_prefix);
 %%
 modulename gimpthumb
 %%

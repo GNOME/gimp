@@ -351,7 +351,7 @@ load_image (const gchar  *filename,
 
   layer = gimp_layer_new_from_pixbuf (image, _("Rendered SVG"), pixbuf,
                                       100, GIMP_NORMAL_MODE, 0.0, 1.0);
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_insert_layer (image, layer, -1, 0);
 
   gimp_image_undo_enable (image);
 

@@ -97,28 +97,35 @@ static gboolean  tileit_dialog          (void);
 static void      tileit_scale_update    (GtkAdjustment *adjustment,
                                          gpointer       data);
 
-static void      tileit_exp_update      (GtkWidget *widget, gpointer value);
-static void      tileit_exp_update_f    (GtkWidget *widget, gpointer value);
+static void      tileit_exp_update      (GtkWidget     *widget,
+                                         gpointer       value);
+static void      tileit_exp_update_f    (GtkWidget     *widget,
+                                         gpointer       value);
 
-static void      tileit_reset           (GtkWidget *widget,
-                                         gpointer   value);
-static void      tileit_radio_update    (GtkWidget *widget,
-                                         gpointer   data);
-static void      tileit_hvtoggle_update (GtkWidget *widget,
-                                         gpointer   data);
+static void      tileit_reset           (GtkWidget     *widget,
+                                         gpointer       value);
+static void      tileit_radio_update    (GtkWidget     *widget,
+                                         gpointer       data);
+static void      tileit_hvtoggle_update (GtkWidget     *widget,
+                                         gpointer       data);
 
-static void      do_tiles  (void);
-static gint      tiles_xy  (gint width, gint height,gint x,gint y,gint *nx,gint *ny);
-static void      all_update     (void);
-static void      alt_update     (void);
-static void      explict_update (gboolean);
+static void      do_tiles               (void);
+static gint      tiles_xy               (gint           width,
+                                         gint           height,
+                                         gint           x,
+                                         gint           y,
+                                         gint          *nx,
+                                         gint          *ny);
+static void      all_update             (void);
+static void      alt_update             (void);
+static void      explicit_update        (gboolean);
 
-static void      dialog_update_preview (void);
-static void      cache_preview         (void);
-static gint      tileit_preview_expose (GtkWidget *widget,
-                                        GdkEvent  *event);
-static gint      tileit_preview_events (GtkWidget *widget,
-                                        GdkEvent  *event);
+static void      dialog_update_preview  (void);
+static void      cache_preview          (void);
+static gboolean  tileit_preview_expose  (GtkWidget     *widget,
+                                         GdkEvent      *event);
+static gboolean  tileit_preview_events  (GtkWidget     *widget,
+                                         GdkEvent      *event);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -136,12 +143,12 @@ static TileItVals itvals =
 };
 
 /* Structures for call backs... */
-/* The "explict tile" & family */
+/* The "explicit tile" & family */
 typedef enum
 {
   ALL,
   ALT,
-  EXPLICT
+  EXPLICIT
 } AppliedTo;
 
 typedef struct
@@ -541,7 +548,7 @@ tileit_dialog (void)
   g_object_set_data (G_OBJECT (label), "set_sensitive", spinbutton);
 
   g_object_set_data (G_OBJECT (toggle), "gimp-item-data",
-                     GINT_TO_POINTER (EXPLICT));
+                     GINT_TO_POINTER (EXPLICIT));
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (tileit_radio_update),
@@ -627,59 +634,39 @@ tileit_hvtoggle_update (GtkWidget *widget,
       alt_update ();
       break;
 
-    case EXPLICT:
+    case EXPLICIT:
       break;
     }
 
   dialog_update_preview ();
 }
 
-static void
-draw_explict_sel (void)
-{
-  if (exp_call.type == EXPLICT)
-    {
-      GtkStyle *style = gtk_widget_get_style (tint.preview);
-      gdouble   x,y;
-      gdouble   width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
-      gdouble   height = (gdouble) preview_height / (gdouble) itvals.numtiles;
-
-      x = width * (exp_call.x - 1);
-      y = height * (exp_call.y - 1);
-
-      gdk_gc_set_function (style->black_gc, GDK_INVERT);
-
-      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
-                          style->black_gc,
-                          0,
-                          (gint) x,
-                          (gint) y,
-                          (gint) width,
-                          (gint) height);
-      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
-                          style->black_gc,
-                          0,
-                          (gint) x + 1,
-                          (gint) y + 1,
-                          (gint) width - 2,
-                          (gint) height - 2);
-      gdk_draw_rectangle (gtk_widget_get_window (tint.preview),
-                          style->black_gc,
-                          0,
-                          (gint) x + 2,
-                          (gint) y + 2,
-                          (gint) width - 4,
-                          (gint) height - 4);
-
-      gdk_gc_set_function (style->black_gc, GDK_COPY);
-    }
-}
-
-static gint
+static gboolean
 tileit_preview_expose (GtkWidget *widget,
                        GdkEvent  *event)
 {
-  draw_explict_sel ();
+  if (exp_call.type == EXPLICIT)
+    {
+      cairo_t  *cr     = gdk_cairo_create (gtk_widget_get_window (tint.preview));
+      gdouble   width  = (gdouble) preview_width / (gdouble) itvals.numtiles;
+      gdouble   height = (gdouble) preview_height / (gdouble) itvals.numtiles;
+      gdouble   x , y;
+
+      x = width  * (exp_call.x - 1);
+      y = height * (exp_call.y - 1);
+
+      cairo_rectangle (cr, x + 1.5, y + 1.5, width - 2, height - 2);
+
+      cairo_set_line_width (cr, 3.0);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+      cairo_stroke_preserve (cr);
+
+      cairo_set_line_width (cr, 1.0);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+      cairo_stroke_preserve (cr);
+
+      cairo_destroy (cr);
+    }
 
   return FALSE;
 }
@@ -693,10 +680,9 @@ exp_need_update (gint nx,
 
   if (nx != exp_call.x || ny != exp_call.y)
     {
-      draw_explict_sel (); /* Clear old 'un */
       exp_call.x = nx;
       exp_call.y = ny;
-      draw_explict_sel ();
+      gtk_widget_queue_draw (tint.preview);
 
       g_signal_handlers_block_by_func (exp_call.c_adj,
                                        tileit_exp_update_f,
@@ -758,7 +744,7 @@ tileit_preview_events (GtkWidget *widget,
 }
 
 static void
-explict_update (gboolean settile)
+explicit_update (gboolean settile)
 {
   gint x,y;
 
@@ -828,8 +814,8 @@ tileit_radio_update (GtkWidget *widget,
           alt_update ();
           break;
 
-        case EXPLICT:
-          explict_update (FALSE);
+        case EXPLICIT:
+          explicit_update (FALSE);
           break;
         }
 
@@ -886,7 +872,7 @@ static void
 tileit_exp_update (GtkWidget *widget,
                    gpointer   applied)
 {
-  explict_update (TRUE);
+  explicit_update (TRUE);
   dialog_update_preview ();
 }
 
@@ -894,7 +880,7 @@ static void
 tileit_exp_update_f (GtkWidget *widget,
                      gpointer   applied)
 {
-  explict_update (FALSE);
+  explicit_update (FALSE);
   dialog_update_preview ();
 }
 
@@ -1132,6 +1118,7 @@ dialog_update_preview (void)
   guchar *buffer;
 
   buffer = g_new (guchar, preview_width * preview_height * tint.img_bpp);
+
   for (y = 0; y < preview_height; y++)
     {
       do_tiles_preview (tint.preview_row,
@@ -1145,12 +1132,14 @@ dialog_update_preview (void)
               tint.preview_row,
               preview_width * tint.img_bpp);
     }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (tint.preview),
                           0, 0, preview_width, preview_height,
                           (tint.img_bpp>3)?GIMP_RGBA_IMAGE:GIMP_RGB_IMAGE,
                           buffer,
                           preview_width * tint.img_bpp);
+
   g_free (buffer);
-  draw_explict_sel ();
+
   gtk_widget_queue_draw (tint.preview);
 }

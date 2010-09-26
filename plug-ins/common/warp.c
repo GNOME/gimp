@@ -949,8 +949,8 @@ diff (GimpDrawable *drawable,
   draw_yd = gimp_drawable_get (ylayer_id);
   draw_xd = gimp_drawable_get (xlayer_id);
 
-  gimp_image_add_layer (new_image_id, xlayer_id, 1);
-  gimp_image_add_layer (new_image_id, ylayer_id, 1);
+  gimp_image_insert_layer (new_image_id, xlayer_id, -1, 1);
+  gimp_image_insert_layer (new_image_id, ylayer_id, -1, 1);
   gimp_drawable_fill (xlayer_id, GIMP_BACKGROUND_FILL);
   gimp_drawable_fill (ylayer_id, GIMP_BACKGROUND_FILL);
   gimp_image_set_active_layer (image_id, layer_active);

@@ -1605,7 +1605,7 @@ msgid "Ca_rtoon..."
 msgstr "Ka_rikatuur..."
 
 msgid "Cannot operate on indexed color images."
-msgstr "Ei suuda töötada pildiga, millel on indekseeritud värvid."
+msgstr "Pole võimalik töötada pildiga, millel on indekseeritud värvid."
 
 msgid "Cartoon"
 msgstr "Karikatuur"
@@ -4588,7 +4588,7 @@ msgid "Could not interpret '%s'"
 msgstr ""
 
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr "PostScripti salvestamine ei suuda käsitleda alfakanaliga pilte"
+msgstr "PostScripti salvestamine ei suuda käsitseda alfakanaliga pilte"
 
 #, c-format
 msgid ""

@@ -28,7 +28,6 @@
 #include "pdb-types.h"
 
 #include "base/temp-buf.h"
-#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -57,6 +56,7 @@
 #include "gimppdb.h"
 #include "gimppdberror.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -402,11 +402,13 @@ image_scale_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
       if (progress)
         gimp_progress_start (progress, _("Scaling"), FALSE);
 
       gimp_image_scale (image, new_width, new_height,
-                        gimp->config->interpolation_type,
+                        pdb_context->interpolation,
                         progress);
 
       if (progress)
@@ -916,9 +918,53 @@ image_add_layer_invoker (GimpProcedure      *procedure,
                                        GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
                                        error))
         {
-          /* FIXME tree */
           success = gimp_image_add_layer (image, layer,
                                           NULL, MAX (position, -1), TRUE);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_insert_layer_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpLayer *layer;
+  GimpLayer *parent;
+  gint32 position;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  layer = gimp_value_get_layer (&args->values[1], gimp);
+  parent = gimp_value_get_layer (&args->values[2], gimp);
+  position = g_value_get_int (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
+          gimp_pdb_image_is_base_type (image,
+                                       GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+                                       error) &&
+          (parent == NULL ||
+           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+            gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+        {
+          if (position == -1 && parent == NULL)
+            parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+          success = gimp_image_add_layer (image, layer,
+                                          parent, MAX (position, -1), TRUE);
         }
       else
         {
@@ -978,9 +1024,50 @@ image_add_channel_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
         {
-          /* FIXME tree */
           success = gimp_image_add_channel (image, channel,
                                             NULL, MAX (position, -1), TRUE);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_insert_channel_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpChannel *channel;
+  GimpChannel *parent;
+  gint32 position;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  channel = gimp_value_get_channel (&args->values[1], gimp);
+  parent = gimp_value_get_channel (&args->values[2], gimp);
+  position = g_value_get_int (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error) &&
+          (parent == NULL ||
+           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+            gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+        {
+          if (position == -1 && parent == NULL)
+            parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+          success = gimp_image_add_channel (image, channel,
+                                            parent, MAX (position, -1), TRUE);
         }
       else
         {
@@ -1040,9 +1127,50 @@ image_add_vectors_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
         {
-          /* FIXME tree */
           success = gimp_image_add_vectors (image, vectors,
                                             NULL, MAX (position, -1), TRUE);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_insert_vectors_invoker (GimpProcedure      *procedure,
+                              Gimp               *gimp,
+                              GimpContext        *context,
+                              GimpProgress       *progress,
+                              const GValueArray  *args,
+                              GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpVectors *vectors;
+  GimpVectors *parent;
+  gint32 position;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  vectors = gimp_value_get_vectors (&args->values[1], gimp);
+  parent = gimp_value_get_vectors (&args->values[2], gimp);
+  position = g_value_get_int (&args->values[3]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
+          (parent == NULL ||
+           (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+            gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+        {
+          if (position == -1 && parent == NULL)
+            parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+          success = gimp_image_add_vectors (image, vectors,
+                                            parent, MAX (position, -1), TRUE);
         }
       else
         {
@@ -2803,7 +2931,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-new",
                                      "Creates a new image with the specified width, height, and type.",
-                                     "Creates a new image, undisplayed with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-add-layer' command.",
+                                     "Creates a new image, undisplayed with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-insert-layer' command.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3078,7 +3206,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-scale",
                                      "Scale the image using the default interpolation method.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The default interpolation method is used.",
+                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. The interpolation method used can be set with 'gimp-context-set-interpolation'.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3112,12 +3240,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-scale-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-scale-full",
-                                     "Scale the image using a specific interpolation method.",
-                                     "This procedure scales the image so that its new width and height are equal to the supplied parameters. All layers and channels within the image are scaled according to the specified parameters; this includes the image selection mask. This procedure allows you to specify the interpolation method explicitly.",
+                                     "Deprecated: Use 'gimp-image-scale' instead.",
+                                     "Deprecated: Use 'gimp-image-scale' instead.",
                                      "Sven Neumann <sven@gimp.org>",
                                      "Sven Neumann",
                                      "2008",
-                                     NULL);
+                                     "gimp-image-scale");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3582,8 +3710,43 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-layer");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-layer",
+                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
+                                     "Deprecated: Use 'gimp-image-insert-layer' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-insert-layer");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("position",
+                                                      "position",
+                                                      "The layer position",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-insert-layer
+   */
+  procedure = gimp_procedure_new (image_insert_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-insert-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-insert-layer",
                                      "Add the specified layer to the image.",
-                                     "This procedure adds the specified layer to the image at the given position. If the position is specified as -1, then the layer is inserted above the active layer. The layer type must be compatible with the image base type.",
+                                     "This procedure adds the specified layer to the image at the given position. If the specified parent is a valid layer group (See 'gimp-item-is-group' and 'gimp-layer-group-new') then the layer is added inside the group. If the parent is NULL, the layer is added inside the main stack, outside of any group. The position argument specifies the location of the layer inside the stack (or the group, if a valid parent was supplied), starting from the top (0) and increasing. If the position is specified as -1 and the parent is specified as NULL, then the layer is inserted above the active layer. The layer type must be compatible with the image base type.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3599,6 +3762,12 @@ register_image_procs (GimpPDB *pdb)
                                                          "layer",
                                                          "The layer",
                                                          pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("parent",
+                                                         "parent",
+                                                         "The parent layer",
+                                                         pdb->gimp, TRUE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",
@@ -3646,8 +3815,43 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-channel");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-channel",
+                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
+                                     "Deprecated: Use 'gimp-image-insert-channel' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-insert-channel");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_channel_id ("channel",
+                                                           "channel",
+                                                           "The channel",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("position",
+                                                      "position",
+                                                      "The channel position",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-insert-channel
+   */
+  procedure = gimp_procedure_new (image_insert_channel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-insert-channel");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-insert-channel",
                                      "Add the specified channel to the image.",
-                                     "This procedure adds the specified channel to the image at the given position. If the position is specified as -1, then the channel is inserted above the active channel or, if no channel is active, at the top of the channel stack.",
+                                     "This procedure adds the specified channel to the image at the given position. Since channel groups are not currently supported, the parent argument must always be NULL. The position argument specifies the location of the channel inside the stack, starting from the top (0) and increasing. If the position is specified as -1, then the channel is inserted above the active channel.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -3663,6 +3867,12 @@ register_image_procs (GimpPDB *pdb)
                                                            "channel",
                                                            "The channel",
                                                            pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_channel_id ("parent",
+                                                           "parent",
+                                                           "The parent channel",
+                                                           pdb->gimp, TRUE,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",
@@ -3710,12 +3920,12 @@ register_image_procs (GimpPDB *pdb)
                                "gimp-image-add-vectors");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-add-vectors",
-                                     "Add the specified vectors object to the image.",
-                                     "This procedure adds the specified vectors object to the image at the given position. If the position is specified as -1, then the vectors object is inserted at the top of the vectors stack.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
+                                     "Deprecated: Use 'gimp-image-insert-vectors' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-insert-vectors");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -3732,6 +3942,47 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("position",
                                                       "position",
                                                       "The vectors objects position",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-insert-vectors
+   */
+  procedure = gimp_procedure_new (image_insert_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-insert-vectors");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-insert-vectors",
+                                     "Add the specified vectors to the image.",
+                                     "This procedure adds the specified vectors to the image at the given position. Since vectors groups are not currently supported, the parent argument must always be NULL. The position argument specifies the location of the vectors inside the stack, starting from the top (0) and increasing. If the position is specified as -1, then the vectors is inserted above the active vectors.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("parent",
+                                                           "parent",
+                                                           "The parent vectors",
+                                                           pdb->gimp, TRUE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("position",
+                                                      "position",
+                                                      "The vectors position",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -3947,7 +4198,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_item_id ("parent",
                                                         "parent",
                                                         "The new parent item",
-                                                        pdb->gimp, FALSE,
+                                                        pdb->gimp, TRUE,
                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("position",

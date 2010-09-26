@@ -369,11 +369,11 @@ gimp_vectors_import (GimpImage    *image,
         {
           if (filename)
             g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-			 _("No paths found in '%s'"),
+                         _("No paths found in '%s'"),
                          gimp_filename_to_utf8 (filename));
           else
             g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-				 _("No paths found in the buffer"));
+                                 _("No paths found in the buffer"));
 
           success = FALSE;
         }
@@ -994,10 +994,11 @@ svg_handler_poly_start (SvgHandler   *handler,
                       break;
                     }
 
+                  if (*p)
+                    n++;
+
                   while (*p && !g_ascii_isspace (*p) && *p != ',')
                     p++;
-
-                  n++;
                 }
 
               if ((n > 3) && (n % 2 == 0))

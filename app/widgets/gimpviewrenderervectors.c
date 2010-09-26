@@ -69,9 +69,9 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
                                  cairo_t            *cr,
                                  const GdkRectangle *area)
 {
-  GtkStyle       *style   = gtk_widget_get_style (widget);
-  GimpVectors    *vectors = GIMP_VECTORS (renderer->viewable);
-  GimpBezierDesc *bezdesc;
+  GtkStyle             *style   = gtk_widget_get_style (widget);
+  GimpVectors          *vectors = GIMP_VECTORS (renderer->viewable);
+  const GimpBezierDesc *desc;
 
   gdk_cairo_set_source_color (cr, &style->white);
 
@@ -82,9 +82,9 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   cairo_clip_preserve (cr);
   cairo_fill (cr);
 
-  bezdesc = gimp_vectors_make_bezier (vectors);
+  desc = gimp_vectors_get_bezier (vectors);
 
-  if (bezdesc)
+  if (desc)
     {
       gdouble xscale;
       gdouble yscale;
@@ -103,10 +103,7 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
       cairo_set_line_width (cr, MAX (xscale, yscale));
       gdk_cairo_set_source_color (cr, &style->black);
 
-      cairo_append_path (cr, (cairo_path_t *) bezdesc);
+      cairo_append_path (cr, (cairo_path_t *) desc);
       cairo_stroke (cr);
-
-      g_free (bezdesc->data);
-      g_free (bezdesc);
     }
 }

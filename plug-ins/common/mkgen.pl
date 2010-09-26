@@ -118,9 +118,7 @@ EOT
 
 foreach (sort keys %plugins) {
     my $makename = $_;
-    my $MAKENAME;
     $makename =~ s/-/_/g;
-    $MAKENAME = "\U$makename";
 
     my $libgimp = "";
 
@@ -154,11 +152,11 @@ foreach (sort keys %plugins) {
 
     if (exists $plugins{$_}->{cflags}) {
 	my $cflags = $plugins{$_}->{cflags};
-	my $optflags = $cflags =~ /FLAGS/ ? $cflags : "$MAKENAME\E_CFLAGS";
+	my $cflagsvalue = $cflags =~ /FLAGS/ ? "\$($cflags)" : $cflags;
 
 	print MK <<EOT;
 
-${makename}_CFLAGS = \$($optflags)
+${makename}_CFLAGS = $cflagsvalue
 EOT
     }
 

@@ -50,7 +50,7 @@
  * are defined between -127 and 127.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_brightness_contrast (gint32 drawable_ID,
                           gint   brightness,
@@ -100,7 +100,7 @@ gimp_brightness_contrast (gint32 drawable_ID,
  * grayscale images. It will not operate on indexed drawables.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_levels (gint32               drawable_ID,
              GimpHistogramChannel channel,
@@ -139,7 +139,7 @@ gimp_levels (gint32               drawable_ID,
  * Deprecated: Use gimp_levels_stretch() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_levels_auto (gint32 drawable_ID)
 {
@@ -172,7 +172,7 @@ gimp_levels_auto (gint32 drawable_ID)
  * not operate on indexed drawables.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_levels_stretch (gint32 drawable_ID)
 {
@@ -203,7 +203,7 @@ gimp_levels_stretch (gint32 drawable_ID)
  * intensity channel to the specified 'levels' parameter.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_posterize (gint32 drawable_ID,
                 gint   levels)
@@ -235,7 +235,7 @@ gimp_posterize (gint32 drawable_ID,
  * This procedure only works on drawables of type RGB color.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_desaturate (gint32 drawable_ID)
 {
@@ -270,7 +270,7 @@ gimp_desaturate (gint32 drawable_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_desaturate_full (gint32             drawable_ID,
                       GimpDesaturateMode desaturate_mode)
@@ -309,7 +309,7 @@ gimp_desaturate_full (gint32             drawable_ID,
  * adjusted based on the histogram for the entire image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_equalize (gint32   drawable_ID,
                gboolean mask_only)
@@ -343,7 +343,7 @@ gimp_equalize (gint32   drawable_ID,
  * valid for this operation.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_invert (gint32 drawable_ID)
 {
@@ -381,7 +381,7 @@ gimp_invert (gint32 drawable_ID)
  * to explicitly modify intensity levels.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_curves_spline (gint32                drawable_ID,
                     GimpHistogramChannel  channel,
@@ -425,7 +425,7 @@ gimp_curves_spline (gint32                drawable_ID,
  * Catmull Rom splines.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_curves_explicit (gint32                drawable_ID,
                       GimpHistogramChannel  channel,
@@ -472,7 +472,7 @@ gimp_curves_explicit (gint32                drawable_ID,
  * luminosity of each pixel remains fixed.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_color_balance (gint32           drawable_ID,
                     GimpTransferMode transfer_mode,
@@ -519,7 +519,7 @@ gimp_color_balance (gint32           drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_colorize (gint32  drawable_ID,
                gdouble hue,
@@ -576,7 +576,7 @@ gimp_colorize (gint32  drawable_ID,
  * pixels with transparent alpha values will not be counted.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_histogram (gint32                drawable_ID,
                 GimpHistogramChannel  channel,
@@ -640,7 +640,7 @@ gimp_histogram (gint32                drawable_ID,
  * provides the capability to limit range of affected hues.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_hue_saturation (gint32       drawable_ID,
                      GimpHueRange hue_range,
@@ -682,7 +682,7 @@ gimp_hue_saturation (gint32       drawable_ID,
  * black.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_threshold (gint32 drawable_ID,
                 gint   low_threshold,

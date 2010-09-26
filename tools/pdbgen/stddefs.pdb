@@ -57,6 +57,10 @@ sub austin_pdb_misc {
     contrib_pdb_misc('Austin Donnelly', '', @_);
 }
 
+sub barak_pdb_misc {
+    contrib_pdb_misc('Barak Itkin', 'lightningismyname@gmail.com', @_);
+}
+
 sub bill_pdb_misc {
     contrib_pdb_misc('Bill Skaggs', 'weskaggs@primate.ucdavis.edu', @_);
 }

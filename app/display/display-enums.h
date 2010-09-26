@@ -31,6 +31,20 @@ typedef enum
 } GimpCursorPrecision;
 
 
+#define GIMP_TYPE_HANDLE_TYPE (gimp_handle_type_get_type ())
+
+GType gimp_handle_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HANDLE_SQUARE,
+  GIMP_HANDLE_FILLED_SQUARE,
+  GIMP_HANDLE_CIRCLE,
+  GIMP_HANDLE_FILLED_CIRCLE,
+  GIMP_HANDLE_CROSS
+} GimpHandleType;
+
+
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 
 GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;

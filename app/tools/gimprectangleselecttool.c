@@ -292,8 +292,6 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
   rect_sel_tool = GIMP_RECTANGLE_SELECT_TOOL (draw_tool);
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
-  gimp_rectangle_tool_draw (draw_tool);
-
   if (priv->round_corners)
     {
       gint    x1, y1, x2, y2;
@@ -312,30 +310,28 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
 
       square_size = (int) (radius * 2);
 
-      gimp_draw_tool_draw_arc (draw_tool, FALSE,
-                               x1, y1,
-                               square_size, square_size,
-                               90 * 64,  90 * 64,
-                               FALSE);
+      gimp_draw_tool_add_arc (draw_tool, FALSE,
+                              x1, y1,
+                              square_size, square_size,
+                              G_PI / 2.0, G_PI / 2.0);
 
-      gimp_draw_tool_draw_arc (draw_tool, FALSE,
-                               x2 - square_size, y1,
-                               square_size, square_size,
-                               0,        90 * 64,
-                               FALSE);
+      gimp_draw_tool_add_arc (draw_tool, FALSE,
+                              x2 - square_size, y1,
+                              square_size, square_size,
+                              0.0, G_PI / 2.0);
 
-      gimp_draw_tool_draw_arc (draw_tool, FALSE,
-                               x2 - square_size, y2 - square_size,
-                               square_size, square_size,
-                               270 * 64, 90 * 64,
-                               FALSE);
+      gimp_draw_tool_add_arc (draw_tool, FALSE,
+                              x2 - square_size, y2 - square_size,
+                              square_size, square_size,
+                              G_PI * 1.5, G_PI / 2.0);
 
-      gimp_draw_tool_draw_arc (draw_tool, FALSE,
-                               x1, y2 - square_size,
-                               square_size, square_size,
-                               180 * 64, 90 * 64,
-                               FALSE);
+      gimp_draw_tool_add_arc (draw_tool, FALSE,
+                              x1, y2 - square_size,
+                              square_size, square_size,
+                              G_PI, G_PI / 2.0);
     }
+
+  gimp_rectangle_tool_draw (draw_tool);
 }
 
 static gboolean

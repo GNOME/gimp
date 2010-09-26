@@ -48,7 +48,8 @@ gimp_image_add_hguide (GimpImage *image,
                           image->gimp->next_guide_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_guide (image, C_("undo-type", "Add Horizontal Guide"), guide);
+    gimp_image_undo_push_guide (image,
+                                C_("undo-type", "Add Horizontal Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
   g_object_unref (G_OBJECT (guide));
@@ -71,7 +72,8 @@ gimp_image_add_vguide (GimpImage *image,
                           image->gimp->next_guide_ID++);
 
   if (push_undo)
-    gimp_image_undo_push_guide (image, C_("undo-type", "Add Vertical Guide"), guide);
+    gimp_image_undo_push_guide (image,
+                                C_("undo-type", "Add Vertical Guide"), guide);
 
   gimp_image_add_guide (image, guide, position);
   g_object_unref (G_OBJECT (guide));

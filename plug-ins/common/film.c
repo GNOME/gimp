@@ -486,7 +486,7 @@ film (void)
           gimp_layer_resize_to_image_size (layer_ID_src);
           new_layer = gimp_layer_new_from_drawable (layer_ID_src,
                                                     image_ID_dst);
-          gimp_image_add_layer (image_ID_dst, new_layer, -1);
+          gimp_image_insert_layer (image_ID_dst, new_layer, -1, -1);
           gimp_layer_set_offsets (new_layer, picture_x0, picture_y0);
 
           /* Draw picture numbers */
@@ -744,7 +744,7 @@ create_new_image (const gchar    *filename,
   gimp_image_undo_disable (image_ID);
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                               gdtype, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image_ID, *layer_ID, 0);
+  gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
   if (drawable)
     {

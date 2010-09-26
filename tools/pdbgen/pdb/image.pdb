@@ -91,7 +91,7 @@ type. A layer should be created and added before this image is
 displayed, or subsequent calls to gimp_display_new() with this image
 as an argument will fail. Layers can be created using the
 gimp_layer_new() commands. They can be added to an image using the
-gimp_image_add_layer() command.
+gimp_image_insert_layer() command.
 HELP
 
     &std_pdb_misc;
@@ -261,7 +261,8 @@ sub image_scale {
 This procedure scales the image so that its new width and height are
 equal to the supplied parameters. All layers and channels within the
 image are scaled according to the specified parameters; this includes
-the image selection mask. The default interpolation method is used.
+the image selection mask. The interpolation method used can be set
+with gimp_context_set_interpolation().
 HELP
 
     &std_pdb_misc;
@@ -276,14 +277,16 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
+	headers => [ qw("core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
   if (progress)
     gimp_progress_start (progress, _("Scaling"), FALSE);
 
   gimp_image_scale (image, new_width, new_height,
-                    gimp->config->interpolation_type,
+                    pdb_context->interpolation,
                     progress);
 
   if (progress)
@@ -294,16 +297,7 @@ CODE
 }
 
 sub image_scale_full {
-    $blurb = 'Scale the image using a specific interpolation method.';
-
-    $help = <<'HELP';
-This procedure scales the image so that its new width and height are
-equal to the supplied parameters. All layers and channels within the
-image are scaled according to the specified parameters; this includes
-the image selection mask. This procedure allows you to specify the
-interpolation method explicitly.
-HELP
-
+    &std_pdb_deprecated('gimp-image-scale');
     &neo_pdb_misc('2008', '2.6');
 
     @inargs = (
@@ -318,7 +312,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
+	headers => [ qw("core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
   if (progress)
@@ -892,7 +886,7 @@ HELP
 	  desc => 'The image' },
 	{ name => 'item', type => 'item',
 	  desc => 'The item to reorder' },
-	{ name => 'parent', type => 'item',
+	{ name => 'parent', type => 'item', none_ok => 1,
           desc => 'The new parent item' },
         { name => 'position', type => 'int32',
           desc => 'The new position of the item' }
@@ -1162,15 +1156,7 @@ CODE
 }
 
 sub image_add_layer {
-    $blurb = 'Add the specified layer to the image.';
-
-    $help = <<'HELP';
-This procedure adds the specified layer to the image at the given position.
-If the position is specified as -1, then the layer is inserted above the
-active layer. The layer type must be compatible with the image base type.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-insert-layer');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1188,9 +1174,61 @@ HELP
 				   GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
 				   error))
     {
-      /* FIXME tree */
       success = gimp_image_add_layer (image, layer,
                                       NULL, MAX (position, -1), TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+}
+
+sub image_insert_layer {
+    $blurb = 'Add the specified layer to the image.';
+
+    $help = <<'HELP';
+This procedure adds the specified layer to the image at the given
+position. If the specified parent is a valid layer group (See
+gimp_item_is_group() and gimp_layer_group_new()) then the layer is
+added inside the group. If the parent is NULL, the layer is added
+inside the main stack, outside of any group. The position argument
+specifies the location of the layer inside the stack (or the group, if
+a valid parent was supplied), starting from the top (0) and increasing.
+If the position is specified as -1 and the parent is specified as NULL,
+then the layer is inserted above the active layer. The layer type must
+be compatible with the image base type.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'layer', type => 'layer',
+	  desc => 'The layer' },
+	{ name => 'parent', type => 'layer', none_ok => 1,
+          desc => 'The parent layer' },
+	{ name => 'position', type => 'int32',
+	  desc => 'The layer position' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (layer), image, error) &&
+      gimp_pdb_image_is_base_type (image,
+				   GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))),
+				   error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+    {
+      if (position == -1 && parent == NULL)
+        parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      success = gimp_image_add_layer (image, layer,
+                                      parent, MAX (position, -1), TRUE);
     }
   else
     {
@@ -1357,15 +1395,7 @@ CODE
 }
 
 sub image_add_channel {
-    $blurb = 'Add the specified channel to the image.';
-
-    $help = <<'HELP';
-This procedure adds the specified channel to the image at the given position.
-If the position is specified as -1, then the channel is inserted above the
-active channel or, if no channel is active, at the top of the channel stack.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-insert-channel');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1381,7 +1411,6 @@ HELP
 {
   if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error))
     {
-      /* FIXME tree */
       success = gimp_image_add_channel (image, channel,
                                         NULL, MAX (position, -1), TRUE);
     }
@@ -1392,6 +1421,52 @@ HELP
 }
 CODE
     );
+}
+
+sub image_insert_channel {
+    $blurb = 'Add the specified channel to the image.';
+
+    $help = <<'HELP';
+This procedure adds the specified channel to the image at the given
+position. Since channel groups are not currently supported, the parent
+argument must always be NULL. The position argument specifies the
+location of the channel inside the stack, starting from the top (0) and
+increasing. If the position is specified as -1, then the channel is
+inserted above the active channel.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel' },
+	{ name => 'parent', type => 'channel', none_ok => 1,
+          desc => 'The parent channel' },
+	{ name => 'position', type => 'int32',
+	  desc => 'The channel position' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (channel), image, error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+    {
+      if (position == -1 && parent == NULL)
+        parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      success = gimp_image_add_channel (image, channel,
+                                        parent, MAX (position, -1), TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
 }
 
 sub image_remove_channel {
@@ -1424,15 +1499,7 @@ CODE
 }
 
 sub image_add_vectors {
-    $blurb = 'Add the specified vectors object to the image.';
-
-    $help = <<'HELP';
-This procedure adds the specified vectors object to the image at the given
-position. If the position is specified as -1, then the vectors object is
-inserted at the top of the vectors stack.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-insert-vectors');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -1447,9 +1514,54 @@ HELP
 {
   if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error))
     {
-      /* FIXME tree */
       success = gimp_image_add_vectors (image, vectors,
                                         NULL, MAX (position, -1), TRUE);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+}
+
+sub image_insert_vectors {
+    $blurb = 'Add the specified vectors to the image.';
+
+    $help = <<'HELP';
+This procedure adds the specified vectors to the image at the given
+position. Since vectors groups are not currently supported, the parent
+argument must always be NULL. The position argument specifies the
+location of the vectors inside the stack, starting from the top (0) and
+increasing. If the position is specified as -1, then the vectors is
+inserted above the active vectors.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'vectors', type => 'vectors',
+	  desc => 'The vectors' },
+	{ name => 'parent', type => 'vectors', none_ok => 1,
+          desc => 'The parent vectors' },
+	{ name => 'position', type => 'int32',
+	  desc => 'The vectors position' }
+    );
+
+    $invoke{code} = <<'CODE';
+{
+  if (gimp_pdb_item_is_floating (GIMP_ITEM (vectors), image, error) &&
+      (parent == NULL ||
+       (gimp_pdb_item_is_in_tree (GIMP_ITEM (parent), image, FALSE, error) &&
+        gimp_pdb_item_is_group (GIMP_ITEM (parent), error))))
+    {
+      if (position == -1 && parent == NULL)
+        parent = GIMP_IMAGE_ACTIVE_PARENT;
+
+      success = gimp_image_add_vectors (image, vectors,
+                                        parent, MAX (position, -1), TRUE);
     }
   else
     {
@@ -2794,6 +2906,7 @@ CODE
               "core/gimpcontainer.h"
               "core/gimpprogress.h"
               "core/gimpunit.h"
+              "gimppdbcontext.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
@@ -2816,9 +2929,9 @@ CODE
             image_floating_sel_attached_to
             image_pick_color
             image_pick_correlate_layer
-            image_add_layer image_remove_layer
-            image_add_channel image_remove_channel
-            image_add_vectors image_remove_vectors
+            image_add_layer image_insert_layer image_remove_layer
+            image_add_channel image_insert_channel image_remove_channel
+            image_add_vectors image_insert_vectors image_remove_vectors
             image_get_item_position
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
@@ -2852,7 +2965,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..52,55..83]]);
+%exports = (app => [@procs], lib => [@procs[0..55,58..86]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

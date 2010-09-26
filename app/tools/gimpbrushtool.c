@@ -306,17 +306,11 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
   options    = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
 
-  /*  don't create the segments for the purpose of undrawing (if we
-   *  don't have the segments, we can hardly have drawn them before)
-   */
-  if (! brush_core->brush_bound_segs && brush_core->main_brush &&
-      ! gimp_draw_tool_is_drawn (draw_tool))
-    {
-      gimp_brush_core_create_bound_segs (brush_core, options);
-    }
+  if (! brush_core->brush_bound_segs && brush_core->main_brush)
+    gimp_brush_core_create_bound_segs (brush_core, options);
 
   if (brush_core->brush_bound_segs)
-      gimp_brush_core_transform_bound_segs (brush_core, options);
+    gimp_brush_core_transform_bound_segs (brush_core, options);
 
   if (brush_core->transformed_brush_bound_segs)
     {
@@ -342,18 +336,16 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
 #undef EPSILON
             }
 
-          gimp_draw_tool_draw_boundary (draw_tool,
-                                        brush_core->transformed_brush_bound_segs,
-                                        brush_core->n_brush_bound_segs,
-                                        x, y,
-                                        FALSE);
+          gimp_draw_tool_add_boundary (draw_tool,
+                                       brush_core->transformed_brush_bound_segs,
+                                       brush_core->n_brush_bound_segs,
+                                       x, y);
         }
       else if (draw_fallback)
         {
-          gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_CROSS,
-                                      x, y,
-                                      5, 5, GTK_ANCHOR_CENTER,
-                                      FALSE);
+          gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
+                                     x, y,
+                                     5, 5, GTK_ANCHOR_CENTER);
         }
     }
 }
@@ -372,9 +364,9 @@ gimp_brush_tool_brush_changed (GimpContext   *context,
 }
 
 static void
-gimp_brush_tool_brush_transformed  (GimpPaintOptions *options,
-                                    GParamSpec       *pspec,
-                                    GimpBrushTool    *brush_tool)
+gimp_brush_tool_brush_transformed (GimpPaintOptions *options,
+                                   GParamSpec       *pspec,
+                                   GimpBrushTool    *brush_tool)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (brush_tool);
   GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);

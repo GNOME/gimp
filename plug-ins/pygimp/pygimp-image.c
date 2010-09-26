@@ -20,7 +20,6 @@
 #  include <config.h>
 #endif
 
-#undef GIMP_DISABLE_DEPRECATED
 #include "pygimp.h"
 
 static PyObject *
@@ -33,9 +32,37 @@ img_add_channel(PyGimpImage *self, PyObject *args)
 	                        &PyGimpChannel_Type, &chn, &pos))
 	return NULL;
 
-    if (!gimp_image_add_channel(self->ID, chn->ID, pos)) {
+    if (!gimp_image_insert_channel(self->ID, chn->ID, -1, pos)) {
 	PyErr_Format(pygimp_error,
 		     "could not add channel (ID %d) to image (ID %d)",
+		     chn->ID, self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+img_insert_channel(PyGimpImage *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpChannel *chn;
+    PyGimpChannel *parent = NULL;
+    int pos = -1;
+
+    static char *kwlist[] = { "channel", "parent", "position", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|O!i:insert_channel", kwlist,
+                                     &PyGimpChannel_Type, &chn,
+                                     &PyGimpChannel_Type, &parent,
+                                     &pos))
+	return NULL;
+
+    if (!gimp_image_insert_channel(self->ID,
+                                   chn->ID, parent ? parent->ID : -1, pos)) {
+	PyErr_Format(pygimp_error,
+		     "could not insert channel (ID %d) to image (ID %d)",
 		     chn->ID, self->ID);
 	return NULL;
     }
@@ -54,9 +81,37 @@ img_add_layer(PyGimpImage *self, PyObject *args)
 			  &pos))
 	return NULL;
 
-    if (!gimp_image_add_layer(self->ID, lay->ID, pos)) {
+    if (!gimp_image_insert_layer(self->ID, lay->ID, -1, pos)) {
 	PyErr_Format(pygimp_error,
 		     "could not add layer (ID %d) to image (ID %d)",
+		     lay->ID, self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
+img_insert_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
+{
+    PyGimpLayer *lay;
+    PyGimpLayer *parent = NULL;
+    int pos = -1;
+
+    static char *kwlist[] = { "layer", "parent", "position", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O!|O!i:insert_layer", kwlist,
+                                     &PyGimpLayer_Type, &lay,
+                                     &PyGimpLayer_Type, &parent,
+                                     &pos))
+	return NULL;
+
+    if (!gimp_image_insert_layer(self->ID,
+                                 lay->ID, parent ? parent->ID : -1, pos)) {
+	PyErr_Format(pygimp_error,
+		     "could not insert layer (ID %d) to image (ID %d)",
 		     lay->ID, self->ID);
 	return NULL;
     }
@@ -126,15 +181,15 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     }
 
     if (!gimp_drawable_fill(layer_id, fill_mode)) {
-        gimp_drawable_delete(layer_id);
+        gimp_item_delete(layer_id);
         PyErr_Format(pygimp_error,
                      "could not fill new layer with fill mode %d",
                      fill_mode);
         return NULL;
     }
 
-    if (!gimp_image_add_layer(self->ID, layer_id, pos)) {
-        gimp_drawable_delete(layer_id);
+    if (!gimp_image_insert_layer(self->ID, layer_id, -1, pos)) {
+        gimp_item_delete(layer_id);
         PyErr_Format(pygimp_error,
                      "could not add layer (ID %d) to image (ID %d)",
                      layer_id, self->ID);
@@ -192,7 +247,7 @@ img_lower_channel(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:lower_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
-    if (!gimp_image_lower_channel(self->ID, chn->ID)) {
+    if (!gimp_image_lower_item(self->ID, chn->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not lower channel (ID %d) on image (ID %d)",
 		     chn->ID, self->ID);
@@ -211,7 +266,7 @@ img_lower_layer(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:lower_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_lower_layer(self->ID, lay->ID)) {
+    if (!gimp_image_lower_item(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not lower layer (ID %d) on image (ID %d)",
 		     lay->ID, self->ID);
@@ -231,7 +286,7 @@ img_lower_layer_to_bottom(PyGimpImage *self, PyObject *args)
 			  &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_lower_layer_to_bottom(self->ID, lay->ID)) {
+    if (!gimp_image_lower_item_to_bottom(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not lower layer (ID %d) to bottom on image (ID %d)",
 		     lay->ID, self->ID);
@@ -315,7 +370,7 @@ img_raise_channel(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:raise_channel", &PyGimpChannel_Type, &chn))
 	return NULL;
 
-    if (!gimp_image_raise_channel(self->ID, chn->ID)) {
+    if (!gimp_image_raise_item(self->ID, chn->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not raise channel (ID %d) on image (ID %d)",
 		     chn->ID, self->ID);
@@ -334,7 +389,7 @@ img_raise_layer(PyGimpImage *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "O!:raise_layer", &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_raise_layer(self->ID, lay->ID)) {
+    if (!gimp_image_raise_item(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not raise layer (ID %d) on image (ID %d)",
 		     lay->ID, self->ID);
@@ -354,7 +409,7 @@ img_raise_layer_to_top(PyGimpImage *self, PyObject *args)
 			  &PyGimpLayer_Type, &lay))
 	return NULL;
 
-    if (!gimp_image_raise_layer_to_top(self->ID, lay->ID)) {
+    if (!gimp_image_raise_item_to_top(self->ID, lay->ID)) {
 	PyErr_Format(pygimp_error,
 		     "could not raise layer (ID %d) to top on image (ID %d)",
 		     lay->ID, self->ID);
@@ -454,18 +509,21 @@ img_scale(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 	return NULL;
 
     if (interpolation != -1) {
-        if (!gimp_image_scale_full(self->ID,
-                                   new_width, new_height, interpolation)) {
-            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
-                         self->ID, new_width, new_height);
-            return NULL;
+        gimp_context_push();
+        gimp_context_set_interpolation(interpolation);
+    }
+
+    if (!gimp_image_scale(self->ID, new_width, new_height)) {
+        PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
+                     self->ID, new_width, new_height);
+        if (interpolation != -1) {
+            gimp_context_pop();
         }
-    } else {
-        if (!gimp_image_scale(self->ID, new_width, new_height)) {
-            PyErr_Format(pygimp_error, "could not scale image (ID %d) to %dx%d",
-                         self->ID, new_width, new_height);
-            return NULL;
-        }
+        return NULL;
+    }
+
+    if (interpolation != -1) {
+        gimp_context_pop();
     }
 
     Py_INCREF(Py_None);
@@ -499,11 +557,7 @@ img_crop(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 static PyObject *
 img_free_shadow(PyGimpImage *self)
 {
-    if (!gimp_image_free_shadow(self->ID)) {
-	PyErr_Format(pygimp_error, "could not free shadow tiles on image (ID %d)",
-		     self->ID);
-	return NULL;
-    }
+    /* this procedure is deprecated and does absolutely nothing */
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -622,6 +676,8 @@ img_attach_new_parasite(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     char *name;
     int flags, size;
     guint8 *data;
+    GimpParasite *parasite;
+    gboolean success;
 
     static char *kwlist[] = { "name", "flags", "data", NULL };
 
@@ -630,7 +686,11 @@ img_attach_new_parasite(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 				     &name, &flags, &data, &size))
 	return NULL;
 
-    if (!gimp_image_attach_new_parasite(self->ID, name, flags, size, data)) {
+    parasite = gimp_parasite_new (name, flags, size, data);
+    success = gimp_image_parasite_attach (self->ID, parasite);
+    gimp_parasite_free (parasite);
+
+    if (!success) {
 	PyErr_Format(pygimp_error,
 		     "could not attach new parasite '%s' to image (ID %d)",
 		     name, self->ID);
@@ -837,7 +897,9 @@ img_undo_group_end(PyGimpImage *self)
 
 static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
+    {"insert_channel",	(PyCFunction)img_insert_channel,	METH_VARARGS | METH_KEYWORDS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
+    {"insert_layer",	(PyCFunction)img_insert_layer,	METH_VARARGS | METH_KEYWORDS},
     {"new_layer",       (PyCFunction)img_new_layer, METH_VARARGS | METH_KEYWORDS},
     {"clean_all",	(PyCFunction)img_clean_all,	METH_NOARGS},
     {"disable_undo",	(PyCFunction)img_disable_undo,	METH_NOARGS},

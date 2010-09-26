@@ -40,153 +40,6 @@
 
 
 /**
- * gimp_drawable_is_valid:
- * @drawable_ID: The drawable to check.
- *
- * Deprecated: Use gimp_item_is_valid() instead.
- *
- * Returns: Whether the drawable ID is valid.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_drawable_is_valid (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean valid = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-is-valid",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    valid = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return valid;
-}
-
-/**
- * gimp_drawable_is_layer:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_is_layer() instead.
- *
- * Returns: TRUE if the drawable is a layer, FALSE otherwise.
- */
-gboolean
-gimp_drawable_is_layer (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean layer = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-is-layer",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    layer = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer;
-}
-
-/**
- * gimp_drawable_is_text_layer:
- * @drawable_ID: The drawable.
- *
- * Returns whether the drawable is a text layer.
- *
- * This procedure returns TRUE if the specified drawable is a text
- * layer.
- *
- * Returns: TRUE if the drawable is a text layer, FALSE otherwise.
- *
- * Since: GIMP 2.6
- */
-gboolean
-gimp_drawable_is_text_layer (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean text_layer = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-is-text-layer",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    text_layer = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return text_layer;
-}
-
-/**
- * gimp_drawable_is_layer_mask:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_is_layer_mask() instead.
- *
- * Returns: TRUE if the drawable is a layer mask, FALSE otherwise.
- */
-gboolean
-gimp_drawable_is_layer_mask (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean layer_mask = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-is-layer-mask",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    layer_mask = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return layer_mask;
-}
-
-/**
- * gimp_drawable_is_channel:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_is_channel() instead.
- *
- * Returns: TRUE if the drawable is a channel, FALSE otherwise.
- */
-gboolean
-gimp_drawable_is_channel (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean channel = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-is-channel",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    channel = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return channel;
-}
-
-/**
  * gimp_drawable_type:
  * @drawable_ID: The drawable.
  *
@@ -195,7 +48,7 @@ gimp_drawable_is_channel (gint32 drawable_ID)
  * This procedure returns the drawable's type.
  *
  * Returns: The drawable's type.
- */
+ **/
 GimpImageType
 gimp_drawable_type (gint32 drawable_ID)
 {
@@ -228,7 +81,7 @@ gimp_drawable_type (gint32 drawable_ID)
  * the drawable's type is simply returned.
  *
  * Returns: The drawable's type with alpha.
- */
+ **/
 GimpImageType
 gimp_drawable_type_with_alpha (gint32 drawable_ID)
 {
@@ -260,7 +113,7 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
  * will be one of: { RGBA , GRAYA, INDEXEDA }.
  *
  * Returns: Does the drawable have an alpha channel?
- */
+ **/
 gboolean
 gimp_drawable_has_alpha (gint32 drawable_ID)
 {
@@ -291,7 +144,7 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
  * RGB, RGBA }.
  *
  * Returns: TRUE if the drawable is an RGB type.
- */
+ **/
 gboolean
 gimp_drawable_is_rgb (gint32 drawable_ID)
 {
@@ -322,7 +175,7 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
  * Gray, GrayA }.
  *
  * Returns: TRUE if the drawable is a grayscale type.
- */
+ **/
 gboolean
 gimp_drawable_is_gray (gint32 drawable_ID)
 {
@@ -353,7 +206,7 @@ gimp_drawable_is_gray (gint32 drawable_ID)
  * Indexed, IndexedA }.
  *
  * Returns: TRUE if the drawable is an indexed type.
- */
+ **/
 gboolean
 gimp_drawable_is_indexed (gint32 drawable_ID)
 {
@@ -384,7 +237,7 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
  * of channels) for the specified drawable.
  *
  * Returns: Bytes per pixel.
- */
+ **/
 gint
 gimp_drawable_bpp (gint32 drawable_ID)
 {
@@ -414,7 +267,7 @@ gimp_drawable_bpp (gint32 drawable_ID)
  * This procedure returns the specified drawable's width in pixels.
  *
  * Returns: Width of drawable.
- */
+ **/
 gint
 gimp_drawable_width (gint32 drawable_ID)
 {
@@ -444,7 +297,7 @@ gimp_drawable_width (gint32 drawable_ID)
  * This procedure returns the specified drawable's height in pixels.
  *
  * Returns: Height of drawable.
- */
+ **/
 gint
 gimp_drawable_height (gint32 drawable_ID)
 {
@@ -478,7 +331,7 @@ gimp_drawable_height (gint32 drawable_ID)
  * The offsets of a channel will be returned as 0.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_offsets (gint32  drawable_ID,
                        gint   *offset_x,
@@ -510,61 +363,6 @@ gimp_drawable_offsets (gint32  drawable_ID,
 }
 
 /**
- * gimp_drawable_delete:
- * @drawable_ID: The drawable to delete.
- *
- * Deprecated: Use gimp_item_delete() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_drawable_delete (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-delete",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_drawable_get_image:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_get_image() instead.
- *
- * Returns: The drawable's image.
- */
-gint32
-gimp_drawable_get_image (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 image_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-get-image",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    image_ID = return_vals[1].data.d_image;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return image_ID;
-}
-
-/**
  * gimp_drawable_set_image:
  * @drawable_ID: The drawable.
  * @image_ID: The image.
@@ -572,7 +370,7 @@ gimp_drawable_get_image (gint32 drawable_ID)
  * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_set_image (gint32 drawable_ID,
                          gint32 image_ID)
@@ -585,238 +383,6 @@ gimp_drawable_set_image (gint32 drawable_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_drawable_get_name:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_get_name() instead.
- *
- * Returns: The drawable name.
- */
-gchar *
-gimp_drawable_get_name (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-get-name",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    name = g_strdup (return_vals[1].data.d_string);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return name;
-}
-
-/**
- * gimp_drawable_set_name:
- * @drawable_ID: The drawable.
- * @name: The new drawable name.
- *
- * Deprecated: Use gimp_item_set_name() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_drawable_set_name (gint32       drawable_ID,
-                        const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-set-name",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_drawable_get_visible:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_get_visible() instead.
- *
- * Returns: The drawable visibility.
- */
-gboolean
-gimp_drawable_get_visible (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean visible = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-get-visible",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    visible = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return visible;
-}
-
-/**
- * gimp_drawable_set_visible:
- * @drawable_ID: The drawable.
- * @visible: The new drawable visibility.
- *
- * Deprecated: Use gimp_item_set_visible() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_drawable_set_visible (gint32   drawable_ID,
-                           gboolean visible)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-set-visible",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, visible,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_drawable_get_linked:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_get_linked() instead.
- *
- * Returns: The drawable linked state (for moves).
- */
-gboolean
-gimp_drawable_get_linked (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean linked = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-get-linked",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    linked = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return linked;
-}
-
-/**
- * gimp_drawable_set_linked:
- * @drawable_ID: The drawable.
- * @linked: The new drawable linked state.
- *
- * Deprecated: Use gimp_item_set_linked() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_drawable_set_linked (gint32   drawable_ID,
-                          gboolean linked)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-set-linked",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, linked,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_drawable_get_tattoo:
- * @drawable_ID: The drawable.
- *
- * Deprecated: Use gimp_item_get_tattoo() instead.
- *
- * Returns: The drawable tattoo.
- */
-gint
-gimp_drawable_get_tattoo (gint32 drawable_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint tattoo = 0;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-get-tattoo",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    tattoo = return_vals[1].data.d_tattoo;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return tattoo;
-}
-
-/**
- * gimp_drawable_set_tattoo:
- * @drawable_ID: The drawable.
- * @tattoo: The new drawable tattoo.
- *
- * Deprecated: Use gimp_item_set_tattoo() instead.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_drawable_set_tattoo (gint32 drawable_ID,
-                          gint   tattoo)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-drawable-set-tattoo",
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE, drawable_ID,
-                                    GIMP_PDB_INT32, tattoo,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -851,7 +417,7 @@ gimp_drawable_set_tattoo (gint32 drawable_ID,
  * return value which is more useful in most cases.
  *
  * Returns: TRUE if there is a selection.
- */
+ **/
 gboolean
 gimp_drawable_mask_bounds (gint32  drawable_ID,
                            gint   *x1,
@@ -902,7 +468,7 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
  * Returns: TRUE if the returned area is not empty.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_drawable_mask_intersect (gint32  drawable_ID,
                               gint   *x,
@@ -946,7 +512,7 @@ gimp_drawable_mask_intersect (gint32  drawable_ID,
  * Requesting no undo is useful for such applications as 'auto-apply'.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_merge_shadow (gint32   drawable_ID,
                             gboolean undo)
@@ -982,7 +548,7 @@ gimp_drawable_merge_shadow (gint32   drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_drawable_free_shadow (gint32 drawable_ID)
 {
@@ -1018,7 +584,7 @@ gimp_drawable_free_shadow (gint32 drawable_ID)
  * (0, 0, width, height).
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_update (gint32 drawable_ID,
                       gint   x,
@@ -1060,7 +626,7 @@ gimp_drawable_update (gint32 drawable_ID,
  * bytes-per-pixel value for the specified drawable.
  *
  * Returns: The pixel value.
- */
+ **/
 guint8 *
 gimp_drawable_get_pixel (gint32  drawable_ID,
                          gint    x_coord,
@@ -1111,7 +677,7 @@ gimp_drawable_get_pixel (gint32  drawable_ID,
  * just created yourself.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_set_pixel (gint32        drawable_ID,
                          gint          x_coord,
@@ -1153,12 +719,13 @@ gimp_drawable_set_pixel (gint32        drawable_ID,
  * with an alpha channel, in which case the alpha channel is set to
  * transparent. If the drawable has no alpha channel, it is filled to
  * white. No fill leaves the drawable's contents undefined. This
- * procedure is unlike the bucket fill tool because it fills regardless
- * of a selection. Its main purpose is to fill a newly created drawable
- * before adding it to the image. This operation cannot be undone.
+ * procedure is unlike gimp_edit_fill() or the bucket fill tool because
+ * it fills regardless of a selection. Its main purpose is to fill a
+ * newly created drawable before adding it to the image. This operation
+ * cannot be undone.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_fill (gint32       drawable_ID,
                     GimpFillType fill_type)
@@ -1199,7 +766,7 @@ gimp_drawable_fill (gint32       drawable_ID,
  * specified by the 'fill-type' parameter.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_drawable_offset (gint32         drawable_ID,
                       gboolean       wrap_around,
@@ -1246,7 +813,7 @@ gimp_drawable_offset (gint32         drawable_ID,
  * the number of bytes in the image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_drawable_thumbnail (gint32   drawable_ID,
                           gint     width,
@@ -1318,7 +885,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
                               gint     src_x,
@@ -1387,7 +954,7 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_drawable_foreground_extract (gint32                    drawable_ID,
                                   GimpForegroundExtractMode mode,

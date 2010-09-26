@@ -30,44 +30,37 @@ void  gimp_display_shell_transform_xy           (const GimpDisplayShell *shell,
                                                  gdouble                 x,
                                                  gdouble                 y,
                                                  gint                   *nx,
-                                                 gint                   *ny,
-                                                 gboolean                use_offsets);
+                                                 gint                   *ny);
 void  gimp_display_shell_untransform_xy         (const GimpDisplayShell *shell,
                                                  gint                    x,
                                                  gint                    y,
                                                  gint                   *nx,
                                                  gint                   *ny,
-                                                 gboolean                round,
-                                                 gboolean                use_offsets);
+                                                 gboolean                round);
 
 void  gimp_display_shell_transform_xy_f         (const GimpDisplayShell *shell,
                                                  gdouble                 x,
                                                  gdouble                 y,
                                                  gdouble                *nx,
-                                                 gdouble                *ny,
-                                                 gboolean                use_offsets);
+                                                 gdouble                *ny);
 void  gimp_display_shell_untransform_xy_f       (const GimpDisplayShell *shell,
                                                  gdouble                 x,
                                                  gdouble                 y,
                                                  gdouble                *nx,
-                                                 gdouble                *ny,
-                                                 gboolean                use_offsets);
+                                                 gdouble                *ny);
 
 void  gimp_display_shell_transform_points       (const GimpDisplayShell *shell,
                                                  const GimpVector2      *points,
                                                  GdkPoint               *coords,
-                                                 gint                    n_points,
-                                                 gboolean                use_offsets);
+                                                 gint                    n_points);
 void  gimp_display_shell_transform_coords       (const GimpDisplayShell *shell,
                                                  const GimpCoords       *image_coords,
                                                  GdkPoint               *disp_coords,
-                                                 gint                    n_coords,
-                                                 gboolean                use_offsets);
+                                                 gint                    n_coords);
 void  gimp_display_shell_transform_segments     (const GimpDisplayShell *shell,
                                                  const BoundSeg         *src_segs,
                                                  GdkSegment             *dest_segs,
-                                                 gint                    n_segs,
-                                                 gboolean                use_offsets);
+                                                 gint                    n_segs);
 
 void  gimp_display_shell_untransform_viewport   (const GimpDisplayShell *shell,
                                                  gint                   *x,

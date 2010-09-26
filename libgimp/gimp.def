@@ -68,30 +68,44 @@ EXPORTS
 	gimp_clone_default
 	gimp_color_balance
 	gimp_colorize
+	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
+	gimp_context_get_feather
+	gimp_context_get_feather_radius
 	gimp_context_get_font
 	gimp_context_get_foreground
 	gimp_context_get_gradient
+	gimp_context_get_interpolation
 	gimp_context_get_opacity
 	gimp_context_get_paint_method
 	gimp_context_get_paint_mode
 	gimp_context_get_palette
 	gimp_context_get_pattern
+	gimp_context_get_transform_direction
+	gimp_context_get_transform_recursion
+	gimp_context_get_transform_resize
 	gimp_context_list_paint_methods
 	gimp_context_pop
 	gimp_context_push
+	gimp_context_set_antialias
 	gimp_context_set_background
 	gimp_context_set_brush
 	gimp_context_set_default_colors
+	gimp_context_set_feather
+	gimp_context_set_feather_radius
 	gimp_context_set_font
 	gimp_context_set_foreground
 	gimp_context_set_gradient
+	gimp_context_set_interpolation
 	gimp_context_set_opacity
 	gimp_context_set_paint_method
 	gimp_context_set_paint_mode
 	gimp_context_set_palette
 	gimp_context_set_pattern
+	gimp_context_set_transform_direction
+	gimp_context_set_transform_recursion
+	gimp_context_set_transform_resize
 	gimp_context_swap_colors
 	gimp_convert_dither_type_get_type
 	gimp_convert_palette_type_get_type
@@ -355,6 +369,9 @@ EXPORTS
 	gimp_image_grid_set_spacing
 	gimp_image_grid_set_style
 	gimp_image_height
+	gimp_image_insert_channel
+	gimp_image_insert_layer
+	gimp_image_insert_vectors
 	gimp_image_is_dirty
 	gimp_image_is_valid
 	gimp_image_list
@@ -429,6 +446,7 @@ EXPORTS
 	gimp_item_is_layer
 	gimp_item_is_layer_mask
 	gimp_item_is_selection
+	gimp_item_is_text_layer
 	gimp_item_is_valid
 	gimp_item_is_vectors
 	gimp_item_parasite_attach
@@ -440,6 +458,16 @@ EXPORTS
 	gimp_item_set_name
 	gimp_item_set_tattoo
 	gimp_item_set_visible
+	gimp_item_to_selection
+	gimp_item_transform_2d
+	gimp_item_transform_flip
+	gimp_item_transform_flip_simple
+	gimp_item_transform_matrix
+	gimp_item_transform_perspective
+	gimp_item_transform_rotate
+	gimp_item_transform_rotate_simple
+	gimp_item_transform_scale
+	gimp_item_transform_shear
 	gimp_layer_add_alpha
 	gimp_layer_add_mask
 	gimp_layer_copy
@@ -454,6 +482,7 @@ EXPORTS
 	gimp_layer_get_opacity
 	gimp_layer_get_preserve_trans
 	gimp_layer_get_show_mask
+	gimp_layer_group_new
 	gimp_layer_is_floating_sel
 	gimp_layer_mode_effects_get_type
 	gimp_layer_new

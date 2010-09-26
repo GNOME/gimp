@@ -608,16 +608,26 @@ gimp_plug_in_handle_proc_return (GimpPlugIn   *plug_in,
 
   g_return_if_fail (proc_return != NULL);
 
+  proc_frame->return_vals =
+    plug_in_params_to_args (proc_frame->procedure->values,
+                            proc_frame->procedure->num_values,
+                            proc_return->params,
+                            proc_return->nparams,
+                            TRUE, TRUE);
+
   if (proc_frame->main_loop)
     {
-      proc_frame->return_vals =
-        plug_in_params_to_args (proc_frame->procedure->values,
-                                proc_frame->procedure->num_values,
-                                proc_return->params,
-                                proc_return->nparams,
-                                TRUE, TRUE);
-
       g_main_loop_quit (proc_frame->main_loop);
+    }
+  else
+    {
+      /*  the plug-in is run asynchronously, so display its error
+       *  messages here because nobody else will do it
+       */
+      gimp_plug_in_procedure_handle_return_values (GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure),
+                                                   plug_in->manager->gimp,
+                                                   proc_frame->progress,
+                                                   proc_frame->return_vals);
     }
 
   gimp_plug_in_close (plug_in, FALSE);

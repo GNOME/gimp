@@ -379,33 +379,30 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
+  /*  Draw the line between the start and end coords  */
+  gimp_draw_tool_add_line (draw_tool,
+                           blend_tool->start_x,
+                           blend_tool->start_y,
+                           blend_tool->end_x,
+                           blend_tool->end_y);
+
   /*  Draw start target  */
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_CROSS,
-                              blend_tool->start_x,
-                              blend_tool->start_y,
-                              TARGET_SIZE,
-                              TARGET_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
+  gimp_draw_tool_add_handle (draw_tool,
+                             GIMP_HANDLE_CROSS,
+                             blend_tool->start_x,
+                             blend_tool->start_y,
+                             TARGET_SIZE,
+                             TARGET_SIZE,
+                             GTK_ANCHOR_CENTER);
 
   /*  Draw end target  */
-  gimp_draw_tool_draw_handle (draw_tool,
-                              GIMP_HANDLE_CROSS,
-                              blend_tool->end_x,
-                              blend_tool->end_y,
-                              TARGET_SIZE,
-                              TARGET_SIZE,
-                              GTK_ANCHOR_CENTER,
-                              FALSE);
-
-  /*  Draw the line between the start and end coords  */
-  gimp_draw_tool_draw_line (draw_tool,
-                            blend_tool->start_x,
-                            blend_tool->start_y,
-                            blend_tool->end_x,
-                            blend_tool->end_y,
-                            FALSE);
+  gimp_draw_tool_add_handle (draw_tool,
+                             GIMP_HANDLE_CROSS,
+                             blend_tool->end_x,
+                             blend_tool->end_y,
+                             TARGET_SIZE,
+                             TARGET_SIZE,
+                             GTK_ANCHOR_CENTER);
 }
 
 static void

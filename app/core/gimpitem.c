@@ -29,7 +29,7 @@
 
 #include "gimp.h"
 #include "gimp-parasites.h"
-#include "gimpdrawable.h"
+#include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -1786,6 +1786,112 @@ gimp_item_is_content_locked (const GimpItem *item)
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
   return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item);
+}
+
+gboolean
+gimp_item_mask_bounds (GimpItem *item,
+                       gint     *x1,
+                       gint     *y1,
+                       gint     *x2,
+                       gint     *y2)
+{
+  GimpImage   *image;
+  GimpChannel *selection;
+  gint         tmp_x1, tmp_y1;
+  gint         tmp_x2, tmp_y2;
+  gboolean     retval;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
+
+  image     = gimp_item_get_image (item);
+  selection = gimp_image_get_mask (image);
+
+  if (GIMP_ITEM (selection) != item &&
+      gimp_channel_bounds (selection, &tmp_x1, &tmp_y1, &tmp_x2, &tmp_y2))
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+
+      tmp_x1 = CLAMP (tmp_x1 - off_x, 0, gimp_item_get_width  (item));
+      tmp_y1 = CLAMP (tmp_y1 - off_y, 0, gimp_item_get_height (item));
+      tmp_x2 = CLAMP (tmp_x2 - off_x, 0, gimp_item_get_width  (item));
+      tmp_y2 = CLAMP (tmp_y2 - off_y, 0, gimp_item_get_height (item));
+
+      retval = TRUE;
+    }
+  else
+    {
+      tmp_x1 = 0;
+      tmp_y1 = 0;
+      tmp_x2 = gimp_item_get_width  (item);
+      tmp_y2 = gimp_item_get_height (item);
+
+      retval = FALSE;
+    }
+
+  if (x1) *x1 = tmp_x1;
+  if (y1) *y1 = tmp_y1;
+  if (x2) *x2 = tmp_x2;
+  if (y2) *y2 = tmp_y2;
+
+  return retval;;
+}
+
+gboolean
+gimp_item_mask_intersect (GimpItem *item,
+                          gint     *x,
+                          gint     *y,
+                          gint     *width,
+                          gint     *height)
+{
+  GimpImage   *image;
+  GimpChannel *selection;
+  gint         tmp_x, tmp_y;
+  gint         tmp_width, tmp_height;
+  gboolean     retval;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
+
+  image     = gimp_item_get_image (item);
+  selection = gimp_image_get_mask (image);
+
+  if (GIMP_ITEM (selection) != item &&
+      gimp_channel_bounds (selection, &tmp_x, &tmp_y, &tmp_width, &tmp_height))
+    {
+      gint off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+
+      tmp_width  -= tmp_x;
+      tmp_height -= tmp_y;
+
+      retval = gimp_rectangle_intersect (tmp_x - off_x, tmp_y - off_y,
+                                         tmp_width, tmp_height,
+                                         0, 0,
+                                         gimp_item_get_width  (item),
+                                         gimp_item_get_height (item),
+                                         &tmp_x, &tmp_y,
+                                         &tmp_width, &tmp_height);
+    }
+  else
+    {
+      tmp_x      = 0;
+      tmp_y      = 0;
+      tmp_width  = gimp_item_get_width  (item);
+      tmp_height = gimp_item_get_height (item);
+
+      retval = TRUE;
+    }
+
+  if (x)      *x      = tmp_x;
+  if (y)      *y      = tmp_y;
+  if (width)  *width  = tmp_width;
+  if (height) *height = tmp_height;
+
+  return retval;
 }
 
 gboolean

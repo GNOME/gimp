@@ -34,6 +34,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -174,6 +175,36 @@ item_is_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     g_value_set_boolean (&return_vals->values[1], layer);
+
+  return return_vals;
+}
+
+static GValueArray *
+item_is_text_layer_invoker (GimpProcedure      *procedure,
+                            Gimp               *gimp,
+                            GimpContext        *context,
+                            GimpProgress       *progress,
+                            const GValueArray  *args,
+                            GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpItem *item;
+  gboolean text_layer = FALSE;
+
+  item = gimp_value_get_item (&args->values[0], gimp);
+
+  if (success)
+    {
+      text_layer = (GIMP_IS_DRAWABLE (item) &&
+                    gimp_drawable_is_text_layer (GIMP_DRAWABLE (item)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], text_layer);
 
   return return_vals;
 }
@@ -676,6 +707,41 @@ item_set_tattoo_invoker (GimpProcedure      *procedure,
                                            error ? *error : NULL);
 }
 
+static GValueArray *
+item_to_selection_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  gboolean success = TRUE;
+  GimpItem *item;
+  gint32 operation;
+
+  item = gimp_value_get_item (&args->values[0], gimp);
+  operation = g_value_get_enum (&args->values[1]);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (item, NULL, FALSE, error))
+        {
+          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+          gimp_item_to_selection (item, operation,
+                                  pdb_context->antialias,
+                                  pdb_context->feather,
+                                  pdb_context->feather_radius_x,
+                                  pdb_context->feather_radius_y);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_item_procs (GimpPDB *pdb)
 {
@@ -815,6 +881,35 @@ register_item_procs (GimpPDB *pdb)
                                    g_param_spec_boolean ("layer",
                                                          "layer",
                                                          "TRUE if the item is a layer, FALSE otherwise",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-is-text-layer
+   */
+  procedure = gimp_procedure_new (item_is_text_layer_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-is-text-layer");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-is-text-layer",
+                                     "Returns whether the item is a text layer.",
+                                     "This procedure returns TRUE if the specified item is a text layer.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("text-layer",
+                                                         "text layer",
+                                                         "TRUE if the item is a text layer, FALSE otherwise.",
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1316,6 +1411,36 @@ register_item_procs (GimpPDB *pdb)
                                                   "tattoo",
                                                   "The new item tattoo",
                                                   1, G_MAXUINT32, 1,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-to-selection
+   */
+  procedure = gimp_procedure_new (item_to_selection_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-to-selection");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-to-selection",
+                                     "Transforms the specified item into a selection",
+                                     "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to render to the selection",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The desired operation with current selection",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

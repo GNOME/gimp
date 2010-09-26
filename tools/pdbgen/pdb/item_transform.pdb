@@ -1,0 +1,647 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# Item Transformations
+
+# shortcuts
+
+sub transform_invoke {
+    my ($progress_text, $assemble_matrix, $check) = @_;
+    my $success_check = 'gimp_pdb_item_is_attached (item, NULL, TRUE, error);';
+
+    if ($check) {
+        $success_check = "(gimp_pdb_item_is_attached (item, NULL, TRUE, error) && " . $check . ");";
+    }
+
+    %invoke = (
+        code => <<"CODE"
+{
+  gint x, y, width, height;
+
+  success = $success_check
+
+  if (success &&
+      gimp_item_mask_intersect (item, &x, &y, &width, &height))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      GimpMatrix3     matrix;
+      gint            off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+      x += off_x;
+      y += off_y;
+
+      /* Assemble the transformation matrix */
+$assemble_matrix
+
+      if (progress)
+        gimp_progress_start (progress, _(\"$progress_text\"), FALSE);
+
+      if (GIMP_IS_DRAWABLE (item))
+        {
+          GimpDrawable *drawable;
+
+          drawable = gimp_drawable_transform_affine (GIMP_DRAWABLE (item),
+                                                     context, &matrix,
+                                                     pdb_context->transform_direction,
+                                                     pdb_context->interpolation,
+                                                     pdb_context->transform_recursion,
+                                                     pdb_context->transform_resize,
+                                                     progress);
+
+          if (drawable)
+            item = GIMP_ITEM (drawable);
+          else
+            success = FALSE;
+        }
+      else
+        {
+          gimp_item_transform (item, context, &matrix,
+                               pdb_context->transform_direction,
+                               pdb_context->interpolation,
+                               pdb_context->transform_recursion,
+                               pdb_context->transform_resize,
+                               progress);
+        }
+
+      if (progress)
+        gimp_progress_end (progress);
+    }
+}
+CODE
+    )
+}
+
+# The defs
+
+sub item_transform_flip_simple {
+    $blurb = <<'BLURB';
+Flip the specified item either vertically or horizontally.
+BLURB
+
+    $help = <<'HELP';
+This procedure flips the specified item. If a selection exists and the
+item is a drawable, the portion of the drawable which lies under the
+selection is cut from the drawable and made into a floating selection
+which is then flipped. If auto_center is set to TRUE, the flip is
+around the selection's center. Otherwise, the coordinate of the axis
+needs to be specified. The return value is the ID of the flipped
+item. If there was no selection or the item is not a drawable, this
+will be equal to the item ID supplied as input.  Otherwise, this will
+be the newly created and flipped drawable.
+HELP
+
+    &mitch_pdb_misc('2004', '2.2');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'flip_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+          desc => 'Type of flip' },
+        { name => 'auto_center', type => 'boolean',
+          desc => 'Whether to automatically position the axis in the selection center' },
+        { name => 'axis', type => 'float',
+          desc => 'coord. of flip axis' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The flipped item' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gint x, y, width, height;
+
+  success = gimp_pdb_item_is_attached (item, NULL, TRUE, error);
+
+  if (success &&
+      gimp_item_mask_intersect (item, &x, &y, &width, &height))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      gint            off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+      x += off_x;
+      y += off_y;
+
+      gimp_transform_get_flip_axis (x, y, width, height,
+                                    flip_type, auto_center, &axis);
+
+      if (GIMP_IS_DRAWABLE (item))
+        {
+          GimpDrawable *drawable;
+
+          drawable = gimp_drawable_transform_flip (GIMP_DRAWABLE (item), context,
+                                                   flip_type, axis,
+                                                   pdb_context->transform_resize);
+
+          if (drawable)
+            item = GIMP_ITEM (drawable);
+          else
+            success = FALSE;
+        }
+      else
+        {
+          gimp_item_flip (item, context,
+                          flip_type, axis,
+                          pdb_context->transform_resize);
+        }
+    }
+}
+CODE
+    );
+}
+
+
+sub item_transform_flip {
+    $blurb = <<'BLURB';
+Flip the specified item around a given line.
+BLURB
+
+    $help = <<'HELP';
+This procedure flips the specified item. If a selection exists and the
+item is a drawable , the portion of the drawable which lies under the
+selection is cut from the drawable and made into a floating selection
+which is then flipped. The axis to flip around is specified by
+specifying two points from that line. The return value is the ID of
+the flipped item. If there was no selection or the item is not a
+drawable, this will be equal to the item ID supplied as input.
+Otherwise, this will be the newly created and flipped drawable.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'x0', type => 'float',
+          desc => 'horz. coord. of one end of axis' },
+        { name => 'y0', type => 'float',
+          desc => 'vert. coord. of one end of axis' },
+        { name => 'x1', type => 'float',
+          desc => 'horz. coord. of other end of axis' },
+        { name => 'y1', type => 'float',
+          desc => 'vert. coord. of other end of axis' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The flipped item' }
+    );
+
+    transform_invoke ("Flipping", <<CODE);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_flip_free (&matrix, x0, y0, x1, y1);
+CODE
+}
+
+
+sub item_transform_perspective {
+    $blurb = <<'BLURB';
+Perform a possibly non-affine transformation on the specified item.
+BLURB
+
+    $help = <<'HELP';
+This procedure performs a possibly non-affine transformation on the
+specified item by allowing the corners of the original bounding box to
+be arbitrarily remapped to any values. The specified item is remapped
+if no selection exists or it is not a drawable. However, if a
+selection exists and the item is a drawable, the portion of the
+drawable which lies under the selection is cut from the drawable and
+made into a floating selection which is then remapped as
+specified. The return value is the ID of the remapped item. If there
+was no selection or the item is not a drawable, this will be equal to
+the item ID supplied as input. Otherwise, this will be the newly
+created and remapped drawable. The 4 coordinates specify the new
+locations of each corner of the original bounding box. By specifying
+these values, any affine transformation (rotation, scaling,
+translation) can be affected. Additionally, these values can be
+specified such that the resulting transformed item will appear to
+have been projected via a perspective transform.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+	{ name => 'x0', type => 'float',
+	  desc => 'The new x coordinate of upper-left corner of original
+		   bounding box' },
+	{ name => 'y0', type => 'float',
+	  desc => 'The new y coordinate of upper-left corner of original
+		   bounding box' },
+	{ name => 'x1', type => 'float',
+	  desc => 'The new x coordinate of upper-right corner of original
+		   bounding box' },
+	{ name => 'y1', type => 'float',
+	  desc => 'The new y coordinate of upper-right corner of original
+		   bounding box' },
+	{ name => 'x2', type => 'float',
+	  desc => 'The new x coordinate of lower-left corner of original
+		   bounding box' },
+	{ name => 'y2', type => 'float',
+	  desc => 'The new y coordinate of lower-left corner of original
+		   bounding box' },
+	{ name => 'x3', type => 'float',
+	  desc => 'The new x coordinate of lower-right corner of original
+		   bounding box' },
+	{ name => 'y3', type => 'float',
+	  desc => 'The new y coordinate of lower-right corner of original
+		   bounding box' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The newly mapped item' }
+    );
+
+    transform_invoke ("Perspective", <<CODE);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_perspective (&matrix,
+                                         x, y, width, height,
+                                         x0, y0, x1, y1,
+                                         x2, y2, x3, y3);
+CODE
+}
+
+
+sub item_transform_rotate_simple {
+    $blurb = <<'BLURB';
+Rotate the specified item about given coordinates through the specified angle.
+BLURB
+
+    $help = <<'HELP';
+This function rotates the specified item. If a selection exists and
+the item is a drawable, the portion of the drawable which lies under
+the selection is cut from the drawable and made into a floating
+selection which is then rotated by the specified amount. The return
+value is the ID of the rotated item. If there was no selection or the
+item is not a drawable, this will be equal to the item ID supplied as
+input. Otherwise, this will be the newly created and rotated drawable.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'rotate_type', type => 'enum GimpRotationType',
+          desc => 'Type of rotation' },
+        { name => 'auto_center', type => 'boolean',
+          desc => 'Whether to automatically rotate around the selection center' },
+        { name => 'center_x', type => 'float',
+          desc => 'The hor. coordinate of the center of rotation' },
+        { name => 'center_y', type => 'float',
+          desc => 'The vert. coordinate of the center of rotation' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The rotated item' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gint x, y, width, height;
+
+  success = gimp_pdb_item_is_attached (item, NULL, FALSE, error);
+
+  if (success &&
+      gimp_item_mask_intersect (item, &x, &y, &width, &height))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+      gint            off_x, off_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+      x += off_x;
+      y += off_y;
+
+      gimp_transform_get_rotate_center (x, y, width, height,
+                                        auto_center, &center_x, &center_y);
+
+      if (GIMP_IS_DRAWABLE (item))
+        {
+          GimpDrawable *drawable;
+
+          drawable = gimp_drawable_transform_rotate (GIMP_DRAWABLE (item),
+                                                     context,
+                                                     rotate_type,
+                                                     center_x, center_y,
+                                                     pdb_context->transform_resize);
+
+          if (drawable)
+            item = GIMP_ITEM (drawable);
+          else
+            success = FALSE;
+        }
+      else
+        {
+          gimp_item_rotate (item, context,
+                            rotate_type,
+                            center_x, center_y,
+                            pdb_context->transform_resize);
+        }
+    }
+}
+CODE
+    );
+}
+
+
+sub item_transform_rotate {
+    $blurb = <<'BLURB';
+Rotate the specified item about given coordinates through the
+specified angle.
+BLURB
+
+    $help = <<'HELP';
+This function rotates the specified item. If a selection exists and
+the item is a drawable, the portion of the drawable which lies under
+the selection is cut from the drawable and made into a floating
+selection which is then rotated by the specified amount. The return
+value is the ID of the rotated item. If there was no selection or the
+item is not a drawable, this will be equal to the item ID supplied as
+input. Otherwise, this will be the newly created and rotated drawable.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'angle', type => 'float',
+          desc => 'The angle of rotation (radians)' },
+        { name => 'auto_center', type => 'boolean',
+          desc => 'Whether to automatically rotate around the selection center' },
+        { name => 'center_x', type => 'float',
+          desc => 'The hor. coordinate of the center of rotation' },
+        { name => 'center_y', type => 'float',
+          desc => 'The vert. coordinate of the center of rotation' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The rotated item' }
+    );
+
+    transform_invoke ("Rotating", <<CODE);
+      gimp_matrix3_identity (&matrix);
+      if (auto_center)
+        gimp_transform_matrix_rotate_rect (&matrix,
+                                           x, y, width, height, angle);
+      else
+        gimp_transform_matrix_rotate_center (&matrix,
+                                             center_x, center_y, angle);
+CODE
+}
+
+
+sub item_transform_scale {
+    $blurb = 'Scale the specified item.';
+
+    $help = <<'HELP';
+This procedure scales the specified item. If a selection exists and
+the item is a drawable, the portion of the drawable which lies under
+the selection is cut from the drawable and made into a floating
+selection which is then scaled by the specified amount. The return
+value is the ID of the scaled item. If there was no selection or the
+item is not a drawable, this will be equal to the item ID supplied as
+input. Otherwise, this will be the newly created and scaled drawable.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+	{ name => 'x0', type => 'float',
+	  desc => 'The new x coordinate of the upper-left corner of the
+		    scaled region' },
+	{ name => 'y0', type => 'float',
+	  desc => 'The new y coordinate of the upper-left corner of the
+		    scaled region' },
+	{ name => 'x1', type => 'float',
+	  desc => 'The new x coordinate of the lower-right corner of the
+		    scaled region' },
+	{ name => 'y1', type => 'float',
+	  desc => 'The new y coordinate of the lower-right corner of the
+		    scaled region' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The scaled item' }
+    );
+
+    transform_invoke ("Scaling", <<CODE, 'x0 < x1 && y0 < y1');
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_scale (&matrix,
+                                   x, y, width, height,
+                                   x0, y0, x1 - x0, y1 - y0);
+CODE
+}
+
+
+sub item_transform_shear {
+    $blurb = <<'BLURB';
+Shear the specified item about its center by the specified magnitude.
+BLURB
+
+    $help = <<'HELP';
+This procedure shears the specified item. If a selection exists and
+the item is a drawable, the portion of the drawable which lies under
+the selection is cut from the drawable and made into a floating
+selection which is then sheard by the specified amount. The return
+value is the ID of the sheard item. If there was no selection or the
+item is not a drawable, this will be equal to the item ID supplied as
+input. Otherwise, this will be the newly created and sheard
+drawable. The shear type parameter indicates whether the shear will be
+applied horizontally or vertically. The magnitude can be either
+positive or negative and indicates the extent (in pixels) to shear by.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'shear_type',
+	  type => 'enum GimpOrientationType (no GIMP_ORIENTATION_UNKNOWN)',
+          desc => 'Type of shear' },
+        { name => 'magnitude', type => 'float',
+          desc => 'The magnitude of the shear' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The sheared item' }
+    );
+
+    transform_invoke ("Shearing", <<CODE);
+      gimp_matrix3_identity (&matrix);
+      gimp_transform_matrix_shear (&matrix,
+                                   x, y, width, height,
+                                   shear_type, magnitude);
+CODE
+}
+
+
+sub item_transform_2d {
+    $blurb = 'Transform the specified item in 2d.';
+
+    $help = <<'HELP';
+This procedure transforms the specified item. If a selection exists
+and the item is a drawable, the portion of the drawable which lies
+under the selection is cut from the drawable and made into a floating
+selection which is then transformed. The transformation is done by
+scaling the image by the x and y scale factors about the point
+(source_x, source_y), then rotating around the same point, then
+translating that point to the new position (dest_x, dest_y). The
+return value is the ID of the rotated drawable. If there was no
+selection or the item is not a drawable, this will be equal to the
+item ID supplied as input. Otherwise, this will be the newly created
+and transformed drawable.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'source_x', type => 'float',
+          desc => 'X coordinate of the transformation center' },
+        { name => 'source_y', type => 'float',
+          desc => 'Y coordinate of the transformation center' },
+        { name => 'scale_x', type => 'float',
+          desc => 'Amount to scale in x direction' },
+        { name => 'scale_y', type => 'float',
+          desc => 'Amount to scale in y direction' },
+        { name => 'angle', type => 'float',
+          desc => 'The angle of rotation (radians)' },
+        { name => 'dest_x', type => 'float',
+          desc => 'X coordinate of where the center goes' },
+        { name => 'dest_y', type => 'float',
+          desc => 'Y coordinate of where the center goes' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The transformed item' }
+    );
+
+    transform_invoke ("2D Transform", <<CODE);
+      gimp_matrix3_identity  (&matrix);
+      gimp_matrix3_translate (&matrix, -source_x, -source_y);
+      gimp_matrix3_scale     (&matrix, scale_x, scale_y);
+      gimp_matrix3_rotate    (&matrix, angle);
+      gimp_matrix3_translate (&matrix, dest_x, dest_y);
+CODE
+}
+
+
+sub item_transform_matrix {
+    $blurb = 'Transform the specified item in 2d.';
+
+    $help = <<'HELP';
+This procedure transforms the specified item. If a selection exists
+and the item is a drawable, the portion of the drawable which lies
+under the selection is cut from the drawable and made into a floating
+selection which is then transformed. The transformation is done by
+assembling a 3x3 matrix from the coefficients passed.  The return
+value is the ID of the transformed item. If there was no selection or
+the item is not a drawable, this will be equal to the item ID supplied
+as input. Otherwise, this will be the newly created and transformed
+drawable.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The affected item' },
+        { name => 'coeff_0_0', type => 'float',
+          desc => 'coefficient (0,0) of the transformation matrix' },
+        { name => 'coeff_0_1', type => 'float',
+          desc => 'coefficient (0,1) of the transformation matrix' },
+        { name => 'coeff_0_2', type => 'float',
+          desc => 'coefficient (0,2) of the transformation matrix' },
+        { name => 'coeff_1_0', type => 'float',
+          desc => 'coefficient (1,0) of the transformation matrix' },
+        { name => 'coeff_1_1', type => 'float',
+          desc => 'coefficient (1,1) of the transformation matrix' },
+        { name => 'coeff_1_2', type => 'float',
+          desc => 'coefficient (1,2) of the transformation matrix' },
+        { name => 'coeff_2_0', type => 'float',
+          desc => 'coefficient (2,0) of the transformation matrix' },
+        { name => 'coeff_2_1', type => 'float',
+          desc => 'coefficient (2,1) of the transformation matrix' },
+        { name => 'coeff_2_2', type => 'float',
+          desc => 'coefficient (2,2) of the transformation matrix' }
+    );
+
+    @outargs = (
+	{ name => 'item', type => 'item', no_declare => 1,
+	  desc => 'The transformed item' }
+    );
+
+    transform_invoke ("2D Transforming", <<CODE);
+      matrix.coeff[0][0] = coeff_0_0;
+      matrix.coeff[0][1] = coeff_0_1;
+      matrix.coeff[0][2] = coeff_0_2;
+      matrix.coeff[1][0] = coeff_1_0;
+      matrix.coeff[1][1] = coeff_1_1;
+      matrix.coeff[1][2] = coeff_1_2;
+      matrix.coeff[2][0] = coeff_2_0;
+      matrix.coeff[2][1] = coeff_2_1;
+      matrix.coeff[2][2] = coeff_2_2;
+CODE
+}
+
+
+@headers = qw("libgimpmath/gimpmath.h"
+              "core/gimp-transform-utils.h"
+              "core/gimpdrawable.h"
+              "core/gimpdrawable-transform.h"
+              "core/gimpprogress.h"
+              "gimppdb-utils.h"
+              "gimppdbcontext.h"
+              "gimp-intl.h");
+
+@procs = qw(item_transform_flip_simple
+            item_transform_flip
+            item_transform_perspective
+            item_transform_rotate_simple
+            item_transform_rotate
+            item_transform_scale
+            item_transform_shear
+            item_transform_2d
+            item_transform_matrix);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Transformation procedures';
+$doc_title = 'gimpitemtransform';
+$doc_short_desc = 'Functions to perform transformations on items.';
+$doc_long_desc = 'Functions to perform transformations on items.';
+
+1;

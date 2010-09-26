@@ -1045,7 +1045,7 @@ load_resource_1033 (const PSDimageres  *res_a,
    * corrupt-data warnings occurred (test whether
    * jerr.num_warnings is nonzero).
    */
-  gimp_image_add_layer (image_id, layer_id, 0);
+  gimp_image_insert_layer (image_id, layer_id, -1, 0);
   gimp_drawable_detach (drawable);
 
   return 0;
@@ -1408,7 +1408,7 @@ load_resource_2000 (const PSDimageres  *res_a,
 
   /* Create path */
   vector_id = gimp_vectors_new (image_id, res_a->name);
-  gimp_image_add_vectors (image_id, vector_id, -1);
+  gimp_image_insert_vectors (image_id, vector_id, -1, -1);
 
   while (path_rec > 0)
     {

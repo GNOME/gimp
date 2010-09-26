@@ -88,6 +88,30 @@ gimp_cairo_stipple_pattern_create (const GimpRGB *fg,
 }
 
 void
+gimp_cairo_add_arc (cairo_t *cr,
+                    gdouble  center_x,
+                    gdouble  center_y,
+                    gdouble  radius,
+                    gdouble  start_angle,
+                    gdouble  slice_angle)
+{
+  g_return_if_fail (cr != NULL);
+
+  if (slice_angle >= 0)
+    {
+      cairo_arc_negative (cr, center_x, center_y, radius,
+                          - start_angle,
+                          - start_angle - slice_angle);
+    }
+  else
+    {
+      cairo_arc (cr, center_x, center_y, radius,
+                 - start_angle,
+                 - start_angle - slice_angle);
+    }
+}
+
+void
 gimp_cairo_add_segments (cairo_t    *cr,
                          GdkSegment *segs,
                          gint        n_segs)
@@ -101,13 +125,13 @@ gimp_cairo_add_segments (cairo_t    *cr,
     {
       if (segs[i].x1 == segs[i].x2)
         {
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2);
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2 - 1.0);
         }
       else
         {
-          cairo_move_to (cr, segs[i].x1, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2, segs[i].y2 + 0.5);
+          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1 + 0.5);
+          cairo_line_to (cr, segs[i].x2 - 1.0, segs[i].y2 + 0.5);
         }
     }
 }

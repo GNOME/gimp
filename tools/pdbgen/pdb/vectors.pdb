@@ -14,36 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-sub vectors_is_valid {
-    &std_pdb_deprecated ('gimp-item-is-valid');
-    &neo_pdb_misc('2007', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors', no_validate => 1,
-	  desc => 'The vectors object to check' }
-    );
-
-    @outargs = (
-	{ name => 'valid', type => 'boolean',
-	  desc => 'Whether the vectors ID is valid' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  valid = (GIMP_IS_VECTORS (vectors) &&
-           ! gimp_item_is_removed (GIMP_ITEM (vectors)));
-}
-CODE
-    );
-}
-
 sub vectors_new {
     $blurb = 'Creates a new empty vectors object.';
 
     $help = <<'HELP';
 Creates a new empty vectors object. The vectors object needs to be added to
-the image using gimp_image_add_vectors().
+the image using gimp_image_insert_vectors().
 HELP
 
     &simon_pdb_misc('2005', '2.4');
@@ -70,13 +46,12 @@ CODE
     );
 }
 
-# Get Vectors from text layer
 sub vectors_new_from_text_layer {
     $blurb = 'Creates a new vectors object from a text layer.';
 
     $help = <<'HELP';
 Creates a new vectors object from a text layer. The vectors object needs to
-be added to the image using gimp_image_add_vectors().
+be added to the image using gimp_image_insert_vectors().
 HELP
 
     &marcus_pdb_misc('2008', '2.6');
@@ -122,10 +97,7 @@ sub vectors_copy {
 This procedure copies the specified vectors object and returns the copy.
 HELP
 
-    $author = 'Barak Itkin <lightningismyname@gmail.com>';
-    $copyright = 'Barak Itkin';
-    $date = '2008';
-    $since = '2.6';
+    barak_pdb_misc('2008', '2.6');
 
     @inargs = (
 	{ name => 'vectors', type => 'vectors',
@@ -145,201 +117,6 @@ HELP
 
   if (! vectors_copy)
     success = FALSE;
-}
-CODE
-    );
-}
-
-sub vectors_get_image {
-    &std_pdb_deprecated ('gimp-item-get-image');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-        { name => 'image', type => 'image',
-          desc => 'The vectors image' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  image = gimp_item_get_image (GIMP_ITEM (vectors));
-}
-CODE
-    );
-}
-
-sub vectors_get_name {
-    &std_pdb_deprecated ('gimp-item-get-name');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-        { name => 'name', type => 'string',
-          desc => 'The name of the vectors object' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  name = g_strdup (gimp_object_get_name (vectors));
-}
-CODE
-    );
-}
-
-sub vectors_set_name {
-    &std_pdb_deprecated ('gimp-item-set-name');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
-	{ name => 'name', type => 'string',
-	  desc => 'the new name of the path' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  success = gimp_item_rename (GIMP_ITEM (vectors), name, error);
-}
-CODE
-    );
-}
-
-sub vectors_get_visible {
-    &std_pdb_deprecated ('gimp-item-get-visible');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-        { name => 'visible', type => 'boolean',
-          desc => 'TRUE if the path is visible, FALSE otherwise' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  visible = gimp_item_get_visible (GIMP_ITEM (vectors));
-}
-CODE
-    );
-}
-
-sub vectors_set_visible {
-    &std_pdb_deprecated ('gimp-item-set-visible');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
-	{ name => 'visible', type => 'boolean',
-	  desc => 'Whether the path is visible' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  gimp_item_set_visible (GIMP_ITEM (vectors), visible, TRUE);
-}
-CODE
-    );
-}
-
-sub vectors_get_linked {
-    &std_pdb_deprecated ('gimp-item-get-linked');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-        { name => 'linked', type => 'boolean',
-          desc => 'TRUE if the path is linked, FALSE otherwise' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  linked = gimp_item_get_linked (GIMP_ITEM (vectors));
-}
-CODE
-    );
-}
-
-sub vectors_set_linked {
-    &std_pdb_deprecated ('gimp-item-set-linked');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
-	{ name => 'linked', type => 'boolean',
-	  desc => 'Whether the path is linked' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  gimp_item_set_linked (GIMP_ITEM (vectors), linked, TRUE);
-}
-CODE
-    );
-}
-
-sub vectors_get_tattoo {
-    &std_pdb_deprecated ('gimp-item-get-tattoo');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-        { name => 'tattoo', type => 'int32',
-          desc => 'The vectors tattoo' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
-}
-CODE
-    );
-}
-
-sub vectors_set_tattoo {
-    &std_pdb_deprecated ('gimp-item-set-tattoo');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' },
-	{ name => 'tattoo', type => 'int32',
-	  desc => 'the new tattoo' }
-    );
-
-    %invoke = (
-        code => <<"CODE"
-{
-  gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
 }
 CODE
     );
@@ -1255,13 +1032,7 @@ CODE
 }
 
 sub vectors_to_selection {
-    $blurb = 'Transforms the specified vectors object into a selection';
-
-    $help = <<'HELP';
-This procedure renders the desired vectors object into the current selection
-of the image the vectors object belongs to.
-HELP
-
+    &std_pdb_deprecated ('gimp-item-to-selection');
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (
@@ -1506,15 +1277,9 @@ CODE
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(vectors_is_valid
-            vectors_new
+@procs = qw(vectors_new
 	    vectors_new_from_text_layer
             vectors_copy
-            vectors_get_image
-            vectors_get_name vectors_set_name
-            vectors_get_visible vectors_set_visible
-            vectors_get_linked vectors_set_linked
-            vectors_get_tattoo vectors_set_tattoo
             vectors_get_strokes 
             vectors_stroke_get_length
             vectors_stroke_get_point_at_dist

@@ -54,6 +54,7 @@
 #include <libgimp/gimpregioniterator.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptile.h>
+#include <libgimp/gimpvectors.h>
 
 #include <libgimp/gimp_pdb.h>
 

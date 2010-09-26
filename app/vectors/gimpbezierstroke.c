@@ -1535,7 +1535,7 @@ gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
     g_printerr ("miscalculated path cmd length! (%d vs. %d)\n",
                 cmd_array->len, num_cmds);
 
-  bezdesc = g_new (GimpBezierDesc, 1);
+  bezdesc = g_slice_new (GimpBezierDesc);
   bezdesc->status = CAIRO_STATUS_SUCCESS;
   bezdesc->data = (cairo_path_data_t *) cmd_array->data;
   bezdesc->num_data = cmd_array->len;

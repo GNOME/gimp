@@ -312,6 +312,17 @@ gboolean        gimp_item_get_lock_content   (const GimpItem     *item);
 gboolean        gimp_item_can_lock_content   (const GimpItem     *item);
 gboolean        gimp_item_is_content_locked  (const GimpItem     *item);
 
+gboolean        gimp_item_mask_bounds        (GimpItem           *item,
+                                              gint               *x1,
+                                              gint               *y1,
+                                              gint               *x2,
+                                              gint               *y2);
+gboolean        gimp_item_mask_intersect     (GimpItem           *item,
+                                              gint               *x,
+                                              gint               *y,
+                                              gint               *width,
+                                              gint               *height);
+
 gboolean        gimp_item_is_in_set          (GimpItem           *item,
                                               GimpItemSet         set);
 

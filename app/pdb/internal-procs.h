@@ -49,6 +49,7 @@ void   register_guides_procs             (GimpPDB *pdb);
 void   register_help_procs               (GimpPDB *pdb);
 void   register_image_procs              (GimpPDB *pdb);
 void   register_item_procs               (GimpPDB *pdb);
+void   register_item_transform_procs     (GimpPDB *pdb);
 void   register_layer_procs              (GimpPDB *pdb);
 void   register_message_procs            (GimpPDB *pdb);
 void   register_misc_procs               (GimpPDB *pdb);

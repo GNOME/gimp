@@ -363,45 +363,69 @@ boundary_simplify (BoundSeg *sorted_segs,
 
 /*Transform boundary based on a matrix*/
 
-BoundSeg * boundary_transform (const BoundSeg *segs,
-                               gint           *num_segs,
-                               GimpMatrix3    *matrix)
+BoundSeg *
+boundary_transform (const BoundSeg *segs,
+                    gint           *num_segs,
+                    GimpMatrix3    *matrix)
 {
+  Boundary *boundary = boundary_new (NULL);
+  gint      i;
 
-  Boundary *boundary = boundary_new(NULL);
+  for (i = 0; i < *num_segs; i++)
+    {
+      /* dont transform sorting sentinels */
+      if (!(segs[i].x1 == -1 &&
+            segs[i].y1 == -1 &&
+            segs[i].x2 == -1 &&
+            segs[i].y2 == -1))
+        {
+          gdouble x1, y1, x2, y2;
+
+          gimp_matrix3_transform_point (matrix, segs[i].x1, segs[i].y1, &x1, &y1);
+          gimp_matrix3_transform_point (matrix, segs[i].x2, segs[i].y2, &x2, &y2);
+
+          boundary_add_seg (boundary,
+                            (gint) ceil(x1), (gint) ceil(y1),
+                            (gint) ceil(x2), (gint) ceil(y2),
+                            segs[i].open);
+        }
+      else
+        {
+          /* Keep the sorting sentinel */
+          boundary_add_seg (boundary,
+                            -1, -1,
+                            -1, -1,
+                            segs[i].open);
+        }
+    }
+
+  *num_segs = boundary->num_segs;
+
+  return boundary_free (boundary, FALSE);
+}
+
+void
+boundary_offset (BoundSeg *segs,
+                 gint      num_segs,
+                 gint      off_x,
+                 gint      off_y)
+{
   gint i;
 
-      for (i = 0; i < *num_segs; i++)
+  for (i = 0; i < num_segs; i++)
+    {
+      /* dont offset sorting sentinels */
+      if (!(segs[i].x1 == -1 &&
+            segs[i].y1 == -1 &&
+            segs[i].x2 == -1 &&
+            segs[i].y2 == -1))
         {
-
-
-          /*dont transform sorting sentinels*/
-          if (!(segs[i].x1 == -1 &&
-                segs[i].y1 == -1 &&
-                segs[i].x2 == -1 &&
-                segs[i].y2 == -1))
-            {
-              gdouble x1, y1, x2, y2;
-
-              gimp_matrix3_transform_point (matrix, segs[i].x1, segs[i].y1, &x1, &y1);
-              gimp_matrix3_transform_point (matrix, segs[i].x2, segs[i].y2, &x2, &y2);
-
-              boundary_add_seg (boundary,
-                                (gint) ceil(x1), (gint) ceil(y1),
-                                (gint) ceil(x2), (gint) ceil(y2),
-                                segs[i].open);
-            }
-          else
-            {
-              /*Keep the sorting sentinel*/
-              boundary_add_seg (boundary,
-                                -1, -1,
-                                -1, -1,
-                                segs[i].open);
-            }
+          segs[i].x1 += off_x;
+          segs[i].y1 += off_y;
+          segs[i].x2 += off_x;
+          segs[i].y2 += off_y;
         }
-      *num_segs = boundary->num_segs;
-      return boundary_free(boundary, FALSE);
+    }
 }
 
 

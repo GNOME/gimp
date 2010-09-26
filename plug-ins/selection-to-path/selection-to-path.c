@@ -477,7 +477,7 @@ do_points (spline_list_array_type in_splines,
                                      sel_x1, sel_y1 + sel_height + 1);
     }
 
-   gimp_image_add_vectors (image_ID, vectors, -1);
+  gimp_image_insert_vectors (image_ID, vectors, -1, -1);
 }
 
 

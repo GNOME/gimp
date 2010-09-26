@@ -68,7 +68,7 @@
  * vertical resolution.
  *
  * Returns: The new text layer or -1 if no layer was created.
- */
+ **/
 gint32
 gimp_text_fontname (gint32        image_ID,
                     gint32        drawable_ID,
@@ -129,7 +129,7 @@ gimp_text_fontname (gint32        image_ID,
  * into account.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_text_get_extents_fontname (const gchar  *text,
                                 gdouble       size,
@@ -195,7 +195,7 @@ gimp_text_get_extents_fontname (const gchar  *text,
  * Deprecated: Use gimp_text_fontname() instead.
  *
  * Returns: The new text layer or -1 if no layer was created.
- */
+ **/
 gint32
 gimp_text (gint32        image_ID,
            gint32        drawable_ID,
@@ -269,7 +269,7 @@ gimp_text (gint32        image_ID,
  * Deprecated: Use gimp_text_get_extents_fontname() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_text_get_extents (const gchar  *text,
                        gdouble       size,

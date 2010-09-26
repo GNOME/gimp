@@ -46,55 +46,59 @@
 #include "color-rotate-draw.h"
 
 
-/* Global variables */
-
-GdkGC *xor_gc;
-
-
 /* Drawing routines */
 
 void
-color_rotate_draw_little_circle (GdkWindow *window,
-                                 GdkGC     *color,
-                                 gfloat     hue,
-                                 gfloat     satur)
+color_rotate_draw_little_circle (cairo_t *cr,
+                                 gfloat   hue,
+                                 gfloat   satur)
 {
-  gint x,y;
+  gint x, y;
 
   x = GRAY_CENTER + GRAY_RADIUS * satur * cos(hue);
   y = GRAY_CENTER - GRAY_RADIUS * satur * sin(hue);
 
-  gdk_draw_arc (window, color, 0, x-LITTLE_RADIUS, y-LITTLE_RADIUS,
-                2*LITTLE_RADIUS, 2*LITTLE_RADIUS, 0, 360*64);
+  cairo_new_sub_path (cr);
+  cairo_arc (cr, x, y, LITTLE_RADIUS, 0, 2 * G_PI);
+
+  cairo_set_line_width (cr, 3.0);
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+  cairo_stroke_preserve (cr);
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+  cairo_stroke (cr);
 }
 
 void
-color_rotate_draw_large_circle (GdkWindow *window,
-                                GdkGC     *color,
-                                gfloat     gray_sat)
+color_rotate_draw_large_circle (cairo_t *cr,
+                                gfloat   gray_sat)
 {
   gint x, y;
 
   x = GRAY_CENTER;
   y = GRAY_CENTER;
 
-  gdk_draw_arc (window, color, 0,
-                ROUND (x - GRAY_RADIUS * gray_sat),
-                ROUND (y - GRAY_RADIUS * gray_sat),
-                ROUND (2 * GRAY_RADIUS * gray_sat),
-                ROUND (2 * GRAY_RADIUS * gray_sat),
-                0, 360 * 64);
+  cairo_new_sub_path (cr);
+  cairo_arc (cr, x, y, GRAY_RADIUS * gray_sat, 0, 2 * G_PI);
+
+  cairo_set_line_width (cr, 3.0);
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+  cairo_stroke_preserve (cr);
+
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+  cairo_stroke (cr);
 }
 
 
-#define REL .8
-#define DEL .1
+#define REL  0.8
+#define DEL  0.1
 #define TICK 10
 
 void
-color_rotate_draw_arrows (GdkWindow *window,
-                          GdkGC     *color,
-                          RcmAngle  *angle)
+color_rotate_draw_arrows (cairo_t  *cr,
+                          RcmAngle *angle)
 {
   gint   dist;
   gfloat alpha, beta, cw_ccw, delta;
@@ -102,58 +106,86 @@ color_rotate_draw_arrows (GdkWindow *window,
   alpha  = angle->alpha;
   beta   = angle->beta;
   cw_ccw = angle->cw_ccw;
-  delta  = angle_mod_2PI(beta - alpha);
+  delta  = angle_mod_2PI (beta - alpha);
 
   if (cw_ccw == -1)
     delta = delta - TP;
 
-  gdk_draw_line (window,color,
+  cairo_move_to (cr, CENTER, CENTER);
+  cairo_line_to (cr,
+                 ROUND (CENTER + RADIUS * cos (alpha)),
+                 ROUND (CENTER - RADIUS * sin (alpha)));
+
+  cairo_move_to (cr,
+                 CENTER + RADIUS * cos (alpha),
+                 CENTER - RADIUS * sin (alpha));
+  cairo_line_to (cr,
+                 ROUND (CENTER + RADIUS * REL * cos (alpha - DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin (alpha - DEL)));
+
+  cairo_move_to (cr,
+                 CENTER + RADIUS * cos (alpha),
+                 CENTER - RADIUS * sin (alpha));
+  cairo_line_to (cr,
+                 ROUND (CENTER + RADIUS * REL * cos (alpha + DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin (alpha + DEL)));
+
+  cairo_move_to (cr,
+                 CENTER,
+                 CENTER);
+  cairo_line_to (cr,
+                 ROUND (CENTER + RADIUS * cos (beta)),
+                 ROUND (CENTER - RADIUS * sin (beta)));
+
+  cairo_move_to (cr,
+                 CENTER + RADIUS * cos (beta),
+                 CENTER - RADIUS * sin (beta));
+  cairo_line_to (cr,
+                 ROUND (CENTER + RADIUS * REL * cos (beta - DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin (beta - DEL)));
+
+  cairo_move_to (cr,
+                 CENTER + RADIUS * cos (beta),
+                 CENTER - RADIUS * sin (beta));
+  cairo_line_to (cr,
+                 ROUND (CENTER + RADIUS * REL * cos (beta + DEL)),
+                 ROUND (CENTER - RADIUS * REL * sin (beta + DEL)));
+
+  dist = RADIUS * EACH_OR_BOTH;
+
+  cairo_move_to (cr,
+                 CENTER + dist * cos (beta),
+                 CENTER - dist * sin (beta));
+  cairo_line_to (cr,
+                 ROUND (CENTER + dist * cos(beta) + cw_ccw * TICK * sin (beta)),
+                 ROUND (CENTER - dist * sin(beta) + cw_ccw * TICK * cos (beta)));
+
+  cairo_new_sub_path (cr);
+
+  if (cw_ccw > 0)
+    {
+      cairo_arc_negative (cr,
+                          CENTER,
+                          CENTER,
+                          dist,
+                          -alpha,
+                          -beta);
+    }
+  else
+    {
+      cairo_arc (cr,
                  CENTER,
                  CENTER,
-                 ROUND (CENTER + RADIUS * cos(alpha)),
-                 ROUND (CENTER - RADIUS * sin(alpha)));
+                 dist,
+                 -alpha,
+                 -beta);
+    }
 
-  gdk_draw_line( window,color,
-                 CENTER + RADIUS * cos(alpha),
-                 CENTER - RADIUS * sin(alpha),
-                 ROUND (CENTER + RADIUS * REL * cos(alpha - DEL)),
-                 ROUND (CENTER - RADIUS * REL * sin(alpha - DEL)));
+  cairo_set_line_width (cr, 3.0);
+  cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+  cairo_stroke_preserve (cr);
 
-  gdk_draw_line (window,color,
-                 CENTER + RADIUS * cos(alpha),
-                 CENTER - RADIUS * sin(alpha),
-                 ROUND (CENTER + RADIUS * REL * cos(alpha + DEL)),
-                 ROUND (CENTER - RADIUS * REL * sin(alpha + DEL)));
-
-  gdk_draw_line (window,color,
-                 CENTER,
-                 CENTER,
-                 ROUND (CENTER + RADIUS * cos(beta)),
-                 ROUND (CENTER - RADIUS * sin(beta)));
-
-  gdk_draw_line (window,color,
-                 CENTER + RADIUS * cos(beta),
-                 CENTER - RADIUS * sin(beta),
-                 ROUND (CENTER + RADIUS * REL * cos(beta - DEL)),
-                 ROUND (CENTER - RADIUS * REL * sin(beta - DEL)));
-
-  gdk_draw_line (window,color,
-                 CENTER + RADIUS * cos(beta),
-                 CENTER - RADIUS * sin(beta),
-                 ROUND (CENTER + RADIUS * REL * cos(beta + DEL)),
-                 ROUND (CENTER - RADIUS * REL * sin(beta + DEL)));
-
-  dist   = RADIUS * EACH_OR_BOTH;
-
-  gdk_draw_line (window,color,
-                 CENTER + dist * cos(beta),
-                 CENTER - dist * sin(beta),
-                 ROUND (CENTER + dist * cos(beta) + cw_ccw * TICK * sin(beta)),
-                 ROUND (CENTER - dist * sin(beta) + cw_ccw * TICK * cos(beta)));
-
-  alpha *= 180 * 64 / G_PI;
-  delta *= 180 * 64 / G_PI;
-
-  gdk_draw_arc (window, color, 0, CENTER - dist, CENTER - dist,
-		2*dist, 2*dist,	alpha, delta);
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+  cairo_stroke (cr);
 }

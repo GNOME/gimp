@@ -30,6 +30,8 @@
 #include "gimppickbutton.h"
 #include "gimpstock.h"
 
+#include "cursors/gimp-color-picker-cursors.h"
+
 #include "libgimp/libgimp-intl.h"
 
 
@@ -166,54 +168,28 @@ gimp_pick_button_new (void)
 
 /*  private functions  */
 
-
-/*  cursor stuff will be removed again once the gimpcursor.[ch] utility
- *  stuff has been moved to libgimpwidgets  --mitch
- */
-#define DROPPER_WIDTH   17
-#define DROPPER_HEIGHT  17
-#define DROPPER_X_HOT    2
-#define DROPPER_Y_HOT   16
-
-static const guchar dropper_bits[] =
-{
-  0xff, 0x8f, 0x01, 0xff, 0x77, 0x01, 0xff, 0xfb, 0x00, 0xff, 0xf8, 0x00,
-  0x7f, 0xff, 0x00, 0xff, 0x7e, 0x01, 0xff, 0x9d, 0x01, 0xff, 0xd8, 0x01,
-  0x7f, 0xd4, 0x01, 0x3f, 0xee, 0x01, 0x1f, 0xff, 0x01, 0x8f, 0xff, 0x01,
-  0xc7, 0xff, 0x01, 0xe3, 0xff, 0x01, 0xf3, 0xff, 0x01, 0xfd, 0xff, 0x01,
-  0xff, 0xff, 0x01
-};
-
-static const guchar dropper_mask[] =
-{
-  0x00, 0x70, 0x00, 0x00, 0xf8, 0x00, 0x00, 0xfc, 0x01, 0x00, 0xff, 0x01,
-  0x80, 0xff, 0x01, 0x00, 0xff, 0x00, 0x00, 0x7f, 0x00, 0x80, 0x3f, 0x00,
-  0xc0, 0x3f, 0x00, 0xe0, 0x13, 0x00, 0xf0, 0x01, 0x00, 0xf8, 0x00, 0x00,
-  0x7c, 0x00, 0x00, 0x3e, 0x00, 0x00, 0x1e, 0x00, 0x00, 0x0d, 0x00, 0x00,
-  0x02, 0x00, 0x00
-};
-
 static GdkCursor *
-make_cursor (void)
+make_cursor (GdkDisplay *display)
 {
-  GdkCursor      *cursor;
-  const GdkColor  bg = { 0, 0xffff, 0xffff, 0xffff };
-  const GdkColor  fg = { 0, 0x0000, 0x0000, 0x0000 };
+  GdkCursor           *cursor;
+  GdkPixbuf           *pixbuf;
+  static const guint8 *data;
 
-  GdkPixmap *pixmap =
-    gdk_bitmap_create_from_data (NULL,
-                                 (gchar *) dropper_bits,
-                                 DROPPER_WIDTH, DROPPER_HEIGHT);
-  GdkPixmap *mask =
-    gdk_bitmap_create_from_data (NULL,
-                                 (gchar *) dropper_mask,
-                                 DROPPER_WIDTH, DROPPER_HEIGHT);
+  if (gdk_display_supports_cursor_alpha (display) &&
+      gdk_display_supports_cursor_color (display))
+    {
+      data = cursor_color_picker;
+    }
+  else
+    {
+      data = cursor_color_picker_bw;
+    }
 
-  cursor = gdk_cursor_new_from_pixmap (pixmap, mask, &fg, &bg,
-                                       DROPPER_X_HOT ,DROPPER_Y_HOT);
+  pixbuf = gdk_pixbuf_new_from_inline (-1, data, FALSE, NULL);
 
-  g_object_unref (pixmap);
-  g_object_unref (mask);
+  cursor = gdk_cursor_new_from_pixbuf (display, pixbuf, 1, 30);
+
+  g_object_unref (pixbuf);
 
   return cursor;
 }
@@ -226,7 +202,7 @@ gimp_pick_button_clicked (GtkButton *gtk_button)
   guint32         timestamp;
 
   if (! button->cursor)
-    button->cursor = make_cursor ();
+    button->cursor = make_cursor (gtk_widget_get_display (GTK_WIDGET (gtk_button)));
 
   if (! button->grab_widget)
     {

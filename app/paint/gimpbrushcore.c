@@ -973,12 +973,20 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
 
           ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
 
+          g_signal_handlers_block_by_func (generated_brush,
+                                           gimp_brush_core_invalidate_cache,
+                                           core);
+
           gimp_brush_generated_set_aspect_ratio (generated_brush, 1.0);
 
           mask = gimp_brush_transform_mask (core->main_brush,
                                             1.0, 1.0, 0.0, 1.0);
 
           gimp_brush_generated_set_aspect_ratio (generated_brush, ratio);
+
+          g_signal_handlers_unblock_by_func (generated_brush,
+                                             gimp_brush_core_invalidate_cache,
+                                             core);
         }
       else
         {

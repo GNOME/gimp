@@ -27,6 +27,55 @@
 
 
 void
+gimp_transform_get_rotate_center (gint      x,
+                                  gint      y,
+                                  gint      width,
+                                  gint      height,
+                                  gboolean  auto_center,
+                                  gdouble  *center_x,
+                                  gdouble  *center_y)
+{
+  g_return_if_fail (center_x != NULL);
+  g_return_if_fail (center_y != NULL);
+
+  if (auto_center)
+    {
+      *center_x = (gdouble) x + (gdouble) width  / 2.0;
+      *center_y = (gdouble) y + (gdouble) height / 2.0;
+    }
+}
+
+void
+gimp_transform_get_flip_axis (gint                 x,
+                              gint                 y,
+                              gint                 width,
+                              gint                 height,
+                              GimpOrientationType  flip_type,
+                              gboolean             auto_center,
+                              gdouble             *axis)
+{
+  g_return_if_fail (axis != NULL);
+
+  if (auto_center)
+    {
+      switch (flip_type)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          *axis = ((gdouble) x + (gdouble) width / 2.0);
+          break;
+
+        case GIMP_ORIENTATION_VERTICAL:
+          *axis = ((gdouble) y + (gdouble) height / 2.0);
+          break;
+
+        default:
+          g_return_if_reached ();
+          break;
+        }
+    }
+}
+
+void
 gimp_transform_matrix_flip (GimpMatrix3         *matrix,
                             GimpOrientationType  flip_type,
                             gdouble              axis)

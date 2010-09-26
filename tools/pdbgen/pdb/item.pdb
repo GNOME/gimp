@@ -165,6 +165,35 @@ CODE
     );
 }
 
+sub item_is_text_layer {
+    $blurb = 'Returns whether the item is a text layer.';
+
+    $help = <<'HELP';
+This procedure returns TRUE if the specified item is a text layer.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+        { name => 'text_layer', type => 'boolean',
+	  desc => 'TRUE if the item is a text layer, FALSE otherwise.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  text_layer = (GIMP_IS_DRAWABLE (item) &&
+                gimp_drawable_is_text_layer (GIMP_DRAWABLE (item)));
+}
+CODE
+    );
+}
+
 sub item_is_channel {
     $blurb = 'Returns whether the item is a channel.';
 
@@ -654,12 +683,53 @@ CODE
     );
 }
 
+sub item_to_selection {
+    $blurb = 'Transforms the specified item into a selection';
+
+    $help = <<'HELP';
+This procedure renders the item's outline into the current selection
+of the image the item belongs to. What exactly the item's outline is
+depends on the item type: for layers, it's the layer's alpha channel,
+for vectors the vector's shape.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+        { name => 'item', type => 'item',
+          desc => 'The item to render to the selection' },
+        { name => 'operation', type => 'enum GimpChannelOps',
+          desc => 'The desired operation with current selection' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (item, NULL, FALSE, error))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      gimp_item_to_selection (item, operation,
+                              pdb_context->antialias,
+                              pdb_context->feather,
+                              pdb_context->feather_radius_x,
+                              pdb_context->feather_radius_y);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+
+}
+
 @headers = qw("core/gimplayermask.h"
               "core/gimplist.h"
               "core/gimpselection.h"
               "text/gimptextlayer.h"
 	      "vectors/gimpvectors.h"
               "gimppdb-utils.h"
+              "gimppdbcontext.h"
               "gimp-intl.h");
 
 @procs = qw(item_is_valid
@@ -667,6 +737,7 @@ CODE
             item_delete
             item_is_drawable
             item_is_layer
+            item_is_text_layer
 	    item_is_channel
 	    item_is_layer_mask
 	    item_is_selection
@@ -678,7 +749,8 @@ CODE
             item_get_visible item_set_visible
             item_get_linked item_set_linked
             item_get_lock_content item_set_lock_content
-            item_get_tattoo item_set_tattoo);
+            item_get_tattoo item_set_tattoo
+            item_to_selection);
 
 %exports = (app => [@procs], lib => [@procs]);
 

@@ -597,7 +597,7 @@ gih_load_one_brush (gint   fd,
 
   if (layer_ID != -1)
     {
-      gimp_image_add_layer (image_ID, layer_ID, num_layers++);
+      gimp_image_insert_layer (image_ID, layer_ID, -1, num_layers++);
       gimp_layer_set_offsets (layer_ID,
                               (new_width - bh.width)   / 2,
                               (new_height - bh.height) / 2);

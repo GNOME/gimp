@@ -1137,7 +1137,7 @@ load_image (const gchar  *filename,
 
               current_layer = gimp_layer_new_from_drawable (tmp_ID, image_ID);
               gimp_item_set_name (current_layer, name);
-              gimp_image_add_layer (image_ID, current_layer, -1);
+              gimp_image_insert_layer (image_ID, current_layer, -1, -1);
               gimp_image_delete (image_list[k]);
 
               g_free (name);
@@ -1934,7 +1934,7 @@ create_new_image (const gchar        *filename,
                               gdtype, 100, GIMP_NORMAL_MODE);
   g_free (tmp);
 
-  gimp_image_add_layer (image_ID, *layer_ID, 0);
+  gimp_image_insert_layer (image_ID, *layer_ID, -1, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,

@@ -43,7 +43,7 @@
  * and updates the font dialogs accordingly.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_fonts_refresh (void)
 {
@@ -73,7 +73,7 @@ gimp_fonts_refresh (void)
  * available.
  *
  * Returns: The list of font names.
- */
+ **/
 gchar **
 gimp_fonts_get_list (const gchar *filter,
                      gint        *num_fonts)

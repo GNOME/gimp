@@ -1017,7 +1017,7 @@ hsv_getitem(PyObject *self, Py_ssize_t pos)
 }
 
 static int
-hsv_setitem(PyObject *self, int pos, PyObject *value)
+hsv_setitem(PyObject *self, Py_ssize_t pos, PyObject *value)
 {
     if (pos < 0)
         pos += 4;
@@ -1530,7 +1530,7 @@ hsl_getitem(PyObject *self, Py_ssize_t pos)
 }
 
 static int
-hsl_setitem(PyObject *self, int pos, PyObject *value)
+hsl_setitem(PyObject *self, Py_ssize_t pos, PyObject *value)
 {
     if (pos < 0)
         pos += 4;
@@ -2035,7 +2035,7 @@ cmyk_getitem(PyObject *self, Py_ssize_t pos)
 }
 
 static int
-cmyk_setitem(PyObject *self, int pos, PyObject *value)
+cmyk_setitem(PyObject *self, Py_ssize_t pos, PyObject *value)
 {
     if (pos < 0)
         pos += 5;

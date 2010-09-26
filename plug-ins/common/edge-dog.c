@@ -69,8 +69,10 @@ static void      compute_difference   (GimpDrawable *drawable,
                                        GimpDrawable *drawable2,
                                        guchar       *maxval);
 
-static void      normalize            (GimpDrawable *drawable,
-                                       guint         maxval);
+static void      normalize_invert     (GimpDrawable *drawable,
+                                       gboolean      normalize,
+                                       guint         maxval,
+                                       gboolean      invert);
 
 static void      dog                  (gint32        image_ID,
                                        GimpDrawable *drawable,
@@ -468,12 +470,14 @@ dog (gint32        image_ID,
   layer1 = gimp_layer_copy (drawable_id);
   gimp_item_set_visible (layer1, FALSE);
   gimp_item_set_name (layer1, "dog_scratch_layer1");
-  gimp_image_add_layer (image_ID, layer1, 0);
+  gimp_image_insert_layer (image_ID, layer1,
+                           gimp_item_get_parent (drawable_id), 0);
 
   layer2 = gimp_layer_copy (drawable_id);
   gimp_item_set_visible (layer2, FALSE);
   gimp_item_set_name (layer2, "dog_scratch_layer2");
-  gimp_image_add_layer (image_ID, layer2, 0);
+  gimp_image_insert_layer (image_ID, layer2,
+                           gimp_item_get_parent (drawable_id), 0);
 
   drawable1 = gimp_drawable_get (layer1);
   drawable2 = gimp_drawable_get (layer2);
@@ -493,16 +497,16 @@ dog (gint32        image_ID,
   gimp_drawable_merge_shadow (drawable_id, TRUE);
   gimp_drawable_update (drawable_id, x1, y1, width, height);
 
-  if (dogvals.normalize)
+  if (dogvals.normalize || dogvals.invert)
+    /* gimp_invert doesn't work properly with previews due to shadow handling
+     * so reimplement it here - see Bug 557380
+     */
     {
-      normalize (drawable, maxval);
+      normalize_invert (drawable, dogvals.normalize, maxval, dogvals.invert);
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable_id, TRUE);
       gimp_drawable_update (drawable_id, x1, y1, width, height);
     }
-
-  if (dogvals.invert)
-    gimp_invert (drawable_id);
 }
 
 
@@ -593,8 +597,10 @@ compute_difference (GimpDrawable *drawable,
 
 
 static void
-normalize (GimpDrawable *drawable,
-           guint         maxval)
+normalize_invert (GimpDrawable *drawable,
+                  gboolean      normalize,
+                  guint         maxval,
+                  gboolean      invert)
 {
   GimpPixelRgn src_rgn, dest_rgn;
   gint         bpp;
@@ -604,10 +610,11 @@ normalize (GimpDrawable *drawable,
   gboolean     has_alpha;
   gdouble      factor;
 
-  if (maxval == 0)
-    return;
+  if (normalize && maxval != 0) {
+      factor = 255.0 / maxval;
+    }
   else
-    factor = 255.0 / maxval;
+    factor = 1.0;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bpp = drawable->bpp;
@@ -640,12 +647,20 @@ normalize (GimpDrawable *drawable,
               if (has_alpha)
                 {
                   for (k = 0; k < bpp-1; k++)
-                    d[k] = factor * s[k];
+                    {
+                      d[k] = factor * s[k];
+                      if (invert)
+                        d[k] = 255 - d[k];
+                    }
                 }
               else
                 {
                   for (k = 0; k < bpp; k++)
-                    d[k] = factor * s[k];
+                    {
+                      d[k] = factor * s[k];
+                      if (invert)
+                        d[k] = 255 - d[k];
+                    }
                 }
 
               s += bpp;
@@ -985,7 +1000,7 @@ preview_update_preview (GimpPreview  *preview,
                                100,
                                GIMP_NORMAL_MODE);
   preview_drawable = gimp_drawable_get (preview_id);
-  gimp_image_add_layer (image_id, preview_id, 0);
+  gimp_image_insert_layer (image_id, preview_id, -1, 0);
   gimp_layer_set_offsets (preview_id, 0, 0);
   gimp_pixel_rgn_init (&preview_rgn, preview_drawable,
                        0, 0, width, height, TRUE, TRUE);

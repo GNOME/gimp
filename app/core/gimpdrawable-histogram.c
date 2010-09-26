@@ -26,7 +26,7 @@
 #include "base/gimphistogram.h"
 #include "base/pixel-region.h"
 
-#include "gimpdrawable.h"
+#include "gimpchannel.h"
 #include "gimpdrawable-histogram.h"
 #include "gimpimage.h"
 
@@ -35,24 +35,24 @@ void
 gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
                                    GimpHistogram *histogram)
 {
-  PixelRegion region;
-  PixelRegion mask;
-  gint        x1, y1, x2, y2;
-  gboolean    have_mask;
+  GimpImage   *image;
+  PixelRegion  region;
+  PixelRegion  mask;
+  gint         x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (histogram != NULL);
 
-  have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-
-  if ((x1 == x2) || (y1 == y2))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return;
 
   pixel_region_init (&region, gimp_drawable_get_tiles (drawable),
-                     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+                     x, y, width, height, FALSE);
 
-  if (have_mask)
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       GimpChannel *sel_mask;
       GimpImage   *image;
@@ -64,7 +64,7 @@ gimp_drawable_calculate_histogram (GimpDrawable  *drawable,
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
       pixel_region_init (&mask,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (sel_mask)),
-                         x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+                         x + off_x, y + off_y, width, height, FALSE);
       gimp_histogram_calculate (histogram, &region, &mask);
     }
   else

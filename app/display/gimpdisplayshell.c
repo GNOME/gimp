@@ -1093,8 +1093,7 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
   gimp_display_shell_transform_xy_f (shell,
                                      overlay->image_x,
                                      overlay->image_y,
-                                     x, y,
-                                     FALSE);
+                                     x, y);
 
   gtk_widget_size_request (child, &requisition);
 
@@ -1625,8 +1624,8 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
       return FALSE;
     }
 
-  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1, FALSE);
-  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2, FALSE);
+  gimp_display_shell_transform_xy (shell, *x1, *y1, x1, y1);
+  gimp_display_shell_transform_xy (shell, *x2, *y2, x2, y2);
 
   /*  Make sure the extents are within bounds  */
   *x1 = CLAMP (*x1, 0, shell->disp_width);
@@ -1698,8 +1697,6 @@ gimp_display_shell_pause (GimpDisplayShell *shell)
       tool_manager_control_active (shell->display->gimp,
                                    GIMP_TOOL_ACTION_PAUSE,
                                    shell->display);
-
-      gimp_display_shell_draw_vectors (shell);
     }
 }
 
@@ -1722,8 +1719,6 @@ gimp_display_shell_resume (GimpDisplayShell *shell)
 
   if (shell->paused_count == 0)
     {
-      gimp_display_shell_draw_vectors (shell);
-
       /* start the currently active tool */
       tool_manager_control_active (shell->display->gimp,
                                    GIMP_TOOL_ACTION_RESUME,

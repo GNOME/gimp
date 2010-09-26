@@ -28,7 +28,7 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
 
     layer_one = gimp.Layer(img, "X Dots", width, height, RGB_IMAGE,
                            100, NORMAL_MODE)
-    img.add_layer(layer_one, 0)
+    img.insert_layer(layer_one)
     pdb.gimp_edit_fill(layer_one, BACKGROUND_FILL)
 
     pdb.plug_in_noisify(img, layer_one, 0, 0.7, 0.7, 0.7, 0.7)
@@ -36,7 +36,7 @@ def clothify(timg, tdrawable, bx=9, by=9, azimuth=135, elevation=45, depth=3):
     layer_two = layer_one.copy()
     layer_two.mode = MULTIPLY_MODE
     layer_two.name = "Y Dots"
-    img.add_layer(layer_two, 0)
+    img.insert_layer(layer_two)
 
     pdb.plug_in_gauss_rle(img, layer_one, bx, 1, 0)
     pdb.plug_in_gauss_rle(img, layer_two, by, 0, 1)

@@ -751,6 +751,7 @@ GPL
 	my $base = 0;
 	my $error = 0;
 	my $utils = 0;
+	my $context = 0;
 	my $intl = 0;
 
 	foreach (@headers) {
@@ -786,6 +787,9 @@ GPL
 	    elsif (/gimppdberror/) {
 		$error = 1;
 	    }
+	    elsif (/gimppdbcontext/) {
+		$context = 1;
+	    }
 	    else {
 		$headers .= "#include $_\n";
 	    }
@@ -795,6 +799,7 @@ GPL
 	$headers .= "#include \"gimppdb.h\"\n";
 	$headers .= "#include \"gimppdberror.h\"\n" if $error;
 	$headers .= "#include \"gimppdb-utils.h\"\n" if $utils;
+	$headers .= "#include \"gimppdbcontext.h\"\n" if $context;
 	$headers .= "#include \"gimpprocedure.h\"\n";
 	$headers .= "#include \"internal-procs.h\"\n";
 

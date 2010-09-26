@@ -1025,6 +1025,8 @@ pointer foreign_error (scheme *sc, const char *s, pointer a) {
 /* char_cnt is length of string in chars. */
 /* str points to a NUL terminated string. */
 /* Only uses fill_char if str is NULL.    */
+/* This routine automatically adds 1 byte */
+/* to allow space for terminating NUL.    */
 static char *store_string(scheme *sc, int char_cnt,
                           const char *str, gunichar fill) {
      int  len;
@@ -1041,11 +1043,11 @@ static char *store_string(scheme *sc, int char_cnt,
        else
           len = q2 - str;
        q=(gchar*)sc->malloc(len+1);
-     }
-     else {
+     } else {
        len = g_unichar_to_utf8(fill, utf8);
        q=(gchar*)sc->malloc(char_cnt*len+1);
      }
+
      if(q==0) {
        sc->no_memory=1;
        return sc->strbuff;
@@ -1070,6 +1072,7 @@ INTERFACE pointer mk_string(scheme *sc, const char *str) {
      return mk_counted_string(sc,str,g_utf8_strlen(str, -1));
 }
 
+/* str points to a NUL terminated string. */
 /* len is the length of str in characters */
 INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
@@ -1080,6 +1083,7 @@ INTERFACE pointer mk_counted_string(scheme *sc, const char *str, int len) {
      return (x);
 }
 
+/* len is the length for the empty string in characters */
 INTERFACE pointer mk_empty_string(scheme *sc, int len, gunichar fill) {
      pointer x = get_cell(sc, sc->NIL, sc->NIL);
 
@@ -1563,82 +1567,81 @@ static void port_close(scheme *sc, pointer p, int flag) {
   }
 }
 
+/* This routine will ignore byte sequences that are not valid UTF-8 */
 static gunichar basic_inchar(port *pt) {
-  int  len;
-
   if(pt->kind & port_file) {
-    unsigned char utf8[7];
     int  c;
-    int  i;
 
     c = fgetc(pt->rep.stdio.file);
-    if (c == EOF) return EOF;
-    utf8[0] = c;
 
     while (TRUE)
       {
-        if (utf8[0] <= 0x7f)
-          {
-            return (gunichar) utf8[0];
-          }
+        if (c == EOF) return EOF;
 
-        /* Check for valid lead byte per RFC-3629 */
-        if (utf8[0] >= 0xc2 && utf8[0] <= 0xf4)
+        if (c <= 0x7f)
+            return (gunichar) c;
+
+        /* Is this byte an invalid lead per RFC-3629? */
+        if (c < 0xc2 || c > 0xf4)
           {
-            len = utf8_length[utf8[0] & 0x3F];
+            /* Ignore invalid lead byte and get the next characer */
+            c = fgetc(pt->rep.stdio.file);
+          }
+        else    /* Byte is valid lead */
+          {
+            unsigned char utf8[7];
+            int  len;
+            int  i;
+
+            utf8[0] = c;    /* Save the lead byte */
+
+            len = utf8_length[c & 0x3F];
             for (i = 1; i <= len; i++)
               {
                 c = fgetc(pt->rep.stdio.file);
-                if (c == EOF) return EOF;
-                utf8[i] = c;
-                if ((utf8[i] & 0xc0) != 0x80)
-                  {
+
+                /* Stop reading if this is not a continuation character */
+                if ((c & 0xc0) != 0x80)
                     break;
-                  }
+
+                utf8[i] = c;
               }
 
-            if (i > len)
+            if (i > len)    /* Read the expected number of bytes? */
               {
-                return g_utf8_get_char ((char *) utf8);
+                return g_utf8_get_char_validated ((char *) utf8,
+                                                  sizeof(utf8));
               }
 
-            /* we did not get enough continuation characters. */
-            utf8[0] = utf8[i];          /* ignore and restart */
+            /* Not enough continuation characters so ignore and restart */
           }
-        else
-          {
-            /* Everything else is invalid and will be ignored */
-            c = fgetc(pt->rep.stdio.file);
-            if (c == EOF) return EOF;
-            utf8[0] = c;
-          }
-      }
+      } /* end of while (TRUE) */
   } else {
-    if(*pt->rep.string.curr == 0 ||
-       pt->rep.string.curr == pt->rep.string.past_the_end) {
-      return EOF;
-    } else {
-      gunichar c;
+    gunichar c;
+    int      len;
+
+    while (TRUE)
+    {
+      /* Found NUL or at end of input buffer? */
+      if (*pt->rep.string.curr == 0 ||
+          pt->rep.string.curr == pt->rep.string.past_the_end) {
+        return EOF;
+      }
 
       len = pt->rep.string.past_the_end - pt->rep.string.curr;
       c = g_utf8_get_char_validated(pt->rep.string.curr, len);
 
-      if (c < 0)
+      if (c >= 0)   /* Valid UTF-8 character? */
       {
-        pt->rep.string.curr = g_utf8_find_next_char(pt->rep.string.curr,
-                                                    pt->rep.string.past_the_end);
-        if (pt->rep.string.curr == NULL)
-            pt->rep.string.curr = pt->rep.string.past_the_end;
-        c = ' ';
-      }
-      else
-      {
-        len = g_unichar_to_utf8(c, NULL);
+        len = g_unichar_to_utf8(c, NULL);   /* Length of UTF-8 sequence */
         pt->rep.string.curr += len;
+        return c;
       }
 
-      return c;
-    }
+      /* Look for next valid UTF-8 character in buffer */
+      pt->rep.string.curr = g_utf8_find_next_char(pt->rep.string.curr,
+                                                  pt->rep.string.past_the_end);
+    } /* end of while (TRUE) */
   }
 }
 
@@ -1811,7 +1814,8 @@ static pointer readstrexp(scheme *sc) {
         break;
       case '"':
         *p=0;
-        return mk_counted_string(sc,sc->strbuff,p-sc->strbuff);
+        return mk_counted_string(sc,sc->strbuff,
+                                 g_utf8_strlen(sc->strbuff, sizeof(sc->strbuff)));
       default:
         len = g_unichar_to_utf8(c, p);
         p += len;
@@ -2853,7 +2857,7 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
           s_goto(sc,OP_EVAL);
 
      case OP_DEF1:  /* define */
-       x=find_slot_in_env(sc,sc->envir,sc->code,0);
+          x=find_slot_in_env(sc,sc->envir,sc->code,0);
           if (x != sc->NIL) {
                set_slot_in_env(sc, x, sc->value);
           } else {
@@ -3532,7 +3536,7 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
 
           free(strvalue(a));
           strvalue(a)=newstr;
-          strlength(a)=newlen;
+          strlength(a)=g_utf8_strlen(newstr, -1);
 
           s_return(sc,a);
      }
@@ -3540,24 +3544,39 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
      case OP_STRAPPEND: { /* string-append */
        /* in 1.29 string-append was in Scheme in init.scm but was too slow */
        int len = 0;
-       pointer newstr;
        pointer car_x;
+       char *newstr;
        char *pos;
+       char *end;
 
        /* compute needed length for new string */
        for (x = sc->args; x != sc->NIL; x = cdr(x)) {
-          len += strlength(car(x));
+          car_x = car(x);
+          end = g_utf8_offset_to_pointer(strvalue(car_x), (long)strlength(car_x));
+          len += end - strvalue(car_x);
        }
-       newstr = mk_empty_string(sc, len, ' ');
+
+       newstr = (char *)sc->malloc(len+1);
+       if (newstr == NULL) {
+          sc->no_memory=1;
+          Error_1(sc,"string-set!: No memory to append strings:",car(sc->args));
+       }
+
        /* store the contents of the argument strings into the new string */
-       pos = strvalue(newstr);
+       pos = newstr;
        for (x = sc->args; x != sc->NIL; x = cdr(x)) {
            car_x = car(x);
-           memcpy(pos, strvalue(car_x), strlength(car_x));
-           pos += strlength(car_x);
+           end = g_utf8_offset_to_pointer(strvalue(car_x), (long)strlength(car_x));
+           len = end - strvalue(car_x);
+           memcpy(pos, strvalue(car_x), len);
+           pos += len;
        }
        *pos = '\0';
-       s_return(sc, newstr);
+
+       car_x = mk_string(sc, newstr);
+       g_free(newstr);
+
+       s_return(sc, car_x);
      }
 
      case OP_SUBSTR: { /* substring */
@@ -3586,12 +3605,22 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
                index1=g_utf8_strlen(str, -1);
           }
 
+          /* store the contents of the argument strings into the new string */
           beg = g_utf8_offset_to_pointer(str, (long)index0);
           end = g_utf8_offset_to_pointer(str, (long)index1);
           len=end-beg;
-          x=mk_empty_string(sc,len,' ');
-          memcpy(strvalue(x),beg,len);
-          strvalue(x)[len] = '\0';
+
+          str = (char *)sc->malloc(len+1);
+          if (str == NULL) {
+             sc->no_memory=1;
+             Error_1(sc,"string-set!: No memory to extract substring:",car(sc->args));
+          }
+
+          memcpy(str, beg, len);
+          str[len] = '\0';
+
+          x = mk_string(sc, str);
+          g_free(str);
 
           s_return(sc,x);
      }
@@ -3992,7 +4021,8 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                default:                   break;  /* Quiet the compiler */
           }
           p=port_from_string(sc, strvalue(car(sc->args)),
-                     strvalue(car(sc->args))+strlength(car(sc->args)), prop);
+                     g_utf8_offset_to_pointer(strvalue(car(sc->args)),
+                                              strlength(car(sc->args))), prop);
           if(p==sc->NIL) {
                s_return(sc,sc->F);
           }

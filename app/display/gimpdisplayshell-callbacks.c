@@ -45,6 +45,7 @@
 #include "tools/gimpmovetool.h"
 #include "tools/gimppainttool.h"
 #include "tools/gimptoolcontrol.h"
+#include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 #include "tools/tools-enums.h"
 
@@ -268,8 +269,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   /*  allow shrinking  */
   gtk_widget_set_size_request (GTK_WIDGET (shell), 0, 0);
-
-  gimp_display_shell_draw_vectors (shell);
 }
 
 void
@@ -372,11 +371,15 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
 static gboolean
 gimp_display_shell_is_double_buffered (GimpDisplayShell *shell)
 {
+  return TRUE; /* FIXME: repair this after cairo tool drawing is done */
+
   /*  always double-buffer if there are overlay children or a
-   *  transform preview, or they will flicker badly
+   *  transform preview, or they will flicker badly. Also double
+   *  buffer when we are editing paths.
    */
-  if (GIMP_OVERLAY_BOX (shell->canvas)->children ||
-      gimp_display_shell_get_show_transform (shell))
+  if (GIMP_OVERLAY_BOX (shell->canvas)->children    ||
+      gimp_display_shell_get_show_transform (shell) ||
+      GIMP_IS_VECTOR_TOOL (tool_manager_get_active (shell->display->gimp)))
     return TRUE;
 
   return FALSE;
@@ -2304,7 +2307,14 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
    */
 
   /* draw the transform tool preview */
-  gimp_display_shell_preview_transform (shell);
+  cairo_save (cr);
+  gimp_display_shell_preview_transform (shell, cr);
+  cairo_restore (cr);
+
+  /* draw the vectors */
+  cairo_save (cr);
+  gimp_display_shell_draw_vectors (shell, cr);
+  cairo_restore (cr);
 
   /* draw the grid */
   cairo_save (cr);
@@ -2320,6 +2330,19 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   cairo_save (cr);
   gimp_display_shell_draw_sample_points (shell, cr);
   cairo_restore (cr);
+
+  /* draw tool items */
+  {
+    GimpTool *tool = tool_manager_get_active (shell->display->gimp);
+
+    if (GIMP_IS_DRAW_TOOL (tool) &&
+        GIMP_DRAW_TOOL (tool)->display == shell->display)
+      {
+        cairo_save (cr);
+        gimp_draw_tool_draw_items (GIMP_DRAW_TOOL (tool), cr);
+        cairo_restore (cr);
+      }
+  }
 
   /* and the cursor (if we have a software cursor) */
   cairo_save (cr);

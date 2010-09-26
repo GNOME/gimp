@@ -28,6 +28,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gint32 gimp_drawable_transform_flip_simple         (gint32                 drawable_ID,
                                                     GimpOrientationType    flip_type,
                                                     gboolean               auto_center,
@@ -178,6 +179,7 @@ gint32 gimp_drawable_transform_matrix_default      (gint32                 drawa
                                                     gdouble                coeff_2_2,
                                                     gboolean               interpolate,
                                                     GimpTransformResize    clip_result);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

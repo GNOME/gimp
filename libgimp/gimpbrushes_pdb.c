@@ -48,7 +48,7 @@
  * path and updates the brush dialogs accordingly.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_brushes_refresh (void)
 {
@@ -79,7 +79,7 @@ gimp_brushes_refresh (void)
  * gimp_context_set_brush() procedure.
  *
  * Returns: The list of brush names.
- */
+ **/
 gchar **
 gimp_brushes_get_list (const gchar *filter,
                        gint        *num_brushes)
@@ -118,7 +118,7 @@ gimp_brushes_get_list (const gchar *filter,
  * Deprecated: Use gimp_context_get_brush() instead.
  *
  * Returns: The brush name.
- */
+ **/
 gchar *
 gimp_brushes_get_brush (gint *width,
                         gint *height,
@@ -151,7 +151,7 @@ gimp_brushes_get_brush (gint *width,
  * Deprecated: Use gimp_brush_get_spacing() instead.
  *
  * Returns: The brush spacing.
- */
+ **/
 gint
 gimp_brushes_get_spacing (void)
 {
@@ -178,7 +178,7 @@ gimp_brushes_get_spacing (void)
  * Deprecated: Use gimp_brush_set_spacing() instead.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_brushes_set_spacing (gint spacing)
 {
@@ -212,7 +212,7 @@ gimp_brushes_set_spacing (gint spacing)
  * Deprecated: Use gimp_brush_get_pixels() instead.
  *
  * Returns: The brush name.
- */
+ **/
 gchar *
 gimp_brushes_get_brush_data (const gchar           *name,
                              gdouble               *opacity,

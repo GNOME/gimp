@@ -411,20 +411,7 @@ CODE
 }
 
 sub selection_layer_alpha {
-    $blurb = <<'BLURB';
-Transfer the specified layer's alpha channel to the selection mask.
-BLURB
-
-    $help = <<'HELP';
-The alpha channel information is used to create a selection mask such
-that for any pixel in the image defined in the specified layer, that
-layer pixel's alpha value is transferred to the selection mask. If the
-layer is undefined at a particular image pixel, the associated
-selection mask value is set to 0. A layer without an alpha channel is
-considered opaque.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-item-to-selection');
 
     @inargs = (
 	{ name => 'layer', type => 'layer',
@@ -446,13 +433,7 @@ CODE
 }
 
 sub selection_load {
-    $blurb = 'Transfer the specified channel to the selection mask.';
-
-    $help = <<'HELP';
-This procedure loads the specified channel into the selection mask.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-item-to-selection');
 
     @inargs = (
 	{ name => 'channel', type => 'channel',
@@ -474,13 +455,7 @@ CODE
 }
 
 sub selection_combine {
-    $blurb = 'Combines the specified channel with the selection mask.';
-
-    $help = <<'HELP';
-This procedure combines the specified channel into the selection mask.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-item-to-selection');
 
     @inargs = (
 	{ name => 'channel', type => 'channel',
@@ -536,7 +511,6 @@ HELP
 CODE
     );
 }
-
 
 @headers = qw("core/gimppickable.h"
               "gimppdb-utils.h"

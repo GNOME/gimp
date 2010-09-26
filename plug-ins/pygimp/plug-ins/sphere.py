@@ -47,7 +47,7 @@ def sphere(radius, light, shadow, foo, bg_colour, sphere_colour):
     offset = radius * 0.1
 
     img.disable_undo()
-    img.add_layer(drawable, 0)
+    img.insert_layer(drawable)
 
     gimp.set_foreground(sphere_colour)
 

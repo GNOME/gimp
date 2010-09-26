@@ -303,9 +303,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
        *  where the translation will result in floating the selection
        *  mask and translating the resulting layer
        */
-      gimp_drawable_mask_bounds (GIMP_DRAWABLE (active_item),
-                                 &edit_select->x1, &edit_select->y1,
-                                 &edit_select->x2, &edit_select->y2);
+      gimp_item_mask_bounds (active_item,
+                             &edit_select->x1, &edit_select->y1,
+                             &edit_select->x2, &edit_select->y2);
     }
 
   gimp_edit_selection_tool_calc_coords (edit_select,
@@ -376,14 +376,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                 x4 = x3 + gimp_item_get_width  (item);
                 y4 = y3 + gimp_item_get_height (item);
 
-                if (x3 < x1)
-                  x1 = x3;
-                if (y3 < y1)
-                  y1 = y3;
-                if (x4 > x2)
-                  x2 = x4;
-                if (y4 > y2)
-                  y2 = y4;
+                x1 = MIN (x1, x3);
+                y1 = MIN (y1, y3);
+                x2 = MAX (x2, x4);
+                y2 = MAX (y2, y4);
               }
 
             g_list_free (linked);
@@ -420,21 +416,17 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
                   gimp_vectors_bounds (GIMP_VECTORS (item), &x3, &y3, &x4, &y4);
 
-                  if (x3 < xd1)
-                    xd1 = x3;
-                  if (y3 < yd1)
-                    yd1 = y3;
-                  if (x4 > xd2)
-                    xd2 = x4;
-                  if (y4 > yd2)
-                    yd2 = y4;
+                  xd1 = MIN (xd1, x3);
+                  yd1 = MIN (yd1, y3);
+                  xd2 = MAX (xd2, x4);
+                  yd2 = MAX (yd2, y4);
                 }
             }
 
-          x1 = ROUND (xd1);
-          y1 = ROUND (yd1);
-          x2 = ROUND (xd2);
-          y2 = ROUND (yd2);
+          x1 = ROUND (floor (xd1));
+          y1 = ROUND (floor (yd1));
+          x2 = ROUND (ceil (xd2));
+          y2 = ROUND (ceil (yd2));
         }
         break;
       }
@@ -820,45 +812,48 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
         if (! floating_sel && edit_select->segs_in)
           {
-            gimp_draw_tool_draw_boundary (draw_tool,
-                                          edit_select->segs_in,
-                                          edit_select->num_segs_in,
-                                          edit_select->cumlx + off_x,
-                                          edit_select->cumly + off_y,
-                                          FALSE);
+            gimp_draw_tool_add_boundary (draw_tool,
+                                         edit_select->segs_in,
+                                         edit_select->num_segs_in,
+                                         edit_select->cumlx + off_x,
+                                         edit_select->cumly + off_y);
           }
 
         if (edit_select->segs_out)
           {
-            gimp_draw_tool_draw_boundary (draw_tool,
-                                          edit_select->segs_out,
-                                          edit_select->num_segs_out,
-                                          edit_select->cumlx + off_x,
-                                          edit_select->cumly + off_y,
-                                          FALSE);
+            gimp_draw_tool_add_boundary (draw_tool,
+                                         edit_select->segs_out,
+                                         edit_select->num_segs_out,
+                                         edit_select->cumlx + off_x,
+                                         edit_select->cumly + off_y);
           }
         else if (edit_select->edit_mode != GIMP_TRANSLATE_MODE_MASK)
           {
-            gimp_draw_tool_draw_rectangle (draw_tool,
-                                           FALSE,
-                                           edit_select->cumlx + off_x,
-                                           edit_select->cumly + off_y,
-                                           gimp_item_get_width  (active_item),
-                                           gimp_item_get_height (active_item),
-                                           FALSE);
+            gimp_draw_tool_add_rectangle (draw_tool,
+                                          FALSE,
+                                          edit_select->cumlx + off_x,
+                                          edit_select->cumly + off_y,
+                                          gimp_item_get_width  (active_item),
+                                          gimp_item_get_height (active_item));
           }
       }
       break;
 
     case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
     case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-      gimp_draw_tool_draw_rectangle (draw_tool,
-                                     FALSE,
-                                     edit_select->x1,
-                                     edit_select->y1,
-                                     edit_select->x2 - edit_select->x1,
-                                     edit_select->y2 - edit_select->y1,
-                                     TRUE);
+      {
+        gint off_x;
+        gint off_y;
+
+        gimp_item_get_offset (active_item, &off_x, &off_y);
+
+        gimp_draw_tool_add_rectangle (draw_tool,
+                                      FALSE,
+                                      edit_select->x1 + off_x,
+                                      edit_select->y1 + off_y,
+                                      edit_select->x2 - edit_select->x1,
+                                      edit_select->y2 - edit_select->y1);
+      }
       break;
 
     case GIMP_TRANSLATE_MODE_LAYER:
@@ -899,24 +894,18 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                 x4 = x3 + gimp_item_get_width  (item);
                 y4 = y3 + gimp_item_get_height (item);
 
-                if (x3 < x1)
-                  x1 = x3;
-                if (y3 < y1)
-                  y1 = y3;
-                if (x4 > x2)
-                  x2 = x4;
-                if (y4 > y2)
-                  y2 = y4;
+                x1 = MIN (x1, x3);
+                y1 = MIN (y1, y3);
+                x2 = MAX (x2, x4);
+                y2 = MAX (y2, y4);
               }
 
             g_list_free (linked);
           }
 
-        gimp_draw_tool_draw_rectangle (draw_tool,
-                                       FALSE,
-                                       x1, y1,
-                                       x2 - x1, y2 - y1,
-                                       FALSE);
+        gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                      x1, y1,
+                                      x2 - x1, y2 - y1);
       }
       break;
 
@@ -952,45 +941,43 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
                 gimp_vectors_bounds (GIMP_VECTORS (item), &x3, &y3, &x4, &y4);
 
-                if (x3 < x1)
-                  x1 = x3;
-                if (y3 < y1)
-                  y1 = y3;
-                if (x4 > x2)
-                  x2 = x4;
-                if (y4 > y2)
-                  y2 = y4;
+                x1 = MIN (x1, x3);
+                y1 = MIN (y1, y3);
+                x2 = MAX (x2, x4);
+                y2 = MAX (y2, y4);
               }
 
             g_list_free (linked);
           }
 
-        gimp_draw_tool_draw_rectangle (draw_tool,
-                                       FALSE,
-                                       ROUND (x1), ROUND (y1),
-                                       ROUND (x2 - x1), ROUND (y2 - y1),
-                                       FALSE);
+        x1 = floor (x1);
+        y1 = floor (y1);
+        x2 = ceil (x2);
+        y2 = ceil (y2);
+
+        gimp_draw_tool_add_rectangle (draw_tool, FALSE,
+                                      x1, y1,
+                                      x2 - x1, y2 - y1);
       }
       break;
 
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-      gimp_draw_tool_draw_boundary (draw_tool,
-                                    edit_select->segs_in,
-                                    edit_select->num_segs_in,
-                                    edit_select->cumlx,
-                                    edit_select->cumly,
-                                    FALSE);
+      gimp_draw_tool_add_boundary (draw_tool,
+                                   edit_select->segs_in,
+                                   edit_select->num_segs_in,
+                                   edit_select->cumlx,
+                                   edit_select->cumly);
       break;
     }
 
   /* Mark the center because we snap to it */
-  gimp_draw_tool_draw_cross_by_anchor (draw_tool,
-                                       edit_select->center_x + edit_select->cumlx,
-                                       edit_select->center_y + edit_select->cumly,
-                                       CENTER_CROSS_SIZE,
-                                       CENTER_CROSS_SIZE,
-                                       GTK_ANCHOR_CENTER,
-                                       FALSE);
+  gimp_draw_tool_add_handle (draw_tool,
+                             GIMP_HANDLE_CROSS,
+                             edit_select->center_x + edit_select->cumlx,
+                             edit_select->center_y + edit_select->cumly,
+                             CENTER_CROSS_SIZE,
+                             CENTER_CROSS_SIZE,
+                             GTK_ANCHOR_CENTER);
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }

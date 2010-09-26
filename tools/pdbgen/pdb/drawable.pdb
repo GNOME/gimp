@@ -16,30 +16,6 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub drawable_is_valid {
-    &std_pdb_deprecated('gimp-item-is-valid');
-    &neo_pdb_misc('2007', '2.4');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable', no_validate => 1,
-	  desc => 'The drawable to check' }
-    );
-
-    @outargs = (
-	{ name => 'valid', type => 'boolean',
-	  desc => 'Whether the drawable ID is valid' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  valid = (GIMP_IS_DRAWABLE (drawable) &&
-           ! gimp_item_is_removed (GIMP_ITEM (drawable)));
-}
-CODE
-    );
-}
-
 sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
 
@@ -126,9 +102,10 @@ channel, in which case the alpha channel is set to transparent. If the
 drawable has no alpha channel, it is filled to white. No fill leaves
 the drawable's contents undefined.
 
-This procedure is unlike the bucket fill tool because it fills
-regardless of a selection. Its main purpose is to fill a newly created
-drawable before adding it to the image. This operation cannot be undone.
+This procedure is unlike gimp_edit_fill() or the bucket fill tool
+because it fills regardless of a selection. Its main purpose is to
+fill a newly created drawable before adding it to the image. This
+operation cannot be undone.
 HELP
 
     &std_pdb_misc;
@@ -231,7 +208,7 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
-    non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+    non_empty = gimp_item_mask_bounds (GIMP_ITEM (drawable), &x1, &y1, &x2, &y2);
   else
     success = FALSE;
 }
@@ -278,32 +255,10 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, FALSE, error))
-    non_empty = gimp_drawable_mask_intersect (drawable,
-                                              &x, &y, &width, &height);
+    non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                          &x, &y, &width, &height);
   else
     success = FALSE;
-}
-CODE
-    );
-}
-
-sub drawable_get_image {
-    &std_pdb_deprecated('gimp-item-get-image');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'image', type => 'image',
-	  desc => "The drawable's image" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  image = gimp_item_get_image (GIMP_ITEM (drawable));
 }
 CODE
     );
@@ -591,268 +546,6 @@ HELP
 	code => <<'CODE'
 {
   gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
-}
-CODE
-    );
-}
-
-sub drawable_is_layer {
-    &std_pdb_deprecated('gimp-item-is-layer');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'layer', type => 'boolean',
-	  desc => 'TRUE if the drawable is a layer, FALSE otherwise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  layer = GIMP_IS_LAYER (drawable);
-}
-CODE
-    );
-}
-
-sub drawable_is_text_layer {
-    $blurb = 'Returns whether the drawable is a text layer.';
-
-    $help = <<'HELP';
-This procedure returns TRUE if the specified drawable is a text layer.
-HELP
-
-    &marcus_pdb_misc('2008', '2.6');
-
-    @inargs = (
-        { name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-        { name => 'text_layer', type => 'boolean',
-	  desc => 'TRUE if the drawable is a text layer, FALSE otherwise.' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  text_layer = gimp_drawable_is_text_layer (drawable);
-}
-CODE
-    );
-}
-
-sub drawable_is_layer_mask {
-    &std_pdb_deprecated('gimp-item-is-layer-mask');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'layer_mask', type => 'boolean',
-	  desc => 'TRUE if the drawable is a layer mask, FALSE otherwise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  layer_mask = GIMP_IS_LAYER_MASK (drawable);
-}
-CODE
-    );
-}
-
-sub drawable_is_channel {
-    &std_pdb_deprecated('gimp-item-is-channel');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'channel', type => 'boolean',
-	  desc => 'TRUE if the drawable is a channel, FALSE otherwise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  channel = GIMP_IS_CHANNEL (drawable);
-}
-CODE
-    );
-}
-
-sub drawable_get_name {
-    &std_pdb_deprecated('gimp-item-get-name');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => "The drawable name" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  name = g_strdup (gimp_object_get_name (drawable));
-}
-CODE
-    );
-}
-
-sub drawable_set_name {
-    &std_pdb_deprecated('gimp-item-set-name');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => 'name', type => 'string',
-	  desc => "The new drawable name" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  success = gimp_item_rename (GIMP_ITEM (drawable), name, error);
-}
-CODE
-    );
-}
-
-sub drawable_get_visible {
-    &std_pdb_deprecated('gimp-item-get-visible');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'visible', type => 'boolean',
-	  desc => "The drawable visibility" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  visible = gimp_item_get_visible (GIMP_ITEM (drawable));
-}
-CODE
-    );
-}
-
-sub drawable_set_visible {
-    &std_pdb_deprecated('gimp-item-set-visible');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => 'visible', type => 'boolean',
-	  desc => "The new drawable visibility" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  gimp_item_set_visible (GIMP_ITEM (drawable), visible, TRUE);
-}
-CODE
-    );
-}
-
-sub drawable_get_linked {
-    &std_pdb_deprecated('gimp-item-get-linked');
-    &wolfgang_pdb_misc('1998');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'linked', type => 'boolean',
-	  desc => "The drawable linked state (for moves)" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  linked = gimp_item_get_linked (GIMP_ITEM (drawable));
-}
-CODE
-    );
-}
-
-sub drawable_set_linked {
-    &std_pdb_deprecated('gimp-item-set-linked');
-    &wolfgang_pdb_misc('1998');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => 'linked', type => 'boolean',
-	  desc => "The new drawable linked state" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  gimp_item_set_linked (GIMP_ITEM (drawable), linked, TRUE);
-}
-CODE
-    );
-}
-
-sub drawable_get_tattoo {
-    &std_pdb_deprecated('gimp-item-get-tattoo');
-    &jay_pdb_misc('1998');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' }
-    );
-
-    @outargs = (
-	{ name => 'tattoo', type => 'tattoo',
-	  desc => "The drawable tattoo" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  tattoo = gimp_item_get_tattoo (GIMP_ITEM (drawable));
-}
-CODE
-    );
-}
-
-sub drawable_set_tattoo {
-    &std_pdb_deprecated('gimp-item-set-tattoo');
-    &jay_pdb_misc('1998');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable' },
-	{ name => 'tattoo', type => 'tattoo',
-	  desc => "The new drawable tattoo" }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  gimp_item_set_tattoo (GIMP_ITEM (drawable), tattoo);
 }
 CODE
     );
@@ -1205,29 +898,6 @@ CODE
     );
 }
 
-sub drawable_delete {
-    &std_pdb_deprecated('gimp-item-delete');
-
-    @inargs = (
-	{ name => 'drawable', type => 'drawable',
-	  desc => 'The drawable to delete' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (g_object_is_floating (drawable))
-    {
-      g_object_ref_sink (drawable);
-      g_object_unref (drawable);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub drawable_foreground_extract {
     $blurb = 'Extract the foreground of a drawable using a given trimap.';
 
@@ -1269,27 +939,20 @@ CODE
               "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimpdrawable-offset.h"
-              "core/gimplayer.h"
-              "core/gimplayermask.h"
-              "text/gimptextlayer.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
-@procs = qw(drawable_is_valid
-            drawable_is_layer drawable_is_text_layer
-	    drawable_is_layer_mask drawable_is_channel
-	    drawable_type  drawable_type_with_alpha drawable_has_alpha
-            drawable_is_rgb drawable_is_gray drawable_is_indexed
+@procs = qw(drawable_type
+            drawable_type_with_alpha
+            drawable_has_alpha
+            drawable_is_rgb
+            drawable_is_gray
+            drawable_is_indexed
             drawable_bpp
             drawable_width
             drawable_height
             drawable_offsets
-            drawable_delete
-            drawable_get_image drawable_set_image
-            drawable_get_name drawable_set_name
-            drawable_get_visible drawable_set_visible
-            drawable_get_linked drawable_set_linked
-            drawable_get_tattoo drawable_set_tattoo
+            drawable_set_image
             drawable_mask_bounds
             drawable_mask_intersect
             drawable_merge_shadow

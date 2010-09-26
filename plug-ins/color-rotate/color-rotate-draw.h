@@ -52,19 +52,10 @@
 #define EACH_OR_BOTH  0.3
 
 
-
-/* Global variables */
-
-extern GdkGC *xor_gc;
-
-
-void color_rotate_draw_little_circle (GdkWindow *window,
-                                      GdkGC     *color,
+void color_rotate_draw_little_circle (cairo_t   *cr,
                                       gfloat     hue,
                                       gfloat     satur);
-void color_rotate_draw_large_circle  (GdkWindow *window,
-                                      GdkGC     *color,
+void color_rotate_draw_large_circle  (cairo_t   *cr,
                                       gfloat     gray_sat);
-void color_rotate_draw_arrows        (GdkWindow *window,
-                                      GdkGC     *color,
+void color_rotate_draw_arrows        (cairo_t   *cr,
                                       RcmAngle  *angle);

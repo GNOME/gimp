@@ -796,7 +796,7 @@ iwarp (void)
           gimp_item_set_name (animlayers[i], st);
           g_free (st);
 
-          gimp_image_add_layer (imageID, animlayers[i], 0);
+          gimp_image_insert_layer (imageID, animlayers[i], -1, 0);
 
           destdrawable = gimp_drawable_get (animlayers[i]);
 
@@ -828,7 +828,7 @@ iwarp (void)
               gimp_item_set_name (layerID, st);
               g_free (st);
 
-              gimp_image_add_layer (imageID, layerID, 0);
+              gimp_image_insert_layer (imageID, layerID, -1, 0);
             }
         }
       g_free (animlayers);

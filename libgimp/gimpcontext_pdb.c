@@ -46,7 +46,7 @@
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_push (void)
 {
@@ -78,7 +78,7 @@ gimp_context_push (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_pop (void)
 {
@@ -110,7 +110,7 @@ gimp_context_pop (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_context_list_paint_methods (gint    *num_paint_methods,
                                  gchar ***paint_methods)
@@ -153,7 +153,7 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
  * Returns: The name of the active paint method.
  *
  * Since: GIMP 2.4
- */
+ **/
 gchar *
 gimp_context_get_paint_method (void)
 {
@@ -189,7 +189,7 @@ gimp_context_get_paint_method (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_context_set_paint_method (const gchar *name)
 {
@@ -222,7 +222,7 @@ gimp_context_set_paint_method (const gchar *name)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_get_foreground (GimpRGB *foreground)
 {
@@ -257,7 +257,7 @@ gimp_context_get_foreground (GimpRGB *foreground)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_foreground (const GimpRGB *foreground)
 {
@@ -290,7 +290,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_get_background (GimpRGB *background)
 {
@@ -326,7 +326,7 @@ gimp_context_get_background (GimpRGB *background)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_background (const GimpRGB *background)
 {
@@ -358,7 +358,7 @@ gimp_context_set_background (const GimpRGB *background)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_default_colors (void)
 {
@@ -389,7 +389,7 @@ gimp_context_set_default_colors (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_swap_colors (void)
 {
@@ -419,7 +419,7 @@ gimp_context_swap_colors (void)
  * Returns: The opacity.
  *
  * Since: GIMP 2.2
- */
+ **/
 gdouble
 gimp_context_get_opacity (void)
 {
@@ -451,7 +451,7 @@ gimp_context_get_opacity (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_opacity (gdouble opacity)
 {
@@ -483,7 +483,7 @@ gimp_context_set_opacity (gdouble opacity)
  * Returns: The paint mode.
  *
  * Since: GIMP 2.2
- */
+ **/
 GimpLayerModeEffects
 gimp_context_get_paint_mode (void)
 {
@@ -514,7 +514,7 @@ gimp_context_get_paint_mode (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
 {
@@ -546,7 +546,7 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
  * Returns: The name of the active brush.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_brush (void)
 {
@@ -581,7 +581,7 @@ gimp_context_get_brush (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_brush (const gchar *name)
 {
@@ -613,7 +613,7 @@ gimp_context_set_brush (const gchar *name)
  * Returns: The name of the active pattern.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_pattern (void)
 {
@@ -649,7 +649,7 @@ gimp_context_get_pattern (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_pattern (const gchar *name)
 {
@@ -679,7 +679,7 @@ gimp_context_set_pattern (const gchar *name)
  * Returns: The name of the active gradient.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_gradient (void)
 {
@@ -715,7 +715,7 @@ gimp_context_get_gradient (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_gradient (const gchar *name)
 {
@@ -745,7 +745,7 @@ gimp_context_set_gradient (const gchar *name)
  * Returns: The name of the active palette.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_palette (void)
 {
@@ -781,7 +781,7 @@ gimp_context_get_palette (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_palette (const gchar *name)
 {
@@ -811,7 +811,7 @@ gimp_context_set_palette (const gchar *name)
  * Returns: The name of the active font.
  *
  * Since: GIMP 2.2
- */
+ **/
 gchar *
 gimp_context_get_font (void)
 {
@@ -846,7 +846,7 @@ gimp_context_get_font (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_context_set_font (const gchar *name)
 {
@@ -857,6 +857,464 @@ gimp_context_set_font (const gchar *name)
   return_vals = gimp_run_procedure ("gimp-context-set-font",
                                     &nreturn_vals,
                                     GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_antialias:
+ *
+ * Get the antialias setting.
+ *
+ * This procedure returns the antialias setting.
+ *
+ * Returns: The antialias setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_antialias (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean antialias = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-antialias",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    antialias = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return antialias;
+}
+
+/**
+ * gimp_context_set_antialias:
+ * @antialias: The antialias setting.
+ *
+ * Set the antialias setting.
+ *
+ * This procedure modifies the antialias setting. This settings affects
+ * the following procedures: gimp-item-to-selection.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_antialias (gboolean antialias)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-antialias",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, antialias,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_feather:
+ *
+ * Get the feather setting.
+ *
+ * This procedure returns the feather setting.
+ *
+ * Returns: The feather setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_feather (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean feather = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-feather",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    feather = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return feather;
+}
+
+/**
+ * gimp_context_set_feather:
+ * @feather: The feather setting.
+ *
+ * Set the feather setting.
+ *
+ * This procedure modifies the feather setting. This settings affects
+ * the following procedures: gimp-item-to-selection.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_feather (gboolean feather)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-feather",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, feather,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_feather_radius:
+ * @feather_radius_x: The horizontal feather radius.
+ * @feather_radius_y: The vertical feather radius.
+ *
+ * Get the feather radius setting.
+ *
+ * This procedure returns the feather radius setting.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_feather_radius (gdouble *feather_radius_x,
+                                 gdouble *feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-feather-radius",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  *feather_radius_x = 0.0;
+  *feather_radius_y = 0.0;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *feather_radius_x = return_vals[1].data.d_float;
+      *feather_radius_y = return_vals[2].data.d_float;
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_feather_radius:
+ * @feather_radius_x: The horizontal feather radius.
+ * @feather_radius_y: The vertical feather radius.
+ *
+ * Set the feather radius setting.
+ *
+ * This procedure modifies the feather radius setting. This settings
+ * affects the following procedures: gimp-item-to-selection.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_feather_radius (gdouble feather_radius_x,
+                                 gdouble feather_radius_y)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-feather-radius",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, feather_radius_x,
+                                    GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_interpolation:
+ *
+ * Get the interpolation type.
+ *
+ * This procedure returns the interpolation setting. The return value
+ * is an integer which corresponds to the values listed in the argument
+ * description.
+ *
+ * Returns: The interpolation type.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpInterpolationType
+gimp_context_get_interpolation (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpInterpolationType interpolation = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-interpolation",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    interpolation = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return interpolation;
+}
+
+/**
+ * gimp_context_set_interpolation:
+ * @interpolation: The interpolation type.
+ *
+ * Set the interpolation type.
+ *
+ * This procedure modifies the interpolation setting. It affects the
+ * following procedures: all transform procedures which can produce
+ * sub-pixel results, gimp_image_scale(), gimp_layer_scale().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_interpolation (GimpInterpolationType interpolation)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-interpolation",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, interpolation,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_transform_direction:
+ *
+ * Get the transform direction.
+ *
+ * This procedure returns the transform direction. The return value is
+ * an integer which corresponds to the values listed in the argument
+ * description.
+ *
+ * Returns: The transform direction.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpTransformDirection
+gimp_context_get_transform_direction (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpTransformDirection transform_direction = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-transform-direction",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    transform_direction = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return transform_direction;
+}
+
+/**
+ * gimp_context_set_transform_direction:
+ * @transform_direction: The transform direction.
+ *
+ * Set the transform direction.
+ *
+ * This procedure modifies the transform direction setting.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_transform_direction (GimpTransformDirection transform_direction)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-transform-direction",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, transform_direction,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_transform_resize:
+ *
+ * Get the transform resize type.
+ *
+ * This procedure returns the transform resize setting. The return
+ * value is an integer which corresponds to the values listed in the
+ * argument description.
+ *
+ * Returns: The transform resize type.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpTransformResize
+gimp_context_get_transform_resize (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpTransformResize transform_resize = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-transform-resize",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    transform_resize = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return transform_resize;
+}
+
+/**
+ * gimp_context_set_transform_resize:
+ * @transform_resize: The transform resize type.
+ *
+ * Set the transform resize type.
+ *
+ * This procedure modifies the transform resize setting. When
+ * transforming pixels, if the result of a transform operation has a
+ * different size than the original area, this setting determines how
+ * the resulting area is sized.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_transform_resize (GimpTransformResize transform_resize)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-transform-resize",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, transform_resize,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_transform_recursion:
+ *
+ * Get the transform supersampling recursion.
+ *
+ * This procedure returns the transform supersampling recursion level.
+ *
+ * Returns: The transform recursion level.
+ *
+ * Since: GIMP 2.8
+ **/
+gint
+gimp_context_get_transform_recursion (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint transform_recursion = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-transform-recursion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    transform_recursion = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return transform_recursion;
+}
+
+/**
+ * gimp_context_set_transform_recursion:
+ * @transform_recursion: The transform recursion level.
+ *
+ * Set the transform supersampling recursion.
+ *
+ * This procedure modifies the transform supersampling recursion level
+ * setting. Whether or not a transformation does supersampling is
+ * determined by the interplolation type. The recursion level defaults
+ * to 3, which is a nice default value.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_transform_recursion (gint transform_recursion)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-transform-recursion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, transform_recursion,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

@@ -23,6 +23,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_LAYER_PDB_H__
+#include "gimplayer_pdb.h"
 
 
 /**
@@ -49,12 +52,12 @@
  * This procedure creates a new layer with the specified width, height,
  * and type. Name, opacity, and mode are also supplied parameters. The
  * new layer still needs to be added to the image, as this is not
- * automatic. Add the new layer with the gimp_image_add_layer()
+ * automatic. Add the new layer with the gimp_image_insert_layer()
  * command. Other attributes such as layer mask modes, and offsets
  * should be set with explicit procedure calls.
  *
  * Returns: The newly created layer.
- */
+ **/
 gint32
 _gimp_layer_new (gint32                image_ID,
                  gint                  width,
@@ -98,13 +101,13 @@ _gimp_layer_new (gint32                image_ID,
  * This procedure creates a new layer from what is visible in the given
  * image. The new layer still needs to be added to the destination
  * image, as this is not automatic. Add the new layer with the
- * gimp_image_add_layer() command. Other attributes such as layer mask
- * modes, and offsets should be set with explicit procedure calls.
+ * gimp_image_insert_layer() command. Other attributes such as layer
+ * mask modes, and offsets should be set with explicit procedure calls.
  *
  * Returns: The newly created layer.
  *
  * Since: GIMP 2.6
- */
+ **/
 gint32
 gimp_layer_new_from_visible (gint32       image_ID,
                              gint32       dest_image_ID,
@@ -139,11 +142,11 @@ gimp_layer_new_from_visible (gint32       image_ID,
  * This procedure creates a new layer as a copy of the specified
  * drawable. The new layer still needs to be added to the image, as
  * this is not automatic. Add the new layer with the
- * gimp_image_add_layer() command. Other attributes such as layer mask
- * modes, and offsets should be set with explicit procedure calls.
+ * gimp_image_insert_layer() command. Other attributes such as layer
+ * mask modes, and offsets should be set with explicit procedure calls.
  *
  * Returns: The newly copied layer.
- */
+ **/
 gint32
 gimp_layer_new_from_drawable (gint32 drawable_ID,
                               gint32 dest_image_ID)
@@ -167,6 +170,41 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
 }
 
 /**
+ * gimp_layer_group_new:
+ * @image_ID: The image to which to add the layer group.
+ *
+ * Create a new layer group.
+ *
+ * This procedure creates a new layer group. Attributes such as layer
+ * mode and opacity should be set with explicit procedure calls. Add
+ * the new layer group (which is a kind of layer) with the
+ * gimp_image_insert_layer() command.
+ *
+ * Returns: The newly created layer group.
+ *
+ * Since: GIMP 2.8
+ **/
+gint32
+gimp_layer_group_new (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_group_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp-layer-group-new",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_group_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_group_ID;
+}
+
+/**
  * _gimp_layer_copy:
  * @layer_ID: The layer to copy.
  * @add_alpha: Add an alpha channel to the copied layer.
@@ -181,7 +219,7 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
  * same image.
  *
  * Returns: The newly copied layer.
- */
+ **/
 gint32
 _gimp_layer_copy (gint32   layer_ID,
                   gboolean add_alpha)
@@ -217,7 +255,7 @@ _gimp_layer_copy (gint32   layer_ID,
  * to GRAYA, and INDEXED to INDEXEDA.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_add_alpha (gint32 layer_ID)
 {
@@ -251,7 +289,7 @@ gimp_layer_add_alpha (gint32 layer_ID)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_layer_flatten (gint32 layer_ID)
 {
@@ -284,10 +322,11 @@ gimp_layer_flatten (gint32 layer_ID)
  * equal to the supplied parameters. The 'local-origin' parameter
  * specifies whether to scale from the center of the layer, or from the
  * image origin. This operation only works if the layer has been added
- * to an image. The default interpolation method is used for scaling.
+ * to an image. The interpolation method used can be set with
+ * gimp_context_set_interpolation().
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_scale (gint32   layer_ID,
                   gint     new_width,
@@ -321,19 +360,12 @@ gimp_layer_scale (gint32   layer_ID,
  * @local_origin: Use a local origin (as opposed to the image origin).
  * @interpolation: Type of interpolation.
  *
- * Scale the layer using a specific interpolation method.
- *
- * This procedure scales the layer so that its new width and height are
- * equal to the supplied parameters. The 'local-origin' parameter
- * specifies whether to scale from the center of the layer, or from the
- * image origin. This operation only works if the layer has been added
- * to an image. This procedure allows you to specify the interpolation
- * method explicitly.
+ * Deprecated: Use gimp_layer_scale() instead.
  *
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_layer_scale_full (gint32                layer_ID,
                        gint                  new_width,
@@ -377,7 +409,7 @@ gimp_layer_scale_full (gint32                layer_ID,
  * operation only works if the layer has been added to an image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_resize (gint32 layer_ID,
                    gint   new_width,
@@ -415,7 +447,7 @@ gimp_layer_resize (gint32 layer_ID,
  * are equal to the width and height of its image container.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_resize_to_image_size (gint32 layer_ID)
 {
@@ -451,7 +483,7 @@ gimp_layer_resize_to_image_size (gint32 layer_ID)
  * the specified offsets.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_translate (gint32 layer_ID,
                       gint   offx,
@@ -488,7 +520,7 @@ gimp_layer_translate (gint32 layer_ID,
  * operation is valid only on layers which have been added to an image.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_offsets (gint32 layer_ID,
                         gint   offx,
@@ -531,7 +563,7 @@ gimp_layer_set_offsets (gint32 layer_ID,
  * to gimp_layer_add_mask().
  *
  * Returns: The newly created mask.
- */
+ **/
 gint32
 gimp_layer_create_mask (gint32          layer_ID,
                         GimpAddMaskType mask_type)
@@ -564,7 +596,7 @@ gimp_layer_create_mask (gint32          layer_ID,
  * exists.
  *
  * Returns: The layer mask.
- */
+ **/
 gint32
 gimp_layer_get_mask (gint32 layer_ID)
 {
@@ -597,7 +629,7 @@ gimp_layer_get_mask (gint32 layer_ID)
  * Returns: The mask's layer.
  *
  * Since: GIMP 2.2
- */
+ **/
 gint32
 gimp_layer_from_mask (gint32 mask_ID)
 {
@@ -634,7 +666,7 @@ gimp_layer_from_mask (gint32 mask_ID)
  * with the procedure 'gimp-layer-create-mask'.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_add_mask (gint32 layer_ID,
                      gint32 mask_ID)
@@ -667,7 +699,7 @@ gimp_layer_add_mask (gint32 layer_ID,
  * the mask doesn't exist, an error is returned.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_remove_mask (gint32            layer_ID,
                         GimpMaskApplyMode mode)
@@ -700,7 +732,7 @@ gimp_layer_remove_mask (gint32            layer_ID,
  * to a specific drawable.
  *
  * Returns: TRUE if the layer is a floating selection.
- */
+ **/
 gboolean
 gimp_layer_is_floating_sel (gint32 layer_ID)
 {
@@ -731,7 +763,7 @@ gimp_layer_is_floating_sel (gint32 layer_ID)
  * setting.
  *
  * Returns: The layer's lock alpha channel setting.
- */
+ **/
 gboolean
 gimp_layer_get_lock_alpha (gint32 layer_ID)
 {
@@ -763,7 +795,7 @@ gimp_layer_get_lock_alpha (gint32 layer_ID)
  * setting.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_lock_alpha (gint32   layer_ID,
                            gboolean lock_alpha)
@@ -796,7 +828,7 @@ gimp_layer_set_lock_alpha (gint32   layer_ID,
  * being composited with the layer's alpha channel.
  *
  * Returns: The layer's apply mask setting.
- */
+ **/
 gboolean
 gimp_layer_get_apply_mask (gint32 layer_ID)
 {
@@ -830,7 +862,7 @@ gimp_layer_get_apply_mask (gint32 layer_ID)
  * error.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_apply_mask (gint32   layer_ID,
                            gboolean apply_mask)
@@ -864,7 +896,7 @@ gimp_layer_set_apply_mask (gint32   layer_ID,
  * function returns an error.
  *
  * Returns: The layer's show mask setting.
- */
+ **/
 gboolean
 gimp_layer_get_show_mask (gint32 layer_ID)
 {
@@ -898,7 +930,7 @@ gimp_layer_get_show_mask (gint32 layer_ID)
  * function will return an error.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_show_mask (gint32   layer_ID,
                           gboolean show_mask)
@@ -931,7 +963,7 @@ gimp_layer_set_show_mask (gint32   layer_ID,
  * active, and not the layer.
  *
  * Returns: The layer's edit mask setting.
- */
+ **/
 gboolean
 gimp_layer_get_edit_mask (gint32 layer_ID)
 {
@@ -965,7 +997,7 @@ gimp_layer_get_edit_mask (gint32 layer_ID)
  * procedure will return an error.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_edit_mask (gint32   layer_ID,
                           gboolean edit_mask)
@@ -996,7 +1028,7 @@ gimp_layer_set_edit_mask (gint32   layer_ID,
  * This procedure returns the specified layer's opacity.
  *
  * Returns: The layer opacity.
- */
+ **/
 gdouble
 gimp_layer_get_opacity (gint32 layer_ID)
 {
@@ -1027,7 +1059,7 @@ gimp_layer_get_opacity (gint32 layer_ID)
  * This procedure sets the specified layer's opacity.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_opacity (gint32  layer_ID,
                         gdouble opacity)
@@ -1058,7 +1090,7 @@ gimp_layer_set_opacity (gint32  layer_ID,
  * This procedure returns the specified layer's combination mode.
  *
  * Returns: The layer combination mode.
- */
+ **/
 GimpLayerModeEffects
 gimp_layer_get_mode (gint32 layer_ID)
 {
@@ -1089,7 +1121,7 @@ gimp_layer_get_mode (gint32 layer_ID)
  * This procedure sets the specified layer's combination mode.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_layer_set_mode (gint32               layer_ID,
                      GimpLayerModeEffects mode)

@@ -39,6 +39,7 @@
 
 #include "widgets/gimphelp-ids.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 
 #include "gimpfreeselecttool.h"
@@ -48,7 +49,7 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE             12
+#define HANDLE_SIZE             13
 #define POINT_GRAB_THRESHOLD_SQ SQR(HANDLE_SIZE / 2)
 #define POINT_SHOW_THRESHOLD_SQ SQR(HANDLE_SIZE * 7)
 #define N_ITEMS_PER_ALLOC       1024
@@ -1528,6 +1529,8 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
   GimpFreeSelectTool        *fst                   = GIMP_FREE_SELECT_TOOL (draw_tool);
   GimpFreeSelectToolPrivate *priv                  = GET_PRIVATE (fst);
   GimpTool                  *tool                  = GIMP_TOOL (draw_tool);
+  GimpCanvasItem            *stroke_group;
+  GimpCanvasItem            *item;
   gboolean                   hovering_first_point  = FALSE;
   gboolean                   handles_wants_to_show = FALSE;
   GimpCoords                 coords                = { priv->last_coords.x,
@@ -1541,9 +1544,22 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                         tool->display,
                                         NO_CLICK_TIME_AVAILABLE,
                                         &coords);
-  gimp_draw_tool_draw_lines (draw_tool,
-                             priv->points, priv->n_points,
-                             FALSE, FALSE);
+
+  stroke_group = gimp_canvas_group_new ();
+  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
+                                        TRUE);
+  gimp_draw_tool_add_item (draw_tool, stroke_group);
+  g_object_unref (stroke_group);
+
+  item = gimp_draw_tool_add_lines (draw_tool,
+                                   priv->points, priv->n_points,
+                                   FALSE);
+
+  if (item)
+    {
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+    }
 
   /* We always show the handle for the first point, even with button1
    * down, since releasing the button on the first point will close
@@ -1592,11 +1608,11 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
             handle_type = GIMP_HANDLE_CIRCLE;
 
           if (handle_type != -1)
-            gimp_draw_tool_draw_handle (draw_tool, handle_type,
-                                        point->x,
-                                        point->y,
-                                        HANDLE_SIZE, HANDLE_SIZE,
-                                        GTK_ANCHOR_CENTER, FALSE);
+            gimp_draw_tool_add_handle (draw_tool, handle_type,
+                                       point->x,
+                                       point->y,
+                                       HANDLE_SIZE, HANDLE_SIZE,
+                                       GTK_ANCHOR_CENTER);
         }
     }
 
@@ -1604,12 +1620,14 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpVector2 last = priv->points[priv->n_points - 1];
 
-      gimp_draw_tool_draw_line (draw_tool,
-                                last.x,
-                                last.y,
-                                priv->pending_point.x,
-                                priv->pending_point.y,
-                                FALSE);
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      last.x,
+                                      last.y,
+                                      priv->pending_point.x,
+                                      priv->pending_point.y);
+
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
     }
 }
 

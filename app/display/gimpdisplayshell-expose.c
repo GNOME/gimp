@@ -27,6 +27,8 @@
 #include "core/gimpguide.h"
 #include "core/gimpsamplepoint.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-transform.h"
@@ -42,6 +44,26 @@ gimp_display_shell_expose_area (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gtk_widget_queue_draw_area (shell->canvas, x, y, w, h);
+}
+
+static void
+gimp_display_shell_expose_region (GimpDisplayShell *shell,
+                                  gdouble           x1,
+                                  gdouble           y1,
+                                  gdouble           x2,
+                                  gdouble           y2,
+                                  gint              border)
+{
+  const gint x = floor (x1);
+  const gint y = floor (y1);
+  const gint w = ceil (x2) - x;
+  const gint h = ceil (y2) - y;
+
+  gimp_display_shell_expose_area (shell,
+                                  x - border,
+                                  y - border,
+                                  w + 2 * border,
+                                  h + 2 * border);
 }
 
 void
@@ -61,8 +83,7 @@ gimp_display_shell_expose_guide (GimpDisplayShell *shell,
 
   gimp_display_shell_transform_xy (shell,
                                    position, position,
-                                   &x, &y,
-                                   FALSE);
+                                   &x, &y);
 
   switch (gimp_guide_get_orientation (guide))
     {
@@ -95,8 +116,7 @@ gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
   gimp_display_shell_transform_xy_f (shell,
                                      sample_point->x + 0.5,
                                      sample_point->y + 0.5,
-                                     &x, &y,
-                                     FALSE);
+                                     &x, &y);
 
   x1 = MAX (0, floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE));
   y1 = MAX (0, floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE));
@@ -105,6 +125,25 @@ gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
 
   /* HACK: add 3 instead of 1 so the number gets cleared too */
   gimp_display_shell_expose_area (shell, x1, y1, x2 - x1 + 3, y2 - y1 + 3);
+}
+
+void
+gimp_display_shell_expose_vectors (GimpDisplayShell *shell,
+                                   GimpVectors      *vectors)
+{
+  gdouble x1, y1;
+  gdouble x2, y2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (vectors != NULL);
+
+  if (gimp_vectors_bounds (vectors, &x1, &y1, &x2, &y2))
+    {
+      gimp_display_shell_transform_xy_f (shell, x1, y1, &x1, &y1);
+      gimp_display_shell_transform_xy_f (shell, x2, y2, &x2, &y2);
+
+      gimp_display_shell_expose_region (shell, x1, y1, x2, y2, 2);
+    }
 }
 
 void

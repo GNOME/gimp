@@ -48,7 +48,7 @@
  * any side effects. The associated drawable is then set to active.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_floating_sel_remove (gint32 floating_sel_ID)
 {
@@ -80,7 +80,7 @@ gimp_floating_sel_remove (gint32 floating_sel_ID)
  * after this operation.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_floating_sel_anchor (gint32 floating_sel_ID)
 {
@@ -116,7 +116,7 @@ gimp_floating_sel_anchor (gint32 floating_sel_ID)
  * selection is above an auxillary channel or a layer mask.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_floating_sel_to_layer (gint32 floating_sel_ID)
 {
@@ -147,7 +147,7 @@ gimp_floating_sel_to_layer (gint32 floating_sel_ID)
  * drawable.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_floating_sel_attach (gint32 layer_ID,
                           gint32 drawable_ID)
@@ -177,7 +177,7 @@ gimp_floating_sel_attach (gint32 layer_ID,
  * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_floating_sel_rigor (gint32   floating_sel_ID,
                          gboolean undo)
@@ -207,7 +207,7 @@ gimp_floating_sel_rigor (gint32   floating_sel_ID,
  * Deprecated: There is no replacement for this procedure.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_floating_sel_relax (gint32   floating_sel_ID,
                          gboolean undo)

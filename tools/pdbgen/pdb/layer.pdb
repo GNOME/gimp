@@ -20,11 +20,12 @@ sub layer_new {
     $blurb = 'Create a new layer.';
 
     $help = <<'HELP';
-This procedure creates a new layer with the specified width, height, and type.
-Name, opacity, and mode are also supplied parameters. The new layer still needs
-to be added to the image, as this is not automatic. Add the new layer with the
-gimp_image_add_layer() command. Other attributes such as layer mask modes, and
-offsets should be set with explicit procedure calls.
+This procedure creates a new layer with the specified width, height,
+and type.  Name, opacity, and mode are also supplied parameters. The
+new layer still needs to be added to the image, as this is not
+automatic. Add the new layer with the gimp_image_insert_layer()
+command. Other attributes such as layer mask modes, and offsets should
+be set with explicit procedure calls.
 HELP
 
     &std_pdb_misc;
@@ -68,11 +69,11 @@ sub layer_new_from_visible {
     $blurb = 'Create a new layer from what is visible in an image.';
 
     $help = <<'HELP';
-This procedure creates a new layer from what is visible in the given image.
-The new layer still needs to be added to the destination image, as this is
-not automatic. Add the new layer with the gimp_image_add_layer() command.
-Other attributes such as layer mask modes, and offsets should be set with
-explicit procedure calls.
+This procedure creates a new layer from what is visible in the given
+image.  The new layer still needs to be added to the destination
+image, as this is not automatic. Add the new layer with the
+gimp_image_insert_layer() command.  Other attributes such as layer
+mask modes, and offsets should be set with explicit procedure calls.
 HELP
 
     &neo_pdb_misc('2008', '2.6');
@@ -112,10 +113,11 @@ sub layer_new_from_drawable {
     $blurb = 'Create a new layer by copying an existing drawable.';
 
     $help = <<'HELP';
-This procedure creates a new layer as a copy of the specified drawable.  The
-new layer still needs to be added to the image, as this is not automatic.  Add
-the new layer with the gimp_image_add_layer() command. Other attributes such
-as layer mask modes, and offsets should be set with explicit procedure calls.
+This procedure creates a new layer as a copy of the specified
+drawable.  The new layer still needs to be added to the image, as this
+is not automatic.  Add the new layer with the
+gimp_image_insert_layer() command. Other attributes such as layer mask
+modes, and offsets should be set with explicit procedure calls.
 HELP
 
     &std_pdb_misc;
@@ -151,6 +153,39 @@ HELP
   if (new_item)
     layer_copy = GIMP_LAYER (new_item);
   else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub layer_group_new {
+    $blurb = 'Create a new layer group.';
+
+    $help = <<'HELP';
+This procedure creates a new layer group. Attributes such as layer mode
+and opacity should be set with explicit procedure calls. Add the new
+layer group (which is a kind of layer) with the
+gimp_image_insert_layer() command.
+HELP
+
+    &barak_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image to which to add the layer group' }
+    );
+
+    @outargs = (
+	{ name => 'layer_group', type => 'layer',
+	  desc => 'The newly created layer group' }
+    );
+    %invoke = (
+	code => <<'CODE'
+{
+  layer_group = gimp_group_layer_new (image);
+
+  if (! layer_group)
     success = FALSE;
 }
 CODE
@@ -327,7 +362,8 @@ This procedure scales the layer so that its new width and height are
 equal to the supplied parameters. The 'local-origin' parameter
 specifies whether to scale from the center of the layer, or from the
 image origin. This operation only works if the layer has been added to
-an image. The default interpolation method is used for scaling.
+an image. The interpolation method used can be set with
+gimp_context_set_interpolation().
 HELP
 
     &std_pdb_misc;
@@ -348,11 +384,13 @@ HELP
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), NULL, TRUE, error))
     {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
       if (progress)
         gimp_progress_start (progress, _("Scaling"), FALSE);
 
       gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
-                                 gimp->config->interpolation_type, progress,
+                                 pdb_context->interpolation, progress,
                                  local_origin);
 
       if (progress)
@@ -368,17 +406,7 @@ CODE
 }
 
 sub layer_scale_full {
-    $blurb = 'Scale the layer using a specific interpolation method.';
-
-    $help = <<'HELP';
-This procedure scales the layer so that its new width and height are
-equal to the supplied parameters. The 'local-origin' parameter
-specifies whether to scale from the center of the layer, or from the
-image origin. This operation only works if the layer has been added to
-an image. This procedure allows you to specify the interpolation
-method explicitly.
-HELP
-
+    &std_pdb_deprecated('gimp-layer-scale');
     &neo_pdb_misc('2008', '2.6');
 
     @inargs = (
@@ -1069,20 +1097,21 @@ CODE
     );
 }
 
-
 @headers = qw("libgimpbase/gimpbase.h"
-              "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
+              "core/gimpgrouplayer.h"
               "core/gimppickable.h"
               "core/gimpprogress.h"
+              "gimppdbcontext.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
 @procs = qw(layer_new
             layer_new_from_visible
             layer_new_from_drawable
+            layer_group_new
             layer_copy
             layer_add_alpha
             layer_flatten

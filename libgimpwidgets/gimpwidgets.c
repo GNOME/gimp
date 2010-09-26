@@ -425,7 +425,7 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  * @upper:          The uppper boundary.
  * @step_increment: The spinbutton's step increment.
  * @page_increment: The spinbutton's page increment (mouse button 2).
- * @page_size:      The spinbutton's page size.
+ * @page_size:      Ignored, spin buttons must always have a zero page size.
  * @climb_rate:     The spinbutton's climb rate.
  * @digits:         The spinbutton's number of decimal digits.
  *
@@ -450,7 +450,7 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
   GtkWidget *spinbutton;
 
   *adjustment = gtk_adjustment_new (value, lower, upper,
-                                    step_increment, page_increment, page_size);
+                                    step_increment, page_increment, 0);
 
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
                                     climb_rate, digits);

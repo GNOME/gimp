@@ -329,7 +329,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   PixelRegion  basePR;
 
   /*  must call gimp_channel_is_empty() instead of relying on
-   *  gimp_drawable_mask_intersect() because the selection pretends to
+   *  gimp_item_mask_intersect() because the selection pretends to
    *  be empty while it is being stroked, to prevent masking itself.
    */
   if (gimp_channel_is_empty (gimp_image_get_mask (image)))
@@ -339,7 +339,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
       w = gimp_item_get_width  (GIMP_ITEM (drawable));
       h = gimp_item_get_height (GIMP_ITEM (drawable));
     }
-  else if (! gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
+  else if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
     {
       return;
     }

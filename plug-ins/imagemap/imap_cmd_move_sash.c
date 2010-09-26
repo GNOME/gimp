@@ -29,13 +29,14 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-COMMAND_PROTO(move_sash_command);
+static void move_sash_command_destruct(Command_t *command);
+static CmdExecuteValue_t move_sash_command_execute(Command_t *command);
 
 static CommandClass_t move_sash_command_class = {
    move_sash_command_destruct,
    move_sash_command_execute,
-   NULL, 			/* move_sash_command_undo */
-   NULL				/* move_sash_command_redo */
+   NULL /*undo*/,
+   NULL /*redo*/
 };
 
 typedef struct {

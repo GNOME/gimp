@@ -60,7 +60,7 @@
 #include "gimp-app-test-utils.h"
 
 
-#define GIMP_UI_WINDOW_POSITION_EPSILON 10
+#define GIMP_UI_WINDOW_POSITION_EPSILON 25
 #define GIMP_UI_POSITION_EPSILON        1
 #define GIMP_UI_ZOOM_EPSILON            0.01
 
@@ -320,8 +320,7 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
                                    image_x,
                                    image_y,
                                    &shell_x_before_zoom,
-                                   &shell_y_before_zoom,
-                                   FALSE /*use_offsets*/);
+                                   &shell_y_before_zoom);
   gimp_display_shell_push_zoom_focus_pointer_pos (shell,
                                                   shell_x_before_zoom,
                                                   shell_y_before_zoom);
@@ -336,8 +335,7 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
                                    image_x,
                                    image_y,
                                    &shell_x_after_zoom,
-                                   &shell_y_after_zoom,
-                                   FALSE /*use_offsets*/);
+                                   &shell_y_after_zoom);
   factor_after_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
   /* First of all make sure a zoom happend at all */
@@ -586,8 +584,7 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
   gimp_test_run_mainloop_until_idle ();
   gimp_display_shell_transform_xy (shell,
                                    0.0, 0.0,
-                                   &x_temp, &y_temp,
-                                   FALSE /*use_offsets*/);
+                                   &x_temp, &y_temp);
   gtk_widget_translate_coordinates (GTK_WIDGET (shell),
                                     toplevel,
                                     x_temp, y_temp,
@@ -603,8 +600,7 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
   gimp_test_run_mainloop_until_idle ();
   gimp_display_shell_transform_xy (shell,
                                    0.0, 0.0,
-                                   &x_temp, &y_temp,
-                                   FALSE /*use_offsets*/);
+                                   &x_temp, &y_temp);
   gtk_widget_translate_coordinates (GTK_WIDGET (shell),
                                     toplevel,
                                     x_temp, y_temp,

@@ -112,7 +112,7 @@ gimp_drawable_levels_stretch (GimpDrawable *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (! gimp_drawable_mask_intersect (drawable, NULL, NULL, NULL, NULL))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), NULL, NULL, NULL, NULL))
     return;
 
   config = g_object_new (GIMP_TYPE_LEVELS_CONFIG, NULL);

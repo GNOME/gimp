@@ -457,7 +457,7 @@ $argdesc *
 $procdesc
  *
  * Returns: $retdesc$sincedesc
- */
+ **/
 $rettype
 $wrapped$funcname ($clist)
 {

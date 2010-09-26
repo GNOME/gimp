@@ -893,8 +893,7 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                                        viewport_x,
                                        viewport_y,
                                        &image_focus_x,
-                                       &image_focus_y,
-                                       FALSE);
+                                       &image_focus_y);
 
   gimp_display_shell_calculate_scale_x_and_y (shell, scale, &scale_x, &scale_y);
 

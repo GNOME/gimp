@@ -1420,21 +1420,22 @@ lay_scale(PyGimpLayer *self, PyObject *args, PyObject *kwargs)
 	return NULL;
 
     if (interpolation != -1) {
-        if (!gimp_layer_scale_full(self->ID,
-                                   new_width, new_height,
-                                   local_origin, interpolation)) {
-            PyErr_Format(pygimp_error,
-                         "could not scale layer (ID %d) to size %dx%d",
-                         self->ID, new_width, new_height);
-            return NULL;
+        gimp_context_push();
+        gimp_context_set_interpolation(interpolation);
+    }
+
+    if (!gimp_layer_scale(self->ID, new_width, new_height, local_origin)) {
+        PyErr_Format(pygimp_error,
+                     "could not scale layer (ID %d) to size %dx%d",
+                     self->ID, new_width, new_height);
+        if (interpolation != -1) {
+            gimp_context_pop();
         }
-    } else {
-        if (!gimp_layer_scale(self->ID, new_width, new_height, local_origin)) {
-            PyErr_Format(pygimp_error,
-                         "could not scale layer (ID %d) to size %dx%d",
-                         self->ID, new_width, new_height);
-            return NULL;
-        }
+        return NULL;
+    }
+
+    if (interpolation != -1) {
+        gimp_context_pop();
     }
 
     Py_INCREF(Py_None);

@@ -25,6 +25,8 @@ libapppdb_a_SOURCES = \
 	gimppdb-query.h			\
 	gimppdb-utils.c			\
 	gimppdb-utils.h			\
+	gimppdbcontext.c		\
+	gimppdbcontext.h		\
 	gimppdberror.c			\
 	gimppdberror.h			\
 	gimpprocedure.c			\
@@ -58,6 +60,7 @@ libappinternal_procs_a_SOURCES = \
 	help-cmds.c			\
 	image-cmds.c			\
 	item-cmds.c			\
+	item-transform-cmds.c		\
 	layer-cmds.c			\
 	message-cmds.c			\
 	misc-cmds.c			\

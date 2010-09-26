@@ -46,7 +46,7 @@
  * call.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_undo_group_start (gint32 image_ID)
 {
@@ -76,7 +76,7 @@ gimp_image_undo_group_start (gint32 image_ID)
  * gimp_image_undo_group_start() call that is made.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_image_undo_group_end (gint32 image_ID)
 {
@@ -108,7 +108,7 @@ gimp_image_undo_group_end (gint32 image_ID)
  * gimp_image_undo_disable() or gimp_image_undo_freeze().
  *
  * Returns: TRUE if undo is enabled for this image.
- */
+ **/
 gboolean
 gimp_image_undo_is_enabled (gint32 image_ID)
 {
@@ -142,7 +142,7 @@ gimp_image_undo_is_enabled (gint32 image_ID)
  * be time and memory intensive.
  *
  * Returns: TRUE if the image undo has been disabled.
- */
+ **/
 gboolean
 gimp_image_undo_disable (gint32 image_ID)
 {
@@ -175,7 +175,7 @@ gimp_image_undo_disable (gint32 image_ID)
  * image undo stack.
  *
  * Returns: TRUE if the image undo has been enabled.
- */
+ **/
 gboolean
 gimp_image_undo_enable (gint32 image_ID)
 {
@@ -215,7 +215,7 @@ gimp_image_undo_enable (gint32 image_ID)
  * behaviour is undefined.
  *
  * Returns: TRUE if the image undo has been frozen.
- */
+ **/
 gboolean
 gimp_image_undo_freeze (gint32 image_ID)
 {
@@ -254,7 +254,7 @@ gimp_image_undo_freeze (gint32 image_ID)
  * responsibility of the caller.
  *
  * Returns: TRUE if the image undo has been thawed.
- */
+ **/
 gboolean
 gimp_image_undo_thaw (gint32 image_ID)
 {

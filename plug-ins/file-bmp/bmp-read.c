@@ -385,7 +385,7 @@ ReadBMP (const gchar  *name,
           g_object_unref (pixbuf);
 
           gimp_image_set_filename (image_ID, filename);
-          gimp_image_add_layer (image_ID, layer_ID, -1);
+          gimp_image_insert_layer (image_ID, layer_ID, -1, -1);
 
           return image_ID;
         }
@@ -651,7 +651,7 @@ ReadImage (FILE                  *fd,
 
   gimp_image_set_filename (image, filename);
 
-  gimp_image_add_layer (image, layer, 0);
+  gimp_image_insert_layer (image, layer, -1, 0);
   drawable = gimp_drawable_get (layer);
 
   /* use g_malloc0 to initialize the dest buffer so that unspecified

@@ -726,7 +726,7 @@ create_new_layer (gint32              image_ID,
 
   layer_ID = gimp_layer_new (image_ID, layername, width, height,
                              gdtype, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer (image_ID, layer_ID, position);
+  gimp_image_insert_layer (image_ID, layer_ID, -1, position);
 
   *drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (pixel_rgn, *drawable, 0, 0, (*drawable)->width,

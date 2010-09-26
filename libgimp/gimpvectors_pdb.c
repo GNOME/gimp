@@ -40,36 +40,6 @@
 
 
 /**
- * gimp_vectors_is_valid:
- * @vectors_ID: The vectors object to check.
- *
- * Deprecated: Use gimp_item_is_valid() instead.
- *
- * Returns: Whether the vectors ID is valid.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_is_valid (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean valid = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-is-valid",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    valid = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return valid;
-}
-
-/**
  * gimp_vectors_new:
  * @image_ID: The image.
  * @name: the name of the new vector object.
@@ -77,12 +47,12 @@ gimp_vectors_is_valid (gint32 vectors_ID)
  * Creates a new empty vectors object.
  *
  * Creates a new empty vectors object. The vectors object needs to be
- * added to the image using gimp_image_add_vectors().
+ * added to the image using gimp_image_insert_vectors().
  *
  * Returns: the current vector object, 0 if no vector exists in the image.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint32
 gimp_vectors_new (gint32       image_ID,
                   const gchar *name)
@@ -113,12 +83,12 @@ gimp_vectors_new (gint32       image_ID,
  * Creates a new vectors object from a text layer.
  *
  * Creates a new vectors object from a text layer. The vectors object
- * needs to be added to the image using gimp_image_add_vectors().
+ * needs to be added to the image using gimp_image_insert_vectors().
  *
  * Returns: The vectors of the text layer.
  *
  * Since: GIMP 2.6
- */
+ **/
 gint32
 gimp_vectors_new_from_text_layer (gint32 image_ID,
                                   gint32 layer_ID)
@@ -153,7 +123,7 @@ gimp_vectors_new_from_text_layer (gint32 image_ID,
  * Returns: The newly copied vectors object.
  *
  * Since: GIMP 2.6
- */
+ **/
 gint32
 gimp_vectors_copy (gint32 vectors_ID)
 {
@@ -175,284 +145,6 @@ gimp_vectors_copy (gint32 vectors_ID)
 }
 
 /**
- * gimp_vectors_get_image:
- * @vectors_ID: The vectors object.
- *
- * Deprecated: Use gimp_item_get_image() instead.
- *
- * Returns: The vectors image.
- *
- * Since: GIMP 2.4
- */
-gint32
-gimp_vectors_get_image (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint32 image_ID = -1;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-get-image",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    image_ID = return_vals[1].data.d_image;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return image_ID;
-}
-
-/**
- * gimp_vectors_get_name:
- * @vectors_ID: The vectors object.
- *
- * Deprecated: Use gimp_item_get_name() instead.
- *
- * Returns: The name of the vectors object.
- *
- * Since: GIMP 2.4
- */
-gchar *
-gimp_vectors_get_name (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gchar *name = NULL;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-get-name",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    name = g_strdup (return_vals[1].data.d_string);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return name;
-}
-
-/**
- * gimp_vectors_set_name:
- * @vectors_ID: The vectors object.
- * @name: the new name of the path.
- *
- * Deprecated: Use gimp_item_set_name() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_set_name (gint32       vectors_ID,
-                       const gchar *name)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-set-name",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_STRING, name,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_vectors_get_visible:
- * @vectors_ID: The vectors object.
- *
- * Deprecated: Use gimp_item_get_visible() instead.
- *
- * Returns: TRUE if the path is visible, FALSE otherwise.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_get_visible (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean visible = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-get-visible",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    visible = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return visible;
-}
-
-/**
- * gimp_vectors_set_visible:
- * @vectors_ID: The vectors object.
- * @visible: Whether the path is visible.
- *
- * Deprecated: Use gimp_item_set_visible() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_set_visible (gint32   vectors_ID,
-                          gboolean visible)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-set-visible",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_INT32, visible,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_vectors_get_linked:
- * @vectors_ID: The vectors object.
- *
- * Deprecated: Use gimp_item_get_linked() instead.
- *
- * Returns: TRUE if the path is linked, FALSE otherwise.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_get_linked (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean linked = FALSE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-get-linked",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    linked = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return linked;
-}
-
-/**
- * gimp_vectors_set_linked:
- * @vectors_ID: The vectors object.
- * @linked: Whether the path is linked.
- *
- * Deprecated: Use gimp_item_set_linked() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_set_linked (gint32   vectors_ID,
-                         gboolean linked)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-set-linked",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_INT32, linked,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_vectors_get_tattoo:
- * @vectors_ID: The vectors object.
- *
- * Deprecated: Use gimp_item_get_tattoo() instead.
- *
- * Returns: The vectors tattoo.
- *
- * Since: GIMP 2.4
- */
-gint
-gimp_vectors_get_tattoo (gint32 vectors_ID)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gint tattoo = 0;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-get-tattoo",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    tattoo = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return tattoo;
-}
-
-/**
- * gimp_vectors_set_tattoo:
- * @vectors_ID: The vectors object.
- * @tattoo: the new tattoo.
- *
- * Deprecated: Use gimp_item_set_tattoo() instead.
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.4
- */
-gboolean
-gimp_vectors_set_tattoo (gint32 vectors_ID,
-                         gint   tattoo)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-vectors-set-tattoo",
-                                    &nreturn_vals,
-                                    GIMP_PDB_VECTORS, vectors_ID,
-                                    GIMP_PDB_INT32, tattoo,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_vectors_get_strokes:
  * @vectors_ID: The vectors object.
  * @num_strokes: The number of strokes returned.
@@ -465,7 +157,7 @@ gimp_vectors_set_tattoo (gint32 vectors_ID,
  * Returns: List of the strokes belonging to the path.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint *
 gimp_vectors_get_strokes (gint32  vectors_ID,
                           gint   *num_strokes)
@@ -508,7 +200,7 @@ gimp_vectors_get_strokes (gint32  vectors_ID,
  * Returns: The length (in pixels) of the given stroke.
  *
  * Since: GIMP 2.4
- */
+ **/
 gdouble
 gimp_vectors_stroke_get_length (gint32  vectors_ID,
                                 gint    stroke_id,
@@ -556,7 +248,7 @@ gimp_vectors_stroke_get_length (gint32  vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
                                        gint      stroke_id,
@@ -611,7 +303,7 @@ gimp_vectors_stroke_get_point_at_dist (gint32    vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_remove_stroke (gint32 vectors_ID,
                             gint   stroke_id)
@@ -645,7 +337,7 @@ gimp_vectors_remove_stroke (gint32 vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_close (gint32 vectors_ID,
                            gint   stroke_id)
@@ -681,7 +373,7 @@ gimp_vectors_stroke_close (gint32 vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_translate (gint32 vectors_ID,
                                gint   stroke_id,
@@ -721,7 +413,7 @@ gimp_vectors_stroke_translate (gint32 vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_scale (gint32  vectors_ID,
                            gint    stroke_id,
@@ -762,7 +454,7 @@ gimp_vectors_stroke_scale (gint32  vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_rotate (gint32  vectors_ID,
                             gint    stroke_id,
@@ -804,7 +496,7 @@ gimp_vectors_stroke_rotate (gint32  vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_flip (gint32              vectors_ID,
                           gint                stroke_id,
@@ -848,7 +540,7 @@ gimp_vectors_stroke_flip (gint32              vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_stroke_flip_free (gint32  vectors_ID,
                                gint    stroke_id,
@@ -896,7 +588,7 @@ gimp_vectors_stroke_flip_free (gint32  vectors_ID,
  * Returns: type of the stroke (always GIMP_VECTORS_STROKE_TYPE_BEZIER for now).
  *
  * Since: GIMP 2.4
- */
+ **/
 GimpVectorsStrokeType
 gimp_vectors_stroke_get_points (gint32     vectors_ID,
                                 gint       stroke_id,
@@ -954,7 +646,7 @@ gimp_vectors_stroke_get_points (gint32     vectors_ID,
  * Returns: The stroke ID of the newly created stroke.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
                                      GimpVectorsStrokeType  type,
@@ -998,7 +690,7 @@ gimp_vectors_stroke_new_from_points (gint32                 vectors_ID,
  * Returns: List of the coords along the path (x0, y0, x1, y1, ...).
  *
  * Since: GIMP 2.4
- */
+ **/
 gdouble *
 gimp_vectors_stroke_interpolate (gint32    vectors_ID,
                                  gint      stroke_id,
@@ -1047,7 +739,7 @@ gimp_vectors_stroke_interpolate (gint32    vectors_ID,
  * Returns: The resulting stroke.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_vectors_bezier_stroke_new_moveto (gint32  vectors_ID,
                                        gdouble x0,
@@ -1086,7 +778,7 @@ gimp_vectors_bezier_stroke_new_moveto (gint32  vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_bezier_stroke_lineto (gint32  vectors_ID,
                                    gint    stroke_id,
@@ -1130,7 +822,7 @@ gimp_vectors_bezier_stroke_lineto (gint32  vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_bezier_stroke_conicto (gint32  vectors_ID,
                                     gint    stroke_id,
@@ -1178,7 +870,7 @@ gimp_vectors_bezier_stroke_conicto (gint32  vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_bezier_stroke_cubicto (gint32  vectors_ID,
                                     gint    stroke_id,
@@ -1228,7 +920,7 @@ gimp_vectors_bezier_stroke_cubicto (gint32  vectors_ID,
  * Returns: The resulting stroke.
  *
  * Since: GIMP 2.4
- */
+ **/
 gint
 gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
                                         gdouble x0,
@@ -1268,15 +960,12 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
  * @feather_radius_x: Feather radius x.
  * @feather_radius_y: Feather radius y.
  *
- * Transforms the specified vectors object into a selection
- *
- * This procedure renders the desired vectors object into the current
- * selection of the image the vectors object belongs to.
+ * Deprecated: Use gimp_item_to_selection() instead.
  *
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_to_selection (gint32         vectors_ID,
                            GimpChannelOps operation,
@@ -1323,7 +1012,7 @@ gimp_vectors_to_selection (gint32         vectors_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_import_from_file (gint32        image_ID,
                                const gchar  *filename,
@@ -1382,7 +1071,7 @@ gimp_vectors_import_from_file (gint32        image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_vectors_import_from_string (gint32        image_ID,
                                  const gchar  *string,
@@ -1440,7 +1129,7 @@ gimp_vectors_import_from_string (gint32        image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.6
- */
+ **/
 gboolean
 gimp_vectors_export_to_file (gint32       image_ID,
                              const gchar *filename,
@@ -1479,7 +1168,7 @@ gimp_vectors_export_to_file (gint32       image_ID,
  * Returns: A string whose contents are a complete SVG document.
  *
  * Since: GIMP 2.6
- */
+ **/
 gchar *
 gimp_vectors_export_to_string (gint32 image_ID,
                                gint32 vectors_ID)

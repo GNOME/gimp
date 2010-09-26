@@ -667,7 +667,7 @@ pdb_subscript(PyGimpPDB *self, PyObject *key)
 }
 
 static PyMappingMethods pdb_as_mapping = {
-    (inquiry)0,			/*mp_length*/
+    (lenfunc)0,			/*mp_length*/
     (binaryfunc)pdb_subscript,	/*mp_subscript*/
     (objobjargproc)0,		/*mp_ass_subscript*/
 };

@@ -45,7 +45,7 @@ gimp_drawable_process (GimpDrawable       *drawable,
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
   g_return_if_fail (undo_desc != NULL);
 
-  if (gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     {
       PixelRegion srcPR, destPR;
 

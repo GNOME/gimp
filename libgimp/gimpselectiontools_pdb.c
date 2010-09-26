@@ -63,7 +63,7 @@
  * In the case of a merged sampling, the supplied drawable is ignored.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_by_color_select (gint32          drawable_ID,
                       const GimpRGB  *color,
@@ -132,7 +132,7 @@ gimp_by_color_select (gint32          drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_by_color_select_full (gint32               drawable_ID,
                            const GimpRGB       *color,
@@ -197,7 +197,7 @@ gimp_by_color_select_full (gint32               drawable_ID,
  * radius.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_ellipse_select (gint32         image_ID,
                      gdouble        x,
@@ -258,7 +258,7 @@ gimp_ellipse_select (gint32         image_ID,
  * radius.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_free_select (gint32          image_ID,
                   gint            num_segs,
@@ -325,7 +325,7 @@ gimp_free_select (gint32          image_ID,
  * drawable's origin.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_fuzzy_select (gint32         drawable_ID,
                    gdouble        x,
@@ -401,7 +401,7 @@ gimp_fuzzy_select (gint32         drawable_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_fuzzy_select_full (gint32              drawable_ID,
                         gdouble             x,
@@ -464,7 +464,7 @@ gimp_fuzzy_select_full (gint32              drawable_ID,
  * radius.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_rect_select (gint32         image_ID,
                   gdouble        x,
@@ -526,7 +526,7 @@ gimp_rect_select (gint32         image_ID,
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_round_rect_select (gint32         image_ID,
                         gdouble        x,

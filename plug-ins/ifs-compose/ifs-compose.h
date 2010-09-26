@@ -153,12 +153,11 @@ void        aff_element_compute_boundary     (AffElement  *elem,
 					      gint         num_elements);
 void        aff_element_draw                 (AffElement  *elem,
                                               gint         selected,
-					      gint         width,
+                                              gint         width,
                                               gint         height,
-					      GdkDrawable *win,
-					      GdkGC       *normal_gc,
-                                              GdkGC       *selected_gc,
-					      PangoLayout *layout);
+                                              cairo_t     *cr,
+                                              GdkColor    *color,
+                                              PangoLayout *layout);
 
 
 void       ifs_render (AffElement     **elements,

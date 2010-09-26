@@ -23,6 +23,10 @@ typedef struct {
     PyObject *user_data;
 } PyGimpIntSensitivityData;
 
+/* TODO: Add a header for these */
+void gimpui_register_classes(PyObject *d);
+void gimpui_add_constants(PyObject *module, const gchar *strip_prefix);
+
 static void
 pygimp_decref_callback(PyObject* obj) {
     Py_XDECREF (obj);

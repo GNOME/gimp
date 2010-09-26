@@ -89,9 +89,6 @@ typedef struct
   GimpDrawable *drawable;
   GimpPreview  *preview;
   GtkWidget    *coords;
-  gint          cursor_drawn;
-  gint          curx, cury;              /* x,y of cursor in preview */
-  gint          oldx, oldy;
 } NovaCenter;
 
 
@@ -111,10 +108,8 @@ static gboolean    nova_dialog                   (GimpDrawable     *drawable);
 
 static GtkWidget * nova_center_create            (GimpDrawable     *drawable,
                                                   GimpPreview      *preview);
-static void        nova_center_cursor_draw       (NovaCenter       *center);
 static void        nova_center_coords_update     (GimpSizeEntry    *coords,
                                                   NovaCenter       *center);
-static void        nova_center_cursor_update     (NovaCenter       *center);
 static void        nova_center_preview_realize   (GtkWidget        *widget,
                                                   NovaCenter       *center);
 static gboolean    nova_center_preview_expose    (GtkWidget        *widget,
@@ -435,13 +430,8 @@ nova_center_create (GimpDrawable *drawable,
 
   center = g_new0 (NovaCenter, 1);
 
-  center->drawable     = drawable;
-  center->preview      = preview;
-  center->cursor_drawn = FALSE;
-  center->curx         = 0;
-  center->cury         = 0;
-  center->oldx         = 0;
-  center->oldy         = 0;
+  center->drawable = drawable;
+  center->preview  = preview;
 
   frame = gimp_frame_new (_("Center of Nova"));
 
@@ -491,8 +481,8 @@ nova_center_create (GimpDrawable *drawable,
                     G_CALLBACK (gimp_toggle_button_update),
                     &show_cursor);
   g_signal_connect_swapped (check, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            preview->area);
 
   g_signal_connect (preview->area, "realize",
                     G_CALLBACK (nova_center_preview_realize),
@@ -504,58 +494,7 @@ nova_center_create (GimpDrawable *drawable,
                     G_CALLBACK (nova_center_preview_events),
                     center);
 
-  nova_center_cursor_update (center);
-
   return frame;
-}
-
-/*
- *   Drawing CenterFrame
- *   if update & PREVIEW, draw preview
- *   if update & CURSOR,  draw cross cursor
- */
-
-static void
-nova_center_cursor_draw (NovaCenter *center)
-{
-  GtkWidget *prvw  = center->preview->area;
-  GtkStyle  *style = gtk_widget_get_style (prvw);
-  gint       width, height;
-
-  gimp_preview_get_size (center->preview, &width, &height);
-
-  gdk_gc_set_function (style->black_gc, GDK_INVERT);
-
-  if (show_cursor)
-    {
-      if (center->cursor_drawn)
-        {
-          gdk_draw_line (gtk_widget_get_window (prvw),
-                         style->black_gc,
-                         center->oldx, 1, center->oldx,
-                         height - 1);
-          gdk_draw_line (gtk_widget_get_window (prvw),
-                         style->black_gc,
-                         1, center->oldy,
-                         width - 1, center->oldy);
-        }
-
-      gdk_draw_line (gtk_widget_get_window (prvw),
-                     style->black_gc,
-                     center->curx, 1, center->curx,
-                     height - 1);
-      gdk_draw_line (gtk_widget_get_window (prvw),
-                     style->black_gc,
-                     1, center->cury,
-                     width - 1, center->cury);
-    }
-
-  /* current position of cursor is updated */
-  center->oldx         = center->curx;
-  center->oldy         = center->cury;
-  center->cursor_drawn = TRUE;
-
-  gdk_gc_set_function (style->black_gc, GDK_COPY);
 }
 
 /*
@@ -568,22 +507,7 @@ nova_center_coords_update (GimpSizeEntry *coords,
   pvals.xcenter = gimp_size_entry_get_refval (coords, 0);
   pvals.ycenter = gimp_size_entry_get_refval (coords, 1);
 
-  nova_center_cursor_update (center);
-  nova_center_cursor_draw (center);
-
   gimp_preview_invalidate (center->preview);
-}
-
-/*
- *  Update the cross cursor's  coordinates accoding to pvals.[xy]center
- *  but do not redraw it.
- */
-static void
-nova_center_cursor_update (NovaCenter *center)
-{
-  gimp_preview_transform (center->preview,
-                          pvals.xcenter, pvals.ycenter,
-                          &center->curx, &center->cury);
 }
 
 /*
@@ -608,10 +532,36 @@ nova_center_preview_expose (GtkWidget  *widget,
                             GdkEvent   *event,
                             NovaCenter *center)
 {
-  center->cursor_drawn = FALSE;
+  if (show_cursor)
+    {
+      cairo_t *cr;
+      gint     x, y;
+      gint     width, height;
 
-  nova_center_cursor_update (center);
-  nova_center_cursor_draw (center);
+      cr = gdk_cairo_create (gtk_widget_get_window (center->preview->area));
+
+      gimp_preview_transform (center->preview,
+                              pvals.xcenter, pvals.ycenter,
+                              &x, &y);
+
+      gimp_preview_get_size (center->preview, &width, &height);
+
+      cairo_move_to (cr, x + 0.5, 0);
+      cairo_line_to (cr, x + 0.5, height);
+
+      cairo_move_to (cr, 0,     y + 0.5);
+      cairo_line_to (cr, width, y + 0.5);
+
+      cairo_set_line_width (cr, 3.0);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+      cairo_stroke_preserve (cr);
+
+      cairo_set_line_width (cr, 1.0);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+      cairo_stroke (cr);
+
+      cairo_destroy (cr);
+    }
 
   return FALSE;
 }
@@ -620,7 +570,7 @@ nova_center_preview_expose (GtkWidget  *widget,
  *    Handle other events on the preview
  */
 
-static gboolean
+static void
 nova_center_update (GtkWidget  *widget,
                     NovaCenter *center,
                     gint        x,
@@ -629,8 +579,6 @@ nova_center_update (GtkWidget  *widget,
   gint tx, ty;
 
   gimp_preview_untransform (center->preview, x, y, &tx, &ty);
-
-  nova_center_cursor_draw (center);
 
   g_signal_handlers_block_by_func (center->coords,
                                    nova_center_coords_update,
@@ -645,7 +593,7 @@ nova_center_update (GtkWidget  *widget,
 
   nova_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
 
-  return TRUE;
+  gtk_widget_queue_draw (center->preview->area);
 }
 
 static gboolean
@@ -661,12 +609,10 @@ nova_center_preview_events (GtkWidget  *widget,
 
         if (mevent->state & GDK_BUTTON1_MASK)
           {
-            gboolean retval = nova_center_update (widget, center,
-                                                  mevent->x, mevent->y);
-
+            nova_center_update (widget, center, mevent->x, mevent->y);
             gdk_event_request_motions (mevent);
 
-            return retval;
+            return TRUE;
           }
       }
       break;
@@ -676,7 +622,11 @@ nova_center_preview_events (GtkWidget  *widget,
         GdkEventButton *bevent = (GdkEventButton *) event;
 
         if (bevent->button == 1)
-          return nova_center_update (widget, center, bevent->x, bevent->y);
+          {
+            nova_center_update (widget, center, bevent->x, bevent->y);
+
+            return TRUE;
+          }
       }
       break;
 

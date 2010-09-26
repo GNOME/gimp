@@ -1451,7 +1451,7 @@ read_layer_block (FILE     *f,
 
       g_free (name);
 
-      gimp_image_add_layer (image_ID, layer_ID, -1);
+      gimp_image_insert_layer (image_ID, layer_ID, -1, -1);
 
       if (saved_image_rect[0] != 0 || saved_image_rect[1] != 0)
         gimp_layer_set_offsets (layer_ID,

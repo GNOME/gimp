@@ -44,7 +44,7 @@
  * reporting. The message must be in UTF-8 encoding.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_message (const gchar *message)
 {
@@ -74,7 +74,7 @@ gimp_message (const gchar *message)
  * gimp was started.
  *
  * Returns: The current handler type.
- */
+ **/
 GimpMessageHandlerType
 gimp_message_get_handler (void)
 {
@@ -105,7 +105,7 @@ gimp_message_get_handler (void)
  * was started.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 gimp_message_set_handler (GimpMessageHandlerType handler)
 {

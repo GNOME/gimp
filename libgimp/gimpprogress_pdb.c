@@ -45,7 +45,7 @@
  * valid to call this procedure from a plug-in.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_progress_init (const gchar *message,
                      gint32       gdisplay_ID)
@@ -77,7 +77,7 @@ _gimp_progress_init (const gchar *message,
  * to call this procedure from a plug-in.
  *
  * Returns: TRUE on success.
- */
+ **/
 gboolean
 _gimp_progress_update (gdouble percentage)
 {
@@ -111,7 +111,7 @@ _gimp_progress_update (gdouble percentage)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_progress_pulse (void)
 {
@@ -143,7 +143,7 @@ gimp_progress_pulse (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_progress_set_text (const gchar *message)
 {
@@ -175,7 +175,7 @@ gimp_progress_set_text (const gchar *message)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.4
- */
+ **/
 gboolean
 gimp_progress_end (void)
 {
@@ -206,7 +206,7 @@ gimp_progress_end (void)
  * Returns: The progress bar's toplevel window.
  *
  * Since: GIMP 2.2
- */
+ **/
 gint
 gimp_progress_get_window_handle (void)
 {
@@ -240,7 +240,7 @@ gimp_progress_get_window_handle (void)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 _gimp_progress_install (const gchar *progress_callback)
 {
@@ -272,7 +272,7 @@ _gimp_progress_install (const gchar *progress_callback)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 _gimp_progress_uninstall (const gchar *progress_callback)
 {
@@ -303,7 +303,7 @@ _gimp_progress_uninstall (const gchar *progress_callback)
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.2
- */
+ **/
 gboolean
 gimp_progress_cancel (const gchar *progress_callback)
 {

@@ -385,6 +385,7 @@ selection_render_mask (Selection *selection)
 
   cairo_push_group_with_content (cr, CAIRO_CONTENT_ALPHA);
 
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
   cairo_set_line_width (cr, 1.0);
 
   gimp_cairo_add_segments (cr,
@@ -408,7 +409,7 @@ selection_transform_segs (Selection      *selection,
   gint       i;
 
   gimp_display_shell_transform_segments (selection->shell,
-                                         src_segs, dest_segs, n_segs, FALSE);
+                                         src_segs, dest_segs, n_segs);
 
   for (i = 0; i < n_segs; i++)
     {

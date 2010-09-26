@@ -204,7 +204,8 @@ gimp_edit_paste (GimpImage    *image,
       gboolean have_mask;
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-      have_mask = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+      have_mask = gimp_item_mask_bounds (GIMP_ITEM (drawable),
+                                         &x1, &y1, &x2, &y2);
 
       if (! have_mask         &&
           viewport_width  > 0 &&
@@ -537,7 +538,7 @@ gimp_edit_fill_internal (GimpImage            *image,
   TempBuf       *pat_buf = NULL;
   gboolean       new_buf;
 
-  if (! gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
     return TRUE;  /*  nothing to do, but the fill succeded  */
 
   drawable_type = gimp_drawable_type (drawable);
