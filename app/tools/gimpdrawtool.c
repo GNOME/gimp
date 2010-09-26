@@ -374,6 +374,17 @@ gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
   gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
 }
 
+void
+gimp_draw_tool_remove_item (GimpDrawTool   *draw_tool,
+                            GimpCanvasItem *item)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (draw_tool->item != NULL);
+
+  gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
+}
+
 /**
  * gimp_draw_tool_add_line:
  * @draw_tool:   the #GimpDrawTool
