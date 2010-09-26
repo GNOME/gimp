@@ -73,9 +73,9 @@ enum
 static GObject * gimp_colormap_editor_constructor  (GType               type,
                                                     guint               n_params,
                                                     GObjectConstructParam *params);
-
+static void   gimp_colormap_editor_dispose         (GObject            *object);
 static void   gimp_colormap_editor_finalize        (GObject            *object);
-static void   gimp_colormap_editor_destroy         (GtkObject          *object);
+
 static void   gimp_colormap_editor_unmap           (GtkWidget          *widget);
 
 static void   gimp_colormap_editor_set_image       (GimpImageEditor    *editor,
@@ -130,7 +130,6 @@ static void
 gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
 {
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
-  GtkObjectClass       *gtk_object_class   = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
@@ -145,9 +144,8 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
                   GDK_TYPE_MODIFIER_TYPE);
 
   object_class->constructor     = gimp_colormap_editor_constructor;
+  object_class->dispose         = gimp_colormap_editor_dispose;
   object_class->finalize        = gimp_colormap_editor_finalize;
-
-  gtk_object_class->destroy     = gimp_colormap_editor_destroy;
 
   widget_class->unmap           = gimp_colormap_editor_unmap;
 
@@ -253,6 +251,20 @@ gimp_colormap_editor_constructor (GType                  type,
 }
 
 static void
+gimp_colormap_editor_dispose (GObject *object)
+{
+  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
+
+  if (editor->color_dialog)
+    {
+      gtk_widget_destroy (editor->color_dialog);
+      editor->color_dialog = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_colormap_editor_finalize (GObject *object)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
@@ -264,20 +276,6 @@ gimp_colormap_editor_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_colormap_editor_destroy (GtkObject *object)
-{
-  GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
-
-  if (editor->color_dialog)
-    {
-      gtk_widget_destroy (editor->color_dialog);
-      editor->color_dialog = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

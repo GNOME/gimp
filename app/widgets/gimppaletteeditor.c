@@ -63,8 +63,8 @@ static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
 static GObject * gimp_palette_editor_constructor   (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
+static void   gimp_palette_editor_dispose          (GObject           *object);
 
-static void   gimp_palette_editor_destroy          (GtkObject         *object);
 static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
 
 static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
@@ -139,14 +139,12 @@ static GimpDockedInterface *parent_docked_iface = NULL;
 static void
 gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
 {
-  GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass      *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass      *widget_class     = GTK_WIDGET_CLASS (klass);
-  GimpDataEditorClass *editor_class     = GIMP_DATA_EDITOR_CLASS (klass);
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   object_class->constructor = gimp_palette_editor_constructor;
-
-  gtk_object_class->destroy = gimp_palette_editor_destroy;
+  object_class->dispose     = gimp_palette_editor_dispose;
 
   widget_class->unmap       = gimp_palette_editor_unmap;
 
@@ -310,7 +308,7 @@ gimp_palette_editor_constructor (GType                  type,
 }
 
 static void
-gimp_palette_editor_destroy (GtkObject *object)
+gimp_palette_editor_dispose (GObject *object)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (object);
 
@@ -320,7 +318,7 @@ gimp_palette_editor_destroy (GtkObject *object)
       editor->color_dialog = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

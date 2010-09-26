@@ -70,6 +70,7 @@ static GObject * gimp_size_box_constructor   (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
 
+static void      gimp_size_box_dispose           (GObject         *object);
 static void      gimp_size_box_set_property      (GObject         *object,
                                                   guint            property_id,
                                                   const GValue    *value,
@@ -78,8 +79,6 @@ static void      gimp_size_box_get_property      (GObject         *object,
                                                   guint            property_id,
                                                   GValue          *value,
                                                   GParamSpec      *pspec);
-
-static void      gimp_size_box_destroy           (GtkObject       *object);
 
 static void      gimp_size_box_update_size       (GimpSizeBox     *box);
 static void      gimp_size_box_update_resolution (GimpSizeBox     *box);
@@ -95,14 +94,12 @@ G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_VBOX)
 static void
 gimp_size_box_class_init (GimpSizeBoxClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_size_box_constructor;
+  object_class->dispose      = gimp_size_box_dispose;
   object_class->set_property = gimp_size_box_set_property;
   object_class->get_property = gimp_size_box_get_property;
-
-  gtk_object_class->destroy  = gimp_size_box_destroy;
 
   g_type_class_add_private (object_class, sizeof (GimpSizeBoxPrivate));
 
@@ -303,6 +300,20 @@ gimp_size_box_constructor (GType                  type,
 }
 
 static void
+gimp_size_box_dispose (GObject *object)
+{
+  GimpSizeBox *box = GIMP_SIZE_BOX (object);
+
+  if (box->size_group)
+    {
+      g_object_unref (box->size_group);
+      box->size_group = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_size_box_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
@@ -411,20 +422,6 @@ gimp_size_box_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_size_box_destroy (GtkObject *object)
-{
-  GimpSizeBox *box = GIMP_SIZE_BOX (object);
-
-  if (box->size_group)
-    {
-      g_object_unref (box->size_group);
-      box->size_group = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

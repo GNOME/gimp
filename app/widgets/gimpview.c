@@ -52,7 +52,8 @@ enum
 };
 
 
-static void        gimp_view_destroy              (GtkObject        *object);
+static void        gimp_view_dispose              (GObject          *object);
+
 static void        gimp_view_realize              (GtkWidget        *widget);
 static void        gimp_view_unrealize            (GtkWidget        *widget);
 static void        gimp_view_map                  (GtkWidget        *widget);
@@ -96,7 +97,7 @@ static guint view_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_view_class_init (GimpViewClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   view_signals[SET_VIEWABLE] =
@@ -137,7 +138,7 @@ gimp_view_class_init (GimpViewClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->destroy              = gimp_view_destroy;
+  object_class->dispose              = gimp_view_dispose;
 
   widget_class->activate_signal      = view_signals[CLICKED];
   widget_class->realize              = gimp_view_realize;
@@ -183,7 +184,7 @@ gimp_view_init (GimpView *view)
 }
 
 static void
-gimp_view_destroy (GtkObject *object)
+gimp_view_dispose (GObject *object)
 {
   GimpView *view = GIMP_VIEW (object);
 
@@ -196,7 +197,7 @@ gimp_view_destroy (GtkObject *object)
       view->renderer = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

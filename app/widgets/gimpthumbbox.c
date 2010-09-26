@@ -56,8 +56,6 @@ static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface
 static void     gimp_thumb_box_dispose            (GObject           *object);
 static void     gimp_thumb_box_finalize           (GObject           *object);
 
-static void     gimp_thumb_box_destroy            (GtkObject         *object);
-
 static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
                                                    GtkStyle          *prev_style);
 
@@ -109,14 +107,11 @@ G_DEFINE_TYPE_WITH_CODE (GimpThumbBox, gimp_thumb_box, GTK_TYPE_FRAME,
 static void
 gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->dispose     = gimp_thumb_box_dispose;
   object_class->finalize    = gimp_thumb_box_finalize;
-
-  gtk_object_class->destroy = gimp_thumb_box_destroy;
 
   widget_class->style_set   = gimp_thumb_box_style_set;
 }
@@ -153,6 +148,8 @@ gimp_thumb_box_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+
+  box->progress = NULL;
 }
 
 static void
@@ -169,16 +166,6 @@ gimp_thumb_box_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_thumb_box_destroy (GtkObject *object)
-{
-  GimpThumbBox *box = GIMP_THUMB_BOX (object);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
-
-  box->progress = NULL;
 }
 
 static void

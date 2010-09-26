@@ -53,6 +53,7 @@ enum
 
 static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *iface);
 
+static void   gimp_color_editor_dispose         (GObject           *object);
 static void   gimp_color_editor_set_property    (GObject           *object,
                                                  guint              property_id,
                                                  const GValue      *value,
@@ -61,8 +62,6 @@ static void   gimp_color_editor_get_property    (GObject           *object,
                                                  guint              property_id,
                                                  GValue            *value,
                                                  GParamSpec        *pspec);
-
-static void   gimp_color_editor_destroy         (GtkObject         *object);
 
 static void   gimp_color_editor_style_set       (GtkWidget         *widget,
                                                  GtkStyle          *prev_style);
@@ -110,14 +109,12 @@ static GimpDockedInterface *parent_docked_iface = NULL;
 static void
 gimp_color_editor_class_init (GimpColorEditorClass* klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose      = gimp_color_editor_dispose;
   object_class->set_property = gimp_color_editor_set_property;
   object_class->get_property = gimp_color_editor_get_property;
-
-  gtk_object_class->destroy  = gimp_color_editor_destroy;
 
   widget_class->style_set    = gimp_color_editor_style_set;
 
@@ -271,6 +268,17 @@ gimp_color_editor_init (GimpColorEditor *editor)
 }
 
 static void
+gimp_color_editor_dispose (GObject *object)
+{
+  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
+
+  if (editor->context)
+    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_color_editor_set_property (GObject      *object,
                                 guint         property_id,
                                 const GValue *value,
@@ -305,17 +313,6 @@ gimp_color_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_color_editor_destroy (GtkObject *object)
-{
-  GimpColorEditor *editor = GIMP_COLOR_EDITOR (object);
-
-  if (editor->context)
-    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static GtkWidget *

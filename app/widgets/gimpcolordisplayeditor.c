@@ -54,7 +54,7 @@ enum
 };
 
 
-static void   gimp_color_display_editor_destroy        (GtkObject             *object);
+static void   gimp_color_display_editor_dispose        (GObject               *object);
 
 static void   gimp_color_display_editor_add_clicked    (GtkWidget             *widget,
                                                         GimpColorDisplayEditor *editor);
@@ -102,9 +102,9 @@ G_DEFINE_TYPE (GimpColorDisplayEditor, gimp_color_display_editor, GTK_TYPE_VBOX)
 static void
 gimp_color_display_editor_class_init (GimpColorDisplayEditorClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->destroy = gimp_color_display_editor_destroy;
+  object_class->dispose = gimp_color_display_editor_dispose;
 }
 
 static void
@@ -326,7 +326,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 }
 
 static void
-gimp_color_display_editor_destroy (GtkObject *object)
+gimp_color_display_editor_dispose (GObject *object)
 {
   GimpColorDisplayEditor *editor = GIMP_COLOR_DISPLAY_EDITOR (object);
 
@@ -336,7 +336,7 @@ gimp_color_display_editor_destroy (GtkObject *object)
       editor->stack = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *

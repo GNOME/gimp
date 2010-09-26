@@ -49,7 +49,7 @@ struct _ResponseData
 };
 
 
-static void       gimp_overlay_dialog_destroy       (GtkObject         *object);
+static void       gimp_overlay_dialog_dispose       (GObject           *object);
 
 static void       gimp_overlay_dialog_size_request  (GtkWidget         *widget,
                                                      GtkRequisition    *requisition);
@@ -78,11 +78,11 @@ static guint signals[LAST_SIGNAL] = { 0, };
 static void
 gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
 {
-  GtkObjectClass    *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass    *widget_class     = GTK_WIDGET_CLASS (klass);
-  GtkContainerClass *container_class  = GTK_CONTAINER_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
+  GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  gtk_object_class->destroy   = gimp_overlay_dialog_destroy;
+  object_class->dispose       = gimp_overlay_dialog_dispose;
 
   widget_class->size_request  = gimp_overlay_dialog_size_request;
   widget_class->size_allocate = gimp_overlay_dialog_size_allocate;
@@ -125,7 +125,7 @@ gimp_overlay_dialog_init (GimpOverlayDialog *dialog)
 }
 
 static void
-gimp_overlay_dialog_destroy (GtkObject *object)
+gimp_overlay_dialog_dispose (GObject *object)
 {
   GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (object);
 
@@ -135,7 +135,7 @@ gimp_overlay_dialog_destroy (GtkObject *object)
       dialog->action_area = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

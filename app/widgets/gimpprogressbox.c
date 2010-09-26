@@ -36,7 +36,7 @@
 
 static void     gimp_progress_box_progress_iface_init (GimpProgressInterface *iface);
 
-static void     gimp_progress_box_destroy            (GtkObject    *object);
+static void     gimp_progress_box_dispose            (GObject      *object);
 
 static GimpProgress *
                 gimp_progress_box_progress_start     (GimpProgress *progress,
@@ -62,9 +62,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpProgressBox, gimp_progress_box, GTK_TYPE_VBOX,
 static void
 gimp_progress_box_class_init (GimpProgressBoxClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->destroy = gimp_progress_box_destroy;
+  object_class->dispose = gimp_progress_box_dispose;
 }
 
 static void
@@ -100,11 +100,11 @@ gimp_progress_box_progress_iface_init (GimpProgressInterface *iface)
 }
 
 static void
-gimp_progress_box_destroy (GtkObject *object)
+gimp_progress_box_dispose (GObject *object)
 {
   GimpProgressBox *box = GIMP_PROGRESS_BOX (object);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 
   box->progress = NULL;
 }

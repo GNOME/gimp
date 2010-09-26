@@ -76,6 +76,7 @@ static void        gimp_tool_options_editor_docked_iface_init (GimpDockedInterfa
 static GObject   * gimp_tool_options_editor_constructor       (GType                  type,
                                                                guint                  n_params,
                                                                GObjectConstructParam *params);
+static void        gimp_tool_options_editor_dispose           (GObject               *object);
 static void        gimp_tool_options_editor_set_property      (GObject               *object,
                                                                guint                  property_id,
                                                                const GValue          *value,
@@ -84,7 +85,7 @@ static void        gimp_tool_options_editor_get_property      (GObject          
                                                                guint                  property_id,
                                                                GValue                *value,
                                                                GParamSpec            *pspec);
-static void        gimp_tool_options_editor_destroy           (GtkObject             *object);
+
 static GtkWidget * gimp_tool_options_editor_get_preview       (GimpDocked            *docked,
                                                                GimpContext           *context,
                                                                GtkIconSize            size);
@@ -122,14 +123,12 @@ G_DEFINE_TYPE_WITH_CODE (GimpToolOptionsEditor, gimp_tool_options_editor,
 static void
 gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_tool_options_editor_constructor;
+  object_class->dispose      = gimp_tool_options_editor_dispose;
   object_class->set_property = gimp_tool_options_editor_set_property;
   object_class->get_property = gimp_tool_options_editor_get_property;
-
-  gtk_object_class->destroy  = gimp_tool_options_editor_destroy;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -260,6 +259,35 @@ gimp_tool_options_editor_constructor (GType                  type,
 }
 
 static void
+gimp_tool_options_editor_dispose (GObject *object)
+{
+  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
+
+  if (editor->p->options_vbox)
+    {
+      GList *options;
+      GList *list;
+
+      options =
+        gtk_container_get_children (GTK_CONTAINER (editor->p->options_vbox));
+
+      for (list = options; list; list = g_list_next (list))
+        {
+          g_object_ref (list->data);
+          gtk_container_remove (GTK_CONTAINER (editor->p->options_vbox),
+                                GTK_WIDGET (list->data));
+        }
+
+      g_list_free (options);
+      editor->p->options_vbox = NULL;
+    }
+
+  gimp_tool_options_editor_save_presets (editor);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_tool_options_editor_set_property (GObject      *object,
                                        guint         property_id,
                                        const GValue *value,
@@ -297,35 +325,6 @@ gimp_tool_options_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_tool_options_editor_destroy (GtkObject *object)
-{
-  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
-
-  if (editor->p->options_vbox)
-    {
-      GList *options;
-      GList *list;
-
-      options =
-        gtk_container_get_children (GTK_CONTAINER (editor->p->options_vbox));
-
-      for (list = options; list; list = g_list_next (list))
-        {
-          g_object_ref (list->data);
-          gtk_container_remove (GTK_CONTAINER (editor->p->options_vbox),
-                                GTK_WIDGET (list->data));
-        }
-
-      g_list_free (options);
-      editor->p->options_vbox = NULL;
-    }
-
-  gimp_tool_options_editor_save_presets (editor);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static GtkWidget *
