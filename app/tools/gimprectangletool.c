@@ -1817,37 +1817,52 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
 
     case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
     case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
-      gimp_draw_tool_add_corner (draw_tool,
-                                 ! gimp_tool_control_is_active (tool->control),
-                                 private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
-                                 private->top_and_bottom_handle_w,
-                                 private->corner_handle_h,
-                                 gimp_rectangle_tool_get_anchor (private));
+      item = gimp_draw_tool_add_corner (draw_tool,
+                                        ! gimp_tool_control_is_active (tool->control),
+                                        private->narrow_mode,
+                                        pub_x1, pub_y1,
+                                        pub_x2, pub_y2,
+                                        private->top_and_bottom_handle_w,
+                                        private->corner_handle_h,
+                                        gimp_rectangle_tool_get_anchor (private));
+      if (gimp_tool_control_is_active (tool->control))
+        {
+          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+          gimp_draw_tool_remove_item (draw_tool, item);
+        }
       break;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
     case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
-      gimp_draw_tool_add_corner (draw_tool,
-                                 ! gimp_tool_control_is_active (tool->control),
-                                 private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
-                                 private->corner_handle_w,
-                                 private->left_and_right_handle_h,
-                                 gimp_rectangle_tool_get_anchor (private));
+      item = gimp_draw_tool_add_corner (draw_tool,
+                                        ! gimp_tool_control_is_active (tool->control),
+                                        private->narrow_mode,
+                                        pub_x1, pub_y1,
+                                        pub_x2, pub_y2,
+                                        private->corner_handle_w,
+                                        private->left_and_right_handle_h,
+                                        gimp_rectangle_tool_get_anchor (private));
+      if (gimp_tool_control_is_active (tool->control))
+        {
+          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+          gimp_draw_tool_remove_item (draw_tool, item);
+        }
       break;
 
     default:
-      gimp_draw_tool_add_corner (draw_tool,
-                                 ! gimp_tool_control_is_active (tool->control),
-                                 private->narrow_mode,
-                                 pub_x1, pub_y1,
-                                 pub_x2, pub_y2,
-                                 private->corner_handle_w,
-                                 private->corner_handle_h,
-                                 gimp_rectangle_tool_get_anchor (private));
+      item = gimp_draw_tool_add_corner (draw_tool,
+                                        ! gimp_tool_control_is_active (tool->control),
+                                        private->narrow_mode,
+                                        pub_x1, pub_y1,
+                                        pub_x2, pub_y2,
+                                        private->corner_handle_w,
+                                        private->corner_handle_h,
+                                        gimp_rectangle_tool_get_anchor (private));
+      if (gimp_tool_control_is_active (tool->control))
+        {
+          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+          gimp_draw_tool_remove_item (draw_tool, item);
+        }
       break;
     }
 }
