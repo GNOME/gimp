@@ -32,12 +32,21 @@
 #include "gimpdisplayshell-style.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_LINE_CAP,
+  PROP_HIGHLIGHT
+};
+
+
 typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 
 struct _GimpCanvasItemPrivate
 {
-  gboolean highlight;
-  gint     suspend_stroking;
+  cairo_line_cap_t line_cap;
+  gboolean         highlight;
+  gint             suspend_stroking;
 };
 
 #define GET_PRIVATE(item) \
@@ -47,6 +56,15 @@ struct _GimpCanvasItemPrivate
 
 
 /*  local function prototypes  */
+
+static void        gimp_canvas_item_set_property     (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void        gimp_canvas_item_get_property     (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
 
 static void        gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
                                                       GimpDisplayShell *shell,
@@ -64,8 +82,27 @@ G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
 static void
 gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 {
-  klass->draw        = gimp_canvas_item_real_draw;
-  klass->get_extents = gimp_canvas_item_real_get_extents;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->set_property = gimp_canvas_item_set_property;
+  object_class->get_property = gimp_canvas_item_get_property;
+
+  klass->draw                = gimp_canvas_item_real_draw;
+  klass->get_extents         = gimp_canvas_item_real_get_extents;
+
+  g_object_class_install_property (object_class, PROP_LINE_CAP,
+                                   g_param_spec_int ("line-cap",
+                                                     NULL, NULL,
+                                                     CAIRO_LINE_CAP_BUTT,
+                                                     CAIRO_LINE_CAP_SQUARE,
+                                                     CAIRO_LINE_CAP_ROUND,
+                                                     GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_HIGHLIGHT,
+                                   g_param_spec_boolean ("highlight",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpCanvasItemPrivate));
 }
@@ -73,6 +110,57 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 static void
 gimp_canvas_item_init (GimpCanvasItem *item)
 {
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  private->line_cap         = CAIRO_LINE_CAP_ROUND;
+  private->highlight        = FALSE;
+  private->suspend_stroking = 0;
+}
+
+static void
+gimp_canvas_item_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_LINE_CAP:
+      private->line_cap = g_value_get_int (value);
+      break;
+    case PROP_HIGHLIGHT:
+      private->highlight = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_canvas_item_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_LINE_CAP:
+      g_value_set_int (value, private->line_cap);
+      break;
+    case PROP_HIGHLIGHT:
+      g_value_set_boolean (value, private->highlight);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -120,16 +208,25 @@ gimp_canvas_item_get_extents (GimpCanvasItem   *item,
 }
 
 void
+gimp_canvas_item_set_line_cap (GimpCanvasItem   *item,
+                               cairo_line_cap_t  line_cap)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  g_object_set (item,
+                "line-cap", line_cap,
+                NULL);
+}
+
+void
 gimp_canvas_item_set_highlight (GimpCanvasItem *item,
                                 gboolean        highlight)
 {
-  GimpCanvasItemPrivate *private;
-
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  private = GET_PRIVATE (item);
-
-  private->highlight = highlight ? TRUE : FALSE;
+  g_object_set (item,
+                "highlight", highlight,
+                NULL);
 }
 
 void
@@ -170,6 +267,8 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
 
   if (private->suspend_stroking == 0)
     {
+      cairo_set_line_cap (cr, private->line_cap);
+
       gimp_display_shell_set_tool_bg_style (shell, cr);
       cairo_stroke_preserve (cr);
 

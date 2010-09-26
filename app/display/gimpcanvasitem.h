@@ -60,6 +60,8 @@ void        gimp_canvas_item_draw             (GimpCanvasItem   *item,
 GdkRegion * gimp_canvas_item_get_extents      (GimpCanvasItem   *item,
                                                GimpDisplayShell *shell);
 
+void        gimp_canvas_item_set_line_cap     (GimpCanvasItem   *item,
+                                               cairo_line_cap_t  line_cap);
 void        gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
                                                gboolean          highlight);
 

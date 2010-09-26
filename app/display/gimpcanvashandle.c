@@ -156,6 +156,9 @@ gimp_canvas_handle_init (GimpCanvasHandle *handle)
 {
   GimpCanvasHandlePrivate *private = GET_PRIVATE (handle);
 
+  gimp_canvas_item_set_line_cap (GIMP_CANVAS_ITEM (handle),
+                                 CAIRO_LINE_CAP_SQUARE);
+
   private->start_angle = 0.0;
   private->slice_angle = 2.0 * G_PI;
 }
