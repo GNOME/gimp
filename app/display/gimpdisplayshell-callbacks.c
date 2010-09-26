@@ -2335,7 +2335,8 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   {
     GimpTool *tool = tool_manager_get_active (shell->display->gimp);
 
-    if (GIMP_IS_DRAW_TOOL (tool))
+    if (GIMP_IS_DRAW_TOOL (tool) &&
+        GIMP_DRAW_TOOL (tool)->display == shell->display)
       {
         cairo_save (cr);
         gimp_draw_tool_draw_items (GIMP_DRAW_TOOL (tool), cr);
