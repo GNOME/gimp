@@ -47,12 +47,17 @@ struct _GimpCanvasGroupClass
 };
 
 
-GType            gimp_canvas_group_get_type (void) G_GNUC_CONST;
+GType            gimp_canvas_group_get_type           (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_group_new      (void);
+GimpCanvasItem * gimp_canvas_group_new                (void);
 
-void             gimp_canvas_group_add_item (GimpCanvasGroup *group,
-                                             GimpCanvasItem  *item);
+void             gimp_canvas_group_add_item           (GimpCanvasGroup *group,
+                                                       GimpCanvasItem  *item);
+void             gimp_canvas_group_remove_item        (GimpCanvasGroup *group,
+                                                       GimpCanvasItem  *item);
+
+void             gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
+                                                       gboolean         group_stroking);
 
 
 #endif /* __GIMP_CANVAS_GROUP_H__ */

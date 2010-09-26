@@ -35,7 +35,8 @@
 
 enum
 {
-  PROP_0
+  PROP_0,
+  PROP_GROUP_STROKING
 };
 
 
@@ -43,7 +44,8 @@ typedef struct _GimpCanvasGroupPrivate GimpCanvasGroupPrivate;
 
 struct _GimpCanvasGroupPrivate
 {
-  GList *items;
+  GList    *items;
+  gboolean  group_stroking;
 };
 
 #define GET_PRIVATE(group) \
@@ -88,6 +90,12 @@ gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
   item_class->draw           = gimp_canvas_group_draw;
   item_class->get_extents    = gimp_canvas_group_get_extents;
 
+  g_object_class_install_property (object_class, PROP_GROUP_STROKING,
+                                   g_param_spec_boolean ("group-stroking",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (klass, sizeof (GimpCanvasGroupPrivate));
 }
 
@@ -117,10 +125,14 @@ gimp_canvas_group_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  /* GimpCanvasGroupPrivate *private = GET_PRIVATE (object); */
+  GimpCanvasGroupPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
+    case PROP_GROUP_STROKING:
+      private->group_stroking = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -133,10 +145,14 @@ gimp_canvas_group_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  /* GimpCanvasGroupPrivate *private = GET_PRIVATE (object); */
+  GimpCanvasGroupPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
+    case PROP_GROUP_STROKING:
+      g_value_set_boolean (value, private->group_stroking);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -157,6 +173,9 @@ gimp_canvas_group_draw (GimpCanvasItem   *item,
 
       gimp_canvas_item_draw (sub_item, shell, cr);
     }
+
+  if (private->group_stroking)
+    _gimp_canvas_item_stroke (item, shell, cr);
 }
 
 static GdkRegion *
@@ -205,5 +224,36 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
 
   private = GET_PRIVATE (group);
 
+  if (private->group_stroking)
+    gimp_canvas_item_suspend_stroking (item);
+
   private->items = g_list_append (private->items, g_object_ref (item));
+}
+
+void
+gimp_canvas_group_remove_item (GimpCanvasGroup *group,
+                               GimpCanvasItem  *item)
+{
+  GimpCanvasGroupPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (group);
+
+  g_return_if_fail (g_list_find (private->items, item));
+
+  private->items = g_list_remove (private->items, item);
+  g_object_unref (item);
+}
+
+void
+gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
+                                      gboolean         group_stroking)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+
+  g_object_set (group,
+                "group-stroking", group_stroking ? TRUE : FALSE,
+                NULL);
 }

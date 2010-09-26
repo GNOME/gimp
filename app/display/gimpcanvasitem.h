@@ -52,26 +52,29 @@ struct _GimpCanvasItemClass
 };
 
 
-GType       gimp_canvas_item_get_type     (void) G_GNUC_CONST;
+GType       gimp_canvas_item_get_type         (void) G_GNUC_CONST;
 
-void        gimp_canvas_item_draw         (GimpCanvasItem   *item,
-                                           GimpDisplayShell *shell,
-                                           cairo_t          *cr);
-GdkRegion * gimp_canvas_item_get_extents  (GimpCanvasItem   *item,
-                                           GimpDisplayShell *shell);
+void        gimp_canvas_item_draw             (GimpCanvasItem   *item,
+                                               GimpDisplayShell *shell,
+                                               cairo_t          *cr);
+GdkRegion * gimp_canvas_item_get_extents      (GimpCanvasItem   *item,
+                                               GimpDisplayShell *shell);
 
-void        gimp_canvas_item_set_highlight(GimpCanvasItem   *item,
-                                           gboolean          highlight);
+void        gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
+                                               gboolean          highlight);
+
+void        gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
+void        gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
 
 
 /*  protected  */
 
-void        _gimp_canvas_item_stroke      (GimpCanvasItem   *item,
-                                           GimpDisplayShell *shell,
-                                           cairo_t          *cr);
-void        _gimp_canvas_item_fill        (GimpCanvasItem   *item,
-                                           GimpDisplayShell *shell,
-                                           cairo_t          *cr);
+void        _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
+                                               GimpDisplayShell *shell,
+                                               cairo_t          *cr);
+void        _gimp_canvas_item_fill            (GimpCanvasItem   *item,
+                                               GimpDisplayShell *shell,
+                                               cairo_t          *cr);
 
 
 #endif /* __GIMP_CANVAS_ITEM_H__ */

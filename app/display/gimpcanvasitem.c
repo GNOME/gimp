@@ -37,6 +37,7 @@ typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 struct _GimpCanvasItemPrivate
 {
   gboolean highlight;
+  gint     suspend_stroking;
 };
 
 #define GET_PRIVATE(item) \
@@ -122,15 +123,43 @@ void
 gimp_canvas_item_set_highlight (GimpCanvasItem *item,
                                 gboolean        highlight)
 {
-  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+  GimpCanvasItemPrivate *private;
 
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
 
   private->highlight = highlight ? TRUE : FALSE;
 }
 
+void
+gimp_canvas_item_suspend_stroking (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
 
-/*  protexted functions  */
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  private->suspend_stroking++;
+}
+
+void
+gimp_canvas_item_resume_stroking (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  g_return_if_fail (private->suspend_stroking > 0);
+
+  private->suspend_stroking--;
+}
+
+
+/*  protected functions  */
 
 void
 _gimp_canvas_item_stroke (GimpCanvasItem   *item,
@@ -139,11 +168,18 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
-  gimp_display_shell_set_tool_bg_style (shell, cr);
-  cairo_stroke_preserve (cr);
+  if (private->suspend_stroking == 0)
+    {
+      gimp_display_shell_set_tool_bg_style (shell, cr);
+      cairo_stroke_preserve (cr);
 
-  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
-  cairo_stroke (cr);
+      gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
+      cairo_stroke (cr);
+    }
+  else
+    {
+      cairo_new_sub_path (cr);
+    }
 }
 
 void
@@ -152,6 +188,9 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
                         cairo_t          *cr)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  if (private->suspend_stroking > 0)
+    g_warning ("_gimp_canvas_item_fill() on an item that is in a stroking group");
 
   gimp_display_shell_set_tool_bg_style (shell, cr);
   cairo_set_line_width (cr, 2.0);
