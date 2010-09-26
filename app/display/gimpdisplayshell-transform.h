@@ -49,10 +49,6 @@ void  gimp_display_shell_untransform_xy_f       (const GimpDisplayShell *shell,
                                                  gdouble                *nx,
                                                  gdouble                *ny);
 
-void  gimp_display_shell_transform_coords       (const GimpDisplayShell *shell,
-                                                 const GimpCoords       *image_coords,
-                                                 GdkPoint               *disp_coords,
-                                                 gint                    n_coords);
 void  gimp_display_shell_transform_segments     (const GimpDisplayShell *shell,
                                                  const BoundSeg         *src_segs,
                                                  GdkSegment             *dest_segs,

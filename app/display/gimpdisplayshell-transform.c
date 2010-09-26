@@ -224,41 +224,6 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_transform_coords:
- * @shell:        a #GimpDisplayShell
- * @image_coords: array of image coordinates
- * @disp_coords:  returns the corresponding display coordinates
- * @n_coords:     number of coordinates
- *
- * Transforms from image coordinates to display coordinates, so that
- * objects can be rendered at the correct points on the display.
- **/
-void
-gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
-                                     const GimpCoords       *image_coords,
-                                     GdkPoint               *disp_coords,
-                                     gint                    n_coords)
-{
-  gint i;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  for (i = 0; i < n_coords ; i++)
-    {
-      gdouble x = image_coords[i].x;
-      gdouble y = image_coords[i].y;
-
-      x = x * shell->x_src_dec / shell->x_dest_inc;
-      y = y * shell->y_src_dec / shell->y_dest_inc;
-
-      disp_coords[i].x = CLAMP (PROJ_ROUND64 (x) - shell->offset_x,
-                                G_MININT, G_MAXINT);
-      disp_coords[i].y = CLAMP (PROJ_ROUND64 (y) - shell->offset_y,
-                                G_MININT, G_MAXINT);
-    }
-}
-
-/**
  * gimp_display_shell_transform_segments:
  * @shell:       a #GimpDisplayShell
  * @src_segs:    array of segments in image coordinates
