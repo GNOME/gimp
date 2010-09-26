@@ -280,6 +280,7 @@ gimp_display_shell_set_selection_in_style (GimpDisplayShell *shell,
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
   pattern = gimp_cairo_stipple_pattern_create (&selection_in_fg,
                                                &selection_in_bg,
