@@ -531,14 +531,6 @@
 # 
 # (space-bar-action pan)
 
-# Sets the color that is used for XOR drawing. This setting only exists as a
-# workaround for buggy display drivers. If lines on the canvas are not
-# correctly undrawn, try to set this to white.  The color is specified in the
-# form (color-rgb red green blue) with channel values as floats in the range
-# of 0.0 to 1.0.
-# 
-# (xor-color (color-rgb 0.501961 1.000000 0.501961))
-
 # There's a tradeoff between speed and quality of the zoomed-out display. 
 # Possible values are low and high.
 # 

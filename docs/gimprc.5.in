@@ -683,15 +683,6 @@ What to do when the space bar is pressed in the image window.  Possible values
 are none, pan and move.
 
 .TP
-(xor-color (color-rgb 0.501961 1.000000 0.501961))
-
-Sets the color that is used for XOR drawing. This setting only exists as a
-workaround for buggy display drivers. If lines on the canvas are not correctly
-undrawn, try to set this to white.  The color is specified in the form
-(color-rgb red green blue) with channel values as floats in the range of 0.0
-to 1.0.
-
-.TP
 (zoom-quality high)
 
 There's a tradeoff between speed and quality of the zoomed-out display. 

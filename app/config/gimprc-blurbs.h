@@ -468,11 +468,6 @@ N_("When enabled, pressing F1 will open the help browser.")
 "The location of the online user manual. This is used if " \
 "'user-manual-online' is enabled."
 
-#define XOR_COLOR_BLURB \
-"Sets the color that is used for XOR drawing. This setting only exists as " \
-"a workaround for buggy display drivers. If lines on the canvas are not " \
-"correctly undrawn, try to set this to white."
-
 #define ZOOM_QUALITY_BLURB \
 "There's a tradeoff between speed and quality of the zoomed-out display."
 

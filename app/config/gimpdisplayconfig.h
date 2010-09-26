@@ -69,7 +69,6 @@ struct _GimpDisplayConfig
   gboolean            default_snap_to_path;
   gboolean            activate_on_focus;
   GimpSpaceBarAction  space_bar_action;
-  GimpRGB             xor_color;
   GimpZoomQuality     zoom_quality;
   gboolean            use_event_history;
 };
