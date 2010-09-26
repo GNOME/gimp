@@ -91,23 +91,26 @@ do_parallel_regions (PixelProcessor *processor)
   g_mutex_lock (processor->mutex);
 
   /*  the first thread getting here must not call pixel_regions_process()  */
-  if (!processor->first && processor->PRI)
+  if (! processor->first && processor->PRI)
     processor->PRI = pixel_regions_process (processor->PRI);
   else
     processor->first = FALSE;
 
   while (processor->PRI)
     {
-      guint pixels = (processor->PRI->portion_width *
-                      processor->PRI->portion_height);
+      const guint pixels = (processor->PRI->portion_width *
+                            processor->PRI->portion_height);
 
       for (i = 0; i < processor->num_regions; i++)
-        if (processor->regions[i])
-          {
-            memcpy (&tr[i], processor->regions[i], sizeof (PixelRegion));
-            if (tr[i].tiles)
-              tile_lock (tr[i].curtile);
-          }
+        {
+          if (processor->regions[i])
+            {
+              memcpy (&tr[i], processor->regions[i], sizeof (PixelRegion));
+
+              if (tr[i].tiles)
+                tile_lock (tr[i].curtile);
+            }
+        }
 
       g_mutex_unlock (processor->mutex);
 
@@ -148,11 +151,13 @@ do_parallel_regions (PixelProcessor *processor)
       g_mutex_lock (processor->mutex);
 
       for (i = 0; i < processor->num_regions; i++)
-        if (processor->regions[i])
-          {
-            if (tr[i].tiles)
-              tile_release (tr[i].curtile, tr[i].dirty);
-          }
+        {
+          if (processor->regions[i])
+            {
+              if (tr[i].tiles)
+                tile_release (tr[i].curtile, tr[i].dirty);
+            }
+        }
 
       processor->progress += pixels;
 
