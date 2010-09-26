@@ -102,9 +102,9 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
   G_STMT_START {                                   \
-    guint tr = (a) * (r) + 0x80;                   \
-    guint tg = (a) * (g) + 0x80;                   \
-    guint tb = (a) * (b) + 0x80;                   \
+    const guint tr = (a) * (r) + 0x80;             \
+    const guint tg = (a) * (g) + 0x80;             \
+    const guint tb = (a) * (b) + 0x80;             \
     d[0] = (((tb) >> 8) + (tb)) >> 8;              \
     d[1] = (((tg) >> 8) + (tg)) >> 8;              \
     d[2] = (((tr) >> 8) + (tr)) >> 8;              \
@@ -113,9 +113,9 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 #else
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
   G_STMT_START {                                   \
-    guint tr = (a) * (r) + 0x80;                   \
-    guint tg = (a) * (g) + 0x80;                   \
-    guint tb = (a) * (b) + 0x80;                   \
+    const guint tr = (a) * (r) + 0x80;             \
+    const guint tg = (a) * (g) + 0x80;             \
+    const guint tb = (a) * (b) + 0x80;             \
     d[0] = (a);                                    \
     d[1] = (((tr) >> 8) + (tr)) >> 8;              \
     d[2] = (((tg) >> 8) + (tg)) >> 8;              \
