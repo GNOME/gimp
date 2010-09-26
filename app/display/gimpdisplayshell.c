@@ -117,6 +117,7 @@ static void      gimp_color_managed_iface_init     (GimpColorManagedInterface *i
 static GObject * gimp_display_shell_constructor    (GType             type,
                                                     guint             n_params,
                                                     GObjectConstructParam *params);
+static void      gimp_display_shell_dispose        (GObject          *object);
 static void      gimp_display_shell_finalize       (GObject          *object);
 static void      gimp_display_shell_set_property   (GObject          *object,
                                                     guint             property_id,
@@ -126,8 +127,6 @@ static void      gimp_display_shell_get_property   (GObject          *object,
                                                     guint             property_id,
                                                     GValue           *value,
                                                     GParamSpec       *pspec);
-
-static void      gimp_display_shell_destroy        (GtkObject        *object);
 
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
@@ -183,9 +182,8 @@ static const gchar display_rc_style[] =
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   display_shell_signals[SCALED] =
     g_signal_new ("scaled",
@@ -215,11 +213,10 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_NONE, 0);
 
   object_class->constructor        = gimp_display_shell_constructor;
+  object_class->dispose            = gimp_display_shell_dispose;
   object_class->finalize           = gimp_display_shell_finalize;
   object_class->set_property       = gimp_display_shell_set_property;
   object_class->get_property       = gimp_display_shell_get_property;
-
-  gtk_object_class->destroy        = gimp_display_shell_destroy;
 
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
@@ -746,6 +743,92 @@ gimp_display_shell_constructor (GType                  type,
 }
 
 static void
+gimp_display_shell_dispose (GObject *object)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  if (shell->display && gimp_display_get_shell (shell->display))
+    gimp_display_shell_disconnect (shell);
+
+  shell->popup_manager = NULL;
+
+  gimp_display_shell_selection_free (shell);
+
+  if (shell->filter_stack)
+    gimp_display_shell_filter_set (shell, NULL);
+
+  if (shell->filter_idle_id)
+    {
+      g_source_remove (shell->filter_idle_id);
+      shell->filter_idle_id = 0;
+    }
+
+  if (shell->render_surface)
+    {
+      cairo_surface_destroy (shell->render_surface);
+      shell->render_surface = NULL;
+    }
+
+  if (shell->highlight)
+    {
+      g_slice_free (GdkRectangle, shell->highlight);
+      shell->highlight = NULL;
+    }
+
+  if (shell->mask)
+    {
+      g_object_unref (shell->mask);
+      shell->mask = NULL;
+    }
+
+  if (shell->event_history)
+    {
+      g_array_free (shell->event_history, TRUE);
+      shell->event_history = NULL;
+    }
+
+  if (shell->event_queue)
+    {
+      g_array_free (shell->event_queue, TRUE);
+      shell->event_queue = NULL;
+    }
+
+  if (shell->zoom_focus_pointer_queue)
+    {
+      g_queue_free (shell->zoom_focus_pointer_queue);
+      shell->zoom_focus_pointer_queue = NULL;
+    }
+
+  if (shell->title_idle_id)
+    {
+      g_source_remove (shell->title_idle_id);
+      shell->title_idle_id = 0;
+    }
+
+  if (shell->fill_idle_id)
+    {
+      g_source_remove (shell->fill_idle_id);
+      shell->fill_idle_id = 0;
+    }
+
+  if (shell->nav_popup)
+    {
+      gtk_widget_destroy (shell->nav_popup);
+      shell->nav_popup = NULL;
+    }
+
+  if (shell->grid_dialog)
+    {
+      gtk_widget_destroy (shell->grid_dialog);
+      shell->grid_dialog = NULL;
+    }
+
+  shell->display = NULL;
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_display_shell_finalize (GObject *object)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
@@ -845,92 +928,6 @@ gimp_display_shell_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_display_shell_destroy (GtkObject *object)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
-
-  if (shell->display && gimp_display_get_shell (shell->display))
-    gimp_display_shell_disconnect (shell);
-
-  shell->popup_manager = NULL;
-
-  gimp_display_shell_selection_free (shell);
-
-  if (shell->filter_stack)
-    gimp_display_shell_filter_set (shell, NULL);
-
-  if (shell->filter_idle_id)
-    {
-      g_source_remove (shell->filter_idle_id);
-      shell->filter_idle_id = 0;
-    }
-
-  if (shell->render_surface)
-    {
-      cairo_surface_destroy (shell->render_surface);
-      shell->render_surface = NULL;
-    }
-
-  if (shell->highlight)
-    {
-      g_slice_free (GdkRectangle, shell->highlight);
-      shell->highlight = NULL;
-    }
-
-  if (shell->mask)
-    {
-      g_object_unref (shell->mask);
-      shell->mask = NULL;
-    }
-
-  if (shell->event_history)
-    {
-      g_array_free (shell->event_history, TRUE);
-      shell->event_history = NULL;
-    }
-
-  if (shell->event_queue)
-    {
-      g_array_free (shell->event_queue, TRUE);
-      shell->event_queue = NULL;
-    }
-
-  if (shell->zoom_focus_pointer_queue)
-    {
-      g_queue_free (shell->zoom_focus_pointer_queue);
-      shell->zoom_focus_pointer_queue = NULL;
-    }
-
-  if (shell->title_idle_id)
-    {
-      g_source_remove (shell->title_idle_id);
-      shell->title_idle_id = 0;
-    }
-
-  if (shell->fill_idle_id)
-    {
-      g_source_remove (shell->fill_idle_id);
-      shell->fill_idle_id = 0;
-    }
-
-  if (shell->nav_popup)
-    {
-      gtk_widget_destroy (shell->nav_popup);
-      shell->nav_popup = NULL;
-    }
-
-  if (shell->grid_dialog)
-    {
-      gtk_widget_destroy (shell->grid_dialog);
-      shell->grid_dialog = NULL;
-    }
-
-  shell->display = NULL;
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

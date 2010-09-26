@@ -55,7 +55,7 @@
 
 static void        gimp_navigation_editor_docked_iface_init (GimpDockedInterface  *iface);
 
-static void        gimp_navigation_editor_destroy           (GtkObject            *object);
+static void        gimp_navigation_editor_dispose           (GObject              *object);
 
 static void        gimp_navigation_editor_set_context       (GimpDocked           *docked,
                                                              GimpContext          *context);
@@ -104,9 +104,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpNavigationEditor, gimp_navigation_editor,
 static void
 gimp_navigation_editor_class_init (GimpNavigationEditorClass *klass)
 {
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gtk_object_class->destroy = gimp_navigation_editor_destroy;
+  object_class->dispose = gimp_navigation_editor_dispose;
 }
 
 static void
@@ -149,14 +149,14 @@ gimp_navigation_editor_init (GimpNavigationEditor *editor)
 }
 
 static void
-gimp_navigation_editor_destroy (GtkObject *object)
+gimp_navigation_editor_dispose (GObject *object)
 {
   GimpNavigationEditor *editor = GIMP_NAVIGATION_EDITOR (object);
 
   if (editor->shell)
     gimp_navigation_editor_set_shell (editor, NULL);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

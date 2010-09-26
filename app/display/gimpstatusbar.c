@@ -72,9 +72,8 @@ struct _GimpStatusbarMsg
 
 static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *iface);
 
+static void     gimp_statusbar_dispose            (GObject           *object);
 static void     gimp_statusbar_finalize           (GObject           *object);
-
-static void     gimp_statusbar_destroy            (GtkObject         *object);
 
 static void     gimp_statusbar_hbox_size_request  (GtkWidget         *widget,
                                                    GtkRequisition    *requisition,
@@ -136,12 +135,10 @@ G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_STATUSBAR,
 static void
 gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize    = gimp_statusbar_finalize;
-
-  gtk_object_class->destroy = gimp_statusbar_destroy;
+  object_class->dispose  = gimp_statusbar_dispose;
+  object_class->finalize = gimp_statusbar_finalize;
 }
 
 static void
@@ -263,6 +260,20 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 }
 
 static void
+gimp_statusbar_dispose (GObject *object)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
+
+  if (statusbar->temp_timeout_id)
+    {
+      g_source_remove (statusbar->temp_timeout_id);
+      statusbar->temp_timeout_id = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_statusbar_finalize (GObject *object)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
@@ -284,20 +295,6 @@ gimp_statusbar_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_statusbar_destroy (GtkObject *object)
-{
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (object);
-
-  if (statusbar->temp_timeout_id)
-    {
-      g_source_remove (statusbar->temp_timeout_id);
-      statusbar->temp_timeout_id = 0;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
