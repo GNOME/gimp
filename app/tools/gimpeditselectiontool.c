@@ -194,7 +194,6 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   gint                   off_x, off_y;
   const BoundSeg        *segs_in;
   const BoundSeg        *segs_out;
-  gint                   num_groups;
   const gchar           *undo_desc;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL,
@@ -281,13 +280,11 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                          &edit_select->num_segs_in, &edit_select->num_segs_out,
                          0, 0, 0, 0);
 
-  edit_select->segs_in = boundary_sort (segs_in, edit_select->num_segs_in,
-                                        &num_groups);
-  edit_select->num_segs_in += num_groups;
+  edit_select->segs_in = g_memdup (segs_in,
+                                   edit_select->num_segs_in * sizeof (BoundSeg));
 
-  edit_select->segs_out = boundary_sort (segs_out, edit_select->num_segs_out,
-                                         &num_groups);
-  edit_select->num_segs_out += num_groups;
+  edit_select->segs_out = g_memdup (segs_out,
+                                    edit_select->num_segs_out * sizeof (BoundSeg));
 
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     {

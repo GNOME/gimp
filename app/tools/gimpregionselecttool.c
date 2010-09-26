@@ -342,9 +342,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
   BoundSeg         *segs;
-  BoundSeg         *sorted;
   PixelRegion       maskPR;
-  gint              n_groups;
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 
@@ -380,13 +378,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                         BOUNDARY_HALF_WAY,
                         n_segs);
 
-  sorted = boundary_sort (segs, *n_segs, &n_groups);
-
-  *n_segs += n_groups;
-
-  g_free (segs);
-
   gimp_display_shell_unset_override_cursor (shell);
 
-  return sorted;
+  return segs;
 }

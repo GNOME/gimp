@@ -997,9 +997,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
 
   if (mask)
     {
-      PixelRegion  PR = { 0, };
-      BoundSeg    *boundary;
-      gint         num_groups;
+      PixelRegion PR = { 0, };
 
       pixel_region_init_temp_buf (&PR, mask,
                                   0, 0, mask->width, mask->height);
@@ -1010,19 +1008,10 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
       if (mask->width > 32 && mask->height > 32)
         smooth_region (&PR);
 
-
-      boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
-                                0, 0, PR.w, PR.h,
-                                0,
-                                &core->n_brush_bound_segs);
-
-      core->brush_bound_segs = boundary_sort (boundary,
-                                              core->n_brush_bound_segs,
-                                              &num_groups);
-
-      core->n_brush_bound_segs += num_groups;
-
-      g_free (boundary);
+      core->brush_bound_segs = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
+                                              0, 0, PR.w, PR.h,
+                                              0,
+                                              &core->n_brush_bound_segs);
 
       core->brush_bound_width  = mask->width;
       core->brush_bound_height = mask->height;

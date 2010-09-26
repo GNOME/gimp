@@ -949,7 +949,6 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       BoundSeg       *segs_out;
       gint            num_segs_in;
       gint            num_segs_out;
-      gint            num_groups;
       gint            i;
 
       gimp_channel_boundary (gimp_image_get_mask (image),
@@ -957,11 +956,8 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                              &num_segs_in, &num_segs_out,
                              0, 0, 0, 0);
 
-      segs_in = boundary_sort (orig_in, num_segs_in, &num_groups);
-      num_segs_in += num_groups;
-
-      segs_out = boundary_sort (orig_out, num_segs_out, &num_groups);
-      num_segs_out += num_groups;
+      segs_in  = g_memdup (orig_in,  num_segs_in  * sizeof (BoundSeg));
+      segs_out = g_memdup (orig_out, num_segs_out * sizeof (BoundSeg));
 
       if (segs_in)
         {
@@ -969,23 +965,17 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
             {
               gdouble tx, ty;
 
-              if (segs_in[i].x1 != -1 &&
-                  segs_in[i].y1 != -1 &&
-                  segs_in[i].x2 != -1 &&
-                  segs_in[i].y2 != -1)
-                {
-                  gimp_matrix3_transform_point (&matrix,
-                                                segs_in[i].x1, segs_in[i].y1,
-                                                &tx, &ty);
-                  segs_in[i].x1 = RINT (tx);
-                  segs_in[i].y1 = RINT (ty);
+              gimp_matrix3_transform_point (&matrix,
+                                            segs_in[i].x1, segs_in[i].y1,
+                                            &tx, &ty);
+              segs_in[i].x1 = RINT (tx);
+              segs_in[i].y1 = RINT (ty);
 
-                  gimp_matrix3_transform_point (&matrix,
-                                                segs_in[i].x2, segs_in[i].y2,
-                                                &tx, &ty);
-                  segs_in[i].x2 = RINT (tx);
-                  segs_in[i].y2 = RINT (ty);
-                }
+              gimp_matrix3_transform_point (&matrix,
+                                            segs_in[i].x2, segs_in[i].y2,
+                                            &tx, &ty);
+              segs_in[i].x2 = RINT (tx);
+              segs_in[i].y2 = RINT (ty);
             }
 
           gimp_draw_tool_add_boundary (draw_tool,
@@ -1000,23 +990,17 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
             {
               gdouble tx, ty;
 
-              if (segs_out[i].x1 != -1 &&
-                  segs_out[i].y1 != -1 &&
-                  segs_out[i].x2 != -1 &&
-                  segs_out[i].y2 != -1)
-                {
-                  gimp_matrix3_transform_point (&matrix,
-                                                segs_out[i].x1, segs_out[i].y1,
-                                                &tx, &ty);
-                  segs_out[i].x1 = RINT (tx);
-                  segs_out[i].y1 = RINT (ty);
+              gimp_matrix3_transform_point (&matrix,
+                                            segs_out[i].x1, segs_out[i].y1,
+                                            &tx, &ty);
+              segs_out[i].x1 = RINT (tx);
+              segs_out[i].y1 = RINT (ty);
 
-                  gimp_matrix3_transform_point (&matrix,
-                                                segs_out[i].x2, segs_out[i].y2,
-                                                &tx, &ty);
-                  segs_out[i].x2 = RINT (tx);
-                  segs_out[i].y2 = RINT (ty);
-                }
+              gimp_matrix3_transform_point (&matrix,
+                                            segs_out[i].x2, segs_out[i].y2,
+                                            &tx, &ty);
+              segs_out[i].x2 = RINT (tx);
+              segs_out[i].y2 = RINT (ty);
             }
 
           gimp_draw_tool_add_boundary (draw_tool,

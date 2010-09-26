@@ -307,7 +307,9 @@ void
 gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
                                        const BoundSeg         *src_segs,
                                        GdkSegment             *dest_segs,
-                                       gint                    n_segs)
+                                       gint                    n_segs,
+                                       gdouble                 offset_x,
+                                       gdouble                 offset_y)
 {
   gint i;
 
@@ -315,23 +317,18 @@ gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
 
   for (i = 0; i < n_segs ; i++)
     {
-      gint64 x1, x2;
-      gint64 y1, y2;
+      gdouble x1, x2;
+      gdouble y1, y2;
 
-      x1 = src_segs[i].x1;
-      x2 = src_segs[i].x2;
-      y1 = src_segs[i].y1;
-      y2 = src_segs[i].y2;
+      x1 = src_segs[i].x1 + offset_x;
+      x2 = src_segs[i].x2 + offset_x;
+      y1 = src_segs[i].y1 + offset_y;
+      y2 = src_segs[i].y2 + offset_y;
 
-      x1 = (x1 * shell->x_src_dec) / shell->x_dest_inc;
-      x2 = (x2 * shell->x_src_dec) / shell->x_dest_inc;
-      y1 = (y1 * shell->y_src_dec) / shell->y_dest_inc;
-      y2 = (y2 * shell->y_src_dec) / shell->y_dest_inc;
-
-      dest_segs[i].x1 = CLAMP (x1 - shell->offset_x, G_MININT, G_MAXINT);
-      dest_segs[i].x2 = CLAMP (x2 - shell->offset_x, G_MININT, G_MAXINT);
-      dest_segs[i].y1 = CLAMP (y1 - shell->offset_y, G_MININT, G_MAXINT);
-      dest_segs[i].y2 = CLAMP (y2 - shell->offset_y, G_MININT, G_MAXINT);
+      dest_segs[i].x1 = SCALEX (shell, x1) - shell->offset_x;
+      dest_segs[i].x2 = SCALEX (shell, x2) - shell->offset_x;
+      dest_segs[i].y1 = SCALEY (shell, y1) - shell->offset_y;
+      dest_segs[i].y2 = SCALEY (shell, y2) - shell->offset_y;
     }
 }
 

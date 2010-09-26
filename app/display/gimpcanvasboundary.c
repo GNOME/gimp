@@ -32,6 +32,8 @@
 
 #include "core/gimpparamspecs.h"
 
+#include "widgets/gimpcairo.h"
+
 #include "gimpcanvasboundary.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-transform.h"
@@ -121,6 +123,8 @@ gimp_canvas_boundary_class_init (GimpCanvasBoundaryClass *klass)
 static void
 gimp_canvas_boundary_init (GimpCanvasBoundary *boundary)
 {
+  gimp_canvas_item_set_line_cap (GIMP_CANVAS_ITEM (boundary),
+                                 CAIRO_LINE_CAP_SQUARE);
 }
 
 static void
@@ -191,36 +195,35 @@ gimp_canvas_boundary_get_property (GObject    *object,
 static void
 gimp_canvas_boundary_transform (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell,
-                                BoundSeg         *segs)
+                                GdkSegment       *segs)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   gint                       i;
 
+  gimp_display_shell_transform_segments (shell,
+                                         private->segs, segs, private->n_segs,
+                                         private->offset_x, private->offset_y);
+
   for (i = 0; i < private->n_segs; i++)
     {
-      if (private->segs[i].x1 == -1 &&
-          private->segs[i].y1 == -1 &&
-          private->segs[i].x2 == -1 &&
-          private->segs[i].y2 == -1)
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (! private->segs[i].open)
         {
-          segs[i] = private->segs[i];
-        }
-      else
-        {
-          gimp_display_shell_transform_xy (shell,
-                                           private->segs[i].x1 +
-                                           private->offset_x,
-                                           private->segs[i].y1 +
-                                           private->offset_y,
-                                           &segs[i].x1,
-                                           &segs[i].y1);
-          gimp_display_shell_transform_xy (shell,
-                                           private->segs[i].x2 +
-                                           private->offset_x,
-                                           private->segs[i].y2 +
-                                           private->offset_y,
-                                           &segs[i].x2,
-                                           &segs[i].y2);
+          /*  If it is vertical  */
+          if (segs[i].x1 == segs[i].x2)
+            {
+              segs[i].x1 -= 1;
+              segs[i].x2 -= 1;
+            }
+          else
+            {
+              segs[i].y1 -= 1;
+              segs[i].y2 -= 1;
+            }
         }
     }
 }
@@ -231,38 +234,14 @@ gimp_canvas_boundary_draw (GimpCanvasItem   *item,
                            cairo_t          *cr)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
-  BoundSeg                  *segs;
-  gint                       i;
+  GdkSegment                *segs;
 
-  segs = g_new0 (BoundSeg, private->n_segs);
+  segs = g_new0 (GdkSegment, private->n_segs);
 
   gimp_canvas_boundary_transform (item, shell, segs);
 
-  cairo_move_to (cr, segs[0].x1 + 0.5, segs[0].y1 + 0.5);
+  gimp_cairo_add_segments (cr, segs, private->n_segs);
 
-  for (i = 1; i < private->n_segs; i++)
-    {
-      if (segs[i].x1 == -1 &&
-          segs[i].y1 == -1 &&
-          segs[i].x2 == -1 &&
-          segs[i].y2 == -1)
-        {
-          cairo_close_path (cr);
-          _gimp_canvas_item_stroke (item, shell, cr);
-
-          i++;
-          if (i == private->n_segs)
-            break;
-
-          cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1 + 0.5);
-        }
-      else
-        {
-          cairo_line_to (cr, segs[i].x1 + 0.5, segs[i].y1 + 0.5);
-        }
-    }
-
-  cairo_close_path (cr);
   _gimp_canvas_item_stroke (item, shell, cr);
 
   g_free (segs);
@@ -274,11 +253,11 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   GdkRectangle               rectangle;
-  BoundSeg                  *segs;
+  GdkSegment                *segs;
   gint                       x1, y1, x2, y2;
   gint                       i;
 
-  segs = g_new0 (BoundSeg, private->n_segs);
+  segs = g_new0 (GdkSegment, private->n_segs);
 
   gimp_canvas_boundary_transform (item, shell, segs);
 
@@ -289,21 +268,15 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 
   for (i = 1; i < private->n_segs; i++)
     {
-      if (segs[i].x1 != -1 ||
-          segs[i].y1 != -1 ||
-          segs[i].x2 != -1 ||
-          segs[i].y2 != -1)
-        {
-          gint x3 = segs[i].x1 - 1;
-          gint y3 = segs[i].y1 - 1;
-          gint x4 = x3 + 3;
-          gint y4 = y3 + 3;
+      gint x3 = segs[i].x1 - 1;
+      gint y3 = segs[i].y1 - 1;
+      gint x4 = x3 + 3;
+      gint y4 = y3 + 3;
 
-          x1 = MIN (x1, x3);
-          y1 = MIN (y1, y3);
-          x2 = MAX (x2, x4);
-          y2 = MAX (y2, y4);
-        }
+      x1 = MIN (x1, x3);
+      y1 = MIN (y1, y3);
+      x2 = MAX (x2, x4);
+      y2 = MAX (y2, y4);
     }
 
   g_free (segs);
