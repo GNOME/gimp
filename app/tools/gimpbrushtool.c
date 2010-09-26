@@ -309,14 +309,25 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   if (! brush_core->brush_bound_segs && brush_core->main_brush)
     gimp_brush_core_create_bound_segs (brush_core, options);
 
+#define TRANSFORM_BOUNDARY 1
+
+#if TRANSFORM_BOUNDARY
   if (brush_core->brush_bound_segs)
     gimp_brush_core_transform_bound_segs (brush_core, options);
 
   if (brush_core->transformed_brush_bound_segs)
+#else
+  if (brush_core->brush_bound_segs)
+#endif
     {
       GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
+#if TRANSFORM_BOUNDARY
       gdouble           width  = brush_core->transformed_brush_bound_width;
       gdouble           height = brush_core->transformed_brush_bound_height;
+#else
+      gdouble           width  = brush_core->brush_bound_width;
+      gdouble           height = brush_core->brush_bound_height;
+#endif
 
       /*  don't draw the boundary if it becomes too small  */
       if (SCALEX (shell, width) > 4 && SCALEY (shell, height) > 4)
@@ -337,8 +348,13 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
             }
 
           gimp_draw_tool_add_boundary (draw_tool,
+#if TRANSFORM_BOUNDARY
                                        brush_core->transformed_brush_bound_segs,
                                        brush_core->n_brush_bound_segs,
+#else
+                                       brush_core->brush_bound_segs,
+                                       brush_core->n_brush_bound_segs,
+#endif
                                        x, y);
         }
       else if (draw_fallback)
