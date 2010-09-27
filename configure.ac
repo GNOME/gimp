@@ -492,13 +492,13 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.22.0 or newer])
+AC_MSG_CHECKING([if GTK+ is version 2.24.0 or newer])
 if $PKG_CONFIG --atleast-version=2.22.0 gtk+-2.0; then
-  have_gtk_2_22=yes
+  have_gtk_2_24=yes
 else
-  have_gtk_2_22=no
+  have_gtk_2_24=no
 fi
-AC_MSG_RESULT($have_gtk_2_22)
+AC_MSG_RESULT($have_gtk_2_24)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -1916,7 +1916,7 @@ if test "x$have_glib_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_22" != "xyes"; then
+if test "x$have_gtk_2_24" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
