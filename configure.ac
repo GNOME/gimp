@@ -863,7 +863,10 @@ AC_MSG_CHECKING([whether symbols are prefixed])
 
 case "$host_os" in
   mingw*)
-    SYMPREFIX='_'
+    case "$host_cpu" in 
+	  x86_64) SYMPREFIX='' ;;
+	  *) SYMPREFIX='_' ;;
+	esac
     ;;
   darwin* | rhapsody* | machten*)
     SYMPREFIX='_'
