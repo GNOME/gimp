@@ -36,6 +36,7 @@
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 
 #include "gimpperspectiveclonetool.h"
@@ -746,19 +747,39 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
 
   if (clone_tool->use_handles)
     {
+      GimpCanvasItem *stroke_group;
+      GimpCanvasItem *item;
+
+      stroke_group = gimp_canvas_group_new ();
+      gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
+                                            TRUE);
+      gimp_draw_tool_add_item (draw_tool, stroke_group);
+      g_object_unref (stroke_group);
+
       /*  draw the bounding box  */
-      gimp_draw_tool_add_line (draw_tool,
-                               clone_tool->tx1, clone_tool->ty1,
-                               clone_tool->tx2, clone_tool->ty2);
-      gimp_draw_tool_add_line (draw_tool,
-                               clone_tool->tx2, clone_tool->ty2,
-                               clone_tool->tx4, clone_tool->ty4);
-      gimp_draw_tool_add_line (draw_tool,
-                               clone_tool->tx3, clone_tool->ty3,
-                               clone_tool->tx4, clone_tool->ty4);
-      gimp_draw_tool_add_line (draw_tool,
-                               clone_tool->tx3, clone_tool->ty3,
-                               clone_tool->tx1, clone_tool->ty1);
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      clone_tool->tx1, clone_tool->ty1,
+                                      clone_tool->tx2, clone_tool->ty2);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      clone_tool->tx2, clone_tool->ty2,
+                                      clone_tool->tx4, clone_tool->ty4);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      clone_tool->tx3, clone_tool->ty3,
+                                      clone_tool->tx4, clone_tool->ty4);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_line (draw_tool,
+                                      clone_tool->tx3, clone_tool->ty3,
+                                      clone_tool->tx1, clone_tool->ty1);
+      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
+      gimp_draw_tool_remove_item (draw_tool, item);
 
       /*  draw the tool handles  */
       gimp_draw_tool_add_handle (draw_tool,
