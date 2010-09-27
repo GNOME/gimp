@@ -493,7 +493,7 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   gthread)
 
 AC_MSG_CHECKING([if GTK+ is version 2.24.0 or newer])
-if $PKG_CONFIG --atleast-version=2.22.0 gtk+-2.0; then
+if $PKG_CONFIG --atleast-version=2.24.0 gtk+-2.0; then
   have_gtk_2_24=yes
 else
   have_gtk_2_24=no
