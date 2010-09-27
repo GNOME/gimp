@@ -56,7 +56,7 @@
 
     (gimp-image-set-filename img "")
 
-    (gimp-image-add-channel img mask 0)
+    (gimp-image-insert-channel img mask -1 0)
 
     (gimp-layer-set-lock-alpha mask-layer TRUE)
     (gimp-context-set-background '(255 255 255))
@@ -76,28 +76,28 @@
     (gimp-image-remove-layer img mask-layer)
 
     (set! mask-fat (car (gimp-channel-copy mask)))
-    (gimp-image-add-channel img mask-fat 0)
-    (gimp-selection-load mask-fat)
+    (gimp-image-insert-channel img mask-fat -1 0)
+    (gimp-item-to-selection mask-fat 2)
     (gimp-context-set-brush (carve-brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke mask-fat)
     (gimp-selection-none img)
 
     (set! mask-emboss (car (gimp-channel-copy mask-fat)))
-    (gimp-image-add-channel img mask-emboss 0)
+    (gimp-image-insert-channel img mask-emboss -1 0)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img mask-emboss feather TRUE TRUE)
     (plug-in-emboss RUN-NONINTERACTIVE img mask-emboss 315.0 45.0 7 TRUE)
 
     (gimp-context-set-background '(180 180 180))
-    (gimp-selection-load mask-fat)
+    (gimp-item-to-selection mask-fat 2)
     (gimp-selection-invert img)
     (gimp-edit-fill mask-emboss BACKGROUND-FILL)
-    (gimp-selection-load mask)
+    (gimp-item-to-selection mask 2)
     (gimp-edit-fill mask-emboss BACKGROUND-FILL)
     (gimp-selection-none img)
 
     (set! mask-highlight (car (gimp-channel-copy mask-emboss)))
-    (gimp-image-add-channel img mask-highlight 0)
+    (gimp-image-insert-channel img mask-highlight -1 0)
     (gimp-levels mask-highlight 0 180 255 1.0 0 255)
 
     (set! mask-shadow mask-emboss)
@@ -123,16 +123,16 @@
 
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask cast-shadow-layer csl-mask)
-    (gimp-selection-load mask)
+    (gimp-item-to-selection mask 2)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill csl-mask BACKGROUND-FILL)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
-    (gimp-image-add-layer img inset-layer 1)
+    (gimp-image-insert-layer img inset-layer -1 1)
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask inset-layer il-mask)
-    (gimp-selection-load mask)
+    (gimp-item-to-selection mask 2)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill il-mask BACKGROUND-FILL)
     (gimp-selection-none img)
