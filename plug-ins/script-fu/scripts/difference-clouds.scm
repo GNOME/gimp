@@ -38,7 +38,7 @@
     (gimp-image-undo-group-start image)
 
     ; Add the cloud layer above the current layer
-    (gimp-image-add-layer image diff-clouds -1)
+    (gimp-image-insert-layer image diff-clouds -1 -1)
 
     ; Clear the layer (so there are no noise in it)
     (gimp-drawable-fill diff-clouds TRANSPARENT-FILL)
