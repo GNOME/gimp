@@ -36,7 +36,8 @@
 enum
 {
   PROP_0,
-  PROP_GROUP_STROKING
+  PROP_GROUP_STROKING,
+  PROP_GROUP_FILLING
 };
 
 
@@ -46,6 +47,7 @@ struct _GimpCanvasGroupPrivate
 {
   GList    *items;
   gboolean  group_stroking;
+  gboolean  group_filling;
 };
 
 #define GET_PRIVATE(group) \
@@ -96,6 +98,12 @@ gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_GROUP_FILLING,
+                                   g_param_spec_boolean ("group-filling",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (klass, sizeof (GimpCanvasGroupPrivate));
 }
 
@@ -132,6 +140,9 @@ gimp_canvas_group_set_property (GObject      *object,
     case PROP_GROUP_STROKING:
       private->group_stroking = g_value_get_boolean (value);
       break;
+    case PROP_GROUP_FILLING:
+      private->group_filling = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -151,6 +162,9 @@ gimp_canvas_group_get_property (GObject    *object,
     {
     case PROP_GROUP_STROKING:
       g_value_set_boolean (value, private->group_stroking);
+      break;
+    case PROP_GROUP_FILLING:
+      g_value_set_boolean (value, private->group_filling);
       break;
 
     default:
@@ -176,6 +190,9 @@ gimp_canvas_group_draw (GimpCanvasItem   *item,
 
   if (private->group_stroking)
     _gimp_canvas_item_stroke (item, shell, cr);
+
+  if (private->group_filling)
+    _gimp_canvas_item_fill (item, shell, cr);
 }
 
 static GdkRegion *
@@ -192,14 +209,14 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
       GdkRegion      *sub_region = gimp_canvas_item_get_extents (sub_item,
                                                                  shell);
 
-      if (region)
+      if (! region)
+        {
+          region = sub_region;
+        }
+      else if (sub_region)
         {
           gdk_region_union (region, sub_region);
           gdk_region_destroy (sub_region);
-        }
-      else
-        {
-          region = sub_region;
         }
     }
 
@@ -226,6 +243,9 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
 
   if (private->group_stroking)
     gimp_canvas_item_suspend_stroking (item);
+
+  if (private->group_filling)
+    gimp_canvas_item_suspend_filling (item);
 
   private->items = g_list_append (private->items, g_object_ref (item));
 }
@@ -255,5 +275,16 @@ gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
 
   g_object_set (group,
                 "group-stroking", group_stroking ? TRUE : FALSE,
+                NULL);
+}
+
+void
+gimp_canvas_group_set_group_filling (GimpCanvasGroup *group,
+                                     gboolean         group_filling)
+{
+  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+
+  g_object_set (group,
+                "group-filling", group_filling ? TRUE : FALSE,
                 NULL);
 }

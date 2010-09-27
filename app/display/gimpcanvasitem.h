@@ -68,6 +68,9 @@ void        gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
 void        gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
 void        gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
 
+void        gimp_canvas_item_suspend_filling  (GimpCanvasItem   *item);
+void        gimp_canvas_item_resume_filling   (GimpCanvasItem   *item);
+
 
 /*  protected  */
 

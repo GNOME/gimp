@@ -57,6 +57,8 @@ void             gimp_canvas_group_remove_item        (GimpCanvasGroup *group,
 
 void             gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
                                                        gboolean         group_stroking);
+void             gimp_canvas_group_set_group_filling  (GimpCanvasGroup *group,
+                                                       gboolean         group_filling);
 
 
 #endif /* __GIMP_CANVAS_GROUP_H__ */

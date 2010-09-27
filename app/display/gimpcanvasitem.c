@@ -47,6 +47,7 @@ struct _GimpCanvasItemPrivate
   cairo_line_cap_t line_cap;
   gboolean         highlight;
   gint             suspend_stroking;
+  gint             suspend_filling;
 };
 
 #define GET_PRIVATE(item) \
@@ -115,6 +116,7 @@ gimp_canvas_item_init (GimpCanvasItem *item)
   private->line_cap         = CAIRO_LINE_CAP_ROUND;
   private->highlight        = FALSE;
   private->suspend_stroking = 0;
+  private->suspend_filling  = 0;
 }
 
 static void
@@ -255,6 +257,32 @@ gimp_canvas_item_resume_stroking (GimpCanvasItem *item)
   private->suspend_stroking--;
 }
 
+void
+gimp_canvas_item_suspend_filling (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  private->suspend_filling++;
+}
+
+void
+gimp_canvas_item_resume_filling (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  g_return_if_fail (private->suspend_filling > 0);
+
+  private->suspend_filling--;
+}
+
 
 /*  protected functions  */
 
@@ -264,6 +292,9 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
                           cairo_t          *cr)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  if (private->suspend_filling > 0)
+    g_warning ("_gimp_canvas_item_stroke() on an item that is in a filling group");
 
   if (private->suspend_stroking == 0)
     {
@@ -291,10 +322,17 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
   if (private->suspend_stroking > 0)
     g_warning ("_gimp_canvas_item_fill() on an item that is in a stroking group");
 
-  gimp_display_shell_set_tool_bg_style (shell, cr);
-  cairo_set_line_width (cr, 2.0);
-  cairo_stroke_preserve (cr);
+  if (private->suspend_filling == 0)
+    {
+      gimp_display_shell_set_tool_bg_style (shell, cr);
+      cairo_set_line_width (cr, 2.0);
+      cairo_stroke_preserve (cr);
 
-  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
-  cairo_fill (cr);
+      gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
+      cairo_fill (cr);
+    }
+  else
+    {
+      cairo_new_sub_path (cr);
+    }
 }
