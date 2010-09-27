@@ -56,6 +56,7 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -822,6 +823,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GtkTextBuffer   *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
+  GimpCanvasItem  *fill_group;
   PangoLayout     *layout;
   gint             offset_x;
   gint             offset_y;
@@ -830,6 +832,11 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
   gint             i;
+
+  fill_group = gimp_canvas_group_new ();
+  gimp_canvas_group_set_group_filling (GIMP_CANVAS_GROUP (fill_group), TRUE);
+  gimp_draw_tool_add_item (draw_tool, fill_group);
+  g_object_unref (fill_group);
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
@@ -855,8 +862,9 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
       if (i >= min && i < max)
         {
-          PangoRectangle rect;
-          gint           ytop, ybottom;
+          GimpCanvasItem *item;
+          PangoRectangle  rect;
+          gint            ytop, ybottom;
 
           pango_layout_iter_get_char_extents (iter, &rect);
           pango_layout_iter_get_line_yrange (iter, &ytop, &ybottom);
@@ -871,9 +879,12 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
           rect.x += offset_x;
           rect.y += offset_y;
 
-          gimp_draw_tool_add_rectangle (draw_tool, TRUE,
-                                        rect.x, rect.y,
-                                        rect.width, rect.height);
+          item = gimp_draw_tool_add_rectangle (draw_tool, TRUE,
+                                               rect.x, rect.y,
+                                               rect.width, rect.height);
+
+          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (fill_group), item);
+          gimp_draw_tool_remove_item (draw_tool, item);
         }
     }
   while (pango_layout_iter_next_char (iter));
