@@ -69,9 +69,9 @@ static const GimpRGB vectors_normal_fg   = { 0.0, 0.0, 1.0, 0.8 };
 static const GimpRGB vectors_active_bg   = { 1.0, 1.0, 1.0, 0.6 };
 static const GimpRGB vectors_active_fg   = { 1.0, 0.0, 0.0, 0.8 };
 
-static const GimpRGB tool_bg             = { 1.0, 1.0, 1.0, 0.6 };
-static const GimpRGB tool_fg             = { 0.0, 0.0, 0.0, 0.8 };
-static const GimpRGB tool_fg_highlight   = { 0.0, 1.0, 1.0, 0.8 };
+static const GimpRGB tool_bg             = { 0.0, 0.0, 0.0, 0.4 };
+static const GimpRGB tool_fg             = { 1.0, 1.0, 1.0, 0.8 };
+static const GimpRGB tool_fg_highlight   = { 1.0, 0.8, 0.2, 0.8 };
 
 
 /*  public functions  */
