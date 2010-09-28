@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -68,6 +66,8 @@ static const GimpRGB vectors_normal_fg   = { 0.0, 0.0, 1.0, 0.8 };
 
 static const GimpRGB vectors_active_bg   = { 1.0, 1.0, 1.0, 0.6 };
 static const GimpRGB vectors_active_fg   = { 1.0, 0.0, 0.0, 0.8 };
+
+static const GimpRGB dim                 = { 0.0, 0.0, 0.0, 0.5 };
 
 static const GimpRGB tool_bg             = { 0.0, 0.0, 0.0, 0.4 };
 static const GimpRGB tool_fg             = { 1.0, 1.0, 1.0, 0.8 };
@@ -324,6 +324,16 @@ gimp_display_shell_set_vectors_fg_style (GimpDisplayShell *shell,
 }
 
 void
+gimp_display_shell_set_dim_style (GimpDisplayShell *shell,
+                                  cairo_t          *cr)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (cr != NULL);
+
+  gimp_cairo_set_source_rgba (cr, &dim);
+}
+
+void
 gimp_display_shell_set_tool_bg_style (GimpDisplayShell *shell,
                                       cairo_t          *cr)
 {
@@ -341,7 +351,6 @@ gimp_display_shell_set_tool_fg_style (GimpDisplayShell *shell,
                                       cairo_t          *cr,
                                       gboolean          highlight)
 {
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
   cairo_set_line_width (cr, 1.0);

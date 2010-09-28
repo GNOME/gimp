@@ -811,7 +811,6 @@ gimp_display_shell_draw_highlight (GimpDisplayShell *shell,
   cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
   cairo_clip (cr);
 
-  /*  FIXME: make this configurable or at least use gimpdisplayshell-style.c  */
-  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
+  gimp_display_shell_set_dim_style (shell, cr);
   cairo_paint (cr);
 }
