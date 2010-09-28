@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-14 19:32+0200\n"
+"POT-Creation-Date: 2010-09-28 16:13+0200\n"
 "PO-Revision-Date: 2010-09-14 21:47+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
@@ -26,15 +26,17 @@ msgstr "GIMP"
 msgid "GNU Image Manipulation Program"
 msgstr "GNU bildebehandlingsprogram"
 
-#: ../app/about.h:29
+#. The year of the last commit (UTC) will be inserted into this string.
+#: ../app/about.h:30
+#, fuzzy, c-format
 msgid ""
-"Copyright © 1995-2010\n"
+"Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Copyright © 1995-2010\n"
 "Spencer Kimball, Peter Mattis og GIMP utviklerene"
 
-#: ../app/about.h:33
+#: ../app/about.h:34
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -375,7 +377,7 @@ msgid "Layers"
 msgstr "Lag"
 
 #: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:365
-#: ../app/widgets/gimppaletteeditor.c:154
+#: ../app/widgets/gimppaletteeditor.c:152
 msgid "Palette Editor"
 msgstr "Palettbehandler"
 
@@ -431,7 +433,7 @@ msgid "Tools"
 msgstr "Verktøy"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:315
-#: ../app/tools/gimpvectortool.c:161
+#: ../app/tools/gimpvectortool.c:162
 msgid "Paths"
 msgstr "Baner"
 
@@ -975,7 +977,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1522
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1624
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:379 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -3230,16 +3232,16 @@ msgid "Set Image Print Resolution"
 msgstr "Velg bildets utskriftsoppløsning"
 
 #: ../app/actions/image-commands.c:378
-#: ../app/pdb/drawable-transform-cmds.c:150
-#: ../app/pdb/drawable-transform-cmds.c:225
-#: ../app/pdb/item-transform-cmds.c:151
+#: ../app/pdb/drawable-transform-cmds.c:153
+#: ../app/pdb/drawable-transform-cmds.c:230
+#: ../app/pdb/item-transform-cmds.c:158
 msgid "Flipping"
 msgstr "Vender"
 
 #: ../app/actions/image-commands.c:402
-#: ../app/pdb/drawable-transform-cmds.c:533
-#: ../app/pdb/drawable-transform-cmds.c:612 ../app/pdb/image-cmds.c:534
-#: ../app/pdb/item-transform-cmds.c:395 ../app/pdb/transform-tools-cmds.c:219
+#: ../app/pdb/drawable-transform-cmds.c:547
+#: ../app/pdb/drawable-transform-cmds.c:628 ../app/pdb/image-cmds.c:536
+#: ../app/pdb/item-transform-cmds.c:423 ../app/pdb/transform-tools-cmds.c:224
 #: ../app/tools/gimprotatetool.c:122
 msgid "Rotating"
 msgstr "Roterer"
@@ -3259,11 +3261,11 @@ msgstr "Skaler bilde"
 #. Scaling
 #: ../app/actions/image-commands.c:680 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:690
-#: ../app/pdb/drawable-transform-cmds.c:766 ../app/pdb/image-cmds.c:406
-#: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:477
-#: ../app/pdb/layer-cmds.c:298 ../app/pdb/layer-cmds.c:343
-#: ../app/pdb/transform-tools-cmds.c:295 ../app/tools/gimpscaletool.c:106
+#: ../app/pdb/drawable-transform-cmds.c:708
+#: ../app/pdb/drawable-transform-cmds.c:786 ../app/pdb/image-cmds.c:408
+#: ../app/pdb/image-cmds.c:444 ../app/pdb/item-transform-cmds.c:512
+#: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
+#: ../app/pdb/transform-tools-cmds.c:302 ../app/tools/gimpscaletool.c:106
 msgid "Scaling"
 msgstr "Skalering"
 
@@ -5165,7 +5167,7 @@ msgstr "Egenskaper for bane"
 msgid "Edit Path Attributes"
 msgstr "Rediger baneegenskaper"
 
-#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:202
+#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:205
 #: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "Bane"
@@ -5179,7 +5181,7 @@ msgid "New Path Options"
 msgstr "Alternativer for ny bane"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1987
+#: ../app/tools/gimpvectortool.c:1990
 msgid "Stroke Path"
 msgstr "Strøkbane"
 
@@ -7046,7 +7048,7 @@ msgid "Text"
 msgstr "Tekst"
 
 #: ../app/core/core-enums.c:902 ../app/core/core-enums.c:944
-#: ../app/core/gimpdrawable-transform.c:566
+#: ../app/core/gimpdrawable-transform.c:567
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformer"
@@ -7523,7 +7525,7 @@ msgstr "Ugyldig UTF-8-streng i penselfil «%s»."
 
 #: ../app/core/gimpbrush-load.c:284 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:82
-#: ../app/tools/gimpvectortool.c:318
+#: ../app/tools/gimpvectortool.c:319
 msgid "Unnamed"
 msgstr "Uten navn"
 
@@ -7686,7 +7688,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "Roter kanal"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:844
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:845
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "Transformer kanal"
@@ -7696,7 +7698,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "Strek opp kanal"
 
-#: ../app/core/gimpchannel.c:280 ../app/core/gimpselection.c:583
+#: ../app/core/gimpchannel.c:280 ../app/core/gimpselection.c:584
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "Kanal til utvalg"
@@ -7788,7 +7790,7 @@ msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Sett kanalens dekkevne"
 
-#: ../app/core/gimpchannel.c:1926 ../app/core/gimpselection.c:532
+#: ../app/core/gimpchannel.c:1926 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
 msgstr "Utvalgsmaske"
 
@@ -7954,22 +7956,22 @@ msgstr "Render strøk"
 msgid "Threshold"
 msgstr "Terskel"
 
-#: ../app/core/gimpdrawable-transform.c:643
+#: ../app/core/gimpdrawable-transform.c:644
 msgctxt "undo-type"
 msgid "Flip"
 msgstr "Vend"
 
-#: ../app/core/gimpdrawable-transform.c:717
+#: ../app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Roter"
 
-#: ../app/core/gimpdrawable-transform.c:842 ../app/core/gimplayer.c:272
+#: ../app/core/gimpdrawable-transform.c:843 ../app/core/gimplayer.c:272
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Transformer lag"
 
-#: ../app/core/gimpdrawable-transform.c:857
+#: ../app/core/gimpdrawable-transform.c:858
 msgid "Transformation"
 msgstr "Transformasjon"
 
@@ -8059,7 +8061,7 @@ msgstr ""
 "Vertikal forskyvning av den første linja i rutenettet. Dette kan være et "
 "negativt tall."
 
-#: ../app/core/gimpgrouplayer.c:178 ../app/core/gimpgrouplayer.c:837
+#: ../app/core/gimpgrouplayer.c:178
 msgid "Layer Group"
 msgstr "Laggruppe"
 
@@ -8277,57 +8279,57 @@ msgstr "Skaler bilde"
 msgid "Can't undo %s"
 msgstr "Kan ikke angre %s"
 
-#: ../app/core/gimpimage.c:1632
+#: ../app/core/gimpimage.c:1734
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Endre bildets oppløsning"
 
-#: ../app/core/gimpimage.c:1684
+#: ../app/core/gimpimage.c:1786
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Endre bildets enhet"
 
-#: ../app/core/gimpimage.c:2654
+#: ../app/core/gimpimage.c:2767
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Fest parasitt på bilde"
 
-#: ../app/core/gimpimage.c:2695
+#: ../app/core/gimpimage.c:2808
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Fjern parasitt fra bilde"
 
-#: ../app/core/gimpimage.c:3404
+#: ../app/core/gimpimage.c:3517
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Legg til lag"
 
-#: ../app/core/gimpimage.c:3454 ../app/core/gimpimage.c:3474
+#: ../app/core/gimpimage.c:3567 ../app/core/gimpimage.c:3587
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Fjern lag"
 
-#: ../app/core/gimpimage.c:3467
+#: ../app/core/gimpimage.c:3580
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Opphev flytende utvalg"
 
-#: ../app/core/gimpimage.c:3633
+#: ../app/core/gimpimage.c:3746
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Legg til kanal"
 
-#: ../app/core/gimpimage.c:3671 ../app/core/gimpimage.c:3683
+#: ../app/core/gimpimage.c:3784 ../app/core/gimpimage.c:3796
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Fjern kanal"
 
-#: ../app/core/gimpimage.c:3730
+#: ../app/core/gimpimage.c:3843
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Legg til bane"
 
-#: ../app/core/gimpimage.c:3761
+#: ../app/core/gimpimage.c:3874
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Fjern bane"
@@ -8366,7 +8368,7 @@ msgstr "(Forhåndsvisning kan være utdatert)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:611 ../app/widgets/gimpimagepropview.c:446
-#: ../app/widgets/gimpsizebox.c:437 ../app/widgets/gimptemplateeditor.c:565
+#: ../app/widgets/gimpsizebox.c:434 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -8653,7 +8655,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Ugyldig UTF-8-streng i mønsterfil «%s»."
 
-#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:351
+#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:339
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -8663,74 +8665,74 @@ msgstr ""
 msgid "Please wait"
 msgstr "Vent litt"
 
-#: ../app/core/gimpselection.c:154
+#: ../app/core/gimpselection.c:155
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "Flytt utvalg"
 
-#: ../app/core/gimpselection.c:155
+#: ../app/core/gimpselection.c:156
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "Strek opp utvalg"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "Myk opp utvalg"
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "Gjør utvalg skarpere"
 
-#: ../app/core/gimpselection.c:173
+#: ../app/core/gimpselection.c:174
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "Velg bort alt"
 
-#: ../app/core/gimpselection.c:174
+#: ../app/core/gimpselection.c:175
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "Velg alt"
 
-#: ../app/core/gimpselection.c:175
+#: ../app/core/gimpselection.c:176
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "Inverter utvalg"
 
-#: ../app/core/gimpselection.c:176
+#: ../app/core/gimpselection.c:177
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "Kantutvalg"
 
-#: ../app/core/gimpselection.c:177
+#: ../app/core/gimpselection.c:178
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "Øk utvalg"
 
-#: ../app/core/gimpselection.c:178
+#: ../app/core/gimpselection.c:179
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "Krymp utvalg"
 
-#: ../app/core/gimpselection.c:285
+#: ../app/core/gimpselection.c:286
 msgid "There is no selection to stroke."
 msgstr "Ingen utvalg å streke opp."
 
-#: ../app/core/gimpselection.c:669
+#: ../app/core/gimpselection.c:670
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Kunne ikke klippe ut eller kopiere fordi den valgte regionen er tom."
 
-#: ../app/core/gimpselection.c:844
+#: ../app/core/gimpselection.c:845
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Kan ikke gjøre utvalg flytende fordi den valgte region er tom."
 
-#: ../app/core/gimpselection.c:851
+#: ../app/core/gimpselection.c:852
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "Flytende utvalg"
 
-#: ../app/core/gimpselection.c:867
+#: ../app/core/gimpselection.c:868
 msgid "Floated Layer"
 msgstr "Flytende lag"
 
@@ -8813,27 +8815,27 @@ msgctxt "plural"
 msgid "percent"
 msgstr "prosent"
 
-#: ../app/dialogs/about-dialog.c:102 ../app/gui/gui.c:484
+#: ../app/dialogs/about-dialog.c:106 ../app/gui/gui.c:484
 msgid "About GIMP"
 msgstr "Om GIMP"
 
-#: ../app/dialogs/about-dialog.c:111
+#: ../app/dialogs/about-dialog.c:115
 msgid "Visit the GIMP website"
 msgstr "Besøk nettsiden til GIMP"
 
 #. Translators: insert your names here, separated by newline
-#: ../app/dialogs/about-dialog.c:116
+#: ../app/dialogs/about-dialog.c:120
 msgid "translator-credits"
 msgstr ""
 "Kjartan Maraas\n"
 "Sigurd Gartmann\n"
 "Runar Ingebrigtsen"
 
-#: ../app/dialogs/about-dialog.c:509
+#: ../app/dialogs/about-dialog.c:515
 msgid "GIMP is brought to you by"
 msgstr "GIMP er levert til deg av"
 
-#: ../app/dialogs/about-dialog.c:583
+#: ../app/dialogs/about-dialog.c:589
 msgid "This is an unstable development release."
 msgstr "Dette er en ustabil utviklingsversjon."
 
@@ -9203,12 +9205,12 @@ msgstr "_Navn på lag:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1074
+#: ../app/tools/gimpmeasuretool.c:1088
 msgid "Width:"
 msgstr "Bredde:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1102
+#: ../app/tools/gimpmeasuretool.c:1116
 msgid "Height:"
 msgstr "Høyde:"
 
@@ -10185,28 +10187,28 @@ msgid "Print Size"
 msgstr "Utskriftsstørrelse:"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:201
+#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:198
 #: ../app/widgets/gimptemplateeditor.c:160
 msgid "_Width:"
 msgstr "_Bredde:"
 
-#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:205
+#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:167
 msgid "H_eight:"
 msgstr "_Høyde:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:263
+#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:287
 msgid "_X resolution:"
 msgstr "_X-oppløsning:"
 
-#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:266
+#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:294
 msgid "_Y resolution:"
 msgstr "_Y-oppløsning:"
 
-#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:259
+#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #: ../app/widgets/gimptemplateeditor.c:307
 #, c-format
 msgid "pixels/%a"
@@ -10448,24 +10450,24 @@ msgstr "H"
 msgid "_Sample Merged"
 msgstr "_Prøve sammenflettet"
 
-#: ../app/display/gimpdisplayshell.c:502
+#: ../app/display/gimpdisplayshell.c:499
 msgid "Access the image menu"
 msgstr "Gå til bildemenyen"
 
-#: ../app/display/gimpdisplayshell.c:616
+#: ../app/display/gimpdisplayshell.c:613
 msgid "Zoom image when window size changes"
 msgstr "Zoom bildet når vindusstørrelsen endres"
 
-#: ../app/display/gimpdisplayshell.c:645
+#: ../app/display/gimpdisplayshell.c:642
 msgid "Toggle Quick Mask"
 msgstr "Slå av/på hurtigmaske"
 
-#: ../app/display/gimpdisplayshell.c:668
+#: ../app/display/gimpdisplayshell.c:665
 msgid "Navigate the image display"
 msgstr "Naviger bildevisningen"
 
-#: ../app/display/gimpdisplayshell.c:736
-#: ../app/display/gimpdisplayshell.c:1315 ../app/widgets/gimptoolbox.c:315
+#: ../app/display/gimpdisplayshell.c:733
+#: ../app/display/gimpdisplayshell.c:1311 ../app/widgets/gimptoolbox.c:315
 msgid "Drop image files here to open them"
 msgstr "Slipp bildefiler her for å åpne dem"
 
@@ -10538,7 +10540,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
 #: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:335
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:286
-#: ../app/tools/gimptransformtool.c:349 ../app/tools/gimptransformtool.c:1193
+#: ../app/tools/gimptransformtool.c:350 ../app/tools/gimptransformtool.c:1178
 msgid "The active layer's pixels are locked."
 msgstr ""
 
@@ -10561,12 +10563,12 @@ msgstr "Filter for fargevisning"
 msgid "Configure Color Display Filters"
 msgstr "Konfigurer filtre for fargevisning"
 
-#: ../app/display/gimpdisplayshell-handlers.c:587
+#: ../app/display/gimpdisplayshell-handlers.c:561
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Bilde lagret som «%s»."
 
-#: ../app/display/gimpdisplayshell-handlers.c:601
+#: ../app/display/gimpdisplayshell-handlers.c:575
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Bilde eksportert til «%s»"
@@ -10617,7 +10619,7 @@ msgstr " (overskrevet)"
 msgid " (imported)"
 msgstr " (importert)"
 
-#: ../app/display/gimpstatusbar.c:361
+#: ../app/display/gimpstatusbar.c:358
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Avbryt <i>%s</i>"
@@ -10772,7 +10774,7 @@ msgid "Pencil"
 msgstr "Blyant"
 
 #: ../app/paint/gimpperspectiveclone.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:127
+#: ../app/tools/gimpperspectiveclonetool.c:128
 msgid "Perspective Clone"
 msgstr "Perspektivkloning"
 
@@ -10832,33 +10834,33 @@ msgstr "Gjør skarpere"
 msgid "Combine Masks"
 msgstr "Kombiner masker"
 
-#: ../app/pdb/drawable-cmds.c:885
+#: ../app/pdb/drawable-cmds.c:474
 msgid "Plug-In"
 msgstr "Programtillegg"
 
-#: ../app/pdb/drawable-transform-cmds.c:312
-#: ../app/pdb/drawable-transform-cmds.c:397
-#: ../app/pdb/item-transform-cmds.c:242 ../app/pdb/transform-tools-cmds.c:150
+#: ../app/pdb/drawable-transform-cmds.c:319
+#: ../app/pdb/drawable-transform-cmds.c:406
+#: ../app/pdb/item-transform-cmds.c:256 ../app/pdb/transform-tools-cmds.c:153
 #: ../app/tools/gimpperspectivetool.c:69
 msgid "Perspective"
 msgstr "Perspektiv"
 
-#: ../app/pdb/drawable-transform-cmds.c:840
-#: ../app/pdb/drawable-transform-cmds.c:912
-#: ../app/pdb/item-transform-cmds.c:555 ../app/pdb/transform-tools-cmds.c:366
+#: ../app/pdb/drawable-transform-cmds.c:862
+#: ../app/pdb/drawable-transform-cmds.c:936
+#: ../app/pdb/item-transform-cmds.c:597 ../app/pdb/transform-tools-cmds.c:375
 #: ../app/tools/gimpsheartool.c:110
 msgid "Shearing"
 msgstr "Forskyvning"
 
-#: ../app/pdb/drawable-transform-cmds.c:997
-#: ../app/pdb/item-transform-cmds.c:644 ../app/pdb/transform-tools-cmds.c:442
+#: ../app/pdb/drawable-transform-cmds.c:1023
+#: ../app/pdb/item-transform-cmds.c:693 ../app/pdb/transform-tools-cmds.c:453
 msgid "2D Transform"
 msgstr "2D-transformasjon"
 
-#: ../app/pdb/drawable-transform-cmds.c:1080
-#: ../app/pdb/drawable-transform-cmds.c:1173
-#: ../app/pdb/drawable-transform-cmds.c:1264
-#: ../app/pdb/item-transform-cmds.c:741
+#: ../app/pdb/drawable-transform-cmds.c:1108
+#: ../app/pdb/drawable-transform-cmds.c:1203
+#: ../app/pdb/drawable-transform-cmds.c:1296
+#: ../app/pdb/item-transform-cmds.c:797
 msgid "2D Transforming"
 msgstr "2D-transformasjon"
 
@@ -11054,7 +11056,7 @@ msgstr ""
 "Prosedyre «%s» har blitt kalt med verditype for argument «%s» (#%d). "
 "Forventet %s, fikk %s."
 
-#: ../app/pdb/gimppdbcontext.c:74
+#: ../app/pdb/gimppdbcontext.c:78
 #: ../app/tools/gimpforegroundselectoptions.c:78
 #: ../app/tools/gimpselectionoptions.c:78
 msgid "Smooth edges"
@@ -11139,17 +11141,17 @@ msgstr ""
 "Prosedyre «%s» har blitt kalt med verdien «%s» for argument «%s» (#%d, type "
 "%s). Denne verdien er utenfor gyldig område."
 
-#: ../app/pdb/image-cmds.c:2648
+#: ../app/pdb/image-cmds.c:2650
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Bildeoppløsningen er utenfor grensene, bruker standard oppløsning i stedet."
 
-#: ../app/pdb/layer-cmds.c:443 ../app/pdb/layer-cmds.c:481
+#: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
 msgid "Move Layer"
 msgstr "Flytt lag"
 
-#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:198
+#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:199
 msgid "Free Select"
 msgstr "Fritt utvalg"
 
@@ -11170,44 +11172,44 @@ msgstr "Klarte ikke å lage tekstlag"
 msgid "Set text layer attribute"
 msgstr "Rediger lagets attributter"
 
-#: ../app/pdb/vectors-cmds.c:587
+#: ../app/pdb/vectors-cmds.c:323
 #, fuzzy
 msgid "Remove path stroke"
 msgstr "Fjern parasitt"
 
-#: ../app/pdb/vectors-cmds.c:623
+#: ../app/pdb/vectors-cmds.c:359
 #, fuzzy
 msgid "Close path stroke"
 msgstr "Koble sammen strøk"
 
-#: ../app/pdb/vectors-cmds.c:663
+#: ../app/pdb/vectors-cmds.c:399
 #, fuzzy
 msgid "Translate path stroke"
 msgstr "Skyv elementer"
 
-#: ../app/pdb/vectors-cmds.c:703
+#: ../app/pdb/vectors-cmds.c:439
 #, fuzzy
 msgid "Scale path stroke"
 msgstr "Skaler bane"
 
-#: ../app/pdb/vectors-cmds.c:745
+#: ../app/pdb/vectors-cmds.c:481
 #, fuzzy
 msgid "Rotate path stroke"
 msgstr "Roter bane"
 
-#: ../app/pdb/vectors-cmds.c:785 ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
 #, fuzzy
 msgid "Flip path stroke"
 msgstr "Vend bane"
 
-#: ../app/pdb/vectors-cmds.c:958 ../app/pdb/vectors-cmds.c:1080
-#: ../app/pdb/vectors-cmds.c:1299
+#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:816
+#: ../app/pdb/vectors-cmds.c:1035
 #, fuzzy
 msgid "Add path stroke"
 msgstr "Legg til strøk"
 
-#: ../app/pdb/vectors-cmds.c:1132 ../app/pdb/vectors-cmds.c:1185
-#: ../app/pdb/vectors-cmds.c:1246
+#: ../app/pdb/vectors-cmds.c:868 ../app/pdb/vectors-cmds.c:921
+#: ../app/pdb/vectors-cmds.c:982
 msgid "Extend path stroke"
 msgstr ""
 
@@ -11361,7 +11363,7 @@ msgstr ""
 "bedre om calypso, watt \n"
 "og klær på vei hjem."
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1368
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1386
 msgid "Add Text Layer"
 msgstr "Legg til tekstlag"
 
@@ -11463,7 +11465,7 @@ msgstr "Rate:"
 msgid "Flow:"
 msgstr "Flyt:"
 
-#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:768
+#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:764
 msgid "Align"
 msgstr "Juster"
 
@@ -11475,95 +11477,95 @@ msgstr "Plasseringsverktøy: Plasser eller organiser lag og andre objekter"
 msgid "_Align"
 msgstr "_Juster"
 
-#: ../app/tools/gimpaligntool.c:600
+#: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:609
+#: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this layer as first item"
 msgstr "Klikk for å velge dette laget som første oppføring"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this layer to the list"
 msgstr "Klikk for å legge til dette laget i listen"
 
-#: ../app/tools/gimpaligntool.c:621
+#: ../app/tools/gimpaligntool.c:620
 #, fuzzy
 msgid "Click to pick this guide as first item"
 msgstr "Klikk for å velge bane å redigere"
 
-#: ../app/tools/gimpaligntool.c:629
+#: ../app/tools/gimpaligntool.c:628
 #, fuzzy
 msgid "Click to add this guide to the list"
 msgstr "Klikk for å gjøre linjen lysere"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:632
 #, fuzzy
 msgid "Click to pick this path as first item"
 msgstr "Klikk for å velge bane å redigere"
 
-#: ../app/tools/gimpaligntool.c:641
+#: ../app/tools/gimpaligntool.c:640
 #, fuzzy
 msgid "Click to add this path to the list"
 msgstr "Klikk for å velge bane å redigere"
 
-#: ../app/tools/gimpaligntool.c:780
+#: ../app/tools/gimpaligntool.c:776
 msgid "Relative to:"
 msgstr "Relativ til:"
 
-#: ../app/tools/gimpaligntool.c:798
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align left edge of target"
 msgstr "Juster venstre kant av målet"
 
-#: ../app/tools/gimpaligntool.c:804
+#: ../app/tools/gimpaligntool.c:800
 msgid "Align center of target"
 msgstr "Juster senter av målet"
 
-#: ../app/tools/gimpaligntool.c:810
+#: ../app/tools/gimpaligntool.c:806
 msgid "Align right edge of target"
 msgstr "Juster høyre side av målet"
 
-#: ../app/tools/gimpaligntool.c:820
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align top edge of target"
 msgstr "Juster toppkanten av målet"
 
-#: ../app/tools/gimpaligntool.c:826
+#: ../app/tools/gimpaligntool.c:822
 msgid "Align middle of target"
 msgstr "Juster midten av målet"
 
-#: ../app/tools/gimpaligntool.c:832
+#: ../app/tools/gimpaligntool.c:828
 msgid "Align bottom of target"
 msgstr "Juster bunnkanten av målet"
 
-#: ../app/tools/gimpaligntool.c:836
+#: ../app/tools/gimpaligntool.c:832
 msgid "Distribute"
 msgstr "Distribuer"
 
-#: ../app/tools/gimpaligntool.c:850
+#: ../app/tools/gimpaligntool.c:846
 msgid "Distribute left edges of targets"
 msgstr "Distribuer venstre kanter av mål"
 
-#: ../app/tools/gimpaligntool.c:857
+#: ../app/tools/gimpaligntool.c:853
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuer horisontale senter av mål"
 
-#: ../app/tools/gimpaligntool.c:864
+#: ../app/tools/gimpaligntool.c:860
 msgid "Distribute right edges of targets"
 msgstr "Distribuer høyre kanter av mål"
 
-#: ../app/tools/gimpaligntool.c:874
+#: ../app/tools/gimpaligntool.c:870
 msgid "Distribute top edges of targets"
 msgstr "Distribuer toppkanter av mål"
 
-#: ../app/tools/gimpaligntool.c:881
+#: ../app/tools/gimpaligntool.c:877
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuer vertikale senter av mål"
 
-#: ../app/tools/gimpaligntool.c:887
+#: ../app/tools/gimpaligntool.c:883
 msgid "Distribute bottoms of targets"
 msgstr "Distribuer bunnkanter av mål"
 
-#: ../app/tools/gimpaligntool.c:895 ../app/tools/gimpblendoptions.c:221
+#: ../app/tools/gimpaligntool.c:891 ../app/tools/gimpblendoptions.c:221
 msgid "Offset:"
 msgstr "Avstand:"
 
@@ -11609,17 +11611,17 @@ msgstr "_Bland"
 msgid "Blend does not operate on indexed layers."
 msgstr "Blanding virker ikke på indekserte lag."
 
-#: ../app/tools/gimpblendtool.c:423 ../app/tools/gimppainttool.c:634
+#: ../app/tools/gimpblendtool.c:420 ../app/tools/gimppainttool.c:634
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s for begrensede vinkler"
 
-#: ../app/tools/gimpblendtool.c:424
+#: ../app/tools/gimpblendtool.c:421
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s for å flytte hele linjen"
 
-#: ../app/tools/gimpblendtool.c:428
+#: ../app/tools/gimpblendtool.c:425
 msgid "Blend: "
 msgstr "Bland: "
 
@@ -11708,7 +11710,7 @@ msgstr "Fyll gjennomsiktige områder"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:150 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:951
+#: ../app/tools/gimpperspectiveclonetool.c:963
 #: ../app/tools/gimpregionselectoptions.c:207
 msgid "Sample merged"
 msgstr "Prøve sammenflettet"
@@ -11770,12 +11772,12 @@ msgid "Click to set a new clone source"
 msgstr "Klikk for å velge en ny kilde for kloning"
 
 #: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:946
+#: ../app/tools/gimpperspectiveclonetool.c:958
 msgid "Source"
 msgstr "Kilde"
 
 #: ../app/tools/gimpclonetool.c:129 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:967
+#: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
 msgstr "Justering:"
 
@@ -11963,19 +11965,19 @@ msgstr "Klikk i et bilde for å legge fargen til i paletten"
 msgid "Color Picker Information"
 msgstr "Informasjon om fargeplukker"
 
-#: ../app/tools/gimpcolortool.c:268 ../app/tools/gimpcolortool.c:452
+#: ../app/tools/gimpcolortool.c:268 ../app/tools/gimpcolortool.c:446
 msgid "Move Sample Point: "
 msgstr "Flytt prøvepunkt: "
 
-#: ../app/tools/gimpcolortool.c:444
+#: ../app/tools/gimpcolortool.c:438
 msgid "Remove Sample Point"
 msgstr "Fjern prøvepunkt"
 
-#: ../app/tools/gimpcolortool.c:445
+#: ../app/tools/gimpcolortool.c:439
 msgid "Cancel Sample Point"
 msgstr "Avbryt prøvepunkt"
 
-#: ../app/tools/gimpcolortool.c:453
+#: ../app/tools/gimpcolortool.c:447
 msgid "Add Sample Point: "
 msgstr "Legg til prøvepunkt: "
 
@@ -12105,7 +12107,7 @@ msgid "Curve _type:"
 msgstr "Kurve_type:"
 
 #: ../app/tools/gimpcurvestool.c:646 ../app/tools/gimplevelstool.c:756
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Kunne ikke lese %d bytes fra «%s»: %s"
 
@@ -12188,17 +12190,17 @@ msgstr "Område"
 msgid "Exposure:"
 msgstr "Eksponering:"
 
-#: ../app/tools/gimpeditselectiontool.c:241
+#: ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
 msgstr "Flytt utvalg"
 
-#: ../app/tools/gimpeditselectiontool.c:245
-#: ../app/tools/gimpeditselectiontool.c:1249
+#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:1233
 msgid "Move Floating Selection"
 msgstr "Flytt flytende utvalg"
 
-#: ../app/tools/gimpeditselectiontool.c:464
-#: ../app/tools/gimpeditselectiontool.c:739
+#: ../app/tools/gimpeditselectiontool.c:453
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "Flytt: "
 
@@ -12365,40 +12367,40 @@ msgstr "Marker forgrunn ved å male på objektet som skal hentes ut"
 msgid "Roughly outline the object to extract"
 msgstr "Tegn en runding rundt objektet som skal hentes ut"
 
-#: ../app/tools/gimpforegroundselecttool.c:773
+#: ../app/tools/gimpforegroundselecttool.c:774
 #, fuzzy
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "Velg forgrunn"
 
-#: ../app/tools/gimpfreeselecttool.c:199
+#: ../app/tools/gimpfreeselecttool.c:200
 #, fuzzy
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "Fritt utvalg: Velg områder på frihånd"
 
-#: ../app/tools/gimpfreeselecttool.c:200
+#: ../app/tools/gimpfreeselecttool.c:201
 msgid "_Free Select"
 msgstr "_Fritt utvalg"
 
-#: ../app/tools/gimpfreeselecttool.c:1119
+#: ../app/tools/gimpfreeselecttool.c:1120
 msgid "Click to complete selection"
 msgstr "Klikk for å fullføre utvalg"
 
-#: ../app/tools/gimpfreeselecttool.c:1123
+#: ../app/tools/gimpfreeselecttool.c:1124
 #, fuzzy
 msgid "Click-Drag to move segment vertex"
 msgstr "Klikk og dra for å flytte komponenten rundt."
 
-#: ../app/tools/gimpfreeselecttool.c:1128
+#: ../app/tools/gimpfreeselecttool.c:1129
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 
-#: ../app/tools/gimpfreeselecttool.c:1132
+#: ../app/tools/gimpfreeselecttool.c:1133
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 
-#: ../app/tools/gimpfreeselecttool.c:1625
+#: ../app/tools/gimpfreeselecttool.c:1643
 msgctxt "command"
 msgid "Free Select"
 msgstr "Fritt utvalg"
@@ -12574,7 +12576,7 @@ msgstr "Justering"
 msgid "Size:"
 msgstr "Størrelse:"
 
-#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1046
+#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1060
 #: ../app/tools/gimppaintoptions-gui.c:137
 #: ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
@@ -12626,32 +12628,32 @@ msgstr "Sakseverktøy: Velg former ved å bruke intelligent kantgjenkjenning"
 msgid "Intelligent _Scissors"
 msgstr "Intelligent _saks"
 
-#: ../app/tools/gimpiscissorstool.c:938 ../app/tools/gimpmeasuretool.c:617
+#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:617
 msgid "Click-Drag to move this point"
 msgstr "Klikk og dra for å flytte dette punktet"
 
-#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpiscissorstool.c:1005
+#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:997
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: slå av autoinnretting"
 
-#: ../app/tools/gimpiscissorstool.c:957
+#: ../app/tools/gimpiscissorstool.c:949
 msgid "Click to close the curve"
 msgstr "Klikk for å lukke kurven"
 
-#: ../app/tools/gimpiscissorstool.c:963
+#: ../app/tools/gimpiscissorstool.c:955
 msgid "Click to add a point on this segment"
 msgstr "Klikk for å legge til et punkt på segmentet"
 
-#: ../app/tools/gimpiscissorstool.c:977
+#: ../app/tools/gimpiscissorstool.c:969
 msgid "Click or press Enter to convert to a selection"
 msgstr "Klikk med musa eller trykk linjeskift for å konvertere til et utvalg"
 
-#: ../app/tools/gimpiscissorstool.c:987
+#: ../app/tools/gimpiscissorstool.c:979
 msgid "Press Enter to convert to a selection"
 msgstr "Trykk linjeskift for å konvertere til et utvalg"
 
-#: ../app/tools/gimpiscissorstool.c:1002
+#: ../app/tools/gimpiscissorstool.c:994
 msgid "Click or Click-Drag to add a point"
 msgstr "Klikk eller klikk og dra for å legge til et punkt"
 
@@ -12749,19 +12751,19 @@ msgstr "_Zoom"
 msgid "Use info window"
 msgstr "Bruk infovindu"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:125
 msgid "Measure"
 msgstr "Mål"
 
-#: ../app/tools/gimpmeasuretool.c:124
+#: ../app/tools/gimpmeasuretool.c:126
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Måleverktøy: Mål avstander og vinkler"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:127
 msgid "_Measure"
 msgstr "_Mål"
 
-#: ../app/tools/gimpmeasuretool.c:245
+#: ../app/tools/gimpmeasuretool.c:246
 msgid "Add Guides"
 msgstr "Legg til innrettingslinjer"
 
@@ -12785,18 +12787,18 @@ msgstr "Klikk og dra for å legge til et nytt punkt"
 msgid "Click-Drag to move all points"
 msgstr "Klikk og dra for å flytte alle punkter"
 
-#: ../app/tools/gimpmeasuretool.c:884 ../app/tools/gimpmeasuretool.c:1029
-#: ../app/tools/gimpmeasuretool.c:1085 ../app/tools/gimpmeasuretool.c:1113
+#: ../app/tools/gimpmeasuretool.c:898 ../app/tools/gimpmeasuretool.c:1043
+#: ../app/tools/gimpmeasuretool.c:1099 ../app/tools/gimpmeasuretool.c:1127
 #: ../app/tools/gimppainttool.c:643
 msgid "pixels"
 msgstr "piksler"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:997
+#: ../app/tools/gimpmeasuretool.c:1011
 msgid "Measure Distances and Angles"
 msgstr "Mål avstander og vinkler"
 
-#: ../app/tools/gimpmeasuretool.c:1018
+#: ../app/tools/gimpmeasuretool.c:1032
 msgid "Distance:"
 msgstr "Avstand:"
 
@@ -12837,19 +12839,19 @@ msgstr "Flytteverktøy: Flytt lag, utvalg og andre objekter"
 msgid "_Move"
 msgstr "_Flytt"
 
-#: ../app/tools/gimpmovetool.c:285 ../app/tools/gimpmovetool.c:581
+#: ../app/tools/gimpmovetool.c:285 ../app/tools/gimpmovetool.c:580
 msgid "Move Guide: "
 msgstr "Flytt innrettingslinje: "
 
-#: ../app/tools/gimpmovetool.c:575
+#: ../app/tools/gimpmovetool.c:574
 msgid "Remove Guide"
 msgstr "Fjern innrettingslinje"
 
-#: ../app/tools/gimpmovetool.c:575
+#: ../app/tools/gimpmovetool.c:574
 msgid "Cancel Guide"
 msgstr "Avbryt innrettingslinje"
 
-#: ../app/tools/gimpmovetool.c:581
+#: ../app/tools/gimpmovetool.c:580
 msgid "Add Guide: "
 msgstr "Legg til innrettingslinje: "
 
@@ -12948,7 +12950,7 @@ msgstr "Blyantverktøy: Penseltegning med harde kanter"
 msgid "Pe_ncil"
 msgstr "_Blyant"
 
-#: ../app/tools/gimpperspectiveclonetool.c:128
+#: ../app/tools/gimpperspectiveclonetool.c:129
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
@@ -12956,11 +12958,11 @@ msgstr ""
 "Perspektivkloningsverktøy: Klon fra en bildekilde etter å ha utført en "
 "perspektivtransformasjon"
 
-#: ../app/tools/gimpperspectiveclonetool.c:130
+#: ../app/tools/gimpperspectiveclonetool.c:131
 msgid "_Perspective Clone"
 msgstr "_Perspektivkloning"
 
-#: ../app/tools/gimpperspectiveclonetool.c:703
+#: ../app/tools/gimpperspectiveclonetool.c:704
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ktrl-klikk for å velge en kloningskilde"
 
@@ -13055,7 +13057,7 @@ msgstr "Rektangelutvalg: Velg et rektangulært område"
 msgid "_Rectangle Select"
 msgstr "_Rektangelutvalg"
 
-#: ../app/tools/gimprectangletool.c:1156 ../app/tools/gimprectangletool.c:2130
+#: ../app/tools/gimprectangletool.c:1158 ../app/tools/gimprectangletool.c:2220
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
@@ -13075,7 +13077,7 @@ msgstr "Velg gjennomsiktige områder"
 msgid "Select by:"
 msgstr "Velg med:"
 
-#: ../app/tools/gimpregionselecttool.c:164
+#: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
 msgstr "Flytt musa for å endre terskel"
 
@@ -13276,32 +13278,32 @@ msgstr "Boks:"
 msgid "Language:"
 msgstr "Språk:"
 
-#: ../app/tools/gimptexttool.c:193
+#: ../app/tools/gimptexttool.c:194
 msgid "Text"
 msgstr "Tekst"
 
-#: ../app/tools/gimptexttool.c:194
+#: ../app/tools/gimptexttool.c:195
 msgid "Text Tool: Create or edit text layers"
 msgstr "Tekstverktøy: Opprett eller rediger tekstlag"
 
-#: ../app/tools/gimptexttool.c:195
+#: ../app/tools/gimptexttool.c:196
 msgid "Te_xt"
 msgstr "_Tekst"
 
-#: ../app/tools/gimptexttool.c:941
+#: ../app/tools/gimptexttool.c:959
 #, fuzzy
 msgid "Reshape Text Layer"
 msgstr "Endre navn på tekstlag"
 
-#: ../app/tools/gimptexttool.c:1479 ../app/tools/gimptexttool.c:1482
+#: ../app/tools/gimptexttool.c:1497 ../app/tools/gimptexttool.c:1500
 msgid "Confirm Text Editing"
 msgstr "Bekreft tekstredigering"
 
-#: ../app/tools/gimptexttool.c:1486
+#: ../app/tools/gimptexttool.c:1504
 msgid "Create _New Layer"
 msgstr "Lag et _nytt lag"
 
-#: ../app/tools/gimptexttool.c:1510
+#: ../app/tools/gimptexttool.c:1528
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13384,19 +13386,19 @@ msgstr "15 grader  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Behold bredde- og høydeforhold  (%s)"
 
-#: ../app/tools/gimptransformtool.c:239
+#: ../app/tools/gimptransformtool.c:240
 msgid "Transforming"
 msgstr "Transformerer..."
 
-#: ../app/tools/gimptransformtool.c:1192
+#: ../app/tools/gimptransformtool.c:1177
 msgid "There is no layer to transform."
 msgstr "Det finnes ingen lag å transformere."
 
-#: ../app/tools/gimptransformtool.c:1205
+#: ../app/tools/gimptransformtool.c:1190
 msgid "There is no path to transform."
 msgstr "Det finnes ingen bane å transformere."
 
-#: ../app/tools/gimptransformtool.c:1206
+#: ../app/tools/gimptransformtool.c:1191
 msgid "The active path's strokes are locked."
 msgstr ""
 
@@ -13430,146 +13432,146 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "Utvalg fra bane"
 
-#: ../app/tools/gimpvectortool.c:162
+#: ../app/tools/gimpvectortool.c:163
 msgid "Paths Tool: Create and edit paths"
 msgstr "Baneverktøy: Opprett og rediger baner"
 
-#: ../app/tools/gimpvectortool.c:163
+#: ../app/tools/gimpvectortool.c:164
 msgid "Pat_hs"
 msgstr "_Baner"
 
-#: ../app/tools/gimpvectortool.c:253
+#: ../app/tools/gimpvectortool.c:254
 #, fuzzy
 msgid "The active path is locked."
 msgstr "Den aktive banen er låst."
 
-#: ../app/tools/gimpvectortool.c:341
+#: ../app/tools/gimpvectortool.c:342
 msgid "Add Stroke"
 msgstr "Legg til strøk"
 
-#: ../app/tools/gimpvectortool.c:365
+#: ../app/tools/gimpvectortool.c:366
 msgid "Add Anchor"
 msgstr "Legg til anker"
 
-#: ../app/tools/gimpvectortool.c:391
+#: ../app/tools/gimpvectortool.c:392
 msgid "Insert Anchor"
 msgstr "Sett inn anker"
 
-#: ../app/tools/gimpvectortool.c:422
+#: ../app/tools/gimpvectortool.c:423
 msgid "Drag Handle"
 msgstr "Dra håndtak"
 
-#: ../app/tools/gimpvectortool.c:452
+#: ../app/tools/gimpvectortool.c:453
 msgid "Drag Anchor"
 msgstr "Dra anker"
 
-#: ../app/tools/gimpvectortool.c:470
+#: ../app/tools/gimpvectortool.c:471
 msgid "Drag Anchors"
 msgstr "Dra ankere"
 
-#: ../app/tools/gimpvectortool.c:493
+#: ../app/tools/gimpvectortool.c:494
 msgid "Drag Curve"
 msgstr "Dra kurve"
 
-#: ../app/tools/gimpvectortool.c:522
+#: ../app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
 msgstr "Koble sammen strøk"
 
-#: ../app/tools/gimpvectortool.c:554
+#: ../app/tools/gimpvectortool.c:555
 msgid "Drag Path"
 msgstr "Dra bane"
 
-#: ../app/tools/gimpvectortool.c:565
+#: ../app/tools/gimpvectortool.c:566
 msgid "Convert Edge"
 msgstr "Konverter kant"
 
-#: ../app/tools/gimpvectortool.c:596
+#: ../app/tools/gimpvectortool.c:597
 msgid "Delete Anchor"
 msgstr "Slett anker"
 
-#: ../app/tools/gimpvectortool.c:619
+#: ../app/tools/gimpvectortool.c:620
 msgid "Delete Segment"
 msgstr "Slett segment"
 
-#: ../app/tools/gimpvectortool.c:838
+#: ../app/tools/gimpvectortool.c:839
 msgid "Move Anchors"
 msgstr "Flytt ankere"
 
-#: ../app/tools/gimpvectortool.c:1198
+#: ../app/tools/gimpvectortool.c:1199
 msgid "Click to pick path to edit"
 msgstr "Klikk for å velge bane å redigere"
 
-#: ../app/tools/gimpvectortool.c:1202
+#: ../app/tools/gimpvectortool.c:1203
 msgid "Click to create a new path"
 msgstr "Klikk for å opprette en ny bane"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1207
 msgid "Click to create a new component of the path"
 msgstr "Klikk for å opprette en ny komponent i banen"
 
-#: ../app/tools/gimpvectortool.c:1210
+#: ../app/tools/gimpvectortool.c:1211
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Klikk og dra for å opprette et nytt anker"
 
-#: ../app/tools/gimpvectortool.c:1220 ../app/tools/gimpvectortool.c:1227
+#: ../app/tools/gimpvectortool.c:1221 ../app/tools/gimpvectortool.c:1228
 msgid "Click-Drag to move the anchor around"
 msgstr "Klikk og dra for å flytte ankeret rundt"
 
-#: ../app/tools/gimpvectortool.c:1231 ../app/tools/gimpvectortool.c:1254
+#: ../app/tools/gimpvectortool.c:1232 ../app/tools/gimpvectortool.c:1255
 msgid "Click-Drag to move the anchors around"
 msgstr "Klikk og dra for å flytte ankrene rundt"
 
-#: ../app/tools/gimpvectortool.c:1237
+#: ../app/tools/gimpvectortool.c:1238
 msgid "Click-Drag to move the handle around"
 msgstr "Klikk og dra for å flytte håndtaket rundt"
 
-#: ../app/tools/gimpvectortool.c:1244
+#: ../app/tools/gimpvectortool.c:1245
 #, fuzzy
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "Klikk og dra for å flytte håndtaket rundt"
 
-#: ../app/tools/gimpvectortool.c:1259
+#: ../app/tools/gimpvectortool.c:1260
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Klikk og dra for å endre kurvens form"
 
-#: ../app/tools/gimpvectortool.c:1262
+#: ../app/tools/gimpvectortool.c:1263
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symmetrisk"
 
-#: ../app/tools/gimpvectortool.c:1267
+#: ../app/tools/gimpvectortool.c:1268
 msgid "Click-Drag to move the component around"
 msgstr "Klikk og dra for å flytte komponenten rundt."
 
-#: ../app/tools/gimpvectortool.c:1275
+#: ../app/tools/gimpvectortool.c:1276
 msgid "Click-Drag to move the path around"
 msgstr "Klikk og dra for å flytte banen rundt"
 
-#: ../app/tools/gimpvectortool.c:1279
+#: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klikk og dra for å sette inn et anker i banen"
 
-#: ../app/tools/gimpvectortool.c:1287
+#: ../app/tools/gimpvectortool.c:1288
 msgid "Click to delete this anchor"
 msgstr "Klikk for å slette dette ankeret"
 
-#: ../app/tools/gimpvectortool.c:1291
+#: ../app/tools/gimpvectortool.c:1292
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Klikk for å koble dette ankeret til det valgte endepunktet"
 
-#: ../app/tools/gimpvectortool.c:1296
+#: ../app/tools/gimpvectortool.c:1297
 msgid "Click to open up the path"
 msgstr "Klikk for å åpne banen"
 
-#: ../app/tools/gimpvectortool.c:1300
+#: ../app/tools/gimpvectortool.c:1301
 msgid "Click to make this node angular"
 msgstr "Klikk for å gjøre denne noden vinklet"
 
-#: ../app/tools/gimpvectortool.c:1810
+#: ../app/tools/gimpvectortool.c:1813
 msgid "Delete Anchors"
 msgstr "Slett ankre"
 
-#: ../app/tools/gimpvectortool.c:1981
+#: ../app/tools/gimpvectortool.c:1984
 msgid "There is no active layer or channel to stroke to"
 msgstr "Det er ikke noe aktivt lag eller en aktiv kanal å tegne på"
 
@@ -13698,97 +13700,97 @@ msgctxt "vector-mode"
 msgid "Move"
 msgstr "Flytt"
 
-#: ../app/vectors/gimpvectors.c:203
+#: ../app/vectors/gimpvectors.c:206
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "Endre navn på bane"
 
-#: ../app/vectors/gimpvectors.c:204
+#: ../app/vectors/gimpvectors.c:207
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "Flytt bane"
 
-#: ../app/vectors/gimpvectors.c:205
+#: ../app/vectors/gimpvectors.c:208
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "Skaler bane"
 
-#: ../app/vectors/gimpvectors.c:206
+#: ../app/vectors/gimpvectors.c:209
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "Endre størrelse på bane"
 
-#: ../app/vectors/gimpvectors.c:207
+#: ../app/vectors/gimpvectors.c:210
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "Vend bane"
 
-#: ../app/vectors/gimpvectors.c:208
+#: ../app/vectors/gimpvectors.c:211
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "Roter bane"
 
-#: ../app/vectors/gimpvectors.c:209
+#: ../app/vectors/gimpvectors.c:212
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "Transformer bane"
 
-#: ../app/vectors/gimpvectors.c:210
+#: ../app/vectors/gimpvectors.c:213
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "Strek opp bane"
 
-#: ../app/vectors/gimpvectors.c:211
+#: ../app/vectors/gimpvectors.c:214
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "Bane til utvalg"
 
-#: ../app/vectors/gimpvectors.c:212
+#: ../app/vectors/gimpvectors.c:215
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "Endre rekkefølge for bane"
 
-#: ../app/vectors/gimpvectors.c:213
+#: ../app/vectors/gimpvectors.c:216
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "Løft bane"
 
-#: ../app/vectors/gimpvectors.c:214
+#: ../app/vectors/gimpvectors.c:217
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "Løft banen til toppen"
 
-#: ../app/vectors/gimpvectors.c:215
+#: ../app/vectors/gimpvectors.c:218
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "Senk bane"
 
-#: ../app/vectors/gimpvectors.c:216
+#: ../app/vectors/gimpvectors.c:219
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "Senk banen til bunnen"
 
-#: ../app/vectors/gimpvectors.c:217
+#: ../app/vectors/gimpvectors.c:220
 msgid "Path cannot be raised higher."
 msgstr "Banen kan ikke løftes høyere."
 
-#: ../app/vectors/gimpvectors.c:218
+#: ../app/vectors/gimpvectors.c:221
 msgid "Path cannot be lowered more."
 msgstr "Banen kan ikke senkes lavere."
 
-#: ../app/vectors/gimpvectors.c:351
+#: ../app/vectors/gimpvectors.c:364
 msgid "Move Path"
 msgstr "Flytt bane"
 
-#: ../app/vectors/gimpvectors.c:450
+#: ../app/vectors/gimpvectors.c:463
 msgid "Flip Path"
 msgstr "Vend bane"
 
-#: ../app/vectors/gimpvectors.c:481
+#: ../app/vectors/gimpvectors.c:494
 msgid "Rotate Path"
 msgstr "Roter bane"
 
-#: ../app/vectors/gimpvectors.c:511
+#: ../app/vectors/gimpvectors.c:524
 msgid "Transform Path"
 msgstr "Transformer bane"
 
@@ -13937,7 +13939,7 @@ msgstr "Fjern «%s» fra listen over aktive filtre."
 msgid "No filter selected"
 msgstr "Ingen filter valgt"
 
-#: ../app/widgets/gimpcoloreditor.c:262
+#: ../app/widgets/gimpcoloreditor.c:259
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -13997,15 +13999,15 @@ msgstr "Svart:"
 msgid "Alpha:"
 msgstr "Gjennomsiktighet:"
 
-#: ../app/widgets/gimpcolormapeditor.c:210
+#: ../app/widgets/gimpcolormapeditor.c:208
 msgid "Color index:"
 msgstr "Fargeindeks:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:218
 msgid "HTML notation:"
 msgstr "HTML-notasjon:"
 
-#: ../app/widgets/gimpcolormapeditor.c:474
+#: ../app/widgets/gimpcolormapeditor.c:472
 msgid "Only indexed images have a colormap."
 msgstr ""
 
@@ -14797,21 +14799,21 @@ msgstr "Gjør elementet eksklusivt lenket"
 msgid "Lock alpha channel"
 msgstr "Lås alfakanal"
 
-#: ../app/widgets/gimpmessagebox.c:442
+#: ../app/widgets/gimpmessagebox.c:439
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Melding gjentatt %d ganger."
 
-#: ../app/widgets/gimpmessagebox.c:444
+#: ../app/widgets/gimpmessagebox.c:441
 msgid "Message repeated once."
 msgstr "Melding gjentatt en gang."
 
-#: ../app/widgets/gimppaletteeditor.c:254
-#: ../app/widgets/gimppaletteeditor.c:745
+#: ../app/widgets/gimppaletteeditor.c:252
+#: ../app/widgets/gimppaletteeditor.c:743
 msgid "Undefined"
 msgstr "Udefinert"
 
-#: ../app/widgets/gimppaletteeditor.c:262
+#: ../app/widgets/gimppaletteeditor.c:260
 msgid "Columns:"
 msgstr "Kolonner:"
 
@@ -14895,12 +14897,12 @@ msgstr "Lagre nivåinntillinger til fil"
 msgid "Delete the selected settings"
 msgstr "Slett valgt mal"
 
-#: ../app/widgets/gimpsizebox.c:463
+#: ../app/widgets/gimpsizebox.c:460
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d × %d ppi"
 
-#: ../app/widgets/gimpsizebox.c:465
+#: ../app/widgets/gimpsizebox.c:462
 #, c-format
 msgid "%d ppi"
 msgstr "%d ppi"
@@ -15031,7 +15033,7 @@ msgstr ""
 msgid "Change baseline of selected text"
 msgstr "Endre laginnholdets størrelse"
 
-#: ../app/widgets/gimpthumbbox.c:343
+#: ../app/widgets/gimpthumbbox.c:330
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -15040,20 +15042,20 @@ msgstr ""
 "Klikk for å oppdatere forhåndsvisning\n"
 "%s%sKlikk for å tvinge oppdatering selv om forhåndsvisningen er oppdatert"
 
-#: ../app/widgets/gimpthumbbox.c:361
+#: ../app/widgets/gimpthumbbox.c:348
 msgid "Pr_eview"
 msgstr "_Forhåndsvis"
 
-#: ../app/widgets/gimpthumbbox.c:416 ../app/widgets/gimpthumbbox.c:480
+#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
 msgid "No selection"
 msgstr "Ingen utvalg"
 
-#: ../app/widgets/gimpthumbbox.c:608 ../app/widgets/gimpthumbbox.c:629
+#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatyr %d av %d"
 
-#: ../app/widgets/gimpthumbbox.c:742 ../app/widgets/gimpthumbbox.c:752
+#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
 msgid "Creating preview..."
 msgstr "Oppretter forhåndsvisning..."
 
@@ -15114,43 +15116,43 @@ msgstr ""
 "Den aktive graderingen.\n"
 "Klikk for å åpne graderingsmenyen."
 
-#: ../app/widgets/gimptooleditor.c:295
+#: ../app/widgets/gimptooleditor.c:294
 #, fuzzy
 msgid "Raise this tool"
 msgstr "Løft verktøykassen"
 
-#: ../app/widgets/gimptooleditor.c:296
+#: ../app/widgets/gimptooleditor.c:295
 #, fuzzy
 msgid "Raise this tool to the top"
 msgstr "Løft verktøy til toppen"
 
-#: ../app/widgets/gimptooleditor.c:303
+#: ../app/widgets/gimptooleditor.c:302
 #, fuzzy
 msgid "Lower this tool"
 msgstr "Senk verktøy"
 
-#: ../app/widgets/gimptooleditor.c:304
+#: ../app/widgets/gimptooleditor.c:303
 #, fuzzy
 msgid "Lower this tool to the bottom"
 msgstr "Senk verktøy til bunnen"
 
-#: ../app/widgets/gimptooleditor.c:311
+#: ../app/widgets/gimptooleditor.c:310
 msgid "Reset tool order and visibility"
 msgstr "Nullstill verktøyenes rekkefølge og synlighet"
 
-#: ../app/widgets/gimptooloptionseditor.c:208
+#: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Save options to..."
 msgstr "Lagre alternativer..."
 
-#: ../app/widgets/gimptooloptionseditor.c:216
+#: ../app/widgets/gimptooloptionseditor.c:226
 msgid "Restore options from..."
 msgstr "Gjenopprett alternativer fra..."
 
-#: ../app/widgets/gimptooloptionseditor.c:224
+#: ../app/widgets/gimptooloptionseditor.c:234
 msgid "Delete saved options..."
 msgstr "Slett lagrede alternativer..."
 
-#: ../app/widgets/gimptooloptionseditor.c:573
+#: ../app/widgets/gimptooloptionseditor.c:592
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "Feil ved lagring innstillinger: %s"

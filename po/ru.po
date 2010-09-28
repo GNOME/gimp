@@ -10,16 +10,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-26 08:04+0400\n"
+"POT-Creation-Date: 2010-09-28 16:13+0200\n"
 "PO-Revision-Date: 2010-09-26 08:23+0400\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n%"
-"100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2); 10<=4 && (n%100<10 || n"
+"%100>=20) ? 1 : 2);\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -29,15 +30,17 @@ msgstr "GIMP"
 msgid "GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
-#: ../app/about.h:29
+#. The year of the last commit (UTC) will be inserted into this string.
+#: ../app/about.h:30
+#, fuzzy, c-format
 msgid ""
-"Copyright © 1995-2010\n"
+"Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Авторские права © 1995-2010\n"
 "Spencer Kimball, Peter Mattis и команда разработчиков GIMP"
 
-#: ../app/about.h:33
+#: ../app/about.h:34
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -382,7 +385,7 @@ msgid "Layers"
 msgstr "Слои"
 
 #: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:365
-#: ../app/widgets/gimppaletteeditor.c:154
+#: ../app/widgets/gimppaletteeditor.c:152
 msgid "Palette Editor"
 msgstr "Редактор палитры образцов"
 
@@ -6183,8 +6186,8 @@ msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
-"Если включено, инструмент «Перемещение» делает активным перемещаемый слой или "
-"контур. В прошлых версиях такое поведение было включено по умолчанию."
+"Если включено, инструмент «Перемещение» делает активным перемещаемый слой "
+"или контур. В прошлых версиях такое поведение было включено по умолчанию."
 
 #: ../app/config/gimprc-blurbs.h:249
 msgid ""
@@ -8330,7 +8333,7 @@ msgstr "(Возможно, миниатюра устарела)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:611 ../app/widgets/gimpimagepropview.c:446
-#: ../app/widgets/gimpsizebox.c:437 ../app/widgets/gimptemplateeditor.c:565
+#: ../app/widgets/gimpsizebox.c:434 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -8608,8 +8611,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Неисправимая ошибка разбора файла текстуры '%s': неизвестная версия формата %"
-"d."
+"Неисправимая ошибка разбора файла текстуры '%s': неизвестная версия формата "
+"%d."
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -8617,8 +8620,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Неисправимая ошибка разбора файла текстуры '%s': неподдерживаемая глубина %"
-"d.\n"
+"Неисправимая ошибка разбора файла текстуры '%s': неподдерживаемая глубина "
+"%d.\n"
 "Текстуры GIMP должны быть в оттенках серого или RGB."
 
 #: ../app/core/gimppattern-load.c:139
@@ -8626,7 +8629,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Недопустимая строка UTF-8 файле текстуры '%s'"
 
-#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:351
+#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:339
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "Не удалось вызвать %s. Возможно, запрашиваемое расширение рухнуло."
@@ -8790,27 +8793,27 @@ msgctxt "plural"
 msgid "percent"
 msgstr "проценты"
 
-#: ../app/dialogs/about-dialog.c:102 ../app/gui/gui.c:484
+#: ../app/dialogs/about-dialog.c:106 ../app/gui/gui.c:484
 msgid "About GIMP"
 msgstr "О GIMP"
 
-#: ../app/dialogs/about-dialog.c:111
+#: ../app/dialogs/about-dialog.c:115
 msgid "Visit the GIMP website"
 msgstr "Посетите сайт GIMP"
 
 #. Translators: insert your names here, separated by newline
-#: ../app/dialogs/about-dialog.c:116
+#: ../app/dialogs/about-dialog.c:120
 msgid "translator-credits"
 msgstr ""
 "Roxana Kolosova\n"
 "Anatoly A. Yakushin\n"
 "Alexandre Prokoudine"
 
-#: ../app/dialogs/about-dialog.c:509
+#: ../app/dialogs/about-dialog.c:515
 msgid "GIMP is brought to you by"
 msgstr "GIMP создали для вас"
 
-#: ../app/dialogs/about-dialog.c:583
+#: ../app/dialogs/about-dialog.c:589
 msgid "This is an unstable development release."
 msgstr "Это нестабильная версия программы."
 
@@ -9183,12 +9186,12 @@ msgstr "_Имя слоя:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1072
+#: ../app/tools/gimpmeasuretool.c:1088
 msgid "Width:"
 msgstr "Ширина:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1100
+#: ../app/tools/gimpmeasuretool.c:1116
 msgid "Height:"
 msgstr "Высота:"
 
@@ -10165,28 +10168,28 @@ msgid "Print Size"
 msgstr "Размер при печати"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:201
+#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:198
 #: ../app/widgets/gimptemplateeditor.c:160
 msgid "_Width:"
 msgstr "_Ширина:"
 
-#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:205
+#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:167
 msgid "H_eight:"
 msgstr "_Высота:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:263
+#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:287
 msgid "_X resolution:"
 msgstr "Разрешение по X:"
 
-#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:266
+#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:294
 msgid "_Y resolution:"
 msgstr "Разрешение по Y:"
 
-#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:259
+#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #: ../app/widgets/gimptemplateeditor.c:307
 #, c-format
 msgid "pixels/%a"
@@ -10428,24 +10431,24 @@ msgstr "В"
 msgid "_Sample Merged"
 msgstr "_Сводить слои"
 
-#: ../app/display/gimpdisplayshell.c:502
+#: ../app/display/gimpdisplayshell.c:499
 msgid "Access the image menu"
 msgstr "Доступ к меню изображения"
 
-#: ../app/display/gimpdisplayshell.c:616
+#: ../app/display/gimpdisplayshell.c:613
 msgid "Zoom image when window size changes"
 msgstr "При изменении размера окна изменять размер изображения"
 
-#: ../app/display/gimpdisplayshell.c:645
+#: ../app/display/gimpdisplayshell.c:642
 msgid "Toggle Quick Mask"
 msgstr "Переключить быструю маску"
 
-#: ../app/display/gimpdisplayshell.c:668
+#: ../app/display/gimpdisplayshell.c:665
 msgid "Navigate the image display"
 msgstr "Навигация по изображению"
 
-#: ../app/display/gimpdisplayshell.c:736
-#: ../app/display/gimpdisplayshell.c:1314 ../app/widgets/gimptoolbox.c:315
+#: ../app/display/gimpdisplayshell.c:733
+#: ../app/display/gimpdisplayshell.c:1311 ../app/widgets/gimptoolbox.c:315
 msgid "Drop image files here to open them"
 msgstr "Перетащите сюда изображения, которые хотите открыть"
 
@@ -10532,7 +10535,7 @@ msgstr "Невозможно изменять точки растра групп
 #: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
 #: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:335
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:286
-#: ../app/tools/gimptransformtool.c:349 ../app/tools/gimptransformtool.c:1172
+#: ../app/tools/gimptransformtool.c:350 ../app/tools/gimptransformtool.c:1178
 msgid "The active layer's pixels are locked."
 msgstr "Точки растра активного слоя заблокированы от изменений"
 
@@ -10611,7 +10614,7 @@ msgstr " (перезаписано)"
 msgid " (imported)"
 msgstr " (импортировано)"
 
-#: ../app/display/gimpstatusbar.c:361
+#: ../app/display/gimpstatusbar.c:358
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Отменить <i>%s</i>"
@@ -10764,7 +10767,7 @@ msgid "Pencil"
 msgstr "Карандаш"
 
 #: ../app/paint/gimpperspectiveclone.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:127
+#: ../app/tools/gimpperspectiveclonetool.c:128
 msgid "Perspective Clone"
 msgstr "Штамп по перспективе"
 
@@ -11056,8 +11059,8 @@ msgstr "Векторный объект %d не содержит обводку 
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
 "Процедура '%s' вызвана с некорректным типом аргумента #%d. Ожидалось %s, "
 "получено %s."
@@ -11079,14 +11082,14 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Процедура '%s' вернула некорректный тип значения для возвратного значения '%"
-"s' (#%d). Ожидалось %s, получено %s."
+"Процедура '%s' вернула некорректный тип значения для возвратного значения "
+"'%s' (#%d). Ожидалось %s, получено %s."
 
 #: ../app/pdb/gimpprocedure.c:646
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "Процедура '%s' вызвана с некорректным значением аргумента '%s' (#%d). "
 "Ожидалось %s, получено %s."
@@ -11139,8 +11142,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:751
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
 "Процедура '%s' вызвана со значением '%s' аргумента '%s' (#%d, тип %s). "
 "Значение выходит из допустимого диапазона."
@@ -11156,7 +11159,7 @@ msgstr ""
 msgid "Move Layer"
 msgstr "Перемещение слоя"
 
-#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:198
+#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:199
 msgid "Free Select"
 msgstr "Свободное выделение"
 
@@ -11364,7 +11367,7 @@ msgstr ""
 "В чащах юга жил-был цитрус.\n"
 "Да, но фальшивый экземпляръ!"
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1375
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1386
 msgid "Add Text Layer"
 msgstr "Добавить текстовый слой"
 
@@ -11707,7 +11710,7 @@ msgstr "Залить прозрачные области"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:150 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:942
+#: ../app/tools/gimpperspectiveclonetool.c:963
 #: ../app/tools/gimpregionselectoptions.c:207
 msgid "Sample merged"
 msgstr "Сводить слои"
@@ -11768,12 +11771,12 @@ msgid "Click to set a new clone source"
 msgstr "Нажмите для получения источника штампа"
 
 #: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:937
+#: ../app/tools/gimpperspectiveclonetool.c:958
 msgid "Source"
 msgstr "Источник"
 
 #: ../app/tools/gimpclonetool.c:129 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:958
+#: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
 msgstr "Выравнивание:"
 
@@ -12183,17 +12186,17 @@ msgstr "Диапазон"
 msgid "Exposure:"
 msgstr "Экспозиция:"
 
-#: ../app/tools/gimpeditselectiontool.c:241
+#: ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
 msgstr "Перемещение выделения"
 
-#: ../app/tools/gimpeditselectiontool.c:245
-#: ../app/tools/gimpeditselectiontool.c:1236
+#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:1233
 msgid "Move Floating Selection"
 msgstr "Переместить плавающее выделение"
 
-#: ../app/tools/gimpeditselectiontool.c:456
-#: ../app/tools/gimpeditselectiontool.c:731
+#: ../app/tools/gimpeditselectiontool.c:453
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "Перемещение: "
 
@@ -12365,37 +12368,37 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "Выделение переднего плана"
 
-#: ../app/tools/gimpfreeselecttool.c:199
+#: ../app/tools/gimpfreeselecttool.c:200
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "Свободное выделение: выделение области произвольными линиями или отрезками"
 
-#: ../app/tools/gimpfreeselecttool.c:200
+#: ../app/tools/gimpfreeselecttool.c:201
 msgid "_Free Select"
 msgstr "С_вободное выделение"
 
-#: ../app/tools/gimpfreeselecttool.c:1119
+#: ../app/tools/gimpfreeselecttool.c:1120
 msgid "Click to complete selection"
 msgstr "Щёлкните для завершения выделения"
 
-#: ../app/tools/gimpfreeselecttool.c:1123
+#: ../app/tools/gimpfreeselecttool.c:1124
 msgid "Click-Drag to move segment vertex"
 msgstr "Щёлкните и потащите, чтобы переместить вершину сегмента"
 
-#: ../app/tools/gimpfreeselecttool.c:1128
+#: ../app/tools/gimpfreeselecttool.c:1129
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "Ввод завершает выделение, Escape отменяет его, Забой убирает последний "
 "сегмент"
 
-#: ../app/tools/gimpfreeselecttool.c:1132
+#: ../app/tools/gimpfreeselecttool.c:1133
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "Щелчок и перетаскивание рисует произвольную линию, щелчок добавляет прямой "
 "отрезок"
 
-#: ../app/tools/gimpfreeselecttool.c:1624
+#: ../app/tools/gimpfreeselecttool.c:1643
 msgctxt "command"
 msgid "Free Select"
 msgstr "Свободное выделение"
@@ -12568,7 +12571,7 @@ msgstr "Коррекция"
 msgid "Size:"
 msgstr "Размер:"
 
-#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1044
+#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1060
 #: ../app/tools/gimppaintoptions-gui.c:137
 #: ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
@@ -12620,7 +12623,7 @@ msgstr "Умные ножницы: выделение фигур при помо
 msgid "Intelligent _Scissors"
 msgstr "_Умные ножницы"
 
-#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:616
+#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:617
 msgid "Click-Drag to move this point"
 msgstr "Нажмите и потащите, чтобы переместить точку"
 
@@ -12743,54 +12746,54 @@ msgstr "_Лупа"
 msgid "Use info window"
 msgstr "Информационное окно"
 
-#: ../app/tools/gimpmeasuretool.c:124
+#: ../app/tools/gimpmeasuretool.c:125
 msgid "Measure"
 msgstr "Измеритель"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:126
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Измеритель: измерение расстояний и углов"
 
-#: ../app/tools/gimpmeasuretool.c:126
+#: ../app/tools/gimpmeasuretool.c:127
 msgid "_Measure"
 msgstr "_Измеритель"
 
-#: ../app/tools/gimpmeasuretool.c:245
+#: ../app/tools/gimpmeasuretool.c:246
 msgid "Add Guides"
 msgstr "Добавить направляющие"
 
-#: ../app/tools/gimpmeasuretool.c:567
+#: ../app/tools/gimpmeasuretool.c:568
 msgid "Click to place vertical and horizontal guides"
 msgstr "Щёлкните для размещения вертикальной или горизонтальной направляющей"
 
-#: ../app/tools/gimpmeasuretool.c:576
+#: ../app/tools/gimpmeasuretool.c:577
 msgid "Click to place a horizontal guide"
 msgstr "Щёлкните для размещения горизонтальной направляющей"
 
-#: ../app/tools/gimpmeasuretool.c:591
+#: ../app/tools/gimpmeasuretool.c:592
 msgid "Click to place a vertical guide"
 msgstr "Щёлкните для размещения вертикальной направляющей"
 
-#: ../app/tools/gimpmeasuretool.c:605
+#: ../app/tools/gimpmeasuretool.c:606
 msgid "Click-Drag to add a new point"
 msgstr "Щёлкните и потащите, чтобы добавить новую точку"
 
-#: ../app/tools/gimpmeasuretool.c:636
+#: ../app/tools/gimpmeasuretool.c:637
 msgid "Click-Drag to move all points"
 msgstr "Щёлкните и потащите, чтобы переместить все точки"
 
-#: ../app/tools/gimpmeasuretool.c:882 ../app/tools/gimpmeasuretool.c:1027
-#: ../app/tools/gimpmeasuretool.c:1083 ../app/tools/gimpmeasuretool.c:1111
+#: ../app/tools/gimpmeasuretool.c:898 ../app/tools/gimpmeasuretool.c:1043
+#: ../app/tools/gimpmeasuretool.c:1099 ../app/tools/gimpmeasuretool.c:1127
 #: ../app/tools/gimppainttool.c:643
 msgid "pixels"
 msgstr "точки растра"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:995
+#: ../app/tools/gimpmeasuretool.c:1011
 msgid "Measure Distances and Angles"
 msgstr "Измерение расстояний и углов"
 
-#: ../app/tools/gimpmeasuretool.c:1016
+#: ../app/tools/gimpmeasuretool.c:1032
 msgid "Distance:"
 msgstr "Расстояние:"
 
@@ -12942,7 +12945,7 @@ msgstr "Карандаш: рисование резкими штрихами"
 msgid "Pe_ncil"
 msgstr "Кара_ндаш"
 
-#: ../app/tools/gimpperspectiveclonetool.c:128
+#: ../app/tools/gimpperspectiveclonetool.c:129
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
@@ -12950,11 +12953,11 @@ msgstr ""
 "Штамп по перспективе: применение инструмента «Штамп» с учетом перспективы "
 "изображения"
 
-#: ../app/tools/gimpperspectiveclonetool.c:130
+#: ../app/tools/gimpperspectiveclonetool.c:131
 msgid "_Perspective Clone"
 msgstr "Штамп по п_ерспективе"
 
-#: ../app/tools/gimpperspectiveclonetool.c:703
+#: ../app/tools/gimpperspectiveclonetool.c:704
 msgid "Ctrl-Click to set a clone source"
 msgstr "Нажмите Ctrl для получения источника штампа"
 
@@ -13049,7 +13052,7 @@ msgstr "Прямоугольное выделение: выделение пря
 msgid "_Rectangle Select"
 msgstr "Пр_ямоугольное выделение"
 
-#: ../app/tools/gimprectangletool.c:1156 ../app/tools/gimprectangletool.c:2123
+#: ../app/tools/gimprectangletool.c:1158 ../app/tools/gimprectangletool.c:2220
 msgid "Rectangle: "
 msgstr "Прямоугольник: "
 
@@ -13271,31 +13274,31 @@ msgstr "Блок:"
 msgid "Language:"
 msgstr "Язык:"
 
-#: ../app/tools/gimptexttool.c:193
+#: ../app/tools/gimptexttool.c:194
 msgid "Text"
 msgstr "Текст"
 
-#: ../app/tools/gimptexttool.c:194
+#: ../app/tools/gimptexttool.c:195
 msgid "Text Tool: Create or edit text layers"
 msgstr "Текст: создание и редактирование текстовых слоев"
 
-#: ../app/tools/gimptexttool.c:195
+#: ../app/tools/gimptexttool.c:196
 msgid "Te_xt"
 msgstr "_Текст"
 
-#: ../app/tools/gimptexttool.c:948
+#: ../app/tools/gimptexttool.c:959
 msgid "Reshape Text Layer"
 msgstr "Смена размера текстового слоя"
 
-#: ../app/tools/gimptexttool.c:1486 ../app/tools/gimptexttool.c:1489
+#: ../app/tools/gimptexttool.c:1497 ../app/tools/gimptexttool.c:1500
 msgid "Confirm Text Editing"
 msgstr "Подтвердите изменение текста"
 
-#: ../app/tools/gimptexttool.c:1493
+#: ../app/tools/gimptexttool.c:1504
 msgid "Create _New Layer"
 msgstr "_Создать новый слой"
 
-#: ../app/tools/gimptexttool.c:1517
+#: ../app/tools/gimptexttool.c:1528
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13377,19 +13380,19 @@ msgstr "15 градусов  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Сохранить пропорции  (%s)"
 
-#: ../app/tools/gimptransformtool.c:239
+#: ../app/tools/gimptransformtool.c:240
 msgid "Transforming"
 msgstr "Преобразование"
 
-#: ../app/tools/gimptransformtool.c:1171
+#: ../app/tools/gimptransformtool.c:1177
 msgid "There is no layer to transform."
 msgstr "Нет слоя для преобразования."
 
-#: ../app/tools/gimptransformtool.c:1184
+#: ../app/tools/gimptransformtool.c:1190
 msgid "There is no path to transform."
 msgstr "Нет контура для преобразования."
 
-#: ../app/tools/gimptransformtool.c:1185
+#: ../app/tools/gimptransformtool.c:1191
 msgid "The active path's strokes are locked."
 msgstr "Элементы активного контура заблокированы от изменений"
 
@@ -13929,7 +13932,7 @@ msgstr "Удалить '%s' из списка активных фильтров"
 msgid "No filter selected"
 msgstr "Фильтр не выбран"
 
-#: ../app/widgets/gimpcoloreditor.c:262
+#: ../app/widgets/gimpcoloreditor.c:259
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -13989,15 +13992,15 @@ msgstr "Черный:"
 msgid "Alpha:"
 msgstr "Альфа-канал:"
 
-#: ../app/widgets/gimpcolormapeditor.c:210
+#: ../app/widgets/gimpcolormapeditor.c:208
 msgid "Color index:"
 msgstr "Номер цвета:"
 
-#: ../app/widgets/gimpcolormapeditor.c:220
+#: ../app/widgets/gimpcolormapeditor.c:218
 msgid "HTML notation:"
 msgstr "Нотация HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:474
+#: ../app/widgets/gimpcolormapeditor.c:472
 msgid "Only indexed images have a colormap."
 msgstr "Только у индексированных изображений может быть цветовая карта."
 
@@ -14793,21 +14796,21 @@ msgstr "Установить связь с элементом"
 msgid "Lock alpha channel"
 msgstr "Запереть альфа-канал"
 
-#: ../app/widgets/gimpmessagebox.c:442
+#: ../app/widgets/gimpmessagebox.c:439
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Сообщение было повторено %d раз"
 
-#: ../app/widgets/gimpmessagebox.c:444
+#: ../app/widgets/gimpmessagebox.c:441
 msgid "Message repeated once."
 msgstr "Сообщение было повторено один раз"
 
-#: ../app/widgets/gimppaletteeditor.c:254
-#: ../app/widgets/gimppaletteeditor.c:745
+#: ../app/widgets/gimppaletteeditor.c:252
+#: ../app/widgets/gimppaletteeditor.c:743
 msgid "Undefined"
 msgstr "Не определено"
 
-#: ../app/widgets/gimppaletteeditor.c:262
+#: ../app/widgets/gimppaletteeditor.c:260
 msgid "Columns:"
 msgstr "Столбцы:"
 
@@ -14882,12 +14885,12 @@ msgstr "Экспортировать выбранные профили в фай
 msgid "Delete the selected settings"
 msgstr "Удалить выбранные профили"
 
-#: ../app/widgets/gimpsizebox.c:463
+#: ../app/widgets/gimpsizebox.c:460
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d x %d ppi"
 
-#: ../app/widgets/gimpsizebox.c:465
+#: ../app/widgets/gimpsizebox.c:462
 #, c-format
 msgid "%d ppi"
 msgstr "%d ppi"
@@ -15014,7 +15017,7 @@ msgstr "Изменить кернинг выделенного текста"
 msgid "Change baseline of selected text"
 msgstr "Изменить линию шрифта выделенного текста"
 
-#: ../app/widgets/gimpthumbbox.c:343
+#: ../app/widgets/gimpthumbbox.c:330
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -15023,20 +15026,20 @@ msgstr ""
 "Нажмите, чтобы обновить просмотр\n"
 "%s%sкнопка мыши — чтобы принудительно обновить просмотр"
 
-#: ../app/widgets/gimpthumbbox.c:361
+#: ../app/widgets/gimpthumbbox.c:348
 msgid "Pr_eview"
 msgstr "_Предпросмотр"
 
-#: ../app/widgets/gimpthumbbox.c:416 ../app/widgets/gimpthumbbox.c:480
+#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
 msgid "No selection"
 msgstr "Нет выделения"
 
-#: ../app/widgets/gimpthumbbox.c:608 ../app/widgets/gimpthumbbox.c:629
+#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Миниатюра %d из %d"
 
-#: ../app/widgets/gimpthumbbox.c:742 ../app/widgets/gimpthumbbox.c:752
+#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
 msgid "Creating preview..."
 msgstr "Создание пред. просмотра..."
 
@@ -15097,39 +15100,39 @@ msgstr ""
 "Активный градиент.\n"
 "Щёлкните для открытия диалога «Градиенты»."
 
-#: ../app/widgets/gimptooleditor.c:295
+#: ../app/widgets/gimptooleditor.c:294
 msgid "Raise this tool"
 msgstr "Поднять инструмент"
 
-#: ../app/widgets/gimptooleditor.c:296
+#: ../app/widgets/gimptooleditor.c:295
 msgid "Raise this tool to the top"
 msgstr "Поднять инструмент до самого верха"
 
-#: ../app/widgets/gimptooleditor.c:303
+#: ../app/widgets/gimptooleditor.c:302
 msgid "Lower this tool"
 msgstr "Опустить инструмент"
 
-#: ../app/widgets/gimptooleditor.c:304
+#: ../app/widgets/gimptooleditor.c:303
 msgid "Lower this tool to the bottom"
 msgstr "Опустить инструмент до самого низа"
 
-#: ../app/widgets/gimptooleditor.c:311
+#: ../app/widgets/gimptooleditor.c:310
 msgid "Reset tool order and visibility"
 msgstr "Исходные порядок и видимость инструмента"
 
-#: ../app/widgets/gimptooloptionseditor.c:219
+#: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Save options to..."
 msgstr "Сохранить параметры..."
 
-#: ../app/widgets/gimptooloptionseditor.c:227
+#: ../app/widgets/gimptooloptionseditor.c:226
 msgid "Restore options from..."
 msgstr "Восстановить параметры из..."
 
-#: ../app/widgets/gimptooloptionseditor.c:235
+#: ../app/widgets/gimptooloptionseditor.c:234
 msgid "Delete saved options..."
 msgstr "Удалить параметры..."
 
-#: ../app/widgets/gimptooloptionseditor.c:593
+#: ../app/widgets/gimptooloptionseditor.c:592
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "Ошибка при записи параметров инструмента: %s"
