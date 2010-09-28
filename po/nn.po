@@ -30,8 +30,6 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright © 1995-2008\n"
-"Spencer Kimball, Peter Mattis and the GIMP Development Team"
 
 #: ../app/about.h:34
 #, fuzzy

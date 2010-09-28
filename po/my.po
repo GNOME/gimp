@@ -34,7 +34,7 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"မူပိုင်ခွင့် © ၁၉၉၅-၂၀၀၉\n"
+"မူပိုင်ခွင့် © 1995-%s\n"
 "Spencer Kimball, Peter Mattis နှင့် GIMP တည်ဆောက်ရေး အဖွဲ့"
 
 #: ../app/about.h:34

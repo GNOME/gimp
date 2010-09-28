@@ -53,12 +53,12 @@ msgstr "Bildmanipulilo (GIMP = GNU Image Manipulation Program)"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Kopirajto © 1995-2006\n"
+"Kopirajto © 1995-%s\n"
 "Spencer Kimball, Peter Mattis kaj GIMP-skipo de Progresigo"
 
 #: ../app/about.h:34

@@ -34,7 +34,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "<b>GIMP GNU Resim Düzenleme Programı</b>\n"
-"Telif hakkı (C) 1995-2003\n"
+"Telif hakkı © 1995-%s\n"
 "Spencer Kimball, Peter Mattis ve GIMP Geliştiricileri Grubu."
 
 #: ../app/about.h:34

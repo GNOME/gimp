@@ -31,12 +31,12 @@ msgstr "ਗਨੂ ਈਮੇਜ਼ ਮੈਨੂਪਲੇਸ਼ਨ ਪਰੋਗਰ
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"ਹੱਕ ਰਾਖਵੇਂ ਹਨ (C) 1995-2008\n"
+"ਹੱਕ ਰਾਖਵੇਂ ਹਨ © 1995-%s\n"
 "ਸਪੈਨਸਰ ਕਿਮਬਿਲ, ਪੀਟਰ ਮਟੀਟੀਸ ਅਤੇ ਜੈਮਪ ਡਿਵੈਲਪਮੈਂਟ ਟੀਮ"
 
 #: ../app/about.h:34

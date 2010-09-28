@@ -28,12 +28,12 @@ msgstr "Редактор на изображения (GIMP)"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Авторски права © 1995-2007\n"
+"Авторски права © 1995-%s\n"
 "Spencer Kimball, Peter Mattis и екипът за разработка на GIMP"
 
 #: ../app/about.h:34

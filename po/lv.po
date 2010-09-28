@@ -32,12 +32,12 @@ msgstr "GNU programmatūra darbam ar attēliem"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Autortiesības (C) 1995-2008\n"
+"Autortiesības © 1995-%s\n"
 "Spencer Kimball, Peter Mattis un GIMP Izstrādātāju grupa."
 
 #: ../app/about.h:34

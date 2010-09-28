@@ -31,12 +31,12 @@ msgstr "க்னூ பட கையாளல் நிரல்"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"பதிப்புரிமை © 1995-2010\n"
+"பதிப்புரிமை © 1995-%s\n"
 "ஸ்பென்சர் கிம்பால், பீட்டர் மாதி மற்றும் கிம்ப் வளர்ச்சிக்குழு"
 
 #: ../app/about.h:34

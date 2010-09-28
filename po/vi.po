@@ -28,12 +28,12 @@ msgstr "Chương Trình Thao Tác Ảnh GNU"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Tác quyền © năm 1995-2006 của\n"
+"Tác quyền © năm 1995-%s của\n"
 "Spencer Kimball, Peter Mattis và Nhóm Phát Triển GIMP."
 
 #: ../app/about.h:34

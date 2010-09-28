@@ -33,7 +33,7 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"ಹಕ್ಕು © 1995-2008\n"
+"ಹಕ್ಕು © 1995-%s\n"
 "Spencer Kimball, Peter Mattis ಹಾಗು GIMP ವಿಕಸನಾ ತಂಡ"
 
 #: ../app/about.h:34

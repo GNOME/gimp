@@ -29,12 +29,12 @@ msgstr "GIMP – Programul GNU de procesare a imaginilor"
 
 #. The year of the last commit (UTC) will be inserted into this string.
 #: ../app/about.h:30
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Drepturi de autor © 1995-2010\n"
+"Drepturi de autor © 1995-%s\n"
 "Spencer Kimball, Peter Mattis și echipa de dezvoltare GIMP"
 
 #: ../app/about.h:34

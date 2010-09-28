@@ -33,7 +33,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "<b>I- GIMP - GNU iNkqubo yokuSebenzisa uMfanekiso</b>\n"
-"Amalungelo omqulunqi (C) 1995-2004\n"
+"Amalungelo omqulunqi © 1995-%s\n"
 "Spencer Kimball, Peter Mattis kunye bneQerla loPhuhliso le-GIMP."
 
 #: ../app/about.h:34

@@ -37,7 +37,7 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Сва права задржана ©1995–2009\n"
+"Сва права задржана © 1995–%s\n"
 "Спенсер Кимбол (Spencer Kimball), Питер Матис (Peter Mattis) и Гимпов "
 "развојни тим."
 

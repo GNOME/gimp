@@ -32,7 +32,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "<b>GIMP - GNU Image Manipulation Program</b>\n"
-"Hak cipta (C) 1995-2003\n"
+"Hak cipta © 1995-%s\n"
 "Spencer Kimball, Peter Mattis dan Pasukan Pembangunan GIMP."
 
 #: ../app/about.h:34

@@ -35,7 +35,7 @@ msgid ""
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "<b>GIMP - GNU Program na manipuláciu s obrázkami</b>\n"
-"Copyright (C) 1995-2004\n"
+"Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis a GIMP vývojársky tím."
 
 #: ../app/about.h:34

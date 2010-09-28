@@ -36,7 +36,7 @@ msgid ""
 "Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright© 1995-2006\n"
+"Copyright © 1995-%s\n"
 "ཨིསི་པེན་སར་ཀིམ་བཱོལ་་་པི་ཊར་མཱ་ཊསི་དང་་་ཇི་ཨའི་ཨེམ་པི་་་གོང་འཕེལ་སྡེ་ཚན།"
 
 #: ../app/about.h:34
