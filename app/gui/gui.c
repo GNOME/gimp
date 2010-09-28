@@ -42,7 +42,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-render.h"
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
@@ -406,7 +405,6 @@ gui_restore_callback (Gimp               *gimp,
   actions_init (gimp);
   menus_init (gimp, global_action_factory);
   gimp_render_init (gimp);
-  gimp_display_shell_render_init (gimp);
 
   dialogs_init (gimp, global_menu_factory);
 
@@ -630,7 +628,6 @@ gui_exit_after_callback (Gimp     *gimp,
   session_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
-  gimp_display_shell_render_exit (gimp);
   gimp_render_exit (gimp);
 
   gimp_controllers_exit (gimp);

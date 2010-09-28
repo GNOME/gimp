@@ -95,37 +95,15 @@ struct _RenderInfo
   gint64            dy;
 };
 
+
+static guchar tile_buf[GIMP_DISPLAY_RENDER_BUF_WIDTH * MAX_CHANNELS];
+
+
 static void  gimp_display_shell_render_info_scale (RenderInfo       *info,
                                                    GimpDisplayShell *shell,
                                                    TileManager      *tiles,
                                                    gint              level,
                                                    gboolean          is_premult);
-
-static guchar *tile_buf = NULL;
-
-
-void
-gimp_display_shell_render_init (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (tile_buf == NULL);
-
-  /*  allocate a buffer for arranging information from a row of tiles  */
-  tile_buf = g_new (guchar, GIMP_DISPLAY_RENDER_BUF_WIDTH * MAX_CHANNELS);
-}
-
-void
-gimp_display_shell_render_exit (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (tile_buf)
-    {
-      g_free (tile_buf);
-      tile_buf = NULL;
-    }
-}
-
 
 /*  Render Image functions  */
 
@@ -147,12 +125,12 @@ static void  gimp_display_shell_render_mask   (GimpDisplayShell *shell,
 /*****************************************************************/
 
 void
-gimp_display_shell_render (GimpDisplayShell   *shell,
-                           cairo_t            *cr,
-                           gint                x,
-                           gint                y,
-                           gint                w,
-                           gint                h)
+gimp_display_shell_render (GimpDisplayShell *shell,
+                           cairo_t          *cr,
+                           gint              x,
+                           gint              y,
+                           gint              w,
+                           gint              h)
 {
   GimpProjection *projection;
   GimpImage      *image;
