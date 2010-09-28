@@ -707,9 +707,8 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  GdkRectangle  rect;
-  gint          x2, y2;
-  gint          i, j;
+  gint x2, y2;
+  gint i, j;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (gimp_display_get_image (shell->display));
@@ -717,14 +716,6 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
   x2 = x + w;
   y2 = y + h;
-
-  if (shell->highlight)
-    {
-      rect.x      = ceil  (shell->scale_x * shell->highlight->x);
-      rect.y      = ceil  (shell->scale_y * shell->highlight->y);
-      rect.width  = floor (shell->scale_x * shell->highlight->width);
-      rect.height = floor (shell->scale_y * shell->highlight->height);
-    }
 
   /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
    *  sized chunks
@@ -746,8 +737,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
           gimp_display_shell_render (shell, cr,
                                      j - disp_xoffset,
                                      i - disp_yoffset,
-                                     dx, dy,
-                                     shell->highlight ? &rect : NULL);
+                                     dx, dy);
         }
     }
 }
@@ -792,7 +782,36 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
 
   cairo_rectangle (cr, x, y, w, h);
   cairo_clip (cr);
+
   cairo_translate (cr, - shell->offset_x, - shell->offset_y);
   cairo_set_source (cr, shell->checkerboard);
+  cairo_paint (cr);
+}
+
+void
+gimp_display_shell_draw_highlight (GimpDisplayShell *shell,
+                                   cairo_t          *cr,
+                                   gint              x,
+                                   gint              y,
+                                   gint              w,
+                                   gint              h)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell->highlight != NULL);
+  g_return_if_fail (cr != NULL);
+
+  cairo_rectangle (cr, x, y, w, h);
+
+  cairo_translate (cr, - shell->offset_x, - shell->offset_y);
+  cairo_scale (cr, shell->scale_x, shell->scale_y);
+  cairo_rectangle (cr,
+                   shell->highlight->x, shell->highlight->y,
+                   shell->highlight->width, shell->highlight->height);
+
+  cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
+  cairo_clip (cr);
+
+  /*  FIXME: make this configurable or at least use gimpdisplayshell-style.c  */
+  cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
   cairo_paint (cr);
 }

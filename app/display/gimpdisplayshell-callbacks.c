@@ -2293,9 +2293,9 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
                                             image_rect.height);
       cairo_restore (cr);
 
-      gdk_region_get_rectangles (image_region, &rects, &n_rects);
 
       cairo_save (cr);
+      gdk_region_get_rectangles (image_region, &rects, &n_rects);
 
       for (i = 0; i < n_rects; i++)
         gimp_display_shell_draw_area (shell, cr,
@@ -2304,9 +2304,19 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
                                       rects[i].width,
                                       rects[i].height);
 
+      g_free (rects);
       cairo_restore (cr);
 
-      g_free (rects);
+      if (shell->highlight)
+        {
+          cairo_save (cr);
+          gimp_display_shell_draw_highlight (shell, cr,
+                                             image_rect.x,
+                                             image_rect.y,
+                                             image_rect.width,
+                                             image_rect.height);
+          cairo_restore (cr);
+        }
     }
 
   gdk_region_destroy (image_region);

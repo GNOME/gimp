@@ -95,11 +95,11 @@ struct _RenderInfo
   gint64            dy;
 };
 
-static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
-                                                     GimpDisplayShell *shell,
-                                                     TileManager      *tiles,
-                                                     gint              level,
-                                                     gboolean          is_premult);
+static void  gimp_display_shell_render_info_scale (RenderInfo       *info,
+                                                   GimpDisplayShell *shell,
+                                                   TileManager      *tiles,
+                                                   gint              level,
+                                                   gboolean          is_premult);
 
 static guchar *tile_buf = NULL;
 
@@ -129,21 +129,14 @@ gimp_display_shell_render_exit (Gimp *gimp)
 
 /*  Render Image functions  */
 
-static void           render_image_rgb_a         (RenderInfo         *info);
-static void           render_image_gray_a        (RenderInfo         *info);
+static void           render_image_rgb_a      (RenderInfo       *info);
+static void           render_image_gray_a     (RenderInfo       *info);
 
-static const guchar * render_image_tile_fault    (RenderInfo         *info);
+static const guchar * render_image_tile_fault (RenderInfo       *info);
 
 
-static void  gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
-                                                  RenderInfo         *info,
-                                                  gint                x,
-                                                  gint                y,
-                                                  gint                w,
-                                                  gint                h,
-                                                  const GdkRectangle *highlight);
-static void  gimp_display_shell_render_mask      (GimpDisplayShell   *shell,
-                                                  RenderInfo         *info);
+static void  gimp_display_shell_render_mask   (GimpDisplayShell *shell,
+                                               RenderInfo       *info);
 
 
 /*****************************************************************/
@@ -159,8 +152,7 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
                            gint                x,
                            gint                y,
                            gint                w,
-                           gint                h,
-                           const GdkRectangle *highlight)
+                           gint                h)
 {
   GimpProjection *projection;
   GimpImage      *image;
@@ -245,12 +237,7 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
 #endif
 
 #if 0
-  /*  dim pixels outside the highlighted rectangle  */
-  if (highlight)
-    {
-      gimp_display_shell_render_highlight (shell, &info, x, y, w, h, highlight);
-    }
-  else if (shell->mask)
+  if (shell->mask)
     {
       TileManager *tiles = gimp_drawable_get_tiles (shell->mask);
 
@@ -288,80 +275,6 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
 #define CAIRO_RGB24_BLUE_PIXEL  3
 #endif
 
-#define GIMP_DISPLAY_SHELL_DIM_PIXEL(buf,x) \
-{ \
-  buf[4 * (x) + CAIRO_RGB24_RED_PIXEL]   >>= 1; \
-  buf[4 * (x) + CAIRO_RGB24_GREEN_PIXEL] >>= 1; \
-  buf[4 * (x) + CAIRO_RGB24_BLUE_PIXEL]  >>= 1; \
-}
-
-/*  This function highlights the given area by dimming all pixels outside. */
-
-static void
-gimp_display_shell_render_highlight (GimpDisplayShell   *shell,
-                                     RenderInfo         *info,
-                                     gint                x,
-                                     gint                y,
-                                     gint                w,
-                                     gint                h,
-                                     const GdkRectangle *highlight)
-{
-  guchar       *buf = cairo_image_surface_get_data (shell->render_surface);
-  GdkRectangle  rect;
-  gint          offset_x;
-  gint          offset_y;
-
-  gimp_display_shell_scroll_get_render_start_offset (shell,
-						     &offset_x, &offset_y);
-
-  rect.x      = x + offset_x;
-  rect.y      = y + offset_y;
-  rect.width  = w;
-  rect.height = h;
-
-  if (gdk_rectangle_intersect (highlight, &rect, &rect))
-    {
-      rect.x -= x + offset_x;
-      rect.y -= y + offset_y;
-
-      for (y = 0; y < rect.y; y++)
-        {
-          for (x = 0; x < w; x++)
-            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
-
-          buf += info->dest_bpl;
-        }
-
-      for ( ; y < rect.y + rect.height; y++)
-        {
-          for (x = 0; x < rect.x; x++)
-            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
-
-          for (x += rect.width; x < w; x++)
-            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
-
-          buf += info->dest_bpl;
-        }
-
-      for ( ; y < h; y++)
-        {
-          for (x = 0; x < w; x++)
-            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
-
-          buf += info->dest_bpl;
-        }
-    }
-  else
-    {
-      for (y = 0; y < h; y++)
-        {
-          for (x = 0; x < w; x++)
-            GIMP_DISPLAY_SHELL_DIM_PIXEL (buf, x)
-
-          buf += info->dest_bpl;
-        }
-    }
-}
 
 static void
 gimp_display_shell_render_mask (GimpDisplayShell *shell,
