@@ -511,7 +511,7 @@ box_filter_premult (const guint    left_weight,
       case 4:
 #define ALPHA 3
         {
-          guint factors[9] =
+          const guint factors[9] =
             {
               (src[1][ALPHA] * top_weight)    >> 4,
               (src[4][ALPHA] * middle_weight) >> 4,
@@ -524,9 +524,11 @@ box_filter_premult (const guint    left_weight,
               (src[6][ALPHA] * bottom_weight) >> 4
             };
 
-          guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
-                     right_weight  * (factors[3] + factors[4] + factors[5]) +
-                     left_weight   * (factors[6] + factors[7] + factors[8]));
+          const guint a =
+            (center_weight * (factors[0] + factors[1] + factors[2]) +
+             right_weight  * (factors[3] + factors[4] + factors[5]) +
+             left_weight   * (factors[6] + factors[7] + factors[8]));
+
           guint i;
 
           for (i = 0; i < ALPHA; i++)
@@ -556,7 +558,7 @@ box_filter_premult (const guint    left_weight,
          *       the behavior in all needed ways.
          */
         {
-          guint factors[9] =
+          const guint factors[9] =
             {
               (src[1][ALPHA] * top_weight)    >> 4,
               (src[4][ALPHA] * middle_weight) >> 4,
@@ -569,9 +571,11 @@ box_filter_premult (const guint    left_weight,
               (src[6][ALPHA] * bottom_weight) >> 4
             };
 
-          guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
-                     right_weight  * (factors[3] + factors[4] + factors[5]) +
-                     left_weight   * (factors[6] + factors[7] + factors[8]));
+          const guint a =
+            (center_weight * (factors[0] + factors[1] + factors[2]) +
+             right_weight  * (factors[3] + factors[4] + factors[5]) +
+             left_weight   * (factors[6] + factors[7] + factors[8]));
+
           guint i;
 
           for (i = 0; i < ALPHA; i++)
