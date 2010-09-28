@@ -140,10 +140,10 @@ static void  gimp_display_shell_render_mask   (GimpDisplayShell *shell,
 
 
 /*****************************************************************/
-/*  This function is the core of the display--it offsets and     */
+/*  This function is the core of the display -- it offsets and   */
 /*  scales the image according to the current parameters in the  */
-/*  display object.  It handles color, grayscale, 8, 15, 16, 24  */
-/*  & 32 bit output depths.                                      */
+/*  display object.  It handles RGBA and GRAYA projection tiles  */
+/*  and renders them to an ARGB32 cairo surface.                 */
 /*****************************************************************/
 
 void
