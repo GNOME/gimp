@@ -20,6 +20,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "display-types.h"
 
 #include "base/tile-manager.h"
@@ -222,26 +224,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
     if (shell->mask)
       {
-        /*  FIXME: mask_color should be GimpRGB  */
-        switch (shell->mask_color)
-          {
-          case GIMP_RED_CHANNEL:
-            cairo_set_source_rgba (cr, 1, 0, 0, 0.5);
-            break;
-
-          case GIMP_GREEN_CHANNEL:
-            cairo_set_source_rgba (cr, 0, 1, 0, 0.5);
-            break;
-
-          case GIMP_BLUE_CHANNEL:
-            cairo_set_source_rgba (cr, 0, 0, 1, 0.5);
-            break;
-
-          default:
-            g_warn_if_reached ();
-            return;
-          }
-
+        gimp_cairo_set_source_rgba (cr, &shell->mask_color);
         cairo_mask_surface (cr, shell->mask_surface,
                             x + disp_xoffset, y + disp_yoffset);
       }

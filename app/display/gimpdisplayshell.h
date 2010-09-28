@@ -187,7 +187,7 @@ struct _GimpDisplayShell
 
   GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
   GimpDrawable      *mask;
-  GimpChannelType    mask_color;
+  GimpRGB            mask_color;
 
   GArray            *event_history;
   GArray            *event_queue;
@@ -277,7 +277,7 @@ void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
 void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
-                                                    GimpChannelType     color);
+                                                    const GimpRGB      *color);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */
