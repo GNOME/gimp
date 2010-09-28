@@ -1,7 +1,9 @@
 #include <winver.h>
+#include "git-version.h"
 
 #define _QUOTE(x) #x
 #define QUOTE(x) _QUOTE(x)
+#define CONCAT(x,y) x ## y
 
 #define VER_COMPANYNAME_STR         "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 
@@ -16,7 +18,7 @@
 #define VER_INTERNALNAME_STR        QUOTE(INTERNALNAME_STR)
 #define VER_ORIGINALFILENAME_STR    QUOTE(ORIGINALFILENAME_STR)
 
-#define VER_LEGALCOPYRIGHT_STR      "Copyright © 1995-2010"
+#define VER_LEGALCOPYRIGHT_STR      CONCAT("Copyright © 1995-", GIMP_GIT_LAST_COMMIT_YEAR)
 
 #ifndef DEBUG
 #define VER_DEBUG                   0                 
