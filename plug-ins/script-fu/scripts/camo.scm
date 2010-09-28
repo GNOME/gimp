@@ -32,13 +32,13 @@
 
     (gimp-context-push)
 
-    (gimp-image-add-layer theImage baseLayer 0)
+    (gimp-image-insert-layer theImage baseLayer 0)
 
     (set! thickLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thick Layer" 100 NORMAL-MODE)))
-    (gimp-image-add-layer theImage thickLayer 0)
+    (gimp-image-insert-layer theImage thickLayer 0)
 
     (set! thinLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thin Layer" 100 NORMAL-MODE)))
-    (gimp-image-add-layer theImage thinLayer 0)
+    (gimp-image-insert-layer theImage thinLayer 0)
 
     (gimp-selection-all theImage)
     (gimp-context-set-background inColor1)
