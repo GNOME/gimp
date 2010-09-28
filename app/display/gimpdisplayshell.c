@@ -286,7 +286,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->x_src_dec   = 1;
   shell->y_src_dec   = 1;
 
-  shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+  shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                                       GIMP_DISPLAY_RENDER_BUF_WIDTH,
                                                       GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
@@ -767,6 +767,12 @@ gimp_display_shell_dispose (GObject *object)
     {
       cairo_surface_destroy (shell->render_surface);
       shell->render_surface = NULL;
+    }
+
+  if (shell->checkerboard)
+    {
+      cairo_pattern_destroy (shell->checkerboard);
+      shell->checkerboard = NULL;
     }
 
   if (shell->highlight)

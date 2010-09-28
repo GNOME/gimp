@@ -2285,6 +2285,14 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   if (! gdk_region_empty (image_region))
     {
+      cairo_save (cr);
+      gimp_display_shell_draw_checkerboard (shell, cr,
+                                            image_rect.x,
+                                            image_rect.y,
+                                            image_rect.width,
+                                            image_rect.height);
+      cairo_restore (cr);
+
       gdk_region_get_rectangles (image_region, &rects, &n_rects);
 
       cairo_save (cr);

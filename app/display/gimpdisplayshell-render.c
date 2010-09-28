@@ -74,7 +74,6 @@ struct _RenderInfo
   gdouble           scaley;
   gint              src_x;
   gint              src_y;
-  gint              dest_bpp;
   gint              dest_bpl;
 
   gint              zoom_quality;
@@ -102,17 +101,7 @@ static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
                                                      gint              level,
                                                      gboolean          is_premult);
 
-static void  gimp_display_shell_render_setup_notify (GObject          *config,
-                                                     GParamSpec       *param_spec,
-                                                     Gimp             *gimp);
-
-
-static guchar *tile_buf    = NULL;
-
-static guint   check_mod   = 0;
-static guint   check_shift = 0;
-static guchar  check_dark  = 0;
-static guchar  check_light = 0;
+static guchar *tile_buf = NULL;
 
 
 void
@@ -121,17 +110,8 @@ gimp_display_shell_render_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (tile_buf == NULL);
 
-  g_signal_connect (gimp->config, "notify::transparency-size",
-                    G_CALLBACK (gimp_display_shell_render_setup_notify),
-                    gimp);
-  g_signal_connect (gimp->config, "notify::transparency-type",
-                    G_CALLBACK (gimp_display_shell_render_setup_notify),
-                    gimp);
-
   /*  allocate a buffer for arranging information from a row of tiles  */
   tile_buf = g_new (guchar, GIMP_DISPLAY_RENDER_BUF_WIDTH * MAX_CHANNELS);
-
-  gimp_display_shell_render_setup_notify (G_OBJECT (gimp->config), NULL, gimp);
 }
 
 void
@@ -139,48 +119,10 @@ gimp_display_shell_render_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  g_signal_handlers_disconnect_by_func (gimp->config,
-                                        gimp_display_shell_render_setup_notify,
-                                        gimp);
-
   if (tile_buf)
     {
       g_free (tile_buf);
       tile_buf = NULL;
-    }
-}
-
-static void
-gimp_display_shell_render_setup_notify (GObject    *config,
-                                        GParamSpec *param_spec,
-                                        Gimp       *gimp)
-{
-  GimpCheckSize check_size;
-  GimpCheckType check_type;
-
-  g_object_get (config,
-                "transparency-size", &check_size,
-                "transparency-type", &check_type,
-                NULL);
-
-  gimp_checks_get_shades (check_type, &check_light, &check_dark);
-
-  switch (check_size)
-    {
-    case GIMP_CHECK_SIZE_SMALL_CHECKS:
-      check_mod   = 0x3;
-      check_shift = 2;
-      break;
-
-    case GIMP_CHECK_SIZE_MEDIUM_CHECKS:
-      check_mod   = 0x7;
-      check_shift = 3;
-      break;
-
-    case GIMP_CHECK_SIZE_LARGE_CHECKS:
-      check_mod   = 0xf;
-      check_shift = 4;
-      break;
     }
 }
 
@@ -248,7 +190,6 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
   info.w        = w;
   info.h        = h;
 
-  info.dest_bpp = 4;
   info.dest_bpl = cairo_image_surface_get_stride (shell->render_surface);
 
   switch (shell->display->config->zoom_quality)
@@ -303,6 +244,7 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
                                       3 * GIMP_DISPLAY_RENDER_BUF_WIDTH);
 #endif
 
+#if 0
   /*  dim pixels outside the highlighted rectangle  */
   if (highlight)
     {
@@ -317,6 +259,7 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
 
       gimp_display_shell_render_mask (shell, &info);
     }
+#endif
 
   cairo_surface_mark_dirty (shell->render_surface);
 
@@ -325,11 +268,11 @@ gimp_display_shell_render (GimpDisplayShell   *shell,
     gint disp_xoffset, disp_yoffset;
 
     gimp_display_shell_scroll_get_disp_offset (shell,
-					       &disp_xoffset, &disp_yoffset);
+                                               &disp_xoffset, &disp_yoffset);
 
+    cairo_rectangle (cr, x + disp_xoffset, y + disp_yoffset, w, h);
     cairo_set_source_surface (cr, shell->render_surface,
                               x + disp_xoffset, y + disp_yoffset);
-    cairo_rectangle (cr, x + disp_xoffset, y + disp_yoffset, w, h);
     cairo_fill (cr);
   }
 }
@@ -437,12 +380,12 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
   while (TRUE)
     {
       const guchar *src  = info->src;
-      guchar       *dest = info->dest;
+      guint32      *dest = (guint32 *) info->dest;
 
       switch (shell->mask_color)
         {
         case GIMP_RED_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += info->dest_bpp)
+          for (x = info->x; x < xe; x++, src++, dest += 4)
             {
               if (*src & 0x80)
                 continue;
@@ -453,7 +396,7 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
           break;
 
         case GIMP_GREEN_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += info->dest_bpp)
+          for (x = info->x; x < xe; x++, src++, dest += 4)
             {
               if (*src & 0x80)
                 continue;
@@ -464,7 +407,7 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
           break;
 
         case GIMP_BLUE_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += info->dest_bpp)
+          for (x = info->x; x < xe; x++, src++, dest += 4)
             {
               if (*src & 0x80)
                 continue;
@@ -512,24 +455,12 @@ render_image_gray_a (RenderInfo *info)
   while (TRUE)
     {
       const guchar *src  = info->src;
-      guchar       *dest = info->dest;
-      guint         dark_light;
+      guint32      *dest = (guint32 *) info->dest;
 
-      dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-      for (x = info->x; x < xe; x++, src += 2, dest += info->dest_bpp)
+      for (x = info->x; x < xe; x++, src += 2, dest++)
         {
-          guint v;
-
-          if (dark_light & 0x1)
-            v = ((src[0] << 8) + check_dark  * (256 - src[1])) >> 8;
-          else
-            v = ((src[0] << 8) + check_light * (256 - src[1])) >> 8;
-
-          GIMP_CAIRO_RGB24_SET_PIXEL (dest, v, v, v);
-
-          if (((x + 1) & check_mod) == 0)
-            dark_light += 1;
+          /*  data in src is premultiplied already  */
+          *dest = (src[1] << 24) | (src[0] << 16) | (src[0] << 8) | src[0];
         }
 
       if (++y == ye)
@@ -561,32 +492,12 @@ render_image_rgb_a (RenderInfo *info)
   while (TRUE)
     {
       const guchar *src  = info->src;
-      guchar       *dest = info->dest;
-      guint         dark_light;
+      guint32      *dest = (guint32 *) info->dest;
 
-      dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-      for (x = info->x; x < xe; x++, src += 4, dest += info->dest_bpp)
+      for (x = info->x; x < xe; x++, src += 4, dest++)
         {
-          guint r, g, b;
-
-          if (dark_light & 0x1)
-            {
-              r = ((src[0] << 8) + check_dark  * (256 - src[3])) >> 8;
-              g = ((src[1] << 8) + check_dark  * (256 - src[3])) >> 8;
-              b = ((src[2] << 8) + check_dark  * (256 - src[3])) >> 8;
-            }
-          else
-            {
-              r = ((src[0] << 8) + check_light * (256 - src[3])) >> 8;
-              g = ((src[1] << 8) + check_light * (256 - src[3])) >> 8;
-              b = ((src[2] << 8) + check_light * (256 - src[3])) >> 8;
-            }
-
-          GIMP_CAIRO_RGB24_SET_PIXEL (dest, r, g, b);
-
-          if (((x + 1) & check_mod) == 0)
-            dark_light += 1;
+          /*  data in src is premultiplied already  */
+          *dest = (src[3] << 24) | (src[0] << 16) | (src[1] << 8) | src[2];
         }
 
       if (++y == ye)

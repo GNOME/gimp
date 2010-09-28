@@ -592,6 +592,12 @@ gimp_display_shell_check_notify_handler (GObject          *config,
   GimpCanvasPaddingMode padding_mode;
   GimpRGB               padding_color;
 
+  if (shell->checkerboard)
+    {
+      cairo_pattern_destroy (shell->checkerboard);
+      shell->checkerboard = NULL;
+    }
+
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
 
   switch (padding_mode)

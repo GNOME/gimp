@@ -71,6 +71,12 @@ void   gimp_display_shell_draw_area                  (GimpDisplayShell   *shell,
                                                       gint                y,
                                                       gint                w,
                                                       gint                h);
+void   gimp_display_shell_draw_checkerboard          (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      gint                x,
+                                                      gint                y,
+                                                      gint                w,
+                                                      gint                h);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_DRAW_H__ */
