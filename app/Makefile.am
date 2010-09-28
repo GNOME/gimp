@@ -8,6 +8,9 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+# Build git-version.h before anything in the subdirs as this is needed in the
+# about dialog.
+BUILT_SOURCES = git-version.h
 
 # Sort this by architectural dependencies, lowest level at the top,
 # so that when e.g. changing a header-file the subdirs are built in
