@@ -55,47 +55,53 @@ typedef void (* RenderFunc) (RenderInfo *info);
 
 struct _RenderInfo
 {
-  GimpDisplayShell *shell;
-  TileManager      *src_tiles;
-  const guchar     *src;
-  guchar           *dest;
-  gboolean          src_is_premult;
-  gint              x, y;
-  gint              w, h;
-  gdouble           scalex;
-  gdouble           scaley;
-  gint              src_x;
-  gint              src_y;
-  gint              dest_bpl;
+  TileManager  *src_tiles;
+  const guchar *src;
+  gboolean      src_is_premult;
+  guchar       *dest;
+  gint          x, y;
+  gint          w, h;
+  gdouble       scalex;       /* scale from (pre-scaled) src to dest       */
+  gdouble       scaley;
+  gdouble       full_scalex;  /* actual display scale factor               */
+  gdouble       full_scaley;
+  gint          src_x;
+  gint          src_y;
+  gint          dest_bpl;
 
-  gint              zoom_quality;
+  gint          zoom_quality;
 
   /* Bresenham helpers */
-  gint              x_dest_inc; /* amount to increment for each dest. pixel  */
-  gint              x_src_dec;  /* amount to decrement for each source pixel */
-  gint64            dx_start;   /* pixel fraction for first pixel            */
+  gint          x_dest_inc;   /* amount to increment for each dest. pixel  */
+  gint          x_src_dec;    /* amount to decrement for each source pixel */
+  gint64        dx_start;     /* pixel fraction for first pixel            */
 
-  gint              y_dest_inc;
-  gint              y_src_dec;
-  gint64            dy_start;
+  gint          y_dest_inc;
+  gint          y_src_dec;
+  gint64        dy_start;
 
-  gint              footprint_x;
-  gint              footprint_y;
-  gint              footshift_x;
-  gint              footshift_y;
+  gint          footprint_x;
+  gint          footprint_y;
+  gint          footshift_x;
+  gint          footshift_y;
 
-  gint64            dy;
+  gint64        dy;
 };
 
 
 static guchar tile_buf[GIMP_DISPLAY_RENDER_BUF_WIDTH * MAX_CHANNELS];
 
 
-static void  gimp_display_shell_render_info_scale (RenderInfo       *info,
-                                                   GimpDisplayShell *shell,
-                                                   TileManager      *tiles,
-                                                   gint              level,
-                                                   gboolean          is_premult);
+static void  gimp_display_shell_render_info_init (RenderInfo       *info,
+                                                  GimpDisplayShell *shell,
+                                                  gint              x,
+                                                  gint              y,
+                                                  gint              w,
+                                                  gint              h,
+                                                  cairo_surface_t  *dest,
+                                                  TileManager      *tiles,
+                                                  gint              level,
+                                                  gboolean          is_premult);
 
 /*  Render Image functions  */
 
@@ -128,8 +134,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   GimpImage      *image;
   RenderInfo      info;
   GimpImageType   type;
-  gint            offset_x;
-  gint            offset_y;
+  TileManager    *tiles;
+  gint            level;
+  gboolean        premult;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -139,46 +146,16 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   projection = gimp_image_get_projection (image);
 
-  gimp_display_shell_scroll_get_render_start_offset (shell,
-						     &offset_x, &offset_y);
+  /* setup RenderInfo for rendering a GimpProjection level. */
+  level = gimp_projection_get_level (projection,
+                                     shell->scale_x, shell->scale_y);
 
-  /* Initialize RenderInfo with values that don't change during the
-   * call of this function.
-   */
-  info.shell    = shell;
+  tiles = gimp_projection_get_tiles_at_level (projection, level, &premult);
 
-  info.x        = x + offset_x;
-  info.y        = y + offset_y;
-  info.w        = w;
-  info.h        = h;
-
-  info.dest_bpl = cairo_image_surface_get_stride (shell->render_surface);
-
-  switch (shell->display->config->zoom_quality)
-    {
-    case GIMP_ZOOM_QUALITY_LOW:
-      info.zoom_quality = GIMP_DISPLAY_ZOOM_FAST;
-      break;
-
-    case GIMP_ZOOM_QUALITY_HIGH:
-      info.zoom_quality = GIMP_DISPLAY_ZOOM_PIXEL_AA;
-      break;
-    }
-
-  /* Setup RenderInfo for rendering a GimpProjection level. */
-  {
-    TileManager *tiles;
-    gint         level;
-    gboolean     premult;
-
-    level = gimp_projection_get_level (projection,
-                                       shell->scale_x,
-                                       shell->scale_y);
-
-    tiles = gimp_projection_get_tiles_at_level (projection, level, &premult);
-
-    gimp_display_shell_render_info_scale (&info, shell, tiles, level, premult);
-  }
+  gimp_display_shell_render_info_init (&info,
+                                       shell, x, y, w, h,
+                                       shell->render_surface,
+                                       tiles, level, premult);
 
   /* Currently, only RGBA and GRAYA projection types are used. */
   type = gimp_pickable_get_image_type (GIMP_PICKABLE (projection));
@@ -263,7 +240,7 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
   while (TRUE)
     {
       const guchar *src  = info->src;
-      guint32      *dest = (guint32 *) info->dest;
+      guchar       *dest = info->dest;
 
       switch (shell->mask_color)
         {
@@ -398,38 +375,59 @@ render_image_rgb_a (RenderInfo *info)
 }
 
 static void
-gimp_display_shell_render_info_scale (RenderInfo       *info,
-                                      GimpDisplayShell *shell,
-                                      TileManager      *tiles,
-                                      gint              level,
-                                      gboolean          is_premult)
+gimp_display_shell_render_info_init (RenderInfo       *info,
+                                     GimpDisplayShell *shell,
+                                     gint              x,
+                                     gint              y,
+                                     gint              w,
+                                     gint              h,
+                                     cairo_surface_t  *dest,
+                                     TileManager      *tiles,
+                                     gint              level,
+                                     gboolean          is_premult)
 {
+  gint offset_x;
+  gint offset_y;
+
+  gimp_display_shell_scroll_get_render_start_offset (shell,
+						     &offset_x, &offset_y);
+
+  info->x = x + offset_x;
+  info->y = y + offset_y;
+  info->w = w;
+  info->h = h;
+
+  info->dest        = cairo_image_surface_get_data (dest);
+  info->dest_bpl    = cairo_image_surface_get_stride (dest);
+
   info->src_tiles      = tiles;
   info->src_is_premult = is_premult;
 
-  /* We must reset info->dest because this member is modified in render
-   * functions.
-   */
-  info->dest     = cairo_image_surface_get_data (shell->render_surface);
+  info->scalex      = shell->scale_x * (1 << level);
+  info->scaley      = shell->scale_y * (1 << level);
 
-  info->scalex   = shell->scale_x * (1 << level);
-  info->scaley   = shell->scale_y * (1 << level);
+  info->full_scalex = shell->scale_x;
+  info->full_scaley = shell->scale_y;
 
   /* use Bresenham like stepping */
-  info->x_dest_inc = shell->x_dest_inc;
-  info->x_src_dec  = shell->x_src_dec << level;
+  info->x_dest_inc  = shell->x_dest_inc;
+  info->x_src_dec   = shell->x_src_dec << level;
 
-  info->dx_start   = ((gint64) info->x_dest_inc) * info->x + info->x_dest_inc / 2;
-  info->src_x      = info->dx_start / info->x_src_dec;
-  info->dx_start   = info->dx_start % info->x_src_dec;
+  info->dx_start    = ((gint64) info->x_dest_inc * info->x
+                       + info->x_dest_inc / 2);
+
+  info->src_x       = info->dx_start / info->x_src_dec;
+  info->dx_start    = info->dx_start % info->x_src_dec;
 
   /* same for y */
-  info->y_dest_inc = shell->y_dest_inc;
-  info->y_src_dec  = shell->y_src_dec << level;
+  info->y_dest_inc  = shell->y_dest_inc;
+  info->y_src_dec   = shell->y_src_dec << level;
 
-  info->dy_start   = ((gint64) info->y_dest_inc) * info->y + info->y_dest_inc / 2;
-  info->src_y      = info->dy_start / info->y_src_dec;
-  info->dy_start   = info->dy_start % info->y_src_dec;
+  info->dy_start    = ((gint64) info->y_dest_inc * info->y
+                       + info->y_dest_inc / 2);
+
+  info->src_y       = info->dy_start / info->y_src_dec;
+  info->dy_start    = info->dy_start % info->y_src_dec;
 
   /* make sure that the footprint is in the range 256..512 */
   info->footprint_x = info->x_src_dec;
@@ -456,6 +454,17 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
     {
       info->footprint_y <<= 1;
       info->footshift_y ++;
+    }
+
+  switch (shell->display->config->zoom_quality)
+    {
+    case GIMP_ZOOM_QUALITY_LOW:
+      info->zoom_quality = GIMP_DISPLAY_ZOOM_FAST;
+      break;
+
+    case GIMP_ZOOM_QUALITY_HIGH:
+      info->zoom_quality = GIMP_DISPLAY_ZOOM_PIXEL_AA;
+      break;
     }
 }
 
@@ -658,13 +667,13 @@ render_image_tile_fault (RenderInfo *info)
           info->scaley == 1.0)
 
       /* or when we're larger than 1.0 and not using any AA */
-      || (info->shell->scale_x > 1.0 &&
-          info->shell->scale_y > 1.0 &&
+      || (info->full_scalex > 1.0 &&
+          info->full_scaley > 1.0 &&
           (! (info->zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA)))
 
       /* or at any point when both scale factors are greater or equal to 200% */
-      || (info->shell->scale_x >= 2.0 &&
-          info->shell->scale_y >= 2.0 )
+      || (info->full_scalex >= 2.0 &&
+          info->full_scaley >= 2.0 )
 
       /* or when we're scaling a 1bpp texture, this code-path seems to be
        * invoked when interacting with SIOX which uses a palletized drawable
