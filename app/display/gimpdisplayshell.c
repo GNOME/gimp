@@ -769,6 +769,12 @@ gimp_display_shell_dispose (GObject *object)
       shell->render_surface = NULL;
     }
 
+  if (shell->mask_surface)
+    {
+      cairo_surface_destroy (shell->mask_surface);
+      shell->mask_surface = NULL;
+    }
+
   if (shell->checkerboard)
     {
       cairo_pattern_destroy (shell->checkerboard);
@@ -1802,7 +1808,7 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  *
  * Allows to preview a selection (used by the foreground selection
  * tool).  Pixels that are not selected (> 127) in the mask are tinted
- * with dark blue.
+ * with the given color.
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
@@ -1823,7 +1829,7 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
   if (shell->mask)
     g_object_unref (shell->mask);
 
-  shell->mask = mask;
+  shell->mask       = mask;
   shell->mask_color = color;
 
   gimp_display_shell_expose_full (shell);

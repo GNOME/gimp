@@ -105,14 +105,11 @@ static void  gimp_display_shell_render_info_init (RenderInfo       *info,
 
 /*  Render Image functions  */
 
-static void           render_image_rgb_a      (RenderInfo       *info);
-static void           render_image_gray_a     (RenderInfo       *info);
+static void           render_image_alpha         (RenderInfo       *info);
+static void           render_image_gray_a        (RenderInfo       *info);
+static void           render_image_rgb_a         (RenderInfo       *info);
 
-static const guchar * render_image_tile_fault (RenderInfo       *info);
-
-
-static void  gimp_display_shell_render_mask   (GimpDisplayShell *shell,
-                                               RenderInfo       *info);
+static const guchar * render_image_tile_fault    (RenderInfo       *info);
 
 
 /*****************************************************************/
@@ -132,9 +129,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 {
   GimpProjection *projection;
   GimpImage      *image;
+  TileManager    *tiles;
   RenderInfo      info;
   GimpImageType   type;
-  TileManager    *tiles;
   gint            level;
   gboolean        premult;
 
@@ -143,7 +140,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (w > 0 && h > 0);
 
   image = gimp_display_get_image (shell->display);
-
   projection = gimp_image_get_projection (image);
 
   /* setup RenderInfo for rendering a GimpProjection level. */
@@ -183,49 +179,80 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                       3 * GIMP_DISPLAY_RENDER_BUF_WIDTH);
 #endif
 
-#if 0
+  cairo_surface_mark_dirty (shell->render_surface);
+
   if (shell->mask)
     {
-      TileManager *tiles = gimp_drawable_get_tiles (shell->mask);
+      if (! shell->mask_surface)
+        {
+          shell->mask_surface =
+            cairo_image_surface_create (CAIRO_FORMAT_A8,
+                                        GIMP_DISPLAY_RENDER_BUF_WIDTH,
+                                        GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+        }
+
+      tiles = gimp_drawable_get_tiles (shell->mask);
 
       /* The mask does not (yet) have an image pyramid, use 0 as level, */
-      gimp_display_shell_render_info_scale (&info, shell, tiles, 0, FALSE);
+      gimp_display_shell_render_info_init (&info,
+                                           shell, x, y, w, h,
+                                           shell->mask_surface,
+                                           tiles, 0, FALSE);
 
-      gimp_display_shell_render_mask (shell, &info);
+      render_image_alpha (&info);
+
+      cairo_surface_mark_dirty (shell->mask_surface);
     }
-#endif
-
-  cairo_surface_mark_dirty (shell->render_surface);
 
   /*  put it to the screen  */
   {
     gint disp_xoffset, disp_yoffset;
 
+    cairo_save (cr);
+
     gimp_display_shell_scroll_get_disp_offset (shell,
                                                &disp_xoffset, &disp_yoffset);
 
     cairo_rectangle (cr, x + disp_xoffset, y + disp_yoffset, w, h);
+    cairo_clip (cr);
+
     cairo_set_source_surface (cr, shell->render_surface,
                               x + disp_xoffset, y + disp_yoffset);
-    cairo_fill (cr);
+    cairo_paint (cr);
+
+    if (shell->mask)
+      {
+        /*  FIXME: mask_color should be GimpRGB  */
+        switch (shell->mask_color)
+          {
+          case GIMP_RED_CHANNEL:
+            cairo_set_source_rgba (cr, 1, 0, 0, 0.5);
+            break;
+
+          case GIMP_GREEN_CHANNEL:
+            cairo_set_source_rgba (cr, 0, 1, 0, 0.5);
+            break;
+
+          case GIMP_BLUE_CHANNEL:
+            cairo_set_source_rgba (cr, 0, 0, 1, 0.5);
+            break;
+
+          default:
+            g_warn_if_reached ();
+            return;
+          }
+
+        cairo_mask_surface (cr, shell->mask_surface,
+                            x + disp_xoffset, y + disp_yoffset);
+      }
+
+    cairo_restore (cr);
   }
 }
 
-
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-#define CAIRO_RGB24_RED_PIXEL   2
-#define CAIRO_RGB24_GREEN_PIXEL 1
-#define CAIRO_RGB24_BLUE_PIXEL  0
-#else
-#define CAIRO_RGB24_RED_PIXEL   1
-#define CAIRO_RGB24_GREEN_PIXEL 2
-#define CAIRO_RGB24_BLUE_PIXEL  3
-#endif
-
-
+/*  render a GRAY tile to an A8 cairo surface  */
 static void
-gimp_display_shell_render_mask (GimpDisplayShell *shell,
-                                RenderInfo       *info)
+render_image_alpha (RenderInfo *info)
 {
   gint y, ye;
   gint x, xe;
@@ -234,7 +261,7 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->dy  = info->dy_start;
+  info->dy = info->dy_start;
   info->src = render_image_tile_fault (info);
 
   while (TRUE)
@@ -242,43 +269,9 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
       const guchar *src  = info->src;
       guchar       *dest = info->dest;
 
-      switch (shell->mask_color)
+      for (x = info->x; x < xe; x++, src++, dest++)
         {
-        case GIMP_RED_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += 4)
-            {
-              if (*src & 0x80)
-                continue;
-
-              dest[CAIRO_RGB24_GREEN_PIXEL] >>= 2;
-              dest[CAIRO_RGB24_BLUE_PIXEL]  >>= 2;
-            }
-          break;
-
-        case GIMP_GREEN_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += 4)
-            {
-              if (*src & 0x80)
-                continue;
-
-              dest[CAIRO_RGB24_RED_PIXEL]  >>= 2;
-              dest[CAIRO_RGB24_BLUE_PIXEL] >>= 2;
-            }
-          break;
-
-        case GIMP_BLUE_CHANNEL:
-          for (x = info->x; x < xe; x++, src++, dest += 4)
-            {
-              if (*src & 0x80)
-                continue;
-
-              dest[CAIRO_RGB24_RED_PIXEL]   >>= 2;
-              dest[CAIRO_RGB24_GREEN_PIXEL] >>= 2;
-            }
-          break;
-
-        default:
-          break;
+          *dest = *src;
         }
 
       if (++y == ye)
@@ -294,16 +287,12 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
     }
 }
 
-
-/*************************/
-/*  8 Bit functions      */
-/*************************/
-
+/*  render a GRAYA tile to an ARGB32 cairo surface  */
 static void
 render_image_gray_a (RenderInfo *info)
 {
-  gint  y, ye;
-  gint  x, xe;
+  gint y, ye;
+  gint x, xe;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -336,11 +325,12 @@ render_image_gray_a (RenderInfo *info)
     }
 }
 
+/*  render an RGBA tile to an ARGB32 cairo surface  */
 static void
 render_image_rgb_a (RenderInfo *info)
 {
-  gint  y, ye;
-  gint  x, xe;
+  gint y, ye;
+  gint x, xe;
 
   y  = info->y;
   ye = info->y + info->h;

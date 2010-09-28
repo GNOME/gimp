@@ -23,12 +23,12 @@
 #define GIMP_DISPLAY_RENDER_BUF_HEIGHT 256
 
 
-void  gimp_display_shell_render   (GimpDisplayShell *shell,
-                                   cairo_t          *cr,
-                                   gint              x,
-                                   gint              y,
-                                   gint              w,
-                                   gint              h);
+void  gimp_display_shell_render (GimpDisplayShell *shell,
+                                 cairo_t          *cr,
+                                 gint              x,
+                                 gint              y,
+                                 gint              w,
+                                 gint              h);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */
