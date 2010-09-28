@@ -17,14 +17,8 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 
@@ -33,19 +27,17 @@
 
 #include "config/gimpdisplayconfig.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojection.h"
 
-#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scroll.h"
+
 
 #define GIMP_DISPLAY_ZOOM_FAST     (1 << 0) /* use the fastest possible code
                                                path trading quality for speed
