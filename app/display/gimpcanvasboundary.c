@@ -261,17 +261,17 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 
   gimp_canvas_boundary_transform (item, shell, segs);
 
-  x1 = segs[0].x1 - 1;
-  y1 = segs[0].y1 - 1;
-  x2 = x1 + 3;
-  y2 = y1 + 3;
+  x1 = MIN (segs[0].x1, segs[0].x2) - 1;
+  y1 = MIN (segs[0].y1, segs[0].y2) - 1;
+  x2 = MAX (segs[0].x1, segs[0].x2) + 2;
+  y2 = MAX (segs[0].y1, segs[0].y2) + 2;
 
   for (i = 1; i < private->n_segs; i++)
     {
-      gint x3 = segs[i].x1 - 1;
-      gint y3 = segs[i].y1 - 1;
-      gint x4 = x3 + 3;
-      gint y4 = y3 + 3;
+      gint x3 = MIN (segs[i].x1, segs[i].x2) - 1;
+      gint y3 = MIN (segs[i].y1, segs[i].y2) - 1;
+      gint x4 = MAX (segs[i].x1, segs[i].x2) + 2;
+      gint y4 = MAX (segs[i].y1, segs[i].y2) + 2;
 
       x1 = MIN (x1, x3);
       y1 = MIN (y1, y3);
