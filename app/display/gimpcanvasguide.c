@@ -58,18 +58,18 @@ struct _GimpCanvasGuidePrivate
 /*  local function prototypes  */
 
 static void        gimp_canvas_guide_set_property (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
+                                                   guint             property_id,
+                                                   const GValue     *value,
+                                                   GParamSpec       *pspec);
 static void        gimp_canvas_guide_get_property (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
+                                                   guint             property_id,
+                                                   GValue           *value,
+                                                   GParamSpec       *pspec);
 static void        gimp_canvas_guide_draw         (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell,
-                                                  cairo_t          *cr);
+                                                   GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
 static GdkRegion * gimp_canvas_guide_get_extents  (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell);
+                                                   GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasGuide, gimp_canvas_guide, GIMP_TYPE_CANVAS_ITEM)
@@ -193,8 +193,8 @@ gimp_canvas_guide_transform (GimpCanvasItem   *item,
 
 static void
 gimp_canvas_guide_draw (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell,
-                       cairo_t          *cr)
+                        GimpDisplayShell *shell,
+                        cairo_t          *cr)
 {
   gdouble x1, y1;
   gdouble x2, y2;
