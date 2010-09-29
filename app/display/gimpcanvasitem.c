@@ -270,6 +270,18 @@ gimp_canvas_item_set_highlight (GimpCanvasItem *item,
                 NULL);
 }
 
+gboolean
+gimp_canvas_item_get_highlight (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
+
+  private = GET_PRIVATE (item);
+
+  return private->highlight;
+}
+
 void
 gimp_canvas_item_suspend_stroking (GimpCanvasItem *item)
 {

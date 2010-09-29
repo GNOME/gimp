@@ -69,8 +69,10 @@ GdkRegion * gimp_canvas_item_get_extents      (GimpCanvasItem   *item,
 
 void        gimp_canvas_item_set_line_cap     (GimpCanvasItem   *item,
                                                cairo_line_cap_t  line_cap);
+
 void        gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
                                                gboolean          highlight);
+gboolean    gimp_canvas_item_get_highlight    (GimpCanvasItem   *item);
 
 void        gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
 void        gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
