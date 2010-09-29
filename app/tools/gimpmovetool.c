@@ -45,10 +45,10 @@
 
 #include "widgets/gimphelp-ids.h"
 
+#include "display/gimpcanvasguide.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-draw.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
@@ -180,30 +180,11 @@ gimp_move_tool_control (GimpTool       *tool,
                         GimpToolAction  action,
                         GimpDisplay    *display)
 {
-  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
-
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
     case GIMP_TOOL_ACTION_RESUME:
-      if (move->guide && gimp_display_shell_get_show_guides (shell))
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
-          cairo_destroy (cr);
-        }
-      break;
-
     case GIMP_TOOL_ACTION_HALT:
-      if (move->guide && gimp_display_shell_get_show_guides (shell))
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
-          cairo_destroy (cr);
-        }
       break;
     }
 
@@ -453,13 +434,6 @@ gimp_move_tool_button_release (GimpTool              *tool,
       gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
       gimp_image_flush (image);
 
-      if (move->guide)
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
-          cairo_destroy (cr);
-        }
-
       move->moving_guide      = FALSE;
       move->guide_position    = -1;
       move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
@@ -677,20 +651,16 @@ gimp_move_tool_oper_update (GimpTool         *tool,
                                      FUNSCALEY (shell, snap_distance));
     }
 
-  if (move->guide && move->guide != guide)
+  if (move->guide != guide)
     {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
-      cairo_destroy (cr);
-    }
+      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  move->guide = guide;
+      if (gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_stop (draw_tool);
 
-  if (move->guide)
-    {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
-      cairo_destroy (cr);
+      move->guide = guide;
+
+      gimp_draw_tool_start (draw_tool, display);
     }
 }
 
@@ -792,6 +762,20 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMoveTool *move = GIMP_MOVE_TOOL (draw_tool);
 
+  if (move->guide)
+    {
+      GimpCanvasItem *item;
+
+      item = gimp_canvas_guide_new (gimp_guide_get_orientation (move->guide),
+                                    gimp_guide_get_position (move->guide));
+
+      g_object_set (item, "guide-style", TRUE, NULL);
+      gimp_canvas_item_set_highlight (item, TRUE);
+
+      gimp_draw_tool_add_item (draw_tool, item);
+      g_object_unref (item);
+    }
+
   if (move->moving_guide && move->guide_position != -1)
     {
       gimp_draw_tool_add_guide_line (draw_tool,
@@ -836,13 +820,8 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
   gimp_tool_control_activate (tool->control);
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
-  if (move->guide)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
-      cairo_destroy (cr);
-    }
+  if (gimp_draw_tool_is_active  (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   move->guide             = NULL;
   move->moving_guide      = TRUE;
