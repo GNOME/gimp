@@ -45,7 +45,7 @@
 
 #include "widgets/gimphelp-ids.h"
 
-#include "display/gimpcanvasguide.h"
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
@@ -775,14 +775,12 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpCanvasItem *item;
 
-      item = gimp_canvas_guide_new (gimp_guide_get_orientation (move->guide),
-                                    gimp_guide_get_position (move->guide));
+      item = gimp_draw_tool_add_guide_line (draw_tool,
+                                            gimp_guide_get_orientation (move->guide),
+                                            gimp_guide_get_position (move->guide));
 
       g_object_set (item, "guide-style", TRUE, NULL);
       gimp_canvas_item_set_highlight (item, TRUE);
-
-      gimp_draw_tool_add_item (draw_tool, item);
-      g_object_unref (item);
     }
 
   if (move->moving_guide && move->guide_position != -1)
