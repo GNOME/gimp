@@ -45,6 +45,7 @@
 #include "display/gimpcanvastextcursor.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-expose.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpdrawtool.h"
@@ -184,17 +185,9 @@ gimp_draw_tool_invalidate_items (GimpDrawTool *draw_tool)
 {
   if (draw_tool->item)
     {
-      GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
-      GdkWindow        *window = gtk_widget_get_window (shell->canvas);
-      GdkRegion        *region;
+      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
-      region = gimp_canvas_item_get_extents (draw_tool->item, shell);
-
-      if (region)
-        {
-          gdk_window_invalidate_region (window, region, TRUE);
-          gdk_region_destroy (region);
-        }
+      gimp_display_shell_expose_item (shell, draw_tool->item);
     }
 }
 

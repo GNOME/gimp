@@ -24,6 +24,8 @@ void        gimp_display_shell_expose_area         (GimpDisplayShell   *shell,
                                                     gint                y,
                                                     gint                w,
                                                     gint                h);
+void        gimp_display_shell_expose_item         (GimpDisplayShell   *shell,
+                                                    GimpCanvasItem     *item);
 void        gimp_display_shell_expose_guide        (GimpDisplayShell   *shell,
                                                     GimpGuide          *guide);
 void        gimp_display_shell_expose_sample_point (GimpDisplayShell   *shell,
