@@ -437,6 +437,9 @@ gimp_move_tool_button_release (GimpTool              *tool,
       move->moving_guide      = FALSE;
       move->guide_position    = -1;
       move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
+
+      if (move->guide)
+        gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
     }
   else
     {
@@ -655,12 +658,18 @@ gimp_move_tool_oper_update (GimpTool         *tool,
     {
       GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-      if (gimp_draw_tool_is_active (draw_tool))
+      gimp_draw_tool_pause (draw_tool);
+
+      if (gimp_draw_tool_is_active (draw_tool) &&
+          draw_tool->display != display)
         gimp_draw_tool_stop (draw_tool);
 
       move->guide = guide;
 
-      gimp_draw_tool_start (draw_tool, display);
+      if (! gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_start (draw_tool, display);
+
+      gimp_draw_tool_resume (draw_tool);
     }
 }
 
