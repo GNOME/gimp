@@ -49,6 +49,7 @@
 
 #include "gimpcanvas.h"
 #include "gimpcanvasguide.h"
+#include "gimpcanvassamplepoint.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -396,12 +397,8 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
                                       GimpSamplePoint    *sample_point,
                                       gboolean            active)
 {
-  GimpImage   *image;
-  gdouble      dx1, dy1, dx2, dy2;
-  gint         x1, x2, y1, y2;
-  gint         sx1, sx2, sy1, sy2;
-  gdouble      x, y;
-  PangoLayout *layout;
+  GimpCanvasItem *item;
+  GimpImage      *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -412,59 +409,16 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
 
   image = gimp_display_get_image (shell->display);
 
-  cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
+  item = gimp_canvas_sample_point_new (sample_point->x,
+                                       sample_point->y,
+                                       g_list_index (gimp_image_get_sample_points (image),
+                                                     sample_point) + 1);
+  g_object_set (item, "sample-point-style", TRUE, NULL);
+  gimp_canvas_item_set_highlight (item, active);
 
-  x1 = floor (dx1);
-  y1 = floor (dy1);
-  x2 = ceil (dx2);
-  y2 = ceil (dy2);
+  gimp_canvas_item_draw (item, shell, cr);
 
-  gimp_display_shell_transform_xy_f (shell,
-                                     sample_point->x + 0.5,
-                                     sample_point->y + 0.5,
-                                     &x, &y);
-
-  sx1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  sx2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
-  sy1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  sy2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
-
-  if (sx1 > x2 ||
-      sx2 < x1 ||
-      sy1 > y2 ||
-      sy2 < y1)
-    return;
-
-  gimp_display_shell_set_sample_point_style (shell, cr, active);
-
-#define HALF_SIZE (GIMP_SAMPLE_POINT_DRAW_SIZE / 2)
-
-  cairo_move_to (cr, x + 0.5, sy1);
-  cairo_line_to (cr, x + 0.5, sy1 + HALF_SIZE);
-
-  cairo_move_to (cr, x + 0.5, sy2);
-  cairo_line_to (cr, x + 0.5, sy2 - HALF_SIZE);
-
-  cairo_move_to (cr, sx1,             y + 0.5);
-  cairo_line_to (cr, sx1 + HALF_SIZE, y + 0.5);
-
-  cairo_move_to (cr, sx2,             y + 0.5);
-  cairo_line_to (cr, sx2 - HALF_SIZE, y + 0.5);
-
-  cairo_arc_negative (cr, x + 0.5, y + 0.5, HALF_SIZE, 0.0, 0.5 * G_PI);
-
-  cairo_stroke (cr);
-
-  layout =
-    gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas),
-                            "%d",
-                            g_list_index (gimp_image_get_sample_points (image),
-                                          sample_point) + 1);
-
-  cairo_move_to (cr, x + 2, y + 2);
-  pango_cairo_show_layout (cr, layout);
-
-  cairo_fill (cr);
+  g_object_unref (item);
 }
 
 void

@@ -145,8 +145,8 @@ gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
   x2 = MIN (shell->disp_width,  ceil (x + GIMP_SAMPLE_POINT_DRAW_SIZE));
   y2 = MIN (shell->disp_height, ceil (y + GIMP_SAMPLE_POINT_DRAW_SIZE));
 
-  /* HACK: add 3 instead of 1 so the number gets cleared too */
-  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1 + 3, y2 - y1 + 3);
+  /* HACK: add 4 instead of 1 so the number gets cleared too */
+  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1 + 4, y2 - y1 + 4);
 }
 
 void
