@@ -2298,11 +2298,11 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
       gdk_region_get_rectangles (image_region, &rects, &n_rects);
 
       for (i = 0; i < n_rects; i++)
-        gimp_display_shell_draw_area (shell, cr,
-                                      rects[i].x,
-                                      rects[i].y,
-                                      rects[i].width,
-                                      rects[i].height);
+        gimp_display_shell_draw_image (shell, cr,
+                                       rects[i].x,
+                                       rects[i].y,
+                                       rects[i].width,
+                                       rects[i].height);
 
       g_free (rects);
       cairo_restore (cr);

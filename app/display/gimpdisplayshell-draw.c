@@ -700,12 +700,12 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_draw_area (GimpDisplayShell *shell,
-                              cairo_t          *cr,
-                              gint              x,
-                              gint              y,
-                              gint              w,
-                              gint              h)
+gimp_display_shell_draw_image (GimpDisplayShell *shell,
+                               cairo_t          *cr,
+                               gint              x,
+                               gint              y,
+                               gint              w,
+                               gint              h)
 {
   gint x2, y2;
   gint i, j;
