@@ -98,7 +98,7 @@ about_dialog_create (GimpContext *context)
 
       pixbuf = about_dialog_load_logo ();
 
-      copyright = g_strdup_printf(GIMP_COPYRIGHT, GIMP_GIT_LAST_COMMIT_YEAR);
+      copyright = g_strdup_printf (GIMP_COPYRIGHT, GIMP_GIT_LAST_COMMIT_YEAR);
 
       widget = g_object_new (GTK_TYPE_ABOUT_DIALOG,
                              "role",               "about-dialog",
@@ -116,14 +116,15 @@ about_dialog_create (GimpContext *context)
                              "authors",            authors,
                              "artists",            artists,
                              "documenters",        documenters,
-                             /* Translators: insert your names here, separated by newline */
+                             /* Translators: insert your names here,
+                                separated by newline */
                              "translator-credits", _("translator-credits"),
                              NULL);
 
       if (pixbuf)
         g_object_unref (pixbuf);
 
-      g_free(copyright);
+      g_free (copyright);
 
       dialog->dialog = widget;
 
