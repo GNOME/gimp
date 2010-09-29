@@ -130,33 +130,6 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 }
 
 void
-gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
-                               cairo_t            *cr,
-                               GimpGuide          *guide,
-                               gboolean            active)
-{
-  GimpCanvasItem *item;
-  gint            position;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
-
-  position = gimp_guide_get_position (guide);
-  if (position < 0)
-    return;
-
-  item = gimp_canvas_guide_new (gimp_guide_get_orientation (guide), position);
-
-  g_object_set (item, "guide-style", TRUE, NULL);
-  gimp_canvas_item_set_highlight (item, active);
-
-  gimp_canvas_item_draw (item, shell, cr);
-
-  g_object_unref (item);
-}
-
-void
 gimp_display_shell_draw_guides (GimpDisplayShell *shell,
                                 cairo_t          *cr)
 {
@@ -169,14 +142,32 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell,
 
   if (image && gimp_display_shell_get_show_guides (shell))
     {
-      GList *list;
+      GimpCanvasItem *item;
+      GList          *list;
+
+      item = gimp_canvas_guide_new (GIMP_ORIENTATION_HORIZONTAL, 0);
+      g_object_set (item, "guide-style", TRUE, NULL);
 
       for (list = gimp_image_get_guides (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_guide (shell, cr, list->data, FALSE);
+          GimpGuide *guide = list->data;
+          gint       position;
+
+          position = gimp_guide_get_position (guide);
+
+          if (position >= 0)
+            {
+              g_object_set (item,
+                            "orientation", gimp_guide_get_orientation (guide),
+                            "position",    position,
+                            NULL);
+              gimp_canvas_item_draw (item, shell, cr);
+            }
         }
+
+      g_object_unref (item);
     }
 }
 

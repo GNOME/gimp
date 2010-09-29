@@ -27,10 +27,6 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
                                                       gdouble             scale,
                                                       gint               *w,
                                                       gint               *h);
-void   gimp_display_shell_draw_guide                 (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      GimpGuide          *guide,
-                                                      gboolean            active);
 void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
 void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
