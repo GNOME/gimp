@@ -271,10 +271,44 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
 
   if (private->filled)
     {
-      rectangle.x      = floor (x);
-      rectangle.y      = floor (y);
-      rectangle.width  = ceil (w);
-      rectangle.height = ceil (h);
+      rectangle.x      = floor (x - 1.0);
+      rectangle.y      = floor (y - 1.0);
+      rectangle.width  = ceil (w + 2.0);
+      rectangle.height = ceil (h + 2.0);
+
+      return gdk_region_rectangle (&rectangle);
+    }
+  else if (w > 64 && h > 64)
+    {
+      GdkRegion *region;
+
+      /* left */
+      rectangle.x      = floor (x - 1.5);
+      rectangle.y      = floor (y - 1.5);
+      rectangle.width  = 3.0;
+      rectangle.height = ceil (h + 3.0);
+
+      region = gdk_region_rectangle (&rectangle);
+
+      /* right */
+      rectangle.x      = floor (x + w - 1.5);
+
+      gdk_region_union_with_rect (region, &rectangle);
+
+      /* top */
+      rectangle.x      = floor (x - 1.5);
+      rectangle.y      = floor (y - 1.5);
+      rectangle.width  = ceil (w + 3.0);
+      rectangle.height = 3.0;
+
+      gdk_region_union_with_rect (region, &rectangle);
+
+      /* bottom */
+      rectangle.y      = floor (y + h - 1.5);
+
+      gdk_region_union_with_rect (region, &rectangle);
+
+      return region;
     }
   else
     {
@@ -282,9 +316,9 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.y      = floor (y - 1.5);
       rectangle.width  = ceil (w + 3.0);
       rectangle.height = ceil (h + 3.0);
-    }
 
-  return gdk_region_rectangle (&rectangle);
+      return gdk_region_rectangle (&rectangle);
+    }
 }
 
 GimpCanvasItem *
