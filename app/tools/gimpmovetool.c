@@ -67,9 +67,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_move_tool_control        (GimpTool              *tool,
-                                             GimpToolAction         action,
-                                             GimpDisplay           *display);
 static void   gimp_move_tool_button_press   (GimpTool              *tool,
                                              const GimpCoords      *coords,
                                              guint32                time,
@@ -140,7 +137,6 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->control        = gimp_move_tool_control;
   tool_class->button_press   = gimp_move_tool_button_press;
   tool_class->button_release = gimp_move_tool_button_release;
   tool_class->motion         = gimp_move_tool_motion;
@@ -173,22 +169,6 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MOVE);
-}
-
-static void
-gimp_move_tool_control (GimpTool       *tool,
-                        GimpToolAction  action,
-                        GimpDisplay    *display)
-{
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
-    case GIMP_TOOL_ACTION_HALT:
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
