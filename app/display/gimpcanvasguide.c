@@ -30,6 +30,7 @@
 
 #include "gimpcanvasguide.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-style.h"
 #include "gimpdisplayshell-transform.h"
 
 
@@ -37,7 +38,8 @@ enum
 {
   PROP_0,
   PROP_ORIENTATION,
-  PROP_POSITION
+  PROP_POSITION,
+  PROP_GUIDE_STYLE
 };
 
 
@@ -47,6 +49,7 @@ struct _GimpCanvasGuidePrivate
 {
   GimpOrientationType orientation;
   gint                position;
+  gboolean            guide_style;
 };
 
 #define GET_PRIVATE(guide) \
@@ -70,6 +73,9 @@ static void        gimp_canvas_guide_draw         (GimpCanvasItem   *item,
                                                    cairo_t          *cr);
 static GdkRegion * gimp_canvas_guide_get_extents  (GimpCanvasItem   *item,
                                                    GimpDisplayShell *shell);
+static void        gimp_canvas_guide_stroke       (GimpCanvasItem   *item,
+                                                   GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasGuide, gimp_canvas_guide, GIMP_TYPE_CANVAS_ITEM)
@@ -88,6 +94,7 @@ gimp_canvas_guide_class_init (GimpCanvasGuideClass *klass)
 
   item_class->draw           = gimp_canvas_guide_draw;
   item_class->get_extents    = gimp_canvas_guide_get_extents;
+  item_class->stroke         = gimp_canvas_guide_stroke;
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation", NULL, NULL,
@@ -100,6 +107,12 @@ gimp_canvas_guide_class_init (GimpCanvasGuideClass *klass)
                                                      -GIMP_MAX_IMAGE_SIZE,
                                                      GIMP_MAX_IMAGE_SIZE, 0,
                                                      GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_GUIDE_STYLE,
+                                   g_param_spec_boolean ("guide-style",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
 
   g_type_class_add_private (klass, sizeof (GimpCanvasGuidePrivate));
 }
@@ -125,6 +138,9 @@ gimp_canvas_guide_set_property (GObject      *object,
     case PROP_POSITION:
       private->position = g_value_get_int (value);
       break;
+    case PROP_GUIDE_STYLE:
+      private->guide_style = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -147,6 +163,9 @@ gimp_canvas_guide_get_property (GObject    *object,
       break;
     case PROP_POSITION:
       g_value_set_int (value, private->position);
+      break;
+    case PROP_GUIDE_STYLE:
+      g_value_set_boolean (value, private->guide_style);
       break;
 
     default:
@@ -223,6 +242,25 @@ gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
   rectangle.height = ABS (y2 - y1) + 3.0;
 
   return gdk_region_rectangle (&rectangle);
+}
+
+static void
+gimp_canvas_guide_stroke (GimpCanvasItem   *item,
+                          GimpDisplayShell *shell,
+                          cairo_t          *cr)
+{
+  GimpCanvasGuidePrivate *private = GET_PRIVATE (item);
+
+  if (private->guide_style)
+    {
+      gimp_display_shell_set_guide_style (shell, cr,
+                                          gimp_canvas_item_get_highlight (item));
+      cairo_stroke (cr);
+    }
+  else
+    {
+      GIMP_CANVAS_ITEM_CLASS (parent_class)->stroke (item, shell, cr);
+    }
 }
 
 GimpCanvasItem *
