@@ -60,6 +60,7 @@
 #include "widgets/gimpuimanager.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -2350,17 +2351,9 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   cairo_restore (cr);
 
   /* draw tool items */
-  {
-    GimpTool *tool = tool_manager_get_active (shell->display->gimp);
-
-    if (GIMP_IS_DRAW_TOOL (tool) &&
-        GIMP_DRAW_TOOL (tool)->display == shell->display)
-      {
-        cairo_save (cr);
-        gimp_draw_tool_draw_items (GIMP_DRAW_TOOL (tool), cr);
-        cairo_restore (cr);
-      }
-  }
+  cairo_save (cr);
+  gimp_canvas_item_draw (shell->canvas_item, shell, cr);
+  cairo_restore (cr);
 
   /* and the cursor (if we have a software cursor) */
   cairo_save (cr);

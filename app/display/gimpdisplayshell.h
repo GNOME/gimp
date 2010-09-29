@@ -135,6 +135,8 @@ struct _GimpDisplayShell
   cairo_surface_t   *mask_surface;     /*  buffer for rendering the mask      */
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 
+  GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+
   guint              title_idle_id;    /*  title update idle ID               */
   gchar             *title;            /*  current title                      */
   gchar             *status;           /*  current default statusbar content  */

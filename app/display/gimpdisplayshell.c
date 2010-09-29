@@ -53,6 +53,7 @@
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvasgroup.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -289,6 +290,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                                       GIMP_DISPLAY_RENDER_BUF_WIDTH,
                                                       GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+
+  shell->canvas_item = gimp_canvas_group_new ();
 
   shell->icon_size  = 32;
 
@@ -791,6 +794,12 @@ gimp_display_shell_dispose (GObject *object)
     {
       g_object_unref (shell->mask);
       shell->mask = NULL;
+    }
+
+  if (shell->canvas_item)
+    {
+      g_object_unref (shell->canvas_item);
+      shell->canvas_item = NULL;
     }
 
   if (shell->event_history)

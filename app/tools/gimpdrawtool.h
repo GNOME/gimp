@@ -66,9 +66,6 @@ gboolean         gimp_draw_tool_is_active            (GimpDrawTool     *draw_too
 void             gimp_draw_tool_pause                (GimpDrawTool     *draw_tool);
 void             gimp_draw_tool_resume               (GimpDrawTool     *draw_tool);
 
-void             gimp_draw_tool_draw_items           (GimpDrawTool     *draw_tool,
-                                                      cairo_t          *cr);
-
 gdouble          gimp_draw_tool_calc_distance        (GimpDrawTool     *draw_tool,
                                                       GimpDisplay      *display,
                                                       gdouble           x1,

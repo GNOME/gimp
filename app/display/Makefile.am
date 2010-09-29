@@ -79,6 +79,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-layer-select.h		\
 	gimpdisplayshell-icon.c			\
 	gimpdisplayshell-icon.h			\
+	gimpdisplayshell-items.c		\
+	gimpdisplayshell-items.h		\
 	gimpdisplayshell-preview.c		\
 	gimpdisplayshell-preview.h		\
 	gimpdisplayshell-progress.c		\

@@ -46,6 +46,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-expose.h"
+#include "display/gimpdisplayshell-items.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpdrawtool.h"
@@ -181,36 +182,35 @@ gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_draw_tool_invalidate_items (GimpDrawTool *draw_tool)
-{
-  if (draw_tool->item)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
-
-      gimp_display_shell_expose_item (shell, draw_tool->item);
-    }
-}
-
-static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
   if (draw_tool->display && draw_tool->paused_count == 0)
     {
-      gimp_draw_tool_invalidate_items (draw_tool);
-      gimp_draw_tool_clear_items (draw_tool);
+      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+
+      if (draw_tool->item)
+        {
+          gimp_display_shell_remove_item (shell, draw_tool->item);
+          gimp_draw_tool_clear_items (draw_tool);
+        }
 
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
-      gimp_draw_tool_invalidate_items (draw_tool);
+      if (draw_tool->item)
+        {
+          gimp_display_shell_add_item (shell, draw_tool->item);
+        }
     }
 }
 
 static void
 gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->display)
+  if (draw_tool->display && draw_tool->item)
     {
-      gimp_draw_tool_invalidate_items (draw_tool);
+      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+
+      gimp_display_shell_remove_item (shell, draw_tool->item);
       gimp_draw_tool_clear_items (draw_tool);
     }
 }
@@ -270,23 +270,6 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
   draw_tool->paused_count--;
 
   gimp_draw_tool_draw (draw_tool);
-}
-
-void
-gimp_draw_tool_draw_items (GimpDrawTool *draw_tool,
-                           cairo_t      *cr)
-{
-  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
-  g_return_if_fail (cr != NULL);
-
-  if (draw_tool->item                      &&
-      gimp_draw_tool_is_active (draw_tool) &&
-      draw_tool->paused_count == 0)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
-
-      gimp_canvas_item_draw (draw_tool->item, shell, cr);
-    }
 }
 
 /**
