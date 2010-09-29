@@ -48,6 +48,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvasguide.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -134,10 +135,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
                                GimpGuide          *guide,
                                gboolean            active)
 {
-  gint    position;
-  gdouble dx1, dy1, dx2, dy2;
-  gint    x1, y1, x2, y2;
-  gint    x, y;
+  GimpCanvasItem *item;
+  gint            position;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -147,40 +146,14 @@ gimp_display_shell_draw_guide (GimpDisplayShell   *shell,
   if (position < 0)
     return;
 
-  cairo_clip_extents (cr, &dx1, &dy1, &dx2, &dy2);
+  item = gimp_canvas_guide_new (gimp_guide_get_orientation (guide), position);
 
-  x1 = floor (dx1);
-  y1 = floor (dy1);
-  x2 = ceil (dx2);
-  y2 = ceil (dy2);
+  g_object_set (item, "guide-style", TRUE, NULL);
+  gimp_canvas_item_set_highlight (item, active);
 
-  gimp_display_shell_set_guide_style (shell, cr, active);
+  gimp_canvas_item_draw (item, shell, cr);
 
-  switch (gimp_guide_get_orientation (guide))
-    {
-    case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_transform_xy (shell, 0, position, &x, &y);
-      if (y >= y1 && y < y2)
-        {
-          cairo_move_to (cr, x1, y + 0.5);
-          cairo_line_to (cr, x2, y + 0.5);
-        }
-      break;
-
-    case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_transform_xy (shell, position, 0, &x, &y);
-      if (x >= x1 && x < x2)
-        {
-          cairo_move_to (cr, x + 0.5, y1);
-          cairo_line_to (cr, x + 0.5, y2);
-        }
-      break;
-
-    case GIMP_ORIENTATION_UNKNOWN:
-      return;
-    }
-
-  cairo_stroke (cr);
+  g_object_unref (item);
 }
 
 void
