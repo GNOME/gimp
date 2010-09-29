@@ -72,6 +72,12 @@ static void        gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
                                                       cairo_t          *cr);
 static GdkRegion * gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
                                                       GimpDisplayShell *shell);
+static void        gimp_canvas_item_real_stroke      (GimpCanvasItem   *item,
+                                                      GimpDisplayShell *shell,
+                                                      cairo_t          *cr);
+static void        gimp_canvas_item_real_fill        (GimpCanvasItem   *item,
+                                                      GimpDisplayShell *shell,
+                                                      cairo_t          *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
@@ -90,6 +96,8 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 
   klass->draw                = gimp_canvas_item_real_draw;
   klass->get_extents         = gimp_canvas_item_real_get_extents;
+  klass->stroke              = gimp_canvas_item_real_stroke;
+  klass->fill                = gimp_canvas_item_real_fill;
 
   g_object_class_install_property (object_class, PROP_LINE_CAP,
                                    g_param_spec_int ("line-cap",
@@ -178,6 +186,37 @@ gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell)
 {
   return NULL;
+}
+
+static void
+gimp_canvas_item_real_stroke (GimpCanvasItem   *item,
+                              GimpDisplayShell *shell,
+                              cairo_t          *cr)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  cairo_set_line_cap (cr, private->line_cap);
+
+  gimp_display_shell_set_tool_bg_style (shell, cr);
+  cairo_stroke_preserve (cr);
+
+  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
+  cairo_stroke (cr);
+}
+
+static void
+gimp_canvas_item_real_fill (GimpCanvasItem   *item,
+                            GimpDisplayShell *shell,
+                            cairo_t          *cr)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  gimp_display_shell_set_tool_bg_style (shell, cr);
+  cairo_set_line_width (cr, 2.0);
+  cairo_stroke_preserve (cr);
+
+  gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
+  cairo_fill (cr);
 }
 
 
@@ -298,13 +337,7 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
 
   if (private->suspend_stroking == 0)
     {
-      cairo_set_line_cap (cr, private->line_cap);
-
-      gimp_display_shell_set_tool_bg_style (shell, cr);
-      cairo_stroke_preserve (cr);
-
-      gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
-      cairo_stroke (cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->stroke (item, shell, cr);
     }
   else
     {
@@ -324,12 +357,7 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
 
   if (private->suspend_filling == 0)
     {
-      gimp_display_shell_set_tool_bg_style (shell, cr);
-      cairo_set_line_width (cr, 2.0);
-      cairo_stroke_preserve (cr);
-
-      gimp_display_shell_set_tool_fg_style (shell, cr, private->highlight);
-      cairo_fill (cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->fill (item, shell, cr);
     }
   else
     {

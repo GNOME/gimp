@@ -49,6 +49,13 @@ struct _GimpCanvasItemClass
                                cairo_t          *cr);
   GdkRegion * (* get_extents) (GimpCanvasItem   *item,
                                GimpDisplayShell *shell);
+
+  void        (* stroke)      (GimpCanvasItem   *item,
+                               GimpDisplayShell *shell,
+                               cairo_t          *cr);
+  void        (* fill)        (GimpCanvasItem   *item,
+                               GimpDisplayShell *shell,
+                               cairo_t          *cr);
 };
 
 
