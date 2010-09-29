@@ -4,21 +4,21 @@
 # This file is distributed under the same license as the gimp.HEAD package.
 #
 # Punjab Linux Technology <punjablinux@netscape.net>, 2004.
-# A S Alam <aalam@users.sf.net>, 2005,2006, 2007.
+# A S Alam <aalam@users.sf.net>, 2005,2006, 2007, 2010.
 # Amanpreet Singh Alam <aalam@users.sf.net>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.pa\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-28 16:13+0200\n"
-"PO-Revision-Date: 2008-10-07 06:19+0000\n"
-"Last-Translator: Amanpreet Singh Alam <aalam@users.sf.net>\n"
-"Language-Team: Punjabi/Panjabi <punjabi-l10n@lists.sf.net>\n"
-"Language: \n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2010-09-28 15:58+0000\n"
+"PO-Revision-Date: 2010-09-29 22:56+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: LoKalize 0.2\n"
+"Language: \n"
+"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../app/about.h:23
@@ -40,7 +40,6 @@ msgstr ""
 "ਸਪੈਨਸਰ ਕਿਮਬਿਲ, ਪੀਟਰ ਮਟੀਟੀਸ ਅਤੇ ਜੈਮਪ ਡਿਵੈਲਪਮੈਂਟ ਟੀਮ"
 
 #: ../app/about.h:34
-#, fuzzy
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -55,17 +54,16 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"ਜੈਮਪ ਇਕ ਮੁਫਤ/ਮੁਕਤ ਸਾਫਟਵੇਅਰ ਹੈ, ਜਿਸ ਨੂੰ ਤਸੀਂ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਈਸੈਂਸ,ਜਿਸ ਨੂੰ ਫਰੀ ਸਾਫਟਵੇਅਰ "
-"ਫਾਊਨਡੇਸ਼ਨ ਨੇ ਤਿਆਰ ਕੀਤਾ ਹੈ, ਦੇ ਵਰਜਨ 2 ਜਾਂ ਨਵਾਂ ਦੀਆਂਸ਼ਰਤਾਂ (ਉਹ ਤੁਹਾਡੀ ਆਪਣੀ ਮਰਜ਼ੀ ਹੈ) ਅਧੀਨ "
+"ਜੈਮਪ ਇਕ ਮੁਫਤ/ਮੁਕਤ ਸਾਫਟਵੇਅਰ ਹੈ: ਤੁਸੀਂ ਇਸ ਨੂੰ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਈਸੈਂਸ, ਜਿਸ ਨੂੰ ਫਰੀ ਸਾਫਟਵੇਅਰ "
+"ਫਾਊਨਡੇਸ਼ਨ ਨੇ ਤਿਆਰ ਕੀਤਾ ਹੈ, ਦੇ ਵਰਜਨ 2 ਜਾਂ ਨਵਾਂ ਦੀਆਂ ਸ਼ਰਤਾਂ (ਉਹ ਤੁਹਾਡੀ ਆਪਣੀ ਮਰਜ਼ੀ ਹੈ) ਅਧੀਨ "
 "ਵੰਡ ਅਤੇ/ਜਾਂ ਸੋਧ ਸਕਦੇ ਹੋ।\n"
 "\n"
 "ਜੈਮਪ ਨੂੰ ਇਹ ਮੰਨ ਕੇ ਵੰਡਿਆਂ ਜਾ ਰਿਹਾ ਹੈ ਕਿ ਇਹ ਫਾਇਦਮੰਦ ਰਹੇਗਾ,ਪਰ ਇਸ ਦੀ ਕੋਈ ਵਾਰੰਟੀ ਨਹੀਂ ਲਈ ਜਾ "
-"ਰਹੀ ਹੈ, ਕਿਸ ਖਾਸ ਕੰਮ ਲਈ ਅਨੁਕੂਲ ਹੋਣ ਜਾਂਠੀਕ ਤਰ੍ਹਾ ਕੰਮ ਕਰਨ ਦੀ ਵੀ ਕੋਈ ਗਾਰਟੀ ਨਹੀਂ ਹੈ। ਹੋਰ ਵੇਰਵੇ "
+"ਰਹੀ ਹੈ, ਕਿਸ ਖਾਸ ਕੰਮ ਲਈ ਅਨੁਕੂਲ ਹੋਣ ਜਾਂ ਠੀਕ ਤਰ੍ਹਾ ਕੰਮ ਕਰਨ ਦੀ ਵੀ ਕੋਈ ਗਾਰਟੀ ਨਹੀਂ ਹੈ। ਹੋਰ ਵੇਰਵੇ "
 "ਲਈ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਇਸੈਂਸ ਨੂੰ ਪੜ੍ਹੋ।\n"
 "\n"
-"ਜੈਮਪ ਨਾਲ ਤੁਸੀਂ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਇਸੈਂਸ ਦੀ ਨਕਲ ਪਰਾਪਤ ਕਰੋਗੇ, ਜੇਕਰ ਤੁਹਾਨੂੰਨਹੀਂ ਮਿਲੀ ਹੈ ਤਾਂ ਫਰੀ "
-"ਸਾਫਟਵਅਰ ਫਾਊਂਨਡੇਸ਼ਨ, 51 ਫਰਾਕਲਿਨ ਸਟਰੀਟ, ਪੰਜਵੀ ਮੰਜ਼ਲ,ਬਸਟਨ, ਐਮ ਏ 02110-1301, ਅਮਰੀਕਾ ਨੂੰ "
-"ਲਿਖੋ।"
+"ਜੈਮਪ ਨਾਲ ਤੁਸੀਂ ਗਨੂ ਜਰਨਲ ਪਬਲਿਕ ਲਾਇਸੈਂਸ ਦੀ ਕਾਪੀ ਪਰਾਪਤ ਕਰੋਗੇ, ਜੇਕਰ ਤੁਹਾਨੂੰ ਨਹੀਂ ਮਿਲੀ ਹੈ ਤਾਂ "
+"<http://www.gnu.org/licenses/> ਵੇਖੋ।"
 
 #: ../app/app.c:220
 #, c-format
@@ -123,9 +121,8 @@ msgid "Do not load any fonts"
 msgstr "ਕੋਈ ਫੋਂਟ ਲੋਡ ਨਾ ਕਰੋ"
 
 #: ../app/main.c:179
-#, fuzzy
 msgid "Do not show a splash screen"
-msgstr "ਇੱਕ ਸ਼ੁਰੂਆਤੀ ਵਿੰਡੋ ਨਾ ਵੇਖਾਓ"
+msgstr "ਸਵਾਗਤੀ ਸਕਰੀਨ ਨਾ ਵੇਖੋ"
 
 #: ../app/main.c:184
 msgid "Do not use shared memory between GIMP and plugins"
@@ -311,15 +308,13 @@ msgstr "ਖਿੱਚਣ-ਯੋਗ"
 
 #. Some things do not have grids, so just list
 #: ../app/actions/actions.c:151 ../app/dialogs/dialogs.c:300
-#, fuzzy
 msgid "Paint Dynamics"
-msgstr "ਡਾਇਨਾਮਿਕ ਬੁਰਸ਼"
+msgstr "ਪੇਂਟ ਡਾਇਨਾਮਿਕ"
 
 #: ../app/actions/actions.c:154 ../app/dialogs/dialogs.c:357
 #: ../app/widgets/gimpdynamicseditor.c:94
-#, fuzzy
 msgid "Paint Dynamics Editor"
-msgstr "ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ"
+msgstr "ਪੇਂਟ ਡਾਇਨਾਮਿਕ ਐਡੀਟਰ"
 
 #: ../app/actions/actions.c:157
 msgid "Edit"
@@ -352,15 +347,13 @@ msgstr "ਗਰੇਡੀਐਂਟ"
 #. initialize the list of gimp tool presets
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:302
-#, fuzzy
 msgid "Tool Presets"
-msgstr "ਪਹਿਲਾਂ-ਸੈੱਟ(_s):"
+msgstr "ਟੂਲ ਪ੍ਰੀ-ਸੈੱਟ"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:369
 #: ../app/widgets/gimptoolpreseteditor.c:75
-#, fuzzy
 msgid "Tool Preset Editor"
-msgstr "ਟੈਕਸਟ ਐਡੀਟਰ"
+msgstr "ਟੂਲ ਪ੍ਰੀਸੈੱਟ ਐਡੀਟਰ"
 
 #: ../app/actions/actions.c:181
 msgid "Help"
@@ -420,9 +413,8 @@ msgid "Templates"
 msgstr "ਟੈਪਲੇਟ"
 
 #: ../app/actions/actions.c:217
-#, fuzzy
 msgid "Text Tool"
-msgstr "ਟੈਕਸਟ ਟੂਲ(_x)"
+msgstr "ਟੈਕਸਟ ਟੂਲ"
 
 #: ../app/actions/actions.c:220
 msgid "Text Editor"
@@ -454,70 +446,60 @@ msgstr "ਵਿੰਡੋ"
 #: ../app/actions/actions.c:584
 #, c-format
 msgid "%s: %.2f"
-msgstr ""
+msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
 #: ../app/actions/actions.c:610
 #, c-format
 msgid "%s: %d"
-msgstr ""
+msgstr "%s: %d"
 
 #: ../app/actions/brush-editor-actions.c:42
-#, fuzzy
 msgctxt "brush-editor-action"
 msgid "Brush Editor Menu"
 msgstr "ਬੁਰਸ਼ ਐਡੀਟਰ ਮੇਨੂ"
 
 #: ../app/actions/brush-editor-actions.c:49
-#, fuzzy
 msgctxt "brush-editor-action"
 msgid "Edit Active Brush"
 msgstr "ਐਕਟਿਵ ਬੁਰਸ਼ ਸੋਧ"
 
 #: ../app/actions/brushes-actions.c:42
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Brushes Menu"
 msgstr "ਬੁਰਸ਼ ਮੇਨੂ"
 
 #: ../app/actions/brushes-actions.c:46
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Open Brush as Image"
 msgstr "ਬੁਰਸ਼ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ(_O)"
 
 #: ../app/actions/brushes-actions.c:47
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Open brush as image"
 msgstr "ਬੁਰਸ਼ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/brushes-actions.c:52
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_New Brush"
 msgstr "ਨਵਾਂ ਬੁਰਸ਼(_N)"
 
 #: ../app/actions/brushes-actions.c:53
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Create a new brush"
-msgstr "ਇੱਕ ਨਵਾਂ ਚੈਨਲ ਬਣਾਓ"
+msgstr "ਇੱਕ ਨਵਾਂ ਬੁਰਸ਼ ਬਣਾਓ"
 
 #: ../app/actions/brushes-actions.c:58
-#, fuzzy
 msgctxt "brushes-action"
 msgid "D_uplicate Brush"
 msgstr "ਡੁਪਲੀਕੇਟ ਬੁਰਸ਼(_u)"
 
 #: ../app/actions/brushes-actions.c:59
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Duplicate this brush"
-msgstr "ਡੁਪਲੀਕੇਟ ਬੁਰਸ਼"
+msgstr "ਇਹ ਬਰੁਸ਼ ਡੁਪਲੀਕੇਟ"
 
 #: ../app/actions/brushes-actions.c:64
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Copy Brush _Location"
 msgstr "ਬੁਰਸ਼ ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_L)"
@@ -529,61 +511,51 @@ msgid "Copy brush file location to clipboard"
 msgstr "ਬੁਰਸ਼ ਫਾਇਲ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/brushes-actions.c:70
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Delete Brush"
 msgstr "ਬੁਰਸ਼ ਹਟਾਓ(_D)"
 
 #: ../app/actions/brushes-actions.c:71
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "ਬੁਰਸ਼ ਹਟਾਓ"
+msgstr "ਇਹ ਬੁਰਸ਼ ਹਟਾਓ"
 
 #: ../app/actions/brushes-actions.c:76
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Refresh Brushes"
 msgstr "ਬੁਰਸ਼ ਤਾਜ਼ਾ ਕਰੋ(_R)"
 
 #: ../app/actions/brushes-actions.c:77
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Refresh brushes"
 msgstr "ਬੁਰਸ਼ ਤਾਜ਼ੇ ਕਰੋ"
 
 #: ../app/actions/brushes-actions.c:85
-#, fuzzy
 msgctxt "brushes-action"
 msgid "_Edit Brush..."
 msgstr "ਬੁਰਸ਼ ਸੋਧ(_E)..."
 
 #: ../app/actions/brushes-actions.c:86
-#, fuzzy
 msgctxt "brushes-action"
 msgid "Edit this brush"
-msgstr "ਬੁਰਸ਼ ਸੋਧ..."
+msgstr "ਇਹ ਬੁਰਸ਼ ਸੋਧ"
 
 #: ../app/actions/buffers-actions.c:41
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Buffers Menu"
 msgstr "ਬਫ਼ਰ ਮੇਨੂ"
 
 #: ../app/actions/buffers-actions.c:45
-#, fuzzy
 msgctxt "buffers-action"
 msgid "_Paste Buffer"
 msgstr "ਬਫ਼ਰ ਚੇਪੋ(_P)"
 
 #: ../app/actions/buffers-actions.c:46
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste the selected buffer"
 msgstr "ਚੁਣੇ ਬਫ਼ਰ ਨੂੰ ਚੇਪੋ"
 
 #: ../app/actions/buffers-actions.c:51
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into"
 msgstr "ਬਫ਼ਰ ਨੂੰ ਇੱਥੇ ਚੇਪੋ(_I)"
@@ -607,19 +579,16 @@ msgid "Paste the selected buffer as a new image"
 msgstr "ਚੋਣ ਕੀਤੇ ਬਫ਼ਰ ਨੂੰ ਨਵੇਂ ਚਿੱਤਰ ਵਾਂਗ ਚੇਪੋ"
 
 #: ../app/actions/buffers-actions.c:63
-#, fuzzy
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
 msgstr "ਬਫ਼ਰ ਹਟਾਓ(_D)"
 
 #: ../app/actions/buffers-actions.c:64
-#, fuzzy
 msgctxt "buffers-action"
 msgid "Delete the selected buffer"
-msgstr "ਚੁਣਿਆ ਬਫ਼ਰ ਹਟਾਉ"
+msgstr "ਚੁਣਿਆ ਬਫ਼ਰ ਹਟਾਓ"
 
 #: ../app/actions/channels-actions.c:44
-#, fuzzy
 msgctxt "channels-action"
 msgid "Channels Menu"
 msgstr "ਚੈਨਲ ਮੇਨੂ"
@@ -637,19 +606,16 @@ msgid "Edit the channel's name, color and opacity"
 msgstr "ਚੈਨਲ ਨਾਂ, ਰੰਗ ਅਤੇ ਧੁੰਦਲਾਪਨ ਸੋਧੋ"
 
 #: ../app/actions/channels-actions.c:54
-#, fuzzy
 msgctxt "channels-action"
 msgid "_New Channel..."
 msgstr "ਨਵਾਂ ਚੈਨਲ(_N)..."
 
 #: ../app/actions/channels-actions.c:55
-#, fuzzy
 msgctxt "channels-action"
 msgid "Create a new channel"
 msgstr "ਇੱਕ ਨਵਾਂ ਚੈਨਲ ਬਣਾਓ"
 
 #: ../app/actions/channels-actions.c:60
-#, fuzzy
 msgctxt "channels-action"
 msgid "_New Channel"
 msgstr "ਨਵਾਂ ਚੈਨਲ(_N)"
@@ -661,7 +627,6 @@ msgid "Create a new channel with last used values"
 msgstr "ਆਖਰੀ ਵਰਤੇ ਮੁੱਲ ਨਾਲ ਇੱਕ ਨਵਾਂ ਚੈਨਲ ਬਣਾਓ"
 
 #: ../app/actions/channels-actions.c:66
-#, fuzzy
 msgctxt "channels-action"
 msgid "D_uplicate Channel"
 msgstr "ਡੁਪਲੀਕੇਟ ਚੈਨਲ(_u)"
@@ -673,22 +638,19 @@ msgid "Create a duplicate of this channel and add it to the image"
 msgstr "ਇਹ ਚੈਨਲ ਨਾਲ ਇੱਕ ਡੁਪਲੀਕੇਟ ਬਣਾਓ ਅਤੇ ਚਿੱਤਰ ਵਿੱਚ ਉਸ ਨੂੰ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../app/actions/channels-actions.c:73
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Delete Channel"
 msgstr "ਚੈਨਲ ਹਟਾਓ(_D)"
 
 #: ../app/actions/channels-actions.c:74
-#, fuzzy
 msgctxt "channels-action"
 msgid "Delete this channel"
 msgstr "ਇਹ ਚੈਨਲ ਹਟਾਓ"
 
 #: ../app/actions/channels-actions.c:79
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Raise Channel"
-msgstr "ਰੇਜ਼ ਚੈਨਲ(_R)"
+msgstr "ਚੈਨਲ ਉਭਾਰੋ(_R)"
 
 #: ../app/actions/channels-actions.c:80
 #, fuzzy
@@ -709,10 +671,9 @@ msgid "Raise this channel to the top of the channel stack"
 msgstr "ਇਹ ਚੈਨਲ ਨੂੰ ਚੈਨਲ ਸਟਾਕ ਦੇ ਸਭ ਤੋਂ ਟਾਪ ਉੱਤੇ ਉਭਾਰੋ"
 
 #: ../app/actions/channels-actions.c:92
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Lower Channel"
-msgstr "ਹੇਠਲਾ ਚੈਨਲ(_L)"
+msgstr "ਚੈਨਲ ਹੇਠਾਂ ਭੇਜੋ(_L)"
 
 #: ../app/actions/channels-actions.c:93
 #, fuzzy
@@ -721,10 +682,9 @@ msgid "Lower this channel one step in the channel stack"
 msgstr "ਇਹ ਚੈਨਲ ਨੂੰ ਚੈਨਲ ਸਟਾਕ ਵਿੱਚ ਇੱਕ ਸਟੈਪ ਹੇਠਾਂ ਭੇਜੋ"
 
 #: ../app/actions/channels-actions.c:98
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower Channel to _Bottom"
-msgstr "ਹੇਠਲਾ ਚੈਨਲ ਥੱਲੇ(_B)"
+msgstr "ਚੈਨਲ ਤਲ ਉੱਤੇ ਭੇਜੋ(_B)"
 
 #: ../app/actions/channels-actions.c:100
 #, fuzzy
@@ -745,7 +705,6 @@ msgid "Replace the selection with this channel"
 msgstr "ਇਹ ਚੈਨਲ ਨਲ ਚੋਣ ਬਦਲੋ"
 
 #: ../app/actions/channels-actions.c:114
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Add to Selection"
 msgstr "ਚੋਣ ਵਿੱਚ ਸ਼ਾਮਲ(_A)"
@@ -826,25 +785,21 @@ msgid "%s Channel Copy"
 msgstr "%s ਚੈਨਲ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/colormap-actions.c:44
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Colormap Menu"
 msgstr "ਰੰਗ-ਮੈਪ ਮੇਨੂ"
 
 #: ../app/actions/colormap-actions.c:48
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "ਰੰਗ ਸੋਧ(_E)..."
 
 #: ../app/actions/colormap-actions.c:49
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Edit this color"
-msgstr "ਰੰਗ ਸੋਧ"
+msgstr "ਇਹ ਰੰਗ ਸੋਧ"
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "FG ਤੋਂ ਰੰਗ ਸ਼ਾਮਿਲ(_A)"
@@ -856,13 +811,11 @@ msgid "Add current foreground color"
 msgstr "ਮੌਜੂਦਾ ਫਾਰ-ਗਰਾਊਂਡ ਰੰਗ ਸ਼ਾਮਿਲ"
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
 msgstr "BG ਤੋਂ ਰੰਗ ਸ਼ਾਮਿਲ(_A)"
 
 #: ../app/actions/colormap-actions.c:64
-#, fuzzy
 msgctxt "colormap-action"
 msgid "Add current background color"
 msgstr "ਮੌਜੂਦਾ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਸ਼ਾਮਿਲ"
@@ -877,7 +830,6 @@ msgid "Edit Colormap Entry"
 msgstr "ਰੰਗ-ਮੈਪ ਐਂਟਰੀ ਸੋਧੋ"
 
 #: ../app/actions/config-actions.c:38
-#, fuzzy
 msgctxt "config-action"
 msgid "Use _GEGL"
 msgstr "_GEGL ਵਰਤੋਂ"
@@ -889,134 +841,114 @@ msgid "If possible, use GEGL for image processing"
 msgstr "ਜੇ ਸੰਭਵ ਹੋਵੇ ਤਾਂ GEGL ਨੂੰ ਚਿੱਤਰ ਪਰੋਸੈਸਿੰਗ ਲਈ ਵਰਤੋਂ"
 
 #: ../app/actions/context-actions.c:46
-#, fuzzy
 msgctxt "context-action"
 msgid "_Context"
-msgstr "ਪਾਠ(_C)"
+msgstr "ਪਰਸੰਗ(_C)"
 
 #: ../app/actions/context-actions.c:48
-#, fuzzy
 msgctxt "context-action"
 msgid "_Colors"
 msgstr "ਰੰਗ(_C)"
 
 #: ../app/actions/context-actions.c:50
-#, fuzzy
 msgctxt "context-action"
 msgid "_Opacity"
 msgstr "ਧੁੰਦਲਾਪਨ(_O)"
 
 #: ../app/actions/context-actions.c:52
-#, fuzzy
 msgctxt "context-action"
 msgid "Paint _Mode"
 msgstr "ਪੇਂਟ ਮੋਡ(_M)"
 
 #: ../app/actions/context-actions.c:54
-#, fuzzy
 msgctxt "context-action"
 msgid "_Tool"
 msgstr "ਟੂਲ(_T)"
 
 #: ../app/actions/context-actions.c:56
-#, fuzzy
 msgctxt "context-action"
 msgid "_Brush"
 msgstr "ਬੁਰਸ਼(_B)"
 
 #: ../app/actions/context-actions.c:58
-#, fuzzy
 msgctxt "context-action"
 msgid "_Pattern"
 msgstr "ਪੈਟਰਨ(_P)"
 
 #: ../app/actions/context-actions.c:60
-#, fuzzy
 msgctxt "context-action"
 msgid "_Palette"
 msgstr "ਪੈਲਅਟ(_P)"
 
 #: ../app/actions/context-actions.c:62
-#, fuzzy
 msgctxt "context-action"
 msgid "_Gradient"
 msgstr "ਗਰੇਡੀਐਂਟ(_G)"
 
 #: ../app/actions/context-actions.c:64
-#, fuzzy
 msgctxt "context-action"
 msgid "_Font"
 msgstr "ਫੋਂਟ(_F)"
 
 #: ../app/actions/context-actions.c:67
-#, fuzzy
 msgctxt "context-action"
 msgid "_Shape"
-msgstr "ਸ਼ੇਪ(_S)"
+msgstr "ਸ਼ਕਲ(_S)"
 
 #: ../app/actions/context-actions.c:69
-#, fuzzy
 msgctxt "context-action"
 msgid "_Radius"
 msgstr "ਰੇਡੀਅਸ(_R)"
 
 #: ../app/actions/context-actions.c:71
-#, fuzzy
 msgctxt "context-action"
 msgid "S_pikes"
 msgstr "ਸਪੀਇਕ(_p)"
 
 #: ../app/actions/context-actions.c:73
-#, fuzzy
 msgctxt "context-action"
 msgid "_Hardness"
 msgstr "ਹਾਰਡਨੈਂਸ(_H)"
 
 #: ../app/actions/context-actions.c:75
-#, fuzzy
 msgctxt "context-action"
 msgid "_Aspect Ratio"
-msgstr "ਅਕਾਰ ਅਨੁਪਾਤ"
+msgstr "ਅਕਾਰ ਅਨੁਪਾਤ(_A)"
 
 #: ../app/actions/context-actions.c:77
-#, fuzzy
 msgctxt "context-action"
 msgid "A_ngle"
 msgstr "ਕੋਣ(_n)"
 
 #: ../app/actions/context-actions.c:80
-#, fuzzy
 msgctxt "context-action"
 msgid "_Default Colors"
 msgstr "ਡਿਫਾਲਟ ਰੰਗ(_D)"
 
 #: ../app/actions/context-actions.c:82
-#, fuzzy
 msgctxt "context-action"
 msgid "Set foreground color to black, background color to white"
-msgstr "ਫਾਰ-ਗਰਾਊਂਡ ਰੰਗ ਕਾਲਾ ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਚਿੱਟਾ ਸੈੱਟ ਕਰੋ"
+msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ ਕਾਲਾ ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਚਿੱਟਾ ਸੈੱਟ ਕਰੋ"
 
 #: ../app/actions/context-actions.c:87
-#, fuzzy
 msgctxt "context-action"
 msgid "S_wap Colors"
-msgstr "ਸਵੈਪ ਰੰਗ(_w)"
+msgstr "ਰੰਗ ਬਦਲੋ(_w)"
 
 #: ../app/actions/context-actions.c:88
-#, fuzzy
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
 msgstr "ਫਾਰਗਰਾਊਂਡ ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਆਪਸ 'ਚ ਬਦਲੋ"
 
 #: ../app/actions/context-commands.c:426
-#, fuzzy, c-format
+#, c-format
 msgid "Paint Mode: %s"
-msgstr "ਪੇਂਟ ਮੋਡ(_M)"
+msgstr "ਪੇਂਟ ਮੋਡ: %s"
 
 #: ../app/actions/context-commands.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "Brush Shape: %s"
-msgstr "ਬੁਰਸ਼"
+msgstr "ਬੁਰਸ਼ ਸ਼ਕਲ: %s"
 
 #: ../app/actions/context-commands.c:612
 #, c-format
@@ -1029,13 +961,11 @@ msgid "Brush Angle: %2.2f"
 msgstr ""
 
 #: ../app/actions/cursor-info-actions.c:40
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "Pointer Information Menu"
 msgstr "ਪੁਆਇੰਟਰ ਜਾਣਕਾਰੀ ਮੇਨੂ"
 
 #: ../app/actions/cursor-info-actions.c:47
-#, fuzzy
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
 msgstr "ਸੈਂਪਲ ਮਿਲਾਨ(_S)"
@@ -1083,201 +1013,168 @@ msgstr "'%s' ਹਟਾਉਣੀ ਹੈ?"
 
 #: ../app/actions/data-commands.c:264
 #, c-format
-msgid ""
-"Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "ਕੀ ਤੁਸੀਂ '%s' ਨੂੰ ਲਿਸਟ ਵਿੱਚੋਂ ਅਤੇ ਡਿਸਕ ਤੋਂ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: ../app/actions/dialogs-actions.c:44
-#, fuzzy
 msgctxt "windows-action"
 msgid "Tool_box"
-msgstr "ਟੂਲਬਾਕਸ(_b)"
+msgstr "ਟੂਲ ਬਾਕਸ(_b)"
 
 #: ../app/actions/dialogs-actions.c:50
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "ਟੂਲ ਚੋਣ(_O)"
 
 #: ../app/actions/dialogs-actions.c:51
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "ਟੂਲ ਚੋਣ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:56
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "ਜੰਤਰ ਹਾਲਤ(_D)"
 
 #: ../app/actions/dialogs-actions.c:57
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "ਜੰਤਰ ਹਾਲਤ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:62
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "ਲੇਅਰਾਂ(_L)"
 
 #: ../app/actions/dialogs-actions.c:63
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "ਲੇਅਰ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:68
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "ਚੈਨਲ(_C)"
 
 #: ../app/actions/dialogs-actions.c:69
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "ਚੈਨਲ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:74
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "ਮਾਰਗ(_P)"
 
 #: ../app/actions/dialogs-actions.c:75
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "ਮਾਰਗ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:80
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "ਰੰਗ-ਮੈਪ(_m)"
 
 #: ../app/actions/dialogs-actions.c:81
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "ਰੰਗ-ਮੈਪ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:86
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "ਹਿਸਟੋਗਰਾਮ(_m)"
 
 #: ../app/actions/dialogs-actions.c:87
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "ਹਿਸਟੋਗਰਾਮ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:92
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "ਚੋਣ ਐਡੀਟਰ(_S)"
 
 #: ../app/actions/dialogs-actions.c:93
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "ਚੋਣ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:98
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "ਨੇਵੀਗੇਸ਼ਨ(_v)"
 
 #: ../app/actions/dialogs-actions.c:99
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "ਡਿਸਪਲੇਅ ਨੇਵੀਗੇਸ਼ਨ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:104
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "ਵਾਪਸ ਅਤੀਤ(_H)"
 
 #: ../app/actions/dialogs-actions.c:105
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
-msgstr "ਵਾਪਿਸ ਅਤੀਤ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
+msgstr "ਵਾਪਸ ਅਤੀਤ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:110
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Pointer"
 msgstr "ਪੁਆਇੰਟਰ"
 
 #: ../app/actions/dialogs-actions.c:111
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "ਪੁਆਇੰਟਰ ਜਾਣਕਾਰੀ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:116
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ(_S)"
 
 #: ../app/actions/dialogs-actions.c:117
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:122
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "ਰੰਗ(_r)"
 
 #: ../app/actions/dialogs-actions.c:123
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "FG/BG ਰੰਗ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:128
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "ਬੁਰਸ਼(_B)"
 
 #: ../app/actions/dialogs-actions.c:129
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "ਬੁਰਸ਼ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:134
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "ਬੁਰਸ਼ ਐਡੀਟਰ"
 
 #: ../app/actions/dialogs-actions.c:135
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "ਬੁਰਸ਼ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:140
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
-msgstr "ਡਾਇਨਾਮਿਕ ਬੁਰਸ਼"
+msgstr "ਪੇਂਟ ਡਾਇਨਾਮਿਕ"
 
 #: ../app/actions/dialogs-actions.c:141
 #, fuzzy
@@ -1286,10 +1183,9 @@ msgid "Open paint dynamics dialog"
 msgstr "ਮਾਰਗ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:146
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
-msgstr "ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ"
+msgstr "ਪੇਂਟ ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ"
 
 #: ../app/actions/dialogs-actions.c:147
 #, fuzzy
@@ -1298,70 +1194,59 @@ msgid "Open the paint dynamics editor"
 msgstr "ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:152
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "ਪੈਟਰਨ(_a)"
 
 #: ../app/actions/dialogs-actions.c:153
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "ਪੈਟਰਨ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:158
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "ਗਰੇਡੀਐਂਟ(_G)"
 
 #: ../app/actions/dialogs-actions.c:159
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "ਗਰੇਡੀਐਂਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:164
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ"
 
 #: ../app/actions/dialogs-actions.c:165
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:170
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "ਪੈਲਅਟ(_e)"
 
 #: ../app/actions/dialogs-actions.c:171
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "ਪੈਲਅਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:176
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "ਪੈਲਅਟ ਐਡੀਟਰ"
 
 #: ../app/actions/dialogs-actions.c:177
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "ਪੈਲਅਟ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:182
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Tool presets"
-msgstr "ਟੂਲ ਚੋਣ"
+msgstr "ਟੂਲ ਪ੍ਰੀ-ਸੈੱਟ"
 
 #: ../app/actions/dialogs-actions.c:183
 #, fuzzy
@@ -1370,145 +1255,121 @@ msgid "Open tool presets dialog"
 msgstr "ਟੂਲ ਚੋਣ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:188
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "ਫੋਂਟ(_F)"
 
 #: ../app/actions/dialogs-actions.c:189
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "ਫੋਂਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:194
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "ਬਫ਼ਰ(_u)"
 
 #: ../app/actions/dialogs-actions.c:195
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "ਨਾਮੀ ਬਫ਼ਰ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:200
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "ਚਿੱਤਰ(_I)"
 
 #: ../app/actions/dialogs-actions.c:201
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "ਚਿੱਤਰ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:206
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "ਦਸਤਾਵੇਜ਼ ਅਤੀਤ(_y)"
 
 #: ../app/actions/dialogs-actions.c:207
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "ਦਸਤਾਵੇਜ਼ ਅਤੀਤ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:212
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "ਟੈਪਲੇਟ(_T)"
 
 #: ../app/actions/dialogs-actions.c:213
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "ਚਿੱਤਰ ਟੈਪਲੇਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:218
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "ਕੰਨਸੋਲ ਗਲਤੀ(_n)"
 
 #: ../app/actions/dialogs-actions.c:219
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "ਗਲਤੀ ਕੰਨਸੋਲ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:229
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "ਮੇਰੀ-ਪਸੰਦ(_P)"
 
 #: ../app/actions/dialogs-actions.c:230
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "ਪਸੰਦ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:235
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Input Devices"
-msgstr "ਇੰਟਪੁੱਟ ਜੰਤਰ"
+msgstr "ਇੰਪੁੱਟ ਜੰਤਰ(_i)"
 
 #: ../app/actions/dialogs-actions.c:236
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
-msgstr "ਪੈਲਅਟ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
+msgstr "ਇੰਪੁੱਟ ਜੰਤਰ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:241
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ(_K)"
 
 #: ../app/actions/dialogs-actions.c:242
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਐਡੀਟਰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:247
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "ਮੋਡੀਊਲ(_M)"
 
 #: ../app/actions/dialogs-actions.c:248
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "ਮੋਡੀਊਲ ਮੈਨੇਜਰ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/dialogs-actions.c:253
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "ਅੱਜ ਦਾ ਇਸ਼ਾਰਾ(_T)"
 
 #: ../app/actions/dialogs-actions.c:254
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "ਜੈਮਪ ਦੀ ਵਰਤੋਂ ਲਈ ਮੱਦਦਗਾਰ ਟਿੱਪ ਵੇਖੋ"
 
 #: ../app/actions/dialogs-actions.c:259
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "ਇਸ ਬਾਰੇ(_A)"
 
 #: ../app/actions/dialogs-actions.c:260
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "ਜੈਮਪ ਬਾਰੇ"
@@ -1523,44 +1384,37 @@ msgid "Raise the toolbox"
 msgstr "ਟੂਲ-ਬਾਕਸ ਉਭਾਰੋ"
 
 #: ../app/actions/dialogs-actions.c:309
-#, fuzzy
 msgid "New Toolbox"
-msgstr "ਟੂਲ-ਬਕਸਾ"
+msgstr "ਨਵਾਂ ਟੂਲ-ਬਾਕਸ"
 
 #: ../app/actions/dialogs-actions.c:310
-#, fuzzy
 msgid "Create a new toolbox"
-msgstr "ਇੱਕ ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
+msgstr "ਨਵਾਂ ਟੂਲ ਬਕਸਾ ਬਣਾਓ"
 
 #: ../app/actions/dock-actions.c:45
-#, fuzzy
 msgctxt "dock-action"
 msgid "M_ove to Screen"
-msgstr "ਸਕਰੀਨ ਉੱਤੇ ਹਿਲਾਓ(_o)"
+msgstr "ਸਕਰੀਨ ਉੱਤੇ ਭੇਜੋ(_o)"
 
 #: ../app/actions/dock-actions.c:49
-#, fuzzy
 msgctxt "dock-action"
 msgid "Close Dock"
 msgstr "ਡੋਕ ਬੰਦ ਕਰੋ"
 
 #: ../app/actions/dock-actions.c:54
-#, fuzzy
 msgctxt "dock-action"
 msgid "_Open Display..."
 msgstr "ਡਿਸਪਲੇਅ ਖੋਲ੍ਹੋ(_O)..."
 
 #: ../app/actions/dock-actions.c:55
-#, fuzzy
 msgctxt "dock-action"
 msgid "Connect to another display"
 msgstr "ਹੋਰ ਡਿਸਪਲੇਅ ਨਾਲ ਕੁਨੈਕਟ ਕਰੋ"
 
 #: ../app/actions/dock-actions.c:63
-#, fuzzy
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "ਚਿੱਤਰ ਚੋਣ ਵੇਖਾਓ(_S)"
+msgstr "ਚਿੱਤਰ ਚੋਣ ਵੇਖੋ(_S)"
 
 #: ../app/actions/dock-actions.c:69
 #, fuzzy
@@ -1569,265 +1423,221 @@ msgid "Auto _Follow Active Image"
 msgstr "ਐਕਟਿਵ ਚਿੱਤਰ ਦਾ ਆਟੋਮੈਟਿਕ ਪਿੱਛਾ ਕਰੋ(_F)"
 
 #: ../app/actions/dockable-actions.c:48
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Dialogs Menu"
 msgstr "ਡਾਈਲਾਗ ਮੇਨੂ"
 
 #: ../app/actions/dockable-actions.c:53
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Add Tab"
-msgstr "ਟੈਬ ਸ਼ਾਮਿਲ(_A)"
+msgstr "ਟੈਬ ਸ਼ਾਮਲ(_A)"
 
 #: ../app/actions/dockable-actions.c:55
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Preview Size"
 msgstr "ਝਲਕ ਅਕਾਰ(_P)"
 
 #: ../app/actions/dockable-actions.c:57
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Tab Style"
-msgstr "ਟੈਬ ਸਟਾਇਲ(_T)"
+msgstr "ਟੈਬ ਸਟਾਈਲ(_T)"
 
 #: ../app/actions/dockable-actions.c:60
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Close Tab"
 msgstr "ਟੈਬ ਬੰਦ ਕਰੋ(_C)"
 
 #: ../app/actions/dockable-actions.c:65
-#, fuzzy
 msgctxt "dockable-action"
 msgid "_Detach Tab"
 msgstr "ਟੈਬ ਵੱਖ ਕਰੋ(_D)"
 
 #: ../app/actions/dockable-actions.c:84
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Tiny"
 msgstr "ਨਿੰਮਾ(_T)"
 
 #: ../app/actions/dockable-actions.c:86
-#, fuzzy
 msgctxt "preview-size"
 msgid "E_xtra Small"
 msgstr "ਬਹੁਤ ਛੋਟਾ(_x)"
 
 #: ../app/actions/dockable-actions.c:88
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Small"
 msgstr "ਛੋਟਾ(_S)"
 
 #: ../app/actions/dockable-actions.c:90
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Medium"
 msgstr "ਮੱਧਮ(_M)"
 
 #: ../app/actions/dockable-actions.c:92
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Large"
 msgstr "ਵੱਡਾ(_L)"
 
 #: ../app/actions/dockable-actions.c:94
-#, fuzzy
 msgctxt "preview-size"
 msgid "Ex_tra Large"
 msgstr "ਬਹੁਤ ਵੱਡਾ(_t)"
 
 #: ../app/actions/dockable-actions.c:96
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Huge"
 msgstr "ਵਿਸ਼ਾਲ(_H)"
 
 #: ../app/actions/dockable-actions.c:98
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Enormous"
 msgstr "ਬਹੁਤ ਵਿਸ਼ਾਲ(_E)"
 
 #: ../app/actions/dockable-actions.c:100
-#, fuzzy
 msgctxt "preview-size"
 msgid "_Gigantic"
 msgstr "ਵਿਰਾਟ(_G)"
 
 #: ../app/actions/dockable-actions.c:106
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Icon"
 msgstr "ਆਈਕਾਨ(_I)"
 
 #: ../app/actions/dockable-actions.c:108
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current _Status"
 msgstr "ਮੌਜੂਦਾ ਹਾਲਤ(_S)"
 
 #: ../app/actions/dockable-actions.c:110
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Text"
 msgstr "ਟੈਕਸਟ(_T)"
 
 #: ../app/actions/dockable-actions.c:112
-#, fuzzy
 msgctxt "tab-style"
 msgid "I_con & Text"
-msgstr "ਆਈਕਾਨ ਅਤੇ ਟੈਕਸਟ(_c)"
+msgstr "ਆਈਕਾਨ ਤੇ ਟੈਕਸਟ(_c)"
 
 #: ../app/actions/dockable-actions.c:114
-#, fuzzy
 msgctxt "tab-style"
 msgid "St_atus & Text"
-msgstr "ਹਾਲਤ ਅਤੇ ਟੈਕਸਟ(_a)"
+msgstr "ਹਾਲਤ ਤੇ ਟੈਕਸਟ(_a)"
 
 #: ../app/actions/dockable-actions.c:116 ../app/widgets/widgets-enums.c:224
-#, fuzzy
 msgctxt "tab-style"
 msgid "Automatic"
-msgstr "ਆਟੋ"
+msgstr "ਆਟੋਮੈਟਿਕ"
 
 #: ../app/actions/dockable-actions.c:126
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Loc_k Tab to Dock"
-msgstr "ਟੈਬ ਨੂੰ ਡੌਕ 'ਚ ਲਾਕ ਕਰੋ(_k)"
+msgstr "ਟੈਬ ਡੌਕ 'ਚ ਲਾਕ ਕਰੋ(_k)"
 
 #: ../app/actions/dockable-actions.c:128
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
 msgstr "ਇਹ ਟੈਬ ਨੂੰ ਮਾਊਂਸ ਪੁਆਇੰਟਰ ਨਾਲ ਡਰੈਗ ਹੋਣ ਤੋਂ ਸੁਰੱਖਿਅਤ ਕਰੋ"
 
 #: ../app/actions/dockable-actions.c:134
-#, fuzzy
 msgctxt "dockable-action"
 msgid "Show _Button Bar"
-msgstr "ਬਟਨ ਬਾਰ ਵੇਖਾਓ(_B)"
+msgstr "ਬਟਨ ਬਾਰ ਵੇਖੋ(_B)"
 
 #: ../app/actions/dockable-actions.c:143
-#, fuzzy
 msgctxt "dockable-action"
 msgid "View as _List"
 msgstr "ਲਿਸਟ ਵਾਂਗ ਵੇਖੋ(_L)"
 
 #: ../app/actions/dockable-actions.c:148
-#, fuzzy
 msgctxt "dockable-action"
 msgid "View as _Grid"
 msgstr "ਗਰਿੱਡ ਵਾਂਗ ਵੇਖੋ(_G)"
 
 #: ../app/actions/documents-actions.c:41
-#, fuzzy
 msgctxt "documents-action"
 msgid "Documents Menu"
 msgstr "ਦਸਤਾਵੇਜ਼ ਮੇਨੂ"
 
 #: ../app/actions/documents-actions.c:45
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Open Image"
 msgstr "ਚਿੱਤਰ ਖੋਲ੍ਹੋ(_O)"
 
 #: ../app/actions/documents-actions.c:46
-#, fuzzy
 msgctxt "documents-action"
 msgid "Open the selected entry"
 msgstr "ਚੁਣੀ ਐਂਟਰੀ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/documents-actions.c:51
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Raise or Open Image"
-msgstr "ਚਿੱਤਰ ਖੋਲ੍ਹੋ ਜਾਂ ਉਭਾਰੋ(_R)"
+msgstr "ਚਿੱਤਰ ਉਭਾਰੋ ਜਾਂ ਖੋਲ੍ਹੋ(_R)"
 
 #: ../app/actions/documents-actions.c:52
-#, fuzzy
 msgctxt "documents-action"
 msgid "Raise window if already open"
 msgstr "ਜੇ ਵਿੰਡੋ ਪਹਿਲਾਂ ਹੀ ਖੁੱਲ੍ਹੀ ਹੈ ਤਾਂ ਉਭਾਰੋ"
 
 #: ../app/actions/documents-actions.c:57
-#, fuzzy
 msgctxt "documents-action"
 msgid "File Open _Dialog"
 msgstr "ਫਾਇਲ ਖੋਲ੍ਹੋ ਡਾਈਲਾਗ(_D)"
 
 #: ../app/actions/documents-actions.c:58
-#, fuzzy
 msgctxt "documents-action"
 msgid "Open image dialog"
 msgstr "ਚਿੱਤਰ ਖੋਲ੍ਹੋ ਡਾਈਲਾਗ"
 
 #: ../app/actions/documents-actions.c:63
-#, fuzzy
 msgctxt "documents-action"
 msgid "Copy Image _Location"
 msgstr "ਚਿੱਤਰ ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_L)"
 
 #: ../app/actions/documents-actions.c:64
-#, fuzzy
 msgctxt "documents-action"
 msgid "Copy image location to clipboard"
 msgstr "ਚਿੱਤਰ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/documents-actions.c:69
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove _Entry"
-msgstr "ਐਂਟਰੀ ਹਟਾਉ(_E)"
+msgstr "ਐਂਟਰੀ ਹਟਾਓ(_E)"
 
 #: ../app/actions/documents-actions.c:70
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove the selected entry"
-msgstr "ਚੁਣੀ ਐਂਟਰੀ ਹਟਾਓ"
+msgstr "ਚੁਣੀ ਗਈ ਐਂਟਰੀ ਨੂੰ ਹਟਾਓ"
 
 #: ../app/actions/documents-actions.c:75
-#, fuzzy
 msgctxt "documents-action"
 msgid "_Clear History"
 msgstr "ਅਤੀਤ ਸਾਫ਼ ਕਰੋ(_C)"
 
 #: ../app/actions/documents-actions.c:76
-#, fuzzy
 msgctxt "documents-action"
 msgid "Clear the entire document history"
 msgstr "ਪੂਰਾ ਦਸਤਾਵੇਜ਼ ਅਤੀਤ ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/actions/documents-actions.c:81
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate _Preview"
-msgstr "ਝਲਕ ਮੁੜ-ਬਣਾਉ(_P)"
+msgstr "ਝਲਕ ਮੁੜ-ਬਣਾਓ(_P)"
 
 #: ../app/actions/documents-actions.c:82
-#, fuzzy
 msgctxt "documents-action"
 msgid "Recreate preview"
-msgstr "ਝਲਕ ਮੁੜ-ਬਣਾਉ"
+msgstr "ਝਲਕ ਮੁੜ-ਬਣਾਓ"
 
 #: ../app/actions/documents-actions.c:87
-#, fuzzy
 msgctxt "documents-action"
 msgid "Reload _all Previews"
-msgstr "ਸਭ ਟੈਪਲੇਟ ਮੁੜ-ਲੋਡ ਕਰੋ"
+msgstr "ਸਭ ਝਲਕ ਮੁੜ-ਲੋਡ ਕਰੋ"
 
 #: ../app/actions/documents-actions.c:88
-#, fuzzy
 msgctxt "documents-action"
 msgid "Reload all previews"
-msgstr "ਸਾਰੇ ਟੈਪਲੇਟ ਮੁੜ-ਲੋਡ ਕਰੋ"
+msgstr "ਸਭ ਝਲਕ ਮੁੜ-ਲੋਡ ਕਰੋ"
 
 #: ../app/actions/documents-actions.c:93
-#, fuzzy
 msgctxt "documents-action"
 msgid "Remove Dangling E_ntries"
 msgstr "ਲਟਕਦੀਆਂ ਐਂਟਰੀਆਂ ਹਟਾਓ(_n)"
@@ -1859,37 +1669,31 @@ msgid "_Equalize"
 msgstr "ਸਮਰੂਪ(_E)"
 
 #: ../app/actions/drawable-actions.c:46
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Automatic contrast enhancement"
 msgstr "ਆਟੋਮੈਟਿਕ ਕਾਨਟਰਾਸਟ ਇੰਹਾਂਸਮੈਂਟ"
 
 #: ../app/actions/drawable-actions.c:51
-#, fuzzy
 msgctxt "drawable-action"
 msgid "In_vert"
 msgstr "ਉਲਟ(_v)"
 
 #: ../app/actions/drawable-actions.c:52
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Invert the colors"
 msgstr "ਰੰਗ ਉਲਟ ਕਰੋ"
 
 #: ../app/actions/drawable-actions.c:57
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_White Balance"
 msgstr "ਚਿੱਟਾ ਬੈਂਲਨਸ(_W)"
 
 #: ../app/actions/drawable-actions.c:58
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Automatic white balance correction"
 msgstr "ਆਟੋਮੈਟਿਕ ਚਿੱਟਾ ਬੈਂਲਨਸ ਸੋਧ"
 
 #: ../app/actions/drawable-actions.c:63
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Offset..."
 msgstr "ਆਫ-ਸੈੱਟ(_O)..."
@@ -1901,35 +1705,30 @@ msgid "Shift the pixels, optionally wrapping them at the borders"
 msgstr "ਪਿਕਸਲ ਸਿਫ਼ਟ ਕਰੋ, ਚੋਣਵੇਂ ਰੂਪ ਵਿੱਚ ਬਾਰਡਰ ਤੋਂ ਸਮੇਟਣਾ"
 
 #: ../app/actions/drawable-actions.c:73
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Visible"
 msgstr "ਦਿੱਖ(_V)"
 
 #: ../app/actions/drawable-actions.c:74
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Toggle visibility"
 msgstr "ਦਿੱਖ ਬਦਲੋ"
 
 #: ../app/actions/drawable-actions.c:80
-#, fuzzy
 msgctxt "drawable-action"
 msgid "_Linked"
 msgstr "ਲਿੰਕ ਕੀਤਾ(_L)"
 
 #: ../app/actions/drawable-actions.c:81
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Toggle the linked state"
 msgstr "ਲਿੰਕ ਹਾਲਤ ਬਦਲੋ"
 
 #. GIMP_STOCK_LOCK
 #: ../app/actions/drawable-actions.c:87
-#, fuzzy
 msgctxt "drawable-action"
 msgid "L_ock pixels"
-msgstr "ਪਿਕਸਲ"
+msgstr "ਪਿਕਸਲ ਲਾਕ ਕਰੋ(_o)"
 
 #: ../app/actions/drawable-actions.c:89
 #, fuzzy
@@ -1938,61 +1737,51 @@ msgid "Keep the pixels on this drawable from being modified"
 msgstr "ਇਹ ਲੇਅਰ ਉੱਤੇ ਸੋਧਣ ਤੋਂ ਟਰਾਂਸਪਰੇਸੀ ਜਾਣਕਾਰੀ ਸੰਭਾਲੋ"
 
 #: ../app/actions/drawable-actions.c:98
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip _Horizontally"
 msgstr "ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ(_H):"
 
 #: ../app/actions/drawable-actions.c:99
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip horizontally"
 msgstr "ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ"
 
 #: ../app/actions/drawable-actions.c:104
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip _Vertically"
 msgstr "ਵਰਟੀਕਲ ਝਟਕੋ(_V):"
 
 #: ../app/actions/drawable-actions.c:105
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Flip vertically"
 msgstr "ਵਰਟੀਕਲ ਝਟਕੋ"
 
 #: ../app/actions/drawable-actions.c:113
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
 msgstr "90° ਸੱਜੇ ਦਾਅ ਘੁੰਮਾਓ(_c)"
 
 #: ../app/actions/drawable-actions.c:114
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "ਸੱਜੇ ਦਾਅ 90 ਦਰਜੇ ਘੁੰਮਾਓ"
 
 #: ../app/actions/drawable-actions.c:119
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate _180°"
 msgstr "_180° ਘੁੰਮਾਓ"
 
 #: ../app/actions/drawable-actions.c:120
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Turn upside-down"
 msgstr "ਉਤਲਾ ਪਾਸਾ ਹੇਠਾਂ ਕਰੋ"
 
 #: ../app/actions/drawable-actions.c:125
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "90° ਖੱਬੇ ਦਾਅ ਘੁੰਮਾਓ(_w)"
 
 #: ../app/actions/drawable-actions.c:126
-#, fuzzy
 msgctxt "drawable-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "90 ਦਰਜੇ ਖੱਬੇ ਨੂੰ ਘੁੰਮਾਓ"
@@ -2010,16 +1799,14 @@ msgid "White Balance operates only on RGB color layers."
 msgstr "ਸਫੈਦ ਬੈਲਨਸ RGB ਰੰਗ ਲੇਅਰਾਂ ਉੱਤੇ ਓਪਰੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../app/actions/dynamics-actions.c:42
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Paint Dynamics Menu"
-msgstr "ਪੈਟਰਨ ਮੇਨੂ"
+msgstr "ਪੇਂਟ ਡਾਇਨਾਮਿਕ ਮੇਨੂ"
 
 #: ../app/actions/dynamics-actions.c:46
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "_New Dynamics"
-msgstr "ਡਾਇਨਾਮਿਕ ਬੁਰਸ਼"
+msgstr "ਨਵਾਂ ਡਾਇਨਾਮਿਕ(_N)"
 
 #: ../app/actions/dynamics-actions.c:47
 #, fuzzy
@@ -2099,155 +1886,130 @@ msgid "Edit Active Dynamics"
 msgstr "ਐਕਟਿਵ ਬੁਰਸ਼ ਸੋਧ"
 
 #: ../app/actions/edit-actions.c:63
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Edit"
 msgstr "ਸੋਧ(_E)"
 
 #: ../app/actions/edit-actions.c:64
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste _as"
 msgstr "ਇੰਜ ਚੇਪੋ(_P)"
 
 #: ../app/actions/edit-actions.c:65
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Buffer"
 msgstr "ਬਫ਼ਰ(_B)"
 
 #: ../app/actions/edit-actions.c:68
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo History Menu"
 msgstr "ਅਤੀਤ ਵਾਪਿਸ ਮੇਨੂ"
 
 #: ../app/actions/edit-actions.c:72
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Undo"
 msgstr "ਵਾਪਸ(_U)"
 
 #: ../app/actions/edit-actions.c:73
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo the last operation"
 msgstr "ਆਖਰੀ ਕਾਰਵਾਈ ਵਾਪਿਸ"
 
 #: ../app/actions/edit-actions.c:78
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Redo"
 msgstr "ਪਰਤਾਓ(_R)"
 
 #: ../app/actions/edit-actions.c:79
-#, fuzzy
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone"
 msgstr "ਆਖਰੀ ਕਾਰਵਾਈ, ਜੋ ਕਿ ਹੁਣ ਵਾਪਸ ਲਈ ਸੀ, ਫੇਰ ਕਰੋ"
 
 #: ../app/actions/edit-actions.c:84
-#, fuzzy
 msgctxt "edit-action"
 msgid "Strong Undo"
 msgstr "ਸਟਰਾਂਗ ਵਾਪਸ"
 
 #: ../app/actions/edit-actions.c:85
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
 msgstr "ਆਖਰੀ ਓਪਰੇਸ਼ਨ ਵਾਪਸ ਲਵੋ, ਦਿੱਖ ਬਦਲਾਅ ਛੱਡੇ ਜਾ ਰਹੇ ਹਨ"
 
 #: ../app/actions/edit-actions.c:90
-#, fuzzy
 msgctxt "edit-action"
 msgid "Strong Redo"
 msgstr "ਸਟਰਾਂਗ ਪਰਤਾਓ"
 
 #: ../app/actions/edit-actions.c:92
-#, fuzzy
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr "ਆਖਰੀ ਓਪਰੇਸ਼ਨ, ਜਿਸ ਨੂੰ ਪਰਤਾਇਆ ਗਿਆ ਸੀ, ਵਾਪਸ ਲਵੋ, ਜਿਸ ਨਾਲ ਦਿੱਖ ਬਦਲਾਅ ਛੱਡੋ"
 
 #: ../app/actions/edit-actions.c:97
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Clear Undo History"
 msgstr "ਵਾਪਸ ਅਤੀਤ ਸਾਫ਼ ਕਰੋ(_C)"
 
 #: ../app/actions/edit-actions.c:98
-#, fuzzy
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
 msgstr "ਵਾਪਸ ਅਤੀਤ ਵਿੱਚੋਂ ਸਭ ਕਾਰਵਾਈ ਹਟਾਓ"
 
 #: ../app/actions/edit-actions.c:103
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Fade..."
 msgstr "ਫੇਡ(_F)..."
 
 #: ../app/actions/edit-actions.c:105
-#, fuzzy
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr "ਆਖਰੀ ਪਿਕਸਲ ਮੇਨੂਪਲੇਸ਼ਨ ਦੇ ਪੇਂਟ ਮੋਡ ਅਤੇ ਧੁੰਦਲੇਪਨ ਨੂੰ ਸੋਧੋ"
 
 #: ../app/actions/edit-actions.c:110
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cu_t"
 msgstr "ਕੱਟੋ(_t)"
 
 #: ../app/actions/edit-actions.c:111
-#, fuzzy
 msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
 msgstr "ਚੁਣੇ ਪਿਕਸਲ ਕਲਿੱਪਬੋਰਡ 'ਚੋਂ ਹਟਾਓ"
 
 #: ../app/actions/edit-actions.c:116
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Copy"
 msgstr "ਕਾਪੀ ਕਰੋ(_C)"
 
 #: ../app/actions/edit-actions.c:117
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
 msgstr "ਚੁਣੇ ਪਿਕਸਲ ਕਲਿੱਪਬੋਰਡ 'ਚੋਂ ਹਟਾਓ"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:122
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy _Visible"
 msgstr "ਦਿੱਖ ਕਾਪੀ ਕਰੋ(_V)"
 
 #: ../app/actions/edit-actions.c:123
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region"
 msgstr "ਚੁਣੇ ਖੇਤਰ 'ਚ ਜੋ ਵੀ ਵੇਖਾਈ ਦਿੰਦਾ ਹੈ, ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/edit-actions.c:128
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "ਚੇਪੋ(_P)"
 
 #: ../app/actions/edit-actions.c:129
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਦੀ ਸਮੱਗਰੀ ਚੇਪੋ"
 
 #: ../app/actions/edit-actions.c:134
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste _Into"
-msgstr "ਵਿੱਚ ਚੇਪੋ(_I)"
+msgstr "ਇਸ ਵਿੱਚ ਚੇਪੋ(_I)"
 
 #: ../app/actions/edit-actions.c:136
 #, fuzzy
@@ -2256,37 +2018,31 @@ msgid "Paste the content of the clipboard into the current selection"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਦੀ ਸਮੱਗਰੀ ਮੌਜੂਦਾ ਚੋਣ ਵਿੱਚ ਚੇਪੋ"
 
 #: ../app/actions/edit-actions.c:141
-#, fuzzy
 msgctxt "edit-action"
 msgid "From _Clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਤੋਂ(_C)"
 
 #: ../app/actions/edit-actions.c:142 ../app/actions/edit-actions.c:148
-#, fuzzy
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਦੀ ਸਮੱਗਰੀ ਤੋਂ ਇੱਕ ਨਵੀਂ ਤਸਵੀਰ ਬਣਾਓ"
 
 #: ../app/actions/edit-actions.c:147
-#, fuzzy
 msgctxt "edit-action"
 msgid "_New Image"
 msgstr "ਨਵਾਂ ਚਿੱਤਰ(_N)"
 
 #: ../app/actions/edit-actions.c:153
-#, fuzzy
 msgctxt "edit-action"
 msgid "New _Layer"
 msgstr "ਨਵੀਂ ਲੇਅਰ(_L)"
 
 #: ../app/actions/edit-actions.c:154
-#, fuzzy
 msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
 msgstr "ਕਲਿੱਪਬੋਰਡ ਦੀ ਸਮੱਗਰੀ ਤੋਂ ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਬਣਾਓ"
 
 #: ../app/actions/edit-actions.c:159
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cu_t Named..."
 msgstr "ਕੱਟਿਆ ਨਾਂ(_t)..."
@@ -2298,83 +2054,70 @@ msgid "Move the selected pixels to a named buffer"
 msgstr "ਚੁਣੇ ਪਿਕਸਲ ਇੱਕ ਨਾਮੀ ਬਫ਼ਰ 'ਚ ਭੇਜੋ"
 
 #: ../app/actions/edit-actions.c:165
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Copy Named..."
 msgstr "ਨਾਮੀ ਕਾਪੀ ਕਰੋ(_C)"
 
 #: ../app/actions/edit-actions.c:166
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
 msgstr "ਚੁਣੇ ਪਿਕਸਲ ਇੱਕ ਨਾਮੀ ਬਫ਼ਰ ਵਿੱਚ ਕਾਪੀ ਕਰੋ"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:171
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
 msgstr "ਦਿੱਖ ਨਾਮੀ ਕਾਪੀ ਕਰੋ(_V)..."
 
 #: ../app/actions/edit-actions.c:173
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "ਚੁਣੇ ਖੇਤਰ 'ਚ ਜੋ ਵੀ ਵੇਖਾਈ ਦਿੰਦਾ ਹੈ, ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/edit-actions.c:178
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Paste Named..."
 msgstr "ਨਾਮੀ ਚੇਪੋ(_P)..."
 
 #: ../app/actions/edit-actions.c:179
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
 msgstr "ਇੱਕ ਨਾਮੀ ਬਫ਼ਰ ਦੀ ਸਮੱਗਰੀ ਚੇਪੋ"
 
 #: ../app/actions/edit-actions.c:184
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "ਸਾਫ਼ ਕਰੋ(_e)"
 
 #: ../app/actions/edit-actions.c:185
-#, fuzzy
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
 msgstr "ਚੁਣੇ ਪਿਕਸਲ ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/actions/edit-actions.c:193
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "_FG ਰੰਗ ਨਾਲ ਭਰੋ"
 
 #: ../app/actions/edit-actions.c:194
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "ਚੋਣ ਨੂੰ ਫਾਰਗਰਾਊਂਡ ਰੰਗ ਨਾਲ ਭਰੋ"
 
 #: ../app/actions/edit-actions.c:199
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "B_G ਰੰਗ ਨਾਲ ਭਰੋ"
 
 #: ../app/actions/edit-actions.c:200
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਚੋਣ ਭਰੋ"
 
 #: ../app/actions/edit-actions.c:205
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
-msgstr "ਪੈਟਰਨ ਨਾਲ ਭਰੋ"
+msgstr "ਪੈਟਰਨ ਨਾਲ ਭਰੋ(_w)"
 
 #: ../app/actions/edit-actions.c:206
 #, fuzzy
@@ -2471,37 +2214,31 @@ msgid "There is no active layer or channel to copy from."
 msgstr "ਕਾਪੀ ਕਰਨ ਲਈ ਕੋਈ ਐਕਟਿਵ ਲੇਅਰ ਜਾਂ ਚੈਨਲ ਨਹੀਂ ਹੈ।"
 
 #: ../app/actions/error-console-actions.c:39
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Error Console Menu"
 msgstr "ਗਲਤੀ ਕਨਸੋਂਲ ਮੇਨੂ"
 
 #: ../app/actions/error-console-actions.c:43
-#, fuzzy
 msgctxt "error-console-action"
 msgid "_Clear"
 msgstr "ਸਾਫ਼ ਕਰੋ(_C)"
 
 #: ../app/actions/error-console-actions.c:44
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Clear error console"
 msgstr "ਗਲਤੀ ਕੰਨਸੋਲ ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/actions/error-console-actions.c:49
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Select _All"
 msgstr "ਸਭ ਚੁਣੋ(_A)"
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Select all error messages"
-msgstr "ਸਭ ਗਲਤੀਆਂ ਚੁਣੋ"
+msgstr "ਸਭ ਗਲਤੀਆਂ ਸੁਨੇਹੇ ਚੁਣੋ"
 
 #: ../app/actions/error-console-actions.c:58
-#, fuzzy
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
 msgstr "ਗਲਤੀ ਲਾਗ ਨੂੰ ਫਾਇਲ 'ਚ ਸੰਭਾਲੋ(_S)..."
@@ -2512,13 +2249,11 @@ msgid "Write all error messages to a file"
 msgstr ""
 
 #: ../app/actions/error-console-actions.c:64
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
 msgstr "ਚੋਣ ਨੂੰ ਫਾਇਲ ਵਿੱਚ ਸੰਭਾਲੋ(_e)..."
 
 #: ../app/actions/error-console-actions.c:65
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Write the selected error messages to a file"
 msgstr "ਚੁਣੀ ਸੈਟਿੰਗ ਨੂੰ ਇੱਕ ਫਾਇਲ ਵਿੱਚ ਐਕਸਪੋਰਟ ਕਰੋ"
@@ -2541,136 +2276,114 @@ msgstr ""
 "%s"
 
 #: ../app/actions/file-actions.c:71
-#, fuzzy
 msgctxt "file-action"
 msgid "_File"
 msgstr "ਫਾਇਲ(_F)"
 
 #: ../app/actions/file-actions.c:72
-#, fuzzy
 msgctxt "file-action"
 msgid "Crea_te"
-msgstr "ਬਣਾਓ"
+msgstr "ਬਣਾਓ(_t)"
 
 #: ../app/actions/file-actions.c:73
-#, fuzzy
 msgctxt "file-action"
 msgid "Open _Recent"
 msgstr "ਤਾਜ਼ਾ ਖੋਲ੍ਹੇ(_R)"
 
 #: ../app/actions/file-actions.c:76
-#, fuzzy
 msgctxt "file-action"
 msgid "_Open..."
 msgstr "ਖੋਲ੍ਹੋ(_O)..."
 
 #: ../app/actions/file-actions.c:77
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "ਇੱਕ ਚਿੱਤਰ ਫਾਇਲ ਖੋਲ੍ਹੋ"
+msgstr "ਚਿੱਤਰ ਫਾਇਲ ਨੂੰ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/file-actions.c:82
-#, fuzzy
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "ਲੇਅਰਾਂ ਵਾਂਗ ਖੋਲ੍ਹੋ(_e)..."
+msgstr "ਲੇਅਰਾਂ ਵਜੋਂ ਖੋਲ੍ਹੋ(_e)..."
 
 #: ../app/actions/file-actions.c:83
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file as layers"
-msgstr "ਚਿੱਤਰ ਫਾਇਲ ਲੇਅਰਾਂ ਵਾਂਗ ਖੋਲ੍ਹੋ"
+msgstr "ਚਿੱਤਰ ਫਾਇਲ ਨੂੰ ਲੇਅਰਾਂ ਵਜੋਂ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/file-actions.c:88
-#, fuzzy
 msgctxt "file-action"
 msgid "Open _Location..."
 msgstr "ਟਿਕਾਣਾ ਖੋਲ੍ਹੋ(_L)..."
 
 #: ../app/actions/file-actions.c:89
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file from a specified location"
 msgstr "ਇੱਕ ਦਿੱਤੇ ਟਿਕਾਣੇ ਤੋਂ ਇੱਕ ਚਿੱਤਰ ਫਾਇਲ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/file-actions.c:94
-#, fuzzy
 msgctxt "file-action"
 msgid "Create Template..."
-msgstr "ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
+msgstr "ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ..."
 
 #: ../app/actions/file-actions.c:95
-#, fuzzy
 msgctxt "file-action"
 msgid "Create a new template from this image"
 msgstr "ਇਸ ਚਿੱਤਰ ਤੋਂ ਇੱਕ ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
 
 #: ../app/actions/file-actions.c:100
-#, fuzzy
 msgctxt "file-action"
 msgid "Re_vert"
 msgstr "ਰੀਵਰਟ(_v)"
 
 #: ../app/actions/file-actions.c:101
-#, fuzzy
 msgctxt "file-action"
 msgid "Reload the image file from disk"
 msgstr "ਚਿੱਤਰ ਫਾਇਲ ਡਿਸਕ ਤੋਂ ਮੁੜ-ਲੋਡ ਕਰੋ"
 
 #: ../app/actions/file-actions.c:106
-#, fuzzy
 msgctxt "file-action"
 msgid "Close all"
 msgstr "ਸਭ ਬੰਦ ਕਰੋ"
 
 #: ../app/actions/file-actions.c:107
-#, fuzzy
 msgctxt "file-action"
 msgid "Close all opened images"
 msgstr "ਸਭ ਖੁੱਲ੍ਹੇ ਚਿੱਤਰ ਬੰਦ ਕਰੋ"
 
 #: ../app/actions/file-actions.c:112
-#, fuzzy
 msgctxt "file-action"
 msgid "_Quit"
 msgstr "ਬਾਹਰ(_Q)"
 
 #: ../app/actions/file-actions.c:113
-#, fuzzy
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "ਗਨੂ ਈਮਿਜ਼ ਮੈਨੂਪਲੇਸ਼ਨ ਪਰੋਗਰਾਮ ਬੰਦ ਕਰੋ"
+msgstr "ਗਨੂ ਈਮੇਜ਼ ਮੈਨੂਪਲੇਸ਼ਨ ਪਰੋਗਰਾਮ ਨੂੰ ਬੰਦ ਕਰ ਦਿਓ"
 
 #: ../app/actions/file-actions.c:121
-#, fuzzy
 msgctxt "file-action"
 msgid "_Save"
 msgstr "ਸੰਭਾਲੋ(_S)"
 
 #: ../app/actions/file-actions.c:122
-#, fuzzy
 msgctxt "file-action"
 msgid "Save this image"
 msgstr "ਇਹ ਚਿੱਤਰ ਸੰਭਾਲੋ"
 
 #: ../app/actions/file-actions.c:127
-#, fuzzy
 msgctxt "file-action"
 msgid "Save _As..."
-msgstr "ਇੰਞ ਸੰਭਾਲੋ(_A)..."
+msgstr "...ਵਜੋਂ ਸੰਭਾਲੋ(_A)"
 
 #: ../app/actions/file-actions.c:128
-#, fuzzy
 msgctxt "file-action"
 msgid "Save this image with a different name"
 msgstr "ਇਹ ਚਿੱਤਰ ਵੱਖਰੇ ਨਾਂ ਨਾਲ ਸੰਭਾਲੋ"
 
 #: ../app/actions/file-actions.c:133
-#, fuzzy
 msgctxt "file-action"
 msgid "Save a Cop_y..."
-msgstr "ਇੱਕ ਕਾਪੀ ਵਾਂਗ ਸੰਭਾਲੋ(_y)..."
+msgstr "ਇੱਕ ਕਾਪੀ... ਵਜੋਂ ਸੰਭਾਲੋ(_y)"
 
 #: ../app/actions/file-actions.c:135
 msgctxt "file-action"
@@ -2680,33 +2393,29 @@ msgid ""
 msgstr ""
 
 #: ../app/actions/file-actions.c:140
-#, fuzzy
 msgctxt "file-action"
 msgid "Save and Close..."
 msgstr "ਸੰਭਾਲੋ ਅਤੇ ਬੰਦ ਕਰੋ..."
 
 #: ../app/actions/file-actions.c:141
-#, fuzzy
 msgctxt "file-action"
 msgid "Save this image and close its window"
-msgstr "ਇਹ ਚਿੱਤਰ ਸੰਭਾਲੋ ਅਤੇ ਇਹ ਵਿੰਡੋ ਬੰਦ ਕਰੋ"
+msgstr "ਇਹ ਚਿੱਤਰ ਸੰਭਾਲੋ ਅਤੇ ਇਸ ਦੀ ਵਿੰਡੋ ਬੰਦ ਕਰੋ"
 
 #: ../app/actions/file-actions.c:146
-#, fuzzy
 msgctxt "file-action"
 msgid "Export to"
-msgstr "SVG ਉੱਤੇ ਐਕਸਪੋਰਟ ਲਈ ਮਾਰਗ"
+msgstr "ਐਕਸਪੋਰਟ ਕਰੋ"
 
 #: ../app/actions/file-actions.c:147
-#, fuzzy
 msgctxt "file-action"
 msgid "Export the image again"
-msgstr "ਐਕਟਿਵ ਮਾਰਗ ਐਕਸਪੋਰਟ"
+msgstr "ਚਿੱਤਰ ਫੇਰ ਐਕਸਪੋਰਟ ਕਰੋ"
 
 #: ../app/actions/file-actions.c:152
 msgctxt "file-action"
 msgid "Overwrite"
-msgstr ""
+msgstr "ਉੱਤੇ ਲਿਖੋ"
 
 #: ../app/actions/file-actions.c:153
 msgctxt "file-action"
@@ -2714,10 +2423,9 @@ msgid "Export the image back to the imported file in the import format"
 msgstr ""
 
 #: ../app/actions/file-actions.c:158
-#, fuzzy
 msgctxt "file-action"
 msgid "Export..."
-msgstr "ਮਾਰਗ ਐਕਸਪੋਰਟ ਕਰੋ(_x)..."
+msgstr "ਐਕਸਪੋਰਟ..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2725,19 +2433,18 @@ msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr ""
 
 #: ../app/actions/file-actions.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "Export to %s"
-msgstr "SVG ਉੱਤੇ ਐਕਸਪੋਰਟ ਲਈ ਮਾਰਗ"
+msgstr "%s ਵਜੋਂ ਐਕਸਪੋਰਟ"
 
 #: ../app/actions/file-actions.c:298
 #, c-format
 msgid "Overwrite %s"
-msgstr ""
+msgstr "%s ਉੱਤੇ ਲਿਖੋ"
 
 #: ../app/actions/file-actions.c:306
-#, fuzzy
 msgid "Export to"
-msgstr "SVG ਉੱਤੇ ਐਕਸਪੋਰਟ ਲਈ ਮਾਰਗ"
+msgstr "ਐਕਸਪੋਰਟ ਕਰੋ"
 
 #: ../app/actions/file-commands.c:112 ../app/actions/file-commands.c:475
 #: ../app/dialogs/file-open-dialog.c:77
@@ -2805,13 +2512,11 @@ msgstr ""
 "%s"
 
 #: ../app/actions/fonts-actions.c:43
-#, fuzzy
 msgctxt "fonts-action"
 msgid "Fonts Menu"
 msgstr "ਫੋਂਟ ਮੇਨੂ"
 
 #: ../app/actions/fonts-actions.c:47
-#, fuzzy
 msgctxt "fonts-action"
 msgid "_Rescan Font List"
 msgstr "ਫੋਂਟ ਲਿਸਟ ਮੁੜ-ਸਕੈਨ(_R)"
@@ -2819,64 +2524,54 @@ msgstr "ਫੋਂਟ ਲਿਸਟ ਮੁੜ-ਸਕੈਨ(_R)"
 #: ../app/actions/fonts-actions.c:48
 msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
-msgstr ""
+msgstr "ਇੰਸਟਾਲ ਕੀਤੇ ਫੋਂਟ ਮੁੜ-ਸਕੈਨ ਕਰੋ"
 
 #: ../app/actions/gradient-editor-actions.c:45
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
 msgstr "ਗਰੇਂਡੀਐਂਟ ਐਡੀਟਰ ਮੇਨੂ"
 
 #: ../app/actions/gradient-editor-actions.c:49
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
 msgstr "ਖੱਬਾ ਰੰਗ ਕਿਸਮ"
 
 #: ../app/actions/gradient-editor-actions.c:51
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Load Left Color From"
 msgstr "ਖੱਬਾ ਰੰਗ ਲੋਡ ਕਰੋ(_L)"
 
 #: ../app/actions/gradient-editor-actions.c:53
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
 msgstr "ਖੱਬਾ ਰੰਗ ਸੰਭਾਲੋ(_S)"
 
 #: ../app/actions/gradient-editor-actions.c:56
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
 msgstr "ਸੱਜਾ ਰੰਗ ਕਿਸਮ"
 
 #: ../app/actions/gradient-editor-actions.c:58
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Load Right Color Fr_om"
 msgstr "ਸੱਜਾ ਰੰਗ ਲੋਡ ਕਰੋ(_o)"
 
 #: ../app/actions/gradient-editor-actions.c:60
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
 msgstr "ਸੱਜਾ ਰੰਗ ਸੰਭਾਲੋ(_v)"
 
 #: ../app/actions/gradient-editor-actions.c:66
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "L_eft Endpoint's Color..."
 msgstr "ਖੱਬਾ ਐਂਡ-ਪੁਆਇੰਟ ਰੰਗ(_e)..."
 
 #: ../app/actions/gradient-editor-actions.c:71
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "R_ight Endpoint's Color..."
 msgstr "ਸੱਜਾ ਐਂਡ-ਪੁਆਇੰਟ ਰੰਗ(_i)..."
 
 #: ../app/actions/gradient-editor-actions.c:111
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
 msgstr "ਐਂਡ-ਪੁਆਇੰਟ ਦੇ ਰੰਗ ਬਲੈੱਡ ਕਰੋ(_n)"
@@ -2907,14 +2602,12 @@ msgstr "ਸੱਜਾ ਐਂਡ-ਪੁਆਇੰਟ(_R)"
 
 #: ../app/actions/gradient-editor-actions.c:165
 #: ../app/actions/gradient-editor-actions.c:213
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
 msgstr "ਫਾਰ-ਗਰਾਊਂਡ ਰੰਗ(_F)"
 
 #: ../app/actions/gradient-editor-actions.c:170
 #: ../app/actions/gradient-editor-actions.c:218
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Background Color"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ(_B)"
@@ -2926,42 +2619,36 @@ msgid "_Right Neighbor's Left Endpoint"
 msgstr "ਸੱਜੇ ਗੁਆਂਢੀ ਦਾ ਖੱਬਾ ਐਂਡ-ਪੁਆਇੰਟ(_R)"
 
 #: ../app/actions/gradient-editor-actions.c:208
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Left Endpoint"
 msgstr "ਖੱਬਾ ਐਂਡ-ਪੁਆਇੰਟ(_L)"
 
 #: ../app/actions/gradient-editor-actions.c:257
 #: ../app/actions/gradient-editor-actions.c:287
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
 msgstr "ਸਥਿਰ(_F)"
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
 msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ(_o)"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:298
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
 msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ (ਪਾਰਦਰਸ਼ੀ)(_r)"
 
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:303
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Background Color"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ(_B)"
 
 #: ../app/actions/gradient-editor-actions.c:279
 #: ../app/actions/gradient-editor-actions.c:309
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ (ਪਾਰਦਰਸ਼ੀ)(_a)"
@@ -2973,55 +2660,46 @@ msgid "_Linear"
 msgstr "ਲੀਨੀਅਰ(_L)"
 
 #: ../app/actions/gradient-editor-actions.c:322
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Curved"
 msgstr "ਕਰਵ(_C)"
 
 #: ../app/actions/gradient-editor-actions.c:327
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Sinusoidal"
 msgstr "ਸਾਇਨਾਸੋਡਲ(_S)"
 
 #: ../app/actions/gradient-editor-actions.c:332
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (i_ncreasing)"
 msgstr "ਗੋਲਾਕਾਰ (ਵੱਧਦਾ)(_n)"
 
 #: ../app/actions/gradient-editor-actions.c:337
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
 msgstr "ਗੋਲਾਕਾਰ (ਘੱਟਦਾ)(_d)"
 
 #: ../app/actions/gradient-editor-actions.c:342
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "(Varies)"
 msgstr "(ਬਦਲਵਾਂ)"
 
 #: ../app/actions/gradient-editor-actions.c:350
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/gradient-editor-actions.c:355
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (ਘੜੀ-ਉਲਟ ਆਭਾ)(_c)"
 
 #: ../app/actions/gradient-editor-actions.c:360
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
 msgstr "_HSV (ਘੜੀ ਦੀ ਦਿਸ਼ਾ ਵਿੱਚ)"
 
 #: ../app/actions/gradient-editor-actions.c:365
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "(Varies)"
 msgstr "(ਬਦਲਵਾਂ)"
@@ -3214,13 +2892,11 @@ msgstr ""
 "ਵਿੱਚ ਸਿਗਮੈਂਟਾਂ ਨੂੰ ਵੰਡਣਾ ਹੈ।"
 
 #: ../app/actions/gradients-actions.c:43
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Gradients Menu"
 msgstr "ਗਰੇਡੀਐਂਟ ਮੇਨੂ"
 
 #: ../app/actions/gradients-actions.c:47
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_New Gradient"
 msgstr "ਨਵਾਂ ਗਰੇਡੀਐਂਟ(_N)"
@@ -3232,7 +2908,6 @@ msgid "Create a new gradient"
 msgstr "ਇੱਕ ਨਵੀਂ ਤਸਵੀਰ ਬਣਾਓ"
 
 #: ../app/actions/gradients-actions.c:53
-#, fuzzy
 msgctxt "gradients-action"
 msgid "D_uplicate Gradient"
 msgstr "ਡੁਪਲੀਕੇਟ ਗਰੇਡੀਐਂਟ(_u)"
@@ -3256,43 +2931,36 @@ msgid "Copy gradient file location to clipboard"
 msgstr "ਗਰੇਂਡੀਐਟ ਫਾਇਲ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/gradients-actions.c:65
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Save as _POV-Ray..."
 msgstr "_POV-ਕਿਰਨ ਇੰਝ ਸੰਭਾਲੋ..."
 
 #: ../app/actions/gradients-actions.c:66
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Save gradient as POV-Ray"
 msgstr "POV-ਕਿਰਨ ਗਰੇਡੀਐਂਟ ਵਾਂਗ ਸੰਭਾਲੋ..."
 
 #: ../app/actions/gradients-actions.c:71
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
 msgstr "ਗਰੇਡੀਐਂਟ ਹਟਾਓ(_D)"
 
 #: ../app/actions/gradients-actions.c:72
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Delete this gradient"
-msgstr "ਗਰੇਡੀਐਂਟ ਹਟਾਓ"
+msgstr "ਇਹ ਗਰੇਡੀਐਂਟ ਹਟਾਓ"
 
 #: ../app/actions/gradients-actions.c:77
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Refresh Gradients"
 msgstr "ਗਰੇਡੀਐਂਟ ਤਾਜ਼ਾ(_R)"
 
 #: ../app/actions/gradients-actions.c:78
-#, fuzzy
 msgctxt "gradients-action"
 msgid "Refresh gradients"
-msgstr "ਗਰੇਡੀਐਂਟ ਤਾਜ਼ਾ"
+msgstr "ਗਰੇਡੀਐਂਟ ਤਾਜ਼ਾ ਕਰੋ"
 
 #: ../app/actions/gradients-actions.c:86
-#, fuzzy
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
 msgstr "ਗਰੇਡੀਐਂਟ ਸੋਧ(_E)..."
@@ -3309,325 +2977,271 @@ msgid "Save '%s' as POV-Ray"
 msgstr "'%s' ਨੂੰ POV-ਕਿਰਨ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../app/actions/help-actions.c:37 ../app/actions/help-actions.c:40
-#, fuzzy
 msgctxt "help-action"
 msgid "_Help"
 msgstr "ਮੱਦਦ(_H)"
 
 #: ../app/actions/help-actions.c:41
-#, fuzzy
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
 msgstr "ਜੈਮਪ ਯੂਜ਼ਰ ਦਸਤਾਵੇਜ਼ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/help-actions.c:46
-#, fuzzy
 msgctxt "help-action"
 msgid "_Context Help"
 msgstr "ਸਮੱਗਰੀ ਮੱਦਦ(_C)"
 
 #: ../app/actions/help-actions.c:47
-#, fuzzy
 msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "ਇੱਕ ਖਾਸ ਯੂਜ਼ਰ ਇੰਟਰਫੇਸ ਆਈਟਮ ਬਾਰੇ ਮੱਦਦ ਵੇਖੋ"
 
 #: ../app/actions/image-actions.c:48 ../app/actions/image-actions.c:52
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "ਚਿੱਤਰ ਮੇਨੂ"
 
 #: ../app/actions/image-actions.c:55
-#, fuzzy
 msgctxt "image-action"
 msgid "_Image"
 msgstr "ਚਿੱਤਰ(_I)"
 
 #: ../app/actions/image-actions.c:56
-#, fuzzy
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "ਮੋਡ(_M)"
 
 #: ../app/actions/image-actions.c:57
-#, fuzzy
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "ਟਰਾਂਸਫਰ(_T)"
 
 #: ../app/actions/image-actions.c:58
-#, fuzzy
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "ਗਾਈਡ(_G)"
 
 #: ../app/actions/image-actions.c:60
-#, fuzzy
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "ਰੰਗ(_C)"
 
 #: ../app/actions/image-actions.c:61
-#, fuzzy
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "ਜਾਣਕਾਰੀ(_n)"
 
 #: ../app/actions/image-actions.c:62
-#, fuzzy
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "ਆਟੋ(_A)"
 
 #: ../app/actions/image-actions.c:63
-#, fuzzy
 msgctxt "image-action"
 msgid "_Map"
 msgstr "ਮੈਪ(_M)"
 
 #: ../app/actions/image-actions.c:64
-#, fuzzy
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "ਭਾਗ(_o)"
 
 #: ../app/actions/image-actions.c:67
-#, fuzzy
 msgctxt "image-action"
 msgid "_New..."
 msgstr "ਨਵਾਂ(_N)..."
 
 #: ../app/actions/image-actions.c:68
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "ਇੱਕ ਨਵੀਂ ਤਸਵੀਰ ਬਣਾਓ"
 
 #: ../app/actions/image-actions.c:73
-#, fuzzy
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "ਕੈਨਵਸ ਆਕਾਰ(_v)..."
 
 #: ../app/actions/image-actions.c:74
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "ਚਿੱਤਰ ਮਾਪ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/actions/image-actions.c:79
-#, fuzzy
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "ਕੈਨਵਸ ਲੇਅਰ ਲਈ ਫਿੱਟ ਕਰੋ(_i)"
 
 #: ../app/actions/image-actions.c:80
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "ਚਿੱਤਰ ਨੂੰ ਸਭ ਲੇਅਰਾਂ ਵਿੱਚ ਰੱਖਣ ਲਈ ਮੁੜ-ਆਕਾਰ ਕਰੋ"
 
 #: ../app/actions/image-actions.c:85
-#, fuzzy
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "ਕੈਨਵਸ ਚੋਣ ਲਈ ਫਿੱਟ(_i)"
 
 #: ../app/actions/image-actions.c:86
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "ਚਿੱਤਰ ਨੂੰ ਚੋਣ ਮੁਤਾਬਕ ਪੂਰਾ ਕਰਨ ਲਈ ਮੁੜ-ਆਕਾਰ ਕਰੋ"
 
 #: ../app/actions/image-actions.c:91
-#, fuzzy
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "ਪਰਿੰਟ ਆਕਾਰ(_P)..."
 
 #: ../app/actions/image-actions.c:92
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "ਪਰਿੰਟ ਰੈਜ਼ੋਲੂਸ਼ਨ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/actions/image-actions.c:97
-#, fuzzy
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "ਚਿਤਰ ਸਕੇਲ ਕਰੋ(_S)..."
 
 #: ../app/actions/image-actions.c:98
-#, fuzzy
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "ਚਿੱਤਰ ਸਮੱਗਰੀ ਦਾ ਆਕਾਰ ਬਦਲੋ"
 
 #: ../app/actions/image-actions.c:103
-#, fuzzy
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "ਚੋਣ ਲਈ ਕਰੋਪ ਕਰੋ(_C)"
+msgstr "ਕੀਤੀ ਗਈ ਚੋਣ ਕੱਟੋ(_C)"
 
 #: ../app/actions/image-actions.c:104
-#, fuzzy
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "ਚੋਣ ਨੂੰ ਫੈਲਾਉਣ ਲਈ ਚਿੱਤਰ ਕਰੋਪ (crop) ਕਰੋ"
+msgstr "ਚਿੱਤਰ ਵਿੱਚੋਂ ਕੀਤੀ ਗਈ ਚੋਣ ਨੂੰ ਕੱਟ ਕੇ ਚਿੱਤਰ ਫੈਲਾਓ (crop)"
 
 #: ../app/actions/image-actions.c:109
-#, fuzzy
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "ਡੁਪਲੀਕੇਟ(_D)"
 
 #: ../app/actions/image-actions.c:110
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "ਇਹ ਚਿੱਤਰ ਦਾ ਡੁਪਲੀਕੇਟ ਬਣਾਓ"
 
 #: ../app/actions/image-actions.c:115
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "ਦਿੱਖ ਲੇਅਰਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ(_L)..."
 
 #: ../app/actions/image-actions.c:116
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
-msgstr "ਸਭ ਦਿੱਸਦੀਆਂ ਲੇਅਰਾਂ ਨੂੰ ਇੱਕ ਲੇਅਰ ਵਿੱਚ ਵਿਲੀਨ ਕਰੋ"
+msgstr "ਸਭ ਦਿਸਦੀਆਂ ਲੇਅਰਾਂ ਨੂੰ ਇੱਕ ਲੇਅਰ ਵਿੱਚ ਵਿਲੀਨ ਕਰੋ"
 
 #: ../app/actions/image-actions.c:121
-#, fuzzy
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "ਚਿੱਤਰ ਫਲੈਟਨ(_F)"
 
 #: ../app/actions/image-actions.c:122
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "ਸਭ ਲੇਅਰਾਂ ਨੂੰ ਇੱਕ ਵਿੱਚ ਮਰਜ਼ ਕਰੋ ਅਤੇ ਟਰਾਂਸਪਰੇਸੀ ਹਟਾਓ"
 
 #: ../app/actions/image-actions.c:127
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "ਗਰਿੱਡ ਸੰਰਚਨਾ(_r)..."
 
 #: ../app/actions/image-actions.c:128
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "ਇਹ ਚਿੱਤਰ ਲਈ ਗਰਿੱਡ ਸੰਰਚਨਾ"
 
 #: ../app/actions/image-actions.c:133
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "ਚਿੱਤਰ ਵਿਸ਼ੇਸ਼ਤਾ(_o)"
 
 #: ../app/actions/image-actions.c:134
-#, fuzzy
 msgctxt "image-action"
 msgid "Display information about this image"
-msgstr "ਇਹ ਚਿੱਤਰ ਬਾਰੇ ਜਾਣਕਾਰੀ ਵੇਖਾਓ"
+msgstr "ਇਹ ਚਿੱਤਰ ਬਾਰੇ ਜਾਣਕਾਰੀ ਵੇਖੋ"
 
 #: ../app/actions/image-actions.c:142
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/image-actions.c:143
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "ਚਿੱਤਰ ਨੂੰ RGB ਪੈਲਅਟ ਵਿੱਚ ਬਦਲੋ"
 
 #: ../app/actions/image-actions.c:147
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "ਗਰੇ-ਸਕੇਲ(_G)"
 
 #: ../app/actions/image-actions.c:148
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "ਚਿੱਤਰ ਨੂੰ ਗਰੇ-ਸਕੇਲ 'ਚ ਬਦਲੋ"
 
 #: ../app/actions/image-actions.c:152
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "ਇੰਡੈਕਸਡ(_I)..."
 
 #: ../app/actions/image-actions.c:153
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "ਚਿੱਤਰ ਨੂੰ ਇੰਡੈਕਸਡ ਰੰਗਾਂ ਵਿੱਚ ਬਦਲੋ"
 
 #: ../app/actions/image-actions.c:160
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ(_H):"
 
 #: ../app/actions/image-actions.c:161
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "ਚਿੱਤਰ ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ"
 
 #: ../app/actions/image-actions.c:166
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "ਵਰਟੀਕਲ ਝਟਕੋ(_V):"
 
 #: ../app/actions/image-actions.c:167
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "ਚਿੱਤਰ ਵਰਟੀਕਲ ਝਟਕੋ"
 
 #: ../app/actions/image-actions.c:175
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "90° ਸੱਜੇ ਦਾਅ ਘੁੰਮਾਓ(_c)"
 
 #: ../app/actions/image-actions.c:176
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "ਚਿੱਤਰ 90 ਡਿਗਰੀ ਸੱਜੇ ਨੂੰ ਘੁੰਮਾਓ"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "_180° ਘੁੰਮਾਓ"
 
 #: ../app/actions/image-actions.c:182
-#, fuzzy
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "ਚਿੱਤਰ ਉੱਤਲਾ ਪਾਸਾ ਹੇਠਾਂ ਭੇਜੋ"
 
 #: ../app/actions/image-actions.c:187
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "90° ਖੱਬੇ ਦਾਅ ਘੁੰਮਾਓ(_w)"
 
 #: ../app/actions/image-actions.c:188
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "ਚਿੱਤਰ 90 ਡਿਗਰੀ ਖੱਬੇ ਘੁੰਮਾਓ"
@@ -3684,25 +3298,21 @@ msgid "Scaling"
 msgstr "ਸਕੇਲਿੰਗ"
 
 #: ../app/actions/images-actions.c:43
-#, fuzzy
 msgctxt "images-action"
 msgid "Images Menu"
 msgstr "ਚਿੱਤਰ ਮੇਨੂ"
 
 #: ../app/actions/images-actions.c:47
-#, fuzzy
 msgctxt "images-action"
 msgid "_Raise Views"
 msgstr "ਵਿਊ ਉਭਾਰੋ(_R)"
 
 #: ../app/actions/images-actions.c:48
-#, fuzzy
 msgctxt "images-action"
 msgid "Raise this image's displays"
 msgstr "ਇਸ ਚਿੱਤਰ ਦਾ ਡਿਸਪਲੇਅ ਉਭਾਰੋ"
 
 #: ../app/actions/images-actions.c:53
-#, fuzzy
 msgctxt "images-action"
 msgid "_New View"
 msgstr "ਨਵਾਂ ਵਿਊ(_N)"
@@ -3714,109 +3324,91 @@ msgid "Create a new display for this image"
 msgstr "ਇਸ ਚਿੱਤਰ ਲਈ ਨਵਾਂ ਡਿਸਪਲੇਅ ਬਣਾਉ"
 
 #: ../app/actions/images-actions.c:59
-#, fuzzy
 msgctxt "images-action"
 msgid "_Delete Image"
 msgstr "ਚਿੱਤਰ ਹਟਾਓ(_D)"
 
 #: ../app/actions/images-actions.c:60
-#, fuzzy
 msgctxt "images-action"
 msgid "Delete this image"
 msgstr "ਇਹ ਚਿੱਤਰ ਹਟਾਓ"
 
 #: ../app/actions/layers-actions.c:49
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "ਲੇਅਰ ਮੇਨੂ"
 
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "ਲੇਅਰ(_L)"
 
 #: ../app/actions/layers-actions.c:55
-#, fuzzy
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "ਸਟਾਕ(_k)"
 
 #: ../app/actions/layers-actions.c:57
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "ਮਾਸਕ(_M)"
 
 #: ../app/actions/layers-actions.c:59
-#, fuzzy
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "ਪਾਰਦਰਸ਼ਤਾ(_a)"
 
 #: ../app/actions/layers-actions.c:61
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "ਟਰਾਂਸਫਰ(_T)"
 
 #: ../app/actions/layers-actions.c:63
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "ਵਿਸ਼ੇਸ਼ਤਾ(_P)"
 
 #: ../app/actions/layers-actions.c:65
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "ਧੁੰਦਲਾਪਨ(_O)"
 
 #: ../app/actions/layers-actions.c:67
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "ਲੇਅਰ ਮੋਡ(_M)"
 
 #: ../app/actions/layers-actions.c:70
-#, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "ਟੈਕਸਟ ਟੂਲ(_x)"
 
 #: ../app/actions/layers-actions.c:71
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "ਇਹ ਟੈਕਸਟ ਲੇਅਰ ਉੱਤੇ ਟੈਕਸਟ ਟੂਲ ਐਕਟਿਵੇਟ ਕਰੋ"
 
 #: ../app/actions/layers-actions.c:76
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "ਲੇਅਰ ਗੁਣ ਸੋਧ(_E)..."
 
 #: ../app/actions/layers-actions.c:77
-#, fuzzy
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "ਲੇਅਰ ਦਾ ਨਾਂ ਸੋਧ"
 
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:598
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "ਨਵੀਂ ਲੇਅਰ(_N)..."
 
 #: ../app/actions/layers-actions.c:83
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਬਣਾਓ ਅਤੇ ਇਸ ਨੂੰ ਚਿੱਤਰ 'ਚ ਜੋੜੋ"
 
 #: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:599
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "ਨਵੀਂ ਲੇਅਰ(_N)"
@@ -4056,10 +3648,9 @@ msgid "Change the size of the layer content"
 msgstr "ਲੇਅਰ ਭਾਗ ਦਾ ਆਕਾਰ ਬਦਲੋ"
 
 #: ../app/actions/layers-actions.c:210
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "ਚੋਣ ਲਈ ਕਰੋਪ ਕਰੋ(_C)"
+msgstr "ਕੀਤੀ ਗਈ ਚੋਣ ਕੱਟੋ(_C)"
 
 #: ../app/actions/layers-actions.c:211
 #, fuzzy
@@ -4116,7 +3707,6 @@ msgid "Keep transparency information on this layer from being modified"
 msgstr "ਇਹ ਲੇਅਰ ਉੱਤੇ ਸੋਧਣ ਤੋਂ ਟਰਾਂਸਪਰੇਸੀ ਜਾਣਕਾਰੀ ਸੰਭਾਲੋ"
 
 #: ../app/actions/layers-actions.c:246
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਸੋਧ(_E)"
@@ -4128,13 +3718,11 @@ msgid "Work on the layer mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਉੱਤੇ ਕੰਮ"
 
 #: ../app/actions/layers-actions.c:253
-#, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
-msgstr "ਲੇਅਰ ਮਾਸਕ ਵੇਖਾਓ(_h)"
+msgstr "ਲੇਅਰ ਮਾਸਕ ਵੇਖੋ(_h)"
 
 #: ../app/actions/layers-actions.c:259
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਅਯੋਗ(_D)"
@@ -4182,7 +3770,6 @@ msgid "Replace the selection with the layer mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਨਾਲ ਚੋਣ ਬਦਲੋ"
 
 #: ../app/actions/layers-actions.c:290
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "ਚੋਣ ਵਿੱਚ ਸ਼ਾਮਲ(_A)"
@@ -4305,9 +3892,8 @@ msgstr "ਮੌਜੂਦਾ ਲੇਅਰ ਦੇ ਹੇਠਲੀ ਲੇਅਰ ਚ�
 #. on thumbnail"
 #.
 #: ../app/actions/layers-actions.c:442
-#, fuzzy
 msgid "Shortcut: "
-msgstr "ਸ਼ਾਰਟਕੱਟ"
+msgstr "ਸ਼ਾਰਟਕੱਟ: "
 
 #. Will be prepended with a modifier key
 #. string, e.g. "Shift"
@@ -4370,13 +3956,11 @@ msgid "Add Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../app/actions/palette-editor-actions.c:43
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Palette Editor Menu"
 msgstr "ਪੈਲਅਟ ਐਡੀਟਰ ਮੇਨੂ"
 
 #: ../app/actions/palette-editor-actions.c:47
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
 msgstr "ਰੰਗ ਸੋਧ(_E)..."
@@ -4388,16 +3972,14 @@ msgid "Edit this entry"
 msgstr "ਗਰੇਡੀਐਂਟ ਸੋਧ"
 
 #: ../app/actions/palette-editor-actions.c:53
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
 msgstr "ਰੰਗ ਹਟਾਓ(_D)"
 
 #: ../app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Delete this entry"
-msgstr "ਇਹ ਲੇਅਰ ਹਟਾਓ"
+msgstr "ਇਹ ਐਂਟਰੀ ਹਟਾਓ"
 
 #: ../app/actions/palette-editor-actions.c:62
 #, fuzzy
@@ -4406,25 +3988,21 @@ msgid "Edit Active Palette"
 msgstr "ਐਕਟਿਵ ਪੈਲਅਟ ਸੋਧ"
 
 #: ../app/actions/palette-editor-actions.c:71
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
 msgstr "_FG ਤੋਂ ਨਵਾਂ ਰੰਗ"
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
 msgstr "ਫਾਰ-ਗਰਾਊਂਡ ਰੰਗ ਤੋਂ ਨਵਾਂ ਰੰਗ"
 
 #: ../app/actions/palette-editor-actions.c:78
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
 msgstr "_BG ਤੋਂ ਨਵਾਂ ਰੰਗ"
 
 #: ../app/actions/palette-editor-actions.c:80
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
 msgstr "ਬੈਕ-ਗਰਾਊਂਡ ਰੰਗ ਤੋਂ ਨਵਾਂ ਰੰਗ"
@@ -4450,61 +4028,51 @@ msgid "Edit Color Palette Entry"
 msgstr "ਰੰਗ ਪੈਲਅਟ ਐਂਟਰੀ ਸੋਧ"
 
 #: ../app/actions/palettes-actions.c:43
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Palettes Menu"
 msgstr "ਪੈਲਅਟ ਮੇਨੂ"
 
 #: ../app/actions/palettes-actions.c:47
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_New Palette"
 msgstr "ਨਵਾਂ ਪੈਲਅਟ(_N)"
 
 #: ../app/actions/palettes-actions.c:48
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Create a new palette"
 msgstr "ਇੱਕ ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
 
 #: ../app/actions/palettes-actions.c:53
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Import Palette..."
 msgstr "ਪੈਲਅਟ ਇੰਪੋਰਟ(_I)..."
 
 #: ../app/actions/palettes-actions.c:54
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Import palette"
 msgstr "ਪੈਲਅਟ ਇੰਪੋਰਟ ਕਰੋ"
 
 #: ../app/actions/palettes-actions.c:59
-#, fuzzy
 msgctxt "palettes-action"
 msgid "D_uplicate Palette"
 msgstr "ਡੁਪਲੀਕੇਟ ਪੈਲਅਟ(_u)"
 
 #: ../app/actions/palettes-actions.c:60
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Duplicate this palette"
-msgstr "ਡੁਪਲੀਕੇਟ ਪੈਲਅਟ"
+msgstr "ਇਹ ਪੈਲਅਟ ਡੁਪਲੀਕੇਟ ਬਣਾਉ"
 
 #: ../app/actions/palettes-actions.c:65
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Merge Palettes..."
 msgstr "ਪੈਲਅਟ ਮਰਜ਼ ਕਰੋ(_M)..."
 
 #: ../app/actions/palettes-actions.c:66
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Merge palettes"
 msgstr "ਪੈਲਅਟ ਮਰਜ਼ ਕਰ ਦਿਓ"
 
 #: ../app/actions/palettes-actions.c:71
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Copy Palette _Location"
 msgstr "ਪੈਲਅਟ ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_L)"
@@ -4516,37 +4084,31 @@ msgid "Copy palette file location to clipboard"
 msgstr "ਪੈਲਅਟ ਫਾਇਲ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/palettes-actions.c:77
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Delete Palette"
 msgstr "ਪੈਲਅਟ ਹਟਾਓ(_D)"
 
 #: ../app/actions/palettes-actions.c:78
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Delete this palette"
-msgstr "ਪੈਲਅਟ ਹਟਾਓ"
+msgstr "ਇਹ ਪੈਲਅਟ ਹਟਾਓ"
 
 #: ../app/actions/palettes-actions.c:83
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Refresh Palettes"
 msgstr "ਪੈਲਅਟ ਤਾਜ਼ਾ ਕਰੋ(_R)"
 
 #: ../app/actions/palettes-actions.c:84
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Refresh palettes"
 msgstr "ਪੈਲਅਟ ਤਾਜ਼ਾ ਕਰੋ"
 
 #: ../app/actions/palettes-actions.c:92
-#, fuzzy
 msgctxt "palettes-action"
 msgid "_Edit Palette..."
 msgstr "ਪੈਲਅਟ ਸੋਧ(_E)..."
 
 #: ../app/actions/palettes-actions.c:93
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Edit palette"
 msgstr "ਪੈਲਅਟ ਸੋਧ"
@@ -4560,13 +4122,11 @@ msgid "Enter a name for the merged palette"
 msgstr "ਮਰਜ਼ ਪੈਲਅਟ ਲਈ ਇੱਕ ਨਾਮ ਦਿਓ"
 
 #: ../app/actions/patterns-actions.c:42
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Patterns Menu"
 msgstr "ਪੈਟਰਨ ਮੇਨੂ"
 
 #: ../app/actions/patterns-actions.c:46
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Open Pattern as Image"
 msgstr "ਪੈਟਰਨ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ(_O)"
@@ -4578,19 +4138,16 @@ msgid "Open this pattern as an image"
 msgstr "ਪੈਟਰਨ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/patterns-actions.c:52
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_New Pattern"
 msgstr "ਨਵਾਂ ਪੈਟਰਨ(_N)"
 
 #: ../app/actions/patterns-actions.c:53
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Create a new pattern"
-msgstr "ਇੱਕ ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
+msgstr "ਇੱਕ ਨਵਾਂ ਪੈਟਰਨ ਬਣਾਓ"
 
 #: ../app/actions/patterns-actions.c:58
-#, fuzzy
 msgctxt "patterns-action"
 msgid "D_uplicate Pattern"
 msgstr "ਡੁਪਲੀਕੇਟ ਪੈਟਰਨ(_u)"
@@ -4602,7 +4159,6 @@ msgid "Duplicate this pattern"
 msgstr "ਡੁਪਲੀਕੇਟ ਪੈਟਰਨ"
 
 #: ../app/actions/patterns-actions.c:64
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Copy Pattern _Location"
 msgstr "ਪੈਟਰਨ ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_L)"
@@ -4614,61 +4170,51 @@ msgid "Copy pattern file location to clipboard"
 msgstr "ਪੈਟਰਨ ਫਾਇਲ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/patterns-actions.c:70
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
 msgstr "ਪੈਟਰਨ ਹਟਾਓ(_D)"
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "ਪੈਟਰਨ ਹਟਾ ਦਿਓ"
+msgstr "ਇਹ ਪੈਟਰਨ ਹਟਾ ਦਿਓ"
 
 #: ../app/actions/patterns-actions.c:76
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Refresh Patterns"
 msgstr "ਪੈਟਰਨ ਤਾਜ਼ਾ ਕਰੋ(_R)"
 
 #: ../app/actions/patterns-actions.c:77
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Refresh patterns"
 msgstr "ਪੈਟਰਨ ਤਾਜ਼ਾ ਕਰੋ"
 
 #: ../app/actions/patterns-actions.c:85
-#, fuzzy
 msgctxt "patterns-action"
 msgid "_Edit Pattern..."
 msgstr "ਪੈਟਰਨ ਸੋਧ(_E)..."
 
 #: ../app/actions/patterns-actions.c:86
-#, fuzzy
 msgctxt "patterns-action"
 msgid "Edit pattern"
 msgstr "ਪੈਟਰਨ ਸੋਧ"
 
 #: ../app/actions/plug-in-actions.c:84
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Filte_rs"
 msgstr "ਫਿਲਟਰ(_r)"
 
 #: ../app/actions/plug-in-actions.c:86
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Recently Used"
 msgstr "ਤਾਜ਼ਾ ਵਰਤੇ"
 
 #: ../app/actions/plug-in-actions.c:88
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Blur"
 msgstr "ਧੱਬਾ(_B)"
 
 #: ../app/actions/plug-in-actions.c:90
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Noise"
 msgstr "ਖਰ੍ਹਵਾ(_N)"
@@ -4680,118 +4226,99 @@ msgid "Edge-De_tect"
 msgstr "ਕੰਢਾ ਖੋਜ(_t)"
 
 #: ../app/actions/plug-in-actions.c:94
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "En_hance"
 msgstr "ਵਧਾ(_h)"
 
 #: ../app/actions/plug-in-actions.c:96
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "C_ombine"
 msgstr "ਕੰਬਾਇਨ(_o)"
 
 #: ../app/actions/plug-in-actions.c:98
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Generic"
 msgstr "ਅਸਲ(_G)"
 
 #: ../app/actions/plug-in-actions.c:100
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Light and Shadow"
 msgstr "ਲਾਈਟ ਅਤੇ ਸ਼ੈਡੋ(_L)"
 
 #: ../app/actions/plug-in-actions.c:102
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Distorts"
 msgstr "ਵਿਰੂਪ(_D)"
 
 #: ../app/actions/plug-in-actions.c:104
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Artistic"
 msgstr "ਕਲਾਮਈ(_A)"
 
 #: ../app/actions/plug-in-actions.c:106
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Decor"
 msgstr "ਡੀਕੋਰ(_D)"
 
 #: ../app/actions/plug-in-actions.c:108
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Map"
 msgstr "ਮੈਪ(_M)"
 
 #: ../app/actions/plug-in-actions.c:110
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Render"
 msgstr "ਰੈਂਡਰ(_R)"
 
 #: ../app/actions/plug-in-actions.c:112
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Clouds"
 msgstr "ਧੁੰਦਲਕਾ(_C)"
 
 #: ../app/actions/plug-in-actions.c:114
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Nature"
 msgstr "ਨੇਚਰ(_N)"
 
 #: ../app/actions/plug-in-actions.c:116
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Pattern"
 msgstr "ਪੈਟਰਨ(_P)"
 
 #: ../app/actions/plug-in-actions.c:118
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "_Web"
 msgstr "ਵੈੱਬ(_W)"
 
 #: ../app/actions/plug-in-actions.c:120
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "An_imation"
 msgstr "ਐਨੀਮੇਸ਼ਨ(_i)"
 
 #: ../app/actions/plug-in-actions.c:123
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
 msgstr "ਸਭ ਫਿਲਟਰ ਮੁੜ-ਸੈੱਟ(_F)"
 
 #: ../app/actions/plug-in-actions.c:124
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all plug-ins to their default settings"
 msgstr "ਸਭ ਪਲੱਗਇਨਾਂ ਨੂੰ ਉਨ੍ਹਾਂ ਦੀ ਡਿਫਾਲਟ ਸੈਟਿੰਗ ਲਈ ਮੁੜ-ਸੈੱਟ ਕਰੋ"
 
 #: ../app/actions/plug-in-actions.c:132
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
 msgstr "ਆਖਰੀ ਰਪੀਟ(_p)"
 
 #: ../app/actions/plug-in-actions.c:134
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Rerun the last used plug-in using the same settings"
 msgstr "ਆਖਰੀ ਵਰਤੀ ਪਲੱਗਇਨ ਨੂੰ ਉਹੀ ਸੈਟਿੰਗ ਵਰਤ ਕੇ ਮੁੜ-ਚਲਾਓ"
 
 #: ../app/actions/plug-in-actions.c:139
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
-msgstr "ਆਖਰੀ ਮੁੜ-ਵੇਖਾਓ(_e)"
+msgstr "ਆਖਰੀ ਮੁੜ-ਵੇਖੋ(_e)"
 
 #: ../app/actions/plug-in-actions.c:140
 #, fuzzy
@@ -4826,28 +4353,24 @@ msgid "Do you really want to reset all filters to default values?"
 msgstr "ਕੀ ਤੁਸੀਂ ਸਭ ਫਿਲਟਰਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਡਿਫਾਲਟ ਮੁੱਲਾਂ ਲਈ ਸੈੱਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
 #: ../app/actions/quick-mask-actions.c:43
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Quick Mask Menu"
 msgstr "ਚੁਸਤ ਮਾਸਕ ਮੇਨੂ"
 
 #: ../app/actions/quick-mask-actions.c:47
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
 msgstr "ਰੰਗ ਅਤੇ ਧੁੰਦਲਾਪਨ ਸੰਰਚਨਾ(_C)..."
 
 #: ../app/actions/quick-mask-actions.c:55
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle _Quick Mask"
 msgstr "ਚੁਸਤ ਮਾਸਕ ਬਦਲੋ(_Q)"
 
 #: ../app/actions/quick-mask-actions.c:56
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "Toggle Quick Mask on/off"
-msgstr "ਤੁਰੰਤ ਮਾਸਕ ਬਦਲੋ"
+msgstr "ਤੁਰੰਤ ਮਾਸਕ ਚਾਲੂ/ਬੰਦ ਕਰੋ"
 
 #: ../app/actions/quick-mask-actions.c:65
 #, fuzzy
@@ -4878,85 +4401,71 @@ msgid "_Mask opacity:"
 msgstr "ਮਾਸਕ ਧੁੰਦਲਾਪਨ(_M):"
 
 #: ../app/actions/sample-points-actions.c:39
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
 msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਮੇਨੂ"
 
 #: ../app/actions/sample-points-actions.c:46
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
 msgstr "ਸੈਂਪਲ ਮਿਲਾਨ(_S)"
 
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
 msgstr "ਸਾਰੀਆਂ ਉਪਲੱਬਧ ਲੇਅਰਾਂ ਤੇ ਅਧਾਰ ਚੋਣ(_s)"
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
 msgctxt "select-action"
 msgid "Selection Editor Menu"
 msgstr "ਚੋਣ ਐਡੀਟਰ ਮੇਨੂ"
 
 #: ../app/actions/select-actions.c:47
-#, fuzzy
 msgctxt "select-action"
 msgid "_Select"
 msgstr "ਚੋਣ(_S)"
 
 #: ../app/actions/select-actions.c:50
-#, fuzzy
 msgctxt "select-action"
 msgid "_All"
-msgstr "ਸਭ ਜ਼ੂਮ(_A)"
+msgstr "ਸਭ(_A)"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgctxt "select-action"
 msgid "Select everything"
 msgstr "ਹਰੇਕ ਚੀਜ਼ ਚੁਣੋ"
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgctxt "select-action"
 msgid "_None"
-msgstr "ਕੋਈ ਨਹੀਂ"
+msgstr "ਕੋਈ ਨਹੀਂ(_N)"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgctxt "select-action"
 msgid "Dismiss the selection"
 msgstr "ਚੋਣ ਰੱਦ ਕਰੋ"
 
 #: ../app/actions/select-actions.c:62
-#, fuzzy
 msgctxt "select-action"
 msgid "_Invert"
 msgstr "ਉਲਟ(_I)"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgctxt "select-action"
 msgid "Invert the selection"
 msgstr "ਚੋਣ ਉਲਟ"
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgctxt "select-action"
 msgid "_Float"
 msgstr "ਫਲੋਟ(_F)"
 
 #: ../app/actions/select-actions.c:69
-#, fuzzy
 msgctxt "select-action"
 msgid "Create a floating selection"
 msgstr "ਇੱਕ ਤਰਦੀ ਚੋਣ ਬਣਾਓ"
 
 #: ../app/actions/select-actions.c:74
-#, fuzzy
 msgctxt "select-action"
 msgid "Fea_ther..."
 msgstr "ਖੰਭ(_t)..."
@@ -4968,7 +4477,6 @@ msgid "Blur the selection border so that it fades out smoothly"
 msgstr "ਚੋਣ ਬਾਰਡਰ ਬਲਰ ਕਰੋ, ਤਾਂ ਕਿ ਇਹ ਫੇਡ-ਆਉਟ ਸਮੂਥ ਹੋਵੇ"
 
 #: ../app/actions/select-actions.c:81
-#, fuzzy
 msgctxt "select-action"
 msgid "_Sharpen"
 msgstr "ਸ਼ਾਰਪਨ(_S)"
@@ -4980,31 +4488,26 @@ msgid "Remove fuzzyness from the selection"
 msgstr "ਚੋਣ 'ਚੋਂ ਧੁੰਦਲਾਪਨ ਹਟਾਓ"
 
 #: ../app/actions/select-actions.c:87
-#, fuzzy
 msgctxt "select-action"
 msgid "S_hrink..."
-msgstr "ਸਮੇਟੋ(_h)..."
+msgstr "ਸੁੰਘੜੋ(_h)..."
 
 #: ../app/actions/select-actions.c:88
-#, fuzzy
 msgctxt "select-action"
 msgid "Contract the selection"
 msgstr "ਚੋਣ ਲਈ ਕੰਨਟਰੈਕਟ"
 
 #: ../app/actions/select-actions.c:93
-#, fuzzy
 msgctxt "select-action"
 msgid "_Grow..."
 msgstr "ਉਭਾਰੋ(_G)..."
 
 #: ../app/actions/select-actions.c:94
-#, fuzzy
 msgctxt "select-action"
 msgid "Enlarge the selection"
 msgstr "ਚੋਣ ਵਧਾਓ"
 
 #: ../app/actions/select-actions.c:99
-#, fuzzy
 msgctxt "select-action"
 msgid "Bo_rder..."
 msgstr "ਬਾਰਡਰ(_r)..."
@@ -5016,7 +4519,6 @@ msgid "Replace the selection by its border"
 msgstr "ਚੋਣ ਨੂੰ ਇਸ ਦੇ ਬਾਰਡਰ ਨਾਲ ਬਦਲੋ"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgctxt "select-action"
 msgid "Save to _Channel"
 msgstr "ਚੈਨਲ ਉੱਤੇ ਸੰਭਾਲੋ(_C)"
@@ -5028,7 +4530,6 @@ msgid "Save the selection to a channel"
 msgstr "ਚੋਣ ਨੂੰ ਇੱਕ ਚੈਨਲ 'ਚ ਸੰਭਾਲੋ"
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection..."
 msgstr "ਚੋਣ ਝਟਕੋ(_S)..."
@@ -5040,7 +4541,6 @@ msgid "Paint along the selection outline"
 msgstr "ਚੋਣ ਆਉਟਲਾਈਨ ਨਾਲ ਪੇਂਟ ਕਰੋ"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection"
 msgstr "ਝਟਕਾ ਚੋਣ(_S)"
@@ -5108,13 +4608,11 @@ msgid "Stroke Selection"
 msgstr "ਝਟਕਾ ਚੋਣ"
 
 #: ../app/actions/templates-actions.c:41
-#, fuzzy
 msgctxt "templates-action"
 msgid "Templates Menu"
 msgstr "ਟੈਪਲੇਟ ਮੇਨੂ"
 
 #: ../app/actions/templates-actions.c:45
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Create Image from Template"
 msgstr "ਟੈਪਲੇਟ ਤੋਂ ਚਿੱਤਰ ਬਣਾਓ(_C)"
@@ -5126,49 +4624,41 @@ msgid "Create a new image from the selected template"
 msgstr "ਚੁਣੇ ਟੈਪਲੇਟ ਤੋਂ ਨਵਾਂ ਚਿੱਤਰ ਬਣਾਓ"
 
 #: ../app/actions/templates-actions.c:51
-#, fuzzy
 msgctxt "templates-action"
 msgid "_New Template..."
 msgstr "ਨਵਾਂ ਟੈਪਲੇਟ(_N)..."
 
 #: ../app/actions/templates-actions.c:52
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new template"
 msgstr "ਇੱਕ ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
 
 #: ../app/actions/templates-actions.c:57
-#, fuzzy
 msgctxt "templates-action"
 msgid "D_uplicate Template..."
 msgstr "ਡੁਪਲੀਕੇਟ ਟੈਪਲੇਟ(_u)..."
 
 #: ../app/actions/templates-actions.c:58
-#, fuzzy
 msgctxt "templates-action"
 msgid "Duplicate this template"
-msgstr "ਚੁਣੇ ਟੈਪਲੇਟ ਤੋਂ ਡੁਪਲੀਕੇਟ ਬਣਾਓ"
+msgstr "ਇਹ ਟੈਪਲੇਟ ਤੋਂ ਡੁਪਲੀਕੇਟ ਬਣਾਓ"
 
 #: ../app/actions/templates-actions.c:63
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Edit Template..."
 msgstr "ਟੈਪਲੇਟ ਸੋਧ(_E)..."
 
 #: ../app/actions/templates-actions.c:64
-#, fuzzy
 msgctxt "templates-action"
 msgid "Edit this template"
-msgstr "ਟੈਪਲੇਟ ਸੋਧ"
+msgstr "ਇਹ ਟੈਪਲੇਟ ਸੋਧੋ"
 
 #: ../app/actions/templates-actions.c:69
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Delete Template"
 msgstr "ਟੈਪਲੇਟ ਹਟਾਓ(_D)"
 
 #: ../app/actions/templates-actions.c:70
-#, fuzzy
 msgctxt "templates-action"
 msgid "Delete this template"
 msgstr "ਇਹ ਚਿੱਤਰ ਹਟਾਓ"
@@ -5184,7 +4674,7 @@ msgstr "ਇੱਕ ਨਵਾਂ ਟੈਪਲੇਟ ਬਣਾਓ"
 #: ../app/actions/templates-commands.c:174
 #: ../app/actions/templates-commands.c:177
 msgid "Edit Template"
-msgstr "ਟੈਪਲੇਟ ਸੋਧ"
+msgstr "ਟੈਪਲੇਟ ਸੋਧੋ"
 
 #: ../app/actions/templates-commands.c:212
 msgid "Delete Template"
@@ -5192,54 +4682,45 @@ msgstr "ਟੈਪਲੇਟ ਹਟਾਓ"
 
 #: ../app/actions/templates-commands.c:238
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "ਕੀ ਤੁਸੀਂ ਟੈਪਲੇਟ '%s' ਨੂੰ ਲਿਸਟ ਅਤੇ ਡਿਸਕ ਤੋਂ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ ?"
 
 #: ../app/actions/text-editor-actions.c:43
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Open"
 msgstr "ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Load text from file"
 msgstr "ਫਾਇਲ ਤੋਂ ਟੈਕਸਟ ਲੋਡ"
 
 #: ../app/actions/text-editor-actions.c:49
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear"
 msgstr "ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/actions/text-editor-actions.c:50
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear all text"
 msgstr "ਸਭ ਟੈਕਸਟ ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/actions/text-editor-actions.c:58
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "LTR"
 msgstr "LTR"
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From left to right"
 msgstr "ਖੱਬੇ ਤੋਂ ਸੱਜੇ"
 
 #: ../app/actions/text-editor-actions.c:64
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "RTL"
 msgstr "RTL"
 
 #: ../app/actions/text-editor-actions.c:65
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From right to left"
 msgstr "ਸੱਜੇ ਤੋਂ ਖੱਬੇ"
@@ -5265,64 +4746,54 @@ msgid "Could not open '%s' for reading: %s"
 msgstr " '%s' ਨੂੰ ਪੜ੍ਹਨ ਲਈ ਖੋਲ੍ਹਣਾ ਅਸਫਲ: %s"
 
 #: ../app/actions/text-tool-actions.c:49
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
-msgstr "ਟੈਕਸਟ ਟੂਲ(_x)"
+msgstr "ਟੈਕਸਟ ਟੂਲ ਮੇਨੂ"
 
 #: ../app/actions/text-tool-actions.c:53
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr "ਇੰਪੁੱਟ ਲੈਵਲ"
+msgstr "ਇੰਪੁੱਟ ਢੰਗ(_M)"
 
 #: ../app/actions/text-tool-actions.c:57
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cu_t"
 msgstr "ਕੱਟੋ(_t)"
 
 #: ../app/actions/text-tool-actions.c:62
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Copy"
 msgstr "ਕਾਪੀ ਕਰੋ(_C)"
 
 #: ../app/actions/text-tool-actions.c:67
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Paste"
 msgstr "ਚੇਪੋ(_P)"
 
 #: ../app/actions/text-tool-actions.c:72
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "ਮਾਰਗ ਹਟਾਓ(_D)"
+msgstr "ਹਟਾਓ(_D)"
 
 #: ../app/actions/text-tool-actions.c:77
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "ਡਿਸਪਲੇਅ ਖੋਲ੍ਹੋ(_O)..."
+msgstr "ਟੈਕਸਟ ਫਾਇਲ ਖੋਲ੍ਹੋ(_O)..."
 
 #: ../app/actions/text-tool-actions.c:82
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "ਸਾਫ਼ ਕਰੋ(_e)"
 
 #: ../app/actions/text-tool-actions.c:83
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Clear all text"
 msgstr "ਸਭ ਟੈਕਸਟ ਸਾਫ਼ ਕਰੋ"
 
 #: ../app/actions/text-tool-actions.c:88
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Path from Text"
-msgstr "ਟੈਕਸਟ ਤੋਂ ਪਾਥ"
+msgstr "ਟੈਕਸਟ ਤੋਂ ਪਾਥ(_P)"
 
 #: ../app/actions/text-tool-actions.c:90
 #, fuzzy
@@ -5331,10 +4802,9 @@ msgid "Create a path from the outlines of the current text"
 msgstr "ਇਹ ਟੈਕਸਟ ਲੇਅਰ ਤੋਂ ਇੱਕ ਮਾਰਗ ਬਣਾਓ"
 
 #: ../app/actions/text-tool-actions.c:95
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text _along Path"
-msgstr "ਮਾਰਗ ਨਾਲ ਟੈਕਸਟ"
+msgstr "ਮਾਰਗ ਨਾਲ ਟੈਕਸਟ(_a)"
 
 #: ../app/actions/text-tool-actions.c:97
 #, fuzzy
@@ -5343,28 +4813,24 @@ msgid "Bend the text along the currently active path"
 msgstr "ਇਹ ਲੇਅਰ ਦੇ ਟੈਕਸਟ ਨੂੰ ਮੌਜੂਦਾ ਪਾਥ ਨਾਲ ਸਮੇਟੋ"
 
 #: ../app/actions/text-tool-actions.c:105
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From left to right"
 msgstr "ਖੱਬੇ ਤੋਂ ਸੱਜੇ"
 
 #: ../app/actions/text-tool-actions.c:110
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From right to left"
 msgstr "ਸੱਜੇ ਤੋਂ ਖੱਬੇ"
 
 #: ../app/actions/tool-options-actions.c:55
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
 msgstr "ਟੂਲ ਚੋਣ ਮੇਨੂ"
 
 #: ../app/actions/tool-options-actions.c:59
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Save Options To"
-msgstr "ਚੋਣਾਂ ਇੰਞ ਸੰਭਾਲੋ(_S)"
+msgstr "ਚੋਣਾਂ ਇੰਝ ਸੰਭਾਲੋ(_S)"
 
 #: ../app/actions/tool-options-actions.c:63
 #, fuzzy
@@ -5385,31 +4851,26 @@ msgid "_Delete Saved Options"
 msgstr "ਸੰਭਾਲੀ ਚੋਣਾਂ ਹਟਾਓ(_D)"
 
 #: ../app/actions/tool-options-actions.c:75
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_New Entry..."
 msgstr "ਨਵੀਂ ਐਂਟਰੀ(_N)..."
 
 #: ../app/actions/tool-options-actions.c:80
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
 msgstr "ਟੂਲ ਚੋਣ ਮੁੜ-ਸੈੱਟ(_e)"
 
 #: ../app/actions/tool-options-actions.c:81
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset to default values"
 msgstr "ਡਿਫਾਲਟ ਮੁੱਲਾਂ ਲਈ ਮੁੜ-ਸੈੱਟ"
 
 #: ../app/actions/tool-options-actions.c:86
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
 msgstr "ਸਭ ਟੂਲ ਚੋਣਾਂ ਮੁੜ-ਸੈੱਟ(_a)"
 
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
 msgstr "ਸਭ ਟੂਲ ਚੋਣ ਮੁੜ-ਸੈੱਟ"
@@ -5534,7 +4995,6 @@ msgid "Edit Active Tool Preset"
 msgstr "ਐਕਟਿਵ ਪੈਲਅਟ ਸੋਧ"
 
 #: ../app/actions/tools-actions.c:45
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Tools"
 msgstr "ਟੂਲ(_T)"
@@ -5546,25 +5006,21 @@ msgid "_Selection Tools"
 msgstr "ਚੋਣ ਟੂਲ(_S)"
 
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Paint Tools"
 msgstr "ਪੇਂਟ ਟੂਲ(_P)"
 
 #: ../app/actions/tools-actions.c:48
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Transform Tools"
 msgstr "ਟਰਾਂਸਫਰਮ ਟੂਲ(_T)"
 
 #: ../app/actions/tools-actions.c:49
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Color Tools"
 msgstr "ਰੰਗ ਟੂਲ(_C)"
 
 #: ../app/actions/tools-actions.c:55
-#, fuzzy
 msgctxt "tools-action"
 msgid "_By Color"
 msgstr "ਰੰਗ ਰਾਹੀਂ(_B)"
@@ -5588,13 +5044,11 @@ msgid "Rotate by an arbitrary angle"
 msgstr "ਆਪਹੁਦਰੇ ਕੋਣ ਨਾਲ ਘੁੰਮਾਓ"
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paths Menu"
 msgstr "ਮਾਰਗ ਮੇਨੂ"
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path _Tool"
 msgstr "ਮਾਰਗ ਟੂਲ(_T)"
@@ -5612,7 +5066,6 @@ msgid "Edit path attributes"
 msgstr "ਮਾਰਗ ਗੁਣ ਸੋਧ"
 
 #: ../app/actions/vectors-actions.c:59
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path..."
 msgstr "ਨਵਾਂ ਮਾਰਗ(_N)..."
@@ -5636,7 +5089,6 @@ msgid "Create a new path with last used values"
 msgstr "ਆਖਰੀ ਸੰਭਾਲੇ ਮੁੱਲਾਂ ਨਾਲ ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਬਣਾਓ"
 
 #: ../app/actions/vectors-actions.c:71
-#, fuzzy
 msgctxt "vectors-action"
 msgid "D_uplicate Path"
 msgstr "ਡੁਪਲੀਕੇਟ ਮਾਰਗ(_u)"
@@ -5648,16 +5100,14 @@ msgid "Duplicate this path"
 msgstr "ਡੁਪਲੀਕੇਟ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:77
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Delete Path"
 msgstr "ਮਾਰਗ ਹਟਾਓ(_D)"
 
 #: ../app/actions/vectors-actions.c:78
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "ਮਾਰਗ ਹਟਾਓ"
+msgstr "ਇਹ ਮਾਰਗ ਹਟਾਓ"
 
 #: ../app/actions/vectors-actions.c:83
 #, fuzzy
@@ -5738,37 +5188,31 @@ msgid "Paint along the path with last values"
 msgstr "ਆਖਰੀ ਮੁੱਲਾਂ ਨਾਲ ਮਾਰਗ ਪੇਂਟ ਕਰੋ"
 
 #: ../app/actions/vectors-actions.c:124
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Co_py Path"
 msgstr "ਮਾਰਗ ਕਾਪੀ ਕਰੋ(_p)"
 
 #: ../app/actions/vectors-actions.c:129
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paste Pat_h"
 msgstr "ਮਾਰਗ ਚੇਪੋ(_h)"
 
 #: ../app/actions/vectors-actions.c:134
-#, fuzzy
 msgctxt "vectors-action"
 msgid "E_xport Path..."
 msgstr "ਮਾਰਗ ਐਕਸਪੋਰਟ ਕਰੋ(_x)..."
 
 #: ../app/actions/vectors-actions.c:139
-#, fuzzy
 msgctxt "vectors-action"
 msgid "I_mport Path..."
 msgstr "ਮਾਰਗ ਇੰਪੋਰਟ ਕਰੋ(_m)..."
 
 #: ../app/actions/vectors-actions.c:147
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Visible"
 msgstr "ਦਿੱਖ(_V)"
 
 #: ../app/actions/vectors-actions.c:153
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Linked"
 msgstr "ਲਿੰਕ ਕੀਤਾ(_L)"
@@ -5793,7 +5237,6 @@ msgid "Path to selection"
 msgstr "ਚੋਣ ਲਈ ਮਾਰਗ"
 
 #: ../app/actions/vectors-actions.c:174
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Fr_om Path"
 msgstr "ਇਸ ਤੋਂ ਮਾਰਗ(_o)"
@@ -5805,7 +5248,6 @@ msgid "Replace selection with path"
 msgstr "ਇਹ ਚੈਨਲ ਨਲ ਚੋਣ ਬਦਲੋ"
 
 #: ../app/actions/vectors-actions.c:180
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_Add to Selection"
 msgstr "ਚੋਣ ਵਿੱਚ ਸ਼ਾਮਲ(_A)"
@@ -5853,7 +5295,6 @@ msgid "Selection to path"
 msgstr "ਮਾਰਗ ਲਈ ਚੋਣ"
 
 #: ../app/actions/vectors-actions.c:207
-#, fuzzy
 msgctxt "vectors-action"
 msgid "To _Path"
 msgstr "ਵੱਲ ਮਾਰਗ(_P)"
@@ -5865,7 +5306,6 @@ msgid "Selection to Path (_Advanced)"
 msgstr "ਮਾਰਗ ਲਈ ਚੋਣ (ਤਕਨੀਕੀ)(_A)"
 
 #: ../app/actions/vectors-actions.c:214
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "ਤਕਨੀਕੀ ਚੋਣ"
@@ -5897,31 +5337,26 @@ msgid "Stroke Path"
 msgstr "ਮਾਰਗ ਸਟਰੋਕ"
 
 #: ../app/actions/view-actions.c:69
-#, fuzzy
 msgctxt "view-action"
 msgid "_View"
 msgstr "ਵੇਖੋ(_V)"
 
 #: ../app/actions/view-actions.c:70
-#, fuzzy
 msgctxt "view-action"
 msgid "_Zoom"
 msgstr "ਜ਼ੂਮ(_Z)"
 
 #: ../app/actions/view-actions.c:71
-#, fuzzy
 msgctxt "view-action"
 msgid "_Padding Color"
 msgstr "ਪੈਡਿੰਗ ਰੰਗ(_P)"
 
 #: ../app/actions/view-actions.c:73
-#, fuzzy
 msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "ਸਕਰੀਨ ਉੱਤੇ ਭੇਜੋ"
 
 #: ../app/actions/view-actions.c:77
-#, fuzzy
 msgctxt "view-action"
 msgid "_New View"
 msgstr "ਨਵਾਂ ਵਿਊ(_N)"
@@ -5933,13 +5368,11 @@ msgid "Create another view on this image"
 msgstr "ਇਸ ਚਿੱਤਰ ਉੱਤੇ ਹੋਰ ਝਲਕ ਬਣਾਓ"
 
 #: ../app/actions/view-actions.c:83
-#, fuzzy
 msgctxt "view-action"
 msgid "_Close"
 msgstr "ਬੰਦ ਕਰੋ(_C)"
 
 #: ../app/actions/view-actions.c:84
-#, fuzzy
 msgctxt "view-action"
 msgid "Close this image window"
 msgstr "ਇਹ ਚਿੱਤਰ ਵਿੰਡੋ ਬੰਦ ਕਰੋ"
@@ -5957,43 +5390,36 @@ msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "ਜ਼ੂਮ ਰੇਸ਼ੋ ਨੂੰ ਇੰਝ ਅਡਜੱਸਟ ਕਰੋ ਕਿ ਚਿੱਤਰ ਪੂਰਾ ਵੇਖਾਈ ਦੇਵੇ"
 
 #: ../app/actions/view-actions.c:95
-#, fuzzy
 msgctxt "view-action"
 msgid "Fi_ll Window"
-msgstr "ਵਿੰਡੋ ਵਿੱਚ ਭਰੋ(_l)"
+msgstr "ਵਿੰਡੋ ਭਰੋ(_l)"
 
 #: ../app/actions/view-actions.c:96
-#, fuzzy
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "ਜ਼ੂਮ ਰੇਸ਼ੋ ਅਡਜੱਸਟ ਕਰੋ ਤਾਂ ਕਿ ਵਿੰਡੋ ਪੂਰੀ ਤਰ੍ਹਾਂ ਵਰਤੀ ਜਾਵੇ"
 
 #: ../app/actions/view-actions.c:101
-#, fuzzy
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "ਜ਼ੂਮ ਰੀਵਰਟ(_v)"
 
 #: ../app/actions/view-actions.c:102
-#, fuzzy
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "ਪਿਛਲਾ ਜ਼ੂਮਲ ਲੈਵਲ ਰੀ-ਸਟੋਰ ਕਰੋ"
 
 #: ../app/actions/view-actions.c:107
-#, fuzzy
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "ਨੇਵੀਗੇਸ਼ਨ ਵਿੰਡੋ(_v)"
 
 #: ../app/actions/view-actions.c:108
-#, fuzzy
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "ਇਹ ਚਿੱਤਰ ਲਈ ਸੰਖੇਪ ਵਿੰਡੋ ਵੇਖਾਓ"
 
 #: ../app/actions/view-actions.c:113
-#, fuzzy
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "ਵੇਖਣ ਫਿਲਟਰ(_F)..."
@@ -6005,7 +5431,6 @@ msgid "Configure filters applied to this view"
 msgstr "ਇਹ ਝਲਕ ਵਾਸਤੇ ਲਾਗੂ ਕਰਨ ਲਈ ਫਿਲਟਰ ਸੰਰਚਨਾ"
 
 #: ../app/actions/view-actions.c:119
-#, fuzzy
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "ਸਮੇਟਣਾ ਸੁੰਘੜੋ(_W)"
@@ -6017,34 +5442,29 @@ msgid "Reduce the image window to the size of the image display"
 msgstr "ਚਿੱਤਰ ਵਿੰਡੋ ਦਾ ਆਕਾਰ ਘਟਾਓ ਤਾਂ ਕਿ ਚਿੱਤਰ ਦਾ ਆਕਾਰ ਵੇਖਾਇਆ ਜਾਵੇ"
 
 #: ../app/actions/view-actions.c:125
-#, fuzzy
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "ਡਿਸਪਲੇਅ ਖੋਲ੍ਹੋ(_O)..."
 
 #: ../app/actions/view-actions.c:126
-#, fuzzy
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "ਹੋਰ ਡਿਸਪਲੇਅ ਨਾਲ ਕੁਨੈਕਟ ਕਰੋ"
 
 #: ../app/actions/view-actions.c:134
-#, fuzzy
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "ਡਾਟ ਲਈ ਡਾਟ(_D)"
 
 #: ../app/actions/view-actions.c:135
-#, fuzzy
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "ਸਕਰੀਨ ਉੱਤੇ ਇੱਕ ਪਿਕਸਲ ਇੱਕ ਚਿੱਤਰ ਪਿਕਸਲ ਨੂੰ ਵੇਖਾਉਦਾ ਹੈ।"
 
 #: ../app/actions/view-actions.c:141
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Selection"
-msgstr "ਚੋਣ ਵੇਖਾਓ(_S)"
+msgstr "ਚੋਣ ਵੇਖੋ(_S)"
 
 #: ../app/actions/view-actions.c:142
 #, fuzzy
@@ -6077,22 +5497,19 @@ msgid "Display the image's guides"
 msgstr "ਚਿੱਤਰ ਗਾਈਡ ਵੇਖੋ"
 
 #: ../app/actions/view-actions.c:162
-#, fuzzy
 msgctxt "view-action"
 msgid "S_how Grid"
-msgstr "ਗਰਿੱਡ ਵੇਖਾਓ(_h)"
+msgstr "ਗਰਿੱਡ ਵੇਖੋ(_h)"
 
 #: ../app/actions/view-actions.c:163
-#, fuzzy
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "ਚਿੱਤਰ ਦੇ ਗਰਿੱਡ ਵੇਖਾਓ"
 
 #: ../app/actions/view-actions.c:169
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Sample Points"
-msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਵੇਖਾਓ"
+msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਵੇਖੋ"
 
 #: ../app/actions/view-actions.c:170
 #, fuzzy
@@ -6149,235 +5566,196 @@ msgid "Tool operations snap to the active path"
 msgstr "ਟੂਲ ਸਨੈਪ ਤੋਂ ਐਕਟਿਵ ਪਾਥ ਓਪਰੇਟ ਕਰਦਾ ਹੈ।"
 
 #: ../app/actions/view-actions.c:204
-#, fuzzy
 msgctxt "view-action"
 msgid "Show _Menubar"
-msgstr "ਮੇਨੂ-ਬਾਰ ਵੇਖਾਓ(_M)"
+msgstr "ਮੇਨੂ-ਬਾਰ ਵੇਖੋ(_M)"
 
 #: ../app/actions/view-actions.c:205
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "ਇਹ ਵਿੰਡੋ ਦੀ ਮੇਨੂ-ਬਾਰ ਵੇਖੋ"
 
 #: ../app/actions/view-actions.c:211
-#, fuzzy
 msgctxt "view-action"
 msgid "Show R_ulers"
-msgstr "ਰੂਲਰ ਵੇਖਾਓ(_u)"
+msgstr "ਰੂਲਰ ਵੇਖੋ(_u)"
 
 #: ../app/actions/view-actions.c:212
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's rulers"
-msgstr "ਇਹ ਵਿੰਡੋ ਦੇ ਰੂਲਰ ਵੇਖਾਓ"
+msgstr "ਇਹ ਵਿੰਡੋ ਦੇ ਰੂਲਰ ਵੇਖੋ"
 
 #: ../app/actions/view-actions.c:218
-#, fuzzy
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr "ਸਕਰੋਲ ਪੱਟੀ ਵੇਖਾਓ(_b)"
+msgstr "ਸਕਰੋਲ ਪੱਟੀ ਵੇਖੋ(_b)"
 
 #: ../app/actions/view-actions.c:219
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "ਇਹ ਵਿੰਡੋ ਦੀ ਸਕਰੋਲਬਾਰ ਵੇਖੋ"
 
 #: ../app/actions/view-actions.c:225
-#, fuzzy
 msgctxt "view-action"
 msgid "Show S_tatusbar"
-msgstr "ਹਾਲਤ-ਪੱਟੀ ਵੇਖਾਓ(_t)"
+msgstr "ਹਾਲਤ-ਪੱਟੀ ਵੇਖੋ(_t)"
 
 #: ../app/actions/view-actions.c:226
-#, fuzzy
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "ਇਹ ਵਿੰਡੋ ਦੀ ਹਾਲਤ-ਬਾਰ ਵੇਖੋ"
 
 #: ../app/actions/view-actions.c:232
-#, fuzzy
 msgctxt "view-action"
 msgid "Fullscr_een"
-msgstr "ਪੂਰੀ ਸਕਰੀਨ ਉੱਤੇ(_e)"
+msgstr "ਪੂਰੀ ਸਕਰੀਨ(_e)"
 
 #: ../app/actions/view-actions.c:233
-#, fuzzy
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ ਝਲਕ ਬਦਲੋ"
 
 #: ../app/actions/view-actions.c:264
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "ਜ਼ੂਮ ਆਉਟ(_O)"
 
 #: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom out"
 msgstr "ਜ਼ੂਮ ਆਉਟ"
 
 #: ../app/actions/view-actions.c:270
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "ਜ਼ੂਮ ਇਨ(_I)"
 
 #: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
-#, fuzzy
 msgctxt "view-action"
 msgid "Zoom in"
 msgstr "ਜ਼ੂਮ ਇਨ"
 
 #: ../app/actions/view-actions.c:276
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "ਜ਼ੂਮ ਆਉਟ"
 
 #: ../app/actions/view-actions.c:282
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "ਜ਼ੂਮ ਇਨ"
 
 #: ../app/actions/view-actions.c:301
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
 #: ../app/actions/view-actions.c:302
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "ਜ਼ੂਮ 16:1"
 
 #: ../app/actions/view-actions.c:307
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
 #: ../app/actions/view-actions.c:308
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "ਜ਼ੂਮ 8:1"
 
 #: ../app/actions/view-actions.c:313
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
 #: ../app/actions/view-actions.c:314
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "ਜ਼ੂਮ 4:1"
 
 #: ../app/actions/view-actions.c:319
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
 #: ../app/actions/view-actions.c:320
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "ਜ਼ੂਮ 2:1"
 
 #: ../app/actions/view-actions.c:325
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
 #: ../app/actions/view-actions.c:326
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "ਜ਼ੂਮ 1:1"
 
 #: ../app/actions/view-actions.c:331
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
 #: ../app/actions/view-actions.c:332
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "ਜ਼ੂਮ 1:2"
 
 #: ../app/actions/view-actions.c:337
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
 #: ../app/actions/view-actions.c:338
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "ਜ਼ੂਮ 1:4"
 
 #: ../app/actions/view-actions.c:343
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
 #: ../app/actions/view-actions.c:344
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "ਜ਼ੂਮ 1:8"
 
 #: ../app/actions/view-actions.c:349
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
 #: ../app/actions/view-actions.c:350
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "ਜ਼ੂਮ 1:16"
 
 #: ../app/actions/view-actions.c:355
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "ਹੋਰ(_r)..."
 
 #: ../app/actions/view-actions.c:356
-#, fuzzy
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "ਇੱਕ ਕਸਟਮ ਜ਼ੂਮ ਫੈਕਟਰ ਸੈੱਟ ਕਰੋ"
 
 #: ../app/actions/view-actions.c:364
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "ਥੀਮ ਤੋਂ(_T)"
 
 #: ../app/actions/view-actions.c:365
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "ਮੌਜੂਦਾ ਥੀਮ ਦਾ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਵਰਤੋਂ"
 
 #: ../app/actions/view-actions.c:370
-#, fuzzy
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "ਹਲਕਾ ਚੈੱਕ ਰੰਗ(_L)"
@@ -6462,247 +5840,208 @@ msgid "Move this window to screen %s"
 msgstr "ਇਹ ਵਿੰਡੋ %s ਸਕਰੀਨ ਉੱਤੇ ਭੇਜੋ"
 
 #: ../app/actions/windows-actions.c:85
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Windows"
 msgstr "ਵਿੰਡੋ(_W)"
 
 #: ../app/actions/windows-actions.c:87
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Recently Closed Docks"
 msgstr "ਤਾਜ਼ਾ ਬੰਦ ਕੀਤੇ ਡੌਕ(_R)"
 
 #: ../app/actions/windows-actions.c:89
-#, fuzzy
 msgctxt "windows-action"
 msgid "_Dockable Dialogs"
 msgstr "ਡੋਕ-ਯੋਗ ਡਾਈਲਾਗ(_D)"
 
 #: ../app/actions/windows-actions.c:95
-#, fuzzy
 msgctxt "windows-action"
 msgid "Hide Docks"
-msgstr "ਡੋਕ ਬੰਦ ਕਰੋ"
+msgstr "ਡੋਕ ਓਹਲੇ"
 
 #: ../app/actions/windows-actions.c:103
 msgctxt "windows-action"
-msgid ""
-"When enabled docks and other dialogs are hidden, leaving only image windows."
-msgstr ""
+msgid "When enabled docks and other dialogs are hidden, leaving only image windows."
+msgstr "ਜਦੋਂ ਚਾਲੂ ਕੀਤਾ ਜਾਵੇਗਾ ਤਾਂ ਡੌਕ ਤੇ ਹੋਰ ਡਾਈਲਾਗ ਲੁਕਵੇਂ ਹੋਣਗੇ, ਕੇਵਲ ਚਿੱਤਰ ਵਿੰਡੋ ਹੀ ਵੇਖਾਈ ਦੇਵੇਗੀ।"
 
 #: ../app/actions/windows-actions.c:109
 msgctxt "windows-action"
 msgid "Single-Window Mode"
-msgstr ""
+msgstr "ਇੱਕਲੀ-ਵਿੰਡੋ ਮੋਡ"
 
 #: ../app/actions/windows-actions.c:110
 msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
 "implemented!"
-msgstr ""
+msgstr "ਜਦੋਂ ਚਾਲੂ ਕੀਤਾ ਜਾਵੇਗਾ ਤਾਂ ਜੈਮਪ ਇੱਕ ਵਿੰਡੋ ਵੇਖਾਏਗਾ। ਪੂਰੀ ਤਰ੍ਹਾਂ ਸਥਾਪਤ ਹੋਣ ਤੋਂ ਕੋਹਾਂ ਦੂਰ!"
 
 #: ../app/base/base-enums.c:23
-#, fuzzy
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "ਮੁਲਾਇਮ"
 
 #: ../app/base/base-enums.c:24
-#, fuzzy
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "ਹੱਥ ਨਾਲ"
 
 #: ../app/base/base-enums.c:56
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
 #: ../app/base/base-enums.c:57
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "ਲਾਲ"
 
 #: ../app/base/base-enums.c:58
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "ਹਰਾ"
 
 #: ../app/base/base-enums.c:59
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "ਨੀਲਾ"
 
 #: ../app/base/base-enums.c:60
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "ਐਲਫਾ"
 
 #: ../app/base/base-enums.c:61
-#, fuzzy
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
 #: ../app/base/base-enums.c:113
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "ਸਧਾਰਨ"
 
 #: ../app/base/base-enums.c:114
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "ਘੋਲ੍ਹੋ"
 
 #: ../app/base/base-enums.c:115
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "ਪਿੱਛੇ"
 
 #: ../app/base/base-enums.c:116
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr "ਗੁਣਾ"
 
 #: ../app/base/base-enums.c:117
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "ਸਕਰੀਨ"
 
 #: ../app/base/base-enums.c:118
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Overlay"
 msgstr "ਓਵਰ-ਲੇ"
 
 #: ../app/base/base-enums.c:119
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "ਅੰਤਰ"
 
 #: ../app/base/base-enums.c:120
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Addition"
 msgstr "ਜੋੜ੍ਹੋ"
 
 #: ../app/base/base-enums.c:121
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Subtract"
 msgstr "ਘਟਾਓ"
 
 #: ../app/base/base-enums.c:122
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Darken only"
 msgstr "ਸਿਰਫ਼ ਗੂੜ੍ਹੇ"
 
 #: ../app/base/base-enums.c:123
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
 msgstr "ਸਿਰਫ਼ ਫਿੱਕੇ"
 
 #: ../app/base/base-enums.c:124
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hue"
 msgstr "ਆਭਾ"
 
 #: ../app/base/base-enums.c:125
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Saturation"
 msgstr "ਸੰਤ੍ਰਿਪਤੀ"
 
 #: ../app/base/base-enums.c:126
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color"
 msgstr "ਰੰਗ"
 
 #: ../app/base/base-enums.c:127
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
 #: ../app/base/base-enums.c:128
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "ਵੰਡੋ"
 
 #: ../app/base/base-enums.c:129
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Dodge"
 msgstr "ਡੋਡਜੇ"
 
 #: ../app/base/base-enums.c:130
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Burn"
 msgstr "ਬਰਨ"
 
 #: ../app/base/base-enums.c:131
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr "ਹਾਰਡ ਰੋਸ਼ਨੀ"
 
 #: ../app/base/base-enums.c:132
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Soft light"
 msgstr "ਸਾਫਟ ਰੋਸ਼ਨੀ"
 
 #: ../app/base/base-enums.c:133
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
 msgstr "ਲੱਕੜ ਦੀਆਂ ਧਾਰੀਆਂ ਖੋਲ੍ਹੋ"
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
 msgstr "ਲੱਕੜ ਦੀਆਂ ਧਾਰੀਆਂ ਵਿਲੀਨ"
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr "ਰੰਗ ਮੇਟਾਓ"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "ਮੇਟਾਓ"
 
 #: ../app/base/base-enums.c:137
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "ਬਦਲੋ"
 
 #: ../app/base/base-enums.c:138
-#, fuzzy
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
 msgstr "ਐਂਟੀ ਹਟਾਉਣ"
@@ -6724,61 +6063,51 @@ msgid "Failed to resize swap file: %s"
 msgstr "ਸਵੈਪ ਫਾਇਲ ਮੁੜ-ਆਕਾਰ ਵਾਸਤੇ ਫੇਲ੍ਹ: %s"
 
 #: ../app/config/config-enums.c:24
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon"
 msgstr "ਟੂਲ ਆਈਕਾਨ"
 
 #: ../app/config/config-enums.c:25
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Tool icon with crosshair"
 msgstr "ਕਰਾਸ-ਹੇਅਰ ਨਾਲ ਟੂਲ ਆਈਕਾਨ"
 
 #: ../app/config/config-enums.c:26
-#, fuzzy
 msgctxt "cursor-mode"
 msgid "Crosshair only"
 msgstr "ਕਰਾਸ-ਹੇਅਰ ਹੀ"
 
 #: ../app/config/config-enums.c:56
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "From theme"
 msgstr "ਥੀਮ ਤੋਂ"
 
 #: ../app/config/config-enums.c:57
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Light check color"
 msgstr "ਫਿੱਕੇ ਚੈੱਕ ਰੰਗ"
 
 #: ../app/config/config-enums.c:58
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Dark check color"
 msgstr "ਗੂੜ੍ਹੇ ਚੈੱਕ ਰੰਗ"
 
 #: ../app/config/config-enums.c:59
-#, fuzzy
 msgctxt "canvas-padding-mode"
 msgid "Custom color"
 msgstr "ਕਸਟਮ ਰੰਗ"
 
 #: ../app/config/config-enums.c:88
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "No action"
 msgstr "ਕੋਈ ਕਾਰਵਾਈ ਨਹੀਂ"
 
 #: ../app/config/config-enums.c:89
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Pan view"
 msgstr "ਪੈਨ ਝਲਕ"
 
 #: ../app/config/config-enums.c:90
-#, fuzzy
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
 msgstr "ਮੂਵ ਟੂਲ ਲਈ ਸਵਿੱਚ ਕਰੋ"
@@ -6786,52 +6115,44 @@ msgstr "ਮੂਵ ਟੂਲ ਲਈ ਸਵਿੱਚ ਕਰੋ"
 #: ../app/config/config-enums.c:118
 msgctxt "zoom-quality"
 msgid "Low"
-msgstr ""
+msgstr "ਘੱਟ"
 
 #: ../app/config/config-enums.c:119
-#, fuzzy
 msgctxt "zoom-quality"
 msgid "High"
-msgstr "ਹਾਈ-ਲਾਈਟ"
+msgstr "ਉੱਚ"
 
 #: ../app/config/config-enums.c:147
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "GIMP help browser"
 msgstr "ਜੈਮਪ ਮੱਦਦ ਬਰਾਊਜ਼ਰ"
 
 #: ../app/config/config-enums.c:148
-#, fuzzy
 msgctxt "help-browser-type"
 msgid "Web browser"
 msgstr "ਵੈਬ ਬਰਾਊਜ਼ਰ"
 
 #: ../app/config/config-enums.c:177
-#, fuzzy
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "ਸਧਾਰਨ ਵਿੰਡੋ"
 
 #: ../app/config/config-enums.c:178
-#, fuzzy
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "ਸਹੂਲਤ ਵਿੰਡੋ"
 
 #: ../app/config/config-enums.c:179
-#, fuzzy
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "ਉੱਤੇ ਰੱਖੋ"
 
 #: ../app/config/config-enums.c:207
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Black & white"
 msgstr "ਕਾਲਾ ਤੇ ਚਿੱਟਾ"
 
 #: ../app/config/config-enums.c:208
-#, fuzzy
 msgctxt "cursor-format"
 msgid "Fancy"
 msgstr "ਫੈਂਸੀ"
@@ -6985,17 +6306,14 @@ msgstr "ਚਿੱਤਰ ਵਿੰਡੋ ਟਾਇਟਲ ਵਿੱਚ ਵੇਖ�
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr ""
-"ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਤਾਂ, ਫਾਇਲ ਖੋਲ੍ਹਣ ਮਗਰੋਂ ਪੂਰਾ ਚਿੱਤਰ ਖੁਲੇਗਾ, ਨਹੀ ਤਾਂ ਇਹ 1:1 ਅਨੁਪਾਤ ਵਿੱਚ ਖੁੱਲੇਗਾ ।"
+msgstr "ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਤਾਂ, ਫਾਇਲ ਖੋਲ੍ਹਣ ਮਗਰੋਂ ਪੂਰਾ ਚਿੱਤਰ ਖੁਲੇਗਾ, ਨਹੀ ਤਾਂ ਇਹ 1:1 ਅਨੁਪਾਤ ਵਿੱਚ ਖੁੱਲੇਗਾ ।"
 
 #: ../app/config/gimprc-blurbs.h:201
-msgid ""
-"Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr "ਇੱਕ ਪ੍ਰਾਈਵੇਟ ਰੰਗ-ਮੈਪ ਇੰਸਟਾਲ ਕਰੋ, ਜੋ ਕਿ 8-ਬਿੱਟ (256 ਰੰਗ) ਦਿੱਖ ਲਈ ਬਹੁਤ ਜ਼ਰੂਰੀ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:204
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr "ਸਕੇਲਿੰਗ ਅਤੇ ਹੋਰ ਟਰਾਂਸਫਰਮੇਸ਼ਨ ਲਈ ਵਰਤਣ ਵਾਸਤੇ ਇੰਟਰਪੋਲਟੇਸ਼ਣ ਦਾ ਲੈਵਲ ਸੈੱਟ ਕਰੋ।"
 
 #: ../app/config/gimprc-blurbs.h:211
@@ -7027,8 +6345,7 @@ msgstr ""
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for GIMP."
-msgstr ""
-"ਆਮ ਤੌਰ ਉੱਤੇ 8-ਬਿੱਟ ਡਿਸਪਲੇਅ ਬਾਰੇ ਹੀ ਹੈ, ਇਹ ਜੈਮਪ ਲਈ ਸਿਸਟਮ ਰੰਗ ਲਈ ਘੱਟੋ-ਘੱਟ ਨੰਬਰ ਸੈੱਟ ਕਰਦਾ ਹੈ।"
+msgstr "ਆਮ ਤੌਰ ਉੱਤੇ 8-ਬਿੱਟ ਡਿਸਪਲੇਅ ਬਾਰੇ ਹੀ ਹੈ, ਇਹ ਜੈਮਪ ਲਈ ਸਿਸਟਮ ਰੰਗ ਲਈ ਘੱਟੋ-ਘੱਟ ਨੰਬਰ ਸੈੱਟ ਕਰਦਾ ਹੈ।"
 
 #: ../app/config/gimprc-blurbs.h:235
 msgid ""
@@ -7113,8 +6430,7 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "ਜੈਮਪ ਨੂੰ ਆਪਣੇ ਅਖੀਰੀ ਸੰਭਾਲੇ ਸ਼ੈਸ਼ਨ ਨੂੰ ਸ਼ੁਰੂ ਵੇਲੇ ਮੁੜ-ਸਟੋਰ ਕਰਨ ਦੀ ਆਗਿਆ ਦਿਉ।"
 
 #: ../app/config/gimprc-blurbs.h:302
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "ਜੈਮਪ ਸ਼ੈਸ਼ਨ ਦੌਰਾਨ ਮੌਜੂਦਾ ਟੂਲ, ਪੈਟਰਨ, ਰੰਗ ਅਤੇ ਬੁਰਸ਼ ਵਗੈਰਾ ਨੂੰ ਯਾਦ ਰੱਖੋ।"
 
 #: ../app/config/gimprc-blurbs.h:306
@@ -7230,7 +6546,7 @@ msgstr "ਜਦੋਂ ਇੱਕ ਆਈਟਮ ਦੇ ਉੱਤੇ ਪੁਆਇੰ�
 
 #: ../app/config/gimprc-blurbs.h:371
 msgid "Use GIMP in a single-window mode."
-msgstr ""
+msgstr "ਜੈਮਪ ਨੂੰ ਇੱਕਲੀ ਵਿੰਡੋ 'ਚ ਵਰਤੋਂ।"
 
 #: ../app/config/gimprc-blurbs.h:374
 msgid "Hide docks and other windows, leaving only image windows."
@@ -7372,25 +6688,21 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "ਟੋਕਨ %s ਦਾ ਮੁੱਲ ਠੀਕ UTF-8 ਲਾਈਨ ਨਹੀਂ ਹੈ।"
 
 #: ../app/core/core-enums.c:54
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
 #: ../app/core/core-enums.c:55
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
 msgstr "ਫਲਾਉਡ-ਸਟੀਨਬਰਗ (ਸਧਾਰਨ)"
 
 #: ../app/core/core-enums.c:56
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "ਫਲਾਉਡ-ਸਟੀਨਬਰਗ (ਘੱਟਦੀ ਰੰਗ ਬਲੀਡਿੰਗ)"
 
 #: ../app/core/core-enums.c:57
-#, fuzzy
 msgctxt "convert-dither-type"
 msgid "Positioned"
 msgstr "ਸਥਿਤੀ"
@@ -7402,343 +6714,286 @@ msgid "Generate optimum palette"
 msgstr "ਅਨੁਕੂਲ ਪੈਲਅਟ ਬਣਾਓ"
 
 #: ../app/core/core-enums.c:88
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "ਵੈਬ-ਅਨੁਕੂਲ ਪੈਲਅਟ ਵਰਤੋਂ"
 
 #: ../app/core/core-enums.c:89
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "ਕਾਲਾ ਚਿੱਟਾ (1-ਬਿੱਟ) ਪੈਲਅਟ ਵਰਤੋਂ"
 
 #: ../app/core/core-enums.c:90
-#, fuzzy
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "ਕਸਟਮ ਪੈਲਅਟ ਵਰਤੋਂ"
 
 #: ../app/core/core-enums.c:216
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "ਪਹਿਲੀ ਆਈਟਮ"
 
 #: ../app/core/core-enums.c:217
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "ਚਿੱਤਰ"
 
 #: ../app/core/core-enums.c:218
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "ਚੋਣ"
 
 #: ../app/core/core-enums.c:219
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "ਐਕਟਿਵ ਲੇਅਰ"
 
 #: ../app/core/core-enums.c:220
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "ਐਕਟਿਵ ਚੈਨਲ"
 
 #: ../app/core/core-enums.c:221
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "ਐਕਟਿਵ ਮਾਰਗ"
 
 #: ../app/core/core-enums.c:253
-#, fuzzy
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../app/core/core-enums.c:254
-#, fuzzy
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../app/core/core-enums.c:255
-#, fuzzy
 msgctxt "fill-type"
 msgid "White"
 msgstr "ਸਫੈਦ"
 
 #: ../app/core/core-enums.c:256
-#, fuzzy
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "ਪਾਰਦਰਸ਼ਤਾ"
 
 #: ../app/core/core-enums.c:257
-#, fuzzy
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "ਪੈਟਰਨ"
 
 #: ../app/core/core-enums.c:258
-#, fuzzy
 msgctxt "fill-type"
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
 #: ../app/core/core-enums.c:286
-#, fuzzy
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "ਇੱਕ ਰੰਗ"
 
 #: ../app/core/core-enums.c:287
-#, fuzzy
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "ਪੈਟਰਨ"
 
 #: ../app/core/core-enums.c:315
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "ਸਟਰੋਕ ਲਾਈਨ"
 
 #: ../app/core/core-enums.c:316
-#, fuzzy
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "ਇੱਕ ਪੇਂਟ ਟੂਲ ਨਾਲ ਸਟਰੋਕ"
 
 #: ../app/core/core-enums.c:345
-#, fuzzy
 msgctxt "join-style"
 msgid "Miter"
 msgstr "ਕਣ"
 
 #: ../app/core/core-enums.c:346
-#, fuzzy
 msgctxt "join-style"
 msgid "Round"
 msgstr "ਗੋਲ"
 
 #: ../app/core/core-enums.c:347
-#, fuzzy
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "ਝੁੰਡ"
 
 #: ../app/core/core-enums.c:376
-#, fuzzy
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "ਉੱਚਾ"
 
 #: ../app/core/core-enums.c:377
-#, fuzzy
 msgctxt "cap-style"
 msgid "Round"
 msgstr "ਗੋਲ"
 
 #: ../app/core/core-enums.c:378
-#, fuzzy
 msgctxt "cap-style"
 msgid "Square"
 msgstr "ਵਰਗ"
 
 #: ../app/core/core-enums.c:415
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "ਕਸਟਮ"
 
 #: ../app/core/core-enums.c:416
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "ਲਾਈਨ"
 
 #: ../app/core/core-enums.c:417
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "ਲੰਮੀ ਧਾਰੀ"
 
 #: ../app/core/core-enums.c:418
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "ਮੱਧਮ ਧਾਰੀ"
 
 #: ../app/core/core-enums.c:419
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "ਛੋਟੀ ਧਾਰੀ"
 
 #: ../app/core/core-enums.c:420
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "ਵਿਰਲੇ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:421
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "ਸਧਾਰਨ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:422
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "ਸੰਘਣੇ ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:423
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "ਬਿੰਦੀਕਾਰੀ"
 
 #: ../app/core/core-enums.c:424
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "ਧਾਰੀ, ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:425
-#, fuzzy
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "ਧਾਰੀ, ਬਿੰਦੂ, ਬਿੰਦੂ"
 
 #: ../app/core/core-enums.c:454
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "ਚੱਕਰ"
 
 #: ../app/core/core-enums.c:455
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "ਵਰਗ"
 
 #: ../app/core/core-enums.c:456
-#, fuzzy
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "ਹੀਰਾ"
 
 #: ../app/core/core-enums.c:485
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "ਖਿਤਿਜੀ"
 
 #: ../app/core/core-enums.c:486
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "ਲੰਬਕਾਰੀ"
 
 #: ../app/core/core-enums.c:487
-#, fuzzy
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "ਅਣਜਾਣ"
 
 #: ../app/core/core-enums.c:518
-#, fuzzy
 msgctxt "item-set"
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
 #: ../app/core/core-enums.c:519
-#, fuzzy
 msgctxt "item-set"
 msgid "All layers"
 msgstr "ਸਭ ਲੇਅਰਾਂ"
 
 #: ../app/core/core-enums.c:520
-#, fuzzy
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "ਚਿੱਤਰ-ਅਕਾਰ ਲੇਅਰ"
 
 #: ../app/core/core-enums.c:521
-#, fuzzy
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "ਸਭ ਦਿੱਖ ਲੇਅਰਾਂ"
 
 #: ../app/core/core-enums.c:522
-#, fuzzy
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "ਸਭ ਲਿੰਕ ਕੀਤੀਆਂ ਲੇਅਰਾਂ"
 
 #: ../app/core/core-enums.c:588
-#, fuzzy
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "ਬਾਰੀਕ"
 
 #: ../app/core/core-enums.c:589
-#, fuzzy
 msgctxt "view-size"
 msgid "Very small"
 msgstr "ਬਹੁਤ ਛੋਟਾ"
 
 #: ../app/core/core-enums.c:590
-#, fuzzy
 msgctxt "view-size"
 msgid "Small"
 msgstr "ਛੋਟਾ"
 
 #: ../app/core/core-enums.c:591
-#, fuzzy
 msgctxt "view-size"
 msgid "Medium"
 msgstr "ਮੱਧਮ"
 
 #: ../app/core/core-enums.c:592
-#, fuzzy
 msgctxt "view-size"
 msgid "Large"
 msgstr "ਵੱਡਾ"
 
 #: ../app/core/core-enums.c:593
-#, fuzzy
 msgctxt "view-size"
 msgid "Very large"
 msgstr "ਬਹੁਤ ਵੱਡਾ"
 
 #: ../app/core/core-enums.c:594
-#, fuzzy
 msgctxt "view-size"
 msgid "Huge"
 msgstr "ਵਿਸ਼ਾਲ"
 
 #: ../app/core/core-enums.c:595
-#, fuzzy
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "ਬਹੁਤ ਵਿਸ਼ਾਲ"
 
 #: ../app/core/core-enums.c:596
-#, fuzzy
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "ਵਿਰਾਟ"
 
 #: ../app/core/core-enums.c:624
-#, fuzzy
 msgctxt "view-type"
 msgid "View as list"
 msgstr "ਲਿਸਟ ਵਾਂਗ ਵੇਖੋ"
@@ -7756,7 +7011,6 @@ msgid "No thumbnails"
 msgstr "ਕੋਈ ਥੰਮਨੇਲ ਨਹੀਂ"
 
 #: ../app/core/core-enums.c:692
-#, fuzzy
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "ਸਧਾਰਨ (128x128)"
@@ -7768,98 +7022,82 @@ msgid "Large (256x256)"
 msgstr "ਵੱਡਾ (256x256)"
 
 #: ../app/core/core-enums.c:870
-#, fuzzy
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<ਗਲਤ>>"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "ਚਿੱਤਰ ਸਕੇਲ ਕਰੋ"
 
 #: ../app/core/core-enums.c:872
-#, fuzzy
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "ਚਿੱਤਰ ਮੁੜ-ਅਕਾਰ"
 
 #: ../app/core/core-enums.c:873
-#, fuzzy
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "ਚਿੱਤਰ ਝਟਕੋ"
 
 #: ../app/core/core-enums.c:874
-#, fuzzy
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "ਚਿੱਤਰ ਘੁੰਮਾਓ"
 
 #: ../app/core/core-enums.c:875
-#, fuzzy
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "ਚਿੱਤਰ ਕਰੋਪ ਕਰੋ"
 
 #: ../app/core/core-enums.c:876
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "ਚਿੱਤਰ ਕਨਵਰਟ ਕਰੋ"
 
 #: ../app/core/core-enums.c:877
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "ਆਈਟਮ ਹਟਾਓ"
 
 #: ../app/core/core-enums.c:878
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "ਲੇਅਰਾਂ ਮਰਜ਼ ਕਰੋ"
 
 #: ../app/core/core-enums.c:879
-#, fuzzy
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "ਮਾਰਗ ਮਰਜ਼ ਕਰੋ"
 
 #: ../app/core/core-enums.c:880
-#, fuzzy
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "ਚੁਸਤ ਮਾਸਕ"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:911
 #: ../app/core/gimpimage-grid.c:63
-#, fuzzy
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "ਗਰਿੱਡ"
 
 #: ../app/core/core-enums.c:882 ../app/core/core-enums.c:913
-#, fuzzy
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "ਗਾਈਡ"
 
 #: ../app/core/core-enums.c:883 ../app/core/core-enums.c:914
-#, fuzzy
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ"
 
 #: ../app/core/core-enums.c:884 ../app/core/core-enums.c:915
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "ਲੇਅਰ/ਚੈਨਲ"
 
 #: ../app/core/core-enums.c:885 ../app/core/core-enums.c:916
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "ਲੇਅਰ/ਚੈਨਲ ਸੋਧ"
@@ -7943,32 +7181,27 @@ msgid "Anchor floating selection"
 msgstr "ਐਂਕਰ ਤਰਦੀ ਚੋਣ"
 
 #: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:262
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "ਚੇਪੋ"
 
 #: ../app/core/core-enums.c:900 ../app/core/gimp-edit.c:501
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "ਕੱਟੋ"
 
 #: ../app/core/core-enums.c:901
-#, fuzzy
 msgctxt "undo-type"
 msgid "Text"
 msgstr "ਟੈਕਸਟ"
 
 #: ../app/core/core-enums.c:902 ../app/core/core-enums.c:944
 #: ../app/core/gimpdrawable-transform.c:567
-#, fuzzy
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "ਟਰਾਂਸਫਰਮ"
 
 #: ../app/core/core-enums.c:903 ../app/core/core-enums.c:945
-#, fuzzy
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "ਪੇਂਟ"
@@ -7992,25 +7225,21 @@ msgid "Import paths"
 msgstr "ਮਾਰਗ ਇੰਪੋਰਟ ਕਰੋ"
 
 #: ../app/core/core-enums.c:907
-#, fuzzy
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "ਪਲੱਗਇਨ"
 
 #: ../app/core/core-enums.c:908
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "ਚਿੱਤਰ ਕਿਸਮ"
 
 #: ../app/core/core-enums.c:909
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "ਚਿੱਤਰ ਅਕਾਰ"
 
 #: ../app/core/core-enums.c:910
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਬਦਲੋ"
@@ -8034,13 +7263,11 @@ msgid "Rename item"
 msgstr "ਆਈਟਮ ਨਾਂ-ਬਦਲੋ"
 
 #: ../app/core/core-enums.c:923
-#, fuzzy
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "ਨਵੀਂ ਲੇਅਰ"
 
 #: ../app/core/core-enums.c:924
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "ਲੇਅਰ ਹਟਾਓ"
@@ -8188,37 +7415,31 @@ msgid "Hue"
 msgstr "ਆਭਾ"
 
 #: ../app/core/core-enums.c:1227
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Saturation"
 msgstr "ਸੰਤ੍ਰਿਪਤੀ"
 
 #: ../app/core/core-enums.c:1228
-#, fuzzy
 msgctxt "select-criterion"
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
 #: ../app/core/core-enums.c:1257
-#, fuzzy
 msgctxt "message-severity"
 msgid "Message"
 msgstr "ਸੁਨੇਹਾ"
 
 #: ../app/core/core-enums.c:1258
-#, fuzzy
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "ਚੇਤਾਵਨੀ"
 
 #: ../app/core/core-enums.c:1259
-#, fuzzy
 msgctxt "message-severity"
 msgid "Error"
 msgstr "ਗਲਤੀ"
 
 #: ../app/core/core-enums.c:1288
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "ਪੁੱਛੋ ਕਿ ਕੀ ਕਰਨਾ ਹੈ"
@@ -8268,7 +7489,7 @@ msgstr "ਸਖਤ"
 #: ../app/core/core-enums.c:1332
 msgctxt "dynamics-output-type"
 msgid "Force"
-msgstr ""
+msgstr "ਫੋਰਸ"
 
 #: ../app/core/core-enums.c:1333
 #, fuzzy
@@ -8291,7 +7512,7 @@ msgstr "ਰੇਟ"
 #: ../app/core/core-enums.c:1336
 msgctxt "dynamics-output-type"
 msgid "Flow"
-msgstr ""
+msgstr "ਵਹਾ"
 
 #: ../app/core/core-enums.c:1337
 #, fuzzy
@@ -8378,7 +7599,6 @@ msgstr "FG ਤੋਂ ਪਾਰਦਰਸ਼ੀ"
 #. * that would be "tags-locale:lt".
 #.
 #: ../app/core/gimp-tags.c:88
-#, fuzzy
 msgid "tags-locale:C"
 msgstr "tips-locale:pa"
 
@@ -8435,9 +7655,8 @@ msgstr "ਪੈਰਾ-ਸਾਇਟਾਂ"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:958 ../app/dialogs/preferences-dialog.c:2724
-#, fuzzy
 msgid "Dynamics"
-msgstr "ਡਾਇਨਾਮਿਕ ਬੁਰਸ਼"
+msgstr "ਡਾਇਨਾਮਿਕ"
 
 #. initialize the list of fonts
 #: ../app/core/gimp.c:978
@@ -8513,8 +7732,7 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:450
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: abr ਫਾਰਮੈਟ ਵਰਜਨ %d ਨੂੰ ਡੀਕੋਡ ਕਰਨ ਲਈ ਅਸਫ਼ਲ ਹੈ।"
 
 #: ../app/core/gimpbrush-load.c:617
@@ -8534,14 +7752,12 @@ msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਲਾਈਨ %d ਵਿੱਚ ਅਣਜਾਣ ਜੈਮਪ ਬੁਰਸ਼ ਵਰਜਨ"
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ: ਲਾਈਨ %d ਵਿੱਚ ਅਣਜਾਣ ਜੈਮਪ ਬੁਰਸ਼ ਸ਼ਕਲ ਹੈ।"
 
 #: ../app/core/gimpbrushgenerated-load.c:226
@@ -9026,8 +8242,7 @@ msgstr "ਗਰੇਡੀਐਂਟ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪ
 #: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-msgstr ""
-"ਗਰੇਡੀਐਂਟ ਫਾਇਲ '%1$s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ ਹੈ: ਲਾਈਨ %3$d ਵਿੱਚ %2$d ਨਿਕਾਰਾ ਸਿਗਮੈਂਟ।"
+msgstr "ਗਰੇਡੀਐਂਟ ਫਾਇਲ '%1$s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ ਹੈ: ਲਾਈਨ %3$d ਵਿੱਚ %2$d ਨਿਕਾਰਾ ਸਿਗਮੈਂਟ।"
 
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
@@ -9053,8 +8268,7 @@ msgid "The foreground color of the grid."
 msgstr "ਗਰਿੱਡ ਦਾ ਫਾਰਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../app/core/gimpgrid.c:94
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr "ਗਰਿੱਡ ਦਾ ਬੈਕਗਰਾਊਂਡ ਰੰਗ; ਕੇਵਲ ਦੂਹਰੀ ਧਾਰੀਦਾਰ ਰੇਖਾ ਸਟਾਇਲ ਨਾਲ ਹੀ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
 
 #: ../app/core/gimpgrid.c:100
@@ -9066,8 +8280,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "ਗਰਿੱਡ ਰੇਖਾਵਾਂ ਵਿੱਚ ਵਰਟੀਕਲ ਦੂਰੀ"
 
 #: ../app/core/gimpgrid.c:114
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr "ਪਹਿਲੀਂ ਗਰਿੱਡ ਲਾਈਨ ਦਾ ਹਰੀਜ਼ਟਲ ਆਫਸੈੱਟ, ਇਹ ਇੱਕ ਨੈਗਟਿਵ ਨੰਬਰ ਵੀ ਹੋ ਸਕਦਾ ਹੈ।"
 
 #: ../app/core/gimpgrid.c:121
@@ -9194,7 +8407,6 @@ msgid "Add Horizontal Guide"
 msgstr "ਲੇਟਵੀ ਗਾਈਡ ਜੋੜ੍ਹੋ"
 
 #: ../app/core/gimpimage-guides.c:76
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "ਵਰਟੀਕਲ ਗਾਈਡ ਜੋੜ੍ਹੋ"
@@ -9318,7 +8530,6 @@ msgid "Move Sample Point"
 msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਹਿਲਾਓ"
 
 #: ../app/core/gimpimage-scale.c:87
-#, fuzzy
 msgctxt "undo-type"
 msgid "Scale Image"
 msgstr "ਚਿੱਤਰ ਸਕੇਲ ਕਰੋ"
@@ -9329,13 +8540,11 @@ msgid "Can't undo %s"
 msgstr "%s ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../app/core/gimpimage.c:1734
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਬਦਲੋ"
 
 #: ../app/core/gimpimage.c:1786
-#, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "ਚਿੱਤਰ ਯੂਨਿਟ ਬਦਲੋ"
@@ -9528,7 +8737,6 @@ msgid "Reorder Layer"
 msgstr "ਲੇਅਰ ਮੁੜ-ਕ੍ਰਮ"
 
 #: ../app/core/gimplayer.c:275
-#, fuzzy
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "ਲੇਅਰ ਉਭਾਰੋ"
@@ -9595,19 +8803,16 @@ msgid "Transfer Alpha to Mask"
 msgstr "ਐਲਫਾ ਨੂੰ ਮਾਸਕ ਵਿੱਚ ਟਰਾਂਸਫਰ ਕਰੋ"
 
 #: ../app/core/gimplayer.c:1716 ../app/core/gimplayermask.c:261
-#, fuzzy
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਲਾਗੂ ਕਰੋ"
 
 #: ../app/core/gimplayer.c:1717
-#, fuzzy
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਹਟਾਓ"
 
 #: ../app/core/gimplayer.c:1836
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "ਐਲਫਾ ਚੈਨਲ ਸ਼ਾਮਲ ਕਰੋ"
@@ -9721,8 +8926,7 @@ msgstr "ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr "ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ: ਅਣਜਾਣ ਪੈਟਰਨ ਫਾਰਮੈਟ ਵਰਜਨ %d।"
 
 #: ../app/core/gimppattern-load.c:114
@@ -10261,8 +9465,7 @@ msgstr ""
 "ਵਰਤੇਗਾ (ਮੌਜੂਦਾ %s)"
 
 #: ../app/dialogs/image-scale-dialog.c:260
-msgid ""
-"Scaling the image to the chosen size will shrink some layers completely away."
+msgid "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr "ਚਿੱਤਰ ਨੂੰ ਚੁਣੇ ਆਕਾਰ ਨਾਲ ਸਕੇਲਿੰਗ ਕੁਝ ਲੇਅਰਾਂ ਨੂੰ ਪੂਰੀ ਤਰ੍ਹਾਂ ਸੁੰਘੜਿਆ ਜਾਵੇਗਾ।"
 
 #: ../app/dialogs/image-scale-dialog.c:264
@@ -10800,9 +10003,8 @@ msgid "_Brush"
 msgstr "ਬੁਰਸ਼(_B)"
 
 #: ../app/dialogs/preferences-dialog.c:1917
-#, fuzzy
 msgid "_Dynamics"
-msgstr "ਡਾਇਨਾਮਿਕ ਬੁਰਸ਼"
+msgstr "ਡਾਇਨਾਮਿਕ(_D)"
 
 #: ../app/dialogs/preferences-dialog.c:1920
 msgid "_Pattern"
@@ -10837,9 +10039,8 @@ msgstr "ਐਕਟਿਵ ਚਿੱਤਰ ਵੇਖਾਓ(_i)"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1975
-#, fuzzy
 msgid "Tools configuration"
-msgstr "ਸੰਰਚਨਾ"
+msgstr "ਟੂਲ ਸੰਰਚਨਾ"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "Default New Image"
@@ -11539,12 +10740,12 @@ msgstr "ਚੋਣ ਐਡੀਟਰ"
 #. Width
 #: ../app/display/gimpcursorview.c:286
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #. Height
 #: ../app/display/gimpcursorview.c:293
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: ../app/display/gimpcursorview.c:320
 msgid "_Sample Merged"
@@ -11589,8 +10790,7 @@ msgstr "ਕੀ ਬੰਦ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ '%s' ਚਿੱ�
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] "ਤੁਸੀਂ ਚਿੱਤਰ ਨਾ ਸੰਭਾਲਿਆ ਤਾਂ ਆਖਰੀ ਘੰਟੇ ਤੋਂ ਤਬਦੀਲੀਆਂ ਖਤਮ ਹੋ ਜਾਣਗੀਆਂ।"
 msgstr[1] "ਤੁਸੀਂ ਚਿੱਤਰ ਨਾ ਸੰਭਾਲਿਆ ਤਾਂ ਆਖਰੀ %d ਘੰਟੇ ਦੀਆਂ ਤਬਦੀਲੀਆਂ ਖਤਮ ਹੋ ਜਾਣਗੀਆਂ।"
 
@@ -11608,8 +10808,7 @@ msgstr[1] "ਜੇ ਤੁਸੀਂ ਚਿੱਤਰ ਨਾ ਸੰਭਾਲਿਆ �
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] "ਜੇ ਤੁਸੀਂ ਚਿੱਤਰ ਨਾ ਸੰਭਾਲਿਆ ਤਾਂ, ਆਖਰੀ ਮਿੰਟ ਕੀਤੇ ਬਦਲਾਅ ਖਤਮ ਹੋ ਜਾਣਗੇ।"
 msgstr[1] "ਜੇ ਤੁਸੀਂ ਚਿੱਤਰ ਨਾ ਸੰਭਾਲਿਆ ਤਾਂ, ਆਖਰੀ %d ਮਿੰਟਾਂ ਕੀਤੇ ਬਦਲਾਅ ਖਤਮ ਹੋ ਜਾਣਗੇ।"
 
@@ -11702,16 +10901,15 @@ msgstr "(ਕੋਈ ਨਹੀਂ)"
 
 #: ../app/display/gimpdisplayshell-title.c:500
 msgid " (exported)"
-msgstr ""
+msgstr " (ਐਕਸਪੋਰਟ ਕੀਤਾ)"
 
 #: ../app/display/gimpdisplayshell-title.c:502
 msgid " (overwritten)"
-msgstr ""
+msgstr " (ਉੱਤੇ ਲਿਖਿਆ)"
 
 #: ../app/display/gimpdisplayshell-title.c:508
-#, fuzzy
 msgid " (imported)"
-msgstr "ਨਵਾਂ ਇੰਪੋਰਟ"
+msgstr " (ਇੰਪੋਰਟ ਕੀਤਾ)"
 
 #: ../app/display/gimpstatusbar.c:358
 #, c-format
@@ -11895,7 +11093,6 @@ msgid "Perspective Clone"
 msgstr "ਪਰੋਸਪੈਕਟਿਵ ਕਲੋਨ"
 
 #: ../app/paint/paint-enums.c:83
-#, fuzzy
 msgctxt "source-align-mode"
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
@@ -11980,8 +11177,7 @@ msgstr "ਇਹ ਲੇਅਰ ਐਂਕਰ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕ
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr ""
-"ਇਹ ਲੇਅਰ ਆਮ ਲੇਅਰ 'ਚ ਤਬਦੀਲ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ, ਕਿਉਂਕਿ ਇਹ ਇੱਕ ਫਲੋਟਿੰਗ ਚੋਣ ਨਹੀਂ  ਹੈ।"
+msgstr "ਇਹ ਲੇਅਰ ਆਮ ਲੇਅਰ 'ਚ ਤਬਦੀਲ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ ਹੈ, ਕਿਉਂਕਿ ਇਹ ਇੱਕ ਫਲੋਟਿੰਗ ਚੋਣ ਨਹੀਂ  ਹੈ।"
 
 #: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:376
@@ -12161,8 +11357,8 @@ msgstr "ਵੈਕਟਰ ਆਬਜੈਕਟ %d  ID %d ਨਾਲ ਕੋਈ ਸਟ�
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
-"%s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
+"s, got %s."
 msgstr "ਪਰੋਸੀਜ਼ਰ '%s' ਨੇ ਆਰਗੂਮੈਂਟ #%d ਲਈ ਗਲਤ ਟਾਈਫ ਨੂੰ ਕਾਲ ਕੀਤਾ ਸੀ। ਲੋੜ ਸੀ %s, ਮਿਲਿਆ %s।"
 
 #: ../app/pdb/gimppdbcontext.c:78
@@ -12188,11 +11384,11 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:646
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
+"d). Expected %s, got %s."
 msgstr ""
-"ਪਰੋਸੀਜ਼ਰ '%s' ਨੂੰ ਆਰਗੂਮੈਂਟ '%s' (#%d) ਲਈ ਇੱਕ ਗਲਤ ਮੁੱਲ ਟਾਈਪ ਨਾਲ ਕਾਲ ਕੀਤਾ ਗਿਆ ਹੈ। ਲੋੜ ਸੀ "
-"%s, ਮਿਲਿਆ %s"
+"ਪਰੋਸੀਜ਼ਰ '%s' ਨੂੰ ਆਰਗੂਮੈਂਟ '%s' (#%d) ਲਈ ਇੱਕ ਗਲਤ ਮੁੱਲ ਟਾਈਪ ਨਾਲ ਕਾਲ ਕੀਤਾ ਗਿਆ ਹੈ। ਲੋੜ ਸੀ %"
+"s, ਮਿਲਿਆ %s"
 
 #: ../app/pdb/gimpprocedure.c:678
 #, c-format
@@ -12235,21 +11431,19 @@ msgstr ""
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
-msgstr ""
-"ਪਰੋਸੀਜ਼ਰ '%s' ਨੇ '%s' ਮੁੱਲ '%s' (#%d, ਟਾਇਪ %s) ਵਾਪਸ ਕੀਤਾ ਹੈ। ਇਹ ਮੁੱਲ ਰੇਜ਼ ਤੋਂ ਬਾਹਰ ਹੈ।"
+msgstr "ਪਰੋਸੀਜ਼ਰ '%s' ਨੇ '%s' ਮੁੱਲ '%s' (#%d, ਟਾਇਪ %s) ਵਾਪਸ ਕੀਤਾ ਹੈ। ਇਹ ਮੁੱਲ ਰੇਜ਼ ਤੋਂ ਬਾਹਰ ਹੈ।"
 
 #: ../app/pdb/gimpprocedure.c:751
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
-"%s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
+"s). This value is out of range."
 msgstr ""
 "ਪਰੋਸੀਜ਼ਰ '%s' ਨੇ '%s' ਮੁੱਲ ਨਾਲ ਆਰਗੂਮੈਂਟ '%s' (#%d, ਟਾਇਪ %s) ਕਾਲ ਕੀਤਾ ਸੀ। ਇਹ ਮੁੱਲ ਰੇਜ਼ ਤੋਂ "
 "ਬਾਹਰ ਹੈ।"
 
 #: ../app/pdb/image-cmds.c:2650
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਵਿੱਚ ਫਿੱਟ ਨਹੀਂ ਹੈ, ਇਸਕਰਕੇ ਡਿਫਾਲਟ ਰੈਜ਼ੋਲੇਸ਼ਨ ਵਰਤਿਆ ਜਾ ਰਿਹਾ ਹੈ।"
 
 #: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
@@ -13354,8 +12548,7 @@ msgid "Flip"
 msgstr "ਫਲਿਪ"
 
 #: ../app/tools/gimpfliptool.c:80
-msgid ""
-"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "ਫਲਿਪ ਟੂਲ: ਲੇਅਰ, ਚੋਣ ਜਾਂ ਪਾਥ ਹਰੀਜਟਲ ਜਾਂ ਵਰਟੀਕਲ ਉਲਟ ਕਰੋ"
 
 #: ../app/tools/gimpfliptool.c:82
@@ -13464,8 +12657,7 @@ msgid "Foreground Select"
 msgstr "ਫਾਰਗਰਾਊਂਡ ਚੋਣ"
 
 #: ../app/tools/gimpfreeselecttool.c:200
-msgid ""
-"Free Select Tool: Select a hand-drawn region with free and polygonal segments"
+msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "ਫਰੀ ਚੋਣ ਟੂਲ: ਇੱਕ ਹੱਥ ਅਤੇ ਬਹੁਭੁਜ ਸਿਗਮੈਂਟ ਨਾਲ ਖੇਤਰ ਚੁਣੋ"
 
 #: ../app/tools/gimpfreeselecttool.c:201
@@ -13486,8 +12678,7 @@ msgstr "ਰੀਟਰਨ ਕਮਿੱਟ ਕਰਦੀ ਹੈ, ਇਸਕੇਪ ਰ
 
 #: ../app/tools/gimpfreeselecttool.c:1133
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
-msgstr ""
-"ਇੱਕ ਮੁਕਤ ਸਿਗਮੈਂਟ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ, ਇੱਕ ਬਹੁ-ਭੁਜ ਸਿਗਮੈਂਟ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ"
+msgstr "ਇੱਕ ਮੁਕਤ ਸਿਗਮੈਂਟ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਕਲਿੱਕ-ਡਰੋਪ ਕਰੋ, ਇੱਕ ਬਹੁ-ਭੁਜ ਸਿਗਮੈਂਟ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpfreeselecttool.c:1643
 msgctxt "command"
@@ -14300,10 +13491,8 @@ msgid "Click to smudge the line"
 msgstr "ਲਾਈਨ ਸਮਅੱਜ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimptextoptions.c:137
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr ""
-"ਹਿੰਟਿੰਗ ਛੋਟੇ ਆਕਾਰਾਂ ਲਈ ਇੱਕ ਕਰਿਸਪ ਬਿੱਟਮੈਪ ਬਣਉਣ ਵਾਸਤੇ ਫੋਂਟ-ਆਉਟਲਾਈਨ ਵਾਸਤੇ ਚੇਤਾਵਨੀ ਦਿੰਦੀ ਹੈ।"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgstr "ਹਿੰਟਿੰਗ ਛੋਟੇ ਆਕਾਰਾਂ ਲਈ ਇੱਕ ਕਰਿਸਪ ਬਿੱਟਮੈਪ ਬਣਉਣ ਵਾਸਤੇ ਫੋਂਟ-ਆਉਟਲਾਈਨ ਵਾਸਤੇ ਚੇਤਾਵਨੀ ਦਿੰਦੀ ਹੈ।"
 
 #: ../app/tools/gimptextoptions.c:145
 msgid "The text language may have an effect on the way the text is rendered."
@@ -14336,9 +13525,8 @@ msgid "Font:"
 msgstr "ਫੋਂਟ:"
 
 #: ../app/tools/gimptextoptions.c:498
-#, fuzzy
 msgid "Use editor"
-msgstr "ਟੈਕਸਟ ਐਡੀਟਰ"
+msgstr "ਐਡੀਟਰ ਵਰਤੋਂ"
 
 #: ../app/tools/gimptextoptions.c:518
 #, fuzzy
@@ -14359,12 +13547,11 @@ msgstr "ਅਨੁਕੂਲ:"
 
 #: ../app/tools/gimptextoptions.c:556
 msgid "Box:"
-msgstr ""
+msgstr "ਬਾਕਸ:"
 
 #: ../app/tools/gimptextoptions.c:570
-#, fuzzy
 msgid "Language:"
-msgstr "ਭਾਸ਼ਾ(_L):"
+msgstr "ਭਾਸ਼ਾ:"
 
 #: ../app/tools/gimptexttool.c:194
 msgid "Text"
@@ -14694,7 +13881,7 @@ msgstr "ਸੁਨਿਹਰੀ ਭਾਗ"
 #: ../app/tools/tools-enums.c:97
 msgctxt "rectangle-guide"
 msgid "Diagonal lines"
-msgstr ""
+msgstr "ਵਿਕਰਣ ਲਾਈਨਾਂ"
 
 #: ../app/tools/tools-enums.c:187
 #, fuzzy
@@ -14739,43 +13926,36 @@ msgid "Fixed aspect ratio"
 msgstr "ਸਥਿਰ ਅਕਾਰ ਅਨੁਪਾਤ"
 
 #: ../app/tools/tools-enums.c:250
-#, fuzzy
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "ਲੇਅਰ"
 
 #: ../app/tools/tools-enums.c:251
-#, fuzzy
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "ਚੋਣ"
 
 #: ../app/tools/tools-enums.c:252
-#, fuzzy
 msgctxt "transform-type"
 msgid "Path"
 msgstr "ਮਾਰਗ"
 
 #: ../app/tools/tools-enums.c:282
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr "ਆਉਟਲਾਇਨ"
 
 #: ../app/tools/tools-enums.c:283
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "ਗਰਿੱਡ"
 
 #: ../app/tools/tools-enums.c:284
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "ਚਿੱਤਰ"
 
 #: ../app/tools/tools-enums.c:285
-#, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "ਚਿੱਤਰ + ਗਰਿੱਡ"
@@ -14799,13 +13979,11 @@ msgid "Design"
 msgstr "ਢਾਂਚਾ"
 
 #: ../app/tools/tools-enums.c:344
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "ਸੋਧ"
 
 #: ../app/tools/tools-enums.c:345
-#, fuzzy
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "ਹਿਲਾਓ"
@@ -15434,14 +14612,13 @@ msgstr ""
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
 #: ../app/widgets/gimpdynamicseditor.c:152
 #: ../app/widgets/gimpdynamicsoutputeditor.c:241
-#, fuzzy
 msgid "Wheel"
-msgstr "ਮਾਊਸ ਪਹੀਆ"
+msgstr "ਪਹੀਆ"
 
 #. the axes
 #: ../app/widgets/gimpdeviceinfoeditor.c:192
 msgid "Axes"
-msgstr ""
+msgstr "ਧੁਰੇ"
 
 #. the keys
 #: ../app/widgets/gimpdeviceinfoeditor.c:266
@@ -15450,9 +14627,9 @@ msgstr ""
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:366
 #: ../app/widgets/gimpdeviceinfoeditor.c:584
-#, fuzzy, c-format
+#, c-format
 msgid "none"
-msgstr "(ਕੋਈ ਨਹੀਂ)"
+msgstr "ਕੋਈ ਨਹੀਂ"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:414
 #, fuzzy, c-format
@@ -15509,7 +14686,7 @@ msgstr "ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਤੁਹਾਡੇ ਵਲੋਂ 
 #: ../app/widgets/gimpdock.h:34
 msgctxt "dock"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. String used to separate books (GtkNotebooks) within a dock,
 #. e.g. "Tool Options, Layers - Brushes"
@@ -15517,7 +14694,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:39
 msgctxt "dock"
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #. String used to separate dock columns,
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
@@ -15525,7 +14702,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:44
 msgctxt "dock"
 msgid " | "
-msgstr ""
+msgstr " | "
 
 #: ../app/widgets/gimpdockbook.c:290
 msgid "Configure this tab"
@@ -15537,8 +14714,7 @@ msgid "Auto"
 msgstr "ਆਟੋ"
 
 #: ../app/widgets/gimpdockwindow.c:364
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "ਜੇਕਰ ਯੋਗ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ ਤਾਂ ਡਾਈਲਾਗ ਆਟੋਮੈਟਿਕ ਹੀ ਚਿੱਤਰ ਜਿਸ ਤੇ ਤੁਸੀਂ ਕੰਮ ਕਰ ਰਹੇ ਹੋ ਦੇ ਨਾਲ "
 "ਚਲੇਗਾ।"
@@ -15555,27 +14731,23 @@ msgstr ""
 
 #: ../app/widgets/gimpdynamicseditor.c:149
 #: ../app/widgets/gimpdynamicsoutputeditor.c:220
-#, fuzzy
 msgid "Velocity"
-msgstr "ਵੇਗ:"
+msgstr "ਵੇਗ"
 
 #: ../app/widgets/gimpdynamicseditor.c:151
 #: ../app/widgets/gimpdynamicsoutputeditor.c:234
-#, fuzzy
 msgid "Tilt"
-msgstr "ਟਿਲਟ:"
+msgstr "ਟਿਲਟ"
 
 #: ../app/widgets/gimpdynamicseditor.c:153
 #: ../app/widgets/gimpdynamicsoutputeditor.c:248
-#, fuzzy
 msgid "Random"
-msgstr "ਰਲਵੇਂ:"
+msgstr "ਰਲਵੇਂ"
 
 #: ../app/widgets/gimpdynamicseditor.c:154
 #: ../app/widgets/gimpdynamicsoutputeditor.c:255
-#, fuzzy
 msgid "Fade"
-msgstr "ਫੇਡ ਕਰੋ(_F)"
+msgstr "ਫੇਡ ਕਰੋ"
 
 #: ../app/widgets/gimperrordialog.c:150
 msgid "Too many error messages!"
@@ -15620,9 +14792,8 @@ msgid "Extensions"
 msgstr "ਇਕਸਟੈਸ਼ਨ"
 
 #: ../app/widgets/gimpfilleditor.c:127
-#, fuzzy
 msgid "Fill Color"
-msgstr "_FG ਰੰਗ ਨਾਲ ਭਰੋ"
+msgstr "ਰੰਗ ਭਰੋ"
 
 #: ../app/widgets/gimpfilleditor.c:145
 msgid "_Antialiasing"
@@ -15791,8 +14962,7 @@ msgstr "ਜੈਮਪ ਯੂਜ਼ਰ ਮੈਨੁਅਲ ਤੁਹਾਡੇ ਕ�
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
-msgstr ""
-"ਤੁਸੀਂ ਹੋਰ ਮੱਦਦ ਪੈਕੇਜ ਇੰਸਟਾਲ ਕਰ ਸਕਦੇ ਹੋ ਜਾਂ ਆਨਲਾਈਨ ਵਰਜਨ ਵਰਤਣ ਲਈ ਆਪਣੀ ਪਸੰਦ ਬਦਲ ਸਕਦੇ ਹੋ।"
+msgstr "ਤੁਸੀਂ ਹੋਰ ਮੱਦਦ ਪੈਕੇਜ ਇੰਸਟਾਲ ਕਰ ਸਕਦੇ ਹੋ ਜਾਂ ਆਨਲਾਈਨ ਵਰਜਨ ਵਰਤਣ ਲਈ ਆਪਣੀ ਪਸੰਦ ਬਦਲ ਸਕਦੇ ਹੋ।"
 
 #: ../app/widgets/gimphistogrameditor.c:99
 msgid "Mean:"
@@ -16058,9 +15228,8 @@ msgid "Dash _preset:"
 msgstr "ਡੈਸ਼ ਪਹਿਲਾਂ-ਸੈੱਟ(_p):"
 
 #: ../app/widgets/gimptagentry.c:43
-#, fuzzy
 msgid "filter"
-msgstr "ਫਿਲਟਰ(_r)"
+msgstr "ਫਿਲਟਰ"
 
 #: ../app/widgets/gimptagentry.c:44
 #, fuzzy
@@ -16073,7 +15242,7 @@ msgstr "ਕੇਦਰੀਂ ਰੇਖਾਵਾਂ"
 #.
 #: ../app/widgets/gimptagentry.c:1716
 msgid ","
-msgstr ""
+msgstr ","
 
 #: ../app/widgets/gimptemplateeditor.c:179
 #, c-format
@@ -16310,7 +15479,7 @@ msgstr "ਪੈਲਅਟ 'ਚ ਜੋੜ੍ਹੋ"
 
 #: ../app/widgets/gimptoolpreseteditor.c:145
 msgid "Apply stored font"
-msgstr ""
+msgstr "ਸਟੋਰ ਕੀਤੇ ਫੋਂਟ ਲਾਗੂ ਕਰੋ"
 
 #: ../app/widgets/gimptranslationstore.c:105
 #, fuzzy
@@ -16319,7 +15488,7 @@ msgstr "ਭਾਸ਼ਾ(_L):"
 
 #: ../app/widgets/gimptranslationstore.c:107
 msgid "English"
-msgstr ""
+msgstr "ਅੰਗਰੇਜ਼ੀ"
 
 #: ../app/widgets/gimpuimanager.c:750
 msgid "Your GIMP installation is incomplete:"
@@ -16457,49 +15626,41 @@ msgid "Logarithmic histogram"
 msgstr "ਲਾਗਰਿਥਮਿਕ ਹਿਸਟੋਗਰਾਮ"
 
 #: ../app/widgets/widgets-enums.c:215
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon"
 msgstr "ਆਈਕਾਨ"
 
 #: ../app/widgets/widgets-enums.c:216
-#, fuzzy
 msgctxt "tab-style"
 msgid "Current status"
 msgstr "ਮੌਜੂਦਾ ਸਥਿਤੀ"
 
 #: ../app/widgets/widgets-enums.c:217
-#, fuzzy
 msgctxt "tab-style"
 msgid "Text"
 msgstr "ਟੈਕਸਟ"
 
 #: ../app/widgets/widgets-enums.c:218
-#, fuzzy
 msgctxt "tab-style"
 msgid "Description"
 msgstr "ਵਰਣਨ"
 
 #: ../app/widgets/widgets-enums.c:219
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & text"
 msgstr "ਆਈਕਾਨ ਤੇ ਪਾਠ"
 
 #: ../app/widgets/widgets-enums.c:220
-#, fuzzy
 msgctxt "tab-style"
 msgid "Icon & desc"
 msgstr "ਆਈਕਾਨ ਤੇ ਵਰਣਨ"
 
 #: ../app/widgets/widgets-enums.c:221
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & text"
 msgstr "ਹਾਲਤ ਅਤੇ ਟੈਕਸਟ"
 
 #: ../app/widgets/widgets-enums.c:222
-#, fuzzy
 msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "ਹਾਲਤ ਅਤੇ ਵਰਣਨ"
@@ -16574,10 +15735,9 @@ msgstr "ਗਲਤੀ, XCF ਫਾਇਲ ਨੂੰ ਸੰਭਾਲਣ ਵਿੱਚ
 
 #: ../data/tags/gimp-tags-default.xml.in.h:1
 msgid "fuzzy"
-msgstr ""
+msgstr "ਫਜ਼ੀ"
 
 #: ../data/tags/gimp-tags-default.xml.in.h:2
-#, fuzzy
 msgid "round"
 msgstr "ਗੋਲ"
 
