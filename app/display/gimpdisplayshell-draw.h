@@ -38,10 +38,6 @@ void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
                                                       GimpContext        *context,
                                                       GimpActiveColor     color,
                                                       gint                width);
-void   gimp_display_shell_draw_sample_point          (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      GimpSamplePoint    *sample_point,
-                                                      gboolean            active);
 void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
 void   gimp_display_shell_draw_layer_boundary        (GimpDisplayShell   *shell,

@@ -392,36 +392,6 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 }
 
 void
-gimp_display_shell_draw_sample_point (GimpDisplayShell   *shell,
-                                      cairo_t            *cr,
-                                      GimpSamplePoint    *sample_point,
-                                      gboolean            active)
-{
-  GimpCanvasItem *item;
-  GimpImage      *image;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-  g_return_if_fail (sample_point != NULL);
-
-  if (sample_point->x < 0)
-    return;
-
-  image = gimp_display_get_image (shell->display);
-
-  item = gimp_canvas_sample_point_new (sample_point->x,
-                                       sample_point->y,
-                                       g_list_index (gimp_image_get_sample_points (image),
-                                                     sample_point) + 1);
-  g_object_set (item, "sample-point-style", TRUE, NULL);
-  gimp_canvas_item_set_highlight (item, active);
-
-  gimp_canvas_item_draw (item, shell, cr);
-
-  g_object_unref (item);
-}
-
-void
 gimp_display_shell_draw_sample_points (GimpDisplayShell *shell,
                                        cairo_t          *cr)
 {
@@ -434,14 +404,37 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell,
 
   if (image && gimp_display_shell_get_show_sample_points (shell))
     {
-      GList *list;
+      GimpCanvasItem *item;
+      GList          *list;
+
+      item = gimp_canvas_sample_point_new (0, 0, 0);
+      g_object_set (item, "sample-point-style", TRUE, NULL);
 
       for (list = gimp_image_get_sample_points (image);
            list;
            list = g_list_next (list))
         {
-          gimp_display_shell_draw_sample_point (shell, cr, list->data, FALSE);
+          GimpSamplePoint *sample_point = list->data;
+
+          if (sample_point->x >= 0 &&
+              sample_point->y >= 0)
+            {
+              gint index;
+
+              index = g_list_index (gimp_image_get_sample_points (image),
+                                    sample_point) + 1;
+
+              g_object_set (item,
+                            "x",     sample_point->x,
+                            "y",     sample_point->y,
+                            "index", index,
+                            NULL);
+
+              gimp_canvas_item_draw (item, shell, cr);
+            }
         }
+
+      g_object_unref (item);
     }
 }
 
