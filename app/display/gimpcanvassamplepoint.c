@@ -37,6 +37,9 @@
 #include "gimpdisplayshell-transform.h"
 
 
+#define GIMP_SAMPLE_POINT_DRAW_SIZE 10
+
+
 enum
 {
   PROP_0,
