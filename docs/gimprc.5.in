@@ -513,6 +513,8 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %H  image height in real-world units
 .br
+%M  the image size expressed in megapixels
+.br
 %u  unit symbol
 .br
 %U  unit abbreviation
@@ -571,6 +573,8 @@ certain % character sequences are recognised and expanded as follows:
 %h  image height in pixels
 .br
 %H  image height in real-world units
+.br
+%M  the image size expressed in megapixels
 .br
 %u  unit symbol
 .br

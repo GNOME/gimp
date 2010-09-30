@@ -324,9 +324,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'M': /* image size in megapixels */
               i += print (title, title_len, i, "%.1f",
-                          (double) gimp_image_get_width (image) *
-                          gimp_image_get_height (image) /
-                          1000000.0);
+                          (gdouble) gimp_image_get_width (image) *
+                          (gdouble) gimp_image_get_height (image) / 1000000.0);
               break;
 
             case 'l': /* number of layers */

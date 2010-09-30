@@ -403,6 +403,7 @@
 # %W  image width in real-world units
 # %h  image height in pixels
 # %H  image height in real-world units
+# %M  the image size expressed in megapixels
 # %u  unit symbol
 # %U  unit abbreviation
 # 
@@ -435,6 +436,7 @@
 # %W  image width in real-world units
 # %h  image height in pixels
 # %H  image height in real-world units
+# %M  the image size expressed in megapixels
 # %u  unit symbol
 # %U  unit abbreviation
 # 

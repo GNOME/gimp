@@ -313,6 +313,7 @@ static const gchar display_format_description[] =
 "%W  image width in real-world units\n"
 "%h  image height in pixels\n"
 "%H  image height in real-world units\n"
+"%M  the image size expressed in megapixels\n"
 "%u  unit symbol\n"
 "%U  unit abbreviation\n\n";
 
