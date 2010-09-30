@@ -43,7 +43,7 @@
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpsessioninfo.h"
 
-#include "display/gimpcanvassamplepoint.h"
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
@@ -533,14 +533,12 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           index = g_list_index (gimp_image_get_sample_points (image),
                                 color_tool->sample_point) + 1;
 
-          item = gimp_canvas_sample_point_new (color_tool->sample_point->x,
-                                               color_tool->sample_point->y,
-                                               index);
+          item = gimp_draw_tool_add_sample_point (draw_tool,
+                                                  color_tool->sample_point->x,
+                                                  color_tool->sample_point->y,
+                                                  index);
           g_object_set (item, "sample-point-style", TRUE, NULL);
           gimp_canvas_item_set_highlight (item, TRUE);
-
-          gimp_draw_tool_add_item (draw_tool, item);
-          g_object_unref (item);
         }
 
       if (color_tool->moving_sample_point)

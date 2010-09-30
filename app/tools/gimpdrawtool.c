@@ -42,6 +42,7 @@
 #include "display/gimpcanvasline.h"
 #include "display/gimpcanvaspolygon.h"
 #include "display/gimpcanvasrectangle.h"
+#include "display/gimpcanvassamplepoint.h"
 #include "display/gimpcanvastextcursor.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -401,15 +402,42 @@ gimp_draw_tool_add_line (GimpDrawTool *draw_tool,
  * This function draws a guide line across the canvas.
  **/
 GimpCanvasItem *
-gimp_draw_tool_add_guide_line (GimpDrawTool        *draw_tool,
-                               GimpOrientationType  orientation,
-                               gint                 position)
+gimp_draw_tool_add_guide (GimpDrawTool        *draw_tool,
+                          GimpOrientationType  orientation,
+                          gint                 position)
 {
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_guide_new (orientation, position);
+
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+/**
+ * gimp_draw_tool_draw_sample_point:
+ * @draw_tool: the #GimpDrawTool
+ * @x:         X position of the sample point
+ * @y:         Y position of the sample point
+ * @index:     Index of the sample point
+ *
+ * This function draws a sample point
+ **/
+GimpCanvasItem *
+gimp_draw_tool_add_sample_point (GimpDrawTool *draw_tool,
+                                 gint          x,
+                                 gint          y,
+                                 gint          index)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+
+  item = gimp_canvas_sample_point_new (x, y, index);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

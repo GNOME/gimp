@@ -755,9 +755,9 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpCanvasItem *item;
 
-      item = gimp_draw_tool_add_guide_line (draw_tool,
-                                            gimp_guide_get_orientation (move->guide),
-                                            gimp_guide_get_position (move->guide));
+      item = gimp_draw_tool_add_guide (draw_tool,
+                                       gimp_guide_get_orientation (move->guide),
+                                       gimp_guide_get_position (move->guide));
 
       g_object_set (item, "guide-style", TRUE, NULL);
       gimp_canvas_item_set_highlight (item, TRUE);
@@ -765,9 +765,9 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
 
   if (move->moving_guide && move->guide_position != -1)
     {
-      gimp_draw_tool_add_guide_line (draw_tool,
-                                     move->guide_orientation,
-                                     move->guide_position);
+      gimp_draw_tool_add_guide (draw_tool,
+                                move->guide_orientation,
+                                move->guide_position);
     }
 }
 
