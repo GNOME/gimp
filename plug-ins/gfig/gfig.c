@@ -147,11 +147,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpParam         *values = g_new (GimpParam, 1);
+  static GimpParam   values[1];
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               pwidth, pheight;
+
   INIT_I18N ();
 
   gfig_context = g_new0 (GFigContext, 1);

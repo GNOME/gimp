@@ -185,7 +185,7 @@ run (const gchar      *name,
 {
   GimpRunMode        run_mode;
   GimpPDBStatusType  status;
-  GimpParam          *values;
+  static GimpParam   values[1];
 
   INIT_I18N ();
 
@@ -195,8 +195,6 @@ run (const gchar      *name,
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
-
-  values = g_new (GimpParam, 1);
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
