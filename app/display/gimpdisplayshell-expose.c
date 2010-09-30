@@ -68,19 +68,17 @@ void
 gimp_display_shell_expose_item (GimpDisplayShell *shell,
                                 GimpCanvasItem   *item)
 {
-  GdkWindow *window;
   GdkRegion *region;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  window = gtk_widget_get_window (shell->canvas);
-
   region = gimp_canvas_item_get_extents (item, shell);
 
   if (region)
     {
-      gdk_window_invalidate_region (window, region, TRUE);
+      gdk_window_invalidate_region (gtk_widget_get_window (shell->canvas),
+                                    region, TRUE);
       gdk_region_destroy (region);
     }
 }
