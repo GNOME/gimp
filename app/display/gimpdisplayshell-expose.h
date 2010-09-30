@@ -19,20 +19,16 @@
 #define __GIMP_DISPLAY_SHELL_EXPOSE_H__
 
 
-void        gimp_display_shell_expose_area         (GimpDisplayShell   *shell,
-                                                    gint                x,
-                                                    gint                y,
-                                                    gint                w,
-                                                    gint                h);
-void        gimp_display_shell_expose_item         (GimpDisplayShell   *shell,
-                                                    GimpCanvasItem     *item);
-void        gimp_display_shell_expose_guide        (GimpDisplayShell   *shell,
-                                                    GimpGuide          *guide);
-void        gimp_display_shell_expose_sample_point (GimpDisplayShell   *shell,
-                                                    GimpSamplePoint    *sample_point);
-void        gimp_display_shell_expose_vectors      (GimpDisplayShell   *shell,
-                                                    GimpVectors        *vectors);
-void        gimp_display_shell_expose_full         (GimpDisplayShell   *shell);
+void   gimp_display_shell_expose_area    (GimpDisplayShell   *shell,
+                                          gint                x,
+                                          gint                y,
+                                          gint                w,
+                                          gint                h);
+void   gimp_display_shell_expose_item    (GimpDisplayShell   *shell,
+                                          GimpCanvasItem     *item);
+void   gimp_display_shell_expose_vectors (GimpDisplayShell   *shell,
+                                          GimpVectors        *vectors);
+void   gimp_display_shell_expose_full    (GimpDisplayShell   *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_EXPOSE_H__ */

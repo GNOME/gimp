@@ -31,16 +31,20 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-quick-mask.h"
 #include "core/gimpitem.h"
+#include "core/gimpsamplepoint.h"
 #include "core/gimptreehandler.h"
 
 #include "file/file-utils.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpcanvasguide.h"
+#include "gimpcanvassamplepoint.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -463,7 +467,15 @@ gimp_display_shell_update_guide_handler (GimpImage        *image,
                                          GimpGuide        *guide,
                                          GimpDisplayShell *shell)
 {
-  gimp_display_shell_expose_guide (shell, guide);
+  GimpCanvasItem *item;
+
+  item = gimp_canvas_guide_new (gimp_guide_get_orientation (guide),
+                                gimp_guide_get_position (guide));
+  g_object_set (item, "guide-style", TRUE, NULL);
+
+  gimp_display_shell_expose_item (shell, item);
+
+  g_object_unref (item);
 }
 
 static void
@@ -471,7 +483,16 @@ gimp_display_shell_update_sample_point_handler (GimpImage        *image,
                                                 GimpSamplePoint  *sample_point,
                                                 GimpDisplayShell *shell)
 {
-  gimp_display_shell_expose_sample_point (shell, sample_point);
+  GimpCanvasItem *item;
+
+  item = gimp_canvas_sample_point_new (sample_point->x,
+                                       sample_point->y,
+                                       0 /* eek */);
+  g_object_set (item, "sample-point-style", TRUE, NULL);
+
+  gimp_display_shell_expose_item (shell, item);
+
+  g_object_unref (item);
 }
 
 static void

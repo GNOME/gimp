@@ -24,9 +24,6 @@
 
 #include "display-types.h"
 
-#include "core/gimpguide.h"
-#include "core/gimpsamplepoint.h"
-
 #include "vectors/gimpvectors.h"
 
 #include "gimpcanvasitem.h"
@@ -86,67 +83,6 @@ gimp_display_shell_expose_item (GimpDisplayShell *shell,
       gdk_window_invalidate_region (window, region, TRUE);
       gdk_region_destroy (region);
     }
-}
-
-void
-gimp_display_shell_expose_guide (GimpDisplayShell *shell,
-                                 GimpGuide        *guide)
-{
-  gint position;
-  gint x, y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_GUIDE (guide));
-
-  position = gimp_guide_get_position (guide);
-
-  if (position < 0)
-    return;
-
-  gimp_display_shell_transform_xy (shell,
-                                   position, position,
-                                   &x, &y);
-
-  switch (gimp_guide_get_orientation (guide))
-    {
-    case GIMP_ORIENTATION_HORIZONTAL:
-      gimp_display_shell_expose_area (shell, 0, y, shell->disp_width, 1);
-      break;
-
-    case GIMP_ORIENTATION_VERTICAL:
-      gimp_display_shell_expose_area (shell, x, 0, 1, shell->disp_height);
-      break;
-
-    default:
-      break;
-    }
-}
-
-void
-gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
-                                        GimpSamplePoint  *sample_point)
-{
-  gdouble x, y;
-  gint    x1, y1, x2, y2;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (sample_point != NULL);
-
-  if (sample_point->x < 0)
-    return;
-
-  gimp_display_shell_transform_xy_f (shell,
-                                     sample_point->x + 0.5,
-                                     sample_point->y + 0.5,
-                                     &x, &y);
-
-  x1 = MAX (0, floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE));
-  y1 = MAX (0, floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE));
-  x2 = MIN (shell->disp_width,  ceil (x + GIMP_SAMPLE_POINT_DRAW_SIZE));
-  y2 = MIN (shell->disp_height, ceil (y + GIMP_SAMPLE_POINT_DRAW_SIZE));
-
-  /* HACK: add 4 instead of 1 so the number gets cleared too */
-  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1 + 4, y2 - y1 + 4);
 }
 
 void
