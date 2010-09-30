@@ -179,7 +179,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gint              title_len,
                                  const gchar      *format)
 {
-  Gimp      *gimp;
   GimpImage *image;
   gint       num, denom;
   gint       i = 0;
@@ -187,7 +186,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
   image = gimp_display_get_image (shell->display);
-  gimp  = gimp_display_get_gimp (shell->display);
 
   if (! image)
     {
