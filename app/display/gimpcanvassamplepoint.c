@@ -28,8 +28,6 @@
 
 #include "display-types.h"
 
-#include "core/gimpsamplepoint.h"
-
 #include "gimpcanvas.h"
 #include "gimpcanvassamplepoint.h"
 #include "gimpdisplayshell.h"
