@@ -293,6 +293,11 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->canvas_item = gimp_canvas_group_new ();
 
+  shell->guides = gimp_canvas_proxy_group_new ();
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
+                              shell->guides);
+  g_object_unref (shell->guides);
+
   shell->sample_points = gimp_canvas_proxy_group_new ();
   gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
                               shell->sample_points);
@@ -805,6 +810,7 @@ gimp_display_shell_dispose (GObject *object)
     {
       g_object_unref (shell->canvas_item);
       shell->canvas_item = NULL;
+      shell->guides = NULL;
       shell->sample_points = NULL;
     }
 
