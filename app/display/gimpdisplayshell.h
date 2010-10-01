@@ -136,6 +136,7 @@ struct _GimpDisplayShell
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 
   GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+  GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
 
   guint              title_idle_id;    /*  title update idle ID               */
   gchar             *title;            /*  current title                      */

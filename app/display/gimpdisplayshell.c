@@ -53,7 +53,7 @@
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
-#include "gimpcanvasgroup.h"
+#include "gimpcanvasproxygroup.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -292,6 +292,11 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                                       GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
   shell->canvas_item = gimp_canvas_group_new ();
+
+  shell->sample_points = gimp_canvas_proxy_group_new ();
+  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
+                              shell->sample_points);
+  g_object_unref (shell->sample_points);
 
   shell->icon_size  = 32;
 
@@ -800,6 +805,7 @@ gimp_display_shell_dispose (GObject *object)
     {
       g_object_unref (shell->canvas_item);
       shell->canvas_item = NULL;
+      shell->sample_points = NULL;
     }
 
   if (shell->event_history)
