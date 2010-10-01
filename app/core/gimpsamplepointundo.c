@@ -177,6 +177,9 @@ gimp_sample_point_undo_pop (GimpUndo              *undo,
       sample_point_undo->sample_point->y = sample_point_undo->y;
       gimp_image_update_sample_point (undo->image,
                                       sample_point_undo->sample_point);
+
+      gimp_image_sample_point_moved (undo->image,
+                                     sample_point_undo->sample_point);
     }
 
   sample_point_undo->x = x;

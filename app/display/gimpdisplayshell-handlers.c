@@ -35,6 +35,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-quick-mask.h"
+#include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
 #include "core/gimpsamplepoint.h"
 #include "core/gimptreehandler.h"
@@ -44,6 +45,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvasguide.h"
+#include "gimpcanvasproxygroup.h"
 #include "gimpcanvassamplepoint.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -94,7 +96,13 @@ static void   gimp_display_shell_quick_mask_changed_handler (GimpImage        *i
 static void   gimp_display_shell_update_guide_handler       (GimpImage        *image,
                                                              GimpGuide        *guide,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_update_sample_point_handler(GimpImage        *image,
+static void   gimp_display_shell_sample_point_add_handler   (GimpImage        *image,
+                                                             GimpSamplePoint  *sample_point,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_sample_point_remove_handler(GimpImage        *image,
+                                                             GimpSamplePoint  *sample_point,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_sample_point_move_handler  (GimpImage        *image,
                                                              GimpSamplePoint  *sample_point,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_update_vectors_handler     (GimpImage        *image,
@@ -143,6 +151,7 @@ void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
   GimpImage *image;
+  GList     *list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
@@ -181,9 +190,23 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "update-guide",
                     G_CALLBACK (gimp_display_shell_update_guide_handler),
                     shell);
-  g_signal_connect (image, "update-sample-point",
-                    G_CALLBACK (gimp_display_shell_update_sample_point_handler),
+
+  g_signal_connect (image, "sample-point-added",
+                    G_CALLBACK (gimp_display_shell_sample_point_add_handler),
                     shell);
+  g_signal_connect (image, "sample-point-removed",
+                    G_CALLBACK (gimp_display_shell_sample_point_remove_handler),
+                    shell);
+  g_signal_connect (image, "sample-point-moved",
+                    G_CALLBACK (gimp_display_shell_sample_point_move_handler),
+                    shell);
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_display_shell_sample_point_add_handler (image, list->data, shell);
+    }
+
   g_signal_connect (image, "update-vectors",
                     G_CALLBACK (gimp_display_shell_update_vectors_handler),
                     shell);
@@ -273,6 +296,7 @@ void
 gimp_display_shell_disconnect (GimpDisplayShell *shell)
 {
   GimpImage *image;
+  GList     *list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->display));
@@ -327,9 +351,24 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_update_guide_handler,
                                         shell);
+
   g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_shell_update_sample_point_handler,
+                                        gimp_display_shell_sample_point_add_handler,
                                         shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_sample_point_remove_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_sample_point_move_handler,
+                                        shell);
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_canvas_proxy_group_remove_item (GIMP_CANVAS_PROXY_GROUP (shell->sample_points),
+                                           list->data);
+    }
+
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_update_vectors_handler,
                                         shell);
@@ -479,20 +518,89 @@ gimp_display_shell_update_guide_handler (GimpImage        *image,
 }
 
 static void
-gimp_display_shell_update_sample_point_handler (GimpImage        *image,
-                                                GimpSamplePoint  *sample_point,
-                                                GimpDisplayShell *shell)
+gimp_display_shell_sample_point_add_handler (GimpImage        *image,
+                                             GimpSamplePoint  *sample_point,
+                                             GimpDisplayShell *shell)
 {
-  GimpCanvasItem *item;
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
+  GimpCanvasItem       *item;
+  GList                *list;
+  gint                  i;
 
   item = gimp_canvas_sample_point_new (sample_point->x,
                                        sample_point->y,
-                                       0 /* eek */);
+                                       0);
   g_object_set (item, "sample-point-style", TRUE, NULL);
+
+  gimp_canvas_proxy_group_add_item (group, sample_point, item);
+  g_object_unref (item);
+
+  for (list = gimp_image_get_sample_points (image), i = 1;
+       list;
+       list = g_list_next (list), i++)
+    {
+      GimpSamplePoint *sample_point = list->data;
+
+      item = gimp_canvas_proxy_group_get_item (group, sample_point);
+
+      g_object_set (item,
+                    "index", i,
+                    NULL);
+
+      gimp_display_shell_expose_item (shell, item);
+    }
+}
+
+static void
+gimp_display_shell_sample_point_remove_handler (GimpImage        *image,
+                                                GimpSamplePoint  *sample_point,
+                                                GimpDisplayShell *shell)
+{
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
+  GimpCanvasItem       *item;
+  GList                *list;
+  gint                  i;
+
+  item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
   gimp_display_shell_expose_item (shell, item);
 
-  g_object_unref (item);
+  gimp_canvas_proxy_group_remove_item (group, sample_point);
+
+  for (list = gimp_image_get_sample_points (image), i = 1;
+       list;
+       list = g_list_next (list), i++)
+    {
+      GimpSamplePoint *sample_point = list->data;
+
+      item = gimp_canvas_proxy_group_get_item (group, sample_point);
+
+      g_object_set (item,
+                    "index", i,
+                    NULL);
+
+      gimp_display_shell_expose_item (shell, item);
+    }
+}
+
+static void
+gimp_display_shell_sample_point_move_handler (GimpImage        *image,
+                                              GimpSamplePoint  *sample_point,
+                                              GimpDisplayShell *shell)
+{
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
+  GimpCanvasItem       *item;
+
+  item = gimp_canvas_proxy_group_get_item (group, sample_point);
+
+  gimp_display_shell_expose_item (shell, item);
+
+  g_object_set (item,
+                "x", sample_point->x,
+                "y", sample_point->y,
+                NULL);
+
+  gimp_display_shell_expose_item (shell, item);
 }
 
 static void

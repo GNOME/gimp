@@ -105,6 +105,7 @@ enum
   UPDATE_VECTORS,
   SAMPLE_POINT_ADDED,
   SAMPLE_POINT_REMOVED,
+  SAMPLE_POINT_MOVED,
   PARASITE_ATTACHED,
   PARASITE_DETACHED,
   COLORMAP_CHANGED,
@@ -472,6 +473,16 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
+  gimp_image_signals[SAMPLE_POINT_MOVED] =
+    g_signal_new ("sample-point-moved",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, sample_point_moved),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
+
   gimp_image_signals[PARASITE_ATTACHED] =
     g_signal_new ("parasite-attached",
                   G_TYPE_FROM_CLASS (klass),
@@ -556,6 +567,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->update_vectors               = NULL;
   klass->sample_point_added           = NULL;
   klass->sample_point_removed         = NULL;
+  klass->sample_point_moved           = NULL;
   klass->parasite_attached            = NULL;
   klass->parasite_detached            = NULL;
   klass->colormap_changed             = gimp_image_real_colormap_changed;
@@ -2140,6 +2152,17 @@ gimp_image_sample_point_removed (GimpImage       *image,
   g_return_if_fail (sample_point != NULL);
 
   g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_REMOVED], 0,
+                 sample_point);
+}
+
+void
+gimp_image_sample_point_moved (GimpImage       *image,
+                               GimpSamplePoint *sample_point)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (sample_point != NULL);
+
+  g_signal_emit (image, gimp_image_signals[SAMPLE_POINT_MOVED], 0,
                  sample_point);
 }
 

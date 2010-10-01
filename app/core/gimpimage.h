@@ -141,6 +141,8 @@ struct _GimpImageClass
                                          GimpSamplePoint      *sample_point);
   void (* sample_point_removed)         (GimpImage            *image,
                                          GimpSamplePoint      *sample_point);
+  void (* sample_point_moved)           (GimpImage            *image,
+                                         GimpSamplePoint      *sample_point);
   void (* parasite_attached)            (GimpImage            *image,
                                          const gchar          *name);
   void (* parasite_detached)            (GimpImage            *image,
@@ -259,6 +261,8 @@ void            gimp_image_update_vectors        (GimpImage          *image,
 void            gimp_image_sample_point_added    (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
 void            gimp_image_sample_point_removed  (GimpImage          *image,
+                                                  GimpSamplePoint    *sample_point);
+void            gimp_image_sample_point_moved    (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
 void            gimp_image_colormap_changed      (GimpImage          *image,
                                                   gint                col);
