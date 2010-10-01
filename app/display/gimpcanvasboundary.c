@@ -242,7 +242,7 @@ gimp_canvas_boundary_draw (GimpCanvasItem   *item,
 
   gimp_cairo_add_segments (cr, segs, private->n_segs);
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 
   g_free (segs);
 }

@@ -246,7 +246,7 @@ gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
 
   cairo_arc_negative (cr, x, y, HALF_SIZE, 0.0, 0.5 * G_PI);
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 
   layout = gimp_canvas_get_layout (GIMP_CANVAS (shell->canvas),
                                    "%d", private->index);
@@ -254,7 +254,7 @@ gimp_canvas_sample_point_draw (GimpCanvasItem   *item,
   cairo_move_to (cr, x + 2.5, y + 2.5);
   pango_cairo_show_layout (cr, layout);
 
-  _gimp_canvas_item_fill (item, shell, cr);
+  _gimp_canvas_item_fill (item, cr);
 }
 
 static GdkRegion *

@@ -261,7 +261,7 @@ gimp_canvas_text_cursor_draw (GimpCanvasItem   *item,
       cairo_line_to (cr, x + 3.0, y + h);
     }
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 }
 
 static GdkRegion *

@@ -185,14 +185,14 @@ gimp_canvas_group_draw (GimpCanvasItem   *item,
     {
       GimpCanvasItem *sub_item = list->data;
 
-      gimp_canvas_item_draw (sub_item, shell, cr);
+      gimp_canvas_item_draw (sub_item, cr);
     }
 
   if (private->group_stroking)
-    _gimp_canvas_item_stroke (item, shell, cr);
+    _gimp_canvas_item_stroke (item, cr);
 
   if (private->group_filling)
-    _gimp_canvas_item_fill (item, shell, cr);
+    _gimp_canvas_item_fill (item, cr);
 }
 
 static GdkRegion *
@@ -206,8 +206,7 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
   for (list = private->items; list; list = g_list_next (list))
     {
       GimpCanvasItem *sub_item   = list->data;
-      GdkRegion      *sub_region = gimp_canvas_item_get_extents (sub_item,
-                                                                 shell);
+      GdkRegion      *sub_region = gimp_canvas_item_get_extents (sub_item);
 
       if (! region)
         {

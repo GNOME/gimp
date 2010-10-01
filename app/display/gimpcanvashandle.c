@@ -425,13 +425,13 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
     case GIMP_HANDLE_SQUARE:
       cairo_rectangle (cr, x, y, private->width - 1.0, private->height - 1.0);
 
-      _gimp_canvas_item_stroke (item, shell, cr);
+      _gimp_canvas_item_stroke (item, cr);
       break;
 
     case GIMP_HANDLE_FILLED_SQUARE:
       cairo_rectangle (cr, x - 0.5, y - 0.5, private->width, private->height);
 
-      _gimp_canvas_item_fill (item, shell, cr);
+      _gimp_canvas_item_fill (item, cr);
       break;
 
     case GIMP_HANDLE_CIRCLE:
@@ -439,7 +439,7 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
                           private->start_angle,
                           private->slice_angle);
 
-      _gimp_canvas_item_stroke (item, shell, cr);
+      _gimp_canvas_item_stroke (item, cr);
       break;
 
     case GIMP_HANDLE_FILLED_CIRCLE:
@@ -449,7 +449,7 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
                           private->start_angle,
                           private->slice_angle);
 
-      _gimp_canvas_item_fill (item, shell, cr);
+      _gimp_canvas_item_fill (item, cr);
       break;
 
     case GIMP_HANDLE_CROSS:
@@ -459,7 +459,7 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
       cairo_move_to (cr, x, y - private->height / 2);
       cairo_line_to (cr, x, y + private->height / 2);
 
-      _gimp_canvas_item_stroke (item, shell, cr);
+      _gimp_canvas_item_stroke (item, cr);
       break;
 
     default:

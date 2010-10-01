@@ -279,9 +279,9 @@ gimp_canvas_arc_draw (GimpCanvasItem   *item,
   cairo_restore (cr);
 
   if (private->filled)
-    _gimp_canvas_item_fill (item, shell, cr);
+    _gimp_canvas_item_fill (item, cr);
   else
-    _gimp_canvas_item_stroke (item, shell, cr);
+    _gimp_canvas_item_stroke (item, cr);
 }
 
 static GdkRegion *

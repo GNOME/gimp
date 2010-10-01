@@ -219,7 +219,7 @@ gimp_canvas_line_draw (GimpCanvasItem   *item,
   cairo_move_to (cr, x1, y1);
   cairo_line_to (cr, x2, y2);
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 }
 
 static GdkRegion *

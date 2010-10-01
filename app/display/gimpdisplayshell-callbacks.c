@@ -2342,7 +2342,7 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   /* draw canvas items */
   cairo_save (cr);
-  gimp_canvas_item_draw (shell->canvas_item, shell, cr);
+  gimp_canvas_item_draw (shell->canvas_item, cr);
   cairo_restore (cr);
 
   /* and the cursor (if we have a software cursor) */

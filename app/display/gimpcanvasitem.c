@@ -252,29 +252,33 @@ gimp_canvas_item_real_fill (GimpCanvasItem   *item,
 /*  public functions  */
 
 void
-gimp_canvas_item_draw (GimpCanvasItem   *item,
-                       GimpDisplayShell *shell,
-                       cairo_t          *cr)
+gimp_canvas_item_draw (GimpCanvasItem *item,
+                       cairo_t        *cr)
 {
+  GimpCanvasItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
+
+  private = GET_PRIVATE (item);
 
   cairo_save (cr);
 
-  GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, shell, cr);
+  GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, private->shell, cr);
 
   cairo_restore (cr);
 }
 
 GdkRegion *
-gimp_canvas_item_get_extents (GimpCanvasItem   *item,
-                              GimpDisplayShell *shell)
+gimp_canvas_item_get_extents (GimpCanvasItem *item)
 {
-  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  GimpCanvasItemPrivate *private;
 
-  return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, shell);
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), NULL);
+
+  private = GET_PRIVATE (item);
+
+  return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, private->shell);
 }
 
 void
@@ -367,9 +371,8 @@ gimp_canvas_item_resume_filling (GimpCanvasItem *item)
 /*  protected functions  */
 
 void
-_gimp_canvas_item_stroke (GimpCanvasItem   *item,
-                          GimpDisplayShell *shell,
-                          cairo_t          *cr)
+_gimp_canvas_item_stroke (GimpCanvasItem *item,
+                          cairo_t        *cr)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
@@ -378,7 +381,7 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
 
   if (private->suspend_stroking == 0)
     {
-      GIMP_CANVAS_ITEM_GET_CLASS (item)->stroke (item, shell, cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->stroke (item, private->shell, cr);
     }
   else
     {
@@ -388,7 +391,6 @@ _gimp_canvas_item_stroke (GimpCanvasItem   *item,
 
 void
 _gimp_canvas_item_fill (GimpCanvasItem   *item,
-                        GimpDisplayShell *shell,
                         cairo_t          *cr)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
@@ -398,7 +400,7 @@ _gimp_canvas_item_fill (GimpCanvasItem   *item,
 
   if (private->suspend_filling == 0)
     {
-      GIMP_CANVAS_ITEM_GET_CLASS (item)->fill (item, shell, cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->fill (item, private->shell, cr);
     }
   else
     {

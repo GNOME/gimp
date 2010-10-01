@@ -73,7 +73,7 @@ gimp_display_shell_expose_item (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  region = gimp_canvas_item_get_extents (item, shell);
+  region = gimp_canvas_item_get_extents (item);
 
   if (region)
     {
