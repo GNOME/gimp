@@ -234,32 +234,42 @@ gimp_canvas_item_dispatch_properties_changed (GObject     *object,
                                               GParamSpec **pspecs)
 {
   GimpCanvasItem *item = GIMP_CANVAS_ITEM (object);
-  GdkRegion      *before;
-  GdkRegion      *region;
 
-  before = gimp_canvas_item_get_extents (item);
-
-  G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
-                                                              n_pspecs,
-                                                              pspecs);
-
-  region = gimp_canvas_item_get_extents (item);
-
-  if (! region)
+  if (g_signal_has_handler_pending (object, item_signals[UPDATE], 0, FALSE))
     {
-      region = before;
+      GdkRegion *before;
+      GdkRegion *region;
+
+      before = gimp_canvas_item_get_extents (item);
+
+      G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
+                                                                  n_pspecs,
+                                                                  pspecs);
+
+      region = gimp_canvas_item_get_extents (item);
+
+      if (! region)
+        {
+          region = before;
+        }
+      else if (before)
+        {
+          gdk_region_union (region, before);
+          gdk_region_destroy (before);
+        }
+
+      if (region)
+        {
+          g_signal_emit (object, item_signals[UPDATE], 0,
+                         region);
+          gdk_region_destroy (region);
+        }
     }
-  else if (before)
+  else
     {
-      gdk_region_union (region, before);
-      gdk_region_destroy (before);
-    }
-
-  if (region)
-    {
-      g_signal_emit (object, item_signals[UPDATE], 0,
-                     region);
-      gdk_region_destroy (region);
+      G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
+                                                                  n_pspecs,
+                                                                  pspecs);
     }
 }
 
@@ -346,22 +356,40 @@ void
 gimp_canvas_item_set_line_cap (GimpCanvasItem   *item,
                                cairo_line_cap_t  line_cap)
 {
+  GimpCanvasItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  g_object_set (item,
-                "line-cap", line_cap,
-                NULL);
+  private = GET_PRIVATE (item);
+
+  line_cap = CLAMP (line_cap,
+                    CAIRO_LINE_CAP_BUTT,
+                    CAIRO_LINE_CAP_SQUARE);
+
+  if (private->line_cap != line_cap)
+    {
+      private->line_cap = line_cap;
+      g_object_notify (G_OBJECT (item), "line-cap");
+    }
 }
 
 void
 gimp_canvas_item_set_highlight (GimpCanvasItem *item,
                                 gboolean        highlight)
 {
+  GimpCanvasItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  g_object_set (item,
-                "highlight", highlight,
-                NULL);
+  private = GET_PRIVATE (item);
+
+  highlight = highlight ? TRUE : FALSE;
+
+  if (private->highlight != highlight)
+    {
+      private->highlight = highlight;
+      g_object_notify (G_OBJECT (item), "highlight");
+    }
 }
 
 gboolean
