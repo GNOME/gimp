@@ -37,6 +37,8 @@ libappdisplay_a_sources = \
 	gimpcanvasline.h			\
 	gimpcanvaspolygon.c			\
 	gimpcanvaspolygon.h			\
+	gimpcanvasproxygroup.c			\
+	gimpcanvasproxygroup.h			\
 	gimpcanvasrectangle.c			\
 	gimpcanvasrectangle.h			\
 	gimpcanvassamplepoint.c			\
