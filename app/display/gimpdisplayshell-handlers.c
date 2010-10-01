@@ -572,10 +572,12 @@ gimp_display_shell_guide_move_handler (GimpImage        *image,
 
   item = gimp_canvas_proxy_group_get_item (group, guide);
 
+  gimp_canvas_item_begin_change (item);
   g_object_set (item,
                 "orientation", gimp_guide_get_orientation (guide),
                 "position",    gimp_guide_get_position (guide),
                 NULL);
+  gimp_canvas_item_end_change (item);
 }
 
 static void
@@ -647,10 +649,12 @@ gimp_display_shell_sample_point_move_handler (GimpImage        *image,
 
   item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
+  gimp_canvas_item_begin_change (item);
   g_object_set (item,
                 "x", sample_point->x,
                 "y", sample_point->y,
                 NULL);
+  gimp_canvas_item_end_change (item);
 }
 
 static void

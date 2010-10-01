@@ -38,6 +38,7 @@ enum
 {
   PROP_0,
   PROP_SHELL,
+  PROP_VISIBLE,
   PROP_LINE_CAP,
   PROP_HIGHLIGHT
 };
@@ -54,10 +55,13 @@ typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 struct _GimpCanvasItemPrivate
 {
   GimpDisplayShell *shell;
+  gboolean          visible;
   cairo_line_cap_t  line_cap;
   gboolean          highlight;
   gint              suspend_stroking;
   gint              suspend_filling;
+  gint              change_count;
+  GdkRegion        *change_region;
 };
 
 #define GET_PRIVATE(item) \
@@ -136,6 +140,12 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_VISIBLE,
+                                   g_param_spec_boolean ("visible",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_LINE_CAP,
                                    g_param_spec_int ("line-cap",
                                                      NULL, NULL,
@@ -159,10 +169,13 @@ gimp_canvas_item_init (GimpCanvasItem *item)
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
   private->shell            = NULL;
+  private->visible          = TRUE;
   private->line_cap         = CAIRO_LINE_CAP_ROUND;
   private->highlight        = FALSE;
   private->suspend_stroking = 0;
   private->suspend_filling  = 0;
+  private->change_count     = 1; /* avoid emissions during construction */
+  private->change_region    = NULL;
 }
 
 static void
@@ -171,6 +184,8 @@ gimp_canvas_item_constructed (GObject *object)
   GimpCanvasItemPrivate *private = GET_PRIVATE (object);
 
   g_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
+
+  private->change_count = 0; /* undo hack from init() */
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -188,6 +203,9 @@ gimp_canvas_item_set_property (GObject      *object,
     {
     case PROP_SHELL:
       private->shell = g_value_get_object (value); /* don't ref */
+      break;
+    case PROP_VISIBLE:
+      private->visible = g_value_get_boolean (value);
       break;
     case PROP_LINE_CAP:
       private->line_cap = g_value_get_int (value);
@@ -215,6 +233,9 @@ gimp_canvas_item_get_property (GObject    *object,
     case PROP_SHELL:
       g_value_set_object (value, private->shell);
       break;
+    case PROP_VISIBLE:
+      g_value_set_boolean (value, private->visible);
+      break;
     case PROP_LINE_CAP:
       g_value_set_int (value, private->line_cap);
       break;
@@ -235,28 +256,13 @@ gimp_canvas_item_dispatch_properties_changed (GObject     *object,
 {
   GimpCanvasItem *item = GIMP_CANVAS_ITEM (object);
 
-  if (g_signal_has_handler_pending (object, item_signals[UPDATE], 0, FALSE))
+  G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
+                                                              n_pspecs,
+                                                              pspecs);
+
+  if (_gimp_canvas_item_needs_update (item))
     {
-      GdkRegion *before;
-      GdkRegion *region;
-
-      before = gimp_canvas_item_get_extents (item);
-
-      G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
-                                                                  n_pspecs,
-                                                                  pspecs);
-
-      region = gimp_canvas_item_get_extents (item);
-
-      if (! region)
-        {
-          region = before;
-        }
-      else if (before)
-        {
-          gdk_region_union (region, before);
-          gdk_region_destroy (before);
-        }
+      GdkRegion *region = gimp_canvas_item_get_extents (item);
 
       if (region)
         {
@@ -264,12 +270,6 @@ gimp_canvas_item_dispatch_properties_changed (GObject     *object,
                          region);
           gdk_region_destroy (region);
         }
-    }
-  else
-    {
-      G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
-                                                                  n_pspecs,
-                                                                  pspecs);
     }
 }
 
@@ -333,11 +333,12 @@ gimp_canvas_item_draw (GimpCanvasItem *item,
 
   private = GET_PRIVATE (item);
 
-  cairo_save (cr);
-
-  GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, private->shell, cr);
-
-  cairo_restore (cr);
+  if (private->visible)
+    {
+      cairo_save (cr);
+      GIMP_CANVAS_ITEM_GET_CLASS (item)->draw (item, private->shell, cr);
+      cairo_restore (cr);
+    }
 }
 
 GdkRegion *
@@ -349,7 +350,42 @@ gimp_canvas_item_get_extents (GimpCanvasItem *item)
 
   private = GET_PRIVATE (item);
 
-  return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, private->shell);
+  if (private->visible)
+    return GIMP_CANVAS_ITEM_GET_CLASS (item)->get_extents (item, private->shell);
+
+  return NULL;
+}
+
+void
+gimp_canvas_item_set_visible (GimpCanvasItem *item,
+                              gboolean        visible)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  if (private->visible != visible)
+    {
+      gimp_canvas_item_begin_change (item);
+      g_object_set (G_OBJECT (item),
+                    "visible", visible,
+                    NULL);
+      gimp_canvas_item_end_change (item);
+    }
+}
+
+gboolean
+gimp_canvas_item_get_visible (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CANVAS_ITEM (item), FALSE);
+
+  private = GET_PRIVATE (item);
+
+  return private->visible;
 }
 
 void
@@ -362,14 +398,13 @@ gimp_canvas_item_set_line_cap (GimpCanvasItem   *item,
 
   private = GET_PRIVATE (item);
 
-  line_cap = CLAMP (line_cap,
-                    CAIRO_LINE_CAP_BUTT,
-                    CAIRO_LINE_CAP_SQUARE);
-
   if (private->line_cap != line_cap)
     {
-      private->line_cap = line_cap;
-      g_object_notify (G_OBJECT (item), "line-cap");
+      gimp_canvas_item_begin_change (item);
+      g_object_set (G_OBJECT (item),
+                    "line-cap", line_cap,
+                    NULL);
+      gimp_canvas_item_end_change (item);
     }
 }
 
@@ -383,12 +418,11 @@ gimp_canvas_item_set_highlight (GimpCanvasItem *item,
 
   private = GET_PRIVATE (item);
 
-  highlight = highlight ? TRUE : FALSE;
-
   if (private->highlight != highlight)
     {
-      private->highlight = highlight;
-      g_object_notify (G_OBJECT (item), "highlight");
+      g_object_set (G_OBJECT (item),
+                    "highlight", highlight,
+                    NULL);
     }
 }
 
@@ -402,6 +436,63 @@ gimp_canvas_item_get_highlight (GimpCanvasItem *item)
   private = GET_PRIVATE (item);
 
   return private->highlight;
+}
+
+void
+gimp_canvas_item_begin_change (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  private->change_count++;
+
+  if (private->change_count == 1 &&
+      g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE))
+    {
+      private->change_region = gimp_canvas_item_get_extents (item);
+    }
+}
+
+void
+gimp_canvas_item_end_change (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+
+  private = GET_PRIVATE (item);
+
+  g_return_if_fail (private->change_count > 0);
+
+  private->change_count--;
+
+  if (private->change_count == 0 &&
+      g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE))
+    {
+      GdkRegion *region = gimp_canvas_item_get_extents (item);
+
+      if (! region)
+        {
+          region = private->change_region;
+        }
+      else if (private->change_region)
+        {
+          gdk_region_union (region, private->change_region);
+          gdk_region_destroy (private->change_region);
+        }
+
+      private->change_region = NULL;
+
+      if (region)
+        {
+          g_signal_emit (item, item_signals[UPDATE], 0,
+                         region);
+          gdk_region_destroy (region);
+        }
+    }
 }
 
 void
@@ -458,6 +549,23 @@ gimp_canvas_item_resume_filling (GimpCanvasItem *item)
 
 
 /*  protected functions  */
+
+void
+_gimp_canvas_item_update (GimpCanvasItem *item,
+                          GdkRegion      *region)
+{
+  g_signal_emit (item, item_signals[UPDATE], 0,
+                 region);
+}
+
+gboolean
+_gimp_canvas_item_needs_update (GimpCanvasItem *item)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (item);
+
+  return (private->change_count == 0 &&
+          g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE));
+}
 
 void
 _gimp_canvas_item_stroke (GimpCanvasItem *item,

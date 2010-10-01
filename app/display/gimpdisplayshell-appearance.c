@@ -40,6 +40,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -295,7 +296,6 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -303,12 +303,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_image_get_guides (image))
-    {
-      gimp_display_shell_expose_full (shell);
-    }
+  gimp_canvas_item_set_visible (shell->guides, show);
 
   appearance_set_action_active (shell, "view-show-guides", show);
 }
@@ -357,7 +352,6 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
                                            gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -365,12 +359,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_image_get_sample_points (image))
-    {
-      gimp_display_shell_expose_full (shell);
-    }
+  gimp_canvas_item_set_visible (shell->sample_points, show);
 
   appearance_set_action_active (shell, "view-show-sample-points", show);
 }

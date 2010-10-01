@@ -70,12 +70,19 @@ void        gimp_canvas_item_draw             (GimpCanvasItem   *item,
                                                cairo_t          *cr);
 GdkRegion * gimp_canvas_item_get_extents      (GimpCanvasItem   *item);
 
+void        gimp_canvas_item_set_visible      (GimpCanvasItem   *item,
+                                               gboolean          visible);
+gboolean    gimp_canvas_item_get_visible      (GimpCanvasItem   *item);
+
 void        gimp_canvas_item_set_line_cap     (GimpCanvasItem   *item,
                                                cairo_line_cap_t  line_cap);
 
 void        gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
                                                gboolean          highlight);
 gboolean    gimp_canvas_item_get_highlight    (GimpCanvasItem   *item);
+
+void        gimp_canvas_item_begin_change     (GimpCanvasItem   *item);
+void        gimp_canvas_item_end_change       (GimpCanvasItem   *item);
 
 void        gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
 void        gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
@@ -86,6 +93,9 @@ void        gimp_canvas_item_resume_filling   (GimpCanvasItem   *item);
 
 /*  protected  */
 
+void        _gimp_canvas_item_update          (GimpCanvasItem   *item,
+                                               GdkRegion        *region);
+gboolean    _gimp_canvas_item_needs_update    (GimpCanvasItem   *item);
 void        _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
                                                cairo_t          *cr);
 void        _gimp_canvas_item_fill            (GimpCanvasItem   *item,
