@@ -101,7 +101,6 @@ enum
   SAVED,
   EXPORTED,
   UPDATE_GUIDE,
-  UPDATE_SAMPLE_POINT,
   UPDATE_VECTORS,
   SAMPLE_POINT_ADDED,
   SAMPLE_POINT_REMOVED,
@@ -433,16 +432,6 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
-  gimp_image_signals[UPDATE_SAMPLE_POINT] =
-    g_signal_new ("update-sample-point",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, update_sample_point),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
-
   gimp_image_signals[UPDATE_VECTORS] =
     g_signal_new ("update-vectors",
                   G_TYPE_FROM_CLASS (klass),
@@ -563,7 +552,6 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->saved                        = NULL;
   klass->exported                     = NULL;
   klass->update_guide                 = NULL;
-  klass->update_sample_point          = NULL;
   klass->update_vectors               = NULL;
   klass->sample_point_added           = NULL;
   klass->sample_point_removed         = NULL;
@@ -2109,17 +2097,6 @@ gimp_image_update_guide (GimpImage *image,
   g_return_if_fail (guide != NULL);
 
   g_signal_emit (image, gimp_image_signals[UPDATE_GUIDE], 0, guide);
-}
-
-void
-gimp_image_update_sample_point (GimpImage       *image,
-                                GimpSamplePoint *sample_point)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (sample_point != NULL);
-
-  g_signal_emit (image, gimp_image_signals[UPDATE_SAMPLE_POINT], 0,
-                 sample_point);
 }
 
 void

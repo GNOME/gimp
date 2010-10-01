@@ -133,8 +133,6 @@ struct _GimpImageClass
 
   void (* update_guide)                 (GimpImage            *image,
                                          GimpGuide            *guide);
-  void (* update_sample_point)          (GimpImage            *image,
-                                         GimpSamplePoint      *sample_point);
   void (* update_vectors)               (GimpImage            *image,
                                          GimpVectors          *vectors);
   void (* sample_point_added)           (GimpImage            *image,
@@ -253,8 +251,6 @@ void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                height);
 void            gimp_image_update_guide          (GimpImage          *image,
                                                   GimpGuide          *guide);
-void            gimp_image_update_sample_point   (GimpImage          *image,
-                                                  GimpSamplePoint    *sample_point);
 void            gimp_image_update_vectors        (GimpImage          *image,
                                                   GimpVectors        *vectors);
 
