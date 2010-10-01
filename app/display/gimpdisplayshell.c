@@ -53,7 +53,6 @@
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
-#include "gimpcanvasproxygroup.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -64,6 +63,7 @@
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-items.h"
 #include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
@@ -291,17 +291,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                                       GIMP_DISPLAY_RENDER_BUF_WIDTH,
                                                       GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
-  shell->canvas_item = gimp_canvas_group_new (shell);
-
-  shell->guides = gimp_canvas_proxy_group_new (shell);
-  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
-                              shell->guides);
-  g_object_unref (shell->guides);
-
-  shell->sample_points = gimp_canvas_proxy_group_new (shell);
-  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
-                              shell->sample_points);
-  g_object_unref (shell->sample_points);
+  gimp_display_shell_items_init (shell);
 
   shell->icon_size  = 32;
 
@@ -806,13 +796,7 @@ gimp_display_shell_dispose (GObject *object)
       shell->mask = NULL;
     }
 
-  if (shell->canvas_item)
-    {
-      g_object_unref (shell->canvas_item);
-      shell->canvas_item = NULL;
-      shell->guides = NULL;
-      shell->sample_points = NULL;
-    }
+  gimp_display_shell_items_free (shell);
 
   if (shell->event_history)
     {

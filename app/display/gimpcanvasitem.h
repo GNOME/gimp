@@ -44,6 +44,11 @@ struct _GimpCanvasItemClass
 {
   GimpObjectClass  parent_class;
 
+  /*  signals  */
+  void        (* update)      (GimpCanvasItem   *item,
+                               GdkRegion        *region);
+
+  /*  virtual functions  */
   void        (* draw)        (GimpCanvasItem   *item,
                                GimpDisplayShell *shell,
                                cairo_t          *cr);

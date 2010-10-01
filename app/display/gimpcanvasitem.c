@@ -23,9 +23,11 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "display-types.h"
 
-#include "libgimpmath/gimpmath.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpcanvasitem.h"
 #include "gimpdisplayshell.h"
@@ -38,6 +40,12 @@ enum
   PROP_SHELL,
   PROP_LINE_CAP,
   PROP_HIGHLIGHT
+};
+
+enum
+{
+  UPDATE,
+  LAST_SIGNAL
 };
 
 
@@ -69,6 +77,10 @@ static void        gimp_canvas_item_get_property     (GObject          *object,
                                                       guint             property_id,
                                                       GValue           *value,
                                                       GParamSpec       *pspec);
+static void
+        gimp_canvas_item_dispatch_properties_changed (GObject          *object,
+                                                      guint             n_pspecs,
+                                                      GParamSpec      **pspecs);
 
 static void        gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
                                                       GimpDisplayShell *shell,
@@ -88,20 +100,34 @@ G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
 
 #define parent_class gimp_canvas_item_parent_class
 
+static guint item_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_canvas_item_constructed;
-  object_class->set_property = gimp_canvas_item_set_property;
-  object_class->get_property = gimp_canvas_item_get_property;
+  object_class->constructed                 = gimp_canvas_item_constructed;
+  object_class->set_property                = gimp_canvas_item_set_property;
+  object_class->get_property                = gimp_canvas_item_get_property;
+  object_class->dispatch_properties_changed = gimp_canvas_item_dispatch_properties_changed;
 
-  klass->draw                = gimp_canvas_item_real_draw;
-  klass->get_extents         = gimp_canvas_item_real_get_extents;
-  klass->stroke              = gimp_canvas_item_real_stroke;
-  klass->fill                = gimp_canvas_item_real_fill;
+  klass->update                             = NULL;
+  klass->draw                               = gimp_canvas_item_real_draw;
+  klass->get_extents                        = gimp_canvas_item_real_get_extents;
+  klass->stroke                             = gimp_canvas_item_real_stroke;
+  klass->fill                               = gimp_canvas_item_real_fill;
+
+  item_signals[UPDATE] =
+    g_signal_new ("update",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpCanvasItemClass, update),
+                  NULL, NULL,
+                  gimp_marshal_VOID__POINTER,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_POINTER);
 
   g_object_class_install_property (object_class, PROP_SHELL,
                                    g_param_spec_object ("shell",
@@ -199,6 +225,41 @@ gimp_canvas_item_get_property (GObject    *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_canvas_item_dispatch_properties_changed (GObject     *object,
+                                              guint        n_pspecs,
+                                              GParamSpec **pspecs)
+{
+  GimpCanvasItem *item = GIMP_CANVAS_ITEM (object);
+  GdkRegion      *before;
+  GdkRegion      *region;
+
+  before = gimp_canvas_item_get_extents (item);
+
+  G_OBJECT_CLASS (parent_class)->dispatch_properties_changed (object,
+                                                              n_pspecs,
+                                                              pspecs);
+
+  region = gimp_canvas_item_get_extents (item);
+
+  if (! region)
+    {
+      region = before;
+    }
+  else if (before)
+    {
+      gdk_region_union (region, before);
+      gdk_region_destroy (before);
+    }
+
+  if (region)
+    {
+      g_signal_emit (object, item_signals[UPDATE], 0,
+                     region);
+      gdk_region_destroy (region);
     }
 }
 

@@ -44,43 +44,15 @@ gimp_display_shell_expose_area (GimpDisplayShell *shell,
   gtk_widget_queue_draw_area (shell->canvas, x, y, w, h);
 }
 
-static void
-gimp_display_shell_expose_region (GimpDisplayShell *shell,
-                                  gdouble           x1,
-                                  gdouble           y1,
-                                  gdouble           x2,
-                                  gdouble           y2,
-                                  gint              border)
-{
-  const gint x = floor (x1);
-  const gint y = floor (y1);
-  const gint w = ceil (x2) - x;
-  const gint h = ceil (y2) - y;
-
-  gimp_display_shell_expose_area (shell,
-                                  x - border,
-                                  y - border,
-                                  w + 2 * border,
-                                  h + 2 * border);
-}
-
 void
-gimp_display_shell_expose_item (GimpDisplayShell *shell,
-                                GimpCanvasItem   *item)
+gimp_display_shell_expose_region (GimpDisplayShell *shell,
+                                  GdkRegion        *region)
 {
-  GdkRegion *region;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
+  g_return_if_fail (region != NULL);
 
-  region = gimp_canvas_item_get_extents (item);
-
-  if (region)
-    {
-      gdk_window_invalidate_region (gtk_widget_get_window (shell->canvas),
-                                    region, TRUE);
-      gdk_region_destroy (region);
-    }
+  gdk_window_invalidate_region (gtk_widget_get_window (shell->canvas),
+                                region, TRUE);
 }
 
 void
@@ -95,10 +67,21 @@ gimp_display_shell_expose_vectors (GimpDisplayShell *shell,
 
   if (gimp_vectors_bounds (vectors, &x1, &y1, &x2, &y2))
     {
+      gint x, y, w, h;
+
       gimp_display_shell_transform_xy_f (shell, x1, y1, &x1, &y1);
       gimp_display_shell_transform_xy_f (shell, x2, y2, &x2, &y2);
 
-      gimp_display_shell_expose_region (shell, x1, y1, x2, y2, 2);
+      x = floor (x1);
+      y = floor (y1);
+      w = ceil (x2) - x;
+      h = ceil (y2) - y;
+
+      gimp_display_shell_expose_area (shell,
+                                      x - 2,
+                                      y - 2,
+                                      w + 4,
+                                      h + 4);
     }
 }
 

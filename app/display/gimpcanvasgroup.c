@@ -72,6 +72,9 @@ static void        gimp_canvas_group_draw         (GimpCanvasItem   *item,
                                                    cairo_t          *cr);
 static GdkRegion * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
                                                    GimpDisplayShell *shell);
+static void        gimp_canvas_group_child_update (GimpCanvasItem   *item,
+                                                   GdkRegion        *region,
+                                                   GimpCanvasGroup  *group);
 
 
 G_DEFINE_TYPE (GimpCanvasGroup, gimp_canvas_group, GIMP_TYPE_CANVAS_ITEM)
@@ -222,6 +225,17 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
   return region;
 }
 
+static void
+gimp_canvas_group_child_update (GimpCanvasItem  *item,
+                                GdkRegion       *region,
+                                GimpCanvasGroup *group)
+{
+  g_signal_emit_by_name (group, "update", region);
+}
+
+
+/*  public functions  */
+
 GimpCanvasItem *
 gimp_canvas_group_new (GimpDisplayShell *shell)
 {
@@ -237,6 +251,7 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
                             GimpCanvasItem  *item)
 {
   GimpCanvasGroupPrivate *private;
+  GdkRegion              *region;
 
   g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
@@ -251,6 +266,18 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
     gimp_canvas_item_suspend_filling (item);
 
   private->items = g_list_append (private->items, g_object_ref (item));
+
+  region = gimp_canvas_item_get_extents (item);
+
+  if (region)
+    {
+      g_signal_emit_by_name (group, "update", region);
+      gdk_region_destroy (region);
+    }
+
+  g_signal_connect (item, "update",
+                    G_CALLBACK (gimp_canvas_group_child_update),
+                    group);
 }
 
 void
@@ -258,6 +285,7 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
                                GimpCanvasItem  *item)
 {
   GimpCanvasGroupPrivate *private;
+  GdkRegion              *region;
 
   g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
@@ -267,6 +295,19 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
   g_return_if_fail (g_list_find (private->items, item));
 
   private->items = g_list_remove (private->items, item);
+
+  region = gimp_canvas_item_get_extents (item);
+
+  if (region)
+    {
+      g_signal_emit_by_name (group, "update", region);
+      gdk_region_destroy (region);
+    }
+
+  g_signal_handlers_disconnect_by_func (item,
+                                        gimp_canvas_group_child_update,
+                                        group);
+
   g_object_unref (item);
 }
 

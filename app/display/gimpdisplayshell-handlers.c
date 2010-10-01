@@ -550,8 +550,6 @@ gimp_display_shell_guide_add_handler (GimpImage        *image,
 
   gimp_canvas_proxy_group_add_item (group, guide, item);
   g_object_unref (item);
-
-  gimp_display_shell_expose_item (shell, item);
 }
 
 static void
@@ -560,11 +558,6 @@ gimp_display_shell_guide_remove_handler (GimpImage        *image,
                                          GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
-  GimpCanvasItem       *item;
-
-  item = gimp_canvas_proxy_group_get_item (group, guide);
-
-  gimp_display_shell_expose_item (shell, item);
 
   gimp_canvas_proxy_group_remove_item (group, guide);
 }
@@ -579,14 +572,10 @@ gimp_display_shell_guide_move_handler (GimpImage        *image,
 
   item = gimp_canvas_proxy_group_get_item (group, guide);
 
-  gimp_display_shell_expose_item (shell, item);
-
   g_object_set (item,
                 "orientation", gimp_guide_get_orientation (guide),
                 "position",    gimp_guide_get_position (guide),
                 NULL);
-
-  gimp_display_shell_expose_item (shell, item);
 }
 
 static void
@@ -619,8 +608,6 @@ gimp_display_shell_sample_point_add_handler (GimpImage        *image,
       g_object_set (item,
                     "index", i,
                     NULL);
-
-      gimp_display_shell_expose_item (shell, item);
     }
 }
 
@@ -630,13 +617,8 @@ gimp_display_shell_sample_point_remove_handler (GimpImage        *image,
                                                 GimpDisplayShell *shell)
 {
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->sample_points);
-  GimpCanvasItem       *item;
   GList                *list;
   gint                  i;
-
-  item = gimp_canvas_proxy_group_get_item (group, sample_point);
-
-  gimp_display_shell_expose_item (shell, item);
 
   gimp_canvas_proxy_group_remove_item (group, sample_point);
 
@@ -645,14 +627,13 @@ gimp_display_shell_sample_point_remove_handler (GimpImage        *image,
        list = g_list_next (list), i++)
     {
       GimpSamplePoint *sample_point = list->data;
+      GimpCanvasItem  *item;
 
       item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
       g_object_set (item,
                     "index", i,
                     NULL);
-
-      gimp_display_shell_expose_item (shell, item);
     }
 }
 
@@ -666,14 +647,10 @@ gimp_display_shell_sample_point_move_handler (GimpImage        *image,
 
   item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
-  gimp_display_shell_expose_item (shell, item);
-
   g_object_set (item,
                 "x", sample_point->x,
                 "y", sample_point->y,
                 NULL);
-
-  gimp_display_shell_expose_item (shell, item);
 }
 
 static void

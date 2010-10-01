@@ -24,11 +24,59 @@
 
 #include "display-types.h"
 
-#include "gimpcanvasgroup.h"
+#include "gimpcanvasproxygroup.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-items.h"
 
+
+/*  local function prototypes  */
+
+static void   gimp_display_shell_item_update (GimpCanvasItem   *item,
+                                              GdkRegion        *region,
+                                              GimpDisplayShell *shell);
+
+
+/*  public functions  */
+
+void
+gimp_display_shell_items_init (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  shell->canvas_item = gimp_canvas_group_new (shell);
+
+  shell->guides = gimp_canvas_proxy_group_new (shell);
+  gimp_display_shell_add_item (shell, shell->guides);
+  g_object_unref (shell->guides);
+
+  shell->sample_points = gimp_canvas_proxy_group_new (shell);
+  gimp_display_shell_add_item (shell, shell->sample_points);
+  g_object_unref (shell->sample_points);
+
+  g_signal_connect (shell->canvas_item, "update",
+                    G_CALLBACK (gimp_display_shell_item_update),
+                    shell);
+}
+
+void
+gimp_display_shell_items_free (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->canvas_item)
+    {
+      g_signal_handlers_disconnect_by_func (shell->canvas_item,
+                                            gimp_display_shell_item_update,
+                                            shell);
+
+      g_object_unref (shell->canvas_item);
+      shell->canvas_item = NULL;
+
+      shell->guides        = NULL;
+      shell->sample_points = NULL;
+    }
+}
 
 void
 gimp_display_shell_add_item (GimpDisplayShell *shell,
@@ -38,8 +86,6 @@ gimp_display_shell_add_item (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item), item);
-
-  gimp_display_shell_expose_item (shell, item);
 }
 
 void
@@ -49,7 +95,16 @@ gimp_display_shell_remove_item (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
-  gimp_display_shell_expose_item (shell, item);
-
   gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (shell->canvas_item), item);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_display_shell_item_update (GimpCanvasItem   *item,
+                                GdkRegion        *region,
+                                GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_region (shell, region);
 }
