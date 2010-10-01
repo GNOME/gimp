@@ -100,8 +100,10 @@ enum
   DIRTY,
   SAVED,
   EXPORTED,
-  UPDATE_GUIDE,
   UPDATE_VECTORS,
+  GUIDE_ADDED,
+  GUIDE_REMOVED,
+  GUIDE_MOVED,
   SAMPLE_POINT_ADDED,
   SAMPLE_POINT_REMOVED,
   SAMPLE_POINT_MOVED,
@@ -422,16 +424,6 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_STRING);
 
-  gimp_image_signals[UPDATE_GUIDE] =
-    g_signal_new ("update-guide",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, update_guide),
-                  NULL, NULL,
-                  gimp_marshal_VOID__POINTER,
-                  G_TYPE_NONE, 1,
-                  G_TYPE_POINTER);
-
   gimp_image_signals[UPDATE_VECTORS] =
     g_signal_new ("update-vectors",
                   G_TYPE_FROM_CLASS (klass),
@@ -441,6 +433,36 @@ gimp_image_class_init (GimpImageClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_VECTORS);
+
+  gimp_image_signals[GUIDE_ADDED] =
+    g_signal_new ("guide-added",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, guide_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_GUIDE);
+
+  gimp_image_signals[GUIDE_REMOVED] =
+    g_signal_new ("guide-removed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, guide_removed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_GUIDE);
+
+  gimp_image_signals[GUIDE_MOVED] =
+    g_signal_new ("guide-moved",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, guide_moved),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GIMP_TYPE_GUIDE);
 
   gimp_image_signals[SAMPLE_POINT_ADDED] =
     g_signal_new ("sample-point-added",
@@ -551,8 +573,10 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->dirty                        = NULL;
   klass->saved                        = NULL;
   klass->exported                     = NULL;
-  klass->update_guide                 = NULL;
   klass->update_vectors               = NULL;
+  klass->guide_added                  = NULL;
+  klass->guide_removed                = NULL;
+  klass->guide_moved                  = NULL;
   klass->sample_point_added           = NULL;
   klass->sample_point_removed         = NULL;
   klass->sample_point_moved           = NULL;
@@ -2090,16 +2114,6 @@ gimp_image_invalidate (GimpImage *image,
 }
 
 void
-gimp_image_update_guide (GimpImage *image,
-                         GimpGuide *guide)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (guide != NULL);
-
-  g_signal_emit (image, gimp_image_signals[UPDATE_GUIDE], 0, guide);
-}
-
-void
 gimp_image_update_vectors (GimpImage   *image,
                            GimpVectors *vectors)
 {
@@ -2108,6 +2122,39 @@ gimp_image_update_vectors (GimpImage   *image,
 
   g_signal_emit (image, gimp_image_signals[UPDATE_VECTORS], 0,
                  vectors);
+}
+
+void
+gimp_image_guide_added (GimpImage *image,
+                        GimpGuide *guide)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  g_signal_emit (image, gimp_image_signals[GUIDE_ADDED], 0,
+                 guide);
+}
+
+void
+gimp_image_guide_removed (GimpImage *image,
+                          GimpGuide *guide)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  g_signal_emit (image, gimp_image_signals[GUIDE_REMOVED], 0,
+                 guide);
+}
+
+void
+gimp_image_guide_moved (GimpImage *image,
+                        GimpGuide *guide)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_GUIDE (guide));
+
+  g_signal_emit (image, gimp_image_signals[GUIDE_MOVED], 0,
+                 guide);
 }
 
 void

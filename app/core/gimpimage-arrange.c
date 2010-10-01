@@ -171,12 +171,10 @@ gimp_image_arrange_objects (GimpImage         *image,
                 {
                 case GIMP_ORIENTATION_VERTICAL:
                   gimp_image_move_guide (image, guide, z1 + xtranslate, TRUE);
-                  gimp_image_update_guide (image, guide);
                   break;
 
                 case GIMP_ORIENTATION_HORIZONTAL:
                   gimp_image_move_guide (image, guide, z1 + ytranslate, TRUE);
-                  gimp_image_update_guide (image, guide);
                   break;
 
                 default:

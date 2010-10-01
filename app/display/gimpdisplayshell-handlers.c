@@ -34,6 +34,7 @@
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-quick-mask.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
@@ -93,7 +94,13 @@ static void   gimp_display_shell_resolution_changed_handler (GimpImage        *i
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_update_guide_handler       (GimpImage        *image,
+static void   gimp_display_shell_guide_add_handler          (GimpImage        *image,
+                                                             GimpGuide        *guide,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_guide_remove_handler       (GimpImage        *image,
+                                                             GimpGuide        *guide,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_guide_move_handler         (GimpImage        *image,
                                                              GimpGuide        *guide,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_sample_point_add_handler   (GimpImage        *image,
@@ -187,9 +194,22 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "quick-mask-changed",
                     G_CALLBACK (gimp_display_shell_quick_mask_changed_handler),
                     shell);
-  g_signal_connect (image, "update-guide",
-                    G_CALLBACK (gimp_display_shell_update_guide_handler),
+
+  g_signal_connect (image, "guide-added",
+                    G_CALLBACK (gimp_display_shell_guide_add_handler),
                     shell);
+  g_signal_connect (image, "guide-removed",
+                    G_CALLBACK (gimp_display_shell_guide_remove_handler),
+                    shell);
+  g_signal_connect (image, "guide-moved",
+                    G_CALLBACK (gimp_display_shell_guide_move_handler),
+                    shell);
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_display_shell_guide_add_handler (image, list->data, shell);
+    }
 
   g_signal_connect (image, "sample-point-added",
                     G_CALLBACK (gimp_display_shell_sample_point_add_handler),
@@ -348,9 +368,23 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_invalidate_preview_handler,
                                         shell);
+
   g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_shell_update_guide_handler,
+                                        gimp_display_shell_guide_add_handler,
                                         shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_guide_remove_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_guide_move_handler,
+                                        shell);
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_canvas_proxy_group_remove_item (GIMP_CANVAS_PROXY_GROUP (shell->guides),
+                                           list->data);
+    }
 
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_sample_point_add_handler,
@@ -502,19 +536,56 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
 }
 
 static void
-gimp_display_shell_update_guide_handler (GimpImage        *image,
-                                         GimpGuide        *guide,
-                                         GimpDisplayShell *shell)
+gimp_display_shell_guide_add_handler (GimpImage        *image,
+                                      GimpGuide        *guide,
+                                      GimpDisplayShell *shell)
 {
-  GimpCanvasItem *item;
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
+  GimpCanvasItem       *item;
 
   item = gimp_canvas_guide_new (gimp_guide_get_orientation (guide),
                                 gimp_guide_get_position (guide));
   g_object_set (item, "guide-style", TRUE, NULL);
 
+  gimp_canvas_proxy_group_add_item (group, guide, item);
+  g_object_unref (item);
+
+  gimp_display_shell_expose_item (shell, item);
+}
+
+static void
+gimp_display_shell_guide_remove_handler (GimpImage        *image,
+                                         GimpGuide        *guide,
+                                         GimpDisplayShell *shell)
+{
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
+  GimpCanvasItem       *item;
+
+  item = gimp_canvas_proxy_group_get_item (group, guide);
+
   gimp_display_shell_expose_item (shell, item);
 
-  g_object_unref (item);
+  gimp_canvas_proxy_group_remove_item (group, guide);
+}
+
+static void
+gimp_display_shell_guide_move_handler (GimpImage        *image,
+                                       GimpGuide        *guide,
+                                       GimpDisplayShell *shell)
+{
+  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
+  GimpCanvasItem       *item;
+
+  item = gimp_canvas_proxy_group_get_item (group, guide);
+
+  gimp_display_shell_expose_item (shell, item);
+
+  g_object_set (item,
+                "orientation", gimp_guide_get_orientation (guide),
+                "position",    gimp_guide_get_position (guide),
+                NULL);
+
+  gimp_display_shell_expose_item (shell, item);
 }
 
 static void

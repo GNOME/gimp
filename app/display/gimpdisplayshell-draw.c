@@ -27,16 +27,13 @@
 
 #include "display-types.h"
 
-#include "base/boundary.h"
 #include "base/tile-manager.h"
 
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrid.h"
-#include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
-#include "core/gimpimage-guides.h"
 #include "core/gimpprojection.h"
 
 #include "vectors/gimpstroke.h"
@@ -46,7 +43,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
-#include "gimpcanvasguide.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -125,48 +121,6 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 
   if (w) *w = PROJ_ROUND (level_width  * (scale_x * (1 << level)));
   if (h) *h = PROJ_ROUND (level_height * (scale_y * (1 << level)));
-}
-
-void
-gimp_display_shell_draw_guides (GimpDisplayShell *shell,
-                                cairo_t          *cr)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_display_shell_get_show_guides (shell))
-    {
-      GimpCanvasItem *item;
-      GList          *list;
-
-      item = gimp_canvas_guide_new (GIMP_ORIENTATION_HORIZONTAL, 0);
-      g_object_set (item, "guide-style", TRUE, NULL);
-
-      for (list = gimp_image_get_guides (image);
-           list;
-           list = g_list_next (list))
-        {
-          GimpGuide *guide = list->data;
-          gint       position;
-
-          position = gimp_guide_get_position (guide);
-
-          if (position >= 0)
-            {
-              g_object_set (item,
-                            "orientation", gimp_guide_get_orientation (guide),
-                            "position",    position,
-                            NULL);
-              gimp_canvas_item_draw (item, shell, cr);
-            }
-        }
-
-      g_object_unref (item);
-    }
 }
 
 void

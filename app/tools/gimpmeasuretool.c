@@ -224,9 +224,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
             {
               if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
                 {
-                  GimpGuide *guide;
-                  gboolean   create_hguide;
-                  gboolean   create_vguide;
+                  gboolean create_hguide;
+                  gboolean create_vguide;
 
                   create_hguide = ((state & GDK_CONTROL_MASK) &&
                                    (measure->y[i] ==
@@ -240,32 +239,24 @@ gimp_measure_tool_button_press (GimpTool            *tool,
                                            0,
                                            gimp_image_get_width (image))));
 
-                  if (create_hguide && create_vguide)
-                    gimp_image_undo_group_start (image,
-                                                 GIMP_UNDO_GROUP_GUIDE,
-                                                 _("Add Guides"));
-
-                  if (create_hguide)
-                    {
-                      guide = gimp_image_add_hguide (image,
-                                                     measure->y[i],
-                                                     TRUE);
-                      gimp_image_update_guide (image, guide);
-                    }
-
-                  if (create_vguide)
-                    {
-                      guide = gimp_image_add_vguide (image,
-                                                     measure->x[i],
-                                                     TRUE);
-                      gimp_image_update_guide (image, guide);
-                    }
-
-                  if (create_hguide && create_vguide)
-                    gimp_image_undo_group_end (image);
-
                   if (create_hguide || create_vguide)
-                    gimp_image_flush (image);
+                    {
+                      if (create_hguide && create_vguide)
+                        gimp_image_undo_group_start (image,
+                                                     GIMP_UNDO_GROUP_GUIDE,
+                                                     _("Add Guides"));
+
+                      if (create_hguide)
+                        gimp_image_add_hguide (image, measure->y[i], TRUE);
+
+                      if (create_vguide)
+                        gimp_image_add_vguide (image, measure->x[i], TRUE);
+
+                      if (create_hguide && create_vguide)
+                        gimp_image_undo_group_end (image);
+
+                      gimp_image_flush (image);
+                    }
 
                   measure->function = GUIDING;
                   break;
