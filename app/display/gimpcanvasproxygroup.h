@@ -55,8 +55,7 @@ void             gimp_canvas_proxy_group_add_item    (GimpCanvasProxyGroup *grou
                                                       gpointer              object,
                                                       GimpCanvasItem       *proxy_item);
 void             gimp_canvas_proxy_group_remove_item (GimpCanvasProxyGroup *group,
-                                                      gpointer              object,
-                                                      GimpCanvasItem       *proxy_item);
+                                                      gpointer              object);
 GimpCanvasItem * gimp_canvas_proxy_group_get_item    (GimpCanvasProxyGroup *group,
                                                       gpointer              object);
 

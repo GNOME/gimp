@@ -169,19 +169,19 @@ gimp_canvas_proxy_group_add_item (GimpCanvasProxyGroup *group,
 
 void
 gimp_canvas_proxy_group_remove_item (GimpCanvasProxyGroup *group,
-                                     gpointer              object,
-                                     GimpCanvasItem       *proxy_item)
+                                     gpointer              object)
 {
   GimpCanvasProxyGroupPrivate *private;
+  GimpCanvasItem              *proxy_item;
 
   g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
   g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_CANVAS_ITEM (proxy_item));
 
   private = GET_PRIVATE (group);
 
-  g_return_if_fail (g_hash_table_lookup (private->proxy_hash, object) ==
-                    proxy_item);
+  proxy_item = g_hash_table_lookup (private->proxy_hash, object);
+
+  g_return_if_fail (proxy_item != NULL);
 
   g_hash_table_remove (private->proxy_hash, object);
 
