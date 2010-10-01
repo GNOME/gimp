@@ -750,11 +750,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
       GimpCanvasItem *stroke_group;
       GimpCanvasItem *item;
 
-      stroke_group = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
-      gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
-                                            TRUE);
-      gimp_draw_tool_add_item (draw_tool, stroke_group);
-      g_object_unref (stroke_group);
+      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
       /*  draw the bounding box  */
       item = gimp_draw_tool_add_line (draw_tool,

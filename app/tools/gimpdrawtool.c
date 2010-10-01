@@ -362,6 +362,38 @@ gimp_draw_tool_remove_item (GimpDrawTool   *draw_tool,
   gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
 }
 
+GimpCanvasItem *
+gimp_draw_tool_add_stroke_group (GimpDrawTool *draw_tool)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+
+  item = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
+  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (item), TRUE);
+
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_draw_tool_add_fill_group (GimpDrawTool *draw_tool)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+
+  item = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
+  gimp_canvas_group_set_group_filling (GIMP_CANVAS_GROUP (item), TRUE);
+
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
 /**
  * gimp_draw_tool_add_line:
  * @draw_tool:   the #GimpDrawTool

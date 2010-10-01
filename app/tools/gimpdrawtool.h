@@ -84,6 +84,9 @@ void             gimp_draw_tool_add_item             (GimpDrawTool     *draw_too
 void             gimp_draw_tool_remove_item          (GimpDrawTool     *draw_tool,
                                                       GimpCanvasItem   *item);
 
+GimpCanvasItem * gimp_draw_tool_add_stroke_group     (GimpDrawTool     *draw_tool);
+GimpCanvasItem * gimp_draw_tool_add_fill_group       (GimpDrawTool     *draw_tool);
+
 GimpCanvasItem * gimp_draw_tool_add_line             (GimpDrawTool     *draw_tool,
                                                       gdouble           x1,
                                                       gdouble           y1,

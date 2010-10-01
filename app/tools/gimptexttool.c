@@ -833,10 +833,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   gint             min, max;
   gint             i;
 
-  fill_group = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
-  gimp_canvas_group_set_group_filling (GIMP_CANVAS_GROUP (fill_group), TRUE);
-  gimp_draw_tool_add_item (draw_tool, fill_group);
-  g_object_unref (fill_group);
+  fill_group = gimp_draw_tool_add_fill_group (draw_tool);
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
