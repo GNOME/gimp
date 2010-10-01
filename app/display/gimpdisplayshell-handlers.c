@@ -543,7 +543,8 @@ gimp_display_shell_guide_add_handler (GimpImage        *image,
   GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->guides);
   GimpCanvasItem       *item;
 
-  item = gimp_canvas_guide_new (gimp_guide_get_orientation (guide),
+  item = gimp_canvas_guide_new (shell,
+                                gimp_guide_get_orientation (guide),
                                 gimp_guide_get_position (guide));
   g_object_set (item, "guide-style", TRUE, NULL);
 
@@ -598,7 +599,8 @@ gimp_display_shell_sample_point_add_handler (GimpImage        *image,
   GList                *list;
   gint                  i;
 
-  item = gimp_canvas_sample_point_new (sample_point->x,
+  item = gimp_canvas_sample_point_new (shell,
+                                       sample_point->x,
                                        sample_point->y,
                                        0);
   g_object_set (item, "sample-point-style", TRUE, NULL);

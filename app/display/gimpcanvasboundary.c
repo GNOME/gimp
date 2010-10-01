@@ -290,15 +290,19 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_boundary_new (const BoundSeg *segs,
-                          gint            n_segs,
-                          gdouble         offset_x,
-                          gdouble         offset_y)
+gimp_canvas_boundary_new (GimpDisplayShell *shell,
+                          const BoundSeg   *segs,
+                          gint              n_segs,
+                          gdouble           offset_x,
+                          gdouble           offset_y)
 {
   GimpCanvasItem            *item;
   GimpCanvasBoundaryPrivate *private;
 
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   item = g_object_new (GIMP_TYPE_CANVAS_BOUNDARY,
+                       "shell",    shell,
                        "offset-x", offset_x,
                        "offset-y", offset_y,
                        NULL);

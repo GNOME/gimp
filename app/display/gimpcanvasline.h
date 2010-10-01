@@ -49,10 +49,11 @@ struct _GimpCanvasLineClass
 
 GType            gimp_canvas_line_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_line_new      (gdouble  x1,
-                                            gdouble  y1,
-                                            gdouble  x2,
-                                            gdouble  y2);
+GimpCanvasItem * gimp_canvas_line_new      (GimpDisplayShell *shell,
+                                            gdouble           x1,
+                                            gdouble           y1,
+                                            gdouble           x2,
+                                            gdouble           y2);
 
 
 #endif /* __GIMP_CANVAS_LINE_H__ */

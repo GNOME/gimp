@@ -35,6 +35,7 @@
 enum
 {
   PROP_0,
+  PROP_SHELL,
   PROP_LINE_CAP,
   PROP_HIGHLIGHT
 };
@@ -44,10 +45,11 @@ typedef struct _GimpCanvasItemPrivate GimpCanvasItemPrivate;
 
 struct _GimpCanvasItemPrivate
 {
-  cairo_line_cap_t line_cap;
-  gboolean         highlight;
-  gint             suspend_stroking;
-  gint             suspend_filling;
+  GimpDisplayShell *shell;
+  cairo_line_cap_t  line_cap;
+  gboolean          highlight;
+  gint              suspend_stroking;
+  gint              suspend_filling;
 };
 
 #define GET_PRIVATE(item) \
@@ -58,6 +60,7 @@ struct _GimpCanvasItemPrivate
 
 /*  local function prototypes  */
 
+static void        gimp_canvas_item_constructed      (GObject          *object);
 static void        gimp_canvas_item_set_property     (GObject          *object,
                                                       guint             property_id,
                                                       const GValue     *value,
@@ -91,6 +94,7 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed  = gimp_canvas_item_constructed;
   object_class->set_property = gimp_canvas_item_set_property;
   object_class->get_property = gimp_canvas_item_get_property;
 
@@ -98,6 +102,13 @@ gimp_canvas_item_class_init (GimpCanvasItemClass *klass)
   klass->get_extents         = gimp_canvas_item_real_get_extents;
   klass->stroke              = gimp_canvas_item_real_stroke;
   klass->fill                = gimp_canvas_item_real_fill;
+
+  g_object_class_install_property (object_class, PROP_SHELL,
+                                   g_param_spec_object ("shell",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_DISPLAY_SHELL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_LINE_CAP,
                                    g_param_spec_int ("line-cap",
@@ -121,10 +132,22 @@ gimp_canvas_item_init (GimpCanvasItem *item)
 {
   GimpCanvasItemPrivate *private = GET_PRIVATE (item);
 
+  private->shell            = NULL;
   private->line_cap         = CAIRO_LINE_CAP_ROUND;
   private->highlight        = FALSE;
   private->suspend_stroking = 0;
   private->suspend_filling  = 0;
+}
+
+static void
+gimp_canvas_item_constructed (GObject *object)
+{
+  GimpCanvasItemPrivate *private = GET_PRIVATE (object);
+
+  g_assert (GIMP_IS_DISPLAY_SHELL (private->shell));
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void
@@ -137,6 +160,9 @@ gimp_canvas_item_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_SHELL:
+      private->shell = g_value_get_object (value); /* don't ref */
+      break;
     case PROP_LINE_CAP:
       private->line_cap = g_value_get_int (value);
       break;
@@ -160,6 +186,9 @@ gimp_canvas_item_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_SHELL:
+      g_value_set_object (value, private->shell);
+      break;
     case PROP_LINE_CAP:
       g_value_set_int (value, private->line_cap);
       break;

@@ -305,15 +305,19 @@ gimp_canvas_arc_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_arc_new (gdouble  center_x,
-                     gdouble  center_y,
-                     gdouble  radius_x,
-                     gdouble  radius_y,
-                     gdouble  start_angle,
-                     gdouble  slice_angle,
-                     gboolean filled)
+gimp_canvas_arc_new (GimpDisplayShell *shell,
+                     gdouble          center_x,
+                     gdouble          center_y,
+                     gdouble          radius_x,
+                     gdouble          radius_y,
+                     gdouble          start_angle,
+                     gdouble          slice_angle,
+                     gboolean         filled)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_ARC,
+                       "shell",       shell,
                        "center-x",    center_x,
                        "center-y",    center_y,
                        "radius-x",    radius_x,

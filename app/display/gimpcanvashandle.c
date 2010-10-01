@@ -504,14 +504,18 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_handle_new (GimpHandleType  type,
-                        GtkAnchorType   anchor,
-                        gdouble         x,
-                        gdouble         y,
-                        gint            width,
-                        gint            height)
+gimp_canvas_handle_new (GimpDisplayShell *shell,
+                        GimpHandleType    type,
+                        GtkAnchorType     anchor,
+                        gdouble           x,
+                        gdouble           y,
+                        gint              width,
+                        gint              height)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_HANDLE,
+                       "shell",  shell,
                        "type",   type,
                        "anchor", anchor,
                        "x",      x,

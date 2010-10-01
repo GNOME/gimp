@@ -49,7 +49,7 @@ struct _GimpCanvasProxyGroupClass
 
 GType            gimp_canvas_proxy_group_get_type    (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_proxy_group_new         (void);
+GimpCanvasItem * gimp_canvas_proxy_group_new         (GimpDisplayShell     *shell);
 
 void             gimp_canvas_proxy_group_add_item    (GimpCanvasProxyGroup *group,
                                                       gpointer              object,

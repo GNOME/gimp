@@ -294,10 +294,15 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_text_cursor_new (PangoRectangle *cursor,
-                             gboolean        overwrite)
+gimp_canvas_text_cursor_new (GimpDisplayShell *shell,
+                             PangoRectangle   *cursor,
+                             gboolean          overwrite)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (cursor != NULL, NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_TEXT_CURSOR,
+                       "shell",     shell,
                        "x",         cursor->x,
                        "y",         cursor->y,
                        "width",     cursor->width,

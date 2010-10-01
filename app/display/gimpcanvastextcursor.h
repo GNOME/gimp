@@ -49,8 +49,9 @@ struct _GimpCanvasTextCursorClass
 
 GType            gimp_canvas_text_cursor_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_text_cursor_new      (PangoRectangle *cursor,
-                                                   gboolean        overwrite);
+GimpCanvasItem * gimp_canvas_text_cursor_new      (GimpDisplayShell *shell,
+                                                   PangoRectangle   *cursor,
+                                                   gboolean          overwrite);
 
 
 #endif /* __GIMP_CANVAS_RECTANGLE_H__ */

@@ -264,10 +264,14 @@ gimp_canvas_guide_stroke (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_guide_new (GimpOrientationType  orientation,
+gimp_canvas_guide_new (GimpDisplayShell    *shell,
+                       GimpOrientationType  orientation,
                        gint                 position)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_GUIDE,
+                       "shell",       shell,
                        "orientation", orientation,
                        "position",    position,
                        NULL);

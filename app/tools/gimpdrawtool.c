@@ -346,7 +346,7 @@ gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   if (! draw_tool->item)
-    draw_tool->item = gimp_canvas_group_new ();
+    draw_tool->item = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
 
   gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
 }
@@ -385,7 +385,8 @@ gimp_draw_tool_add_line (GimpDrawTool *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_line_new (x1, y1, x2, y2);
+  item = gimp_canvas_line_new (gimp_display_get_shell (draw_tool->display),
+                               x1, y1, x2, y2);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -410,7 +411,8 @@ gimp_draw_tool_add_guide (GimpDrawTool        *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_guide_new (orientation, position);
+  item = gimp_canvas_guide_new (gimp_display_get_shell (draw_tool->display),
+                                orientation, position);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -437,7 +439,8 @@ gimp_draw_tool_add_sample_point (GimpDrawTool *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_sample_point_new (x, y, index);
+  item = gimp_canvas_sample_point_new (gimp_display_get_shell (draw_tool->display),
+                                       x, y, index);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -469,7 +472,8 @@ gimp_draw_tool_add_rectangle (GimpDrawTool *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_rectangle_new (x, y, width, height, filled);
+  item = gimp_canvas_rectangle_new (gimp_display_get_shell (draw_tool->display),
+                                    x, y, width, height, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -491,7 +495,8 @@ gimp_draw_tool_add_arc (GimpDrawTool *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_arc_new (x + width  / 2.0,
+  item = gimp_canvas_arc_new (gimp_display_get_shell (draw_tool->display),
+                              x + width  / 2.0,
                               y + height / 2.0,
                               width  / 2.0,
                               height / 2.0,
@@ -518,7 +523,8 @@ gimp_draw_tool_add_handle (GimpDrawTool   *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_handle_new (type, anchor, x, y, width, height);
+  item = gimp_canvas_handle_new (gimp_display_get_shell (draw_tool->display),
+                                 type, anchor, x, y, width, height);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -559,7 +565,8 @@ gimp_draw_tool_add_corner (GimpDrawTool   *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_corner_new (x1, y1, x2 - x1, y2 - y1,
+  item = gimp_canvas_corner_new (gimp_display_get_shell (draw_tool->display),
+                                 x1, y1, x2 - x1, y2 - y1,
                                  anchor, width, height, put_outside);
   gimp_canvas_item_set_highlight (item, highlight);
 
@@ -582,7 +589,8 @@ gimp_draw_tool_add_lines (GimpDrawTool      *draw_tool,
   if (points == NULL || n_points < 2)
     return NULL;
 
-  item = gimp_canvas_polygon_new (points, n_points, filled);
+  item = gimp_canvas_polygon_new (gimp_display_get_shell (draw_tool->display),
+                                  points, n_points, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -603,7 +611,8 @@ gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
   if (points == NULL || n_points < 2)
     return NULL;
 
-  item = gimp_canvas_polygon_new_from_coords (points, n_points, filled);
+  item = gimp_canvas_polygon_new_from_coords (gimp_display_get_shell (draw_tool->display),
+                                              points, n_points, filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -637,7 +646,8 @@ gimp_draw_tool_add_boundary (GimpDrawTool   *draw_tool,
   g_return_val_if_fail (n_bound_segs > 0, NULL);
   g_return_val_if_fail (bound_segs != NULL, NULL);
 
-  item = gimp_canvas_boundary_new (bound_segs, n_bound_segs,
+  item = gimp_canvas_boundary_new (gimp_display_get_shell (draw_tool->display),
+                                   bound_segs, n_bound_segs,
                                    offset_x, offset_y);
 
   gimp_draw_tool_add_item (draw_tool, item);
@@ -655,7 +665,8 @@ gimp_draw_tool_add_text_cursor (GimpDrawTool   *draw_tool,
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
-  item = gimp_canvas_text_cursor_new (cursor, overwrite);
+  item = gimp_canvas_text_cursor_new (gimp_display_get_shell (draw_tool->display),
+                                      cursor, overwrite);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

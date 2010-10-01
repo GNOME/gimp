@@ -322,13 +322,17 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_rectangle_new (gdouble  x,
-                           gdouble  y,
-                           gdouble  width,
-                           gdouble  height,
-                           gboolean filled)
+gimp_canvas_rectangle_new (GimpDisplayShell *shell,
+                           gdouble           x,
+                           gdouble           y,
+                           gdouble           width,
+                           gdouble           height,
+                           gboolean          filled)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_RECTANGLE,
+                       "shell",  shell,
                        "x",      x,
                        "y",      y,
                        "width",  width,

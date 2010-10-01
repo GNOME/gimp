@@ -140,9 +140,13 @@ gimp_canvas_proxy_group_get_property (GObject    *object,
 }
 
 GimpCanvasItem *
-gimp_canvas_proxy_group_new (void)
+gimp_canvas_proxy_group_new (GimpDisplayShell *shell)
 {
-  return g_object_new (GIMP_TYPE_CANVAS_PROXY_GROUP, NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  return g_object_new (GIMP_TYPE_CANVAS_PROXY_GROUP,
+                       "shell", shell,
+                       NULL);
 }
 
 void

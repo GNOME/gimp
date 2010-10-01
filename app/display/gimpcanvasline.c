@@ -251,15 +251,19 @@ gimp_canvas_line_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_line_new (gdouble  x1,
-                      gdouble  y1,
-                      gdouble  x2,
-                      gdouble  y2)
+gimp_canvas_line_new (GimpDisplayShell *shell,
+                      gdouble           x1,
+                      gdouble           y1,
+                      gdouble           x2,
+                      gdouble           y2)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_LINE,
-                       "x1", x1,
-                       "y1", y1,
-                       "x2", x2,
-                       "y2", y2,
+                       "shell", shell,
+                       "x1",    x1,
+                       "y1",    y1,
+                       "x2",    x2,
+                       "y2",    y2,
                        NULL);
 }

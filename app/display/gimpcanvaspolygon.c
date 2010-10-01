@@ -263,14 +263,19 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_polygon_new (const GimpVector2 *points,
+gimp_canvas_polygon_new (GimpDisplayShell  *shell,
+                         const GimpVector2 *points,
                          gint               n_points,
                          gboolean           filled)
 {
   GimpCanvasItem           *item;
   GimpCanvasPolygonPrivate *private;
 
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (points != NULL && n_points > 1, NULL);
+
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+                       "shell",  shell,
                        "filled", filled,
                        NULL);
   private = GET_PRIVATE (item);
@@ -283,7 +288,8 @@ gimp_canvas_polygon_new (const GimpVector2 *points,
 }
 
 GimpCanvasItem *
-gimp_canvas_polygon_new_from_coords (const GimpCoords *points,
+gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
+                                     const GimpCoords *points,
                                      gint              n_points,
                                      gboolean          filled)
 {
@@ -291,7 +297,11 @@ gimp_canvas_polygon_new_from_coords (const GimpCoords *points,
   GimpCanvasPolygonPrivate *private;
   gint                      i;
 
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (points != NULL && n_points > 1, NULL);
+
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+                       "shell",  shell,
                        "filled", filled,
                        NULL);
   private = GET_PRIVATE (item);

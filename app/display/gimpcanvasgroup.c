@@ -224,9 +224,13 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_group_new (void)
+gimp_canvas_group_new (GimpDisplayShell *shell)
 {
-  return g_object_new (GIMP_TYPE_CANVAS_GROUP, NULL);
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  return g_object_new (GIMP_TYPE_CANVAS_GROUP,
+                       "shell", shell,
+                       NULL);
 }
 
 void

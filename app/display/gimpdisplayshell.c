@@ -291,14 +291,14 @@ gimp_display_shell_init (GimpDisplayShell *shell)
                                                       GIMP_DISPLAY_RENDER_BUF_WIDTH,
                                                       GIMP_DISPLAY_RENDER_BUF_HEIGHT);
 
-  shell->canvas_item = gimp_canvas_group_new ();
+  shell->canvas_item = gimp_canvas_group_new (shell);
 
-  shell->guides = gimp_canvas_proxy_group_new ();
+  shell->guides = gimp_canvas_proxy_group_new (shell);
   gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
                               shell->guides);
   g_object_unref (shell->guides);
 
-  shell->sample_points = gimp_canvas_proxy_group_new ();
+  shell->sample_points = gimp_canvas_proxy_group_new (shell);
   gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (shell->canvas_item),
                               shell->sample_points);
   g_object_unref (shell->sample_points);

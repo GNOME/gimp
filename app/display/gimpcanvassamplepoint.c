@@ -323,11 +323,15 @@ gimp_canvas_sample_point_fill (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_sample_point_new (gint x,
-                              gint y,
-                              gint index)
+gimp_canvas_sample_point_new (GimpDisplayShell *shell,
+                              gint              x,
+                              gint              y,
+                              gint              index)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_SAMPLE_POINT,
+                       "shell", shell,
                        "x",     x,
                        "y",     y,
                        "index", index,

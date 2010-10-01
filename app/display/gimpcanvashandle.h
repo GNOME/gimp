@@ -49,7 +49,8 @@ struct _GimpCanvasHandleClass
 
 GType            gimp_canvas_handle_get_type   (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_handle_new        (GimpHandleType    type,
+GimpCanvasItem * gimp_canvas_handle_new        (GimpDisplayShell *shell,
+                                                GimpHandleType    type,
                                                 GtkAnchorType     anchor,
                                                 gdouble           x,
                                                 gdouble           y,

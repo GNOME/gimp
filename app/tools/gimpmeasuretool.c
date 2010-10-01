@@ -660,7 +660,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
   gint             i;
   gint             draw_arc = 0;
 
-  stroke_group = gimp_canvas_group_new ();
+  stroke_group = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
   gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
                                         TRUE);
   gimp_draw_tool_add_item (draw_tool, stroke_group);

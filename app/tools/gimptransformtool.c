@@ -785,7 +785,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpCanvasItem    *item;
   gdouble            z1, z2, z3, z4;
 
-  stroke_group = gimp_canvas_group_new ();
+  stroke_group = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
   gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
                                         TRUE);
   gimp_draw_tool_add_item (draw_tool, stroke_group);

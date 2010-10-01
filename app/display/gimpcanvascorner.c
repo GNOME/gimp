@@ -427,16 +427,20 @@ gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_corner_new (gdouble       x,
-                        gdouble       y,
-                        gdouble       width,
-                        gdouble       height,
-                        GtkAnchorType anchor,
-                        gint          corner_width,
-                        gint          corner_height,
-                        gboolean      outside)
+gimp_canvas_corner_new (GimpDisplayShell *shell,
+                        gdouble           x,
+                        gdouble           y,
+                        gdouble           width,
+                        gdouble           height,
+                        GtkAnchorType     anchor,
+                        gint              corner_width,
+                        gint              corner_height,
+                        gboolean          outside)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_CORNER,
+                       "shell",         shell,
                        "x",             x,
                        "y",             y,
                        "width",         width,
