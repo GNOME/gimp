@@ -37,6 +37,8 @@ libappdisplay_a_sources = \
 	gimpcanvashandle.h			\
 	gimpcanvasitem.c			\
 	gimpcanvasitem.h			\
+	gimpcanvaslayerboundary.c		\
+	gimpcanvaslayerboundary.h		\
 	gimpcanvasline.c			\
 	gimpcanvasline.h			\
 	gimpcanvaspolygon.c			\

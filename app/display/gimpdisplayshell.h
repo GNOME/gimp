@@ -139,6 +139,7 @@ struct _GimpDisplayShell
   GimpCanvasItem    *grid;             /*  item proxy of the grid             */
   GimpCanvasItem    *guides;           /*  item proxies of guides             */
   GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
+  GimpCanvasItem    *layer_boundary;   /*  item for the layer boundary        */
   GimpCanvasItem    *cursor;           /*  item for the software cursor       */
 
   guint              title_idle_id;    /*  title update idle ID               */

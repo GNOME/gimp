@@ -46,6 +46,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvasguide.h"
+#include "gimpcanvaslayerboundary.h"
 #include "gimpcanvasproxygroup.h"
 #include "gimpcanvassamplepoint.h"
 #include "gimpdisplay.h"
@@ -312,6 +313,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 
   gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
+
+  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                        gimp_image_get_active_layer (image));
 }
 
 void
@@ -328,6 +332,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   gimp_display_shell_icon_update_stop (shell);
+
+  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                        NULL);
 
   g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_quality_notify_handler,

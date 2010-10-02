@@ -35,11 +35,6 @@ void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
                                                       GimpContext        *context,
                                                       GimpActiveColor     color,
                                                       gint                width);
-void   gimp_display_shell_draw_layer_boundary        (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      GimpDrawable       *drawable,
-                                                      GdkSegment         *segs,
-                                                      gint                n_segs);
 void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       GdkSegment         *segs,

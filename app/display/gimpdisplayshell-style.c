@@ -30,6 +30,7 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
+#include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 
 #include "widgets/gimpcairo.h"
@@ -205,24 +206,25 @@ gimp_display_shell_set_pen_style (GimpDisplayShell *shell,
 void
 gimp_display_shell_set_layer_style (GimpDisplayShell *shell,
                                     cairo_t          *cr,
-                                    GimpDrawable     *drawable)
+                                    GimpLayer        *layer)
 {
   cairo_pattern_t *pattern;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_LAYER (layer));
 
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
 
-  if (GIMP_IS_LAYER_MASK (drawable))
+  if (gimp_layer_get_mask (layer) &&
+      gimp_layer_mask_get_edit (gimp_layer_get_mask (layer)))
     {
       pattern = gimp_cairo_stipple_pattern_create (&layer_mask_fg,
                                                    &layer_mask_bg,
                                                    0);
     }
-  else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+  else if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     {
       pattern = gimp_cairo_stipple_pattern_create (&layer_group_fg,
                                                    &layer_group_bg,

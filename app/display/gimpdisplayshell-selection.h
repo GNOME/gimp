@@ -19,16 +19,14 @@
 #define __GIMP_DISPLAY_SHELL_SELECTION_H__
 
 
-void   gimp_display_shell_selection_init     (GimpDisplayShell     *shell);
-void   gimp_display_shell_selection_free     (GimpDisplayShell     *shell);
+void   gimp_display_shell_selection_init       (GimpDisplayShell     *shell);
+void   gimp_display_shell_selection_free       (GimpDisplayShell     *shell);
 
-void   gimp_display_shell_selection_control  (GimpDisplayShell     *shell,
-                                              GimpSelectionControl  control);
+void   gimp_display_shell_selection_control    (GimpDisplayShell     *shell,
+                                                GimpSelectionControl  control);
 
-void   gimp_display_shell_selection_set_hidden       (GimpDisplayShell *shell,
-                                                      gboolean          hidden);
-void   gimp_display_shell_selection_set_layer_hidden (GimpDisplayShell *shell,
-                                                      gboolean          hidden);
+void   gimp_display_shell_selection_set_hidden (GimpDisplayShell     *shell,
+                                                gboolean              hidden);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

@@ -644,8 +644,6 @@ gimp_selection_control_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", "off" },
-    { GIMP_SELECTION_LAYER_OFF, "GIMP_SELECTION_LAYER_OFF", "layer-off" },
-    { GIMP_SELECTION_LAYER_ON, "GIMP_SELECTION_LAYER_ON", "layer-on" },
     { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", "on" },
     { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", "pause" },
     { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", "resume" },
@@ -655,8 +653,6 @@ gimp_selection_control_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", NULL },
-    { GIMP_SELECTION_LAYER_OFF, "GIMP_SELECTION_LAYER_OFF", NULL },
-    { GIMP_SELECTION_LAYER_ON, "GIMP_SELECTION_LAYER_ON", NULL },
     { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", NULL },
     { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", NULL },
     { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", NULL },

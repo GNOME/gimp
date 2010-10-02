@@ -38,7 +38,7 @@ void   gimp_display_shell_set_pen_style           (GimpDisplayShell *shell,
                                                    gint              width);
 void   gimp_display_shell_set_layer_style         (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
-                                                   GimpDrawable     *drawable);
+                                                   GimpLayer        *layer);
 void   gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
                                                    cairo_t          *cr);
 void   gimp_display_shell_set_selection_in_style  (GimpDisplayShell *shell,

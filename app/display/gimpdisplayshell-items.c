@@ -26,6 +26,7 @@
 
 #include "gimpcanvascursor.h"
 #include "gimpcanvasgrid.h"
+#include "gimpcanvaslayerboundary.h"
 #include "gimpcanvasproxygroup.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
@@ -61,6 +62,11 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   gimp_display_shell_add_item (shell, shell->sample_points);
   g_object_unref (shell->sample_points);
 
+  shell->layer_boundary = gimp_canvas_layer_boundary_new (shell);
+  gimp_canvas_item_set_visible (shell->layer_boundary, FALSE);
+  gimp_display_shell_add_item (shell, shell->layer_boundary);
+  g_object_unref (shell->layer_boundary);
+
   shell->cursor = gimp_canvas_cursor_new (shell);
   gimp_canvas_item_set_visible (shell->cursor, FALSE);
   gimp_display_shell_add_item (shell, shell->cursor);
@@ -85,10 +91,11 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
       g_object_unref (shell->canvas_item);
       shell->canvas_item = NULL;
 
-      shell->grid          = NULL;
-      shell->guides        = NULL;
-      shell->sample_points = NULL;
-      shell->cursor        = NULL;
+      shell->grid           = NULL;
+      shell->guides         = NULL;
+      shell->sample_points  = NULL;
+      shell->layer_boundary = NULL;
+      shell->cursor         = NULL;
     }
 }
 

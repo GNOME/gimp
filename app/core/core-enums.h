@@ -297,8 +297,6 @@ GType gimp_selection_control_get_type (void) G_GNUC_CONST;
 typedef enum  /*< pdb-skip >*/
 {
   GIMP_SELECTION_OFF,
-  GIMP_SELECTION_LAYER_OFF,
-  GIMP_SELECTION_LAYER_ON,
   GIMP_SELECTION_ON,
   GIMP_SELECTION_PAUSE,
   GIMP_SELECTION_RESUME

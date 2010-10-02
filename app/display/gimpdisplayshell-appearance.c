@@ -257,7 +257,7 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 
   g_object_set (options, "show-layer-boundary", show, NULL);
 
-  gimp_display_shell_selection_set_layer_hidden (shell, ! show);
+  gimp_canvas_item_set_visible (shell->layer_boundary, show);
 
   appearance_set_action_active (shell, "view-show-layer-boundary", show);
 }

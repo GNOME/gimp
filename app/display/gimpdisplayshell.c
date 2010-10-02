@@ -53,6 +53,7 @@
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvaslayerboundary.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -1659,6 +1660,9 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 
   /* make sure the information is up-to-date */
   gimp_display_shell_scale_changed (shell);
+
+  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
 
   if (now)
     {

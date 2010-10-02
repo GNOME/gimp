@@ -27,8 +27,7 @@
 #include "base/boundary.h"
 
 #include "core/gimp.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcairo.h"
@@ -52,14 +51,10 @@ struct _Selection
   GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
   gint              n_segs_out;       /*  number of segments in segs_out    */
 
-  GdkSegment       *segs_layer;       /*  segments of layer boundary        */
-  gint              n_segs_layer;     /*  number of segments in segs_layer  */
-
   guint             index;            /*  index of current stipple pattern  */
   gint              paused;           /*  count of pause requests           */
   gboolean          visible;          /*  visility of the display shell     */
   gboolean          hidden;           /*  is the selection hidden?          */
-  gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
   guint             timeout;          /*  timer for successive draws        */
   cairo_pattern_t  *segs_in_mask;     /*  cache for rendered segments       */
 };
@@ -75,8 +70,6 @@ static void      selection_resume         (Selection      *selection);
 
 static void      selection_draw           (Selection      *selection);
 static void      selection_undraw         (Selection      *selection);
-static void      selection_layer_undraw   (Selection      *selection);
-static void      selection_layer_draw     (Selection      *selection);
 
 static void      selection_render_mask    (Selection      *selection);
 
@@ -110,10 +103,9 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
 
   selection = g_slice_new0 (Selection);
 
-  selection->shell        = shell;
-  selection->visible      = TRUE;
-  selection->hidden       = ! gimp_display_shell_get_show_selection (shell);
-  selection->layer_hidden = ! gimp_display_shell_get_show_layer (shell);
+  selection->shell   = shell;
+  selection->visible = TRUE;
+  selection->hidden  = ! gimp_display_shell_get_show_selection (shell);
 
   shell->selection = selection;
 
@@ -167,15 +159,6 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
           selection_undraw (selection);
           break;
 
-        case GIMP_SELECTION_LAYER_OFF:
-          selection_layer_undraw (selection);
-          break;
-
-        case GIMP_SELECTION_LAYER_ON:
-          if (! selection->layer_hidden)
-            selection_layer_draw (selection);
-          break;
-
         case GIMP_SELECTION_ON:
           selection_start (selection);
           break;
@@ -209,31 +192,8 @@ gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
       if (hidden != selection->hidden)
         {
           selection_undraw (selection);
-          selection_layer_undraw (selection);
 
           selection->hidden = hidden;
-
-          selection_start (selection);
-        }
-    }
-}
-
-void
-gimp_display_shell_selection_set_layer_hidden (GimpDisplayShell *shell,
-                                               gboolean          hidden)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (shell->selection && gimp_display_get_image (shell->display))
-    {
-      Selection *selection = shell->selection;
-
-      if (hidden != selection->layer_hidden)
-        {
-          selection_undraw (selection);
-          selection_layer_undraw (selection);
-
-          selection->layer_hidden = hidden;
 
           selection_start (selection);
         }
@@ -321,62 +281,6 @@ selection_undraw (Selection *selection)
 }
 
 static void
-selection_layer_draw (Selection *selection)
-{
-  if (selection->segs_layer)
-    {
-      GimpImage    *image;
-      GimpDrawable *drawable;
-      cairo_t      *cr;
-
-      image    = gimp_display_get_image (selection->shell->display);
-      drawable = gimp_image_get_active_drawable (image);
-
-      cr = gdk_cairo_create (gtk_widget_get_window (selection->shell->canvas));
-
-      gimp_display_shell_draw_layer_boundary (selection->shell, cr,
-                                              drawable,
-                                              selection->segs_layer,
-                                              selection->n_segs_layer);
-
-      cairo_destroy (cr);
-    }
-}
-
-static void
-selection_layer_undraw (Selection *selection)
-{
-  selection_stop (selection);
-
-  if (selection->segs_layer && selection->n_segs_layer == 4)
-    {
-      const gint x1 = selection->segs_layer[0].x1 - 1;
-      const gint y1 = selection->segs_layer[0].y1 - 1;
-      const gint x2 = selection->segs_layer[3].x2 + 1;
-      const gint y2 = selection->segs_layer[3].y2 + 1;
-
-      const gint x3 = selection->segs_layer[0].x1 + 1;
-      const gint y3 = selection->segs_layer[0].y1 + 1;
-      const gint x4 = selection->segs_layer[3].x2 - 1;
-      const gint y4 = selection->segs_layer[3].y2 - 1;
-
-      /*  expose the region, this will restart the selection  */
-      gimp_display_shell_expose_area (selection->shell,
-                                      x1, y1, (x2 - x1) + 1, (y3 - y1) + 1);
-      gimp_display_shell_expose_area (selection->shell,
-                                      x1, y3, (x3 - x1) + 1, (y4 - y3) + 1);
-      gimp_display_shell_expose_area (selection->shell,
-                                      x1, y4, (x2 - x1) + 1, (y2 - y4) + 1);
-      gimp_display_shell_expose_area (selection->shell,
-                                      x4, y3, (x2 - x4) + 1, (y4 - y3) + 1);
-    }
-  else
-    {
-      selection_start (selection);
-    }
-}
-
-static void
 selection_render_mask (Selection *selection)
 {
   cairo_t *cr;
@@ -448,7 +352,6 @@ selection_generate_segs (Selection *selection)
   GimpImage      *image = gimp_display_get_image (selection->shell->display);
   const BoundSeg *segs_in;
   const BoundSeg *segs_out;
-  GimpLayer      *layer;
 
   /*  Ask the image for the boundary of its selected region...
    *  Then transform that information into a new buffer of GdkSegments
@@ -482,27 +385,6 @@ selection_generate_segs (Selection *selection)
     {
       selection->segs_out = NULL;
     }
-
-  layer = gimp_image_get_active_layer (image);
-
-  if (layer)
-    {
-      BoundSeg *segs;
-
-      segs = gimp_layer_boundary (layer, &selection->n_segs_layer);
-
-      if (selection->n_segs_layer)
-        {
-          selection->segs_layer = g_new (GdkSegment, selection->n_segs_layer);
-
-          selection_transform_segs (selection,
-                                    segs,
-                                    selection->segs_layer,
-                                    selection->n_segs_layer);
-        }
-
-      g_free (segs);
-    }
 }
 
 static void
@@ -520,13 +402,6 @@ selection_free_segs (Selection *selection)
       g_free (selection->segs_out);
       selection->segs_out   = NULL;
       selection->n_segs_out = 0;
-    }
-
-  if (selection->segs_layer)
-    {
-      g_free (selection->segs_layer);
-      selection->segs_layer   = NULL;
-      selection->n_segs_layer = 0;
     }
 
   if (selection->segs_in_mask)
@@ -548,9 +423,6 @@ selection_start_timeout (Selection *selection)
   selection_generate_segs (selection);
 
   selection->index = 0;
-
-  if (! selection->layer_hidden)
-    selection_layer_draw (selection);
 
   /*  Draw the ants  */
   if (! selection->hidden)

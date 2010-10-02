@@ -163,24 +163,6 @@ gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
 }
 
 void
-gimp_display_shell_draw_layer_boundary (GimpDisplayShell *shell,
-                                        cairo_t          *cr,
-                                        GimpDrawable     *drawable,
-                                        GdkSegment       *segs,
-                                        gint              n_segs)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (segs != NULL && n_segs == 4);
-
-  gimp_display_shell_set_layer_style (shell, cr, drawable);
-
-  gimp_cairo_add_segments (cr, segs, n_segs);
-  cairo_stroke (cr);
-}
-
-void
 gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
                                        cairo_t          *cr,
                                        GdkSegment       *segs,
