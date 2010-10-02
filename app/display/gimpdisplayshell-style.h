@@ -31,8 +31,6 @@ void   gimp_display_shell_set_sample_point_style  (GimpDisplayShell *shell,
 void   gimp_display_shell_set_grid_style          (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
                                                    GimpGrid         *grid);
-void   gimp_display_shell_set_cursor_style        (GimpDisplayShell *shell,
-                                                   cairo_t          *cr);
 void   gimp_display_shell_set_pen_style           (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
                                                    GimpContext      *context,
