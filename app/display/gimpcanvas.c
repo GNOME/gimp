@@ -301,4 +301,6 @@ gimp_canvas_set_bg_color (GimpCanvas *canvas,
   gdk_colormap_alloc_color (colormap, &gdk_color, FALSE, TRUE);
 
   gdk_window_set_background (gtk_widget_get_window (widget), &gdk_color);
+
+  gtk_widget_queue_draw (GTK_WIDGET (canvas));
 }

@@ -41,7 +41,6 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
@@ -502,8 +501,6 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   appearance_set_action_color (shell, "view-padding-color-menu",
                                &options->padding_color);
-
-  gimp_display_shell_expose_full (shell);
 }
 
 void
