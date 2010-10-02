@@ -1929,8 +1929,6 @@ gimp_layer_boundary (GimpLayer *layer,
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
-  item = GIMP_ITEM (layer);
-
   if (gimp_layer_is_floating_sel (layer))
     {
       GimpDrawable *fs_drawable;
@@ -1952,6 +1950,8 @@ gimp_layer_boundary (GimpLayer *layer,
           layer = GIMP_LAYER (fs_drawable);
         }
     }
+
+  item = GIMP_ITEM (layer);
 
   /*  Create the four boundary segments that encompass this
    *  layer's boundary.
