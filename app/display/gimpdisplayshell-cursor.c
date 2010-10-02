@@ -24,7 +24,6 @@
 
 #include "config/gimpguiconfig.h"
 
-#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcursor.h"

@@ -38,12 +38,10 @@
 #include "vectors/gimpvectors.h"
 
 #include "widgets/gimpcairo.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
-#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"

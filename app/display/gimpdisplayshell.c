@@ -59,7 +59,6 @@
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
-#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
