@@ -469,34 +469,36 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
 
   private->change_count--;
 
-  if (private->change_count == 0 &&
-      g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE))
+  if (private->change_count == 0)
     {
-      GdkRegion *region = gimp_canvas_item_get_extents (item);
-
-      if (! region)
+      if (g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE))
         {
-          region = private->change_region;
+          GdkRegion *region = gimp_canvas_item_get_extents (item);
+
+          if (! region)
+            {
+              region = private->change_region;
+            }
+          else if (private->change_region)
+            {
+              gdk_region_union (region, private->change_region);
+              gdk_region_destroy (private->change_region);
+            }
+
+          private->change_region = NULL;
+
+          if (region)
+            {
+              g_signal_emit (item, item_signals[UPDATE], 0,
+                             region);
+              gdk_region_destroy (region);
+            }
         }
       else if (private->change_region)
         {
-          gdk_region_union (region, private->change_region);
           gdk_region_destroy (private->change_region);
+          private->change_region = NULL;
         }
-
-      private->change_region = NULL;
-
-      if (region)
-        {
-          g_signal_emit (item, item_signals[UPDATE], 0,
-                         region);
-          gdk_region_destroy (region);
-        }
-    }
-  else if (private->change_region)
-    {
-      gdk_region_destroy (private->change_region);
-      private->change_region = NULL;
     }
 }
 
