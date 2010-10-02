@@ -54,8 +54,8 @@ GimpCanvasItem * gimp_canvas_polygon_new             (GimpDisplayShell  *shell,
                                                       gint               n_points,
                                                       gboolean           filled);
 GimpCanvasItem * gimp_canvas_polygon_new_from_coords (GimpDisplayShell  *shell,
-                                                      const GimpCoords  *points,
-                                                      gint               n_points,
+                                                      const GimpCoords  *coords,
+                                                      gint               n_coords,
                                                       gboolean           filled);
 
 
