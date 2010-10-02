@@ -176,9 +176,12 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "undo-event",
                     G_CALLBACK (gimp_display_shell_undo_event_handler),
                     shell);
+
   g_signal_connect (gimp_image_get_grid (image), "notify",
                     G_CALLBACK (gimp_display_shell_grid_notify_handler),
                     shell);
+  g_object_set (shell->grid, "grid", gimp_image_get_grid (image), NULL);
+
   g_signal_connect (image, "name-changed",
                     G_CALLBACK (gimp_display_shell_name_changed_handler),
                     shell);
@@ -457,10 +460,7 @@ gimp_display_shell_grid_notify_handler (GimpGrid         *grid,
                                         GParamSpec       *pspec,
                                         GimpDisplayShell *shell)
 {
-  gimp_display_shell_expose_full (shell);
-
-  /* update item factory */
-  gimp_display_flush (shell->display);
+  g_object_set (shell->grid, "grid", grid, NULL);
 }
 
 static void

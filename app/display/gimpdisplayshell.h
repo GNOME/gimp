@@ -136,6 +136,7 @@ struct _GimpDisplayShell
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 
   GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+  GimpCanvasItem    *grid;             /*  item proxy of the grid             */
   GimpCanvasItem    *guides;           /*  item proxies of guides             */
   GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
 

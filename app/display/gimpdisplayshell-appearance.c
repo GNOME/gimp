@@ -30,9 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-grid.h"
-#include "core/gimpimage-guides.h"
-#include "core/gimpimage-sample-points.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimprender.h"
@@ -321,7 +318,6 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
                                   gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -329,12 +325,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_object_set (options, "show-grid", show, NULL);
 
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_image_get_grid (image))
-    {
-      gimp_display_shell_expose_full (shell);
-    }
+  gimp_canvas_item_set_visible (shell->grid, show);
 
   appearance_set_action_active (shell, "view-show-grid", show);
 }

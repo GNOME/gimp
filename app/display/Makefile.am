@@ -25,6 +25,8 @@ libappdisplay_a_sources = \
 	gimpcanvasboundary.h			\
 	gimpcanvascorner.c			\
 	gimpcanvascorner.h			\
+	gimpcanvasgrid.c			\
+	gimpcanvasgrid.h			\
 	gimpcanvasgroup.c			\
 	gimpcanvasgroup.h			\
 	gimpcanvasguide.c			\
