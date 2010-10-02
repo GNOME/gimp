@@ -219,18 +219,18 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem   *item,
   *w -= *x;
   *h -= *y;
 
-  *x = PROJ_ROUND (*x) + 0.5;
-  *y = PROJ_ROUND (*y) + 0.5;
+  *x = floor (*x) + 0.5;
+  *y = floor (*y) + 0.5;
 
   if (private->overwrite)
     {
-      *w = PROJ_ROUND (*w) - 1.0;
-      *h = PROJ_ROUND (*h) - 1.0;
+      *w = ceil (*w) - 1.0;
+      *h = ceil (*h) - 1.0;
     }
   else
     {
       *w = 0;
-      *h = PROJ_ROUND (*h) - 1.0;
+      *h = ceil (*h) - 1.0;
     }
 }
 
@@ -284,10 +284,10 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem   *item,
     }
   else
     {
-      rectangle.x      = floor (x - 3.5);
+      rectangle.x      = floor (x - 4.5);
       rectangle.y      = floor (y - 1.5);
-      rectangle.width  = ceil (8.0);
-      rectangle.height = ceil (h + 1.5);
+      rectangle.width  = ceil (9.0);
+      rectangle.height = ceil (h + 3.0);
     }
 
   return gdk_region_rectangle (&rectangle);
