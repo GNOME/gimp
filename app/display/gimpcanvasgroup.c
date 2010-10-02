@@ -298,6 +298,12 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
 
   private->items = g_list_remove (private->items, item);
 
+  if (private->group_stroking)
+    gimp_canvas_item_resume_stroking (item);
+
+  if (private->group_filling)
+    gimp_canvas_item_resume_filling (item);
+
   if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
     {
       GdkRegion *region = gimp_canvas_item_get_extents (item);
@@ -320,20 +326,62 @@ void
 gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
                                       gboolean         group_stroking)
 {
+  GimpCanvasGroupPrivate *private;
+
   g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
 
-  g_object_set (group,
-                "group-stroking", group_stroking ? TRUE : FALSE,
-                NULL);
+  private = GET_PRIVATE (group);
+
+  if (private->group_stroking != group_stroking)
+    {
+      GList *list;
+
+      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (group));
+
+      g_object_set (group,
+                    "group-stroking", group_stroking ? TRUE : FALSE,
+                    NULL);
+
+      for (list = private->items; list; list = g_list_next (list))
+        {
+          if (private->group_stroking)
+            gimp_canvas_item_suspend_stroking (list->data);
+          else
+            gimp_canvas_item_resume_stroking (list->data);
+        }
+
+      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (group));
+    }
 }
 
 void
 gimp_canvas_group_set_group_filling (GimpCanvasGroup *group,
                                      gboolean         group_filling)
 {
+  GimpCanvasGroupPrivate *private;
+
   g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
 
-  g_object_set (group,
-                "group-filling", group_filling ? TRUE : FALSE,
-                NULL);
+  private = GET_PRIVATE (group);
+
+  if (private->group_filling != group_filling)
+    {
+      GList *list;
+
+      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (group));
+
+      g_object_set (group,
+                    "group-filling", group_filling ? TRUE : FALSE,
+                    NULL);
+
+      for (list = private->items; list; list = g_list_next (list))
+        {
+          if (private->group_filling)
+            gimp_canvas_item_suspend_filling (list->data);
+          else
+            gimp_canvas_item_resume_filling (list->data);
+        }
+
+      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (group));
+    }
 }
