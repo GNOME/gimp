@@ -31,11 +31,11 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
 
+#include "gimpcanvascursor.h"
 #include "gimpdisplay.h"
 #include "gimpcursorview.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-cursor.h"
-#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpstatusbar.h"
 
@@ -125,44 +125,31 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
                                   gdouble              image_x,
                                   gdouble              image_y)
 {
-  GimpStatusbar     *statusbar;
-  GimpSessionInfo   *session_info;
-  GimpImage         *image;
-  gboolean           new_cursor;
+  GimpStatusbar   *statusbar;
+  GimpSessionInfo *session_info;
+  GimpImage       *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   image = gimp_display_get_image (shell->display);
 
-  new_cursor = (shell->draw_cursor &&
-                shell->proximity   &&
-                display_x >= 0     &&
-                display_y >= 0);
-
-  /* Erase old cursor, if necessary */
-
-  if (shell->have_cursor && (! new_cursor                 ||
-                             display_x != shell->cursor_x ||
-                             display_y != shell->cursor_y))
+  if (shell->draw_cursor &&
+      shell->proximity   &&
+      display_x >= 0     &&
+      display_y >= 0)
     {
-      gimp_display_shell_expose_area (shell,
-                                      shell->cursor_x - GIMP_CURSOR_SIZE,
-                                      shell->cursor_y - GIMP_CURSOR_SIZE,
-                                      2 * GIMP_CURSOR_SIZE + 1,
-                                      2 * GIMP_CURSOR_SIZE + 1);
+      gimp_canvas_item_begin_change (shell->cursor);
+
+      gimp_canvas_cursor_set_coords (GIMP_CANVAS_CURSOR (shell->cursor),
+                                     display_x,
+                                     display_y);
+      gimp_canvas_item_set_visible (shell->cursor, TRUE);
+
+      gimp_canvas_item_end_change (shell->cursor);
     }
-
-  shell->have_cursor = new_cursor;
-  shell->cursor_x    = display_x;
-  shell->cursor_y    = display_y;
-
-  if (shell->have_cursor)
+  else
     {
-      gimp_display_shell_expose_area (shell,
-                                      shell->cursor_x - GIMP_CURSOR_SIZE,
-                                      shell->cursor_y - GIMP_CURSOR_SIZE,
-                                      2 * GIMP_CURSOR_SIZE + 1,
-                                      2 * GIMP_CURSOR_SIZE + 1);
+      gimp_canvas_item_set_visible (shell->cursor, FALSE);
     }
 
   /*  use the passed image_coords for the statusbar because they are
@@ -204,6 +191,8 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
   GimpSessionInfo   *session_info;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimp_canvas_item_set_visible (shell->cursor, FALSE);
 
   statusbar = gimp_display_shell_get_statusbar (shell);
 

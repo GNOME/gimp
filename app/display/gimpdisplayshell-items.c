@@ -24,6 +24,7 @@
 
 #include "display-types.h"
 
+#include "gimpcanvascursor.h"
 #include "gimpcanvasgrid.h"
 #include "gimpcanvasproxygroup.h"
 #include "gimpdisplayshell.h"
@@ -60,6 +61,11 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   gimp_display_shell_add_item (shell, shell->sample_points);
   g_object_unref (shell->sample_points);
 
+  shell->cursor = gimp_canvas_cursor_new (shell);
+  gimp_canvas_item_set_visible (shell->cursor, FALSE);
+  gimp_display_shell_add_item (shell, shell->cursor);
+  g_object_unref (shell->cursor);
+
   g_signal_connect (shell->canvas_item, "update",
                     G_CALLBACK (gimp_display_shell_item_update),
                     shell);
@@ -82,6 +88,7 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
       shell->grid          = NULL;
       shell->guides        = NULL;
       shell->sample_points = NULL;
+      shell->cursor        = NULL;
     }
 }
 

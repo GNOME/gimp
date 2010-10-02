@@ -50,8 +50,6 @@ void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
                                                       gint                index);
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
-void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr);
 void   gimp_display_shell_draw_image                 (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       gint                x,

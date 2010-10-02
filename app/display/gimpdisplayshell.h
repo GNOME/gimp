@@ -139,6 +139,7 @@ struct _GimpDisplayShell
   GimpCanvasItem    *grid;             /*  item proxy of the grid             */
   GimpCanvasItem    *guides;           /*  item proxies of guides             */
   GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
+  GimpCanvasItem    *cursor;           /*  item for the software cursor       */
 
   guint              title_idle_id;    /*  title update idle ID               */
   gchar             *title;            /*  current title                      */
@@ -158,9 +159,6 @@ struct _GimpDisplayShell
   GimpCursorType     override_cursor;  /*  Overriding cursor                 */
   gboolean           using_override_cursor;
   gboolean           draw_cursor;      /* should we draw software cursor ?    */
-  gboolean           have_cursor;      /* is cursor currently drawn ?         */
-  gint               cursor_x;         /* software cursor X value             */
-  gint               cursor_y;         /* software cursor Y value             */
 
   GtkWidget         *close_dialog;     /*  close dialog                       */
   GtkWidget         *scale_dialog;     /*  scale (zoom) dialog                */
