@@ -948,6 +948,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
             }
 
           if (! any_toggle_active &&
+              color_differs       &&
               font_differs        &&
               size_differs        &&
               baseline_differs    &&
