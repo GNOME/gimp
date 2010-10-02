@@ -376,6 +376,7 @@ gimp_canvas_grid_stroke (GimpCanvasItem   *item,
 
   if (private->grid_style)
     {
+      cairo_translate (cr, -shell->offset_x, -shell->offset_y);
       gimp_display_shell_set_grid_style (shell, cr, private->grid);
       cairo_stroke (cr);
     }

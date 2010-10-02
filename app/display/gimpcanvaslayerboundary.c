@@ -183,8 +183,8 @@ gimp_canvas_layer_boundary_stroke (GimpCanvasItem   *item,
 {
   GimpCanvasLayerBoundaryPrivate *private = GET_PRIVATE (item);
 
+  cairo_translate (cr, -shell->offset_x, -shell->offset_y);
   gimp_display_shell_set_layer_style (shell, cr, private->layer);
-
   cairo_stroke (cr);
 }
 
