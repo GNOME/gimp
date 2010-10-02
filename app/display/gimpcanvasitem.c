@@ -493,6 +493,11 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
           gdk_region_destroy (region);
         }
     }
+  else if (private->change_region)
+    {
+      gdk_region_destroy (private->change_region);
+      private->change_region = NULL;
+    }
 }
 
 void
