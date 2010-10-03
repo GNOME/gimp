@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 
 #include "gui/gui-types.h"
@@ -159,4 +161,21 @@ gimp_test_run_mainloop_until_idle (void)
   g_main_loop_run (loop);
 
   g_main_loop_unref (loop);
+}
+
+/**
+ * gimp_test_bail_if_no_display:
+ * @void:
+ *
+ * If no DISPLAY is set, call exit(EXIT_SUCCESS). There is no use in
+ * having UI tests failing in DISPLAY-less environments.
+ **/
+void
+gimp_test_bail_if_no_display (void)
+{
+  if (! g_getenv ("DISPLAY"))
+    {
+      g_message ("No DISPLAY set, not running UI tests\n");
+      exit (EXIT_SUCCESS);
+    }
 }

@@ -24,6 +24,7 @@ Gimp * gimp_init_for_gui_testing         (gboolean use_cpu_accel,
                                           gboolean show_gui);
 void   gimp_test_run_temp_mainloop       (guint32  running_time);
 void   gimp_test_run_mainloop_until_idle (void);
+void   gimp_test_bail_if_no_display      (void);
 
 
 #endif /* __TESTS_H__ */

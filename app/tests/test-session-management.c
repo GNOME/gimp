@@ -69,6 +69,7 @@ int main(int argc, char **argv)
   gchar             *dockrc_filename         = NULL;
   gint               result                  = 0;
 
+  gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
   /* Make sure to run this before we use any GIMP functions */

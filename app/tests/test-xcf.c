@@ -968,6 +968,7 @@ main (int    argc,
 {
   int result;
 
+  gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
