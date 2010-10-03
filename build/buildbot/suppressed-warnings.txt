@@ -13,7 +13,6 @@
 # This will die in GIMP 3.0, don't bother fixing...
 :    .*gimp-composite-.* warning: function declaration isn.*t a prototype.*
 :    .*gimp-composite-.* warning: unused variable .*
-:    .*gimpcpuaccel.c:182: warning: dereferencing type-punned pointer will break strict-aliasing rules.*
 
 # Well-known harmless warnings
 :    .*app/core/gimpimagemap.c:.*: warning: implicit declaration of function .*gegl_node_get_pad.*
