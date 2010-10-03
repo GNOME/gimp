@@ -127,7 +127,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
                                                     GTK_TABLE (table), 0, table_row++,
-                                                    _("Aspect Ratio:"),
+                                                    /* Label for a slider that affects
+                                                       aspect ratio for brushes */
+                                                    _("Aspect:"),
                                                     0.01, 0.1, 2,
                                                     FALSE, 0.0, 0.0);
       gimp_scale_entry_set_logarithmic (adj_aspect_ratio, TRUE);
