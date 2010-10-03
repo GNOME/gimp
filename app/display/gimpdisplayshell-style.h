@@ -33,8 +33,7 @@ void   gimp_display_shell_set_grid_style          (GimpDisplayShell *shell,
                                                    GimpGrid         *grid);
 void   gimp_display_shell_set_pen_style           (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
-                                                   GimpContext      *context,
-                                                   GimpActiveColor   active,
+                                                   const GimpRGB    *color,
                                                    gint              width);
 void   gimp_display_shell_set_layer_style         (GimpDisplayShell *shell,
                                                    cairo_t          *cr,

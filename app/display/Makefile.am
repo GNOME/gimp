@@ -41,6 +41,8 @@ libappdisplay_a_sources = \
 	gimpcanvaslayerboundary.h		\
 	gimpcanvasline.c			\
 	gimpcanvasline.h			\
+	gimpcanvaspen.c				\
+	gimpcanvaspen.h				\
 	gimpcanvaspolygon.c			\
 	gimpcanvaspolygon.h			\
 	gimpcanvasproxygroup.c			\

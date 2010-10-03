@@ -131,6 +131,7 @@ GimpCanvasItem * gimp_draw_tool_add_corner           (GimpDrawTool     *draw_too
                                                       gint              width,
                                                       gint              height,
                                                       GtkAnchorType     anchor);
+
 GimpCanvasItem * gimp_draw_tool_add_lines            (GimpDrawTool     *draw_tool,
                                                       const GimpVector2 *points,
                                                       gint              n_points,
@@ -140,6 +141,13 @@ GimpCanvasItem * gimp_draw_tool_add_strokes          (GimpDrawTool     *draw_too
                                                       const GimpCoords *points,
                                                       gint              n_points,
                                                       gboolean          filled);
+
+GimpCanvasItem * gimp_draw_tool_add_pen              (GimpDrawTool     *draw_tool,
+                                                      const GimpVector2 *points,
+                                                      gint              n_points,
+                                                      GimpContext      *context,
+                                                      GimpActiveColor   color,
+                                                      gint              width);
 
 GimpCanvasItem * gimp_draw_tool_add_boundary         (GimpDrawTool     *draw_tool,
                                                       const BoundSeg   *bound_segs,

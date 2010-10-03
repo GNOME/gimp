@@ -28,7 +28,6 @@
 
 #include "display-types.h"
 
-#include "core/gimpcontext.h"
 #include "core/gimpgrid.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -174,33 +173,19 @@ gimp_display_shell_set_grid_style (GimpDisplayShell *shell,
 void
 gimp_display_shell_set_pen_style (GimpDisplayShell *shell,
                                   cairo_t          *cr,
-                                  GimpContext      *context,
-                                  GimpActiveColor   active,
+                                  const GimpRGB    *color,
                                   gint              width)
 {
-  GimpRGB rgb;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (color != NULL);
 
   cairo_set_antialias (cr, CAIRO_ANTIALIAS_NONE);
   cairo_set_line_width (cr, width);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
   cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
 
-  switch (active)
-    {
-    case GIMP_ACTIVE_COLOR_FOREGROUND:
-      gimp_context_get_foreground (context, &rgb);
-      break;
-
-    case GIMP_ACTIVE_COLOR_BACKGROUND:
-      gimp_context_get_background (context, &rgb);
-      break;
-    }
-
-  cairo_set_source_rgb (cr, rgb.r, rgb.g, rgb.b);
+  gimp_cairo_set_source_rgb (cr, color);
 }
 
 void

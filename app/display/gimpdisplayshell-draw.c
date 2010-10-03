@@ -29,7 +29,6 @@
 
 #include "base/tile-manager.h"
 
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
@@ -116,50 +115,6 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 
   if (w) *w = PROJ_ROUND (level_width  * (scale_x * (1 << level)));
   if (h) *h = PROJ_ROUND (level_height * (scale_y * (1 << level)));
-}
-
-void
-gimp_display_shell_draw_pen (GimpDisplayShell  *shell,
-                             cairo_t           *cr,
-                             const GimpVector2 *points,
-                             gint               n_points,
-                             GimpContext       *context,
-                             GimpActiveColor    color,
-                             gint               width)
-{
-  gint i;
-  gint x, y;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (cr != NULL);
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (n_points == 0 || points != NULL);
-
-  if (n_points == 0)
-    return;
-
-  gimp_display_shell_set_pen_style (shell, cr, context, color, width);
-  cairo_translate (cr, 0.5, 0.5);
-
-  gimp_display_shell_transform_xy (shell,
-                                   points[0].x, points[0].y,
-                                   &x, &y);
-
-  cairo_move_to (cr, x, y);
-
-  for (i = 1; i < n_points; i++)
-    {
-      gimp_display_shell_transform_xy (shell,
-                                       points[i].x, points[i].y,
-                                       &x, &y);
-
-      cairo_line_to (cr, x, y);
-    }
-
-  if (i == 1)
-    cairo_line_to (cr, x, y);
-
-  cairo_stroke (cr);
 }
 
 void

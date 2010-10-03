@@ -28,13 +28,6 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
                                                       gint               *w,
                                                       gint               *h);
 
-void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      const GimpVector2  *points,
-                                                      gint                n_points,
-                                                      GimpContext        *context,
-                                                      GimpActiveColor     color,
-                                                      gint                width);
 void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       GdkSegment         *segs,
@@ -43,8 +36,10 @@ void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       cairo_pattern_t    *mask,
                                                       gint                index);
+
 void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell,
                                                       cairo_t            *cr);
+
 void   gimp_display_shell_draw_image                 (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       gint                x,
