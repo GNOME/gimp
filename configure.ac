@@ -661,7 +661,7 @@ if test "x$enable_mmx" = xyes; then
   mmx_save_CFLAGS="$CFLAGS"
   CFLAGS="$mmx_save_CFLAGS $MMX_EXTRA_CFLAGS"
 
-  AC_COMPILE_IFELSE([asm ("movq 0, %mm0");],
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("movq 0, %mm0");])],
 
     AC_DEFINE(USE_MMX, 1, [Define to 1 if MMX assembly is available.])
     AC_MSG_RESULT(yes)
@@ -674,7 +674,7 @@ if test "x$enable_mmx" = xyes; then
 
       CFLAGS="$CFLAGS $sse_flag"
 
-      AC_COMPILE_IFELSE([asm ("movntps %xmm0, 0");],
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("movntps %xmm0, 0");])],
         AC_DEFINE(USE_SSE, 1, [Define to 1 if SSE assembly is available.])
         AC_MSG_RESULT(yes)
       ,
@@ -737,7 +737,7 @@ if test "x$enable_altivec" = xyes; then
          [Define to 1 if the altivec runtime test should use a sysctl.])
         ;;
       *)
-        AC_COMPILE_IFELSE([asm ("vand %v0, %v0, %v0");],
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("vand %v0, %v0, %v0");])],
           can_use_altivec=yes, can_use_altivec=no)
         ;;
     esac
