@@ -178,6 +178,8 @@ gimp_canvas_pen_get_extents (GimpCanvasItem   *item,
       rectangle.y      -= ceil (private->width / 2.0);
       rectangle.width  += private->width + 1;
       rectangle.height += private->width + 1;
+
+      gdk_region_union_with_rect (region, &rectangle);
     }
 
   return region;
