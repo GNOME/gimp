@@ -267,7 +267,8 @@ gimp_canvas_guide_stroke (GimpCanvasItem   *item,
 GimpCanvasItem *
 gimp_canvas_guide_new (GimpDisplayShell    *shell,
                        GimpOrientationType  orientation,
-                       gint                 position)
+                       gint                 position,
+                       gboolean             guide_style)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
@@ -275,5 +276,6 @@ gimp_canvas_guide_new (GimpDisplayShell    *shell,
                        "shell",       shell,
                        "orientation", orientation,
                        "position",    position,
+                       "guide-style", guide_style,
                        NULL);
 }

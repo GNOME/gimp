@@ -94,7 +94,8 @@ GimpCanvasItem * gimp_draw_tool_add_line             (GimpDrawTool     *draw_too
                                                       gdouble           y2);
 GimpCanvasItem * gimp_draw_tool_add_guide            (GimpDrawTool     *draw_tool,
                                                       GimpOrientationType  orientation,
-                                                      gint              position);
+                                                      gint              position,
+                                                      gboolean          guide_style);
 GimpCanvasItem * gimp_draw_tool_add_sample_point     (GimpDrawTool     *draw_tool,
                                                       gint              x,
                                                       gint              y,

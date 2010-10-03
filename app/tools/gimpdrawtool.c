@@ -438,14 +438,15 @@ gimp_draw_tool_add_line (GimpDrawTool *draw_tool,
 GimpCanvasItem *
 gimp_draw_tool_add_guide (GimpDrawTool        *draw_tool,
                           GimpOrientationType  orientation,
-                          gint                 position)
+                          gint                 position,
+                          gboolean             guide_style)
 {
   GimpCanvasItem *item;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_guide_new (gimp_display_get_shell (draw_tool->display),
-                                orientation, position);
+                                orientation, position, guide_style);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
@@ -473,7 +474,7 @@ gimp_draw_tool_add_sample_point (GimpDrawTool *draw_tool,
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
 
   item = gimp_canvas_sample_point_new (gimp_display_get_shell (draw_tool->display),
-                                       x, y, index);
+                                       x, y, index, TRUE);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);

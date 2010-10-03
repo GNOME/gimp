@@ -537,7 +537,6 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
                                                   color_tool->sample_point->x,
                                                   color_tool->sample_point->y,
                                                   index);
-          g_object_set (item, "sample-point-style", TRUE, NULL);
           gimp_canvas_item_set_highlight (item, TRUE);
         }
 

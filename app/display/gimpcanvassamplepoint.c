@@ -326,14 +326,16 @@ GimpCanvasItem *
 gimp_canvas_sample_point_new (GimpDisplayShell *shell,
                               gint              x,
                               gint              y,
-                              gint              index)
+                              gint              index,
+                              gboolean          sample_point_style)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
   return g_object_new (GIMP_TYPE_CANVAS_SAMPLE_POINT,
-                       "shell", shell,
-                       "x",     x,
-                       "y",     y,
-                       "index", index,
+                       "shell",              shell,
+                       "x",                  x,
+                       "y",                  y,
+                       "index",              index,
+                       "sample-point-style", sample_point_style,
                        NULL);
 }

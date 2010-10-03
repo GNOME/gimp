@@ -52,7 +52,8 @@ GType            gimp_canvas_sample_point_get_type (void) G_GNUC_CONST;
 GimpCanvasItem * gimp_canvas_sample_point_new      (GimpDisplayShell *shell,
                                                     gint              x,
                                                     gint              y,
-                                                    gint              index);
+                                                    gint              index,
+                                                    gboolean          sample_point_style);
 
 
 #endif /* __GIMP_CANVAS_SAMPLE_POINT_H__ */
