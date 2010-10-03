@@ -254,6 +254,8 @@ print_surface_from_drawable (gint32 drawable_ID)
 
   gimp_drawable_detach (drawable);
 
+  cairo_surface_mark_dirty (surface);
+
   return surface;
 }
 
