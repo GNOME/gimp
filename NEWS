@@ -7,6 +7,34 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.6.10 to GIMP 2.6.11
+===================================================
+
+* Bugs fixed:
+
+ 631199 - Printing and Print preview broken with cairo 1.10
+ 572865 - Parasite handling had problems and can cause crashing
+ 628893 - Error with string-append and gimp-drawable-get-name
+ 623850 - (Paco) Recursive Gaussian Filter error
+ 624487 - Fix incorrect "wrap mode" documentation values in Edge plug-in
+ 557380 - Difference of Gaussians gives blank doc if "Invert" selected
+ 627009 - Image type filter doesn't include .rgba SGI files
+ 626020 - Console window opening on file-ps-load
+ 624698 - Wood 1 and Wood 2 have bad alpha value
+ 624275 - Image saved from google docs generates a
+          'gimp-image-set-resolution' error message
+
+* Updated translations:
+
+ German (de)
+ Spanish (es)
+ Italian (it)
+ Japanese (ja)
+ Romanian (ro)
+ Chinese (Hong Kong) (zh_HK)
+ Chinese (Taiwan) (zh_HK)
+
+
 Overview of Changes from GIMP 2.6.9 to GIMP 2.6.10
 ==================================================
 
