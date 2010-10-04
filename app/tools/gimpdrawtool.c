@@ -536,7 +536,7 @@ gimp_draw_tool_add_arc (GimpDrawTool *draw_tool,
                               height / 2.0,
                               start_angle,
                               slice_angle,
-                              FALSE);
+                              filled);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
