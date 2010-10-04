@@ -236,10 +236,6 @@ gimp_canvas_arc_transform (GimpCanvasItem   *item,
   gdouble               x2, y2;
 
   gimp_display_shell_transform_xy_f (shell,
-                                     private->center_x,
-                                     private->center_y,
-                                     center_x, center_y);
-  gimp_display_shell_transform_xy_f (shell,
                                      private->center_x - private->radius_x,
                                      private->center_y - private->radius_y,
                                      &x1, &y1);
@@ -247,6 +243,14 @@ gimp_canvas_arc_transform (GimpCanvasItem   *item,
                                      private->center_x + private->radius_x,
                                      private->center_y + private->radius_y,
                                      &x2, &y2);
+
+  x1 = floor (x1);
+  y1 = floor (y1);
+  x2 = ceil (x2);
+  y2 = ceil (y2);
+
+  *center_x = (x1 + x2) / 2.0;
+  *center_y = (y1 + y2) / 2.0;
 
   *radius_x = (x2 - x1) / 2.0;
   *radius_y = (y2 - y1) / 2.0;

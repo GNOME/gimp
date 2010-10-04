@@ -267,10 +267,10 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
   rw -= rx;
   rh -= ry;
 
-  rx = PROJ_ROUND (rx) + 0.5;
-  ry = PROJ_ROUND (ry) + 0.5;
-  rw = PROJ_ROUND (rw) - 1.0;
-  rh = PROJ_ROUND (rh) - 1.0;
+  rx = floor (rx) + 0.5;
+  ry = floor (ry) + 0.5;
+  rw = ceil (rw) - 1.0;
+  rh = ceil (rh) - 1.0;
 
   top_and_bottom_handle_x_offset = (rw - private->corner_width)  / 2;
   left_and_right_handle_y_offset = (rh - private->corner_height) / 2;

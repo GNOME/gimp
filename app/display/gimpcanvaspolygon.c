@@ -213,8 +213,8 @@ gimp_canvas_polygon_transform (GimpCanvasItem   *item,
                                          &points[i].x,
                                          &points[i].y);
 
-      points[i].x = PROJ_ROUND (points[i].x) + 0.5;
-      points[i].y = PROJ_ROUND (points[i].y) + 0.5;
+      points[i].x = floor (points[i].x) + 0.5;
+      points[i].y = floor (points[i].y) + 0.5;
     }
 }
 

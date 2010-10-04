@@ -232,10 +232,10 @@ gimp_canvas_rectangle_transform (GimpCanvasItem   *item,
     }
   else
     {
-      *x = PROJ_ROUND (*x) + 0.5;
-      *y = PROJ_ROUND (*y) + 0.5;
-      *w = PROJ_ROUND (*w) - 1.0;
-      *h = PROJ_ROUND (*h) - 1.0;
+      *x = floor (*x) + 0.5;
+      *y = floor (*y) + 0.5;
+      *w = ceil (*w) - 1.0;
+      *h = ceil (*h) - 1.0;
     }
 }
 

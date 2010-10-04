@@ -200,10 +200,10 @@ gimp_canvas_line_transform (GimpCanvasItem   *item,
                                      private->x2, private->y2,
                                      x2, y2);
 
-  *x1 = PROJ_ROUND (*x1) + 0.5;
-  *y1 = PROJ_ROUND (*y1) + 0.5;
-  *x2 = PROJ_ROUND (*x2) + 0.5;
-  *y2 = PROJ_ROUND (*y2) + 0.5;
+  *x1 = floor (*x1) + 0.5;
+  *y1 = floor (*y1) + 0.5;
+  *x2 = floor (*x2) + 0.5;
+  *y2 = floor (*y2) + 0.5;
 }
 
 static void

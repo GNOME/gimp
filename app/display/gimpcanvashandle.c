@@ -406,8 +406,8 @@ gimp_canvas_handle_transform (GimpCanvasItem   *item,
       break;
     }
 
-  *x = PROJ_ROUND (*x) + 0.5;
-  *y = PROJ_ROUND (*y) + 0.5;
+  *x = floor (*x) + 0.5;
+  *y = floor (*y) + 0.5;
 }
 
 static void
