@@ -396,6 +396,7 @@ gimp_brush_tool_set_brush (GimpBrushCore *brush_core,
                            GimpBrushTool *brush_tool)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (brush_core);
+
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (brush_tool));
 
   if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)
