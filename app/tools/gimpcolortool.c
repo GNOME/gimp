@@ -57,6 +57,9 @@
 #include "gimp-intl.h"
 
 
+#define SAMPLE_POINT_POSITION_INVALID G_MININT
+
+
 enum
 {
   PICKED,
@@ -172,8 +175,8 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 
   color_tool->sample_point        = NULL;
   color_tool->moving_sample_point = FALSE;
-  color_tool->sample_point_x      = -1;
-  color_tool->sample_point_y      = -1;
+  color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+  color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 }
 
 static void
@@ -271,8 +274,8 @@ gimp_color_tool_button_release (GimpTool              *tool,
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
         {
           color_tool->moving_sample_point = FALSE;
-          color_tool->sample_point_x      = -1;
-          color_tool->sample_point_y      = -1;
+          color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+          color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 
           gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
           return;
@@ -316,8 +319,8 @@ gimp_color_tool_button_release (GimpTool              *tool,
       gimp_image_flush (image);
 
       color_tool->moving_sample_point = FALSE;
-      color_tool->sample_point_x      = -1;
-      color_tool->sample_point_y      = -1;
+      color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+      color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 
       if (color_tool->sample_point)
         gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
@@ -355,8 +358,8 @@ gimp_color_tool_motion (GimpTool         *tool,
       if (tx < 0 || tx > shell->disp_width ||
           ty < 0 || ty > shell->disp_height)
         {
-          color_tool->sample_point_x = -1;
-          color_tool->sample_point_y = -1;
+          color_tool->sample_point_x = SAMPLE_POINT_POSITION_INVALID;
+          color_tool->sample_point_y = SAMPLE_POINT_POSITION_INVALID;
 
           delete_point = TRUE;
         }
@@ -542,19 +545,19 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
 
       if (color_tool->moving_sample_point)
         {
-          if (color_tool->sample_point_x != -1 &&
-              color_tool->sample_point_y != -1)
+          if (color_tool->sample_point_x != SAMPLE_POINT_POSITION_INVALID &&
+              color_tool->sample_point_y != SAMPLE_POINT_POSITION_INVALID)
             {
-              GimpImage *image = gimp_display_get_image (draw_tool->display);
+              gimp_draw_tool_push_group (draw_tool,
+                                         gimp_draw_tool_add_stroke_group (draw_tool));
+              gimp_draw_tool_add_guide (draw_tool,
+                                        GIMP_ORIENTATION_VERTICAL,
+                                        color_tool->sample_point_x, FALSE);
+              gimp_draw_tool_add_guide (draw_tool,
+                                        GIMP_ORIENTATION_HORIZONTAL,
+                                        color_tool->sample_point_y, FALSE);
 
-              gimp_draw_tool_add_line (draw_tool,
-                                       0, color_tool->sample_point_y + 0.5,
-                                       gimp_image_get_width (image),
-                                       color_tool->sample_point_y + 0.5);
-              gimp_draw_tool_add_line (draw_tool,
-                                       color_tool->sample_point_x + 0.5, 0,
-                                       color_tool->sample_point_x + 0.5,
-                                       gimp_image_get_height (image));
+              gimp_draw_tool_pop_group (draw_tool);
             }
         }
       else if (color_tool->options->sample_average &&
@@ -800,8 +803,8 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   color_tool->sample_point        = NULL;
   color_tool->moving_sample_point = TRUE;
-  color_tool->sample_point_x      = -1;
-  color_tool->sample_point_y      = -1;
+  color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+  color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 
   gimp_tool_set_cursor (tool, display,
                         GIMP_CURSOR_MOUSE,
