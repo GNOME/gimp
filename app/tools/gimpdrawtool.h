@@ -101,6 +101,9 @@ GimpCanvasItem * gimp_draw_tool_add_guide            (GimpDrawTool     *draw_too
                                                       GimpOrientationType  orientation,
                                                       gint              position,
                                                       gboolean          guide_style);
+GimpCanvasItem * gimp_draw_tool_add_crosshair        (GimpDrawTool     *draw_tool,
+                                                      gint              position_x,
+                                                      gint              position_y);
 GimpCanvasItem * gimp_draw_tool_add_sample_point     (GimpDrawTool     *draw_tool,
                                                       gint              x,
                                                       gint              y,

@@ -466,7 +466,7 @@ gimp_draw_tool_add_line (GimpDrawTool *draw_tool,
 }
 
 /**
- * gimp_draw_tool_draw_guide:
+ * gimp_draw_tool_add_guide:
  * @draw_tool:   the #GimpDrawTool
  * @orientation: the orientation of the guide line
  * @position:    the position of the guide line in image coordinates
@@ -493,7 +493,34 @@ gimp_draw_tool_add_guide (GimpDrawTool        *draw_tool,
 }
 
 /**
- * gimp_draw_tool_draw_sample_point:
+ * gimp_draw_tool_add_crosshair:
+ * @draw_tool:  the #GimpDrawTool
+ * @position_x: the position of the vertical guide line in image coordinates
+ * @position_y: the position of the horizontal guide line in image coordinates
+ *
+ * This function draws two crossing guide lines across the canvas.
+ **/
+GimpCanvasItem *
+gimp_draw_tool_add_crosshair (GimpDrawTool *draw_tool,
+                              gint          position_x,
+                              gint          position_y)
+{
+  GimpCanvasGroup *group;
+
+  group = gimp_draw_tool_add_stroke_group (draw_tool);
+
+  gimp_draw_tool_push_group (draw_tool, group);
+  gimp_draw_tool_add_guide (draw_tool,
+                            GIMP_ORIENTATION_VERTICAL, position_x, FALSE);
+  gimp_draw_tool_add_guide (draw_tool,
+                            GIMP_ORIENTATION_HORIZONTAL, position_y, FALSE);
+  gimp_draw_tool_pop_group (draw_tool);
+
+  return GIMP_CANVAS_ITEM (group);
+}
+
+/**
+ * gimp_draw_tool_add_sample_point:
  * @draw_tool: the #GimpDrawTool
  * @x:         X position of the sample point
  * @y:         Y position of the sample point

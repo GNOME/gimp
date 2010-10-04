@@ -548,16 +548,9 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           if (color_tool->sample_point_x != SAMPLE_POINT_POSITION_INVALID &&
               color_tool->sample_point_y != SAMPLE_POINT_POSITION_INVALID)
             {
-              gimp_draw_tool_push_group (draw_tool,
-                                         gimp_draw_tool_add_stroke_group (draw_tool));
-              gimp_draw_tool_add_guide (draw_tool,
-                                        GIMP_ORIENTATION_VERTICAL,
-                                        color_tool->sample_point_x, FALSE);
-              gimp_draw_tool_add_guide (draw_tool,
-                                        GIMP_ORIENTATION_HORIZONTAL,
-                                        color_tool->sample_point_y, FALSE);
-
-              gimp_draw_tool_pop_group (draw_tool);
+              gimp_draw_tool_add_crosshair (draw_tool,
+                                            color_tool->sample_point_x,
+                                            color_tool->sample_point_y);
             }
         }
       else if (color_tool->options->sample_average &&
