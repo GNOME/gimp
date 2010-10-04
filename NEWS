@@ -15,7 +15,7 @@ Overview of Changes from GIMP 2.6.10 to GIMP 2.6.11
  631199 - Printing and Print preview broken with cairo 1.10
  572865 - Parasite handling had problems and can cause crashing
  628893 - Error with string-append and gimp-drawable-get-name
- 623850 - (Paco) Recursive Gaussian Filter error
+ 623850 - Colors -> Retinex creates halos
  624487 - Fix incorrect "wrap mode" documentation values in Edge plug-in
  557380 - Difference of Gaussians gives blank doc if "Invert" selected
  627009 - Image type filter doesn't include .rgba SGI files
