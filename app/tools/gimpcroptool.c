@@ -85,6 +85,7 @@ static void      gimp_crop_tool_cursor_update             (GimpTool             
                                                            const GimpCoords           *coords,
                                                            GdkModifierType             state,
                                                            GimpDisplay                *display);
+static void      gimp_crop_tool_draw                      (GimpDrawTool               *draw_tool);
 static gboolean  gimp_crop_tool_execute                   (GimpRectangleTool          *rectangle,
                                                            gint                        x,
                                                            gint                        y,
@@ -154,7 +155,7 @@ gimp_crop_tool_class_init (GimpCropToolClass *klass)
   tool_class->oper_update         = gimp_rectangle_tool_oper_update;
   tool_class->cursor_update       = gimp_crop_tool_cursor_update;
 
-  draw_tool_class->draw           = gimp_rectangle_tool_draw;
+  draw_tool_class->draw           = gimp_crop_tool_draw;
 }
 
 static void
@@ -300,6 +301,12 @@ gimp_crop_tool_cursor_update (GimpTool         *tool,
   gimp_rectangle_tool_cursor_update (tool, coords, state, display);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static void
+gimp_crop_tool_draw (GimpDrawTool *draw_tool)
+{
+  gimp_rectangle_tool_draw (draw_tool, NULL);
 }
 
 static gboolean

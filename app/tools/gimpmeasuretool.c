@@ -655,8 +655,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (draw_tool);
   GimpTool        *tool    = GIMP_TOOL (draw_tool);
-  GimpCanvasItem  *stroke_group;
-  GimpCanvasItem  *item;
+  GimpCanvasGroup *stroke_group;
   gint             i;
   gint             draw_arc = 0;
 
@@ -687,14 +686,15 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
       if (i > 0)
         {
-          item = gimp_draw_tool_add_line (draw_tool,
-                                          measure->x[0],
-                                          measure->y[0],
-                                          measure->x[i],
-                                          measure->y[i]);
+          gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-          gimp_draw_tool_remove_item (draw_tool, item);
+          gimp_draw_tool_add_line (draw_tool,
+                                   measure->x[0],
+                                   measure->y[0],
+                                   measure->x[i],
+                                   measure->y[i]);
+
+          gimp_draw_tool_pop_group (draw_tool);
 
           /*  only draw the arc if the lines are long enough  */
           if (gimp_draw_tool_calc_distance (draw_tool, tool->display,
@@ -721,6 +721,10 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
       if (angle2 != 0.0)
         {
+          GimpCanvasItem *item;
+
+          gimp_draw_tool_push_group (draw_tool, stroke_group);
+
           item = gimp_draw_tool_add_handle (draw_tool,
                                             GIMP_HANDLE_CIRCLE,
                                             measure->x[0],
@@ -731,9 +735,6 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
                                          angle1, angle2);
-
-          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-          gimp_draw_tool_remove_item (draw_tool, item);
 
           if (measure->num_points == 2)
             {
@@ -746,17 +747,16 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
               target     = FUNSCALEX (shell, (TARGET >> 1));
               arc_radius = FUNSCALEX (shell, ARC_RADIUS);
 
-              item = gimp_draw_tool_add_line (draw_tool,
-                                              measure->x[0],
-                                              measure->y[0],
-                                              (measure->x[1] >= measure->x[0] ?
-                                               measure->x[0] + arc_radius + target :
-                                               measure->x[0] - arc_radius - target),
-                                              measure->y[0]);
-
-              gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-              gimp_draw_tool_remove_item (draw_tool, item);
+              gimp_draw_tool_add_line (draw_tool,
+                                       measure->x[0],
+                                       measure->y[0],
+                                       (measure->x[1] >= measure->x[0] ?
+                                        measure->x[0] + arc_radius + target :
+                                        measure->x[0] - arc_radius - target),
+                                       measure->y[0]);
             }
+
+          gimp_draw_tool_pop_group (draw_tool);
         }
     }
 }

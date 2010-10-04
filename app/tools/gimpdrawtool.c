@@ -198,6 +198,17 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
+      if (draw_tool->group_stack)
+        {
+          g_warning ("%s: draw_tool->group_stack not empty after calling "
+                     "GimpDrawTool::draw() of %s",
+                     G_STRFUNC,
+                     g_type_name (G_TYPE_FROM_INSTANCE (draw_tool)));
+
+          while (draw_tool->group_stack)
+            gimp_draw_tool_pop_group (draw_tool);
+        }
+
       if (draw_tool->item)
         {
           gimp_display_shell_add_item (shell, draw_tool->item);
@@ -343,13 +354,20 @@ void
 gimp_draw_tool_add_item (GimpDrawTool   *draw_tool,
                          GimpCanvasItem *item)
 {
+  GimpCanvasGroup *group;
+
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (GIMP_IS_CANVAS_ITEM (item));
 
   if (! draw_tool->item)
     draw_tool->item = gimp_canvas_group_new (gimp_display_get_shell (draw_tool->display));
 
-  gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
+  group = GIMP_CANVAS_GROUP (draw_tool->item);
+
+  if (draw_tool->group_stack)
+    group = draw_tool->group_stack->data;
+
+  gimp_canvas_group_add_item (group, item);
 }
 
 void
@@ -363,7 +381,7 @@ gimp_draw_tool_remove_item (GimpDrawTool   *draw_tool,
   gimp_canvas_group_remove_item (GIMP_CANVAS_GROUP (draw_tool->item), item);
 }
 
-GimpCanvasItem *
+GimpCanvasGroup *
 gimp_draw_tool_add_stroke_group (GimpDrawTool *draw_tool)
 {
   GimpCanvasItem *item;
@@ -376,10 +394,10 @@ gimp_draw_tool_add_stroke_group (GimpDrawTool *draw_tool)
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
 
-  return item;
+  return GIMP_CANVAS_GROUP (item);
 }
 
-GimpCanvasItem *
+GimpCanvasGroup *
 gimp_draw_tool_add_fill_group (GimpDrawTool *draw_tool)
 {
   GimpCanvasItem *item;
@@ -392,7 +410,27 @@ gimp_draw_tool_add_fill_group (GimpDrawTool *draw_tool)
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
 
-  return item;
+  return GIMP_CANVAS_GROUP (item);
+}
+
+void
+gimp_draw_tool_push_group (GimpDrawTool    *draw_tool,
+                           GimpCanvasGroup *group)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+
+  draw_tool->group_stack = g_list_prepend (draw_tool->group_stack, group);
+}
+
+void
+gimp_draw_tool_pop_group (GimpDrawTool *draw_tool)
+{
+  g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
+  g_return_if_fail (draw_tool->group_stack != NULL);
+
+  draw_tool->group_stack = g_list_remove (draw_tool->group_stack,
+                                          draw_tool->group_stack->data);
 }
 
 /**

@@ -41,6 +41,7 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
@@ -288,15 +289,17 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpRectangleSelectTool        *rect_sel_tool;
   GimpRectangleSelectToolPrivate *priv;
+  GimpCanvasGroup                *stroke_group = NULL;
 
   rect_sel_tool = GIMP_RECTANGLE_SELECT_TOOL (draw_tool);
   priv          = GIMP_RECTANGLE_SELECT_TOOL_GET_PRIVATE (rect_sel_tool);
 
   if (priv->round_corners)
     {
-      gint    x1, y1, x2, y2;
-      gdouble radius;
-      gint    square_size;
+      GimpCanvasItem *item;
+      gint            x1, y1, x2, y2;
+      gdouble         radius;
+      gint            square_size;
 
       g_object_get (rect_sel_tool,
                     "x1", &x1,
@@ -310,28 +313,39 @@ gimp_rectangle_select_tool_draw (GimpDrawTool *draw_tool)
 
       square_size = (int) (radius * 2);
 
-      gimp_draw_tool_add_arc (draw_tool, FALSE,
-                              x1, y1,
-                              square_size, square_size,
-                              G_PI / 2.0, G_PI / 2.0);
+      stroke_group =
+        GIMP_CANVAS_GROUP (gimp_draw_tool_add_stroke_group (draw_tool));
 
-      gimp_draw_tool_add_arc (draw_tool, FALSE,
-                              x2 - square_size, y1,
-                              square_size, square_size,
-                              0.0, G_PI / 2.0);
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x1, y1,
+                                     square_size, square_size,
+                                     G_PI / 2.0, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
 
-      gimp_draw_tool_add_arc (draw_tool, FALSE,
-                              x2 - square_size, y2 - square_size,
-                              square_size, square_size,
-                              G_PI * 1.5, G_PI / 2.0);
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x2 - square_size, y1,
+                                     square_size, square_size,
+                                     0.0, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
 
-      gimp_draw_tool_add_arc (draw_tool, FALSE,
-                              x1, y2 - square_size,
-                              square_size, square_size,
-                              G_PI, G_PI / 2.0);
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x2 - square_size, y2 - square_size,
+                                     square_size, square_size,
+                                     G_PI * 1.5, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
+
+      item = gimp_draw_tool_add_arc (draw_tool, FALSE,
+                                     x1, y2 - square_size,
+                                     square_size, square_size,
+                                     G_PI, G_PI / 2.0);
+      gimp_canvas_group_add_item (stroke_group, item);
+      gimp_draw_tool_remove_item (draw_tool, item);
     }
 
-  gimp_rectangle_tool_draw (draw_tool);
+  gimp_rectangle_tool_draw (draw_tool, stroke_group);
 }
 
 static gboolean

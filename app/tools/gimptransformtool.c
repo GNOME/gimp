@@ -781,14 +781,16 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   GimpTool          *tool    = GIMP_TOOL (draw_tool);
   GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
   GimpImage         *image   = gimp_display_get_image (tool->display);
-  GimpCanvasItem    *stroke_group;
-  GimpCanvasItem    *item;
   gdouble            z1, z2, z3, z4;
-
-  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
   if (tr_tool->use_grid)
     {
+      GimpCanvasGroup *stroke_group;
+
+      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
+
+      gimp_draw_tool_push_group (draw_tool, stroke_group);
+
       /* We test if the transformed polygon is convex.
        * if z1 and z2 have the same sign as well as z3 and z4
        * the polygon is convex.
@@ -814,41 +816,29 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
           for (i = 0, gci = 0; i < k; i++, gci += 4)
             {
-              item = gimp_draw_tool_add_line (draw_tool,
-                                              tr_tool->tgrid_coords[gci],
-                                              tr_tool->tgrid_coords[gci + 1],
-                                              tr_tool->tgrid_coords[gci + 2],
-                                              tr_tool->tgrid_coords[gci + 3]);
-
-              gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-              gimp_draw_tool_remove_item (draw_tool, item);
+              gimp_draw_tool_add_line (draw_tool,
+                                       tr_tool->tgrid_coords[gci],
+                                       tr_tool->tgrid_coords[gci + 1],
+                                       tr_tool->tgrid_coords[gci + 2],
+                                       tr_tool->tgrid_coords[gci + 3]);
             }
         }
 
       /*  draw the bounding box  */
-      item = gimp_draw_tool_add_line (draw_tool,
-                                      tr_tool->tx1, tr_tool->ty1,
-                                      tr_tool->tx2, tr_tool->ty2);
-      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-      gimp_draw_tool_remove_item (draw_tool, item);
+      gimp_draw_tool_add_line (draw_tool,
+                               tr_tool->tx1, tr_tool->ty1,
+                               tr_tool->tx2, tr_tool->ty2);
+      gimp_draw_tool_add_line (draw_tool,
+                               tr_tool->tx2, tr_tool->ty2,
+                               tr_tool->tx4, tr_tool->ty4);
+      gimp_draw_tool_add_line (draw_tool,
+                               tr_tool->tx3, tr_tool->ty3,
+                               tr_tool->tx4, tr_tool->ty4);
+      gimp_draw_tool_add_line (draw_tool,
+                               tr_tool->tx3, tr_tool->ty3,
+                               tr_tool->tx1, tr_tool->ty1);
 
-      item = gimp_draw_tool_add_line (draw_tool,
-                                      tr_tool->tx2, tr_tool->ty2,
-                                      tr_tool->tx4, tr_tool->ty4);
-      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-
-      item = gimp_draw_tool_add_line (draw_tool,
-                                      tr_tool->tx3, tr_tool->ty3,
-                                      tr_tool->tx4, tr_tool->ty4);
-      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-
-      item = gimp_draw_tool_add_line (draw_tool,
-                                      tr_tool->tx3, tr_tool->ty3,
-                                      tr_tool->tx1, tr_tool->ty1);
-      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-      gimp_draw_tool_remove_item (draw_tool, item);
+      gimp_draw_tool_pop_group (draw_tool);
     }
 
   gimp_transform_tool_handles_recalc (tr_tool, tool->display);

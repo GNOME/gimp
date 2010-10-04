@@ -783,7 +783,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 "narrow-mode", TRUE,
                 NULL);
 
-  gimp_rectangle_tool_draw (draw_tool);
+  gimp_rectangle_tool_draw (draw_tool, NULL);
 
   if (! text_tool->text  ||
       ! text_tool->layer ||
@@ -823,7 +823,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GtkTextBuffer   *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
-  GimpCanvasItem  *fill_group;
+  GimpCanvasGroup *fill_group;
   PangoLayout     *layout;
   gint             offset_x;
   gint             offset_y;
@@ -850,6 +850,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
   iter = pango_layout_get_iter (layout);
 
+  gimp_draw_tool_push_group (draw_tool, fill_group);
+
   do
     {
       if (! pango_layout_iter_get_run (iter))
@@ -859,9 +861,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 
       if (i >= min && i < max)
         {
-          GimpCanvasItem *item;
-          PangoRectangle  rect;
-          gint            ytop, ybottom;
+          PangoRectangle rect;
+          gint           ytop, ybottom;
 
           pango_layout_iter_get_char_extents (iter, &rect);
           pango_layout_iter_get_line_yrange (iter, &ytop, &ybottom);
@@ -876,15 +877,14 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
           rect.x += offset_x;
           rect.y += offset_y;
 
-          item = gimp_draw_tool_add_rectangle (draw_tool, TRUE,
-                                               rect.x, rect.y,
-                                               rect.width, rect.height);
-
-          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (fill_group), item);
-          gimp_draw_tool_remove_item (draw_tool, item);
+          gimp_draw_tool_add_rectangle (draw_tool, TRUE,
+                                        rect.x, rect.y,
+                                        rect.width, rect.height);
         }
     }
   while (pango_layout_iter_next_char (iter));
+
+  gimp_draw_tool_pop_group (draw_tool);
 
   pango_layout_iter_free (iter);
 }
