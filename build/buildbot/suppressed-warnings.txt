@@ -33,3 +33,6 @@
 # jas_config.h redefines PACKAGE_NAME etc
 :    .*jas_config.h:.*:1: warning: .* redefined$
 :    .*config.h:.*:1: warning: this is the location of the previous definition$
+
+# Tons of deprecation warnings, hopefully we never have to fix these...
+:    .*file-.*: warning: .* is deprecated (declared at .*png.h::*)
