@@ -174,27 +174,11 @@ gimp_draw_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_draw_tool_clear_items (GimpDrawTool *draw_tool)
-{
-  if (draw_tool->item)
-    {
-      g_object_unref (draw_tool->item);
-      draw_tool->item = NULL;
-    }
-}
-
-static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
   if (draw_tool->display && draw_tool->paused_count == 0)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
-
-      if (draw_tool->item)
-        {
-          gimp_display_shell_remove_item (shell, draw_tool->item);
-          gimp_draw_tool_clear_items (draw_tool);
-        }
+      gimp_draw_tool_undraw (draw_tool);
 
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
 
@@ -211,6 +195,8 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 
       if (draw_tool->item)
         {
+          GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
+
           gimp_display_shell_add_item (shell, draw_tool->item);
         }
     }
@@ -224,7 +210,8 @@ gimp_draw_tool_undraw (GimpDrawTool *draw_tool)
       GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
 
       gimp_display_shell_remove_item (shell, draw_tool->item);
-      gimp_draw_tool_clear_items (draw_tool);
+      g_object_unref (draw_tool->item);
+      draw_tool->item = NULL;
     }
 }
 
