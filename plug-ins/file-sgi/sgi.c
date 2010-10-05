@@ -333,22 +333,24 @@ load_image (const gchar  *filename,
    * Get the image dimensions and create the image...
    */
 
-  /* Sanitize dimensions */
-  if (sgip->xsize == 0 || sgip->xsize > GIMP_MAX_IMAGE_SIZE)
+  /* Sanitize dimensions (note that they are unsigned short and can
+   * thus never be larger than GIMP_MAX_IMAGE_SIZE
+   */
+  if (sgip->xsize == 0 /*|| sgip->xsize > GIMP_MAX_IMAGE_SIZE*/)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid width: %hu"), sgip->xsize);
       return -1;
     }
 
-  if (sgip->ysize == 0 || sgip->ysize > GIMP_MAX_IMAGE_SIZE)
+  if (sgip->ysize == 0 /*|| sgip->ysize > GIMP_MAX_IMAGE_SIZE*/)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid height: %hu"), sgip->ysize);
       return -1;
     }
 
-  if (sgip->zsize == 0 || sgip->zsize > GIMP_MAX_IMAGE_SIZE)
+  if (sgip->zsize == 0 /*|| sgip->zsize > GIMP_MAX_IMAGE_SIZE*/)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
               _("Invalid number of channels: %hu"), sgip->zsize);
