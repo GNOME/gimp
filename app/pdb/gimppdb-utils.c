@@ -516,7 +516,7 @@ gimp_pdb_layer_is_text_layer (GimpLayer  *layer,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_item_is_text_layer (GIMP_DRAWABLE (layer)))
+  if (! gimp_item_is_text_layer (GIMP_ITEM (layer)))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_INVALID_ARGUMENT,
                    _("Layer '%s' (%d) cannot be used because it is not "

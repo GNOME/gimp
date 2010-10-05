@@ -211,7 +211,7 @@ layer_options_dialog_new (GimpImage    *image,
   else
     {
       /*  For text layers add a toggle to control "auto-rename"  */
-      if (gimp_item_is_text_layer (GIMP_DRAWABLE (layer)))
+      if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
           options->rename_toggle =
             gtk_check_button_new_with_mnemonic (_("Set name from _text"));
@@ -240,7 +240,7 @@ layer_options_dialog_toggle_rename (GtkWidget          *widget,
                                     LayerOptionsDialog *options)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) &&
-      gimp_item_is_text_layer (GIMP_DRAWABLE (options->layer)))
+      gimp_item_is_text_layer (GIMP_ITEM (options->layer)))
     {
       GimpTextLayer *text_layer = GIMP_TEXT_LAYER (options->layer);
       GimpText      *text       = gimp_text_layer_get_text (text_layer);

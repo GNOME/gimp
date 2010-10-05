@@ -159,7 +159,7 @@ layers_text_tool_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_item_is_text_layer (GIMP_DRAWABLE (layer)))
+  if (! gimp_item_is_text_layer (GIMP_ITEM (layer)))
     {
       layers_edit_attributes_cmd_callback (action, data);
       return;
@@ -1049,7 +1049,7 @@ layers_edit_layer_response (GtkWidget          *widget,
         }
 
       if (dialog->rename_toggle &&
-          gimp_item_is_text_layer (GIMP_DRAWABLE (layer)))
+          gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
           g_object_set (layer,
                         "auto-rename",

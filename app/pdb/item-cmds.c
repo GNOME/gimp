@@ -196,8 +196,7 @@ item_is_text_layer_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      text_layer = (GIMP_IS_DRAWABLE (item) &&
-                    gimp_item_is_text_layer (GIMP_DRAWABLE (item)));
+      text_layer = gimp_item_is_text_layer (item);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
