@@ -157,7 +157,7 @@ text_tool_actions_update (GimpActionGroup *group,
   layer = gimp_image_get_active_layer (image);
 
   if (layer)
-    text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
+    text_layer = gimp_item_is_text_layer (GIMP_DRAWABLE (layer));
 
   vectors = gimp_image_get_active_vectors (image);
 

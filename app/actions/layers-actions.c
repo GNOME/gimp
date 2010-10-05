@@ -572,7 +572,7 @@ layers_actions_update (GimpActionGroup *group,
                 }
             }
 
-          text_layer = gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer));
+          text_layer = gimp_item_is_text_layer (GIMP_DRAWABLE (layer));
         }
     }
 

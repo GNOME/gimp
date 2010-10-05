@@ -446,7 +446,7 @@ gimp_text_layer_set (GimpTextLayer *layer,
   GimpText  *text;
   va_list    var_args;
 
-  g_return_if_fail (gimp_drawable_is_text_layer ((GimpDrawable *) layer));
+  g_return_if_fail (gimp_item_is_text_layer ((GimpDrawable *) layer));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)));
 
   text = gimp_text_layer_get_text (layer);
@@ -513,7 +513,7 @@ gimp_text_layer_discard (GimpTextLayer *layer)
 }
 
 gboolean
-gimp_drawable_is_text_layer (GimpDrawable *drawable)
+gimp_item_is_text_layer (GimpDrawable *drawable)
 {
   return (GIMP_IS_TEXT_LAYER (drawable)    &&
           GIMP_TEXT_LAYER (drawable)->text &&

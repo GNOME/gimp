@@ -67,7 +67,7 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
     {
       stock_id = GIMP_STOCK_FLOATING_SELECTION;
     }
-  else if (gimp_drawable_is_text_layer (GIMP_DRAWABLE (renderer->viewable)))
+  else if (gimp_item_is_text_layer (GIMP_DRAWABLE (renderer->viewable)))
     {
       stock_id = gimp_viewable_get_stock_id (renderer->viewable);
     }
