@@ -1073,7 +1073,9 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
  *
  * This procedure returns the interpolation setting. The return value
  * is an integer which corresponds to the values listed in the argument
- * description.
+ * description. If the interpolation has not been set explicitly by
+ * gimp_context_set_interpolation(), the default interpolation set in
+ * gimprc will be used.
  *
  * Returns: The interpolation type.
  *
