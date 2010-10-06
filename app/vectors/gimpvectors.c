@@ -44,7 +44,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gimpanchor.h"
-#include "gimpbezierdesc.c"
+#include "gimpbezierdesc.h"
 #include "gimpstroke.h"
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"
