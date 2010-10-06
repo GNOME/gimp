@@ -39,6 +39,7 @@
 #include "widgets/gimpcairo.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvaspath.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-draw.h"
@@ -148,32 +149,6 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
   cairo_mask (cr, mask);
 }
 
-static void
-gimp_display_shell_draw_one_vectors (GimpDisplayShell *shell,
-                                     cairo_t          *cr,
-                                     GimpVectors      *vectors,
-                                     gdouble           width,
-                                     gboolean          active)
-{
-  GimpStroke *stroke;
-
-  for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       stroke;
-       stroke = gimp_vectors_stroke_get_next (vectors, stroke))
-    {
-      const GimpBezierDesc *desc = gimp_vectors_get_bezier (vectors);
-
-      if (desc)
-        cairo_append_path (cr, (cairo_path_t *) desc);
-    }
-
-  gimp_display_shell_set_vectors_bg_style (shell, cr, width, active);
-  cairo_stroke_preserve (cr);
-
-  gimp_display_shell_set_vectors_fg_style (shell, cr, width, active);
-  cairo_stroke (cr);
-}
-
 void
 gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
                                  cairo_t          *cr)
@@ -186,23 +161,14 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
 
   if (image && TRUE /* gimp_display_shell_get_show_vectors (shell) */)
     {
-      GList       *all_vectors = gimp_image_get_vectors_list (image);
-      const GList *list;
-      gdouble      xscale;
-      gdouble      yscale;
-      gdouble      width;
+      GList          *all_vectors = gimp_image_get_vectors_list (image);
+      const GList    *list;
+      GimpCanvasItem *path;
+
+      path = gimp_canvas_path_new (shell, NULL, FALSE, TRUE);
 
       if (! all_vectors)
         return;
-
-      cairo_translate (cr, - shell->offset_x, - shell->offset_y);
-      cairo_scale (cr, shell->scale_x, shell->scale_y);
-
-      /* determine a reasonable line width */
-      xscale = yscale = 1.0;
-      cairo_device_to_user_distance (cr, &xscale, &yscale);
-      width = MAX (xscale, yscale);
-      width = MIN (width, 1.0);
 
       for (list = all_vectors; list; list = list->next)
         {
@@ -210,14 +176,20 @@ gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
 
           if (gimp_item_get_visible (GIMP_ITEM (vectors)))
             {
-              gboolean active;
+              const GimpBezierDesc *desc;
+              gboolean              active;
 
+              desc   = gimp_vectors_get_bezier (vectors);
               active = (vectors == gimp_image_get_active_vectors (image));
 
-              gimp_display_shell_draw_one_vectors (shell, cr, vectors,
-                                                   width, active);
+              g_object_set (path, "path", desc, NULL);
+              gimp_canvas_item_set_highlight (path, active);
+
+              gimp_canvas_item_draw (path, cr);
             }
         }
+
+      g_object_unref (path);
 
       g_list_free (all_vectors);
     }

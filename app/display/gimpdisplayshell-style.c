@@ -268,13 +268,12 @@ gimp_display_shell_set_selection_in_style (GimpDisplayShell *shell,
 void
 gimp_display_shell_set_vectors_bg_style (GimpDisplayShell *shell,
                                          cairo_t          *cr,
-                                         gdouble           width,
                                          gboolean          active)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
-  cairo_set_line_width (cr, width * 3.0);
+  cairo_set_line_width (cr, 3.0);
 
   if (active)
     gimp_cairo_set_source_rgba (cr, &vectors_active_bg);
@@ -285,13 +284,12 @@ gimp_display_shell_set_vectors_bg_style (GimpDisplayShell *shell,
 void
 gimp_display_shell_set_vectors_fg_style (GimpDisplayShell *shell,
                                          cairo_t          *cr,
-                                         gdouble           width,
                                          gboolean          active)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
 
-  cairo_set_line_width (cr, width);
+  cairo_set_line_width (cr, 1.0);
 
   if (active)
     gimp_cairo_set_source_rgba (cr, &vectors_active_fg);
