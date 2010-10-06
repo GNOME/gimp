@@ -414,9 +414,16 @@ p_gimp_rotate (gint32  image_id,
 
   l_angle_rad = (angle_deg * G_PI) / 180.0;
 
-  l_rc = gimp_drawable_transform_rotate_default (drawable_id, l_angle_rad,
-                                                 TRUE, 0, 0, interpolation,
-                                                 FALSE);
+  gimp_context_push ();
+  if (! interpolation)
+    gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+  gimp_context_set_transform_resize (GIMP_TRANSFORM_RESIZE_ADJUST);
+  l_rc = gimp_item_transform_rotate (drawable_id,
+                                     l_angle_rad,
+                                     TRUE /*auto_center*/,
+                                     -1.0 /*center_x*/,
+                                     -1.0 /*center_y*/);
+  gimp_context_pop ();
 
   if (l_rc == -1)
     g_printerr ("Error: gimp_drawable_transform_rotate_default call failed\n");
