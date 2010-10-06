@@ -36,3 +36,6 @@
 
 # Tons of deprecation warnings, hopefully we never have to fix these...
 :    .*file-.*: warning: .* is deprecated \(declared at .*/png.h:.*\)$
+
+# Temporary suppression until Bug 631543 is fixed
+.*plug-ins/pygimp/pygimp-drawable.c:.*: warning: implicit declaration of function .*gimp_drawable_transform_.*
