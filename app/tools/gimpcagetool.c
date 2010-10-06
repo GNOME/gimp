@@ -119,6 +119,10 @@ static void         gimp_cage_tool_prepare_preview    (GimpCageTool          *ct
                                                        GimpDisplay           *display);
 static gboolean     gimp_cage_tool_update_preview     (GimpTool              *tool);
 
+static GeglNode*    gimp_cage_tool_get_render_node    (GimpCageTool    *ct,
+                                                       GeglNode        *parent);
+
+
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
 
 #define parent_class gimp_cage_tool_parent_class
@@ -695,7 +699,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
                               NULL);
 
   gegl_node_connect_to (input, "output",
-                          output, "input");
+                        output, "input");
 
   processor = gegl_node_new_processor (output, NULL);
 
@@ -711,14 +715,64 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   g_object_unref (gegl);
 }
 
+static GeglNode*
+gimp_cage_tool_get_render_node (GimpCageTool *ct,
+                                GeglNode     *parent)
+{
+   GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+
+  GeglNode *cage, *render; /* Render nodes */
+  GeglNode *input, *output, *aux; /* Proxy nodes*/
+  GeglNode *node; /* wraper to be returned */
+
+   node = gegl_node_new_child (parent,
+                              /* FIXME: Leavin this empty causes compiler warning,
+                               *        but adding it causes a hang.
+                               * "operation", "gegl:nop",  */
+                              NULL);
+
+  input  = gegl_node_get_input_proxy  (node, "input");
+  aux    = gegl_node_get_input_proxy  (node, "aux");
+  output = gegl_node_get_output_proxy (node, "output");
+
+
+  cage = gegl_node_new_child (parent,
+                              "operation", "gimp:cage_transform",
+                              "config", ct->config,
+                              "fill_plain_color", options->fill_plain_color,
+                              NULL);
+
+  render = gegl_node_new_child (parent,
+                                "operation", "gegl:render_mapping",
+                                NULL);
+
+  gegl_node_connect_to (input, "output",
+                        cage, "input");
+
+  gegl_node_connect_to (aux, "output",
+                        cage, "aux");
+
+  gegl_node_connect_to (input, "output",
+                        render, "input");
+
+  gegl_node_connect_to (cage, "output",
+                        render, "aux");
+
+  gegl_node_connect_to (render, "output",
+                        output, "input");
+  return node;
+}
+
 static void
 gimp_cage_tool_prepare_preview (GimpCageTool *ct,
                                 GimpDisplay  *display)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GimpImage       *image    = gimp_display_get_image (display);
+  GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
 
-  GeglNode *coef, *cage;
+
+  GeglNode *coef;
+  GeglNode *node; 
 
   if (ct->node_preview)
   {
@@ -733,17 +787,15 @@ gimp_cage_tool_prepare_preview (GimpCageTool *ct,
                               "buffer",    ct->coef,
                               NULL);
 
-  cage = gegl_node_new_child (ct->node_preview,
-                                "operation", "gimp:cage_preview",
-                                "config", ct->config,
-                                NULL);
+  node = gimp_cage_tool_get_render_node (ct,
+                                         ct->node_preview);
 
   gegl_node_connect_to (coef, "output",
-                        cage, "aux");
+                        node, "aux");
 
   ct->image_map = gimp_image_map_new (drawable,
                                       _("Cage transform"),
-                                      cage,
+                                      node,
                                       NULL,
                                       NULL);
 }
@@ -780,8 +832,8 @@ static void
 gimp_cage_tool_process (GimpCageTool *ct,
                         GimpDisplay  *display)
 {
-  GimpCageOptions   *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
-  TileManager       *new_tiles;
+  TileManager       *new_tiles = NULL;
+  TileManager       *old_tiles = NULL;
   GeglRectangle      rect;
 
   GimpImage     *image    = gimp_display_get_image (display);
@@ -797,14 +849,24 @@ gimp_cage_tool_process (GimpCageTool *ct,
   {
     GeglNode *gegl = gegl_node_new ();
 
-#ifdef DEBUG_CAGE
-    /* debug coeficient */
-    GeglNode *coef, *debug, *output;
+    /* reverse transform */
+    GeglNode *coef, *node, *input, *output;
+
+    old_tiles = gimp_drawable_get_tiles (drawable);
+
+    input  = gegl_node_new_child (gegl,
+                                  "operation",    "gimp:tilemanager-source",
+                                  "tile-manager", old_tiles,
+                                  "linear",       TRUE,
+                                  NULL);
 
     coef = gegl_node_new_child (gegl,
                                 "operation", "gegl:buffer-source",
                                 "buffer",    ct->coef,
                                 NULL);
+
+    node = gimp_cage_tool_get_render_node (ct,
+                                           gegl);
 
     new_tiles = gimp_drawable_get_shadow_tiles (drawable);
     output = gegl_node_new_child (gegl,
@@ -813,6 +875,18 @@ gimp_cage_tool_process (GimpCageTool *ct,
                                   "linear",       TRUE,
                                   NULL);
 
+    gegl_node_connect_to (input, "output",
+                          node, "input");
+
+    gegl_node_connect_to (coef, "output",
+                          node, "aux");
+
+    gegl_node_connect_to (node, "output",
+                          output, "input");
+
+    /* Debug code sample for debugging coef calculation.*/
+
+    /*
     debug = gegl_node_new_child (gegl,
                                   "operation", "gegl:debugit",
                                   NULL);
@@ -821,54 +895,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
                           debug, "input");
 
     gegl_node_connect_to (debug, "output",
-                          output, "input");
-#else
-    /* reverse transform */
-    GeglNode *coef, *cage, *render, *input, *output;
-
-    input  = gegl_node_new_child (gegl,
-                                  "operation",    "gimp:tilemanager-source",
-                                  "tile-manager", gimp_drawable_get_tiles (drawable),
-                                  "linear",       TRUE,
-                                  NULL);
-
-    cage = gegl_node_new_child (gegl,
-                                "operation", "gimp:cage_transform",
-                                "config", ct->config,
-                                "fill_plain_color", options->fill_plain_color,
-                                NULL);
-
-    coef = gegl_node_new_child (gegl,
-                                "operation", "gegl:buffer-source",
-                                "buffer",    ct->coef,
-                                NULL);
-
-    render = gegl_node_new_child (gegl,
-                                  "operation", "gegl:render_mapping",
-                                  NULL);
-
-    new_tiles = gimp_drawable_get_shadow_tiles (drawable);
-    output = gegl_node_new_child (gegl,
-                                  "operation",    "gimp:tilemanager-sink",
-                                  "tile-manager", new_tiles,
-                                  "linear",       TRUE,
-                                  NULL);
-
-    gegl_node_connect_to (input, "output",
-                          cage, "input");
-
-    gegl_node_connect_to (input, "output",
-                          render, "input");
-
-    gegl_node_connect_to (coef, "output",
-                          cage, "aux");
-
-    gegl_node_connect_to (cage, "output",
-                          render, "aux");
-
-    gegl_node_connect_to (render, "output",
-                          output, "input");
-#endif
+                          output, "input");*/
 
 
     progress = gimp_progress_start (GIMP_PROGRESS (display),

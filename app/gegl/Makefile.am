@@ -55,8 +55,6 @@ libappgegl_a_SOURCES = \
 	gimpoperationcolorize.h		\
 	gimpoperationcagecoefcalc.c	\
 	gimpoperationcagecoefcalc.h	\
-	gimpoperationcagepreview.c	\
-	gimpoperationcagepreview.h	\
 	gimpoperationcagetransform.c	\
 	gimpoperationcagetransform.h	\
 	gimpoperationcurves.c		\
