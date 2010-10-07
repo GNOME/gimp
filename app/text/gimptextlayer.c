@@ -641,15 +641,12 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   GimpItem        *item     = GIMP_ITEM (layer);
   GimpImage       *image    = gimp_item_get_image (item);
   cairo_t         *cr;
-  cairo_surface_t *rgb_surface;
-  cairo_surface_t *alpha_surface;
+  cairo_surface_t *surface;
   PixelRegion      layerPR;
-  const guchar    *rgb_data;
-  const guchar    *alpha_data;
+  const guchar    *data;
   GimpImageType    layer_type;
   gint             layer_alpha_byte;
-  gint             rgb_rowstride;
-  gint             alpha_rowstride;
+  gint             rowstride;
   gint             width;
   gint             height;
   gpointer         pr;
@@ -659,73 +656,60 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   width  = gimp_item_get_width  (item);
   height = gimp_item_get_height (item);
 
-  rgb_surface   = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
-  alpha_surface = cairo_image_surface_create (CAIRO_FORMAT_A8,    width, height);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
 
-  cr = cairo_create (rgb_surface);
-  gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
-  cairo_destroy (cr);
-
-  cr = cairo_create (alpha_surface);
+  cr = cairo_create (surface);
   gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
   cairo_destroy (cr);
 
   pixel_region_init (&layerPR, gimp_drawable_get_tiles (drawable),
                      0, 0, width, height, TRUE);
 
-  layer_type       = gimp_drawable_type (drawable);
+  layer_type = gimp_drawable_type (drawable);
   layer_alpha_byte = layerPR.bytes - 1;
 
-  cairo_surface_flush (rgb_surface);
-  rgb_data      = cairo_image_surface_get_data (rgb_surface);
-  rgb_rowstride = cairo_image_surface_get_stride (rgb_surface);
-
-  cairo_surface_flush (alpha_surface);
-  alpha_data      = cairo_image_surface_get_data (alpha_surface);
-  alpha_rowstride = cairo_image_surface_get_stride (alpha_surface);
+  cairo_surface_flush (surface);
+  data      = cairo_image_surface_get_data (surface);
+  rowstride = cairo_image_surface_get_stride (surface);
 
   for (pr = pixel_regions_register (1, &layerPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
-      const guchar *rgb_src;
-      const guchar *alpha_src;
+      const guchar *src  = data + layerPR.y * rowstride + layerPR.x * 4;
       guchar       *dest = layerPR.data;
       gint          rows = layerPR.h;
 
-      rgb_src   = rgb_data   + layerPR.x * 4 + layerPR.y * rgb_rowstride;
-      alpha_src = alpha_data + layerPR.x     + layerPR.y * alpha_rowstride;
-
       while (rows--)
         {
-          const guchar *rgb   = rgb_src;
-          const guchar *alpha = alpha_src;
-          guchar       *d     = dest;
-          gint          i;
+          const guchar *s = src;
+          guchar       *d = dest;
+          gint          w = layerPR.w;
 
-          for (i = 0; i < layerPR.w; i++)
+          while (w--)
             {
-              guchar color[3];
+              guchar color[4];
 
-              GIMP_CAIRO_RGB24_GET_PIXEL (rgb, color[0], color[1], color[2]);
+              GIMP_CAIRO_ARGB32_GET_PIXEL (s,
+                                           color[0],
+                                           color[1],
+                                           color[2],
+                                           color[3]);
 
-              gimp_image_transform_color (image, layer_type, d,
-                                          GIMP_RGB, color);
-              d[layer_alpha_byte] = *alpha;
+              gimp_image_transform_color (image,
+                                          layer_type, d, GIMP_RGB, color);
+              d[layer_alpha_byte] = color[3];
 
-              rgb   += 4;
-              alpha += 1;
-              d     += layerPR.bytes;
+              s += 4;
+              d += layerPR.bytes;
             }
 
-          rgb_src   += rgb_rowstride;
-          alpha_src += alpha_rowstride;
-          dest      += layerPR.rowstride;
+          src  += rowstride;
+          dest += layerPR.rowstride;
         }
     }
 
-  cairo_surface_destroy (rgb_surface);
-  cairo_surface_destroy (alpha_surface);
+  cairo_surface_destroy (surface);
 
   gimp_drawable_update (drawable, 0, 0, width, height);
 }
