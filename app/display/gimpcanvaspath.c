@@ -156,7 +156,7 @@ gimp_canvas_path_set_property (GObject      *object,
 
         if (private->path)
           {
-            cairo_path_destroy (private->path);
+            gimp_bezier_desc_free (private->path, TRUE);
             private->path = NULL;
           }
 
@@ -240,10 +240,12 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
 
       cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
 
+      cairo_save (cr);
       cairo_translate (cr, - shell->offset_x, - shell->offset_y);
       cairo_scale (cr, shell->scale_x, shell->scale_y);
 
       cairo_append_path (cr, private->path);
+      cairo_restore (cr);
 
       cairo_path_extents (cr, &x1, &y1, &x2, &y2);
 
@@ -252,14 +254,14 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
       if (private->filled)
         {
           rectangle.x      = floor (x1 - 1.0);
-          rectangle.y      = floor (x1 - 1.0);
+          rectangle.y      = floor (y1 - 1.0);
           rectangle.width  = ceil (x2 + 1.0) - rectangle.x;
           rectangle.height = ceil (y2 + 1.0) - rectangle.y;
         }
       else
         {
           rectangle.x      = floor (x1 - 1.5);
-          rectangle.y      = floor (x1 - 1.5);
+          rectangle.y      = floor (y1 - 1.5);
           rectangle.width  = ceil (x2 + 1.5) - rectangle.x;
           rectangle.height = ceil (y2 + 1.5) - rectangle.y;
         }
@@ -294,10 +296,10 @@ gimp_canvas_path_stroke (GimpCanvasItem   *item,
 }
 
 GimpCanvasItem *
-gimp_canvas_path_new (GimpDisplayShell *shell,
-                      GimpBezierDesc   *path,
-                      gboolean          filled,
-                      gboolean          path_style)
+gimp_canvas_path_new (GimpDisplayShell     *shell,
+                      const GimpBezierDesc *path,
+                      gboolean              filled,
+                      gboolean              path_style)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
 
