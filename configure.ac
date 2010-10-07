@@ -956,10 +956,10 @@ if test "$gdk_target" = x11; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
 	  have_libxmu=yes
-          XMU_LIBS="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
+          XMU_LIBS="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt"
+          SCREENSHOT_LIBS="$XMU_LIBS",
 	  [have_libxmu="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
 	[have_libxmu="no (XMU library not found)"], -lXt -lX11)
-      SCREENSHOT_LIBS="$XMU_LIBS"
    fi
 
    # Check for shaped window extension
