@@ -1400,45 +1400,33 @@ gimp_vector_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpVectorTool  *vector_tool = GIMP_VECTOR_TOOL (draw_tool);
-  GimpAnchor      *cur_anchor  = NULL;
-  GimpStroke      *cur_stroke  = NULL;
-  GimpVectors     *vectors;
-  GArray          *coords;
-  gboolean         closed;
-  GList           *draw_anchors;
-  GList           *list;
+  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (draw_tool);
+  GimpStroke     *cur_stroke;
+  GimpVectors    *vectors;
 
   vectors = vector_tool->vectors;
 
   if (!vectors)
     return;
 
-  while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
+  /* the stroke itself */
+  if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
+    gimp_draw_tool_add_path (draw_tool, gimp_vectors_get_bezier (vectors));
+
+  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+       cur_stroke;
+       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
     {
-      /* the stroke itself */
-      if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
-        {
-          coords = gimp_stroke_interpolate (cur_stroke, 1.0, &closed);
-
-          if (coords)
-            {
-              if (coords->len)
-                gimp_draw_tool_add_strokes (draw_tool,
-                                            &g_array_index (coords,
-                                                            GimpCoords, 0),
-                                            coords->len, FALSE);
-
-              g_array_free (coords, TRUE);
-            }
-        }
+      GArray *coords;
+      GList  *draw_anchors;
+      GList  *list;
 
       /* anchor handles */
       draw_anchors = gimp_stroke_get_draw_anchors (cur_stroke);
 
       for (list = draw_anchors; list; list = g_list_next (list))
         {
-          cur_anchor = GIMP_ANCHOR (list->data);
+          GimpAnchor *cur_anchor = GIMP_ANCHOR (list->data);
 
           if (cur_anchor->type == GIMP_ANCHOR_ANCHOR)
             {
@@ -1490,7 +1478,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
           for (list = draw_anchors; list; list = g_list_next (list))
             {
-              cur_anchor = GIMP_ANCHOR (list->data);
+              GimpAnchor *cur_anchor = GIMP_ANCHOR (list->data);
 
               gimp_draw_tool_add_handle (draw_tool,
                                          GIMP_HANDLE_SQUARE,

@@ -40,6 +40,7 @@
 #include "display/gimpcanvasguide.h"
 #include "display/gimpcanvashandle.h"
 #include "display/gimpcanvasline.h"
+#include "display/gimpcanvaspath.h"
 #include "display/gimpcanvaspen.h"
 #include "display/gimpcanvaspolygon.h"
 #include "display/gimpcanvasrectangle.h"
@@ -699,6 +700,24 @@ gimp_draw_tool_add_strokes (GimpDrawTool     *draw_tool,
 
   item = gimp_canvas_polygon_new_from_coords (gimp_display_get_shell (draw_tool->display),
                                               points, n_points, filled);
+
+  gimp_draw_tool_add_item (draw_tool, item);
+  g_object_unref (item);
+
+  return item;
+}
+
+GimpCanvasItem *
+gimp_draw_tool_add_path (GimpDrawTool         *draw_tool,
+                         const GimpBezierDesc *desc)
+{
+  GimpCanvasItem *item;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), NULL);
+  g_return_val_if_fail (desc != NULL, NULL);
+
+  item = gimp_canvas_path_new (gimp_display_get_shell (draw_tool->display),
+                               desc, FALSE, FALSE);
 
   gimp_draw_tool_add_item (draw_tool, item);
   g_object_unref (item);
