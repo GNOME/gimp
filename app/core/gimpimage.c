@@ -2590,10 +2590,10 @@ gimp_image_get_color (const GimpImage *src_image,
 }
 
 void
-gimp_image_transform_rgb (const GimpImage    *dest_image,
-                          GimpImageType       dest_type,
-                          const GimpRGB      *rgb,
-                          guchar             *color)
+gimp_image_transform_rgb (const GimpImage *dest_image,
+                          GimpImageType    dest_type,
+                          const GimpRGB   *rgb,
+                          guchar          *color)
 {
   guchar col[3];
 
