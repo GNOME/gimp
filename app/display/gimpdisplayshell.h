@@ -136,6 +136,7 @@ struct _GimpDisplayShell
   cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
 
   GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+  GimpCanvasItem    *vectors;          /*  item proxy of vectors              */
   GimpCanvasItem    *grid;             /*  item proxy of the grid             */
   GimpCanvasItem    *guides;           /*  item proxies of guides             */
   GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
@@ -171,6 +172,10 @@ struct _GimpDisplayShell
   GtkWidget             *filters_dialog; /* color display filter dialog       */
 
   gint               paused_count;
+
+  GimpTreeHandler   *vectors_freeze_handler;
+  GimpTreeHandler   *vectors_thaw_handler;
+  GimpTreeHandler   *vectors_visible_handler;
 
   gboolean           zoom_on_resize;
   gboolean           show_transform_preview;

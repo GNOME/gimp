@@ -33,9 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpprojection.h"
 
-#include "vectors/gimpstroke.h"
-#include "vectors/gimpvectors.h"
-
 #include "widgets/gimpcairo.h"
 
 #include "gimpcanvas.h"
@@ -147,52 +144,6 @@ gimp_display_shell_draw_selection_in (GimpDisplayShell   *shell,
   gimp_display_shell_set_selection_in_style (shell, cr, index);
 
   cairo_mask (cr, mask);
-}
-
-void
-gimp_display_shell_draw_vectors (GimpDisplayShell *shell,
-                                 cairo_t          *cr)
-{
-  GimpImage *image;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  image = gimp_display_get_image (shell->display);
-
-  if (image && TRUE /* gimp_display_shell_get_show_vectors (shell) */)
-    {
-      GList          *all_vectors = gimp_image_get_vectors_list (image);
-      const GList    *list;
-      GimpCanvasItem *path;
-
-      path = gimp_canvas_path_new (shell, NULL, FALSE, TRUE);
-
-      if (! all_vectors)
-        return;
-
-      for (list = all_vectors; list; list = list->next)
-        {
-          GimpVectors *vectors = list->data;
-
-          if (gimp_item_get_visible (GIMP_ITEM (vectors)))
-            {
-              const GimpBezierDesc *desc;
-              gboolean              active;
-
-              desc   = gimp_vectors_get_bezier (vectors);
-              active = (vectors == gimp_image_get_active_vectors (image));
-
-              g_object_set (path, "path", desc, NULL);
-              gimp_canvas_item_set_highlight (path, active);
-
-              gimp_canvas_item_draw (path, cr);
-            }
-        }
-
-      g_object_unref (path);
-
-      g_list_free (all_vectors);
-    }
 }
 
 void

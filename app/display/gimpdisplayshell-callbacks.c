@@ -2330,11 +2330,6 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_display_shell_preview_transform (shell, cr);
   cairo_restore (cr);
 
-  /* draw the vectors */
-  cairo_save (cr);
-  gimp_display_shell_draw_vectors (shell, cr);
-  cairo_restore (cr);
-
   /* draw canvas items */
   cairo_save (cr);
   gimp_canvas_item_draw (shell->canvas_item, cr);

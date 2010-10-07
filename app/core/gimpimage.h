@@ -131,8 +131,6 @@ struct _GimpImageClass
   void (* exported)                     (GimpImage            *image,
                                          const gchar          *uri);
 
-  void (* update_vectors)               (GimpImage            *image,
-                                         GimpVectors          *vectors);
   void (* guide_added)                  (GimpImage            *image,
                                          GimpGuide            *guide);
   void (* guide_removed)                (GimpImage            *image,
@@ -253,9 +251,6 @@ void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
-void            gimp_image_update_vectors        (GimpImage          *image,
-                                                  GimpVectors        *vectors);
-
 void            gimp_image_guide_added           (GimpImage          *image,
                                                   GimpGuide          *guide);
 void            gimp_image_guide_removed         (GimpImage          *image,

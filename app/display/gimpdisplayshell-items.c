@@ -49,6 +49,10 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
 
   shell->canvas_item = gimp_canvas_group_new (shell);
 
+  shell->vectors = gimp_canvas_proxy_group_new (shell);
+  gimp_display_shell_add_item (shell, shell->vectors);
+  g_object_unref (shell->vectors);
+
   shell->grid = gimp_canvas_grid_new (shell, NULL);
   g_object_set (shell->grid, "grid-style", TRUE, NULL);
   gimp_display_shell_add_item (shell, shell->grid);

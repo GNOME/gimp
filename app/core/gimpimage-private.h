@@ -78,10 +78,6 @@ struct _GimpImagePrivate
   GQuark             channel_name_changed_handler;
   GQuark             channel_color_changed_handler;
 
-  GimpTreeHandler   *vectors_freeze_handler;
-  GimpTreeHandler   *vectors_thaw_handler;
-  GimpTreeHandler   *vectors_visible_handler;
-
   GimpLayer         *floating_sel;          /*  the FS layer                 */
   GimpChannel       *selection_mask;        /*  the selection mask channel   */
 
