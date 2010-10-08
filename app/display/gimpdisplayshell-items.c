@@ -95,6 +95,7 @@ gimp_display_shell_items_free (GimpDisplayShell *shell)
       g_object_unref (shell->canvas_item);
       shell->canvas_item = NULL;
 
+      shell->vectors        = NULL;
       shell->grid           = NULL;
       shell->guides         = NULL;
       shell->sample_points  = NULL;
