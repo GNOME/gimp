@@ -1104,7 +1104,7 @@ channel_type_name (gint type)
   };
   static gchar *err_name = NULL;
 
-  if (type >= 0 && type <= PSP_DIB_THUMBNAIL)
+  if (type >= 0 && type <= PSP_CHANNEL_BLUE)
     return channel_type_names[type];
 
   g_free (err_name);
