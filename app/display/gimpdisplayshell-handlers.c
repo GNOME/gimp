@@ -823,7 +823,7 @@ static void
 gimp_display_shell_active_vectors_handler (GimpImage        *image,
                                            GimpDisplayShell *shell)
 {
-  GimpCanvasProxyGroup *group = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
+  GimpCanvasProxyGroup *group  = GIMP_CANVAS_PROXY_GROUP (shell->vectors);
   GimpVectors          *active = gimp_image_get_active_vectors (image);
   GList                *list;
 

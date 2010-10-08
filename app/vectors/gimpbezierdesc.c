@@ -28,6 +28,19 @@
 #include "gimpbezierdesc.h"
 
 
+GType
+gimp_bezier_desc_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    type = g_boxed_type_register_static ("GimpBezierDesc",
+                                         (GBoxedCopyFunc) gimp_bezier_desc_copy,
+                                         (GBoxedFreeFunc) gimp_bezier_desc_free);
+
+  return type;
+}
+
 GimpBezierDesc *
 gimp_bezier_desc_new (cairo_path_data_t *data,
                       gint               n_data)
@@ -55,25 +68,11 @@ gimp_bezier_desc_copy (const GimpBezierDesc *desc)
                                desc->num_data);
 }
 
-cairo_path_data_t *
-gimp_bezier_desc_free (GimpBezierDesc *desc,
-                       gboolean        free_data)
+void
+gimp_bezier_desc_free (GimpBezierDesc *desc)
 {
-  cairo_path_data_t *data;
+  g_return_if_fail (desc != NULL);
 
-  g_return_val_if_fail (desc != NULL, NULL);
-
-  if (free_data)
-    {
-      g_free (desc->data);
-      data = NULL;
-    }
-  else
-    {
-      data = desc->data;
-    }
-
+  g_free (desc->data);
   g_slice_free (GimpBezierDesc, desc);
-
-  return data;
 }

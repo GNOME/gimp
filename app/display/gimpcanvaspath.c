@@ -104,8 +104,9 @@ gimp_canvas_path_class_init (GimpCanvasPathClass *klass)
   item_class->stroke         = gimp_canvas_path_stroke;
 
   g_object_class_install_property (object_class, PROP_PATH,
-                                   g_param_spec_pointer ("path", NULL, NULL,
-                                                         GIMP_PARAM_READWRITE));
+                                   g_param_spec_boxed ("path", NULL, NULL,
+                                                       GIMP_TYPE_BEZIER_DESC,
+                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_FILLED,
                                    g_param_spec_boolean ("filled", NULL, NULL,
@@ -133,7 +134,7 @@ gimp_canvas_path_finalize (GObject *object)
 
   if (private->path)
     {
-      gimp_bezier_desc_free (private->path, TRUE);
+      gimp_bezier_desc_free (private->path);
       private->path = NULL;
     }
 
@@ -151,18 +152,9 @@ gimp_canvas_path_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_PATH:
-      {
-        cairo_path_t *path = g_value_get_pointer (value);
-
-        if (private->path)
-          {
-            gimp_bezier_desc_free (private->path, TRUE);
-            private->path = NULL;
-          }
-
-        if (path)
-          private->path = gimp_bezier_desc_copy (path);
-      }
+      if (private->path)
+        gimp_bezier_desc_free (private->path);
+      private->path = g_value_dup_boxed (value);
       break;
     case PROP_FILLED:
       private->filled = g_value_get_boolean (value);
@@ -188,7 +180,7 @@ gimp_canvas_path_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_PATH:
-      g_value_set_pointer (value, private->path);
+      g_value_set_boxed (value, private->path);
       break;
     case PROP_FILLED:
       g_value_set_boolean (value, private->filled);

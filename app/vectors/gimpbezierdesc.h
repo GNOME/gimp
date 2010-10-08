@@ -22,12 +22,16 @@
 #define __GIMP_BEZIER_DESC_H__
 
 
+#define             GIMP_TYPE_BEZIER_DESC     (gimp_bezier_desc_get_type ())
+
+GType               gimp_bezier_desc_get_type (void) G_GNUC_CONST;
+
+
 /* takes ownership of "data" */
-GimpBezierDesc    * gimp_bezier_desc_new  (cairo_path_data_t    *data,
-                                           gint                  n_data);
-GimpBezierDesc    * gimp_bezier_desc_copy (const GimpBezierDesc *desc);
-cairo_path_data_t * gimp_bezier_desc_free (GimpBezierDesc       *desc,
-                                           gboolean              free_data);
+GimpBezierDesc    * gimp_bezier_desc_new      (cairo_path_data_t    *data,
+                                               gint                  n_data);
+GimpBezierDesc    * gimp_bezier_desc_copy     (const GimpBezierDesc *desc);
+void                gimp_bezier_desc_free     (GimpBezierDesc       *desc);
 
 
 #endif /* __GIMP_BEZIER_DESC_H__ */

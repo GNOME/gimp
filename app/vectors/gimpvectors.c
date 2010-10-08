@@ -261,7 +261,7 @@ gimp_vectors_finalize (GObject *object)
 
   if (vectors->bezier_desc)
     {
-      gimp_bezier_desc_free (vectors->bezier_desc, TRUE);
+      gimp_bezier_desc_free (vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -613,7 +613,7 @@ gimp_vectors_real_freeze (GimpVectors *vectors)
   /*  release cached bezier representation  */
   if (vectors->bezier_desc)
     {
-      gimp_bezier_desc_free (vectors->bezier_desc, TRUE);
+      gimp_bezier_desc_free (vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -1158,7 +1158,7 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
         {
           cmd_array = g_array_append_vals (cmd_array, bezdesc->data,
                                            bezdesc->num_data);
-          gimp_bezier_desc_free (bezdesc, TRUE);
+          gimp_bezier_desc_free (bezdesc);
         }
     }
 
