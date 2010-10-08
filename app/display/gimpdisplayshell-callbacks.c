@@ -2331,9 +2331,7 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   cairo_restore (cr);
 
   /* draw canvas items */
-  cairo_save (cr);
   gimp_canvas_item_draw (shell->canvas_item, cr);
-  cairo_restore (cr);
 
   /* restart (and recalculate) the selection boundaries */
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
