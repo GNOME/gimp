@@ -946,18 +946,14 @@ void
 gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
                                    GimpPaintOptions *paint_options)
 {
-  TempBuf *mask  = NULL;
+  TempBuf *mask = NULL;
   gdouble  scale;
-  gdouble  angle;
-  gdouble  aspect_ratio;
 
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (core->main_brush != NULL);
   g_return_if_fail (core->brush_bound_segs == NULL);
 
   scale = paint_options->brush_scale;
-  angle = paint_options->brush_angle;
-  aspect_ratio = paint_options->brush_aspect_ratio;
 
   if (scale > 0.0)
     {
