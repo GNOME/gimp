@@ -64,19 +64,19 @@
           (set! from-selection TRUE)
           (set! active-selection (car (gimp-selection-save image)))))
 
-    (set! hl-layer (car (gimp-layer-new image image-width image-height type "Highlight" 100 NORMAL-MODE)))
-    (gimp-image-add-layer image hl-layer -1)
+    (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 NORMAL-MODE)))
+    (gimp-image-insert-layer image hl-layer -1 -1)
 
     (gimp-selection-none image)
     (gimp-edit-clear hl-layer)
-    (gimp-selection-load active-selection)
+    (gimp-item-to-selection active-selection 2)
 
     (gimp-context-set-background hl-color)
     (gimp-edit-fill hl-layer BACKGROUND-FILL)
     (gimp-selection-translate image hl-offset-x hl-offset-y)
     (gimp-edit-fill hl-layer BACKGROUND-FILL)
     (gimp-selection-none image)
-    (gimp-selection-load active-selection)
+    (gimp-item-to-selection active-selection 2)
 
     (set! mask (car (gimp-layer-create-mask hl-layer ADD-WHITE-MASK)))
     (gimp-layer-add-mask hl-layer mask)
@@ -88,21 +88,21 @@
                                             image-width
                                             image-height
                                             type
-                                            "Shadow"
+                                            _"Shadow"
                                             ds-opacity
                                             NORMAL-MODE)))
-    (gimp-image-add-layer image shadow-layer -1)
+    (gimp-image-insert-layer image shadow-layer -1 -1)
     (gimp-selection-none image)
     (gimp-edit-clear shadow-layer)
-    (gimp-selection-load active-selection)
+    (gimp-item-to-selection active-selection 2)
     (gimp-selection-translate image ds-offset-x ds-offset-y)
     (gimp-context-set-background ds-color)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image shadow-layer ds-blur TRUE TRUE)
-    (gimp-selection-load active-selection)
+    (gimp-item-to-selection active-selection 2)
     (gimp-edit-clear shadow-layer)
-    (gimp-image-lower-layer image shadow-layer)
+    (gimp-image-lower-item image shadow-layer)
 
     (if (= keep-selection FALSE)
         (gimp-selection-none image))
