@@ -294,7 +294,7 @@ rcm_create_one_circle (gint         height,
   gtk_widget_show (legend_table);
 
   /* spinbutton 1 */
-  label = gtk_label_new (_("From:"));
+  label = gtk_label_new (C_("color-range", "From:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (legend_table), label, 0, 1, 0, 1,
                     0, GTK_EXPAND, 5, 5);
@@ -320,7 +320,7 @@ rcm_create_one_circle (gint         height,
                     0, GTK_EXPAND, 4, 4);
 
   /* spinbutton 2 */
-  label = gtk_label_new (_("To:"));
+  label = gtk_label_new (C_("color-range", "To:"));
   gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (legend_table), label, 3,4, 0,1,
                     0, GTK_EXPAND, 4, 4);
