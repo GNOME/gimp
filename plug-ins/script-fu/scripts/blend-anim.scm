@@ -203,8 +203,8 @@
 				 (layer-count (- num-result-layers 1)))
 			(while (> layer-count -1)
 			   (let* ((layer (aref result-layer-array layer-count))
-				  (name (string-append _"Frame "
-						   (number->string
+				  (name (string-append _"Frame" " "
+						       (number->string
 							(- num-result-layers layer-count) 10))))
 				 (gimp-item-set-visible layer TRUE)
 				 (gimp-item-set-name layer name)
