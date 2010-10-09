@@ -977,7 +977,7 @@ main (int    argc,
   /* We share the same application instance across all tests. We need
    * the GUI variant for the file procs
    */
-  gimp = gimp_init_for_gui_testing (TRUE, FALSE);
+  gimp = gimp_init_for_gui_testing (FALSE /*show_gui*/);
 
   /* Add tests */
   ADD_TEST (write_and_read_gimp_2_6_format);

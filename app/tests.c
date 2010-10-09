@@ -49,7 +49,7 @@
  * selected subset of the initialization happning in app_run().
  **/
 Gimp *
-gimp_init_for_testing (gboolean use_cpu_accel)
+gimp_init_for_testing (void)
 {
   Gimp *gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
                          FALSE, TRUE, TRUE, FALSE);
@@ -58,7 +58,9 @@ gimp_init_for_testing (gboolean use_cpu_accel)
 
   gimp_load_config (gimp, NULL, NULL);
 
-  base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
+  base_init (GIMP_BASE_CONFIG (gimp->config),
+             FALSE /*be_verbose*/,
+             FALSE /*use_cpu_accel*/);
 
   return gimp;
 }
@@ -83,7 +85,7 @@ gimp_status_func_dummy (const gchar *text1,
  * Returns: The #Gimp instance.
  **/
 Gimp *
-gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
+gimp_init_for_gui_testing (gboolean show_gui)
 {
   GimpSessionInfoClass *klass;
   Gimp                 *gimp;
@@ -102,7 +104,9 @@ gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, NULL, NULL);
-  base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
+  base_init (GIMP_BASE_CONFIG (gimp->config),
+             FALSE /*be_verbose*/,
+             FALSE /*use_cpu_accel*/);
   gui_init (gimp, TRUE);
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);

@@ -186,7 +186,7 @@ main (int    argc,
                                        "app/tests/gimpdir");
 
   /* We share the same application instance across all tests */
-  gimp = gimp_init_for_testing (TRUE);
+  gimp = gimp_init_for_testing ();
 
   /* Add tests */
   ADD_IMAGE_TEST (add_layer);

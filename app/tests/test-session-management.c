@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     result = -1;
 
   /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (FALSE, TRUE);
+  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
 
   /* Let the main loop run until idle to let things stabilize. This
    * includes parsing sessionrc and dockrc

@@ -846,7 +846,7 @@ int main(int argc, char **argv)
   gimp_test_utils_setup_menus_dir ();
 
   /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (FALSE, TRUE);
+  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
   gimp_test_run_mainloop_until_idle ();
 
   /* Add tests. Note that the order matters. For example,
