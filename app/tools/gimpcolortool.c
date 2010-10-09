@@ -219,7 +219,7 @@ gimp_color_tool_button_press (GimpTool            *tool,
 
       gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
+      gimp_display_shell_selection_pause (shell);
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -277,7 +277,7 @@ gimp_color_tool_button_release (GimpTool              *tool,
           color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
           color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 
-          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_resume (shell);
           return;
         }
 
@@ -315,7 +315,7 @@ gimp_color_tool_button_release (GimpTool              *tool,
             }
         }
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_resume (shell);
       gimp_image_flush (image);
 
       color_tool->moving_sample_point = FALSE;
@@ -784,8 +784,7 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   color_tool = GIMP_COLOR_TOOL (tool);
 
-  gimp_display_shell_selection_control (gimp_display_get_shell (display),
-                                        GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_pause (gimp_display_get_shell (display));
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);

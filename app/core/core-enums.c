@@ -645,8 +645,6 @@ gimp_selection_control_get_type (void)
   {
     { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", "off" },
     { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", "on" },
-    { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", "pause" },
-    { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", "resume" },
     { 0, NULL, NULL }
   };
 
@@ -654,8 +652,6 @@ gimp_selection_control_get_type (void)
   {
     { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", NULL },
     { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", NULL },
-    { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", NULL },
-    { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", NULL },
     { 0, NULL, NULL }
   };
 

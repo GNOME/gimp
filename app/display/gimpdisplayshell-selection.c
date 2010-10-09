@@ -65,9 +65,6 @@ struct _Selection
 static void      selection_start          (Selection      *selection);
 static void      selection_stop           (Selection      *selection);
 
-static void      selection_pause          (Selection      *selection);
-static void      selection_resume         (Selection      *selection);
-
 static void      selection_draw           (Selection      *selection);
 static void      selection_undraw         (Selection      *selection);
 
@@ -162,20 +159,40 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
         case GIMP_SELECTION_ON:
           selection_start (selection);
           break;
-
-        case GIMP_SELECTION_PAUSE:
-          selection_pause (selection);
-          break;
-
-        case GIMP_SELECTION_RESUME:
-          selection_resume (selection);
-          break;
         }
     }
   else if (shell->selection)
     {
       selection_stop (shell->selection);
       selection_free_segs (shell->selection);
+    }
+}
+
+void
+gimp_display_shell_selection_pause (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->selection && gimp_display_get_image (shell->display))
+    {
+      if (shell->selection->paused == 0)
+        selection_stop (shell->selection);
+
+      shell->selection->paused++;
+    }
+}
+
+void
+gimp_display_shell_selection_resume (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->selection && gimp_display_get_image (shell->display))
+    {
+      shell->selection->paused--;
+
+      if (shell->selection->paused == 0)
+        selection_start (shell->selection);
     }
 }
 
@@ -224,24 +241,6 @@ selection_stop (Selection *selection)
       g_source_remove (selection->timeout);
       selection->timeout = 0;
     }
-}
-
-static void
-selection_pause (Selection *selection)
-{
-  if (selection->paused == 0)
-    selection_stop (selection);
-
-  selection->paused++;
-}
-
-static void
-selection_resume (Selection *selection)
-{
-  selection->paused--;
-
-  if (selection->paused == 0)
-    selection_start (selection);
 }
 
 static void

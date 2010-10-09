@@ -1044,8 +1044,8 @@ gimp_display_shell_ants_speed_notify_handler (GObject          *config,
                                               GParamSpec       *param_spec,
                                               GimpDisplayShell *shell)
 {
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_pause (shell);
+  gimp_display_shell_selection_resume (shell);
 }
 
 static void

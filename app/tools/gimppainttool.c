@@ -346,7 +346,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
                                                 press_type, display);
 
   /*  pause the current selection  */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_pause (shell);
 
   /*  Let the specific painting function initialize itself  */
   gimp_paint_core_paint (core, drawable, paint_options,
@@ -400,7 +400,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
                          GIMP_PAINT_STATE_FINISH, time);
 
   /*  resume the current selection  */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_resume (shell);
 
   /*  chain up to halt the tool */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,

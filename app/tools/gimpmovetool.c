@@ -239,8 +239,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
               gimp_tool_control_activate (tool->control);
 
-              gimp_display_shell_selection_control (shell,
-                                                    GIMP_SELECTION_PAUSE);
+              gimp_display_shell_selection_pause (shell);
 
               gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -352,7 +351,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
           move->guide_position    = GUIDE_POSITION_INVALID;
           move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
 
-          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_resume (shell);
           return;
         }
 
@@ -413,7 +412,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
             }
         }
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_resume (shell);
       gimp_image_flush (image);
 
       move->moving_guide      = FALSE;
@@ -802,8 +801,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 {
   GimpTool *tool = GIMP_TOOL (move);
 
-  gimp_display_shell_selection_control (gimp_display_get_shell (display),
-                                        GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_pause (gimp_display_get_shell (display));
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);
