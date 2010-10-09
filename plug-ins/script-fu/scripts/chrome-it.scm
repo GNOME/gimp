@@ -100,11 +100,11 @@
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
         (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
-        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE "Background" 100 NORMAL-MODE)))
-        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type "Layer1" 100 NORMAL-MODE)))
-        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
-        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
-        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
+        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 NORMAL-MODE)))
+        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer1" 100 NORMAL-MODE)))
+        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 DIFFERENCE-MODE)))
+        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 NORMAL-MODE)))
+        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 NORMAL-MODE)))
         (mask-fs 0)
         (layer-mask 0)
         )
@@ -197,8 +197,8 @@
     (gimp-item-set-visible shadow TRUE)
     (gimp-item-set-visible bg-layer TRUE)
 
-    (gimp-item-set-name layer2 "Chrome")
-    (gimp-item-set-name layer1 "Highlight")
+    (gimp-item-set-name layer2 _"Chrome")
+    (gimp-item-set-name layer1 _"Highlight")
 
     (gimp-image-remove-channel img mask)
 
