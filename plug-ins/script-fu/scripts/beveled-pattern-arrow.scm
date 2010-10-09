@@ -75,8 +75,8 @@
 
   (let* (
         (img (car (gimp-image-new size size RGB)))
-        (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
-        (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (background (car (gimp-layer-new img size size RGB-IMAGE _"Arrow" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img size size RGB-IMAGE _"Bumpmap" 100 NORMAL-MODE)))
         (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
         (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
         (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation)))
@@ -85,8 +85,8 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img background -1)
-    (gimp-image-add-layer img bumpmap -1)
+    (gimp-image-insert-layer img background -1 -1)
+    (gimp-image-insert-layer img bumpmap -1 -1)
 
     ; Create pattern layer
 

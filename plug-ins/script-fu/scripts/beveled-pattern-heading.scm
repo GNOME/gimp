@@ -38,18 +38,18 @@
 
         (background (car (gimp-layer-new img
                                          width height RGBA-IMAGE
-                                         "Background" 100 NORMAL-MODE)))
+                                         _"Background" 100 NORMAL-MODE)))
         (bumpmap (car (gimp-layer-new img
                                       width height RGBA-IMAGE
-                                      "Bumpmap" 100 NORMAL-MODE)))
+                                      _"Bumpmap" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
-    (gimp-image-add-layer img background 1)
-    (gimp-image-add-layer img bumpmap 1)
+    (gimp-image-insert-layer img background -1 1)
+    (gimp-image-insert-layer img bumpmap -1 1)
 
     ; Create pattern layer
 
@@ -64,12 +64,12 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-selection-layer-alpha textl)
+    (gimp-item-to-selection textl 2)
     (gimp-selection-shrink img 1)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-selection-layer-alpha textl)
+    (gimp-item-to-selection textl 2)
     (gimp-selection-shrink img 2)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
@@ -82,7 +82,7 @@
     ; Clean up
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-selection-layer-alpha textl)
+    (gimp-item-to-selection textl 2)
     (gimp-selection-invert img)
     (gimp-edit-clear background)
     (gimp-selection-none img)
