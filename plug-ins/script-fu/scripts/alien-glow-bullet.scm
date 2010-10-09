@@ -37,20 +37,20 @@
         (blend-start (+ half-radius (/ half-radius 2)))
         (bullet-layer (car (gimp-layer-new img
                                            diameter diameter RGBA-IMAGE
-                                           "Ruler" 100 NORMAL-MODE)))
+                                           _"Bullet" 100 NORMAL-MODE)))
         (glow-layer (car (gimp-layer-new img diameter diameter RGBA-IMAGE
-                                         "ALien Glow" 100 NORMAL-MODE)))
+                                         _"Alien Glow" 100 NORMAL-MODE)))
         (bg-layer (car (gimp-layer-new img diameter diameter RGB-IMAGE
-                                       "Background" 100 NORMAL-MODE)))
+                                       _"Background" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img diameter diameter 0 0)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img glow-layer -1)
-    (gimp-image-add-layer img bullet-layer -1)
+    (gimp-image-insert-layer img bg-layer -1 1)
+    (gimp-image-insert-layer img glow-layer -1 -1)
+    (gimp-image-insert-layer img bullet-layer -1 -1)
 
     ; (gimp-layer-set-lock-alpha ruler-layer TRUE)
     (gimp-context-set-background bg-color)

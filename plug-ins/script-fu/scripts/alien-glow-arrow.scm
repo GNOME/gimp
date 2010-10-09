@@ -115,13 +115,13 @@
         (offset (/ size 6))
         (ruler-layer (car (gimp-layer-new img
                                           size size RGBA-IMAGE
-                                          "Ruler" 100 NORMAL-MODE)))
+                                          _"Arrow" 100 NORMAL-MODE)))
         (glow-layer (car (gimp-layer-new img
                                          size size RGBA-IMAGE
-                                         "Alien Glow" 100 NORMAL-MODE)))
+                                         _"Alien Glow" 100 NORMAL-MODE)))
         (bg-layer (car (gimp-layer-new img
                                        size size RGB-IMAGE
-                                       "Background" 100 NORMAL-MODE)))
+                                       _"Background" 100 NORMAL-MODE)))
         (big-arrow (point-list->double-array
                     (rotate-points (make-arrow size offset)
                                     size orientation)))
@@ -131,9 +131,9 @@
 
     (gimp-image-undo-disable img)
     ;(gimp-image-resize img (+ length height) (+ height height) 0 0)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img glow-layer -1)
-    (gimp-image-add-layer img ruler-layer -1)
+    (gimp-image-insert-layer img bg-layer -1 1)
+    (gimp-image-insert-layer img glow-layer -1 -1)
+    (gimp-image-insert-layer img ruler-layer -1 -1)
 
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)

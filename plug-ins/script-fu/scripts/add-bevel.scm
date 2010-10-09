@@ -73,7 +73,7 @@
                                          (+ width 2)
                                          (+ height 2)
                                          RGB-IMAGE
-                                         "Bumpmap"
+                                         _"Bumpmap"
                                          100
                                          NORMAL-MODE)))
 
@@ -89,7 +89,7 @@
       (gimp-image-undo-group-start image)
     )
 
-    (gimp-image-add-layer image bump-layer 1)
+    (gimp-image-insert-layer image bump-layer -1 1)
 
     ; If the layer we're bevelling is offset from the image's origin, we
     ; have to do the same to the bumpmap
@@ -101,7 +101,7 @@
     ; Set the selection to the area we want to bevel.
     ;
     (if (= selection-exists 0)
-        (gimp-selection-layer-alpha pic-layer)
+        (gimp-item-to-selection pic-layer 2)
     )
 
     ; Store it for later.
@@ -151,7 +151,7 @@
     ;
     (if (= selection-exists 0)
         (gimp-selection-none image)        ; No selection to start with
-        (gimp-selection-load selection)
+        (gimp-item-to-selection selection 2)
     )
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.

@@ -105,7 +105,7 @@
          (layer (car (gimp-layer-new img
                                      width height
                                      (car (gimp-drawable-type-with-alpha adraw))
-                                     "Border-Layer" 100 NORMAL-MODE))))
+                                     _"Border Layer" 100 NORMAL-MODE))))
 
     (gimp-context-push)
 
@@ -117,7 +117,7 @@
                        xsize
                        ysize)
 
-    (gimp-image-add-layer img layer 0)
+    (gimp-image-insert-layer img layer -1 0)
     (gimp-drawable-fill layer TRANSPARENT-FILL)
 
     (gimp-context-set-background (adjcolour colour dvalue))
