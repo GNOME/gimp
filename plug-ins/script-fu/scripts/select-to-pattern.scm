@@ -67,7 +67,7 @@
 
   (gimp-drawable-fill pattern-draw TRANSPARENT-FILL)
 
-  (gimp-image-add-layer pattern-image pattern-draw 0)
+  (gimp-image-insert-layer pattern-image pattern-draw -1 0)
 
   (gimp-edit-copy drawable)
 

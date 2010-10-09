@@ -60,7 +60,7 @@
     (set! new-draw (car (gimp-layer-new new-image
                                         selection-width selection-height
                                         draw-type "Selection" 100 NORMAL-MODE)))
-    (gimp-image-add-layer new-image new-draw 0)
+    (gimp-image-insert-layer new-image new-draw -1 0)
     (gimp-drawable-fill new-draw BACKGROUND-FILL)
 
     (let ((floating-sel (car (gimp-edit-paste new-draw FALSE))))

@@ -50,7 +50,7 @@
                                       100
                                       NORMAL-MODE)))
 
-  (gimp-image-add-layer theImage theLayer 0)
+  (gimp-image-insert-layer theImage theLayer -1 0)
 
   (if (= FALSE (car (gimp-selection-is-empty theImage)))
       (gimp-edit-fill theLayer BACKGROUND-FILL)
@@ -81,7 +81,7 @@
   (gimp-layer-scale theLayer theWidth theHeight TRUE)
   (plug-in-threshold-alpha RUN-NONINTERACTIVE theImage theLayer inThreshold)
   (plug-in-gauss-iir RUN-NONINTERACTIVE theImage theLayer 1 TRUE TRUE)
-  (gimp-selection-layer-alpha theLayer)
+  (gimp-item-to-selection theLayer 2)
   (gimp-image-remove-layer theImage theLayer)
   (if (and (= (car (gimp-item-is-channel inDrawable)) TRUE)
            (= (car (gimp-item-is-layer-mask inDrawable)) FALSE))

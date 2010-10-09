@@ -86,7 +86,7 @@
                                100
                                NORMAL-MODE)))
 
-    (gimp-image-add-layer brush-image brush-draw 0)
+    (gimp-image-insert-layer brush-image brush-draw -1 0)
 
     (gimp-selection-none brush-image)
 
