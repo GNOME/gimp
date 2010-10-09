@@ -1318,7 +1318,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
       shell->fill_idle_id = 0;
     }
 
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
+  gimp_display_shell_selection_undraw (shell);
 
   gimp_display_shell_unset_cursor (shell);
 

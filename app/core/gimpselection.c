@@ -305,7 +305,7 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
   GimpLayer *layer;
 
   /*  Turn the current selection off  */
-  gimp_image_selection_control (image, GIMP_SELECTION_OFF);
+  gimp_image_selection_invalidate (image);
 
   GIMP_DRAWABLE_CLASS (parent_class)->invalidate_boundary (drawable);
 

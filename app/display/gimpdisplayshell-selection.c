@@ -141,30 +141,29 @@ gimp_display_shell_selection_free (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_selection_control (GimpDisplayShell     *shell,
-                                      GimpSelectionControl  control)
+gimp_display_shell_selection_undraw (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (shell->selection && gimp_display_get_image (shell->display))
     {
-      Selection *selection = shell->selection;
-
-      switch (control)
-        {
-        case GIMP_SELECTION_OFF:
-          selection_undraw (selection);
-          break;
-
-        case GIMP_SELECTION_ON:
-          selection_start (selection);
-          break;
-        }
+      selection_undraw (shell->selection);
     }
-  else if (shell->selection)
+  else
     {
       selection_stop (shell->selection);
       selection_free_segs (shell->selection);
+    }
+}
+
+void
+gimp_display_shell_selection_restart (GimpDisplayShell *shell)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (shell->selection && gimp_display_get_image (shell->display))
+    {
+      selection_start (shell->selection);
     }
 }
 

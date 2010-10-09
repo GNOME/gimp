@@ -2334,7 +2334,7 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_canvas_item_draw (shell->canvas_item, cr);
 
   /* restart (and recalculate) the selection boundaries */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
+  gimp_display_shell_selection_restart (shell);
 }
 
 static void

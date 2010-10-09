@@ -856,7 +856,7 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
     return;
 
   /*  Turn the current selection off  */
-  gimp_image_selection_control (image, GIMP_SELECTION_OFF);
+  gimp_image_selection_invalidate (image);
 
   /*  get the selection mask channel  */
   mask = gimp_image_get_mask (image);

@@ -83,8 +83,8 @@ static void   gimp_display_shell_grid_notify_handler        (GimpGrid         *g
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_name_changed_handler       (GimpImage        *image,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_selection_control_handler  (GimpImage        *image,
-                                                             GimpSelectionControl control,
+static void   gimp_display_shell_selection_invalidate_handler
+                                                            (GimpImage        *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_size_changed_detailed_handler
                                                             (GimpImage        *image,
@@ -200,8 +200,8 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "name-changed",
                     G_CALLBACK (gimp_display_shell_name_changed_handler),
                     shell);
-  g_signal_connect (image, "selection-control",
-                    G_CALLBACK (gimp_display_shell_selection_control_handler),
+  g_signal_connect (image, "selection-invalidate",
+                    G_CALLBACK (gimp_display_shell_selection_invalidate_handler),
                     shell);
   g_signal_connect (image, "size-changed-detailed",
                     G_CALLBACK (gimp_display_shell_size_changed_detailed_handler),
@@ -487,7 +487,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_size_changed_detailed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_shell_selection_control_handler,
+                                        gimp_display_shell_selection_invalidate_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_name_changed_handler,
@@ -539,11 +539,10 @@ gimp_display_shell_name_changed_handler (GimpImage        *image,
 }
 
 static void
-gimp_display_shell_selection_control_handler (GimpImage            *image,
-                                              GimpSelectionControl  control,
-                                              GimpDisplayShell     *shell)
+gimp_display_shell_selection_invalidate_handler (GimpImage        *image,
+                                                 GimpDisplayShell *shell)
 {
-  gimp_display_shell_selection_control (shell, control);
+  gimp_display_shell_selection_undraw (shell);
 }
 
 static void

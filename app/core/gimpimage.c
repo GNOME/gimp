@@ -94,7 +94,7 @@ enum
   SIZE_CHANGED_DETAILED,
   UNIT_CHANGED,
   QUICK_MASK_CHANGED,
-  SELECTION_CONTROL,
+  SELECTION_INVALIDATE,
   CLEAN,
   DIRTY,
   SAVED,
@@ -360,15 +360,14 @@ gimp_image_class_init (GimpImageClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  gimp_image_signals[SELECTION_CONTROL] =
-    g_signal_new ("selection-control",
+  gimp_image_signals[SELECTION_INVALIDATE] =
+    g_signal_new ("selection-invalidate",
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpImageClass, selection_control),
+                  G_STRUCT_OFFSET (GimpImageClass, selection_invalidate),
                   NULL, NULL,
-                  gimp_marshal_VOID__ENUM,
-                  G_TYPE_NONE, 1,
-                  GIMP_TYPE_SELECTION_CONTROL);
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   gimp_image_signals[CLEAN] =
     g_signal_new ("clean",
@@ -543,7 +542,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->size_changed_detailed        = gimp_image_real_size_changed_detailed;
   klass->unit_changed                 = NULL;
   klass->quick_mask_changed           = NULL;
-  klass->selection_control            = NULL;
+  klass->selection_invalidate         = NULL;
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
@@ -2118,12 +2117,11 @@ gimp_image_colormap_changed (GimpImage *image,
 }
 
 void
-gimp_image_selection_control (GimpImage            *image,
-                              GimpSelectionControl  control)
+gimp_image_selection_invalidate (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[SELECTION_CONTROL], 0, control);
+  g_signal_emit (image, gimp_image_signals[SELECTION_INVALIDATE], 0);
 }
 
 void

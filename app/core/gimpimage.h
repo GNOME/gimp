@@ -119,8 +119,7 @@ struct _GimpImageClass
                                          gint                  previous_height);
   void (* unit_changed)                 (GimpImage            *image);
   void (* quick_mask_changed)           (GimpImage            *image);
-  void (* selection_control)            (GimpImage            *image,
-                                         GimpSelectionControl  control);
+  void (* selection_invalidate)         (GimpImage            *image);
 
   void (* clean)                        (GimpImage            *image,
                                          GimpDirtyMask         dirty_mask);
@@ -266,8 +265,7 @@ void            gimp_image_sample_point_moved    (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
 void            gimp_image_colormap_changed      (GimpImage          *image,
                                                   gint                col);
-void            gimp_image_selection_control     (GimpImage          *image,
-                                                  GimpSelectionControl  control);
+void            gimp_image_selection_invalidate  (GimpImage          *image);
 void            gimp_image_quick_mask_changed    (GimpImage          *image);
 void            gimp_image_size_changed_detailed (GimpImage          *image,
                                                   gint                previous_origin_x,
