@@ -54,7 +54,7 @@ struct _Selection
   guint             index;            /*  index of current stipple pattern  */
   gint              paused;           /*  count of pause requests           */
   gboolean          shell_visible;    /*  visility of the display shell     */
-  gboolean          hidden;           /*  is the selection hidden?          */
+  gboolean          show_selection;   /*  is the selection visible?         */
   guint             timeout;          /*  timer for successive draws        */
   cairo_pattern_t  *segs_in_mask;     /*  cache for rendered segments       */
 };
@@ -103,9 +103,9 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
 
   selection = g_slice_new0 (Selection);
 
-  selection->shell         = shell;
-  selection->shell_visible = TRUE;
-  selection->hidden        = ! gimp_display_shell_get_show_selection (shell);
+  selection->shell          = shell;
+  selection->shell_visible  = TRUE;
+  selection->show_selection = gimp_display_shell_get_show_selection (shell);
 
   shell->selection = selection;
 
@@ -180,8 +180,8 @@ gimp_display_shell_selection_control (GimpDisplayShell     *shell,
 }
 
 void
-gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
-                                         gboolean          hidden)
+gimp_display_shell_selection_set_show (GimpDisplayShell *shell,
+                                       gboolean          show)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -189,11 +189,11 @@ gimp_display_shell_selection_set_hidden (GimpDisplayShell *shell,
     {
       Selection *selection = shell->selection;
 
-      if (hidden != selection->hidden)
+      if (show != selection->show_selection)
         {
           selection_undraw (selection);
 
-          selection->hidden = hidden;
+          selection->show_selection = show;
 
           selection_start (selection);
         }
@@ -425,7 +425,7 @@ selection_start_timeout (Selection *selection)
   selection->index = 0;
 
   /*  Draw the ants  */
-  if (! selection->hidden)
+  if (selection->show_selection)
     {
       GimpDisplayConfig *config = selection->shell->display->config;
 

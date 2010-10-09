@@ -232,7 +232,7 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 
   g_object_set (options, "show-selection", show, NULL);
 
-  gimp_display_shell_selection_set_hidden (shell, ! show);
+  gimp_display_shell_selection_set_show (shell, show);
 
   appearance_set_action_active (shell, "view-show-selection", show);
 }
