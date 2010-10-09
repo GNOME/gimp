@@ -52,6 +52,7 @@ GType            gimp_canvas_boundary_get_type (void) G_GNUC_CONST;
 GimpCanvasItem * gimp_canvas_boundary_new      (GimpDisplayShell *shell,
                                                 const BoundSeg   *segs,
                                                 gint              n_segs,
+                                                GimpMatrix3      *transform,
                                                 gdouble           offset_x,
                                                 gdouble           offset_y);
 

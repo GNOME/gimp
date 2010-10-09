@@ -812,6 +812,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             gimp_draw_tool_add_boundary (draw_tool,
                                          edit_select->segs_in,
                                          edit_select->num_segs_in,
+                                         NULL,
                                          edit_select->cumlx + off_x,
                                          edit_select->cumly + off_y);
           }
@@ -821,6 +822,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             gimp_draw_tool_add_boundary (draw_tool,
                                          edit_select->segs_out,
                                          edit_select->num_segs_out,
+                                         NULL,
                                          edit_select->cumlx + off_x,
                                          edit_select->cumly + off_y);
           }
@@ -962,6 +964,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_add_boundary (draw_tool,
                                    edit_select->segs_in,
                                    edit_select->num_segs_in,
+                                   NULL,
                                    edit_select->cumlx,
                                    edit_select->cumly);
       break;

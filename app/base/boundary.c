@@ -361,34 +361,6 @@ boundary_simplify (BoundSeg *sorted_segs,
   return (BoundSeg *) g_array_free (new_bounds, FALSE);
 }
 
-/*Transform boundary based on a matrix*/
-
-BoundSeg *
-boundary_transform (const BoundSeg *segs,
-                    gint           *num_segs,
-                    GimpMatrix3    *matrix)
-{
-  Boundary *boundary = boundary_new (NULL);
-  gint      i;
-
-  for (i = 0; i < *num_segs; i++)
-    {
-      gdouble x1, y1, x2, y2;
-
-      gimp_matrix3_transform_point (matrix, segs[i].x1, segs[i].y1, &x1, &y1);
-      gimp_matrix3_transform_point (matrix, segs[i].x2, segs[i].y2, &x2, &y2);
-
-      boundary_add_seg (boundary,
-                        RINT (x1), RINT (y1),
-                        RINT (x2), RINT (y2),
-                        segs[i].open);
-    }
-
-  *num_segs = boundary->num_segs;
-
-  return boundary_free (boundary, FALSE);
-}
-
 void
 boundary_offset (BoundSeg *segs,
                  gint      num_segs,

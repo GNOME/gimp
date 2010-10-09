@@ -966,6 +966,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_draw_tool_add_boundary (draw_tool,
                                        segs_in, num_segs_in,
+                                       NULL,
                                        0, 0);
           g_free (segs_in);
         }
@@ -991,6 +992,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_draw_tool_add_boundary (draw_tool,
                                        segs_out, num_segs_out,
+                                       NULL,
                                        0, 0);
           g_free (segs_out);
         }

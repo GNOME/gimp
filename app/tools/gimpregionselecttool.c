@@ -331,6 +331,7 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_add_boundary (draw_tool,
                                    region_sel->segs,
                                    region_sel->n_segs,
+                                   NULL,
                                    off_x, off_y);
     }
 }

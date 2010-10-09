@@ -754,6 +754,7 @@ gimp_draw_tool_add_pen (GimpDrawTool      *draw_tool,
  * @draw_tool:    a #GimpDrawTool
  * @bound_segs:   the sorted brush outline
  * @n_bound_segs: the number of segments in @bound_segs
+ * @matrix:       transform matrix for the boundary
  * @offset_x:     x offset
  * @offset_y:     y offset
  *
@@ -766,6 +767,7 @@ GimpCanvasItem *
 gimp_draw_tool_add_boundary (GimpDrawTool   *draw_tool,
                              const BoundSeg *bound_segs,
                              gint            n_bound_segs,
+                             GimpMatrix3    *transform,
                              gdouble         offset_x,
                              gdouble         offset_y)
 {
@@ -777,6 +779,7 @@ gimp_draw_tool_add_boundary (GimpDrawTool   *draw_tool,
 
   item = gimp_canvas_boundary_new (gimp_display_get_shell (draw_tool->display),
                                    bound_segs, n_bound_segs,
+                                   transform,
                                    offset_x, offset_y);
 
   gimp_draw_tool_add_item (draw_tool, item);
