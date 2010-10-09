@@ -24,7 +24,7 @@
         (img (car (gimp-image-new width height RGB)))
         (background (car (gimp-layer-new img
                                          width height RGB-IMAGE
-                                         _"Hrule" 100 NORMAL-MODE)))
+                                         _"Rule" 100 NORMAL-MODE)))
         (bumpmap (car (gimp-layer-new img
                                       width height RGBA-IMAGE
                                       _"Bumpmap" 100 NORMAL-MODE)))
