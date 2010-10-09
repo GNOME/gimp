@@ -42,6 +42,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-selection.h"
 
 #include "gimpcoloroptions.h"
 #include "gimppainttool.h"
@@ -260,6 +261,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
+  GimpDisplayShell *shell         = gimp_display_get_shell (display);
   GimpImage        *image         = gimp_display_get_image (display);
   GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
   GimpCoords        curr_coords;
@@ -344,7 +346,7 @@ gimp_paint_tool_button_press (GimpTool            *tool,
                                                 press_type, display);
 
   /*  pause the current selection  */
-  gimp_image_selection_control (image, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
 
   /*  Let the specific painting function initialize itself  */
   gimp_paint_core_paint (core, drawable, paint_options,
@@ -379,6 +381,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintCore    *core          = paint_tool->core;
+  GimpDisplayShell *shell         = gimp_display_get_shell (display);
   GimpImage        *image         = gimp_display_get_image (display);
   GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
 
@@ -397,7 +400,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
                          GIMP_PAINT_STATE_FINISH, time);
 
   /*  resume the current selection  */
-  gimp_image_selection_control (image, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
 
   /*  chain up to halt the tool */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
