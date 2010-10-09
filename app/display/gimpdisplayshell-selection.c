@@ -53,7 +53,7 @@ struct _Selection
 
   guint             index;            /*  index of current stipple pattern  */
   gint              paused;           /*  count of pause requests           */
-  gboolean          visible;          /*  visility of the display shell     */
+  gboolean          shell_visible;    /*  visility of the display shell     */
   gboolean          hidden;           /*  is the selection hidden?          */
   guint             timeout;          /*  timer for successive draws        */
   cairo_pattern_t  *segs_in_mask;     /*  cache for rendered segments       */
@@ -103,9 +103,9 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
 
   selection = g_slice_new0 (Selection);
 
-  selection->shell   = shell;
-  selection->visible = TRUE;
-  selection->hidden  = ! gimp_display_shell_get_show_selection (shell);
+  selection->shell         = shell;
+  selection->shell_visible = TRUE;
+  selection->hidden        = ! gimp_display_shell_get_show_selection (shell);
 
   shell->selection = selection;
 
@@ -444,7 +444,7 @@ selection_start_timeout (Selection *selection)
           cairo_destroy (cr);
         }
 
-      if (selection->segs_in && selection->visible)
+      if (selection->segs_in && selection->shell_visible)
         selection->timeout = g_timeout_add_full (G_PRIORITY_DEFAULT_IDLE,
                                                  config->marching_ants_speed,
                                                  (GSourceFunc) selection_timeout,
@@ -464,14 +464,14 @@ selection_timeout (Selection *selection)
 }
 
 static void
-selection_set_visible (Selection *selection,
-                       gboolean   visible)
+selection_set_shell_visible (Selection *selection,
+                             gboolean   shell_visible)
 {
-  if (selection->visible != visible)
+  if (selection->shell_visible != shell_visible)
     {
-      selection->visible = visible;
+      selection->shell_visible = shell_visible;
 
-      if (visible)
+      if (shell_visible)
         selection_start (selection);
       else
         selection_stop (selection);
@@ -483,9 +483,9 @@ selection_window_state_event (GtkWidget           *shell,
                               GdkEventWindowState *event,
                               Selection           *selection)
 {
-  selection_set_visible (selection,
-                         (event->new_window_state & (GDK_WINDOW_STATE_WITHDRAWN |
-                                                     GDK_WINDOW_STATE_ICONIFIED)) == 0);
+  selection_set_shell_visible (selection,
+                               (event->new_window_state & (GDK_WINDOW_STATE_WITHDRAWN |
+                                                           GDK_WINDOW_STATE_ICONIFIED)) == 0);
 
   return FALSE;
 }
@@ -495,8 +495,8 @@ selection_visibility_notify_event (GtkWidget          *shell,
                                    GdkEventVisibility *event,
                                    Selection          *selection)
 {
-  selection_set_visible (selection,
-                         event->state != GDK_VISIBILITY_FULLY_OBSCURED);
+  selection_set_shell_visible (selection,
+                               event->state != GDK_VISIBILITY_FULLY_OBSCURED);
 
   return FALSE;
 }
