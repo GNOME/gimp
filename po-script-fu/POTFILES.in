@@ -42,6 +42,7 @@ plug-ins/script-fu/scripts/chrome-logo.scm
 plug-ins/script-fu/scripts/circuit.scm
 plug-ins/script-fu/scripts/clothify.scm
 plug-ins/script-fu/scripts/coffee.scm
+plug-ins/script-fu/scripts/contactsheet.scm
 plug-ins/script-fu/scripts/comic-logo.scm
 plug-ins/script-fu/scripts/coolmetal-logo.scm
 plug-ins/script-fu/scripts/crystal-logo.scm
