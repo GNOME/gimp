@@ -32,11 +32,11 @@
     (while (> theNumber 0)
       (set! theNumber (- theNumber 1))
       (set! theStain (car (gimp-layer-new theImage theSize theSize
-                                          RGBA-IMAGE "Stain" 100
+                                          RGBA-IMAGE _"Stain" 100
                                           (if (= inDark TRUE)
                                               DARKEN-ONLY-MODE NORMAL-MODE))))
 
-      (gimp-image-add-layer theImage theStain 0)
+      (gimp-image-insert-layer theImage theStain -1 0)
       (gimp-selection-all theImage)
       (gimp-edit-clear theStain)
 
