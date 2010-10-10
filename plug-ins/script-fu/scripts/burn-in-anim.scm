@@ -81,7 +81,7 @@
               (gimp-layer-add-alpha bl-layer)
 
               ;--- add an alpha mask for blending and select it
-              (gimp-item-to-selection bl-layer 2)
+              (gimp-item-to-selection bl-layer CHANNEL-OP-REPLACE)
               (set! bl-mask (car (gimp-layer-create-mask bl-layer ADD-BLACK-MASK)))
               (gimp-layer-add-mask bl-layer bl-mask)
 
@@ -148,7 +148,7 @@
                    (- (+ bl-x-off bl-width) after-glow) 0)
 
           ;--- add corona effect
-          (gimp-item-to-selection bl-layer 2)
+          (gimp-item-to-selection bl-layer CHANNEL-OP-REPLACE)
           (gimp-selection-sharpen img)
           (gimp-selection-grow img corona-width)
           (gimp-layer-set-lock-alpha bl-layer FALSE)

@@ -135,7 +135,7 @@
     (gimp-item-set-visible bg-layer FALSE)
     (gimp-item-set-visible shadow FALSE)
 
-    (gimp-item-to-selection mask 2)
+    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
@@ -157,7 +157,7 @@
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer1 layer-mask)
-    (gimp-item-to-selection mask 2)
+    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 

@@ -101,7 +101,7 @@
     ; Set the selection to the area we want to bevel.
     ;
     (if (= selection-exists 0)
-        (gimp-item-to-selection pic-layer 2)
+        (gimp-item-to-selection pic-layer CHANNEL-OP-REPLACE)
     )
 
     ; Store it for later.
@@ -151,7 +151,7 @@
     ;
     (if (= selection-exists 0)
         (gimp-selection-none image)        ; No selection to start with
-        (gimp-item-to-selection selection 2)
+        (gimp-item-to-selection selection CHANNEL-OP-REPLACE)
     )
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.

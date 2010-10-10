@@ -64,12 +64,12 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-item-to-selection textl 2)
+    (gimp-item-to-selection textl CHANNEL-OP-REPLACE)
     (gimp-selection-shrink img 1)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-item-to-selection textl 2)
+    (gimp-item-to-selection textl CHANNEL-OP-REPLACE)
     (gimp-selection-shrink img 2)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
@@ -82,7 +82,7 @@
     ; Clean up
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-item-to-selection textl 2)
+    (gimp-item-to-selection textl CHANNEL-OP-REPLACE)
     (gimp-selection-invert img)
     (gimp-edit-clear background)
     (gimp-selection-none img)
