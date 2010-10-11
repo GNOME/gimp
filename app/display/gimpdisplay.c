@@ -49,6 +49,9 @@
 #include "gimp-intl.h"
 
 
+#define FLUSH_NOW_TIMEOUT 20
+
+
 enum
 {
   PROP_0,
@@ -71,6 +74,8 @@ struct _GimpDisplayPrivate
 
   GtkWidget *shell;
   GSList    *update_areas;
+
+  guint      flush_now_timeout;
 };
 
 #define GIMP_DISPLAY_GET_PRIVATE(display) \
@@ -83,6 +88,7 @@ struct _GimpDisplayPrivate
 
 static void     gimp_display_progress_iface_init (GimpProgressInterface *iface);
 
+static void     gimp_display_dispose             (GObject             *object);
 static void     gimp_display_set_property        (GObject             *object,
                                                   guint                property_id,
                                                   const GValue        *value,
@@ -134,6 +140,7 @@ gimp_display_class_init (GimpDisplayClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->dispose      = gimp_display_dispose;
   object_class->set_property = gimp_display_set_property;
   object_class->get_property = gimp_display_get_property;
 
@@ -182,6 +189,20 @@ gimp_display_progress_iface_init (GimpProgressInterface *iface)
   iface->pulse      = gimp_display_progress_pulse;
   iface->get_window = gimp_display_progress_get_window;
   iface->message    = gimp_display_progress_message;
+}
+
+static void
+gimp_display_dispose (GObject *object)
+{
+  GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (object);
+
+  if (private->flush_now_timeout)
+    {
+      g_source_remove (private->flush_now_timeout);
+      private->flush_now_timeout = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -613,6 +634,12 @@ gimp_display_set_image (GimpDisplay *display,
 
   shell = gimp_display_get_shell (display);
 
+  if (private->flush_now_timeout)
+    {
+      g_source_remove (private->flush_now_timeout);
+      private->flush_now_timeout = 0;
+    }
+
   if (private->image)
     {
       /*  stop any active tool  */
@@ -788,6 +815,18 @@ gimp_display_flush_now (GimpDisplay *display)
 
 /*  private functions  */
 
+static gboolean
+gimp_display_flush_now_timeout (GimpDisplay *display)
+{
+  GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (display);
+
+  private->flush_now_timeout = 0;
+
+  gimp_display_shell_flush (gimp_display_get_shell (display), TRUE);
+
+  return FALSE;
+}
+
 static void
 gimp_display_flush_whenever (GimpDisplay *display,
                              gboolean     now)
@@ -816,7 +855,19 @@ gimp_display_flush_whenever (GimpDisplay *display,
       private->update_areas = NULL;
     }
 
-  gimp_display_shell_flush (gimp_display_get_shell (display), now);
+  if (now)
+    {
+      if (! private->flush_now_timeout)
+        private->flush_now_timeout =
+          gdk_threads_add_timeout_full (G_PRIORITY_HIGH_IDLE,
+                                        FLUSH_NOW_TIMEOUT,
+                                        (GSourceFunc) gimp_display_flush_now_timeout,
+                                        display, NULL);
+    }
+  else
+    {
+      gimp_display_shell_flush (gimp_display_get_shell (display), now);
+    }
 }
 
 static void
