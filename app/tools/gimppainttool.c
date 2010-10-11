@@ -588,7 +588,10 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
       return;
     }
 
-  if (gimp_draw_tool_is_active (draw_tool))
+  gimp_draw_tool_pause (draw_tool);
+
+  if (gimp_draw_tool_is_active (draw_tool) &&
+      draw_tool->display != display)
     gimp_draw_tool_stop (draw_tool);
 
   gimp_tool_pop_status (tool, display);
@@ -698,11 +701,18 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           paint_tool->draw_line = FALSE;
         }
 
-      gimp_draw_tool_start (draw_tool, display);
+      if (! gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_start (draw_tool, display);
+    }
+  else if (gimp_draw_tool_is_active (draw_tool))
+    {
+      gimp_draw_tool_stop (draw_tool);
     }
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static void
