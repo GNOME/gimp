@@ -41,6 +41,7 @@ struct _GimpDrawTool
                                  */
 
   gint            paused_count; /*  count to keep track of multiple pauses  */
+  guint           draw_timeout; /*  draw delay timeout ID                   */
 
   GimpCanvasItem *item;
   GList          *group_stack;
