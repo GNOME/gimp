@@ -144,6 +144,8 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
+  gimp_text_layout_set_attrs (layout);
+
   if (text->markup)
     pango_layout_set_markup (layout->layout, text->markup, -1);
   else if (text->text)
@@ -191,7 +193,6 @@ gimp_text_layout_new (GimpText  *text,
                                                          text->unit,
                                                          yres));
 
-  gimp_text_layout_set_attrs (layout);
   gimp_text_layout_position (layout);
 
   switch (text->box_mode)
