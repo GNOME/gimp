@@ -675,10 +675,34 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
     case GTK_MOVEMENT_VISUAL_POSITIONS:
       if (! cancel_selection)
         {
-          if (count < 0)
-            gtk_text_iter_backward_cursor_position (&cursor);
-          else if (count > 0)
-            gtk_text_iter_forward_cursor_position (&cursor);
+          PangoLayout *layout;
+          gint         index;
+          gint         trailing;
+
+          index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                   &cursor, TRUE);
+
+          layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+          while (count != 0)
+            {
+              if (count > 0)
+                {
+                  pango_layout_move_cursor_visually (layout, TRUE, index, 0, 1,
+                                                     &index, &trailing);
+                  count--;
+                }
+              else
+                {
+                  pango_layout_move_cursor_visually (layout, TRUE, index, 0, -1,
+                                                     &index, &trailing);
+                  count++;
+                }
+            }
+
+          gimp_text_buffer_get_iter_at_index (text_tool->buffer,
+                                              &cursor, index, TRUE);
+          gtk_text_iter_forward_chars (&cursor, trailing);
         }
       break;
 
