@@ -33,6 +33,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "tools/gimptool.h"
 #include "tools/gimptexttool.h"
@@ -153,6 +154,8 @@ text_tool_actions_update (GimpActionGroup *group,
   gboolean          text_layer = FALSE;
   gboolean          text_sel   = FALSE;   /* some text is selected        */
   gboolean          clip       = FALSE;   /* clipboard has text available */
+  gboolean          input_method_menu;
+  gboolean          unicode_menu;
 
   layer = gimp_image_get_active_layer (image);
 
@@ -163,13 +166,16 @@ text_tool_actions_update (GimpActionGroup *group,
 
   text_sel = gimp_text_tool_get_has_text_selection (text_tool);
 
-  /*
-   * see whether there is text available for pasting
-   */
+  /* see whether there is text available for pasting */
   shell = gimp_display_get_shell (display);
-  clipboard = gtk_widget_get_clipboard (GTK_WIDGET (shell),
+  clipboard = gtk_widget_get_clipboard (shell->canvas,
                                         GDK_SELECTION_CLIPBOARD);
   clip = gtk_clipboard_wait_is_text_available (clipboard);
+
+  g_object_get (gtk_widget_get_settings (shell->canvas),
+                "gtk-show-input-method-menu", &input_method_menu,
+                "gtk-show-unicode-menu",      &unicode_menu,
+                NULL);
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
@@ -186,4 +192,6 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-load",            image);
   SET_SENSITIVE ("text-tool-text-to-path",    text_layer);
   SET_SENSITIVE ("text-tool-text-along-path", text_layer && vectors);
+
+  SET_VISIBLE ("text-tool-input-methods-menu", input_method_menu);
 }
