@@ -1590,6 +1590,11 @@ parse_path_do_cmd (ParsePathContext *ctx,
           ctx->strokes = g_list_prepend (ctx->strokes, ctx->stroke);
 
           ctx->param = 0;
+
+          /* If a moveto is followed by multiple pairs of coordinates,
+           * the subsequent pairs are treated as implicit lineto commands.
+           */
+          ctx->cmd = 'l';
         }
       break;
 
