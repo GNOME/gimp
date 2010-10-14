@@ -49,7 +49,7 @@ struct _GimpScrolledPreview
   GtkWidget    *nav_icon;
   GtkWidget    *nav_popup;
   GdkCursor    *cursor_move;
-  GdkGC        *nav_gc; /* unused */
+  gpointer      nav_gc; /* unused */
 
   /*< private >*/
   gpointer      priv;
