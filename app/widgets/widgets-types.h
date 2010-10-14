@@ -196,8 +196,6 @@ typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpTextStyleEditor          GimpTextStyleEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
 typedef struct _GimpTranslationStore         GimpTranslationStore;
-typedef struct _GimpUnitStore                GimpUnitStore;
-typedef struct _GimpUnitComboBox             GimpUnitComboBox;
 typedef struct _GimpWindow                   GimpWindow;
 
 

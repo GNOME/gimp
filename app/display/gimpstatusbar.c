@@ -33,8 +33,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpprogress.h"
 
-#include "widgets/gimpunitstore.h"
-#include "widgets/gimpunitcombobox.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"

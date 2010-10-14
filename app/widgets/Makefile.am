@@ -348,10 +348,6 @@ libappwidgets_a_sources = \
 	gimpuimanager.h			\
 	gimpundoeditor.c		\
 	gimpundoeditor.h		\
-	gimpunitcombobox.c		\
-	gimpunitcombobox.h		\
-	gimpunitstore.c			\
-	gimpunitstore.h			\
 	gimpvectorstreeview.c		\
 	gimpvectorstreeview.h		\
 	gimpview.c			\
