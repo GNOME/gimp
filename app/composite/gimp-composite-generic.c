@@ -1399,7 +1399,7 @@ gimp_composite_scale_any_any_any_generic (GimpCompositeContext * ctx)
 {
   const guchar *src1 = ctx->A;
   guchar *dest = ctx->D;
-  guint length = ctx->n_pixels;
+  guint length;
   guint bytes1 = (ctx->pixelformat_A == GIMP_PIXELFORMAT_V8) ? 1
     : (ctx->pixelformat_A == GIMP_PIXELFORMAT_VA8) ? 2
     : (ctx->pixelformat_A == GIMP_PIXELFORMAT_RGB8) ? 3 : (ctx->pixelformat_A == GIMP_PIXELFORMAT_RGBA8) ? 4 : 0;

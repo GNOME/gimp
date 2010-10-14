@@ -689,8 +689,6 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
     {
       GimpItem *new_item = GIMP_ITEM (new_layer);
 
-      new_item = GIMP_ITEM (new_layer);
-
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                    _("Drop New Layer"));
 
