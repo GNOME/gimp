@@ -62,10 +62,6 @@ struct _GimpUnitStoreClass
 struct _GimpUnitStore
 {
   GObject       parent_instance;
-
-  gint          num_values;
-  gdouble      *values;
-  gdouble      *resolutions;
 };
 
 

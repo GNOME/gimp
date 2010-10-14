@@ -36,6 +36,17 @@ enum
   PROP_NUM_VALUES
 };
 
+typedef struct
+{
+  gint     num_values;
+  gdouble *values;
+  gdouble *resolutions;
+} GimpUnitStorePrivate;
+
+#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                                      GIMP_TYPE_UNIT_STORE, \
+                                                      GimpUnitStorePrivate)
+
 
 static void         gimp_unit_store_tree_model_init (GtkTreeModelIface *iface);
 
@@ -117,6 +128,8 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                                      0, G_MAXINT, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (object_class, sizeof (GimpUnitStorePrivate));
 }
 
 static void
@@ -144,13 +157,13 @@ gimp_unit_store_tree_model_init (GtkTreeModelIface *iface)
 static void
 gimp_unit_store_finalize (GObject *object)
 {
-  GimpUnitStore *store = GIMP_UNIT_STORE (object);
+  GimpUnitStorePrivate *private = GET_PRIVATE (object);
 
-  if (store->num_values > 0)
+  if (private->num_values > 0)
     {
-      g_free (store->values);
-      g_free (store->resolutions);
-      store->num_values = 0;
+      g_free (private->values);
+      g_free (private->resolutions);
+      private->num_values = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -162,17 +175,17 @@ gimp_unit_store_set_property (GObject      *object,
                               const GValue *value,
                               GParamSpec   *pspec)
 {
-  GimpUnitStore *store = GIMP_UNIT_STORE (object);
+  GimpUnitStorePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_NUM_VALUES:
-      g_return_if_fail (store->num_values == 0);
-      store->num_values = g_value_get_int (value);
-      if (store->num_values)
+      g_return_if_fail (private->num_values == 0);
+      private->num_values = g_value_get_int (value);
+      if (private->num_values)
         {
-          store->values      = g_new0 (gdouble, store->num_values);
-          store->resolutions = g_new0 (gdouble, store->num_values);
+          private->values      = g_new0 (gdouble, private->num_values);
+          private->resolutions = g_new0 (gdouble, private->num_values);
         }
       break;
 
@@ -188,12 +201,12 @@ gimp_unit_store_get_property (GObject      *object,
                               GValue       *value,
                               GParamSpec   *pspec)
 {
-  GimpUnitStore *store = GIMP_UNIT_STORE (object);
+  GimpUnitStorePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_NUM_VALUES:
-      g_value_set_int (value, store->num_values);
+      g_value_set_int (value, private->num_values);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -210,9 +223,9 @@ gimp_unit_store_get_flags (GtkTreeModel *tree_model)
 static gint
 gimp_unit_store_get_n_columns (GtkTreeModel *tree_model)
 {
-  GimpUnitStore *store = GIMP_UNIT_STORE (tree_model);
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
 
-  return GIMP_UNIT_STORE_UNIT_COLUMNS + store->num_values;
+  return GIMP_UNIT_STORE_UNIT_COLUMNS + private->num_values;
 }
 
 static GType
@@ -264,11 +277,11 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
                                       gint          column,
                                       GValue       *value)
 {
-  GimpUnitStore *store = GIMP_UNIT_STORE (tree_model);
-  GimpUnit       unit;
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  GimpUnit             unit;
 
   g_return_if_fail (column >= 0 &&
-                    column < GIMP_UNIT_STORE_UNIT_COLUMNS + store->num_values);
+                    column < GIMP_UNIT_STORE_UNIT_COLUMNS + private->num_values);
 
   g_value_init (value,
                 column < GIMP_UNIT_STORE_UNIT_COLUMNS ?
@@ -310,14 +323,14 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
           column -= GIMP_UNIT_STORE_UNIT_COLUMNS;
           if (unit == GIMP_UNIT_PIXEL)
             {
-              g_value_set_double (value, store->values[column]);
+              g_value_set_double (value, private->values[column]);
             }
-          else if (store->resolutions[column])
+          else if (private->resolutions[column])
             {
               g_value_set_double (value,
-                                  store->values[column] *
+                                  private->values[column] *
                                   gimp_unit_get_factor (unit) /
-                                  store->resolutions[column]);
+                                  private->resolutions[column]);
             }
           break;
         }
@@ -415,10 +428,15 @@ gimp_unit_store_set_pixel_value (GimpUnitStore *store,
                                  gint           index,
                                  gdouble        value)
 {
-  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
-  g_return_if_fail (index > 0 && index < store->num_values);
+  GimpUnitStorePrivate *private;
 
-  store->values[index] = value;
+  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
+
+  private = GET_PRIVATE (store);
+
+  g_return_if_fail (index > 0 && index < private->num_values);
+
+  private->values[index] = value;
 }
 
 void
@@ -426,18 +444,21 @@ gimp_unit_store_set_pixel_values (GimpUnitStore *store,
                                   gdouble        first_value,
                                   ...)
 {
-  va_list  args;
-  gint     i;
+  GimpUnitStorePrivate *private;
+  va_list               args;
+  gint                  i;
 
   g_return_if_fail (GIMP_IS_UNIT_STORE (store));
 
+  private = GET_PRIVATE (store);
+
   va_start (args, first_value);
 
-  for (i = 0; i < store->num_values; )
+  for (i = 0; i < private->num_values; )
     {
-      store->values[i] = first_value;
+      private->values[i] = first_value;
 
-      if (++i < store->num_values)
+      if (++i < private->num_values)
         first_value = va_arg (args, gdouble);
     }
 
@@ -449,10 +470,15 @@ gimp_unit_store_set_resolution (GimpUnitStore *store,
                                 gint           index,
                                 gdouble        resolution)
 {
-  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
-  g_return_if_fail (index > 0 && index < store->num_values);
+  GimpUnitStorePrivate *private;
 
-  store->resolutions[index] = resolution;
+  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
+
+  private = GET_PRIVATE (store);
+
+  g_return_if_fail (index > 0 && index < private->num_values);
+
+  private->resolutions[index] = resolution;
 }
 
 void
@@ -460,18 +486,21 @@ gimp_unit_store_set_resolutions  (GimpUnitStore *store,
                                   gdouble        first_resolution,
                                   ...)
 {
-  va_list  args;
-  gint     i;
+  GimpUnitStorePrivate *private;
+  va_list               args;
+  gint                  i;
 
   g_return_if_fail (GIMP_IS_UNIT_STORE (store));
 
+  private = GET_PRIVATE (store);
+
   va_start (args, first_resolution);
 
-  for (i = 0; i < store->num_values; )
+  for (i = 0; i < private->num_values; )
     {
-      store->resolutions[i] = first_resolution;
+      private->resolutions[i] = first_resolution;
 
-      if (++i < store->num_values)
+      if (++i < private->num_values)
         first_resolution = va_arg (args, gdouble);
     }
 
@@ -483,11 +512,15 @@ gimp_unit_store_get_value (GimpUnitStore *store,
                            GimpUnit       unit,
                            gint           index)
 {
-  GtkTreeIter  iter;
-  GValue       value = { 0, };
+  GimpUnitStorePrivate *private;
+  GtkTreeIter          iter;
+  GValue               value = { 0, };
 
   g_return_val_if_fail (GIMP_IS_UNIT_STORE (store), 0.0);
-  g_return_val_if_fail (index >= 0 && index < store->num_values, 0.0);
+
+  private = GET_PRIVATE (store);
+
+  g_return_val_if_fail (index >= 0 && index < private->num_values, 0.0);
 
   iter.user_data = GINT_TO_POINTER (unit);
 
@@ -505,19 +538,22 @@ gimp_unit_store_get_values (GimpUnitStore *store,
                             gdouble       *first_value,
                             ...)
 {
-  va_list  args;
-  gint     i;
+  GimpUnitStorePrivate *private;
+  va_list               args;
+  gint                  i;
 
   g_return_if_fail (GIMP_IS_UNIT_STORE (store));
 
+  private = GET_PRIVATE (store);
+
   va_start (args, first_value);
 
-  for (i = 0; i < store->num_values; )
+  for (i = 0; i < private->num_values; )
     {
       if (first_value)
         *first_value = gimp_unit_store_get_value (store, unit, i);
 
-      if (++i < store->num_values)
+      if (++i < private->num_values)
         first_value = va_arg (args, gdouble *);
     }
 
