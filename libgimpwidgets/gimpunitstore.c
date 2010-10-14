@@ -33,14 +33,17 @@
 enum
 {
   PROP_0,
-  PROP_NUM_VALUES
+  PROP_NUM_VALUES,
+  PROP_HAS_PIXELS
 };
 
 typedef struct
 {
-  gint     num_values;
-  gdouble *values;
-  gdouble *resolutions;
+  gint      num_values;
+  gboolean  has_pixels;
+
+  gdouble  *values;
+  gdouble  *resolutions;
 } GimpUnitStorePrivate;
 
 #define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
@@ -129,12 +132,21 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_HAS_PIXELS,
+                                   g_param_spec_boolean ("has-pixels",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (object_class, sizeof (GimpUnitStorePrivate));
 }
 
 static void
 gimp_unit_store_init (GimpUnitStore *store)
 {
+  GimpUnitStorePrivate *private = GET_PRIVATE (store);
+
+  private->has_pixels = TRUE;
 }
 
 static void
@@ -188,6 +200,10 @@ gimp_unit_store_set_property (GObject      *object,
           private->resolutions = g_new0 (gdouble, private->num_values);
         }
       break;
+    case PROP_HAS_PIXELS:
+      gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (object),
+                                      g_value_get_boolean (value));
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -208,6 +224,10 @@ gimp_unit_store_get_property (GObject      *object,
     case PROP_NUM_VALUES:
       g_value_set_int (value, private->num_values);
       break;
+    case PROP_HAS_PIXELS:
+      g_value_set_boolean (value, private->has_pixels);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -245,11 +265,15 @@ gimp_unit_store_get_iter (GtkTreeModel *tree_model,
                           GtkTreeIter  *iter,
                           GtkTreePath  *path)
 {
-  gint  unit;
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  gint                  unit;
 
   g_return_val_if_fail (gtk_tree_path_get_depth (path) > 0, FALSE);
 
   unit = gtk_tree_path_get_indices (path)[0];
+
+  if (! private->has_pixels)
+    unit++;
 
   if (unit >= 0 && unit < gimp_unit_get_number_of_units ())
     {
@@ -264,9 +288,14 @@ static GtkTreePath *
 gimp_unit_store_get_path (GtkTreeModel *tree_model,
                           GtkTreeIter  *iter)
 {
-  GtkTreePath *path = gtk_tree_path_new ();
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  GtkTreePath          *path    = gtk_tree_path_new ();
+  gint                  index   = GPOINTER_TO_INT (iter->user_data);
 
-  gtk_tree_path_append_index (path, GPOINTER_TO_INT (iter->user_data));
+  if (! private->has_pixels)
+    index--;
+
+  gtk_tree_path_append_index (path, GPOINTER_TO_INT (index));
 
   return path;
 }
@@ -341,7 +370,7 @@ static gboolean
 gimp_unit_store_iter_next (GtkTreeModel *tree_model,
                            GtkTreeIter  *iter)
 {
-  gint  unit  = GPOINTER_TO_INT (iter->user_data);
+  gint unit = GPOINTER_TO_INT (iter->user_data);
 
   unit++;
   if (unit > 0 && unit < gimp_unit_get_number_of_units ())
@@ -358,11 +387,16 @@ gimp_unit_store_iter_children (GtkTreeModel *tree_model,
                                GtkTreeIter  *iter,
                                GtkTreeIter  *parent)
 {
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+
   /* this is a list, nodes have no children */
   if (parent)
     return FALSE;
 
-  iter->user_data = GINT_TO_POINTER (0);
+  if (private->has_pixels)
+    iter->user_data = GINT_TO_POINTER (GIMP_UNIT_PIXEL);
+  else
+    iter->user_data = GINT_TO_POINTER (GIMP_UNIT_INCH);
 
   return TRUE;
 }
@@ -378,10 +412,18 @@ static gint
 gimp_unit_store_iter_n_children (GtkTreeModel *tree_model,
                                  GtkTreeIter  *iter)
 {
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  gint                  n_children;
+
   if (iter)
     return 0;
 
-  return gimp_unit_get_number_of_units ();
+  n_children = gimp_unit_get_number_of_units ();
+
+  if (! private->has_pixels)
+    n_children--;
+
+  return n_children;
 }
 
 static gboolean
@@ -390,16 +432,23 @@ gimp_unit_store_iter_nth_child (GtkTreeModel *tree_model,
                                 GtkTreeIter  *parent,
                                 gint          n)
 {
-  GimpUnitStore *store;
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  gint                  n_children;
 
   if (parent)
     return FALSE;
 
-  store = GIMP_UNIT_STORE (tree_model);
+  n_children = gimp_unit_store_iter_n_children (tree_model, NULL);
 
-  if (n >= 0 && n < gimp_unit_get_number_of_units ())
+  if (n >= 0 && n < n_children)
     {
-      iter->user_data = GINT_TO_POINTER (n);
+      GimpUnit unit = n;
+
+      if (! private->has_pixels)
+        unit++;
+
+      iter->user_data = GINT_TO_POINTER (unit);
+
       return TRUE;
     }
 
@@ -421,6 +470,65 @@ gimp_unit_store_new (gint  num_values)
   return g_object_new (GIMP_TYPE_UNIT_STORE,
                        "num-values", num_values,
                        NULL);
+}
+
+void
+gimp_unit_store_set_has_pixels (GimpUnitStore *store,
+                                gboolean       has_pixels)
+{
+  GimpUnitStorePrivate *private;
+
+  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
+
+  private = GET_PRIVATE (store);
+
+  has_pixels = has_pixels ? TRUE : FALSE;
+
+  if (has_pixels != private->has_pixels)
+    {
+      GtkTreeModel *model        = GTK_TREE_MODEL (store);
+      GtkTreePath  *deleted_path = NULL;
+
+      if (! has_pixels)
+        {
+          GtkTreeIter iter;
+
+          gtk_tree_model_get_iter_first (model, &iter);
+          deleted_path = gtk_tree_model_get_path (model, &iter);
+        }
+
+      private->has_pixels = has_pixels;
+
+      if (has_pixels)
+        {
+          GtkTreePath *path;
+          GtkTreeIter  iter;
+
+          gtk_tree_model_get_iter_first (model, &iter);
+          path = gtk_tree_model_get_path (model, &iter);
+          gtk_tree_model_row_inserted (model, path, &iter);
+          gtk_tree_path_free (path);
+        }
+      else if (deleted_path)
+        {
+          gtk_tree_model_row_deleted (model, deleted_path);
+          gtk_tree_path_free (deleted_path);
+        }
+
+      g_object_notify (G_OBJECT (store), "has-pixels");
+    }
+}
+
+gboolean
+gimp_unit_store_get_has_pixels (GimpUnitStore *store)
+{
+  GimpUnitStorePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_UNIT_STORE (store), FALSE);
+
+  private = GET_PRIVATE (store);
+
+  return private->has_pixels;
 }
 
 void

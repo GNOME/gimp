@@ -131,16 +131,47 @@ gimp_unit_combo_box_new_with_model (GimpUnitStore *model)
 GimpUnit
 gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
 {
+  GtkTreeIter iter;
+  gint        unit;
+
   g_return_val_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo), -1);
 
-  return gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+  gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter);
+
+  gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)), &iter,
+                      GIMP_UNIT_STORE_UNIT, &unit,
+                      -1);
+
+  return (GimpUnit) unit;
 }
 
 void
 gimp_unit_combo_box_set_active (GimpUnitComboBox *combo,
                                 GimpUnit          unit)
 {
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
   g_return_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo));
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), unit);
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gint iter_unit;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_UNIT_STORE_UNIT, &iter_unit,
+                          -1);
+
+      if (unit == (GimpUnit) iter_unit)
+        {
+          gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+          break;
+        }
+    }
+
 }

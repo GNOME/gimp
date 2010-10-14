@@ -378,6 +378,9 @@ gimp_size_entry_new (gint                       number_of_fields,
     }
 
   store = gimp_unit_store_new (gse->number_of_fields);
+  gimp_unit_store_set_has_pixels (store, gse->menu_show_pixels);
+  /* FIXME menu_show_percent */
+
   gse->unitmenu = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 

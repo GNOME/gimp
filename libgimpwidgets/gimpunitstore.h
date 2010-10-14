@@ -69,6 +69,10 @@ GType           gimp_unit_store_get_type (void) G_GNUC_CONST;
 
 GimpUnitStore * gimp_unit_store_new              (gint           num_values);
 
+void            gimp_unit_store_set_has_pixels   (GimpUnitStore *store,
+                                                  gboolean       has_pixels);
+gboolean        gimp_unit_store_get_has_pixels   (GimpUnitStore *store);
+
 void            gimp_unit_store_set_pixel_value  (GimpUnitStore *store,
                                                   gint           index,
                                                   gdouble        value);
