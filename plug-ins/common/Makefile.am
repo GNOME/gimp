@@ -107,7 +107,6 @@ libexec_PROGRAMS = \
 	$(FILE_MNG) \
 	file-pat \
 	file-pcx \
-	$(FILE_PDF_LOAD) \
 	$(FILE_PDF_SAVE) \
 	file-pix \
 	$(FILE_PNG) \
@@ -193,7 +192,6 @@ EXTRA_PROGRAMS = \
 	file-aa \
 	file-jp2-load \
 	file-mng \
-	file-pdf-load \
 	file-pdf-save \
 	file-png \
 	file-psp \
@@ -1271,26 +1269,6 @@ file_pcx_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_pcx_RC)
-
-file_pdf_load_CFLAGS = $(POPPLER_CFLAGS)
-
-file_pdf_load_SOURCES = \
-	file-pdf-load.c
-
-file_pdf_load_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(POPPLER_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(file_pdf_load_RC)
 
 file_pdf_save_CFLAGS = $(CAIRO_PDF_CFLAGS)
 

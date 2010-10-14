@@ -19,6 +19,8 @@
  * <http://www.gnu.org/licenses/>.
  */
 
+#ifndef GIMP_DISABLE_DEPRECATED
+
 #ifndef __GIMP_UNIT_MENU_H__
 #define __GIMP_UNIT_MENU_H__
 
@@ -95,3 +97,5 @@ gint        gimp_unit_menu_get_pixel_digits (GimpUnitMenu *menu);
 G_END_DECLS
 
 #endif /* __GIMP_UNIT_MENU_H__ */
+
+#endif /* GIMP_DISABLE_DEPRECATED */

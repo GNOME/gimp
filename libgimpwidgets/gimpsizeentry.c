@@ -40,7 +40,7 @@
  * SECTION: gimpsizeentry
  * @title: GimpSizeEntry
  * @short_description: Widget for entering pixel values and resolutions.
- * @see_also: #GimpUnit, #GimpUnitMenu, gimp_coordinates_new()
+ * @see_also: #GimpUnit, #GimpUnitComboBox, gimp_coordinates_new()
  *
  * This widget is used to enter pixel distances/sizes and resolutions.
  *
@@ -48,13 +48,13 @@
  * each field automatic mappings are performed between the field's
  * "reference value" and its "value".
  *
- * There is a #GimpUnitMenu right of the entry fields which lets you
- * specify the #GimpUnit of the displayed values.
+ * There is a #GimpUnitComboBox right of the entry fields which lets
+ * you specify the #GimpUnit of the displayed values.
  *
  * For each field, there can be one or two #GtkSpinButton's to enter
  * "value" and "reference value". If you specify @show_refval as
  * #FALSE in gimp_size_entry_new() there will be only one
- * #GtkSpinButton and the #GimpUnitMenu will contain an item for
+ * #GtkSpinButton and the #GimpUnitComboBox will contain an item for
  * selecting GIMP_UNIT_PIXEL.
  *
  * The "reference value" is either of GIMP_UNIT_PIXEL or dpi,
@@ -246,7 +246,7 @@ gimp_size_entry_finalize (GObject *object)
  *
  * The #GimpSizeEntry is derived from #GtkTable and will have
  * an empty border of one cell width on each side plus an empty column left
- * of the #GimpUnitMenu to allow the caller to add labels or a
+ * of the #GimpUnitComboBox to allow the caller to add labels or a
  * #GimpChainButton.
  *
  * Returns: A Pointer to the new #GimpSizeEntry widget.
@@ -262,6 +262,7 @@ gimp_size_entry_new (gint                       number_of_fields,
                      GimpSizeEntryUpdatePolicy  update_policy)
 {
   GimpSizeEntry *gse;
+  GimpUnitStore *store;
   gint           i;
 
   g_return_val_if_fail ((number_of_fields >= 0) && (number_of_fields <= 16),
@@ -376,14 +377,17 @@ gimp_size_entry_new (gint                       number_of_fields,
                                     gsef->refval_digits);
     }
 
-  gse->unitmenu = gimp_unit_menu_new (unit_format, unit,
-                                      gse->menu_show_pixels,
-                                      gse->menu_show_percent, TRUE);
+  store = gimp_unit_store_new (gse->number_of_fields);
+  gse->unitmenu = gimp_unit_combo_box_new_with_model (store);
+  g_object_unref (store);
+
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gse->unitmenu), unit);
+
   gtk_table_attach (GTK_TABLE (gse), gse->unitmenu,
                     i+2, i+3,
                     gse->show_refval+1, gse->show_refval+2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (gse->unitmenu, "unit-changed",
+  g_signal_connect (gse->unitmenu, "changed",
                     G_CALLBACK (gimp_size_entry_unit_callback),
                     gse);
   gtk_widget_show (gse->unitmenu);
@@ -595,7 +599,7 @@ gimp_size_entry_set_resolution (GimpSizeEntry *gse,
  *
  * These values will be used if you specified @menu_show_percent as %TRUE
  * in gimp_size_entry_new() and the user has selected GIMP_UNIT_PERCENT in
- * the #GimpSizeEntry's #GimpUnitMenu.
+ * the #GimpSizeEntry's #GimpUnitComboBox.
  *
  * This function does nothing if the #GimpSizeEntryUpdatePolicy specified in
  * gimp_size_entry_new() doesn't equal to GIMP_SIZE_ENTRY_UPDATE_SIZE.
@@ -721,7 +725,7 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
  *
  * The @value returned is a distance or resolution
  * in the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitMenu.
+ * #GimpUnitComboBox.
  *
  * NOTE: In most cases you won't be interested in this value because the
  *       #GimpSizeEntry's purpose is to shield the programmer from unit
@@ -805,7 +809,7 @@ gimp_size_entry_update_value (GimpSizeEntryField *gsef,
  *
  * The @value passed is treated to be a distance or resolution
  * in the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitMenu.
+ * #GimpUnitComboBox.
  *
  * NOTE: In most cases you won't be interested in this value because the
  *       #GimpSizeEntry's purpose is to shield the programmer from unit
@@ -1107,7 +1111,7 @@ gimp_size_entry_refval_callback (GtkWidget *widget,
  * @gse: The sizeentry you want to know the unit of.
  *
  * Returns the #GimpUnit the user has selected in the #GimpSizeEntry's
- * #GimpUnitMenu.
+ * #GimpUnitComboBox.
  *
  * Returns: The sizeentry's unit.
  **/
@@ -1129,7 +1133,8 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
 
   gse->unit = unit;
 
-  digits = gimp_unit_menu_get_pixel_digits (GIMP_UNIT_MENU (gse->unitmenu));
+  digits = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (gse),
+                                               "gimp-pixel-digits"));
 
   for (i = 0; i < gse->number_of_fields; i++)
     {
@@ -1184,7 +1189,7 @@ gimp_size_entry_set_unit (GimpSizeEntry *gse,
   g_return_if_fail (gse->menu_show_pixels || (unit != GIMP_UNIT_PIXEL));
   g_return_if_fail (gse->menu_show_percent || (unit != GIMP_UNIT_PERCENT));
 
-  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gse->unitmenu), unit);
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gse->unitmenu), unit);
   gimp_size_entry_update_unit (gse, unit);
 }
 
@@ -1194,7 +1199,7 @@ gimp_size_entry_unit_callback (GtkWidget     *widget,
 {
   GimpUnit new_unit;
 
-  new_unit = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+  new_unit = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (widget));
 
   if (gse->unit != new_unit)
     gimp_size_entry_update_unit (gse, new_unit);
@@ -1392,21 +1397,22 @@ gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
  * @gse: a #GimpSizeEntry
  * @digits: the number of digits to display for a pixel size
  *
- * Similar to gimp_unit_menu_set_pixel_digits(), this function allows
- * you set up a #GimpSizeEntry so that sub-pixel sizes can be entered.
+ * This function allows you set up a #GimpSizeEntry so that sub-pixel
+ * sizes can be entered.
  **/
 void
 gimp_size_entry_set_pixel_digits (GimpSizeEntry *gse,
                                   gint           digits)
 {
-  GimpUnitMenu *menu;
+  GimpUnitComboBox *combo;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
 
-  menu = GIMP_UNIT_MENU (gse->unitmenu);
+  combo = GIMP_UNIT_COMBO_BOX (gse->unitmenu);
 
-  gimp_unit_menu_set_pixel_digits (menu, digits);
-  gimp_size_entry_update_unit (gse, gimp_unit_menu_get_unit (menu));
+  g_object_set_data (G_OBJECT (gse), "gimp-pixel-digits",
+                     GINT_TO_POINTER (digits));
+  gimp_size_entry_update_unit (gse, gimp_unit_combo_box_get_active (combo));
 }
 
 

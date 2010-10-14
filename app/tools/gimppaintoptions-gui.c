@@ -224,13 +224,16 @@ fade_options_gui (GimpPaintOptions *paint_options,
                              spinbutton, 1, FALSE);
 
   /*  the fade-out unitmenu  */
-  menu = gimp_prop_unit_menu_new (config, "fade-unit", "%a");
+  menu = gimp_prop_unit_combo_box_new (config, "fade-unit");
   gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (menu);
 
+#if 0
+  /* FIXME pixel digits */
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
   gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
+#endif
 
     /*  the repeat type  */
   combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);

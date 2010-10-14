@@ -26,6 +26,13 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
+#include "gimpwidgetstypes.h"
+
+#undef GIMP_DISABLE_DEPRECATED
+#include "gimppropwidgets.h"
+#include "gimpunitmenu.h"
+
+#define GIMP_DISABLE_DEPRECATED
 #include "gimpwidgets.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -3369,6 +3376,127 @@ gimp_prop_color_area_notify (GObject    *config,
 
   g_signal_handlers_unblock_by_func (area,
                                      gimp_prop_color_area_callback,
+                                     config);
+}
+
+
+/********************/
+/*  unit combo box  */
+/********************/
+
+static void   gimp_prop_unit_combo_box_callback (GtkWidget  *combo,
+                                                 GObject    *config);
+static void   gimp_prop_unit_combo_box_notify   (GObject    *config,
+                                                 GParamSpec *param_spec,
+                                                 GtkWidget  *combo);
+
+/**
+ * gimp_prop_unit_combo_box_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of Unit property.
+ *
+ * Creates a #GimpUnitComboBox to set and display the value of a Unit
+ * property.  See gimp_unit_combo_box_new() for more information.
+ *
+ * Return value:  A new #GimpUnitComboBox widget.
+ *
+ * Since GIMP 2.8
+ */
+GtkWidget *
+gimp_prop_unit_combo_box_new (GObject     *config,
+                              const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo;
+  GimpUnit    unit;
+  GValue      value = { 0, };
+  gboolean    show_pixels;
+  gboolean    show_percent;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_value_init (&value, param_spec->value_type);
+
+  g_value_set_int (&value, GIMP_UNIT_PIXEL);
+  show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
+
+  g_value_set_int (&value, GIMP_UNIT_PERCENT);
+  show_percent = (g_param_value_validate (param_spec, &value) == FALSE);
+
+  g_value_unset (&value);
+
+  g_object_get (config,
+                property_name, &unit,
+                NULL);
+
+  /* FIXME implement show_pixels and show_percent */
+  combo = gimp_unit_combo_box_new ();
+
+  set_param_spec (G_OBJECT (combo), combo, param_spec);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_prop_unit_combo_box_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_unit_combo_box_notify),
+                  combo);
+
+  return combo;
+}
+
+static void
+gimp_prop_unit_combo_box_callback (GtkWidget *combo,
+                                   GObject   *config)
+{
+  GParamSpec *param_spec;
+  GimpUnit    unit;
+
+  param_spec = get_param_spec (G_OBJECT (combo));
+  if (! param_spec)
+    return;
+
+  unit = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (combo));
+
+  /* FIXME gimp_unit_menu_update (menu, &unit); */
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_unit_combo_box_notify,
+                                   combo);
+
+  g_object_set (config,
+                param_spec->name, unit,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_unit_combo_box_notify,
+                                     combo);
+}
+
+static void
+gimp_prop_unit_combo_box_notify (GObject    *config,
+                                 GParamSpec *param_spec,
+                                 GtkWidget  *combo)
+{
+  GimpUnit  unit;
+
+  g_object_get (config,
+                param_spec->name, &unit,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo,
+                                   gimp_prop_unit_combo_box_callback,
+                                   config);
+
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (combo), unit);
+
+  /* FIXME gimp_unit_menu_update (menu, &unit); */
+
+  g_signal_handlers_unblock_by_func (combo,
+                                     gimp_prop_unit_combo_box_callback,
                                      config);
 }
 

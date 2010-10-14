@@ -31,8 +31,10 @@
 
 #include "gimpdialog.h"
 #include "gimphelpui.h"
-#include "gimpunitmenu.h"
 #include "gimpwidgets.h"
+
+#undef GIMP_DISABLE_DEPRECATED
+#include "gimpunitmenu.h"
 
 #include "libgimp/libgimp-intl.h"
 
