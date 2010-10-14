@@ -34,13 +34,15 @@ enum
 {
   PROP_0,
   PROP_NUM_VALUES,
-  PROP_HAS_PIXELS
+  PROP_HAS_PIXELS,
+  PROP_HAS_PERCENT
 };
 
 typedef struct
 {
   gint      num_values;
   gboolean  has_pixels;
+  gboolean  has_percent;
 
   gdouble  *values;
   gdouble  *resolutions;
@@ -138,6 +140,12 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                                          TRUE,
                                                          GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_HAS_PERCENT,
+                                   g_param_spec_boolean ("has-percent",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (object_class, sizeof (GimpUnitStorePrivate));
 }
 
@@ -146,7 +154,8 @@ gimp_unit_store_init (GimpUnitStore *store)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (store);
 
-  private->has_pixels = TRUE;
+  private->has_pixels  = TRUE;
+  private->has_percent = FALSE;
 }
 
 static void
@@ -204,6 +213,10 @@ gimp_unit_store_set_property (GObject      *object,
       gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (object),
                                       g_value_get_boolean (value));
       break;
+    case PROP_HAS_PERCENT:
+      gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (object),
+                                       g_value_get_boolean (value));
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -226,6 +239,9 @@ gimp_unit_store_get_property (GObject      *object,
       break;
     case PROP_HAS_PIXELS:
       g_value_set_boolean (value, private->has_pixels);
+      break;
+    case PROP_HAS_PERCENT:
+      g_value_set_boolean (value, private->has_percent);
       break;
 
     default:
@@ -266,16 +282,38 @@ gimp_unit_store_get_iter (GtkTreeModel *tree_model,
                           GtkTreePath  *path)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
-  gint                  unit;
+  gint                  index;
+  GimpUnit              unit;
 
   g_return_val_if_fail (gtk_tree_path_get_depth (path) > 0, FALSE);
 
-  unit = gtk_tree_path_get_indices (path)[0];
+  index = gtk_tree_path_get_indices (path)[0];
+
+  unit = index;
 
   if (! private->has_pixels)
     unit++;
 
-  if (unit >= 0 && unit < gimp_unit_get_number_of_units ())
+  if (private->has_percent)
+    {
+      unit--;
+
+      if (private->has_pixels)
+        {
+          if (index == 0)
+            unit = GIMP_UNIT_PIXEL;
+          else if (index == 1)
+            unit = GIMP_UNIT_PERCENT;
+        }
+      else
+        {
+          if (index == 0)
+            unit = GIMP_UNIT_PERCENT;
+        }
+    }
+
+  if ((unit >= 0 && unit < gimp_unit_get_number_of_units ()) ||
+      ((unit == GIMP_UNIT_PERCENT && private->has_percent)))
     {
       iter->user_data = GINT_TO_POINTER (unit);
       return TRUE;
@@ -290,12 +328,33 @@ gimp_unit_store_get_path (GtkTreeModel *tree_model,
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
   GtkTreePath          *path    = gtk_tree_path_new ();
-  gint                  index   = GPOINTER_TO_INT (iter->user_data);
+  GimpUnit              unit    = GPOINTER_TO_INT (iter->user_data);
+  gint                  index;
+
+  index = unit;
 
   if (! private->has_pixels)
     index--;
 
-  gtk_tree_path_append_index (path, GPOINTER_TO_INT (index));
+  if (private->has_percent)
+    {
+      index++;
+
+      if (private->has_pixels)
+        {
+          if (unit == GIMP_UNIT_PIXEL)
+            index = 0;
+          else if (unit == GIMP_UNIT_PERCENT)
+            index = 1;
+        }
+      else
+        {
+          if (unit == GIMP_UNIT_PERCENT)
+            index = 0;
+        }
+    }
+
+  gtk_tree_path_append_index (path, index);
 
   return path;
 }
@@ -307,7 +366,7 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
                                       GValue       *value)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
-  GimpUnit             unit;
+  GimpUnit              unit;
 
   g_return_if_fail (column >= 0 &&
                     column < GIMP_UNIT_STORE_UNIT_COLUMNS + private->num_values);
@@ -319,7 +378,8 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
 
   unit = GPOINTER_TO_INT (iter->user_data);
 
-  if (unit >= 0 && unit < gimp_unit_get_number_of_units ())
+  if ((unit >= 0 && unit < gimp_unit_get_number_of_units ()) ||
+      ((unit == GIMP_UNIT_PERCENT && private->has_percent)))
     {
       switch (column)
         {
@@ -370,16 +430,29 @@ static gboolean
 gimp_unit_store_iter_next (GtkTreeModel *tree_model,
                            GtkTreeIter  *iter)
 {
-  gint unit = GPOINTER_TO_INT (iter->user_data);
+  GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  GimpUnit              unit    = GPOINTER_TO_INT (iter->user_data);
 
-  unit++;
-  if (unit > 0 && unit < gimp_unit_get_number_of_units ())
+  if (unit == GIMP_UNIT_PIXEL && private->has_percent)
     {
-      iter->user_data = GINT_TO_POINTER (unit);
-      return TRUE;
+      unit = GIMP_UNIT_PERCENT;
+    }
+  else if (unit == GIMP_UNIT_PERCENT)
+    {
+      unit = GIMP_UNIT_INCH;
+    }
+  else if (unit >= 0 && unit < gimp_unit_get_number_of_units () - 1)
+    {
+      unit++;
+    }
+  else
+    {
+      return FALSE;
     }
 
-  return FALSE;
+  iter->user_data = GINT_TO_POINTER (unit);
+
+  return TRUE;
 }
 
 static gboolean
@@ -388,15 +461,26 @@ gimp_unit_store_iter_children (GtkTreeModel *tree_model,
                                GtkTreeIter  *parent)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (tree_model);
+  GimpUnit              unit;
 
   /* this is a list, nodes have no children */
   if (parent)
     return FALSE;
 
   if (private->has_pixels)
-    iter->user_data = GINT_TO_POINTER (GIMP_UNIT_PIXEL);
+    {
+      unit = GIMP_UNIT_PIXEL;
+    }
+  else if (private->has_percent)
+    {
+      unit = GIMP_UNIT_PERCENT;
+    }
   else
-    iter->user_data = GINT_TO_POINTER (GIMP_UNIT_INCH);
+    {
+      unit = GIMP_UNIT_INCH;
+    }
+
+  iter->user_data = GINT_TO_POINTER (unit);
 
   return TRUE;
 }
@@ -423,6 +507,9 @@ gimp_unit_store_iter_n_children (GtkTreeModel *tree_model,
   if (! private->has_pixels)
     n_children--;
 
+  if (private->has_percent)
+    n_children++;
+
   return n_children;
 }
 
@@ -446,6 +533,24 @@ gimp_unit_store_iter_nth_child (GtkTreeModel *tree_model,
 
       if (! private->has_pixels)
         unit++;
+
+      if (private->has_percent)
+        {
+          unit--;
+
+          if (private->has_pixels)
+            {
+              if (n == 0)
+                unit = GIMP_UNIT_PIXEL;
+              else if (n == 1)
+                unit = GIMP_UNIT_PERCENT;
+            }
+          else
+            {
+              if (n == 0)
+                unit = GIMP_UNIT_PERCENT;
+            }
+        }
 
       iter->user_data = GINT_TO_POINTER (unit);
 
@@ -529,6 +634,69 @@ gimp_unit_store_get_has_pixels (GimpUnitStore *store)
   private = GET_PRIVATE (store);
 
   return private->has_pixels;
+}
+
+void
+gimp_unit_store_set_has_percent (GimpUnitStore *store,
+                                 gboolean       has_percent)
+{
+  GimpUnitStorePrivate *private;
+
+  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
+
+  private = GET_PRIVATE (store);
+
+  has_percent = has_percent ? TRUE : FALSE;
+
+  if (has_percent != private->has_percent)
+    {
+      GtkTreeModel *model        = GTK_TREE_MODEL (store);
+      GtkTreePath  *deleted_path = NULL;
+
+      if (! has_percent)
+        {
+          GtkTreeIter iter;
+
+          gtk_tree_model_get_iter_first (model, &iter);
+          if (private->has_pixels)
+            gtk_tree_model_iter_next (model, &iter);
+          deleted_path = gtk_tree_model_get_path (model, &iter);
+        }
+
+      private->has_percent = has_percent;
+
+      if (has_percent)
+        {
+          GtkTreePath *path;
+          GtkTreeIter  iter;
+
+          gtk_tree_model_get_iter_first (model, &iter);
+           if (private->has_pixels)
+            gtk_tree_model_iter_next (model, &iter);
+         path = gtk_tree_model_get_path (model, &iter);
+          gtk_tree_model_row_inserted (model, path, &iter);
+          gtk_tree_path_free (path);
+        }
+      else if (deleted_path)
+        {
+          gtk_tree_model_row_deleted (model, deleted_path);
+          gtk_tree_path_free (deleted_path);
+        }
+
+      g_object_notify (G_OBJECT (store), "has-percent");
+    }
+}
+
+gboolean
+gimp_unit_store_get_has_percent (GimpUnitStore *store)
+{
+  GimpUnitStorePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_UNIT_STORE (store), FALSE);
+
+  private = GET_PRIVATE (store);
+
+  return private->has_percent;
 }
 
 void

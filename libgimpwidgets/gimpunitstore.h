@@ -73,6 +73,10 @@ void            gimp_unit_store_set_has_pixels   (GimpUnitStore *store,
                                                   gboolean       has_pixels);
 gboolean        gimp_unit_store_get_has_pixels   (GimpUnitStore *store);
 
+void            gimp_unit_store_set_has_percent  (GimpUnitStore *store,
+                                                  gboolean       has_percent);
+gboolean        gimp_unit_store_get_has_percent  (GimpUnitStore *store);
+
 void            gimp_unit_store_set_pixel_value  (GimpUnitStore *store,
                                                   gint           index,
                                                   gdouble        value);
