@@ -681,45 +681,43 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
       if (! cancel_selection)
         {
           PangoLayout *layout;
-          gint         index;
-          gint         trailing;
 
-          index = gimp_text_buffer_get_iter_index (text_tool->buffer,
-                                                   &cursor, TRUE);
+          if (! gimp_text_tool_ensure_layout (text_tool))
+            break;
 
           layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
           while (count != 0)
             {
+              gint index;
+              gint trailing;
               gint new_index;
+
+              index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                       &cursor, TRUE);
 
              if (count > 0)
                 {
                   pango_layout_move_cursor_visually (layout, TRUE, index, 0, 1,
                                                      &new_index, &trailing);
                   count--;
-
-                  if (new_index != G_MAXINT)
-                    index = new_index;
-                  else
-                    break;
                 }
               else
                 {
                   pango_layout_move_cursor_visually (layout, TRUE, index, 0, -1,
                                                      &new_index, &trailing);
                   count++;
-
-                  if (new_index != -1)
-                    index = new_index;
-                  else
-                    break;
                 }
-            }
 
-          gimp_text_buffer_get_iter_at_index (text_tool->buffer,
-                                              &cursor, index, TRUE);
-          gtk_text_iter_forward_chars (&cursor, trailing);
+             if (new_index != G_MAXINT && new_index != -1)
+               index = new_index;
+             else
+               break;
+
+             gimp_text_buffer_get_iter_at_index (text_tool->buffer,
+                                                 &cursor, index, TRUE);
+             gtk_text_iter_forward_chars (&cursor, trailing);
+            }
         }
       break;
 
@@ -753,7 +751,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
                                                         &cursor, TRUE);
 
-        gimp_text_tool_ensure_layout (text_tool);
+        if (! gimp_text_tool_ensure_layout (text_tool))
+          break;
 
         layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 

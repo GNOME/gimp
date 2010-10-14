@@ -1740,7 +1740,7 @@ gimp_text_tool_clear_layout (GimpTextTool *text_tool)
     }
 }
 
-void
+gboolean
 gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
 {
   if (! text_tool->layout && text_tool->text)
@@ -1749,6 +1749,8 @@ gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
 
       text_tool->layout = gimp_text_layout_new (text_tool->layer->text, image);
     }
+
+  return text_tool->layout != NULL;
 }
 
 void
