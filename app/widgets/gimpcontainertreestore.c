@@ -333,7 +333,7 @@ gimp_container_tree_store_reorder_item (GimpContainerTreeStore *store,
                                         gint                    new_index,
                                         GtkTreeIter            *iter)
 {
-  GimpContainerTreeStorePrivate *private = GET_PRIVATE (store);
+  GimpContainerTreeStorePrivate *private;
   GimpViewable                  *parent;
   GimpContainer                 *container;
 
