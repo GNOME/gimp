@@ -208,12 +208,16 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem   *item,
   GimpCanvasTextCursorPrivate *private = GET_PRIVATE (item);
 
   gimp_display_shell_transform_xy_f (shell,
-                                     private->x,
-                                     private->y,
+                                     MIN (private->x,
+                                          private->x + private->width),
+                                     MIN (private->y,
+                                          private->y + private->height),
                                      x, y);
   gimp_display_shell_transform_xy_f (shell,
-                                     private->x + private->width,
-                                     private->y + private->height,
+                                     MAX (private->x,
+                                          private->x + private->width),
+                                     MAX (private->y,
+                                          private->y + private->height),
                                      w, h);
 
   *w -= *x;
