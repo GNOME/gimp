@@ -806,13 +806,15 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       gint           off_x, off_y;
       gboolean       overwrite;
 
-      gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect);
+      gimp_text_tool_editor_get_cursor_rect (text_tool,
+                                             text_tool->overwrite_mode,
+                                             &cursor_rect);
 
       gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
       cursor_rect.x += off_x;
       cursor_rect.y += off_y;
 
-      overwrite = text_tool->overwrite_mode && cursor_rect.width > 0;
+      overwrite = text_tool->overwrite_mode && cursor_rect.width != 0;
 
       gimp_draw_tool_add_text_cursor (draw_tool, &cursor_rect, overwrite);
     }

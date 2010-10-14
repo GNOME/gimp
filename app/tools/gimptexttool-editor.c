@@ -515,6 +515,7 @@ gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 
 void
 gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
+                                       gboolean        overwrite,
                                        PangoRectangle *cursor_rect)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -538,7 +539,11 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 
   gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
 
-  pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
+  if (overwrite)
+    pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
+  else
+    pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
+
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
 
   cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + offset_x;
@@ -686,17 +691,29 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
 
           while (count != 0)
             {
-              if (count > 0)
+              gint new_index;
+
+             if (count > 0)
                 {
                   pango_layout_move_cursor_visually (layout, TRUE, index, 0, 1,
-                                                     &index, &trailing);
+                                                     &new_index, &trailing);
                   count--;
+
+                  if (new_index != G_MAXINT)
+                    index = new_index;
+                  else
+                    break;
                 }
               else
                 {
                   pango_layout_move_cursor_visually (layout, TRUE, index, 0, -1,
-                                                     &index, &trailing);
+                                                     &new_index, &trailing);
                   count++;
+
+                  if (new_index != -1)
+                    index = new_index;
+                  else
+                    break;
                 }
             }
 
@@ -1250,7 +1267,9 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
   gint              off_x, off_y;
 
   if (text_tool->text)
-    gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect);
+    gimp_text_tool_editor_get_cursor_rect (text_tool,
+                                           text_tool->overwrite_mode,
+                                           &cursor_rect);
 
   g_object_get (text_tool, "x1", &off_x, "y1", &off_y, NULL);
 
