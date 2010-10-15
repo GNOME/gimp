@@ -218,9 +218,6 @@ EXPORTS
 	gimp_int_combo_box_set_label
 	gimp_int_combo_box_set_layout
 	gimp_int_combo_box_set_sensitivity
-	gimp_int_option_menu_new
-	gimp_int_option_menu_set_history
-	gimp_int_option_menu_set_sensitive
 	gimp_int_radio_group_new
 	gimp_int_radio_group_set_active
 	gimp_int_store_get_type
@@ -232,7 +229,6 @@ EXPORTS
 	gimp_memsize_entry_get_value
 	gimp_memsize_entry_new
 	gimp_memsize_entry_set_value
-	gimp_menu_item_update
 	gimp_number_pair_entry_get_aspect
 	gimp_number_pair_entry_get_default_text
 	gimp_number_pair_entry_get_default_values
@@ -252,10 +248,6 @@ EXPORTS
 	gimp_offset_area_set_offsets
 	gimp_offset_area_set_pixbuf
 	gimp_offset_area_set_size
-	gimp_option_menu_new
-	gimp_option_menu_new2
-	gimp_option_menu_set_history
-	gimp_option_menu_set_sensitive
 	gimp_page_selector_get_n_pages
 	gimp_page_selector_get_page_label
 	gimp_page_selector_get_page_thumbnail
@@ -285,10 +277,6 @@ EXPORTS
 	gimp_path_editor_set_writable_path
 	gimp_pick_button_get_type
 	gimp_pick_button_new
-	gimp_pixmap_button_new
-	gimp_pixmap_get_type
-	gimp_pixmap_new
-	gimp_pixmap_set
 	gimp_preview_area_blend
 	gimp_preview_area_draw
 	gimp_preview_area_fill
@@ -406,7 +394,6 @@ EXPORTS
 	gimp_string_combo_box_new
 	gimp_string_combo_box_set_active
 	gimp_table_attach_aligned
-	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
 	gimp_uint_adjustment_update
 	gimp_unit_combo_box_get_active
@@ -414,13 +401,6 @@ EXPORTS
 	gimp_unit_combo_box_new
 	gimp_unit_combo_box_new_with_model
 	gimp_unit_combo_box_set_active
-	gimp_unit_menu_get_pixel_digits
-	gimp_unit_menu_get_type
-	gimp_unit_menu_get_unit
-	gimp_unit_menu_new
-	gimp_unit_menu_set_pixel_digits
-	gimp_unit_menu_set_unit
-	gimp_unit_menu_update
 	gimp_unit_store_get_has_percent
 	gimp_unit_store_get_has_pixels
 	gimp_unit_store_get_type
