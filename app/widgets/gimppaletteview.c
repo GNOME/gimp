@@ -48,8 +48,8 @@ enum
 };
 
 
-static gboolean gimp_palette_view_expose         (GtkWidget        *widget,
-                                                  GdkEventExpose   *eevent);
+static gboolean gimp_palette_view_draw           (GtkWidget        *widget,
+                                                  cairo_t          *cr);
 static gboolean gimp_palette_view_button_press   (GtkWidget        *widget,
                                                   GdkEventButton   *bevent);
 static gboolean gimp_palette_view_key_press      (GtkWidget        *widget,
@@ -142,7 +142,7 @@ gimp_palette_view_class_init (GimpPaletteViewClass *klass)
                   G_TYPE_POINTER,
                   GIMP_TYPE_RGB);
 
-  widget_class->expose_event       = gimp_palette_view_expose;
+  widget_class->draw               = gimp_palette_view_draw;
   widget_class->button_press_event = gimp_palette_view_button_press;
   widget_class->key_press_event    = gimp_palette_view_key_press;
   widget_class->focus              = gimp_palette_view_focus;
@@ -160,23 +160,19 @@ gimp_palette_view_init (GimpPaletteView *view)
 }
 
 static gboolean
-gimp_palette_view_expose (GtkWidget      *widget,
-                          GdkEventExpose *eevent)
+gimp_palette_view_draw (GtkWidget *widget,
+                        cairo_t   *cr)
 {
   GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (widget);
   GimpView        *view     = GIMP_VIEW (widget);
 
-  if (! gtk_widget_is_drawable (widget))
-    return FALSE;
-
-  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
   if (view->renderer->viewable && pal_view->selected)
     {
       GimpViewRendererPalette *renderer;
       GtkStyle                *style = gtk_widget_get_style (widget);
       GtkAllocation            allocation;
-      cairo_t                 *cr;
       gint                     row, col;
 
       renderer = GIMP_VIEW_RENDERER_PALETTE (view->renderer);
@@ -185,12 +181,6 @@ gimp_palette_view_expose (GtkWidget      *widget,
 
       row = pal_view->selected->position / renderer->columns;
       col = pal_view->selected->position % renderer->columns;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-      gdk_cairo_region (cr, eevent->region);
-      cairo_clip (cr);
-
-      cairo_translate (cr, allocation.x, allocation.y);
 
       cairo_rectangle (cr,
                        col * renderer->cell_width  + 0.5,
@@ -207,8 +197,6 @@ gimp_palette_view_expose (GtkWidget      *widget,
           gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
           cairo_stroke (cr);
         }
-
-      cairo_destroy (cr);
     }
 
   return FALSE;
