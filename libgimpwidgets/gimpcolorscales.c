@@ -66,7 +66,7 @@ struct _GimpColorScales
 
   GtkWidget         *toggles[7];
   GtkWidget         *sliders[7];
-  GtkObject         *slider_data[7];
+  GtkAdjustment     *slider_data[7];
 };
 
 struct _GimpColorScalesClass
@@ -366,7 +366,7 @@ gimp_color_scales_scale_update (GtkAdjustment   *adjustment,
   gint               i;
 
   for (i = 0; i < 7; i++)
-    if (scales->slider_data[i] == GTK_OBJECT (adjustment))
+    if (scales->slider_data[i] == adjustment)
       break;
 
   switch (i)

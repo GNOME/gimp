@@ -38,7 +38,7 @@ static void gimp_scale_entry_exp_adjustment_callback           (GtkAdjustment *a
 static void gimp_scale_entry_log_adjustment_callback           (GtkAdjustment *adjustment,
                                                                 GtkAdjustment *other_adj);
 
-static GtkObject * gimp_scale_entry_new_internal               (gboolean       color_scale,
+static GtkAdjustment * gimp_scale_entry_new_internal           (gboolean       color_scale,
                                                                 GtkTable      *table,
                                                                 gint           column,
                                                                 gint           row,
@@ -117,7 +117,7 @@ gimp_scale_entry_exp_adjustment_callback (GtkAdjustment *adjustment,
                                      adjustment);
 }
 
-static GtkObject *
+static GtkAdjustment *
 gimp_scale_entry_new_internal (gboolean     color_scale,
                                GtkTable    *table,
                                gint         column,
@@ -241,7 +241,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (return_adj), "scale",      scale);
   g_object_set_data (G_OBJECT (return_adj), "spinbutton", spinbutton);
 
-  return GTK_OBJECT (return_adj);
+  return return_adj;
 }
 
 /**
@@ -273,7 +273,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
-GtkObject *
+GtkAdjustment *
 gimp_scale_entry_new (GtkTable    *table,
                       gint         column,
                       gint         row,
@@ -327,7 +327,7 @@ gimp_scale_entry_new (GtkTable    *table,
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
-GtkObject *
+GtkAdjustment *
 gimp_color_scale_entry_new (GtkTable    *table,
                             gint         column,
                             gint         row,
@@ -367,8 +367,8 @@ gimp_color_scale_entry_new (GtkTable    *table,
  * Since: 2.2
  **/
 void
-gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
-                                  gboolean   logarithmic)
+gimp_scale_entry_set_logarithmic (GtkAdjustment *adjustment,
+                                  gboolean       logarithmic)
 {
   GtkAdjustment *adj;
   GtkAdjustment *scale_adj;
@@ -404,7 +404,7 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
 
       if (scale_adj == adj)
         {
-          GtkObject *new_adj;
+          GtkAdjustment *new_adj;
 
           new_adj = gtk_adjustment_new (gtk_adjustment_get_value (scale_adj),
                                         gtk_adjustment_get_lower (scale_adj),
@@ -494,7 +494,7 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
  * Since: 2.2
  **/
 gboolean
-gimp_scale_entry_get_logarithmic (GtkObject *adjustment)
+gimp_scale_entry_get_logarithmic (GtkAdjustment *adjustment)
 {
   return GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
                                              "logarithmic"));
@@ -510,8 +510,8 @@ gimp_scale_entry_get_logarithmic (GtkObject *adjustment)
  * #GtkSpinButton.
  **/
 void
-gimp_scale_entry_set_sensitive (GtkObject *adjustment,
-                                gboolean   sensitive)
+gimp_scale_entry_set_sensitive (GtkAdjustment *adjustment,
+                                gboolean       sensitive)
 {
   GtkWidget *widget;
 
