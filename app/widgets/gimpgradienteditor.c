@@ -161,8 +161,8 @@ static void      view_pick_color                  (GimpGradientEditor *editor,
 static gboolean  control_events                   (GtkWidget          *widget,
                                                    GdkEvent           *event,
                                                    GimpGradientEditor *editor);
-static gboolean  control_expose                   (GtkWidget          *widget,
-                                                   GdkEventExpose     *event,
+static gboolean  control_draw                     (GtkWidget          *widget,
+                                                   cairo_t            *cr,
                                                    GimpGradientEditor *editor);
 static void      control_do_hint                  (GimpGradientEditor *editor,
                                                    gint                x,
@@ -203,7 +203,7 @@ static double    control_move                     (GimpGradientEditor  *editor,
 static void      control_update                   (GimpGradientEditor *editor,
                                                    GimpGradient       *gradient,
                                                    gboolean            recalculate);
-static void      control_draw                     (GimpGradientEditor *editor,
+static void      control_draw_all                 (GimpGradientEditor *editor,
                                                    GimpGradient       *gradient,
                                                    cairo_t            *cr,
                                                    gint                width,
@@ -354,8 +354,8 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                     G_CALLBACK (control_events),
                     editor);
 
-  g_signal_connect (editor->control, "expose-event",
-                    G_CALLBACK (control_expose),
+  g_signal_connect (editor->control, "draw",
+                    G_CALLBACK (control_draw),
                     editor);
 
   gimp_dnd_color_dest_add (GTK_WIDGET (editor->control),
@@ -1078,8 +1078,7 @@ control_events (GtkWidget          *widget,
         else
           {
             GtkAdjustment *adj = editor->scroll_data;
-
-            gfloat new_value;
+            gfloat         new_value;
 
             new_value = (gtk_adjustment_get_value (adj) +
                          ((sevent->direction == GDK_SCROLL_UP) ?
@@ -1180,26 +1179,23 @@ control_events (GtkWidget          *widget,
 }
 
 static gboolean
-control_expose (GtkWidget          *widget,
-                GdkEventExpose     *event,
-                GimpGradientEditor *editor)
+control_draw (GtkWidget          *widget,
+              cairo_t            *cr,
+              GimpGradientEditor *editor)
 {
   GtkAdjustment *adj = editor->scroll_data;
-  cairo_t       *cr  = gdk_cairo_create (gtk_widget_get_window (widget));
   GtkAllocation  allocation;
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  control_draw (editor,
-                GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
-                cr,
-                allocation.width,
-                allocation.height,
-                gtk_adjustment_get_value (adj),
-                gtk_adjustment_get_value (adj) +
-                gtk_adjustment_get_page_size (adj));
-
-  cairo_destroy (cr);
+  control_draw_all (editor,
+                    GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data),
+                    cr,
+                    allocation.width,
+                    allocation.height,
+                    gtk_adjustment_get_value (adj),
+                    gtk_adjustment_get_value (adj) +
+                    gtk_adjustment_get_page_size (adj));
 
   return TRUE;
 }
@@ -1690,13 +1686,13 @@ control_update (GimpGradientEditor *editor,
 }
 
 static void
-control_draw (GimpGradientEditor *editor,
-              GimpGradient       *gradient,
-              cairo_t            *cr,
-              gint                width,
-              gint                height,
-              gdouble             left,
-              gdouble             right)
+control_draw_all (GimpGradientEditor *editor,
+                  GimpGradient       *gradient,
+                  cairo_t            *cr,
+                  gint                width,
+                  gint                height,
+                  gdouble             left,
+                  gdouble             right)
 {
   GtkStyle               *control_style;
   GimpGradientSegment    *seg;
