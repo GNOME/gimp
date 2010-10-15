@@ -357,6 +357,13 @@
   (gtype-id "GIMP_TYPE_STRING_COMBO_BOX")
 )
 
+(define-object UnitComboBox
+  (in-module "Gimp")
+  (parent "GtkComboBox")
+  (c-name "GimpUnitComboBox")
+  (gtype-id "GIMP_TYPE_UNIT_COMBO_BOX")
+)
+
 (define-object UnitMenu
   (in-module "Gimp")
   (parent "GtkOptionMenu")
@@ -468,6 +475,20 @@
     '("none" "GIMP_SIZE_ENTRY_UPDATE_NONE")
     '("size" "GIMP_SIZE_ENTRY_UPDATE_SIZE")
     '("resolution" "GIMP_SIZE_ENTRY_UPDATE_RESOLUTION")
+  )
+)
+
+(define-enum Unit
+  (in-module "Gimp")
+  (c-name "GimpUnit")
+;; FIXME: make GimpUnit enum more binding-friendly -- gimp_unit_get_type()
+;;  (gtype-id "GIMP_TYPE_UNIT")
+  (values
+    '("pixel" "GIMP_UNIT_PIXEL")
+    '("inch" "GIMP_UNIT_INCH")
+    '("mm" "GIMP_UNIT_MM")
+    '("point" "GIMP_UNIT_POINT")
+    '("pica" "GIMP_UNIT_PICA")
   )
 )
 
@@ -2594,6 +2615,45 @@
   (of-object "GimpStringComboBox")
   (c-name "gimp_string_combo_box_get_active")
   (return-type "gchar*")
+)
+
+
+
+;; From gimpunitcombobox.h
+
+(define-function gimp_unit_combo_box_get_type
+  (c-name "gimp_unit_combo_box_get_type")
+  (return-type "GType")
+)
+
+(define-function gimp_unit_combo_box_new
+  (c-name "gimp_unit_combo_box_new")
+  (is-constructor-of "GimpUnitComboBox")
+  (return-type "GtkWidget*")
+)
+
+(define-function gimp_unit_combo_box_new_with_model
+  (c-name "gimp_unit_combo_box_new_with_model")
+  (is-constructor-of "GimpUnitComboBox")
+  (return-type "GtkWidget*")
+  (properties
+    '("model" (optional))
+  )
+)
+
+(define-method get_active
+  (of-object "GimpUnitComboBox")
+  (c-name "gimp_unit_combo_box_get_active")
+  (return-type "GimpUnit")
+)
+
+(define-method set_active
+  (of-object "GimpUnitComboBox")
+  (c-name "gimp_unit_combo_box_set_active")
+  (return-type "none")
+  (parameters
+    '("GimpUnit" "unit")
+  )
 )
 
 
