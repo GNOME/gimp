@@ -252,8 +252,7 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  editor->columns_adj = (GtkAdjustment *)
-    gtk_adjustment_new (0, 0, 64, 1, 4, 0);
+  editor->columns_adj = gtk_adjustment_new (0, 0, 64, 1, 4, 0);
   spinbutton = gtk_spin_button_new (editor->columns_adj, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);

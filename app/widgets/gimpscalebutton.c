@@ -186,8 +186,8 @@ gimp_scale_button_new (gdouble value,
                        gdouble min,
                        gdouble max)
 {
-  GtkObject *adj;
-  gdouble    step;
+  GtkAdjustment *adj;
+  gdouble        step;
 
   g_return_val_if_fail (value >= min && value <= max, NULL);
 
