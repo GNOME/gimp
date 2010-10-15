@@ -3,8 +3,8 @@
 /.deps
 /.libs
 /kernelgen
-/gimptool-2.0
-/gimptool-2.0.exe
+/gimptool-3.0
+/gimptool-3.0.exe
 /test-clipboard
 /test-clipboard.exe
 /invert-svg

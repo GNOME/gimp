@@ -171,8 +171,8 @@ static gchar *
 sanity_check_glib (void)
 {
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 54
-#define GLIB_REQUIRED_MICRO 2
+#define GLIB_REQUIRED_MINOR 56
+#define GLIB_REQUIRED_MICRO 0
 
   const gchar *mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
                                               GLIB_REQUIRED_MINOR,
@@ -204,8 +204,8 @@ static gchar *
 sanity_check_cairo (void)
 {
 #define CAIRO_REQUIRED_MAJOR 1
-#define CAIRO_REQUIRED_MINOR 12
-#define CAIRO_REQUIRED_MICRO 2
+#define CAIRO_REQUIRED_MINOR 14
+#define CAIRO_REQUIRED_MICRO 0
 
   if (cairo_version () < CAIRO_VERSION_ENCODE (CAIRO_REQUIRED_MAJOR,
                                                CAIRO_REQUIRED_MINOR,
@@ -234,8 +234,8 @@ static gchar *
 sanity_check_pango (void)
 {
 #define PANGO_REQUIRED_MAJOR 1
-#define PANGO_REQUIRED_MINOR 29
-#define PANGO_REQUIRED_MICRO 4
+#define PANGO_REQUIRED_MINOR 42
+#define PANGO_REQUIRED_MICRO 0
 
   const gchar *mismatch = pango_version_check (PANGO_REQUIRED_MAJOR,
                                                PANGO_REQUIRED_MINOR,

@@ -30,6 +30,8 @@
 #include "gimp3migration.h"
 
 
+#if 0
+
 GtkWidget *
 gtk_box_new (GtkOrientation  orientation,
              gint            spacing)
@@ -86,6 +88,9 @@ gtk_separator_new (GtkOrientation  orientation)
   else
     return gtk_vseparator_new ();
 }
+
+#endif /* if 0 */
+
 
 #if ! GTK_CHECK_VERSION (3, 3, 0)
 

@@ -27,10 +27,10 @@
 /cscope.files
 /cscope.out
 /depcomp
-/gimp-2.0.pc
+/gimp-3.0.pc
 /gimp-zip
-/gimpthumb-2.0.pc
-/gimpui-2.0.pc
+/gimpthumb-3.0.pc
+/gimpui-3.0.pc
 /git-version.h
 /gtk-doc.make
 /install-sh
