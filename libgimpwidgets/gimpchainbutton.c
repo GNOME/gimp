@@ -383,15 +383,16 @@ gimp_chain_line_expose_event (GtkWidget      *widget,
   GimpChainPosition  position;
   cairo_t           *cr;
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
   gtk_widget_get_allocation (widget, &allocation);
 
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+  gdk_cairo_region (cr, event->region);
+  cairo_translate (cr, allocation.x, allocation.y);
+  cairo_clip (cr);
+
 #define SHORT_LINE 4
-  points[0].x = allocation.x + allocation.width  / 2;
-  points[0].y = allocation.y + allocation.height / 2;
+  points[0].x = allocation.width  / 2;
+  points[0].y = allocation.height / 2;
 
   position = line->position;
 
@@ -420,9 +421,7 @@ gimp_chain_line_expose_event (GtkWidget      *widget,
       points[1].x = points[0].x - SHORT_LINE;
       points[1].y = points[0].y;
       points[2].x = points[1].x;
-      points[2].y = (line->which == 1 ?
-                     allocation.y + allocation.height - 1 :
-                     allocation.y);
+      points[2].y = (line->which == 1 ? allocation.height - 1 : 0);
       break;
 
     case GIMP_CHAIN_RIGHT:
@@ -430,18 +429,14 @@ gimp_chain_line_expose_event (GtkWidget      *widget,
       points[1].x = points[0].x + SHORT_LINE;
       points[1].y = points[0].y;
       points[2].x = points[1].x;
-      points[2].y = (line->which == 1 ?
-                     allocation.y + allocation.height - 1 :
-                     allocation.y);
+      points[2].y = (line->which == 1 ? allocation.height - 1 : 0);
       break;
 
     case GIMP_CHAIN_TOP:
       points[0].y += SHORT_LINE;
       points[1].x = points[0].x;
       points[1].y = points[0].y - SHORT_LINE;
-      points[2].x = (line->which == 1 ?
-                     allocation.x + allocation.width - 1 :
-                     allocation.x);
+      points[2].x = (line->which == 1 ? allocation.width - 1 : 0);
       points[2].y = points[1].y;
       break;
 
@@ -449,9 +444,7 @@ gimp_chain_line_expose_event (GtkWidget      *widget,
       points[0].y -= SHORT_LINE;
       points[1].x = points[0].x;
       points[1].y = points[0].y + SHORT_LINE;
-      points[2].x = (line->which == 1 ?
-                     allocation.x + allocation.width - 1 :
-                     allocation.x);
+      points[2].x = (line->which == 1 ? allocation.width - 1 : 0);
       points[2].y = points[1].y;
       break;
 
