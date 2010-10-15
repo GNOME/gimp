@@ -47,35 +47,34 @@ enum
 };
 
 
-static void gimp_cell_renderer_viewable_finalize     (GObject         *object);
-static void gimp_cell_renderer_viewable_get_property (GObject         *object,
-                                                      guint            param_id,
-                                                      GValue          *value,
-                                                      GParamSpec      *pspec);
-static void gimp_cell_renderer_viewable_set_property (GObject         *object,
-                                                      guint            param_id,
-                                                      const GValue    *value,
-                                                      GParamSpec      *pspec);
-static void gimp_cell_renderer_viewable_get_size     (GtkCellRenderer *cell,
-                                                      GtkWidget       *widget,
-                                                      GdkRectangle    *rectangle,
-                                                      gint            *x_offset,
-                                                      gint            *y_offset,
-                                                      gint            *width,
-                                                      gint            *height);
-static void gimp_cell_renderer_viewable_render       (GtkCellRenderer *cell,
-                                                      GdkWindow       *window,
-                                                      GtkWidget       *widget,
-                                                      GdkRectangle    *background_area,
-                                                      GdkRectangle    *cell_area,
-                                                      GdkRectangle    *expose_area,
+static void gimp_cell_renderer_viewable_finalize     (GObject            *object);
+static void gimp_cell_renderer_viewable_get_property (GObject            *object,
+                                                      guint               param_id,
+                                                      GValue             *value,
+                                                      GParamSpec         *pspec);
+static void gimp_cell_renderer_viewable_set_property (GObject            *object,
+                                                      guint               param_id,
+                                                      const GValue       *value,
+                                                      GParamSpec         *pspec);
+static void gimp_cell_renderer_viewable_get_size     (GtkCellRenderer    *cell,
+                                                      GtkWidget          *widget,
+                                                      const GdkRectangle *rectangle,
+                                                      gint               *x_offset,
+                                                      gint               *y_offset,
+                                                      gint               *width,
+                                                      gint               *height);
+static void gimp_cell_renderer_viewable_render       (GtkCellRenderer    *cell,
+                                                      cairo_t            *cr,
+                                                      GtkWidget          *widget,
+                                                      const GdkRectangle *background_area,
+                                                      const GdkRectangle *cell_area,
                                                       GtkCellRendererState flags);
-static gboolean gimp_cell_renderer_viewable_activate (GtkCellRenderer *cell,
-                                                      GdkEvent        *event,
-                                                      GtkWidget       *widget,
-                                                      const gchar     *path,
-                                                      GdkRectangle    *background_area,
-                                                      GdkRectangle    *cell_area,
+static gboolean gimp_cell_renderer_viewable_activate (GtkCellRenderer    *cell,
+                                                      GdkEvent           *event,
+                                                      GtkWidget          *widget,
+                                                      const gchar        *path,
+                                                      const GdkRectangle *background_area,
+                                                      const GdkRectangle *cell_area,
                                                       GtkCellRendererState flags);
 
 
@@ -224,13 +223,13 @@ gimp_cell_renderer_viewable_set_property (GObject      *object,
 }
 
 static void
-gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
-                                      GtkWidget       *widget,
-                                      GdkRectangle    *cell_area,
-                                      gint            *x_offset,
-                                      gint            *y_offset,
-                                      gint            *width,
-                                      gint            *height)
+gimp_cell_renderer_viewable_get_size (GtkCellRenderer    *cell,
+                                      GtkWidget          *widget,
+                                      const GdkRectangle *cell_area,
+                                      gint               *x_offset,
+                                      gint               *y_offset,
+                                      gint               *width,
+                                      gint               *height)
 {
   GimpCellRendererViewable *cellviewable;
   gfloat                    xalign, yalign;
@@ -281,11 +280,10 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
 
 static void
 gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
-                                    GdkWindow            *window,
+                                    cairo_t              *cr,
                                     GtkWidget            *widget,
-                                    GdkRectangle         *background_area,
-                                    GdkRectangle         *cell_area,
-                                    GdkRectangle         *expose_area,
+                                    const GdkRectangle   *background_area,
+                                    const GdkRectangle   *cell_area,
                                     GtkCellRendererState  flags)
 {
   GimpCellRendererViewable *cellviewable;
@@ -294,8 +292,6 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
 
   if (cellviewable->renderer)
     {
-      cairo_t *cr;
-
       if (! (flags & GTK_CELL_RENDERER_SELECTED))
         {
           /* this is an ugly hack. The cell state should be passed to
@@ -308,17 +304,11 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
           gimp_view_renderer_remove_idle (cellviewable->renderer);
         }
 
-      cr = gdk_cairo_create (window);
-      gdk_cairo_rectangle (cr, expose_area);
-      cairo_clip (cr);
-
       cairo_translate (cr, cell_area->x, cell_area->y);
 
       gimp_view_renderer_draw (cellviewable->renderer, widget, cr,
                                cell_area->width,
                                cell_area->height);
-
-      cairo_destroy (cr);
     }
 }
 
@@ -327,8 +317,8 @@ gimp_cell_renderer_viewable_activate (GtkCellRenderer      *cell,
                                       GdkEvent             *event,
                                       GtkWidget            *widget,
                                       const gchar          *path,
-                                      GdkRectangle         *background_area,
-                                      GdkRectangle         *cell_area,
+                                      const GdkRectangle   *background_area,
+                                      const GdkRectangle   *cell_area,
                                       GtkCellRendererState  flags)
 {
   GimpCellRendererViewable *cellviewable;

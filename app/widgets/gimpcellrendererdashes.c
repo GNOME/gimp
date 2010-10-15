@@ -43,28 +43,27 @@ enum
 };
 
 
-static void gimp_cell_renderer_dashes_finalize     (GObject         *object);
-static void gimp_cell_renderer_dashes_get_property (GObject         *object,
-                                                    guint            param_id,
-                                                    GValue          *value,
-                                                    GParamSpec      *pspec);
-static void gimp_cell_renderer_dashes_set_property (GObject         *object,
-                                                    guint            param_id,
-                                                    const GValue    *value,
-                                                    GParamSpec      *pspec);
-static void gimp_cell_renderer_dashes_get_size     (GtkCellRenderer *cell,
-                                                    GtkWidget       *widget,
-                                                    GdkRectangle    *rectangle,
-                                                    gint            *x_offset,
-                                                    gint            *y_offset,
-                                                    gint            *width,
-                                                    gint            *height);
-static void gimp_cell_renderer_dashes_render       (GtkCellRenderer *cell,
-                                                    GdkWindow       *window,
-                                                    GtkWidget       *widget,
-                                                    GdkRectangle    *background_area,
-                                                    GdkRectangle    *cell_area,
-                                                    GdkRectangle    *expose_area,
+static void gimp_cell_renderer_dashes_finalize     (GObject            *object);
+static void gimp_cell_renderer_dashes_get_property (GObject            *object,
+                                                    guint               param_id,
+                                                    GValue             *value,
+                                                    GParamSpec         *pspec);
+static void gimp_cell_renderer_dashes_set_property (GObject            *object,
+                                                    guint               param_id,
+                                                    const GValue       *value,
+                                                    GParamSpec         *pspec);
+static void gimp_cell_renderer_dashes_get_size     (GtkCellRenderer    *cell,
+                                                    GtkWidget          *widget,
+                                                    const GdkRectangle *rectangle,
+                                                    gint               *x_offset,
+                                                    gint               *y_offset,
+                                                    gint               *width,
+                                                    gint               *height);
+static void gimp_cell_renderer_dashes_render       (GtkCellRenderer    *cell,
+                                                    cairo_t            *cr,
+                                                    GtkWidget          *widget,
+                                                    const GdkRectangle *background_area,
+                                                    const GdkRectangle *cell_area,
                                                     GtkCellRendererState flags);
 
 
@@ -140,13 +139,13 @@ gimp_cell_renderer_dashes_set_property (GObject      *object,
 }
 
 static void
-gimp_cell_renderer_dashes_get_size (GtkCellRenderer *cell,
-                                    GtkWidget       *widget,
-                                    GdkRectangle    *cell_area,
-                                    gint            *x_offset,
-                                    gint            *y_offset,
-                                    gint            *width,
-                                    gint            *height)
+gimp_cell_renderer_dashes_get_size (GtkCellRenderer    *cell,
+                                    GtkWidget          *widget,
+                                    const GdkRectangle *cell_area,
+                                    gint               *x_offset,
+                                    gint               *y_offset,
+                                    gint               *width,
+                                    gint               *height)
 {
   gfloat xalign, yalign;
   gint   xpad, ypad;
@@ -188,18 +187,16 @@ gimp_cell_renderer_dashes_get_size (GtkCellRenderer *cell,
 
 static void
 gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
-                                  GdkWindow            *window,
+                                  cairo_t              *cr,
                                   GtkWidget            *widget,
-                                  GdkRectangle         *background_area,
-                                  GdkRectangle         *cell_area,
-                                  GdkRectangle         *expose_area,
+                                  const GdkRectangle   *background_area,
+                                  const GdkRectangle   *cell_area,
                                   GtkCellRendererState  flags)
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
   GtkStyle               *style  = gtk_widget_get_style (widget);
   GtkStateType            state;
   gint                    xpad, ypad;
-  cairo_t                *cr;
   gint                    width;
   gint                    x, y;
 
@@ -232,11 +229,6 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
   width = cell_area->width - 2 * xpad;
 
-  cr = gdk_cairo_create (window);
-
-  gdk_cairo_rectangle (cr, expose_area);
-  cairo_clip (cr);
-
   for (x = 0; x < width + BLOCK_WIDTH; x += BLOCK_WIDTH)
     {
       guint index = ((guint) x / BLOCK_WIDTH) % N_SEGMENTS;
@@ -251,8 +243,6 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 
   gdk_cairo_set_source_color (cr, &style->text[state]);
   cairo_fill (cr);
-
-  cairo_destroy (cr);
 }
 
 GtkCellRenderer *
