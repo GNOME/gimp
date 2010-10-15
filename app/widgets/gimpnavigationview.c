@@ -80,8 +80,8 @@ struct _GimpNavigationView
 
 static void     gimp_navigation_view_size_allocate   (GtkWidget      *widget,
                                                       GtkAllocation  *allocation);
-static gboolean gimp_navigation_view_expose          (GtkWidget      *widget,
-                                                      GdkEventExpose *event);
+static gboolean gimp_navigation_view_draw            (GtkWidget      *widget,
+                                                      cairo_t        *cr);
 static gboolean gimp_navigation_view_button_press    (GtkWidget      *widget,
                                                       GdkEventButton *bevent);
 static gboolean gimp_navigation_view_button_release  (GtkWidget      *widget,
@@ -153,7 +153,7 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
                   GDK_TYPE_SCROLL_DIRECTION);
 
   widget_class->size_allocate        = gimp_navigation_view_size_allocate;
-  widget_class->expose_event         = gimp_navigation_view_expose;
+  widget_class->draw                 = gimp_navigation_view_draw;
   widget_class->button_press_event   = gimp_navigation_view_button_press;
   widget_class->button_release_event = gimp_navigation_view_button_release;
   widget_class->scroll_event         = gimp_navigation_view_scroll;
@@ -198,24 +198,12 @@ gimp_navigation_view_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_navigation_view_expose (GtkWidget      *widget,
-                             GdkEventExpose *event)
+gimp_navigation_view_draw (GtkWidget *widget,
+                           cairo_t   *cr)
 {
-  if (gtk_widget_is_drawable (widget))
-    {
-      cairo_t *cr;
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
-      GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
-
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
-
-      gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget), cr);
-
-      cairo_destroy (cr);
-    }
+  gimp_navigation_view_draw_marker (GIMP_NAVIGATION_VIEW (widget), cr);
 
   return TRUE;
 }
