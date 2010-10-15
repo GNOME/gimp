@@ -55,8 +55,8 @@ static void      gimp_offset_area_size_allocate (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 static gboolean  gimp_offset_area_event         (GtkWidget      *widget,
                                                  GdkEvent       *event);
-static gboolean  gimp_offset_area_expose_event  (GtkWidget      *widget,
-                                                 GdkEventExpose *eevent);
+static gboolean  gimp_offset_area_draw          (GtkWidget      *widget,
+                                                 cairo_t        *cr);
 
 
 G_DEFINE_TYPE (GimpOffsetArea, gimp_offset_area, GTK_TYPE_DRAWING_AREA)
@@ -85,7 +85,7 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
   widget_class->size_allocate = gimp_offset_area_size_allocate;
   widget_class->realize       = gimp_offset_area_realize;
   widget_class->event         = gimp_offset_area_event;
-  widget_class->expose_event  = gimp_offset_area_expose_event;
+  widget_class->draw          = gimp_offset_area_draw;
 }
 
 static void
@@ -400,21 +400,15 @@ gimp_offset_area_event (GtkWidget *widget,
 }
 
 static gboolean
-gimp_offset_area_expose_event (GtkWidget      *widget,
-                               GdkEventExpose *eevent)
+gimp_offset_area_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
-  GimpOffsetArea *area   = GIMP_OFFSET_AREA (widget);
-  GtkStyle       *style  = gtk_widget_get_style (widget);
-  GdkWindow      *window = gtk_widget_get_window (widget);
-  cairo_t        *cr;
+  GimpOffsetArea *area  = GIMP_OFFSET_AREA (widget);
+  GtkStyle       *style = gtk_widget_get_style (widget);
   GtkAllocation   allocation;
   GdkPixbuf      *pixbuf;
   gint            w, h;
   gint            x, y;
-
-  cr = gdk_cairo_create (eevent->window);
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -448,9 +442,9 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
     }
   else
     {
-      gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
+      gtk_paint_shadow (style, cr, GTK_STATE_NORMAL,
                         GTK_SHADOW_OUT,
-                        NULL, widget, NULL,
+                        widget, NULL,
                         x, y, w, h);
     }
 
@@ -499,8 +493,6 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
       cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
       cairo_stroke (cr);
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
