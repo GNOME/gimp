@@ -1390,7 +1390,7 @@ gimp_prop_hscale_new (GObject     *config,
  *
  * Since: 2.4
  */
-GtkObject *
+GtkAdjustment *
 gimp_prop_scale_entry_new (GObject     *config,
                            const gchar *property_name,
                            GtkTable    *table,
@@ -1404,12 +1404,12 @@ gimp_prop_scale_entry_new (GObject     *config,
                            gdouble      lower_limit,
                            gdouble      upper_limit)
 {
-  GParamSpec  *param_spec;
-  GtkObject   *adjustment;
-  const gchar *tooltip;
-  gdouble      value;
-  gdouble      lower;
-  gdouble      upper;
+  GParamSpec    *param_spec;
+  GtkAdjustment *adjustment;
+  const gchar   *tooltip;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1536,7 +1536,7 @@ gimp_prop_widget_set_factor (GtkWidget     *widget,
  *
  * Since: 2.4
  */
-GtkObject *
+GtkAdjustment *
 gimp_prop_opacity_entry_new (GObject     *config,
                              const gchar *property_name,
                              GtkTable    *table,
@@ -1544,7 +1544,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
                              gint         row,
                              const gchar *label)
 {
-  GtkObject *adjustment;
+  GtkAdjustment *adjustment;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -3829,129 +3829,6 @@ gimp_prop_unit_combo_box_notify (GObject    *config,
 
   g_signal_handlers_unblock_by_func (combo,
                                      gimp_prop_unit_combo_box_callback,
-                                     config);
-}
-
-
-/***************/
-/*  unit menu  */
-/***************/
-
-static void   gimp_prop_unit_menu_callback (GtkWidget  *menu,
-                                            GObject    *config);
-static void   gimp_prop_unit_menu_notify   (GObject    *config,
-                                            GParamSpec *param_spec,
-                                            GtkWidget  *menu);
-
-/**
- * gimp_prop_unit_menu_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of Unit property.
- * @unit_format:   A printf-like format string which is used to create
- *                 the unit strings.
- *
- * Creates a #GimpUnitMenu to set and display the value of a Unit
- * property.  See gimp_unit_menu_new() for more information.
- *
- * Return value:  A new #GimpUnitMenu widget.
- *
- * Since: 2.4
- *
- * Deprecated: 2.10
- */
-GtkWidget *
-gimp_prop_unit_menu_new (GObject     *config,
-                         const gchar *property_name,
-                         const gchar *unit_format)
-{
-  GParamSpec *param_spec;
-  GtkWidget  *menu;
-  GimpUnit    unit;
-  GValue      value = G_VALUE_INIT;
-  gboolean    show_pixels;
-  gboolean    show_percent;
-
-  param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  g_value_init (&value, param_spec->value_type);
-
-  g_value_set_int (&value, GIMP_UNIT_PIXEL);
-  show_pixels = (g_param_value_validate (param_spec, &value) == FALSE);
-
-  g_value_set_int (&value, GIMP_UNIT_PERCENT);
-  show_percent = (g_param_value_validate (param_spec, &value) == FALSE);
-
-  g_value_unset (&value);
-
-  g_object_get (config,
-                property_name, &unit,
-                NULL);
-
-  menu = gimp_unit_menu_new (unit_format,
-                             unit, show_pixels, show_percent, TRUE);
-
-  set_param_spec (G_OBJECT (menu), menu, param_spec);
-
-  g_signal_connect (menu, "unit-changed",
-                    G_CALLBACK (gimp_prop_unit_menu_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_unit_menu_notify),
-                  menu);
-
-  return menu;
-}
-
-static void
-gimp_prop_unit_menu_callback (GtkWidget *menu,
-                              GObject   *config)
-{
-  GParamSpec *param_spec;
-  GimpUnit    unit;
-
-  param_spec = get_param_spec (G_OBJECT (menu));
-  if (! param_spec)
-    return;
-
-  gimp_unit_menu_update (menu, &unit);
-
-  g_signal_handlers_block_by_func (config,
-                                   gimp_prop_unit_menu_notify,
-                                   menu);
-
-  g_object_set (config,
-                param_spec->name, unit,
-                NULL);
-
-  g_signal_handlers_unblock_by_func (config,
-                                     gimp_prop_unit_menu_notify,
-                                     menu);
-}
-
-static void
-gimp_prop_unit_menu_notify (GObject    *config,
-                            GParamSpec *param_spec,
-                            GtkWidget  *menu)
-{
-  GimpUnit  unit;
-
-  g_object_get (config,
-                param_spec->name, &unit,
-                NULL);
-
-  g_signal_handlers_block_by_func (menu,
-                                   gimp_prop_unit_menu_callback,
-                                   config);
-
-  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (menu), unit);
-  gimp_unit_menu_update (menu, &unit);
-
-  g_signal_handlers_unblock_by_func (menu,
-                                     gimp_prop_unit_menu_callback,
                                      config);
 }
 
