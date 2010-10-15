@@ -254,7 +254,7 @@ gradients_get_gradient_data_invoker (GimpProcedure      *procedure,
 
           pv = grad_data;
 
-          while (sample_size)
+          while (sample_size--)
             {
               seg = gimp_gradient_get_color_at (gradient, context, seg,
                                                 pos, reverse, &color);
