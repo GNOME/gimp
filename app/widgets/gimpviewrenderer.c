@@ -572,35 +572,20 @@ gimp_view_renderer_remove_idle (GimpViewRenderer *renderer)
 
 void
 gimp_view_renderer_draw (GimpViewRenderer   *renderer,
-                         GdkWindow          *window,
                          GtkWidget          *widget,
-                         const GdkRectangle *draw_area,
-                         const GdkRectangle *expose_area)
+                         cairo_t            *cr,
+                         const GdkRectangle *draw_area)
 {
-  cairo_t      *cr;
-  GdkRectangle  render_rect;
-
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
-  g_return_if_fail (GDK_IS_WINDOW (window));
   g_return_if_fail (GTK_IS_WIDGET (widget));
+  g_return_if_fail (cr != NULL);
   g_return_if_fail (draw_area != NULL);
-  g_return_if_fail (expose_area != NULL);
 
   if (G_UNLIKELY (renderer->context == NULL))
     g_warning ("%s: renderer->context is NULL", G_STRFUNC);
 
   if (! gtk_widget_is_drawable (widget))
     return;
-
-  if (! gdk_rectangle_intersect ((GdkRectangle *) draw_area,
-                                 (GdkRectangle *) expose_area,
-                                 &render_rect))
-    return;
-
-  cr = gdk_cairo_create (window);
-
-  gdk_cairo_rectangle (cr, &render_rect);
-  cairo_clip (cr);
 
   if (renderer->viewable)
     {
@@ -642,8 +627,6 @@ gimp_view_renderer_draw (GimpViewRenderer   *renderer,
       cairo_rectangle (cr, x, y, width, height);
       cairo_stroke (cr);
     }
-
-  cairo_destroy (cr);
 }
 
 

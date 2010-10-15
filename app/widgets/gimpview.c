@@ -389,14 +389,19 @@ gimp_view_expose_event (GtkWidget      *widget,
 {
   if (gtk_widget_is_drawable (widget))
     {
-      GtkAllocation allocation;
+      GtkAllocation  allocation;
+      cairo_t       *cr;
 
       gtk_widget_get_allocation (widget, &allocation);
 
+      cr = gdk_cairo_create (event->window);
+      gdk_cairo_region (cr, event->region);
+      cairo_clip (cr);
+
       gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                               gtk_widget_get_window (widget), widget,
-                               &allocation,
-                               &event->area);
+                               widget, cr, &allocation);
+
+      cairo_destroy (cr);
     }
 
   return FALSE;

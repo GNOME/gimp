@@ -132,10 +132,9 @@ void   gimp_view_renderer_update_idle      (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_remove_idle      (GimpViewRenderer   *renderer);
 
 void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
-                                            GdkWindow          *window,
                                             GtkWidget          *widget,
-                                            const GdkRectangle *draw_area,
-                                            const GdkRectangle *expose_area);
+                                            cairo_t            *cr,
+                                            const GdkRectangle *draw_area);
 
 /*  protected  */
 
