@@ -62,7 +62,6 @@ libgimpwidgets/gimppreview.c
 libgimpwidgets/gimppreviewarea.c
 libgimpwidgets/gimppropwidgets.c
 libgimpwidgets/gimpquerybox.c
-libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
 libgimpwidgets/gimpwidgets-private.c
 libgimpwidgets/gimpwidgetsenums.c
