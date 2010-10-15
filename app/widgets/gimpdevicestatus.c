@@ -77,12 +77,11 @@ struct _GimpDeviceStatusEntry
 static GObject *gimp_device_status_constructor (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
+static void gimp_device_status_dispose         (GObject               *object);
 static void gimp_device_status_set_property    (GObject               *object,
                                                 guint                  property_id,
                                                 const GValue          *value,
                                                 GParamSpec            *pspec);
-
-static void gimp_device_status_destroy         (GtkObject             *object);
 
 static void gimp_device_status_device_add      (GimpContainer         *devices,
                                                 GimpDeviceInfo        *device_info,
@@ -108,13 +107,11 @@ G_DEFINE_TYPE (GimpDeviceStatus, gimp_device_status, GIMP_TYPE_EDITOR)
 static void
 gimp_device_status_class_init (GimpDeviceStatusClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_device_status_constructor;
+  object_class->dispose      = gimp_device_status_dispose;
   object_class->set_property = gimp_device_status_set_property;
-
-  gtk_object_class->destroy  = gimp_device_status_destroy;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
@@ -176,26 +173,7 @@ gimp_device_status_constructor (GType                  type,
 }
 
 static void
-gimp_device_status_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
-{
-  GimpDeviceStatus *status = GIMP_DEVICE_STATUS (object);
-
-  switch (property_id)
-    {
-    case PROP_GIMP:
-      status->gimp = g_value_get_object (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_device_status_destroy (GtkObject *object)
+gimp_device_status_dispose (GObject *object)
 {
   GimpDeviceStatus *status = GIMP_DEVICE_STATUS (object);
 
@@ -218,7 +196,26 @@ gimp_device_status_destroy (GtkObject *object)
       status->devices = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_device_status_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpDeviceStatus *status = GIMP_DEVICE_STATUS (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      status->gimp = g_value_get_object (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
