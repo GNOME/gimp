@@ -321,9 +321,9 @@ gimp_chain_button_update_image (GimpChainButton *button)
  * don't need any input events.
  */
 
-static GType     gimp_chain_line_get_type     (void) G_GNUC_CONST;
-static gboolean  gimp_chain_line_expose_event (GtkWidget       *widget,
-                                               GdkEventExpose  *event);
+static GType     gimp_chain_line_get_type (void) G_GNUC_CONST;
+static gboolean  gimp_chain_line_draw     (GtkWidget *widget,
+                                           cairo_t   *cr);
 
 struct _GimpChainLine
 {
@@ -342,7 +342,7 @@ gimp_chain_line_class_init (GimpChainLineClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->expose_event = gimp_chain_line_expose_event;
+  widget_class->draw = gimp_chain_line_draw;
 }
 
 static void
@@ -364,22 +364,16 @@ gimp_chain_line_new (GimpChainPosition  position,
 }
 
 static gboolean
-gimp_chain_line_expose_event (GtkWidget      *widget,
-                              GdkEventExpose *event)
+gimp_chain_line_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
   GtkStyle          *style = gtk_widget_get_style (widget);
   GimpChainLine     *line  = ((GimpChainLine *) widget);
   GtkAllocation      allocation;
   GdkPoint           points[3];
   GimpChainPosition  position;
-  cairo_t           *cr;
 
   gtk_widget_get_allocation (widget, &allocation);
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-  gdk_cairo_region (cr, event->region);
-  cairo_translate (cr, allocation.x, allocation.y);
-  cairo_clip (cr);
 
 #define SHORT_LINE 4
   points[0].x = allocation.width  / 2;
@@ -452,8 +446,6 @@ gimp_chain_line_expose_event (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
 
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
