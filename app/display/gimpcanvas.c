@@ -287,19 +287,13 @@ void
 gimp_canvas_set_bg_color (GimpCanvas *canvas,
                           GimpRGB    *color)
 {
-  GtkWidget   *widget = GTK_WIDGET (canvas);
-  GdkColormap *colormap;
-  GdkColor     gdk_color;
+  GtkWidget *widget = GTK_WIDGET (canvas);
+  GdkColor   gdk_color;
 
   if (! gtk_widget_get_realized (widget))
     return;
 
   gimp_rgb_get_gdk_color (color, &gdk_color);
-
-  colormap = gdk_drawable_get_colormap (gtk_widget_get_window (widget));
-  g_return_if_fail (colormap != NULL);
-  gdk_colormap_alloc_color (colormap, &gdk_color, FALSE, TRUE);
-
   gdk_window_set_background (gtk_widget_get_window (widget), &gdk_color);
 
   gtk_widget_queue_draw (GTK_WIDGET (canvas));
