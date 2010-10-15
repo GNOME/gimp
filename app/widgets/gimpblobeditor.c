@@ -46,8 +46,8 @@ static void      gimp_blob_editor_get_property   (GObject        *object,
                                                   GValue         *value,
                                                   GParamSpec     *pspec);
 
-static gboolean  gimp_blob_editor_expose         (GtkWidget      *widget,
-                                                  GdkEventExpose *event);
+static gboolean  gimp_blob_editor_draw           (GtkWidget      *widget,
+                                                  cairo_t        *cr);
 static gboolean  gimp_blob_editor_button_press   (GtkWidget      *widget,
                                                   GdkEventButton *event);
 static gboolean  gimp_blob_editor_button_release (GtkWidget      *widget,
@@ -78,7 +78,7 @@ gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
   object_class->set_property         = gimp_blob_editor_set_property;
   object_class->get_property         = gimp_blob_editor_get_property;
 
-  widget_class->expose_event         = gimp_blob_editor_expose;
+  widget_class->draw                 = gimp_blob_editor_draw;
   widget_class->button_press_event   = gimp_blob_editor_button_press;
   widget_class->button_release_event = gimp_blob_editor_button_release;
   widget_class->motion_notify_event  = gimp_blob_editor_motion_notify;
@@ -183,14 +183,13 @@ gimp_blob_editor_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_blob_editor_expose (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_blob_editor_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
   GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
   GtkStateType    state  = gtk_widget_get_state (widget);
   GtkAllocation   allocation;
-  cairo_t        *cr;
   GdkRectangle    rect;
   gint            r0;
 
@@ -200,8 +199,6 @@ gimp_blob_editor_expose (GtkWidget      *widget,
 
   if (r0 < 2)
     return TRUE;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
   gimp_blob_editor_draw_blob (editor, cr,
                               allocation.width  / 2.0,
@@ -218,8 +215,6 @@ gimp_blob_editor_expose (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->dark[state]);
   cairo_set_line_width (cr, 1);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
