@@ -59,6 +59,7 @@ static void        gimp_editor_docked_iface_init (GimpDockedInterface *iface);
 static GObject   * gimp_editor_constructor       (GType            type,
                                                   guint            n_params,
                                                   GObjectConstructParam *params);
+static void        gimp_editor_dispose           (GObject         *object);
 static void        gimp_editor_set_property      (GObject         *object,
                                                   guint            property_id,
                                                   const GValue    *value,
@@ -67,7 +68,7 @@ static void        gimp_editor_get_property      (GObject         *object,
                                                   guint            property_id,
                                                   GValue          *value,
                                                   GParamSpec      *pspec);
-static void        gimp_editor_destroy           (GtkObject       *object);
+
 static void        gimp_editor_style_set         (GtkWidget       *widget,
                                                   GtkStyle        *prev_style);
 
@@ -93,15 +94,13 @@ G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_VBOX,
 static void
 gimp_editor_class_init (GimpEditorClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor  = gimp_editor_constructor;
+  object_class->dispose      = gimp_editor_dispose;
   object_class->set_property = gimp_editor_set_property;
   object_class->get_property = gimp_editor_get_property;
-
-  gtk_object_class->destroy  = gimp_editor_destroy;
 
   widget_class->style_set    = gimp_editor_style_set;
 
@@ -235,6 +234,38 @@ gimp_editor_constructor (GType                  type,
 }
 
 static void
+gimp_editor_dispose (GObject *object)
+{
+  GimpEditor *editor = GIMP_EDITOR (object);
+
+  if (editor->menu_factory)
+    {
+      g_object_unref (editor->menu_factory);
+      editor->menu_factory = NULL;
+    }
+
+  if (editor->menu_identifier)
+    {
+      g_free (editor->menu_identifier);
+      editor->menu_identifier = NULL;
+    }
+
+  if (editor->ui_manager)
+    {
+      g_object_unref (editor->ui_manager);
+      editor->ui_manager = NULL;
+    }
+
+  if (editor->ui_path)
+    {
+      g_free (editor->ui_path);
+      editor->ui_path = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_editor_set_property (GObject      *object,
                           guint         property_id,
                           const GValue *value,
@@ -308,38 +339,6 @@ gimp_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_editor_destroy (GtkObject *object)
-{
-  GimpEditor *editor = GIMP_EDITOR (object);
-
-  if (editor->menu_factory)
-    {
-      g_object_unref (editor->menu_factory);
-      editor->menu_factory = NULL;
-    }
-
-  if (editor->menu_identifier)
-    {
-      g_free (editor->menu_identifier);
-      editor->menu_identifier = NULL;
-    }
-
-  if (editor->ui_manager)
-    {
-      g_object_unref (editor->ui_manager);
-      editor->ui_manager = NULL;
-    }
-
-  if (editor->ui_path)
-    {
-      g_free (editor->ui_path);
-      editor->ui_path = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

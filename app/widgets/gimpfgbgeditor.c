@@ -59,6 +59,7 @@ typedef enum
 } FgBgTarget;
 
 
+static void     gimp_fg_bg_editor_dispose         (GObject        *object);
 static void     gimp_fg_bg_editor_set_property    (GObject        *object,
                                                    guint           property_id,
                                                    const GValue   *value,
@@ -68,7 +69,6 @@ static void     gimp_fg_bg_editor_get_property    (GObject        *object,
                                                    GValue         *value,
                                                    GParamSpec     *pspec);
 
-static void     gimp_fg_bg_editor_destroy         (GtkObject      *object);
 static gboolean gimp_fg_bg_editor_expose          (GtkWidget      *widget,
                                                    GdkEventExpose *eevent);
 static gboolean gimp_fg_bg_editor_button_press    (GtkWidget      *widget,
@@ -101,9 +101,8 @@ static guint  editor_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   editor_signals[COLOR_CLICKED] =
     g_signal_new ("color-clicked",
@@ -115,10 +114,9 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_ACTIVE_COLOR);
 
+  object_class->dispose              = gimp_fg_bg_editor_dispose;
   object_class->set_property         = gimp_fg_bg_editor_set_property;
   object_class->get_property         = gimp_fg_bg_editor_get_property;
-
-  gtk_object_class->destroy          = gimp_fg_bg_editor_destroy;
 
   widget_class->expose_event         = gimp_fg_bg_editor_expose;
   widget_class->button_press_event   = gimp_fg_bg_editor_button_press;
@@ -153,6 +151,29 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
                              gimp_fg_bg_editor_drag_color, NULL);
   gimp_dnd_color_dest_add (GTK_WIDGET (editor),
                            gimp_fg_bg_editor_drop_color, NULL);
+}
+
+static void
+gimp_fg_bg_editor_dispose (GObject *object)
+{
+  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (object);
+
+  if (editor->context)
+    gimp_fg_bg_editor_set_context (editor, NULL);
+
+  if (editor->default_icon)
+    {
+      g_object_unref (editor->default_icon);
+      editor->default_icon = NULL;
+    }
+
+  if (editor->swap_icon)
+    {
+      g_object_unref (editor->swap_icon);
+      editor->swap_icon = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -197,29 +218,6 @@ gimp_fg_bg_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_fg_bg_editor_destroy (GtkObject *object)
-{
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (object);
-
-  if (editor->context)
-    gimp_fg_bg_editor_set_context (editor, NULL);
-
-  if (editor->default_icon)
-    {
-      g_object_unref (editor->default_icon);
-      editor->default_icon = NULL;
-    }
-
-  if (editor->swap_icon)
-    {
-      g_object_unref (editor->swap_icon);
-      editor->swap_icon = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean

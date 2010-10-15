@@ -80,6 +80,7 @@ struct _GimpDockablePrivate
 };
 
 
+static void       gimp_dockable_dispose           (GObject        *object);
 static void       gimp_dockable_set_property      (GObject        *object,
                                                    guint           property_id,
                                                    const GValue   *value,
@@ -88,7 +89,7 @@ static void       gimp_dockable_get_property      (GObject        *object,
                                                    guint           property_id,
                                                    GValue         *value,
                                                    GParamSpec     *pspec);
-static void       gimp_dockable_destroy           (GtkObject      *object);
+
 static void       gimp_dockable_size_request      (GtkWidget      *widget,
                                                    GtkRequisition *requisition);
 static void       gimp_dockable_size_allocate     (GtkWidget      *widget,
@@ -129,15 +130,13 @@ static const GtkTargetEntry dialog_target_table[] = { GIMP_TARGET_DIALOG };
 static void
 gimp_dockable_class_init (GimpDockableClass *klass)
 {
-  GObjectClass      *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass    *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass    *widget_class     = GTK_WIDGET_CLASS (klass);
-  GtkContainerClass *container_class  = GTK_CONTAINER_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
+  GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
+  object_class->dispose       = gimp_dockable_dispose;
   object_class->set_property  = gimp_dockable_set_property;
   object_class->get_property  = gimp_dockable_get_property;
-
-  gtk_object_class->destroy   = gimp_dockable_destroy;
 
   widget_class->size_request  = gimp_dockable_size_request;
   widget_class->size_allocate = gimp_dockable_size_allocate;
@@ -183,6 +182,45 @@ gimp_dockable_init (GimpDockable *dockable)
 }
 
 static void
+gimp_dockable_dispose (GObject *object)
+{
+  GimpDockable *dockable = GIMP_DOCKABLE (object);
+
+  gimp_dockable_blink_cancel (dockable);
+
+  if (dockable->p->context)
+    gimp_dockable_set_context (dockable, NULL);
+
+  if (dockable->p->blurb)
+    {
+      if (dockable->p->blurb != dockable->p->name)
+        g_free (dockable->p->blurb);
+
+      dockable->p->blurb = NULL;
+    }
+
+  if (dockable->p->name)
+    {
+      g_free (dockable->p->name);
+      dockable->p->name = NULL;
+    }
+
+  if (dockable->p->stock_id)
+    {
+      g_free (dockable->p->stock_id);
+      dockable->p->stock_id = NULL;
+    }
+
+  if (dockable->p->help_id)
+    {
+      g_free (dockable->p->help_id);
+      dockable->p->help_id = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_dockable_set_property (GObject      *object,
                             guint         property_id,
                             const GValue *value,
@@ -218,45 +256,6 @@ gimp_dockable_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_dockable_destroy (GtkObject *object)
-{
-  GimpDockable *dockable = GIMP_DOCKABLE (object);
-
-  gimp_dockable_blink_cancel (dockable);
-
-  if (dockable->p->context)
-    gimp_dockable_set_context (dockable, NULL);
-
-  if (dockable->p->blurb)
-    {
-      if (dockable->p->blurb != dockable->p->name)
-        g_free (dockable->p->blurb);
-
-      dockable->p->blurb = NULL;
-    }
-
-  if (dockable->p->name)
-    {
-      g_free (dockable->p->name);
-      dockable->p->name = NULL;
-    }
-
-  if (dockable->p->stock_id)
-    {
-      g_free (dockable->p->stock_id);
-      dockable->p->stock_id = NULL;
-    }
-
-  if (dockable->p->help_id)
-    {
-      g_free (dockable->p->help_id);
-      dockable->p->help_id = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void

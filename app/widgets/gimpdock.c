@@ -70,9 +70,10 @@ struct _GimpDockPrivate
 };
 
 
+static void              gimp_dock_dispose                (GObject      *object);
+
 static void              gimp_dock_style_set              (GtkWidget    *widget,
                                                            GtkStyle     *prev_style);
-static void              gimp_dock_destroy                (GtkObject    *object);
 static gchar           * gimp_dock_real_get_description   (GimpDock     *dock,
                                                            gboolean      complete);
 static void              gimp_dock_real_book_added        (GimpDock     *dock,
@@ -96,8 +97,8 @@ static guint dock_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_dock_class_init (GimpDockClass *klass)
 {
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   dock_signals[BOOK_ADDED] =
     g_signal_new ("book-added",
@@ -137,7 +138,7 @@ gimp_dock_class_init (GimpDockClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  gtk_object_class->destroy      = gimp_dock_destroy;
+  object_class->dispose          = gimp_dock_dispose;
 
   widget_class->style_set        = gimp_dock_style_set;
 
@@ -177,7 +178,7 @@ gimp_dock_init (GimpDock *dock)
   dock->p->temp_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->p->temp_vbox);
   /* Never show it */
-  
+
   dock->p->main_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (dock), dock->p->main_vbox);
   gtk_widget_show (dock->p->main_vbox);
@@ -188,6 +189,17 @@ gimp_dock_init (GimpDock *dock)
                                  dock);
   gtk_container_add (GTK_CONTAINER (dock->p->main_vbox), dock->p->paned_vbox);
   gtk_widget_show (dock->p->paned_vbox);
+}
+
+static void
+gimp_dock_dispose (GObject *object)
+{
+  GimpDock *dock = GIMP_DOCK (object);
+
+  while (dock->p->dockbooks)
+    gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->p->dockbooks->data));
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -237,17 +249,6 @@ gimp_dock_style_set (GtkWidget *widget,
 
       gtk_widget_reset_rc_styles (widget);
     }
-}
-
-static void
-gimp_dock_destroy (GtkObject *object)
-{
-  GimpDock *dock = GIMP_DOCK (object);
-
-  while (dock->p->dockbooks)
-    gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->p->dockbooks->data));
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gchar *

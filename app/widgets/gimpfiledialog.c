@@ -68,7 +68,8 @@ struct _GimpFileDialogState
 
 static void     gimp_file_dialog_progress_iface_init    (GimpProgressInterface *iface);
 
-static void     gimp_file_dialog_destroy                (GtkObject        *object);
+static void     gimp_file_dialog_dispose                (GObject          *object);
+
 static gboolean gimp_file_dialog_delete_event           (GtkWidget        *widget,
                                                          GdkEventAny      *event);
 static void     gimp_file_dialog_response               (GtkDialog        *dialog,
@@ -135,11 +136,11 @@ G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
 static void
 gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->destroy      = gimp_file_dialog_destroy;
+  object_class->dispose      = gimp_file_dialog_dispose;
 
   widget_class->delete_event = gimp_file_dialog_delete_event;
 
@@ -165,11 +166,11 @@ gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface)
 }
 
 static void
-gimp_file_dialog_destroy (GtkObject *object)
+gimp_file_dialog_dispose (GObject *object)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 
   dialog->progress = NULL;
 }

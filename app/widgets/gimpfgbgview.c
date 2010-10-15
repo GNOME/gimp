@@ -43,6 +43,7 @@ enum
 };
 
 
+static void     gimp_fg_bg_view_dispose      (GObject        *object);
 static void     gimp_fg_bg_view_set_property (GObject        *object,
                                               guint           property_id,
                                               const GValue   *value,
@@ -52,7 +53,6 @@ static void     gimp_fg_bg_view_get_property (GObject        *object,
                                               GValue         *value,
                                               GParamSpec     *pspec);
 
-static void     gimp_fg_bg_view_destroy      (GtkObject      *object);
 static gboolean gimp_fg_bg_view_expose       (GtkWidget      *widget,
                                               GdkEventExpose *eevent);
 
@@ -65,14 +65,12 @@ G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_WIDGET)
 static void
 gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose      = gimp_fg_bg_view_dispose;
   object_class->set_property = gimp_fg_bg_view_set_property;
   object_class->get_property = gimp_fg_bg_view_get_property;
-
-  gtk_object_class->destroy  = gimp_fg_bg_view_destroy;
 
   widget_class->expose_event = gimp_fg_bg_view_expose;
 
@@ -89,6 +87,17 @@ gimp_fg_bg_view_init (GimpFgBgView *view)
   gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
 
   view->context = NULL;
+}
+
+static void
+gimp_fg_bg_view_dispose (GObject *object)
+{
+  GimpFgBgView *view = GIMP_FG_BG_VIEW (object);
+
+  if (view->context)
+    gimp_fg_bg_view_set_context (view, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -129,17 +138,6 @@ gimp_fg_bg_view_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_fg_bg_view_destroy (GtkObject *object)
-{
-  GimpFgBgView *view = GIMP_FG_BG_VIEW (object);
-
-  if (view->context)
-    gimp_fg_bg_view_set_context (view, NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean

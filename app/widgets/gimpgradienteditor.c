@@ -108,8 +108,8 @@ static void  gimp_gradient_editor_docked_iface_init (GimpDockedInterface *face);
 static GObject * gimp_gradient_editor_constructor   (GType               type,
                                                      guint               n_params,
                                                      GObjectConstructParam *params);
+static void   gimp_gradient_editor_dispose          (GObject            *object);
 
-static void   gimp_gradient_editor_destroy          (GtkObject          *object);
 static void   gimp_gradient_editor_unmap            (GtkWidget          *widget);
 static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
                                                      GimpData           *data);
@@ -260,14 +260,12 @@ static GimpDockedInterface *parent_docked_iface = NULL;
 static void
 gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 {
-  GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass      *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass      *widget_class     = GTK_WIDGET_CLASS (klass);
-  GimpDataEditorClass *editor_class     = GIMP_DATA_EDITOR_CLASS (klass);
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   object_class->constructor = gimp_gradient_editor_constructor;
-
-  gtk_object_class->destroy = gimp_gradient_editor_destroy;
+  object_class->dispose     = gimp_gradient_editor_dispose;
 
   widget_class->unmap       = gimp_gradient_editor_unmap;
 
@@ -473,7 +471,7 @@ gimp_gradient_editor_constructor (GType                  type,
 }
 
 static void
-gimp_gradient_editor_destroy (GtkObject *object)
+gimp_gradient_editor_dispose (GObject *object)
 {
   GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (object);
 
@@ -481,7 +479,7 @@ gimp_gradient_editor_destroy (GtkObject *object)
     gtk_dialog_response (GTK_DIALOG (editor->color_dialog),
                          GTK_RESPONSE_CANCEL);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
