@@ -75,10 +75,9 @@ static void     gimp_fg_bg_editor_get_property      (GObject          *object,
                                                      GValue           *value,
                                                      GParamSpec       *pspec);
 
-static void     gimp_fg_bg_editor_style_set         (GtkWidget        *widget,
-                                                     GtkStyle         *prev_style);
-static gboolean gimp_fg_bg_editor_expose            (GtkWidget        *widget,
-                                                     GdkEventExpose   *eevent);
+static void     gimp_fg_bg_editor_style_updated     (GtkWidget        *widget);
+static gboolean gimp_fg_bg_editor_draw              (GtkWidget        *widget,
+                                                     cairo_t          *cr);
 static gboolean gimp_fg_bg_editor_button_press      (GtkWidget        *widget,
                                                      GdkEventButton   *bevent);
 static gboolean gimp_fg_bg_editor_button_release    (GtkWidget        *widget,
@@ -129,8 +128,8 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
   object_class->set_property         = gimp_fg_bg_editor_set_property;
   object_class->get_property         = gimp_fg_bg_editor_get_property;
 
-  widget_class->style_set            = gimp_fg_bg_editor_style_set;
-  widget_class->expose_event         = gimp_fg_bg_editor_expose;
+  widget_class->style_updated        = gimp_fg_bg_editor_style_updated;
+  widget_class->draw                 = gimp_fg_bg_editor_draw;
   widget_class->button_press_event   = gimp_fg_bg_editor_button_press;
   widget_class->button_release_event = gimp_fg_bg_editor_button_release;
   widget_class->drag_motion          = gimp_fg_bg_editor_drag_motion;
@@ -229,25 +228,22 @@ gimp_fg_bg_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_fg_bg_editor_style_set (GtkWidget *widget,
-                             GtkStyle  *prev_style)
+gimp_fg_bg_editor_style_updated (GtkWidget *widget)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   g_clear_object (&editor->default_icon);
   g_clear_object (&editor->swap_icon);
 }
 
 static gboolean
-gimp_fg_bg_editor_expose (GtkWidget      *widget,
-                          GdkEventExpose *eevent)
+gimp_fg_bg_editor_draw (GtkWidget *widget,
+                        cairo_t   *cr)
 {
   GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
-  GdkWindow      *window = gtk_widget_get_window (widget);
-  cairo_t        *cr;
   GtkAllocation   allocation;
   gint            width, height;
   gint            default_w, default_h;
@@ -258,10 +254,6 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
   if (! gtk_widget_is_drawable (widget))
     return FALSE;
-
-  cr = gdk_cairo_create (eevent->window);
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -365,10 +357,10 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
         }
     }
 
-  gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
+  gtk_paint_shadow (style, cr, GTK_STATE_NORMAL,
                     editor->active_color == GIMP_ACTIVE_COLOR_FOREGROUND ?
                     GTK_SHADOW_OUT : GTK_SHADOW_IN,
-                    NULL, widget, NULL,
+                    widget, NULL,
                     allocation.x + (width - rect_w),
                     allocation.y + (height - rect_h),
                     rect_w, rect_h);
@@ -415,15 +407,13 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
         }
     }
 
-  gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
+  gtk_paint_shadow (style, cr, GTK_STATE_NORMAL,
                     editor->active_color == GIMP_ACTIVE_COLOR_BACKGROUND ?
                     GTK_SHADOW_OUT : GTK_SHADOW_IN,
-                    NULL, widget, NULL,
+                    widget, NULL,
                     allocation.x,
                     allocation.y,
                     rect_w, rect_h);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
