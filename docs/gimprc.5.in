@@ -983,21 +983,21 @@ There are a few variables that are pre-defined:
 .TP
 .I gimp_dir
 The personal gimp directory which is set to the value of the environment
-variable GIMP2_DIRECTORY or to @manpage_gimpdir@.
+variable GIMP3_DIRECTORY or to @manpage_gimpdir@.
 .TP
 .I gimp_data_dir
 Base for paths to shareable data, which is set to the value of the
-environment variable GIMP2_DATADIR or to the compiled-in default value
+environment variable GIMP3_DATADIR or to the compiled-in default value
 @gimpdatadir@.
 .TP
 .I gimp_plug_in_dir
 Base to paths for architecture-specific plugins and modules, which is set
-to the value of the environment variable GIMP2_PLUGINDIR or to the
+to the value of the environment variable GIMP3_PLUGINDIR or to the
 compiled-in default value @gimpplugindir@.
 .TP
 .I gimp_sysconf_dir
 Path to configuration files, which is set to the value of the environment
-variable GIMP2_SYSCONFDIR or to the compiled-in default value 
+variable GIMP3_SYSCONFDIR or to the compiled-in default value 
 @gimpsysconfdir@.
 
 .SH FILES

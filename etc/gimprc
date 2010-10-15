@@ -8,8 +8,8 @@
 # documents the default values and shows what changes are possible.
 # 
 # The variable ${gimp_dir} is set to the value of the environment variable
-# GIMP2_DIRECTORY or, if that is not set, the compiled-in default value is
-# used.  If GIMP2_DIRECTORY is not an absolute path, it is interpreted
+# GIMP3_DIRECTORY or, if that is not set, the compiled-in default value is
+# used.  If GIMP3_DIRECTORY is not an absolute path, it is interpreted
 # relative to your home directory.
 
 # Sets the folder for temporary storage. Files will appear here during the
