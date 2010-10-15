@@ -89,8 +89,8 @@ static gboolean gimp_color_scale_button_release    (GtkWidget        *widget,
                                                     GdkEventButton   *event);
 static gboolean gimp_color_scale_scroll            (GtkWidget        *widget,
                                                     GdkEventScroll   *event);
-static gboolean gimp_color_scale_expose            (GtkWidget        *widget,
-                                                    GdkEventExpose   *event);
+static gboolean gimp_color_scale_draw              (GtkWidget        *widget,
+                                                    cairo_t          *cr);
 
 static void     gimp_color_scale_render            (GimpColorScale   *scale);
 static void     gimp_color_scale_render_alpha      (GimpColorScale   *scale);
@@ -121,7 +121,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   widget_class->button_press_event   = gimp_color_scale_button_press;
   widget_class->button_release_event = gimp_color_scale_button_release;
   widget_class->scroll_event         = gimp_color_scale_scroll;
-  widget_class->expose_event         = gimp_color_scale_expose;
+  widget_class->draw                 = gimp_color_scale_draw;
 
   /**
    * GimpColorScale:channel:
@@ -394,16 +394,14 @@ gimp_color_scale_scroll (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_color_scale_expose (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_color_scale_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
   GimpColorScale        *scale     = GIMP_COLOR_SCALE (widget);
   GimpColorScalePrivate *priv      = GET_PRIVATE (widget);
   GtkRange              *range     = GTK_RANGE (widget);
   GtkStyle              *style     = gtk_widget_get_style (widget);
-  GdkWindow             *window    = gtk_widget_get_window (widget);
   gboolean               sensitive = gtk_widget_is_sensitive (widget);
-  GtkAllocation          allocation;
   GdkRectangle           range_rect;
   GdkRectangle           area      = { 0, };
   cairo_surface_t       *buffer;
@@ -413,17 +411,9 @@ gimp_color_scale_expose (GtkWidget      *widget,
   gint                   slider_size;
   gint                   x, y;
   gint                   w, h;
-  cairo_t               *cr;
 
-  if (! scale->buf || ! gtk_widget_is_drawable (widget))
+  if (! scale->buf)
     return FALSE;
-
-  gtk_widget_get_allocation (widget, &allocation);
-
-  cr = gdk_cairo_create (window);
-  gdk_cairo_region (cr, event->region);
-  cairo_translate (cr, allocation.x, allocation.y);
-  cairo_clip (cr);
 
   gtk_widget_style_get (widget,
                         "trough-border", &trough_border,
@@ -460,13 +450,11 @@ gimp_color_scale_expose (GtkWidget      *widget,
       scale->needs_render = FALSE;
     }
 
-  gtk_paint_box (style, window,
+  gtk_paint_box (style, cr,
                  sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
                  GTK_SHADOW_IN,
-                 &event->area, widget, "trough",
-                 x + allocation.x,
-                 y + allocation.y,
-                 w, h);
+                 widget, "trough",
+                 x, y, w, h);
 
   if (! priv->transform)
     gimp_color_scale_create_transform (scale);
@@ -526,10 +514,10 @@ gimp_color_scale_expose (GtkWidget      *widget,
   cairo_paint (cr);
 
   if (gtk_widget_has_focus (widget))
-    gtk_paint_focus (style, window, gtk_widget_get_state (widget),
-                     &event->area, widget, "trough",
-                     range_rect.x + allocation.x,
-                     range_rect.y + allocation.y,
+    gtk_paint_focus (style, cr, gtk_widget_get_state (widget),
+                     widget, "trough",
+                     range_rect.x,
+                     range_rect.y,
                      range_rect.width,
                      range_rect.height);
 
@@ -603,8 +591,6 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   cairo_close_path (cr);
   cairo_fill (cr);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
