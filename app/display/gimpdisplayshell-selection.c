@@ -45,10 +45,10 @@ struct _Selection
 {
   GimpDisplayShell *shell;            /*  shell that owns the selection     */
 
-  GdkSegment       *segs_in;          /*  gdk segments of area boundary     */
+  GimpSegment      *segs_in;          /*  gdk segments of area boundary     */
   gint              n_segs_in;        /*  number of segments in segs_in     */
 
-  GdkSegment       *segs_out;         /*  gdk segments of area boundary     */
+  GimpSegment      *segs_out;         /*  gdk segments of area boundary     */
   gint              n_segs_out;       /*  number of segments in segs_out    */
 
   guint             index;            /*  index of current stipple pattern  */
@@ -72,7 +72,7 @@ static void      selection_render_mask    (Selection      *selection);
 
 static void      selection_transform_segs (Selection      *selection,
                                            const BoundSeg *src_segs,
-                                           GdkSegment     *dest_segs,
+                                           GimpSegment    *dest_segs,
                                            gint            n_segs);
 static void      selection_generate_segs  (Selection      *selection);
 static void      selection_free_segs      (Selection      *selection);
@@ -303,7 +303,7 @@ selection_render_mask (Selection *selection)
 static void
 selection_transform_segs (Selection      *selection,
                           const BoundSeg *src_segs,
-                          GdkSegment     *dest_segs,
+                          GimpSegment    *dest_segs,
                           gint            n_segs)
 {
   const gint xclamp = selection->shell->disp_width + 1;
@@ -352,7 +352,7 @@ selection_generate_segs (Selection *selection)
   const BoundSeg *segs_out;
 
   /*  Ask the image for the boundary of its selected region...
-   *  Then transform that information into a new buffer of GdkSegments
+   *  Then transform that information into a new buffer of GimpSegments
    */
   gimp_channel_boundary (gimp_image_get_mask (image),
                          &segs_in, &segs_out,
@@ -361,7 +361,7 @@ selection_generate_segs (Selection *selection)
 
   if (selection->n_segs_in)
     {
-      selection->segs_in = g_new (GdkSegment, selection->n_segs_in);
+      selection->segs_in = g_new (GimpSegment, selection->n_segs_in);
       selection_transform_segs (selection, segs_in,
                                 selection->segs_in, selection->n_segs_in);
 
@@ -375,7 +375,7 @@ selection_generate_segs (Selection *selection)
   /*  Possible secondary boundary representation  */
   if (selection->n_segs_out)
     {
-      selection->segs_out = g_new (GdkSegment, selection->n_segs_out);
+      selection->segs_out = g_new (GimpSegment, selection->n_segs_out);
       selection_transform_segs (selection, segs_out,
                                 selection->segs_out, selection->n_segs_out);
     }

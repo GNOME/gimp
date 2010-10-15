@@ -118,7 +118,7 @@ gimp_display_shell_draw_get_scaled_image_size_for_scale (GimpDisplayShell *shell
 void
 gimp_display_shell_draw_selection_out (GimpDisplayShell *shell,
                                        cairo_t          *cr,
-                                       GdkSegment       *segs,
+                                       GimpSegment      *segs,
                                        gint              n_segs)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));

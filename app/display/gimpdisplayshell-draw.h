@@ -30,7 +30,7 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
 
 void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
-                                                      GdkSegment         *segs,
+                                                      GimpSegment        *segs,
                                                       gint                n_segs);
 void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,

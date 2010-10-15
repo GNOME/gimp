@@ -112,9 +112,9 @@ gimp_cairo_add_arc (cairo_t *cr,
 }
 
 void
-gimp_cairo_add_segments (cairo_t    *cr,
-                         GdkSegment *segs,
-                         gint        n_segs)
+gimp_cairo_add_segments (cairo_t     *cr,
+                         GimpSegment *segs,
+                         gint         n_segs)
 {
   gint i;
 

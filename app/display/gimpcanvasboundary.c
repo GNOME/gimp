@@ -221,7 +221,7 @@ gimp_canvas_boundary_get_property (GObject    *object,
 static void
 gimp_canvas_boundary_transform (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell,
-                                GdkSegment       *segs)
+                                GimpSegment      *segs)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   gint                       i;
@@ -288,9 +288,9 @@ gimp_canvas_boundary_draw (GimpCanvasItem   *item,
                            cairo_t          *cr)
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
-  GdkSegment                *segs;
+  GimpSegment               *segs;
 
-  segs = g_new0 (GdkSegment, private->n_segs);
+  segs = g_new0 (GimpSegment, private->n_segs);
 
   gimp_canvas_boundary_transform (item, shell, segs);
 
@@ -307,11 +307,11 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
 {
   GimpCanvasBoundaryPrivate *private = GET_PRIVATE (item);
   GdkRectangle               rectangle;
-  GdkSegment                *segs;
+  GimpSegment               *segs;
   gint                       x1, y1, x2, y2;
   gint                       i;
 
-  segs = g_new0 (GdkSegment, private->n_segs);
+  segs = g_new0 (GimpSegment, private->n_segs);
 
   gimp_canvas_boundary_transform (item, shell, segs);
 

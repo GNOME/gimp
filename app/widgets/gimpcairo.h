@@ -36,7 +36,7 @@ void              gimp_cairo_add_arc                (cairo_t       *cr,
                                                      gdouble        start_angle,
                                                      gdouble        slice_angle);
 void              gimp_cairo_add_segments           (cairo_t       *cr,
-                                                     GdkSegment    *segs,
+                                                     GimpSegment   *segs,
                                                      gint           n_segs);
 
 void              gimp_cairo_draw_toolbox_wilber    (GtkWidget     *widget,
