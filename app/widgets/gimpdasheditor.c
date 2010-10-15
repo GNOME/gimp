@@ -61,8 +61,8 @@ static void gimp_dash_editor_get_property       (GObject        *object,
 
 static void gimp_dash_editor_size_request       (GtkWidget      *widget,
                                                  GtkRequisition *requisition);
-static gboolean gimp_dash_editor_expose         (GtkWidget      *widget,
-                                                 GdkEventExpose *event);
+static gboolean gimp_dash_editor_draw           (GtkWidget      *widget,
+                                                 cairo_t        *cr);
 static gboolean gimp_dash_editor_button_press   (GtkWidget      *widget,
                                                  GdkEventButton *bevent);
 static gboolean gimp_dash_editor_button_release (GtkWidget      *widget,
@@ -94,7 +94,7 @@ gimp_dash_editor_class_init (GimpDashEditorClass *klass)
   object_class->set_property = gimp_dash_editor_set_property;
 
   widget_class->size_request         = gimp_dash_editor_size_request;
-  widget_class->expose_event         = gimp_dash_editor_expose;
+  widget_class->draw                 = gimp_dash_editor_draw;
   widget_class->button_press_event   = gimp_dash_editor_button_press;
   widget_class->button_release_event = gimp_dash_editor_button_release;
   widget_class->motion_notify_event  = gimp_dash_editor_motion_notify;
@@ -234,12 +234,11 @@ gimp_dash_editor_size_request (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_dash_editor_expose (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_dash_editor_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
   GtkStyle       *style  = gtk_widget_get_style (widget);
-  cairo_t        *cr     = gdk_cairo_create (gtk_widget_get_window (widget));
   GtkAllocation   allocation;
   gint            x;
   gint            w, h;
@@ -247,9 +246,6 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   gtk_widget_get_allocation (widget, &allocation);
 
   update_blocksize (editor);
-
-  gdk_cairo_rectangle (cr, &event->area);
-  cairo_clip (cr);
 
   /*  draw the background  */
 
@@ -337,8 +333,6 @@ gimp_dash_editor_expose (GtkWidget      *widget,
   gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
