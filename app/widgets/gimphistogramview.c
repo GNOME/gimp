@@ -63,8 +63,8 @@ static void     gimp_histogram_view_get_property   (GObject        *object,
 
 static void     gimp_histogram_view_size_request   (GtkWidget      *widget,
                                                     GtkRequisition *requisition);
-static gboolean gimp_histogram_view_expose         (GtkWidget      *widget,
-                                                    GdkEventExpose *event);
+static gboolean gimp_histogram_view_draw           (GtkWidget      *widget,
+                                                    cairo_t        *cr);
 static gboolean gimp_histogram_view_button_press   (GtkWidget      *widget,
                                                     GdkEventButton *bevent);
 static gboolean gimp_histogram_view_button_release (GtkWidget      *widget,
@@ -122,7 +122,7 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   object_class->set_property         = gimp_histogram_view_set_property;
 
   widget_class->size_request         = gimp_histogram_view_size_request;
-  widget_class->expose_event         = gimp_histogram_view_expose;
+  widget_class->draw                 = gimp_histogram_view_draw;
   widget_class->button_press_event   = gimp_histogram_view_button_press;
   widget_class->button_release_event = gimp_histogram_view_button_release;
   widget_class->motion_notify_event  = gimp_histogram_view_motion_notify;
@@ -285,13 +285,12 @@ gimp_histogram_view_get_maximum (GimpHistogramView    *view,
 }
 
 static gboolean
-gimp_histogram_view_expose (GtkWidget      *widget,
-                            GdkEventExpose *event)
+gimp_histogram_view_draw (GtkWidget *widget,
+                          cairo_t   *cr)
 {
   GimpHistogramView *view  = GIMP_HISTOGRAM_VIEW (widget);
   GtkStyle          *style = gtk_widget_get_style (widget);
   GtkAllocation      allocation;
-  cairo_t           *cr;
   gint               x;
   gint               x1, x2;
   gint               border;
@@ -304,11 +303,6 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   GdkColor          *bg_color_in;
   GdkColor          *bg_color_out;
   GdkColor           rgb_color[3];
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   /*  Draw the background  */
   gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
@@ -432,8 +426,6 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                                           x, i, j, max, bg_max, height, border);
         }
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
