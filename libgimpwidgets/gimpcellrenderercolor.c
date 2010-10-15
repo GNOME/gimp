@@ -54,27 +54,26 @@ enum
 };
 
 
-static void gimp_cell_renderer_color_get_property (GObject         *object,
-                                                   guint            param_id,
-                                                   GValue          *value,
-                                                   GParamSpec      *pspec);
-static void gimp_cell_renderer_color_set_property (GObject         *object,
-                                                   guint            param_id,
-                                                   const GValue    *value,
-                                                   GParamSpec      *pspec);
-static void gimp_cell_renderer_color_get_size     (GtkCellRenderer *cell,
-                                                   GtkWidget       *widget,
-                                                   GdkRectangle    *rectangle,
-                                                   gint            *x_offset,
-                                                   gint            *y_offset,
-                                                   gint            *width,
-                                                   gint            *height);
-static void gimp_cell_renderer_color_render       (GtkCellRenderer *cell,
-                                                   GdkWindow       *window,
-                                                   GtkWidget       *widget,
-                                                   GdkRectangle    *background_area,
-                                                   GdkRectangle    *cell_area,
-                                                   GdkRectangle    *expose_area,
+static void gimp_cell_renderer_color_get_property (GObject            *object,
+                                                   guint               param_id,
+                                                   GValue             *value,
+                                                   GParamSpec         *pspec);
+static void gimp_cell_renderer_color_set_property (GObject            *object,
+                                                   guint               param_id,
+                                                   const GValue       *value,
+                                                   GParamSpec         *pspec);
+static void gimp_cell_renderer_color_get_size     (GtkCellRenderer    *cell,
+                                                   GtkWidget          *widget,
+                                                   const GdkRectangle *rectangle,
+                                                   gint               *x_offset,
+                                                   gint               *y_offset,
+                                                   gint               *width,
+                                                   gint               *height);
+static void gimp_cell_renderer_color_render       (GtkCellRenderer    *cell,
+                                                   cairo_t            *cr,
+                                                   GtkWidget          *widget,
+                                                   const GdkRectangle *background_area,
+                                                   const GdkRectangle *cell_area,
                                                    GtkCellRendererState flags);
 
 
@@ -176,13 +175,13 @@ gimp_cell_renderer_color_set_property (GObject      *object,
 }
 
 static void
-gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
-                                   GtkWidget       *widget,
-                                   GdkRectangle    *cell_area,
-                                   gint            *x_offset,
-                                   gint            *y_offset,
-                                   gint            *width,
-                                   gint            *height)
+gimp_cell_renderer_color_get_size (GtkCellRenderer    *cell,
+                                   GtkWidget          *widget,
+                                   const GdkRectangle *cell_area,
+                                   gint               *x_offset,
+                                   gint               *y_offset,
+                                   gint               *width,
+                                   gint               *height)
 {
   GimpCellRendererColor *color = GIMP_CELL_RENDERER_COLOR (cell);
   gint                   calc_width;
@@ -228,11 +227,10 @@ gimp_cell_renderer_color_get_size (GtkCellRenderer *cell,
 
 static void
 gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
-                                 GdkWindow            *window,
+                                 cairo_t              *cr,
                                  GtkWidget            *widget,
-                                 GdkRectangle         *background_area,
-                                 GdkRectangle         *cell_area,
-                                 GdkRectangle         *expose_area,
+                                 const GdkRectangle   *background_area,
+                                 const GdkRectangle   *cell_area,
                                  GtkCellRendererState  flags)
 {
   GimpCellRendererColor *color = GIMP_CELL_RENDERER_COLOR (cell);
@@ -255,7 +253,6 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
   if (rect.width > 2 && rect.height > 2)
     {
-      cairo_t      *cr    = gdk_cairo_create (window);
       GtkStyle     *style = gtk_widget_get_style (widget);
       GtkStateType  state;
 
@@ -306,8 +303,6 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
       cairo_set_line_width (cr, 1);
       gdk_cairo_set_source_color (cr, &style->fg[state]);
       cairo_stroke_preserve (cr);
-
-      cairo_destroy (cr);
     }
 }
 
