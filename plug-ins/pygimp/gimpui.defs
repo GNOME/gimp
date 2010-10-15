@@ -369,6 +369,7 @@
   (parent "GtkOptionMenu")
   (c-name "GimpUnitMenu")
   (gtype-id "GIMP_TYPE_UNIT_MENU")
+  (deprecated "use gimpui.UnitComboBox instead")
 )
 
 (define-object VectorsComboBox
