@@ -117,8 +117,6 @@ static void        gimp_toolbox_style_set               (GtkWidget             *
                                                          GtkStyle              *previous_style);
 static gboolean    gimp_toolbox_button_press_event      (GtkWidget             *widget,
                                                          GdkEventButton        *event);
-static gboolean    gimp_toolbox_expose_event            (GtkWidget             *widget,
-                                                         GdkEventExpose        *event);
 static void        gimp_toolbox_drag_leave              (GtkWidget             *widget,
                                                          GdkDragContext        *context,
                                                          guint                  time,
@@ -143,6 +141,8 @@ static void        gimp_toolbox_book_added              (GimpDock              *
                                                          GimpDockbook          *dockbook);
 static void        gimp_toolbox_book_removed            (GimpDock              *dock,
                                                          GimpDockbook          *dockbook);
+static gboolean    gimp_toolbox_expose_wilber           (GtkWidget             *widget,
+                                                         GdkEventExpose        *event);
 static void        toolbox_create_tools                 (GimpToolbox           *toolbox,
                                                          GimpContext           *context);
 static GtkWidget * toolbox_create_color_area            (GimpToolbox           *toolbox,
@@ -200,7 +200,6 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->size_allocate         = gimp_toolbox_size_allocate;
   widget_class->style_set             = gimp_toolbox_style_set;
   widget_class->button_press_event    = gimp_toolbox_button_press_event;
-  widget_class->expose_event          = gimp_toolbox_expose_event;
 
   dock_class->get_description         = gimp_toolbox_get_description;
   dock_class->set_host_geometry_hints = gimp_toolbox_set_host_geometry_hints;
@@ -310,6 +309,10 @@ gimp_toolbox_constructor (GType                  type,
 
   if (config->toolbox_wilber)
     gtk_widget_show (toolbox->p->header);
+
+  g_signal_connect (toolbox->p->header, "expose-event",
+                    G_CALLBACK (gimp_toolbox_expose_wilber),
+                    toolbox);
 
   gimp_help_set_help_data (toolbox->p->header,
                            _("Drop image files here to open them"), NULL);
@@ -657,37 +660,6 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
   return FALSE;
 }
 
-static gboolean
-gimp_toolbox_expose_event (GtkWidget      *widget,
-                           GdkEventExpose *event)
-{
-  GimpToolbox  *toolbox = GIMP_TOOLBOX (widget);
-  GtkAllocation header_allocation;
-  GdkRectangle  clip_rect;
-
-  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
-
-  gtk_widget_get_allocation (toolbox->p->header, &header_allocation);
-
-  if (gtk_widget_get_visible (toolbox->p->header) &&
-      gdk_rectangle_intersect (&event->area,
-                               &header_allocation,
-                               &clip_rect))
-    {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-      gdk_cairo_rectangle (cr, &clip_rect);
-      cairo_clip (cr);
-
-      gimp_cairo_draw_toolbox_wilber (toolbox->p->header, cr);
-
-      cairo_destroy (cr);
-    }
-
-  return FALSE;
-}
-
 static void
 gimp_toolbox_drag_leave (GtkWidget      *widget,
                          GdkDragContext *context,
@@ -914,6 +886,23 @@ gimp_toolbox_set_drag_handler (GimpToolbox  *toolbox,
 
 
 /*  private functions  */
+
+static gboolean
+gimp_toolbox_expose_wilber (GtkWidget      *widget,
+                            GdkEventExpose *event)
+{
+  cairo_t *cr;
+
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  gimp_cairo_draw_toolbox_wilber (widget, cr);
+
+  cairo_destroy (cr);
+
+  return FALSE;
+}
 
 static void
 toolbox_create_tools (GimpToolbox *toolbox,
