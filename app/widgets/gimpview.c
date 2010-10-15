@@ -63,10 +63,9 @@ static void        gimp_view_size_request         (GtkWidget        *widget,
                                                    GtkRequisition   *requisition);
 static void        gimp_view_size_allocate        (GtkWidget        *widget,
                                                    GtkAllocation    *allocation);
-static void        gimp_view_style_set            (GtkWidget        *widget,
-                                                   GtkStyle         *prev_style);
-static gboolean    gimp_view_expose_event         (GtkWidget        *widget,
-                                                   GdkEventExpose   *event);
+static void        gimp_view_style_updated        (GtkWidget        *widget);
+static gboolean    gimp_view_draw                 (GtkWidget        *widget,
+                                                   cairo_t          *cr);
 static gboolean    gimp_view_button_press_event   (GtkWidget        *widget,
                                                    GdkEventButton   *bevent);
 static gboolean    gimp_view_button_release_event (GtkWidget        *widget,
@@ -152,8 +151,8 @@ gimp_view_class_init (GimpViewClass *klass)
   widget_class->unmap                = gimp_view_unmap;
   widget_class->size_request         = gimp_view_size_request;
   widget_class->size_allocate        = gimp_view_size_allocate;
-  widget_class->style_set            = gimp_view_style_set;
-  widget_class->expose_event         = gimp_view_expose_event;
+  widget_class->style_updated        = gimp_view_style_updated;
+  widget_class->draw                 = gimp_view_draw;
   widget_class->button_press_event   = gimp_view_button_press_event;
   widget_class->button_release_event = gimp_view_button_release_event;
   widget_class->enter_notify_event   = gimp_view_enter_notify_event;
@@ -387,40 +386,27 @@ gimp_view_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_view_style_set (GtkWidget *widget,
-                     GtkStyle  *prev_style)
+gimp_view_style_updated (GtkWidget *widget)
 {
   GimpView *view = GIMP_VIEW (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gimp_view_renderer_invalidate (view->renderer);
 }
 
 static gboolean
-gimp_view_expose_event (GtkWidget      *widget,
-                        GdkEventExpose *event)
+gimp_view_draw (GtkWidget *widget,
+                cairo_t   *cr)
 {
-  if (gtk_widget_is_drawable (widget))
-    {
-      GtkAllocation  allocation;
-      cairo_t       *cr;
+  GtkAllocation allocation;
 
-      gtk_widget_get_allocation (widget, &allocation);
+  gtk_widget_get_allocation (widget, &allocation);
 
-      cr = gdk_cairo_create (event->window);
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
-
-      cairo_translate (cr, allocation.x, allocation.y);
-
-      gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                               widget, cr,
-                               allocation.width,
-                               allocation.height);
-
-      cairo_destroy (cr);
-    }
+  gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
+                           widget, cr,
+                           allocation.width,
+                           allocation.height);
 
   return FALSE;
 }
