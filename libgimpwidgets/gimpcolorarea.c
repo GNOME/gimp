@@ -94,8 +94,8 @@ static void      gimp_color_area_size_allocate (GtkWidget          *widget,
                                                 GtkAllocation      *allocation);
 static void      gimp_color_area_state_changed (GtkWidget          *widget,
                                                 GtkStateType        previous_state);
-static gboolean  gimp_color_area_expose        (GtkWidget          *widget,
-                                                GdkEventExpose     *event);
+static gboolean  gimp_color_area_draw          (GtkWidget          *widget,
+                                                cairo_t            *cr);
 static void      gimp_color_area_render_buf    (GtkWidget          *widget,
                                                 gboolean            insensitive,
                                                 GimpColorAreaType   type,
@@ -159,7 +159,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 
   widget_class->size_allocate      = gimp_color_area_size_allocate;
   widget_class->state_changed      = gimp_color_area_state_changed;
-  widget_class->expose_event       = gimp_color_area_expose;
+  widget_class->draw               = gimp_color_area_draw;
 
   widget_class->drag_begin         = gimp_color_area_drag_begin;
   widget_class->drag_end           = gimp_color_area_drag_end;
@@ -375,25 +375,19 @@ gimp_color_area_state_changed (GtkWidget    *widget,
 }
 
 static gboolean
-gimp_color_area_expose (GtkWidget      *widget,
-                        GdkEventExpose *event)
+gimp_color_area_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
   GimpColorArea        *area  = GIMP_COLOR_AREA (widget);
   GimpColorAreaPrivate *priv  = GET_PRIVATE (widget);
   GtkStyle             *style = gtk_widget_get_style (widget);
-  cairo_t              *cr;
   cairo_surface_t      *buffer;
 
-  if (! area->buf || ! gtk_widget_is_drawable (widget))
+  if (! area->buf)
     return FALSE;
 
   if (area->needs_render)
     gimp_color_area_render (area);
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   if (! priv->transform)
     gimp_color_area_create_transform (area);
@@ -449,8 +443,6 @@ gimp_color_area_expose (GtkWidget      *widget,
 
       cairo_stroke (cr);
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
