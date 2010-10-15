@@ -44,17 +44,17 @@ enum
 
 /*  local function prototypes  */
 
-static void      gimp_color_bar_set_property (GObject        *object,
-                                              guint           property_id,
-                                              const GValue   *value,
-                                              GParamSpec     *pspec);
-static void      gimp_color_bar_get_property (GObject        *object,
-                                              guint           property_id,
-                                              GValue         *value,
-                                              GParamSpec     *pspec);
+static void      gimp_color_bar_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void      gimp_color_bar_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
 
-static gboolean  gimp_color_bar_expose       (GtkWidget      *widget,
-                                              GdkEventExpose *event);
+static gboolean  gimp_color_bar_draw         (GtkWidget    *widget,
+                                              cairo_t      *cr);
 
 
 G_DEFINE_TYPE (GimpColorBar, gimp_color_bar, GTK_TYPE_EVENT_BOX)
@@ -72,7 +72,7 @@ gimp_color_bar_class_init (GimpColorBarClass *klass)
   object_class->set_property = gimp_color_bar_set_property;
   object_class->get_property = gimp_color_bar_get_property;
 
-  widget_class->expose_event = gimp_color_bar_expose;
+  widget_class->draw         = gimp_color_bar_draw;
 
   g_object_class_install_property (object_class, PROP_ORIENTATION,
                                    g_param_spec_enum ("orientation",
@@ -153,11 +153,10 @@ gimp_color_bar_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_color_bar_expose (GtkWidget      *widget,
-                       GdkEventExpose *event)
+gimp_color_bar_draw (GtkWidget *widget,
+                     cairo_t   *cr)
 {
   GimpColorBar    *bar = GIMP_COLOR_BAR (widget);
-  cairo_t         *cr;
   GtkAllocation    allocation;
   cairo_surface_t *surface;
   cairo_pattern_t *pattern;
@@ -166,11 +165,6 @@ gimp_color_bar_expose (GtkWidget      *widget,
   gint             x, y;
   gint             width, height;
   gint             i;
-
-  cr = gdk_cairo_create (event->window);
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -182,7 +176,7 @@ gimp_color_bar_expose (GtkWidget      *widget,
   if (width < 1 || height < 1)
     return TRUE;
 
-  cairo_translate (cr, allocation.x + x, allocation.y + y);
+  cairo_translate (cr, x, y);
   cairo_rectangle (cr, 0, 0, width, height);
   cairo_clip (cr);
 
@@ -216,8 +210,6 @@ gimp_color_bar_expose (GtkWidget      *widget,
   cairo_pattern_destroy (pattern);
 
   cairo_paint (cr);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
