@@ -189,9 +189,11 @@ gimp_palette_view_expose (GtkWidget      *widget,
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
 
+      cairo_translate (cr, allocation.x, allocation.y);
+
       cairo_rectangle (cr,
-                       allocation.x + col * renderer->cell_width  + 0.5,
-                       allocation.y + row * renderer->cell_height + 0.5,
+                       col * renderer->cell_width  + 0.5,
+                       row * renderer->cell_height + 0.5,
                        renderer->cell_width,
                        renderer->cell_height);
 
