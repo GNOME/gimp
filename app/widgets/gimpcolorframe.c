@@ -63,8 +63,8 @@ static void       gimp_color_frame_set_property      (GObject        *object,
 
 static void       gimp_color_frame_style_set         (GtkWidget      *widget,
                                                       GtkStyle       *prev_style);
-static gboolean   gimp_color_frame_expose            (GtkWidget      *widget,
-                                                      GdkEventExpose *eevent);
+static gboolean   gimp_color_frame_draw              (GtkWidget      *widget,
+                                                      cairo_t        *cr);
 
 static void       gimp_color_frame_menu_callback     (GtkWidget      *widget,
                                                       GimpColorFrame *frame);
@@ -91,7 +91,7 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
   object_class->set_property = gimp_color_frame_set_property;
 
   widget_class->style_set    = gimp_color_frame_style_set;
-  widget_class->expose_event = gimp_color_frame_expose;
+  widget_class->draw         = gimp_color_frame_draw;
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode",
@@ -335,8 +335,8 @@ gimp_color_frame_style_set (GtkWidget *widget,
 }
 
 static gboolean
-gimp_color_frame_expose (GtkWidget      *widget,
-                         GdkEventExpose *eevent)
+gimp_color_frame_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
   GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
 
@@ -348,7 +348,6 @@ gimp_color_frame_expose (GtkWidget      *widget,
       GtkAllocation  color_area_allocation;
       GtkAllocation  coords_box_x_allocation;
       GtkAllocation  coords_box_y_allocation;
-      cairo_t       *cr;
       gchar          buf[8];
       gint           w, h;
       gdouble        scale;
@@ -358,12 +357,6 @@ gimp_color_frame_expose (GtkWidget      *widget,
       gtk_widget_get_allocation (frame->color_area, &color_area_allocation);
       gtk_widget_get_allocation (frame->coords_box_x, &coords_box_x_allocation);
       gtk_widget_get_allocation (frame->coords_box_y, &coords_box_y_allocation);
-
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-      gdk_cairo_region (cr, eevent->region);
-      cairo_clip (cr);
-
-      cairo_translate (cr, allocation.x, allocation.y);
 
       gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_NORMAL]);
 
@@ -392,11 +385,9 @@ gimp_color_frame_expose (GtkWidget      *widget,
                       coords_box_x_allocation.height / 2.0 +
                       coords_box_y_allocation.height / 2.0) / scale - h / 2.0);
       pango_cairo_show_layout (cr, frame->number_layout);
-
-      cairo_destroy (cr);
     }
 
-  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+  return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 }
 
 
