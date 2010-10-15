@@ -151,8 +151,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_widget_show (box);
 
   /*  brush radius scale  */
-  editor->radius_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.1, 1000.0, 0.1, 1.0, 0.0));
+  editor->radius_data = gtk_adjustment_new (0.0, 0.1, 1000.0, 0.1, 1.0, 0.0);
   scale = gimp_spin_scale_new (editor->radius_data, _("Radius"), 1);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -162,8 +161,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     editor);
 
   /*  number of spikes  */
-  editor->spikes_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (2.0, 2.0, 20.0, 1.0, 1.0, 0.0));
+  editor->spikes_data = gtk_adjustment_new (2.0, 2.0, 20.0, 1.0, 1.0, 0.0);
   scale = gimp_spin_scale_new (editor->spikes_data, _("Spikes"), 0);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -173,8 +171,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     editor);
 
   /*  brush hardness scale  */
-  editor->hardness_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.1, 0.0));
+  editor->hardness_data = gtk_adjustment_new (0.0, 0.0, 1.0, 0.01, 0.1, 0.0);
   scale = gimp_spin_scale_new (editor->hardness_data, _("Hardness"), 2);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -184,8 +181,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     editor);
 
   /*  brush aspect ratio scale  */
-  editor->aspect_ratio_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 20.0, 0.1, 1.0, 0.0));
+  editor->aspect_ratio_data = gtk_adjustment_new (0.0, 1.0, 20.0, 0.1, 1.0, 0.0);
   scale = gimp_spin_scale_new (editor->aspect_ratio_data, _("Aspect ratio"), 1);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -195,8 +191,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     editor);
 
   /*  brush angle scale  */
-  editor->angle_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 180.0, 0.1, 1.0, 0.0));
+  editor->angle_data = gtk_adjustment_new (0.0, 0.0, 180.0, 0.1, 1.0, 0.0);
   scale = gimp_spin_scale_new (editor->angle_data, _("Angle"), 1);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
@@ -206,8 +201,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     editor);
 
   /*  brush spacing  */
-  editor->spacing_data =
-    GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 5000.0, 1.0, 10.0, 0.0));
+  editor->spacing_data = gtk_adjustment_new (0.0, 1.0, 5000.0, 1.0, 10.0, 0.0);
   scale = gimp_spin_scale_new (editor->spacing_data, _("Spacing"), 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 200.0);
   gtk_box_pack_start (GTK_BOX (editor->options_box), scale, FALSE, FALSE, 0);
