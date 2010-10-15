@@ -80,8 +80,8 @@ static void       gimp_curve_view_get_property    (GObject          *object,
 
 static void       gimp_curve_view_style_set       (GtkWidget        *widget,
                                                    GtkStyle         *prev_style);
-static gboolean   gimp_curve_view_expose          (GtkWidget        *widget,
-                                                   GdkEventExpose   *event);
+static gboolean   gimp_curve_view_draw            (GtkWidget        *widget,
+                                                   cairo_t          *cr);
 static gboolean   gimp_curve_view_button_press    (GtkWidget        *widget,
                                                    GdkEventButton   *bevent);
 static gboolean   gimp_curve_view_button_release  (GtkWidget        *widget,
@@ -124,7 +124,7 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
   object_class->get_property         = gimp_curve_view_get_property;
 
   widget_class->style_set            = gimp_curve_view_style_set;
-  widget_class->expose_event         = gimp_curve_view_expose;
+  widget_class->draw                 = gimp_curve_view_draw;
   widget_class->button_press_event   = gimp_curve_view_button_press;
   widget_class->button_release_event = gimp_curve_view_button_release;
   widget_class->motion_notify_event  = gimp_curve_view_motion_notify;
@@ -491,14 +491,12 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
 }
 
 static gboolean
-gimp_curve_view_expose (GtkWidget      *widget,
-                        GdkEventExpose *event)
+gimp_curve_view_draw (GtkWidget *widget,
+                      cairo_t   *cr)
 {
-  GimpCurveView *view   = GIMP_CURVE_VIEW (widget);
-  GdkWindow     *window = gtk_widget_get_window (widget);
-  GtkStyle      *style  = gtk_widget_get_style (widget);
+  GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
+  GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
-  cairo_t       *cr;
   GList         *list;
   gint           border;
   gint           width;
@@ -508,7 +506,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gdouble        x, y;
   gint           i;
 
-  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
   if (! view->curve)
     return FALSE;
@@ -519,16 +517,11 @@ gimp_curve_view_expose (GtkWidget      *widget,
   width  = allocation.width  - 2 * border;
   height = allocation.height - 2 * border;
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
   if (gtk_widget_has_focus (widget))
     {
-      gtk_paint_focus (style, window,
+      gtk_paint_focus (style, cr,
                        gtk_widget_get_state (widget),
-                       &event->area, widget, NULL,
+                       widget, NULL,
                        border - 2, border - 2,
                        width + 4, height + 4);
     }
@@ -775,8 +768,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
       cairo_pop_group_to_source (cr);
       cairo_paint_with_alpha (cr, 0.6);
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
