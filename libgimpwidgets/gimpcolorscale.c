@@ -251,28 +251,31 @@ static gboolean
 gimp_color_scale_expose (GtkWidget      *widget,
                          GdkEventExpose *event)
 {
-  GimpColorScale *scale  = GIMP_COLOR_SCALE (widget);
-  GtkRange       *range  = GTK_RANGE (widget);
-  GtkStyle       *style  = gtk_widget_get_style (widget);
-  GdkWindow      *window = gtk_widget_get_window (widget);
-  cairo_t        *cr;
-  GtkAllocation   allocation;
-  GdkRectangle    range_rect;
-  GdkRectangle    expose_area;        /* Relative to widget->allocation */
-  GdkRectangle    area;
-  gint            focus = 0;
-  gint            trough_border;
-  gint            slider_start;
-  gint            slider_size;
-  gint            x, y;
-  gint            w, h;
+  GimpColorScale  *scale     = GIMP_COLOR_SCALE (widget);
+  GtkRange        *range     = GTK_RANGE (widget);
+  GtkStyle        *style     = gtk_widget_get_style (widget);
+  GdkWindow       *window    = gtk_widget_get_window (widget);
+  gboolean         sensitive = gtk_widget_is_sensitive (widget);
+  GtkAllocation    allocation;
+  GdkRectangle     range_rect;
+  GdkRectangle     area      = { 0, };
+  cairo_surface_t *buffer;
+  gint             focus = 0;
+  gint             trough_border;
+  gint             slider_start;
+  gint             slider_size;
+  gint             x, y;
+  gint             w, h;
+  cairo_t         *cr;
 
   if (! scale->buf || ! gtk_widget_is_drawable (widget))
     return FALSE;
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+  gtk_widget_get_allocation (widget, &allocation);
 
+  cr = gdk_cairo_create (window);
   gdk_cairo_region (cr, event->region);
+  cairo_translate (cr, allocation.x, allocation.y);
   cairo_clip (cr);
 
   gtk_widget_style_get (widget,
@@ -290,83 +293,70 @@ gimp_color_scale_expose (GtkWidget      *widget,
       focus += focus_padding;
     }
 
-  gtk_widget_get_allocation (widget, &allocation);
-
   gtk_range_get_range_rect (range, &range_rect);
   gtk_range_get_slider_range (range, &slider_start, NULL);
 
-  x = allocation.x + range_rect.x + focus;
-  y = allocation.y + range_rect.y + focus;
+  x = range_rect.x + focus;
+  y = range_rect.y + focus;
   w = range_rect.width  - 2 * focus;
   h = range_rect.height - 2 * focus;
 
   slider_size = gtk_range_get_min_slider_size (range) / 2;
 
-  expose_area = event->area;
-  expose_area.x -= allocation.x;
-  expose_area.y -= allocation.y;
-
-  if (gdk_rectangle_intersect (&expose_area, &range_rect, &area))
+  if (scale->needs_render)
     {
-      gboolean         sensitive = gtk_widget_is_sensitive (widget);
-      cairo_surface_t *buffer;
+      gimp_color_scale_render (scale);
 
-      if (scale->needs_render)
-        {
-          gimp_color_scale_render (scale);
+      if (! sensitive)
+        gimp_color_scale_render_stipple (scale);
 
-          if (! sensitive)
-            gimp_color_scale_render_stipple (scale);
-
-          scale->needs_render = FALSE;
-        }
-
-      area.x += allocation.x;
-      area.y += allocation.y;
-
-      gtk_paint_box (style, window,
-                     sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
-                     GTK_SHADOW_IN,
-                     &area, widget, "trough",
-                     x, y, w, h);
-
-      buffer = cairo_image_surface_create_for_data (scale->buf,
-                                                    CAIRO_FORMAT_RGB24,
-                                                    scale->width,
-                                                    scale->height,
-                                                    scale->rowstride);
-
-      switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
-        {
-        case GTK_ORIENTATION_HORIZONTAL:
-          cairo_set_source_surface (cr, buffer,
-                                    x + trough_border + slider_size,
-                                    y + trough_border + 1);
-          break;
-
-        case GTK_ORIENTATION_VERTICAL:
-          cairo_set_source_surface (cr, buffer,
-                                    x + trough_border + 1,
-                                    y + trough_border + slider_size);
-          break;
-        }
-
-      cairo_surface_destroy (buffer);
-      cairo_paint (cr);
+      scale->needs_render = FALSE;
     }
+
+  gtk_paint_box (style, window,
+                 sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
+                 GTK_SHADOW_IN,
+                 &event->area, widget, "trough",
+                 x + allocation.x,
+                 y + allocation.y,
+                 w, h);
+
+  buffer = cairo_image_surface_create_for_data (scale->buf,
+                                                CAIRO_FORMAT_RGB24,
+                                                scale->width,
+                                                scale->height,
+                                                scale->rowstride);
+
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
+    {
+    case GTK_ORIENTATION_HORIZONTAL:
+      cairo_set_source_surface (cr, buffer,
+                                x + trough_border + slider_size,
+                                y + trough_border + 1);
+      break;
+
+    case GTK_ORIENTATION_VERTICAL:
+      cairo_set_source_surface (cr, buffer,
+                                x + trough_border + 1,
+                                y + trough_border + slider_size);
+      break;
+    }
+
+  cairo_surface_destroy (buffer);
+  cairo_paint (cr);
 
   if (gtk_widget_has_focus (widget))
     gtk_paint_focus (style, window, gtk_widget_get_state (widget),
-                     &area, widget, "trough",
-                     allocation.x + range_rect.x,
-                     allocation.y + range_rect.y,
+                     &event->area, widget, "trough",
+                     range_rect.x + allocation.x,
+                     range_rect.y + allocation.y,
                      range_rect.width,
                      range_rect.height);
 
   switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
     case GTK_ORIENTATION_HORIZONTAL:
-      area.x      = allocation.x + slider_start;
+      area.x      = slider_start;
       area.y      = y + trough_border;
       area.width  = 2 * slider_size + 1;
       area.height = h - 2 * trough_border;
@@ -374,68 +364,65 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
     case GTK_ORIENTATION_VERTICAL:
       area.x      = x + trough_border;
-      area.y      = allocation.y + slider_start;
+      area.y      = slider_start;
       area.width  = w - 2 * trough_border;
       area.height = 2 * slider_size + 1;
       break;
     }
 
-  if (gdk_rectangle_intersect (&event->area, &area, &expose_area))
+  if (gtk_widget_is_sensitive (widget))
+    gdk_cairo_set_source_color (cr, &style->black);
+  else
+    gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_INSENSITIVE]);
+
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
     {
-      if (gtk_widget_is_sensitive (widget))
-        gdk_cairo_set_source_color (cr, &style->black);
-      else
-        gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_INSENSITIVE]);
+    case GTK_ORIENTATION_HORIZONTAL:
+      cairo_move_to (cr, area.x, area.y);
+      cairo_line_to (cr, area.x + area.width, area.y);
+      cairo_line_to (cr,
+                     area.x + area.width / 2 + 0.5,
+                     area.y + area.width / 2);
+      break;
 
-      switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
-        {
-        case GTK_ORIENTATION_HORIZONTAL:
-          cairo_move_to (cr, area.x, area.y);
-          cairo_line_to (cr, area.x + area.width, area.y);
-          cairo_line_to (cr,
-                         area.x + area.width / 2 + 0.5,
-                         area.y + area.width / 2);
-          break;
-
-        case GTK_ORIENTATION_VERTICAL:
-          cairo_move_to (cr, area.x, area.y);
-          cairo_line_to (cr, area.x, area.y + area.height);
-          cairo_line_to (cr,
-                         area.x + area.height / 2,
-                         area.y + area.height / 2 + 0.5);
-          break;
-        }
-
-      cairo_close_path (cr);
-      cairo_fill (cr);
-
-      if (gtk_widget_is_sensitive (widget))
-        gdk_cairo_set_source_color (cr, &style->white);
-      else
-        gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_INSENSITIVE]);
-
-      switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
-        {
-        case GTK_ORIENTATION_HORIZONTAL:
-          cairo_move_to (cr, area.x, area.y + area.height);
-          cairo_line_to (cr, area.x + area.width, area.y + area.height);
-          cairo_line_to (cr,
-                         area.x + area.width / 2 + 0.5,
-                         area.y + area.height - area.width / 2);
-          break;
-
-        case GTK_ORIENTATION_VERTICAL:
-          cairo_move_to (cr, area.x + area.width, area.y);
-          cairo_line_to (cr, area.x + area.width, area.y + area.height);
-          cairo_line_to (cr,
-                         area.x + area.width - area.height / 2,
-                         area.y + area.height / 2 + 0.5);
-          break;
-        }
-
-      cairo_close_path (cr);
-      cairo_fill (cr);
+    case GTK_ORIENTATION_VERTICAL:
+      cairo_move_to (cr, area.x, area.y);
+      cairo_line_to (cr, area.x, area.y + area.height);
+      cairo_line_to (cr,
+                     area.x + area.height / 2,
+                     area.y + area.height / 2 + 0.5);
+      break;
     }
+
+  cairo_close_path (cr);
+  cairo_fill (cr);
+
+  if (gtk_widget_is_sensitive (widget))
+    gdk_cairo_set_source_color (cr, &style->white);
+  else
+    gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_INSENSITIVE]);
+
+  switch (gtk_orientable_get_orientation (GTK_ORIENTABLE (range)))
+    {
+    case GTK_ORIENTATION_HORIZONTAL:
+      cairo_move_to (cr, area.x, area.y + area.height);
+      cairo_line_to (cr, area.x + area.width, area.y + area.height);
+      cairo_line_to (cr,
+                     area.x + area.width / 2 + 0.5,
+                     area.y + area.height - area.width / 2);
+      break;
+
+    case GTK_ORIENTATION_VERTICAL:
+      cairo_move_to (cr, area.x + area.width, area.y);
+      cairo_line_to (cr, area.x + area.width, area.y + area.height);
+      cairo_line_to (cr,
+                     area.x + area.width - area.height / 2,
+                     area.y + area.height / 2 + 0.5);
+      break;
+    }
+
+  cairo_close_path (cr);
+  cairo_fill (cr);
 
   cairo_destroy (cr);
 
