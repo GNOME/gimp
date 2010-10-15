@@ -127,8 +127,8 @@ static void        gimp_toolbox_book_removed            (GimpDock       *dock,
 static void        gimp_toolbox_size_request_wilber     (GtkWidget      *widget,
                                                          GtkRequisition *requisition,
                                                          GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_expose_wilber           (GtkWidget      *widget,
-                                                         GdkEventExpose *event);
+static gboolean    gimp_toolbox_draw_wilber             (GtkWidget             *widget,
+                                                         cairo_t               *cr);
 static GtkWidget * toolbox_create_color_area            (GimpToolbox    *toolbox,
                                                          GimpContext    *context);
 static GtkWidget * toolbox_create_foo_area              (GimpToolbox    *toolbox,
@@ -243,8 +243,8 @@ gimp_toolbox_constructed (GObject *object)
   g_signal_connect (toolbox->p->header, "size-request",
                     G_CALLBACK (gimp_toolbox_size_request_wilber),
                     toolbox);
-  g_signal_connect (toolbox->p->header, "expose-event",
-                    G_CALLBACK (gimp_toolbox_expose_wilber),
+  g_signal_connect (toolbox->p->header, "draw",
+                    G_CALLBACK (gimp_toolbox_draw_wilber),
                     toolbox);
 
   gimp_help_set_help_data (toolbox->p->header,
@@ -662,18 +662,10 @@ gimp_toolbox_size_request_wilber (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_toolbox_expose_wilber (GtkWidget      *widget,
-                            GdkEventExpose *event)
+gimp_toolbox_draw_wilber (GtkWidget *widget,
+                          cairo_t   *cr)
 {
-  cairo_t *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
   gimp_cairo_draw_toolbox_wilber (widget, cr);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
