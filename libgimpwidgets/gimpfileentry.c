@@ -66,7 +66,7 @@ enum
 };
 
 
-static void   gimp_file_entry_destroy         (GtkObject     *object);
+static void   gimp_file_entry_dispose         (GObject       *object);
 
 static void   gimp_file_entry_entry_activate  (GtkWidget     *widget,
                                                GimpFileEntry *entry);
@@ -88,7 +88,7 @@ static guint gimp_file_entry_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_file_entry_class_init (GimpFileEntryClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   /**
    * GimpFileEntry::filename-changed:
@@ -104,7 +104,7 @@ gimp_file_entry_class_init (GimpFileEntryClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->destroy   = gimp_file_entry_destroy;
+  object_class->dispose   = gimp_file_entry_dispose;
 
   klass->filename_changed = NULL;
 }
@@ -147,7 +147,7 @@ gimp_file_entry_init (GimpFileEntry *entry)
 }
 
 static void
-gimp_file_entry_destroy (GtkObject *object)
+gimp_file_entry_dispose (GObject *object)
 {
   GimpFileEntry *entry = GIMP_FILE_ENTRY (object);
 
@@ -163,7 +163,7 @@ gimp_file_entry_destroy (GtkObject *object)
       entry->title = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 /**
