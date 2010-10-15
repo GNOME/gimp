@@ -133,25 +133,22 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_widget_show (label);
 
-  scale_adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (value, lower, upper,
-                        step_increment, page_increment, 0.0);
+  scale_adjustment = gtk_adjustment_new (value, lower, upper,
+                                         step_increment, page_increment, 0.0);
 
   if (! constrain &&
       unconstrained_lower <= lower &&
       unconstrained_upper >= upper)
     {
-      spin_adjustment = (GtkAdjustment *)
-        gtk_adjustment_new (value,
-                            unconstrained_lower,
-                            unconstrained_upper,
-                            step_increment, page_increment, 0.0);
+      spin_adjustment = gtk_adjustment_new (value,
+                                            unconstrained_lower,
+                                            unconstrained_upper,
+                                            step_increment, page_increment, 0.0);
     }
   else
     {
-      spin_adjustment = (GtkAdjustment *)
-        gtk_adjustment_new (value, lower, upper,
-                            step_increment, page_increment, 0.0);
+      spin_adjustment = gtk_adjustment_new (value, lower, upper,
+                                            step_increment, page_increment, 0.0);
     }
 
   binding = g_object_bind_property (G_OBJECT (spin_adjustment),  "value",
@@ -247,7 +244,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
-GtkObject *
+GtkAdjustment *
 gimp_scale_entry_new (GtkTable    *table,
                       gint         column,
                       gint         row,
@@ -266,17 +263,16 @@ gimp_scale_entry_new (GtkTable    *table,
                       const gchar *tooltip,
                       const gchar *help_id)
 {
-  return (GtkObject *)
-    gimp_scale_entry_new_internal (FALSE,
-                                   table, column, row,
-                                   text, scale_width, spinbutton_width,
-                                   value, lower, upper,
-                                   step_increment, page_increment,
-                                   digits,
-                                   constrain,
-                                   unconstrained_lower,
-                                   unconstrained_upper,
-                                   tooltip, help_id);
+  return gimp_scale_entry_new_internal (FALSE,
+                                        table, column, row,
+                                        text, scale_width, spinbutton_width,
+                                        value, lower, upper,
+                                        step_increment, page_increment,
+                                        digits,
+                                        constrain,
+                                        unconstrained_lower,
+                                        unconstrained_upper,
+                                        tooltip, help_id);
 }
 
 /**
@@ -302,7 +298,7 @@ gimp_scale_entry_new (GtkTable    *table,
  *
  * Returns: The #GtkSpinButton's #GtkAdjustment.
  **/
-GtkObject *
+GtkAdjustment *
 gimp_color_scale_entry_new (GtkTable    *table,
                             gint         column,
                             gint         row,
@@ -318,15 +314,14 @@ gimp_color_scale_entry_new (GtkTable    *table,
                             const gchar *tooltip,
                             const gchar *help_id)
 {
-  return (GtkObject *)
-    gimp_scale_entry_new_internal (TRUE,
-                                   table, column, row,
-                                   text, scale_width, spinbutton_width,
-                                   value, lower, upper,
-                                   step_increment, page_increment,
-                                   digits,
-                                   TRUE, 0.0, 0.0,
-                                   tooltip, help_id);
+  return gimp_scale_entry_new_internal (TRUE,
+                                        table, column, row,
+                                        text, scale_width, spinbutton_width,
+                                        value, lower, upper,
+                                        step_increment, page_increment,
+                                        digits,
+                                        TRUE, 0.0, 0.0,
+                                        tooltip, help_id);
 }
 
 /**
@@ -343,8 +338,8 @@ gimp_color_scale_entry_new (GtkTable    *table,
  * Since: 2.2
  **/
 void
-gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
-                                  gboolean   logarithmic)
+gimp_scale_entry_set_logarithmic (GtkAdjustment *adjustment,
+                                  gboolean       logarithmic)
 {
   GtkAdjustment *spin_adj;
   GtkAdjustment *scale_adj;
@@ -441,7 +436,7 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
  * Since: 2.2
  **/
 gboolean
-gimp_scale_entry_get_logarithmic (GtkObject *adjustment)
+gimp_scale_entry_get_logarithmic (GtkAdjustment *adjustment)
 {
   return GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
                                              "logarithmic"));
@@ -457,8 +452,8 @@ gimp_scale_entry_get_logarithmic (GtkObject *adjustment)
  * #GtkSpinButton.
  **/
 void
-gimp_scale_entry_set_sensitive (GtkObject *adjustment,
-                                gboolean   sensitive)
+gimp_scale_entry_set_sensitive (GtkAdjustment *adjustment,
+                                gboolean       sensitive)
 {
   GtkWidget *widget;
 
