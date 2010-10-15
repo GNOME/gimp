@@ -435,15 +435,15 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  * Returns: A #GtkSpinButton and its #GtkAdjustment.
  **/
 GtkWidget *
-gimp_spin_button_new (GtkObject **adjustment,  /* return value */
-                      gdouble     value,
-                      gdouble     lower,
-                      gdouble     upper,
-                      gdouble     step_increment,
-                      gdouble     page_increment,
-                      gdouble     page_size,
-                      gdouble     climb_rate,
-                      guint       digits)
+gimp_spin_button_new (GtkAdjustment **adjustment,  /* return value */
+                      gdouble         value,
+                      gdouble         lower,
+                      gdouble         upper,
+                      gdouble         step_increment,
+                      gdouble         page_increment,
+                      gdouble         page_size,
+                      gdouble         climb_rate,
+                      guint           digits)
 {
   GtkWidget *spinbutton;
 
