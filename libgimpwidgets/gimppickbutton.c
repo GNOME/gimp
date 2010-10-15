@@ -53,7 +53,7 @@ enum
 };
 
 
-static void       gimp_pick_button_destroy       (GtkObject      *object);
+static void       gimp_pick_button_dispose       (GObject        *object);
 
 static void       gimp_pick_button_clicked       (GtkButton      *button);
 
@@ -86,7 +86,7 @@ static guint pick_button_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_pick_button_class_init (GimpPickButtonClass* klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
   /**
@@ -106,7 +106,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_POINTER);
 
-  object_class->destroy = gimp_pick_button_destroy;
+  object_class->dispose = gimp_pick_button_dispose;
 
   button_class->clicked = gimp_pick_button_clicked;
 
@@ -130,7 +130,7 @@ gimp_pick_button_init (GimpPickButton *button)
 }
 
 static void
-gimp_pick_button_destroy (GtkObject *object)
+gimp_pick_button_dispose (GObject *object)
 {
   GimpPickButton *button = GIMP_PICK_BUTTON (object);
 
@@ -146,7 +146,7 @@ gimp_pick_button_destroy (GtkObject *object)
       button->grab_widget = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 
