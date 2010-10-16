@@ -4,7 +4,7 @@ EXTRA_DIST = \
 	makefile.msc
 
 
-if BUILD_HELP_BROWSER
+if HAVE_WEBKIT
 help_browser = help-browser
 endif
 

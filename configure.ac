@@ -1271,7 +1271,7 @@ else
   have_webkit="no (WebKit support disabled)"
 fi
 
-AM_CONDITIONAL(BUILD_HELP_BROWSER, test "x$have_webkit" = xyes)
+AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 
 
 ###################
