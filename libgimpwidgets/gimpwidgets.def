@@ -351,12 +351,12 @@ EXPORTS
 	gimp_table_attach_aligned
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
+	gimp_uint_adjustment_update
 	gimp_unit_combo_box_get_active
 	gimp_unit_combo_box_get_type
 	gimp_unit_combo_box_new
 	gimp_unit_combo_box_new_with_model
 	gimp_unit_combo_box_set_active
-	gimp_uint_adjustment_update
 	gimp_unit_menu_get_pixel_digits
 	gimp_unit_menu_get_type
 	gimp_unit_menu_get_unit
