@@ -376,7 +376,7 @@ EXPORTS
 	gimp_unit_store_set_pixel_values
 	gimp_unit_store_set_resolution
 	gimp_unit_store_set_resolutions
-        gimp_widgets_error_quark
+	gimp_widgets_error_quark
 	gimp_widgets_init
 	gimp_zoom_button_new
 	gimp_zoom_model_get_factor
