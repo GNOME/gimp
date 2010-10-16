@@ -27,7 +27,7 @@
 
 #include "gimp-intl.h"
 
-#define MAX_XCF_STRING_LEN (16 * (1L << 20)) /* 16 MB */
+#define MAX_XCF_STRING_LEN (16L * 1024 * 1024)
 
 guint
 xcf_read_int32 (FILE    *fp,
@@ -97,8 +97,8 @@ xcf_read_string (FILE   *fp,
 
       if (tmp > MAX_XCF_STRING_LEN)
         {
-          g_warning ("Maximum string length (%ld bytes) exceeded."
-                     " Possibly corrupt XCF file.", MAX_XCF_STRING_LEN);
+          g_warning ("Maximum string length (%ld bytes) exceeded. "
+                     "Possibly corrupt XCF file.", MAX_XCF_STRING_LEN);
           data[i] = NULL;
         }
       else if (tmp > 0)
