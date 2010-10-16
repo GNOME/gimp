@@ -213,8 +213,8 @@ install-%: %
 	   || test -f $$p1 \
 	; then \
 	  f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
-	  echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(libexecPROGRAMS_INSTALL) $$p $(DESTDIR)$(libexecdir)/$$f"; \
-	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(libexecPROGRAMS_INSTALL) $$p $(DESTDIR)$(libexecdir)/$$f || exit 1; \
+	  echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(libexecdir)/$$f"; \
+	  $(INSTALL_PROGRAM_ENV) $(LIBTOOL) --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(libexecdir)/$$f || exit 1; \
 	else :; fi
 
 alien_map_SOURCES = \
