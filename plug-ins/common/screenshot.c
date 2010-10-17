@@ -237,7 +237,7 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_PROC,
                           N_("Create an image from an area of the screen"),
-                          "The plug-in allows to take screenshots of a an "
+                          "The plug-in allows to take screenshots of an "
                           "interactively selected window or of the desktop, "
                           "either the whole desktop or an interactively "
                           "selected region. When called non-interactively, it "
