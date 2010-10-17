@@ -53,8 +53,8 @@ static void      gimp_stroke_editor_get_property (GObject           *object,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
 
-static gboolean  gimp_stroke_editor_paint_button (GtkWidget         *widget,
-                                                  GdkEventExpose    *event,
+static gboolean  gimp_stroke_editor_draw_button  (GtkWidget         *widget,
+                                                  cairo_t           *cr,
                                                   gpointer           data);
 static void      gimp_stroke_editor_dash_preset  (GtkWidget         *widget,
                                                   GimpStrokeOptions *options);
@@ -193,8 +193,8 @@ gimp_stroke_editor_constructed (GObject *object)
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_left),
                            dash_editor, G_CONNECT_SWAPPED);
-  g_signal_connect_after (button, "expose-event",
-                          G_CALLBACK (gimp_stroke_editor_paint_button),
+  g_signal_connect_after (button, "draw",
+                          G_CALLBACK (gimp_stroke_editor_draw_button),
                           button);
 
   gtk_box_pack_start (GTK_BOX (box), dash_editor, TRUE, TRUE, 0);
@@ -209,8 +209,8 @@ gimp_stroke_editor_constructed (GObject *object)
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_dash_editor_shift_right),
                            dash_editor, G_CONNECT_SWAPPED);
-  g_signal_connect_after (button, "expose-event",
-                          G_CALLBACK (gimp_stroke_editor_paint_button),
+  g_signal_connect_after (button, "draw",
+                          G_CALLBACK (gimp_stroke_editor_draw_button),
                           NULL);
 
 
@@ -325,9 +325,9 @@ gimp_stroke_editor_new (GimpStrokeOptions *options,
 }
 
 static gboolean
-gimp_stroke_editor_paint_button (GtkWidget       *widget,
-                                 GdkEventExpose  *event,
-                                 gpointer         data)
+gimp_stroke_editor_draw_button (GtkWidget *widget,
+                                cairo_t   *cr,
+                                gpointer   data)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
@@ -337,14 +337,13 @@ gimp_stroke_editor_paint_button (GtkWidget       *widget,
 
   w = MIN (allocation.width, allocation.height) * 2 / 3;
 
-  gtk_paint_arrow (style,
-                   gtk_widget_get_window (widget),
+  gtk_paint_arrow (style, cr,
                    gtk_widget_get_state (widget),
                    GTK_SHADOW_IN,
-                   &event->area, widget, NULL,
+                   widget, NULL,
                    data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
-                   allocation.x + (allocation.width - w) / 2,
-                   allocation.y + (allocation.height - w) / 2,
+                   (allocation.width  - w) / 2,
+                   (allocation.height - w) / 2,
                    w, w);
   return FALSE;
 }
