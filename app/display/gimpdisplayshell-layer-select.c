@@ -255,10 +255,10 @@ layer_select_events (GtkWidget   *widget,
 
       switch (kevent->keyval)
         {
-        case GDK_Tab:
+        case GDK_KEY_Tab:
           layer_select_advance (layer_select, 1);
           break;
-        case GDK_ISO_Left_Tab:
+        case GDK_KEY_ISO_Left_Tab:
           layer_select_advance (layer_select, -1);
           break;
         }
@@ -270,13 +270,13 @@ layer_select_events (GtkWidget   *widget,
 
       switch (kevent->keyval)
         {
-        case GDK_Alt_L: case GDK_Alt_R:
+        case GDK_KEY_Alt_L: case GDK_KEY_Alt_R:
           kevent->state &= ~GDK_MOD1_MASK;
           break;
-        case GDK_Control_L: case GDK_Control_R:
+        case GDK_KEY_Control_L: case GDK_KEY_Control_R:
           kevent->state &= ~GDK_CONTROL_MASK;
           break;
-        case GDK_Shift_L: case GDK_Shift_R:
+        case GDK_KEY_Shift_L: case GDK_KEY_Shift_R:
           kevent->state &= ~GDK_SHIFT_MASK;
           break;
         }
