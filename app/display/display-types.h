@@ -24,6 +24,15 @@
 #include "display/display-enums.h"
 
 
+#if CAIRO_VERSION >= CAIRO_VERSION_ENCODE(1, 10, 0)
+#define USE_CAIRO_REGION
+#endif
+
+#ifndef USE_CAIRO_REGION
+typedef GdkRegion cairo_region_t;
+#endif
+
+
 typedef struct _GimpCanvas            GimpCanvas;
 typedef struct _GimpCanvasItem        GimpCanvasItem;
 typedef struct _GimpCanvasGroup       GimpCanvasGroup;

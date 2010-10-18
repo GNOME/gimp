@@ -63,23 +63,23 @@ struct _GimpCanvasGridPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_grid_finalize     (GObject          *object);
-static void        gimp_canvas_grid_set_property (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void        gimp_canvas_grid_get_property (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
-static void        gimp_canvas_grid_draw         (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell,
-                                                  cairo_t          *cr);
-static GdkRegion * gimp_canvas_grid_get_extents  (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell);
-static void        gimp_canvas_grid_stroke       (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell,
-                                                  cairo_t          *cr);
+static void             gimp_canvas_grid_finalize     (GObject          *object);
+static void             gimp_canvas_grid_set_property (GObject          *object,
+                                                       guint             property_id,
+                                                       const GValue     *value,
+                                                       GParamSpec       *pspec);
+static void             gimp_canvas_grid_get_property (GObject          *object,
+                                                       guint             property_id,
+                                                       GValue           *value,
+                                                       GParamSpec       *pspec);
+static void             gimp_canvas_grid_draw         (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell,
+                                                       cairo_t          *cr);
+static cairo_region_t * gimp_canvas_grid_get_extents  (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell);
+static void             gimp_canvas_grid_stroke       (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell,
+                                                       cairo_t          *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasGrid, gimp_canvas_grid, GIMP_TYPE_CANVAS_ITEM)
@@ -340,7 +340,7 @@ gimp_canvas_grid_draw (GimpCanvasItem   *item,
   _gimp_canvas_item_stroke (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
                               GimpDisplayShell *shell)
 {
@@ -364,7 +364,11 @@ gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (x2) - rectangle.x;
   rectangle.height = ceil (y2) - rectangle.y;
 
+#ifdef USE_CAIRO_REGION
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
   return gdk_region_rectangle (&rectangle);
+#endif
 }
 
 static void

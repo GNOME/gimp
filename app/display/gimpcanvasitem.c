@@ -61,7 +61,7 @@ struct _GimpCanvasItemPrivate
   gint              suspend_stroking;
   gint              suspend_filling;
   gint              change_count;
-  GdkRegion        *change_region;
+  cairo_region_t   *change_region;
 };
 
 #define GET_PRIVATE(item) \
@@ -72,31 +72,30 @@ struct _GimpCanvasItemPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_item_constructed      (GObject          *object);
-static void        gimp_canvas_item_set_property     (GObject          *object,
-                                                      guint             property_id,
-                                                      const GValue     *value,
-                                                      GParamSpec       *pspec);
-static void        gimp_canvas_item_get_property     (GObject          *object,
-                                                      guint             property_id,
-                                                      GValue           *value,
-                                                      GParamSpec       *pspec);
-static void
-        gimp_canvas_item_dispatch_properties_changed (GObject          *object,
-                                                      guint             n_pspecs,
-                                                      GParamSpec      **pspecs);
+static void             gimp_canvas_item_constructed      (GObject          *object);
+static void             gimp_canvas_item_set_property     (GObject          *object,
+                                                           guint             property_id,
+                                                           const GValue     *value,
+                                                           GParamSpec       *pspec);
+static void             gimp_canvas_item_get_property     (GObject          *object,
+                                                           guint             property_id,
+                                                           GValue           *value,
+                                                           GParamSpec       *pspec);
+static void  gimp_canvas_item_dispatch_properties_changed (GObject          *object,
+                                                           guint             n_pspecs,
+                                                           GParamSpec      **pspecs);
 
-static void        gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
-                                                      GimpDisplayShell *shell,
-                                                      cairo_t          *cr);
-static GdkRegion * gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
-                                                      GimpDisplayShell *shell);
-static void        gimp_canvas_item_real_stroke      (GimpCanvasItem   *item,
-                                                      GimpDisplayShell *shell,
-                                                      cairo_t          *cr);
-static void        gimp_canvas_item_real_fill        (GimpCanvasItem   *item,
-                                                      GimpDisplayShell *shell,
-                                                      cairo_t          *cr);
+static void             gimp_canvas_item_real_draw        (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell,
+                                                           cairo_t          *cr);
+static cairo_region_t * gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell);
+static void             gimp_canvas_item_real_stroke      (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell,
+                                                           cairo_t          *cr);
+static void             gimp_canvas_item_real_fill        (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell,
+                                                           cairo_t          *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasItem, gimp_canvas_item,
@@ -262,13 +261,17 @@ gimp_canvas_item_dispatch_properties_changed (GObject     *object,
 
   if (_gimp_canvas_item_needs_update (item))
     {
-      GdkRegion *region = gimp_canvas_item_get_extents (item);
+      cairo_region_t *region = gimp_canvas_item_get_extents (item);
 
       if (region)
         {
           g_signal_emit (object, item_signals[UPDATE], 0,
                          region);
+#ifdef USE_CAIRO_REGION
+          cairo_region_destroy (region);
+#else
           gdk_region_destroy (region);
+#endif
         }
     }
 }
@@ -281,7 +284,7 @@ gimp_canvas_item_real_draw (GimpCanvasItem   *item,
   g_warn_if_reached ();
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_item_real_get_extents (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell)
 {
@@ -341,7 +344,7 @@ gimp_canvas_item_draw (GimpCanvasItem *item,
     }
 }
 
-GdkRegion *
+cairo_region_t *
 gimp_canvas_item_get_extents (GimpCanvasItem *item)
 {
   GimpCanvasItemPrivate *private;
@@ -473,7 +476,7 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
     {
       if (g_signal_has_handler_pending (item, item_signals[UPDATE], 0, FALSE))
         {
-          GdkRegion *region = gimp_canvas_item_get_extents (item);
+          cairo_region_t *region = gimp_canvas_item_get_extents (item);
 
           if (! region)
             {
@@ -481,8 +484,13 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
             }
           else if (private->change_region)
             {
+#ifdef USE_CAIRO_REGION
+              cairo_region_union (region, private->change_region);
+              cairo_region_destroy (private->change_region);
+#else
               gdk_region_union (region, private->change_region);
               gdk_region_destroy (private->change_region);
+#endif
             }
 
           private->change_region = NULL;
@@ -491,12 +499,20 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
             {
               g_signal_emit (item, item_signals[UPDATE], 0,
                              region);
+#ifdef USE_CAIRO_REGION
+              cairo_region_destroy (region);
+#else
               gdk_region_destroy (region);
+#endif
             }
         }
       else if (private->change_region)
         {
+#ifdef USE_CAIRO_REGION
+          cairo_region_destroy (private->change_region);
+#else
           gdk_region_destroy (private->change_region);
+#endif
           private->change_region = NULL;
         }
     }
@@ -559,7 +575,7 @@ gimp_canvas_item_resume_filling (GimpCanvasItem *item)
 
 void
 _gimp_canvas_item_update (GimpCanvasItem *item,
-                          GdkRegion      *region)
+                          cairo_region_t *region)
 {
   g_signal_emit (item, item_signals[UPDATE], 0,
                  region);

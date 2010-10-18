@@ -69,19 +69,19 @@ struct _GimpCanvasArcPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_arc_set_property (GObject          *object,
-                                                 guint             property_id,
-                                                 const GValue     *value,
-                                                 GParamSpec       *pspec);
-static void        gimp_canvas_arc_get_property (GObject          *object,
-                                                 guint             property_id,
-                                                 GValue           *value,
-                                                 GParamSpec       *pspec);
-static void        gimp_canvas_arc_draw         (GimpCanvasItem   *item,
-                                                 GimpDisplayShell *shell,
-                                                 cairo_t          *cr);
-static GdkRegion * gimp_canvas_arc_get_extents  (GimpCanvasItem   *item,
-                                                 GimpDisplayShell *shell);
+static void             gimp_canvas_arc_set_property (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void             gimp_canvas_arc_get_property (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
+static void             gimp_canvas_arc_draw         (GimpCanvasItem   *item,
+                                                      GimpDisplayShell *shell,
+                                                      cairo_t          *cr);
+static cairo_region_t * gimp_canvas_arc_get_extents  (GimpCanvasItem   *item,
+                                                      GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasArc, gimp_canvas_arc,
@@ -288,7 +288,7 @@ gimp_canvas_arc_draw (GimpCanvasItem   *item,
     _gimp_canvas_item_stroke (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_arc_get_extents (GimpCanvasItem   *item,
                              GimpDisplayShell *shell)
 {
@@ -305,7 +305,11 @@ gimp_canvas_arc_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (center_x + radius_x + 1.5) - rectangle.x;
   rectangle.height = ceil (center_y + radius_y + 1.5) - rectangle.y;
 
+#ifdef USE_CAIRO_REGION
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
   return gdk_region_rectangle (&rectangle);
+#endif
 }
 
 GimpCanvasItem *

@@ -71,19 +71,19 @@ struct _GimpCanvasHandlePrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_handle_set_property (GObject          *object,
-                                                    guint             property_id,
-                                                    const GValue     *value,
-                                                    GParamSpec       *pspec);
-static void        gimp_canvas_handle_get_property (GObject          *object,
-                                                    guint             property_id,
-                                                    GValue           *value,
-                                                    GParamSpec       *pspec);
-static void        gimp_canvas_handle_draw         (GimpCanvasItem   *item,
-                                                    GimpDisplayShell *shell,
-                                                    cairo_t          *cr);
-static GdkRegion * gimp_canvas_handle_get_extents  (GimpCanvasItem   *item,
-                                                    GimpDisplayShell *shell);
+static void             gimp_canvas_handle_set_property (GObject          *object,
+                                                         guint             property_id,
+                                                         const GValue     *value,
+                                                         GParamSpec       *pspec);
+static void             gimp_canvas_handle_get_property (GObject          *object,
+                                                         guint             property_id,
+                                                         GValue           *value,
+                                                         GParamSpec       *pspec);
+static void             gimp_canvas_handle_draw         (GimpCanvasItem   *item,
+                                                         GimpDisplayShell *shell,
+                                                         cairo_t          *cr);
+static cairo_region_t * gimp_canvas_handle_get_extents  (GimpCanvasItem   *item,
+                                                         GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasHandle, gimp_canvas_handle,
@@ -467,7 +467,7 @@ gimp_canvas_handle_draw (GimpCanvasItem   *item,
     }
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
@@ -500,7 +500,11 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
       break;
     }
 
+#ifdef USE_CAIRO_REGION
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
   return gdk_region_rectangle (&rectangle);
+#endif
 }
 
 GimpCanvasItem *

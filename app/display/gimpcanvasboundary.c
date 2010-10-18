@@ -68,20 +68,20 @@ struct _GimpCanvasBoundaryPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_boundary_finalize     (GObject          *object);
-static void        gimp_canvas_boundary_set_property (GObject          *object,
-                                                      guint             property_id,
-                                                      const GValue     *value,
-                                                      GParamSpec       *pspec);
-static void        gimp_canvas_boundary_get_property (GObject          *object,
-                                                      guint             property_id,
-                                                      GValue           *value,
-                                                      GParamSpec       *pspec);
-static void        gimp_canvas_boundary_draw         (GimpCanvasItem   *item,
-                                                      GimpDisplayShell *shell,
-                                                      cairo_t          *cr);
-static GdkRegion * gimp_canvas_boundary_get_extents  (GimpCanvasItem   *item,
-                                                      GimpDisplayShell *shell);
+static void             gimp_canvas_boundary_finalize     (GObject          *object);
+static void             gimp_canvas_boundary_set_property (GObject          *object,
+                                                           guint             property_id,
+                                                           const GValue     *value,
+                                                           GParamSpec       *pspec);
+static void             gimp_canvas_boundary_get_property (GObject          *object,
+                                                           guint             property_id,
+                                                           GValue           *value,
+                                                           GParamSpec       *pspec);
+static void             gimp_canvas_boundary_draw         (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell,
+                                                           cairo_t          *cr);
+static cairo_region_t * gimp_canvas_boundary_get_extents  (GimpCanvasItem   *item,
+                                                           GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasBoundary, gimp_canvas_boundary,
@@ -301,7 +301,7 @@ gimp_canvas_boundary_draw (GimpCanvasItem   *item,
   g_free (segs);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
                                   GimpDisplayShell *shell)
 {
@@ -340,7 +340,11 @@ gimp_canvas_boundary_get_extents (GimpCanvasItem   *item,
   rectangle.width  = x2 - x1 + 4;
   rectangle.height = y2 - y1 + 4;
 
+#ifdef USE_CAIRO_REGION
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
   return gdk_region_rectangle (&rectangle);
+#endif
 }
 
 GimpCanvasItem *

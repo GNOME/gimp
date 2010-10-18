@@ -63,19 +63,19 @@ struct _GimpCanvasRectanglePrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_rectangle_set_property (GObject          *object,
-                                                       guint             property_id,
-                                                       const GValue     *value,
-                                                       GParamSpec       *pspec);
-static void        gimp_canvas_rectangle_get_property (GObject          *object,
-                                                       guint             property_id,
-                                                       GValue           *value,
-                                                       GParamSpec       *pspec);
-static void        gimp_canvas_rectangle_draw         (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell,
-                                                       cairo_t          *cr);
-static GdkRegion * gimp_canvas_rectangle_get_extents  (GimpCanvasItem   *item,
-                                                       GimpDisplayShell *shell);
+static void             gimp_canvas_rectangle_set_property (GObject          *object,
+                                                            guint             property_id,
+                                                            const GValue     *value,
+                                                            GParamSpec       *pspec);
+static void             gimp_canvas_rectangle_get_property (GObject          *object,
+                                                            guint             property_id,
+                                                            GValue           *value,
+                                                            GParamSpec       *pspec);
+static void             gimp_canvas_rectangle_draw         (GimpCanvasItem   *item,
+                                                            GimpDisplayShell *shell,
+                                                            cairo_t          *cr);
+static cairo_region_t * gimp_canvas_rectangle_get_extents  (GimpCanvasItem   *item,
+                                                            GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasRectangle, gimp_canvas_rectangle,
@@ -258,7 +258,7 @@ gimp_canvas_rectangle_draw (GimpCanvasItem   *item,
     _gimp_canvas_item_stroke (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
                                    GimpDisplayShell *shell)
 {
@@ -276,11 +276,15 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = ceil (w + 2.0);
       rectangle.height = ceil (h + 2.0);
 
-      return gdk_region_rectangle (&rectangle);
+#ifdef USE_CAIRO_REGION
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
+  return gdk_region_rectangle (&rectangle);
+#endif
     }
   else if (w > 64 && h > 64)
     {
-      GdkRegion *region;
+      cairo_region_t *region;
 
       /* left */
       rectangle.x      = floor (x - 1.5);
@@ -288,12 +292,20 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = 3.0;
       rectangle.height = ceil (h + 3.0);
 
+#ifdef USE_CAIRO_REGION
+      region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
       region = gdk_region_rectangle (&rectangle);
+#endif
 
       /* right */
       rectangle.x      = floor (x + w - 1.5);
 
+#ifdef USE_CAIRO_REGION
+      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+#else
       gdk_region_union_with_rect (region, &rectangle);
+#endif
 
       /* top */
       rectangle.x      = floor (x - 1.5);
@@ -301,12 +313,20 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = ceil (w + 3.0);
       rectangle.height = 3.0;
 
+#ifdef USE_CAIRO_REGION
+      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+#else
       gdk_region_union_with_rect (region, &rectangle);
+#endif
 
       /* bottom */
       rectangle.y      = floor (y + h - 1.5);
 
+#ifdef USE_CAIRO_REGION
+      cairo_region_union_rectangle (region, (cairo_rectangle_int_t *) &rectangle);
+#else
       gdk_region_union_with_rect (region, &rectangle);
+#endif
 
       return region;
     }
@@ -317,7 +337,11 @@ gimp_canvas_rectangle_get_extents (GimpCanvasItem   *item,
       rectangle.width  = ceil (w + 3.0);
       rectangle.height = ceil (h + 3.0);
 
+#ifdef USE_CAIRO_REGION
+      return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
+#else
       return gdk_region_rectangle (&rectangle);
+#endif
     }
 }
 

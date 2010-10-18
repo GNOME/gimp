@@ -36,7 +36,7 @@
 /*  local function prototypes  */
 
 static void   gimp_display_shell_item_update (GimpCanvasItem   *item,
-                                              GdkRegion        *region,
+                                              cairo_region_t   *region,
                                               GimpDisplayShell *shell);
 
 
@@ -129,7 +129,7 @@ gimp_display_shell_remove_item (GimpDisplayShell *shell,
 
 static void
 gimp_display_shell_item_update (GimpCanvasItem   *item,
-                                GdkRegion        *region,
+                                cairo_region_t   *region,
                                 GimpDisplayShell *shell)
 {
   gimp_display_shell_expose_region (shell, region);

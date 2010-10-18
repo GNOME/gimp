@@ -64,22 +64,22 @@ struct _GimpCanvasLayerBoundaryPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_layer_boundary_set_property (GObject          *object,
-                                                            guint             property_id,
-                                                            const GValue     *value,
-                                                            GParamSpec       *pspec);
-static void        gimp_canvas_layer_boundary_get_property (GObject          *object,
-                                                            guint             property_id,
-                                                            GValue           *value,
-                                                            GParamSpec       *pspec);
-static void        gimp_canvas_layer_boundary_draw         (GimpCanvasItem   *item,
-                                                            GimpDisplayShell *shell,
-                                                            cairo_t          *cr);
-static GdkRegion * gimp_canvas_layer_boundary_get_extents  (GimpCanvasItem   *item,
-                                                            GimpDisplayShell *shell);
-static void        gimp_canvas_layer_boundary_stroke       (GimpCanvasItem   *item,
-                                                            GimpDisplayShell *shell,
-                                                            cairo_t          *cr);
+static void             gimp_canvas_layer_boundary_set_property (GObject          *object,
+                                                                 guint             property_id,
+                                                                 const GValue     *value,
+                                                                 GParamSpec       *pspec);
+static void             gimp_canvas_layer_boundary_get_property (GObject          *object,
+                                                                 guint             property_id,
+                                                                 GValue           *value,
+                                                                 GParamSpec       *pspec);
+static void             gimp_canvas_layer_boundary_draw         (GimpCanvasItem   *item,
+                                                                 GimpDisplayShell *shell,
+                                                                 cairo_t          *cr);
+static cairo_region_t * gimp_canvas_layer_boundary_get_extents  (GimpCanvasItem   *item,
+                                                                 GimpDisplayShell *shell);
+static void             gimp_canvas_layer_boundary_stroke       (GimpCanvasItem   *item,
+                                                                 GimpDisplayShell *shell,
+                                                                 cairo_t          *cr);
 
 
 G_DEFINE_TYPE (GimpCanvasLayerBoundary, gimp_canvas_layer_boundary,
@@ -176,7 +176,7 @@ gimp_canvas_layer_boundary_draw (GimpCanvasItem   *item,
     GIMP_CANVAS_ITEM_CLASS (parent_class)->draw (item, shell, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_layer_boundary_get_extents (GimpCanvasItem   *item,
                                         GimpDisplayShell *shell)
 {

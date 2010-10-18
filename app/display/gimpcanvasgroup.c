@@ -58,23 +58,23 @@ struct _GimpCanvasGroupPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_group_dispose      (GObject          *object);
-static void        gimp_canvas_group_set_property (GObject          *object,
-                                                   guint             property_id,
-                                                   const GValue     *value,
-                                                   GParamSpec       *pspec);
-static void        gimp_canvas_group_get_property (GObject          *object,
-                                                   guint             property_id,
-                                                   GValue           *value,
-                                                   GParamSpec       *pspec);
-static void        gimp_canvas_group_draw         (GimpCanvasItem   *item,
-                                                   GimpDisplayShell *shell,
-                                                   cairo_t          *cr);
-static GdkRegion * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
-                                                   GimpDisplayShell *shell);
-static void        gimp_canvas_group_child_update (GimpCanvasItem   *item,
-                                                   GdkRegion        *region,
-                                                   GimpCanvasGroup  *group);
+static void             gimp_canvas_group_dispose      (GObject          *object);
+static void             gimp_canvas_group_set_property (GObject          *object,
+                                                        guint             property_id,
+                                                        const GValue     *value,
+                                                        GParamSpec       *pspec);
+static void             gimp_canvas_group_get_property (GObject          *object,
+                                                        guint             property_id,
+                                                        GValue           *value,
+                                                        GParamSpec       *pspec);
+static void             gimp_canvas_group_draw         (GimpCanvasItem   *item,
+                                                        GimpDisplayShell *shell,
+                                                        cairo_t          *cr);
+static cairo_region_t * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
+                                                        GimpDisplayShell *shell);
+static void             gimp_canvas_group_child_update (GimpCanvasItem   *item,
+                                                        cairo_region_t   *region,
+                                                        GimpCanvasGroup  *group);
 
 
 G_DEFINE_TYPE (GimpCanvasGroup, gimp_canvas_group, GIMP_TYPE_CANVAS_ITEM)
@@ -198,18 +198,18 @@ gimp_canvas_group_draw (GimpCanvasItem   *item,
     _gimp_canvas_item_fill (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_group_get_extents (GimpCanvasItem   *item,
                                GimpDisplayShell *shell)
 {
   GimpCanvasGroupPrivate *private = GET_PRIVATE (item);
-  GdkRegion              *region  = NULL;
+  cairo_region_t         *region  = NULL;
   GList                  *list;
 
   for (list = private->items; list; list = g_list_next (list))
     {
       GimpCanvasItem *sub_item   = list->data;
-      GdkRegion      *sub_region = gimp_canvas_item_get_extents (sub_item);
+      cairo_region_t *sub_region = gimp_canvas_item_get_extents (sub_item);
 
       if (! region)
         {
@@ -217,8 +217,13 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
         }
       else if (sub_region)
         {
+#ifdef USE_CAIRO_REGION
+          cairo_region_union (region, sub_region);
+          cairo_region_destroy (sub_region);
+#else
           gdk_region_union (region, sub_region);
           gdk_region_destroy (sub_region);
+#endif
         }
     }
 
@@ -227,7 +232,7 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
 
 static void
 gimp_canvas_group_child_update (GimpCanvasItem  *item,
-                                GdkRegion       *region,
+                                cairo_region_t  *region,
                                 GimpCanvasGroup *group)
 {
   if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
@@ -269,12 +274,16 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
 
   if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
     {
-      GdkRegion *region = gimp_canvas_item_get_extents (item);
+      cairo_region_t *region = gimp_canvas_item_get_extents (item);
 
       if (region)
         {
           _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+#ifdef USE_CAIRO_REGION
+          cairo_region_destroy (region);
+#else
           gdk_region_destroy (region);
+#endif
         }
     }
 
@@ -306,12 +315,16 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
 
   if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
     {
-      GdkRegion *region = gimp_canvas_item_get_extents (item);
+      cairo_region_t *region = gimp_canvas_item_get_extents (item);
 
       if (region)
         {
           _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+#ifdef USE_CAIRO_REGION
+          cairo_region_destroy (region);
+#else
           gdk_region_destroy (region);
+#endif
         }
     }
 

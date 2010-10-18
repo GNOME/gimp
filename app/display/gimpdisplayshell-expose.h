@@ -25,7 +25,7 @@ void   gimp_display_shell_expose_area    (GimpDisplayShell   *shell,
                                           gint                w,
                                           gint                h);
 void   gimp_display_shell_expose_region  (GimpDisplayShell   *shell,
-                                          GdkRegion          *region);
+                                          cairo_region_t     *region);
 void   gimp_display_shell_expose_vectors (GimpDisplayShell   *shell,
                                           GimpVectors        *vectors);
 void   gimp_display_shell_expose_full    (GimpDisplayShell   *shell);
