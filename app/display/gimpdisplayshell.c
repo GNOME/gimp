@@ -1762,34 +1762,39 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
     {
       if (highlight)
         {
-          GdkRectangle *rects;
-          GdkRegion    *old;
-          GdkRegion    *new;
-          gint          num_rects, i;
+          cairo_region_t *old;
+          cairo_region_t *new;
 
           if (memcmp (shell->highlight, highlight, sizeof (GdkRectangle)) == 0)
             return;
 
+#ifdef USE_CAIRO_REGION
+          old = cairo_region_create_rectangle ((cairo_rectangle_int_t *) shell->highlight);
+#else
           old = gdk_region_rectangle (shell->highlight);
+#endif
 
           *shell->highlight = *highlight;
 
+#ifdef USE_CAIRO_REGION
+          new = cairo_region_create_rectangle ((cairo_rectangle_int_t *) shell->highlight);
+
+          cairo_region_xor (old, new);
+#else
           new = gdk_region_rectangle (shell->highlight);
 
           gdk_region_xor (old, new);
+#endif
 
-          gdk_region_get_rectangles (old, &rects, &num_rects);
+          gimp_display_shell_expose_region (shell, old);
 
+#ifdef USE_CAIRO_REGION
+          cairo_region_destroy (old);
+          cairo_region_destroy (new);
+#else
           gdk_region_destroy (old);
           gdk_region_destroy (new);
-
-          for (i = 0; i < num_rects; i++)
-            gimp_display_update_area (shell->display, TRUE,
-                                      rects[i].x,
-                                      rects[i].y,
-                                      rects[i].width,
-                                      rects[i].height);
-          g_free (rects);
+#endif
         }
       else
         {
