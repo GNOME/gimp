@@ -23,8 +23,6 @@
 
 #include <string.h>
 
-#undef GSEAL_ENABLE
-
 #include <gtk/gtk.h>
 
 #include "gimpwidgetstypes.h"
@@ -53,12 +51,12 @@ static void      gimp_frame_size_request        (GtkWidget      *widget,
                                                  GtkRequisition *requisition);
 static void      gimp_frame_size_allocate       (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
-static void      gimp_frame_child_allocate      (GtkFrame       *frame,
-                                                 GtkAllocation  *allocation);
 static void      gimp_frame_style_set           (GtkWidget      *widget,
                                                  GtkStyle       *previous);
 static gboolean  gimp_frame_expose_event        (GtkWidget      *widget,
                                                  GdkEventExpose *event);
+static void      gimp_frame_child_allocate      (GtkFrame       *frame,
+                                                 GtkAllocation  *allocation);
 static void      gimp_frame_label_widget_notify (GtkFrame       *frame);
 static gint      gimp_frame_get_indent          (GtkWidget      *widget);
 static gint      gimp_frame_get_label_spacing   (GtkFrame       *frame);
@@ -73,14 +71,11 @@ static void
 gimp_frame_class_init (GimpFrameClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-  GtkFrameClass  *frame_class  = GTK_FRAME_CLASS (klass);
 
   widget_class->size_request  = gimp_frame_size_request;
   widget_class->size_allocate = gimp_frame_size_allocate;
   widget_class->style_set     = gimp_frame_style_set;
   widget_class->expose_event  = gimp_frame_expose_event;
-
-  frame_class->compute_child_allocation = gimp_frame_child_allocate;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_boolean ("label-bold",
@@ -148,16 +143,17 @@ static void
 gimp_frame_size_allocate (GtkWidget     *widget,
                           GtkAllocation *allocation)
 {
-  GtkFrame  *frame        = GTK_FRAME (widget);
-  GtkWidget *label_widget = gtk_frame_get_label_widget (frame);
-  GtkWidget *child        = gtk_bin_get_child (GTK_BIN (widget));
+  GtkFrame      *frame        = GTK_FRAME (widget);
+  GtkWidget     *label_widget = gtk_frame_get_label_widget (frame);
+  GtkWidget     *child        = gtk_bin_get_child (GTK_BIN (widget));
+  GtkAllocation  child_allocation;
 
   gtk_widget_set_allocation (widget, allocation);
 
-  gimp_frame_child_allocate (frame, &frame->child_allocation);
+  gimp_frame_child_allocate (frame, &child_allocation);
 
   if (child && gtk_widget_get_visible (child))
-    gtk_widget_size_allocate (child, &frame->child_allocation);
+    gtk_widget_size_allocate (child, &child_allocation);
 
   if (label_widget && gtk_widget_get_visible (label_widget))
     {
