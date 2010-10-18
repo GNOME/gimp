@@ -268,7 +268,8 @@ load_image (const gchar  *filename,
         }
       components[3] = jas_image_getcmptbytype (image, JAS_IMAGE_CT_OPACITY);
 
-      /* ImageMagick seems to write out the 'matte' component (number 3) */
+      /* ImageMagick seems to write out the 'matte' component type
+	 (number 3) */
       if (components[3] == -1)
         components[3] = jas_image_getcmptbytype (image, 3);
 
