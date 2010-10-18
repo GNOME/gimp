@@ -258,6 +258,6 @@ gimp_display_shell_draw_highlight (GimpDisplayShell *shell,
   cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
   cairo_clip (cr);
 
-  gimp_display_shell_set_dim_style (shell, cr);
+  gimp_display_shell_set_passe_partout_style (shell, cr);
   cairo_paint (cr);
 }
