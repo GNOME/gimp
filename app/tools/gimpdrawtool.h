@@ -130,7 +130,7 @@ GimpCanvasItem * gimp_draw_tool_add_handle           (GimpDrawTool     *draw_too
                                                       gdouble           y,
                                                       gint              width,
                                                       gint              height,
-                                                      GtkAnchorType     anchor);
+                                                      GimpHandleAnchor  anchor);
 GimpCanvasItem * gimp_draw_tool_add_corner           (GimpDrawTool     *draw_tool,
                                                       gboolean          highlight,
                                                       gboolean          put_outside,
@@ -140,7 +140,7 @@ GimpCanvasItem * gimp_draw_tool_add_corner           (GimpDrawTool     *draw_too
                                                       gdouble           y2,
                                                       gint              width,
                                                       gint              height,
-                                                      GtkAnchorType     anchor);
+                                                      GimpHandleAnchor  anchor);
 
 GimpCanvasItem * gimp_draw_tool_add_lines            (GimpDrawTool     *draw_tool,
                                                       const GimpVector2 *points,
@@ -181,7 +181,7 @@ gboolean         gimp_draw_tool_on_handle            (GimpDrawTool     *draw_too
                                                       gdouble           handle_y,
                                                       gint              width,
                                                       gint              height,
-                                                      GtkAnchorType     anchor);
+                                                      GimpHandleAnchor  anchor);
 gboolean         gimp_draw_tool_on_vectors_handle    (GimpDrawTool     *draw_tool,
                                                       GimpDisplay      *display,
                                                       GimpVectors      *vectors,

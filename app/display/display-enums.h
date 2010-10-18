@@ -45,6 +45,24 @@ typedef enum
 } GimpHandleType;
 
 
+#define GIMP_TYPE_HANDLE_ANCHOR (gimp_handle_anchor_get_type ())
+
+GType gimp_handle_anchor_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HANDLE_ANCHOR_CENTER,
+  GIMP_HANDLE_ANCHOR_NORTH,
+  GIMP_HANDLE_ANCHOR_NORTH_WEST,
+  GIMP_HANDLE_ANCHOR_NORTH_EAST,
+  GIMP_HANDLE_ANCHOR_SOUTH,
+  GIMP_HANDLE_ANCHOR_SOUTH_WEST,
+  GIMP_HANDLE_ANCHOR_SOUTH_EAST,
+  GIMP_HANDLE_ANCHOR_WEST,
+  GIMP_HANDLE_ANCHOR_EAST
+} GimpHandleAnchor;
+
+
 #define GIMP_TYPE_ZOOM_FOCUS (gimp_zoom_focus_get_type ())
 
 GType gimp_zoom_focus_get_type (void) G_GNUC_CONST;

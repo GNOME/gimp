@@ -51,14 +51,14 @@ typedef struct _GimpCanvasCornerPrivate GimpCanvasCornerPrivate;
 
 struct _GimpCanvasCornerPrivate
 {
-  gdouble       x;
-  gdouble       y;
-  gdouble       width;
-  gdouble       height;
-  GtkAnchorType anchor;
-  gint          corner_width;
-  gint          corner_height;
-  gboolean      outside;
+  gdouble          x;
+  gdouble          y;
+  gdouble          width;
+  gdouble          height;
+  GimpHandleAnchor anchor;
+  gint             corner_width;
+  gint             corner_height;
+  gboolean         outside;
 };
 
 #define GET_PRIVATE(corner) \
@@ -128,8 +128,8 @@ gimp_canvas_corner_class_init (GimpCanvasCornerClass *klass)
 
   g_object_class_install_property (object_class, PROP_ANCHOR,
                                    g_param_spec_enum ("anchor", NULL, NULL,
-                                                      GTK_TYPE_ANCHOR_TYPE,
-                                                      GTK_ANCHOR_CENTER,
+                                                      GIMP_TYPE_HANDLE_ANCHOR,
+                                                      GIMP_HANDLE_ANCHOR_CENTER,
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CORNER_WIDTH,
@@ -280,10 +280,10 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
 
   switch (private->anchor)
     {
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       break;
 
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -296,7 +296,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -309,7 +309,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -322,7 +322,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -335,7 +335,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       if (private->outside)
         {
           *x = rx;
@@ -349,7 +349,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       if (private->outside)
         {
           *x = rx;
@@ -363,7 +363,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -377,7 +377,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -432,7 +432,7 @@ gimp_canvas_corner_new (GimpDisplayShell *shell,
                         gdouble           y,
                         gdouble           width,
                         gdouble           height,
-                        GtkAnchorType     anchor,
+                        GimpHandleAnchor  anchor,
                         gint              corner_width,
                         gint              corner_height,
                         gboolean          outside)

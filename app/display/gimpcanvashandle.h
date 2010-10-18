@@ -51,7 +51,7 @@ GType            gimp_canvas_handle_get_type   (void) G_GNUC_CONST;
 
 GimpCanvasItem * gimp_canvas_handle_new        (GimpDisplayShell *shell,
                                                 GimpHandleType    type,
-                                                GtkAnchorType     anchor,
+                                                GimpHandleAnchor  anchor,
                                                 gdouble           x,
                                                 gdouble           y,
                                                 gint              width,

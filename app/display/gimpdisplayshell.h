@@ -230,14 +230,14 @@ void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y,
-                                                    GtkAnchorType       anchor,
+                                                    GimpHandleAnchor    anchor,
                                                     gint                spacing_x,
                                                     gint                spacing_y);
 void              gimp_display_shell_move_overlay  (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y,
-                                                    GtkAnchorType       anchor,
+                                                    GimpHandleAnchor    anchor,
                                                     gint                spacing_x,
                                                     gint                spacing_y);
 

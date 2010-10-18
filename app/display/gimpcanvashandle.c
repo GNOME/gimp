@@ -53,14 +53,14 @@ typedef struct _GimpCanvasHandlePrivate GimpCanvasHandlePrivate;
 
 struct _GimpCanvasHandlePrivate
 {
-  GimpHandleType  type;
-  GtkAnchorType   anchor;
-  gdouble         x;
-  gdouble         y;
-  gint            width;
-  gint            height;
-  gdouble         start_angle;
-  gdouble         slice_angle;;
+  GimpHandleType   type;
+  GimpHandleAnchor anchor;
+  gdouble          x;
+  gdouble          y;
+  gint             width;
+  gint             height;
+  gdouble          start_angle;
+  gdouble          slice_angle;;
 };
 
 #define GET_PRIVATE(handle) \
@@ -112,8 +112,8 @@ gimp_canvas_handle_class_init (GimpCanvasHandleClass *klass)
 
   g_object_class_install_property (object_class, PROP_ANCHOR,
                                    g_param_spec_enum ("anchor", NULL, NULL,
-                                                      GTK_TYPE_ANCHOR_TYPE,
-                                                      GTK_ANCHOR_CENTER,
+                                                      GIMP_TYPE_HANDLE_ANCHOR,
+                                                      GIMP_HANDLE_ANCHOR_CENTER,
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_X,
@@ -256,42 +256,42 @@ gimp_canvas_handle_shift_to_north_west (GtkAnchorType  anchor,
 {
   switch (anchor)
     {
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       x -= handle_width  / 2;
       y -= handle_height / 2;
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       x -= handle_width / 2;
       break;
 
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       /*  nothing, this is the default  */
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       x -= handle_width;
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       x -= handle_width / 2;
       y -= handle_height;
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       y -= handle_height;
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       x -= handle_width;
       y -= handle_height;
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       y -= handle_height / 2;
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       x -= handle_width;
       y -= handle_height / 2;
       break;
@@ -318,43 +318,43 @@ gimp_canvas_handle_shift_to_center (GtkAnchorType  anchor,
 {
   switch (anchor)
     {
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       /*  nothing, this is the default  */
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       y += height / 2;
       break;
 
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       x += width  / 2;
       y += height / 2;
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       x -= width  / 2;
       y += height / 2;
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       y -= height / 2;
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       x += width  / 2;
       y -= height / 2;
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       x -= width  / 2;
       y -= height / 2;
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       x += width / 2;
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       x -= width / 2;
       break;
 
@@ -506,7 +506,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
 GimpCanvasItem *
 gimp_canvas_handle_new (GimpDisplayShell *shell,
                         GimpHandleType    type,
-                        GtkAnchorType     anchor,
+                        GimpHandleAnchor  anchor,
                         gdouble           x,
                         gdouble           y,
                         gint              width,

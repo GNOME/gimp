@@ -103,11 +103,11 @@ typedef struct _GimpDisplayShellOverlay GimpDisplayShellOverlay;
 
 struct _GimpDisplayShellOverlay
 {
-  gdouble       image_x;
-  gdouble       image_y;
-  GtkAnchorType anchor;
-  gint          spacing_x;
-  gint          spacing_y;
+  gdouble          image_x;
+  gdouble          image_y;
+  GimpHandleAnchor anchor;
+  gint             spacing_x;
+  gint             spacing_y;
 };
 
 
@@ -1113,47 +1113,47 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 
   switch (overlay->anchor)
     {
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       *x -= requisition.width  / 2;
       *y -= requisition.height / 2;
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       *x -= requisition.width / 2;
       *y += overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       *x += overlay->spacing_x;
       *y += overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       *x -= requisition.width + overlay->spacing_x;
       *y += overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       *x -= requisition.width / 2;
       *y -= requisition.height + overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       *x += overlay->spacing_x;
       *y -= requisition.height + overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       *x -= requisition.width + overlay->spacing_x;
       *y -= requisition.height + overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       *x += overlay->spacing_x;
       *y -= requisition.height / 2;
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       *x -= requisition.width + overlay->spacing_x;
       *y -= requisition.height / 2;
       break;
@@ -1184,7 +1184,7 @@ gimp_display_shell_add_overlay (GimpDisplayShell *shell,
                                 GtkWidget        *child,
                                 gdouble           image_x,
                                 gdouble           image_y,
-                                GtkAnchorType     anchor,
+                                GimpHandleAnchor  anchor,
                                 gint              spacing_x,
                                 gint              spacing_y)
 {
@@ -1219,7 +1219,7 @@ gimp_display_shell_move_overlay (GimpDisplayShell *shell,
                                  GtkWidget        *child,
                                  gdouble           image_x,
                                  gdouble           image_y,
-                                 GtkAnchorType     anchor,
+                                 GimpHandleAnchor  anchor,
                                  gint              spacing_x,
                                  gint              spacing_y)
 {

@@ -54,7 +54,7 @@ GimpCanvasItem * gimp_canvas_corner_new      (GimpDisplayShell *shell,
                                               gdouble           y,
                                               gdouble           width,
                                               gdouble           height,
-                                              GtkAnchorType     anchor,
+                                              GimpHandleAnchor  anchor,
                                               gint              corner_width,
                                               gint              corner_height,
                                               gboolean          outside);
