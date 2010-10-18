@@ -630,7 +630,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         GIMP_HANDLE_SQUARE,
                                         x, y,
                                         tr_tool->handle_w, tr_tool->handle_h,
-                                        GTK_ANCHOR_CENTER))
+                                        GIMP_HANDLE_ANCHOR_CENTER))
             {
               tr_tool->function = TRANSFORM_HANDLE_N;
             }
@@ -643,7 +643,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         GIMP_HANDLE_SQUARE,
                                         x, y,
                                         tr_tool->handle_w, tr_tool->handle_h,
-                                        GTK_ANCHOR_CENTER))
+                                        GIMP_HANDLE_ANCHOR_CENTER))
             {
               tr_tool->function = TRANSFORM_HANDLE_E;
             }
@@ -656,7 +656,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         GIMP_HANDLE_SQUARE,
                                         x, y,
                                         tr_tool->handle_w, tr_tool->handle_h,
-                                        GTK_ANCHOR_CENTER))
+                                        GIMP_HANDLE_ANCHOR_CENTER))
             {
               tr_tool->function = TRANSFORM_HANDLE_S;
             }
@@ -669,7 +669,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                         GIMP_HANDLE_SQUARE,
                                         x, y,
                                         tr_tool->handle_w, tr_tool->handle_h,
-                                        GTK_ANCHOR_CENTER))
+                                        GIMP_HANDLE_ANCHOR_CENTER))
             {
               tr_tool->function = TRANSFORM_HANDLE_W;
             }
@@ -683,7 +683,7 @@ gimp_transform_tool_oper_update (GimpTool         *tool,
                                 tr_tool->tcx, tr_tool->tcy,
                                 MIN (tr_tool->handle_w, tr_tool->handle_h),
                                 MIN (tr_tool->handle_w, tr_tool->handle_h),
-                                GTK_ANCHOR_CENTER))
+                                GIMP_HANDLE_ANCHOR_CENTER))
     {
       tr_tool->function = TRANSFORM_HANDLE_CENTER;
     }
@@ -850,22 +850,22 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_SQUARE,
                                  tr_tool->tx1, tr_tool->ty1,
                                  tr_tool->handle_w, tr_tool->handle_h,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  tr_tool->tx2, tr_tool->ty2,
                                  tr_tool->handle_w, tr_tool->handle_h,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  tr_tool->tx3, tr_tool->ty3,
                                  tr_tool->handle_w, tr_tool->handle_h,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  tr_tool->tx4, tr_tool->ty4,
                                  tr_tool->handle_w, tr_tool->handle_h,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
 
       if (tr_tool->use_mid_handles)
         {
@@ -878,7 +878,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_SQUARE,
                                      x, y,
                                      tr_tool->handle_w, tr_tool->handle_h,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
 
           x = (tr_tool->tx2 + tr_tool->tx4) / 2.0;
           y = (tr_tool->ty2 + tr_tool->ty4) / 2.0;
@@ -887,7 +887,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_SQUARE,
                                      x, y,
                                      tr_tool->handle_w, tr_tool->handle_h,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
 
           x = (tr_tool->tx3 + tr_tool->tx4) / 2.0;
           y = (tr_tool->ty3 + tr_tool->ty4) / 2.0;
@@ -896,7 +896,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_SQUARE,
                                      x, y,
                                      tr_tool->handle_w, tr_tool->handle_h,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
 
           x = (tr_tool->tx3 + tr_tool->tx1) / 2.0;
           y = (tr_tool->ty3 + tr_tool->ty1) / 2.0;
@@ -905,7 +905,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_SQUARE,
                                      x, y,
                                      tr_tool->handle_w, tr_tool->handle_h,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 
@@ -918,12 +918,12 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_CIRCLE,
                                  tr_tool->tcx, tr_tool->tcy,
                                  d, d,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_CROSS,
                                  tr_tool->tcx, tr_tool->tcy,
                                  d, d,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
     }
 
   if (tr_tool->type == GIMP_TRANSFORM_TYPE_SELECTION)

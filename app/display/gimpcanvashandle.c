@@ -246,13 +246,13 @@ gimp_canvas_handle_get_property (GObject    *object,
 }
 
 static inline void
-gimp_canvas_handle_shift_to_north_west (GtkAnchorType  anchor,
-                                        gdouble        x,
-                                        gdouble        y,
-                                        gint           handle_width,
-                                        gint           handle_height,
-                                        gdouble       *shifted_x,
-                                        gdouble       *shifted_y)
+gimp_canvas_handle_shift_to_north_west (GimpHandleAnchor  anchor,
+                                        gdouble           x,
+                                        gdouble           y,
+                                        gint              handle_width,
+                                        gint              handle_height,
+                                        gdouble          *shifted_x,
+                                        gdouble          *shifted_y)
 {
   switch (anchor)
     {
@@ -308,13 +308,13 @@ gimp_canvas_handle_shift_to_north_west (GtkAnchorType  anchor,
 }
 
 static inline void
-gimp_canvas_handle_shift_to_center (GtkAnchorType  anchor,
-                                    gdouble        x,
-                                    gdouble        y,
-                                    gint           width,
-                                    gint           height,
-                                    gdouble       *shifted_x,
-                                    gdouble       *shifted_y)
+gimp_canvas_handle_shift_to_center (GimpHandleAnchor  anchor,
+                                    gdouble           x,
+                                    gdouble           y,
+                                    gint              width,
+                                    gint              height,
+                                    gdouble          *shifted_x,
+                                    gdouble          *shifted_y)
 {
   switch (anchor)
     {

@@ -236,9 +236,9 @@ static gboolean      gimp_rectangle_tool_coord_outside        (GimpRectangleTool
 
 static gboolean      gimp_rectangle_tool_coord_on_handle      (GimpRectangleTool        *rect_tool,
                                                                const GimpCoords         *coords,
-                                                               GtkAnchorType             anchor);
+                                                               GimpHandleAnchor          anchor);
 
-static GtkAnchorType gimp_rectangle_tool_get_anchor           (GimpRectangleToolPrivate *private);
+static GimpHandleAnchor gimp_rectangle_tool_get_anchor        (GimpRectangleToolPrivate *private);
 
 static void          gimp_rectangle_tool_update_highlight     (GimpRectangleTool        *rect_tool);
 
@@ -1596,55 +1596,55 @@ gimp_rectangle_tool_oper_update (GimpTool         *tool,
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_NORTH_WEST))
+                                                GIMP_HANDLE_ANCHOR_NORTH_WEST))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_SOUTH_EAST))
+                                                GIMP_HANDLE_ANCHOR_SOUTH_EAST))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT;
     }
   else if  (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                  coords,
-                                                 GTK_ANCHOR_NORTH_EAST))
+                                                 GIMP_HANDLE_ANCHOR_NORTH_EAST))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_SOUTH_WEST))
+                                                GIMP_HANDLE_ANCHOR_SOUTH_WEST))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_WEST))
+                                                GIMP_HANDLE_ANCHOR_WEST))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_LEFT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_EAST))
+                                                GIMP_HANDLE_ANCHOR_EAST))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_RIGHT;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_NORTH))
+                                                GIMP_HANDLE_ANCHOR_NORTH))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_TOP;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_SOUTH))
+                                                GIMP_HANDLE_ANCHOR_SOUTH))
     {
       function = GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM;
     }
   else if (gimp_rectangle_tool_coord_on_handle (rect_tool,
                                                 coords,
-                                                GTK_ANCHOR_CENTER))
+                                                GIMP_HANDLE_ANCHOR_CENTER))
     {
       function = GIMP_RECTANGLE_TOOL_MOVING;
     }
@@ -1765,7 +1765,7 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
                                      (pub_y1 + pub_y2) / 2.0,
                                      CENTER_CROSS_SIZE,
                                      CENTER_CROSS_SIZE,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
           break;
         }
       else
@@ -1782,25 +1782,25 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
                                  pub_x2, pub_y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
-                                 GTK_ANCHOR_NORTH_WEST);
+                                 GIMP_HANDLE_ANCHOR_NORTH_WEST);
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
                                  pub_x1, pub_y1,
                                  pub_x2, pub_y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
-                                 GTK_ANCHOR_NORTH_EAST);
+                                 GIMP_HANDLE_ANCHOR_NORTH_EAST);
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
                                  pub_x1, pub_y1,
                                  pub_x2, pub_y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
-                                 GTK_ANCHOR_SOUTH_WEST);
+                                 GIMP_HANDLE_ANCHOR_SOUTH_WEST);
       gimp_draw_tool_add_corner (draw_tool, FALSE, private->narrow_mode,
                                  pub_x1, pub_y1,
                                  pub_x2, pub_y2,
                                  private->corner_handle_w,
                                  private->corner_handle_h,
-                                 GTK_ANCHOR_SOUTH_EAST);
+                                 GIMP_HANDLE_ANCHOR_SOUTH_EAST);
 
       gimp_draw_tool_pop_group (draw_tool);
       break;
@@ -2741,7 +2741,7 @@ gimp_rectangle_tool_coord_outside (GimpRectangleTool *rect_tool,
 static gboolean
 gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
                                      const GimpCoords  *coords,
-                                     GtkAnchorType      anchor)
+                                     GimpHandleAnchor   anchor)
 {
   GimpRectangleToolPrivate *private;
   GimpDisplayShell         *shell;
@@ -2769,7 +2769,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
 
   switch (anchor)
     {
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       handle_x      = pub_x1;
       handle_y      = pub_y1;
       handle_width  = private->corner_handle_w;
@@ -2779,7 +2779,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir = -1;
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       handle_x      = pub_x2;
       handle_y      = pub_y2;
       handle_width  = private->corner_handle_w;
@@ -2789,7 +2789,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir =  1;
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       handle_x      = pub_x2;
       handle_y      = pub_y1;
       handle_width  = private->corner_handle_w;
@@ -2799,7 +2799,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir = -1;
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       handle_x      = pub_x1;
       handle_y      = pub_y2;
       handle_width  = private->corner_handle_w;
@@ -2809,7 +2809,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir =  1;
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       handle_x      = pub_x1;
       handle_y      = pub_y1 + rect_h / 2;
       handle_width  = private->corner_handle_w;
@@ -2819,7 +2819,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir =  0;
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       handle_x      = pub_x2;
       handle_y      = pub_y1 + rect_h / 2;
       handle_width  = private->corner_handle_w;
@@ -2829,7 +2829,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir =  0;
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       handle_x      = pub_x1 + rect_w / 2;
       handle_y      = pub_y1;
       handle_width  = private->top_and_bottom_handle_w;
@@ -2839,7 +2839,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir = -1;
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       handle_x      = pub_x1 + rect_w / 2;
       handle_y      = pub_y2;
       handle_width  = private->top_and_bottom_handle_w;
@@ -2849,7 +2849,7 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
       narrow_mode_y_dir =  1;
       break;
 
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       handle_x      = pub_x1 + rect_w / 2;
       handle_y      = pub_y1 + rect_h / 2;
 
@@ -2883,37 +2883,37 @@ gimp_rectangle_tool_coord_on_handle (GimpRectangleTool *rect_tool,
                                    anchor);
 }
 
-static GtkAnchorType
+static GimpHandleAnchor
 gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
 {
   switch (private->function)
     {
     case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_LEFT:
-      return GTK_ANCHOR_NORTH_WEST;
+      return GIMP_HANDLE_ANCHOR_NORTH_WEST;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_UPPER_RIGHT:
-      return GTK_ANCHOR_NORTH_EAST;
+      return GIMP_HANDLE_ANCHOR_NORTH_EAST;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_LEFT:
-      return GTK_ANCHOR_SOUTH_WEST;
+      return GIMP_HANDLE_ANCHOR_SOUTH_WEST;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LOWER_RIGHT:
-      return GTK_ANCHOR_SOUTH_EAST;
+      return GIMP_HANDLE_ANCHOR_SOUTH_EAST;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_LEFT:
-      return GTK_ANCHOR_WEST;
+      return GIMP_HANDLE_ANCHOR_WEST;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_RIGHT:
-      return GTK_ANCHOR_EAST;
+      return GIMP_HANDLE_ANCHOR_EAST;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_TOP:
-      return GTK_ANCHOR_NORTH;
+      return GIMP_HANDLE_ANCHOR_NORTH;
 
     case GIMP_RECTANGLE_TOOL_RESIZING_BOTTOM:
-      return GTK_ANCHOR_SOUTH;
+      return GIMP_HANDLE_ANCHOR_SOUTH;
 
     default:
-      return GTK_ANCHOR_CENTER;
+      return GIMP_HANDLE_ANCHOR_CENTER;
     }
 }
 

@@ -345,7 +345,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
         {
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
                                      x, y,
-                                     5, 5, GTK_ANCHOR_CENTER);
+                                     5, 5, GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 }

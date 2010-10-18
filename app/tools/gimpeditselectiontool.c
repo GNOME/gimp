@@ -977,7 +977,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                              edit_select->center_y + edit_select->cumly,
                              CENTER_CROSS_SIZE,
                              CENTER_CROSS_SIZE,
-                             GTK_ANCHOR_CENTER);
+                             GIMP_HANDLE_ANCHOR_CENTER);
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }

@@ -1603,7 +1603,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                        point->x,
                                        point->y,
                                        HANDLE_SIZE, HANDLE_SIZE,
-                                       GTK_ANCHOR_CENTER);
+                                       GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 

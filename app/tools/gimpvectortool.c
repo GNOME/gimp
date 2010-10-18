@@ -1438,7 +1438,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                          cur_anchor->position.y,
                                          TARGET,
                                          TARGET,
-                                         GTK_ANCHOR_CENTER);
+                                         GIMP_HANDLE_ANCHOR_CENTER);
             }
         }
 
@@ -1486,7 +1486,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                          cur_anchor->position.y,
                                          TARGET - 3,
                                          TARGET - 3,
-                                         GTK_ANCHOR_CENTER);
+                                         GIMP_HANDLE_ANCHOR_CENTER);
             }
 
           g_list_free (draw_anchors);

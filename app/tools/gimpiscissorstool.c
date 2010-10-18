@@ -608,7 +608,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
                                                 GIMP_HANDLE_CIRCLE,
                                                 curve->x1, curve->y1,
                                                 POINT_WIDTH, POINT_WIDTH,
-                                                GTK_ANCHOR_CENTER))
+                                                GIMP_HANDLE_ANCHOR_CENTER))
                     {
                       iscissors->x = curve->x1;
                       iscissors->y = curve->y1;
@@ -753,7 +753,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_CROSS,
                                  iscissors->x, iscissors->y,
                                  TARGET_SIZE, TARGET_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
 
       /* Draw a line boundary */
       if (! iscissors->first_point && ! (iscissors->draw & DRAW_LIVEWIRE))
@@ -814,7 +814,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                      iscissors->iy,
                                      POINT_WIDTH,
                                      POINT_WIDTH,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
 
       /*  Go through the list of icurves, and render each one...  */
@@ -837,7 +837,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                      curve->y1,
                                      POINT_WIDTH,
                                      POINT_WIDTH,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
 
           if (iscissors->draw & DRAW_ACTIVE_CURVE)
             {
@@ -878,7 +878,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                  iscissors->ny,
                                  POINT_WIDTH,
                                  POINT_WIDTH,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
     }
 }
 
@@ -944,7 +944,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
                                     GIMP_HANDLE_CIRCLE,
                                     curve->x1, curve->y1,
                                     POINT_WIDTH, POINT_WIDTH,
-                                    GTK_ANCHOR_CENTER))
+                                    GIMP_HANDLE_ANCHOR_CENTER))
         {
           gimp_tool_replace_status (tool, display, _("Click to close the"
                                                      " curve"));
@@ -1215,7 +1215,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
                                     GIMP_HANDLE_CIRCLE,
                                     curve->x1, curve->y1,
                                     POINT_WIDTH, POINT_WIDTH,
-                                    GTK_ANCHOR_CENTER))
+                                    GIMP_HANDLE_ANCHOR_CENTER))
         {
           iscissors->curve1 = curve;
 
@@ -1228,7 +1228,7 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
                                          GIMP_HANDLE_CIRCLE,
                                          curve->x2, curve->y2,
                                          POINT_WIDTH, POINT_WIDTH,
-                                         GTK_ANCHOR_CENTER))
+                                         GIMP_HANDLE_ANCHOR_CENTER))
         {
           iscissors->curve2 = curve;
 

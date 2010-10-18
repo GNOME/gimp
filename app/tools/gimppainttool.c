@@ -746,7 +746,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      core->last_coords.y + off_y,
                                      HANDLE_SIZE,
                                      HANDLE_SIZE,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
 
           /*  Draw end target  */
           gimp_draw_tool_add_handle (draw_tool,
@@ -755,7 +755,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      core->cur_coords.y + off_y,
                                      HANDLE_SIZE,
                                      HANDLE_SIZE,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 
