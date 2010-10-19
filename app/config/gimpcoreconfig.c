@@ -94,12 +94,14 @@ enum
   PROP_LAYER_PREVIEW_SIZE,
   PROP_THUMBNAIL_SIZE,
   PROP_THUMBNAIL_FILESIZE_LIMIT,
-  PROP_INSTALL_COLORMAP,
-  PROP_MIN_COLORS,
   PROP_COLOR_MANAGEMENT,
   PROP_COLOR_PROFILE_POLICY,
   PROP_SAVE_DOCUMENT_HISTORY,
-  PROP_USE_GEGL
+  PROP_USE_GEGL,
+
+  /* ignored, only for backward compatibility: */
+  PROP_INSTALL_COLORMAP,
+  PROP_MIN_COLORS
 };
 
 
@@ -407,16 +409,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                     THUMBNAIL_FILESIZE_LIMIT_BLURB,
                                     0, GIMP_MAX_MEMSIZE, 1 << 22,
                                     GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
-                                    "install-colormap", INSTALL_COLORMAP_BLURB,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS |
-                                    GIMP_CONFIG_PARAM_RESTART);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MIN_COLORS,
-                                "min-colors", MIN_COLORS_BLURB,
-                                27, 256, 144,
-                                GIMP_PARAM_STATIC_STRINGS |
-                                GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_COLOR_MANAGEMENT,
                                    "color-management", COLOR_MANAGEMENT_BLURB,
                                    GIMP_TYPE_COLOR_CONFIG,
@@ -441,6 +433,18 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
+                                    "install-colormap", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_IGNORE);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MIN_COLORS,
+                                "min-colors", NULL,
+                                27, 256, 144,
+                                GIMP_PARAM_STATIC_STRINGS |
+                                GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -685,12 +689,6 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_THUMBNAIL_FILESIZE_LIMIT:
       core_config->thumbnail_filesize_limit = g_value_get_uint64 (value);
       break;
-    case PROP_INSTALL_COLORMAP:
-      core_config->install_cmap = g_value_get_boolean (value);
-      break;
-    case PROP_MIN_COLORS:
-      core_config->min_colors = g_value_get_int (value);
-      break;
     case PROP_COLOR_MANAGEMENT:
       if (g_value_get_object (value))
         gimp_config_sync (g_value_get_object (value),
@@ -704,6 +702,11 @@ gimp_core_config_set_property (GObject      *object,
       break;
     case PROP_USE_GEGL:
       core_config->use_gegl = g_value_get_boolean (value);
+      break;
+
+    case PROP_INSTALL_COLORMAP:
+    case PROP_MIN_COLORS:
+      /*  ignored  */
       break;
 
     default:
@@ -854,12 +857,6 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_THUMBNAIL_FILESIZE_LIMIT:
       g_value_set_uint64 (value, core_config->thumbnail_filesize_limit);
       break;
-    case PROP_INSTALL_COLORMAP:
-      g_value_set_boolean (value, core_config->install_cmap);
-      break;
-    case PROP_MIN_COLORS:
-      g_value_set_int (value, core_config->min_colors);
-      break;
     case PROP_COLOR_MANAGEMENT:
       g_value_set_object (value, core_config->color_management);
       break;
@@ -871,6 +868,11 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_USE_GEGL:
       g_value_set_boolean (value, core_config->use_gegl);
+      break;
+
+    case PROP_INSTALL_COLORMAP:
+    case PROP_MIN_COLORS:
+      /*  ignored  */
       break;
 
     default:

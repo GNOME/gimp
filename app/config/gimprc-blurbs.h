@@ -197,9 +197,6 @@ N_("Sets the text to appear in image window titles.")
 N_("When enabled, this will ensure that the full image is visible after a " \
    "file is opened, otherwise it will be displayed with a scale of 1:1.")
 
-#define INSTALL_COLORMAP_BLURB \
-N_("Install a private colormap; might be useful on 8-bit (256 colors) displays.")
-
 #define INTERPOLATION_TYPE_BLURB \
 N_("Sets the level of interpolation used for scaling and other " \
    "transformations.")
@@ -220,10 +217,6 @@ N_("Speed of marching ants in the selection outline.  This value is in " \
 #define MAX_NEW_IMAGE_SIZE_BLURB  \
 N_("GIMP will warn the user if an attempt is made to create an image that " \
    "would take more memory than the size specified here.")
-
-#define MIN_COLORS_BLURB  \
-N_("Generally only a concern for 8-bit displays, this sets the minimum " \
-   "number of system colors allocated for GIMP.")
 
 #define MODULE_PATH_BLURB \
 "Sets the module search path."

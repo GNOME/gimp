@@ -216,9 +216,6 @@ gui_init (Gimp     *gimp,
 
   themes_init (gimp);
 
-  gdk_rgb_set_min_colors (CLAMP (gimp->config->min_colors, 27, 256));
-  gdk_rgb_set_install (gimp->config->install_cmap);
-
   screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
 
