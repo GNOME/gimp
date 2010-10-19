@@ -113,8 +113,8 @@ static gboolean gimp_tag_entry_auto_complete             (GimpTagEntry     *entr
 
 static void     gimp_tag_entry_toggle_desc               (GimpTagEntry     *widget,
                                                           gboolean          show);
-static gboolean gimp_tag_entry_expose                    (GtkWidget        *widget,
-                                                          GdkEventExpose   *event);
+static gboolean gimp_tag_entry_draw                      (GtkWidget        *widget,
+                                                          cairo_t          *cr);
 static void     gimp_tag_entry_commit_region             (GString          *tags,
                                                           GString          *mask);
 static void     gimp_tag_entry_commit_tags               (GimpTagEntry     *entry);
@@ -210,8 +210,8 @@ gimp_tag_entry_init (GimpTagEntry *entry)
   g_signal_connect (entry, "focus-out-event",
                     G_CALLBACK (gimp_tag_entry_focus_out),
                     NULL);
-  g_signal_connect_after (entry, "expose-event",
-                          G_CALLBACK (gimp_tag_entry_expose),
+  g_signal_connect_after (entry, "draw",
+                          G_CALLBACK (gimp_tag_entry_draw),
                           NULL);
 }
 
@@ -1284,10 +1284,11 @@ gimp_tag_entry_toggle_desc (GimpTagEntry *tag_entry,
 }
 
 static gboolean
-gimp_tag_entry_expose (GtkWidget      *widget,
-                       GdkEventExpose *event)
+gimp_tag_entry_draw (GtkWidget *widget,
+                     cairo_t   *cr)
 {
   GimpTagEntry   *tag_entry = GIMP_TAG_ENTRY (widget);
+  GdkWindow      *window;
   PangoLayout    *layout;
   PangoAttrList  *attr_list;
   PangoAttribute *attribute;
@@ -1298,8 +1299,9 @@ gimp_tag_entry_expose (GtkWidget      *widget,
   gint            offset;
   const char     *display_text;
 
-  /* eeeeeek */
-  if (event->window != gtk_entry_get_text_window (GTK_ENTRY (widget)))
+  window = gtk_entry_get_text_window (GTK_ENTRY (widget));
+
+  if (! gtk_cairo_should_draw_window (cr, window))
     return FALSE;
 
   if (! GIMP_TAG_ENTRY (widget)->description_shown)
@@ -1323,17 +1325,16 @@ gimp_tag_entry_expose (GtkWidget      *widget,
   pango_layout_set_attributes (layout, attr_list);
   pango_attr_list_unref (attr_list);
 
-  window_width  = gdk_window_get_width (event->window);
-  window_height = gdk_window_get_height (event->window);
+  window_width  = gdk_window_get_width  (window);
+  window_height = gdk_window_get_height (window);
   pango_layout_get_size (layout,
                          &layout_width, &layout_height);
   offset = (window_height - PANGO_PIXELS (layout_height)) / 2;
 
   gtk_paint_layout (gtk_widget_get_style (widget),
-                    event->window,
+                    cr,
                     GTK_STATE_INSENSITIVE,
                     TRUE,
-                    &event->area,
                     widget,
                     NULL,
                     (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
