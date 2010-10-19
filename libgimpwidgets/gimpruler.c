@@ -136,8 +136,8 @@ static void          gimp_ruler_style_set             (GtkWidget      *widget,
                                                        GtkStyle       *prev_style);
 static gboolean      gimp_ruler_motion_notify         (GtkWidget      *widget,
                                                        GdkEventMotion *event);
-static gboolean      gimp_ruler_expose                (GtkWidget      *widget,
-                                                       GdkEventExpose *event);
+static gboolean      gimp_ruler_draw                  (GtkWidget      *widget,
+                                                       cairo_t        *cr);
 
 static void          gimp_ruler_draw_ticks            (GimpRuler      *ruler);
 static GdkRectangle  gimp_ruler_get_pos_rect          (GimpRuler      *ruler,
@@ -176,7 +176,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->size_request        = gimp_ruler_size_request;
   widget_class->style_set           = gimp_ruler_style_set;
   widget_class->motion_notify_event = gimp_ruler_motion_notify;
-  widget_class->expose_event        = gimp_ruler_expose;
+  widget_class->draw                = gimp_ruler_draw;
 
   g_type_class_add_private (object_class, sizeof (GimpRulerPrivate));
 
@@ -947,32 +947,19 @@ gimp_ruler_motion_notify (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_ruler_expose (GtkWidget      *widget,
-                   GdkEventExpose *event)
+gimp_ruler_draw (GtkWidget *widget,
+                 cairo_t   *cr)
 {
-  if (gtk_widget_is_drawable (widget))
-    {
-      GimpRuler        *ruler = GIMP_RULER (widget);
-      GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
-      GtkAllocation     allocation;
-      cairo_t          *cr;
+  GimpRuler        *ruler = GIMP_RULER (widget);
+  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
 
-      if (! priv->backing_store_valid)
-        gimp_ruler_draw_ticks (ruler);
+  if (! priv->backing_store_valid)
+    gimp_ruler_draw_ticks (ruler);
 
-      cr = gdk_cairo_create (gtk_widget_get_window (widget));
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
+  cairo_set_source_surface (cr, priv->backing_store, 0, 0);
+  cairo_paint (cr);
 
-      gtk_widget_get_allocation (widget, &allocation);
-      cairo_set_source_surface (cr, priv->backing_store,
-                                allocation.x, allocation.y);
-      cairo_paint (cr);
-
-      gimp_ruler_draw_pos (ruler, cr);
-
-      cairo_destroy (cr);
-    }
+  gimp_ruler_draw_pos (ruler, cr);
 
   return FALSE;
 }
@@ -1206,7 +1193,6 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
                                      pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
                       pango_cairo_show_layout (cr, layout);
 #endif
-
                     }
                 }
             }
