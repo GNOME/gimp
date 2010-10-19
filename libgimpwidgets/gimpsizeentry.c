@@ -321,10 +321,10 @@ gimp_size_entry_new (gint                       number_of_fields,
                 gsef->refval_digits : ((unit == GIMP_UNIT_PERCENT) ?
                                        2 : GIMP_SIZE_ENTRY_DIGITS (unit)));
 
-      gsef->value_adjustment = (GtkAdjustment *)
-        gtk_adjustment_new (gsef->value,
-                            gsef->min_value, gsef->max_value,
-                            1.0, 10.0, 0.0);
+      gsef->value_adjustment = gtk_adjustment_new (gsef->value,
+                                                   gsef->min_value,
+                                                   gsef->max_value,
+                                                   1.0, 10.0, 0.0);
       gsef->value_spinbutton = gtk_spin_button_new (gsef->value_adjustment,
                                                     1.0, digits);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gsef->value_spinbutton),
@@ -354,10 +354,10 @@ gimp_size_entry_new (gint                       number_of_fields,
 
       if (gse->show_refval)
         {
-          gsef->refval_adjustment = (GtkAdjustment *)
-            gtk_adjustment_new (gsef->refval,
-                                gsef->min_refval, gsef->max_refval,
-                                1.0, 10.0, 0.0);
+          gsef->refval_adjustment = gtk_adjustment_new (gsef->refval,
+                                                        gsef->min_refval,
+                                                        gsef->max_refval,
+                                                        1.0, 10.0, 0.0);
           gsef->refval_spinbutton = gtk_spin_button_new (gsef->refval_adjustment,
                                                          1.0,
                                                          gsef->refval_digits);
