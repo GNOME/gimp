@@ -67,14 +67,14 @@ static void        splash_position_layouts     (GimpSplash     *splash,
                                                 const gchar    *text1,
                                                 const gchar    *text2,
                                                 GdkRectangle   *area);
-static gboolean    splash_area_expose          (GtkWidget      *widget,
-                                                GdkEventExpose *event,
-                                                GimpSplash     *splash);
+static gboolean    splash_area_draw            (GtkWidget      *widget,
+                                                cairo_t        *cr,
+                                               GimpSplash      *splash);
 static void        splash_rectangle_union      (GdkRectangle   *dest,
                                                 PangoRectangle *pango_rect,
                                                 gint            offset_x,
                                                 gint            offset_y);
-static gboolean    splash_average_text_area    (GimpSplash     *splash,
+static void        splash_average_text_area    (GimpSplash     *splash,
                                                 GdkPixbuf      *pixbuf,
                                                 GdkColor       *color);
 
@@ -170,9 +170,9 @@ splash_create (gboolean   be_verbose,
 
   g_object_unref (pixbuf);
 
-  g_signal_connect_after (splash->area, "expose-event",
-                          G_CALLBACK (splash_area_expose),
-                          splash);
+  g_signal_connect_after (splash->area, "draw",
+			  G_CALLBACK (splash_area_draw),
+			  splash);
 
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
@@ -262,15 +262,10 @@ splash_update (const gchar *text1,
 /*  private functions  */
 
 static gboolean
-splash_area_expose (GtkWidget      *widget,
-                    GdkEventExpose *event,
-                    GimpSplash     *splash)
+splash_area_draw (GtkWidget  *widget,
+                  cairo_t    *cr,
+                  GimpSplash *splash)
 {
-  cairo_t *cr = gdk_cairo_create (event->window);
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
   gdk_cairo_set_source_color (cr, &splash->color);
 
   cairo_move_to (cr, splash->upper_x, splash->upper_y);
@@ -278,8 +273,6 @@ splash_area_expose (GtkWidget      *widget,
 
   cairo_move_to (cr, splash->lower_x, splash->lower_y);
   pango_cairo_show_layout (cr, splash->lower);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
@@ -351,7 +344,7 @@ splash_rectangle_union (GdkRectangle   *dest,
 /* This function chooses a gray value for the text color, based on
  * the average luminance of the text area of the splash image.
  */
-static gboolean
+static void
 splash_average_text_area (GimpSplash *splash,
                           GdkPixbuf  *pixbuf,
                           GdkColor   *color)
@@ -364,8 +357,8 @@ splash_average_text_area (GimpSplash *splash,
   GdkRectangle  image     = { 0, 0, 0, 0 };
   GdkRectangle  area      = { 0, 0, 0, 0 };
 
-  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
-  g_return_val_if_fail (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8, FALSE);
+  g_return_if_fail (GDK_IS_PIXBUF (pixbuf));
+  g_return_if_fail (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8);
 
   image.width  = gdk_pixbuf_get_width (pixbuf);
   image.height = gdk_pixbuf_get_height (pixbuf);
@@ -410,9 +403,6 @@ splash_average_text_area (GimpSplash *splash,
     }
 
   color->red = color->green = color->blue = (luminance << 8 | luminance);
-
-  return gdk_colormap_alloc_color (gtk_widget_get_colormap (splash->area),
-                                   color, FALSE, TRUE);
 }
 
 static GdkPixbufAnimation *
