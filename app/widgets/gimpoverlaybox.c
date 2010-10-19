@@ -45,8 +45,8 @@ static void        gimp_overlay_box_size_request        (GtkWidget      *widget,
                                                          GtkRequisition *requisition);
 static void        gimp_overlay_box_size_allocate       (GtkWidget      *widget,
                                                          GtkAllocation  *allocation);
-static gboolean    gimp_overlay_box_expose              (GtkWidget      *widget,
-                                                         GdkEventExpose *event);
+static gboolean    gimp_overlay_box_draw                (GtkWidget      *widget,
+                                                         cairo_t        *cr);
 static gboolean    gimp_overlay_box_damage              (GtkWidget      *widget,
                                                          GdkEventExpose *event);
 
@@ -85,7 +85,7 @@ gimp_overlay_box_class_init (GimpOverlayBoxClass *klass)
   widget_class->unrealize     = gimp_overlay_box_unrealize;
   widget_class->size_request  = gimp_overlay_box_size_request;
   widget_class->size_allocate = gimp_overlay_box_size_allocate;
-  widget_class->expose_event  = gimp_overlay_box_expose;
+  widget_class->draw          = gimp_overlay_box_draw;
 
   g_signal_override_class_handler ("damage-event",
                                    GIMP_TYPE_OVERLAY_BOX,
@@ -151,10 +151,9 @@ gimp_overlay_box_realize (GtkWidget *widget)
   attributes.window_type = GDK_WINDOW_CHILD;
   attributes.wclass      = GDK_INPUT_OUTPUT;
   attributes.visual      = gtk_widget_get_visual (widget);
-  attributes.colormap    = gtk_widget_get_colormap (widget);
   attributes.event_mask  = gtk_widget_get_events (widget);
 
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
 
   gtk_widget_set_window (widget,
                          gdk_window_new (gtk_widget_get_parent_window (widget),
@@ -217,19 +216,16 @@ gimp_overlay_box_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_overlay_box_expose (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_overlay_box_draw (GtkWidget *widget,
+                       cairo_t   *cr)
 {
-  if (gtk_widget_is_drawable (widget))
-    {
-      GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
-      GList          *list;
+  GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
+  GList          *list;
 
-      for (list = box->children; list; list = g_list_next (list))
-        {
-          if (gimp_overlay_child_expose (box, list->data, event))
-            return FALSE;
-        }
+  for (list = box->children; list; list = g_list_next (list))
+    {
+      if (gimp_overlay_child_draw (box, list->data, cr))
+        return FALSE;
     }
 
   return FALSE;

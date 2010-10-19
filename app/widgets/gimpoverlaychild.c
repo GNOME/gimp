@@ -133,7 +133,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   GtkWidget     *widget;
   GdkDisplay    *display;
   GdkScreen     *screen;
-  GdkColormap   *colormap;
+  GdkVisual     *visual;
   GtkAllocation  child_allocation;
   GdkWindowAttr  attributes;
   gint           attributes_mask;
@@ -147,9 +147,9 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   display = gtk_widget_get_display (widget);
   screen  = gtk_widget_get_screen (widget);
 
-  colormap = gdk_screen_get_rgba_colormap (screen);
-  if (colormap)
-    gtk_widget_set_colormap (child->widget, colormap);
+  visual = gdk_screen_get_rgba_visual (screen);
+  if (visual)
+    gtk_widget_set_visual (child->widget, visual);
 
   gtk_widget_get_allocation (child->widget, &child_allocation);
 
@@ -169,7 +169,6 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   attributes.window_type = GDK_WINDOW_OFFSCREEN;
   attributes.wclass      = GDK_INPUT_OUTPUT;
   attributes.visual      = gtk_widget_get_visual (child->widget);
-  attributes.colormap    = gtk_widget_get_colormap (child->widget);
   attributes.event_mask  = (gtk_widget_get_events (widget) |
                             GDK_EXPOSURE_MASK);
   attributes.cursor      = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
@@ -177,7 +176,6 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   attributes_mask = (GDK_WA_X        |
                      GDK_WA_Y        |
                      GDK_WA_VISUAL   |
-                     GDK_WA_COLORMAP |
                      GDK_WA_CURSOR);
 
   child->window = gdk_window_new (gtk_widget_get_root_window (widget),
@@ -223,7 +221,7 @@ gimp_overlay_child_size_request (GimpOverlayBox   *box,
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
-  gtk_widget_size_request (child->widget, &child_requisition);
+  gtk_widget_get_preferred_size (child->widget, &child_requisition, NULL);
 }
 
 void
@@ -243,7 +241,7 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
 
   gimp_overlay_child_invalidate (box, child);
 
-  gtk_widget_get_child_requisition (child->widget, &child_requisition);
+  gtk_widget_get_preferred_size (child->widget, &child_requisition, NULL);
 
   child_allocation.x      = 0;
   child_allocation.y      = 0;
@@ -341,19 +339,19 @@ gimp_overlay_child_clip_fully_opaque (GimpOverlayChild *child,
 }
 
 gboolean
-gimp_overlay_child_expose (GimpOverlayBox   *box,
-                           GimpOverlayChild *child,
-                           GdkEventExpose   *event)
+gimp_overlay_child_draw (GimpOverlayBox   *box,
+                         GimpOverlayChild *child,
+                         cairo_t          *cr)
 {
   GtkWidget *widget;
 
   g_return_val_if_fail (GIMP_IS_OVERLAY_BOX (box), FALSE);
   g_return_val_if_fail (child != NULL, FALSE);
-  g_return_val_if_fail (event != NULL, FALSE);
+  g_return_val_if_fail (cr != NULL, FALSE);
 
   widget = GTK_WIDGET (box);
 
-  if (event->window == gtk_widget_get_window (widget))
+  if (gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget)))
     {
       GtkAllocation child_allocation;
       GdkRectangle  bounds;
@@ -362,22 +360,18 @@ gimp_overlay_child_expose (GimpOverlayBox   *box,
 
       gimp_overlay_child_transform_bounds (child, &child_allocation, &bounds);
 
-      if (gtk_widget_get_visible (child->widget) &&
-          gdk_rectangle_intersect (&event->area, &bounds, NULL))
+      if (gtk_widget_get_visible (child->widget))
         {
-          GdkPixmap *pixmap;
-          cairo_t   *cr;
+          cairo_surface_t *surface;
 
           gdk_window_process_updates (child->window, FALSE);
 
-          pixmap = gdk_offscreen_window_get_pixmap (child->window);
-          cr     = gdk_cairo_create (gtk_widget_get_window (widget));
+          surface = gdk_offscreen_window_get_surface (child->window);
 
-          gdk_cairo_region (cr, event->region);
-          cairo_clip (cr);
+          cairo_save (cr);
 
           cairo_transform (cr, &child->matrix);
-          gdk_cairo_set_source_pixmap (cr, pixmap, 0, 0);
+          cairo_set_source_surface (cr, surface, 0, 0);
           cairo_paint_with_alpha (cr, child->opacity);
 
           gimp_overlay_child_clip_fully_opaque (child,
@@ -386,21 +380,22 @@ gimp_overlay_child_expose (GimpOverlayBox   *box,
           cairo_clip (cr);
           cairo_paint (cr);
 
-          cairo_destroy (cr);
+          cairo_restore (cr);
         }
     }
-  else if (event->window == child->window)
+
+  if (gtk_cairo_should_draw_window (cr, child->window))
     {
       if (! gtk_widget_get_app_paintable (child->widget))
         gtk_paint_flat_box (gtk_widget_get_style (child->widget),
-                            event->window,
+                            cr,
                             GTK_STATE_NORMAL, GTK_SHADOW_NONE,
-                            &event->area, widget, NULL,
+                            widget, NULL,
                             0, 0, -1, -1);
 
-      gtk_container_propagate_expose (GTK_CONTAINER (widget),
-                                      child->widget,
-                                      event);
+      gtk_container_propagate_draw (GTK_CONTAINER (widget),
+                                    child->widget,
+                                    cr);
 
       return TRUE;
     }
@@ -423,23 +418,23 @@ gimp_overlay_child_damage (GimpOverlayBox   *box,
 
   if (event->window == child->window)
     {
-      GdkRectangle *rects;
-      gint          n_rects;
-      gint          i;
+      gint n_rects;
+      gint i;
 
-      gdk_region_get_rectangles (event->region, &rects, &n_rects);
+      n_rects = cairo_region_num_rectangles (event->region);
 
       for (i = 0; i < n_rects; i++)
         {
+          GdkRectangle rect;
           GdkRectangle bounds;
 
-          gimp_overlay_child_transform_bounds (child, &rects[i], &bounds);
+          cairo_region_get_rectangle (event->region, i, &rect);
+
+          gimp_overlay_child_transform_bounds (child, &rect, &bounds);
 
           gdk_window_invalidate_rect (gtk_widget_get_window (widget),
                                       &bounds, FALSE);
         }
-
-      g_free (rects);
 
       return TRUE;
     }
