@@ -42,29 +42,14 @@ void
 gimp_display_shell_expose_region (GimpDisplayShell *shell,
                                   cairo_region_t   *region)
 {
-  GdkWindow *window;
-  gint       n_rectangles;
-  gint       i;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (region != NULL);
 
   if (! gtk_widget_get_realized (shell->canvas))
     return;
 
-  window = gtk_widget_get_window (shell->canvas);
-  n_rectangles = cairo_region_num_rectangles (region);
-
-  for (i = 0; i < n_rectangles; i++)
-    {
-      cairo_rectangle_int_t rectangle;
-
-      cairo_region_get_rectangle (region, i, &rectangle);
-
-      gdk_window_invalidate_rect (window,
-                                  (GdkRectangle *) &rectangle,
-                                  TRUE);
-    }
+  gdk_window_invalidate_region (gtk_widget_get_window (shell->canvas),
+                                region, TRUE);
 }
 
 void
