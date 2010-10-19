@@ -192,11 +192,13 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 static void
 gimp_toolbox_constructed (GObject *object)
 {
-  GimpToolbox   *toolbox = GIMP_TOOLBOX (object);
-  GimpGuiConfig *config;
-  GtkWidget     *main_vbox;
-  GdkDisplay    *display;
-  GList         *list;
+  GimpToolbox      *toolbox = GIMP_TOOLBOX (object);
+  GimpGuiConfig    *config;
+  GtkWidget        *main_vbox;
+  GdkDisplay       *display;
+  GdkDeviceManager *manager;
+  GList            *devices;
+  GList            *list;
 
   g_assert (GIMP_IS_CONTEXT (toolbox->p->context));
 
@@ -276,9 +278,15 @@ gimp_toolbox_constructed (GObject *object)
    * manually that all devices have a cursor, before establishing the check.
    */
   display = gtk_widget_get_display (GTK_WIDGET (toolbox));
-  for (list = gdk_display_list_devices (display); list; list = list->next)
+  manager = gdk_display_get_device_manager (display);
+
+  devices = gdk_device_manager_list_devices (manager, GDK_DEVICE_TYPE_MASTER);
+
+  for (list = devices; list; list = g_list_next (list))
     if (! ((GdkDevice *) (list->data))->has_cursor)
       break;
+
+  g_list_free (devices);
 
   if (! list)  /* all devices have cursor */
     {
