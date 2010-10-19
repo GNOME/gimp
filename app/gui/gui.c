@@ -277,7 +277,6 @@ gui_init (Gimp     *gimp,
   themes_init (gimp);
 
   initial_monitor = gimp_get_monitor_at_pointer (&initial_screen);
-  gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (initial_screen));
 
   if (! no_splash)
     {
