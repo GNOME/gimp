@@ -54,8 +54,8 @@ static void      gimp_frame_size_allocate       (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 static void      gimp_frame_style_set           (GtkWidget      *widget,
                                                  GtkStyle       *previous);
-static gboolean  gimp_frame_expose_event        (GtkWidget      *widget,
-                                                 GdkEventExpose *event);
+static gboolean  gimp_frame_draw                (GtkWidget      *widget,
+                                                 cairo_t        *cr);
 static void      gimp_frame_child_allocate      (GtkFrame       *frame,
                                                  GtkAllocation  *allocation);
 static void      gimp_frame_label_widget_notify (GtkFrame       *frame);
@@ -76,7 +76,7 @@ gimp_frame_class_init (GimpFrameClass *klass)
   widget_class->size_request  = gimp_frame_size_request;
   widget_class->size_allocate = gimp_frame_size_allocate;
   widget_class->style_set     = gimp_frame_style_set;
-  widget_class->expose_event  = gimp_frame_expose_event;
+  widget_class->draw          = gimp_frame_draw;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_boolean ("label-bold",
@@ -113,7 +113,7 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   if (label_widget && gtk_widget_get_visible (label_widget))
     {
-      gtk_widget_size_request (label_widget, requisition);
+      gtk_widget_get_preferred_size (label_widget, requisition, NULL);
     }
   else
     {
@@ -127,7 +127,7 @@ gimp_frame_size_request (GtkWidget      *widget,
     {
       gint indent = gimp_frame_get_indent (widget);
 
-      gtk_widget_size_request (child, &child_requisition);
+      gtk_widget_get_preferred_size (child, &child_requisition, NULL);
 
       requisition->width = MAX (requisition->width,
                                 child_requisition.width + indent);
@@ -165,7 +165,7 @@ gimp_frame_size_allocate (GtkWidget     *widget,
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-      gtk_widget_get_child_requisition (label_widget, &label_requisition);
+      gtk_widget_get_preferred_size (label_widget, &label_requisition, NULL);
 
       label_allocation.x      = allocation->x + border_width;
       label_allocation.y      = allocation->y + border_width;
@@ -196,7 +196,7 @@ gimp_frame_child_allocate (GtkFrame      *frame,
     {
       GtkRequisition  child_requisition;
 
-      gtk_widget_get_child_requisition (label_widget, &child_requisition);
+      gtk_widget_get_preferred_size (label_widget, &child_requisition, NULL);
       spacing += child_requisition.height;
     }
 
@@ -230,17 +230,12 @@ gimp_frame_style_set (GtkWidget *widget,
 }
 
 static gboolean
-gimp_frame_expose_event (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_frame_draw (GtkWidget *widget,
+                 cairo_t   *cr)
 {
-  if (gtk_widget_is_drawable (widget))
-    {
-      GtkWidgetClass *widget_class = g_type_class_peek_parent (parent_class);
+  GtkWidgetClass *widget_class = g_type_class_peek_parent (parent_class);
 
-      return widget_class->expose_event (widget, event);
-    }
-
-  return FALSE;
+  return widget_class->draw (widget, cr);
 }
 
 static void
