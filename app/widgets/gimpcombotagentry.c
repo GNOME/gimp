@@ -44,8 +44,8 @@
 static void     gimp_combo_tag_entry_constructed       (GObject              *object);
 static void     gimp_combo_tag_entry_dispose           (GObject              *object);
 
-static gboolean gimp_combo_tag_entry_expose            (GtkWidget            *widget,
-                                                        GdkEventExpose       *event);
+static gboolean gimp_combo_tag_entry_draw              (GtkWidget            *widget,
+                                                        cairo_t              *cr);
 static void     gimp_combo_tag_entry_style_set         (GtkWidget            *widget,
                                                         GtkStyle             *previous_style);
 
@@ -73,11 +73,11 @@ gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_combo_tag_entry_constructed;
-  object_class->dispose      = gimp_combo_tag_entry_dispose;
+  object_class->constructed = gimp_combo_tag_entry_constructed;
+  object_class->dispose     = gimp_combo_tag_entry_dispose;
 
-  widget_class->expose_event = gimp_combo_tag_entry_expose;
-  widget_class->style_set    = gimp_combo_tag_entry_style_set;
+  widget_class->draw        = gimp_combo_tag_entry_draw;
+  widget_class->style_set   = gimp_combo_tag_entry_style_set;
 }
 
 static void
@@ -143,13 +143,14 @@ gimp_combo_tag_entry_dispose (GObject *object)
 }
 
 static gboolean
-gimp_combo_tag_entry_expose (GtkWidget      *widget,
-                             GdkEventExpose *event)
+gimp_combo_tag_entry_draw (GtkWidget *widget,
+                           cairo_t   *cr)
 {
   GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
 
   if (! entry->arrow_pixbuf)
     {
+#if 0
       GtkStyle  *style = gtk_widget_get_style (widget);
       GdkPixmap *pixmap;
       cairo_t   *cr;
@@ -175,9 +176,10 @@ gimp_combo_tag_entry_expose (GtkWidget      *widget,
       gtk_entry_set_icon_from_pixbuf (GTK_ENTRY (entry),
                                       GTK_ENTRY_ICON_SECONDARY,
                                       entry->arrow_pixbuf);
+#endif
     }
 
-  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+  return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 }
 
 static void
