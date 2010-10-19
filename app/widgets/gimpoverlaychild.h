@@ -63,9 +63,9 @@ void               gimp_overlay_child_size_request  (GimpOverlayBox   *box,
                                                      GimpOverlayChild *child);
 void               gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
                                                      GimpOverlayChild *child);
-gboolean           gimp_overlay_child_expose        (GimpOverlayBox   *box,
+gboolean           gimp_overlay_child_draw          (GimpOverlayBox   *box,
                                                      GimpOverlayChild *child,
-                                                     GdkEventExpose   *event);
+                                                     cairo_t          *cr);
 gboolean           gimp_overlay_child_damage        (GimpOverlayBox   *box,
                                                      GimpOverlayChild *child,
                                                      GdkEventExpose   *event);
