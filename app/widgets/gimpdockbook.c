@@ -661,7 +661,7 @@ gimp_dockbook_get_dockable_tab_width (GimpDockbook *dockbook,
    */
   gimp_dock_temp_add (dockbook->p->dock, tab_widget);
 
-  gtk_widget_size_request (tab_widget, &dockable_request);
+  gtk_widget_get_preferred_size (tab_widget, &dockable_request, NULL);
 
   /* Also destroys the widget */
   gimp_dock_temp_remove (dockbook->p->dock, tab_widget);
@@ -1386,7 +1386,7 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_container_add (GTK_CONTAINER (window), view);
   gtk_widget_show (view);
 
-  gtk_widget_size_request (view, &requisition);
+  gtk_widget_get_preferred_size (view, &requisition, NULL);
 
   if (requisition.width < allocation.width)
     gtk_widget_set_size_request (view, allocation.width, -1);

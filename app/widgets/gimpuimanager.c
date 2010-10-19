@@ -836,7 +836,7 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
 
   gtk_menu_set_screen (menu, screen);
 
-  gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+  gtk_widget_get_preferred_size (GTK_WIDGET (menu), &requisition, NULL);
 
   if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_RTL)
     {
