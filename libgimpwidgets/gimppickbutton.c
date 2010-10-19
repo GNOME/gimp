@@ -375,7 +375,7 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
   cr = cairo_create (image);
 
-  gdk_cairo_set_source_pixmap (cr, root_window, -x_root, -y_root);
+  gdk_cairo_set_source_window (cr, root_window, -x_root, -y_root);
   cairo_paint (cr);
 
   cairo_destroy (cr);
