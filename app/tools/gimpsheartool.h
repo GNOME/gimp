@@ -37,8 +37,8 @@ struct _GimpShearTool
 {
   GimpTransformTool  parent_instance;
 
-  GtkObject         *x_adj;
-  GtkObject         *y_adj;
+  GtkAdjustment     *x_adj;
+  GtkAdjustment     *y_adj;
 };
 
 struct _GimpShearToolClass

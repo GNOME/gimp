@@ -62,8 +62,8 @@ struct _GimpAlignTool
   gdouble                horz_offset;
   gdouble                vert_offset;
 
-  GtkObject             *horz_offset_adjustment;
-  GtkObject             *vert_offset_adjustment;
+  GtkAdjustment         *horz_offset_adjustment;
+  GtkAdjustment         *vert_offset_adjustment;
 
   gint                   x0, y0, x1, y1;   /* rubber-band rectangle */
 

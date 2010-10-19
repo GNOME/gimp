@@ -127,7 +127,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                       table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  button = gimp_spin_button_new (&shear->x_adj,
+  button = gimp_spin_button_new ((GtkObject **) &shear->x_adj,
                                  0, -65536, 65536, 1, 15, 0, 1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Shear magnitude _X:"),
@@ -137,7 +137,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                     G_CALLBACK (shear_x_mag_changed),
                     tr_tool);
 
-  button = gimp_spin_button_new (&shear->y_adj,
+  button = gimp_spin_button_new ((GtkObject **) &shear->y_adj,
                                  0, -65536, 65536, 1, 15, 0, 1, 0);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, _("Shear magnitude _Y:"),
@@ -153,10 +153,8 @@ gimp_shear_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   GimpShearTool *shear = GIMP_SHEAR_TOOL (tr_tool);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (shear->x_adj),
-                            tr_tool->trans_info[XSHEAR]);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (shear->y_adj),
-                            tr_tool->trans_info[YSHEAR]);
+  gtk_adjustment_set_value (shear->x_adj, tr_tool->trans_info[XSHEAR]);
+  gtk_adjustment_set_value (shear->y_adj, tr_tool->trans_info[YSHEAR]);
 }
 
 static void

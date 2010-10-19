@@ -892,7 +892,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
+  spinbutton = gimp_spin_button_new ((GtkObject **) &align_tool->horz_offset_adjustment,
                                      0,
                                      -100000,
                                      100000,
