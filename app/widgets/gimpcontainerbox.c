@@ -159,7 +159,7 @@ gimp_container_box_set_size_request (GimpContainerBox *box,
 
   sb = gtk_scrolled_window_get_vscrollbar (GTK_SCROLLED_WINDOW (box->scrolled_win));
 
-  gtk_widget_size_request (sb, &req);
+  gtk_widget_get_preferred_size (sb, &req, NULL);
   scrollbar_width += req.width;
 
   border_x = border_y = gtk_container_get_border_width (GTK_CONTAINER (box));

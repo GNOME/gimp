@@ -245,7 +245,7 @@ gimp_message_box_size_request (GtkWidget      *widget,
       GtkRequisition  child_requisition;
       gint            border_width;
 
-      gtk_widget_size_request (box->image, &child_requisition);
+      gtk_widget_get_preferred_size (box->image, &child_requisition, NULL);
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
@@ -274,7 +274,7 @@ gimp_message_box_size_allocate (GtkWidget     *widget,
       gint            border_width;
       gint            height;
 
-      gtk_widget_size_request (box->image, &child_requisition);
+      gtk_widget_get_preferred_size (box->image, &child_requisition, NULL);
 
       border_width = gtk_container_get_border_width (container);
 

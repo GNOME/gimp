@@ -292,7 +292,7 @@ gimp_dockable_size_request (GtkWidget      *widget,
 
   if (child && gtk_widget_get_visible (child))
     {
-      gtk_widget_size_request (child, &child_requisition);
+      gtk_widget_get_preferred_size (child, &child_requisition, NULL);
 
       requisition->width  += child_requisition.width;
       requisition->height += child_requisition.height;

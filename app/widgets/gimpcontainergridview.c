@@ -633,7 +633,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *container_view,
       adj = gtk_scrolled_window_get_vadjustment
         (GTK_SCROLLED_WINDOW (box->scrolled_win));
 
-      gtk_widget_size_request (GTK_WIDGET (view), &view_requisition);
+      gtk_widget_get_preferred_size (GTK_WIDGET (view), &view_requisition, NULL);
 
       item_height = view_requisition.height;
 
@@ -691,8 +691,8 @@ gimp_container_grid_view_viewport_resized (GtkWidget             *widget,
           gint           columns;
           gint           rows;
 
-          gtk_widget_size_request (GTK_WIDGET (children->data),
-                                   &view_requisition);
+          gtk_widget_get_preferred_size (GTK_WIDGET (children->data),
+                                         &view_requisition, NULL);
 
           g_list_free (children);
 

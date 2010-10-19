@@ -399,9 +399,12 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
 
   config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
 
-  gtk_widget_size_request (toolbox->p->color_area, &color_requisition);
-  gtk_widget_size_request (toolbox->p->foo_area,   &foo_requisition);
-  gtk_widget_size_request (toolbox->p->image_area, &image_requisition);
+  gtk_widget_get_preferred_size (toolbox->p->color_area,
+                                 &color_requisition, NULL);
+  gtk_widget_get_preferred_size (toolbox->p->foo_area,
+                                 &foo_requisition, NULL);
+  gtk_widget_get_preferred_size (toolbox->p->image_area,
+                                 &image_requisition, NULL);
 
   width  = MAX (color_requisition.width,
                 MAX (foo_requisition.width,
@@ -743,7 +746,7 @@ toolbox_area_notify (GimpGuiConfig *config,
 
       gtk_widget_show (parent);
 
-      gtk_widget_size_request (area, &req);
+      gtk_widget_get_preferred_size (area, &req, NULL);
       gtk_widget_set_size_request (parent, req.width, req.height);
     }
   else

@@ -424,8 +424,8 @@ gimp_thumb_box_new (GimpContext *context)
   /* don't gtk_widget_show (box->progress); */
 
   /* eek */
-  gtk_widget_size_request (box->info,     &info_requisition);
-  gtk_widget_size_request (box->progress, &progress_requisition);
+  gtk_widget_get_preferred_size (box->info,     &info_requisition,     NULL);
+  gtk_widget_get_preferred_size (box->progress, &progress_requisition, NULL);
 
   gtk_widget_set_size_request (box->info,
                                -1, info_requisition.height);
