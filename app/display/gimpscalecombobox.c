@@ -145,6 +145,7 @@ gimp_scale_combo_box_constructed (GObject *object)
   entry = gtk_bin_get_child (GTK_BIN (combo_box));
 
   g_object_set (entry,
+                "has-entry",          TRUE,
                 "xalign",             1.0,
                 "width-chars",        7,
                 "truncate-multiline", TRUE,
