@@ -102,8 +102,8 @@ static gboolean gimp_statusbar_progress_message   (GimpProgress      *progress,
 static void     gimp_statusbar_progress_canceled  (GtkWidget         *button,
                                                    GimpStatusbar     *statusbar);
 
-static gboolean gimp_statusbar_label_expose       (GtkWidget         *widget,
-                                                   GdkEventExpose    *event,
+static gboolean gimp_statusbar_label_draw         (GtkWidget         *widget,
+                                                   cairo_t           *cr,
                                                    GimpStatusbar     *statusbar);
 
 static void     gimp_statusbar_update             (GimpStatusbar     *statusbar);
@@ -248,8 +248,8 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   g_object_unref (statusbar->label);
 
-  g_signal_connect_after (statusbar->label, "expose-event",
-                          G_CALLBACK (gimp_statusbar_label_expose),
+  g_signal_connect_after (statusbar->label, "draw",
+                          G_CALLBACK (gimp_statusbar_label_draw),
                           statusbar);
 
   statusbar->progressbar = g_object_new (GTK_TYPE_PROGRESS_BAR,
@@ -1256,20 +1256,14 @@ gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 /*  private functions  */
 
 static gboolean
-gimp_statusbar_label_expose (GtkWidget      *widget,
-                             GdkEventExpose *event,
-                             GimpStatusbar  *statusbar)
+gimp_statusbar_label_draw (GtkWidget     *widget,
+                           cairo_t       *cr,
+                           GimpStatusbar *statusbar)
 {
   if (statusbar->icon)
     {
-      cairo_t        *cr;
       PangoRectangle  rect;
       gint            x, y;
-
-      cr = gdk_cairo_create (event->window);
-
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
 
       gtk_label_get_layout_offsets (GTK_LABEL (widget), &x, &y);
 
@@ -1283,8 +1277,6 @@ gimp_statusbar_label_expose (GtkWidget      *widget,
 
       gdk_cairo_set_source_pixbuf (cr, statusbar->icon, x, y);
       cairo_paint (cr);
-
-      cairo_destroy (cr);
     }
 
   return FALSE;
