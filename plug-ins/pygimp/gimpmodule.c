@@ -789,18 +789,6 @@ pygimp_gamma(PyObject *self)
 }
 
 static PyObject *
-pygimp_install_cmap(PyObject *self)
-{
-    return PyBool_FromLong(gimp_install_cmap());
-}
-
-static PyObject *
-pygimp_min_colors(PyObject *self)
-{
-    return PyInt_FromLong(gimp_min_colors());
-}
-
-static PyObject *
 pygimp_gtkrc(PyObject *self)
 {
     return PyString_FromString(gimp_gtkrc());
@@ -1708,8 +1696,6 @@ static struct PyMethodDef gimp_methods[] = {
     {"domain_register",         (PyCFunction)pygimp_domain_register,    METH_VARARGS},
     {"menu_register",           (PyCFunction)pygimp_menu_register,      METH_VARARGS},
     {"gamma",   (PyCFunction)pygimp_gamma,      METH_NOARGS},
-    {"install_cmap",    (PyCFunction)pygimp_install_cmap,       METH_NOARGS},
-    {"min_colors",      (PyCFunction)pygimp_min_colors, METH_NOARGS},
     {"gtkrc",   (PyCFunction)pygimp_gtkrc,      METH_NOARGS},
     {"personal_rc_file",        (PyCFunction)pygimp_personal_rc_file, METH_VARARGS | METH_KEYWORDS},
     {"context_push", (PyCFunction)pygimp_context_push, METH_NOARGS},
