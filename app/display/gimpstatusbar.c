@@ -375,30 +375,36 @@ gimp_statusbar_hbox_size_request (GtkWidget      *widget,
 
   /*  also consider the children which can be invisible  */
 
-  gtk_widget_size_request (statusbar->cursor_label, &child_requisition);
+  gtk_widget_get_preferred_size (statusbar->cursor_label,
+                                 &child_requisition, NULL);
   width += child_requisition.width;
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
-  gtk_widget_size_request (statusbar->unit_combo, &child_requisition);
+  gtk_widget_get_preferred_size (statusbar->unit_combo,
+                                 &child_requisition, NULL);
   width += child_requisition.width;
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
-  gtk_widget_size_request (statusbar->scale_combo, &child_requisition);
+  gtk_widget_get_preferred_size (statusbar->scale_combo,
+                                 &child_requisition, NULL);
   width += child_requisition.width;
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
-  gtk_widget_size_request (statusbar->progressbar, &child_requisition);
+  gtk_widget_get_preferred_size (statusbar->progressbar,
+                                 &child_requisition, NULL);
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
-  gtk_widget_size_request (statusbar->label, &child_requisition);
+  gtk_widget_get_preferred_size (statusbar->label,
+                                 &child_requisition, NULL);
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
-  gtk_widget_size_request (statusbar->cancel_button, &child_requisition);
+  gtk_widget_get_preferred_size (statusbar->cancel_button,
+                                 &child_requisition, NULL);
   requisition->height = MAX (requisition->height,
                              child_requisition.height);
 
