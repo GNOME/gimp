@@ -232,7 +232,7 @@ gimp_container_editor_constructed (GObject *object)
   switch (editor->priv->view_type)
     {
     case GIMP_VIEW_TYPE_GRID:
-#if 0
+#if 1
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (editor->priv->container,
                                                            editor->priv->context,
