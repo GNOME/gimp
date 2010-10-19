@@ -78,8 +78,8 @@ static void        about_dialog_unmap         (GtkWidget       *widget,
 static GdkPixbuf * about_dialog_load_logo     (void);
 static void        about_dialog_add_animation (GtkWidget       *vbox,
                                                GimpAboutDialog *dialog);
-static gboolean    about_dialog_anim_expose   (GtkWidget       *widget,
-                                               GdkEventExpose  *event,
+static gboolean    about_dialog_anim_draw     (GtkWidget       *widget,
+                                               cairo_t         *cr,
                                                GimpAboutDialog *dialog);
 static void        about_dialog_reshuffle     (GimpAboutDialog *dialog);
 static gboolean    about_dialog_timer         (gpointer         data);
@@ -248,8 +248,8 @@ about_dialog_add_animation (GtkWidget       *vbox,
 
   gtk_widget_set_size_request (dialog->anim_area, -1, 2 * height);
 
-  g_signal_connect (dialog->anim_area, "expose-event",
-                    G_CALLBACK (about_dialog_anim_expose),
+  g_signal_connect (dialog->anim_area, "draw",
+                    G_CALLBACK (about_dialog_anim_draw),
                     dialog);
 }
 
@@ -280,20 +280,17 @@ about_dialog_reshuffle (GimpAboutDialog *dialog)
 }
 
 static gboolean
-about_dialog_anim_expose (GtkWidget       *widget,
-                          GdkEventExpose  *event,
-                          GimpAboutDialog *dialog)
+about_dialog_anim_draw (GtkWidget       *widget,
+                        cairo_t         *cr,
+                        GimpAboutDialog *dialog)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
-  cairo_t       *cr;
   GtkAllocation  allocation;
   gint           x, y;
   gint           width, height;
 
   if (! dialog->visible)
     return FALSE;
-
-  cr = gdk_cairo_create (event->window);
 
   gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
@@ -305,25 +302,21 @@ about_dialog_anim_expose (GtkWidget       *widget,
 
   if (dialog->textrange[1] > 0)
     {
-      GdkRegion *covered_region;
+      cairo_region_t *covered_region;
 
       covered_region = gdk_pango_layout_get_clip_region (dialog->layout,
                                                          x, y,
                                                          dialog->textrange, 1);
 
-      gdk_region_intersect (covered_region, event->region);
-
       gdk_cairo_region (cr, covered_region);
       cairo_clip (cr);
 
-      gdk_region_destroy (covered_region);
+      cairo_region_destroy (covered_region);
     }
 
   cairo_move_to (cr, x, y);
 
   pango_cairo_show_layout (cr, dialog->layout);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
