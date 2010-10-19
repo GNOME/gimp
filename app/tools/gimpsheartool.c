@@ -132,8 +132,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                       FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  shear->x_adj = (GtkAdjustment *)
-    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
+  shear->x_adj = gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
   scale = gimp_spin_scale_new (shear->x_adj, _("Shear magnitude _X"), 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -143,8 +142,7 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                     G_CALLBACK (shear_x_mag_changed),
                     tr_tool);
 
-  shear->y_adj = (GtkAdjustment *)
-    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
+  shear->y_adj = gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
   scale = gimp_spin_scale_new (shear->y_adj, _("Shear magnitude _Y"), 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
