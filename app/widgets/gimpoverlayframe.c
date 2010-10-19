@@ -36,8 +36,8 @@ static void       gimp_overlay_frame_size_request  (GtkWidget      *widget,
                                                     GtkRequisition *requisition);
 static void       gimp_overlay_frame_size_allocate (GtkWidget      *widget,
                                                     GtkAllocation  *allocation);
-static gboolean   gimp_overlay_frame_expose        (GtkWidget      *widget,
-                                                    GdkEventExpose *eevent);
+static gboolean   gimp_overlay_frame_draw          (GtkWidget      *widget,
+                                                    cairo_t        *cr);
 
 
 G_DEFINE_TYPE (GimpOverlayFrame, gimp_overlay_frame, GTK_TYPE_BIN)
@@ -52,7 +52,7 @@ gimp_overlay_frame_class_init (GimpOverlayFrameClass *klass)
 
   widget_class->size_request  = gimp_overlay_frame_size_request;
   widget_class->size_allocate = gimp_overlay_frame_size_allocate;
-  widget_class->expose_event  = gimp_overlay_frame_expose;
+  widget_class->draw          = gimp_overlay_frame_draw;
 }
 
 static void
@@ -76,7 +76,7 @@ gimp_overlay_frame_size_request (GtkWidget      *widget,
 
   if (child && gtk_widget_get_visible (child))
     {
-      gtk_widget_size_request (child, &child_requisition);
+      gtk_widget_get_preferred_size (child, &child_requisition, NULL);
     }
   else
     {
@@ -112,19 +112,15 @@ gimp_overlay_frame_size_allocate (GtkWidget     *widget,
 }
 
 static gboolean
-gimp_overlay_frame_expose (GtkWidget      *widget,
-                           GdkEventExpose *eevent)
+gimp_overlay_frame_draw (GtkWidget *widget,
+                         cairo_t   *cr)
 {
-  cairo_t       *cr    = gdk_cairo_create (gtk_widget_get_window (widget));
   GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
   gboolean       rgba;
   gint           border_width;
 
-  rgba = gdk_screen_get_rgba_colormap (gtk_widget_get_screen (widget)) != NULL;
-
-  gdk_cairo_region (cr, eevent->region);
-  cairo_clip (cr);
+  rgba = gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget)) != NULL;
 
   if (rgba)
     {
@@ -160,9 +156,7 @@ gimp_overlay_frame_expose (GtkWidget      *widget,
       cairo_stroke (cr);
     }
 
-  cairo_destroy (cr);
-
-  return GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
+  return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 }
 
 GtkWidget *
