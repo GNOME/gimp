@@ -506,8 +506,7 @@ gimp_levels_tool_dialog (GimpFilterTool *filter_tool)
 
   tool->gamma = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
-  tool->gamma_linear = GTK_ADJUSTMENT (gtk_adjustment_new (127, 0, 255,
-                                                           0.1, 1.0, 0.0));
+  tool->gamma_linear = gtk_adjustment_new (127, 0, 255, 0.1, 1.0, 0.0);
   g_signal_connect (tool->gamma_linear, "value-changed",
                     G_CALLBACK (levels_linear_gamma_changed),
                     tool);
