@@ -1186,7 +1186,7 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
                                      overlay->image_y,
                                      x, y);
 
-  gtk_widget_size_request (child, &requisition);
+  gtk_widget_get_preferred_size (child, &requisition, NULL);
 
   switch (overlay->anchor)
     {
