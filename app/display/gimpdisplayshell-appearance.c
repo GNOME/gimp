@@ -61,25 +61,10 @@ gimp_display_shell_appearance_update (GimpDisplayShell *shell)
 
   if (window)
     {
-      GimpDockColumns *left_docks;
-      GimpDockColumns *right_docks;
-      gboolean         fullscreen;
-      gboolean         has_grip;
-
-      fullscreen = gimp_image_window_get_fullscreen (window);
+      gboolean fullscreen = gimp_image_window_get_fullscreen (window);
 
       gimp_display_shell_set_action_active (shell, "view-fullscreen",
                                             fullscreen);
-
-      left_docks  = gimp_image_window_get_left_docks (window);
-      right_docks = gimp_image_window_get_right_docks (window);
-
-      has_grip = (! fullscreen &&
-                  ! (left_docks  && gimp_dock_columns_get_docks (left_docks)) &&
-                  ! (right_docks && gimp_dock_columns_get_docks (right_docks)));
-
-      gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (shell->statusbar),
-                                         has_grip);
     }
 
   gimp_display_shell_set_show_menubar       (shell,
