@@ -216,23 +216,17 @@ gimp_display_shell_canvas_size_allocate (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_canvas_expose (GtkWidget        *widget,
-                                  GdkEventExpose   *eevent,
-                                  GimpDisplayShell *shell)
+gimp_display_shell_canvas_draw (GtkWidget        *widget,
+                                cairo_t          *cr,
+                                GimpDisplayShell *shell)
 {
   /*  are we in destruction?  */
   if (! shell->display || ! gimp_display_get_shell (shell->display))
     return TRUE;
 
   /*  ignore events on overlays  */
-  if (eevent->window == gtk_widget_get_window (widget))
+  if (gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget)))
     {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gdk_cairo_region (cr, eevent->region);
-      cairo_clip (cr);
-
       if (gimp_display_get_image (shell->display))
         {
           gimp_display_shell_canvas_draw_image (shell, cr);
@@ -241,8 +235,6 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
         {
           gimp_display_shell_canvas_draw_drop_zone (shell, cr);
         }
-
-      cairo_destroy (cr);
     }
 
   return FALSE;
