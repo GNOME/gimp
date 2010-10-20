@@ -288,9 +288,6 @@ gimp_view_size_request (GtkWidget      *widget,
       requisition->height = (view->renderer->height +
                              2 * view->renderer->border_width);
     }
-
-  if (GTK_WIDGET_CLASS (parent_class)->size_request)
-    GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 }
 
 static void
