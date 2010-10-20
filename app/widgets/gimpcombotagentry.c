@@ -119,8 +119,6 @@ gimp_combo_tag_entry_dispose (GObject *object)
 {
   GimpComboTagEntry *combo_entry = GIMP_COMBO_TAG_ENTRY (object);
 
-  g_clear_object (&combo_entry->arrow_pixbuf);
-
   if (combo_entry->normal_item_attr)
     {
       pango_attr_list_unref (combo_entry->normal_item_attr);
@@ -146,40 +144,34 @@ static gboolean
 gimp_combo_tag_entry_draw (GtkWidget *widget,
                            cairo_t   *cr)
 {
-  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (widget);
+  GdkWindow *icon_window;
 
-  if (! entry->arrow_pixbuf)
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+
+  icon_window = gtk_entry_get_icon_window (GTK_ENTRY (widget),
+                                           GTK_ENTRY_ICON_SECONDARY);
+
+  if (gtk_cairo_should_draw_window (cr, icon_window))
     {
-#if 0
-      GtkStyle  *style = gtk_widget_get_style (widget);
-      GdkPixmap *pixmap;
-      cairo_t   *cr;
+      GtkStyle *style = gtk_widget_get_style (widget);
+      gint      x, y;
 
-      pixmap = gdk_pixmap_new (gtk_widget_get_window (widget), 8, 8, -1);
+      gtk_cairo_transform_to_window (cr, widget, icon_window);
 
-      cr = gdk_cairo_create (pixmap);
       gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
       cairo_paint (cr);
-      cairo_destroy (cr);
 
-      gtk_paint_arrow (style, pixmap,
+      x = (gdk_window_get_width  (icon_window) - 8) / 2;
+      y = (gdk_window_get_height (icon_window) - 8) / 2;
+
+      gtk_paint_arrow (style, cr,
                        GTK_STATE_NORMAL,
-                       GTK_SHADOW_NONE, NULL, widget, NULL,
+                       GTK_SHADOW_NONE, widget, NULL,
                        GTK_ARROW_DOWN, TRUE,
-                       0, 0, 8, 8);
-
-      entry->arrow_pixbuf = gdk_pixbuf_get_from_drawable (NULL, pixmap, NULL,
-                                                          0, 0, 0, 0, 8, 8);
-
-      g_object_unref (pixmap);
-
-      gtk_entry_set_icon_from_pixbuf (GTK_ENTRY (entry),
-                                      GTK_ENTRY_ICON_SECONDARY,
-                                      entry->arrow_pixbuf);
-#endif
+                       x, y, 8, 8);
     }
 
-  return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+  return FALSE;
 }
 
 static void
@@ -230,8 +222,6 @@ gimp_combo_tag_entry_style_set (GtkWidget *widget,
   pango_attr_list_insert (entry->insensitive_item_attr, attribute);
 
   entry->selected_item_color = style->base[GTK_STATE_SELECTED];
-
-  g_clear_object (&entry->arrow_pixbuf);
 }
 
 /**

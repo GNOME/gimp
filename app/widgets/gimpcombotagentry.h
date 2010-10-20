@@ -37,8 +37,6 @@ struct _GimpComboTagEntry
 {
   GimpTagEntry    parent_instance;
 
-  GdkPixbuf      *arrow_pixbuf;
-
   GtkWidget      *popup;
   PangoAttrList  *normal_item_attr;
   PangoAttrList  *selected_item_attr;
