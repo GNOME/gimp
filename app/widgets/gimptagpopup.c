@@ -570,7 +570,7 @@ gimp_tag_popup_border_draw (GtkWidget    *widget,
                             cairo_t      *cr,
                             GimpTagPopup *popup)
 {
-  GtkStyle     *style  = gtk_widget_get_style (widget);
+  GtkStyle     *style = gtk_widget_get_style (widget);
   GdkRectangle  border;
   GdkRectangle  upper;
   GdkRectangle  lower;
@@ -588,7 +588,9 @@ gimp_tag_popup_border_draw (GtkWidget    *widget,
                  GTK_STATE_NORMAL,
                  GTK_SHADOW_OUT,
                  widget, "menu",
-                 0, 0, -1, -1);
+                 0, 0,
+                 gtk_widget_get_allocated_width (widget),
+                 gtk_widget_get_allocated_height (widget));
 
   if (popup->arrows_visible)
     {
