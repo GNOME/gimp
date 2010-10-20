@@ -32,13 +32,14 @@
 #include "gimpviewrendererbrush.h"
 
 
-static void   gimp_view_renderer_brush_finalize (GObject            *object);
-static void   gimp_view_renderer_brush_render   (GimpViewRenderer   *renderer,
-                                                 GtkWidget          *widget);
-static void   gimp_view_renderer_brush_draw     (GimpViewRenderer   *renderer,
-                                                 GtkWidget          *widget,
-                                                 cairo_t            *cr,
-                                                 const GdkRectangle *area);
+static void   gimp_view_renderer_brush_finalize (GObject          *object);
+static void   gimp_view_renderer_brush_render   (GimpViewRenderer *renderer,
+                                                 GtkWidget        *widget);
+static void   gimp_view_renderer_brush_draw     (GimpViewRenderer *renderer,
+                                                 GtkWidget        *widget,
+                                                 cairo_t          *cr,
+                                                 gint              available_width,
+                                                 gint              available_height);
 
 static gboolean gimp_view_renderer_brush_render_timeout (gpointer    data);
 
@@ -182,12 +183,15 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
 }
 
 static void
-gimp_view_renderer_brush_draw (GimpViewRenderer   *renderer,
-                               GtkWidget          *widget,
-                               cairo_t            *cr,
-                               const GdkRectangle *area)
+gimp_view_renderer_brush_draw (GimpViewRenderer *renderer,
+                               GtkWidget        *widget,
+                               cairo_t          *cr,
+                               gint              available_width,
+                               gint              available_height)
 {
-  GIMP_VIEW_RENDERER_CLASS (parent_class)->draw (renderer, widget, cr, area);
+  GIMP_VIEW_RENDERER_CLASS (parent_class)->draw (renderer, widget, cr,
+                                                 available_width,
+                                                 available_height);
 
 #define INDICATOR_WIDTH  7
 #define INDICATOR_HEIGHT 7
@@ -202,7 +206,7 @@ gimp_view_renderer_brush_draw (GimpViewRenderer   *renderer,
 
       if (generated || pipe)
         {
-          cairo_move_to (cr, area->x + area->width, area->y + area->height);
+          cairo_move_to (cr, available_width, available_height);
           cairo_rel_line_to (cr, - INDICATOR_WIDTH, 0);
           cairo_rel_line_to (cr, INDICATOR_WIDTH, - INDICATOR_HEIGHT);
           cairo_rel_line_to (cr, 0, INDICATOR_HEIGHT);
@@ -220,13 +224,13 @@ gimp_view_renderer_brush_draw (GimpViewRenderer   *renderer,
       if (renderer->width < brush_width || renderer->height < brush_height)
         {
           cairo_move_to (cr,
-                         area->x + area->width  - INDICATOR_WIDTH + 1,
-                         area->y + area->height - INDICATOR_HEIGHT / 2.0);
+                         available_width  - INDICATOR_WIDTH + 1,
+                         available_height - INDICATOR_HEIGHT / 2.0);
           cairo_rel_line_to (cr, INDICATOR_WIDTH - 2, 0);
 
           cairo_move_to (cr,
-                         area->x + area->width  - INDICATOR_WIDTH / 2.0,
-                         area->y + area->height - INDICATOR_HEIGHT + 1);
+                         available_width  - INDICATOR_WIDTH / 2.0,
+                         available_height - INDICATOR_HEIGHT + 1);
           cairo_rel_line_to (cr, 0, INDICATOR_WIDTH - 2);
 
           cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);

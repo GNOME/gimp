@@ -77,18 +77,19 @@ struct _GimpViewRendererClass
   gint           frame_top;
 
   /*  signals  */
-  void (* update)      (GimpViewRenderer   *renderer);
+  void (* update)      (GimpViewRenderer *renderer);
 
   /*  virtual functions  */
-  void (* set_context) (GimpViewRenderer   *renderer,
-                        GimpContext        *context);
-  void (* invalidate)  (GimpViewRenderer   *renderer);
-  void (* draw)        (GimpViewRenderer   *renderer,
-                        GtkWidget          *widget,
-                        cairo_t            *cr,
-                        const GdkRectangle *area);
-  void (* render)      (GimpViewRenderer   *renderer,
-                        GtkWidget          *widget);
+  void (* set_context) (GimpViewRenderer *renderer,
+                        GimpContext      *context);
+  void (* invalidate)  (GimpViewRenderer *renderer);
+  void (* draw)        (GimpViewRenderer *renderer,
+                        GtkWidget        *widget,
+                        cairo_t          *cr,
+                        gint              available_width,
+                        gint              available_height);
+  void (* render)      (GimpViewRenderer *renderer,
+                        GtkWidget        *widget);
 };
 
 
@@ -134,7 +135,8 @@ void   gimp_view_renderer_remove_idle      (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
                                             GtkWidget          *widget,
                                             cairo_t            *cr,
-                                            const GdkRectangle *draw_area);
+                                            gint                available_width,
+                                            gint                available_height);
 
 /*  protected  */
 

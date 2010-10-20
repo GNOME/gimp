@@ -395,8 +395,12 @@ gimp_view_expose_event (GtkWidget      *widget,
       gdk_cairo_region (cr, event->region);
       cairo_clip (cr);
 
+      cairo_translate (cr, allocation.x, allocation.y);
+
       gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                               widget, cr, &allocation);
+                               widget, cr,
+                               allocation.width,
+                               allocation.height);
 
       cairo_destroy (cr);
     }

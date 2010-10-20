@@ -311,7 +311,11 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
       gdk_cairo_rectangle (cr, expose_area);
       cairo_clip (cr);
 
-      gimp_view_renderer_draw (cellviewable->renderer, widget, cr, cell_area);
+      cairo_translate (cr, cell_area->x, cell_area->y);
+
+      gimp_view_renderer_draw (cellviewable->renderer, widget, cr,
+                               cell_area->width,
+                               cell_area->height);
 
       cairo_destroy (cr);
     }
