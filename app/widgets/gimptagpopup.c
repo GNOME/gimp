@@ -77,11 +77,11 @@ static void     gimp_tag_popup_get_property            (GObject        *object,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
 
-static gboolean gimp_tag_popup_border_expose           (GtkWidget      *widget,
-                                                        GdkEventExpose *event,
+static gboolean gimp_tag_popup_border_draw             (GtkWidget      *widget,
+                                                        cairo_t        *cr,
                                                         GimpTagPopup   *popup);
-static gboolean gimp_tag_popup_list_expose             (GtkWidget      *widget,
-                                                        GdkEventExpose *event,
+static gboolean gimp_tag_popup_list_draw               (GtkWidget      *widget,
+                                                        cairo_t        *cr,
                                                         GimpTagPopup   *popup);
 static gboolean gimp_tag_popup_border_event            (GtkWidget      *widget,
                                                         GdkEvent       *event);
@@ -179,14 +179,14 @@ gimp_tag_popup_init (GimpTagPopup *popup)
   gtk_container_add (GTK_CONTAINER (popup->alignment), popup->tag_area);
   gtk_widget_show (popup->tag_area);
 
-  g_signal_connect (popup->alignment, "expose-event",
-                    G_CALLBACK (gimp_tag_popup_border_expose),
+  g_signal_connect (popup->alignment, "draw",
+                    G_CALLBACK (gimp_tag_popup_border_draw),
                     popup);
   g_signal_connect (popup, "event",
                     G_CALLBACK (gimp_tag_popup_border_event),
                     NULL);
-  g_signal_connect (popup->tag_area, "expose-event",
-                    G_CALLBACK (gimp_tag_popup_list_expose),
+  g_signal_connect (popup->tag_area, "draw",
+                    G_CALLBACK (gimp_tag_popup_list_draw),
                     popup);
   g_signal_connect (popup->tag_area, "event",
                     G_CALLBACK (gimp_tag_popup_list_event),
@@ -566,11 +566,10 @@ gimp_tag_popup_layout_tags (GimpTagPopup *popup,
 }
 
 static gboolean
-gimp_tag_popup_border_expose (GtkWidget      *widget,
-                              GdkEventExpose *event,
-                              GimpTagPopup   *popup)
+gimp_tag_popup_border_draw (GtkWidget    *widget,
+                            cairo_t      *cr,
+                            GimpTagPopup *popup)
 {
-  GdkWindow    *window = gtk_widget_get_window (widget);
   GtkStyle     *style  = gtk_widget_get_style (widget);
   GdkRectangle  border;
   GdkRectangle  upper;
@@ -578,36 +577,36 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
   gint          arrow_space;
   gint          arrow_size;
 
-  if (event->window != gtk_widget_get_window (widget))
+  if (! gtk_cairo_should_draw_window (cr, gtk_widget_get_window (widget)))
     return FALSE;
 
   get_arrows_visible_area (popup, &border, &upper, &lower, &arrow_space);
 
   arrow_size = 0.7 * arrow_space;
 
-  gtk_paint_box (style, window,
+  gtk_paint_box (style, cr,
                  GTK_STATE_NORMAL,
                  GTK_SHADOW_OUT,
-                 &event->area, widget, "menu",
+                 widget, "menu",
                  0, 0, -1, -1);
 
   if (popup->arrows_visible)
     {
       /*  upper arrow  */
 
-      gtk_paint_box (style, window,
+      gtk_paint_box (style, cr,
                      popup->upper_arrow_state,
                      GTK_SHADOW_OUT,
-                     &event->area, widget, "menu",
+                     widget, "menu",
                      upper.x,
                      upper.y,
                      upper.width,
                      upper.height);
 
-      gtk_paint_arrow (style, window,
+      gtk_paint_arrow (style, cr,
                        popup->upper_arrow_state,
                        GTK_SHADOW_OUT,
-                       &event->area, widget, "menu_scroll_arrow_up",
+                       widget, "menu_scroll_arrow_up",
                        GTK_ARROW_UP,
                        TRUE,
                        upper.x + (upper.width - arrow_size) / 2,
@@ -616,19 +615,19 @@ gimp_tag_popup_border_expose (GtkWidget      *widget,
 
       /*  lower arrow  */
 
-      gtk_paint_box (style, window,
+      gtk_paint_box (style, cr,
                      popup->lower_arrow_state,
                      GTK_SHADOW_OUT,
-                     &event->area, widget, "menu",
+                     widget, "menu",
                      lower.x,
                      lower.y,
                      lower.width,
                      lower.height);
 
-      gtk_paint_arrow (style, window,
+      gtk_paint_arrow (style, cr,
                        popup->lower_arrow_state,
                        GTK_SHADOW_OUT,
-                       &event->area, widget, "menu_scroll_arrow_down",
+                       widget, "menu_scroll_arrow_down",
                        GTK_ARROW_DOWN,
                        TRUE,
                        lower.x + (lower.width - arrow_size) / 2,
@@ -737,21 +736,14 @@ gimp_tag_popup_border_event (GtkWidget *widget,
 }
 
 static gboolean
-gimp_tag_popup_list_expose (GtkWidget      *widget,
-                            GdkEventExpose *event,
-                            GimpTagPopup   *popup)
+gimp_tag_popup_list_draw (GtkWidget    *widget,
+                          cairo_t      *cr,
+                          GimpTagPopup *popup)
 {
-  GdkWindow      *window = gtk_widget_get_window (widget);
-  GtkStyle       *style  = gtk_widget_get_style (widget);
-  cairo_t        *cr;
+  GtkStyle       *style = gtk_widget_get_style (widget);
   PangoAttribute *attribute;
   PangoAttrList  *attributes;
   gint            i;
-
-  cr = gdk_cairo_create (event->window);
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
@@ -834,17 +826,15 @@ gimp_tag_popup_list_expose (GtkWidget      *widget,
           tag_data->state != GTK_STATE_INSENSITIVE &&
           ! popup->single_select_disabled)
         {
-          gtk_paint_focus (style, window,
+          gtk_paint_focus (style, cr,
                            tag_data->state,
-                           &event->area, widget, NULL,
+                           widget, NULL,
                            tag_data->bounds.x,
                            tag_data->bounds.y - popup->scroll_y,
                            tag_data->bounds.width,
                            tag_data->bounds.height);
         }
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
