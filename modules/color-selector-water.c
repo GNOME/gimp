@@ -188,8 +188,8 @@ colorsel_water_init (ColorselWater *water)
   gtk_widget_set_extension_events (water->area, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_grab_focus (water->area);
 
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
-                                            0.0, 200.0, 1.0, 1.0, 0.0));
+  adj = gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
+                            0.0, 200.0, 1.0, 1.0, 0.0);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (pressure_adjust_update),
                     water);

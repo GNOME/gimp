@@ -128,9 +128,9 @@ colorsel_cmyk_class_finalize (ColorselCmykClass *klass)
 static void
 colorsel_cmyk_init (ColorselCmyk *module)
 {
-  GtkWidget *table;
-  GtkObject *adj;
-  gint       i;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  gint           i;
 
   static const gchar * const cmyk_labels[] =
   {
