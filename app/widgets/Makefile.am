@@ -154,10 +154,10 @@ libappwidgets_a_sources = \
 	gimpdrawabletreeview.h		\
 	gimpdynamicseditor.c		\
 	gimpdynamicseditor.h		\
-	gimpdynamicsfactoryview.c		\
-	gimpdynamicsfactoryview.h		\
-	gimpdynamicsoutputeditor.c		\
-	gimpdynamicsoutputeditor.h		\
+	gimpdynamicsfactoryview.c	\
+	gimpdynamicsfactoryview.h	\
+	gimpdynamicsoutputeditor.c	\
+	gimpdynamicsoutputeditor.h	\
 	gimpeditor.c			\
 	gimpeditor.h			\
 	gimpenumaction.c		\
