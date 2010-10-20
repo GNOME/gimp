@@ -20,8 +20,6 @@
 
 #include "config.h"
 
-#undef GSEAL_ENABLE
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -365,8 +363,7 @@ gimp_tag_popup_constructor (GType                  type,
       popup->scroll_step   = 0;
     }
 
-  popup->tag_area->requisition.width  = width;
-  popup->tag_area->requisition.height = popup_height;
+  gtk_widget_set_size_request (popup->tag_area, width, popup_height);
 
   gtk_window_move (GTK_WINDOW (popup), popup_rect.x, popup_rect.y);
   gtk_window_resize (GTK_WINDOW (popup), popup_rect.width, popup_rect.height);
