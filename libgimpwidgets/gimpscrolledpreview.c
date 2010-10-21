@@ -90,8 +90,8 @@ static gboolean  gimp_scrolled_preview_nav_button_press    (GtkWidget           
 static gboolean  gimp_scrolled_preview_nav_popup_event     (GtkWidget                *widget,
                                                             GdkEvent                 *event,
                                                             GimpScrolledPreview      *preview);
-static gboolean  gimp_scrolled_preview_nav_popup_expose    (GtkWidget                *widget,
-                                                            GdkEventExpose           *event,
+static gboolean  gimp_scrolled_preview_nav_popup_draw      (GtkWidget                *widget,
+                                                            cairo_t                  *cr,
                                                             GimpScrolledPreview      *preview);
 
 static void      gimp_scrolled_preview_set_cursor          (GimpPreview              *preview);
@@ -595,8 +595,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       g_signal_connect (area, "event",
                         G_CALLBACK (gimp_scrolled_preview_nav_popup_event),
                         preview);
-      g_signal_connect_after (area, "expose-event",
-                              G_CALLBACK (gimp_scrolled_preview_nav_popup_expose),
+      g_signal_connect_after (area, "draw",
+                              G_CALLBACK (gimp_scrolled_preview_nav_popup_draw),
                               preview);
 
       GIMP_PREVIEW_GET_CLASS (preview)->draw_thumb (gimp_preview,
@@ -721,13 +721,12 @@ gimp_scrolled_preview_nav_popup_event (GtkWidget           *widget,
 }
 
 static gboolean
-gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
-                                        GdkEventExpose      *event,
-                                        GimpScrolledPreview *preview)
+gimp_scrolled_preview_nav_popup_draw (GtkWidget           *widget,
+                                      cairo_t             *cr,
+                                      GimpScrolledPreview *preview)
 {
   GtkAdjustment *adj;
   GtkAllocation  allocation;
-  cairo_t       *cr;
   gdouble        x, y;
   gdouble        w, h;
 
@@ -759,14 +758,7 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
   w = MAX (1, ceil (w * (gdouble) allocation.width));
   h = MAX (1, ceil (h * (gdouble) allocation.height));
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
-  cairo_rectangle (cr,
-                   0, 0, allocation.width, allocation.height);
-
+  cairo_rectangle (cr, 0, 0, allocation.width, allocation.height);
   cairo_rectangle (cr, x, y, w, h);
 
   cairo_set_source_rgba (cr, 0, 0, 0, 0.5);
@@ -778,8 +770,6 @@ gimp_scrolled_preview_nav_popup_expose (GtkWidget           *widget,
   cairo_set_source_rgb (cr, 1, 1, 1);
   cairo_set_line_width (cr, 2);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
