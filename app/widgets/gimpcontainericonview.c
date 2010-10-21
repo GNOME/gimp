@@ -539,6 +539,7 @@ gimp_container_icon_view_select_item (GimpContainerView *view,
                                        gimp_container_icon_view_selection_changed,
                                        icon_view);
 
+      gtk_icon_view_select_path (icon_view->view, path);
       gtk_icon_view_set_cursor (icon_view->view, path, NULL, FALSE);
 
       g_signal_handlers_unblock_by_func (icon_view->view,
