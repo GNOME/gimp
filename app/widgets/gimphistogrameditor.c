@@ -82,7 +82,8 @@ static void     gimp_histogram_editor_menu_update   (GimpHistogramEditor *editor
 static void     gimp_histogram_editor_name_update   (GimpHistogramEditor *editor);
 static void     gimp_histogram_editor_info_update   (GimpHistogramEditor *editor);
 
-static gboolean gimp_histogram_editor_view_expose   (GimpHistogramEditor *editor);
+static gboolean gimp_histogram_editor_view_draw     (GimpHistogramEditor *editor,
+                                                     cairo_t             *cr);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpHistogramEditor, gimp_histogram_editor,
@@ -184,8 +185,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
                             G_CALLBACK (gimp_histogram_editor_info_update),
                             editor);
 
-  g_signal_connect_swapped (view, "expose-event",
-                            G_CALLBACK (gimp_histogram_editor_view_expose),
+  g_signal_connect_swapped (view, "draw",
+                            G_CALLBACK (gimp_histogram_editor_view_draw),
                             editor);
 
   table = gtk_table_new (3, 4, FALSE);
@@ -709,7 +710,8 @@ gimp_histogram_editor_info_update (GimpHistogramEditor *editor)
 }
 
 static gboolean
-gimp_histogram_editor_view_expose (GimpHistogramEditor *editor)
+gimp_histogram_editor_view_draw (GimpHistogramEditor *editor,
+                                 cairo_t             *cr)
 {
   gimp_histogram_editor_validate (editor);
 
