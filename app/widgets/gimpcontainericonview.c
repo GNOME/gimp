@@ -577,8 +577,11 @@ gimp_container_icon_view_set_view_size (GimpContainerView *view)
   if (icon_view->model)
     gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (icon_view->model));
 
-  gtk_icon_view_set_columns (icon_view->view, -1);
-  gtk_icon_view_set_item_width (icon_view->view, -1);
+  if (icon_view->view)
+    {
+      gtk_icon_view_set_columns (icon_view->view, -1);
+      gtk_icon_view_set_item_width (icon_view->view, -1);
+    }
 }
 
 
