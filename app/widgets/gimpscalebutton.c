@@ -30,8 +30,8 @@
 static void      gimp_scale_button_value_changed  (GtkScaleButton  *button,
                                                    gdouble          value);
 static void      gimp_scale_button_update_tooltip (GimpScaleButton *button);
-static gboolean  gimp_scale_button_image_expose   (GtkWidget       *widget,
-                                                   GdkEventExpose  *event,
+static gboolean  gimp_scale_button_image_draw     (GtkWidget       *widget,
+                                                   cairo_t         *cr,
                                                    GimpScaleButton *button);
 
 
@@ -62,8 +62,8 @@ gimp_scale_button_init (GimpScaleButton *button)
   gtk_widget_hide (plusminus);
   gtk_widget_set_no_show_all (plusminus, TRUE);
 
-  g_signal_connect (image, "expose-event",
-                    G_CALLBACK (gimp_scale_button_image_expose),
+  g_signal_connect (image, "draw",
+                    G_CALLBACK (gimp_scale_button_image_draw),
                     button);
 
   /* GtkScaleButton doesn't emit "value-changed" when the adjustment changes */
@@ -110,14 +110,13 @@ gimp_scale_button_update_tooltip (GimpScaleButton *button)
 }
 
 static gboolean
-gimp_scale_button_image_expose (GtkWidget       *widget,
-                                GdkEventExpose  *event,
-                                GimpScaleButton *button)
+gimp_scale_button_image_draw (GtkWidget       *widget,
+                              cairo_t         *cr,
+                              GimpScaleButton *button)
 {
   GtkStyle      *style = gtk_widget_get_style (widget);
   GtkAllocation  allocation;
   GtkAdjustment *adj;
-  cairo_t       *cr;
   gint           value;
   gint           steps;
   gint           i;
@@ -136,25 +135,16 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
                  (gtk_adjustment_get_upper (adj) -
                   gtk_adjustment_get_lower (adj)));
 
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_rectangle (cr, &event->area);
-  cairo_clip (cr);
-
   cairo_set_line_width (cr, 0.5);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
-      cairo_translate (cr,
-                       allocation.x + allocation.width - 0.5,
-                       allocation.y + allocation.height);
+      cairo_translate (cr, allocation.width - 0.5, allocation.height);
       cairo_scale (cr, -2.0, -2.0);
     }
   else
     {
-      cairo_translate (cr,
-                       allocation.x + 0.5,
-                       allocation.y + allocation.height);
+      cairo_translate (cr, 0.5, allocation.height);
       cairo_scale (cr, 2.0, -2.0);
     }
 
@@ -175,8 +165,6 @@ gimp_scale_button_image_expose (GtkWidget       *widget,
 
   gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_INSENSITIVE]);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
