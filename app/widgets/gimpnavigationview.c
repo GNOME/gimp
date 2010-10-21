@@ -518,7 +518,6 @@ gimp_navigation_view_draw_marker (GimpNavigationView *nav_view,
 
       gtk_widget_get_allocation (widget, &allocation);
 
-      cairo_translate (cr, allocation.x, allocation.y);
       cairo_rectangle (cr,
                        0, 0,
                        allocation.width, allocation.height);
