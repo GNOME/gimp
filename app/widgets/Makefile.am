@@ -240,13 +240,13 @@ libappwidgets_a_sources = \
 	gimpoverlayframe.c		\
 	gimpoverlayframe.h		\
 	gimppaletteeditor.c		\
-	gimppanedbox.c			\
-	gimppanedbox.h			\
 	gimppaletteeditor.h		\
 	gimppaletteselect.c		\
 	gimppaletteselect.h		\
 	gimppaletteview.c		\
 	gimppaletteview.h		\
+	gimppanedbox.c			\
+	gimppanedbox.h			\
 	gimppatternfactoryview.c	\
 	gimppatternfactoryview.h	\
 	gimppatternselect.c		\
