@@ -42,6 +42,13 @@
 #include "units.h"
 
 
+static void
+gimp_status_func_dummy (const gchar *text1,
+                        const gchar *text2,
+                        gdouble      percentage)
+{
+}
+
 /**
  * gimp_init_for_testing:
  *
@@ -61,19 +68,14 @@ gimp_init_for_testing (void)
   base_init (GIMP_BASE_CONFIG (gimp->config),
              FALSE /*be_verbose*/,
              FALSE /*use_cpu_accel*/);
+  gimp_initialize (gimp, gimp_status_func_dummy);
+  gimp_restore (gimp, gimp_status_func_dummy);
 
   return gimp;
 }
 
 
 #ifndef GIMP_CONSOLE_COMPILATION
-
-static void
-gimp_status_func_dummy (const gchar *text1,
-                        const gchar *text2,
-                        gdouble      percentage)
-{
-}
 
 /**
  * gimp_init_for_gui_testing:
