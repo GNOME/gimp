@@ -32,7 +32,6 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainereditor.h"
-#include "gimpcontainergridview.h"
 #include "gimpcontainericonview.h"
 #include "gimpcontainertreeview.h"
 #include "gimpcontainerview.h"
@@ -232,19 +231,11 @@ gimp_container_editor_constructed (GObject *object)
   switch (editor->priv->view_type)
     {
     case GIMP_VIEW_TYPE_GRID:
-#if 1
       editor->view =
         GIMP_CONTAINER_VIEW (gimp_container_icon_view_new (editor->priv->container,
                                                            editor->priv->context,
                                                            editor->priv->view_size,
                                                            editor->priv->view_border_width));
-#else
-      editor->view =
-        GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (editor->priv->container,
-                                                           editor->priv->context,
-                                                           editor->priv->view_size,
-                                                           editor->priv->view_border_width));
-#endif
       break;
 
     case GIMP_VIEW_TYPE_LIST:
