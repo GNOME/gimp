@@ -178,6 +178,8 @@ int
 main (int    argc,
       char **argv)
 {
+  int result;
+
   g_thread_init (NULL);
   g_type_init ();
   g_test_init (&argc, &argv, NULL);
@@ -192,6 +194,11 @@ main (int    argc,
   ADD_IMAGE_TEST (add_layer);
   ADD_IMAGE_TEST (remove_layer);
 
-  /* Run the tests and return status */
-  return g_test_run ();
+  /* Run the tests */
+  result = g_test_run ();
+
+  /* Exit so we don't break script-fu plug-in wire */
+  gimp_exit (gimp, TRUE);
+
+  return result;
 }
