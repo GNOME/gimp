@@ -968,8 +968,9 @@ main (int    argc,
 {
   int result;
 
-  gimp_test_bail_if_no_display ();
-  gtk_test_init (&argc, &argv, NULL);
+  g_thread_init (NULL);
+  g_type_init ();
+  g_test_init (&argc, &argv, NULL);
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
                                        "app/tests/gimpdir");
@@ -977,7 +978,7 @@ main (int    argc,
   /* We share the same application instance across all tests. We need
    * the GUI variant for the file procs
    */
-  gimp = gimp_init_for_gui_testing (FALSE /*show_gui*/);
+  gimp = gimp_init_for_testing ();
 
   /* Add tests */
   ADD_TEST (write_and_read_gimp_2_6_format);
