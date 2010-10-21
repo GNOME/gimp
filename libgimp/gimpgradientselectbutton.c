@@ -105,8 +105,8 @@ static void gimp_gradient_select_preview_size_allocate
                                                  (GtkWidget                *widget,
                                                   GtkAllocation            *allocation,
                                                   GimpGradientSelectButton *button);
-static gboolean gimp_gradient_select_preview_expose   (GtkWidget                *preview,
-                                                       GdkEventExpose           *event,
+static gboolean gimp_gradient_select_preview_draw     (GtkWidget                *preview,
+                                                       cairo_t                  *cr,
                                                        GimpGradientSelectButton *button);
 
 static void   gimp_gradient_select_drag_data_received (GimpGradientSelectButton *button,
@@ -481,13 +481,12 @@ gimp_gradient_select_preview_size_allocate (GtkWidget                *widget,
 }
 
 static gboolean
-gimp_gradient_select_preview_expose (GtkWidget                *widget,
-                                     GdkEventExpose           *event,
-                                     GimpGradientSelectButton *button)
+gimp_gradient_select_preview_draw (GtkWidget                *widget,
+                                   cairo_t                  *cr,
+                                   GimpGradientSelectButton *button)
 {
   GimpGradientSelectButtonPrivate *priv;
   GtkAllocation                    allocation;
-  cairo_t                         *cr;
   cairo_pattern_t                 *pattern;
   cairo_surface_t                 *surface;
   const gdouble                   *src;
@@ -502,11 +501,6 @@ gimp_gradient_select_preview_expose (GtkWidget                *widget,
     return FALSE;
 
   gtk_widget_get_allocation (widget, &allocation);
-
-  cr = gdk_cairo_create (event->window);
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   pattern = gimp_cairo_checkerboard_create (cr, GIMP_CHECK_SIZE_SM, NULL, NULL);
   cairo_set_source (cr, pattern);
@@ -543,8 +537,6 @@ gimp_gradient_select_preview_expose (GtkWidget                *widget,
   cairo_pattern_destroy (pattern);
 
   cairo_paint (cr);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
@@ -608,8 +600,8 @@ gimp_gradient_select_button_create_inside (GimpGradientSelectButton *gradient_bu
                     G_CALLBACK (gimp_gradient_select_preview_size_allocate),
                     gradient_button);
 
-  g_signal_connect (priv->preview, "expose-event",
-                    G_CALLBACK (gimp_gradient_select_preview_expose),
+  g_signal_connect (priv->preview, "draw",
+                    G_CALLBACK (gimp_gradient_select_preview_draw),
                     gradient_button);
 
   gtk_widget_show_all (button);
