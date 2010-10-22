@@ -224,7 +224,7 @@ gimp_container_tree_view_scroll_timeout (gpointer data)
   GtkAdjustment         *adj;
   gdouble                new_value;
 
-  adj = gtk_tree_view_get_vadjustment (GTK_TREE_VIEW (tree_view->view));
+  adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (tree_view->view));
 
 #ifdef SCROLL_DEBUG
   g_print ("scroll_timeout: scrolling by %d\n", SCROLL_STEP);
