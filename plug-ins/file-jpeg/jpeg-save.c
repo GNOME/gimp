@@ -85,6 +85,7 @@ typedef struct
   GimpPixelRgn  pixel_rgn;
   const gchar  *file_name;
   gboolean      abort_me;
+  guint         source_id;
 } PreviewPersistent;
 
 /*le added : struct containing pointers to save dialog*/
@@ -136,7 +137,7 @@ static gint  create_thumbnail    (gint32         image_ID,
 static GtkWidget *restart_markers_scale = NULL;
 static GtkWidget *restart_markers_label = NULL;
 static GtkWidget *preview_size          = NULL;
-static gboolean  *abort_me              = NULL;
+static PreviewPersistent *prev_p        = NULL;
 
 static void   save_dialog_response (GtkWidget   *widget,
                                     gint         response_id,
@@ -154,8 +155,8 @@ static void   save_defaults        (void);
 static void
 background_error_exit (j_common_ptr cinfo)
 {
-  if (abort_me)
-    *abort_me = TRUE;
+  if (prev_p)
+    prev_p->abort_me = TRUE;
   (*cinfo->err->output_message) (cinfo);
 }
 
@@ -212,10 +213,8 @@ background_jpeg_save (PreviewPersistent *pp)
       /* we cleanup here (load_image doesn't run in the background) */
       g_unlink (pp->file_name);
 
-      if (abort_me == &(pp->abort_me))
-        abort_me = NULL;
-
       g_free (pp);
+      prev_p = NULL;
 
       gimp_displays_flush ();
       gdk_flush ();
@@ -675,9 +674,10 @@ save_image (const gchar  *filename,
       pp->pixel_rgn   = pixel_rgn;
       pp->src         = NULL;
       pp->file_name   = filename;
-
       pp->abort_me    = FALSE;
-      abort_me = &(pp->abort_me);
+
+      g_warn_if_fail (prev_p == NULL);
+      prev_p = pp;
 
       pp->cinfo.err = jpeg_std_error(&(pp->jerr));
       pp->jerr.error_exit = background_error_exit;
@@ -685,7 +685,7 @@ save_image (const gchar  *filename,
       gtk_label_set_text (GTK_LABEL (preview_size),
                           _("Calculating file size..."));
 
-      g_idle_add ((GSourceFunc) background_jpeg_save, pp);
+      pp->source_id = g_idle_add ((GSourceFunc) background_jpeg_save, pp);
 
       /* background_jpeg_save() will cleanup as needed */
       return TRUE;
@@ -784,8 +784,12 @@ make_preview (void)
 void
 destroy_preview (void)
 {
-  if (abort_me)
-    *abort_me = TRUE;   /* signal the background save to stop */
+  if (prev_p && !prev_p->abort_me) {
+    guint id = prev_p->source_id;
+    prev_p->abort_me = TRUE;   /* signal the background save to stop */
+    background_jpeg_save (prev_p);
+    g_source_remove (id);
+  }
 
   if (drawable_global)
     {
