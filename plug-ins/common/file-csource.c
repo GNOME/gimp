@@ -855,16 +855,16 @@ rgb565_toggle_button_update (GtkWidget *toggle,
 static gboolean
 run_save_dialog (Config *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *prefixed_name;
-  GtkWidget *centry;
-  GtkWidget *toggle;
-  GtkWidget *rle_toggle;
-  GtkWidget *alpha_toggle;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *prefixed_name;
+  GtkWidget     *centry;
+  GtkWidget     *toggle;
+  GtkWidget     *rle_toggle;
+  GtkWidget     *alpha_toggle;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("C-Source"), PLUG_IN_BINARY, SAVE_PROC);
 

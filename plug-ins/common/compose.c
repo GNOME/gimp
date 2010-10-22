@@ -1154,13 +1154,13 @@ compose_dialog (const gchar *compose_type,
 
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
     {
-      GtkWidget    *image;
-      GtkWidget    *label;
-      GtkWidget    *combo;
-      GtkObject    *scale;
-      GtkTreeIter   iter;
-      GtkTreeModel *model;
-      GdkPixbuf    *ico;
+      GtkWidget     *image;
+      GtkWidget     *label;
+      GtkWidget     *combo;
+      GtkAdjustment *scale;
+      GtkTreeIter    iter;
+      GtkTreeModel  *model;
+      GdkPixbuf     *ico;
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
       gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, j, j + 1,

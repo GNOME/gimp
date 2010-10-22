@@ -633,15 +633,15 @@ DepthMerge_executeRegion (DepthMerge *dm,
 static gboolean
 DepthMerge_dialog (DepthMerge *dm)
 {
-  GtkWidget *dialog;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *combo;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *hbox;
+  GtkWidget     *label;
+  GtkWidget     *combo;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   dm->interface = g_new0 (DepthMergeInterface, 1);
 

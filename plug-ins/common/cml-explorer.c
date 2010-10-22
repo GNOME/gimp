@@ -341,21 +341,21 @@ static gdouble           logistic_function     (CML_PARAM *param,
 
 
 static gint        CML_explorer_dialog           (void);
-static GtkWidget * CML_dialog_channel_panel_new  (CML_PARAM *param,
-                                                  gint       channel_id);
+static GtkWidget * CML_dialog_channel_panel_new  (CML_PARAM     *param,
+                                                  gint           channel_id);
 static GtkWidget * CML_dialog_advanced_panel_new (void);
 
-static void     CML_explorer_toggle_entry_init   (WidgetEntry *widget_entry,
-                                                  GtkWidget   *widget,
-                                                  gpointer     value_ptr);
+static void     CML_explorer_toggle_entry_init   (WidgetEntry   *widget_entry,
+                                                  GtkWidget     *widget,
+                                                  gpointer       value_ptr);
 
-static void     CML_explorer_int_entry_init      (WidgetEntry *widget_entry,
-                                                  GtkObject   *object,
-                                                  gpointer     value_ptr);
+static void     CML_explorer_int_entry_init      (WidgetEntry   *widget_entry,
+                                                  GtkAdjustment *object,
+                                                  gpointer       value_ptr);
 
-static void     CML_explorer_double_entry_init   (WidgetEntry *widget_entry,
-                                                  GtkObject   *object,
-                                                  gpointer     value_ptr);
+static void     CML_explorer_double_entry_init   (WidgetEntry   *widget_entry,
+                                                  GtkAdjustment *object,
+                                                  gpointer       value_ptr);
 
 static void     CML_explorer_menu_update         (GtkWidget   *widget,
                                                   gpointer     data);
@@ -1308,13 +1308,13 @@ CML_explorer_dialog (void)
                               gtk_label_new_with_mnemonic (_("_Advanced")));
 
     {
-      GtkSizeGroup *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-      GtkWidget    *table;
-      GtkWidget    *label;
-      GtkWidget    *combo;
-      GtkWidget    *frame;
-      GtkWidget    *vbox;
-      GtkObject    *adj;
+      GtkSizeGroup  *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+      GtkWidget     *table;
+      GtkWidget     *label;
+      GtkWidget     *combo;
+      GtkWidget     *frame;
+      GtkWidget     *vbox;
+      GtkAdjustment *adj;
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -1548,13 +1548,13 @@ static GtkWidget *
 CML_dialog_channel_panel_new (CML_PARAM *param,
                               gint       channel_id)
 {
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkWidget *toggle;
-  GtkWidget *button;
-  GtkObject *adj;
-  gpointer  *chank;
-  gint       index = 0;
+  GtkWidget     *table;
+  GtkWidget     *combo;
+  GtkWidget     *toggle;
+  GtkWidget     *button;
+  GtkAdjustment *adj;
+  gpointer      *chank;
+  gint           index = 0;
 
   table = gtk_table_new (13, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -1705,15 +1705,14 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 static GtkWidget *
 CML_dialog_advanced_panel_new (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *subframe;
-  GtkWidget *table;
-  GtkObject *adj;
-
-  gint       index = 0;
-  gint       widget_offset = 12;
-  gint       channel_id;
-  CML_PARAM *param;
+  GtkWidget     *vbox;
+  GtkWidget     *subframe;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  gint           index = 0;
+  gint           widget_offset = 12;
+  gint           channel_id;
+  CML_PARAM     *param;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -2444,9 +2443,9 @@ CML_explorer_int_entry_change_value (WidgetEntry *widget_entry)
 }
 
 static void
-CML_explorer_int_entry_init (WidgetEntry *widget_entry,
-                             GtkObject   *adjustment,
-                             gpointer     value_ptr)
+CML_explorer_int_entry_init (WidgetEntry   *widget_entry,
+                             GtkAdjustment *adjustment,
+                             gpointer       value_ptr)
 {
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (CML_explorer_int_adjustment_update),
@@ -2477,9 +2476,9 @@ CML_explorer_double_entry_change_value (WidgetEntry *widget_entry)
 }
 
 static void
-CML_explorer_double_entry_init (WidgetEntry *widget_entry,
-                                GtkObject   *adjustment,
-                                gpointer     value_ptr)
+CML_explorer_double_entry_init (WidgetEntry   *widget_entry,
+                                GtkAdjustment *adjustment,
+                                gpointer       value_ptr)
 {
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (CML_explorer_double_adjustment_update),
