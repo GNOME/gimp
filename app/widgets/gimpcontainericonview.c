@@ -583,6 +583,14 @@ gimp_container_icon_view_set_view_size (GimpContainerView *view)
     {
       gtk_icon_view_set_columns (icon_view->view, -1);
       gtk_icon_view_set_item_width (icon_view->view, -1);
+
+      /* ugly workaround to force the icon view to invalidate all its
+       * cached icon sizes
+       */
+      gtk_icon_view_set_item_orientation (icon_view->view,
+                                          GTK_ORIENTATION_VERTICAL);
+      gtk_icon_view_set_item_orientation (icon_view->view,
+                                          GTK_ORIENTATION_HORIZONTAL);
     }
 }
 
