@@ -149,8 +149,6 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   GdkWindow    *window = gtk_widget_get_window (widget);
   cairo_t      *cr;
   GtkAllocation allocation;
-  gint          x, y;
-  gint          width, height;
   gint          rect_w, rect_h;
   GimpRGB       color;
 
@@ -164,13 +162,10 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  x      = allocation.x;
-  y      = allocation.y;
-  width  = allocation.width;
-  height = allocation.height;
+  cairo_translate (cr, allocation.x, allocation.y);
 
-  rect_w = width  * 3 / 4;
-  rect_h = height * 3 / 4;
+  rect_w = allocation.width  * 3 / 4;
+  rect_h = allocation.height * 3 / 4;
 
   /*  draw the background area  */
 
@@ -180,8 +175,8 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_cairo_set_source_rgb (cr, &color);
 
       cairo_rectangle (cr,
-                       x + width  - rect_w + 1,
-                       y + height - rect_h + 1,
+                       allocation.width  - rect_w + 1,
+                       allocation.height - rect_h + 1,
                        rect_w - 2,
                        rect_h - 2);
       cairo_fill (cr);
@@ -190,7 +185,9 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                     GTK_SHADOW_IN,
                     NULL, widget, NULL,
-                    x + width - rect_w, y + height - rect_h, rect_w, rect_h);
+                    allocation.x + allocation.width  - rect_w,
+                    allocation.y + allocation.height - rect_h,
+                    rect_w, rect_h);
 
   /*  draw the foreground area  */
 
@@ -199,18 +196,14 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_context_get_foreground (view->context, &color);
       gimp_cairo_set_source_rgb (cr, &color);
 
-      cairo_rectangle (cr,
-                       x + 1,
-                       y + 1,
-                       rect_w - 2,
-                       rect_h - 2);
+      cairo_rectangle (cr, 1, 1, rect_w - 2, rect_h - 2);
       cairo_fill (cr);
     }
 
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                     GTK_SHADOW_OUT,
                     NULL, widget, NULL,
-                    x, y, rect_w, rect_h);
+                    allocation.x, allocation.y, rect_w, rect_h);
 
   cairo_destroy (cr);
 
