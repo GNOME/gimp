@@ -682,8 +682,8 @@ remap_dialog (gint32  image_ID,
 
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (iconview),
                                     GTK_SELECTION_SINGLE);
-  gtk_icon_view_set_orientation (GTK_ICON_VIEW (iconview),
-                                 GTK_ORIENTATION_VERTICAL);
+  gtk_icon_view_set_item_orientation (GTK_ICON_VIEW (iconview),
+                                      GTK_ORIENTATION_VERTICAL);
   gtk_icon_view_set_columns (GTK_ICON_VIEW (iconview), 16);
   gtk_icon_view_set_row_spacing (GTK_ICON_VIEW (iconview), 0);
   gtk_icon_view_set_column_spacing (GTK_ICON_VIEW (iconview), 0);
