@@ -144,32 +144,31 @@ static gboolean
 gimp_combo_tag_entry_draw (GtkWidget *widget,
                            cairo_t   *cr)
 {
-  GdkWindow *icon_window;
+  GtkStyle     *style = gtk_widget_get_style (widget);
+  GdkRectangle  icon_area;
+  gint          x, y;
 
+  cairo_save (cr);
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+  cairo_restore (cr);
 
-  icon_window = gtk_entry_get_icon_window (GTK_ENTRY (widget),
-                                           GTK_ENTRY_ICON_SECONDARY);
+  gtk_entry_get_icon_area (GTK_ENTRY (widget), GTK_ENTRY_ICON_SECONDARY,
+                           &icon_area);
 
-  if (gtk_cairo_should_draw_window (cr, icon_window))
-    {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      gint      x, y;
+  gdk_cairo_rectangle (cr, &icon_area);
+  cairo_clip (cr);
 
-      gtk_cairo_transform_to_window (cr, widget, icon_window);
+  gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+  cairo_paint (cr);
 
-      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
-      cairo_paint (cr);
+  x = icon_area.x + (icon_area.width  - 8) / 2;
+  y = icon_area.y + (icon_area.height - 8) / 2;
 
-      x = (gdk_window_get_width  (icon_window) - 8) / 2;
-      y = (gdk_window_get_height (icon_window) - 8) / 2;
-
-      gtk_paint_arrow (style, cr,
-                       GTK_STATE_NORMAL,
-                       GTK_SHADOW_NONE, widget, NULL,
-                       GTK_ARROW_DOWN, TRUE,
-                       x, y, 8, 8);
-    }
+  gtk_paint_arrow (style, cr,
+                   GTK_STATE_NORMAL,
+                   GTK_SHADOW_NONE, widget, NULL,
+                   GTK_ARROW_DOWN, TRUE,
+                   x, y, 8, 8);
 
   return FALSE;
 }
