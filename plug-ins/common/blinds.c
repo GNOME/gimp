@@ -204,17 +204,17 @@ run (const gchar      *name,
 static gboolean
 blinds_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkObject *size_data;
-  GtkWidget *toggle;
-  GtkWidget *horizontal;
-  GtkWidget *vertical;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *hbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkAdjustment *size_data;
+  GtkWidget     *toggle;
+  GtkWidget     *horizontal;
+  GtkWidget     *vertical;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

@@ -272,13 +272,13 @@ run (const gchar      *name,
 static gboolean
 retinex_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *table;
+  GtkWidget     *combo;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
