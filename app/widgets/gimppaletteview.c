@@ -166,7 +166,9 @@ gimp_palette_view_draw (GtkWidget *widget,
   GimpPaletteView *pal_view = GIMP_PALETTE_VIEW (widget);
   GimpView        *view     = GIMP_VIEW (widget);
 
+  cairo_save (cr);
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+  cairo_restore (cr);
 
   if (view->renderer->viewable && pal_view->selected)
     {
