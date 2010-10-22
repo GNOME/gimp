@@ -784,12 +784,13 @@ make_preview (void)
 void
 destroy_preview (void)
 {
-  if (prev_p && !prev_p->abort_me) {
-    guint id = prev_p->source_id;
-    prev_p->abort_me = TRUE;   /* signal the background save to stop */
-    background_jpeg_save (prev_p);
-    g_source_remove (id);
-  }
+  if (prev_p && !prev_p->abort_me)
+    {
+      guint id = prev_p->source_id;
+      prev_p->abort_me = TRUE;   /* signal the background save to stop */
+      background_jpeg_save (prev_p);
+      g_source_remove (id);
+    }
 
   if (drawable_global)
     {
