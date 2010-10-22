@@ -217,13 +217,8 @@ gimp_canvas_group_get_extents (GimpCanvasItem   *item,
         }
       else if (sub_region)
         {
-#ifdef USE_CAIRO_REGION
           cairo_region_union (region, sub_region);
           cairo_region_destroy (sub_region);
-#else
-          gdk_region_union (region, sub_region);
-          gdk_region_destroy (sub_region);
-#endif
         }
     }
 
@@ -279,11 +274,7 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
       if (region)
         {
           _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
-#ifdef USE_CAIRO_REGION
           cairo_region_destroy (region);
-#else
-          gdk_region_destroy (region);
-#endif
         }
     }
 
@@ -320,11 +311,7 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
       if (region)
         {
           _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
-#ifdef USE_CAIRO_REGION
           cairo_region_destroy (region);
-#else
-          gdk_region_destroy (region);
-#endif
         }
     }
 

@@ -500,11 +500,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem   *item,
       break;
     }
 
-#ifdef USE_CAIRO_REGION
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
-#else
-  return gdk_region_rectangle (&rectangle);
-#endif
 }
 
 GimpCanvasItem *

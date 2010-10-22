@@ -267,11 +267,7 @@ gimp_canvas_item_dispatch_properties_changed (GObject     *object,
         {
           g_signal_emit (object, item_signals[UPDATE], 0,
                          region);
-#ifdef USE_CAIRO_REGION
           cairo_region_destroy (region);
-#else
-          gdk_region_destroy (region);
-#endif
         }
     }
 }
@@ -484,13 +480,8 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
             }
           else if (private->change_region)
             {
-#ifdef USE_CAIRO_REGION
               cairo_region_union (region, private->change_region);
               cairo_region_destroy (private->change_region);
-#else
-              gdk_region_union (region, private->change_region);
-              gdk_region_destroy (private->change_region);
-#endif
             }
 
           private->change_region = NULL;
@@ -499,20 +490,12 @@ gimp_canvas_item_end_change (GimpCanvasItem *item)
             {
               g_signal_emit (item, item_signals[UPDATE], 0,
                              region);
-#ifdef USE_CAIRO_REGION
               cairo_region_destroy (region);
-#else
-              gdk_region_destroy (region);
-#endif
             }
         }
       else if (private->change_region)
         {
-#ifdef USE_CAIRO_REGION
           cairo_region_destroy (private->change_region);
-#else
-          gdk_region_destroy (private->change_region);
-#endif
           private->change_region = NULL;
         }
     }

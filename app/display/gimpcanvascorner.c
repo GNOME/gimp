@@ -423,11 +423,7 @@ gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (w + 3.0);
   rectangle.height = ceil (h + 3.0);
 
-#ifdef USE_CAIRO_REGION
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
-#else
-  return gdk_region_rectangle (&rectangle);
-#endif
 }
 
 GimpCanvasItem *

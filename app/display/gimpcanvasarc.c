@@ -305,11 +305,7 @@ gimp_canvas_arc_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (center_x + radius_x + 1.5) - rectangle.x;
   rectangle.height = ceil (center_y + radius_y + 1.5) - rectangle.y;
 
-#ifdef USE_CAIRO_REGION
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
-#else
-  return gdk_region_rectangle (&rectangle);
-#endif
 }
 
 GimpCanvasItem *

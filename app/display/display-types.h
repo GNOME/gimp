@@ -29,7 +29,15 @@
 #endif
 
 #ifndef USE_CAIRO_REGION
-typedef GdkRegion cairo_region_t;
+#define cairo_region_t GdkRegion
+#define cairo_rectangle_int_t GdkRectangle
+#define cairo_region_destroy gdk_region_destroy
+#define cairo_region_union gdk_region_union
+#define cairo_region_create_rectangle gdk_region_rectangle
+#define cairo_region_union_rectangle gdk_region_union_with_rect
+#define cairo_region_get_extents gdk_region_get_clipbox
+#define cairo_region_subtract gdk_region_subtract
+#define cairo_region_xor gdk_region_xor
 #endif
 
 

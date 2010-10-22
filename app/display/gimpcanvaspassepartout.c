@@ -89,19 +89,11 @@ gimp_canvas_passe_partout_get_extents (GimpCanvasItem   *item,
 
   gimp_display_shell_draw_get_scaled_image_size (shell,
                                                  &rect.width, &rect.height);
-#ifdef USE_CAIRO_REGION
   outer = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rect);
-#else
-  outer = gdk_region_rectangle (&rect);
-#endif
 
   inner = GIMP_CANVAS_ITEM_CLASS (parent_class)->get_extents (item, shell);
 
-#ifdef USE_CAIRO_REGION
   cairo_region_subtract (outer, inner);
-#else
-  gdk_region_subtract (outer, inner);
-#endif
 
   return outer;
 }

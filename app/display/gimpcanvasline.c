@@ -247,11 +247,7 @@ gimp_canvas_line_get_extents (GimpCanvasItem   *item,
       rectangle.height = ceil (ABS (y2 - y1) + 5.0);
     }
 
-#ifdef USE_CAIRO_REGION
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
-#else
-  return gdk_region_rectangle (&rectangle);
-#endif
 }
 
 GimpCanvasItem *

@@ -241,11 +241,7 @@ gimp_canvas_guide_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ABS (x2 - x1) + 3.0;
   rectangle.height = ABS (y2 - y1) + 3.0;
 
-#ifdef USE_CAIRO_REGION
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
-#else
-  return gdk_region_rectangle (&rectangle);
-#endif
 }
 
 static void

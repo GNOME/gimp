@@ -364,11 +364,7 @@ gimp_canvas_grid_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (x2) - rectangle.x;
   rectangle.height = ceil (y2) - rectangle.y;
 
-#ifdef USE_CAIRO_REGION
   return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
-#else
-  return gdk_region_rectangle (&rectangle);
-#endif
 }
 
 static void
