@@ -296,6 +296,12 @@ gimp_tag_popup_constructed (GObject *object)
 
   gdk_window_get_origin (gtk_widget_get_window (entry), &x, &y);
 
+  if (! gtk_widget_get_has_window (entry))
+    {
+      x += entry_allocation.x;
+      y += entry_allocation.y;
+    }
+
   max_height = entry_allocation.height * 10;
 
   screen_height = gdk_screen_get_height (gtk_widget_get_screen (entry));

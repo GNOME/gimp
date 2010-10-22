@@ -1288,24 +1288,19 @@ gimp_tag_entry_draw (GtkWidget *widget,
                      cairo_t   *cr)
 {
   GimpTagEntry   *tag_entry = GIMP_TAG_ENTRY (widget);
-  GdkWindow      *window;
+  GdkRectangle    text_area;
   PangoLayout    *layout;
   PangoAttrList  *attr_list;
   PangoAttribute *attribute;
   gint            layout_width;
   gint            layout_height;
-  gint            window_width;
-  gint            window_height;
   gint            offset;
   const char     *display_text;
 
-  window = gtk_entry_get_text_window (GTK_ENTRY (widget));
-
-  if (! gtk_cairo_should_draw_window (cr, window))
-    return FALSE;
-
   if (! GIMP_TAG_ENTRY (widget)->description_shown)
     return FALSE;
+
+  gtk_entry_get_text_area (GTK_ENTRY (widget), &text_area);
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_QUERY)
     {
@@ -1325,11 +1320,8 @@ gimp_tag_entry_draw (GtkWidget *widget,
   pango_layout_set_attributes (layout, attr_list);
   pango_attr_list_unref (attr_list);
 
-  window_width  = gdk_window_get_width  (window);
-  window_height = gdk_window_get_height (window);
-  pango_layout_get_size (layout,
-                         &layout_width, &layout_height);
-  offset = (window_height - PANGO_PIXELS (layout_height)) / 2;
+  pango_layout_get_pixel_size (layout, &layout_width, &layout_height);
+  offset = (text_area.height - layout_height) / 2;
 
   gtk_paint_layout (gtk_widget_get_style (widget),
                     cr,
@@ -1338,9 +1330,9 @@ gimp_tag_entry_draw (GtkWidget *widget,
                     widget,
                     NULL,
                     (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-                    window_width - PANGO_PIXELS (layout_width) - offset :
-                    offset,
-                    offset,
+                    text_area.width - layout_width - offset :
+                    text_area.x + offset,
+                    text_area.y + offset,
                     layout);
 
   g_object_unref (layout);
