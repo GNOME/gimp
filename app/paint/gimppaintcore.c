@@ -351,6 +351,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   item = GIMP_ITEM (drawable);
+  
+  core->smoothing_history = gimp_circular_queue_new (sizeof(GimpCoords), paint_options->smoothing_options->smoothing_history);
 
   core->cur_coords = *coords;
 
@@ -418,6 +420,11 @@ gimp_paint_core_finish (GimpPaintCore *core,
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
+  
+  if (core->smoothing_history) {
+    gimp_circular_queue_free (core->smoothing_history);
+    core->smoothing_history = NULL;
+  }
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 

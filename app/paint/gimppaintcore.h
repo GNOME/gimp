@@ -21,6 +21,7 @@
 
 #include "libgimpmath/gimpvector.h"
 #include "core/gimpobject.h"
+#include "gimppaintoptions.h" /* GimpCircularQueue */
 
 
 #define GIMP_TYPE_PAINT_CORE            (gimp_paint_core_get_type ())
@@ -63,6 +64,8 @@ struct _GimpPaintCore
   TempBuf     *orig_buf;         /*  the unmodified drawable pixels      */
   TempBuf     *orig_proj_buf;    /*  the unmodified projection pixels    */
   TempBuf     *canvas_buf;       /*  the buffer to paint pixels to       */
+  
+  GimpCircularQueue *smoothing_history;
 };
 
 struct _GimpPaintCoreClass

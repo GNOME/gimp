@@ -398,7 +398,7 @@ gimp_brush_core_post_paint (GimpPaintCore    *paint_core,
                             guint32           time)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
-
+  
   if (paint_state == GIMP_PAINT_STATE_MOTION)
     {
       core->brush = core->main_brush;
@@ -520,6 +520,11 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
   gimp_paint_core_get_current_coords (paint_core, &current_coords);
+  
+  if (paint_core->smoothing_history) {
+    current_coords = gimp_paint_options_get_smoothed_coords(paint_options, &current_coords, paint_core->smoothing_history);
+    gimp_paint_core_set_current_coords (paint_core, &current_coords);
+  }
 
   /*Zero sized brushes are unfit for interpolate,
    * so we just let paint core fail onits own

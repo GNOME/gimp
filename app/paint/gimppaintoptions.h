@@ -29,10 +29,30 @@
                                         GIMP_CONTEXT_BRUSH_MASK      | \
                                         GIMP_CONTEXT_DYNAMICS_MASK
 
+typedef struct _GimpCircularQueue   GimpCircularQueue;
+struct _GimpCircularQueue
+{
+  guint    element_size;
+  guint    queue_size;
+  guint    start;
+  guint    end;
+  gpointer data;
+};
+GimpCircularQueue* gimp_circular_queue_new(guint element_size, guint queue_size);
+void gimp_circular_queue_free(GimpCircularQueue* queue);
+void gimp_circular_queue_enqueue_data(GimpCircularQueue* queue, gpointer data);
+gpointer gimp_circular_queue_get_nth_offset(GimpCircularQueue* queue, guint index);
+gpointer gimp_circular_queue_get_last_offset(GimpCircularQueue* queue);
+#define gimp_circular_queue_length(q) ((q)->end - (q)->start)
+#define gimp_circular_queue_enqueue(q, a) gimp_circular_queue_enqueue_data(q, (void*)(&(a)))
+#define gimp_circular_queue_index(q, type, i) (*(type*)gimp_circular_queue_get_nth_offset(q, i))
+#define gimp_circular_queue_last(q, type) (*(type*)gimp_circular_queue_get_last_offset(q))
+
 
 typedef struct _GimpJitterOptions   GimpJitterOptions;
 typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
+typedef struct _GimpSmoothingOptions GimpSmoothingOptions;
 
 struct _GimpJitterOptions
 {
@@ -52,6 +72,13 @@ struct _GimpGradientOptions
 {
   gboolean        gradient_reverse;
   GimpRepeatMode  gradient_repeat;
+};
+
+struct _GimpSmoothingOptions
+{
+  gboolean use_smoothing;
+  gint     smoothing_history;
+  gdouble  smoothing_factor;
 };
 
 
@@ -85,6 +112,7 @@ struct _GimpPaintOptions
   gboolean                  dynamics_expanded;
   GimpFadeOptions          *fade_options;
   GimpGradientOptions      *gradient_options;
+  GimpSmoothingOptions     *smoothing_options;
 
   GimpViewType              brush_view_type;
   GimpViewSize              brush_view_size;
@@ -118,6 +146,10 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                                 gdouble           grad_point,
                                                 gdouble           pixel_dist,
                                                 GimpRGB          *color);
+
+GimpCoords gimp_paint_options_get_smoothed_coords (GimpPaintOptions  *paint_options,
+                                                   const GimpCoords *original_coords,
+                                                   GimpCircularQueue *history);
 
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);

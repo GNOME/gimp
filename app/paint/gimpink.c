@@ -152,6 +152,7 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 
     case GIMP_PAINT_STATE_INIT:
       gimp_paint_core_get_last_coords (paint_core, &last_coords);
+      ink->queue = gimp_circular_queue_new(sizeof(GimpCoords), paint_options->smoothing_options->smoothing_history);
 
       if (coords->x == last_coords.x &&
           coords->y == last_coords.y)
@@ -186,6 +187,8 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
       break;
 
     case GIMP_PAINT_STATE_FINISH:
+      gimp_circular_queue_free(ink->queue);
+      ink->queue = NULL;
       break;
     }
 }
@@ -254,17 +257,20 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   TempBuf        *area;
   guchar          col[MAX_CHANNELS];
   PixelRegion     blob_maskPR;
+  GimpCoords      modified_coords;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
+  
+  modified_coords = gimp_paint_options_get_smoothed_coords(paint_options, coords, ink->queue);
 
   if (! ink->last_blob)
     {
       ink->last_blob = ink_pen_ellipse (options,
-                                        coords->x,
-                                        coords->y,
-                                        coords->pressure,
-                                        coords->xtilt,
-                                        coords->ytilt,
+                                        modified_coords.x,
+                                        modified_coords.y,
+                                        modified_coords.pressure,
+                                        modified_coords.xtilt,
+                                        modified_coords.ytilt,
                                         100);
 
       if (ink->start_blob)
@@ -277,12 +283,12 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   else
     {
       GimpBlob *blob = ink_pen_ellipse (options,
-                                        coords->x,
-                                        coords->y,
-                                        coords->pressure,
-                                        coords->xtilt,
-                                        coords->ytilt,
-                                        coords->velocity * 100);
+                                    modified_coords.x,
+                                    modified_coords.y,
+                                    modified_coords.pressure,
+                                    modified_coords.xtilt,
+                                    modified_coords.ytilt,
+                                    modified_coords.velocity * 100);
 
       blob_union = gimp_blob_convex_union (ink->last_blob, blob);
 

@@ -50,16 +50,16 @@
 
 #include "gimp-intl.h"
 
-
-
+static void gimp_paint_options_gui_reset_size (GtkWidget        *button,
+                                               GimpPaintOptions *paint_options);
 
 static GtkWidget * dynamics_options_gui       (GimpPaintOptions *paint_options,
                                                GType             tool_type);
-static GtkWidget * jitter_options_gui         (GimpPaintOptions *paint_options,
-                                               GType             tool_type);
 
-static void gimp_paint_options_gui_reset_size (GtkWidget        *button,
-                                               GimpPaintOptions *paint_options);
+static GtkWidget * jitter_options_gui    (GimpPaintOptions *paint_options,
+                                          GType             tool_type);
+static GtkWidget * smoothing_options_gui (GimpPaintOptions *paint_options,
+                                          GType             tool_type);
 
 
 /*  public functions  */
@@ -170,6 +170,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
+
+    frame = smoothing_options_gui (options, tool_type);
+    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+    gtk_widget_show (frame);
+    
 
   /*  the "incremental" toggle  */
   if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||
@@ -326,3 +331,36 @@ gimp_paint_options_gui_reset_size (GtkWidget        *button,
                    NULL);
    }
 }
+
+static GtkWidget *
+smoothing_options_gui (GimpPaintOptions *paint_options,
+                       GType             tool_type)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkObject *factor;
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+
+  frame = gimp_prop_expanding_frame_new (config, "use-smoothing",
+                                         _("Apply Smoothing"),
+                                         table, NULL);
+
+  gimp_prop_scale_entry_new (config, "smoothing-history",
+                             GTK_TABLE (table), 0, 0,
+                             _("Quality:"),
+                             1, 10, 1,
+                             FALSE, 0, 100);
+                             
+  factor = gimp_prop_scale_entry_new (config, "smoothing-factor",
+                                      GTK_TABLE (table), 0, 1,
+                                      _("Factor:"),
+                                      1, 10, 1,
+                                      FALSE, 0, 100);
+  gimp_scale_entry_set_logarithmic (factor, TRUE);
+  
+  return frame;
+}
+
