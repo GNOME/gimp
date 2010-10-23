@@ -1352,18 +1352,14 @@ load_gui_defaults (JpegSaveGui *pg)
   g_signal_handler_block (pg->use_restart_markers, pg->handler_id_restart);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->use_restart_markers),
                                 jsvals.restart);
-  restart_markers = GTK_ADJUSTMENT (pg->scale_data);
+  restart_markers = pg->scale_data;
   gtk_adjustment_set_value (restart_markers, jsvals.restart);
   g_signal_handler_unblock (pg->use_restart_markers, pg->handler_id_restart);
-
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->smoothing),
-                            jsvals.smoothing);
 
   /* Don't override quality and subsampling setting if we alredy set it from original */
   if (!jsvals.use_orig_quality)
     {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (pg->quality),
-                                jsvals.quality);
+      gtk_adjustment_set_value (pg->quality, jsvals.quality);
 
       if (gimp_drawable_is_rgb (drawable_ID_global))
         {
