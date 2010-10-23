@@ -265,8 +265,8 @@ save_image (const gchar  *filename,
   GimpDrawable  *drawable;
   GimpImageType  drawable_type;
   GimpParasite  *parasite;
-  struct jpeg_compress_struct cinfo;
-  struct my_error_mgr         jerr;
+  static struct jpeg_compress_struct cinfo;
+  static struct my_error_mgr         jerr;
   JpegSubsampling             subsampling;
   FILE     * volatile outfile;
   guchar   *temp, *t;
