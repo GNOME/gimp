@@ -633,8 +633,7 @@ fp_create_rough (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  data = (GtkAdjustment *)
-    gtk_adjustment_new (fpvals.roughness, 0, 1.0, 0.05, 0.01, 0.0);
+  data = gtk_adjustment_new (fpvals.roughness, 0, 1.0, 0.05, 0.01, 0.0);
   fp_widgets.roughness_scale = scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
                                                       data);
 
@@ -1398,9 +1397,8 @@ fp_advanced_dialog (GtkWidget *parent)
                         GTK_EXPAND | GTK_FILL, 0, 0, 0);
     }
 
-  smoothnessData = (GtkAdjustment *)
-    gtk_adjustment_new (fpvals.aliasing,
-                        0, 1.0, 0.05, 0.01, 0.0);
+  smoothnessData = gtk_adjustment_new (fpvals.aliasing,
+                                       0, 1.0, 0.05, 0.01, 0.0);
 
   fp_widgets.aliasing_scale = scale =
     gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, smoothnessData);
@@ -1424,10 +1422,9 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  smoothnessData = (GtkAdjustment *)
-    gtk_adjustment_new (fpvals.preview_size,
-                        50, MAX_PREVIEW_SIZE,
-                        5, 5, 0.0);
+  smoothnessData = gtk_adjustment_new (fpvals.preview_size,
+                                       50, MAX_PREVIEW_SIZE,
+                                       5, 5, 0.0);
 
   fp_widgets.preview_size_scale = scale =
     gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, smoothnessData);

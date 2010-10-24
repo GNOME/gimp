@@ -761,15 +761,15 @@ oilify_map_constrain (gint32   image_id G_GNUC_UNUSED,
 static gint
 oilify_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkWidget *combo;
-  GtkObject *adj;
-  gboolean   can_use_mode_inten;
-  gboolean   ret;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *table;
+  GtkWidget     *toggle;
+  GtkWidget     *combo;
+  GtkAdjustment *adj;
+  gboolean       can_use_mode_inten;
+  gboolean       ret;
 
   can_use_mode_inten = gimp_drawable_is_rgb (drawable->drawable_id);
 

@@ -1293,17 +1293,17 @@ level_out_events (GtkWidget *widget,
 static void
 smp_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *hbox;
-  GtkWidget *vbox2;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *check_button;
-  GtkWidget *label;
-  GtkWidget *combo;
-  GtkWidget *spinbutton;
-  GtkObject *data;
-  gint       ty;
+  GtkWidget     *dialog;
+  GtkWidget     *hbox;
+  GtkWidget     *vbox2;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *check_button;
+  GtkWidget     *label;
+  GtkWidget     *combo;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *data;
+  gint           ty;
 
   /* set flags for check buttons from mode value bits */
   if (g_Sdebug)

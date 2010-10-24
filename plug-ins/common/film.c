@@ -67,9 +67,9 @@ typedef struct
 /* Data to use for the dialog */
 typedef struct
 {
-  GtkObject    *advanced_adj[7];
-  GtkTreeModel *image_list_all;
-  GtkTreeModel *image_list_film;
+  GtkAdjustment *advanced_adj[7];
+  GtkTreeModel  *image_list_all;
+  GtkTreeModel  *image_list_film;
 } FilmInterface;
 
 
@@ -1127,13 +1127,13 @@ create_selection_tab (GtkWidget *notebook,
 static void
 create_advanced_tab (GtkWidget *notebook)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkObject *adj;
-  GtkWidget *button;
-  gint       row;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *table;
+  GtkWidget     *frame;
+  GtkAdjustment *adj;
+  GtkWidget     *button;
+  gint           row;
 
   frame = gimp_frame_new (_("All Values are Fractions of the Strip Height"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
@@ -1326,7 +1326,7 @@ film_reset_callback (GtkWidget *widget,
   gint i;
 
   for (i = 0; i < G_N_ELEMENTS (advanced_defaults) ; i++)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (filmint.advanced_adj[i]),
+    gtk_adjustment_set_value (filmint.advanced_adj[i],
                               advanced_defaults[i]);
 }
 

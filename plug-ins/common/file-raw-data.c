@@ -1530,18 +1530,18 @@ palette_update (GimpPreviewArea *preview)
 static gboolean
 load_dialog (const gchar *filename)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *sw;
-  GtkWidget *viewport;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkWidget *button;
-  GtkObject *adj;
-  goffset    file_size;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *sw;
+  GtkWidget     *viewport;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *combo;
+  GtkWidget     *button;
+  GtkAdjustment *adj;
+  goffset        file_size;
+  gboolean       run;
 
   file_size = get_file_info (filename);
 

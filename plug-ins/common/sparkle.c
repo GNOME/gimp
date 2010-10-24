@@ -321,16 +321,16 @@ run (const gchar      *name,
 static gboolean
 sparkle_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkWidget *r1, *r2, *r3;
-  GtkObject *scale_data;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *table;
+  GtkWidget     *toggle;
+  GtkWidget     *r1, *r2, *r3;
+  GtkAdjustment *scale_data;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 

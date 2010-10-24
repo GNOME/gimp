@@ -228,15 +228,15 @@ typedef struct _channel_st channel_st;
 
 struct _channel_st
 {
-  GtkWidget   *vbox;             /* vbox of this channel */
-  gint        *spotfn_num;       /* which spotfn the menu is controlling */
-  preview_st   prev[3];          /* state for 3 preview widgets */
-  GtkObject   *angle_adj;        /* angle adjustment */
-  GtkWidget   *combo;            /* popup for spot function */
-  GtkWidget   *menuitem[NUM_SPOTFN]; /* menuitems for each spot function */
-  GtkWidget   *ch_menuitem;      /* menuitem for the channel selector */
-  gint         ch_menu_num;      /* this channel's position in the selector */
-  channel_st  *next;             /* circular list of channels in locked group */
+  GtkWidget     *vbox;             /* vbox of this channel */
+  gint          *spotfn_num;       /* which spotfn the menu is controlling */
+  preview_st     prev[3];          /* state for 3 preview widgets */
+  GtkAdjustment *angle_adj;        /* angle adjustment */
+  GtkWidget     *combo;            /* popup for spot function */
+  GtkWidget     *menuitem[NUM_SPOTFN]; /* menuitems for each spot function */
+  GtkWidget     *ch_menuitem;      /* menuitem for the channel selector */
+  gint           ch_menu_num;      /* this channel's position in the selector */
+  channel_st    *next;             /* circular list of channels in locked group */
 };
 
 
@@ -244,18 +244,18 @@ struct _channel_st
  * callback functions */
 typedef struct
 {
-  GtkWidget  *pull_table;
-  GtkObject  *pull;            /* black pullout percentage */
-  GtkObject  *input_spi;
-  GtkObject  *output_lpi;
-  GtkObject  *cellsize;
-  GtkWidget  *vbox;            /* container for screen info */
+  GtkWidget     *pull_table;
+  GtkAdjustment *pull;            /* black pullout percentage */
+  GtkAdjustment *input_spi;
+  GtkAdjustment *output_lpi;
+  GtkAdjustment *cellsize;
+  GtkWidget     *vbox;            /* container for screen info */
 
   /* Notebook for the channels (one per colorspace) */
-  GtkWidget  *channel_notebook[NUM_CS];
+  GtkWidget     *channel_notebook[NUM_CS];
 
-  /* room for up to 4 channels per colorspace */
-  channel_st *chst[NUM_CS][4];
+  /* room for up to 4 channels per colourspace */
+  channel_st    *chst[NUM_CS][4];
 } NewsprintDialog_st;
 
 
@@ -843,7 +843,7 @@ angle_callback (GtkAdjustment *adjustment,
 
       while (c != st)
         {
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (c->angle_adj), *angle_ptr);
+          gtk_adjustment_set_value (c->angle_adj, *angle_ptr);
           c = c->next;
         }
 
@@ -863,7 +863,7 @@ lpi_callback (GtkAdjustment *adjustment,
                                    cellsize_callback,
                                    data);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->cellsize),
+  gtk_adjustment_set_value (st->cellsize,
                             pvals_ui.input_spi / pvals_ui.output_lpi);
 
   g_signal_handlers_unblock_by_func (st->cellsize,
@@ -883,7 +883,7 @@ spi_callback (GtkAdjustment *adjustment,
                                    lpi_callback,
                                    data);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
+  gtk_adjustment_set_value (st->output_lpi,
                             pvals_ui.input_spi / pvals.cell_width);
 
   g_signal_handlers_unblock_by_func (st->output_lpi,
@@ -903,7 +903,7 @@ cellsize_callback (GtkAdjustment *adjustment,
                                    lpi_callback,
                                    data);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (st->output_lpi),
+  gtk_adjustment_set_value (st->output_lpi,
                             pvals_ui.input_spi / pvals.cell_width);
 
   g_signal_handlers_unblock_by_func (st->output_lpi,
@@ -940,7 +940,7 @@ newsprint_defaults_callback (GtkWidget *widget,
       c = 0;
       while (ct->name)
         {
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (chst[c]->angle_adj),
+          gtk_adjustment_set_value (chst[c]->angle_adj,
                                     *(ct->factory_angle));
 
           /* change the popup menu and also activate the menuitem in
@@ -1138,19 +1138,19 @@ newsprint_dialog (GimpDrawable *drawable)
 {
   /* widgets we need from callbacks stored here */
   NewsprintDialog_st st;
-  GtkWidget *dialog;
-  GtkWidget *paned;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *preview;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkObject *adj;
-  GSList    *group = NULL;
-  gint       bpp;
-  gint       i;
-  gdouble    xres, yres;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *paned;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *preview;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  GSList        *group = NULL;
+  gint           bpp;
+  gint           i;
+  gdouble        xres, yres;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

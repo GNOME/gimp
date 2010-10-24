@@ -1323,7 +1323,7 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  cd->rotate_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 0));
+  cd->rotate_data = gtk_adjustment_new (0, 0.0, 360.0, 1, 45, 0);
   gtk_adjustment_set_value (cd->rotate_data, cd->rotation);
 
   spinbutton = gtk_spin_button_new (cd->rotate_data, 0.5, 1);

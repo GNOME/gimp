@@ -1063,8 +1063,7 @@ save_dialog (const gint32   image_ID,
   x1 = hotspotRange->x;
   x2 = hotspotRange->width + hotspotRange->x - 1;
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (xmcparas.x, x1, x2, 1, 5, 0);
+  adjustment = gtk_adjustment_new (xmcparas.x, x1, x2, 1, 5, 0);
   tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
@@ -1086,8 +1085,7 @@ save_dialog (const gint32   image_ID,
   y1 = hotspotRange->y;
   y2 = hotspotRange->height + hotspotRange->y - 1;
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (xmcparas.y, y1, y2, 1, 5, 0);
+  adjustment = gtk_adjustment_new (xmcparas.y, y1, y2, 1, 5, 0);
   tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
@@ -1191,9 +1189,8 @@ save_dialog (const gint32   image_ID,
                              "each frame is rendered."),
                            NULL);
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (xmcvals.delay, CURSOR_MINIMUM_DELAY,
-                        CURSOR_MAX_DELAY, 1, 5, 0);
+  adjustment = gtk_adjustment_new (xmcvals.delay, CURSOR_MINIMUM_DELAY,
+                                   CURSOR_MAX_DELAY, 1, 5, 0);
   tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);

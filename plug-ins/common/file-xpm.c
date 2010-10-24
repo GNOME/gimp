@@ -821,10 +821,10 @@ save_image (const gchar  *filename,
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkObject *scale_data;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkAdjustment *scale_data;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("XPM"), PLUG_IN_BINARY, SAVE_PROC);
 
