@@ -847,10 +847,10 @@ size_adjustment_callback (GtkWidget          *widget,
                           newn * *(adj->value) != size);
 
   if (adj->ncells != NULL)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (adj->ncells),
+    gtk_adjustment_set_value (adj->ncells,
                               *(adj->other_count) * *(adj->count));
   if (adj->rank0 != NULL)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (adj->rank0),
+    gtk_adjustment_set_value (adj->rank0,
                               *(adj->other_count) * *(adj->count));
 }
 
@@ -940,8 +940,7 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Spacing: __
    */
-  adjustment = (GtkAdjustment *) gtk_adjustment_new (info.spacing,
-                                                     1, 1000, 1, 10, 0);
+  adjustment = gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -957,9 +956,8 @@ gih_save_dialog (gint32 image_ID)
    */
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (gihparams.cellwidth,
-                        2, gimp_image_width (image_ID), 1, 10, 0);
+  adjustment = gtk_adjustment_new (gihparams.cellwidth,
+                                   2, gimp_image_width (image_ID), 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
@@ -981,9 +979,8 @@ gih_save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (gihparams.cellheight,
-                        2, gimp_image_height (image_ID), 1, 10, 0);
+  adjustment = gtk_adjustment_new (gihparams.cellheight,
+                                   2, gimp_image_height (image_ID), 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
@@ -1013,8 +1010,7 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Number of cells: ___
    */
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (gihparams.ncells, 1, 1000, 1, 10, 0);
+  adjustment = gtk_adjustment_new (gihparams.ncells, 1, 1000, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
@@ -1074,8 +1070,8 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Dimension: ___
    */
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (gihparams.dim, 1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0);
+  adjustment = gtk_adjustment_new (gihparams.dim,
+                                   1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
@@ -1096,8 +1092,7 @@ gih_save_dialog (gint32 image_ID)
     {
       gint j;
 
-      adjustment = (GtkAdjustment *)
-        gtk_adjustment_new (gihparams.rank[i], 1, 100, 1, 1, 0);
+      adjustment = gtk_adjustment_new (gihparams.rank[i], 1, 100, 1, 1, 0);
       spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_table_attach (GTK_TABLE (dimtable), spinbutton, 0, 1, i, i + 1,

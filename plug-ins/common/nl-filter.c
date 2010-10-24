@@ -1001,16 +1001,16 @@ nlfilter (GimpDrawable *drawable,
 static gboolean
 nlfilter_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *frame;
-  GtkWidget *alpha_trim;
-  GtkWidget *opt_est;
-  GtkWidget *edge_enhance;
-  GtkWidget *table;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *frame;
+  GtkWidget     *alpha_trim;
+  GtkWidget     *opt_est;
+  GtkWidget     *edge_enhance;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

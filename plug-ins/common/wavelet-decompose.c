@@ -338,12 +338,12 @@ wavelet_blur (gint32 drawable_id,
 static gboolean
 wavelet_decompose_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *table;
-  GtkWidget *button;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *table;
+  GtkWidget     *button;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
