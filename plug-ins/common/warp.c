@@ -354,20 +354,20 @@ run (const gchar      *name,
 static gboolean
 warp_dialog (GimpDrawable *drawable)
 {
-  GtkWidget    *dlg;
-  GtkWidget    *vbox;
-  GtkWidget    *label;
-  GtkWidget    *toggle;
-  GtkWidget    *toggle_hbox;
-  GtkWidget    *frame;
-  GtkWidget    *table;
-  GtkWidget    *spinbutton;
-  GtkObject    *adj;
-  GtkWidget    *combo;
-  GtkSizeGroup *label_group;
-  GtkSizeGroup *spin_group;
-  GSList       *group = NULL;
-  gboolean      run;
+  GtkWidget     *dlg;
+  GtkWidget     *vbox;
+  GtkWidget     *label;
+  GtkWidget     *toggle;
+  GtkWidget     *toggle_hbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkWidget     *combo;
+  GtkSizeGroup  *label_group;
+  GtkSizeGroup  *spin_group;
+  GSList        *group = NULL;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 

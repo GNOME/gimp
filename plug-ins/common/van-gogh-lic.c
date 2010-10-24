@@ -629,14 +629,14 @@ effect_image_constrain (gint32    image_id,
 static gboolean
 create_main_dialog (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkObject *scale_data;
-  gint       row;
-  gboolean   run;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *combo;
+  GtkAdjustment *scale_data;
+  gint           row;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

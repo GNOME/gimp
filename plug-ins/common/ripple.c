@@ -461,22 +461,22 @@ ripple (GimpDrawable *drawable,
 static gboolean
 ripple_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *toggle;
-  GtkWidget *toggle_vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkObject *scale_data;
-  GtkWidget *horizontal;
-  GtkWidget *vertical;
-  GtkWidget *wrap;
-  GtkWidget *smear;
-  GtkWidget *blank;
-  GtkWidget *sawtooth;
-  GtkWidget *sine;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkWidget     *toggle;
+  GtkWidget     *toggle_vbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkAdjustment *scale_data;
+  GtkWidget     *horizontal;
+  GtkWidget     *vertical;
+  GtkWidget     *wrap;
+  GtkWidget     *smear;
+  GtkWidget     *blank;
+  GtkWidget     *sawtooth;
+  GtkWidget     *sine;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

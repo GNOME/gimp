@@ -693,14 +693,14 @@ dialog_outside_type_callback (GtkWidget *widget,
 static gboolean
 dialog_show (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *mainbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *abox;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *mainbox;
+  GtkWidget     *hbox;
+  GtkWidget     *table;
+  GtkWidget     *frame;
+  GtkWidget     *abox;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

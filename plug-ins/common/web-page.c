@@ -291,9 +291,8 @@ webpage_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  adjustment = (GtkAdjustment *)
-    gtk_adjustment_new (webpagevals.width,
-                        1, 8192, 1, 10, 0);
+  adjustment = gtk_adjustment_new (webpagevals.width,
+                                   1, 8192, 1, 10, 0);
   spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);

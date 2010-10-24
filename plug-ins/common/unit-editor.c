@@ -325,8 +325,8 @@ new_unit_dialog (GtkWidget *main_dialog,
         break;
 
       identifier   = g_strdup (gtk_entry_get_text (GTK_ENTRY (identifier_entry)));
-      factor       = gtk_adjustment_get_value (GTK_ADJUSTMENT (factor_adj));
-      digits       = gtk_adjustment_get_value (GTK_ADJUSTMENT (digits_adj));
+      factor       = gtk_adjustment_get_value (factor_adj);
+      digits       = gtk_adjustment_get_value (digits_adj);
       symbol       = g_strdup (gtk_entry_get_text (GTK_ENTRY (symbol_entry)));
       abbreviation = g_strdup (gtk_entry_get_text (GTK_ENTRY (abbreviation_entry)));
       singular     = g_strdup (gtk_entry_get_text (GTK_ENTRY (singular_entry)));

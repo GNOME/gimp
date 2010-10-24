@@ -327,15 +327,15 @@ static gdouble   turbulence    (gdouble              *point,
 
 static GtkTreeView *texturelist = NULL;
 
-static GtkObject *scalexscale, *scaleyscale, *scalezscale;
-static GtkObject *rotxscale, *rotyscale, *rotzscale;
-static GtkObject *posxscale, *posyscale, *poszscale;
-static GtkObject *scalescale;
-static GtkObject *turbulencescale;
-static GtkObject *amountscale;
-static GtkObject *expscale;
-static GtkWidget *typemenu;
-static GtkWidget *texturemenu;
+static GtkAdjustment *scalexscale, *scaleyscale, *scalezscale;
+static GtkAdjustment *rotxscale, *rotyscale, *rotzscale;
+static GtkAdjustment *posxscale, *posyscale, *poszscale;
+static GtkAdjustment *scalescale;
+static GtkAdjustment *turbulencescale;
+static GtkAdjustment *amountscale;
+static GtkAdjustment *expscale;
+static GtkWidget     *typemenu;
+static GtkWidget     *texturemenu;
 
 #define DOT(a,b) (a[0] * b[0] + a[1] * b[1] + a[2] * b[2])
 
@@ -1823,25 +1823,24 @@ setvals (texture *t)
     return;
 
   noupdate = TRUE;
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (amountscale), t->amount);
+  gtk_adjustment_set_value (amountscale, t->amount);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (scalescale), t->oscale);
+  gtk_adjustment_set_value (scalescale, t->oscale);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (scalexscale), t->scale.x);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (scaleyscale), t->scale.y);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (scalezscale), t->scale.z);
+  gtk_adjustment_set_value (scalexscale, t->scale.x);
+  gtk_adjustment_set_value (scaleyscale, t->scale.y);
+  gtk_adjustment_set_value (scalezscale, t->scale.z);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (rotxscale), t->rotate.x);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (rotyscale), t->rotate.y);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (rotzscale), t->rotate.z);
+  gtk_adjustment_set_value (rotxscale, t->rotate.x);
+  gtk_adjustment_set_value (rotyscale, t->rotate.y);
+  gtk_adjustment_set_value (rotzscale, t->rotate.z);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (posxscale), t->translate.x);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (posyscale), t->translate.y);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (poszscale), t->translate.z);
+  gtk_adjustment_set_value (posxscale, t->translate.x);
+  gtk_adjustment_set_value (posyscale, t->translate.y);
+  gtk_adjustment_set_value (poszscale, t->translate.z);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (turbulencescale),
-                            t->turbulence.x);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (expscale), t->exp);
+  gtk_adjustment_set_value (turbulencescale, t->turbulence.x);
+  gtk_adjustment_set_value (expscale, t->exp);
 
   drawcolor1 (NULL);
   drawcolor2 (NULL);
@@ -2378,25 +2377,25 @@ getscales (GtkWidget *widget,
   if (!t)
     return;
 
-  t->amount = gtk_adjustment_get_value (GTK_ADJUSTMENT (amountscale));
-  t->exp = gtk_adjustment_get_value (GTK_ADJUSTMENT (expscale));
+  t->amount = gtk_adjustment_get_value (amountscale);
+  t->exp = gtk_adjustment_get_value (expscale);
 
-  f = gtk_adjustment_get_value (GTK_ADJUSTMENT (turbulencescale));
+  f = gtk_adjustment_get_value (turbulencescale);
   vset (&t->turbulence, f, f, f);
 
-  t->oscale = gtk_adjustment_get_value (GTK_ADJUSTMENT (scalescale));
+  t->oscale = gtk_adjustment_get_value (scalescale);
 
-  t->scale.x = gtk_adjustment_get_value (GTK_ADJUSTMENT (scalexscale));
-  t->scale.y = gtk_adjustment_get_value (GTK_ADJUSTMENT (scaleyscale));
-  t->scale.z = gtk_adjustment_get_value (GTK_ADJUSTMENT (scalezscale));
+  t->scale.x = gtk_adjustment_get_value (scalexscale);
+  t->scale.y = gtk_adjustment_get_value (scaleyscale);
+  t->scale.z = gtk_adjustment_get_value (scalezscale);
 
-  t->rotate.x = gtk_adjustment_get_value (GTK_ADJUSTMENT (rotxscale));
-  t->rotate.y = gtk_adjustment_get_value (GTK_ADJUSTMENT (rotyscale));
-  t->rotate.z = gtk_adjustment_get_value (GTK_ADJUSTMENT (rotzscale));
+  t->rotate.x = gtk_adjustment_get_value (rotxscale);
+  t->rotate.y = gtk_adjustment_get_value (rotyscale);
+  t->rotate.z = gtk_adjustment_get_value (rotzscale);
 
-  t->translate.x = gtk_adjustment_get_value (GTK_ADJUSTMENT (posxscale));
-  t->translate.y = gtk_adjustment_get_value (GTK_ADJUSTMENT (posyscale));
-  t->translate.z = gtk_adjustment_get_value (GTK_ADJUSTMENT (poszscale));
+  t->translate.x = gtk_adjustment_get_value (posxscale);
+  t->translate.y = gtk_adjustment_get_value (posyscale);
+  t->translate.z = gtk_adjustment_get_value (poszscale);
 
   restartrender ();
 }

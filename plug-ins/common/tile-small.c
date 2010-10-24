@@ -156,11 +156,11 @@ typedef struct
 {
   AppliedTo  type;
 
-  gint       x;        /* X - pos of tile   */
-  gint       y;        /* Y - pos of tile   */
-  GtkObject *r_adj;    /* row adjustment    */
-  GtkObject *c_adj;    /* column adjustment */
-  GtkWidget *applybut; /* The apply button  */
+  gint           x;        /* X - pos of tile   */
+  gint           y;        /* Y - pos of tile   */
+  GtkAdjustment *r_adj;    /* row adjustment    */
+  GtkAdjustment *c_adj;    /* column adjustment */
+  GtkWidget     *applybut; /* The apply button  */
 } Exp_Call;
 
 static Exp_Call exp_call =
@@ -346,21 +346,21 @@ run (const gchar      *name,
 static gboolean
 tileit_dialog (void)
 {
-  GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *table2;
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkObject *scale;
-  GtkWidget *toggle;
-  GSList    *orientation_group = NULL;
-  gboolean   run;
+  GtkWidget     *dlg;
+  GtkWidget     *main_vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *table2;
+  GtkWidget     *button;
+  GtkWidget     *label;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkAdjustment *scale;
+  GtkWidget     *toggle;
+  GSList        *orientation_group = NULL;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
