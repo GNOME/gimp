@@ -614,12 +614,12 @@ align_layers_get_align_offsets (gint32  drawable_id,
 static int
 align_layers_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkWidget *toggle;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkWidget     *combo;
+  GtkWidget     *toggle;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 

@@ -2377,16 +2377,16 @@ check_config (gint width,
 static gboolean
 jigsaw_dialog (GimpDrawable *drawable)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *preview;
-  GtkSizeGroup *group;
-  GtkWidget    *frame;
-  GtkWidget    *rbutton1;
-  GtkWidget    *rbutton2;
-  GtkWidget    *table;
-  GtkObject    *adj;
-  gboolean      run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *preview;
+  GtkSizeGroup  *group;
+  GtkWidget     *frame;
+  GtkWidget     *rbutton1;
+  GtkWidget     *rbutton2;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
