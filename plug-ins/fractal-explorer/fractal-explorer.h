@@ -100,32 +100,32 @@ typedef struct _DialogElements DialogElements;
 
 struct _DialogElements
 {
-  GtkWidget  *type[NUM_TYPES];
-  GtkObject  *xmin;
-  GtkObject  *xmax;
-  GtkObject  *ymin;
-  GtkObject  *ymax;
-  GtkObject  *iter;
-  GtkObject  *cx;
-  GtkObject  *cy;
+  GtkWidget     *type[NUM_TYPES];
+  GtkAdjustment *xmin;
+  GtkAdjustment *xmax;
+  GtkAdjustment *ymin;
+  GtkAdjustment *ymax;
+  GtkAdjustment *iter;
+  GtkAdjustment *cx;
+  GtkAdjustment *cy;
 
-  GtkObject  *ncol;
-  GtkWidget  *useloglog;
+  GtkAdjustment *ncol;
+  GtkWidget     *useloglog;
 
-  GtkObject  *red;
-  GtkObject  *green;
-  GtkObject  *blue;
+  GtkAdjustment *red;
+  GtkAdjustment *green;
+  GtkAdjustment *blue;
 
-  GtkWidget  *redmode[3];
-  GtkWidget  *redinvert;
+  GtkWidget     *redmode[3];
+  GtkWidget     *redinvert;
 
-  GtkWidget  *greenmode[3];
-  GtkWidget  *greeninvert;
+  GtkWidget     *greenmode[3];
+  GtkWidget     *greeninvert;
 
-  GtkWidget  *bluemode[3];
-  GtkWidget  *blueinvert;
+  GtkWidget     *bluemode[3];
+  GtkWidget     *blueinvert;
 
-  GtkWidget  *colormode[2];
+  GtkWidget     *colormode[2];
 };
 
 
