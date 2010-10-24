@@ -631,16 +631,16 @@ edit_callback (GtkWidget *widget,
 
   if (edit_dialog == NULL)
     {
-      GtkWidget *main_vbox;
-      GtkWidget *frame;
-      GtkWidget *table;
-      GtkWidget *vbox;
-      GtkWidget *hbox;
-      GtkWidget *button;
-      GtkWidget *combo;
-      GtkWidget *label;
-      GtkObject *adj;
-      gint       i, j;
+      GtkWidget     *main_vbox;
+      GtkWidget     *frame;
+      GtkWidget     *table;
+      GtkWidget     *vbox;
+      GtkWidget     *hbox;
+      GtkWidget     *button;
+      GtkWidget     *combo;
+      GtkWidget     *label;
+      GtkAdjustment *adj;
+      gint           i, j;
 
       edit_dialog = gimp_dialog_new (_("Edit Flame"), PLUG_IN_ROLE,
                                      parent, GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -951,16 +951,16 @@ cmap_constrain (gint32   image_id,
 static gboolean
 flame_dialog (void)
 {
-  GtkWidget *main_vbox;
-  GtkWidget *notebook;
-  GtkWidget *label;
-  GtkWidget *frame;
-  GtkWidget *abox;
-  GtkWidget *button;
-  GtkWidget *table;
-  GtkWidget *box;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *main_vbox;
+  GtkWidget     *notebook;
+  GtkWidget     *label;
+  GtkWidget     *frame;
+  GtkWidget     *abox;
+  GtkWidget     *button;
+  GtkWidget     *table;
+  GtkWidget     *box;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 

@@ -2695,16 +2695,16 @@ static void
 dlg_make_page_settings (GFlareDialog *dlg,
                         GtkWidget    *notebook)
 {
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
-  GtkWidget *center;
-  GtkWidget *chain;
-  GtkWidget *table;
-  GtkWidget *button;
-  GtkWidget *asup_table;
-  GtkObject *adj;
-  gdouble    xres, yres;
-  gint       row;
+  GtkWidget     *main_vbox;
+  GtkWidget     *frame;
+  GtkWidget     *center;
+  GtkWidget     *chain;
+  GtkWidget     *table;
+  GtkWidget     *button;
+  GtkWidget     *asup_table;
+  GtkAdjustment *adj;
+  gdouble        xres, yres;
+  gint           row;
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
@@ -3432,12 +3432,12 @@ static void
 ed_make_page_general (GFlareEditor *ed,
                       GtkWidget    *notebook)
 {
-  GFlare    *gflare = ed->gflare;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *combo;
-  GtkObject *adj;
+  GFlare        *gflare = ed->gflare;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkWidget     *combo;
+  GtkAdjustment *adj;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -3538,13 +3538,13 @@ static void
 ed_make_page_glow (GFlareEditor *ed,
                    GtkWidget    *notebook)
 {
-  GFlare       *gflare = ed->gflare;
-  GradientMenu *gm;
-  GtkWidget    *vbox;
-  GtkWidget    *frame;
-  GtkWidget    *table;
-  GtkObject    *adj;
-  gint          row;
+  GFlare        *gflare = ed->gflare;
+  GradientMenu  *gm;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  gint           row;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -3641,13 +3641,13 @@ static void
 ed_make_page_rays (GFlareEditor *ed,
                    GtkWidget    *notebook)
 {
-  GFlare       *gflare = ed->gflare;
-  GradientMenu *gm;
-  GtkWidget    *vbox;
-  GtkWidget    *frame;
-  GtkWidget    *table;
-  GtkObject    *adj;
-  gint          row;
+  GFlare        *gflare = ed->gflare;
+  GradientMenu  *gm;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *table;
+  GtkAdjustment *adj;
+  gint           row;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -3771,22 +3771,22 @@ static void
 ed_make_page_sflare (GFlareEditor *ed,
                      GtkWidget    *notebook)
 {
-  GFlare       *gflare = ed->gflare;
-  GradientMenu *gm;
-  GtkWidget    *vbox;
-  GtkWidget    *table;
-  GtkWidget    *frame;
-  GtkWidget    *shape_vbox;
-  GSList       *shape_group = NULL;
-  GtkWidget    *polygon_hbox;
-  GtkWidget    *seed_hbox;
-  GtkWidget    *toggle;
-  GtkWidget    *label;
-  GtkWidget    *seed;
-  GtkWidget    *entry;
-  GtkObject    *adj;
-  gchar         buf[256];
-  gint          row;
+  GFlare        *gflare = ed->gflare;
+  GradientMenu  *gm;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *frame;
+  GtkWidget     *shape_vbox;
+  GSList        *shape_group = NULL;
+  GtkWidget     *polygon_hbox;
+  GtkWidget     *seed_hbox;
+  GtkWidget     *toggle;
+  GtkWidget     *label;
+  GtkWidget     *seed;
+  GtkWidget     *entry;
+  GtkAdjustment *adj;
+  gchar          buf[256];
+  gint           row;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);

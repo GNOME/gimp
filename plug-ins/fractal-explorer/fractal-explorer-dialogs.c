@@ -1444,17 +1444,17 @@ dialog_change_scale (void)
 {
   ready_now = FALSE;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->xmin), wvals.xmin);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->xmax), wvals.xmax);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->ymin), wvals.ymin);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->ymax), wvals.ymax);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->iter), wvals.iter);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->cx),   wvals.cx);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->cy),   wvals.cy);
+  gtk_adjustment_set_value (elements->xmin, wvals.xmin);
+  gtk_adjustment_set_value (elements->xmax, wvals.xmax);
+  gtk_adjustment_set_value (elements->ymin, wvals.ymin);
+  gtk_adjustment_set_value (elements->ymax, wvals.ymax);
+  gtk_adjustment_set_value (elements->iter, wvals.iter);
+  gtk_adjustment_set_value (elements->cx,   wvals.cx);
+  gtk_adjustment_set_value (elements->cy,   wvals.cy);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->red),  wvals.redstretch);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->green),wvals.greenstretch);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (elements->blue), wvals.bluestretch);
+  gtk_adjustment_set_value (elements->red,  wvals.redstretch);
+  gtk_adjustment_set_value (elements->green,wvals.greenstretch);
+  gtk_adjustment_set_value (elements->blue, wvals.bluestretch);
 
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (elements->type[wvals.fractaltype]), TRUE);
