@@ -172,14 +172,14 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
 
 /**
  * gimp_display_shell_transform_xy_f:
- * @shell:       a #GimpDisplayShell
- * @x:           x coordinate of point in image coordinates
- * @y:           y coordinate of point in image coordinate
- * @nx:          returns the transformed x coordinate
- * @ny:          returns the transformed y coordinate
+ * @shell: a #GimpDisplayShell
+ * @x:     image x coordinate of point
+ * @y:     image y coordinate of point
+ * @nx:    returned shell canvas x coordinate
+ * @ny:    returned shell canvas y coordinate
  *
- * This function is identical to gimp_display_shell_transfrom_xy(),
- * except that it returns its results as doubles rather than ints.
+ * Transforms from image coordinates to display shell canvas
+ * coordinates.
  **/
 void
 gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
