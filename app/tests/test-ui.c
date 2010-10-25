@@ -338,7 +338,15 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
                                    &shell_y_after_zoom);
   factor_after_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
-  /* First of all make sure a zoom happend at all */
+  /* First of all make sure a zoom happend at all. If this assert
+   * fails, it means that the zoom didn't happen. Possible causes:
+   *
+   *  * gdk_test_simulate_key() failed to map 'GDK_plus' to the proper
+   *    'plus' X keysym, probably because it is mapped to a keycode
+   *    with modifiers like 'shift'. Run "xmodmap -pk | grep plus" to
+   *    find out. Make sure 'plus' is the first keysym for the given
+   *    keycode. If not, use "xmodmap <keycode> = plus" to correct it.
+   */
   g_assert_cmpfloat (fabs (factor_before_zoom - factor_after_zoom),
                      >=,
                      GIMP_UI_ZOOM_EPSILON);
