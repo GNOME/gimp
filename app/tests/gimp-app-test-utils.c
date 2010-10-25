@@ -39,9 +39,12 @@ gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
   /* Get root dir */
   root_dir = g_getenv (root_env_var);
   if (! root_dir)
-    g_printerr ("The env var %s is not set, you are probably running\n"
-                "in a debugger. Set it manually, e.g.:\n"
-                "set env %s=%s/source/gimp\n",
+    g_printerr ("*\n"
+                "*  The env var %s is not set, you are probably running\n"
+                "*  in a debugger. Set it manually, e.g.:\n"
+                "*\n"
+                "*    set env %s=%s/source/gimp\n"
+                "*\n",
                 root_env_var,
                 root_env_var, g_get_home_dir ());
 
