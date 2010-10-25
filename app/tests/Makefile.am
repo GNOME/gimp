@@ -13,6 +13,7 @@ TESTS_ENVIRONMENT = \
 TESTS = \
 	test-core		\
 	test-session-management	\
+	test-tools		\
 	test-ui			\
 	test-xcf
 

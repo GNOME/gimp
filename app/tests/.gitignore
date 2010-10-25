@@ -7,6 +7,7 @@ libgimpapptestutils.a
 test-core*
 test-layer-grouping*
 test-session-management*
+test-tools*
 test-ui*
 test-window-management*
 test-xcf*
