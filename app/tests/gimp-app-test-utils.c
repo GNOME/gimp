@@ -15,7 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <glib.h>
+#include "config.h"
+
+#include <gegl.h>
+
+#include "core/core-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
 
 #include "gimp-app-test-utils.h"
 
@@ -76,4 +84,50 @@ gimp_test_utils_setup_menus_dir (void)
   gimp_test_utils_set_env_to_subdir ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
                                      "menus" /*subdir*/,
                                      "GIMP_TESTING_MENUS_DIR" /*target_env_var*/);
+}
+
+/**
+ * gimp_test_utils_create_image:
+ * @gimp:   A #Gimp instance.
+ * @width:  Width of image (and layer)
+ * @height: Height of image (and layer)
+ *
+ * Creates a new image of a given size with one layer of same size and
+ * a display.
+ *
+ * Returns: The new #GimpImage.
+ **/
+GimpImage *
+gimp_test_utils_create_image (Gimp *gimp,
+                              gint  width,
+                              gint  height)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+
+  image = gimp_image_new (gimp,
+                          width,
+                          height,
+                          GIMP_RGB);
+
+  layer = gimp_layer_new (image,
+                          width,
+                          height,
+                          GIMP_RGBA_IMAGE,
+                          "layer1",
+                          1.0,
+                          GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image,
+                        layer,
+                        NULL /*parent*/,
+                        0 /*position*/,
+                        FALSE /*push_undo*/);
+
+  gimp_create_display (gimp,
+                       image,
+                       GIMP_UNIT_PIXEL,
+                       1.0 /*scale*/);
+
+  return image;
 }
