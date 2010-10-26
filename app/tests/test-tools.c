@@ -277,12 +277,12 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
                                                 gint              button /*1..3*/,
                                                 GdkModifierType   modifiers)
 {
-  gdouble  start_canvas_x = -1.0;
-  gdouble  start_canvas_y = -1.0;
-  gdouble  end_canvas_x   = -1.0;
-  gdouble  end_canvas_y   = -1.0;
-  gdouble  middle_canvas_x   = -1.0;
-  gdouble  middle_canvas_y   = -1.0;
+  gdouble start_canvas_x  = -1.0;
+  gdouble start_canvas_y  = -1.0;
+  gdouble middle_canvas_x = -1.0;
+  gdouble middle_canvas_y = -1.0;
+  gdouble end_canvas_x    = -1.0;
+  gdouble end_canvas_y    = -1.0;
 
   /* Transform coordinates */
   gimp_display_shell_transform_xy_f (shell,
@@ -351,8 +351,8 @@ gimp_tools_synthesize_image_click_drag_release (GimpDisplayShell *shell,
  * @fixture:
  * @data:
  *
- * Make sure it's possible to crop at all. Regression test for bug
- * 315255.
+ * Make sure it's possible to crop at all. Regression test for
+ * "Bug 315255 - SIGSEGV, while doing a crop".
  **/
 static void
 crop_tool_can_crop (GimpTestFixture *fixture,
