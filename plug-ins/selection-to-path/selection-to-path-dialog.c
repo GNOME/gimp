@@ -48,13 +48,13 @@ static GSList * adjust_widgets = NULL;
 void
 reset_adv_dialog (void)
 {
-  GSList    *list;
-  GtkObject *widget;
-  gdouble   *value;
+  GSList  *list;
+  GObject *widget;
+  gdouble *value;
 
   for (list = adjust_widgets; list; list = g_slist_next (list))
     {
-      widget = GTK_OBJECT (list->data);
+      widget = G_OBJECT (list->data);
       value  = (gdouble *) g_object_get_data (G_OBJECT (widget),
                                               "default_value");
 
@@ -84,10 +84,10 @@ def_val (gdouble default_value)
 GtkWidget *
 dialog_create_selection_area (SELVALS *sels)
 {
-  GtkWidget *table;
-  GtkWidget *check;
-  GtkObject *adj;
-  gint       row;
+  GtkWidget     *table;
+  GtkWidget     *check;
+  GtkAdjustment *adj;
+  gint           row;
 
   table = gtk_table_new (20, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
