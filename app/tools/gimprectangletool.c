@@ -30,6 +30,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
@@ -49,6 +50,8 @@
 #include "gimprectangleoptions.h"
 #include "gimprectangletool.h"
 #include "gimptoolcontrol.h"
+
+#include "gimp-log.h"
 
 #include "gimp-intl.h"
 
@@ -863,6 +866,9 @@ gimp_rectangle_tool_control (GimpTool       *tool,
 {
   GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (tool);
 
+  GIMP_LOG (RECTANGLE_TOOL, "action = %s",
+            gimp_enum_get_value_name (GIMP_TYPE_TOOL_ACTION, action));
+
   switch (action)
     {
     case GIMP_TOOL_ACTION_PAUSE:
@@ -915,6 +921,9 @@ gimp_rectangle_tool_button_press (GimpTool         *tool,
   gimp_draw_tool_pause (draw_tool);
 
   gimp_tool_control_activate (tool->control);
+
+  GIMP_LOG (RECTANGLE_TOOL, "coords->x = %f, coords->y = %f",
+            coords->x, coords->y);
 
   if (display != tool->display)
     {
@@ -1029,6 +1038,9 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
+  GIMP_LOG (RECTANGLE_TOOL, "coords->x = %f, coords->y = %f",
+            coords->x, coords->y);
+
   if (private->function == GIMP_RECTANGLE_TOOL_EXECUTING)
     gimp_tool_pop_status (tool, display);
 
@@ -1112,6 +1124,9 @@ gimp_rectangle_tool_motion (GimpTool         *tool,
   if (private->function == GIMP_RECTANGLE_TOOL_EXECUTING ||
       private->function == GIMP_RECTANGLE_TOOL_DEAD)
     return;
+
+  GIMP_LOG (RECTANGLE_TOOL, "coords->x = %f, coords->y = %f",
+            coords->x, coords->y);
 
   /* Handle snapping. */
   gimp_tool_control_get_snap_offsets (tool->control,
