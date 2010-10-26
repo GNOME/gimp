@@ -38,6 +38,7 @@
 #include "core/gimp.h"
 #include "core/gimp-contexts.h"
 
+#include "gimp-log.h"
 #include "tests.h"
 #include "units.h"
 
@@ -58,8 +59,12 @@ gimp_status_func_dummy (const gchar *text1,
 Gimp *
 gimp_init_for_testing (void)
 {
-  Gimp *gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
-                         FALSE, TRUE, TRUE, FALSE);
+  Gimp *gimp;
+  
+  gimp_log_init ();
+
+  gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
+                   FALSE, TRUE, TRUE, FALSE);
 
   units_init (gimp);
 
@@ -95,6 +100,7 @@ gimp_init_for_gui_testing (gboolean show_gui)
   /* from main() */
   g_thread_init(NULL);
   g_type_init();
+  gimp_log_init ();
 
   /* Introduce an error margin for positions written to sessionrc */
   klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
