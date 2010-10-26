@@ -87,7 +87,7 @@ typedef struct
 } GimpTestFixture;
 
 
-static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
+static GimpUIManager * gimp_test_utils_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
 static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
                                                                  gint               x,
@@ -476,7 +476,7 @@ restore_recently_closed_multi_column_dock (GimpTestFixture *fixture,
   /* Restore the (only avaiable) closed dock and make sure the session
    * infos in the global dock factory are increased again
    */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    /* FIXME: This is severly hardcoded */
                                    "windows-recent-0003");
@@ -528,14 +528,14 @@ tab_toggle_dont_change_dock_window_position (GimpTestFixture *fixture,
                        &h_before_hide);
 
   /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
   g_assert (! gtk_widget_get_visible (dock_window));
 
   /* Show them again */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
@@ -565,7 +565,7 @@ switch_to_single_window_mode (GimpTestFixture *fixture,
   /* Switch to single-window mode. We consider this test as passed if
    * we don't get any GLib warnings/errors
    */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-use-single-window-mode");
   gimp_test_run_mainloop_until_idle ();
@@ -597,7 +597,7 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
                                     &x_before_hide, &y_before_hide);
 
   /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
@@ -641,7 +641,7 @@ switch_back_to_multi_window_mode (GimpTestFixture *fixture,
   /* Switch back to multi-window mode. We consider this test as passed
    * if we don't get any GLib warnings/errors
    */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-use-single-window-mode");
   gimp_test_run_mainloop_until_idle ();
@@ -696,31 +696,6 @@ paintbrush_is_standard_tool (GimpTestFixture *fixture,
   g_assert_cmpstr (tool_info->help_id,
                    ==,
                    "gimp-tool-paintbrush");
-}
-
-static GimpUIManager *
-gimp_ui_get_ui_manager (Gimp *gimp)
-{
-  GimpDisplay       *display      = NULL;
-  GimpDisplayShell  *shell        = NULL;
-  GtkWidget         *toplevel     = NULL;
-  GimpImageWindow   *image_window = NULL;
-  GimpUIManager     *ui_manager   = NULL;
-
-  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-
-  /* If there were not empty display, assume that there is at least
-   * one image display and use that
-   */
-  if (! display)
-    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-
-  shell            = gimp_display_get_shell (display);
-  toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  image_window     = GIMP_IMAGE_WINDOW (toplevel);
-  ui_manager       = gimp_image_window_get_ui_manager (image_window);
-
-  return ui_manager;
 }
 
 /**

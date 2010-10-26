@@ -18,8 +18,15 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "display/display-types.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
+
+#include "widgets/gimpuimanager.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -100,7 +107,7 @@ gimp_test_utils_setup_menus_dir (void)
  *
  * Returns: The new #GimpImage.
  **/
-GimpImage *
+void
 gimp_test_utils_create_image (Gimp *gimp,
                               gint  width,
                               gint  height)
@@ -131,8 +138,6 @@ gimp_test_utils_create_image (Gimp *gimp,
                        image,
                        GIMP_UNIT_PIXEL,
                        1.0 /*scale*/);
-
-  return image;
 }
 
 /**
@@ -156,4 +161,39 @@ gimp_test_utils_synthesize_key_event (GtkWidget *widget,
                          keyval,
                          0 /*modifiers*/,
                          GDK_KEY_RELEASE);
+}
+
+/**
+ * gimp_test_utils_get_ui_manager:
+ * @gimp: The #Gimp instance.
+ *
+ * Returns the "best" #GimpUIManager to use when performing
+ * actions. It gives the ui manager of the empty display if it exists,
+ * otherwise it gives it the ui manager of the first display.
+ *
+ * Returns: The #GimpUIManager.
+ **/
+GimpUIManager *
+gimp_test_utils_get_ui_manager (Gimp *gimp)
+{
+  GimpDisplay       *display      = NULL;
+  GimpDisplayShell  *shell        = NULL;
+  GtkWidget         *toplevel     = NULL;
+  GimpImageWindow   *image_window = NULL;
+  GimpUIManager     *ui_manager   = NULL;
+
+  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+
+  /* If there were not empty display, assume that there is at least
+   * one image display and use that
+   */
+  if (! display)
+    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+
+  shell            = gimp_display_get_shell (display);
+  toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  image_window     = GIMP_IMAGE_WINDOW (toplevel);
+  ui_manager       = gimp_image_window_get_ui_manager (image_window);
+
+  return ui_manager;
 }
