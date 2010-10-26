@@ -87,7 +87,6 @@ typedef struct
 } GimpTestFixture;
 
 
-static GimpUIManager * gimp_test_utils_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
 static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
                                                                  gint               x,
