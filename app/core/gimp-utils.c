@@ -686,6 +686,32 @@ gimp_markup_extract_text (const gchar *markup)
 }
 
 /**
+ * gimp_enum_get_value_name:
+ * @enum_type: Enum type
+ * @value:     Enum value
+ *
+ * Returns the value name for a given value of a given enum
+ * type. Useful to have inline in GIMP_LOG() messages for example.
+ *
+ * Returns: The value name.
+ **/
+const gchar *
+gimp_enum_get_value_name (GType enum_type,
+                          gint  value)
+{
+  const gchar *value_name = NULL;
+  
+  gimp_enum_get_value (enum_type,
+                       value,
+                       &value_name,
+                       NULL /*value_nick*/,
+                       NULL /*value_desc*/,
+                       NULL /*value_help*/);
+
+  return value_name;
+}
+
+/**
  * gimp_utils_point_to_line_distance:
  * @point:              The point to calculate the distance for.
  * @point_on_line:      A point on the line.

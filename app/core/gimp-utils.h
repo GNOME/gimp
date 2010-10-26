@@ -78,6 +78,8 @@ GimpObject * gimp_container_get_neighbor_of_active (GimpContainer   *container,
 
 gchar      * gimp_markup_extract_text              (const gchar     *markup);
 
+const gchar* gimp_enum_get_value_name              (GType            enum_type,
+                                                    gint             value);
 
 /* Common values for the n_snap_lines parameter of
  * gimp_constrain_line.
