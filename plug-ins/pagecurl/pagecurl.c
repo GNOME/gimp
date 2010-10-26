@@ -420,15 +420,15 @@ dialog (void)
   /* Missing options: Color-dialogs? / own curl layer ? / transparency
      to original drawable / Warp-curl (unsupported yet) */
 
-  GtkWidget *dialog;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *frame;
-  GtkWidget *button;
-  GtkWidget *combo;
-  GtkObject *adjustment;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *hbox;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *frame;
+  GtkWidget     *button;
+  GtkWidget     *combo;
+  GtkAdjustment *adjustment;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
