@@ -16,8 +16,11 @@
  */
 
 #include <gegl.h>
+#include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
+
+#include "widgets/gimpuimanager.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
