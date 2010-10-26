@@ -134,3 +134,26 @@ gimp_test_utils_create_image (Gimp *gimp,
 
   return image;
 }
+
+/**
+ * gimp_test_utils_synthesize_key_event:
+ * @widget: Widget to target.
+ * @keyval: Keyval, e.g. GDK_Return
+ *
+ * Simulates a keypress and release with gdk_test_simulate_key().
+ **/
+void
+gimp_test_utils_synthesize_key_event (GtkWidget *widget,
+                                      guint      keyval)
+{
+  gdk_test_simulate_key (gtk_widget_get_window (widget),
+                         -1, -1, /*x, y*/
+                         keyval,
+                         0 /*modifiers*/,
+                         GDK_KEY_PRESS);
+  gdk_test_simulate_key (gtk_widget_get_window (widget),
+                         -1, -1, /*x, y*/
+                         keyval,
+                         0 /*modifiers*/,
+                         GDK_KEY_RELEASE);
+}

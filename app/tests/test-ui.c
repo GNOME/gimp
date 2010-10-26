@@ -89,8 +89,6 @@ typedef struct
 
 static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
-static void            gimp_ui_synthesize_key_event             (GtkWidget         *widget,
-                                                                 guint              keyval);
 static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
                                                                  gint               x,
                                                                  gint               y,
@@ -327,7 +325,7 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
   factor_before_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
   /* Do the zoom */
-  gimp_ui_synthesize_key_event (GTK_WIDGET (window), GDK_plus);
+  gimp_test_utils_synthesize_key_event (GTK_WIDGET (window), GDK_plus);
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure the zoom focus point remained fixed */
@@ -745,22 +743,6 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
   event->any.send_event = TRUE;
   gtk_main_do_event (event);
   gdk_event_free (event);
-}
-
-static void
-gimp_ui_synthesize_key_event (GtkWidget *widget,
-                              guint      keyval)
-{
-  gdk_test_simulate_key (gtk_widget_get_window (widget),
-                         -1, -1, /*x, y*/
-                         keyval,
-                         0 /*modifiers*/,
-                         GDK_KEY_PRESS);
-  gdk_test_simulate_key (gtk_widget_get_window (widget),
-                         -1, -1, /*x, y*/
-                         keyval,
-                         0 /*modifiers*/,
-                         GDK_KEY_RELEASE);
 }
 
 static gboolean
