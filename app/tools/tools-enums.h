@@ -158,6 +158,18 @@ typedef enum
 } GimpVectorMode;
 
 
+#define GIMP_TYPE_TOOL_ACTION (gimp_tool_action_get_type ())
+
+GType gimp_tool_action_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TOOL_ACTION_PAUSE,
+  GIMP_TOOL_ACTION_RESUME,
+  GIMP_TOOL_ACTION_HALT
+} GimpToolAction;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -170,14 +182,6 @@ typedef enum /*< skip >*/
   SELECTION_MOVE_COPY,
   SELECTION_ANCHOR
 } SelectFunction;
-
-/*  Tool control actions  */
-typedef enum /*< skip >*/
-{
-  GIMP_TOOL_ACTION_PAUSE,
-  GIMP_TOOL_ACTION_RESUME,
-  GIMP_TOOL_ACTION_HALT
-} GimpToolAction;
 
 /*  Modes of GimpEditSelectionTool  */
 typedef enum /*< skip >*/
