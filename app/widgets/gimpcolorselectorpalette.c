@@ -78,7 +78,7 @@ gimp_color_selector_palette_set_color (GimpColorSelector *selector,
     {
       GimpPalette *palette = gimp_context_get_palette (select->context);
 
-      if (palette && palette->n_colors > 0)
+      if (palette && gimp_palette_get_n_colors (palette) > 0)
         {
           GimpPaletteEntry *entry;
 

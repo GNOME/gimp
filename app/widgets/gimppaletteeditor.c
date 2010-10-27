@@ -347,7 +347,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                         editor);
 
       gtk_adjustment_set_value (palette_editor->columns_data,
-                                palette->n_columns);
+                                gimp_palette_get_columns (palette));
 
       palette_editor_scroll_top_left (palette_editor);
 
@@ -468,8 +468,9 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
           break;
 
         case GIMP_COLOR_PICK_STATE_UPDATE:
-          editor->color->color = *color;
-          gimp_data_dirty (data);
+          gimp_palette_set_entry_color (GIMP_PALETTE (data),
+                                        editor->color->position,
+                                        color);
           break;
         }
     }
@@ -515,10 +516,12 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
         gtk_widget_get_allocation (viewport, &allocation);
 
-        columns = palette->n_columns ? palette->n_columns : COLUMNS;
-        rows    = palette->n_colors / columns;
+        columns = gimp_palette_get_columns (palette);
+        if (columns == 0)
+          columns = COLUMNS;
 
-        if (palette->n_colors % columns)
+        rows = gimp_palette_get_n_colors (palette) / columns;
+        if (gimp_palette_get_n_colors (palette) % columns)
           rows += 1;
 
         rows = MAX (1, rows);
@@ -531,9 +534,8 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
   zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
 
-  if (palette->n_columns)
-    editor->columns = palette->n_columns;
-  else
+  editor->columns = gimp_palette_get_columns (palette);
+  if (editor->columns == 0)
     editor->columns = COLUMNS;
 
   palette_editor_resize (editor, editor->last_width, zoom_factor);
@@ -552,7 +554,7 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (palette && palette->n_colors > 0)
+  if (palette && gimp_palette_get_n_colors (palette) > 0)
     {
       GimpPaletteEntry *entry;
 
@@ -571,26 +573,29 @@ gimp_palette_editor_set_index (GimpPaletteEditor *editor,
                                GimpRGB           *color)
 {
   GimpPalette *palette;
-  GList       *list;
 
   g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), FALSE);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette || palette->n_colors == 0)
-    return FALSE;
+  if (palette && gimp_palette_get_n_colors (palette) > 0)
+    {
+      GimpPaletteEntry *entry;
 
-  index = CLAMP (index, 0, palette->n_colors - 1);
+      index = CLAMP (index, 0, gimp_palette_get_n_colors (palette) - 1);
 
-  list = g_list_nth (palette->colors, index);
+      entry = gimp_palette_get_entry (palette, index);
 
-  gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
-                                  list->data);
+      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
+                                      entry);
 
-  if (color)
-    *color = editor->color->color;
+      if (color)
+        *color = editor->color->color;
 
-  return TRUE;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 gint
@@ -602,10 +607,12 @@ gimp_palette_editor_max_index (GimpPaletteEditor *editor)
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette || palette->n_colors == 0)
-    return -1;
+  if (palette && gimp_palette_get_n_colors (palette) > 0)
+    {
+      return gimp_palette_get_n_colors (palette) - 1;
+    }
 
-  return palette->n_colors - 1;
+  return -1;
 }
 
 
@@ -615,9 +622,8 @@ static void
 palette_editor_invalidate_preview (GimpPalette       *palette,
                                    GimpPaletteEditor *editor)
 {
-  if (palette->n_columns)
-    editor->columns = palette->n_columns;
-  else
+  editor->columns = gimp_palette_get_columns (palette);
+  if (editor->columns == 0)
     editor->columns = COLUMNS;
 
   palette_editor_resize (editor, editor->last_width, editor->zoom_factor);
@@ -747,17 +753,12 @@ palette_editor_color_name_changed (GtkWidget         *widget,
 {
   if (GIMP_DATA_EDITOR (editor)->data)
     {
-      GimpPalette *palette;
+      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      const gchar *name;
 
-      palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      name = gtk_entry_get_text (GTK_ENTRY (editor->color_name));
 
-      if (editor->color->name)
-        g_free (editor->color->name);
-
-      editor->color->name =
-        g_strdup (gtk_entry_get_text (GTK_ENTRY (editor->color_name)));
-
-      gimp_data_dirty (GIMP_DATA (palette));
+      gimp_palette_set_entry_name (palette, editor->color->position, name);
     }
 }
 
@@ -799,8 +800,8 @@ palette_editor_resize (GimpPaletteEditor *editor,
   if (editor->col_width < 0)
     editor->col_width = 0;
 
-  rows = palette->n_colors / editor->columns;
-  if (palette->n_colors % editor->columns)
+  rows = gimp_palette_get_n_colors (palette) / editor->columns;
+  if (gimp_palette_get_n_colors (palette) % editor->columns)
     rows += 1;
 
   preview_width  = (editor->col_width + SPACING) * editor->columns;

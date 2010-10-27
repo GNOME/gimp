@@ -780,12 +780,13 @@ gimp_image_convert (GimpImage               *image,
       g_return_val_if_fail (custom_palette == NULL ||
                             GIMP_IS_PALETTE (custom_palette), FALSE);
       g_return_val_if_fail (custom_palette == NULL ||
-                            custom_palette->n_colors <= 256, FALSE);
+                            gimp_palette_get_n_colors (custom_palette) <= 256,
+                            FALSE);
 
       if (! custom_palette)
         palette_type = GIMP_MONO_PALETTE;
 
-      if (custom_palette->n_colors < 1)
+      if (gimp_palette_get_n_colors (custom_palette) == 0)
         {
           g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
 			       _("Cannot convert image: palette is empty."));
@@ -2733,20 +2734,19 @@ webpal_pass1 (QuantizeObj *quantobj)
 static void
 custompal_pass1 (QuantizeObj *quantobj)
 {
-  gint              i;
-  GList            *list;
-  GimpPaletteEntry *entry;
-  guchar            r, g, b;
+  gint   i;
+  GList *list;
 
   /* fprintf(stderr,
              "custompal_pass1: using (theCustomPalette %s) from (file %s)\n",
              theCustomPalette->name, theCustomPalette->filename); */
 
-  for (i = 0, list = theCustomPalette->colors;
+  for (i = 0, list = gimp_palette_get_colors (theCustomPalette);
        list;
        i++, list = g_list_next (list))
     {
-      entry = list->data;
+      GimpPaletteEntry *entry = list->data;
+      guchar            r, g, b;
 
       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
 

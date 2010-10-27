@@ -204,7 +204,7 @@ gimp_palette_import_create_image_palette (gpointer data,
   n_colors = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (palette),
                                                  "import-n-colors"));
 
-  if (palette->n_colors >= n_colors)
+  if (gimp_palette_get_n_colors (palette) >= n_colors)
     return;
 
   lab = g_strdup_printf ("%s (occurs %u)", _("Untitled"), color_tab->count);

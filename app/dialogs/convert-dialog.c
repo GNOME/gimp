@@ -396,7 +396,8 @@ convert_dialog_palette_filter (const GimpObject *object,
 {
   GimpPalette *palette = GIMP_PALETTE (object);
 
-  return palette->n_colors > 0 && palette->n_colors <= 256;
+  return (gimp_palette_get_n_colors (palette) > 0 &&
+          gimp_palette_get_n_colors (palette) <= 256);
 }
 
 static void
@@ -407,7 +408,7 @@ convert_dialog_palette_changed (GimpContext   *context,
   if (! palette)
     return;
 
-  if (palette->n_colors > 256)
+  if (gimp_palette_get_n_colors (palette) > 256)
     {
       gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
                     GIMP_MESSAGE_WARNING,

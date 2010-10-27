@@ -297,8 +297,12 @@ gimp_palette_view_focus (GtkWidget        *widget,
     {
       gtk_widget_grab_focus (widget);
 
-      if (! view->selected && palette->colors)
-        gimp_palette_view_select_entry (view, palette->colors->data);
+      if (! view->selected && gimp_palette_get_n_colors (palette) > 0)
+        {
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, 0);
+
+          gimp_palette_view_select_entry (view, entry);
+        }
 
       return TRUE;
     }
@@ -337,7 +341,7 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
           position = view->selected->position + skip;
 
-          entry = g_list_nth_data (palette->colors, position);
+          entry = gimp_palette_get_entry (palette, position);
 
           if (entry)
             gimp_palette_view_select_entry (view, entry);
@@ -443,8 +447,8 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
 
       palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
-      entry = g_list_nth_data (palette->colors,
-                               row * renderer->columns + col);
+      entry = gimp_palette_get_entry (palette,
+                                      row * renderer->columns + col);
     }
 
   return entry;
@@ -479,8 +483,11 @@ gimp_palette_view_invalidate (GimpPalette     *palette,
 {
   view->dnd_entry = NULL;
 
-  if (view->selected && ! g_list_find (palette->colors, view->selected))
-    gimp_palette_view_select_entry (view, NULL);
+  if (view->selected &&
+      ! g_list_find (gimp_palette_get_colors (palette), view->selected))
+    {
+      gimp_palette_view_select_entry (view, NULL);
+    }
 }
 
 static void

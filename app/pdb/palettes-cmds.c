@@ -105,7 +105,7 @@ palettes_get_palette_invoker (GimpProcedure      *procedure,
   if (palette)
     {
       name       = g_strdup (gimp_object_get_name (palette));
-      num_colors = palette->n_colors;
+      num_colors = gimp_palette_get_n_colors (palette);
     }
   else
     success = FALSE;
@@ -152,12 +152,12 @@ palettes_get_palette_entry_invoker (GimpProcedure      *procedure,
 
       if (palette)
         {
-          if (entry_num >= 0 && entry_num < palette->n_colors)
-            {
-              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
+          if (entry)
+            {
               actual_name = g_strdup (gimp_object_get_name (palette));
-              num_colors  = palette->n_colors;
+              num_colors  = gimp_palette_get_n_colors (palette);
               color       = entry->color;
             }
           else

@@ -864,7 +864,7 @@ palette_import_make_palette (ImportDialog *dialog)
       if (dialog->palette)
         g_object_unref (dialog->palette);
 
-      palette->n_columns = n_columns;
+      gimp_palette_set_columns (palette, n_columns);
 
       gimp_view_set_viewable (GIMP_VIEW (dialog->preview),
                               GIMP_VIEWABLE (palette));
@@ -873,5 +873,6 @@ palette_import_make_palette (ImportDialog *dialog)
     }
 
   gtk_widget_set_visible (dialog->no_colors_label,
-                          dialog->palette && dialog->palette->n_colors > 0);
+                          dialog->palette &&
+                          gimp_palette_get_n_colors (dialog->palette) > 0);
 }
