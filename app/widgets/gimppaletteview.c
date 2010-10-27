@@ -228,7 +228,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
   view->dnd_entry = entry;
 
   if (! entry || bevent->button == 2)
-    return FALSE;
+    return TRUE;
 
   if (bevent->type == GDK_BUTTON_PRESS)
     g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
@@ -261,7 +261,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
       break;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
