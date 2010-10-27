@@ -633,6 +633,7 @@ gimp_image_init (GimpImage *image)
 
   private->colormap            = NULL;
   private->n_colors            = 0;
+  private->palette             = NULL;
 
   private->dirty               = 1;
   private->dirty_time          = 0;
@@ -768,19 +769,8 @@ gimp_image_constructor (GType                  type,
 
   private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
-  switch (private->base_type)
-    {
-    case GIMP_RGB:
-    case GIMP_GRAY:
-      break;
-    case GIMP_INDEXED:
-      /* always allocate 256 colors for the colormap */
-      private->n_colors = 0;
-      private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
-      break;
-    default:
-      break;
-    }
+  if (private->base_type == GIMP_INDEXED)
+    gimp_image_colormap_init (image);
 
   /* create the selection mask */
   private->selection_mask = gimp_selection_new (image,
@@ -877,6 +867,9 @@ gimp_image_dispose (GObject *object)
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
+  if (private->colormap)
+    gimp_image_colormap_dispose (image);
+
   gimp_image_undo_free (image);
 
   g_signal_handlers_disconnect_by_func (private->layers->container,
@@ -931,10 +924,7 @@ gimp_image_finalize (GObject *object)
     }
 
   if (private->colormap)
-    {
-      g_free (private->colormap);
-      private->colormap = NULL;
-    }
+    gimp_image_colormap_free (image);
 
   if (private->layers)
     {
@@ -1058,6 +1048,9 @@ gimp_image_get_memsize (GimpObject *object,
 
   if (gimp_image_get_colormap (image))
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->palette),
+                                      gui_size);
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (private->projection),
                                       gui_size);

@@ -49,6 +49,7 @@ struct _GimpImagePrivate
 
   guchar            *colormap;              /*  colormap (for indexed)       */
   gint               n_colors;              /*  # of colors (for indexed)    */
+  GimpPalette       *palette;               /*  palette of colormap          */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
   guint              dirty_time;            /*  time when image became dirty */
