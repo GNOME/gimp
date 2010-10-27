@@ -89,6 +89,8 @@ enum
 
   PROP_BRUSH_VIEW_TYPE,
   PROP_BRUSH_VIEW_SIZE,
+  PROP_DYNAMICS_VIEW_TYPE,
+  PROP_DYNAMICS_VIEW_SIZE,
   PROP_PATTERN_VIEW_TYPE,
   PROP_PATTERN_VIEW_SIZE,
   PROP_GRADIENT_VIEW_TYPE,
@@ -204,6 +206,18 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
                                 "brush-view-size", NULL,
+                                GIMP_VIEW_SIZE_TINY,
+                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                GIMP_VIEW_SIZE_SMALL,
+                                GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DYNAMICS_VIEW_TYPE,
+                                  "dynamics-view-type", NULL,
+                                 GIMP_TYPE_VIEW_TYPE,
+                                 GIMP_VIEW_TYPE_LIST,
+                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DYNAMICS_VIEW_SIZE,
+                                "dynamics-view-size", NULL,
                                 GIMP_VIEW_SIZE_TINY,
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_SMALL,
@@ -351,6 +365,14 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_view_size = g_value_get_int (value);
       break;
 
+    case PROP_DYNAMICS_VIEW_TYPE:
+      options->dynamics_view_type = g_value_get_enum (value);
+      break;
+
+    case PROP_DYNAMICS_VIEW_SIZE:
+      options->dynamics_view_size = g_value_get_int (value);
+      break;
+
     case PROP_PATTERN_VIEW_TYPE:
       options->pattern_view_type = g_value_get_enum (value);
       break;
@@ -452,6 +474,14 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_BRUSH_VIEW_SIZE:
       g_value_set_int (value, options->brush_view_size);
+      break;
+
+    case PROP_DYNAMICS_VIEW_TYPE:
+      g_value_set_enum (value, options->dynamics_view_type);
+      break;
+
+    case PROP_DYNAMICS_VIEW_SIZE:
+      g_value_set_int (value, options->dynamics_view_size);
       break;
 
     case PROP_PATTERN_VIEW_TYPE:

@@ -76,7 +76,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the main table  */
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -116,6 +116,12 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                         "brush-view-type", "brush-view-size");
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Brush:"), 0.0, 0.5,
+                                 button, 2, FALSE);
+
+      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+                                           "dynamics-view-type", "dynamics-view-size");
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 _("Dynamics:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
       adj_scale = gimp_prop_scale_entry_new (config, "brush-scale",
