@@ -293,11 +293,13 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
   palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
-  if (gtk_widget_get_can_focus (widget) && ! gtk_widget_has_focus (widget))
+  if (gtk_widget_get_can_focus (widget) &&
+      ! gtk_widget_has_focus (widget))
     {
       gtk_widget_grab_focus (widget);
 
-      if (! view->selected && gimp_palette_get_n_colors (palette) > 0)
+      if (! view->selected &&
+          palette && gimp_palette_get_n_colors (palette) > 0)
         {
           GimpPaletteEntry *entry = gimp_palette_get_entry (palette, 0);
 
@@ -431,11 +433,16 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
                               gint             x,
                               gint             y)
 {
+  GimpPalette             *palette;
   GimpViewRendererPalette *renderer;
   GimpPaletteEntry        *entry = NULL;
   gint                     col, row;
 
+  palette  = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+
+  if (! palette)
+    return NULL;
 
   col = x / renderer->cell_width;
   row = y / renderer->cell_height;
@@ -443,10 +450,6 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
   if (col >= 0 && col < renderer->columns &&
       row >= 0 && row < renderer->rows)
     {
-      GimpPalette *palette;
-
-      palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
-
       entry = gimp_palette_get_entry (palette,
                                       row * renderer->columns + col);
     }
