@@ -458,11 +458,7 @@ libappwidgets_a_sources = \
 	gimpwindow.c			\
 	gimpwindow.h			\
 	gimpwindowstrategy.c		\
-	gimpwindowstrategy.h		\
-	gtkwrapbox.c			\
-	gtkwrapbox.h			\
-	gtkhwrapbox.c			\
-	gtkhwrapbox.h
+	gimpwindowstrategy.h
 
 libappwidgets_a_built_sources = widgets-enums.c
 
