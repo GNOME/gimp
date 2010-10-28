@@ -297,6 +297,15 @@ gimp_view_renderer_set_context (GimpViewRenderer *renderer,
     }
 }
 
+static void
+gimp_view_renderer_weak_notify (GimpViewRenderer *renderer,
+                                GimpViewable     *viewable)
+{
+  renderer->viewable = NULL;
+
+  gimp_view_renderer_update_idle (renderer);
+}
+
 void
 gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
                                  GimpViewable     *viewable)
@@ -325,8 +334,9 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
 
   if (renderer->viewable)
     {
-      g_object_remove_weak_pointer (G_OBJECT (renderer->viewable),
-                                    (gpointer) &renderer->viewable);
+      g_object_weak_unref (G_OBJECT (renderer->viewable),
+                           (GWeakNotify) gimp_view_renderer_weak_notify,
+                           renderer);
 
       g_signal_handlers_disconnect_by_func (renderer->viewable,
                                             G_CALLBACK (gimp_view_renderer_invalidate),
@@ -341,8 +351,9 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
 
   if (renderer->viewable)
     {
-      g_object_add_weak_pointer (G_OBJECT (renderer->viewable),
-                                 (gpointer) &renderer->viewable);
+      g_object_weak_ref (G_OBJECT (renderer->viewable),
+                         (GWeakNotify) gimp_view_renderer_weak_notify,
+                         renderer);
 
       g_signal_connect_swapped (renderer->viewable,
                                 "invalidate-preview",
