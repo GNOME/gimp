@@ -27,6 +27,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
@@ -44,14 +45,7 @@
 #include "gimp-intl.h"
 
 
-#define BORDER 6
-
-enum
-{
-  SELECTED,
-  LAST_SIGNAL
-};
-
+#define BORDER  6
 #define EPSILON 1e-10
 
 #define HAVE_COLORMAP(image) \
@@ -122,8 +116,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpColormapEditor, gimp_colormap_editor,
 
 #define parent_class gimp_colormap_editor_parent_class
 
-static guint editor_signals[LAST_SIGNAL] = { 0 };
-
 static GimpDockedInterface *parent_docked_iface = NULL;
 
 
@@ -134,16 +126,6 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
-  editor_signals[SELECTED] =
-    g_signal_new ("selected",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpColormapEditorClass, selected),
-                  NULL, NULL,
-                  gimp_marshal_VOID__FLAGS,
-                  G_TYPE_NONE, 1,
-                  GDK_TYPE_MODIFIER_TYPE);
-
   object_class->constructor     = gimp_colormap_editor_constructor;
   object_class->dispose         = gimp_colormap_editor_dispose;
   object_class->finalize        = gimp_colormap_editor_finalize;
@@ -151,8 +133,6 @@ gimp_colormap_editor_class_init (GimpColormapEditorClass* klass)
   widget_class->unmap           = gimp_colormap_editor_unmap;
 
   image_editor_class->set_image = gimp_colormap_editor_set_image;
-
-  klass->selected               = NULL;
 }
 
 static void
@@ -593,8 +573,14 @@ gimp_colormap_editor_entry_clicked (GimpPaletteView    *view,
                                     GdkModifierType     state,
                                     GimpColormapEditor *editor)
 {
+  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
+
   gimp_colormap_editor_set_index (editor, entry->position, NULL);
-  g_signal_emit (editor, editor_signals[SELECTED], 0, state);
+
+  if (state & GDK_CONTROL_MASK)
+    gimp_context_set_background (image_editor->context, &entry->color);
+  else
+    gimp_context_set_foreground (image_editor->context, &entry->color);
 }
 
 static void
@@ -613,6 +599,7 @@ gimp_colormap_editor_entry_activated (GimpPaletteView    *view,
                                       GimpColormapEditor *editor)
 {
   gimp_colormap_editor_set_index (editor, entry->position, NULL);
+
   gimp_ui_manager_activate_action (GIMP_EDITOR (editor)->ui_manager,
                                    "colormap",
                                    "colormap-edit-color");
@@ -624,6 +611,7 @@ gimp_colormap_editor_entry_context (GimpPaletteView    *view,
                                     GimpColormapEditor *editor)
 {
   gimp_colormap_editor_set_index (editor, entry->position, NULL);
+
   gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
 }
 

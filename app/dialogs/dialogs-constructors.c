@@ -26,8 +26,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
 
 #include "config/gimpguiconfig.h"
 
@@ -82,13 +80,6 @@
 #include "tips-dialog.h"
 
 #include "gimp-intl.h"
-
-
-/*  local function prototypes  */
-
-static void   dialogs_indexed_palette_selected (GimpColormapEditor *editor,
-                                                GdkModifierType     state,
-                                                gpointer            data);
 
 
 /**********************/
@@ -659,15 +650,7 @@ dialogs_colormap_editor_new (GimpDialogFactory *factory,
                              GimpUIManager     *ui_manager,
                              gint               view_size)
 {
-  GtkWidget *view;
-
-  view = gimp_colormap_editor_new (gimp_dialog_factory_get_menu_factory (factory));
-
-  g_signal_connect (view, "selected",
-                    G_CALLBACK (dialogs_indexed_palette_selected),
-                    NULL);
-
-  return view;
+  return gimp_colormap_editor_new (gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *
@@ -784,30 +767,4 @@ dialogs_tool_preset_editor_get (GimpDialogFactory *factory,
 {
   return gimp_tool_preset_editor_new (context,
                                       gimp_dialog_factory_get_menu_factory (factory));
-}
-
-
-/*  private functions  */
-
-static void
-dialogs_indexed_palette_selected (GimpColormapEditor *editor,
-                                  GdkModifierType     state,
-                                  gpointer            data)
-{
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
-
-  if (image_editor->image)
-    {
-      GimpRGB color;
-      gint    index;
-
-      index = gimp_colormap_editor_get_index (editor, NULL);
-
-      gimp_image_get_colormap_entry (image_editor->image, index, &color);
-
-      if (state & GDK_CONTROL_MASK)
-        gimp_context_set_background (image_editor->context, &color);
-      else
-        gimp_context_set_foreground (image_editor->context, &color);
-    }
 }

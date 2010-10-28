@@ -51,9 +51,6 @@ struct _GimpColormapEditor
 struct _GimpColormapEditorClass
 {
   GimpImageEditorClass  parent_class;
-
-  void (* selected) (GimpColormapEditor *editor,
-                     GdkModifierType     state);
 };
 
 
