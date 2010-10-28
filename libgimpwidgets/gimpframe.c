@@ -48,19 +48,23 @@
 #define GIMP_FRAME_IN_EXPANDER_KEY  "gimp-frame-in-expander"
 
 
-static void      gimp_frame_size_request        (GtkWidget      *widget,
-                                                 GtkRequisition *requisition);
-static void      gimp_frame_size_allocate       (GtkWidget      *widget,
-                                                 GtkAllocation  *allocation);
-static void      gimp_frame_style_set           (GtkWidget      *widget,
-                                                 GtkStyle       *previous);
-static gboolean  gimp_frame_draw                (GtkWidget      *widget,
-                                                 cairo_t        *cr);
-static void      gimp_frame_child_allocate      (GtkFrame       *frame,
-                                                 GtkAllocation  *allocation);
-static void      gimp_frame_label_widget_notify (GtkFrame       *frame);
-static gint      gimp_frame_get_indent          (GtkWidget      *widget);
-static gint      gimp_frame_get_label_spacing   (GtkFrame       *frame);
+static void      gimp_frame_get_preferred_width  (GtkWidget      *widget,
+                                                  gint           *minimum_width,
+                                                  gint           *natural_width);
+static void      gimp_frame_get_preferred_height (GtkWidget      *widget,
+                                                  gint           *minimum_height,
+                                                  gint           *natural_height);
+static void      gimp_frame_size_allocate        (GtkWidget      *widget,
+                                                  GtkAllocation  *allocation);
+static void      gimp_frame_style_set            (GtkWidget      *widget,
+                                                  GtkStyle       *previous);
+static gboolean  gimp_frame_draw                 (GtkWidget      *widget,
+                                                  cairo_t        *cr);
+static void      gimp_frame_child_allocate       (GtkFrame       *frame,
+                                                  GtkAllocation  *allocation);
+static void      gimp_frame_label_widget_notify  (GtkFrame       *frame);
+static gint      gimp_frame_get_indent           (GtkWidget      *widget);
+static gint      gimp_frame_get_label_spacing    (GtkFrame       *frame);
 
 
 G_DEFINE_TYPE (GimpFrame, gimp_frame, GTK_TYPE_FRAME)
@@ -73,10 +77,11 @@ gimp_frame_class_init (GimpFrameClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->size_request  = gimp_frame_size_request;
-  widget_class->size_allocate = gimp_frame_size_allocate;
-  widget_class->style_set     = gimp_frame_style_set;
-  widget_class->draw          = gimp_frame_draw;
+  widget_class->get_preferred_width  = gimp_frame_get_preferred_width;
+  widget_class->get_preferred_height = gimp_frame_get_preferred_height;
+  widget_class->size_allocate        = gimp_frame_size_allocate;
+  widget_class->style_set            = gimp_frame_style_set;
+  widget_class->draw                 = gimp_frame_draw;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_boolean ("label-bold",
@@ -138,6 +143,30 @@ gimp_frame_size_request (GtkWidget      *widget,
 
   requisition->width  += 2 * border_width;
   requisition->height += 2 * border_width;
+}
+
+static void
+gimp_frame_get_preferred_width (GtkWidget *widget,
+                                gint      *minimum_width,
+                                gint      *natural_width)
+{
+  GtkRequisition requisition;
+
+  gimp_frame_size_request (widget, &requisition);
+
+  *minimum_width = *natural_width = requisition.width;
+}
+
+static void
+gimp_frame_get_preferred_height (GtkWidget *widget,
+                                 gint      *minimum_height,
+                                 gint      *natural_height)
+{
+  GtkRequisition requisition;
+
+  gimp_frame_size_request (widget, &requisition);
+
+  *minimum_height = *natural_height = requisition.height;
 }
 
 static void
