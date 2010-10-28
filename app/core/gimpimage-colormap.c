@@ -70,6 +70,8 @@ gimp_image_colormap_init (GimpImage *image)
   private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
   private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
 
+  gimp_palette_set_columns  (private->palette, 16);
+
   gimp_data_make_internal (GIMP_DATA (private->palette), palette_id);
 
   palettes = gimp_data_factory_get_container (image->gimp->palette_factory);
@@ -115,6 +117,14 @@ gimp_image_colormap_free (GimpImage *image)
 
   g_object_unref (private->palette);
   private->palette = NULL;
+}
+
+GimpPalette *
+gimp_image_get_colormap_palette (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->palette;
 }
 
 const guchar *
@@ -170,8 +180,6 @@ gimp_image_set_colormap (GimpImage    *image,
 
   private->n_colors = n_colors;
 
-  gimp_image_colormap_changed (image, -1);
-
   if (private->palette)
     {
       GimpPaletteEntry *entry;
@@ -187,6 +195,8 @@ gimp_image_set_colormap (GimpImage    *image,
 
       gimp_data_thaw (GIMP_DATA (private->palette));
     }
+
+  gimp_image_colormap_changed (image, -1);
 }
 
 void
@@ -236,6 +246,9 @@ gimp_image_set_colormap_entry (GimpImage     *image,
                       &private->colormap[color_index * 3 + 1],
                       &private->colormap[color_index * 3 + 2]);
 
+  if (private->palette)
+    gimp_image_colormap_set_palette_entry (image, color_index);
+
   gimp_image_colormap_changed (image, color_index);
 }
 
@@ -260,6 +273,9 @@ gimp_image_add_colormap_entry (GimpImage     *image,
                       &private->colormap[private->n_colors * 3],
                       &private->colormap[private->n_colors * 3 + 1],
                       &private->colormap[private->n_colors * 3 + 2]);
+
+  if (private->palette)
+    gimp_image_colormap_set_palette_entry (image, private->n_colors - 1);
 
   private->n_colors++;
 
