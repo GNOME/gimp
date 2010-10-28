@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-30 19:33+0200\n"
+"POT-Creation-Date: 2010-10-29 00:27+0100\n"
 "PO-Revision-Date: 2008-09-07 17:38+0200\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,22 +24,22 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1068
 msgid "success"
 msgstr "correcta"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1072
 msgid "execution error"
 msgstr "error d'execució"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1076
 msgid "calling error"
 msgstr "error en la crida"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1080
 msgid "cancelled"
 msgstr "cancel·lada"
 
@@ -1380,8 +1381,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Este filtre pren la seua configuració de la secció de «Gestió de color» en el "
-"diàleg de «Preferències»."
+"Este filtre pren la seua configuració de la secció de «Gestió de color» en "
+"el diàleg de «Preferències»."
 
 #: ../modules/display-filter-lcms.c:226
 msgid "Mode of operation:"

@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-30 19:45+0200\n"
-"PO-Revision-Date: 2010-03-30 19:46+0200\n"
+"POT-Creation-Date: 2010-10-29 00:27+0100\n"
+"PO-Revision-Date: 2010-03-30 18:43+0200\n"
 "Last-Translator: Quim Perez i Noguer <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp a llistes.softcatala.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -84,7 +85,8 @@ msgstr ""
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "No s'ha definit cap intèrpret d'ordes, per defecte s'utilitzarà «%s».\n"
+msgstr ""
+"No s'ha definit cap intèrpret d'ordes, per defecte s'utilitzarà «%s».\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
@@ -92,102 +94,102 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'intèrpret d'ordes «%s» no està disponible. El mode d'ordes està desactivat."
 
-#: ../app/main.c:144 ../tools/gimp-remote.c:60
+#: ../app/main.c:148 ../tools/gimp-remote.c:60
 msgid "Show version information and exit"
 msgstr "Mostra informació de la versió i ix"
 
-#: ../app/main.c:149
+#: ../app/main.c:153
 msgid "Show license information and exit"
 msgstr "Mostra informació de la llicència i ix"
 
-#: ../app/main.c:154
+#: ../app/main.c:158
 msgid "Be more verbose"
 msgstr "Escriu més informació"
 
-#: ../app/main.c:159
+#: ../app/main.c:163
 msgid "Start a new GIMP instance"
 msgstr "Inicia una nova instància del GIMP"
 
-#: ../app/main.c:164
+#: ../app/main.c:168
 msgid "Open images as new"
 msgstr "Obri les imatges com a noves"
 
-#: ../app/main.c:169
+#: ../app/main.c:173
 msgid "Run without a user interface"
 msgstr "Executa sense interfícies d'usuari"
 
-#: ../app/main.c:174
+#: ../app/main.c:178
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "No carreguis pinzells, degradats, paletes, patrons..."
 
-#: ../app/main.c:179
+#: ../app/main.c:183
 msgid "Do not load any fonts"
 msgstr "No carreguis tipus de lletra"
 
-#: ../app/main.c:184
+#: ../app/main.c:188
 msgid "Do not show a startup window"
 msgstr "No mostres la finestra inicial"
 
-#: ../app/main.c:189
+#: ../app/main.c:193
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "No utilitzes la memòria compartida entre el GIMP i els seus connectors"
 
-#: ../app/main.c:194
+#: ../app/main.c:198
 msgid "Do not use special CPU acceleration functions"
 msgstr "No utilitzes cap funció especial d'acceleració de CPU "
 
-#: ../app/main.c:199
+#: ../app/main.c:203
 msgid "Use an alternate sessionrc file"
 msgstr "Utilitza un fitxer sessionrc alternatiu"
 
-#: ../app/main.c:204
+#: ../app/main.c:208
 msgid "Use an alternate user gimprc file"
 msgstr "Utilitza un fitxer gimprc del sistema alternatiu"
 
-#: ../app/main.c:209
+#: ../app/main.c:213
 msgid "Use an alternate system gimprc file"
 msgstr "Utilitza un fitxer gimprc del sistema alternatiu"
 
-#: ../app/main.c:214
+#: ../app/main.c:218
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Orde de processament a executar (es pot emprar múltiples cops)"
 
-#: ../app/main.c:219
+#: ../app/main.c:223
 msgid "The procedure to process batch commands with"
 msgstr "El procediment amb el qual processar ordes"
 
-#: ../app/main.c:224
+#: ../app/main.c:228
 msgid "Send messages to console instead of using a dialog"
 msgstr "Mostra els avisos a la consola en comptes d'emprar un quadre de diàleg"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:230
+#: ../app/main.c:234
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr ""
 "Mode de compatibilitat de la base de dades de procediments (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:236
+#: ../app/main.c:240
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Depura en cas de fallada (never|query|always)"
 
-#: ../app/main.c:241
+#: ../app/main.c:245
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Habilita la depuració dels gestors de senyals no fatals"
 
-#: ../app/main.c:246
+#: ../app/main.c:250
 msgid "Make all warnings fatal"
 msgstr "Fes tots els avisos fatals"
 
-#: ../app/main.c:251
+#: ../app/main.c:255
 msgid "Output a gimprc file with default settings"
 msgstr "Escriu un fitxer gimprc amb els paràmetres per defecte"
 
-#: ../app/main.c:355
+#: ../app/main.c:383
 msgid "[FILE|URI...]"
 msgstr "[Fitxer|URI...]"
 
-#: ../app/main.c:373
+#: ../app/main.c:401
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -196,21 +198,21 @@ msgstr ""
 "Assegureu-vos que el vostre entorn de visualització està configurat "
 "adequadament."
 
-#: ../app/main.c:392
+#: ../app/main.c:420
 msgid "Another GIMP instance is already running."
 msgstr "Ja hi ha una altra instància del GIMP executant-se."
 
-#: ../app/main.c:462
+#: ../app/main.c:490
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Eixida del GIMP. Escriviu qualsevol caràcter per a tancar esta finestra."
 
-#: ../app/main.c:463
+#: ../app/main.c:491
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Escriviu qualsevol caràcter per a tancar esta finestra)\n"
 
-#: ../app/main.c:480
+#: ../app/main.c:508
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr ""
 "Eixida del GIMP. Podeu minimitzar esta finestra, però no la podeu tancar."
@@ -851,8 +853,8 @@ msgid "Sample Merged"
 msgstr "Mostra fusionada"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:220
-#: ../app/dialogs/file-open-dialog.c:264
+#: ../app/actions/file-commands.c:184 ../app/dialogs/file-open-dialog.c:229
+#: ../app/dialogs/file-open-dialog.c:273
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:537
@@ -2006,7 +2008,7 @@ msgstr "Carrega e_l color esquerre de "
 
 #: ../app/actions/gradient-editor-actions.c:54
 msgid "_Save Left Color To"
-msgstr "Al_ça el color esquerre a"
+msgstr "De_sa el color esquerre a"
 
 #: ../app/actions/gradient-editor-actions.c:57
 msgid "Right Color Type"
@@ -3709,7 +3711,7 @@ msgstr "Menú de les opcions de l'eina"
 
 #: ../app/actions/tool-options-actions.c:60
 msgid "_Save Options To"
-msgstr "Al_ça opcions a"
+msgstr "De_sa opcions a"
 
 #: ../app/actions/tool-options-actions.c:64
 msgid "_Restore Options From"
@@ -4597,8 +4599,8 @@ msgid ""
 "backup of your configuration has been created at '%s'."
 msgstr ""
 "Hi ha hagut un error en analitzar el fitxer «%s». S'utilitzaran els valors "
-"per defecte. S'ha creat una còpia de seguretat de la vostra configuració a «%"
-"s»."
+"per defecte. S'ha creat una còpia de seguretat de la vostra configuració a "
+"«%s»."
 
 #  Not all strings defined here are used in the user interface
 #  *  (the preferences dialog mainly) and only those that are should
@@ -4783,7 +4785,7 @@ msgid ""
 "resolution information."
 msgstr ""
 "Estableix la resolució horitzontal del monitor, en punts per polzada. Si "
-"s'estableix a 0, força a que el sevidor X demane informació de les dos "
+"s'estableix a 0, força a que el sevidor X demane informació de les dues "
 "resolucions, horitzontal i vertical."
 
 #: ../app/config/gimprc-blurbs.h:203
@@ -4793,7 +4795,7 @@ msgid ""
 "resolution information."
 msgstr ""
 "Estableix la resolució vertical del monitor, en punts per polzada. Si "
-"s'estableix a 0, força a que el sevidor X demane informació de les dos "
+"s'estableix a 0, força a que el sevidor X demane informació de les dues "
 "resolucions, horitzontal i vertical."
 
 #: ../app/config/gimprc-blurbs.h:208
@@ -5845,7 +5847,8 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "El fitxer del pinzell «%s» està malmés: té una mida nul·la (Bytes = 0)."
+msgstr ""
+"El fitxer del pinzell «%s» està malmés: té una mida nul·la (Bytes = 0)."
 
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
@@ -5898,7 +5901,8 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:615
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
-msgstr "El fitxer del pinzell «%s» està malmés: no es permeten pinzells amples."
+msgstr ""
+"El fitxer del pinzell «%s» està malmés: no es permeten pinzells amples."
 
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
@@ -6238,15 +6242,15 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"El fitxer del degradat «%s» està malmés: el segment %d està malmés a la línia "
-"%d."
+"El fitxer del degradat «%s» està malmés: el segment %d està malmés a la "
+"línia %d."
 
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
-"El fitxer de degradats «%s» està malmés: s'han trobat segments fora del límit "
-"0-1."
+"El fitxer de degradats «%s» està malmés: s'han trobat segments fora del "
+"límit 0-1."
 
 #: ../app/core/gimpgradient-load.c:334
 #, c-format
@@ -6770,8 +6774,8 @@ msgstr ""
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr ""
-"En el fitxer de la paleta «%s»: el valor RGB està fora de límits a la línia %"
-"d."
+"En el fitxer de la paleta «%s»: el valor RGB està fora de límits a la línia "
+"%d."
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -6793,8 +6797,8 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"El fitxer del patró «%s» està malmés: no es permet una profunditat de patró %"
-"d.\n"
+"El fitxer del patró «%s» està malmés: no es permet una profunditat de patró "
+"%d.\n"
 "Els patrons del GIMP han de ser en GRIS o en RGB."
 
 #: ../app/core/gimppattern-load.c:139
@@ -7077,7 +7081,7 @@ msgstr "_Mode:"
 msgid "_Opacity:"
 msgstr "_Opacitat:"
 
-#: ../app/dialogs/file-open-dialog.c:253
+#: ../app/dialogs/file-open-dialog.c:262
 msgid "Open layers"
 msgstr "Obri les capes"
 
@@ -7659,7 +7663,7 @@ msgstr "Configura les dreceres de _teclat..."
 
 #: ../app/dialogs/preferences-dialog.c:1651
 msgid "_Save keyboard shortcuts on exit"
-msgstr "Al_ça les dreceres de teclat en eixir"
+msgstr "De_sa les dreceres de teclat en eixir"
 
 #: ../app/dialogs/preferences-dialog.c:1655
 msgid "Save Keyboard Shortcuts _Now"
@@ -7745,7 +7749,7 @@ msgstr "Navegador _web a utilitzar:"
 
 #: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Save tool options on exit"
-msgstr "Al_ça les opcions de les finestres en eixir"
+msgstr "De_sa les opcions de les finestres en eixir"
 
 #: ../app/dialogs/preferences-dialog.c:1899
 msgid "Save Tool Options _Now"
@@ -8055,7 +8059,7 @@ msgstr "Configura dispositius d'entrada e_stesos..."
 
 #: ../app/dialogs/preferences-dialog.c:2572
 msgid "_Save input device settings on exit"
-msgstr "Al_ça els paràmetres dels dispositius d'entrada en eixir"
+msgstr "De_sa els paràmetres dels dispositius d'entrada en eixir"
 
 #: ../app/dialogs/preferences-dialog.c:2576
 msgid "Save Input Device Settings _Now"
@@ -8108,7 +8112,7 @@ msgstr "Posicions de la finestra"
 
 #: ../app/dialogs/preferences-dialog.c:2657
 msgid "_Save window positions on exit"
-msgstr "Al_ça les posicions de les finestres en eixir"
+msgstr "De_sa les posicions de les finestres en eixir"
 
 #: ../app/dialogs/preferences-dialog.c:2661
 msgid "Save Window Positions _Now"
@@ -9044,8 +9048,8 @@ msgstr "L'objecte de vectors %d no té cap traça amb l'ID %d"
 #: ../app/pdb/gimppdb.c:411
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
 "La funció «%s» s'ha cridat amb un paràmetre (núm #%d) amb el tipus "
 "incorrecte. S'esperava un %s, però ha arribat un %s."
@@ -9067,8 +9071,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:597
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "La funció «%s» s'ha cridat amb un paràmetre «%s» (núm %d) amb el tipus "
 "incorrecte. S'esperava un %s, però ha arribat un %s."
@@ -9079,8 +9083,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament un "
-"connector està intentant treballar amb una capa que ja no existeix."
+"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament "
+"un connector està intentant treballar amb una capa que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:641
 #, c-format
@@ -9088,8 +9092,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». Segurament "
-"un connector està intentant treballar amb una capa que ja no existeix."
+"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». "
+"Segurament un connector està intentant treballar amb una capa que ja no "
+"existeix."
 
 #: ../app/pdb/gimpprocedure.c:657
 #, c-format
@@ -9097,8 +9102,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament un "
-"connector està intentant treballar amb una imatge que ja no existeix."
+"La funció «%s» ha retornat un id invàlid per al paràmetre «%s». Segurament "
+"un connector està intentant treballar amb una imatge que ja no existeix."
 
 #: ../app/pdb/gimpprocedure.c:669
 #, c-format
@@ -9106,8 +9111,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». Segurament "
-"un connector està intentant treballar amb una imatge que ja no existeix."
+"La funció «%s» s'ha cridat amb un id invàlid per al paràmetre «%s». "
+"Segurament un connector està intentant treballar amb una imatge que ja no "
+"existeix."
 
 #: ../app/pdb/gimpprocedure.c:689
 #, c-format
@@ -9115,17 +9121,17 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de tipus %"
-"s). Este valor no és permés."
+"La funció «%s» ha retornat «%s» com a valor de retorn «%s» (núm. %d, de "
+"tipus %s). Este valor no és permés."
 
 #: ../app/pdb/gimpprocedure.c:702
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
-"La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, de "
-"tipus %s). Este valor no és permés."
+"La funció «%s» s'ha cridat amb el valor «%s» per al paràmetre «%s» (núm. %d, "
+"de tipus %s). Este valor no és permés."
 
 #: ../app/pdb/image-cmds.c:2268
 #, c-format
@@ -9380,7 +9386,7 @@ msgstr ""
 "Algunes propietats del text poden estar malament. A no ser que es vulga "
 "editar la capa del text, no cal preocupar-se."
 
-#: ../app/tools/gimp-tools.c:327
+#: ../app/tools/gimp-tools.c:335
 msgid ""
 "This tool has\n"
 "no options."
@@ -11777,11 +11783,11 @@ msgstr "Només les imatges indexades tenen un mapa de color."
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../app/widgets/gimpcontainerpopup.c:540
+#: ../app/widgets/gimpcontainerpopup.c:571
 msgid "Smaller Previews"
 msgstr "Previsualitzacions més petites"
 
-#: ../app/widgets/gimpcontainerpopup.c:545
+#: ../app/widgets/gimpcontainerpopup.c:576
 msgid "Larger Previews"
 msgstr "Previsualitzacions més grans"
 
@@ -11968,8 +11974,8 @@ msgstr ""
 "Si se suprimeix este controlador de la llista, també se suprimiran tots els "
 "esdeveniments que li hagueu configurat.\n"
 "\n"
-"Si no voleu perdre tota la informació, és millor que només feu «inhabilita el "
-"controlador»."
+"Si no voleu perdre tota la informació, és millor que només feu «inhabilita "
+"el controlador»."
 
 #: ../app/widgets/gimpcontrollerlist.c:633
 msgid "Configure Input Controller"
@@ -12101,7 +12107,7 @@ msgstr "Massa missatges d'error!"
 
 #: ../app/widgets/gimperrordialog.c:152
 msgid "Messages are redirected to stderr."
-msgstr "Els missatges són redireccionats a l'eixida estàndard."
+msgstr "Els missatges són redireccionats a la eixida estàndard."
 
 #: ../app/widgets/gimperrordialog.c:171
 #, c-format

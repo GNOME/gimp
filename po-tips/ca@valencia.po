@@ -1,19 +1,20 @@
-# translation of ca.po to Valencian (southern Catalan)
-# Valencian (southern Catalan) translation of gimp-tips.
+# translation of ca.po to Catalan
+# Catalan translation of gimp-tips.
 # Copyright © 2004, 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
+# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Beà <xbea a pie.xtec.es>, 2004, 2006.
-# Quim Perez i Noguer <noguer a gmail.com>, 2006.
-# Joaquim Perez <noguer@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-30 19:41+0200\n"
+"POT-Creation-Date: 2010-10-29 00:27+0100\n"
 "PO-Revision-Date: 2007-10-14 11:46+0200\n"
-"Last-Translator: Robert Millan <rmh@aybabtu.com>\n"
+"Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,8 +31,8 @@ msgstr ""
 "Amb l'eina Cubell de pintura, si l'utilitzeu prement <tt>Ctrl</tt>quan "
 "cliqueu per a omplir, utilitzareu el color de fons en comptes del color de "
 "primer pla. De la mateixa manera que amb l'eina Capturador de color podeu "
-"prémer <tt>Ctrl</tt> quan cliqueu, per a obtenir el color de fons en comptes "
-"del color de primer pla."
+"prémer <tt>Ctrl</tt> quan cliqueu, per a obtindre el color de fons en "
+"comptes del color de primer pla."
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -69,7 +70,7 @@ msgid ""
 "use the menus to do the same."
 msgstr ""
 "Si teniu una selecció flotant, abans d'operarar amb la imatge cal ancorar-"
-"la, ja sigui en una nova capa o a l'última capa activa. Per fer-ho, cliqueu "
+"la, ja siga en una nova capa o a l'última capa activa. Per fer-ho, cliqueu "
 "els botons &quot;Nova capa&quot; o &quot;Ancora la capa&quot; del diàleg de "
 "capes, o utilitzeu els menús."
 
@@ -180,7 +181,7 @@ msgid ""
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
 "No tots els efectes es poden aplicar a tots els tipus d'imatges. Els efectes "
-"que no es puguen utilitzar estaran deshabilitats. Per activar-los potser us "
+"que no es puguen utilitzar estaran deshabilitats. Per activar-los potser vos "
 "caldrà canviar el mode de la imatge a RGB (Imatge-&gt;Mode-&gt;RGB), afegir "
 "un canal alfa (Capes-&gt; Transparència-&gt; Afig canal alfa) o aplanar la "
 "imatge (Imatge-&gt;Aplana la imatge)."
@@ -192,8 +193,9 @@ msgid ""
 "tt> before making a selection subtracts from the current one."
 msgstr ""
 "Premeu i manteniu la tecla <tt>majúscules</tt> abans de fer una selecció i "
-"us permetrà afegir la selecció actual en comptes de reemplaçar-la. Utilitzeu "
-"<tt>Ctrl</tt> abans de fer una selecció per sostreure-la de l'actual."
+"vos permetrà afegir la selecció actual en comptes de reemplaçar-la. "
+"Utilitzeu <tt>Ctrl</tt> abans de fer una selecció per sostreure-la de "
+"l'actual."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -218,7 +220,7 @@ msgstr ""
 "arrossega. Si això fa que es mogui la finestra serà perquè el vostre gestor "
 "de finestres ja fa servir la tecla <tt>Alt</tt>. La majoria de gestors de "
 "finestres es poden configurar perquè ignorin la tecla <tt>Alt</tt> o bé "
-"perquè permetin substituir-la per la tecla <tt>Super</tt> ( o bé el «logotip "
+"perquè permeten substituir-la per la tecla <tt>Super</tt> ( o bé el «logotip "
 "de Windows» )."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
@@ -228,7 +230,7 @@ msgid ""
 "selections."
 msgstr ""
 "Podeu crear i editar seleccions complexes utilitzant l'eina Camí. El diàleg "
-"de camins us permet treballar en múltiples camins i convertir-los a "
+"de camins vos permet treballar en múltiples camins i convertir-los a "
 "seleccions."
 
 #: ../data/tips/gimp-tips.xml.in.h:20
@@ -265,7 +267,7 @@ msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Podeu obtenir ajuda contextual per a la majoria de les característiques del "
+"Podeu obtindre ajuda contextual per a la majoria de les característiques del "
 "GIMP prement la tecla F1 en qualsevol moment. Això també funciona dins els "
 "menús."
 
@@ -318,16 +320,6 @@ msgstr ""
 "de la imatge. A continuació, canvieu la vostra selecció pintant la imatge i "
 "cliqueu el botó de nou per a tornar-la a convertir en una selecció normal."
 
-#~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-#~ msgstr "<big>Benvingut al programa de manipulació d'imatges de GNU!</big>"
-
-#~ msgid ""
-#~ "GIMP allows you to undo most changes to the image, so feel free to "
-#~ "experiment."
-#~ msgstr ""
-#~ "El GIMP us permet desfer la majoria de canvis, així podeu experimentar "
-#~ "sense por."
-
 #~ msgid ""
 #~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 #~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -340,3 +332,13 @@ msgstr ""
 #~ "arrossegueu les guies horitzontals i verticals tangents al cercle que "
 #~ "voleu fer i a continuaciófeu el cercle a partir de la intersecció de les "
 #~ "guies."
+
+#~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+#~ msgstr "<big>Benvingut al programa de manipulació d'imatges de GNU!</big>"
+
+#~ msgid ""
+#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "experiment."
+#~ msgstr ""
+#~ "El GIMP us permet desfer la majoria de canvis, així podeu experimentar "
+#~ "sense por."
