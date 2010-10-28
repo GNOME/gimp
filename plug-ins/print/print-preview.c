@@ -76,8 +76,12 @@ static void      print_preview_finalize             (GObject          *object);
 
 static void      print_preview_realize              (GtkWidget        *widget);
 static void      print_preview_unrealize            (GtkWidget        *widget);
-static void      print_preview_size_request         (GtkWidget        *widget,
-                                                     GtkRequisition   *requisition);
+static void      print_preview_get_preferred_width  (GtkWidget        *widget,
+                                                     gint             *minimum_width,
+                                                     gint             *natural_width);
+static void      print_preview_get_preferred_height (GtkWidget        *widget,
+                                                     gint             *minimum_height,
+                                                     gint             *natural_height);
 static void      print_preview_size_allocate        (GtkWidget        *widget,
                                                      GtkAllocation    *allocation);
 static gboolean  print_preview_draw                 (GtkWidget        *widget,
@@ -180,7 +184,8 @@ print_preview_class_init (PrintPreviewClass *klass)
 
   widget_class->realize              = print_preview_realize;
   widget_class->unrealize            = print_preview_unrealize;
-  widget_class->size_request         = print_preview_size_request;
+  widget_class->get_preferred_width  = print_preview_get_preferred_width;
+  widget_class->get_preferred_height = print_preview_get_preferred_height;
   widget_class->size_allocate        = print_preview_size_allocate;
   widget_class->draw                 = print_preview_draw;
   widget_class->button_press_event   = print_preview_button_press_event;
@@ -273,6 +278,30 @@ print_preview_size_request (GtkWidget      *widget,
 
   requisition->width  += 2 * border;
   requisition->height += 2 * border;
+}
+
+static void
+print_preview_get_preferred_width (GtkWidget *widget,
+                                   gint      *minimum_width,
+                                   gint      *natural_width)
+{
+  GtkRequisition requisition;
+
+  print_preview_size_request (widget, &requisition);
+
+  *minimum_width = *natural_width = requisition.width;
+}
+
+static void
+print_preview_get_preferred_height (GtkWidget *widget,
+                                    gint      *minimum_height,
+                                    gint      *natural_height)
+{
+  GtkRequisition requisition;
+
+  print_preview_size_request (widget, &requisition);
+
+  *minimum_height = *natural_height = requisition.height;
 }
 
 static void
