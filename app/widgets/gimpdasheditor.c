@@ -49,33 +49,37 @@ enum
 };
 
 
-static void gimp_dash_editor_finalize           (GObject        *object);
-static void gimp_dash_editor_set_property       (GObject        *object,
-                                                 guint           property_id,
-                                                 const GValue   *value,
-                                                 GParamSpec     *pspec);
-static void gimp_dash_editor_get_property       (GObject        *object,
-                                                 guint           property_id,
-                                                 GValue         *value,
-                                                 GParamSpec     *pspec);
+static void     gimp_dash_editor_finalize             (GObject        *object);
+static void     gimp_dash_editor_set_property         (GObject        *object,
+                                                       guint           property_id,
+                                                       const GValue   *value,
+                                                       GParamSpec     *pspec);
+static void     gimp_dash_editor_get_property         (GObject        *object,
+                                                       guint           property_id,
+                                                       GValue         *value,
+                                                       GParamSpec     *pspec);
 
-static void gimp_dash_editor_size_request       (GtkWidget      *widget,
-                                                 GtkRequisition *requisition);
-static gboolean gimp_dash_editor_draw           (GtkWidget      *widget,
-                                                 cairo_t        *cr);
-static gboolean gimp_dash_editor_button_press   (GtkWidget      *widget,
-                                                 GdkEventButton *bevent);
-static gboolean gimp_dash_editor_button_release (GtkWidget      *widget,
-                                                 GdkEventButton *bevent);
-static gboolean gimp_dash_editor_motion_notify  (GtkWidget      *widget,
-                                                 GdkEventMotion *bevent);
+static void     gimp_dash_editor_get_preferred_width  (GtkWidget      *widget,
+                                                       gint           *minimum_width,
+                                                       gint           *natural_width);
+static void     gimp_dash_editor_get_preferred_height (GtkWidget      *widget,
+                                                       gint           *minimum_height,
+                                                       gint           *natural_height);
+static gboolean gimp_dash_editor_draw                 (GtkWidget      *widget,
+                                                       cairo_t        *cr);
+static gboolean gimp_dash_editor_button_press         (GtkWidget      *widget,
+                                                       GdkEventButton *bevent);
+static gboolean gimp_dash_editor_button_release       (GtkWidget      *widget,
+                                                       GdkEventButton *bevent);
+static gboolean gimp_dash_editor_motion_notify        (GtkWidget      *widget,
+                                                       GdkEventMotion *bevent);
 
 /* helper function */
-static void update_segments_from_options        (GimpDashEditor *editor);
-static void update_options_from_segments        (GimpDashEditor *editor);
-static void update_blocksize                    (GimpDashEditor *editor);
-static gint dash_x_to_index                     (GimpDashEditor *editor,
-                                                 gint            x);
+static void     update_segments_from_options          (GimpDashEditor *editor);
+static void     update_options_from_segments          (GimpDashEditor *editor);
+static void     update_blocksize                      (GimpDashEditor *editor);
+static gint     dash_x_to_index                       (GimpDashEditor *editor,
+                                                       gint            x);
 
 
 G_DEFINE_TYPE (GimpDashEditor, gimp_dash_editor, GTK_TYPE_DRAWING_AREA)
@@ -93,7 +97,8 @@ gimp_dash_editor_class_init (GimpDashEditorClass *klass)
   object_class->get_property = gimp_dash_editor_get_property;
   object_class->set_property = gimp_dash_editor_set_property;
 
-  widget_class->size_request         = gimp_dash_editor_size_request;
+  widget_class->get_preferred_width  = gimp_dash_editor_get_preferred_width;
+  widget_class->get_preferred_height = gimp_dash_editor_get_preferred_height;
   widget_class->draw                 = gimp_dash_editor_draw;
   widget_class->button_press_event   = gimp_dash_editor_button_press;
   widget_class->button_release_event = gimp_dash_editor_button_release;
@@ -223,14 +228,26 @@ gimp_dash_editor_get_property (GObject      *object,
 }
 
 static void
-gimp_dash_editor_size_request (GtkWidget      *widget,
-                               GtkRequisition *requisition)
+gimp_dash_editor_get_preferred_width (GtkWidget *widget,
+                                      gint      *minimum_width,
+                                      gint      *natural_width)
 {
   GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
 
-  requisition->width  = MAX (editor->block_width * editor->n_segments + 20,
-                             MIN_WIDTH);
-  requisition->height = MAX (editor->block_height + 10, MIN_HEIGHT);
+  *minimum_width = *natural_width = MAX (editor->block_width *
+                                         editor->n_segments + 20,
+                                         MIN_WIDTH);
+}
+
+static void
+gimp_dash_editor_get_preferred_height (GtkWidget *widget,
+                                       gint      *minimum_height,
+                                       gint      *natural_height)
+{
+  GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
+
+  *minimum_height = *natural_height = MAX (editor->block_height + 10,
+                                           MIN_HEIGHT);
 }
 
 static gboolean

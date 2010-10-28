@@ -30,12 +30,16 @@
 #include "gimpwidgets-utils.h"
 
 
-static void       gimp_overlay_frame_size_request  (GtkWidget      *widget,
-                                                    GtkRequisition *requisition);
-static void       gimp_overlay_frame_size_allocate (GtkWidget      *widget,
-                                                    GtkAllocation  *allocation);
-static gboolean   gimp_overlay_frame_draw          (GtkWidget      *widget,
-                                                    cairo_t        *cr);
+static void       gimp_overlay_frame_get_preferred_width  (GtkWidget     *widget,
+                                                           gint          *minimum_width,
+                                                           gint          *natural_width);
+static void       gimp_overlay_frame_get_preferred_height (GtkWidget     *widget,
+                                                           gint          *minimum_height,
+                                                           gint          *natural_height);
+static void       gimp_overlay_frame_size_allocate        (GtkWidget     *widget,
+                                                           GtkAllocation *allocation);
+static gboolean   gimp_overlay_frame_draw                 (GtkWidget     *widget,
+                                                           cairo_t       *cr);
 
 
 G_DEFINE_TYPE (GimpOverlayFrame, gimp_overlay_frame, GTK_TYPE_BIN)
@@ -48,9 +52,10 @@ gimp_overlay_frame_class_init (GimpOverlayFrameClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->size_request  = gimp_overlay_frame_size_request;
-  widget_class->size_allocate = gimp_overlay_frame_size_allocate;
-  widget_class->draw          = gimp_overlay_frame_draw;
+  widget_class->get_preferred_width  = gimp_overlay_frame_get_preferred_width;
+  widget_class->get_preferred_height = gimp_overlay_frame_get_preferred_height;
+  widget_class->size_allocate        = gimp_overlay_frame_size_allocate;
+  widget_class->draw                 = gimp_overlay_frame_draw;
 }
 
 static void
@@ -60,46 +65,58 @@ gimp_overlay_frame_init (GimpOverlayFrame *frame)
 }
 
 static void
-gimp_overlay_frame_size_request (GtkWidget      *widget,
-                                 GtkRequisition *requisition)
+gimp_overlay_frame_get_preferred_width (GtkWidget *widget,
+                                        gint      *minimum_width,
+                                        gint      *natural_width)
 {
-  GtkWidget      *child = gtk_bin_get_child (GTK_BIN (widget));
-  GtkRequisition  child_requisition;
-  gint            border_width;
+  GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
+  gint       border_width;
 
   border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
-  requisition->width  = border_width * 2;
-  requisition->height = border_width * 2;
+  if (child && gtk_widget_get_visible (child))
+    gtk_widget_get_preferred_width (child, minimum_width, natural_width);
+  else
+    *minimum_width = *natural_width = 0;
+
+  *minimum_width += 2 * border_width;
+  *natural_width += 2 * border_width;
+}
+
+static void
+gimp_overlay_frame_get_preferred_height (GtkWidget *widget,
+                                         gint      *minimum_height,
+                                         gint      *natural_height)
+{
+  GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
+  gint       border_width;
+
+  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
   if (child && gtk_widget_get_visible (child))
-    {
-      gtk_widget_get_preferred_size (child, &child_requisition, NULL);
-    }
+    gtk_widget_get_preferred_height (child, minimum_height, natural_height);
   else
-    {
-      child_requisition.width  = 0;
-      child_requisition.height = 0;
-    }
+    *minimum_height = *natural_height = 0;
 
-  requisition->width  += child_requisition.width;
-  requisition->height += child_requisition.height;
+  *minimum_height += 2 * border_width;
+  *natural_height += 2 * border_width;
 }
 
 static void
 gimp_overlay_frame_size_allocate (GtkWidget     *widget,
                                   GtkAllocation *allocation)
 {
-  GtkWidget     *child = gtk_bin_get_child (GTK_BIN (widget));
-  GtkAllocation  child_allocation;
-  gint           border_width;
+  GtkWidget *child = gtk_bin_get_child (GTK_BIN (widget));
 
   gtk_widget_set_allocation (widget, allocation);
 
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
   if (child && gtk_widget_get_visible (child))
     {
+      GtkAllocation child_allocation;
+      gint          border_width;
+
+      border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
       child_allocation.x      = allocation->x + border_width;
       child_allocation.y      = allocation->y + border_width;
       child_allocation.width  = MAX (allocation->width  - 2 * border_width, 0);

@@ -42,36 +42,39 @@ enum
 };
 
 
-static void   gimp_message_box_constructed      (GObject        *object);
-static void   gimp_message_box_dispose          (GObject        *object);
-static void   gimp_message_box_finalize         (GObject        *object);
-static void   gimp_message_box_set_property     (GObject        *object,
-                                                 guint           property_id,
-                                                 const GValue   *value,
-                                                 GParamSpec     *pspec);
-static void   gimp_message_box_get_property     (GObject        *object,
-                                                 guint           property_id,
-                                                 GValue         *value,
-                                                 GParamSpec     *pspec);
+static void   gimp_message_box_constructed          (GObject        *object);
+static void   gimp_message_box_dispose              (GObject        *object);
+static void   gimp_message_box_finalize             (GObject        *object);
+static void   gimp_message_box_set_property         (GObject        *object,
+                                                     guint           property_id,
+                                                     const GValue   *value,
+                                                     GParamSpec     *pspec);
+static void   gimp_message_box_get_property         (GObject        *object,
+                                                     guint           property_id,
+                                                     GValue         *value,
+                                                     GParamSpec     *pspec);
 
-static void   gimp_message_box_forall           (GtkContainer   *container,
-                                                 gboolean        include_internals,
-                                                 GtkCallback     callback,
-                                                 gpointer        callback_data);
+static void   gimp_message_box_get_preferred_width  (GtkWidget      *widget,
+                                                     gint           *minimum_width,
+                                                     gint           *natural_width);
+static void   gimp_message_box_get_preferred_height (GtkWidget      *widget,
+                                                     gint           *minimum_height,
+                                                     gint           *natural_height);
+static void   gimp_message_box_size_allocate        (GtkWidget      *widget,
+                                                     GtkAllocation  *allocation);
 
-static void   gimp_message_box_size_request     (GtkWidget      *widget,
-                                                 GtkRequisition *requisition);
-static void   gimp_message_box_size_allocate    (GtkWidget      *widget,
-                                                 GtkAllocation  *allocation);
-
-static void   gimp_message_box_set_label_text   (GimpMessageBox *box,
-                                                 gint            n,
-                                                 const gchar    *format,
-                                                 va_list         args) G_GNUC_PRINTF (3, 0);
-static void   gimp_message_box_set_label_markup (GimpMessageBox *box,
-                                                 gint            n,
-                                                 const gchar    *format,
-                                                 va_list         args) G_GNUC_PRINTF (3, 0);
+static void   gimp_message_box_forall               (GtkContainer   *container,
+                                                     gboolean        include_internals,
+                                                     GtkCallback     callback,
+                                                     gpointer        callback_data);
+static void   gimp_message_box_set_label_text       (GimpMessageBox *box,
+                                                     gint            n,
+                                                     const gchar    *format,
+                                                     va_list         args) G_GNUC_PRINTF (3, 0);
+static void   gimp_message_box_set_label_markup     (GimpMessageBox *box,
+                                                     gint            n,
+                                                     const gchar    *format,
+                                                     va_list         args) G_GNUC_PRINTF (3, 0);
 
 
 G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_BOX)
@@ -86,17 +89,19 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->constructed   = gimp_message_box_constructed;
-  object_class->dispose       = gimp_message_box_dispose;
-  object_class->finalize      = gimp_message_box_finalize;
-  object_class->set_property  = gimp_message_box_set_property;
-  object_class->get_property  = gimp_message_box_get_property;
+  object_class->constructed          = gimp_message_box_constructed;
+  object_class->dispose              = gimp_message_box_dispose;
+  object_class->finalize             = gimp_message_box_finalize;
+  object_class->set_property         = gimp_message_box_set_property;
+  object_class->get_property         = gimp_message_box_get_property;
 
+  widget_class->get_preferred_width  = gimp_message_box_get_preferred_width;
+  widget_class->get_preferred_height = gimp_message_box_get_preferred_height;
+  widget_class->size_allocate        = gimp_message_box_size_allocate;
 
-  widget_class->size_request  = gimp_message_box_size_request;
-  widget_class->size_allocate = gimp_message_box_size_allocate;
+  container_class->forall            = gimp_message_box_forall;
 
-  container_class->forall     = gimp_message_box_forall;
+  gtk_container_class_handle_border_width (container_class);
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name", NULL, NULL,
@@ -233,26 +238,50 @@ gimp_message_box_get_property (GObject    *object,
 }
 
 static void
-gimp_message_box_size_request (GtkWidget      *widget,
-                               GtkRequisition *requisition)
+gimp_message_box_get_preferred_width (GtkWidget *widget,
+                                      gint      *minimum_width,
+                                      gint      *natural_width)
 {
   GimpMessageBox *box = GIMP_MESSAGE_BOX (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+  GTK_WIDGET_CLASS (parent_class)->get_preferred_width (widget,
+                                                        minimum_width,
+                                                        natural_width);
 
   if (box->image && gtk_widget_get_visible (box->image))
     {
-      GtkRequisition  child_requisition;
-      gint            border_width;
+      gint image_minimum;
+      gint image_natural;
 
-      gtk_widget_get_preferred_size (box->image, &child_requisition, NULL);
+      gtk_widget_get_preferred_width (box->image,
+                                      &image_minimum, &image_natural);
 
-      border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+      *minimum_width += image_minimum + GIMP_MESSAGE_BOX_SPACING;
+      *natural_width += image_natural + GIMP_MESSAGE_BOX_SPACING;
+    }
+}
 
-      requisition->width  += child_requisition.width + GIMP_MESSAGE_BOX_SPACING;
-      requisition->height = MAX (requisition->height,
-                                 child_requisition.height +
-                                 2 * border_width);
+static void
+gimp_message_box_get_preferred_height (GtkWidget *widget,
+                                       gint      *minimum_height,
+                                       gint      *natural_height)
+{
+  GimpMessageBox *box = GIMP_MESSAGE_BOX (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->get_preferred_height (widget,
+                                                         minimum_height,
+                                                         natural_height);
+
+  if (box->image && gtk_widget_get_visible (box->image))
+    {
+      gint image_minimum;
+      gint image_natural;
+
+      gtk_widget_get_preferred_height (box->image,
+                                       &image_minimum, &image_natural);
+
+      *minimum_height = MAX (*minimum_height, image_minimum);
+      *natural_height = MAX (*natural_height, image_natural);
     }
 }
 
@@ -260,39 +289,32 @@ static void
 gimp_message_box_size_allocate (GtkWidget     *widget,
                                 GtkAllocation *allocation)
 {
-  GimpMessageBox *box       = GIMP_MESSAGE_BOX (widget);
-  GtkContainer   *container = GTK_CONTAINER (widget);
-  gint            width     = 0;
+  GimpMessageBox *box   = GIMP_MESSAGE_BOX (widget);
+  gint            width = 0;
   gboolean        rtl;
 
   rtl = (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL);
 
   if (box->image && gtk_widget_get_visible (box->image))
     {
-      GtkRequisition  child_requisition;
-      GtkAllocation   child_allocation;
-      gint            border_width;
-      gint            height;
+      GtkRequisition child_requisition;
+      GtkAllocation  child_allocation;
+      gint           height;
 
       gtk_widget_get_preferred_size (box->image, &child_requisition, NULL);
 
-      border_width = gtk_container_get_border_width (container);
-
-      width  = MIN (allocation->width - 2 * border_width,
+      width  = MIN (allocation->width,
                     child_requisition.width + GIMP_MESSAGE_BOX_SPACING);
       width  = MAX (1, width);
 
-      height = allocation->height - 2 * border_width;
-      height = MAX (1, height);
+      height = allocation->height;
 
       if (rtl)
-        child_allocation.x  = (allocation->width -
-                               border_width      -
-                               child_requisition.width);
+        child_allocation.x = allocation->width - child_requisition.width;
       else
-        child_allocation.x  = allocation->x + border_width;
+        child_allocation.x = allocation->x;
 
-      child_allocation.y      = allocation->y + border_width;
+      child_allocation.y      = allocation->y;
       child_allocation.width  = width;
       child_allocation.height = height;
 

@@ -51,26 +51,30 @@ enum
 };
 
 
-static void     gimp_histogram_view_finalize       (GObject        *object);
-static void     gimp_histogram_view_set_property   (GObject        *object,
-                                                    guint           property_id,
-                                                    const GValue   *value,
-                                                    GParamSpec     *pspec);
-static void     gimp_histogram_view_get_property   (GObject        *object,
-                                                    guint           property_id,
-                                                    GValue         *value,
-                                                    GParamSpec     *pspec);
+static void     gimp_histogram_view_finalize             (GObject        *object);
+static void     gimp_histogram_view_set_property         (GObject        *object,
+                                                          guint           property_id,
+                                                          const GValue   *value,
+                                                          GParamSpec     *pspec);
+static void     gimp_histogram_view_get_property         (GObject        *object,
+                                                          guint           property_id,
+                                                          GValue         *value,
+                                                          GParamSpec     *pspec);
 
-static void     gimp_histogram_view_size_request   (GtkWidget      *widget,
-                                                    GtkRequisition *requisition);
-static gboolean gimp_histogram_view_draw           (GtkWidget      *widget,
-                                                    cairo_t        *cr);
-static gboolean gimp_histogram_view_button_press   (GtkWidget      *widget,
-                                                    GdkEventButton *bevent);
-static gboolean gimp_histogram_view_button_release (GtkWidget      *widget,
-                                                    GdkEventButton *bevent);
-static gboolean gimp_histogram_view_motion_notify  (GtkWidget      *widget,
-                                                    GdkEventMotion *bevent);
+static void     gimp_histogram_view_get_preferred_width  (GtkWidget      *widget,
+                                                          gint           *minimum_width,
+                                                          gint           *natural_width);
+static void     gimp_histogram_view_get_preferred_height (GtkWidget      *widget,
+                                                          gint           *minimum_height,
+                                                          gint           *natural_height);
+static gboolean gimp_histogram_view_draw                 (GtkWidget      *widget,
+                                                          cairo_t        *cr);
+static gboolean gimp_histogram_view_button_press         (GtkWidget      *widget,
+                                                          GdkEventButton *bevent);
+static gboolean gimp_histogram_view_button_release       (GtkWidget      *widget,
+                                                          GdkEventButton *bevent);
+static gboolean gimp_histogram_view_motion_notify        (GtkWidget      *widget,
+                                                          GdkEventMotion *bevent);
 
 static void     gimp_histogram_view_notify      (GimpHistogram        *histogram,
                                                  const GParamSpec     *pspec,
@@ -121,7 +125,8 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
   object_class->get_property         = gimp_histogram_view_get_property;
   object_class->set_property         = gimp_histogram_view_set_property;
 
-  widget_class->size_request         = gimp_histogram_view_size_request;
+  widget_class->get_preferred_width  = gimp_histogram_view_get_preferred_width;
+  widget_class->get_preferred_height = gimp_histogram_view_get_preferred_height;
   widget_class->draw                 = gimp_histogram_view_draw;
   widget_class->button_press_event   = gimp_histogram_view_button_press;
   widget_class->button_release_event = gimp_histogram_view_button_release;
@@ -252,13 +257,23 @@ gimp_histogram_view_get_property (GObject      *object,
 }
 
 static void
-gimp_histogram_view_size_request (GtkWidget      *widget,
-                                  GtkRequisition *requisition)
+gimp_histogram_view_get_preferred_width (GtkWidget *widget,
+                                         gint      *minimum_width,
+                                         gint      *natural_width)
 {
   GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
 
-  requisition->width  = MIN_WIDTH  + 2 * view->border_width;
-  requisition->height = MIN_HEIGHT + 2 * view->border_width;
+  *minimum_width = *natural_width = MIN_WIDTH + 2 * view->border_width;
+}
+
+static void
+gimp_histogram_view_get_preferred_height (GtkWidget *widget,
+                                          gint      *minimum_height,
+                                          gint      *natural_height)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+
+  *minimum_height = *natural_height = MIN_HEIGHT + 2 * view->border_width;
 }
 
 static gdouble

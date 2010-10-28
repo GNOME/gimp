@@ -72,15 +72,19 @@ static void       gimp_overlay_dialog_get_property  (GObject           *object,
                                                      GValue            *value,
                                                      GParamSpec        *pspec);
 
-static void       gimp_overlay_dialog_size_request  (GtkWidget         *widget,
-                                                     GtkRequisition    *requisition);
-static void       gimp_overlay_dialog_size_allocate (GtkWidget         *widget,
-                                                     GtkAllocation     *allocation);
+static void       gimp_overlay_dialog_get_preferred_width  (GtkWidget     *widget,
+                                                            gint          *minimum_width,
+                                                            gint          *natural_width);
+static void       gimp_overlay_dialog_get_preferred_height (GtkWidget     *widget,
+                                                            gint          *minimum_height,
+                                                            gint          *natural_height);
+static void       gimp_overlay_dialog_size_allocate        (GtkWidget         *widget,
+                                                            GtkAllocation     *allocation);
 
-static void       gimp_overlay_dialog_forall        (GtkContainer      *container,
-                                                     gboolean           include_internals,
-                                                     GtkCallback        callback,
-                                                     gpointer           callback_data);
+static void       gimp_overlay_dialog_forall               (GtkContainer      *container,
+                                                            gboolean           include_internals,
+                                                            GtkCallback        callback,
+                                                            gpointer           callback_data);
 
 static void       gimp_overlay_dialog_detach        (GimpOverlayDialog *dialog);
 static void       gimp_overlay_dialog_real_detach   (GimpOverlayDialog *dialog);
@@ -88,8 +92,8 @@ static void       gimp_overlay_dialog_real_detach   (GimpOverlayDialog *dialog);
 static void       gimp_overlay_dialog_close         (GimpOverlayDialog *dialog);
 static void       gimp_overlay_dialog_real_close    (GimpOverlayDialog *dialog);
 
-static ResponseData * get_response_data             (GtkWidget         *widget,
-                                                     gboolean          create);
+static ResponseData * get_response_data                    (GtkWidget         *widget,
+                                                            gboolean          create);
 
 
 G_DEFINE_TYPE (GimpOverlayDialog, gimp_overlay_dialog,
@@ -113,10 +117,11 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
   object_class->get_property  = gimp_overlay_dialog_get_property;
   object_class->set_property  = gimp_overlay_dialog_set_property;
 
-  widget_class->size_request  = gimp_overlay_dialog_size_request;
-  widget_class->size_allocate = gimp_overlay_dialog_size_allocate;
+  widget_class->get_preferred_width  = gimp_overlay_dialog_get_preferred_width;
+  widget_class->get_preferred_height = gimp_overlay_dialog_get_preferred_height;
+  widget_class->size_allocate        = gimp_overlay_dialog_size_allocate;
 
-  container_class->forall     = gimp_overlay_dialog_forall;
+  container_class->forall            = gimp_overlay_dialog_forall;
 
   klass->detach               = gimp_overlay_dialog_real_detach;
   klass->close                = gimp_overlay_dialog_real_close;
@@ -336,42 +341,61 @@ gimp_overlay_dialog_get_property (GObject    *object,
 }
 
 static void
-gimp_overlay_dialog_size_request (GtkWidget      *widget,
-                                  GtkRequisition *requisition)
+gimp_overlay_dialog_get_preferred_width (GtkWidget *widget,
+                                         gint      *minimum_width,
+                                         gint      *natural_width)
 {
-  GtkContainer      *container = GTK_CONTAINER (widget);
-  GimpOverlayDialog *dialog    = GIMP_OVERLAY_DIALOG (widget);
-  GtkWidget         *child     = gtk_bin_get_child (GTK_BIN (widget));
-  GtkRequisition     child_requisition;
-  GtkRequisition     header_requisition;
-  GtkRequisition     action_requisition;
+  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
+  GtkWidget         *child  = gtk_bin_get_child (GTK_BIN (widget));
   gint               border_width;
+  gint               header_minimum;
+  gint               header_natural;
+  gint               action_minimum;
+  gint               action_natural;
 
-  border_width = gtk_container_get_border_width (container);
-
-  requisition->width  = border_width * 2;
-  requisition->height = border_width * 2;
+  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
 
   if (child && gtk_widget_get_visible (child))
-    {
-      gtk_widget_get_preferred_size (child, &child_requisition, NULL);
-    }
+    gtk_widget_get_preferred_width (child, minimum_width, natural_width);
   else
-    {
-      child_requisition.width  = 0;
-      child_requisition.height = 0;
-    }
+    *minimum_width = *natural_width = 0;
 
-  gtk_widget_get_preferred_size (dialog->header,      &header_requisition, NULL);
-  gtk_widget_get_preferred_size (dialog->action_area, &action_requisition, NULL);
+  gtk_widget_get_preferred_width (dialog->header,
+                                  &header_minimum, &header_natural);
+  gtk_widget_get_preferred_width (dialog->action_area,
+                                  &action_minimum, &action_natural);
 
-  requisition->width  += MAX (MAX (child_requisition.width,
-                                   action_requisition.width),
-                              header_requisition.width);
-  requisition->height += (child_requisition.height +
-                          2 * border_width +
-                          header_requisition.height +
-                          action_requisition.height);
+  *minimum_width = MAX (MAX (*minimum_width, action_minimum), header_minimum) + 2 * border_width;
+  *natural_width = MAX (MAX (*natural_width, action_natural), header_natural) + 2 * border_width;
+}
+
+static void
+gimp_overlay_dialog_get_preferred_height (GtkWidget *widget,
+                                          gint      *minimum_height,
+                                          gint      *natural_height)
+{
+  GimpOverlayDialog *dialog = GIMP_OVERLAY_DIALOG (widget);
+  GtkWidget         *child  = gtk_bin_get_child (GTK_BIN (widget));
+  gint               border_width;
+  gint               header_minimum;
+  gint               header_natural;
+  gint               action_minimum;
+  gint               action_natural;
+
+  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
+
+  if (child && gtk_widget_get_visible (child))
+    gtk_widget_get_preferred_height (child, minimum_height, natural_height);
+  else
+    *minimum_height = *natural_height = 0;
+
+  gtk_widget_get_preferred_height (dialog->header,
+                                   &header_minimum, &header_natural);
+  gtk_widget_get_preferred_height (dialog->action_area,
+                                   &action_minimum, &action_natural);
+
+  *minimum_height += header_minimum + action_minimum + 4 * border_width;
+  *natural_height += header_natural + action_natural + 4 * border_width;
 }
 
 static void
