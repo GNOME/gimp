@@ -74,7 +74,7 @@ struct _GimpPaintOptions
 
   GimpPaintInfo            *paint_info;
 
-  gdouble                   brush_scale;
+  gdouble                   brush_size;
   gdouble                   brush_angle;
   gdouble                   brush_aspect_ratio;
 

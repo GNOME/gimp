@@ -23,12 +23,16 @@
 
 #include "tools-types.h"
 
+#include "base/temp-buf.h"
+
+#include "core/gimpbrush.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
+#include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpairbrushtool.h"
@@ -47,13 +51,18 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget * fade_options_gui      (GimpPaintOptions *paint_options,
-                                          GType             tool_type);
-static GtkWidget * gradient_options_gui  (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkWidget        *incremental_toggle);
-static GtkWidget * jitter_options_gui    (GimpPaintOptions *paint_options,
-                                          GType             tool_type);
+
+
+static GtkWidget * fade_options_gui           (GimpPaintOptions *paint_options,
+                                               GType             tool_type);
+static GtkWidget * gradient_options_gui       (GimpPaintOptions *paint_options,
+                                               GType             tool_type,
+                                               GtkWidget        *incremental_toggle);
+static GtkWidget * jitter_options_gui         (GimpPaintOptions *paint_options,
+                                               GType             tool_type);
+
+static void gimp_paint_options_gui_reset_size (GtkWidget        *button,
+                                               GimpPaintOptions *paint_options);
 
 
 /*  public functions  */
@@ -124,12 +133,24 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  _("Dynamics:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
-      adj_scale = gimp_prop_scale_entry_new (config, "brush-scale",
+      adj_scale = gimp_prop_scale_entry_new (config, "brush-size",
                                              GTK_TABLE (table), 0, table_row++,
-                                             _("Scale:"),
+                                             _("Size:"),
                                              0.01, 0.1, 2,
                                              FALSE, 0.0, 0.0);
       gimp_scale_entry_set_logarithmic (adj_scale, TRUE);
+
+
+      button = gimp_stock_button_new (GTK_STOCK_REFRESH, _("Reset size"));
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 "", 0.0, 0.5,
+                                 button, 2, FALSE);
+
+      gtk_widget_show (button);
+
+      g_signal_connect(button, "clicked",
+                       G_CALLBACK(gimp_paint_options_gui_reset_size), options);
 
       adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
                                                     GTK_TABLE (table), 0, table_row++,
@@ -317,4 +338,17 @@ gradient_options_gui (GimpPaintOptions *paint_options,
                              button, 2, TRUE);
 
   return frame;
+}
+
+static void
+gimp_paint_options_gui_reset_size (GtkWidget        *button,
+                                   GimpPaintOptions *paint_options)
+{
+ GimpContext *context = GIMP_CONTEXT(paint_options);
+ GimpBrush *brush = gimp_context_get_brush (context);
+ if (brush)
+  {
+    paint_options->brush_size = MAX(brush->mask->width, brush->mask->height);
+    g_object_notify(G_OBJECT(paint_options), "brush-size");
+  }
 }

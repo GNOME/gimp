@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH_SCALE            1.0
+#define DEFAULT_BRUSH_SIZE             20.0
 #define DEFAULT_BRUSH_ASPECT_RATIO     1.0
 #define DEFAULT_BRUSH_ANGLE            0.0
 
@@ -68,7 +68,7 @@ enum
 
   PROP_PAINT_INFO,
 
-  PROP_BRUSH_SCALE,
+  PROP_BRUSH_SIZE,
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
 
@@ -136,9 +136,9 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SCALE,
-                                   "brush-scale", _("Brush Scale"),
-                                   0.01, 10.0, DEFAULT_BRUSH_SCALE,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
+                                   "brush-size", _("Brush Size"),
+                                   1.0, 10000.0, DEFAULT_BRUSH_SIZE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
@@ -301,8 +301,8 @@ gimp_paint_options_set_property (GObject      *object,
       options->paint_info = g_value_dup_object (value);
       break;
 
-    case PROP_BRUSH_SCALE:
-      options->brush_scale = g_value_get_double (value);
+    case PROP_BRUSH_SIZE:
+      options->brush_size = g_value_get_double (value);
       break;
 
     case PROP_BRUSH_ASPECT_RATIO:
@@ -412,8 +412,8 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_object (value, options->paint_info);
       break;
 
-    case PROP_BRUSH_SCALE:
-      g_value_set_double (value, options->brush_scale);
+    case PROP_BRUSH_SIZE:
+      g_value_set_double (value, options->brush_size);
       break;
 
     case PROP_BRUSH_ASPECT_RATIO:
