@@ -606,7 +606,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
           rect.y      = 0;
           rect.width  = PANGO_SCALE * (gdk_pixbuf_get_width (statusbar->icon) +
                                        ICON_SPACING);
-          rect.height = PANGO_SCALE * gdk_pixbuf_get_height (statusbar->icon);
+          rect.height = 0;
 
           attrs = pango_attr_list_new ();
 
