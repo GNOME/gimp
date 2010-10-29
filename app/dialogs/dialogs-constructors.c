@@ -383,7 +383,8 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
                                      context->gimp->gradient_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Gradients>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Gradients>",
                                      "/gradients-popup",
                                      "gradients");
 }
@@ -398,7 +399,8 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
                                      context->gimp->palette_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Palettes>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Palettes>",
                                      "/palettes-popup",
                                      "palettes");
 }
@@ -521,7 +523,8 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
                                      context->gimp->gradient_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Gradients>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Gradients>",
                                      "/gradients-popup",
                                      "gradients");
 }
@@ -536,7 +539,8 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
                                      context->gimp->palette_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Palettes>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Palettes>",
                                      "/palettes-popup",
                                      "palettes");
 }
@@ -608,7 +612,8 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
   return gimp_item_tree_view_new (GIMP_TYPE_LAYER_TREE_VIEW,
                                   view_size, 2,
                                   gimp_context_get_image (context),
-                                  gimp_dialog_factory_get_menu_factory (factory), "<Layers>",
+                                  gimp_dialog_factory_get_menu_factory (factory),
+                                  "<Layers>",
                                   "/layers-popup");
 }
 
@@ -624,7 +629,8 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   return gimp_item_tree_view_new (GIMP_TYPE_CHANNEL_TREE_VIEW,
                                   view_size, 1,
                                   gimp_context_get_image (context),
-                                  gimp_dialog_factory_get_menu_factory (factory), "<Channels>",
+                                  gimp_dialog_factory_get_menu_factory (factory),
+                                  "<Channels>",
                                   "/channels-popup");
 }
 
@@ -640,7 +646,8 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   return gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
                                   view_size, 1,
                                   gimp_context_get_image (context),
-                                  gimp_dialog_factory_get_menu_factory (factory), "<Vectors>",
+                                  gimp_dialog_factory_get_menu_factory (factory),
+                                  "<Vectors>",
                                   "/vectors-popup");
 }
 
@@ -715,9 +722,9 @@ dialogs_color_editor_new (GimpDialogFactory *factory,
 }
 
 
-/*********************/
-/*****  editors  *****/
-/*********************/
+/*************/
+/*  editors  */
+/*************/
 
 GtkWidget *
 dialogs_brush_editor_get (GimpDialogFactory *factory,
