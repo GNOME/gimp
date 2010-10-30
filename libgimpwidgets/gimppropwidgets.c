@@ -3406,12 +3406,13 @@ GtkWidget *
 gimp_prop_unit_combo_box_new (GObject     *config,
                               const gchar *property_name)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *combo;
-  GimpUnit    unit;
-  GValue      value = { 0, };
-  gboolean    show_pixels;
-  gboolean    show_percent;
+  GParamSpec   *param_spec;
+  GtkWidget    *combo;
+  GtkTreeModel *model;
+  GimpUnit      unit;
+  GValue        value = { 0, };
+  gboolean      show_pixels;
+  gboolean      show_percent;
 
   param_spec = check_param_spec_w (config, property_name,
                                    GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
@@ -3432,8 +3433,12 @@ gimp_prop_unit_combo_box_new (GObject     *config,
                 property_name, &unit,
                 NULL);
 
-  /* FIXME implement show_pixels and show_percent */
   combo = gimp_unit_combo_box_new ();
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
+  gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (model), show_pixels);
+  gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (model), show_percent);
+
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (combo), unit);
 
   set_param_spec (G_OBJECT (combo), combo, param_spec);
 
