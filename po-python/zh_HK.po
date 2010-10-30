@@ -1,4 +1,4 @@
-# traditional Chinese translation for gimp-python.
+# Chinese (Hong Kong) translation for gimp-python.
 # Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-30 19:48+0800\n"
-"PO-Revision-Date: 2010-10-04 20:06+0800\n"
+"PO-Revision-Date: 2010-10-30 19:48+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,7 +66,7 @@ msgstr "儲存時預設建議的檔案名稱"
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
 #, fuzzy
 msgid "Save as colored XHTML"
-msgstr "將連絡人儲存為 VCar_d..."
+msgstr "將聯絡人儲存為 VCar_d..."
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
 #, fuzzy
@@ -209,16 +209,16 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
 #, fuzzy
 msgid "Palette to _Repeating Gradient"
-msgstr "按這裡可以加入新的選字盤"
+msgstr "按這裏可以加入新的選字盤"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
 msgid "Create a gradient using colors from the palette"
-msgstr "建立一漸層，使用調色盤中的顏色"
+msgstr "建立一漸變色，使用調色盤中的顏色"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
 #, fuzzy
 msgid "Palette to _Gradient"
-msgstr "按這裡可以加入新的選字盤"
+msgstr "按這裏可以加入新的選字盤"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:56
 msgid "Slice"
@@ -227,7 +227,7 @@ msgstr "切片"
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:417
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "沿著指南剪裁圖像，創建圖像和一個 HTML 表格片段"
+msgstr "沿着指南剪裁圖像，創建圖像和一個 HTML 表格片段"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:428
 msgid "_Slice..."
@@ -255,7 +255,7 @@ msgstr "圖片格式"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 #, fuzzy
 msgid "Separate image folder"
-msgstr "您選取了 %d 個資料夾"
+msgstr "你選取了 %d 個資料夾"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 #, fuzzy
@@ -319,7 +319,7 @@ msgstr ""
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 #, fuzzy
 msgid "_Drop Shadow and Bevel..."
-msgstr "分頁拖放的群組"
+msgstr "分頁拖放的羣組"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"

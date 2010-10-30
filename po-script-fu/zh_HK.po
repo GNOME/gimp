@@ -1,4 +1,4 @@
-# traditional Chinese translation for gimp-script-fu.
+# Chinese (Hong Kong) translation for gimp-script-fu.
 # Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-30 19:49+0800\n"
-"PO-Revision-Date: 2010-10-04 20:08+0800\n"
+"PO-Revision-Date: 2010-10-30 19:49+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional)\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr "Script-Fu 訊息視窗"
 #: ../plug-ins/script-fu/script-fu-console.c:193
 #, fuzzy
 msgid "Welcome to TinyScheme"
-msgstr "歡迎來玩黑白棋！"
+msgstr "歡迎來玩蘋果棋！"
 
 #: ../plug-ins/script-fu/script-fu-console.c:199
 #, fuzzy
@@ -64,7 +64,7 @@ msgstr "Script-Fu 不能同時處理兩個 script"
 #: ../plug-ins/script-fu/script-fu-interface.c:197
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "您已經執行「%s」script。"
+msgstr "你已經執行「%s」script。"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:223
 #, c-format
@@ -105,7 +105,7 @@ msgstr "Script-Fu 圖樣選擇"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:486
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu 漸層選擇"
+msgstr "Script-Fu 漸變色選擇"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:495
 msgid "Script-Fu Brush Selection"
@@ -159,7 +159,7 @@ msgstr "啟動伺服器(_S)..."
 
 #: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
-msgstr "_GIMP 線上"
+msgstr "_GIMP 網上"
 
 #: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
@@ -217,9 +217,7 @@ msgstr "重新整理 Sc_ript"
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr ""
-"您不能在開啟 Script-Fu 對話盒的時候使用「重新整理 Script-Fu」。請關閉所有的 "
-"Script-Fu 視窗後再試一次。"
+msgstr "你不能在開啟 Script-Fu 對話盒的時候使用「重新整理 Script-Fu」。請關閉所有的 Script-Fu 視窗後再試一次。"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -428,7 +426,7 @@ msgstr "建立填滿立體 Truchet 圖樣的圖片"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
-msgstr "漸層結束顏色"
+msgstr "漸變色結束顏色"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:5
@@ -443,7 +441,7 @@ msgstr "垂直區域數目"
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
 msgid "Start blend"
-msgstr "漸層開始顏色"
+msgstr "漸變色開始顏色"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
@@ -715,7 +713,7 @@ msgstr "異樣霓虹燈(_N)..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr "建立一個標誌，帶有沿著文字產生迷幻效果的輪廓"
+msgstr "建立一個標誌，帶有沿着文字產生迷幻效果的輪廓"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
@@ -727,23 +725,23 @@ msgstr "色帶數目"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of bands"
-msgstr "色帶寬度"
+msgstr "色帶闊度"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
-msgstr "間隔寬度"
+msgstr "間隔闊度"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr "在選定的範圍(或alpha)裡，增加一個漸變的效果，一個陰影和一個背景"
+msgstr "在選定的範圍(或alpha)裏，增加一個漸變的效果，一個陰影和一個背景"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr "建立一個簡單的文字標誌，帶有漸層效果、陰影，和一個背景色"
+msgstr "建立一個簡單的文字標誌，帶有漸變色效果、陰影，和一個背景色"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -765,7 +763,7 @@ msgstr "建立一個簡單的標誌，帶有陰影與強光部份的效果"
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
-msgstr "斜面寬度"
+msgstr "斜面闊度"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
 msgid "Create a simple, beveled button graphic for webpages"
@@ -780,7 +778,7 @@ msgstr "為網頁建立一個簡單的斜角按鈕圖形"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
 msgid "Lower-right color"
@@ -850,7 +848,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
 msgid "Width"
-msgstr "寬度"
+msgstr "闊度"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
@@ -904,7 +902,7 @@ msgstr "建立一個標誌，其文字融合背景顏色，並帶有強光部份
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
-msgstr "自製漸層範例"
+msgstr "自製漸變色範例"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
@@ -925,7 +923,7 @@ msgstr "前景-透明"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient reverse"
-msgstr "文字內部使用相反方向漸層"
+msgstr "文字內部使用相反方向漸變色"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
@@ -973,7 +971,7 @@ msgstr "擦去(_U)..."
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 #, fuzzy
 msgid "Corona width"
-msgstr "視窗寬度"
+msgstr "視窗闊度"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid ""
@@ -988,7 +986,7 @@ msgstr "淡出"
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 #, fuzzy
 msgid "Fadeout width"
-msgstr "視窗寬度"
+msgstr "視窗闊度"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
@@ -1045,7 +1043,7 @@ msgstr "迷彩圖案(_C)..."
 #, fuzzy
 #| msgid "Bevel width"
 msgid "Bevel Highlight"
-msgstr "斜面寬度"
+msgstr "斜面闊度"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
@@ -1178,7 +1176,7 @@ msgstr "鍍鉻平衡色"
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
-msgstr "鍍鉻係數"
+msgstr "鍍鉻系數"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
@@ -1357,7 +1355,7 @@ msgstr "漫畫書(_K)..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr "建立一個漫畫書風格的標誌，藉由文字的輪廓與文字填充上漸層色"
+msgstr "建立一個漫畫書風格的標誌，藉由文字的輪廓與文字填充上漸變色色"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1540,7 +1538,7 @@ msgstr "圖片高度"
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:4
 #: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image width"
-msgstr "圖片寬度"
+msgstr "圖片闊度"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:5
 #: ../plug-ins/script-fu/scripts/land.scm.h:7
@@ -1698,7 +1696,7 @@ msgstr "主要網站(_M)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr "準備您要上傳至網站的圖片(_P)"
+msgstr "準備你要上傳至網站的圖片(_P)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:13
 msgid "_User Manual Web Site"
@@ -1706,7 +1704,7 @@ msgstr "使用者手冊網站(_U)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr "數位相機照片的處理(_W)"
+msgstr "數碼相機照片的處理(_W)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
@@ -1716,15 +1714,15 @@ msgstr "添加漸變，圖樣，陰影和凹凸貼圖到選定的區域(或alpha
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
-msgstr "混色漸層(輪廓)"
+msgstr "混色漸變色(輪廓)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (text)"
-msgstr "混色漸層(文字)"
+msgstr "混色漸變色(文字)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr "建立一個帶有漸層、圖樣、陰影和凹凸映射的標誌"
+msgstr "建立一個帶有漸變色、圖樣、陰影和凹凸映射的標誌"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1732,7 +1730,7 @@ msgstr "光滑的文字(_S)..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
-msgstr "輪廓使用相反方向漸層"
+msgstr "輪廓使用相反方向漸變色"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (outline)"
@@ -1753,15 +1751,15 @@ msgstr "陰影"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Text gradient reverse"
-msgstr "文字內部使用相反方向漸層"
+msgstr "文字內部使用相反方向漸變色"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
-msgstr "使用圖樣而不是漸層來繪畫輪廓"
+msgstr "使用圖樣而不是漸變色來繪畫輪廓"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
-msgstr "使用圖樣而不是漸層來繪畫文字"
+msgstr "使用圖樣而不是漸變色來繪畫文字"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern overlay"
@@ -1799,7 +1797,7 @@ msgstr "建立一個標誌，帶有有光澤的外觀和斜面邊緣"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr "漸層斜面(_L)..."
+msgstr "漸變色斜面(_L)..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
@@ -1808,7 +1806,7 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
 #, fuzzy
 msgid "Custom _Gradient..."
-msgstr "連續漸層"
+msgstr "連續漸變色"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
@@ -1928,7 +1926,7 @@ msgstr "種子"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
-msgstr "使用目前的漸層"
+msgstr "使用目前的漸變色"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
@@ -2048,7 +2046,7 @@ msgstr "散焦"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr "使影像看起來像舊照片"
+msgstr "使圖像看起來像舊照片"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
@@ -2156,7 +2154,7 @@ msgstr "角度"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
 msgid "Interpolation"
-msgstr "內插法"
+msgstr "插值法"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Relative distance of horizon"
@@ -2453,7 +2451,7 @@ msgstr "圓形"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color method"
-msgstr "著色方式"
+msgstr "着色方式"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
@@ -2620,7 +2618,7 @@ msgstr "僅僅邊緣"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 msgid "Edge width"
-msgstr "邊緣寬度"
+msgstr "邊緣闊度"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
@@ -2637,7 +2635,7 @@ msgstr "平滑化"
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid ""
 "Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr "建立一個標誌，由指定的文字沿著圓形的邊緣描寫"
+msgstr "建立一個標誌，由指定的文字沿着圓形的邊緣描寫"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2660,8 +2658,7 @@ msgstr "混合顏色(2)"
 msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
-msgstr ""
-"填充選取的區域(或alpha)，用一紋理，並且加入高亮度，陰影，以及一馬賽克背景"
+msgstr "填充選取的區域(或alpha)，用一紋理，並且加入高亮度，陰影，以及一馬賽克背景"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2781,7 +2778,7 @@ msgstr "絲帶間隔"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon width"
-msgstr "絲帶寬度"
+msgstr "絲帶闊度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow darkness"

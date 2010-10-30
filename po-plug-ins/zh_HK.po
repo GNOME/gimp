@@ -1,4 +1,4 @@
-# traditional Chinese translation for gimp-std-plugins.
+# Chinese (Hong Kong) translation for gimp-std-plugins.
 # Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: gimp-std-plug-ins 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-10-30 19:45+0800\n"
-"PO-Revision-Date: 2010-10-04 20:02+0800\n"
+"PO-Revision-Date: 2010-10-30 19:45+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
-"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -151,7 +151,7 @@ msgstr "切換到逆時針"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:38
 msgid "Change Order of Arrows"
-msgstr "變更箭頭順序"
+msgstr "更改箭頭順序"
 
 #: ../plug-ins/color-rotate/color-rotate-stock.c:40
 #: ../plug-ins/imagemap/imap_cmd_select_all.c:50
@@ -1277,7 +1277,7 @@ msgstr "乘以隨機數(0,2)"
 #: ../plug-ins/common/cml-explorer.c:207
 #, fuzzy
 msgid "Multiply gradient (0,1)"
-msgstr "事件漸層效果"
+msgstr "事件漸變色效果"
 
 #: ../plug-ins/common/cml-explorer.c:208
 #, fuzzy
@@ -1302,11 +1302,11 @@ msgstr "圖片的第一行"
 
 #: ../plug-ins/common/cml-explorer.c:226
 msgid "Continuous gradient"
-msgstr "連續漸層"
+msgstr "連續漸變色"
 
 #: ../plug-ins/common/cml-explorer.c:227
 msgid "Continuous grad. w/o gap"
-msgstr "連續漸層而且沒有縫隙"
+msgstr "連續漸變色而且沒有縫隙"
 
 #: ../plug-ins/common/cml-explorer.c:228
 #, fuzzy
@@ -1634,7 +1634,7 @@ msgstr "色彩交換"
 #: ../plug-ins/common/color-exchange.c:310
 #, fuzzy
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
-msgstr "預覽：請按裡面選取「來源顏色」"
+msgstr "預覽：請按裏面選取「來源顏色」"
 
 #: ../plug-ins/common/color-exchange.c:355
 msgid "To Color"
@@ -1704,23 +1704,23 @@ msgstr "替換所有指定顏色的色彩與色調"
 
 #: ../plug-ins/common/colorify.c:107
 msgid "Colorif_y..."
-msgstr "著色效果(_Y)..."
+msgstr "着色效果(_Y)..."
 
 #: ../plug-ins/common/colorify.c:168
 msgid "Colorifying"
-msgstr "正在著色中..."
+msgstr "正在着色中..."
 
 #: ../plug-ins/common/colorify.c:254
 msgid "Colorify"
-msgstr "著色效果"
+msgstr "着色效果"
 
 #: ../plug-ins/common/colorify.c:289
 msgid "Custom color:"
-msgstr "自訂顏色："
+msgstr "自選顏色："
 
 #: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
-msgstr "自訂著色效果的顏色"
+msgstr "自選着色效果的顏色"
 
 #: ../plug-ins/common/colormap-remap.c:96
 #, fuzzy
@@ -1785,9 +1785,7 @@ msgstr "修改色票項目 #%d"
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
-msgstr ""
-"拖放顏色重新排列顏色表。這些數字顯示的是原來的指標。右鍵單擊一個選單選項與排"
-"序"
+msgstr "拖放顏色重新排列顏色表。這些數字顯示的是原來的指標。右鍵點選一個選單選項與排序"
 
 #: ../plug-ins/common/compose.c:188 ../plug-ins/common/decompose.c:169
 #: ../plug-ins/common/file-raw.c:1098
@@ -1936,7 +1934,7 @@ msgstr "重組(_E)"
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
-msgstr "您只能執行重組，如果使用中的圖片最初是由分解產生。"
+msgstr "你只能執行重組，如果使用中的圖片最初是由分解產生。"
 
 #: ../plug-ins/common/compose.c:511
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -1998,7 +1996,7 @@ msgstr "色彩模式(_M)："
 #: ../plug-ins/common/compose.c:1551
 #, fuzzy
 msgid "Channel Representations"
-msgstr "視訊通道"
+msgstr "視像通道"
 
 #: ../plug-ins/common/compose.c:1614
 #, fuzzy
@@ -2258,7 +2256,7 @@ msgstr "使用兩個控制曲線來扭曲圖片"
 
 #: ../plug-ins/common/curve-bend.c:547
 msgid "_Curve Bend..."
-msgstr "依曲線扭曲(_C)..."
+msgstr "根據曲線扭曲(_C)..."
 
 #: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:177
 msgid "Can operate on layers only (but was called on channel or mask)."
@@ -2281,7 +2279,7 @@ msgstr "讀取影片 DVD 時發生錯誤 (%s)"
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1223 ../plug-ins/common/curve-bend.c:2963
 msgid "Curve Bend"
-msgstr "依曲線扭曲"
+msgstr "根據曲線扭曲"
 
 #. Preview area, top of column
 #. preview
@@ -2747,7 +2745,7 @@ msgstr "去條紋"
 #: ../plug-ins/imagemap/imap_rectangle.c:402
 #: ../plug-ins/print/print-page-layout.c:264
 msgid "_Width:"
-msgstr "寬度(_W)："
+msgstr "闊度(_W)："
 
 #: ../plug-ins/common/destripe.c:484
 msgid "Create _histogram"
@@ -2938,7 +2936,7 @@ msgstr "程度(_A)："
 
 #: ../plug-ins/common/edge-sobel.c:107
 msgid "Specialized direction-dependent edge detection"
-msgstr "專門的有方向依賴性的邊緣偵測"
+msgstr "專門的有方向根據賴性的邊緣偵測"
 
 #: ../plug-ins/common/edge-sobel.c:120
 msgid "_Sobel..."
@@ -2991,7 +2989,7 @@ msgstr "指南針模式"
 
 #: ../plug-ins/common/edge.c:666 ../plug-ins/common/sinus.c:903
 msgid "Gradient"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../plug-ins/common/edge.c:667
 msgid "Roberts"
@@ -3065,7 +3063,7 @@ msgstr "高度(_H)："
 
 #: ../plug-ins/common/engrave.c:255
 msgid "_Limit line width"
-msgstr "限制線條寬度(_L)"
+msgstr "限制線條闊度(_L)"
 
 #: ../plug-ins/common/file-aa.c:97
 #, fuzzy
@@ -3251,7 +3249,7 @@ msgstr "GIMP 筆刷"
 #: ../plug-ins/common/file-gbr.c:398 ../plug-ins/common/file-pat.c:417
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr "在「%s」有無效的標題資料：寬度=%lu，高度=%lu，位元組=%lu"
+msgstr "在「%s」有無效的標題資料：闊度=%lu，高度=%lu，位元組=%lu"
 
 #: ../plug-ins/common/file-gbr.c:422 ../plug-ins/common/file-gbr.c:434
 msgid "Unsupported brush format"
@@ -3347,8 +3345,7 @@ msgstr ""
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
-msgstr ""
-"GIF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
+msgstr "GIF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
 #: ../plug-ins/common/file-gif-save.c:752
 msgid ""
@@ -3366,10 +3363,9 @@ msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"在準備儲存成為 GIF 的圖片中，有一些圖層的位置超出圖片範圍之外。GIF 應該不允許"
-"這種情況發生。\n"
+"在準備儲存成為 GIF 的圖片中，有一些圖層的位置超出圖片範圍之外。GIF 應該不允許這種情況發生。\n"
 "\n"
-"您可以選擇裁剪所有圖層，令它們限制在圖片之內，或者不儲存圖片。"
+"你可以選擇裁剪所有圖層，令它們限制在圖片之內，或者不儲存圖片。"
 
 #: ../plug-ins/common/file-gif-save.c:987
 #, fuzzy
@@ -3377,10 +3373,9 @@ msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
 msgstr ""
-"在準備儲存成為 GIF 的圖片中，有一些圖層的位置超出圖片範圍之外。GIF 應該不允許"
-"這種情況發生。\n"
+"在準備儲存成為 GIF 的圖片中，有一些圖層的位置超出圖片範圍之外。GIF 應該不允許這種情況發生。\n"
 "\n"
-"您可以選擇裁剪所有圖層，令它們限制在圖片之內，或者不儲存圖片。"
+"你可以選擇裁剪所有圖層，令它們限制在圖片之內，或者不儲存圖片。"
 
 #: ../plug-ins/common/file-gif-save.c:1123
 msgid "GIF"
@@ -3472,7 +3467,7 @@ msgstr "捨棄右面欄位"
 
 #: ../plug-ins/common/file-gih.c:1002
 msgid " (Width Mismatch!) "
-msgstr " (寬度不符！) "
+msgstr " (闊度不符！) "
 
 #: ../plug-ins/common/file-gih.c:1006
 msgid " (Height Mismatch!) "
@@ -3511,7 +3506,7 @@ msgid ""
 "You are about to create a huge\n"
 "HTML file which will most likely\n"
 "crash your browser."
-msgstr "您正要建立一個很可能會讓瀏覽器掛掉的巨大 HTML 檔。"
+msgstr "你正要建立一個很可能會讓瀏覽器掛掉的巨大 HTML 檔。"
 
 #. HTML Page Options
 #: ../plug-ins/common/file-html-table.c:441
@@ -3526,9 +3521,7 @@ msgstr "產生完整的 _HTML 文件"
 msgid ""
 "If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. "
 "tags instead of just the table html."
-msgstr ""
-"若選取本選項，GTM 會輸出一個包含 <HTML>、<BODY> 等標籤的完整 HTML 檔，而非只"
-"有表格部份的 HTML。"
+msgstr "若選取本選項，GTM 會輸出一個包含 <HTML>、<BODY> 等標籤的完整 HTML 檔，而非只有表格部份的 HTML。"
 
 #. HTML Table Creation Options
 #: ../plug-ins/common/file-html-table.c:467
@@ -3543,9 +3536,7 @@ msgstr "使用 _Cellspan"
 msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
-msgstr ""
-"若選上此選項，GTM 會將任何成矩型區域而且顏色相同的格子合成一個有 ROWSPAN 和 "
-"COLSPAN 值的大型方格。"
+msgstr "若選上此選項，GTM 會將任何成矩型區域而且顏色相同的格子合成一個有 ROWSPAN 和 COLSPAN 值的大型方格。"
 
 #: ../plug-ins/common/file-html-table.c:490
 msgid "Co_mpress TD tags"
@@ -3556,9 +3547,7 @@ msgid ""
 "Checking this tag will cause GTM to leave no whitespace between the TD tags "
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
-msgstr ""
-"若選上此選項，GTM 將不會在 TD 標籤及格子內容之間留下任何空白字符。這只在需要"
-"以像素的程度控制位置才有需要使用。"
+msgstr "若選上此選項，GTM 將不會在 TD 標籤及格子內容之間留下任何空白字符。這只在需要以像素的程度控制位置才有需要使用。"
 
 #: ../plug-ins/common/file-html-table.c:506
 msgid "C_aption"
@@ -3591,11 +3580,11 @@ msgstr "邊框(_B)："
 
 #: ../plug-ins/common/file-html-table.c:569
 msgid "The number of pixels in the table border."
-msgstr "表格邊框的寬度(像素)。"
+msgstr "表格邊框的闊度(像素)。"
 
 #: ../plug-ins/common/file-html-table.c:584
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr "表格格子的寬度。可以是數字或是百分比。"
+msgstr "表格格子的闊度。可以是數字或是百分比。"
 
 #: ../plug-ins/common/file-html-table.c:600
 msgid "The height for each table cell.  Can be a number or a percent."
@@ -3607,7 +3596,7 @@ msgstr "格子留邊(_P)："
 
 #: ../plug-ins/common/file-html-table.c:615
 msgid "The amount of cellpadding."
-msgstr "格子留邊的寬度。"
+msgstr "格子留邊的闊度。"
 
 #: ../plug-ins/common/file-html-table.c:624
 msgid "Cell-_spacing:"
@@ -3709,7 +3698,7 @@ msgstr "儲存 gamma 值"
 
 #: ../plug-ins/common/file-mng.c:1332
 msgid "Save resolution"
-msgstr "儲存解析度"
+msgstr "儲存解像度"
 
 #: ../plug-ins/common/file-mng.c:1343
 msgid "Save creation time"
@@ -3775,7 +3764,7 @@ msgstr "JPEG 壓縮品質："
 #: ../plug-ins/common/file-mng.c:1447
 #, fuzzy
 msgid "JPEG smoothing factor:"
-msgstr "字型縮放係數"
+msgstr "字型縮放系數"
 
 #: ../plug-ins/common/file-mng.c:1457
 #, fuzzy
@@ -3837,13 +3826,13 @@ msgstr "‘%s’不是 PCX 檔。"
 #: ../plug-ins/file-psd/psd-load.c:301
 #, fuzzy, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "圖片的寬度和/或高度無效"
+msgstr "圖片的闊度和/或高度無效"
 
 #: ../plug-ins/common/file-pcx.c:399 ../plug-ins/file-bmp/bmp-read.c:643
 #: ../plug-ins/file-psd/psd-load.c:293
 #, fuzzy, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "圖片的寬度和/或高度無效"
+msgstr "圖片的闊度和/或高度無效"
 
 #: ../plug-ins/common/file-pcx.c:404
 msgid "Invalid number of bytes per line in PCX header"
@@ -3852,7 +3841,7 @@ msgstr ""
 #: ../plug-ins/common/file-pcx.c:411
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
-msgstr "圖片尺寸過大：寬度 %d x 高度 %d"
+msgstr "圖片尺寸過大：闊度 %d x 高度 %d"
 
 #: ../plug-ins/common/file-pcx.c:459
 msgid "Unusual PCX flavour, giving up"
@@ -3886,7 +3875,7 @@ msgstr "開啟檔案「%s」失敗：%s"
 #: ../plug-ins/common/file-pix.c:141 ../plug-ins/common/file-pix.c:158
 #, fuzzy
 msgid "Alias Pix image"
-msgstr "機器人圖案佈景"
+msgstr "機械人圖案佈景"
 
 #: ../plug-ins/common/file-png.c:262 ../plug-ins/common/file-png.c:283
 #: ../plug-ins/common/file-png.c:303 ../plug-ins/common/file-png.c:320
@@ -3967,7 +3956,7 @@ msgstr "字型解像度"
 
 #: ../plug-ins/common/file-pnm.c:554
 msgid "Image width is larger than GIMP can handle."
-msgstr "圖片寬度大於 GIMP 可以處理的範圍。"
+msgstr "圖片闊度大於 GIMP 可以處理的範圍。"
 
 #: ../plug-ins/common/file-pnm.c:561
 #, fuzzy
@@ -4074,7 +4063,7 @@ msgstr "描繪"
 #: ../plug-ins/common/file-ps.c:3151 ../plug-ins/common/file-svg.c:928
 #: ../plug-ins/common/file-wmf.c:691
 msgid "Resolution:"
-msgstr "解析度："
+msgstr "解像度："
 
 #: ../plug-ins/common/file-ps.c:3190
 #, fuzzy
@@ -4106,7 +4095,7 @@ msgstr "下載此綁定方塊"
 #. Colouring
 #: ../plug-ins/common/file-ps.c:3223
 msgid "Coloring"
-msgstr "著色方式"
+msgstr "着色方式"
 
 #: ../plug-ins/common/file-ps.c:3227
 msgid "B/W"
@@ -4276,7 +4265,7 @@ msgstr "一般"
 #: ../plug-ins/common/file-raw.c:1169 ../plug-ins/common/file-raw.c:1255
 #, fuzzy
 msgid "B, G, R, X (BMP style)"
-msgstr "紙牌樣式(_C)"
+msgstr "啤牌樣式(_C)"
 
 #: ../plug-ins/common/file-raw.c:1174
 msgid "_Palette Type:"
@@ -4349,7 +4338,7 @@ msgid ""
 "No image width specified"
 msgstr ""
 "‘%s’：\n"
-"未指定圖片寬度"
+"未指定圖片闊度"
 
 #: ../plug-ins/common/file-sunras.c:463 ../plug-ins/common/file-xbm.c:833
 #: ../plug-ins/common/file-xwd.c:497
@@ -4452,7 +4441,7 @@ msgstr "繪製 SVG"
 #: ../plug-ins/common/file-svg.c:807 ../plug-ins/common/file-wmf.c:570
 #: ../plug-ins/common/grid.c:724
 msgid "Width:"
-msgstr "寬度："
+msgstr "闊度："
 
 #: ../plug-ins/common/file-svg.c:813 ../plug-ins/common/file-wmf.c:576
 msgid "Height:"
@@ -4566,20 +4555,18 @@ msgid ""
 "this conversion."
 msgstr ""
 "警告：\n"
-"準備載入的圖片的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行"
-"轉換，而在這個過程中將會失去一部份資訊。"
+"準備載入的圖片的色版是 16 位元色版。GIMP 只支援 8 位元色版，因此它會自動進行轉換，而在這個過程中將會失去一部份資訊。"
 
 #: ../plug-ins/common/file-tiff-save.c:887
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
-msgstr ""
-"TIFF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
+msgstr "TIFF 圖片格式只接受 7 位元的 ASCII 編碼文字作為備註，因此這些備註不會儲存。"
 
 #: ../plug-ins/common/file-tiff-save.c:1061
 #, fuzzy
 msgid "TIFF"
-msgstr "TIFF 函式"
+msgstr "TIFF 函數"
 
 #. compression
 #: ../plug-ins/common/file-tiff-save.c:1069
@@ -5108,7 +5095,7 @@ msgstr "齒孔位置(_H)："
 
 #: ../plug-ins/common/film.c:1182
 msgid "Ho_le width:"
-msgstr "齒孔寬度(_L)："
+msgstr "齒孔闊度(_L)："
 
 #: ../plug-ins/common/film.c:1193
 msgid "Hol_e height:"
@@ -5343,15 +5330,15 @@ msgstr "Y_2："
 
 #: ../plug-ins/common/gradient-map.c:83
 msgid "Recolor the image using colors from the active gradient"
-msgstr "重新為圖片著色,使用前景與背景顏色產生的漸層顏色"
+msgstr "重新為圖片着色,使用前景與背景顏色產生的漸變色顏色"
 
 #: ../plug-ins/common/gradient-map.c:96
 msgid "_Gradient Map"
-msgstr "漸層映射(_G)"
+msgstr "漸變色映射(_G)"
 
 #: ../plug-ins/common/gradient-map.c:105
 msgid "Recolor the image using colors from the active palette"
-msgstr "重新為圖片著色，用使用中的調色盤"
+msgstr "重新為圖片着色，用使用中的調色盤"
 
 #: ../plug-ins/common/gradient-map.c:118
 msgid "_Palette Map"
@@ -5359,7 +5346,7 @@ msgstr "調色盤映射(_P)"
 
 #: ../plug-ins/common/gradient-map.c:161
 msgid "Gradient Map"
-msgstr "漸層映射"
+msgstr "漸變色映射"
 
 #: ../plug-ins/common/gradient-map.c:166
 msgid "Palette Map"
@@ -5636,7 +5623,7 @@ msgstr "斜邊"
 
 #: ../plug-ins/common/jigsaw.c:2501
 msgid "_Bevel width:"
-msgstr "斜邊寬度(_B)："
+msgstr "斜邊闊度(_B)："
 
 #: ../plug-ins/common/jigsaw.c:2505
 msgid "Degree of slope of each piece's edge"
@@ -5690,7 +5677,7 @@ msgstr "在圖片中應用一顏色設定"
 
 #: ../plug-ins/common/lcms.c:257
 msgid "_Convert to Color Profile..."
-msgstr "依據描述檔轉換色彩(_C)..."
+msgstr "根據據描述檔轉換色彩(_C)..."
 
 #: ../plug-ins/common/lcms.c:275
 #, fuzzy
@@ -6140,12 +6127,12 @@ msgstr "報紙印刷"
 
 #: ../plug-ins/common/newsprint.c:1021
 msgid "_Spot function:"
-msgstr "描繪斑點函式(_S)："
+msgstr "描繪斑點函數(_S)："
 
 #. resolution settings
 #: ../plug-ins/common/newsprint.c:1231
 msgid "Resolution"
-msgstr "解析度"
+msgstr "解像度"
 
 #: ../plug-ins/common/newsprint.c:1250
 msgid "_Input SPI:"
@@ -6521,7 +6508,7 @@ msgstr "馬賽克處理"
 
 #: ../plug-ins/common/pixelize.c:352
 msgid "Pixel _width:"
-msgstr "像素寬度(_W):"
+msgstr "像素闊度(_W):"
 
 #: ../plug-ins/common/pixelize.c:357
 msgid "Pixel _height:"
@@ -6529,15 +6516,15 @@ msgstr "像素高度(_H):"
 
 #: ../plug-ins/common/plasma.c:175
 msgid "Create a random plasma texture"
-msgstr "創建一個隨機電漿紋理"
+msgstr "創建一個隨機等離子紋理"
 
 #: ../plug-ins/common/plasma.c:180
 msgid "_Plasma..."
-msgstr "電漿(_P)..."
+msgstr "等離子(_P)..."
 
 #: ../plug-ins/common/plasma.c:262 ../plug-ins/common/plasma.c:299
 msgid "Plasma"
-msgstr "電漿"
+msgstr "等離子"
 
 #: ../plug-ins/common/plasma.c:337
 msgid "Random _seed:"
@@ -6557,7 +6544,7 @@ msgstr "插件瀏覽器(_P)"
 
 #: ../plug-ins/common/plugin-browser.c:376
 msgid "Searching by name"
-msgstr "依名稱搜尋"
+msgstr "根據名稱搜尋"
 
 #: ../plug-ins/common/plugin-browser.c:390
 #, fuzzy, c-format
@@ -6655,9 +6642,7 @@ msgstr "從四週開始映射(_T)"
 msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
-msgstr ""
-"如果不選用本選項，映射後的圖片底部表示原來圖片的中心點，而頂端表示原來圖片的"
-"四周。如果選用則會以相反方向映射。"
+msgstr "如果不選用本選項，映射後的圖片底部表示原來圖片的中心點，而頂端表示原來圖片的四周。如果選用則會以相反方向映射。"
 
 #: ../plug-ins/common/polar-coords.c:694
 msgid "To _polar"
@@ -6667,9 +6652,7 @@ msgstr "變成圓形(_P)"
 msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
-msgstr ""
-"如果不選用本選項，圖片會以旋轉方式映射至另一個長方形。如果選上則會映射至圓"
-"形。"
+msgstr "如果不選用本選項，圖片會以旋轉方式映射至另一個長方形。如果選上則會映射至圓形。"
 
 #: ../plug-ins/common/procedure-browser.c:82
 #, fuzzy
@@ -6813,15 +6796,15 @@ msgstr "旋轉"
 
 #: ../plug-ins/common/sample-colorize.c:297
 msgid "Colorize image using a sample image as a guide"
-msgstr "圖片著色使用樣品圖片作為指引"
+msgstr "圖片着色使用樣品圖片作為指引"
 
 #: ../plug-ins/common/sample-colorize.c:302
 msgid "_Sample Colorize..."
-msgstr "樣品色著色(_S)..."
+msgstr "樣品色着色(_S)..."
 
 #: ../plug-ins/common/sample-colorize.c:1315
 msgid "Sample Colorize"
-msgstr "樣品色著色"
+msgstr "樣品色着色"
 
 #: ../plug-ins/common/sample-colorize.c:1320
 msgid "Get _Sample Colors"
@@ -6839,11 +6822,11 @@ msgstr "樣品："
 
 #: ../plug-ins/common/sample-colorize.c:1375
 msgid "From reverse gradient"
-msgstr "從反向漸層"
+msgstr "從反向漸變色"
 
 #: ../plug-ins/common/sample-colorize.c:1380
 msgid "From gradient"
-msgstr "從漸層"
+msgstr "從漸變色"
 
 #. check button
 #: ../plug-ins/common/sample-colorize.c:1401
@@ -6916,7 +6899,7 @@ msgstr "螢幕畫面擷取"
 
 #: ../plug-ins/common/screenshot.c:844
 msgid "Mouse Pointer"
-msgstr "滑鼠指標"
+msgstr "鼠標"
 
 #: ../plug-ins/common/screenshot.c:948
 msgid "Specified window not found"
@@ -6962,7 +6945,7 @@ msgstr "拍下全螢幕的快照(_S)"
 
 #: ../plug-ins/common/screenshot.c:1176
 msgid "Include _mouse pointer"
-msgstr "包含滑鼠指標(_M)"
+msgstr "包含鼠標(_M)"
 
 #: ../plug-ins/common/screenshot.c:1196
 msgid "Select a _region to grab"
@@ -7315,7 +7298,7 @@ msgstr "加上邊框(_D)"
 
 #: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
-msgstr "沿著圖片邊緣，繪製火花組成的邊框"
+msgstr "沿着圖片邊緣，繪製火花組成的邊框"
 
 #: ../plug-ins/common/sparkle.c:549
 msgid "_Natural color"
@@ -7559,7 +7542,7 @@ msgstr "玻璃磚片"
 
 #: ../plug-ins/common/tile-glass.c:289
 msgid "Tile _width:"
-msgstr "磚片寬度(_W)："
+msgstr "磚片闊度(_W)："
 
 #: ../plug-ins/common/tile-paper.c:242 ../plug-ins/common/tile-paper.c:556
 msgid "Paper Tile"
@@ -7623,7 +7606,7 @@ msgstr "背景顏色(_K)"
 
 #: ../plug-ins/common/tile-paper.c:394
 msgid "S_elect here:"
-msgstr "選擇這裡(_E):"
+msgstr "選擇這裏(_E):"
 
 #: ../plug-ins/common/tile-paper.c:401
 msgid "Background Color"
@@ -7769,9 +7752,7 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr ""
-"本欄是數值輸入欄位的提示。它指定了輸入欄位應提供多少個小數點，使得準確度大致"
-"上等於「英吋」的小數點後兩位。"
+msgstr "本欄是數值輸入欄位的提示。它指定了輸入欄位應提供多少個小數點，使得準確度大致上等於「英吋」的小數點後兩位。"
 
 #: ../plug-ins/common/unit-editor.c:103
 msgid "Symbol"
@@ -7782,9 +7763,7 @@ msgstr "符號"
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
-msgstr ""
-"本單位的符號 (如果有的話，例如英吋的「'」)。如果沒有該單位的相應符號則使用縮"
-"寫。"
+msgstr "本單位的符號 (如果有的話，例如英吋的「'」)。如果沒有該單位的相應符號則使用縮寫。"
 
 #: ../plug-ins/common/unit-editor.c:106
 msgid "Abbreviation"
@@ -8027,7 +8006,7 @@ msgstr "衍生(_D)"
 
 #: ../plug-ins/common/van-gogh-lic.c:685
 msgid "_Gradient"
-msgstr "漸層(_G)"
+msgstr "漸變色(_G)"
 
 #: ../plug-ins/common/van-gogh-lic.c:691
 msgid "Convolve"
@@ -8228,7 +8207,7 @@ msgstr "梯度量縮放值："
 #: ../plug-ins/common/warp.c:658
 #, fuzzy
 msgid "Gradient map selection menu"
-msgstr "開啟漸層選擇對話盒。"
+msgstr "開啟漸變色選擇對話盒。"
 
 #: ../plug-ins/common/warp.c:668
 msgid "Vector mag:"
@@ -8247,18 +8226,18 @@ msgstr ""
 #: ../plug-ins/common/warp.c:1178
 #, fuzzy
 msgid "Smoothing X gradient"
-msgstr "事件漸層效果"
+msgstr "事件漸變色效果"
 
 #: ../plug-ins/common/warp.c:1181
 #, fuzzy
 msgid "Smoothing Y gradient"
-msgstr "事件漸層效果"
+msgstr "事件漸變色效果"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1231
 #, fuzzy
 msgid "Finding XY gradient"
-msgstr "3D化(漸層)"
+msgstr "3D化(漸變色)"
 
 #: ../plug-ins/common/warp.c:1256
 #, fuzzy, c-format
@@ -8471,7 +8450,7 @@ msgstr "較高的值會增加效果的強度"
 #: ../plug-ins/file-bmp/bmp-read.c:87
 #, fuzzy
 msgid "Bad colormap"
-msgstr "損壞的簽章"
+msgstr "損壞的簽署"
 
 #: ../plug-ins/file-bmp/bmp-read.c:171 ../plug-ins/file-bmp/bmp-read.c:181
 #: ../plug-ins/file-bmp/bmp-read.c:188 ../plug-ins/file-bmp/bmp-read.c:197
@@ -8493,12 +8472,12 @@ msgstr "讀取 BMP 點陣圖‘%s’的檔頭時發生錯誤"
 #: ../plug-ins/file-bmp/bmp-read.c:589
 #, fuzzy
 msgid "Unrecognized or invalid BMP compression format."
-msgstr "無法辨別的金鑰類型，或是無效的資料格式"
+msgstr "無法辨別的密碼匙類型，或是無效的資料格式"
 
 #: ../plug-ins/file-bmp/bmp-read.c:631
 #, fuzzy
 msgid "Unsupported or invalid bitdepth."
-msgstr "無效或無法碓認的金鑰：%s"
+msgstr "無效或無法碓認的密碼匙：%s"
 
 #: ../plug-ins/file-bmp/bmp-read.c:819 ../plug-ins/file-bmp/bmp-read.c:860
 #: ../plug-ins/file-bmp/bmp-read.c:910
@@ -8523,7 +8502,7 @@ msgstr "BMP 圖片格式"
 #: ../plug-ins/file-bmp/bmp-write.c:803
 #, fuzzy
 msgid "_Run-Length Encoded"
-msgstr "雙擊的時間長度。"
+msgstr "連按兩下的時間長度。"
 
 #: ../plug-ins/file-bmp/bmp-write.c:815 ../plug-ins/file-jpeg/jpeg-save.c:897
 msgid "_Advanced Options"
@@ -8548,7 +8527,7 @@ msgstr "Windows 點陣圖"
 #: ../plug-ins/file-faxg3/faxg3.c:102
 #, fuzzy
 msgid "G3 fax image"
-msgstr "機器人圖案佈景"
+msgstr "機械人圖案佈景"
 
 #: ../plug-ins/file-fits/fits.c:167 ../plug-ins/file-fits/fits.c:187
 msgid "Flexible Image Transport System"
@@ -8880,12 +8859,12 @@ msgstr "清單中有太多值"
 #: ../plug-ins/file-psd/psd-load.c:561
 #, fuzzy, c-format
 msgid "Unsupported or invalid layer height: %d"
-msgstr "圖片的寬度和/或高度無效"
+msgstr "圖片的闊度和/或高度無效"
 
 #: ../plug-ins/file-psd/psd-load.c:569
 #, fuzzy, c-format
 msgid "Unsupported or invalid layer width: %d"
-msgstr "圖片的寬度和/或高度無效"
+msgstr "圖片的闊度和/或高度無效"
 
 #: ../plug-ins/file-psd/psd-load.c:578
 #, c-format
@@ -8900,7 +8879,7 @@ msgstr "不支援或無效的圖層遮罩高度：%d"
 #: ../plug-ins/file-psd/psd-load.c:770
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
-msgstr "不支援或無效的圖層遮罩寬度：%d"
+msgstr "不支援或無效的圖層遮罩闊度：%d"
 
 #: ../plug-ins/file-psd/psd-load.c:779
 #, c-format
@@ -8932,9 +8911,7 @@ msgstr "Photoshop 圖片"
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
-msgstr ""
-"無法以「%s」模式儲存圖層。可能是 PSD 檔案格式或儲存插件不支援，使用正常的模式"
-"代替。"
+msgstr "無法以「%s」模式儲存圖層。可能是 PSD 檔案格式或儲存插件不支援，使用正常的模式代替。"
 
 #: ../plug-ins/file-psd/psd-save.c:633
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
@@ -8972,7 +8949,7 @@ msgstr "無法開啟‘%s’來讀取資料。"
 #: ../plug-ins/file-sgi/sgi.c:342
 #, c-format
 msgid "Invalid width: %hu"
-msgstr "無效的寬度：%hu"
+msgstr "無效的闊度：%hu"
 
 #: ../plug-ins/file-sgi/sgi.c:349
 #, fuzzy, c-format
@@ -9082,7 +9059,7 @@ msgstr "VoIP _URI:"
 #: ../plug-ins/file-uri/uri-backend-wget.c:262
 #, fuzzy, c-format
 msgid "A network error occurred: %s"
-msgstr "發生和網路有關的錯誤。"
+msgstr "發生和網絡有關的錯誤。"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:307
 msgid "Downloading unknown amount of image data"
@@ -9363,7 +9340,7 @@ msgstr "選擇排列(_S)："
 
 #: ../plug-ins/flame/flame.c:1203
 msgid "Custom gradient"
-msgstr "連續漸層"
+msgstr "連續漸變色"
 
 #: ../plug-ins/flame/flame.c:1229
 msgid "C_amera"
@@ -9380,7 +9357,7 @@ msgid ""
 "to your %s file."
 msgstr ""
 "gimprc 中未定義 %1$s︰\n"
-"您需要在 %4$s 檔案中加上類似\n"
+"你需要在 %4$s 檔案中加上類似\n"
 "(%2$s \"%3$s\")\n"
 "的設定。"
 
@@ -9396,7 +9373,7 @@ msgstr "即時預覽"
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:645
 #, fuzzy
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "如果您選用本選項，預覽圖片將會自動更新"
+msgstr "如果你選用本選項，預覽圖片將會自動更新"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:648
 #, fuzzy
@@ -9448,8 +9425,7 @@ msgstr "下："
 #, fuzzy
 msgid ""
 "The higher the number of iterations, the more details will be calculated"
-msgstr ""
-"更改計算的次數。如果數值越高，計算出來的圖形細節也越多，但會消耗較多時間"
+msgstr "更改計算的次數。如果數值越高，計算出來的圖形細節也越多，但會消耗較多時間"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:780
 msgid "CX:"
@@ -9525,7 +9501,7 @@ msgstr "要這次遊戲中拼貼顏色的數目"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:929
 msgid "Use loglog smoothing"
-msgstr "使用 loglog 平滑函式"
+msgstr "使用 loglog 平滑函數"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:936
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
@@ -9611,7 +9587,7 @@ msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1144
 msgid "Apply active gradient to final image"
-msgstr "將使用中的漸層套用在最終的圖片之上"
+msgstr "將使用中的漸變色套用在最終的圖片之上"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1156
 msgid "Create a color-map using a gradient from the gradient editor"
@@ -9620,7 +9596,7 @@ msgstr ""
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1167
 #, fuzzy
 msgid "FractalExplorer Gradient"
-msgstr "事件漸層效果"
+msgstr "事件漸變色效果"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1197
 msgid "_Fractals"
@@ -9665,7 +9641,7 @@ msgstr "描繪碎形"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3199
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
-msgstr "您是否確定同時從清單及磁碟中刪除“%s”？"
+msgstr "你是否確定同時從清單及磁碟中刪除“%s”？"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:759
 msgid "Delete Fractal"
@@ -9759,15 +9735,15 @@ msgstr "圖樣填充"
 
 #: ../plug-ins/gfig/gfig-dialog.c:417
 msgid "Shape gradient"
-msgstr "造型漸層"
+msgstr "造型漸變色"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Vertical gradient"
-msgstr "垂直漸層"
+msgstr "垂直漸變色"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Horizontal gradient"
-msgstr "水平漸層"
+msgstr "水平漸變色"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:479
@@ -10015,7 +9991,7 @@ msgstr "方向："
 
 #: ../plug-ins/gfig/gfig-dobject.c:584
 msgid "Hey where has the object gone ?"
-msgstr "嘿，物件到哪裡去了？"
+msgstr "嘿，物件到哪裏去了？"
 
 #: ../plug-ins/gfig/gfig-dobject.c:954
 msgid "Error reading file"
@@ -10049,7 +10025,7 @@ msgstr "星形點數"
 #: ../plug-ins/gfig/gfig-stock.c:40
 #, fuzzy
 msgid "Create bezier curve"
-msgstr "只是建立金鑰(_J)"
+msgstr "只是建立密碼匙(_J)"
 
 #: ../plug-ins/gfig/gfig.c:123
 msgid "Create geometric shapes"
@@ -10125,7 +10101,7 @@ msgstr "筆刷中心點(_E)"
 
 #: ../plug-ins/gimpressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr "依筆刷下的所有像素的平均顏色來計算顏色"
+msgstr "根據筆刷下的所有像素的平均顏色來計算顏色"
 
 #: ../plug-ins/gimpressionist/color.c:82
 msgid "Samples the color from the pixel in the center of the brush"
@@ -10287,7 +10263,7 @@ msgstr ""
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr "依該區域的亮度來決定筆劃的方向"
+msgstr "根據該區域的亮度來決定筆劃的方向"
 
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
@@ -10325,7 +10301,7 @@ msgstr "筆劃會以「流動」的方式來鋪排"
 
 #: ../plug-ins/gimpressionist/orientation.c:180
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "依該區域的色相來決定筆劃的方向"
+msgstr "根據該區域的色相來決定筆劃的方向"
 
 #: ../plug-ins/gimpressionist/orientation.c:183
 #: ../plug-ins/gimpressionist/size.c:186
@@ -10458,7 +10434,7 @@ msgstr "Function exp"
 #: ../plug-ins/gimpressionist/sizemap.c:537
 #, fuzzy
 msgid "Change the exponent of the strength"
-msgstr "金鑰強度[位元](_S):"
+msgstr "密碼匙強度[位元](_S):"
 
 #: ../plug-ins/gimpressionist/paper.c:137
 msgid "P_aper"
@@ -10615,7 +10591,7 @@ msgstr "<span size=\"small\">%U 於 %h</span>"
 #: ../plug-ins/gimpressionist/size.c:159
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
-msgstr "依該區域的亮度來決定筆劃的大小"
+msgstr "根據該區域的亮度來決定筆劃的大小"
 
 #: ../plug-ins/gimpressionist/size.c:163
 msgid ""
@@ -10632,7 +10608,7 @@ msgstr "依從圖片中心點出發至該點的方向來決定筆劃的大小"
 
 #: ../plug-ins/gimpressionist/size.c:183
 msgid "The hue of the region determines the size of the stroke"
-msgstr "依該區域的色相來決定筆劃的大小"
+msgstr "根據該區域的色相來決定筆劃的大小"
 
 #: ../plug-ins/gimpressionist/size.c:187
 msgid "The brush-size that matches the original image the closest is selected"
@@ -10721,7 +10697,7 @@ msgstr "使用漸變產生鏡頭光斑效果"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:811
 msgid "_Gradient Flare..."
-msgstr "漸層光斑(_G)..."
+msgstr "漸變色光斑(_G)..."
 
 #.
 #. *    Dialog Shell
@@ -10729,7 +10705,7 @@ msgstr "漸層光斑(_G)..."
 #: ../plug-ins/gradient-flare/gradient-flare.c:950
 #: ../plug-ins/gradient-flare/gradient-flare.c:2356
 msgid "Gradient Flare"
-msgstr "漸層光斑"
+msgstr "漸變色光斑"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:1263
 #, c-format
@@ -10819,7 +10795,7 @@ msgstr "選擇(_E)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3058
 msgid "New Gradient Flare"
-msgstr "新的漸層光斑"
+msgstr "新的漸變色光斑"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3061
 msgid "Enter a name for the new GFlare"
@@ -10832,7 +10808,7 @@ msgstr "名稱「%s」已經被使用了！"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3137
 msgid "Copy Gradient Flare"
-msgstr "複製漸層光斑"
+msgstr "複製漸變色光斑"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3140
 msgid "Enter a name for the copied GFlare"
@@ -10849,7 +10825,7 @@ msgstr "無法刪除!! 至少要有一個或以上的 GFlare。"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3203
 msgid "Delete Gradient Flare"
-msgstr "刪除漸層光斑"
+msgstr "刪除漸變色光斑"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3275
 #, c-format
@@ -10858,11 +10834,11 @@ msgstr "在 gflares_list 中找不到 %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3316
 msgid "Gradient Flare Editor"
-msgstr "漸層光斑編輯器"
+msgstr "漸變色光斑編輯器"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3320
 msgid "Rescan Gradients"
-msgstr "重新掃瞄漸層"
+msgstr "重新掃瞄漸變色"
 
 #. Glow
 #: ../plug-ins/gradient-flare/gradient-flare.c:3445
@@ -10898,23 +10874,23 @@ msgstr "第二光斑彩繪選項"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3657
 #: ../plug-ins/gradient-flare/gradient-flare.c:3796
 msgid "Gradients"
-msgstr "漸層"
+msgstr "漸變色"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3565
 #: ../plug-ins/gradient-flare/gradient-flare.c:3670
 #: ../plug-ins/gradient-flare/gradient-flare.c:3807
 msgid "Radial gradient:"
-msgstr "放射狀漸層:"
+msgstr "放射狀漸變色:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3569
 #: ../plug-ins/gradient-flare/gradient-flare.c:3674
 msgid "Angular gradient:"
-msgstr "角度漸層："
+msgstr "角度漸變色："
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3573
 #: ../plug-ins/gradient-flare/gradient-flare.c:3678
 msgid "Angular size gradient:"
-msgstr "角度大小漸層："
+msgstr "角度大小漸變色："
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3593
 #: ../plug-ins/gradient-flare/gradient-flare.c:3698
@@ -10952,11 +10928,11 @@ msgstr "光芒(_R)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3811
 msgid "Size factor gradient:"
-msgstr "大小因子漸層："
+msgstr "大小因子漸變色："
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3815
 msgid "Probability gradient:"
-msgstr "機率漸層："
+msgstr "機率漸變色："
 
 #.
 #. *    Shape Radio Button Frame
@@ -11309,7 +11285,7 @@ msgstr "版權所有 © 1999-2004 Maurits Rijk"
 #: ../plug-ins/imagemap/imap_about.c:48
 #, fuzzy
 msgid "Released under the GNU General Public License"
-msgstr "依 GNU General Public License Version 2 授權"
+msgstr "根據 GNU General Public License Version 2 授權"
 
 #: ../plug-ins/imagemap/imap_circle.c:63
 msgid "C_ircle"
@@ -11663,7 +11639,7 @@ msgstr "方格大小"
 
 #: ../plug-ins/imagemap/imap_grid.c:246
 msgid "_Width"
-msgstr "寬度(_W)"
+msgstr "闊度(_W)"
 
 #: ../plug-ins/imagemap/imap_grid.c:252
 msgid "_Height"
@@ -11947,7 +11923,7 @@ msgstr "需要預設的 URL(_R)"
 #: ../plug-ins/imagemap/imap_preferences.c:376
 #, fuzzy
 msgid "Show area _handles"
-msgstr "顯示列印範圍"
+msgstr "顯示打印範圍"
 
 #: ../plug-ins/imagemap/imap_preferences.c:378
 msgid "_Keep NCSA circles true"
@@ -11992,7 +11968,7 @@ msgstr "已選取"
 
 #: ../plug-ins/imagemap/imap_preferences.c:436
 msgid "Co_ntiguous Region"
-msgstr "連續漸層(_N)"
+msgstr "連續漸變色(_N)"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
 msgid "_Automatically convert"
@@ -12636,7 +12612,7 @@ msgstr "迷宮大小"
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: ../plug-ins/maze/maze-dialog.c:198
 msgid "Width (pixels):"
-msgstr "寬度(像素)："
+msgstr "闊度(像素)："
 
 #: ../plug-ins/maze/maze-dialog.c:210 ../plug-ins/maze/maze-dialog.c:226
 msgid "Pieces:"
@@ -12791,11 +12767,11 @@ msgstr "捲曲位置下加陰影(_S)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:580
 msgid "Current gradient (reversed)"
-msgstr "目前的漸層(相反的)"
+msgstr "目前的漸變色(相反的)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:585
 msgid "Current gradient"
-msgstr "目前的漸層"
+msgstr "目前的漸變色"
 
 #: ../plug-ins/pagecurl/pagecurl.c:590
 msgid "Foreground / background colors"
@@ -12826,11 +12802,11 @@ msgstr "組合附加記號"
 
 #: ../plug-ins/print/print-page-layout.c:306
 msgid "_X resolution:"
-msgstr "_X 解析度："
+msgstr "_X 解像度："
 
 #: ../plug-ins/print/print-page-layout.c:310
 msgid "_Y resolution:"
-msgstr "_Y 解析度："
+msgstr "_Y 解像度："
 
 #: ../plug-ins/print/print-page-layout.c:381
 msgid "_Left:"
@@ -12858,15 +12834,15 @@ msgstr "兩者"
 
 #: ../plug-ins/print/print.c:101
 msgid "Print the image"
-msgstr "列印圖片"
+msgstr "打印圖片"
 
 #: ../plug-ins/print/print.c:106
 msgid "_Print..."
-msgstr "列印(_P)..."
+msgstr "打印(_P)..."
 
 #: ../plug-ins/print/print.c:117
 msgid "Adjust page size and orientation for printing"
-msgstr "調整頁面的大小和列印的方向"
+msgstr "調整頁面的大小和打印的方向"
 
 #: ../plug-ins/print/print.c:123
 msgid "Page Set_up"
@@ -12878,11 +12854,11 @@ msgstr "圖片設定"
 
 #: ../plug-ins/print/print.c:346
 msgid "An error occurred while trying to print:"
-msgstr "當試圖列印時出現錯誤："
+msgstr "當試圖打印時出現錯誤："
 
 #: ../plug-ins/print/print.c:373
 msgid "Printing"
-msgstr "正在列印"
+msgstr "正在打印"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/selection-to-path/pxl-outline.c:81
