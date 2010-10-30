@@ -84,7 +84,7 @@ static GtkIconSize gimp_editor_ensure_button_box   (GimpEditor      *editor,
                                                     GtkReliefStyle  *button_relief);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_VBOX,
+G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_editor_docked_iface_init))
 
@@ -178,6 +178,9 @@ gimp_editor_class_init (GimpEditorClass *klass)
 static void
 gimp_editor_init (GimpEditor *editor)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
+
   editor->menu_factory    = NULL;
   editor->menu_identifier = NULL;
   editor->ui_manager      = NULL;

@@ -34,14 +34,14 @@ typedef struct _GimpContainerEditorClass  GimpContainerEditorClass;
 
 struct _GimpContainerEditor
 {
-  GtkVBox            parent_instance;
+  GtkBox             parent_instance;
 
   GimpContainerView *view;
 };
 
 struct _GimpContainerEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* select_item)   (GimpContainerEditor *editor,
                           GimpViewable        *object);

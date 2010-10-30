@@ -113,7 +113,7 @@ static void gimp_controller_list_down_clicked    (GtkWidget          *button,
                                                   GimpControllerList *list);
 
 
-G_DEFINE_TYPE (GimpControllerList, gimp_controller_list, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpControllerList, gimp_controller_list, GTK_TYPE_BOX)
 
 #define parent_class gimp_controller_list_parent_class
 
@@ -152,6 +152,9 @@ gimp_controller_list_init (GimpControllerList *list)
   GType             *controller_types;
   guint              n_controller_types;
   gint               i;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (list),
+                                  GTK_ORIENTATION_VERTICAL);
 
   list->gimp = NULL;
 
@@ -645,8 +648,8 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
   editor = gimp_controller_editor_new (list->dest_info,
                                        gimp_get_user_context (list->gimp));
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     editor);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
   g_object_set_data (G_OBJECT (list->dest_info), "gimp-controller-editor-dialog",

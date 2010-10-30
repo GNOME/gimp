@@ -34,7 +34,7 @@ typedef struct _GimpControllerListClass GimpControllerListClass;
 
 struct _GimpControllerList
 {
-  GtkVBox             parent_instance;
+  GtkBox              parent_instance;
 
   Gimp               *gimp;
 
@@ -56,7 +56,7 @@ struct _GimpControllerList
 
 struct _GimpControllerListClass
 {
-  GtkVBoxClass   parent_class;
+  GtkBoxClass   parent_class;
 };
 
 

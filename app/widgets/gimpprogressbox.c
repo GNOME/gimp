@@ -52,7 +52,7 @@ static gdouble  gimp_progress_box_progress_get_value (GimpProgress *progress);
 static void     gimp_progress_box_progress_pulse     (GimpProgress *progress);
 
 
-G_DEFINE_TYPE_WITH_CODE (GimpProgressBox, gimp_progress_box, GTK_TYPE_VBOX,
+G_DEFINE_TYPE_WITH_CODE (GimpProgressBox, gimp_progress_box, GTK_TYPE_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_progress_box_progress_iface_init))
 
@@ -70,6 +70,9 @@ gimp_progress_box_class_init (GimpProgressBoxClass *klass)
 static void
 gimp_progress_box_init (GimpProgressBox *box)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_VERTICAL);
+
   gtk_box_set_spacing (GTK_BOX (box), 6);
 
   box->progress = gtk_progress_bar_new ();

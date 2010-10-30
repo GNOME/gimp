@@ -34,7 +34,7 @@ typedef struct _GimpImageParasiteViewClass GimpImageParasiteViewClass;
 
 struct _GimpImageParasiteView
 {
-  GtkVBox    parent_instance;
+  GtkBox     parent_instance;
 
   GimpImage *image;
   gchar     *parasite;
@@ -42,7 +42,7 @@ struct _GimpImageParasiteView
 
 struct _GimpImageParasiteViewClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   /*  signals  */
   void (* update) (GimpImageParasiteView *view);

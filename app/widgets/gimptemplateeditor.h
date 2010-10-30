@@ -34,7 +34,7 @@ typedef struct _GimpTemplateEditorClass GimpTemplateEditorClass;
 
 struct _GimpTemplateEditor
 {
-  GtkVBox        parent_instance;
+  GtkBox         parent_instance;
 
   GimpTemplate  *template;
 
@@ -54,7 +54,7 @@ struct _GimpTemplateEditor
 
 struct _GimpTemplateEditorClass
 {
-  GtkVBoxClass   parent_class;
+  GtkBoxClass   parent_class;
 };
 
 

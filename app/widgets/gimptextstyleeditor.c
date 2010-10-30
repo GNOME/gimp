@@ -113,7 +113,7 @@ static gboolean  gimp_text_style_editor_update_idle      (GimpTextStyleEditor *e
 
 
 G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
-               GTK_TYPE_VBOX)
+               GTK_TYPE_BOX)
 
 #define parent_class gimp_text_style_editor_parent_class
 
@@ -174,6 +174,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
 {
   GtkWidget *image;
   GimpRGB    color;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
 
   /*  upper row  */
 

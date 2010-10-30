@@ -36,7 +36,7 @@ typedef struct _GimpSizeBoxClass  GimpSizeBoxClass;
 
 struct _GimpSizeBox
 {
-  GtkVBox       parent_instance;
+  GtkBox        parent_instance;
 
   GtkSizeGroup *size_group;
 
@@ -52,7 +52,7 @@ struct _GimpSizeBox
 
 struct _GimpSizeBoxClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

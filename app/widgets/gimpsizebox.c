@@ -86,7 +86,7 @@ static void      gimp_size_box_chain_toggled     (GimpChainButton *button,
                                                   GimpSizeBox     *box);
 
 
-G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_size_box_parent_class
 
@@ -162,6 +162,9 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
 static void
 gimp_size_box_init (GimpSizeBox *box)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_VERTICAL);
+
   gtk_box_set_spacing (GTK_BOX (box), 6);
 
   box->size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);

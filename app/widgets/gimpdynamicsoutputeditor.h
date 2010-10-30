@@ -34,12 +34,12 @@ typedef struct _GimpDynamicsOutputEditorClass GimpDynamicsOutputEditorClass;
 
 struct _GimpDynamicsOutputEditor
 {
-  GtkVBox  parent_instance;
+  GtkBox  parent_instance;
 };
 
 struct _GimpDynamicsOutputEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

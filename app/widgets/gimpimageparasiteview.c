@@ -69,7 +69,7 @@ static void      gimp_image_parasite_view_parasite_changed (GimpImageParasiteVie
 static void      gimp_image_parasite_view_update           (GimpImageParasiteView *view);
 
 
-G_DEFINE_TYPE (GimpImageParasiteView, gimp_image_parasite_view, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpImageParasiteView, gimp_image_parasite_view, GTK_TYPE_BOX)
 
 #define parent_class gimp_image_parasite_view_parent_class
 
@@ -112,6 +112,9 @@ gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
 static void
 gimp_image_parasite_view_init (GimpImageParasiteView *view)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (view),
+                                  GTK_ORIENTATION_VERTICAL);
+
   view->parasite = NULL;
 }
 

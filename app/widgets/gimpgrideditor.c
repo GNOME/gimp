@@ -68,7 +68,7 @@ static void      gimp_grid_editor_get_property (GObject               *object,
 static void      gimp_grid_editor_finalize     (GObject               *object);
 
 
-G_DEFINE_TYPE (GimpGridEditor, gimp_grid_editor, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpGridEditor, gimp_grid_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_grid_editor_parent_class
 
@@ -112,6 +112,10 @@ gimp_grid_editor_class_init (GimpGridEditorClass *klass)
 static void
 gimp_grid_editor_init (GimpGridEditor *editor)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
+
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
 }
 
 static void
@@ -197,8 +201,6 @@ gimp_grid_editor_constructor (GType                  type,
   editor = GIMP_GRID_EDITOR (object);
 
   g_assert (editor->grid != NULL);
-
-  gtk_box_set_spacing (GTK_BOX (editor), 12);
 
   frame = gimp_frame_new (_("Appearance"));
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);

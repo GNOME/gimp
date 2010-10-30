@@ -66,7 +66,7 @@ static void      gimp_message_box_size_allocate (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 
 
-G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_message_box_parent_class
 
@@ -101,6 +101,9 @@ static void
 gimp_message_box_init (GimpMessageBox *box)
 {
   gint i;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gtk_box_set_spacing (GTK_BOX (box), 12);
   gtk_container_set_border_width (GTK_CONTAINER (box), 12);

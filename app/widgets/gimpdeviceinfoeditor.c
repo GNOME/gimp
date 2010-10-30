@@ -130,7 +130,7 @@ static void     gimp_device_info_editor_curve_reset   (GtkWidget             *bu
                                                        GimpCurve             *curve);
 
 
-G_DEFINE_TYPE (GimpDeviceInfoEditor, gimp_device_info_editor, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpDeviceInfoEditor, gimp_device_info_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_device_info_editor_parent_class
 
@@ -180,6 +180,9 @@ gimp_device_info_editor_init (GimpDeviceInfoEditor *editor)
   gint                         i;
 
   private = GIMP_DEVICE_INFO_EDITOR_GET_PRIVATE (editor);
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
 

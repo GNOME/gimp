@@ -34,7 +34,7 @@ typedef struct _GimpTextStyleEditorClass GimpTextStyleEditorClass;
 
 struct _GimpTextStyleEditor
 {
-  GtkVBox         parent_instance;
+  GtkBox          parent_instance;
 
   Gimp           *gimp;
   GimpContext    *context;
@@ -70,7 +70,7 @@ struct _GimpTextStyleEditor
 
 struct _GimpTextStyleEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 
