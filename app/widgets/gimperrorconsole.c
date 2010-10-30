@@ -87,7 +87,7 @@ gimp_error_console_init (GimpErrorConsole *console)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (console), scrolled_window);
+  gtk_box_pack_start (GTK_BOX (console), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   console->text_view = gtk_text_view_new_with_buffer (console->text_buffer);

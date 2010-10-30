@@ -174,7 +174,8 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
 
-  gtk_container_add (GTK_CONTAINER (editor), editor->p->scrolled_window);
+  gtk_box_pack_start (GTK_BOX (editor), editor->p->scrolled_window,
+                      TRUE, TRUE, 0);
   gtk_widget_show (editor->p->scrolled_window);
 
   viewport = gtk_viewport_new (gtk_scrolled_window_get_hadjustment (scrolled_window),

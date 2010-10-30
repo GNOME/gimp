@@ -141,7 +141,7 @@ gimp_undo_editor_constructor (GType                  type,
                                                     undo_editor->view_size,
                                                     1);
 
-  gtk_container_add (GTK_CONTAINER (undo_editor), undo_editor->view);
+  gtk_box_pack_start (GTK_BOX (undo_editor), undo_editor->view, TRUE, TRUE, 0);
   gtk_widget_show (undo_editor->view);
 
   g_signal_connect (undo_editor->view, "select-item",
