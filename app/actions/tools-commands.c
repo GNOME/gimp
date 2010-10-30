@@ -140,7 +140,7 @@ tools_paint_brush_size_cmd_callback (GtkAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-size",
-                              1.0, 10.0, 10.0, 1.0, FALSE);
+                              0.1, 1.0, 10.0, 1.0, FALSE);
     }
 }
 

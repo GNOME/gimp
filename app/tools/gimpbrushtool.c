@@ -106,7 +106,7 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
   GimpTool *tool = GIMP_TOOL (brush_tool);
 
   gimp_tool_control_set_action_value_2 (tool->control,
-                                        "tools/tools-paint-brush-scale-set");
+                                        "tools/tools-paint-brush-size-set");
   gimp_tool_control_set_action_value_3  (tool->control,
                                          "context/context-brush-aspect-set");
   gimp_tool_control_set_action_value_4  (tool->control,
@@ -154,7 +154,7 @@ gimp_brush_tool_constructor (GType                  type,
   g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),
                            brush_tool, 0);
-  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-scale",
+  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-size",
                            G_CALLBACK (gimp_brush_tool_brush_transformed),
                            brush_tool, 0);
 
