@@ -59,6 +59,7 @@ libappinternal_procs_a_SOURCES = \
 	guides-cmds.c			\
 	help-cmds.c			\
 	image-cmds.c			\
+	image-select-cmds.c		\
 	item-cmds.c			\
 	item-transform-cmds.c		\
 	layer-cmds.c			\

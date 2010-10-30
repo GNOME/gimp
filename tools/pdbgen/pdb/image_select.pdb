@@ -1,0 +1,433 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub image_select_color {
+    $blurb = <<'BLURB';
+Create a selection by selecting all pixels (in the specified drawable)
+with the same (or similar) color to that specified.
+BLURB
+
+    $help = <<'HELP';
+This tool creates a selection over the specified image. A by-color
+selection is determined by the supplied color under the constraints of
+the specified threshold. Essentially, all pixels (in the drawable)
+that have color sufficiently close to the specified color (as
+determined by the threshold value) are included in the selection. To
+select transparent regions, the color specified must also have minimum
+alpha. If the 'sample-merged' parameter is TRUE, the data of the
+composite image will be used instead of that for the specified
+drawable.  This is equivalent to sampling for colors after merging all
+visible layers. In the case of a merged sampling, the supplied
+drawable is ignored.
+HELP
+
+    &david_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The affected image' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	{ name => 'color', type => 'color',
+	  desc => 'The color to select' },
+	{ name => 'threshold', type => '0 <= int32 <= 255',
+	  desc => 'Threshold in intensity levels' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
+	{ name => 'sample_merged', type => 'boolean',
+	  desc => 'Use the composite image, not the drawable' },
+        { name => 'select_transparent', type => 'boolean',
+          desc => "Whether to consider transparent pixels for selection.
+                   If TRUE, transparency is considered as a unique selectable
+                   color." },
+        { name => 'select_criterion', type => 'enum GimpSelectCriterion',
+          desc => "The criterion used to determine color similarity.
+                   SELECT_CRITERION_COMPOSITE is the standard choice.
+		   " },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (sample_merged ||
+      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
+                                    sample_merged,
+                                    &color,
+                                    threshold,
+                                    select_transparent,
+                                    select_criterion,
+                                    operation,
+                                    pdb_context->antialias,
+                                    pdb_context->feather,
+                                    pdb_context->feather_radius_x,
+                                    pdb_context->feather_radius_y);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub image_select_ellipse {
+    $blurb = 'Create an elliptical selection over the specified image.';
+
+    $help = <<'HELP';
+This tool creates an elliptical selection over the specified
+image. The elliptical region can be either added to, subtracted from,
+or replace the contents of the previous selection mask.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of ellipse bounding box' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of ellipse bounding box' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the ellipse' },
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the ellipse' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  gimp_channel_select_ellipse (gimp_image_get_mask (image),
+                               (gint) x, (gint) y,
+                               (gint) width, (gint) height,
+                               operation,
+                               pdb_context->antialias,
+                               pdb_context->feather,
+                               pdb_context->feather_radius_x,
+                               pdb_context->feather_radius_y,
+                               TRUE);
+}
+CODE
+    );
+}
+
+
+sub image_select_polygon {
+    $blurb = 'Create a polygonal selection over the specified image.';
+
+    $help = <<'HELP';
+This tool creates a polygonal selection over the specified image. The
+polygonal region can be either added to, subtracted from, or replace
+the contents of the previous selection mask. The polygon is specified
+through an array of floating point numbers and its length. The length
+of array must be 2n, where n is the number of points. Each point is
+defined by 2 floating point values which correspond to the x and y
+coordinates. If the final point does not connect to the starting
+point, a connecting segment is automatically added.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+        { name => 'segs', type => 'floatarray',
+          desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
+                   pn.x, pn.y}',
+          array => { type => '2 <= int32',
+                     desc => 'Number of points (count 1 coordinate as two
+                              points)' } },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  gimp_channel_select_polygon (gimp_image_get_mask (image),
+                               _("Free Select"),
+                               num_segs / 2,
+                               (GimpVector2 *) segs,
+                               operation,
+                               pdb_context->antialias,
+                               pdb_context->feather,
+                               pdb_context->feather_radius_x,
+                               pdb_context->feather_radius_y,
+                               TRUE);
+}
+CODE
+    );
+}
+
+
+sub image_select_fuzzy {
+    $blurb = <<'BLURB';
+Create a fuzzy selection starting at the specified coordinates on the specified
+drawable.
+BLURB
+
+    $help = <<'HELP';
+This tool creates a fuzzy selection over the specified image. A fuzzy
+selection is determined by a seed fill under the constraints of the
+specified threshold.  Essentially, the color at the specified
+coordinates (in the drawable) is measured and the selection expands
+outwards from that point to any adjacent pixels which are not
+significantly different (as determined by the threshold value). This
+process continues until no more expansion is possible. If antialiasing
+is turned on, the final selection mask will contain intermediate
+values based on close misses to the threshold bar at pixels along the
+seed fill boundary. If the 'sample-merged' parameter is TRUE, the data
+of the composite image will be used instead of that for the specified
+drawable.  This is equivalent to sampling for colors after merging all
+visible layers. In the case of a merged sampling, the supplied
+drawable is ignored. If the sample is merged, the specified
+coordinates are relative to the image origin; otherwise, they are
+relative to the drawable's origin.
+HELP
+
+    &david_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The affected image' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The affected drawable' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of initial seed fill point: (image
+	  	   coordinates)' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of initial seed fill point: (image
+	  	   coordinates)' },
+	{ name => 'threshold', type => '0 <= int32 <= 255',
+	  desc => 'Threshold in intensity levels' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
+	{ name => 'sample_merged', type => 'boolean',
+	  desc => 'Use the composite image, not the drawable' },
+	{ name => 'select_transparent', type => 'boolean',
+          desc => "Whether to consider transparent pixels for selection.
+                   If TRUE, transparency is considered as a unique selectable
+                   color." },
+        { name => 'select_criterion', type => 'enum GimpSelectCriterion',
+          desc => "The criterion used to determine color similarity.
+                   SELECT_CRITERION_COMPOSITE is the standard choice.
+		   " },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (sample_merged ||
+      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      gimp_channel_select_fuzzy (gimp_image_get_mask (image),
+                                 drawable,
+                                 sample_merged,
+                                 x, y,
+                                 threshold,
+                                 select_transparent,
+                                 select_criterion,
+                                 operation,
+                                 pdb_context->antialias,
+                                 pdb_context->feather,
+                                 pdb_context->feather_radius_x,
+                                 pdb_context->feather_radius_y);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
+sub image_select_rectangle {
+    $blurb = 'Create a rectangular selection over the specified image;';
+
+    $help = <<'HELP';
+This tool creates a rectangular selection over the specified
+image. The rectangular region can be either added to, subtracted from,
+or replace the contents of the previous selection mask.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of rectangle' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of rectangle' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the rectangle' },
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the rectangle' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  gimp_channel_select_rectangle (gimp_image_get_mask (image),
+                                 (gint) x, (gint) y,
+                                 (gint) width, (gint) height,
+                                 operation,
+                                 pdb_context->feather,
+                                 pdb_context->feather_radius_x,
+                                 pdb_context->feather_radius_y,
+                                 TRUE);
+}
+CODE
+    );
+}
+
+
+sub image_select_round_rectangle {
+    $blurb = 'Create a rectangular selection with round corners over the specified image;';
+
+    $help = <<'HELP';
+This tool creates a rectangular selection with round corners over the
+specified image. The rectangular region can be either added to,
+subtracted from, or replace the contents of the previous selection
+mask.
+HELP
+
+    &martin_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of rectangle' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of rectangle' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the rectangle' },
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the rectangle' },
+        { name => 'corner_radius_x', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
+          desc => 'The corner radius in X direction' },
+        { name => 'corner_radius_y', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
+          desc => 'The corner radius in Y direction' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  gimp_channel_select_round_rect (gimp_image_get_mask (image),
+                                  (gint) x, (gint) y,
+                                  (gint) width, (gint) height,
+                                  corner_radius_x,
+                                  corner_radius_y,
+                                  operation,
+                                  pdb_context->antialias,
+                                  pdb_context->feather,
+                                  pdb_context->feather_radius_x,
+                                  pdb_context->feather_radius_y,
+                                  TRUE);
+}
+CODE
+    );
+}
+
+
+sub image_select_item {
+    $blurb = 'Transforms the specified item into a selection';
+
+    $help = <<'HELP';
+This procedure renders the item's outline into the current selection
+of the image the item belongs to. What exactly the item's outline is
+depends on the item type: for layers, it's the layer's alpha channel,
+for vectors the vector's shape.
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+        { name => 'item', type => 'item',
+          desc => 'The item to render to the selection' },
+        { name => 'operation', type => 'enum GimpChannelOps',
+          desc => 'The desired operation with current selection' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (item, image, FALSE, error))
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      gimp_item_to_selection (item, operation,
+                              pdb_context->antialias,
+                              pdb_context->feather,
+                              pdb_context->feather_radius_x,
+                              pdb_context->feather_radius_y);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+
+}
+
+
+@headers = qw("libgimpbase/gimpbase.h"
+              "core/gimpchannel-select.h"
+              "gimppdb-utils.h"
+              "gimppdbcontext.h"
+              "gimp-intl.h");
+
+@procs = qw(image_select_color
+            image_select_ellipse
+            image_select_polygon
+	    image_select_fuzzy
+	    image_select_rectangle
+            image_select_round_rectangle
+            image_select_item);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Selection procedures';
+$doc_title = 'gimpimageselect';
+$doc_short_desc = "Modify the image's selection.";
+$doc_long_desc = "Functions to modify the image's selection.";
+
+1;
