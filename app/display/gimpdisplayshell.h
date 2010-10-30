@@ -47,7 +47,7 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GtkVBox            parent_instance;
+  GtkBox             parent_instance;
 
   /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
 
@@ -211,7 +211,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);

@@ -119,8 +119,8 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
   editor = gimp_color_display_editor_new (shell->filter_stack);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (cdd->dialog))),
-                     editor);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (cdd->dialog))),
+                      editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
   return cdd->dialog;

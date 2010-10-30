@@ -160,7 +160,7 @@ static void   gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
-                         GTK_TYPE_VBOX,
+                         GTK_TYPE_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -274,6 +274,9 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (shell),
+                                  GTK_ORIENTATION_VERTICAL);
+
   shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
   shell->no_image_options   = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
