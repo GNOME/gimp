@@ -411,7 +411,7 @@ CODE
 }
 
 sub selection_layer_alpha {
-    &std_pdb_deprecated ('gimp-item-to-selection');
+    &std_pdb_deprecated ('gimp-image-select-item');
 
     @inargs = (
 	{ name => 'layer', type => 'layer',
@@ -433,7 +433,7 @@ CODE
 }
 
 sub selection_load {
-    &std_pdb_deprecated ('gimp-item-to-selection');
+    &std_pdb_deprecated ('gimp-image-select-item');
 
     @inargs = (
 	{ name => 'channel', type => 'channel',
@@ -455,7 +455,7 @@ CODE
 }
 
 sub selection_combine {
-    &std_pdb_deprecated ('gimp-item-to-selection');
+    &std_pdb_deprecated ('gimp-image-select-item');
 
     @inargs = (
 	{ name => 'channel', type => 'channel',

@@ -465,7 +465,6 @@ EXPORTS
 	gimp_item_set_name
 	gimp_item_set_tattoo
 	gimp_item_set_visible
-	gimp_item_to_selection
 	gimp_item_transform_2d
 	gimp_item_transform_flip
 	gimp_item_transform_flip_simple
