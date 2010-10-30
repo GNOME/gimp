@@ -108,7 +108,7 @@ module_dialog_new (Gimp *gimp)
 {
   GtkWidget         *shell;
   GtkWidget         *vbox;
-  GtkWidget         *listbox;
+  GtkWidget         *sw;
   GtkWidget         *view;
   GtkWidget         *image;
   ModuleDialog      *dialog;
@@ -143,8 +143,8 @@ module_dialog_new (Gimp *gimp)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
-                     vbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   dialog->hint = gimp_hint_box_new (_("You will have to restart GIMP "
@@ -154,15 +154,15 @@ module_dialog_new (Gimp *gimp)
   if (gimp->write_modulerc)
     gtk_widget_show (dialog->hint);
 
-  listbox = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (listbox),
+  sw = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
                                        GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (listbox),
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (listbox, 124, 100);
-  gtk_widget_show (listbox);
+  gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (sw, 124, 100);
+  gtk_widget_show (sw);
 
   dialog->list = gtk_list_store_new (N_COLUMNS,
                                      G_TYPE_STRING,
@@ -193,7 +193,7 @@ module_dialog_new (Gimp *gimp)
                                                "text", COLUMN_NAME,
                                                NULL);
 
-  gtk_container_add (GTK_CONTAINER (listbox), view);
+  gtk_container_add (GTK_CONTAINER (sw), view);
   gtk_widget_show (view);
 
   dialog->table = gtk_table_new (2, N_INFOS, FALSE);

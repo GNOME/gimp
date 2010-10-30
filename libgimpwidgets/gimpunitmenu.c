@@ -631,8 +631,8 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (menu->selection))),
-                     vbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (menu->selection))),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /*  the selection list  */
@@ -642,7 +642,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_ALWAYS);
-  gtk_container_add (GTK_CONTAINER (vbox), scrolled_win);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
   list = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_STRING,

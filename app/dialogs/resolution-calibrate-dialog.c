@@ -92,8 +92,8 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
 
   table = gtk_table_new (4, 4, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     table);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
   if (pixbuf)

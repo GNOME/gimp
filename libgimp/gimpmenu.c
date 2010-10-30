@@ -439,7 +439,7 @@ gimp_menu_add_item (GtkWidget   *menu,
   preview = gimp_menu_make_preview (any_ID, drawable_name == NULL,
                                     MENU_THUMBNAIL_WIDTH,
                                     MENU_THUMBNAIL_HEIGHT);
-  gtk_container_add (GTK_CONTAINER (vbox), preview);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   label = gtk_label_new (str);

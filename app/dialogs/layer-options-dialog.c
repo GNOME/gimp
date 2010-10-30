@@ -109,8 +109,8 @@ layer_options_dialog_new (GimpImage    *image,
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
-                     vbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (layer ? 1 : 3, 2, FALSE);
