@@ -120,7 +120,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       GtkObject *adj_angle;
       GtkObject *adj_aspect_ratio;
 
-
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
@@ -147,10 +146,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  "", 0.0, 0.5,
                                  button, 2, FALSE);
 
-      gtk_widget_show (button);
-
-      g_signal_connect(button, "clicked",
-                       G_CALLBACK(gimp_paint_options_gui_reset_size), options);
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (gimp_paint_options_gui_reset_size),
+                        options);
 
       adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
                                                     GTK_TABLE (table), 0, table_row++,
@@ -344,11 +342,13 @@ static void
 gimp_paint_options_gui_reset_size (GtkWidget        *button,
                                    GimpPaintOptions *paint_options)
 {
- GimpContext *context = GIMP_CONTEXT(paint_options);
- GimpBrush *brush = gimp_context_get_brush (context);
+ GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
  if (brush)
-  {
-    paint_options->brush_size = MAX(brush->mask->width, brush->mask->height);
-    g_object_notify(G_OBJECT(paint_options), "brush-size");
-  }
+   {
+     g_object_set (paint_options,
+                   "brush-size", (gdouble) MAX (brush->mask->width,
+                                                brush->mask->height),
+                   NULL);
+   }
 }
