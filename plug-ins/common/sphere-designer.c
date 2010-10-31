@@ -2297,21 +2297,12 @@ initworld (void)
 }
 
 static gboolean
-expose_event (GtkWidget      *widget,
-              GdkEventExpose *event)
+draw (GtkWidget *widget,
+      cairo_t   *cr)
 {
-  cairo_t *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
-
   cairo_set_source_surface (cr, buffer, 0.0, 0.0);
 
   cairo_paint (cr);
-
-  cairo_destroy (cr);
 
   return TRUE;
 }
@@ -2598,8 +2589,8 @@ makewindow (void)
   gtk_widget_set_size_request (drawarea, PREVIEWSIZE, PREVIEWSIZE);
   gtk_widget_show (drawarea);
 
-  g_signal_connect (drawarea, "expose-event",
-                    G_CALLBACK (expose_event), NULL);
+  g_signal_connect (drawarea, "draw",
+                    G_CALLBACK (draw), NULL);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
