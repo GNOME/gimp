@@ -405,6 +405,10 @@ const GimpPlugInInfo PLUG_IN_INFO =
 static GtkWidget   *preview;
 static WidgetEntry  widget_pointers[4][CML_PARAM_NUM];
 
+static guchar          *img;
+static gint             img_stride;
+static cairo_surface_t *buffer;
+
 typedef struct
 {
   GtkWidget *widget;
@@ -412,6 +416,7 @@ typedef struct
 } CML_sensitive_widget_table;
 
 #define RANDOM_SENSITIVES_NUM 5
+#define GRAPHSIZE 256
 
 static CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
 {
@@ -1510,17 +1515,26 @@ CML_explorer_dialog (void)
 
   CML_initial_value_sensitives_update ();
 
+  gtk_widget_show (dialog);
+
+  img_stride = cairo_format_stride_for_width (CAIRO_FORMAT_RGB24, GRAPHSIZE);
+  img = g_malloc0 (img_stride * GRAPHSIZE);
+
+  buffer = cairo_image_surface_create_for_data (img, CAIRO_FORMAT_RGB24,
+                                                GRAPHSIZE,
+                                                GRAPHSIZE,
+                                                img_stride);
+
   /*  Displaying preview might takes a long time. Thus, first, dialog itself
    *  should be shown before making preview in it.
    */
-  gtk_widget_show (dialog);
-
   CML_preview_defer = FALSE;
   preview_update ();
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
+  g_free (img);
 
   return run;
 }
@@ -1757,53 +1771,68 @@ preview_update (void)
 
 static gboolean
 function_graph_expose (GtkWidget      *widget,
-                       GdkEventExpose *ev,
+                       GdkEventExpose *event,
                        gpointer       *data)
 {
   GtkStyle  *style = gtk_widget_get_style (widget);
-  gint       x, y, last_y;
+  gint       x, y;
   gint       rgbi[3];
-  guchar    *buffer;
   gint       channel_id = GPOINTER_TO_INT (data[0]);
   CML_PARAM *param      = data[1];
+  cairo_t   *cr;
 
-  buffer = g_new (guchar, 256*256*3);
-  for (x = 0; x < 256; x++)
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  cairo_set_line_width (cr, 1.0);
+
+  cairo_surface_flush (buffer);
+
+  for (x = 0; x < GRAPHSIZE; x++)
     {
       /* hue */
       rgbi[0] = rgbi[1] = rgbi[2] = 127;
       if ((0 <= channel_id) && (channel_id <= 2))
         rgbi[channel_id] = CANNONIZE ((*param), ((gdouble) x / (gdouble) 255));
       gimp_hsv_to_rgb_int (rgbi, rgbi+1, rgbi+2);
-      for (y = 0; y < 256; y++)
+      for (y = 0; y < GRAPHSIZE; y++)
       {
-        buffer[(y*256+x)*3+0] = rgbi[0];
-        buffer[(y*256+x)*3+1] = rgbi[1];
-        buffer[(y*256+x)*3+2] = rgbi[2];
+        GIMP_CAIRO_RGB24_SET_PIXEL((img+(y*img_stride+x*4)),
+                                   rgbi[0],
+                                   rgbi[1],
+                                   rgbi[2]);
       }
     }
 
-  gdk_draw_rgb_image (gtk_widget_get_window (widget), style->black_gc,
-                      0, 0, 256, 256,
-                      GDK_RGB_DITHER_NORMAL,
-                      buffer,
-                      3 * 256);
+  cairo_surface_mark_dirty (buffer);
 
-  g_free (buffer);
+  cairo_set_source_surface (cr, buffer, 0.0, 0.0);
 
-  gdk_draw_line (gtk_widget_get_window (widget), style->white_gc, 0,255, 255, 0);
+  cairo_paint (cr);
+  cairo_translate (cr, 0.5, 0.5);
+
+  cairo_move_to (cr, 0, 255);
+  cairo_line_to (cr, 255, 0);
+  gdk_cairo_set_source_color (cr, &style->white);
+  cairo_stroke (cr);
 
   y = 255 * CLAMP (logistic_function (param, 0, param->power),
                      0, 1.0);
-  for (x = 0; x < 256; x++)
+  cairo_move_to (cr, 0, 255-y);
+  for (x = 0; x < GRAPHSIZE; x++)
     {
-      last_y = y;
       /* curve */
       y = 255 * CLAMP (logistic_function (param, x/(gdouble)255, param->power),
                        0, 1.0);
-      gdk_draw_line (gtk_widget_get_window (widget), style->black_gc,
-                     x, 255-last_y, x, 255-y);
+      cairo_line_to (cr, x, 255-y);
     }
+
+  gdk_cairo_set_source_color (cr, &style->black);
+  cairo_stroke (cr);
+  cairo_destroy (cr);
+
   return TRUE;
 }
 
@@ -1831,7 +1860,7 @@ function_graph_new (GtkWidget *widget,
   gtk_widget_show (frame);
 
   preview = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (preview, 256, 256);
+  gtk_widget_set_size_request (preview, GRAPHSIZE, GRAPHSIZE);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
   g_signal_connect (preview, "expose-event",
