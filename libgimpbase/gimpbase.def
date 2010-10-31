@@ -105,6 +105,7 @@ EXPORTS
 	gimp_type_get_translation_domain
 	gimp_type_set_translation_context
 	gimp_type_set_translation_domain
+	gimp_unit_format_string
 	gimp_unit_get_abbreviation
 	gimp_unit_get_deletion_flag
 	gimp_unit_get_digits
