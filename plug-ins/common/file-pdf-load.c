@@ -1147,6 +1147,7 @@ gimp_resolution_entry_new (const gchar *width_label,
                            GimpUnit     initial_unit)
 {
   GimpResolutionEntry *gre;
+  GtkTreeModel        *model;
 
   gre = g_object_new (GIMP_TYPE_RESOLUTION_ENTRY, NULL);
 
@@ -1170,13 +1171,17 @@ gimp_resolution_entry_new (const gchar *width_label,
 
   gtk_widget_show (gre->x.spinbutton);
 
-  gre->unitmenu = gimp_unit_menu_new (_("pixels/%s"), initial_unit,
-                                      FALSE, FALSE,
-                                      TRUE);
+  gre->unitmenu = gimp_unit_combo_box_new ();
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (gre->unitmenu));
+  gimp_unit_store_set_has_pixels (GIMP_UNIT_STORE (model), FALSE);
+  gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (model), FALSE);
+  gimp_unit_combo_box_set_active (GIMP_UNIT_COMBO_BOX (gre->unitmenu),
+                                  initial_unit);
+
   gtk_table_attach (GTK_TABLE (gre), gre->unitmenu,
                     3, 4, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  g_signal_connect (gre->unitmenu, "unit-changed",
+  g_signal_connect (gre->unitmenu, "changed",
                     G_CALLBACK (gimp_resolution_entry_unit_callback),
                     gre);
   gtk_widget_show (gre->unitmenu);
@@ -1416,7 +1421,7 @@ gimp_resolution_entry_unit_callback (GtkWidget           *widget,
 {
   GimpUnit new_unit;
 
-  new_unit = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+  new_unit = gimp_unit_combo_box_get_active (GIMP_UNIT_COMBO_BOX (widget));
 
   if (gre->unit != new_unit)
     gimp_resolution_entry_update_unit (gre, new_unit);
