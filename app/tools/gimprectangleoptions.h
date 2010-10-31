@@ -165,4 +165,9 @@ void        gimp_rectangle_options_get_property       (GObject      *object,
                                                        GParamSpec   *pspec);
 
 
+/*  testing helper functions  */
+
+GtkWidget * gimp_rectangle_options_get_width_entry    (GimpRectangleOptions *rectangle_options);
+
+
 #endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */
