@@ -222,7 +222,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 
   gtk_table_attach (GTK_TABLE (table), spinbutton,
                     column + 2, column + 3, row, row + 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+                    GTK_FILL | GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinbutton);
 
   if (tooltip || help_id)
