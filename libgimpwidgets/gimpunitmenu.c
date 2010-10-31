@@ -75,12 +75,9 @@ enum
 };
 
 
-static void          gimp_unit_menu_finalize     (GObject     *object);
-
-static const gchar * gimp_unit_menu_build_string (const gchar *format,
-                                                  GimpUnit     unit);
-static void          gimp_unit_menu_callback     (GtkWidget   *widget,
-                                                  gpointer     data);
+static void   gimp_unit_menu_finalize (GObject   *object);
+static void   gimp_unit_menu_callback (GtkWidget *widget,
+                                       gpointer   data);
 
 
 G_DEFINE_TYPE (GimpUnitMenu, gimp_unit_menu, GTK_TYPE_OPTION_MENU)
@@ -154,38 +151,7 @@ gimp_unit_menu_finalize (GObject *object)
  *
  * Creates a new #GimpUnitMenu widget.
  *
- * The @format string supports the following percent expansions:
- *
- * <informaltable pgwide="1" frame="none" role="enum">
- *   <tgroup cols="2"><colspec colwidth="1*"/><colspec colwidth="8*"/>
- *     <tbody>
- *       <row>
- *         <entry>% f</entry>
- *         <entry>Factor (how many units make up an inch)</entry>
- *        </row>
- *       <row>
- *         <entry>% y</entry>
- *         <entry>Symbol (e.g. "''" for GIMP_UNIT_INCH)</entry>
- *       </row>
- *       <row>
- *         <entry>% a</entry>
- *         <entry>Abbreviation</entry>
- *       </row>
- *       <row>
- *         <entry>% s</entry>
- *         <entry>Singular</entry>
- *       </row>
- *       <row>
- *         <entry>% p</entry>
- *         <entry>Plural</entry>
- *       </row>
- *       <row>
- *         <entry>%%</entry>
- *         <entry>Literal percent</entry>
- *       </row>
- *     </tbody>
- *   </tgroup>
- * </informaltable>
+ * For the @format string's possible expansions, see gimp_unit_format_string().
  *
  * Returns: A pointer to the new #GimpUnitMenu widget.
  **/
@@ -199,6 +165,7 @@ gimp_unit_menu_new (const gchar *format,
   GimpUnitMenu *unit_menu;
   GtkWidget    *menu;
   GtkWidget    *menuitem;
+  gchar        *string;
   GimpUnit      u;
 
   g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
@@ -225,9 +192,10 @@ gimp_unit_menu_new (const gchar *format,
         {
           if (show_percent)
             {
-              menuitem =
-                gtk_menu_item_new_with_label
-                (gimp_unit_menu_build_string (format, GIMP_UNIT_PERCENT));
+              string = gimp_unit_format_string (format, GIMP_UNIT_PERCENT);
+              menuitem = gtk_menu_item_new_with_label (string);
+              g_free (string);
+
               gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
               g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                                  GINT_TO_POINTER (GIMP_UNIT_PERCENT));
@@ -247,8 +215,10 @@ gimp_unit_menu_new (const gchar *format,
             }
         }
 
-      menuitem =
-        gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, u));
+      string = gimp_unit_format_string (format, u);
+      menuitem = gtk_menu_item_new_with_label (string);
+      g_free (string);
+
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          GINT_TO_POINTER (u));
@@ -267,9 +237,10 @@ gimp_unit_menu_new (const gchar *format,
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
 
-      menuitem =
-        gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format,
-                                                                   unit));
+      string = gimp_unit_format_string (format, unit);
+      menuitem = gtk_menu_item_new_with_label (string);
+      g_free (string);
+
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
                          GINT_TO_POINTER (unit));
@@ -344,6 +315,8 @@ gimp_unit_menu_set_unit (GimpUnitMenu *menu,
 
   if ((unit >= GIMP_UNIT_END) && (unit != GIMP_UNIT_PERCENT))
     {
+      gchar *string;
+
       if ((g_list_length (items) - 3) >= user_unit)
         {
           gtk_widget_destroy (GTK_WIDGET (g_list_nth_data (items,
@@ -360,9 +333,10 @@ gimp_unit_menu_set_unit (GimpUnitMenu *menu,
                               menuitem, user_unit - 1);
       gtk_widget_show (menuitem);
 
-      menuitem =
-        gtk_menu_item_new_with_label (gimp_unit_menu_build_string (menu->format,
-                                                                   unit));
+      string = gimp_unit_format_string (menu->format, unit);
+      menuitem = gtk_menu_item_new_with_label (string);
+      g_free (string);
+
       gtk_menu_shell_append (GTK_MENU_SHELL (GTK_OPTION_MENU (menu)->menu),
                              menuitem);
       g_object_set_data (G_OBJECT (menuitem), "gimp_unit_menu",
@@ -451,98 +425,6 @@ gimp_unit_menu_get_pixel_digits (GimpUnitMenu *menu)
   g_return_val_if_fail (GIMP_IS_UNIT_MENU (menu), 0);
 
   return menu->pixel_digits;
-}
-
-
-/*  most of the next two functions is stolen from app/gdisplay.c  */
-static gint
-print (gchar       *buf,
-       gint         len,
-       gint         start,
-       const gchar *fmt,
-       ...)
-{
-  va_list args;
-  gint printed;
-
-  va_start (args, fmt);
-
-  printed = g_vsnprintf (buf + start, len - start, fmt, args);
-  if (printed < 0)
-    printed = len - start;
-
-  va_end (args);
-
-  return printed;
-}
-
-static const gchar *
-gimp_unit_menu_build_string (const gchar *format,
-                             GimpUnit     unit)
-{
-  static gchar buffer[64];
-  gint i = 0;
-
-  while (i < (sizeof (buffer) - 1) && *format)
-    {
-      switch (*format)
-        {
-        case '%':
-          format++;
-          switch (*format)
-            {
-            case 0:
-              g_warning ("%s: unit-menu-format string ended within %%-sequence",
-                         G_STRFUNC);
-              break;
-
-            case '%':
-              buffer[i++] = '%';
-              break;
-
-            case 'f': /* factor (how many units make up an inch) */
-              i += print (buffer, sizeof (buffer), i, "%f",
-                          gimp_unit_get_factor (unit));
-              break;
-
-            case 'y': /* symbol ("''" for inch) */
-              i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_symbol (unit));
-              break;
-
-            case 'a': /* abbreviation */
-              i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_abbreviation (unit));
-              break;
-
-            case 's': /* singular */
-              i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_singular (unit));
-              break;
-
-            case 'p': /* plural */
-              i += print (buffer, sizeof (buffer), i, "%s",
-                          gimp_unit_get_plural (unit));
-              break;
-
-            default:
-              g_warning ("%s: unit-menu-format contains unknown format "
-                         "sequence '%%%c'", G_STRFUNC, *format);
-              break;
-            }
-          break;
-
-        default:
-          buffer[i++] = *format;
-          break;
-        }
-
-      format++;
-    }
-
-  buffer[MIN (i, sizeof (buffer) - 1)] = 0;
-
-  return buffer;
 }
 
 /*  private callback of gimp_unit_menu_create_selection ()  */
@@ -663,15 +545,22 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   num_units = gimp_unit_get_number_of_units ();
   for (unit = GIMP_UNIT_END; unit < num_units; unit++)
     {
+      gchar *string;
+
       gtk_list_store_append (list, &iter);
+
+      string = gimp_unit_format_string (menu->format, unit);
       gtk_list_store_set (list, &iter,
-                          UNIT_COLUMN,
-                          gimp_unit_menu_build_string (menu->format, unit),
+                          UNIT_COLUMN, string,
                           -1);
+      g_free (string);
+
+      string = gimp_unit_format_string ("(%f)", unit);
       gtk_list_store_set (list, &iter,
-                          FACTOR_COLUMN,
-                          gimp_unit_menu_build_string ("(%f)", unit),
+                          FACTOR_COLUMN, string,
                           -1);
+      g_free (string);
+
       gtk_list_store_set (list, &iter, DATA_COLUMN, unit, -1);
     }
 
