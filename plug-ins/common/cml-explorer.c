@@ -1535,6 +1535,7 @@ CML_explorer_dialog (void)
 
   gtk_widget_destroy (dialog);
   g_free (img);
+  cairo_surface_destroy (buffer);
 
   return run;
 }
