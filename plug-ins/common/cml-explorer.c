@@ -1774,21 +1774,15 @@ preview_update (void)
 }
 
 static gboolean
-function_graph_expose (GtkWidget      *widget,
-                       GdkEventExpose *event,
-                       gpointer       *data)
+function_graph_draw (GtkWidget *widget,
+                     cairo_t   *cr,
+                     gpointer  *data)
 {
   GtkStyle  *style = gtk_widget_get_style (widget);
   gint       x, y;
   gint       rgbi[3];
   gint       channel_id = GPOINTER_TO_INT (data[0]);
   CML_PARAM *param      = data[1];
-  cairo_t   *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (widget));
-
-  gdk_cairo_region (cr, event->region);
-  cairo_clip (cr);
 
   cairo_set_line_width (cr, 1.0);
 
@@ -1835,7 +1829,6 @@ function_graph_expose (GtkWidget      *widget,
 
   gdk_cairo_set_source_color (cr, &style->black);
   cairo_stroke (cr);
-  cairo_destroy (cr);
 
   return TRUE;
 }
@@ -1867,8 +1860,9 @@ function_graph_new (GtkWidget *widget,
   gtk_widget_set_size_request (preview, GRAPHSIZE, GRAPHSIZE);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
-  g_signal_connect (preview, "expose-event",
-                    G_CALLBACK (function_graph_expose), data);
+  g_signal_connect (preview, "draw",
+                    G_CALLBACK (function_graph_draw),
+                    data);
 
   gtk_widget_show (dialog);
 
