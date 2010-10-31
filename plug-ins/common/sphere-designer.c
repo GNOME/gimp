@@ -272,7 +272,9 @@ struct camera_t
 
 static GtkWidget *drawarea = NULL;
 
-static guchar img[PREVIEWSIZE * PREVIEWSIZE * 3];
+static guchar          *img;
+static gint             img_stride;
+static cairo_surface_t *buffer;
 
 static guint  idle_id = 0;
 
@@ -2290,16 +2292,18 @@ static gboolean
 expose_event (GtkWidget      *widget,
               GdkEventExpose *event)
 {
-  GtkStyle *style = gtk_widget_get_style (widget);
-  guchar   *data  = img + event->area.y * 3 * PREVIEWSIZE + event->area.x * 3;
+  cairo_t *cr;
 
-  gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                style->white_gc,
-                                event->area.x, event->area.y,
-                                event->area.width, event->area.height,
-                                GDK_RGB_DITHER_MAX,
-                                data, PREVIEWSIZE * 3,
-                                - event->area.x, - event->area.y);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  cairo_set_source_surface (cr, buffer, 0.0, 0.0);
+
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
 
   return TRUE;
 }
@@ -2878,7 +2882,7 @@ render (void)
   gint    hit;
   gint    tx  = PREVIEWSIZE;
   gint    ty  = PREVIEWSIZE;
-  gint    bpp = 3;
+  gint    bpp = 4;
 
   idle_id = 0;
 
@@ -2889,9 +2893,11 @@ render (void)
 
   if (world.obj[0].com.numtexture > 0)
     {
+      cairo_surface_flush (buffer);
+
       for (y = 0; y < ty; y++)
         {
-          dest_row = img + y * PREVIEWSIZE * 3;
+          dest_row = img + y * img_stride;
 
           for (x = 0; x < tx; x++)
             {
@@ -2911,14 +2917,14 @@ render (void)
               else if (col.w > 1.0)
                 col.w = 1.0;
 
-              dest_row[p + 0] =
-                pixelval (255 * col.x) * col.w + g * (1.0 - col.w);
-              dest_row[p + 1] =
-                pixelval (255 * col.y) * col.w + g * (1.0 - col.w);
-              dest_row[p + 2] =
-                pixelval (255 * col.z) * col.w + g * (1.0 - col.w);
+              GIMP_CAIRO_RGB24_SET_PIXEL ((dest_row + p),
+                pixelval (255 * col.x) * col.w + g * (1.0 - col.w),
+                pixelval (255 * col.y) * col.w + g * (1.0 - col.w),
+                pixelval (255 * col.z) * col.w + g * (1.0 - col.w));
              }
         }
+
+      cairo_surface_mark_dirty (buffer);
     }
 
   gtk_widget_queue_draw (drawarea);
@@ -3031,7 +3037,14 @@ sphere_main (GimpDrawable *drawable)
 {
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  memset (img, 0, PREVIEWSIZE * PREVIEWSIZE * 3);
+  img_stride = cairo_format_stride_for_width (CAIRO_FORMAT_RGB24, PREVIEWSIZE);
+  img = g_malloc0 (img_stride * PREVIEWSIZE);
+
+  buffer = cairo_image_surface_create_for_data (img, CAIRO_FORMAT_RGB24,
+                                                PREVIEWSIZE,
+                                                PREVIEWSIZE,
+                                                img_stride);
+
   makewindow ();
 
   if (s.com.numtexture == 0)
@@ -3046,6 +3059,9 @@ sphere_main (GimpDrawable *drawable)
     }
 
   gtk_main ();
+
+  cairo_surface_destroy (buffer);
+  g_free (img);
 
   return do_run;
 }
