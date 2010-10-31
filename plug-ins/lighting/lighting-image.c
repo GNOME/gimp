@@ -23,7 +23,9 @@ GimpPixelRgn  bump_region;
 GimpDrawable *env_drawable = NULL;
 GimpPixelRgn  env_region;
 
-guchar   *preview_rgb_data = NULL;
+guchar          *preview_rgb_data = NULL;
+gint             preview_rgb_stride;
+cairo_surface_t *preview_surface = NULL;
 
 glong  maxcounter;
 gint   imgtype, width, height, env_width, env_height, in_channels, out_channels;
@@ -373,7 +375,14 @@ image_setup (GimpDrawable *drawable,
 
   if (interactive)
     {
-      preview_rgb_data = g_new0 (guchar, PREVIEW_WIDTH * PREVIEW_HEIGHT * 3);
+      preview_rgb_stride = cairo_format_stride_for_width (CAIRO_FORMAT_RGB24,
+                                                          PREVIEW_WIDTH);
+      preview_rgb_data = g_new0 (guchar, preview_rgb_stride * PREVIEW_HEIGHT);
+      preview_surface = cairo_image_surface_create_for_data (preview_rgb_data,
+                                                             CAIRO_FORMAT_RGB24,
+                                                             PREVIEW_WIDTH,
+                                                             PREVIEW_HEIGHT,
+                                                             preview_rgb_stride);
     }
 
   return TRUE;

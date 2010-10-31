@@ -41,7 +41,6 @@ extern LightingValues mapvals;
 static GtkWidget   *appwin            = NULL;
 static GtkNotebook *options_note_book = NULL;
 
-GdkGC     *gc                         = NULL;
 GtkWidget *previewarea                = NULL;
 
 GtkWidget *spin_pos_x                 = NULL;
@@ -1112,11 +1111,16 @@ main_dialog (GimpDrawable *drawable)
 
   image_setup (drawable, TRUE);
 
+  draw_preview_image (TRUE);
+
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;
 
   if (preview_rgb_data != NULL)
     g_free (preview_rgb_data);
+
+  if (preview_surface != NULL)
+    cairo_surface_destroy (preview_surface);
 
   gtk_widget_destroy (appwin);
 

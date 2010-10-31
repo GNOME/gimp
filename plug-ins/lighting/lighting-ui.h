@@ -4,7 +4,6 @@
 /* Externally visible variables */
 /* ============================ */
 
-extern GdkGC     *gc;
 extern GtkWidget *previewarea;
 
 extern GtkWidget *spin_pos_x;

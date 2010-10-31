@@ -1,6 +1,9 @@
 #ifndef __LIGHTING_IMAGE_H__
 #define __LIGHTING_IMAGE_H__
 
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 extern GimpDrawable *input_drawable,*output_drawable;
 extern GimpPixelRgn  source_region, dest_region;
 
@@ -10,7 +13,9 @@ extern GimpPixelRgn  bump_region;
 extern GimpDrawable *env_drawable;
 extern GimpPixelRgn  env_region;
 
-extern guchar   *preview_rgb_data;
+extern guchar          *preview_rgb_data;
+extern gint             preview_rgb_stride;
+extern cairo_surface_t *preview_surface;
 
 extern glong  maxcounter;
 extern gint   imgtype,width,height,env_width,env_height,in_channels,out_channels;
