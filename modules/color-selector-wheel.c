@@ -62,9 +62,6 @@ static void   colorsel_wheel_set_color     (GimpColorSelector *selector,
 static void   colorsel_wheel_size_allocate (GtkWidget         *frame,
                                             GtkAllocation     *allocation,
                                             ColorselWheel     *wheel);
-static void   colorsel_wheel_size_request  (GtkWidget         *dont_use,
-                                            GtkRequisition    *requisition,
-                                            ColorselWheel     *wheel);
 static void   colorsel_wheel_changed       (GtkHSV            *hsv,
                                             GimpColorSelector *selector);
 
@@ -131,10 +128,6 @@ colorsel_wheel_init (ColorselWheel *wheel)
   gtk_container_add (GTK_CONTAINER (frame), wheel->hsv);
   gtk_widget_show (wheel->hsv);
 
-  g_signal_connect (wheel->hsv, "size-request",
-                    G_CALLBACK (colorsel_wheel_size_request),
-                    wheel);
-
   g_signal_connect (wheel->hsv, "changed",
                     G_CALLBACK (colorsel_wheel_changed),
                     wheel);
@@ -170,23 +163,6 @@ colorsel_wheel_size_allocate (GtkWidget     *frame,
           2 * (focus_width + focus_padding));
 
   gtk_hsv_set_metrics (GTK_HSV (wheel->hsv), size, size / 10);
-}
-
-static void
-colorsel_wheel_size_request (GtkWidget      *dont_use,
-                             GtkRequisition *requisition,
-                             ColorselWheel  *wheel)
-{
-  gint focus_width;
-  gint focus_padding;
-
-  gtk_widget_style_get (wheel->hsv,
-                        "focus-line-width", &focus_width,
-                        "focus-padding",    &focus_padding,
-                        NULL);
-
-  requisition->width  = 2 * (focus_width + focus_padding);
-  requisition->height = 2 * (focus_width + focus_padding);
 }
 
 static void
