@@ -200,9 +200,11 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
   GtkWidget *table;
+  GtkWidget *vbox2;
   GtkWidget *frame;
   GtkWidget *combo;
   GtkWidget *button;
+  GtkWidget *scale;
 
   table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
 
@@ -248,29 +250,26 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   /*  supersampling options  */
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
-
+  vbox2 = gtk_vbox_new (FALSE, 2);
   frame = gimp_prop_expanding_frame_new (config, "supersample",
                                          _("Adaptive supersampling"),
-                                         table, NULL);
+                                         vbox2, NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  max depth scale  */
-  gimp_prop_scale_entry_new (config, "supersample-depth",
-                             GTK_TABLE (table), 0, 0,
-                             _("Max depth:"),
-                             1.0, 1.0, 0,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "supersample-depth",
+                                    _("Max depth"),
+                                    1.0, 1.0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  threshold scale  */
-  gimp_prop_scale_entry_new (config, "supersample-threshold",
-                             GTK_TABLE (table), 0, 1,
-                             _("Threshold:"),
-                             0.01, 0.1, 2,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "supersample-threshold",
+                                    _("Threshold"),
+                                    0.01, 0.1, 2);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   return vbox;
 }

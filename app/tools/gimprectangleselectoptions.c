@@ -154,14 +154,15 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
     {
       GtkWidget *frame;
       GtkWidget *button;
-      GtkWidget *table;
+      GtkWidget *scale;
 
-      table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+      scale = gimp_prop_spin_scale_new (config, "corner-radius",
+                                        _("Radius"),
+                                        1.0, 10.0, 1);
 
       frame = gimp_prop_expanding_frame_new (config, "round-corners",
                                              _("Rounded corners"),
-                                             table, &button);
+                                             scale, &button);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -169,13 +170,7 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
                          GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle);
       gtk_widget_set_sensitive (GIMP_SELECTION_OPTIONS (tool_options)->antialias_toggle,
                                 GIMP_RECTANGLE_SELECT_OPTIONS (tool_options)->round_corners);
-
-      gimp_prop_scale_entry_new (config, "corner-radius",
-                                 GTK_TABLE (table), 0, 0,
-                                 _("Radius:"),
-                                 1.0, 10.0, 1,
-                                 FALSE, 0.0, 0.0);
-  }
+    }
 
   /*  the rectangle options  */
   {
