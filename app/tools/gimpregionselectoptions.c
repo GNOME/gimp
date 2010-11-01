@@ -217,7 +217,7 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
 
   /*  the threshold scale  */
   scale = gimp_prop_spin_scale_new (config, "threshold",
-                                    _("Thrshold"),
+                                    _("Threshold"),
                                     1.0, 16.0, 1);
   gtk_table_attach (GTK_TABLE (table), scale,
                     0, 3, 0, 1,

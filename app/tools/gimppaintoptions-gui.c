@@ -248,7 +248,7 @@ fade_options_gui (GimpPaintOptions *paint_options,
   scale = gimp_prop_spin_scale_new (config, "fade-length",
                                     _("Length"), 1.0, 50.0, 0);
   gtk_table_attach (GTK_TABLE (table), scale, 0, 2, 0, 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (scale);
 
   /*  the fade-out unitmenu  */
