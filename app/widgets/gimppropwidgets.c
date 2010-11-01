@@ -495,7 +495,7 @@ gimp_prop_spin_scale_new (GObject     *config,
 
   scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, digits);
 
-  set_param_spec (G_OBJECT (scale), scale, param_spec);
+  set_param_spec (G_OBJECT (adjustment), scale, param_spec);
 
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_prop_spin_scale_callback),
