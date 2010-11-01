@@ -76,6 +76,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *frame;
   GtkWidget        *table;
   GtkWidget        *menu;
+  GtkWidget        *scale;
   GtkWidget        *label;
   GtkWidget        *button;
   GtkWidget        *incremental_toggle = NULL;
@@ -109,9 +110,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the opacity scale  */
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
+  scale = gimp_prop_opacity_spin_scale_new (config, "opacity",
+                                            _("Opacity"));
+  gtk_table_attach (GTK_TABLE (table), scale,
+                    0, 3, table_row, table_row + 1,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_widget_show (scale);
+  table_row++;
 
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
