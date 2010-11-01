@@ -159,11 +159,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                                     FALSE, 0.0, 0.0);
       gimp_scale_entry_set_logarithmic (adj_aspect_ratio, TRUE);
 
-      adj_angle = gimp_prop_scale_entry_new (config, "brush-angle",
-                                             GTK_TABLE (table), 0, table_row++,
-                                             _("Angle:"),
-                                             1.0, 5.0, 2,
-                                             FALSE, 0.0, 0.0);
+      button = gimp_prop_spin_scale_new (config, "brush-angle",
+                                         _("Angle"),
+                                         1.0, 5.0, 2);
+      gtk_table_attach (GTK_TABLE (table), button,
+                        0, 3, table_row, table_row + 1,
+                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_widget_show (button);
+      table_row++;
     }
 
 
