@@ -278,6 +278,24 @@ gimp_spin_scale_expose (GtkWidget      *widget,
   return FALSE;
 }
 
+static gboolean
+gimp_spin_scale_on_number (GtkWidget *widget,
+                           gdouble    x,
+                           gdouble    y)
+{
+  gint layout_x;
+  gint layout_y;
+
+  gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
+
+  if (x > layout_x && y > layout_y)
+    {
+      return TRUE;
+    }
+
+  return FALSE;
+ }
+
 static void
 gimp_spin_scale_set_value (GtkWidget *widget,
                            gdouble    x)
@@ -310,13 +328,7 @@ gimp_spin_scale_button_press (GtkWidget      *widget,
 
   if (event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
-      gint layout_x;
-      gint layout_y;
-
-      gtk_entry_get_layout_offsets (GTK_ENTRY (widget), &layout_x, &layout_y);
-
-      if (event->x < layout_x ||
-          event->y < layout_y)
+      if (! gimp_spin_scale_on_number (widget, event->x, event->y))
         {
           private->changing_value = TRUE;
 
@@ -362,7 +374,33 @@ gimp_spin_scale_button_motion (GtkWidget      *widget,
       return TRUE;
     }
 
-  return GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
+  GTK_WIDGET_CLASS (parent_class)->motion_notify_event (widget, event);
+
+  if (! (event->state &
+         (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
+      event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
+    {
+      if (gimp_spin_scale_on_number (widget, event->x, event->y))
+        {
+          GdkDisplay *display = gtk_widget_get_display (widget);
+          GdkCursor  *cursor;
+
+          cursor = gdk_cursor_new_for_display (display, GDK_XTERM);
+          gdk_window_set_cursor (event->window, cursor);
+          gdk_cursor_unref (cursor);
+        }
+      else
+        {
+          GdkDisplay *display = gtk_widget_get_display (widget);
+          GdkCursor  *cursor;
+
+          cursor = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
+          gdk_window_set_cursor (event->window, cursor);
+          gdk_cursor_unref (cursor);
+        }
+    }
+
+  return FALSE;
 }
 
 static void
