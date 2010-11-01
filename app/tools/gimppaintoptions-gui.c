@@ -232,7 +232,7 @@ fade_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *spinbutton;
+  GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *combo;
   GtkWidget *checkbox;
@@ -245,13 +245,11 @@ fade_options_gui (GimpPaintOptions *paint_options,
                                          table, NULL);
 
   /*  the fade-out sizeentry  */
-  spinbutton = gimp_prop_spin_button_new (config, "fade-length",
-                                          1.0, 50.0, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Length:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  scale = gimp_prop_spin_scale_new (config, "fade-length",
+                                    _("Length"), 1.0, 50.0, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 0, 2, 0, 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (scale);
 
   /*  the fade-out unitmenu  */
   menu = gimp_prop_unit_combo_box_new (config, "fade-unit");
