@@ -59,6 +59,9 @@ GtkWidget * gimp_prop_spin_scale_new      (GObject     *config,
                                            gdouble      step_increment,
                                            gdouble      page_increment,
                                            gint         digits);
+GtkWidget * gimp_prop_opacity_spin_scale_new (GObject     *config,
+                                              const gchar *property_name,
+                                              const gchar *label);
 
 
 /*  GParamObject (GimpViewable)  */

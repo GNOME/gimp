@@ -516,6 +516,60 @@ gimp_prop_spin_scale_new (GObject     *config,
   return scale;
 }
 
+/**
+ * gimp_prop_opacity_spin_scale_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of gdouble property
+ *
+ * Creates a #GimpSpinScale to set and display the value of a
+ * gdouble property in a very space-efficient way.
+ *
+ * Return value:  A new #GimpSpinScale widget.
+ *
+ * Since GIMP 2.8
+ */
+GtkWidget *
+gimp_prop_opacity_spin_scale_new (GObject     *config,
+                                  const gchar *property_name,
+                                  const gchar *label)
+{
+  GParamSpec *param_spec;
+  GtkObject  *adjustment;
+  GtkWidget  *scale;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config, property_name, &value, NULL);
+
+  value *= 100.0;
+  lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
+  upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
+
+  adjustment = gtk_adjustment_new (value, lower, upper, 1.0, 10.0, 0.0);
+
+  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, 1);
+
+  set_param_spec (G_OBJECT (adjustment), scale, param_spec);
+  g_object_set_data (G_OBJECT (adjustment),
+                     "opacity-scale", GINT_TO_POINTER (TRUE));
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
+
+  return scale;
+}
+
 static void
 gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
                                GObject       *config)
