@@ -42,6 +42,7 @@
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
 #include "gimpscalebutton.h"
+#include "gimpspinscale.h"
 #include "gimpview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
@@ -438,6 +439,117 @@ gimp_prop_scale_button_notify (GObject    *config,
 
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_scale_button_callback,
+                                     config);
+}
+
+
+/****************/
+/*  spin scale  */
+/****************/
+
+static void   gimp_prop_spin_scale_callback (GtkAdjustment *adjustment,
+                                             GObject       *config);
+static void   gimp_prop_spin_scale_notify   (GObject       *config,
+                                             GParamSpec    *param_spec,
+                                             GtkAdjustment *adjustment);
+
+/**
+ * gimp_prop_spin_scale_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of gdouble property
+ *
+ * Creates a #GimpSpinScale to set and display the value of a
+ * gdouble property in a very space-efficient way.
+ *
+ * Return value:  A new #GimpSpinScale widget.
+ *
+ * Since GIMP 2.8
+ */
+GtkWidget *
+gimp_prop_spin_scale_new (GObject     *config,
+                          const gchar *property_name,
+                          const gchar *label,
+                          gdouble      step_increment,
+                          gdouble      page_increment,
+                          gint         digits)
+{
+  GParamSpec *param_spec;
+  GtkObject  *adjustment;
+  GtkWidget  *scale;
+  gdouble     value;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
+
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  adjustment = gtk_adjustment_new (value,
+                                   G_PARAM_SPEC_DOUBLE (param_spec)->minimum,
+                                   G_PARAM_SPEC_DOUBLE (param_spec)->maximum,
+                                   step_increment, page_increment, 0.0);
+
+  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, digits);
+
+  set_param_spec (G_OBJECT (scale), scale, param_spec);
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_prop_spin_scale_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_spin_scale_notify),
+                  adjustment);
+
+  return scale;
+}
+
+static void
+gimp_prop_spin_scale_callback (GtkAdjustment *adjustment,
+                               GObject       *config)
+{
+  GParamSpec *param_spec;
+
+  param_spec = get_param_spec (G_OBJECT (adjustment));
+  if (! param_spec)
+    return;
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_spin_scale_notify,
+                                   adjustment);
+
+  g_object_set (config,
+                param_spec->name, gtk_adjustment_get_value (adjustment),
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_spin_scale_notify,
+                                     adjustment);
+}
+
+static void
+gimp_prop_spin_scale_notify (GObject       *config,
+                             GParamSpec    *param_spec,
+                             GtkAdjustment *adjustment)
+{
+  gdouble value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (adjustment,
+                                   gimp_prop_spin_scale_callback,
+                                   config);
+
+  gtk_adjustment_set_value (adjustment, value);
+
+  g_signal_handlers_unblock_by_func (adjustment,
+                                     gimp_prop_spin_scale_callback,
                                      config);
 }
 
