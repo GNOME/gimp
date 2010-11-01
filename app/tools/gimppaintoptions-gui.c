@@ -116,9 +116,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
-      GtkObject *adj_scale;
-      GtkObject *adj_angle;
-      GtkObject *adj_aspect_ratio;
+      GtkObject *adj;
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
@@ -132,16 +130,15 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                  _("Dynamics:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
-      adj_scale = gimp_prop_scale_entry_new (config, "brush-size",
-                                             GTK_TABLE (table), 0, table_row++,
-                                             _("Size:"),
-                                             0.01, 0.1, 2,
-                                             FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj_scale, TRUE);
+      adj = gimp_prop_scale_entry_new (config, "brush-size",
+                                       GTK_TABLE (table), 0, table_row++,
+                                       _("Size:"),
+                                       0.01, 0.1, 2,
+                                       FALSE, 0.0, 0.0);
+      gimp_scale_entry_set_logarithmic (adj, TRUE);
 
 
       button = gimp_stock_button_new (GTK_STOCK_REFRESH, _("Reset size"));
-
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  "", 0.0, 0.5,
                                  button, 2, FALSE);
@@ -150,14 +147,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         G_CALLBACK (gimp_paint_options_gui_reset_size),
                         options);
 
-      adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
-                                                    GTK_TABLE (table), 0, table_row++,
-                                                    /* Label for a slider that affects
-                                                       aspect ratio for brushes */
-                                                    _("Aspect:"),
-                                                    0.01, 0.1, 2,
-                                                    FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj_aspect_ratio, TRUE);
+      adj = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
+                                       GTK_TABLE (table), 0, table_row++,
+                                       /* Label for a slider that affects
+                                          aspect ratio for brushes */
+                                       _("Aspect:"),
+                                       0.01, 0.1, 2,
+                                       FALSE, 0.0, 0.0);
+      gimp_scale_entry_set_logarithmic (adj, TRUE);
 
       button = gimp_prop_spin_scale_new (config, "brush-angle",
                                          _("Angle"),
@@ -285,20 +282,15 @@ jitter_options_gui (GimpPaintOptions *paint_options,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *scale;
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  scale = gimp_prop_spin_scale_new (config, "jitter-amount",
+                                    _("Amount"),
+                                    0.01, 1.0, 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-jitter",
                                          _("Apply Jitter"),
-                                         table, NULL);
-
-  gimp_prop_scale_entry_new (config, "jitter-amount",
-                             GTK_TABLE (table), 0, 0,
-                             _("Amount:"),
-                             0.01, 0.1, 2,
-                             TRUE, 0.0, 5.0);
+                                         scale, NULL);
 
   return frame;
 }
