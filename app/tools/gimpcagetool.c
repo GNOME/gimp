@@ -743,7 +743,7 @@ gimp_cage_tool_get_render_node (GimpCageTool *ct,
                               NULL);
 
   render = gegl_node_new_child (parent,
-                                "operation", "gegl:render_mapping",
+                                "operation", "gegl:map-absolute",
                                 NULL);
 
   gegl_node_connect_to (input, "output",
