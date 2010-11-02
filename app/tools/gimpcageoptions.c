@@ -157,7 +157,7 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
 
 
   button = gimp_prop_check_button_new (config, "fill-plain-color",
-                                       _("Fill in background"));
+                                       _("Fill from first point"));
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
   

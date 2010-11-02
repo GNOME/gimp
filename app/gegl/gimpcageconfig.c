@@ -61,7 +61,9 @@ static void       gimp_cage_config_set_property               (GObject      *obj
 static void       gimp_cage_config_compute_scaling_factor     (GimpCageConfig *gcc);
 static void       gimp_cage_config_compute_edge_normal        (GimpCageConfig *gcc);
 
-/* FIXME: to debug only */
+/*#define DEBUG_CAGE */
+
+#ifdef DEBUG_CAGE
 static void
 print_cage (GimpCageConfig *gcc)
 {
@@ -78,7 +80,7 @@ print_cage (GimpCageConfig *gcc)
   printf("bounding box: x: %d  y: %d  width: %d  height: %d\n", bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height);
   printf("done\n");
 }
-
+#endif
 
 static void
 gimp_cage_config_class_init (GimpCageConfigClass *klass)
@@ -122,7 +124,6 @@ gimp_cage_config_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-  /* GimpCageConfig *gcc = GIMP_CAGE_CONFIG (object); */
 
   switch (property_id)
     {
@@ -139,7 +140,6 @@ gimp_cage_config_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-  /* GimpCageConfig *gcc = GIMP_CAGE_CONFIG (object); */
 
   switch (property_id)
     {
@@ -330,11 +330,6 @@ gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
   if (sum > 0)
   {
     gimp_cage_config_reverse_cage (gcc);
-    printf("reverse the cage !\n");
-  }
-  else
-  {
-    printf("Cage OK !\n");
   }
 }
 
@@ -358,7 +353,9 @@ gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
     gcc->scaling_factor[i] = length_d / length;
   }
 
+#ifdef DEBUG_CAGE
   print_cage (gcc);
+#endif
 }
 
 static void

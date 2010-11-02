@@ -218,8 +218,6 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
   plain_color.x = (gint) config->cage_vertices[0].x;
   plain_color.y = (gint) config->cage_vertices[0].y;
 
-  printf ("Color fill picked from (%f, %f)\n", plain_color.x, plain_color.y);
-
   while (gegl_buffer_iterator_next (it))
   {
     /* iterate inside the roi */
