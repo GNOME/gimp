@@ -28,6 +28,7 @@
 #include "paint/gimpinkoptions.h"
 
 #include "widgets/gimpblobeditor.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gimpinkoptions-gui.h"
 #include "gimppaintoptions-gui.h"
@@ -45,67 +46,64 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   GimpInkOptions *ink_options = GIMP_INK_OPTIONS (tool_options);
   GtkWidget      *vbox        = gimp_paint_options_gui (tool_options);
   GtkWidget      *frame;
-  GtkWidget      *table;
+  GtkWidget      *vbox2;
+  GtkWidget      *scale;
   GtkWidget      *blob_vbox;
   GtkWidget      *hbox;
   GtkWidget      *editor;
-  GtkObject      *adj;
 
   /* adjust sliders */
   frame = gimp_frame_new (_("Adjustment"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
   /*  size slider  */
-  adj = gimp_prop_scale_entry_new (config, "size",
-                                   GTK_TABLE (table), 0, 0,
-                                   _("Size:"),
-                                   1.0, 2.0, 1,
-                                   FALSE, 0.0, 0.0);
-  gimp_scale_entry_set_logarithmic (adj, TRUE);
+  scale = gimp_prop_spin_scale_new (config, "size",
+                                    _("Size"),
+                                    1.0, 2.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /* angle adjust slider */
-  gimp_prop_scale_entry_new (config, "tilt-angle",
-                             GTK_TABLE (table), 0, 1,
-                             _("Angle:"),
-                             1.0, 10.0, 1,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "tilt-angle",
+                                    _("Angle"),
+                                    1.0, 10.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /* sens sliders */
   frame = gimp_frame_new (_("Sensitivity"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
   /* size sens slider */
-  gimp_prop_scale_entry_new (config, "size-sensitivity",
-                             GTK_TABLE (table), 0, 0,
-                             _("Size:"),
-                             0.01, 0.1, 1,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "size-sensitivity",
+                                    _("Size"),
+                                    0.01, 0.1, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /* tilt sens slider */
-  gimp_prop_scale_entry_new (config, "tilt-sensitivity",
-                             GTK_TABLE (table), 0, 1,
-                             _("Tilt:"),
-                             0.01, 0.1, 1,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "tilt-sensitivity",
+                                    _("Tilt"),
+                                    0.01, 0.1, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /* velocity sens slider */
-  gimp_prop_scale_entry_new (config, "vel-sensitivity",
-                             GTK_TABLE (table), 0, 2,
-                             _("Speed:"),
-                             0.01, 0.1, 1,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "vel-sensitivity",
+                                    _("Speed"),
+                                    0.01, 0.1, 1);
+  gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  bottom hbox */
   hbox = gtk_hbox_new (FALSE, 2);
