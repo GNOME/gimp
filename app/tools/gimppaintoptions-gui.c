@@ -122,6 +122,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       GtkObject *adj;
+      GtkWidget *hbox;
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
                                         _("Brush"), 2,
@@ -142,18 +143,22 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
       table_row++;
 
-      adj = gimp_prop_scale_entry_new (config, "brush-size",
-                                       GTK_TABLE (table), 0, table_row++,
-                                       _("Size:"),
-                                       0.01, 0.1, 2,
-                                       FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj, TRUE);
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_table_attach (GTK_TABLE (table), hbox,
+                        0, 3, table_row, table_row + 1,
+                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_widget_show (hbox);
+      table_row++;
 
+      scale = gimp_prop_spin_scale_new (config, "brush-size",
+                                        _("Size"),
+                                        0.01, 1.0, 2);
+      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+      gtk_widget_show (scale);
 
-      button = gimp_stock_button_new (GTK_STOCK_REFRESH, _("Reset size"));
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 "", 0.0, 0.5,
-                                 button, 2, FALSE);
+      button = gimp_stock_button_new (GTK_STOCK_REFRESH, NULL);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (gimp_paint_options_gui_reset_size),
@@ -177,7 +182,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
       table_row++;
     }
-
 
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
