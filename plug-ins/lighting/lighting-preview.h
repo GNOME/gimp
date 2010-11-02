@@ -30,8 +30,8 @@ void     preview_compute              (void);
 void     interactive_preview_callback (GtkWidget *widget);
 gboolean preview_events               (GtkWidget *area,
                                        GdkEvent  *event);
-gboolean preview_expose               (GtkWidget *area,
-                                       GdkEventExpose *eevent);
+gboolean preview_draw                 (GtkWidget *area,
+                                       cairo_t   *cr);
 void     update_light                 (gint       xpos,
                                        gint       ypos);
 
