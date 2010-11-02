@@ -123,17 +123,24 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     {
       GtkObject *adj;
 
-      button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+      button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                        _("Brush"), 2,
                                         "brush-view-type", "brush-view-size");
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Brush:"), 0.0, 0.5,
-                                 button, 2, FALSE);
+      gtk_table_attach (GTK_TABLE (table), button,
+                        0, 3, table_row, table_row + 1,
+                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_widget_show (button);
+      table_row++;
 
-      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
-                                           "dynamics-view-type", "dynamics-view-size");
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Dynamics:"), 0.0, 0.5,
-                                 button, 2, FALSE);
+      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                           _("Dynamics"), 2,
+                                           "dynamics-view-type",
+                                           "dynamics-view-size");
+      gtk_table_attach (GTK_TABLE (table), button,
+                        0, 3, table_row, table_row + 1,
+                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_widget_show (button);
+      table_row++;
 
       adj = gimp_prop_scale_entry_new (config, "brush-size",
                                        GTK_TABLE (table), 0, table_row++,
@@ -305,16 +312,19 @@ gradient_options_gui (GimpPaintOptions *paint_options,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *box;
   GtkWidget *button;
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  /*  the gradient view  */
+  box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
+                                    _("Gradient"), 2,
+                                    "gradient-view-type",
+                                    "gradient-view-size",
+                                    "gradient-reverse");
 
   frame = gimp_prop_expanding_frame_new (config, "use-gradient",
                                          _("Use color from gradient"),
-                                         table, &button);
+                                         box, &button);
 
   if (incremental_toggle)
     {
@@ -323,15 +333,6 @@ gradient_options_gui (GimpPaintOptions *paint_options,
       g_object_set_data (G_OBJECT (button), "inverse_sensitive",
                          incremental_toggle);
     }
-
-  /*  the gradient view  */
-  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config), 2,
-                                       "gradient-view-type",
-                                       "gradient-view-size",
-                                       "gradient-reverse");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Gradient:"), 0.0, 0.5,
-                             button, 2, TRUE);
 
   return frame;
 }

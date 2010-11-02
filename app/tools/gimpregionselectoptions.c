@@ -209,22 +209,20 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  table = gtk_table_new (2, 3, FALSE);
+  /*  the threshold scale  */
+  scale = gimp_prop_spin_scale_new (config, "threshold",
+                                    _("Threshold"),
+                                    1.0, 16.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  /*  the select criterion combo  */
+  table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  /*  the threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "threshold",
-                                    _("Threshold"),
-                                    1.0, 16.0, 1);
-  gtk_table_attach (GTK_TABLE (table), scale,
-                    0, 3, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
-  gtk_widget_show (scale);
-
-  /*  the select criterion combo  */
   combo = gimp_prop_enum_combo_box_new (config, "select-criterion", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Select by:"), 0.0, 0.5,

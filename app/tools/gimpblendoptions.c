@@ -202,41 +202,35 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkWidget *vbox2;
   GtkWidget *frame;
+  GtkWidget *scale;
   GtkWidget *combo;
   GtkWidget *button;
-  GtkWidget *scale;
 
   table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
 
   /*  the gradient  */
-  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                       _("Gradient"), 2,
                                        "gradient-view-type",
                                        "gradient-view-size",
                                        "gradient-reverse");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Gradient:"), 0.0, 0.5,
-                             button, 2, TRUE);
-
-  /*  the offset scale  */
-  gimp_prop_scale_entry_new (config, "offset",
-                             GTK_TABLE (table), 0, 3,
-                             _("Offset:"),
-                             1.0, 10.0, 1,
-                             FALSE, 0.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), button, 0, 3, 2, 3,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_widget_show (button);
 
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Shape:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("Repeat:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
@@ -244,6 +238,16 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                     G_CALLBACK (blend_options_gradient_type_notify),
                     combo);
 
+  /*  the offset scale  */
+  scale = gimp_prop_spin_scale_new (config, "offset",
+                                    _("Offset"),
+                                    1.0, 10.0, 1);
+  gtk_table_attach (GTK_TABLE (table), scale,
+                    0, 3, 5, 6,
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_widget_show (scale);
+
+  /*  the dither toggle  */
   button = gimp_prop_check_button_new (config, "dither",
                                        _("Dithering"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);

@@ -232,7 +232,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+  hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                    NULL, 2,
                                     "pattern-view-type", "pattern-view-size");
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
                              GIMP_PATTERN_BUCKET_FILL, TRUE);

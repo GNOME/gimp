@@ -136,7 +136,8 @@ gimp_fill_editor_constructor (GType                   type,
                                GIMP_FILL_STYLE_SOLID, FALSE);
 
       pattern_box = gimp_prop_pattern_box_new (NULL,
-                                               GIMP_CONTEXT (editor->options), 2,
+                                               GIMP_CONTEXT (editor->options),
+                                               NULL, 2,
                                                "pattern-view-type",
                                                "pattern-view-size");
       gimp_enum_radio_box_add (GTK_BOX (box), pattern_box,

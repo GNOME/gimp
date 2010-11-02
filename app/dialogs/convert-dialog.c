@@ -387,7 +387,7 @@ convert_dialog_palette_box (IndexedDialog *dialog)
                     G_CALLBACK (convert_dialog_palette_changed),
                     dialog);
 
-  return gimp_palette_box_new (dialog->container, dialog->context, 4);
+  return gimp_palette_box_new (dialog->container, dialog->context, NULL, 4);
 }
 
 static gboolean

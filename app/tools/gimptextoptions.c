@@ -470,17 +470,17 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkSizeGroup    *size_group;
   gint             row = 0;
 
-  table = gtk_table_new (2, 3, FALSE);
+  hbox = gimp_prop_font_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                 _("Font"), 2,
+                                 "font-view-type", "font-view-size");
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
-
-  hbox = gimp_prop_font_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
-                                 "font-view-type", "font-view-size");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Font:"), 0.0, 0.5,
-                             hbox, 2, FALSE);
 
   entry = gimp_prop_size_entry_new (config,
                                     "font-size", FALSE, "font-size-unit", "%a",
