@@ -80,23 +80,19 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *label;
   GtkWidget        *button;
   GtkWidget        *incremental_toggle = NULL;
-  gint              table_row          = 0;
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the main table  */
-  table = gtk_table_new (3, 4, FALSE);
+  table = gtk_table_new (3, 1, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  g_object_set_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY, table);
-
   /*  the paint mode menu  */
   menu  = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                      _("Mode:"), 0.0, 0.5,
                                      menu, 2, FALSE);
 
@@ -112,43 +108,30 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   /*  the opacity scale  */
   scale = gimp_prop_opacity_spin_scale_new (config, "opacity",
                                             _("Opacity"));
-  gtk_table_attach (GTK_TABLE (table), scale,
-                    0, 3, table_row, table_row + 1,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
-  table_row++;
 
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
-      GtkObject *adj;
       GtkWidget *hbox;
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
                                         _("Brush"), 2,
                                         "brush-view-type", "brush-view-size");
-      gtk_table_attach (GTK_TABLE (table), button,
-                        0, 3, table_row, table_row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
-      table_row++;
 
       button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
                                            _("Dynamics"), 2,
                                            "dynamics-view-type",
                                            "dynamics-view-size");
-      gtk_table_attach (GTK_TABLE (table), button,
-                        0, 3, table_row, table_row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
-      table_row++;
 
       hbox = gtk_hbox_new (FALSE, 2);
-      gtk_table_attach (GTK_TABLE (table), hbox,
-                        0, 3, table_row, table_row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
-      table_row++;
 
       scale = gimp_prop_spin_scale_new (config, "brush-size",
                                         _("Size"),
@@ -170,20 +153,14 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
                                         _("Aspect Ratio"),
                                         0.01, 0.1, 2);
-      gtk_table_attach (GTK_TABLE (table), scale,
-                        0, 3, table_row, table_row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
       gtk_widget_show (scale);
-      table_row++;
 
       scale = gimp_prop_spin_scale_new (config, "brush-angle",
                                         _("Angle"),
                                         1.0, 5.0, 2);
-      gtk_table_attach (GTK_TABLE (table), scale,
-                        0, 3, table_row, table_row + 1,
-                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
       gtk_widget_show (scale);
-      table_row++;
     }
 
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
@@ -253,6 +230,7 @@ fade_options_gui (GimpPaintOptions *paint_options,
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-fade",
                                          _("Fade out"),

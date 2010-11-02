@@ -206,31 +206,34 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GtkWidget *combo;
   GtkWidget *button;
 
-  table = g_object_get_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY);
-
   /*  the gradient  */
   button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (tool_options),
                                        _("Gradient"), 2,
                                        "gradient-view-type",
                                        "gradient-view-size",
                                        "gradient-reverse");
-  gtk_table_attach (GTK_TABLE (table), button, 0, 3, 2, 3,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Shape:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Repeat:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
@@ -242,9 +245,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "offset",
                                     _("Offset"),
                                     1.0, 10.0, 1);
-  gtk_table_attach (GTK_TABLE (table), scale,
-                    0, 3, 5, 6,
-                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /*  the dither toggle  */
