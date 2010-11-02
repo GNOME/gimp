@@ -387,7 +387,6 @@ preview_compute (void)
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
   cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
-
   gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
   gdk_cursor_unref (cursor);
 
@@ -438,13 +437,9 @@ preview_events (GtkWidget *area,
 }
 
 gboolean
-preview_expose (GtkWidget *area,
-                GdkEventExpose *eevent)
+preview_draw (GtkWidget *area,
+              cairo_t   *cr)
 {
-  cairo_t *cr;
-
-  cr = gdk_cairo_create (eevent->window);
-
   cairo_set_source_surface (cr, preview_surface, 0.0, 0.0);
 
   cairo_paint (cr);
@@ -454,8 +449,6 @@ preview_expose (GtkWidget *area,
     {
       draw_handles ();
     }
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
