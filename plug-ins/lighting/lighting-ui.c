@@ -1078,8 +1078,8 @@ main_dialog (GimpDrawable *drawable)
   g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
                     previewarea);
-  g_signal_connect (previewarea, "expose-event",
-                    G_CALLBACK (preview_expose),
+  g_signal_connect (previewarea, "draw",
+                    G_CALLBACK (preview_draw),
                     previewarea);
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
   gtk_widget_show (previewarea);
