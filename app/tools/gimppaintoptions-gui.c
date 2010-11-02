@@ -157,6 +157,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (scale);
 
       button = gimp_stock_button_new (GTK_STOCK_REFRESH, NULL);
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+      gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                GTK_STOCK_REFRESH, GTK_ICON_SIZE_MENU);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
