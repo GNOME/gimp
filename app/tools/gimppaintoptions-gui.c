@@ -167,22 +167,22 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                         G_CALLBACK (gimp_paint_options_gui_reset_size),
                         options);
 
-      adj = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
-                                       GTK_TABLE (table), 0, table_row++,
-                                       /* Label for a slider that affects
-                                          aspect ratio for brushes */
-                                       _("Aspect:"),
-                                       0.01, 0.1, 2,
-                                       FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj, TRUE);
-
-      button = gimp_prop_spin_scale_new (config, "brush-angle",
-                                         _("Angle"),
-                                         1.0, 5.0, 2);
-      gtk_table_attach (GTK_TABLE (table), button,
+      scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
+                                        _("Aspect Ratio"),
+                                        0.01, 0.1, 2);
+      gtk_table_attach (GTK_TABLE (table), scale,
                         0, 3, table_row, table_row + 1,
                         GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
-      gtk_widget_show (button);
+      gtk_widget_show (scale);
+      table_row++;
+
+      scale = gimp_prop_spin_scale_new (config, "brush-angle",
+                                        _("Angle"),
+                                        1.0, 5.0, 2);
+      gtk_table_attach (GTK_TABLE (table), scale,
+                        0, 3, table_row, table_row + 1,
+                        GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_SHRINK, 0, 0);
+      gtk_widget_show (scale);
       table_row++;
     }
 
