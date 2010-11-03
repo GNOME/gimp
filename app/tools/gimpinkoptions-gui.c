@@ -51,6 +51,7 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   GtkWidget      *blob_vbox;
   GtkWidget      *hbox;
   GtkWidget      *editor;
+  GtkSizeGroup   *size_group;
 
   /* adjust sliders */
   frame = gimp_frame_new (_("Adjustment"));
@@ -105,24 +106,31 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  /*  bottom hbox */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  /* Blob type radiobuttons */
-  frame = gimp_prop_enum_radio_frame_new (config, "blob-type",
-                                          _("Type"), 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  /* Blob shape widgets */
+  frame = gimp_frame_new (_("Shape"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
+
+  /* Blob type radiobuttons */
+  blob_vbox = gimp_prop_enum_radio_box_new (config, "blob-type",
+                                            0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), blob_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (blob_vbox);
+
+  gtk_size_group_add_widget (size_group, blob_vbox);
+
   {
-    GtkWidget       *frame_child = gtk_bin_get_child (GTK_BIN (frame));
     GList           *children;
     GList           *list;
     GimpInkBlobType  blob_type;
 
-    children = gtk_container_get_children (GTK_CONTAINER (frame_child));
+    children = gtk_container_get_children (GTK_CONTAINER (blob_vbox));
 
     for (list = children, blob_type = GIMP_INK_BLOB_TYPE_ELLIPSE;
          list;
@@ -130,6 +138,9 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
       {
         GtkWidget *radio = GTK_WIDGET (list->data);
         GtkWidget *blob;
+
+        gtk_button_set_relief (GTK_BUTTON (radio), GTK_RELIEF_NONE);
+        gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (radio), FALSE);
 
         gtk_container_remove (GTK_CONTAINER (radio),
                               gtk_bin_get_child (GTK_BIN (radio)));
@@ -142,24 +153,16 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
     g_list_free (children);
   }
 
-  /* Blob shape widget */
-  frame = gimp_frame_new (_("Shape"));
+  frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  blob_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (frame), blob_vbox);
-  gtk_widget_show (blob_vbox);
-
-  frame = gtk_aspect_frame_new (NULL, 0.0, 0.5, 1.0, FALSE);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (blob_vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
+  gtk_size_group_add_widget (size_group, frame);
 
   editor = gimp_blob_editor_new (ink_options->blob_type,
                                  ink_options->blob_aspect,
                                  ink_options->blob_angle);
-  gtk_widget_set_size_request (editor, 60, 60);
   gtk_container_add (GTK_CONTAINER (frame), editor);
   gtk_widget_show (editor);
 
