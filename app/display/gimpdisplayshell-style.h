@@ -31,16 +31,13 @@ void   gimp_display_shell_set_sample_point_style  (GimpDisplayShell *shell,
 void   gimp_display_shell_set_grid_style          (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
                                                    GimpGrid         *grid);
-void   gimp_display_shell_set_cursor_style        (GimpDisplayShell *shell,
-                                                   cairo_t          *cr);
 void   gimp_display_shell_set_pen_style           (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
-                                                   GimpContext      *context,
-                                                   GimpActiveColor   active,
+                                                   const GimpRGB    *color,
                                                    gint              width);
 void   gimp_display_shell_set_layer_style         (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
-                                                   GimpDrawable     *drawable);
+                                                   GimpLayer        *layer);
 void   gimp_display_shell_set_selection_out_style (GimpDisplayShell *shell,
                                                    cairo_t          *cr);
 void   gimp_display_shell_set_selection_in_style  (GimpDisplayShell *shell,
@@ -48,12 +45,14 @@ void   gimp_display_shell_set_selection_in_style  (GimpDisplayShell *shell,
                                                    gint              index);
 void   gimp_display_shell_set_vectors_bg_style    (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
-                                                   gdouble           width,
                                                    gboolean          active);
 void   gimp_display_shell_set_vectors_fg_style    (GimpDisplayShell *shell,
                                                    cairo_t          *cr,
-                                                   gdouble           width,
                                                    gboolean          active);
+
+void   gimp_display_shell_set_passe_partout_style (GimpDisplayShell *shell,
+                                                   cairo_t          *cr);
+
 void   gimp_display_shell_set_tool_bg_style       (GimpDisplayShell *shell,
                                                    cairo_t          *cr);
 void   gimp_display_shell_set_tool_fg_style       (GimpDisplayShell *shell,

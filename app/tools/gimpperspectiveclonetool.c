@@ -36,6 +36,7 @@
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 
 #include "gimpperspectiveclonetool.h"
@@ -746,7 +747,13 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
 
   if (clone_tool->use_handles)
     {
+      GimpCanvasGroup *stroke_group;
+
+      stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
+
       /*  draw the bounding box  */
+      gimp_draw_tool_push_group (draw_tool, stroke_group);
+
       gimp_draw_tool_add_line (draw_tool,
                                clone_tool->tx1, clone_tool->ty1,
                                clone_tool->tx2, clone_tool->ty2);
@@ -760,27 +767,29 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
                                clone_tool->tx3, clone_tool->ty3,
                                clone_tool->tx1, clone_tool->ty1);
 
+      gimp_draw_tool_pop_group (draw_tool);
+
       /*  draw the tool handles  */
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx1, clone_tool->ty1,
                                  HANDLE_SIZE, HANDLE_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx2, clone_tool->ty2,
                                  HANDLE_SIZE, HANDLE_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx3, clone_tool->ty3,
                                  HANDLE_SIZE, HANDLE_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx4, clone_tool->ty4,
                                  HANDLE_SIZE, HANDLE_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
     }
 
   if (GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE &&
@@ -796,7 +805,7 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
                                  clone_tool->src_x,
                                  clone_tool->src_y,
                                  TARGET_SIZE, TARGET_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
 
       draw_tool->display = tmp_display;
     }

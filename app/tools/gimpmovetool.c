@@ -45,10 +45,10 @@
 
 #include "widgets/gimphelp-ids.h"
 
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-draw.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
@@ -60,6 +60,8 @@
 #include "gimp-intl.h"
 
 
+#define GUIDE_POSITION_INVALID G_MININT
+
 #define SWAP_ORIENT(orient) ((orient) == GIMP_ORIENTATION_HORIZONTAL ? \
                              GIMP_ORIENTATION_VERTICAL : \
                              GIMP_ORIENTATION_HORIZONTAL)
@@ -67,9 +69,6 @@
 
 /*  local function prototypes  */
 
-static void   gimp_move_tool_control        (GimpTool              *tool,
-                                             GimpToolAction         action,
-                                             GimpDisplay           *display);
 static void   gimp_move_tool_button_press   (GimpTool              *tool,
                                              const GimpCoords      *coords,
                                              guint32                time,
@@ -140,7 +139,6 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->control        = gimp_move_tool_control;
   tool_class->button_press   = gimp_move_tool_button_press;
   tool_class->button_release = gimp_move_tool_button_release;
   tool_class->motion         = gimp_move_tool_motion;
@@ -161,7 +159,7 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->guide              = NULL;
 
   move_tool->moving_guide       = FALSE;
-  move_tool->guide_position     = -1;
+  move_tool->guide_position     = GUIDE_POSITION_INVALID;
   move_tool->guide_orientation  = GIMP_ORIENTATION_UNKNOWN;
 
   move_tool->saved_type         = GIMP_TRANSFORM_TYPE_LAYER;
@@ -173,41 +171,6 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MOVE);
-}
-
-static void
-gimp_move_tool_control (GimpTool       *tool,
-                        GimpToolAction  action,
-                        GimpDisplay    *display)
-{
-  GimpMoveTool     *move  = GIMP_MOVE_TOOL (tool);
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
-
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
-    case GIMP_TOOL_ACTION_RESUME:
-      if (move->guide && gimp_display_shell_get_show_guides (shell))
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
-          cairo_destroy (cr);
-        }
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      if (move->guide && gimp_display_shell_get_show_guides (shell))
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
-          cairo_destroy (cr);
-        }
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -255,9 +218,9 @@ gimp_move_tool_button_press (GimpTool            *tool,
         }
       else if (options->move_type == GIMP_TRANSFORM_TYPE_LAYER)
         {
-          GimpGuide *guide;
-          GimpLayer *layer;
-          gint       snap_distance = display->config->snap_distance;
+          GimpGuide  *guide;
+          GimpLayer  *layer;
+          const gint  snap_distance = display->config->snap_distance;
 
           if (gimp_display_shell_get_show_guides (shell) &&
               (guide = gimp_image_find_guide (image,
@@ -276,8 +239,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
               gimp_tool_control_activate (tool->control);
 
-              gimp_display_shell_selection_control (shell,
-                                                    GIMP_SELECTION_PAUSE);
+              gimp_display_shell_selection_pause (shell);
 
               gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -386,10 +348,10 @@ gimp_move_tool_button_release (GimpTool              *tool,
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
         {
           move->moving_guide      = FALSE;
-          move->guide_position    = -1;
+          move->guide_position    = GUIDE_POSITION_INVALID;
           move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
 
-          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_resume (shell);
           return;
         }
 
@@ -450,19 +412,15 @@ gimp_move_tool_button_release (GimpTool              *tool,
             }
         }
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_resume (shell);
       gimp_image_flush (image);
 
-      if (move->guide)
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
-          cairo_destroy (cr);
-        }
-
       move->moving_guide      = FALSE;
-      move->guide_position    = -1;
+      move->guide_position    = GUIDE_POSITION_INVALID;
       move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
+
+      if (move->guide)
+        gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
     }
   else
     {
@@ -528,7 +486,7 @@ gimp_move_tool_motion (GimpTool         *tool,
       if (tx < 0 || tx >= shell->disp_width ||
           ty < 0 || ty >= shell->disp_height)
         {
-          move->guide_position = -1;
+          move->guide_position = GUIDE_POSITION_INVALID;
 
           delete_guide = TRUE;
         }
@@ -670,27 +628,29 @@ gimp_move_tool_oper_update (GimpTool         *tool,
       gimp_display_shell_get_show_guides (shell)      &&
       proximity)
     {
-      gint snap_distance = display->config->snap_distance;
+      const gint snap_distance = display->config->snap_distance;
 
       guide = gimp_image_find_guide (image, coords->x, coords->y,
                                      FUNSCALEX (shell, snap_distance),
                                      FUNSCALEY (shell, snap_distance));
     }
 
-  if (move->guide && move->guide != guide)
+  if (move->guide != guide)
     {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
-      cairo_destroy (cr);
-    }
+      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
 
-  move->guide = guide;
+      gimp_draw_tool_pause (draw_tool);
 
-  if (move->guide)
-    {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_guide (shell, cr, move->guide, TRUE);
-      cairo_destroy (cr);
+      if (gimp_draw_tool_is_active (draw_tool) &&
+          draw_tool->display != display)
+        gimp_draw_tool_stop (draw_tool);
+
+      move->guide = guide;
+
+      if (! gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_start (draw_tool, display);
+
+      gimp_draw_tool_resume (draw_tool);
     }
 }
 
@@ -746,9 +706,9 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
     }
   else
     {
-      GimpGuide *guide;
-      GimpLayer *layer;
-      gint       snap_distance = display->config->snap_distance;
+      GimpGuide  *guide;
+      GimpLayer  *layer;
+      const gint  snap_distance = display->config->snap_distance;
 
       if (gimp_display_shell_get_show_guides (shell) &&
           (guide = gimp_image_find_guide (image, coords->x, coords->y,
@@ -792,11 +752,23 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMoveTool *move = GIMP_MOVE_TOOL (draw_tool);
 
-  if (move->moving_guide && move->guide_position != -1)
+  if (move->guide)
     {
-      gimp_draw_tool_add_guide_line (draw_tool,
-                                     move->guide_orientation,
-                                     move->guide_position);
+      GimpCanvasItem *item;
+
+      item = gimp_draw_tool_add_guide (draw_tool,
+                                       gimp_guide_get_orientation (move->guide),
+                                       gimp_guide_get_position (move->guide),
+                                       TRUE);
+      gimp_canvas_item_set_highlight (item, TRUE);
+    }
+
+  if (move->moving_guide && move->guide_position != GUIDE_POSITION_INVALID)
+    {
+      gimp_draw_tool_add_guide (draw_tool,
+                                move->guide_orientation,
+                                move->guide_position,
+                                FALSE);
     }
 }
 
@@ -829,24 +801,18 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 {
   GimpTool *tool = GIMP_TOOL (move);
 
-  gimp_display_shell_selection_control (gimp_display_get_shell (display),
-                                        GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_pause (gimp_display_get_shell (display));
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
-  if (move->guide)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_guide (shell, cr, move->guide, FALSE);
-      cairo_destroy (cr);
-    }
+  if (gimp_draw_tool_is_active  (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   move->guide             = NULL;
   move->moving_guide      = TRUE;
-  move->guide_position    = -1;
+  move->guide_position    = GUIDE_POSITION_INVALID;
   move->guide_orientation = orientation;
 
   gimp_tool_set_cursor (tool, display,

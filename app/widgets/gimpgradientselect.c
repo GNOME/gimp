@@ -117,7 +117,7 @@ gimp_gradient_select_constructor (GType                  type,
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-  gtk_container_add (GTK_CONTAINER (content_area), dialog->view);
+  gtk_box_pack_start (GTK_BOX (content_area), dialog->view, TRUE, TRUE, 0);
   gtk_widget_show (dialog->view);
 
   return object;

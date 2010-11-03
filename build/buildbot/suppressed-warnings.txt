@@ -13,7 +13,6 @@
 # This will die in GIMP 3.0, don't bother fixing...
 :    .*gimp-composite-.* warning: function declaration isn.*t a prototype.*
 :    .*gimp-composite-.* warning: unused variable .*
-:    .*gimpcpuaccel.c:182: warning: dereferencing type-punned pointer will break strict-aliasing rules.*
 
 # Well-known harmless warnings
 :    .*app/core/gimpimagemap.c:.*: warning: implicit declaration of function .*gegl_node_get_pad.*
@@ -27,3 +26,16 @@
 # fixed properly
 :    <stdout>.* warning: .*yyunput.* defined but not used
 :    <stdout>.* warning: .*input.* defined but not used
+
+# Comes from AM_PROG_LIBTOOL, not much we can do
+:    ^configure.ac:157: warning: AC_LANG_CONFTEST: no AC_LANG_SOURCE call detected in body$
+
+# jas_config.h redefines PACKAGE_NAME etc
+:    .*jas_config.h:.*:1: warning: .* redefined$
+:    .*config.h:.*:1: warning: this is the location of the previous definition$
+
+# Tons of deprecation warnings, hopefully we never have to fix these...
+:    .*file-.*: warning: .* is deprecated \(declared at .*/png.h:.*\)$
+
+# Temporary suppression until Bug 631543 is fixed
+.*plug-ins/pygimp/pygimp-drawable.c:.*: warning: implicit declaration of function .*gimp_drawable_transform_.*

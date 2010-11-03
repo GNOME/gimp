@@ -1068,14 +1068,16 @@ load_image (const gchar        *filename,
             }
 
           if (flip_horizontal)
-            gimp_drawable_transform_flip_simple (layer,
-                                                 GIMP_ORIENTATION_HORIZONTAL,
-                                                 TRUE, 0.0, TRUE);
+            gimp_item_transform_flip_simple (layer,
+                                             GIMP_ORIENTATION_HORIZONTAL,
+                                             TRUE /*auto_center*/,
+                                             -1.0 /*axis*/);
 
           if (flip_vertical)
-            gimp_drawable_transform_flip_simple (layer,
-                                                 GIMP_ORIENTATION_VERTICAL,
-                                                 TRUE, 0.0, TRUE);
+            gimp_item_transform_flip_simple (layer,
+                                             GIMP_ORIENTATION_VERTICAL,
+                                             TRUE /*auto_center*/,
+                                             -1.0 /*axis*/);
         }
 
       gimp_drawable_flush (channel[0].drawable);

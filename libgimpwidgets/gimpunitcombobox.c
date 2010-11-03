@@ -1,28 +1,29 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1999 Peter Mattis and Spencer Kimball
  *
  * gimpunitcombobox.c
  * Copyright (C) 2004, 2008  Sven Neumann <sven@gimp.org>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library.  If not, see
+ * <http://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
 
 #include <gtk/gtk.h>
 
-#include "widgets-types.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpunitcombobox.h"
 #include "gimpunitstore.h"
@@ -130,16 +131,47 @@ gimp_unit_combo_box_new_with_model (GimpUnitStore *model)
 GimpUnit
 gimp_unit_combo_box_get_active (GimpUnitComboBox *combo)
 {
+  GtkTreeIter iter;
+  gint        unit;
+
   g_return_val_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo), -1);
 
-  return gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
+  gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter);
+
+  gtk_tree_model_get (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)), &iter,
+                      GIMP_UNIT_STORE_UNIT, &unit,
+                      -1);
+
+  return (GimpUnit) unit;
 }
 
 void
 gimp_unit_combo_box_set_active (GimpUnitComboBox *combo,
                                 GimpUnit          unit)
 {
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
   g_return_if_fail (GIMP_IS_UNIT_COMBO_BOX (combo));
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), unit);
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gint iter_unit;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_UNIT_STORE_UNIT, &iter_unit,
+                          -1);
+
+      if (unit == (GimpUnit) iter_unit)
+        {
+          gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+          break;
+        }
+    }
+
 }

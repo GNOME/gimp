@@ -44,39 +44,62 @@ struct _GimpCanvasItemClass
 {
   GimpObjectClass  parent_class;
 
-  void        (* draw)        (GimpCanvasItem   *item,
-                               GimpDisplayShell *shell,
-                               cairo_t          *cr);
-  GdkRegion * (* get_extents) (GimpCanvasItem   *item,
-                               GimpDisplayShell *shell);
+  /*  signals  */
+  void             (* update)      (GimpCanvasItem   *item,
+                                    cairo_region_t   *region);
+
+  /*  virtual functions  */
+  void             (* draw)        (GimpCanvasItem   *item,
+                                    GimpDisplayShell *shell,
+                                    cairo_t          *cr);
+  cairo_region_t * (* get_extents) (GimpCanvasItem   *item,
+                                    GimpDisplayShell *shell);
+
+  void             (* stroke)      (GimpCanvasItem   *item,
+                                    GimpDisplayShell *shell,
+                                    cairo_t          *cr);
+  void             (* fill)        (GimpCanvasItem   *item,
+                                    GimpDisplayShell *shell,
+                                    cairo_t          *cr);
 };
 
 
-GType       gimp_canvas_item_get_type         (void) G_GNUC_CONST;
+GType            gimp_canvas_item_get_type         (void) G_GNUC_CONST;
 
-void        gimp_canvas_item_draw             (GimpCanvasItem   *item,
-                                               GimpDisplayShell *shell,
-                                               cairo_t          *cr);
-GdkRegion * gimp_canvas_item_get_extents      (GimpCanvasItem   *item,
-                                               GimpDisplayShell *shell);
+void             gimp_canvas_item_draw             (GimpCanvasItem   *item,
+                                                    cairo_t          *cr);
+cairo_region_t * gimp_canvas_item_get_extents      (GimpCanvasItem   *item);
 
-void        gimp_canvas_item_set_line_cap     (GimpCanvasItem   *item,
-                                               cairo_line_cap_t  line_cap);
-void        gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
-                                               gboolean          highlight);
+void             gimp_canvas_item_set_visible      (GimpCanvasItem   *item,
+                                                    gboolean          visible);
+gboolean         gimp_canvas_item_get_visible      (GimpCanvasItem   *item);
 
-void        gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
-void        gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
+void             gimp_canvas_item_set_line_cap     (GimpCanvasItem   *item,
+                                                    cairo_line_cap_t  line_cap);
+
+void             gimp_canvas_item_set_highlight    (GimpCanvasItem   *item,
+                                                    gboolean          highlight);
+gboolean         gimp_canvas_item_get_highlight    (GimpCanvasItem   *item);
+
+void             gimp_canvas_item_begin_change     (GimpCanvasItem   *item);
+void             gimp_canvas_item_end_change       (GimpCanvasItem   *item);
+
+void             gimp_canvas_item_suspend_stroking (GimpCanvasItem   *item);
+void             gimp_canvas_item_resume_stroking  (GimpCanvasItem   *item);
+
+void             gimp_canvas_item_suspend_filling  (GimpCanvasItem   *item);
+void             gimp_canvas_item_resume_filling   (GimpCanvasItem   *item);
 
 
 /*  protected  */
 
-void        _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
-                                               GimpDisplayShell *shell,
-                                               cairo_t          *cr);
-void        _gimp_canvas_item_fill            (GimpCanvasItem   *item,
-                                               GimpDisplayShell *shell,
-                                               cairo_t          *cr);
+void             _gimp_canvas_item_update          (GimpCanvasItem   *item,
+                                                    cairo_region_t   *region);
+gboolean         _gimp_canvas_item_needs_update    (GimpCanvasItem   *item);
+void             _gimp_canvas_item_stroke          (GimpCanvasItem   *item,
+                                                    cairo_t          *cr);
+void             _gimp_canvas_item_fill            (GimpCanvasItem   *item,
+                                                    cairo_t          *cr);
 
 
 #endif /* __GIMP_CANVAS_ITEM_H__ */

@@ -1546,6 +1546,7 @@ add_merged_image (const gint32  image_id,
 
           case PSD_COMP_ZIP:                 /* ? */
           case PSD_COMP_ZIP_PRED:
+          default:
             g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                         _("Unsupported compression mode: %d"), comp_mode);
             return -1;

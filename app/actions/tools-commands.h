@@ -27,7 +27,7 @@ void   tools_color_average_radius_cmd_callback      (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 
-void   tools_paint_brush_scale_cmd_callback         (GtkAction   *action,
+void   tools_paint_brush_size_cmd_callback          (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 

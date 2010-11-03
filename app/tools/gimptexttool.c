@@ -56,6 +56,7 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpviewabledialog.h"
 
+#include "display/gimpcanvasgroup.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -782,7 +783,7 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                 "narrow-mode", TRUE,
                 NULL);
 
-  gimp_rectangle_tool_draw (draw_tool);
+  gimp_rectangle_tool_draw (draw_tool, NULL);
 
   if (! text_tool->text  ||
       ! text_tool->layer ||
@@ -805,13 +806,15 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
       gint           off_x, off_y;
       gboolean       overwrite;
 
-      gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect);
+      gimp_text_tool_editor_get_cursor_rect (text_tool,
+                                             text_tool->overwrite_mode,
+                                             &cursor_rect);
 
       gimp_item_get_offset (GIMP_ITEM (text_tool->layer), &off_x, &off_y);
       cursor_rect.x += off_x;
       cursor_rect.y += off_y;
 
-      overwrite = text_tool->overwrite_mode && cursor_rect.width > 0;
+      overwrite = text_tool->overwrite_mode && cursor_rect.width != 0;
 
       gimp_draw_tool_add_text_cursor (draw_tool, &cursor_rect, overwrite);
     }
@@ -822,6 +825,7 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
 {
   GimpTextTool    *text_tool = GIMP_TEXT_TOOL (draw_tool);
   GtkTextBuffer   *buffer    = GTK_TEXT_BUFFER (text_tool->buffer);
+  GimpCanvasGroup *fill_group;
   PangoLayout     *layout;
   gint             offset_x;
   gint             offset_y;
@@ -830,6 +834,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   GtkTextIter      sel_start, sel_end;
   gint             min, max;
   gint             i;
+
+  fill_group = gimp_draw_tool_add_fill_group (draw_tool);
 
   gtk_text_buffer_get_selection_bounds (buffer, &sel_start, &sel_end);
 
@@ -845,6 +851,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
   offset_y += off_y;
 
   iter = pango_layout_get_iter (layout);
+
+  gimp_draw_tool_push_group (draw_tool, fill_group);
 
   do
     {
@@ -877,6 +885,8 @@ gimp_text_tool_draw_selection (GimpDrawTool *draw_tool)
         }
     }
   while (pango_layout_iter_next_char (iter));
+
+  gimp_draw_tool_pop_group (draw_tool);
 
   pango_layout_iter_free (iter);
 }
@@ -1730,7 +1740,7 @@ gimp_text_tool_clear_layout (GimpTextTool *text_tool)
     }
 }
 
-void
+gboolean
 gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
 {
   if (! text_tool->layout && text_tool->text)
@@ -1739,6 +1749,8 @@ gimp_text_tool_ensure_layout (GimpTextTool *text_tool)
 
       text_tool->layout = gimp_text_layout_new (text_tool->layer->text, image);
     }
+
+  return text_tool->layout != NULL;
 }
 
 void

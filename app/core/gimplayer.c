@@ -856,10 +856,7 @@ gimp_layer_invalidate_boundary (GimpDrawable *drawable)
     return;
 
   /*  Turn the current selection off  */
-  gimp_image_selection_control (image, GIMP_SELECTION_OFF);
-
-  /*  clear the affected region surrounding the layer  */
-  gimp_image_selection_control (image, GIMP_SELECTION_LAYER_OFF);
+  gimp_image_selection_invalidate (image);
 
   /*  get the selection mask channel  */
   mask = gimp_image_get_mask (image);
@@ -1916,76 +1913,6 @@ gimp_layer_resize_to_image (GimpLayer   *layer,
                     offset_x, offset_y);
 
   gimp_image_undo_group_end (image);
-}
-
-BoundSeg *
-gimp_layer_boundary (GimpLayer *layer,
-                     gint      *num_segs)
-{
-  GimpItem *item;
-  BoundSeg *new_segs;
-  gint      offset_x;
-  gint      offset_y;
-
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-
-  item = GIMP_ITEM (layer);
-
-  if (gimp_layer_is_floating_sel (layer))
-    {
-      GimpDrawable *fs_drawable;
-
-      fs_drawable = gimp_layer_get_floating_sel_drawable (layer);
-
-      if (GIMP_IS_CHANNEL (fs_drawable))
-        {
-          /*  if the owner drawable is a channel, just return nothing  */
-
-          *num_segs = 0;
-
-          return NULL;
-        }
-      else
-        {
-          /*  otherwise, set the layer to the owner drawable  */
-
-          layer = GIMP_LAYER (fs_drawable);
-        }
-    }
-
-  /*  Create the four boundary segments that encompass this
-   *  layer's boundary.
-   */
-  new_segs  = g_new (BoundSeg, 4);
-  *num_segs = 4;
-
-  gimp_item_get_offset (item, &offset_x, &offset_y);
-
-  new_segs[0].x1   = offset_x;
-  new_segs[0].y1   = offset_y;
-  new_segs[0].x2   = offset_x;
-  new_segs[0].y2   = offset_y + gimp_item_get_height (item);
-  new_segs[0].open = 1;
-
-  new_segs[1].x1   = offset_x;
-  new_segs[1].y1   = offset_y;
-  new_segs[1].x2   = offset_x + gimp_item_get_width (item);
-  new_segs[1].y2   = offset_y;
-  new_segs[1].open = 1;
-
-  new_segs[2].x1   = offset_x + gimp_item_get_width (item);
-  new_segs[2].y1   = offset_y;
-  new_segs[2].x2   = offset_x + gimp_item_get_width  (item);
-  new_segs[2].y2   = offset_y + gimp_item_get_height (item);
-  new_segs[2].open = 0;
-
-  new_segs[3].x1   = offset_x;
-  new_segs[3].y1   = offset_y + gimp_item_get_height (item);
-  new_segs[3].x2   = offset_x + gimp_item_get_width  (item);
-  new_segs[3].y2   = offset_y + gimp_item_get_height (item);
-  new_segs[3].open = 0;
-
-  return new_segs;
 }
 
 /**********************/

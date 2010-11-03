@@ -49,7 +49,7 @@ enum
 };
 
 
-static void      gimp_browser_destroy          (GtkObject             *object);
+static void      gimp_browser_dispose          (GObject               *object);
 
 static void      gimp_browser_combo_changed    (GtkComboBox           *combo,
                                                 GimpBrowser           *browser);
@@ -72,7 +72,7 @@ static guint browser_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_browser_class_init (GimpBrowserClass *klass)
 {
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   browser_signals[SEARCH] =
     g_signal_new ("search",
@@ -85,9 +85,9 @@ gimp_browser_class_init (GimpBrowserClass *klass)
                   G_TYPE_STRING,
                   G_TYPE_INT);
 
-  gtk_object_class->destroy = gimp_browser_destroy;
+  object_class->dispose = gimp_browser_dispose;
 
-  klass->search             = NULL;
+  klass->search         = NULL;
 }
 
 static void
@@ -164,7 +164,7 @@ gimp_browser_init (GimpBrowser *browser)
 }
 
 static void
-gimp_browser_destroy (GtkObject *object)
+gimp_browser_dispose (GObject *object)
 {
   GimpBrowser *browser = GIMP_BROWSER (object);
 
@@ -174,7 +174,7 @@ gimp_browser_destroy (GtkObject *object)
       browser->search_timeout_id = 0;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 

@@ -118,7 +118,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpParam         values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;

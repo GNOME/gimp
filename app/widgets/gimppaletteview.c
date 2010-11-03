@@ -189,9 +189,11 @@ gimp_palette_view_expose (GtkWidget      *widget,
       gdk_cairo_region (cr, eevent->region);
       cairo_clip (cr);
 
+      cairo_translate (cr, allocation.x, allocation.y);
+
       cairo_rectangle (cr,
-                       allocation.x + col * renderer->cell_width  + 0.5,
-                       allocation.y + row * renderer->cell_height + 0.5,
+                       col * renderer->cell_width  + 0.5,
+                       row * renderer->cell_height + 0.5,
                        renderer->cell_width,
                        renderer->cell_height);
 
@@ -226,7 +228,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
   view->dnd_entry = entry;
 
   if (! entry || bevent->button == 2)
-    return FALSE;
+    return TRUE;
 
   if (bevent->type == GDK_BUTTON_PRESS)
     g_signal_emit (view, view_signals[ENTRY_CLICKED], 0,
@@ -259,7 +261,7 @@ gimp_palette_view_button_press (GtkWidget      *widget,
       break;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
@@ -291,12 +293,18 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
   palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
 
-  if (gtk_widget_get_can_focus (widget) && ! gtk_widget_has_focus (widget))
+  if (gtk_widget_get_can_focus (widget) &&
+      ! gtk_widget_has_focus (widget))
     {
       gtk_widget_grab_focus (widget);
 
-      if (! view->selected && palette->colors)
-        gimp_palette_view_select_entry (view, palette->colors->data);
+      if (! view->selected &&
+          palette && gimp_palette_get_n_colors (palette) > 0)
+        {
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, 0);
+
+          gimp_palette_view_select_entry (view, entry);
+        }
 
       return TRUE;
     }
@@ -335,7 +343,7 @@ gimp_palette_view_focus (GtkWidget        *widget,
 
           position = view->selected->position + skip;
 
-          entry = g_list_nth_data (palette->colors, position);
+          entry = gimp_palette_get_entry (palette, position);
 
           if (entry)
             gimp_palette_view_select_entry (view, entry);
@@ -425,11 +433,16 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
                               gint             x,
                               gint             y)
 {
+  GimpPalette             *palette;
   GimpViewRendererPalette *renderer;
   GimpPaletteEntry        *entry = NULL;
   gint                     col, row;
 
+  palette  = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
   renderer = GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (view)->renderer);
+
+  if (! palette)
+    return NULL;
 
   col = x / renderer->cell_width;
   row = y / renderer->cell_height;
@@ -437,12 +450,8 @@ gimp_palette_view_find_entry (GimpPaletteView *view,
   if (col >= 0 && col < renderer->columns &&
       row >= 0 && row < renderer->rows)
     {
-      GimpPalette *palette;
-
-      palette = GIMP_PALETTE (GIMP_VIEW (view)->renderer->viewable);
-
-      entry = g_list_nth_data (palette->colors,
-                               row * renderer->columns + col);
+      entry = gimp_palette_get_entry (palette,
+                                      row * renderer->columns + col);
     }
 
   return entry;
@@ -477,8 +486,11 @@ gimp_palette_view_invalidate (GimpPalette     *palette,
 {
   view->dnd_entry = NULL;
 
-  if (view->selected && ! g_list_find (palette->colors, view->selected))
-    gimp_palette_view_select_entry (view, NULL);
+  if (view->selected &&
+      ! g_list_find (gimp_palette_get_colors (palette), view->selected))
+    {
+      gimp_palette_view_select_entry (view, NULL);
+    }
 }
 
 static void

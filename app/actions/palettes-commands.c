@@ -94,7 +94,6 @@ palettes_merge_callback (GtkWidget   *widget,
   GimpContainerEditor *editor;
   GimpPalette         *palette;
   GimpPalette         *new_palette;
-  GimpPaletteEntry    *entry;
   GList               *sel_list;
 
   editor = (GimpContainerEditor *) data;
@@ -115,7 +114,6 @@ palettes_merge_callback (GtkWidget   *widget,
   while (sel_list)
     {
       GimpListItem *list_item;
-      GList        *cols;
 
       list_item = GIMP_LIST_ITEM (sel_list->data);
 
@@ -123,9 +121,13 @@ palettes_merge_callback (GtkWidget   *widget,
 
       if (palette)
         {
-          for (cols = palette->colors; cols; cols = g_list_next (cols))
+          GList *cols;
+
+          for (cols = gimp_palette_get_colors (palette);
+               cols;
+               cols = g_list_next (cols))
             {
-              entry = (GimpPaletteEntry *) cols->data;
+              GimpPaletteEntry *entry = cols->data;
 
               gimp_palette_add_entry (new_palette,
                                       entry->name,

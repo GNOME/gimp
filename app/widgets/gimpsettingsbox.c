@@ -118,7 +118,7 @@ static void  gimp_settings_box_truncate_list     (GimpSettingsBox   *box,
                                                   gint               max_recent);
 
 
-G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpSettingsBox, gimp_settings_box, GTK_TYPE_BOX)
 
 #define parent_class gimp_settings_box_parent_class
 
@@ -202,6 +202,9 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
 static void
 gimp_settings_box_init (GimpSettingsBox *box)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_HORIZONTAL);
+
   gtk_box_set_spacing (GTK_BOX (box), 6);
 }
 
@@ -651,7 +654,7 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (box->editor_dialog));
-  gtk_container_add (GTK_CONTAINER (content_area), editor);
+  gtk_box_pack_start (GTK_BOX (content_area), editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
   gtk_widget_show (box->editor_dialog);

@@ -60,20 +60,20 @@ struct _GimpCanvasPolygonPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_polygon_finalize     (GObject          *object);
-static void        gimp_canvas_polygon_set_property (GObject          *object,
-                                                     guint             property_id,
-                                                     const GValue     *value,
-                                                     GParamSpec       *pspec);
-static void        gimp_canvas_polygon_get_property (GObject          *object,
-                                                     guint             property_id,
-                                                     GValue           *value,
-                                                     GParamSpec       *pspec);
-static void        gimp_canvas_polygon_draw         (GimpCanvasItem   *item,
-                                                     GimpDisplayShell *shell,
-                                                     cairo_t          *cr);
-static GdkRegion * gimp_canvas_polygon_get_extents  (GimpCanvasItem   *item,
-                                                     GimpDisplayShell *shell);
+static void             gimp_canvas_polygon_finalize     (GObject          *object);
+static void             gimp_canvas_polygon_set_property (GObject          *object,
+                                                          guint             property_id,
+                                                          const GValue     *value,
+                                                          GParamSpec       *pspec);
+static void             gimp_canvas_polygon_get_property (GObject          *object,
+                                                          guint             property_id,
+                                                          GValue           *value,
+                                                          GParamSpec       *pspec);
+static void             gimp_canvas_polygon_draw         (GimpCanvasItem   *item,
+                                                          GimpDisplayShell *shell,
+                                                          cairo_t          *cr);
+static cairo_region_t * gimp_canvas_polygon_get_extents  (GimpCanvasItem   *item,
+                                                          GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasPolygon, gimp_canvas_polygon,
@@ -138,6 +138,19 @@ gimp_canvas_polygon_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_POINTS:
+      {
+        GimpArray *array = g_value_get_boxed (value);
+
+        g_free (private->points);
+        private->points = NULL;
+        private->n_points = 0;
+
+        if (array)
+          {
+            private->points = g_memdup (array->data, array->length);
+            private->n_points = array->length / sizeof (GimpVector2);
+          }
+      }
       break;
     case PROP_FILLED:
       private->filled = g_value_get_boolean (value);
@@ -151,15 +164,28 @@ gimp_canvas_polygon_set_property (GObject      *object,
 
 static void
 gimp_canvas_polygon_get_property (GObject    *object,
-                                    guint       property_id,
-                                    GValue     *value,
-                                    GParamSpec *pspec)
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
 {
   GimpCanvasPolygonPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_POINTS:
+      if (private->points)
+        {
+          GimpArray *array;
+
+          array = gimp_array_new ((const guint8 *) private->points,
+                                  private->n_points * sizeof (GimpVector2),
+                                  FALSE);
+          g_value_take_boxed (value, array);
+        }
+      else
+        {
+          g_value_set_boxed (value, NULL);
+        }
       break;
     case PROP_FILLED:
       g_value_set_boolean (value, private->filled);
@@ -187,8 +213,8 @@ gimp_canvas_polygon_transform (GimpCanvasItem   *item,
                                          &points[i].x,
                                          &points[i].y);
 
-      points[i].x = PROJ_ROUND (points[i].x) + 0.5;
-      points[i].y = PROJ_ROUND (points[i].y) + 0.5;
+      points[i].x = floor (points[i].x) + 0.5;
+      points[i].y = floor (points[i].y) + 0.5;
     }
 }
 
@@ -213,14 +239,14 @@ gimp_canvas_polygon_draw (GimpCanvasItem   *item,
     }
 
   if (private->filled)
-    _gimp_canvas_item_fill (item, shell, cr);
+    _gimp_canvas_item_fill (item, cr);
   else
-    _gimp_canvas_item_stroke (item, shell, cr);
+    _gimp_canvas_item_stroke (item, cr);
 
   g_free (points);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_polygon_get_extents (GimpCanvasItem   *item,
                                  GimpDisplayShell *shell)
 {
@@ -259,52 +285,67 @@ gimp_canvas_polygon_get_extents (GimpCanvasItem   *item,
   rectangle.width  = x2 - x1;
   rectangle.height = y2 - y1;
 
-  return gdk_region_rectangle (&rectangle);
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
 }
 
 GimpCanvasItem *
-gimp_canvas_polygon_new (const GimpVector2 *points,
+gimp_canvas_polygon_new (GimpDisplayShell  *shell,
+                         const GimpVector2 *points,
                          gint               n_points,
                          gboolean           filled)
 {
-  GimpCanvasItem           *item;
-  GimpCanvasPolygonPrivate *private;
+  GimpCanvasItem *item;
+  GimpArray      *array;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (points != NULL && n_points > 1, NULL);
+
+  array = gimp_array_new ((const guint8 *) points,
+                          n_points * sizeof (GimpVector2), TRUE);
 
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+                       "shell",  shell,
                        "filled", filled,
+                       "points", array,
                        NULL);
-  private = GET_PRIVATE (item);
 
-  /* puke */
-  private->points   = g_memdup (points, n_points * sizeof (GimpVector2));
-  private->n_points = n_points;
+  gimp_array_free (array);
 
   return item;
 }
 
 GimpCanvasItem *
-gimp_canvas_polygon_new_from_coords (const GimpCoords *points,
-                                     gint              n_points,
+gimp_canvas_polygon_new_from_coords (GimpDisplayShell *shell,
+                                     const GimpCoords *coords,
+                                     gint              n_coords,
                                      gboolean          filled)
 {
-  GimpCanvasItem           *item;
-  GimpCanvasPolygonPrivate *private;
-  gint                      i;
+  GimpCanvasItem *item;
+  GimpVector2    *points;
+  GimpArray      *array;
+  gint            i;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (coords != NULL && n_coords > 1, NULL);
+
+  points = g_new (GimpVector2, n_coords);
+
+  for (i = 0; i < n_coords; i++)
+    {
+      points[i].x = coords[i].x;
+      points[i].y = coords[i].y;
+    }
+
+  array = gimp_array_new ((const guint8 *) points,
+                          n_coords * sizeof (GimpVector2), FALSE);
 
   item = g_object_new (GIMP_TYPE_CANVAS_POLYGON,
+                       "shell",  shell,
                        "filled", filled,
+                       "points", array,
                        NULL);
-  private = GET_PRIVATE (item);
 
-  /* puke */
-  private->points   = g_new (GimpVector2, n_points);
-  private->n_points = n_points;
-
-  for (i = 0; i < n_points; i++)
-    {
-      private->points[i].x = points[i].x;
-      private->points[i].y = points[i].y;
-    }
+  gimp_array_free (array);
 
   return item;
 }

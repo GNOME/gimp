@@ -34,6 +34,7 @@
 
 #include "text/gimpfontlist.h"
 
+#include "gimpcolorpanel.h"
 #include "gimpcontainerentry.h"
 #include "gimpcontainerview.h"
 #include "gimptextbuffer.h"
@@ -112,7 +113,7 @@ static gboolean  gimp_text_style_editor_update_idle      (GimpTextStyleEditor *e
 
 
 G_DEFINE_TYPE (GimpTextStyleEditor, gimp_text_style_editor,
-               GTK_TYPE_VBOX)
+               GTK_TYPE_BOX)
 
 #define parent_class gimp_text_style_editor_parent_class
 
@@ -174,6 +175,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   GtkWidget *image;
   GimpRGB    color;
 
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
+
   /*  upper row  */
 
   editor->upper_hbox = gtk_hbox_new (FALSE, 0);
@@ -203,9 +207,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     editor);
 
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-  editor->color_button = gimp_color_button_new (_("Change color of selected text"),
-                                                20, 20, &color,
-                                                GIMP_COLOR_AREA_FLAT);
+  editor->color_button = gimp_color_panel_new (_("Change color of selected text"),
+                                               &color,
+                                               GIMP_COLOR_AREA_FLAT, 20, 20);
 
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->color_button,
                       FALSE, FALSE, 0);
@@ -292,6 +296,10 @@ gimp_text_style_editor_constructor (GType                  type,
   g_signal_connect (editor->context, "font-changed",
                     G_CALLBACK (gimp_text_style_editor_font_changed),
                     editor);
+
+  /* use the global user context so we get the global FG/BG colors */
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (editor->color_button),
+                                gimp_get_user_context (editor->gimp));
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (editor->font_entry),
                                      editor->fonts);
@@ -943,6 +951,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
             }
 
           if (! any_toggle_active &&
+              color_differs       &&
               font_differs        &&
               size_differs        &&
               baseline_differs    &&

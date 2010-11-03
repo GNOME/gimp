@@ -71,9 +71,11 @@ enum
   PROP_DEFAULT_SNAP_TO_PATH,
   PROP_ACTIVATE_ON_FOCUS,
   PROP_SPACE_BAR_ACTION,
-  PROP_XOR_COLOR,
   PROP_ZOOM_QUALITY,
-  PROP_USE_EVENT_HISTORY
+  PROP_USE_EVENT_HISTORY,
+
+  /* ignored, only for backward compatibility: */
+  PROP_XOR_COLOR
 };
 
 
@@ -104,9 +106,7 @@ static void
 gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       color;
-
-  gimp_rgba_set_uchar (&color, 0x80, 0xff, 0x80, 0xff);
+  GimpRGB       color        = { 0, 0, 0, 0 };
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
@@ -252,10 +252,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  GIMP_TYPE_SPACE_BAR_ACTION,
                                  GIMP_SPACE_BAR_ACTION_PAN,
                                  GIMP_PARAM_STATIC_STRINGS);
-  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_XOR_COLOR,
-                                "xor-color", XOR_COLOR_BLURB,
-                                FALSE, &color,
-                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_QUALITY,
                                  "zoom-quality",
                                  ZOOM_QUALITY_BLURB,
@@ -268,6 +264,13 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                     DEFAULT_USE_EVENT_HISTORY_BLURB,
                                     DEFAULT_USE_EVENT_HISTORY,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  /*  only for backward compatibility:  */
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_XOR_COLOR,
+                                "xor-color", NULL,
+                                FALSE, &color,
+                                GIMP_PARAM_STATIC_STRINGS |
+                                GIMP_CONFIG_PARAM_IGNORE);
 }
 
 static void
@@ -406,15 +409,14 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_SPACE_BAR_ACTION:
       display_config->space_bar_action = g_value_get_enum (value);
       break;
-    case PROP_XOR_COLOR:
-      display_config->xor_color = *(GimpRGB *) g_value_get_boxed (value);
-      break;
     case PROP_ZOOM_QUALITY:
       display_config->zoom_quality = g_value_get_enum (value);
       break;
-
     case PROP_USE_EVENT_HISTORY:
       display_config->use_event_history = g_value_get_boolean (value);
+      break;
+    case PROP_XOR_COLOR:
+      /* ignored */
       break;
 
     default:
@@ -517,15 +519,14 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_SPACE_BAR_ACTION:
       g_value_set_enum (value, display_config->space_bar_action);
       break;
-    case PROP_XOR_COLOR:
-      g_value_set_boxed (value, &display_config->xor_color);
-      break;
     case PROP_ZOOM_QUALITY:
       g_value_set_enum (value, display_config->zoom_quality);
       break;
-
     case PROP_USE_EVENT_HISTORY:
       g_value_set_boolean (value, display_config->use_event_history);
+      break;
+    case PROP_XOR_COLOR:
+      /* ignored */
       break;
 
     default:

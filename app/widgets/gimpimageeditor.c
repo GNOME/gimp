@@ -34,7 +34,9 @@ static void   gimp_image_editor_docked_iface_init (GimpDockedInterface *iface);
 
 static void   gimp_image_editor_set_context    (GimpDocked       *docked,
                                                 GimpContext      *context);
-static void   gimp_image_editor_destroy        (GtkObject        *object);
+
+static void   gimp_image_editor_dispose        (GObject          *object);
+
 static void   gimp_image_editor_real_set_image (GimpImageEditor  *editor,
                                                 GimpImage        *image);
 static void   gimp_image_editor_image_flush    (GimpImage        *image,
@@ -52,9 +54,9 @@ G_DEFINE_TYPE_WITH_CODE (GimpImageEditor, gimp_image_editor, GIMP_TYPE_EDITOR,
 static void
 gimp_image_editor_class_init (GimpImageEditorClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->destroy = gimp_image_editor_destroy;
+  object_class->dispose = gimp_image_editor_dispose;
 
   klass->set_image      = gimp_image_editor_real_set_image;
 }
@@ -100,14 +102,14 @@ gimp_image_editor_set_context (GimpDocked  *docked,
 }
 
 static void
-gimp_image_editor_destroy (GtkObject *object)
+gimp_image_editor_dispose (GObject *object)
 {
   GimpImageEditor *editor = GIMP_IMAGE_EDITOR (object);
 
   if (editor->image)
     gimp_image_editor_set_image (editor, NULL);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

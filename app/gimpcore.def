@@ -201,7 +201,6 @@ EXPORTS
 	gimp_drawable_invert
 	gimp_drawable_is_indexed
 	gimp_drawable_is_rgb
-	gimp_drawable_is_text_layer
 	gimp_drawable_mask_bounds
 	gimp_drawable_offset
 	gimp_drawable_set_tiles
@@ -399,6 +398,7 @@ EXPORTS
 	gimp_item_get_type
 	gimp_item_get_visible
 	gimp_item_height
+	gimp_item_is_text_layer
 	gimp_item_linked_flip
 	gimp_item_linked_rotate
 	gimp_item_linked_transform

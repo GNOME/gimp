@@ -60,6 +60,7 @@
 #include "widgets/gimpuimanager.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
@@ -2285,20 +2286,38 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
   if (! gdk_region_empty (image_region))
     {
-      gdk_region_get_rectangles (image_region, &rects, &n_rects);
-
       cairo_save (cr);
-
-      for (i = 0; i < n_rects; i++)
-        gimp_display_shell_draw_area (shell, cr,
-                                      rects[i].x,
-                                      rects[i].y,
-                                      rects[i].width,
-                                      rects[i].height);
-
+      gimp_display_shell_draw_checkerboard (shell, cr,
+                                            image_rect.x,
+                                            image_rect.y,
+                                            image_rect.width,
+                                            image_rect.height);
       cairo_restore (cr);
 
+
+      cairo_save (cr);
+      gdk_region_get_rectangles (image_region, &rects, &n_rects);
+
+      for (i = 0; i < n_rects; i++)
+        gimp_display_shell_draw_image (shell, cr,
+                                       rects[i].x,
+                                       rects[i].y,
+                                       rects[i].width,
+                                       rects[i].height);
+
       g_free (rects);
+      cairo_restore (cr);
+
+      if (shell->highlight)
+        {
+          cairo_save (cr);
+          gimp_display_shell_draw_highlight (shell, cr,
+                                             image_rect.x,
+                                             image_rect.y,
+                                             image_rect.width,
+                                             image_rect.height);
+          cairo_restore (cr);
+        }
     }
 
   gdk_region_destroy (image_region);
@@ -2311,46 +2330,11 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
   gimp_display_shell_preview_transform (shell, cr);
   cairo_restore (cr);
 
-  /* draw the vectors */
-  cairo_save (cr);
-  gimp_display_shell_draw_vectors (shell, cr);
-  cairo_restore (cr);
-
-  /* draw the grid */
-  cairo_save (cr);
-  gimp_display_shell_draw_grid (shell, cr);
-  cairo_restore (cr);
-
-  /* draw the guides */
-  cairo_save (cr);
-  gimp_display_shell_draw_guides (shell, cr);
-  cairo_restore (cr);
-
-  /* draw the sample points */
-  cairo_save (cr);
-  gimp_display_shell_draw_sample_points (shell, cr);
-  cairo_restore (cr);
-
-  /* draw tool items */
-  {
-    GimpTool *tool = tool_manager_get_active (shell->display->gimp);
-
-    if (GIMP_IS_DRAW_TOOL (tool) &&
-        GIMP_DRAW_TOOL (tool)->display == shell->display)
-      {
-        cairo_save (cr);
-        gimp_draw_tool_draw_items (GIMP_DRAW_TOOL (tool), cr);
-        cairo_restore (cr);
-      }
-  }
-
-  /* and the cursor (if we have a software cursor) */
-  cairo_save (cr);
-  gimp_display_shell_draw_cursor (shell, cr);
-  cairo_restore (cr);
+  /* draw canvas items */
+  gimp_canvas_item_draw (shell->canvas_item, cr);
 
   /* restart (and recalculate) the selection boundaries */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_ON);
+  gimp_display_shell_selection_restart (shell);
 }
 
 static void

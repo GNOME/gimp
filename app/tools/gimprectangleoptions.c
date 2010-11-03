@@ -757,7 +757,7 @@ gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  menu = gimp_prop_unit_menu_new (config, unit_property_name, "%a");
+  menu = gimp_prop_unit_combo_box_new (config, unit_property_name);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

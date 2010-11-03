@@ -34,7 +34,7 @@ typedef struct _GimpFillEditorClass GimpFillEditorClass;
 
 struct _GimpFillEditor
 {
-  GtkVBox          parent_instance;
+  GtkBox           parent_instance;
 
   GimpFillOptions *options;
   gboolean         edit_context;
@@ -42,7 +42,7 @@ struct _GimpFillEditor
 
 struct _GimpFillEditorClass
 {
-  GtkVBoxClass     parent_class;
+  GtkBoxClass      parent_class;
 };
 
 

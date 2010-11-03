@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 
 #include "gui/gui-types.h"
@@ -36,9 +38,17 @@
 #include "core/gimp.h"
 #include "core/gimp-contexts.h"
 
+#include "gimp-log.h"
 #include "tests.h"
 #include "units.h"
 
+
+static void
+gimp_status_func_dummy (const gchar *text1,
+                        const gchar *text2,
+                        gdouble      percentage)
+{
+}
 
 /**
  * gimp_init_for_testing:
@@ -47,29 +57,30 @@
  * selected subset of the initialization happning in app_run().
  **/
 Gimp *
-gimp_init_for_testing (gboolean use_cpu_accel)
+gimp_init_for_testing (void)
 {
-  Gimp *gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
-                         FALSE, TRUE, TRUE, FALSE);
+  Gimp *gimp;
+  
+  gimp_log_init ();
+
+  gimp = gimp_new ("Unit Tested GIMP", NULL, FALSE, TRUE, TRUE, TRUE,
+                   FALSE, TRUE, TRUE, FALSE);
 
   units_init (gimp);
 
   gimp_load_config (gimp, NULL, NULL);
 
-  base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
+  base_init (GIMP_BASE_CONFIG (gimp->config),
+             FALSE /*be_verbose*/,
+             FALSE /*use_cpu_accel*/);
+  gimp_initialize (gimp, gimp_status_func_dummy);
+  gimp_restore (gimp, gimp_status_func_dummy);
 
   return gimp;
 }
 
 
 #ifndef GIMP_CONSOLE_COMPILATION
-
-static void
-gimp_status_func_dummy (const gchar *text1,
-                        const gchar *text2,
-                        gdouble      percentage)
-{
-}
 
 /**
  * gimp_init_for_gui_testing:
@@ -81,7 +92,7 @@ gimp_status_func_dummy (const gchar *text1,
  * Returns: The #Gimp instance.
  **/
 Gimp *
-gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
+gimp_init_for_gui_testing (gboolean show_gui)
 {
   GimpSessionInfoClass *klass;
   Gimp                 *gimp;
@@ -89,6 +100,7 @@ gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
   /* from main() */
   g_thread_init(NULL);
   g_type_init();
+  gimp_log_init ();
 
   /* Introduce an error margin for positions written to sessionrc */
   klass = g_type_class_ref (GIMP_TYPE_SESSION_INFO);
@@ -100,7 +112,9 @@ gimp_init_for_gui_testing (gboolean use_cpu_accel, gboolean show_gui)
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, NULL, NULL);
-  base_init (GIMP_BASE_CONFIG (gimp->config), FALSE, use_cpu_accel);
+  base_init (GIMP_BASE_CONFIG (gimp->config),
+             FALSE /*be_verbose*/,
+             FALSE /*use_cpu_accel*/);
   gui_init (gimp, TRUE);
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
@@ -159,4 +173,21 @@ gimp_test_run_mainloop_until_idle (void)
   g_main_loop_run (loop);
 
   g_main_loop_unref (loop);
+}
+
+/**
+ * gimp_test_bail_if_no_display:
+ * @void:
+ *
+ * If no DISPLAY is set, call exit(EXIT_SUCCESS). There is no use in
+ * having UI tests failing in DISPLAY-less environments.
+ **/
+void
+gimp_test_bail_if_no_display (void)
+{
+  if (! g_getenv ("DISPLAY"))
+    {
+      g_message ("No DISPLAY set, not running UI tests\n");
+      exit (EXIT_SUCCESS);
+    }
 }

@@ -49,18 +49,12 @@ void  gimp_display_shell_untransform_xy_f       (const GimpDisplayShell *shell,
                                                  gdouble                *nx,
                                                  gdouble                *ny);
 
-void  gimp_display_shell_transform_points       (const GimpDisplayShell *shell,
-                                                 const GimpVector2      *points,
-                                                 GdkPoint               *coords,
-                                                 gint                    n_points);
-void  gimp_display_shell_transform_coords       (const GimpDisplayShell *shell,
-                                                 const GimpCoords       *image_coords,
-                                                 GdkPoint               *disp_coords,
-                                                 gint                    n_coords);
 void  gimp_display_shell_transform_segments     (const GimpDisplayShell *shell,
                                                  const BoundSeg         *src_segs,
-                                                 GdkSegment             *dest_segs,
-                                                 gint                    n_segs);
+                                                 GimpSegment            *dest_segs,
+                                                 gint                    n_segs,
+                                                 gdouble                 offset_x,
+                                                 gdouble                 offset_y);
 
 void  gimp_display_shell_untransform_viewport   (const GimpDisplayShell *shell,
                                                  gint                   *x,

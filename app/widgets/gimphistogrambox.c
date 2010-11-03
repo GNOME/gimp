@@ -60,7 +60,7 @@ static void   gimp_histogram_box_border_notify   (GimpHistogramView *view,
                                                   GimpHistogramBox  *box);
 
 
-G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpHistogramBox, gimp_histogram_box, GTK_TYPE_BOX)
 
 
 static void
@@ -79,6 +79,9 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   GtkWidget *frame;
   GtkWidget *view;
   GtkWidget *bar;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gtk_box_set_spacing (GTK_BOX (box), 2);
 

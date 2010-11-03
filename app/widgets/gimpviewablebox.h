@@ -27,6 +27,14 @@ GtkWidget * gimp_prop_brush_box_new    (GimpContainer *container,
                                         gint           spacing,
                                         const gchar   *view_type_prop,
                                         const gchar   *view_size_prop);
+GtkWidget * gimp_dynamics_box_new      (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing);
+GtkWidget * gimp_prop_dynamics_box_new (GimpContainer *container,
+                                        GimpContext   *context,
+                                        gint           spacing,
+                                        const gchar   *view_type_prop,
+                                        const gchar   *view_size_prop);
 
 GtkWidget * gimp_pattern_box_new       (GimpContainer *container,
                                         GimpContext   *context,

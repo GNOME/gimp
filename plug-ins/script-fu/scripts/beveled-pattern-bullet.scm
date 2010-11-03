@@ -22,15 +22,15 @@
 (define (script-fu-beveled-pattern-bullet diameter pattern transparent)
   (let* (
         (img (car (gimp-image-new diameter diameter RGB)))
-        (background (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bullet" 100 NORMAL-MODE)))
-        (bumpmap (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (background (car (gimp-layer-new img diameter diameter RGBA-IMAGE _"Bullet" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img diameter diameter RGBA-IMAGE _"Bumpmap" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img background -1)
-    (gimp-image-add-layer img bumpmap -1)
+    (gimp-image-insert-layer img background -1 -1)
+    (gimp-image-insert-layer img bumpmap -1 -1)
 
     ; Create pattern layer
 

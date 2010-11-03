@@ -51,14 +51,14 @@ typedef struct _GimpCanvasCornerPrivate GimpCanvasCornerPrivate;
 
 struct _GimpCanvasCornerPrivate
 {
-  gdouble       x;
-  gdouble       y;
-  gdouble       width;
-  gdouble       height;
-  GtkAnchorType anchor;
-  gint          corner_width;
-  gint          corner_height;
-  gboolean      outside;
+  gdouble          x;
+  gdouble          y;
+  gdouble          width;
+  gdouble          height;
+  GimpHandleAnchor anchor;
+  gint             corner_width;
+  gint             corner_height;
+  gboolean         outside;
 };
 
 #define GET_PRIVATE(corner) \
@@ -69,19 +69,19 @@ struct _GimpCanvasCornerPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_corner_set_property (GObject          *object,
-                                                    guint             property_id,
-                                                    const GValue     *value,
-                                                    GParamSpec       *pspec);
-static void        gimp_canvas_corner_get_property (GObject          *object,
-                                                    guint             property_id,
-                                                    GValue           *value,
-                                                    GParamSpec       *pspec);
-static void        gimp_canvas_corner_draw         (GimpCanvasItem   *item,
-                                                    GimpDisplayShell *shell,
-                                                    cairo_t          *cr);
-static GdkRegion * gimp_canvas_corner_get_extents  (GimpCanvasItem   *item,
-                                                    GimpDisplayShell *shell);
+static void             gimp_canvas_corner_set_property (GObject          *object,
+                                                         guint             property_id,
+                                                         const GValue     *value,
+                                                         GParamSpec       *pspec);
+static void             gimp_canvas_corner_get_property (GObject          *object,
+                                                         guint             property_id,
+                                                         GValue           *value,
+                                                         GParamSpec       *pspec);
+static void             gimp_canvas_corner_draw         (GimpCanvasItem   *item,
+                                                         GimpDisplayShell *shell,
+                                                         cairo_t          *cr);
+static cairo_region_t * gimp_canvas_corner_get_extents  (GimpCanvasItem   *item,
+                                                         GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasCorner, gimp_canvas_corner,
@@ -128,8 +128,8 @@ gimp_canvas_corner_class_init (GimpCanvasCornerClass *klass)
 
   g_object_class_install_property (object_class, PROP_ANCHOR,
                                    g_param_spec_enum ("anchor", NULL, NULL,
-                                                      GTK_TYPE_ANCHOR_TYPE,
-                                                      GTK_ANCHOR_CENTER,
+                                                      GIMP_TYPE_HANDLE_ANCHOR,
+                                                      GIMP_HANDLE_ANCHOR_CENTER,
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_CORNER_WIDTH,
@@ -267,10 +267,10 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
   rw -= rx;
   rh -= ry;
 
-  rx = PROJ_ROUND (rx) + 0.5;
-  ry = PROJ_ROUND (ry) + 0.5;
-  rw = PROJ_ROUND (rw) - 1.0;
-  rh = PROJ_ROUND (rh) - 1.0;
+  rx = floor (rx) + 0.5;
+  ry = floor (ry) + 0.5;
+  rw = ceil (rw) - 1.0;
+  rh = ceil (rh) - 1.0;
 
   top_and_bottom_handle_x_offset = (rw - private->corner_width)  / 2;
   left_and_right_handle_y_offset = (rh - private->corner_height) / 2;
@@ -280,10 +280,10 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
 
   switch (private->anchor)
     {
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       break;
 
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -296,7 +296,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -309,7 +309,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -322,7 +322,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -335,7 +335,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       if (private->outside)
         {
           *x = rx;
@@ -349,7 +349,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       if (private->outside)
         {
           *x = rx;
@@ -363,7 +363,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       if (private->outside)
         {
           *x = rx - private->corner_width;
@@ -377,7 +377,7 @@ gimp_canvas_corner_transform (GimpCanvasItem   *item,
         }
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       if (private->outside)
         {
           *x = rx + rw;
@@ -405,10 +405,10 @@ gimp_canvas_corner_draw (GimpCanvasItem   *item,
 
   cairo_rectangle (cr, x, y, w, h);
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
                                 GimpDisplayShell *shell)
 {
@@ -423,20 +423,24 @@ gimp_canvas_corner_get_extents (GimpCanvasItem   *item,
   rectangle.width  = ceil (w + 3.0);
   rectangle.height = ceil (h + 3.0);
 
-  return gdk_region_rectangle (&rectangle);
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
 }
 
 GimpCanvasItem *
-gimp_canvas_corner_new (gdouble       x,
-                        gdouble       y,
-                        gdouble       width,
-                        gdouble       height,
-                        GtkAnchorType anchor,
-                        gint          corner_width,
-                        gint          corner_height,
-                        gboolean      outside)
+gimp_canvas_corner_new (GimpDisplayShell *shell,
+                        gdouble           x,
+                        gdouble           y,
+                        gdouble           width,
+                        gdouble           height,
+                        GimpHandleAnchor  anchor,
+                        gint              corner_width,
+                        gint              corner_height,
+                        gboolean          outside)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_CORNER,
+                       "shell",         shell,
                        "x",             x,
                        "y",             y,
                        "width",         width,

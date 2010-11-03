@@ -43,7 +43,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-scale.h"
-#include "display/gimpdisplayshell-selection.h"
 #include "display/gimpimagewindow.h"
 
 #include "actions.h"

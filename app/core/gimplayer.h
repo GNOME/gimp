@@ -116,8 +116,6 @@ void            gimp_layer_flatten             (GimpLayer            *layer,
 
 void            gimp_layer_resize_to_image     (GimpLayer            *layer,
                                                 GimpContext          *context);
-BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer,
-                                                gint                 *num_segs);
 
 GimpDrawable * gimp_layer_get_floating_sel_drawable (const GimpLayer *layer);
 void           gimp_layer_set_floating_sel_drawable (GimpLayer       *layer,

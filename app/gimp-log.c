@@ -54,7 +54,8 @@ gimp_log_init (void)
         { "text-editing",       GIMP_LOG_TEXT_EDITING       },
         { "key-events",         GIMP_LOG_KEY_EVENTS         },
         { "auto-tab-style",     GIMP_LOG_AUTO_TAB_STYLE     },
-        { "instances",          GIMP_LOG_INSTANCES          }
+        { "instances",          GIMP_LOG_INSTANCES          },
+        { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     }
       };
 
       /*  g_parse_debug_string() has special treatment of the string 'help',

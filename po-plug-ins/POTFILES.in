@@ -70,7 +70,6 @@ plug-ins/common/file-jp2-load.c
 plug-ins/common/file-mng.c
 plug-ins/common/file-pat.c
 plug-ins/common/file-pcx.c
-plug-ins/common/file-pdf-load.c
 plug-ins/common/file-pix.c
 plug-ins/common/file-png.c
 plug-ins/common/file-pnm.c

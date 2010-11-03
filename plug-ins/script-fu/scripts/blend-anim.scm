@@ -38,7 +38,7 @@
 
   (define (multi-raise-layer image layer times)
     (while (> times 0)
-       (gimp-image-raise-layer image layer)
+       (gimp-image-raise-item image layer)
        (set! times (- times 1))
     )
   )
@@ -68,7 +68,7 @@
 			  ; add a copy of the lowest blend layer on top
 			  (let* ((copy (car (gimp-layer-copy
 						 (aref layer-array (- num-layers 2)) TRUE))))
-				(gimp-image-add-layer image copy 0)
+				(gimp-image-insert-layer image copy -1 0)
 				(set! layers (gimp-image-get-layers image))
 				(set! num-layers (car layers))
 				(set! layer-array (cadr layers))
@@ -113,9 +113,9 @@
 				   (upper-copy (car (gimp-layer-copy upper-layer TRUE)))
 				   (lower-copy (car (gimp-layer-copy lower-layer TRUE)))
 				   (bg-copy (car (gimp-layer-copy bg-layer TRUE))))
-				  (gimp-image-add-layer image bg-copy 0)
-				  (gimp-image-add-layer image lower-copy 0)
-				  (gimp-image-add-layer image upper-copy 0)
+				  (gimp-image-insert-layer image bg-copy -1 0)
+				  (gimp-image-insert-layer image lower-copy -1 0)
+				  (gimp-image-insert-layer image upper-copy -1 0)
 				  (gimp-item-set-visible upper-copy TRUE)
 				  (gimp-item-set-visible lower-copy TRUE)
 				  (gimp-item-set-visible bg-copy TRUE)
@@ -171,8 +171,9 @@
 			(while (< layer-count slots)
 				   (let* ((orig-layer (aref layer-array layer-count))
 				  (bg-copy (car (gimp-layer-copy bg-layer TRUE))))
-				 (gimp-image-add-layer image
+				 (gimp-image-insert-layer image
 						   bg-copy
+						   -1
 						   (* layer-count (+ frames 1)))
 				 (multi-raise-layer image
 						orig-layer
@@ -202,8 +203,8 @@
 				 (layer-count (- num-result-layers 1)))
 			(while (> layer-count -1)
 			   (let* ((layer (aref result-layer-array layer-count))
-				  (name (string-append "Frame "
-						   (number->string
+				  (name (string-append _"Frame" " "
+						       (number->string
 							(- num-result-layers layer-count) 10))))
 				 (gimp-item-set-visible layer TRUE)
 				 (gimp-item-set-name layer name)

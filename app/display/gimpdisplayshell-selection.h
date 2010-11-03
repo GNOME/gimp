@@ -22,13 +22,14 @@
 void   gimp_display_shell_selection_init     (GimpDisplayShell     *shell);
 void   gimp_display_shell_selection_free     (GimpDisplayShell     *shell);
 
-void   gimp_display_shell_selection_control  (GimpDisplayShell     *shell,
-                                              GimpSelectionControl  control);
+void   gimp_display_shell_selection_undraw   (GimpDisplayShell     *shell);
+void   gimp_display_shell_selection_restart  (GimpDisplayShell     *shell);
 
-void   gimp_display_shell_selection_set_hidden       (GimpDisplayShell *shell,
-                                                      gboolean          hidden);
-void   gimp_display_shell_selection_set_layer_hidden (GimpDisplayShell *shell,
-                                                      gboolean          hidden);
+void   gimp_display_shell_selection_pause    (GimpDisplayShell     *shell);
+void   gimp_display_shell_selection_resume   (GimpDisplayShell     *shell);
+
+void   gimp_display_shell_selection_set_show (GimpDisplayShell     *shell,
+                                              gboolean              show);
 
 
 #endif  /*  __GIMP_DISPLAY_SHELL_SELECTION_H__  */

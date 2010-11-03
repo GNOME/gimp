@@ -34,14 +34,14 @@ typedef struct _GimpActionEditorClass GimpActionEditorClass;
 
 struct _GimpActionEditor
 {
-  GtkVBox    parent_instance;
+  GtkBox     parent_instance;
 
   GtkWidget *view;
 };
 
 struct _GimpActionEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

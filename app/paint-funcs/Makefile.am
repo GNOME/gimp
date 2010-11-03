@@ -19,8 +19,6 @@ INCLUDES = \
 noinst_LIBRARIES = libapppaint-funcs.a
 
 libapppaint_funcs_a_SOURCES = \
-	layer-modes.c		\
-	layer-modes.h		\
 	paint-funcs.c		\
 	paint-funcs.h		\
 	paint-funcs-generic.h	\

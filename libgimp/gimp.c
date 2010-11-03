@@ -1186,6 +1186,8 @@ gimp_gamma (void)
  *
  * This is a constant value given at plug-in configuration time.
  *
+ * @Deprecated: 2.8
+ *
  * Return value: the install_cmap boolean
  **/
 gboolean
@@ -1203,6 +1205,8 @@ gimp_install_cmap (void)
  * This is a constant value given at plug-in configuration time.
  *
  * See also: gimp_install_cmap()
+ *
+ * @Deprecated: 2.8
  *
  * Return value: the minimum number of colors to allocate
  **/

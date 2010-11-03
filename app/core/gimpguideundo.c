@@ -151,6 +151,7 @@ gimp_guide_undo_pop (GimpUndo              *undo,
   GimpGuideUndo       *guide_undo = GIMP_GUIDE_UNDO (undo);
   GimpOrientationType  orientation;
   gint                 position;
+  gboolean             moved = FALSE;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -168,12 +169,15 @@ gimp_guide_undo_pop (GimpUndo              *undo,
     }
   else
     {
-      gimp_image_update_guide (undo->image, guide_undo->guide);
       gimp_guide_set_position (guide_undo->guide, guide_undo->position);
-      gimp_image_update_guide (undo->image, guide_undo->guide);
+
+      moved = TRUE;
     }
 
   gimp_guide_set_orientation (guide_undo->guide, guide_undo->orientation);
+
+  if (moved || guide_undo->orientation != orientation)
+    gimp_image_guide_moved (undo->image, guide_undo->guide);
 
   guide_undo->position    = position;
   guide_undo->orientation = orientation;

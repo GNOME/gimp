@@ -947,26 +947,32 @@ gimp_text_buffer_get_color_tag (GimpTextBuffer *buffer,
   GtkTextTag *tag;
   gchar       name[256];
   GdkColor    gdk_color;
+  guchar      r, g, b;
+
+  gimp_rgb_get_uchar (color, &r, &g, &b);
 
   for (list = buffer->color_tags; list; list = g_list_next (list))
     {
       GimpRGB tag_color;
+      guchar  tag_r, tag_g, tag_b;
 
       tag = list->data;
 
       gimp_text_tag_get_color (tag, &tag_color);
 
+      gimp_rgb_get_uchar (&tag_color, &tag_r, &tag_g, &tag_b);
+
       /* Do not compare the alpha channel, since it's unused */
-      if (tag_color.r == color->r &&
-          tag_color.g == color->g &&
-          tag_color.b == color->b)
+      if (tag_r == r &&
+          tag_g == g &&
+          tag_b == b)
         {
           return tag;
         }
     }
 
-  g_snprintf (name, sizeof (name), "color-(%0.f,%0.f,%0.f)",
-              color->r, color->g, color->b);
+  g_snprintf (name, sizeof (name), "color-#%02x%02x%02x",
+              r, g, b);
 
   gimp_rgb_get_gdk_color (color, &gdk_color);
 

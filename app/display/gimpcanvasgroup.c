@@ -36,7 +36,8 @@
 enum
 {
   PROP_0,
-  PROP_GROUP_STROKING
+  PROP_GROUP_STROKING,
+  PROP_GROUP_FILLING
 };
 
 
@@ -46,6 +47,7 @@ struct _GimpCanvasGroupPrivate
 {
   GList    *items;
   gboolean  group_stroking;
+  gboolean  group_filling;
 };
 
 #define GET_PRIVATE(group) \
@@ -56,20 +58,23 @@ struct _GimpCanvasGroupPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_group_dispose      (GObject          *object);
-static void        gimp_canvas_group_set_property (GObject          *object,
-                                                   guint             property_id,
-                                                   const GValue     *value,
-                                                   GParamSpec       *pspec);
-static void        gimp_canvas_group_get_property (GObject          *object,
-                                                   guint             property_id,
-                                                   GValue           *value,
-                                                   GParamSpec       *pspec);
-static void        gimp_canvas_group_draw         (GimpCanvasItem   *item,
-                                                   GimpDisplayShell *shell,
-                                                   cairo_t          *cr);
-static GdkRegion * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
-                                                   GimpDisplayShell *shell);
+static void             gimp_canvas_group_dispose      (GObject          *object);
+static void             gimp_canvas_group_set_property (GObject          *object,
+                                                        guint             property_id,
+                                                        const GValue     *value,
+                                                        GParamSpec       *pspec);
+static void             gimp_canvas_group_get_property (GObject          *object,
+                                                        guint             property_id,
+                                                        GValue           *value,
+                                                        GParamSpec       *pspec);
+static void             gimp_canvas_group_draw         (GimpCanvasItem   *item,
+                                                        GimpDisplayShell *shell,
+                                                        cairo_t          *cr);
+static cairo_region_t * gimp_canvas_group_get_extents  (GimpCanvasItem   *item,
+                                                        GimpDisplayShell *shell);
+static void             gimp_canvas_group_child_update (GimpCanvasItem   *item,
+                                                        cairo_region_t   *region,
+                                                        GimpCanvasGroup  *group);
 
 
 G_DEFINE_TYPE (GimpCanvasGroup, gimp_canvas_group, GIMP_TYPE_CANVAS_ITEM)
@@ -92,6 +97,12 @@ gimp_canvas_group_class_init (GimpCanvasGroupClass *klass)
 
   g_object_class_install_property (object_class, PROP_GROUP_STROKING,
                                    g_param_spec_boolean ("group-stroking",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_GROUP_FILLING,
+                                   g_param_spec_boolean ("group-filling",
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
@@ -132,6 +143,9 @@ gimp_canvas_group_set_property (GObject      *object,
     case PROP_GROUP_STROKING:
       private->group_stroking = g_value_get_boolean (value);
       break;
+    case PROP_GROUP_FILLING:
+      private->group_filling = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -152,6 +166,9 @@ gimp_canvas_group_get_property (GObject    *object,
     case PROP_GROUP_STROKING:
       g_value_set_boolean (value, private->group_stroking);
       break;
+    case PROP_GROUP_FILLING:
+      g_value_set_boolean (value, private->group_filling);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -171,45 +188,63 @@ gimp_canvas_group_draw (GimpCanvasItem   *item,
     {
       GimpCanvasItem *sub_item = list->data;
 
-      gimp_canvas_item_draw (sub_item, shell, cr);
+      gimp_canvas_item_draw (sub_item, cr);
     }
 
   if (private->group_stroking)
-    _gimp_canvas_item_stroke (item, shell, cr);
+    _gimp_canvas_item_stroke (item, cr);
+
+  if (private->group_filling)
+    _gimp_canvas_item_fill (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_group_get_extents (GimpCanvasItem   *item,
                                GimpDisplayShell *shell)
 {
   GimpCanvasGroupPrivate *private = GET_PRIVATE (item);
-  GdkRegion              *region  = NULL;
+  cairo_region_t         *region  = NULL;
   GList                  *list;
 
   for (list = private->items; list; list = g_list_next (list))
     {
       GimpCanvasItem *sub_item   = list->data;
-      GdkRegion      *sub_region = gimp_canvas_item_get_extents (sub_item,
-                                                                 shell);
+      cairo_region_t *sub_region = gimp_canvas_item_get_extents (sub_item);
 
-      if (region)
-        {
-          gdk_region_union (region, sub_region);
-          gdk_region_destroy (sub_region);
-        }
-      else
+      if (! region)
         {
           region = sub_region;
+        }
+      else if (sub_region)
+        {
+          cairo_region_union (region, sub_region);
+          cairo_region_destroy (sub_region);
         }
     }
 
   return region;
 }
 
-GimpCanvasItem *
-gimp_canvas_group_new (void)
+static void
+gimp_canvas_group_child_update (GimpCanvasItem  *item,
+                                cairo_region_t  *region,
+                                GimpCanvasGroup *group)
 {
-  return g_object_new (GIMP_TYPE_CANVAS_GROUP, NULL);
+  if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
+    _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+}
+
+
+/*  public functions  */
+
+GimpCanvasItem *
+gimp_canvas_group_new (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
+  return g_object_new (GIMP_TYPE_CANVAS_GROUP,
+                       "shell", shell,
+                       NULL);
 }
 
 void
@@ -227,7 +262,25 @@ gimp_canvas_group_add_item (GimpCanvasGroup *group,
   if (private->group_stroking)
     gimp_canvas_item_suspend_stroking (item);
 
+  if (private->group_filling)
+    gimp_canvas_item_suspend_filling (item);
+
   private->items = g_list_append (private->items, g_object_ref (item));
+
+  if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
+    {
+      cairo_region_t *region = gimp_canvas_item_get_extents (item);
+
+      if (region)
+        {
+          _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+          cairo_region_destroy (region);
+        }
+    }
+
+  g_signal_connect (item, "update",
+                    G_CALLBACK (gimp_canvas_group_child_update),
+                    group);
 }
 
 void
@@ -244,6 +297,28 @@ gimp_canvas_group_remove_item (GimpCanvasGroup *group,
   g_return_if_fail (g_list_find (private->items, item));
 
   private->items = g_list_remove (private->items, item);
+
+  if (private->group_stroking)
+    gimp_canvas_item_resume_stroking (item);
+
+  if (private->group_filling)
+    gimp_canvas_item_resume_filling (item);
+
+  if (_gimp_canvas_item_needs_update (GIMP_CANVAS_ITEM (group)))
+    {
+      cairo_region_t *region = gimp_canvas_item_get_extents (item);
+
+      if (region)
+        {
+          _gimp_canvas_item_update (GIMP_CANVAS_ITEM (group), region);
+          cairo_region_destroy (region);
+        }
+    }
+
+  g_signal_handlers_disconnect_by_func (item,
+                                        gimp_canvas_group_child_update,
+                                        group);
+
   g_object_unref (item);
 }
 
@@ -251,9 +326,62 @@ void
 gimp_canvas_group_set_group_stroking (GimpCanvasGroup *group,
                                       gboolean         group_stroking)
 {
+  GimpCanvasGroupPrivate *private;
+
   g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
 
-  g_object_set (group,
-                "group-stroking", group_stroking ? TRUE : FALSE,
-                NULL);
+  private = GET_PRIVATE (group);
+
+  if (private->group_stroking != group_stroking)
+    {
+      GList *list;
+
+      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (group));
+
+      g_object_set (group,
+                    "group-stroking", group_stroking ? TRUE : FALSE,
+                    NULL);
+
+      for (list = private->items; list; list = g_list_next (list))
+        {
+          if (private->group_stroking)
+            gimp_canvas_item_suspend_stroking (list->data);
+          else
+            gimp_canvas_item_resume_stroking (list->data);
+        }
+
+      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (group));
+    }
+}
+
+void
+gimp_canvas_group_set_group_filling (GimpCanvasGroup *group,
+                                     gboolean         group_filling)
+{
+  GimpCanvasGroupPrivate *private;
+
+  g_return_if_fail (GIMP_IS_CANVAS_GROUP (group));
+
+  private = GET_PRIVATE (group);
+
+  if (private->group_filling != group_filling)
+    {
+      GList *list;
+
+      gimp_canvas_item_begin_change (GIMP_CANVAS_ITEM (group));
+
+      g_object_set (group,
+                    "group-filling", group_filling ? TRUE : FALSE,
+                    NULL);
+
+      for (list = private->items; list; list = g_list_next (list))
+        {
+          if (private->group_filling)
+            gimp_canvas_item_suspend_filling (list->data);
+          else
+            gimp_canvas_item_resume_filling (list->data);
+        }
+
+      gimp_canvas_item_end_change (GIMP_CANVAS_ITEM (group));
+    }
 }

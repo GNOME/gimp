@@ -54,14 +54,14 @@ typedef struct _GimpDockPrivate  GimpDockPrivate;
  */
 struct _GimpDock
 {
-  GtkVBox  parent_instance;
+  GtkBox           parent_instance;
 
   GimpDockPrivate *p;
 };
 
 struct _GimpDockClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   /*  virtual functions  */
   gchar * (* get_description)         (GimpDock       *dock,

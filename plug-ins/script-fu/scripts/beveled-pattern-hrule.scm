@@ -24,17 +24,17 @@
         (img (car (gimp-image-new width height RGB)))
         (background (car (gimp-layer-new img
                                          width height RGB-IMAGE
-                                         "Hrule" 100 NORMAL-MODE)))
+                                         _"Rule" 100 NORMAL-MODE)))
         (bumpmap (car (gimp-layer-new img
                                       width height RGBA-IMAGE
-                                      "Bumpmap" 100 NORMAL-MODE)))
+                                      _"Bumpmap" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img background -1)
-    (gimp-image-add-layer img bumpmap -1)
+    (gimp-image-insert-layer img background -1 -1)
+    (gimp-image-insert-layer img bumpmap -1 -1)
 
     ; Create pattern layer
 

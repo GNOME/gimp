@@ -359,7 +359,7 @@ gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
   /* FIXME: there should be a virtual method for this that the
    *        GimpTextLayer can override.
    */
-  if (color && gimp_drawable_is_text_layer (drawable))
+  if (color && gimp_item_is_text_layer (GIMP_ITEM (drawable)))
     {
       gimp_text_layer_set (GIMP_TEXT_LAYER (drawable), NULL,
                            "color", color,

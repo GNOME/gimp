@@ -43,6 +43,7 @@ enum
 };
 
 
+static void     gimp_fg_bg_view_dispose      (GObject        *object);
 static void     gimp_fg_bg_view_set_property (GObject        *object,
                                               guint           property_id,
                                               const GValue   *value,
@@ -52,7 +53,6 @@ static void     gimp_fg_bg_view_get_property (GObject        *object,
                                               GValue         *value,
                                               GParamSpec     *pspec);
 
-static void     gimp_fg_bg_view_destroy      (GtkObject      *object);
 static gboolean gimp_fg_bg_view_expose       (GtkWidget      *widget,
                                               GdkEventExpose *eevent);
 
@@ -65,14 +65,12 @@ G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_WIDGET)
 static void
 gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose      = gimp_fg_bg_view_dispose;
   object_class->set_property = gimp_fg_bg_view_set_property;
   object_class->get_property = gimp_fg_bg_view_get_property;
-
-  gtk_object_class->destroy  = gimp_fg_bg_view_destroy;
 
   widget_class->expose_event = gimp_fg_bg_view_expose;
 
@@ -89,6 +87,17 @@ gimp_fg_bg_view_init (GimpFgBgView *view)
   gtk_widget_set_has_window (GTK_WIDGET (view), FALSE);
 
   view->context = NULL;
+}
+
+static void
+gimp_fg_bg_view_dispose (GObject *object)
+{
+  GimpFgBgView *view = GIMP_FG_BG_VIEW (object);
+
+  if (view->context)
+    gimp_fg_bg_view_set_context (view, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -131,17 +140,6 @@ gimp_fg_bg_view_get_property (GObject    *object,
     }
 }
 
-static void
-gimp_fg_bg_view_destroy (GtkObject *object)
-{
-  GimpFgBgView *view = GIMP_FG_BG_VIEW (object);
-
-  if (view->context)
-    gimp_fg_bg_view_set_context (view, NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
 static gboolean
 gimp_fg_bg_view_expose (GtkWidget      *widget,
                         GdkEventExpose *eevent)
@@ -151,8 +149,6 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   GdkWindow    *window = gtk_widget_get_window (widget);
   cairo_t      *cr;
   GtkAllocation allocation;
-  gint          x, y;
-  gint          width, height;
   gint          rect_w, rect_h;
   GimpRGB       color;
 
@@ -166,13 +162,10 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
 
   gtk_widget_get_allocation (widget, &allocation);
 
-  x      = allocation.x;
-  y      = allocation.y;
-  width  = allocation.width;
-  height = allocation.height;
+  cairo_translate (cr, allocation.x, allocation.y);
 
-  rect_w = width  * 3 / 4;
-  rect_h = height * 3 / 4;
+  rect_w = allocation.width  * 3 / 4;
+  rect_h = allocation.height * 3 / 4;
 
   /*  draw the background area  */
 
@@ -182,8 +175,8 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_cairo_set_source_rgb (cr, &color);
 
       cairo_rectangle (cr,
-                       x + width  - rect_w + 1,
-                       y + height - rect_h + 1,
+                       allocation.width  - rect_w + 1,
+                       allocation.height - rect_h + 1,
                        rect_w - 2,
                        rect_h - 2);
       cairo_fill (cr);
@@ -192,7 +185,9 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                     GTK_SHADOW_IN,
                     NULL, widget, NULL,
-                    x + width - rect_w, y + height - rect_h, rect_w, rect_h);
+                    allocation.x + allocation.width  - rect_w,
+                    allocation.y + allocation.height - rect_h,
+                    rect_w, rect_h);
 
   /*  draw the foreground area  */
 
@@ -201,18 +196,14 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_context_get_foreground (view->context, &color);
       gimp_cairo_set_source_rgb (cr, &color);
 
-      cairo_rectangle (cr,
-                       x + 1,
-                       y + 1,
-                       rect_w - 2,
-                       rect_h - 2);
+      cairo_rectangle (cr, 1, 1, rect_w - 2, rect_h - 2);
       cairo_fill (cr);
     }
 
   gtk_paint_shadow (style, window, GTK_STATE_NORMAL,
                     GTK_SHADOW_OUT,
                     NULL, widget, NULL,
-                    x, y, rect_w, rect_h);
+                    allocation.x, allocation.y, rect_w, rect_h);
 
   cairo_destroy (cr);
 

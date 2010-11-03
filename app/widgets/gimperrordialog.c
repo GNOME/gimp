@@ -171,7 +171,7 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), "%s", message);
 
-  gtk_container_add (GTK_CONTAINER (dialog->vbox), box);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
   dialog->last_box = box;

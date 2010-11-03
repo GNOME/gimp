@@ -198,9 +198,9 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.gimp_reserved_6  = 0;
       config.gimp_reserved_7  = 0;
       config.gimp_reserved_8  = 0;
-      config.install_cmap     = core_config->install_cmap;
+      config.install_cmap     = FALSE;
       config.show_tooltips    = gui_config->show_tooltips;
-      config.min_colors       = CLAMP (core_config->min_colors, 27, 256);
+      config.min_colors       = 144;
       config.gdisp_ID         = display_ID;
       config.app_name         = (gchar *) g_get_application_name ();
       config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);

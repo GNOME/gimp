@@ -25,13 +25,107 @@
 
 #include "core-types.h"
 
+#include "gimp.h"
+#include "gimpcontainer.h"
+#include "gimpdatafactory.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-private.h"
 #include "gimpimage-undo-push.h"
+#include "gimppalette.h"
 
 #include "gimp-intl.h"
 
+
+/*  local function prototype  */
+
+void   gimp_image_colormap_set_palette_entry (GimpImage *image,
+                                              gint       index);
+
+
+/*  public functions  */
+
+void
+gimp_image_colormap_init (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  GimpContainer    *palettes;
+  gchar            *palette_name;
+  gchar            *palette_id;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  g_return_if_fail (private->colormap == NULL);
+  g_return_if_fail (private->palette == NULL);
+
+  palette_name = g_strdup_printf (_("Colormap of Image #%d (%s)"),
+                                  gimp_image_get_ID (image),
+                                  gimp_image_get_display_name (image));
+  palette_id = g_strdup_printf ("gimp-indexed-image-palette-%d",
+                                gimp_image_get_ID (image));
+
+  private->n_colors = 0;
+  private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+  private->palette  = GIMP_PALETTE (gimp_palette_new (NULL, palette_name));
+
+  gimp_palette_set_columns  (private->palette, 16);
+
+  gimp_data_make_internal (GIMP_DATA (private->palette), palette_id);
+
+  palettes = gimp_data_factory_get_container (image->gimp->palette_factory);
+
+  gimp_container_add (palettes, GIMP_OBJECT (private->palette));
+
+  g_free (palette_name);
+  g_free (palette_id);
+}
+
+void
+gimp_image_colormap_dispose (GimpImage *image)
+{
+  GimpImagePrivate *private;
+  GimpContainer    *palettes;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  g_return_if_fail (private->colormap != NULL);
+  g_return_if_fail (GIMP_IS_PALETTE (private->palette));
+
+  palettes = gimp_data_factory_get_container (image->gimp->palette_factory);
+
+  gimp_container_remove (palettes, GIMP_OBJECT (private->palette));
+}
+
+void
+gimp_image_colormap_free (GimpImage *image)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  g_return_if_fail (private->colormap != NULL);
+  g_return_if_fail (GIMP_IS_PALETTE (private->palette));
+
+  g_free (private->colormap);
+  private->colormap = NULL;
+
+  g_object_unref (private->palette);
+  private->palette = NULL;
+}
+
+GimpPalette *
+gimp_image_get_colormap_palette (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->palette;
+}
 
 const guchar *
 gimp_image_get_colormap (const GimpImage *image)
@@ -72,19 +166,35 @@ gimp_image_set_colormap (GimpImage    *image,
   if (colormap)
     {
       if (! private->colormap)
-        private->colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+        {
+          gimp_image_colormap_init (image);
+        }
 
       memcpy (private->colormap, colormap, n_colors * 3);
     }
-  else if (! gimp_image_base_type (image) == GIMP_INDEXED)
+  else if (private->colormap)
     {
-      if (private->colormap)
-        g_free (private->colormap);
-
-      private->colormap = NULL;
+      gimp_image_colormap_dispose (image);
+      gimp_image_colormap_free (image);
     }
 
   private->n_colors = n_colors;
+
+  if (private->palette)
+    {
+      GimpPaletteEntry *entry;
+      gint              i;
+
+      gimp_data_freeze (GIMP_DATA (private->palette));
+
+      while ((entry = gimp_palette_get_entry (private->palette, 0)))
+        gimp_palette_delete_entry (private->palette, entry);
+
+      for (i = 0; i < private->n_colors; i++)
+        gimp_image_colormap_set_palette_entry (image, i);
+
+      gimp_data_thaw (GIMP_DATA (private->palette));
+    }
 
   gimp_image_colormap_changed (image, -1);
 }
@@ -136,6 +246,9 @@ gimp_image_set_colormap_entry (GimpImage     *image,
                       &private->colormap[color_index * 3 + 1],
                       &private->colormap[color_index * 3 + 2]);
 
+  if (private->palette)
+    gimp_image_colormap_set_palette_entry (image, color_index);
+
   gimp_image_colormap_changed (image, color_index);
 }
 
@@ -161,7 +274,35 @@ gimp_image_add_colormap_entry (GimpImage     *image,
                       &private->colormap[private->n_colors * 3 + 1],
                       &private->colormap[private->n_colors * 3 + 2]);
 
+  if (private->palette)
+    gimp_image_colormap_set_palette_entry (image, private->n_colors - 1);
+
   private->n_colors++;
 
   gimp_image_colormap_changed (image, -1);
+}
+
+
+/*  private functions  */
+
+void
+gimp_image_colormap_set_palette_entry (GimpImage *image,
+                                       gint       index)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpRGB           color;
+  gchar             name[64];
+
+  gimp_rgba_set_uchar (&color,
+                       private->colormap[3 * index + 0],
+                       private->colormap[3 * index + 1],
+                       private->colormap[3 * index + 2],
+                       255);
+
+  g_snprintf (name, sizeof (name), "#%d", index);
+
+  if (gimp_palette_get_n_colors (private->palette) < private->n_colors)
+    gimp_palette_add_entry (private->palette, index, name, &color);
+  else
+    gimp_palette_set_entry (private->palette, index, name, &color);
 }

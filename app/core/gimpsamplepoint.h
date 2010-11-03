@@ -19,9 +19,6 @@
 #define __GIMP_SAMPLE_POINT_H__
 
 
-#define GIMP_SAMPLE_POINT_DRAW_SIZE 10
-
-
 #define GIMP_TYPE_SAMPLE_POINT (gimp_sample_point_get_type ())
 
 

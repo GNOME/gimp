@@ -44,7 +44,6 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-draw.h"
 
 #include "gimpforegroundselecttool.h"
 #include "gimpforegroundselectoptions.h"
@@ -571,18 +570,14 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->stroke)
     {
-      GimpDisplayShell *shell = gimp_display_get_shell (draw_tool->display);
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_pen (gimp_display_get_shell (draw_tool->display),
-                                   cr,
-                                   (const GimpVector2 *)fg_select->stroke->data,
-                                   fg_select->stroke->len,
-                                   GIMP_CONTEXT (options),
-                                   (options->background ?
-                                    GIMP_ACTIVE_COLOR_BACKGROUND :
-                                    GIMP_ACTIVE_COLOR_FOREGROUND),
-                                   options->stroke_width);
-      cairo_destroy (cr);
+      gimp_draw_tool_add_pen (draw_tool,
+                              (const GimpVector2 *) fg_select->stroke->data,
+                              fg_select->stroke->len,
+                              GIMP_CONTEXT (options),
+                              (options->background ?
+                               GIMP_ACTIVE_COLOR_BACKGROUND :
+                               GIMP_ACTIVE_COLOR_FOREGROUND),
+                              options->stroke_width);
     }
 
   if (fg_select->mask)
@@ -735,10 +730,20 @@ gimp_foreground_select_tool_set_mask (GimpForegroundSelectTool *fg_select,
     }
 
   if (mask)
-    fg_select->mask = g_object_ref (mask);
+    {
+      GimpRGB color;
 
-  gimp_display_shell_set_mask (gimp_display_get_shell (display),
-                               GIMP_DRAWABLE (mask), options->mask_color);
+      fg_select->mask = g_object_ref (mask);
+
+      gimp_foreground_select_options_get_mask_color (options, &color);
+      gimp_display_shell_set_mask (gimp_display_get_shell (display),
+                                   GIMP_DRAWABLE (mask), &color);
+    }
+  else
+    {
+      gimp_display_shell_set_mask (gimp_display_get_shell (display),
+                                   NULL, NULL);
+    }
 
   if (mask)
     {
@@ -896,9 +901,13 @@ gimp_foreground_select_options_notify (GimpForegroundSelectOptions *options,
     {
       GimpTool *tool = GIMP_TOOL (fg_select);
 
-      if (tool->display)
-        gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
-                                     GIMP_DRAWABLE (fg_select->mask),
-                                     options->mask_color);
+      if (tool->display && fg_select->mask)
+        {
+          GimpRGB color;
+
+          gimp_foreground_select_options_get_mask_color (options, &color);
+          gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                       GIMP_DRAWABLE (fg_select->mask), &color);
+        }
     }
 }

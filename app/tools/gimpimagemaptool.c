@@ -350,8 +350,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
 
           image_map_tool->main_vbox = vbox = gtk_vbox_new (FALSE, 6);
           gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-          gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
-                             vbox);
+          gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (shell))),
+                              vbox, TRUE, TRUE, 0);
         }
 
       g_signal_connect_object (shell, "response",

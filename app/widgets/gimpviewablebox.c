@@ -117,6 +117,61 @@ gimp_prop_brush_box_new (GimpContainer *container,
                              view_type_prop, view_size_prop);
 }
 
+/*  dynamics boxes  */
+
+static GtkWidget *
+dynamics_box_new (GimpContainer *container,
+                  GimpContext   *context,
+                  gint           spacing,
+                  GimpViewSize   view_size)
+{
+  if (! container)
+    container = gimp_data_factory_get_container (context->gimp->dynamics_factory);
+
+  return gimp_viewable_box_new (container, context, spacing,
+                                GIMP_VIEW_TYPE_LIST, GIMP_VIEW_SIZE_SMALL, view_size,
+                                "gimp-dynamics-list",
+                                GIMP_STOCK_DYNAMICS,
+                                _("Open the dynamics selection dialog"));
+}
+
+GtkWidget *
+gimp_dynamics_box_new (GimpContainer *container,
+                    GimpContext   *context,
+                    gint           spacing)
+{
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  return dynamics_box_new (container, context, spacing,
+                           GIMP_VIEW_SIZE_SMALL);
+}
+GtkWidget *
+gimp_prop_dynamics_box_new (GimpContainer *container,
+                            GimpContext   *context,
+                            gint           spacing,
+                            const gchar   *view_type_prop,
+                            const gchar   *view_size_prop)
+{
+  GimpViewType view_type;
+  GimpViewSize view_size;
+
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  g_object_get (context,
+                view_type_prop, &view_type,
+                view_size_prop, &view_size,
+                NULL);
+
+  return view_props_connect (dynamics_box_new (container, context,
+                                               spacing, view_size),
+                             context,
+                             view_type_prop, view_size_prop);
+}
+
 
 /*  pattern boxes  */
 

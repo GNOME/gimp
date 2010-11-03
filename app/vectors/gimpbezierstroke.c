@@ -31,6 +31,7 @@
 #include "core/gimpcoords-interpolate.h"
 
 #include "gimpanchor.h"
+#include "gimpbezierdesc.h"
 #include "gimpbezierstroke.h"
 
 
@@ -1535,11 +1536,8 @@ gimp_bezier_stroke_make_bezier (const GimpStroke *stroke)
     g_printerr ("miscalculated path cmd length! (%d vs. %d)\n",
                 cmd_array->len, num_cmds);
 
-  bezdesc = g_slice_new (GimpBezierDesc);
-  bezdesc->status = CAIRO_STATUS_SUCCESS;
-  bezdesc->data = (cairo_path_data_t *) cmd_array->data;
-  bezdesc->num_data = cmd_array->len;
-
+  bezdesc = gimp_bezier_desc_new ((cairo_path_data_t *) cmd_array->data,
+                                  cmd_array->len);
   g_array_free (points, TRUE);
   g_array_free (cmd_array, FALSE);
 

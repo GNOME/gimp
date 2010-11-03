@@ -130,9 +130,9 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
+  static GimpParam   values[1]; /* Return values */
   GimpRunMode        run_mode;  /* Current run mode */
   GimpPDBStatusType  status;    /* Return status */
-  GimpParam         *values;    /* Return values */
   GimpDrawable      *drawable;  /* Current image */
 
   /*
@@ -143,8 +143,6 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
-
-  values = g_new (GimpParam, 1);
 
   *nreturn_vals = 1;
   *return_vals  = values;

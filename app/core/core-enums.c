@@ -639,43 +639,6 @@ gimp_view_type_get_type (void)
 }
 
 GType
-gimp_selection_control_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", "off" },
-    { GIMP_SELECTION_LAYER_OFF, "GIMP_SELECTION_LAYER_OFF", "layer-off" },
-    { GIMP_SELECTION_LAYER_ON, "GIMP_SELECTION_LAYER_ON", "layer-on" },
-    { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", "on" },
-    { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", "pause" },
-    { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", "resume" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_SELECTION_OFF, "GIMP_SELECTION_OFF", NULL },
-    { GIMP_SELECTION_LAYER_OFF, "GIMP_SELECTION_LAYER_OFF", NULL },
-    { GIMP_SELECTION_LAYER_ON, "GIMP_SELECTION_LAYER_ON", NULL },
-    { GIMP_SELECTION_ON, "GIMP_SELECTION_ON", NULL },
-    { GIMP_SELECTION_PAUSE, "GIMP_SELECTION_PAUSE", NULL },
-    { GIMP_SELECTION_RESUME, "GIMP_SELECTION_RESUME", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpSelectionControl", values);
-      gimp_type_set_translation_context (type, "selection-control");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_thumbnail_size_get_type (void)
 {
   static const GEnumValue values[] =

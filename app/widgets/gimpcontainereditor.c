@@ -74,7 +74,7 @@ static gboolean  gimp_container_editor_get_show_button_bar (GimpDocked *docked);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerEditor, gimp_container_editor,
-                         GTK_TYPE_VBOX,
+                         GTK_TYPE_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
                                                 gimp_container_editor_docked_iface_init))
 
@@ -101,9 +101,12 @@ gimp_container_editor_docked_iface_init (GimpDockedInterface *iface)
 }
 
 static void
-gimp_container_editor_init (GimpContainerEditor *view)
+gimp_container_editor_init (GimpContainerEditor *editor)
 {
-  view->view = NULL;
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
+
+  editor->view = NULL;
 }
 
 gboolean
@@ -168,7 +171,8 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
                              menu_factory, menu_identifier, ui_identifier,
                              editor);
 
-  gtk_container_add (GTK_CONTAINER (editor), GTK_WIDGET (editor->view));
+  gtk_box_pack_start (GTK_BOX (editor), GTK_WIDGET (editor->view),
+                      TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (editor->view));
 
   g_signal_connect_object (editor->view, "select-item",

@@ -126,7 +126,7 @@
                                             "Drop Shadow"
                                             shadow-opacity
                                             NORMAL-MODE)))
-    (gimp-image-add-layer image shadow-layer -1)
+    (gimp-image-insert-layer image shadow-layer -1 -1)
     (gimp-layer-set-offsets shadow-layer
                             shadow-offset-x
                             shadow-offset-y))
@@ -146,7 +146,7 @@
 
   (if (= from-selection TRUE)
       (begin
-        (gimp-selection-load active-selection)
+        (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
         (gimp-edit-clear shadow-layer)
         (gimp-image-remove-channel image active-selection)))
 

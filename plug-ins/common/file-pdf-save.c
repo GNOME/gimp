@@ -478,7 +478,7 @@ run (const gchar      *name,
               gimp_drawable_offsets (layer->drawable_id, &x, &y);
 
               /* For raster layers */
-              if (!gimp_drawable_is_text_layer (layer->drawable_id))
+              if (!gimp_item_is_text_layer (layer->drawable_id))
                 {
                   layer_color = get_layer_color (layer, &single_color);
                   cairo_rectangle (cr, x, y, layer->width, layer->height);

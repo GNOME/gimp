@@ -47,7 +47,7 @@ typedef struct _GimpDisplayShellClass  GimpDisplayShellClass;
 
 struct _GimpDisplayShell
 {
-  GtkVBox            parent_instance;
+  GtkBox             parent_instance;
 
   /* --- cacheline 2 boundary (128 bytes) was 20 bytes ago --- */
 
@@ -132,6 +132,16 @@ struct _GimpDisplayShell
   GtkWidget         *statusbar;        /*  statusbar                          */
 
   cairo_surface_t   *render_surface;   /*  buffer for rendering the image     */
+  cairo_surface_t   *mask_surface;     /*  buffer for rendering the mask      */
+  cairo_pattern_t   *checkerboard;     /*  checkerboard pattern               */
+
+  GimpCanvasItem    *canvas_item;      /*  items drawn on the canvas          */
+  GimpCanvasItem    *vectors;          /*  item proxy of vectors              */
+  GimpCanvasItem    *grid;             /*  item proxy of the grid             */
+  GimpCanvasItem    *guides;           /*  item proxies of guides             */
+  GimpCanvasItem    *sample_points;    /*  item proxies of sample points      */
+  GimpCanvasItem    *layer_boundary;   /*  item for the layer boundary        */
+  GimpCanvasItem    *cursor;           /*  item for the software cursor       */
 
   guint              title_idle_id;    /*  title update idle ID               */
   gchar             *title;            /*  current title                      */
@@ -151,9 +161,6 @@ struct _GimpDisplayShell
   GimpCursorType     override_cursor;  /*  Overriding cursor                 */
   gboolean           using_override_cursor;
   gboolean           draw_cursor;      /* should we draw software cursor ?    */
-  gboolean           have_cursor;      /* is cursor currently drawn ?         */
-  gint               cursor_x;         /* software cursor X value             */
-  gint               cursor_y;         /* software cursor Y value             */
 
   GtkWidget         *close_dialog;     /*  close dialog                       */
   GtkWidget         *scale_dialog;     /*  scale (zoom) dialog                */
@@ -165,6 +172,10 @@ struct _GimpDisplayShell
   GtkWidget             *filters_dialog; /* color display filter dialog       */
 
   gint               paused_count;
+
+  GimpTreeHandler   *vectors_freeze_handler;
+  GimpTreeHandler   *vectors_thaw_handler;
+  GimpTreeHandler   *vectors_visible_handler;
 
   gboolean           zoom_on_resize;
   gboolean           show_transform_preview;
@@ -185,7 +196,7 @@ struct _GimpDisplayShell
 
   GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
   GimpDrawable      *mask;
-  GimpChannelType    mask_color;
+  GimpRGB            mask_color;
 
   GArray            *event_history;
   GArray            *event_queue;
@@ -200,7 +211,7 @@ struct _GimpDisplayShell
 
 struct _GimpDisplayShellClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* scaled)    (GimpDisplayShell *shell);
   void (* scrolled)  (GimpDisplayShell *shell);
@@ -219,14 +230,14 @@ void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y,
-                                                    GtkAnchorType       anchor,
+                                                    GimpHandleAnchor    anchor,
                                                     gint                spacing_x,
                                                     gint                spacing_y);
 void              gimp_display_shell_move_overlay  (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,
                                                     gdouble             image_x,
                                                     gdouble             image_y,
-                                                    GtkAnchorType       anchor,
+                                                    GimpHandleAnchor    anchor,
                                                     gint                spacing_x,
                                                     gint                spacing_y);
 
@@ -275,7 +286,7 @@ void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
 void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GimpDrawable       *mask,
-                                                    GimpChannelType     color);
+                                                    const GimpRGB      *color);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

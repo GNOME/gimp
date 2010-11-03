@@ -55,7 +55,7 @@ m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.14.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
-m4_define([poppler_required_version], [0.4.1])
+m4_define([poppler_required_version], [0.6.0])
 m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
@@ -492,13 +492,13 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.22.0 or newer])
-if $PKG_CONFIG --atleast-version=2.22.0 gtk+-2.0; then
-  have_gtk_2_22=yes
+AC_MSG_CHECKING([if GTK+ is version 2.24.0 or newer])
+if $PKG_CONFIG --atleast-version=2.24.0 gtk+-2.0; then
+  have_gtk_2_24=yes
 else
-  have_gtk_2_22=no
+  have_gtk_2_24=no
 fi
-AC_MSG_RESULT($have_gtk_2_22)
+AC_MSG_RESULT($have_gtk_2_24)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -661,7 +661,7 @@ if test "x$enable_mmx" = xyes; then
   mmx_save_CFLAGS="$CFLAGS"
   CFLAGS="$mmx_save_CFLAGS $MMX_EXTRA_CFLAGS"
 
-  AC_COMPILE_IFELSE([asm ("movq 0, %mm0");],
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("movq 0, %mm0");])],
 
     AC_DEFINE(USE_MMX, 1, [Define to 1 if MMX assembly is available.])
     AC_MSG_RESULT(yes)
@@ -674,7 +674,7 @@ if test "x$enable_mmx" = xyes; then
 
       CFLAGS="$CFLAGS $sse_flag"
 
-      AC_COMPILE_IFELSE([asm ("movntps %xmm0, 0");],
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("movntps %xmm0, 0");])],
         AC_DEFINE(USE_SSE, 1, [Define to 1 if SSE assembly is available.])
         AC_MSG_RESULT(yes)
       ,
@@ -737,7 +737,7 @@ if test "x$enable_altivec" = xyes; then
          [Define to 1 if the altivec runtime test should use a sysctl.])
         ;;
       *)
-        AC_COMPILE_IFELSE([asm ("vand %v0, %v0, %v0");],
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM(,[asm ("vand %v0, %v0, %v0");])],
           can_use_altivec=yes, can_use_altivec=no)
         ;;
     esac
@@ -863,7 +863,10 @@ AC_MSG_CHECKING([whether symbols are prefixed])
 
 case "$host_os" in
   mingw*)
-    SYMPREFIX='_'
+    case "$host_cpu" in 
+	  x86_64) SYMPREFIX='' ;;
+	  *) SYMPREFIX='_' ;;
+	esac
     ;;
   darwin* | rhapsody* | machten*)
     SYMPREFIX='_'
@@ -953,10 +956,10 @@ if test "$gdk_target" = x11; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
 	  have_libxmu=yes
-          XMU_LIBS="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
+          XMU_LIBS="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt"
+          SCREENSHOT_LIBS="$XMU_LIBS",
 	  [have_libxmu="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
 	[have_libxmu="no (XMU library not found)"], -lXt -lX11)
-      SCREENSHOT_LIBS="$XMU_LIBS"
    fi
 
    # Check for shaped window extension
@@ -1268,7 +1271,7 @@ else
   have_webkit="no (WebKit support disabled)"
 fi
 
-AM_CONDITIONAL(BUILD_HELP_BROWSER, test "x$have_webkit" = xyes)
+AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 
 
 ###################
@@ -1913,7 +1916,7 @@ if test "x$have_glib_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_22" != "xyes"; then
+if test "x$have_gtk_2_24" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 

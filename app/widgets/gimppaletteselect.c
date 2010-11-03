@@ -98,7 +98,7 @@ gimp_palette_select_constructor (GType                  type,
   gtk_container_set_border_width (GTK_CONTAINER (dialog->view), 12);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
-  gtk_container_add (GTK_CONTAINER (content_area), dialog->view);
+  gtk_box_pack_start (GTK_BOX (content_area), dialog->view, TRUE, TRUE, 0);
   gtk_widget_show (dialog->view);
 
   return object;
@@ -117,7 +117,7 @@ gimp_palette_select_run_callback (GimpPdbDialog  *dialog,
                                              NULL, error,
                                              dialog->callback_name,
                                              G_TYPE_STRING,   gimp_object_get_name (object),
-                                             GIMP_TYPE_INT32, palette->n_colors,
+                                             GIMP_TYPE_INT32, gimp_palette_get_n_colors (palette),
                                              GIMP_TYPE_INT32, closing,
                                              G_TYPE_NONE);
 }

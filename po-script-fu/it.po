@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-03 17:48+0200\n"
-"PO-Revision-Date: 2010-08-27 11:26+0200\n"
+"POT-Creation-Date: 2010-10-27 23:47+0200\n"
+"PO-Revision-Date: 2010-10-27 23:51+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -118,19 +118,19 @@ msgstr "Troppo pochi argomenti per la chiamata \"script-fu-register\""
 msgid "Error while loading %s:"
 msgstr "Errore durante il caricamento di: %s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:804
+#: ../plug-ins/script-fu/script-fu-server.c:807
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:809
+#: ../plug-ins/script-fu/script-fu-server.c:812
 msgid "_Start Server"
 msgstr "Avvia il _server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:837
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "Server port:"
 msgstr "Porta del server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:843
+#: ../plug-ins/script-fu/script-fu-server.c:846
 msgid "Server logfile:"
 msgstr "File di log del server:"
 
@@ -232,17 +232,17 @@ msgid "Default bumpmap settings"
 msgstr "Impostazioni predefinite mappa a sbalzo"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
@@ -269,17 +269,17 @@ msgid "Font"
 msgstr "Carattere"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:6
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
@@ -316,11 +316,11 @@ msgstr ""
 "un'ombra"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
@@ -343,17 +343,17 @@ msgid "Shadow blur radius"
 msgstr "Raggio sfocatura ombra"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:13
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:7
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
@@ -384,10 +384,10 @@ msgid "3_D Truchet..."
 msgstr "Truchet 3_D..."
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
@@ -445,7 +445,7 @@ msgid "Supersample"
 msgstr "Sovracampionamento"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr "Spessore"
@@ -459,11 +459,21 @@ msgid "Add a beveled border to an image"
 msgstr "Porta in rilievo il bordo di un'immagine"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "Bumpmap"
+msgstr "Mappa a sbalzo"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr "Mantieni il livello mappa a sbalzo"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:6
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
@@ -481,44 +491,69 @@ msgid "Add a border around an image"
 msgstr "Aggiunge un bordo attorno ad un'immagine"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border Layer"
+msgstr "Livello bordo"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border X size"
 msgstr "Dimensione bordo X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border Y size"
 msgstr "Dimensione bordo Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Border color"
 msgstr "Colore bordo"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:7
 msgid "Delta value on color"
 msgstr "Valore delta su colore"
 
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+msgid "Alien Glow"
+msgstr "Bagliore alieno"
+
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Arrow"
+msgstr "Freccia"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+msgid "Background"
+msgstr "Sfondo"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 msgid "Create an arrow graphic with an eerie glow for web pages"
 msgstr ""
 "Crea una freccia grafica con un tema di tenebra luminescenza per pagine web"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Down"
 msgstr "Abbassa"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/camo.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten image"
 msgstr "Immagine appiattita"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
@@ -527,69 +562,78 @@ msgstr "Immagine appiattita"
 msgid "Glow color"
 msgstr "Colore bagliore"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
 msgid "Left"
 msgstr "Sinistra"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Orientation"
 msgstr "Orientamento"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Right"
 msgstr "Destra"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
 #: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:13
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:10
 msgid "Up"
 msgstr "Alza"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:14
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:11
 msgid "_Arrow..."
 msgstr "Frecci_a..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar"
+msgstr "Barra"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 msgid "Bar height"
 msgstr "Altezza barra"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
 msgid "Bar length"
 msgstr "Lunghezza barra"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 msgid "Create an Hrule graphic with an eerie glow for web pages"
 msgstr ""
 "Crea un separatore orizzontale grafico con un tema di tenebra luminescenza "
 "per pagine web"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:7
 msgid "_Hrule..."
 msgstr "Separatore _orizzontale..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Bullet"
+msgstr "Voce elenco puntato"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 msgid "Create a bullet graphic with an eerie glow for web pages"
 msgstr ""
 "Crea un rivetto grafico con un tema di tenebra luminescenza per pagine web"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
 msgstr "Raggio"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:7
 msgid "_Bullet..."
 msgstr "_Voce elenco puntato..."
 
@@ -598,25 +642,33 @@ msgstr "_Voce elenco puntato..."
 msgid "B_utton..."
 msgstr "P_ulsante..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+msgid "Button"
+msgstr "Pulsante"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 msgid "Create a button graphic with an eerie glow for web pages"
 msgstr ""
 "Crea un pulsante grafico con un tema di tenebra luminescenza per pagine web"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+msgid "Glow"
+msgstr "Bagliore"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 msgid "Glow radius"
 msgstr "Raggio bagliore"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Padding"
 msgstr "Padding"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:14
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
@@ -711,70 +763,85 @@ msgstr "Crea un semplice logotipo con un'ombra e un'evidenziazione"
 msgid "Bevel width"
 msgstr "Larghezza rilievo"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
 msgid "Create a simple, beveled button graphic for webpages"
 msgstr "Crea un semplice pulsante in rilievo per pagine web"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient"
+msgstr "Gradiente"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
 msgid "Lower-right color"
 msgstr "Colore in basso a destra"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
 msgstr "Premuto"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Simple _Beveled Button..."
 msgstr "Pulsante semplice in _rilievo..."
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:13
 msgid "Upper-left color"
 msgstr "Colore in alto a sinistra"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Create a beveled pattern arrow for webpages"
 msgstr "Crea una freccia con motivo in rilievo per pagine web"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
 msgid "Create a beveled pattern bullet for webpages"
 msgstr "Crea un segnalino con motivo in rilievo per pagine web"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 msgid "Diameter"
 msgstr "Diametro"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:9
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent background"
 msgstr "Sfondo trasparente"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
 msgid "Create a beveled pattern button for webpages"
 msgstr "Crea un pulsante con motivo in rilievo per pagine web"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
 msgid "Create a beveled pattern heading for webpages"
 msgstr "Crea un'intestazione con motivo in rilievo per pagine web"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 msgid "H_eading..."
 msgstr "Intestazion_e..."
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 msgid "Create a beveled pattern hrule for webpages"
 msgstr "Crea un separatore orizzontale con motivo in rilievo per pagine web"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Altezza"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "Rule"
+msgstr "Righello"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
@@ -794,18 +861,23 @@ msgstr ""
 "un'animazione"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Frame"
+msgstr "Fotogramma"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Intermediate frames"
 msgstr "Fotogrammi intermedi"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Looped"
 msgstr "Ciclico"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "Max. blur radius"
 msgstr "Raggio di massima sfocatura"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:7
 msgid "_Blend..."
 msgstr "_Sfuma..."
 
@@ -844,16 +916,6 @@ msgstr "PP-SF-RGB"
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
 msgstr "PP-trasparente"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/land.scm.h:3
-#: ../plug-ins/script-fu/scripts/lava.scm.h:2
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
-msgid "Gradient"
-msgstr "Gradiente"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
@@ -979,14 +1041,43 @@ msgid "_Camouflage..."
 msgstr "_Camuffamento..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#, fuzzy
+msgid "Bevel Highlight"
+msgstr "Larghezza rilievo"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#, fuzzy
+msgid "Bevel Shadow"
+msgstr "Ombra"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
 msgstr "Aree bianche scolpite"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+msgid "Carved Surface"
+msgstr "Superficie scolpita"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#, fuzzy
+msgid "Cast Shadow"
+msgstr "Crea ombra"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
 msgid "Image to carve"
 msgstr "Immagine da scolpire"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
+#, fuzzy
+msgid "Inset"
+msgstr "Inverti"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
 msgstr "Scolpitur_a..."
 
@@ -994,15 +1085,15 @@ msgstr "Scolpitur_a..."
 msgid "Background Image"
 msgstr "Immagine di sfondo"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid "Carve raised text"
 msgstr "Testo scolpito in rilievo"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Carved..."
 msgstr "Scolpito..."
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
@@ -1010,7 +1101,7 @@ msgstr ""
 "Crea un logotipo con testo scolpito in alto o bassorilievo sull'immagine di "
 "sfondo specificata"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:12
 msgid "Padding around text"
 msgstr "Rilievo attorno al testo"
 
@@ -1077,43 +1168,70 @@ msgstr ""
 "Aggiunge un effetto cromatura alla regione o al livello alfa selezionati "
 "usando lo stampino (in scala di grigi) predefinito"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+msgid "Chrome"
+msgstr "Cromato"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "Bilanciamento cromatura"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "Fattore cromatura"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "Luminosità cromatura"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "Saturazione cromatura"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 msgid "Chrome white areas"
 msgstr "Cromatura aree bianche"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+msgid "Drop Shadow"
+msgstr "Crea ombra"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
 msgstr "Mappa ambiente"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
+msgid "Highlight"
+msgstr "Illuminato"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#, fuzzy
 msgid "Highlight balance"
 msgstr "Bilanciamento luminosità"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
+msgid "Layer 2"
+msgstr "Livello 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
+msgid "Layer 3"
+msgstr "Livello 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
+msgid "Layer1"
+msgstr "Livello 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
 msgstr "Scol_pitura cromata..."
 
@@ -1140,34 +1258,39 @@ msgid "Circuit seed"
 msgstr "Seme casualità circuiti"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
+#, fuzzy
+msgid "Effect layer"
+msgstr "Livello separato"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
 "Riempie la regione o il livello alfa selezionati con disegni simili ad un "
 "circuito stampato"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "Keep selection"
 msgstr "Mantieni la selezione"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "No background (only for separate layer)"
 msgstr "Senza sfondo (solo per livello separato)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 msgid "Oilify mask size"
 msgstr "Dimensione maschera pittura ad olio"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
 #: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
 msgstr "Livello separato"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:8
 msgid "_Circuit..."
 msgstr "_Circuito..."
 
@@ -1213,10 +1336,15 @@ msgid "Darken only"
 msgstr "Solo toni scuri"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-msgid "Stains"
+#, fuzzy
+msgid "Stain"
 msgstr "Macchie"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
+msgid "Stains"
+msgstr "Macchie"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:5
 msgid "_Coffee Stain..."
 msgstr "Macchie di _caffè..."
 
@@ -1633,6 +1761,7 @@ msgid "Pattern (text)"
 msgstr "Motivo (testo)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:13
 msgid "Shadow"
 msgstr "Ombra"
 
@@ -2361,10 +2490,6 @@ msgstr "Metodo colore"
 msgid "Epitrochoid"
 msgstr "Epitrocoidi"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
-msgid "Frame"
-msgstr "Fotogramma"
-
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Sawtooth"
 msgstr "Gradiente: dente di sega ciclico"
@@ -2744,22 +2869,22 @@ msgstr "Colore ombra"
 msgid "Drop shadow opacity"
 msgstr "Opacità ombra"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight X offset"
 msgstr "Spostamento illuminazione in X"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight Y offset"
 msgstr "Spostamento illuminazione in Y"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight color"
 msgstr "Colore illuminato"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Highlight opacity"
 msgstr "Opacità illuminazione"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "Effetto _xach..."

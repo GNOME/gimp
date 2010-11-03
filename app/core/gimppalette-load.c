@@ -152,7 +152,7 @@ gimp_palette_load (GimpContext  *context,
               columns = 0;
             }
 
-          palette->n_columns = columns;
+          gimp_palette_set_columns (palette, columns);
 
           linenum++;
           if (! fgets (str, sizeof (str), file))
@@ -221,7 +221,7 @@ gimp_palette_load (GimpContext  *context,
                                255);
 
           entry->name     = g_strdup (tok ? tok : _("Untitled"));
-          entry->position = palette->n_colors;
+          entry->position = gimp_palette_get_n_colors (palette);
 
           palette->colors = g_list_prepend (palette->colors, entry);
           palette->n_colors++;

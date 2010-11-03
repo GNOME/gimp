@@ -23,12 +23,16 @@
 
 #include "tools-types.h"
 
+#include "base/temp-buf.h"
+
+#include "core/gimpbrush.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
+#include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpairbrushtool.h"
@@ -47,13 +51,18 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget * fade_options_gui      (GimpPaintOptions *paint_options,
-                                          GType             tool_type);
-static GtkWidget * gradient_options_gui  (GimpPaintOptions *paint_options,
-                                          GType             tool_type,
-                                          GtkWidget        *incremental_toggle);
-static GtkWidget * jitter_options_gui    (GimpPaintOptions *paint_options,
-                                          GType             tool_type);
+
+
+static GtkWidget * fade_options_gui           (GimpPaintOptions *paint_options,
+                                               GType             tool_type);
+static GtkWidget * gradient_options_gui       (GimpPaintOptions *paint_options,
+                                               GType             tool_type,
+                                               GtkWidget        *incremental_toggle);
+static GtkWidget * jitter_options_gui         (GimpPaintOptions *paint_options,
+                                               GType             tool_type);
+
+static void gimp_paint_options_gui_reset_size (GtkWidget        *button,
+                                               GimpPaintOptions *paint_options);
 
 
 /*  public functions  */
@@ -76,7 +85,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the main table  */
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -111,23 +120,41 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       GtkObject *adj_angle;
       GtkObject *adj_aspect_ratio;
 
-
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
                                         "brush-view-type", "brush-view-size");
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Brush:"), 0.0, 0.5,
                                  button, 2, FALSE);
 
-      adj_scale = gimp_prop_scale_entry_new (config, "brush-scale",
+      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+                                           "dynamics-view-type", "dynamics-view-size");
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 _("Dynamics:"), 0.0, 0.5,
+                                 button, 2, FALSE);
+
+      adj_scale = gimp_prop_scale_entry_new (config, "brush-size",
                                              GTK_TABLE (table), 0, table_row++,
-                                             _("Scale:"),
+                                             _("Size:"),
                                              0.01, 0.1, 2,
                                              FALSE, 0.0, 0.0);
       gimp_scale_entry_set_logarithmic (adj_scale, TRUE);
 
+
+      button = gimp_stock_button_new (GTK_STOCK_REFRESH, _("Reset size"));
+
+      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                 "", 0.0, 0.5,
+                                 button, 2, FALSE);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (gimp_paint_options_gui_reset_size),
+                        options);
+
       adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
                                                     GTK_TABLE (table), 0, table_row++,
-                                                    _("Aspect Ratio:"),
+                                                    /* Label for a slider that affects
+                                                       aspect ratio for brushes */
+                                                    _("Aspect:"),
                                                     0.01, 0.1, 2,
                                                     FALSE, 0.0, 0.0);
       gimp_scale_entry_set_logarithmic (adj_aspect_ratio, TRUE);
@@ -222,13 +249,16 @@ fade_options_gui (GimpPaintOptions *paint_options,
                              spinbutton, 1, FALSE);
 
   /*  the fade-out unitmenu  */
-  menu = gimp_prop_unit_menu_new (config, "fade-unit", "%a");
+  menu = gimp_prop_unit_combo_box_new (config, "fade-unit");
   gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (menu);
 
+#if 0
+  /* FIXME pixel digits */
   g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
   gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
+#endif
 
     /*  the repeat type  */
   combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
@@ -306,4 +336,19 @@ gradient_options_gui (GimpPaintOptions *paint_options,
                              button, 2, TRUE);
 
   return frame;
+}
+
+static void
+gimp_paint_options_gui_reset_size (GtkWidget        *button,
+                                   GimpPaintOptions *paint_options)
+{
+ GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+ if (brush)
+   {
+     g_object_set (paint_options,
+                   "brush-size", (gdouble) MAX (brush->mask->width,
+                                                brush->mask->height),
+                   NULL);
+   }
 }

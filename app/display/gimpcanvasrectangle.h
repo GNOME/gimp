@@ -49,11 +49,12 @@ struct _GimpCanvasRectangleClass
 
 GType            gimp_canvas_rectangle_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_rectangle_new      (gdouble  x,
-                                                 gdouble  y,
-                                                 gdouble  width,
-                                                 gdouble  height,
-                                                 gboolean filled);
+GimpCanvasItem * gimp_canvas_rectangle_new      (GimpDisplayShell *shell,
+                                                 gdouble           x,
+                                                 gdouble           y,
+                                                 gdouble           width,
+                                                 gdouble           height,
+                                                 gboolean          filled);
 
 
 #endif /* __GIMP_CANVAS_RECTANGLE_H__ */

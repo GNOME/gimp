@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_brush_factory_view_destroy         (GtkObject            *object);
+static void   gimp_brush_factory_view_dispose         (GObject              *object);
 
 static void   gimp_brush_factory_view_select_item     (GimpContainerEditor  *editor,
                                                        GimpViewable         *viewable);
@@ -59,10 +59,10 @@ G_DEFINE_TYPE (GimpBrushFactoryView, gimp_brush_factory_view,
 static void
 gimp_brush_factory_view_class_init (GimpBrushFactoryViewClass *klass)
 {
-  GtkObjectClass           *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass             *object_class = G_OBJECT_CLASS (klass);
   GimpContainerEditorClass *editor_class = GIMP_CONTAINER_EDITOR_CLASS (klass);
 
-  object_class->destroy     = gimp_brush_factory_view_destroy;
+  object_class->dispose     = gimp_brush_factory_view_dispose;
 
   editor_class->select_item = gimp_brush_factory_view_select_item;
 }
@@ -94,7 +94,7 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 }
 
 static void
-gimp_brush_factory_view_destroy (GtkObject *object)
+gimp_brush_factory_view_dispose (GObject *object)
 {
   GimpBrushFactoryView *view   = GIMP_BRUSH_FACTORY_VIEW (object);
   GimpContainerEditor  *editor = GIMP_CONTAINER_EDITOR (object);
@@ -113,7 +113,7 @@ gimp_brush_factory_view_destroy (GtkObject *object)
       view->spacing_changed_handler_id = 0;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GtkWidget *

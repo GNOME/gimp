@@ -1687,7 +1687,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-get-interpolation",
                                      "Get the interpolation type.",
-                                     "This procedure returns the interpolation setting. The return value is an integer which corresponds to the values listed in the argument description.",
+                                     "This procedure returns the interpolation setting. The return value is an integer which corresponds to the values listed in the argument description. If the interpolation has not been set explicitly by 'gimp-context-set-interpolation', the default interpolation set in gimprc will be used.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",

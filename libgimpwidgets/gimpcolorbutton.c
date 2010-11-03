@@ -90,6 +90,8 @@ static void     gimp_color_button_class_init   (GimpColorButtonClass *klass);
 static void     gimp_color_button_init         (GimpColorButton      *button,
                                                 GimpColorButtonClass *klass);
 
+static void     gimp_color_button_finalize          (GObject         *object);
+static void     gimp_color_button_dispose           (GObject         *object);
 static void     gimp_color_button_get_property      (GObject         *object,
                                                      guint            property_id,
                                                      GValue          *value,
@@ -98,9 +100,6 @@ static void     gimp_color_button_set_property      (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
                                                      GParamSpec      *pspec);
-static void     gimp_color_button_finalize          (GObject         *object);
-
-static void     gimp_color_button_destroy           (GtkObject       *object);
 
 static gboolean gimp_color_button_button_press      (GtkWidget       *widget,
                                                      GdkEventButton  *bevent);
@@ -183,10 +182,9 @@ gimp_color_button_get_type (void)
 static void
 gimp_color_button_class_init (GimpColorButtonClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
-  GtkButtonClass *button_class     = GTK_BUTTON_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
   GimpRGB         color;
 
   parent_class = g_type_class_peek_parent (klass);
@@ -200,11 +198,10 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->finalize           = gimp_color_button_finalize;
+  object_class->dispose            = gimp_color_button_dispose;
   object_class->get_property       = gimp_color_button_get_property;
   object_class->set_property       = gimp_color_button_set_property;
-  object_class->finalize           = gimp_color_button_finalize;
-
-  gtk_object_class->destroy        = gimp_color_button_destroy;
 
   widget_class->button_press_event = gimp_color_button_button_press;
   widget_class->state_changed      = gimp_color_button_state_changed;
@@ -351,6 +348,32 @@ gimp_color_button_finalize (GObject *object)
 }
 
 static void
+gimp_color_button_dispose (GObject *object)
+{
+  GimpColorButton *button = GIMP_COLOR_BUTTON (object);
+
+  if (button->dialog)
+    {
+      gtk_widget_destroy (button->dialog);
+      button->dialog = NULL;
+    }
+
+  if (button->color_area)
+    {
+      gtk_widget_destroy (button->color_area);
+      button->color_area = NULL;
+    }
+
+  if (button->popup_menu)
+    {
+      g_object_unref (button->popup_menu);
+      button->popup_menu = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_color_button_get_property (GObject    *object,
                                 guint       property_id,
                                 GValue     *value,
@@ -413,32 +436,6 @@ gimp_color_button_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_color_button_destroy (GtkObject *object)
-{
-  GimpColorButton *button = GIMP_COLOR_BUTTON (object);
-
-  if (button->dialog)
-    {
-      gtk_widget_destroy (button->dialog);
-      button->dialog = NULL;
-    }
-
-  if (button->color_area)
-    {
-      gtk_widget_destroy (button->color_area);
-      button->color_area = NULL;
-    }
-
-  if (button->popup_menu)
-    {
-      g_object_unref (button->popup_menu);
-      button->popup_menu = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean
@@ -522,8 +519,8 @@ gimp_color_button_clicked (GtkButton *button)
       gimp_color_selection_set_color (GIMP_COLOR_SELECTION (selection), &color);
       gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (selection),
                                           &color);
-      gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                         selection);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                          selection, TRUE, TRUE, 0);
       gtk_widget_show (selection);
 
       g_signal_connect (selection, "color-changed",

@@ -52,7 +52,8 @@ enum
 };
 
 
-static void        gimp_view_destroy              (GtkObject        *object);
+static void        gimp_view_dispose              (GObject          *object);
+
 static void        gimp_view_realize              (GtkWidget        *widget);
 static void        gimp_view_unrealize            (GtkWidget        *widget);
 static void        gimp_view_map                  (GtkWidget        *widget);
@@ -96,7 +97,7 @@ static guint view_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_view_class_init (GimpViewClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   view_signals[SET_VIEWABLE] =
@@ -137,7 +138,7 @@ gimp_view_class_init (GimpViewClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->destroy              = gimp_view_destroy;
+  object_class->dispose              = gimp_view_dispose;
 
   widget_class->activate_signal      = view_signals[CLICKED];
   widget_class->realize              = gimp_view_realize;
@@ -183,7 +184,7 @@ gimp_view_init (GimpView *view)
 }
 
 static void
-gimp_view_destroy (GtkObject *object)
+gimp_view_dispose (GObject *object)
 {
   GimpView *view = GIMP_VIEW (object);
 
@@ -196,7 +197,7 @@ gimp_view_destroy (GtkObject *object)
       view->renderer = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -287,9 +288,6 @@ gimp_view_size_request (GtkWidget      *widget,
       requisition->height = (view->renderer->height +
                              2 * view->renderer->border_width);
     }
-
-  if (GTK_WIDGET_CLASS (parent_class)->size_request)
-    GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 }
 
 static void
@@ -388,14 +386,23 @@ gimp_view_expose_event (GtkWidget      *widget,
 {
   if (gtk_widget_is_drawable (widget))
     {
-      GtkAllocation allocation;
+      GtkAllocation  allocation;
+      cairo_t       *cr;
 
       gtk_widget_get_allocation (widget, &allocation);
 
+      cr = gdk_cairo_create (event->window);
+      gdk_cairo_region (cr, event->region);
+      cairo_clip (cr);
+
+      cairo_translate (cr, allocation.x, allocation.y);
+
       gimp_view_renderer_draw (GIMP_VIEW (widget)->renderer,
-                               gtk_widget_get_window (widget), widget,
-                               &allocation,
-                               &event->area);
+                               widget, cr,
+                               allocation.width,
+                               allocation.height);
+
+      cairo_destroy (cr);
     }
 
   return FALSE;

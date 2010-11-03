@@ -211,8 +211,6 @@ query (void)
                           info_return_vals);
 }
 
-GimpParam values[5];
-
 static void
 run (const gchar      *name,
      gint              nparams,
@@ -220,6 +218,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
+  static GimpParam   values[5];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   gint32             pc;

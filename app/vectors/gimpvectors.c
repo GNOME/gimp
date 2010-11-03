@@ -44,6 +44,7 @@
 #include "paint/gimppaintoptions.h"
 
 #include "gimpanchor.h"
+#include "gimpbezierdesc.h"
 #include "gimpstroke.h"
 #include "gimpvectors.h"
 #include "gimpvectors-preview.h"
@@ -260,8 +261,7 @@ gimp_vectors_finalize (GObject *object)
 
   if (vectors->bezier_desc)
     {
-      g_free (vectors->bezier_desc->data);
-      g_slice_free (GimpBezierDesc, vectors->bezier_desc);
+      gimp_bezier_desc_free (vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -613,8 +613,7 @@ gimp_vectors_real_freeze (GimpVectors *vectors)
   /*  release cached bezier representation  */
   if (vectors->bezier_desc)
     {
-      g_free (vectors->bezier_desc->data);
-      g_slice_free (GimpBezierDesc, vectors->bezier_desc);
+      gimp_bezier_desc_free (vectors->bezier_desc);
       vectors->bezier_desc = NULL;
     }
 
@@ -1159,17 +1158,14 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
         {
           cmd_array = g_array_append_vals (cmd_array, bezdesc->data,
                                            bezdesc->num_data);
-          g_free (bezdesc->data);
-          g_slice_free (GimpBezierDesc, bezdesc);
+          gimp_bezier_desc_free (bezdesc);
         }
     }
 
   if (cmd_array->len > 0)
     {
-      ret_bezdesc = g_slice_new (GimpBezierDesc);
-      ret_bezdesc->status = CAIRO_STATUS_SUCCESS;
-      ret_bezdesc->num_data = cmd_array->len;
-      ret_bezdesc->data = (cairo_path_data_t *) cmd_array->data;
+      ret_bezdesc = gimp_bezier_desc_new ((cairo_path_data_t *) cmd_array->data,
+                                          cmd_array->len);
       g_array_free (cmd_array, FALSE);
     }
 

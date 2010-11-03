@@ -34,7 +34,7 @@ typedef struct _GimpColorDisplayEditorClass  GimpColorDisplayEditorClass;
 
 struct _GimpColorDisplayEditor
 {
-  GtkVBox                parent_instance;
+  GtkBox                 parent_instance;
 
   GimpColorDisplayStack *stack;
 
@@ -61,7 +61,7 @@ struct _GimpColorDisplayEditor
 
 struct _GimpColorDisplayEditorClass
 {
-  GtkVBoxClass parent_class;
+  GtkBoxClass parent_class;
 };
 
 

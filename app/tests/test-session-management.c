@@ -69,6 +69,7 @@ int main(int argc, char **argv)
   gchar             *dockrc_filename         = NULL;
   gint               result                  = 0;
 
+  gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
   /* Make sure to run this before we use any GIMP functions */
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
     result = -1;
 
   /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (FALSE, TRUE);
+  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
 
   /* Let the main loop run until idle to let things stabilize. This
    * includes parsing sessionrc and dockrc

@@ -1,0 +1,365 @@
+# Chinese (Hong Kong) translation for gimp-python.
+# Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
+# Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
+# 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
+# Abel Cheung <maddog@linuxhall.org>, 2001, 2003, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python 2.1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-30 19:48+0800\n"
+"PO-Revision-Date: 2010-10-30 19:48+0800\n"
+"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:394
+#, fuzzy
+msgid "Missing exception information"
+msgstr "有關文字輸入欄的選項"
+
+#: ../plug-ins/pygimp/gimpfu.py:403
+#, fuzzy, python-format
+msgid "An error occurred running %s"
+msgstr "發生錯誤。"
+
+#: ../plug-ins/pygimp/gimpfu.py:414
+msgid "_More Information"
+msgstr "更多資訊(_M)"
+
+#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
+#: ../plug-ins/pygimp/gimpfu.py:544
+msgid "No"
+msgstr "否"
+
+#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+msgid "Yes"
+msgstr "是"
+
+#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+msgid "Python-Fu File Selection"
+msgstr "Python-Fu 檔案選擇"
+
+#: ../plug-ins/pygimp/gimpfu.py:607
+msgid "Python-Fu Folder Selection"
+msgstr "Python-Fu 資料夾選擇"
+
+#: ../plug-ins/pygimp/gimpfu.py:696
+#, fuzzy, python-format
+msgid "Invalid input for '%s'"
+msgstr "--%2$s 有無效的數值「%1$s」"
+
+#: ../plug-ins/pygimp/gimpui.py:176
+#, fuzzy
+msgid "Python-Fu Color Selection"
+msgstr "顏色選擇對話盒的標題"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#, fuzzy
+msgid "Saving as colored XHTML"
+msgstr "儲存時預設建議的檔案名稱"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#, fuzzy
+msgid "Save as colored XHTML"
+msgstr "將聯絡人儲存為 VCar_d..."
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#, fuzzy
+msgid "Colored XHTML"
+msgstr "XHTML 1.0 - Tags"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#, fuzzy
+msgid "Character _source"
+msgstr "來源選項"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#, fuzzy
+msgid "Source code"
+msgstr "C 源代碼"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Text file"
+msgstr "文字檔"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#, fuzzy
+msgid "Entry box"
+msgstr "組合方塊項目"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "_File to read or characters to use"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+msgid "Fo_nt size in pixels"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#, fuzzy
+msgid "_Write a separate CSS file"
+msgstr "無法寫入‘%s’檔案：%s"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "Add a layer of fog"
+msgstr "添加一層霧"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Fog..."
+msgstr "霧(_F)..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+msgid "_Layer name"
+msgstr "圖層名稱(_L)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#, fuzzy
+msgid "Clouds"
+msgstr "密雲"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:67
+msgid "_Fog color"
+msgstr "霧的顏色(_F)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:68
+msgid "_Turbulence"
+msgstr "亂流(_T)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:69
+msgid "Op_acity"
+msgstr "不透明度(_A)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
+#, fuzzy
+msgid "Offset the colors in a palette"
+msgstr "增強顏色對比(_C)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
+#, fuzzy
+msgid "_Offset Palette..."
+msgstr "調色盤顏色 %d"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+msgid "Palette"
+msgstr "調色盤"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+msgid "Off_set"
+msgstr "偏移(_S)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#, fuzzy
+msgid "Sort the colors in a palette"
+msgstr "增強顏色對比(_C)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#, fuzzy
+msgid "_Sort Palette..."
+msgstr "調色盤顏色 %d"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+msgid "Color _model"
+msgstr "色彩模式(_M)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#, fuzzy
+msgid "Channel to _sort"
+msgstr "seahorse 收件人欄位的排序形式"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+#, fuzzy
+msgid "Red or Hue"
+msgstr "負向色調偏移"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+#, fuzzy
+msgid "Green or Saturation"
+msgstr "選擇性綠色飽和"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+#, fuzzy
+msgid "Blue or Value"
+msgstr "顯示公式的回傳值或是公式本身"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#, fuzzy
+msgid "_Ascending"
+msgstr "遞增(_A)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+msgid "Create a repeating gradient using colors from the palette"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#, fuzzy
+msgid "Palette to _Repeating Gradient"
+msgstr "按這裏可以加入新的選字盤"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+msgid "Create a gradient using colors from the palette"
+msgstr "建立一漸變色，使用調色盤中的顏色"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#, fuzzy
+msgid "Palette to _Gradient"
+msgstr "按這裏可以加入新的選字盤"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+msgid "Slice"
+msgstr "切片"
+
+#. table snippet means a small piece of HTML code here
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "沿着指南剪裁圖像，創建圖像和一個 HTML 表格片段"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+msgid "_Slice..."
+msgstr "切片(_S)..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#, fuzzy
+msgid "Path for HTML export"
+msgstr "匯出 HTML 到指定位置"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#, fuzzy
+msgid "Filename for export"
+msgstr "匯出 HTML 到指定位置"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#, fuzzy
+msgid "Image name prefix"
+msgstr "圖片檔案名稱"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Image format"
+msgstr "圖片格式"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#, fuzzy
+msgid "Separate image folder"
+msgstr "你選取了 %d 個資料夾"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#, fuzzy
+msgid "Folder for image export"
+msgstr "匯出 HTML 到指定位置"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#, fuzzy
+msgid "Space between table elements"
+msgstr "區域中元件間的間距"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+msgid "Javascript for onmouseover and clicked"
+msgstr ""
+
+#. table caps are table cells on the edge of the table
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+msgid "Skip animation for table caps"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+msgid "Python Console"
+msgstr "Python 訊息視窗"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+msgid "_Browse..."
+msgstr "瀏覽(_B)..."
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#, fuzzy
+msgid "Python Procedure Browser"
+msgstr "瀏覽器需要終端機方可運作"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#, fuzzy, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "無法開啟‘%s’來寫入資料：%s"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#, fuzzy, python-format
+msgid "Could not write to '%s': %s"
+msgstr "無法將 %s 的名稱更改為 %s：%s\n"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#, fuzzy
+msgid "Save Python-Fu Console Output"
+msgstr "儲存 Script-Fu 訊息視窗輸出"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+msgid "Interactive GIMP Python interpreter"
+msgstr "互動式 GIMP Python 解譯器"
+
+#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+msgid "_Console"
+msgstr "資訊視窗(_C)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
+#, fuzzy
+msgid "_Drop Shadow and Bevel..."
+msgstr "分頁拖放的羣組"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+msgid "_Shadow blur"
+msgstr "陰影模糊(_S)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Bevel"
+msgstr "斜邊(_B)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Drop shadow"
+msgstr "陰影(_D)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#, fuzzy
+msgid "Drop shadow _X displacement"
+msgstr "拖放"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#, fuzzy
+msgid "Drop shadow _Y displacement"
+msgstr "拖放"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+msgid "Create a new brush with characters from a text sequence"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#, fuzzy
+msgid "New Brush from _Text..."
+msgstr "從剪貼簿貼上文字"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+msgid "Font"
+msgstr "字型"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+msgid "Pixel Size"
+msgstr "像素大小"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Text"
+msgstr "文字"

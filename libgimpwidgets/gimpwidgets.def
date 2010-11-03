@@ -291,6 +291,7 @@ EXPORTS
 	gimp_prop_stock_image_new
 	gimp_prop_string_combo_box_new
 	gimp_prop_text_buffer_new
+	gimp_prop_unit_combo_box_new
 	gimp_prop_unit_menu_new
 	gimp_query_boolean_box
 	gimp_query_double_box
@@ -351,6 +352,11 @@ EXPORTS
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
 	gimp_uint_adjustment_update
+	gimp_unit_combo_box_get_active
+	gimp_unit_combo_box_get_type
+	gimp_unit_combo_box_new
+	gimp_unit_combo_box_new_with_model
+	gimp_unit_combo_box_set_active
 	gimp_unit_menu_get_pixel_digits
 	gimp_unit_menu_get_type
 	gimp_unit_menu_get_unit
@@ -358,7 +364,19 @@ EXPORTS
 	gimp_unit_menu_set_pixel_digits
 	gimp_unit_menu_set_unit
 	gimp_unit_menu_update
-        gimp_widgets_error_quark
+	gimp_unit_store_get_has_percent
+	gimp_unit_store_get_has_pixels
+	gimp_unit_store_get_type
+	gimp_unit_store_get_value
+	gimp_unit_store_get_values
+	gimp_unit_store_new
+	gimp_unit_store_set_has_percent
+	gimp_unit_store_set_has_pixels
+	gimp_unit_store_set_pixel_value
+	gimp_unit_store_set_pixel_values
+	gimp_unit_store_set_resolution
+	gimp_unit_store_set_resolutions
+	gimp_widgets_error_quark
 	gimp_widgets_init
 	gimp_zoom_button_new
 	gimp_zoom_model_get_factor

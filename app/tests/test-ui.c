@@ -87,10 +87,7 @@ typedef struct
 } GimpTestFixture;
 
 
-static GimpUIManager * gimp_ui_get_ui_manager                   (Gimp              *gimp);
 static void            gimp_ui_synthesize_delete_event          (GtkWidget         *widget);
-static void            gimp_ui_synthesize_key_event             (GtkWidget         *widget,
-                                                                 guint              keyval);
 static gboolean        gimp_ui_synthesize_click                 (GtkWidget         *widget,
                                                                  gint               x,
                                                                  gint               y,
@@ -327,7 +324,7 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
   factor_before_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
   /* Do the zoom */
-  gimp_ui_synthesize_key_event (GTK_WIDGET (window), GDK_plus);
+  gimp_test_utils_synthesize_key_event (GTK_WIDGET (window), GDK_plus);
   gimp_test_run_mainloop_until_idle ();
 
   /* Make sure the zoom focus point remained fixed */
@@ -338,7 +335,15 @@ keyboard_zoom_focus (GimpTestFixture *fixture,
                                    &shell_y_after_zoom);
   factor_after_zoom = gimp_zoom_model_get_factor (shell->zoom);
 
-  /* First of all make sure a zoom happend at all */
+  /* First of all make sure a zoom happend at all. If this assert
+   * fails, it means that the zoom didn't happen. Possible causes:
+   *
+   *  * gdk_test_simulate_key() failed to map 'GDK_plus' to the proper
+   *    'plus' X keysym, probably because it is mapped to a keycode
+   *    with modifiers like 'shift'. Run "xmodmap -pk | grep plus" to
+   *    find out. Make sure 'plus' is the first keysym for the given
+   *    keycode. If not, use "xmodmap <keycode> = plus" to correct it.
+   */
   g_assert_cmpfloat (fabs (factor_before_zoom - factor_after_zoom),
                      >=,
                      GIMP_UI_ZOOM_EPSILON);
@@ -470,7 +475,7 @@ restore_recently_closed_multi_column_dock (GimpTestFixture *fixture,
   /* Restore the (only avaiable) closed dock and make sure the session
    * infos in the global dock factory are increased again
    */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    /* FIXME: This is severly hardcoded */
                                    "windows-recent-0003");
@@ -522,14 +527,14 @@ tab_toggle_dont_change_dock_window_position (GimpTestFixture *fixture,
                        &h_before_hide);
 
   /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
   g_assert (! gtk_widget_get_visible (dock_window));
 
   /* Show them again */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
@@ -559,7 +564,7 @@ switch_to_single_window_mode (GimpTestFixture *fixture,
   /* Switch to single-window mode. We consider this test as passed if
    * we don't get any GLib warnings/errors
    */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-use-single-window-mode");
   gimp_test_run_mainloop_until_idle ();
@@ -591,7 +596,7 @@ gimp_ui_toggle_docks_in_single_window_mode (Gimp *gimp)
                                     &x_before_hide, &y_before_hide);
 
   /* Hide all dock windows */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-hide-docks");
   gimp_test_run_mainloop_until_idle ();
@@ -635,7 +640,7 @@ switch_back_to_multi_window_mode (GimpTestFixture *fixture,
   /* Switch back to multi-window mode. We consider this test as passed
    * if we don't get any GLib warnings/errors
    */
-  gimp_ui_manager_activate_action (gimp_ui_get_ui_manager (gimp),
+  gimp_ui_manager_activate_action (gimp_test_utils_get_ui_manager (gimp),
                                    "windows",
                                    "windows-use-single-window-mode");
   gimp_test_run_mainloop_until_idle ();
@@ -692,31 +697,6 @@ paintbrush_is_standard_tool (GimpTestFixture *fixture,
                    "gimp-tool-paintbrush");
 }
 
-static GimpUIManager *
-gimp_ui_get_ui_manager (Gimp *gimp)
-{
-  GimpDisplay       *display      = NULL;
-  GimpDisplayShell  *shell        = NULL;
-  GtkWidget         *toplevel     = NULL;
-  GimpImageWindow   *image_window = NULL;
-  GimpUIManager     *ui_manager   = NULL;
-
-  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-
-  /* If there were not empty display, assume that there is at least
-   * one image display and use that
-   */
-  if (! display)
-    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
-
-  shell            = gimp_display_get_shell (display);
-  toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  image_window     = GIMP_IMAGE_WINDOW (toplevel);
-  ui_manager       = gimp_image_window_get_ui_manager (image_window);
-
-  return ui_manager;
-}
-
 /**
  * gimp_ui_synthesize_delete_event:
  * @widget:
@@ -737,22 +717,6 @@ gimp_ui_synthesize_delete_event (GtkWidget *widget)
   event->any.send_event = TRUE;
   gtk_main_do_event (event);
   gdk_event_free (event);
-}
-
-static void
-gimp_ui_synthesize_key_event (GtkWidget *widget,
-                              guint      keyval)
-{
-  gdk_test_simulate_key (gtk_widget_get_window (widget),
-                         -1, -1, /*x, y*/
-                         keyval,
-                         0 /*modifiers*/,
-                         GDK_KEY_PRESS);
-  gdk_test_simulate_key (gtk_widget_get_window (widget),
-                         -1, -1, /*x, y*/
-                         keyval,
-                         0 /*modifiers*/,
-                         GDK_KEY_RELEASE);
 }
 
 static gboolean
@@ -838,6 +802,7 @@ int main(int argc, char **argv)
   Gimp *gimp   = NULL;
   gint  result = -1;
 
+  gimp_test_bail_if_no_display ();
   gtk_test_init (&argc, &argv, NULL);
 
   gimp_test_utils_set_gimp2_directory ("GIMP_TESTING_ABS_TOP_SRCDIR",
@@ -845,7 +810,7 @@ int main(int argc, char **argv)
   gimp_test_utils_setup_menus_dir ();
 
   /* Start up GIMP */
-  gimp = gimp_init_for_gui_testing (FALSE, TRUE);
+  gimp = gimp_init_for_gui_testing (TRUE /*show_gui*/);
   gimp_test_run_mainloop_until_idle ();
 
   /* Add tests. Note that the order matters. For example,

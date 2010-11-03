@@ -106,7 +106,7 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
   GimpTool *tool = GIMP_TOOL (brush_tool);
 
   gimp_tool_control_set_action_value_2 (tool->control,
-                                        "tools/tools-paint-brush-scale-set");
+                                        "tools/tools-paint-brush-size-set");
   gimp_tool_control_set_action_value_3  (tool->control,
                                          "context/context-brush-aspect-set");
   gimp_tool_control_set_action_value_4  (tool->control,
@@ -154,7 +154,7 @@ gimp_brush_tool_constructor (GType                  type,
   g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),
                            brush_tool, 0);
-  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-scale",
+  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-size",
                            G_CALLBACK (gimp_brush_tool_brush_transformed),
                            brush_tool, 0);
 
@@ -296,6 +296,7 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   GimpDrawTool     *draw_tool;
   GimpBrushCore    *brush_core;
   GimpPaintOptions *options;
+  GimpMatrix3       matrix;
 
   g_return_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool));
 
@@ -307,12 +308,10 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
   options    = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
 
   if (! brush_core->brush_bound_segs && brush_core->main_brush)
-    gimp_brush_core_create_bound_segs (brush_core, options);
+    gimp_brush_core_create_boundary (brush_core, options);
 
-  if (brush_core->brush_bound_segs)
-    gimp_brush_core_transform_bound_segs (brush_core, options);
-
-  if (brush_core->transformed_brush_bound_segs)
+  if (brush_core->brush_bound_segs &&
+      gimp_brush_core_get_transform (brush_core, &matrix))
     {
       GimpDisplayShell *shell  = gimp_display_get_shell (draw_tool->display);
       gdouble           width  = brush_core->transformed_brush_bound_width;
@@ -337,15 +336,16 @@ gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
             }
 
           gimp_draw_tool_add_boundary (draw_tool,
-                                       brush_core->transformed_brush_bound_segs,
+                                       brush_core->brush_bound_segs,
                                        brush_core->n_brush_bound_segs,
+                                       &matrix,
                                        x, y);
         }
       else if (draw_fallback)
         {
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_CROSS,
                                      x, y,
-                                     5, 5, GTK_ANCHOR_CENTER);
+                                     5, 5, GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 }
@@ -380,6 +380,7 @@ gimp_brush_tool_set_brush (GimpBrushCore *brush_core,
                            GimpBrushTool *brush_tool)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (brush_core);
+
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (brush_tool));
 
   if (GIMP_BRUSH_CORE_GET_CLASS (brush_core)->handles_transforming_brush)

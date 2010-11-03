@@ -38,10 +38,11 @@
 #include "gimpviewrenderervectors.h"
 
 
-static void   gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
-                                               GtkWidget          *widget,
-                                               cairo_t            *cr,
-                                               const GdkRectangle *area);
+static void   gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
+                                               GtkWidget        *widget,
+                                               cairo_t          *cr,
+                                               gint              available_width,
+                                               gint              available_height);
 
 
 G_DEFINE_TYPE (GimpViewRendererVectors, gimp_view_renderer_vectors,
@@ -64,10 +65,11 @@ gimp_view_renderer_vectors_init (GimpViewRendererVectors *renderer)
 }
 
 static void
-gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
-                                 GtkWidget          *widget,
-                                 cairo_t            *cr,
-                                 const GdkRectangle *area)
+gimp_view_renderer_vectors_draw (GimpViewRenderer *renderer,
+                                 GtkWidget        *widget,
+                                 cairo_t          *cr,
+                                 gint              available_width,
+                                 gint              available_height)
 {
   GtkStyle             *style   = gtk_widget_get_style (widget);
   GimpVectors          *vectors = GIMP_VECTORS (renderer->viewable);
@@ -76,8 +78,8 @@ gimp_view_renderer_vectors_draw (GimpViewRenderer   *renderer,
   gdk_cairo_set_source_color (cr, &style->white);
 
   cairo_translate (cr,
-                   area->x + (area->width  - renderer->width)  / 2,
-                   area->y + (area->height - renderer->height) / 2);
+                   (available_width  - renderer->width)  / 2,
+                   (available_height - renderer->height) / 2);
   cairo_rectangle (cr, 0, 0, renderer->width, renderer->height);
   cairo_clip_preserve (cr);
   cairo_fill (cr);

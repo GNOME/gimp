@@ -30,9 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-grid.h"
-#include "core/gimpimage-guides.h"
-#include "core/gimpimage-sample-points.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimprender.h"
@@ -40,10 +37,10 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvasitem.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
-#include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"
@@ -235,7 +232,7 @@ gimp_display_shell_set_show_selection (GimpDisplayShell *shell,
 
   g_object_set (options, "show-selection", show, NULL);
 
-  gimp_display_shell_selection_set_hidden (shell, ! show);
+  gimp_display_shell_selection_set_show (shell, show);
 
   appearance_set_action_active (shell, "view-show-selection", show);
 }
@@ -260,7 +257,7 @@ gimp_display_shell_set_show_layer (GimpDisplayShell *shell,
 
   g_object_set (options, "show-layer-boundary", show, NULL);
 
-  gimp_display_shell_selection_set_layer_hidden (shell, ! show);
+  gimp_canvas_item_set_visible (shell->layer_boundary, show);
 
   appearance_set_action_active (shell, "view-show-layer-boundary", show);
 }
@@ -295,7 +292,6 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -303,12 +299,7 @@ gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
 
   g_object_set (options, "show-guides", show, NULL);
 
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_image_get_guides (image))
-    {
-      gimp_display_shell_expose_full (shell);
-    }
+  gimp_canvas_item_set_visible (shell->guides, show);
 
   appearance_set_action_active (shell, "view-show-guides", show);
 }
@@ -326,7 +317,6 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
                                   gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -334,12 +324,7 @@ gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
 
   g_object_set (options, "show-grid", show, NULL);
 
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_image_get_grid (image))
-    {
-      gimp_display_shell_expose_full (shell);
-    }
+  gimp_canvas_item_set_visible (shell->grid, show);
 
   appearance_set_action_active (shell, "view-show-grid", show);
 }
@@ -357,7 +342,6 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
                                            gboolean          show)
 {
   GimpDisplayOptions *options;
-  GimpImage          *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -365,12 +349,7 @@ gimp_display_shell_set_show_sample_points (GimpDisplayShell *shell,
 
   g_object_set (options, "show-sample-points", show, NULL);
 
-  image = gimp_display_get_image (shell->display);
-
-  if (image && gimp_image_get_sample_points (image))
-    {
-      gimp_display_shell_expose_full (shell);
-    }
+  gimp_canvas_item_set_visible (shell->sample_points, show);
 
   appearance_set_action_active (shell, "view-show-sample-points", show);
 }
@@ -522,8 +501,6 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
 
   appearance_set_action_color (shell, "view-padding-color-menu",
                                &options->padding_color);
-
-  gimp_display_shell_expose_full (shell);
 }
 
 void

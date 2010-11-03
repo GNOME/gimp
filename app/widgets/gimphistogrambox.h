@@ -31,7 +31,7 @@ typedef struct _GimpHistogramBoxClass GimpHistogramBoxClass;
 
 struct _GimpHistogramBox
 {
-  GtkVBox            parent_instance;
+  GtkBox             parent_instance;
 
   GimpHistogramView *view;
   GtkWidget         *color_bar;
@@ -43,7 +43,7 @@ struct _GimpHistogramBox
 
 struct _GimpHistogramBoxClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

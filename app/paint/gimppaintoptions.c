@@ -37,7 +37,7 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH_SCALE            1.0
+#define DEFAULT_BRUSH_SIZE             20.0
 #define DEFAULT_BRUSH_ASPECT_RATIO     1.0
 #define DEFAULT_BRUSH_ANGLE            0.0
 
@@ -68,7 +68,7 @@ enum
 
   PROP_PAINT_INFO,
 
-  PROP_BRUSH_SCALE,
+  PROP_BRUSH_SIZE,
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
 
@@ -89,6 +89,8 @@ enum
 
   PROP_BRUSH_VIEW_TYPE,
   PROP_BRUSH_VIEW_SIZE,
+  PROP_DYNAMICS_VIEW_TYPE,
+  PROP_DYNAMICS_VIEW_SIZE,
   PROP_PATTERN_VIEW_TYPE,
   PROP_PATTERN_VIEW_SIZE,
   PROP_GRADIENT_VIEW_TYPE,
@@ -134,9 +136,9 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SCALE,
-                                   "brush-scale", _("Brush Scale"),
-                                   0.01, 10.0, DEFAULT_BRUSH_SCALE,
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
+                                   "brush-size", _("Brush Size"),
+                                   1.0, 10000.0, DEFAULT_BRUSH_SIZE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
@@ -204,6 +206,18 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_BRUSH_VIEW_SIZE,
                                 "brush-view-size", NULL,
+                                GIMP_VIEW_SIZE_TINY,
+                                GIMP_VIEWABLE_MAX_BUTTON_SIZE,
+                                GIMP_VIEW_SIZE_SMALL,
+                                GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DYNAMICS_VIEW_TYPE,
+                                  "dynamics-view-type", NULL,
+                                 GIMP_TYPE_VIEW_TYPE,
+                                 GIMP_VIEW_TYPE_LIST,
+                                 GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DYNAMICS_VIEW_SIZE,
+                                "dynamics-view-size", NULL,
                                 GIMP_VIEW_SIZE_TINY,
                                 GIMP_VIEWABLE_MAX_BUTTON_SIZE,
                                 GIMP_VIEW_SIZE_SMALL,
@@ -287,8 +301,8 @@ gimp_paint_options_set_property (GObject      *object,
       options->paint_info = g_value_dup_object (value);
       break;
 
-    case PROP_BRUSH_SCALE:
-      options->brush_scale = g_value_get_double (value);
+    case PROP_BRUSH_SIZE:
+      options->brush_size = g_value_get_double (value);
       break;
 
     case PROP_BRUSH_ASPECT_RATIO:
@@ -351,6 +365,14 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_view_size = g_value_get_int (value);
       break;
 
+    case PROP_DYNAMICS_VIEW_TYPE:
+      options->dynamics_view_type = g_value_get_enum (value);
+      break;
+
+    case PROP_DYNAMICS_VIEW_SIZE:
+      options->dynamics_view_size = g_value_get_int (value);
+      break;
+
     case PROP_PATTERN_VIEW_TYPE:
       options->pattern_view_type = g_value_get_enum (value);
       break;
@@ -390,8 +412,8 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_object (value, options->paint_info);
       break;
 
-    case PROP_BRUSH_SCALE:
-      g_value_set_double (value, options->brush_scale);
+    case PROP_BRUSH_SIZE:
+      g_value_set_double (value, options->brush_size);
       break;
 
     case PROP_BRUSH_ASPECT_RATIO:
@@ -452,6 +474,14 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_BRUSH_VIEW_SIZE:
       g_value_set_int (value, options->brush_view_size);
+      break;
+
+    case PROP_DYNAMICS_VIEW_TYPE:
+      g_value_set_enum (value, options->dynamics_view_type);
+      break;
+
+    case PROP_DYNAMICS_VIEW_SIZE:
+      g_value_set_int (value, options->dynamics_view_size);
       break;
 
     case PROP_PATTERN_VIEW_TYPE:

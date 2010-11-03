@@ -19,6 +19,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -369,4 +370,31 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                GTK_UPDATE_DELAYED);
 
   return vbox;
+}
+
+void
+gimp_foreground_select_options_get_mask_color (GimpForegroundSelectOptions *options,
+                                               GimpRGB                     *color)
+{
+  g_return_if_fail (GIMP_IS_FOREGROUND_SELECT_OPTIONS (options));
+  g_return_if_fail (color != NULL);
+
+  switch (options->mask_color)
+    {
+    case GIMP_RED_CHANNEL:
+      gimp_rgba_set (color, 1, 0, 0, 0.5);
+      break;
+
+    case GIMP_GREEN_CHANNEL:
+      gimp_rgba_set (color, 0, 1, 0, 0.5);
+      break;
+
+    case GIMP_BLUE_CHANNEL:
+      gimp_rgba_set (color, 0, 0, 1, 0.5);
+      break;
+
+    default:
+      g_warn_if_reached ();
+      break;
+    }
 }

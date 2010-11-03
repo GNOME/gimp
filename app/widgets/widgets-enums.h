@@ -20,7 +20,7 @@
 
 
 /*
- * these enums that are registered with the type system
+ * enums that are registered with the type system
  */
 
 #define GIMP_TYPE_ACTIVE_COLOR (gimp_active_color_get_type ())

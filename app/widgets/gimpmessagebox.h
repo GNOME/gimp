@@ -36,17 +36,17 @@ typedef struct _GimpMessageBoxClass  GimpMessageBoxClass;
 
 struct _GimpMessageBox
 {
-  GtkVBox       parent_instance;
+  GtkBox     parent_instance;
 
-  gchar        *stock_id;
-  gint          repeat;
-  GtkWidget    *label[3];
-  GtkWidget    *image;
+  gchar     *stock_id;
+  gint       repeat;
+  GtkWidget *label[3];
+  GtkWidget *image;
 };
 
 struct _GimpMessageBoxClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

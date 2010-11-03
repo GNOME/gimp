@@ -77,7 +77,7 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
 
   /* Vbox */
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (editor), vbox);
+  gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /* Scrolled winow */

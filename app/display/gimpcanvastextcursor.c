@@ -63,19 +63,19 @@ struct _GimpCanvasTextCursorPrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_text_cursor_set_property (GObject          *object,
-                                                         guint             property_id,
-                                                         const GValue     *value,
-                                                         GParamSpec       *pspec);
-static void        gimp_canvas_text_cursor_get_property (GObject          *object,
-                                                         guint             property_id,
-                                                         GValue           *value,
-                                                         GParamSpec       *pspec);
-static void        gimp_canvas_text_cursor_draw         (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell,
-                                                         cairo_t          *cr);
-static GdkRegion * gimp_canvas_text_cursor_get_extents  (GimpCanvasItem   *item,
-                                                         GimpDisplayShell *shell);
+static void             gimp_canvas_text_cursor_set_property (GObject          *object,
+                                                              guint             property_id,
+                                                              const GValue     *value,
+                                                              GParamSpec       *pspec);
+static void             gimp_canvas_text_cursor_get_property (GObject          *object,
+                                                              guint             property_id,
+                                                              GValue           *value,
+                                                              GParamSpec       *pspec);
+static void             gimp_canvas_text_cursor_draw         (GimpCanvasItem   *item,
+                                                              GimpDisplayShell *shell,
+                                                              cairo_t          *cr);
+static cairo_region_t * gimp_canvas_text_cursor_get_extents  (GimpCanvasItem   *item,
+                                                              GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasTextCursor, gimp_canvas_text_cursor,
@@ -208,29 +208,33 @@ gimp_canvas_text_cursor_transform (GimpCanvasItem   *item,
   GimpCanvasTextCursorPrivate *private = GET_PRIVATE (item);
 
   gimp_display_shell_transform_xy_f (shell,
-                                     private->x,
-                                     private->y,
+                                     MIN (private->x,
+                                          private->x + private->width),
+                                     MIN (private->y,
+                                          private->y + private->height),
                                      x, y);
   gimp_display_shell_transform_xy_f (shell,
-                                     private->x + private->width,
-                                     private->y + private->height,
+                                     MAX (private->x,
+                                          private->x + private->width),
+                                     MAX (private->y,
+                                          private->y + private->height),
                                      w, h);
 
   *w -= *x;
   *h -= *y;
 
-  *x = PROJ_ROUND (*x) + 0.5;
-  *y = PROJ_ROUND (*y) + 0.5;
+  *x = floor (*x) + 0.5;
+  *y = floor (*y) + 0.5;
 
   if (private->overwrite)
     {
-      *w = PROJ_ROUND (*w) - 1.0;
-      *h = PROJ_ROUND (*h) - 1.0;
+      *w = ceil (*w) - 1.0;
+      *h = ceil (*h) - 1.0;
     }
   else
     {
       *w = 0;
-      *h = PROJ_ROUND (*h) - 1.0;
+      *h = ceil (*h) - 1.0;
     }
 }
 
@@ -261,10 +265,10 @@ gimp_canvas_text_cursor_draw (GimpCanvasItem   *item,
       cairo_line_to (cr, x + 3.0, y + h);
     }
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_text_cursor_get_extents (GimpCanvasItem   *item,
                                      GimpDisplayShell *shell)
 {
@@ -284,20 +288,25 @@ gimp_canvas_text_cursor_get_extents (GimpCanvasItem   *item,
     }
   else
     {
-      rectangle.x      = floor (x - 3.5);
+      rectangle.x      = floor (x - 4.5);
       rectangle.y      = floor (y - 1.5);
-      rectangle.width  = ceil (8.0);
-      rectangle.height = ceil (h + 1.5);
+      rectangle.width  = ceil (9.0);
+      rectangle.height = ceil (h + 3.0);
     }
 
-  return gdk_region_rectangle (&rectangle);
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
 }
 
 GimpCanvasItem *
-gimp_canvas_text_cursor_new (PangoRectangle *cursor,
-                             gboolean        overwrite)
+gimp_canvas_text_cursor_new (GimpDisplayShell *shell,
+                             PangoRectangle   *cursor,
+                             gboolean          overwrite)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_val_if_fail (cursor != NULL, NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_TEXT_CURSOR,
+                       "shell",     shell,
                        "x",         cursor->x,
                        "y",         cursor->y,
                        "width",     cursor->width,

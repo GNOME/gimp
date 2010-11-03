@@ -58,26 +58,42 @@ struct _GimpPaletteClass
 };
 
 
-GType              gimp_palette_get_type     (void) G_GNUC_CONST;
+GType              gimp_palette_get_type        (void) G_GNUC_CONST;
 
-GimpData         * gimp_palette_new          (GimpContext      *context,
-                                              const gchar      *name);
-GimpData         * gimp_palette_get_standard (GimpContext      *context);
+GimpData         * gimp_palette_new             (GimpContext      *context,
+                                                 const gchar      *name);
+GimpData         * gimp_palette_get_standard    (GimpContext      *context);
 
-GimpPaletteEntry * gimp_palette_add_entry    (GimpPalette      *palette,
-                                              gint              position,
-                                              const gchar      *name,
-                                              const GimpRGB    *color);
-void               gimp_palette_delete_entry (GimpPalette      *palette,
-                                              GimpPaletteEntry *entry);
+GList            * gimp_palette_get_colors      (GimpPalette      *palette);
+gint               gimp_palette_get_n_colors    (GimpPalette      *palette);
 
-void               gimp_palette_set_columns  (GimpPalette      *palette,
-                                              gint              columns);
-gint               gimp_palette_get_columns  (GimpPalette      *palette);
+GimpPaletteEntry * gimp_palette_add_entry       (GimpPalette      *palette,
+                                                 gint              position,
+                                                 const gchar      *name,
+                                                 const GimpRGB    *color);
+void               gimp_palette_delete_entry    (GimpPalette      *palette,
+                                                 GimpPaletteEntry *entry);
 
-GimpPaletteEntry * gimp_palette_find_entry   (GimpPalette      *palette,
-                                              const GimpRGB    *color,
-                                              GimpPaletteEntry *start_from);
+gboolean           gimp_palette_set_entry       (GimpPalette      *palette,
+                                                 gint              position,
+                                                 const gchar      *name,
+                                                 const GimpRGB    *color);
+gboolean           gimp_palette_set_entry_color (GimpPalette      *palette,
+                                                 gint              position,
+                                                 const GimpRGB    *color);
+gboolean           gimp_palette_set_entry_name  (GimpPalette      *palette,
+                                                 gint              position,
+                                                 const gchar      *name);
+GimpPaletteEntry * gimp_palette_get_entry       (GimpPalette      *palette,
+                                                 gint              position);
+
+void               gimp_palette_set_columns     (GimpPalette      *palette,
+                                                 gint              columns);
+gint               gimp_palette_get_columns     (GimpPalette      *palette);
+
+GimpPaletteEntry * gimp_palette_find_entry      (GimpPalette      *palette,
+                                                 const GimpRGB    *color,
+                                                 GimpPaletteEntry *start_from);
 
 
 #endif /* __GIMP_PALETTE_H__ */

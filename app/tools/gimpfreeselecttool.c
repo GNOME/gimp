@@ -1529,8 +1529,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
   GimpFreeSelectTool        *fst                   = GIMP_FREE_SELECT_TOOL (draw_tool);
   GimpFreeSelectToolPrivate *priv                  = GET_PRIVATE (fst);
   GimpTool                  *tool                  = GIMP_TOOL (draw_tool);
-  GimpCanvasItem            *stroke_group;
-  GimpCanvasItem            *item;
+  GimpCanvasGroup           *stroke_group;
   gboolean                   hovering_first_point  = FALSE;
   gboolean                   handles_wants_to_show = FALSE;
   GimpCoords                 coords                = { priv->last_coords.x,
@@ -1545,21 +1544,13 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                         NO_CLICK_TIME_AVAILABLE,
                                         &coords);
 
-  stroke_group = gimp_canvas_group_new ();
-  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
-                                        TRUE);
-  gimp_draw_tool_add_item (draw_tool, stroke_group);
-  g_object_unref (stroke_group);
+  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
-  item = gimp_draw_tool_add_lines (draw_tool,
-                                   priv->points, priv->n_points,
-                                   FALSE);
-
-  if (item)
-    {
-      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-      gimp_draw_tool_remove_item (draw_tool, item);
-    }
+  gimp_draw_tool_push_group (draw_tool, stroke_group);
+  gimp_draw_tool_add_lines (draw_tool,
+                            priv->points, priv->n_points,
+                            FALSE);
+  gimp_draw_tool_pop_group (draw_tool);
 
   /* We always show the handle for the first point, even with button1
    * down, since releasing the button on the first point will close
@@ -1612,7 +1603,7 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                                        point->x,
                                        point->y,
                                        HANDLE_SIZE, HANDLE_SIZE,
-                                       GTK_ANCHOR_CENTER);
+                                       GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 
@@ -1620,14 +1611,13 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
     {
       GimpVector2 last = priv->points[priv->n_points - 1];
 
-      item = gimp_draw_tool_add_line (draw_tool,
-                                      last.x,
-                                      last.y,
-                                      priv->pending_point.x,
-                                      priv->pending_point.y);
-
-      gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-      gimp_draw_tool_remove_item (draw_tool, item);
+      gimp_draw_tool_push_group (draw_tool, stroke_group);
+      gimp_draw_tool_add_line (draw_tool,
+                               last.x,
+                               last.y,
+                               priv->pending_point.x,
+                               priv->pending_point.y);
+      gimp_draw_tool_pop_group (draw_tool);
     }
 }
 

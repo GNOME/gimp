@@ -250,14 +250,14 @@ gimp_handle_bar_button_press (GtkWidget      *widget,
 
   gtk_adjustment_set_value (bar->slider_adj[bar->active_slider], value);
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
 gimp_handle_bar_button_release (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
@@ -284,7 +284,7 @@ gimp_handle_bar_motion_notify (GtkWidget      *widget,
 
   gtk_adjustment_set_value (bar->slider_adj[bar->active_slider], value);
 
-  return FALSE;
+  return TRUE;
 }
 
 

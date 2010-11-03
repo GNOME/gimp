@@ -34,7 +34,7 @@ typedef struct _GimpSettingsBoxClass GimpSettingsBoxClass;
 
 struct _GimpSettingsBox
 {
-  GtkHBox        parent_instance;
+  GtkBox         parent_instance;
 
   GtkWidget     *combo;
   GtkWidget     *menu;
@@ -57,7 +57,7 @@ struct _GimpSettingsBox
 
 struct _GimpSettingsBoxClass
 {
-  GtkHBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 
   void (* file_dialog_setup) (GimpSettingsBox      *box,
                               GtkFileChooserDialog *dialog,

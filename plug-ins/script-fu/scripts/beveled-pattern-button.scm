@@ -53,8 +53,8 @@
                    (+ ascent descent)))
 
         (img (car (gimp-image-new width height RGB)))
-        (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE)))
+        (background (car (gimp-layer-new img width height RGBA-IMAGE _"Background" 100 NORMAL-MODE)))
+        (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE _"Bumpmap" 100 NORMAL-MODE)))
         (textl (car
                 (gimp-text-fontname
                  img -1 0 0 text 0 TRUE text-size PIXELS font)))
@@ -63,8 +63,8 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img background 1)
-    (gimp-image-add-layer img bumpmap 1)
+    (gimp-image-insert-layer img background -1 1)
+    (gimp-image-insert-layer img bumpmap -1 1)
 
     ; Create pattern layer
 

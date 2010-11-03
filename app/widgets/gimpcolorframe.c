@@ -285,6 +285,11 @@ gimp_color_frame_expose (GtkWidget      *widget,
       gtk_widget_get_allocation (frame->color_area, &color_area_allocation);
 
       cr = gdk_cairo_create (gtk_widget_get_window (widget));
+      gdk_cairo_region (cr, eevent->region);
+      cairo_clip (cr);
+
+      cairo_translate (cr, allocation.x, allocation.y);
+
       gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_NORMAL]);
 
       g_snprintf (buf, sizeof (buf), "%d", frame->number);
@@ -303,10 +308,8 @@ gimp_color_frame_expose (GtkWidget      *widget,
       cairo_scale (cr, scale, scale);
 
       cairo_move_to (cr,
-                     (allocation.x +
-                      allocation.width / 2.0) / scale - w / 2.0,
-                     (allocation.y +
-                      allocation.height / 2.0 +
+                     (allocation.width / 2.0) / scale - w / 2.0,
+                     (allocation.height / 2.0 +
                       menu_allocation.height / 2.0 +
                       color_area_allocation.height / 2.0) / scale - h / 2.0);
       pango_cairo_show_layout (cr, frame->number_layout);

@@ -56,6 +56,7 @@
 #define PREVIEW_WIDTH  ((ENTRY_WIDTH  + SPACING) * COLUMNS + 1)
 #define PREVIEW_HEIGHT ((ENTRY_HEIGHT + SPACING) * ROWS    + 1)
 
+
 /*  local function prototypes  */
 
 static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
@@ -63,8 +64,8 @@ static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
 static GObject * gimp_palette_editor_constructor   (GType              type,
                                                     guint              n_params,
                                                     GObjectConstructParam *params);
+static void   gimp_palette_editor_dispose          (GObject           *object);
 
-static void   gimp_palette_editor_destroy          (GtkObject         *object);
 static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
 
 static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
@@ -83,14 +84,6 @@ static void   palette_editor_viewport_size_allocate(GtkWidget         *widget,
                                                     GtkAllocation     *allocation,
                                                     GimpPaletteEditor *editor);
 
-static gint   palette_editor_eventbox_button_press (GtkWidget         *widget,
-                                                    GdkEventButton    *bevent,
-                                                    GimpPaletteEditor *editor);
-static void   palette_editor_drop_color            (GtkWidget         *widget,
-                                                    gint               x,
-                                                    gint               y,
-                                                    const GimpRGB     *color,
-                                                    gpointer           data);
 static void   palette_editor_drop_palette          (GtkWidget         *widget,
                                                     gint               x,
                                                     gint               y,
@@ -139,14 +132,12 @@ static GimpDockedInterface *parent_docked_iface = NULL;
 static void
 gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
 {
-  GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass      *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass      *widget_class     = GTK_WIDGET_CLASS (klass);
-  GimpDataEditorClass *editor_class     = GIMP_DATA_EDITOR_CLASS (klass);
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   object_class->constructor = gimp_palette_editor_constructor;
-
-  gtk_object_class->destroy = gimp_palette_editor_destroy;
+  object_class->dispose     = gimp_palette_editor_dispose;
 
   widget_class->unmap       = gimp_palette_editor_unmap;
 
@@ -171,8 +162,6 @@ static void
 gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  GtkWidget      *eventbox;
-  GtkWidget      *alignment;
   GtkWidget      *hbox;
   GtkWidget      *label;
   GtkWidget      *spinbutton;
@@ -191,27 +180,6 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), data_editor->view, TRUE, TRUE, 0);
   gtk_widget_show (data_editor->view);
 
-  eventbox = gtk_event_box_new ();
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (data_editor->view),
-                                         eventbox);
-  gtk_widget_show (eventbox);
-
-  g_signal_connect (eventbox, "button-press-event",
-                    G_CALLBACK (palette_editor_eventbox_button_press),
-                    editor);
-  g_signal_connect (gtk_widget_get_parent (eventbox), "size-allocate",
-                    G_CALLBACK (palette_editor_viewport_size_allocate),
-                    editor);
-
-  gimp_dnd_color_dest_add (eventbox, palette_editor_drop_color, editor);
-  gimp_dnd_viewable_dest_add (eventbox, GIMP_TYPE_PALETTE,
-                              palette_editor_drop_palette,
-                              editor);
-
-  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (eventbox), alignment);
-  gtk_widget_show (alignment);
-
   editor->view = gimp_view_new_full_by_types (NULL,
                                               GIMP_TYPE_PALETTE_VIEW,
                                               GIMP_TYPE_PALETTE,
@@ -221,8 +189,14 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
     (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), -1);
   gimp_view_renderer_palette_set_draw_grid
     (GIMP_VIEW_RENDERER_PALETTE (GIMP_VIEW (editor->view)->renderer), TRUE);
-  gtk_container_add (GTK_CONTAINER (alignment), editor->view);
+
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (data_editor->view),
+                                         editor->view);
   gtk_widget_show (editor->view);
+
+  g_signal_connect (gtk_widget_get_parent (editor->view), "size-allocate",
+                    G_CALLBACK (palette_editor_viewport_size_allocate),
+                    editor);
 
   g_signal_connect (editor->view, "entry-clicked",
                     G_CALLBACK (palette_editor_entry_clicked),
@@ -310,7 +284,7 @@ gimp_palette_editor_constructor (GType                  type,
 }
 
 static void
-gimp_palette_editor_destroy (GtkObject *object)
+gimp_palette_editor_dispose (GObject *object)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (object);
 
@@ -320,7 +294,7 @@ gimp_palette_editor_destroy (GtkObject *object)
       editor->color_dialog = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -373,7 +347,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                         editor);
 
       gtk_adjustment_set_value (palette_editor->columns_data,
-                                palette->n_columns);
+                                gimp_palette_get_columns (palette));
 
       palette_editor_scroll_top_left (palette_editor);
 
@@ -494,8 +468,9 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
           break;
 
         case GIMP_COLOR_PICK_STATE_UPDATE:
-          editor->color->color = *color;
-          gimp_data_dirty (data);
+          gimp_palette_set_entry_color (GIMP_PALETTE (data),
+                                        editor->color->position,
+                                        color);
           break;
         }
     }
@@ -541,10 +516,12 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
         gtk_widget_get_allocation (viewport, &allocation);
 
-        columns = palette->n_columns ? palette->n_columns : COLUMNS;
-        rows    = palette->n_colors / columns;
+        columns = gimp_palette_get_columns (palette);
+        if (columns == 0)
+          columns = COLUMNS;
 
-        if (palette->n_colors % columns)
+        rows = gimp_palette_get_n_colors (palette) / columns;
+        if (gimp_palette_get_n_colors (palette) % columns)
           rows += 1;
 
         rows = MAX (1, rows);
@@ -557,9 +534,8 @@ gimp_palette_editor_zoom (GimpPaletteEditor  *editor,
 
   zoom_factor = CLAMP (zoom_factor, 0.1, 4.0);
 
-  if (palette->n_columns)
-    editor->columns = palette->n_columns;
-  else
+  editor->columns = gimp_palette_get_columns (palette);
+  if (editor->columns == 0)
     editor->columns = COLUMNS;
 
   palette_editor_resize (editor, editor->last_width, zoom_factor);
@@ -578,7 +554,7 @@ gimp_palette_editor_get_index (GimpPaletteEditor *editor,
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (palette && palette->n_colors > 0)
+  if (palette && gimp_palette_get_n_colors (palette) > 0)
     {
       GimpPaletteEntry *entry;
 
@@ -597,26 +573,29 @@ gimp_palette_editor_set_index (GimpPaletteEditor *editor,
                                GimpRGB           *color)
 {
   GimpPalette *palette;
-  GList       *list;
 
   g_return_val_if_fail (GIMP_IS_PALETTE_EDITOR (editor), FALSE);
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette || palette->n_colors == 0)
-    return FALSE;
+  if (palette && gimp_palette_get_n_colors (palette) > 0)
+    {
+      GimpPaletteEntry *entry;
 
-  index = CLAMP (index, 0, palette->n_colors - 1);
+      index = CLAMP (index, 0, gimp_palette_get_n_colors (palette) - 1);
 
-  list = g_list_nth (palette->colors, index);
+      entry = gimp_palette_get_entry (palette, index);
 
-  gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
-                                  list->data);
+      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view),
+                                      entry);
 
-  if (color)
-    *color = editor->color->color;
+      if (color)
+        *color = editor->color->color;
 
-  return TRUE;
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 gint
@@ -628,10 +607,12 @@ gimp_palette_editor_max_index (GimpPaletteEditor *editor)
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (! palette || palette->n_colors == 0)
-    return -1;
+  if (palette && gimp_palette_get_n_colors (palette) > 0)
+    {
+      return gimp_palette_get_n_colors (palette) - 1;
+    }
 
-  return palette->n_colors - 1;
+  return -1;
 }
 
 
@@ -641,9 +622,8 @@ static void
 palette_editor_invalidate_preview (GimpPalette       *palette,
                                    GimpPaletteEditor *editor)
 {
-  if (palette->n_columns)
-    editor->columns = palette->n_columns;
-  else
+  editor->columns = gimp_palette_get_columns (palette);
+  if (editor->columns == 0)
     editor->columns = COLUMNS;
 
   palette_editor_resize (editor, editor->last_width, editor->zoom_factor);
@@ -658,38 +638,6 @@ palette_editor_viewport_size_allocate (GtkWidget         *widget,
     {
       palette_editor_resize (editor, allocation->width,
                              editor->zoom_factor);
-    }
-}
-
-static gboolean
-palette_editor_eventbox_button_press (GtkWidget         *widget,
-                                      GdkEventButton    *bevent,
-                                      GimpPaletteEditor *editor)
-{
-  if (bevent->button == 3 && bevent->type == GDK_BUTTON_PRESS)
-    {
-      return gimp_editor_popup_menu (GIMP_EDITOR (editor), NULL, NULL);
-    }
-
-  return TRUE;
-}
-
-static void
-palette_editor_drop_color (GtkWidget     *widget,
-                           gint           x,
-                           gint           y,
-                           const GimpRGB *color,
-                           gpointer       data)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
-
-  if (GIMP_DATA_EDITOR (editor)->data_editable)
-    {
-      GimpPalette      *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
-      GimpPaletteEntry *entry;
-
-      entry = gimp_palette_add_entry (palette, -1, NULL, color);
-      gimp_palette_view_select_entry (GIMP_PALETTE_VIEW (editor->view), entry);
     }
 }
 
@@ -805,17 +753,12 @@ palette_editor_color_name_changed (GtkWidget         *widget,
 {
   if (GIMP_DATA_EDITOR (editor)->data)
     {
-      GimpPalette *palette;
+      GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      const gchar *name;
 
-      palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
+      name = gtk_entry_get_text (GTK_ENTRY (editor->color_name));
 
-      if (editor->color->name)
-        g_free (editor->color->name);
-
-      editor->color->name =
-        g_strdup (gtk_entry_get_text (GTK_ENTRY (editor->color_name)));
-
-      gimp_data_dirty (GIMP_DATA (palette));
+      gimp_palette_set_entry_name (palette, editor->color->position, name);
     }
 }
 
@@ -857,8 +800,8 @@ palette_editor_resize (GimpPaletteEditor *editor,
   if (editor->col_width < 0)
     editor->col_width = 0;
 
-  rows = palette->n_colors / editor->columns;
-  if (palette->n_colors % editor->columns)
+  rows = gimp_palette_get_n_colors (palette) / editor->columns;
+  if (gimp_palette_get_n_colors (palette) % editor->columns)
     rows += 1;
 
   preview_width  = (editor->col_width + SPACING) * editor->columns;

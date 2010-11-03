@@ -649,8 +649,12 @@ gimp_session_info_read_geometry (GimpSessionInfo *info)
 
       if (gimp_session_info_get_remember_size (info))
         {
-          gdk_drawable_get_size (GDK_DRAWABLE (window),
-                                 &info->p->width, &info->p->height);
+          GtkAllocation allocation;
+
+          gtk_widget_get_allocation (info->p->widget, &allocation);
+
+          info->p->width  = allocation.width;
+          info->p->height = allocation.height;
         }
       else
         {

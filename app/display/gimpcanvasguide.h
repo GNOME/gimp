@@ -49,8 +49,10 @@ struct _GimpCanvasGuideClass
 
 GType            gimp_canvas_guide_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_guide_new      (GimpOrientationType  orientation,
-                                             gint                 position);
+GimpCanvasItem * gimp_canvas_guide_new      (GimpDisplayShell    *shell,
+                                             GimpOrientationType  orientation,
+                                             gint                 position,
+                                             gboolean             guide_style);
 
 
 #endif /* __GIMP_CANVAS_GUIDE_H__ */

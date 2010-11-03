@@ -181,7 +181,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                       table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  button = gimp_spin_button_new (&rotate->angle_adj,
+  button = gimp_spin_button_new ((GtkObject **) &rotate->angle_adj,
                                  0, -180, 180, 0.1, 15, 0, 2, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (button), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
@@ -193,7 +193,7 @@ gimp_rotate_tool_dialog (GimpTransformTool *tr_tool)
                     G_CALLBACK (rotate_angle_changed),
                     tr_tool);
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (rotate->angle_adj));
+  scale = gtk_hscale_new (rotate->angle_adj);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
   gtk_table_attach (GTK_TABLE (table), scale, 1, 2, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
@@ -223,7 +223,7 @@ gimp_rotate_tool_dialog_update (GimpTransformTool *tr_tool)
 {
   GimpRotateTool *rotate = GIMP_ROTATE_TOOL (tr_tool);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (rotate->angle_adj),
+  gtk_adjustment_set_value (rotate->angle_adj,
                             gimp_rad_to_deg (tr_tool->trans_info[ANGLE]));
 
   g_signal_handlers_block_by_func (rotate->sizeentry,

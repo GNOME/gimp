@@ -87,7 +87,7 @@ static void gimp_settings_editor_name_edited        (GtkCellRendererText *cell,
                                                      GimpSettingsEditor  *editor);
 
 
-G_DEFINE_TYPE (GimpSettingsEditor, gimp_settings_editor, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpSettingsEditor, gimp_settings_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_settings_editor_parent_class
 
@@ -127,6 +127,9 @@ gimp_settings_editor_class_init (GimpSettingsEditorClass *klass)
 static void
 gimp_settings_editor_init (GimpSettingsEditor *editor)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
+
   gtk_box_set_spacing (GTK_BOX (editor), 6);
 }
 
@@ -151,7 +154,7 @@ gimp_settings_editor_constructor (GType                  type,
                                                gimp_get_user_context (editor->gimp),
                                                16, 0);
   gtk_widget_set_size_request (editor->view, 200, 200);
-  gtk_container_add (GTK_CONTAINER (editor), editor->view);
+  gtk_box_pack_start (GTK_BOX (editor), editor->view, TRUE, TRUE, 0);
   gtk_widget_show (editor->view);
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);

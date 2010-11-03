@@ -78,7 +78,7 @@ gimp_color_selector_palette_set_color (GimpColorSelector *selector,
     {
       GimpPalette *palette = gimp_context_get_palette (select->context);
 
-      if (palette && palette->n_colors > 0)
+      if (palette && gimp_palette_get_n_colors (palette) > 0)
         {
           GimpPaletteEntry *entry;
 
@@ -137,7 +137,7 @@ gimp_color_selector_palette_set_config (GimpColorSelector *selector,
 
           frame = gtk_frame_new (NULL);
           gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-          gtk_container_add (GTK_CONTAINER (select), frame);
+          gtk_box_pack_start (GTK_BOX (select), frame, TRUE, TRUE, 0);
           gtk_widget_show (frame);
 
           select->view = gimp_view_new_full_by_types (select->context,

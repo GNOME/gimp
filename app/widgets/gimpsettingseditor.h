@@ -34,7 +34,7 @@ typedef struct _GimpSettingsEditorClass GimpSettingsEditorClass;
 
 struct _GimpSettingsEditor
 {
-  GtkVBox        parent_instance;
+  GtkBox         parent_instance;
 
   Gimp          *gimp;
   GObject       *config;
@@ -49,7 +49,7 @@ struct _GimpSettingsEditor
 
 struct _GimpSettingsEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

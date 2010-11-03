@@ -5,7 +5,9 @@ headers
 #include <pygobject.h>
 
 #include <libgimp/gimp.h>
+#undef GIMP_DISABLE_DEPRECATED
 #include <libgimp/gimpui.h>
+#define GIMP_DISABLE_DEPRECATED
 
 #define NO_IMPORT_PYGIMP
 #include "pygimp-api.h"

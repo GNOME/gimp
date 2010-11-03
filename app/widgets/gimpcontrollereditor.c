@@ -107,7 +107,7 @@ static GtkWidget *  gimp_controller_int_view_new    (GimpController *controller,
                                                      GParamSpec     *pspec);
 
 
-G_DEFINE_TYPE (GimpControllerEditor, gimp_controller_editor, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpControllerEditor, gimp_controller_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_controller_editor_parent_class
 
@@ -142,9 +142,12 @@ gimp_controller_editor_class_init (GimpControllerEditorClass *klass)
 static void
 gimp_controller_editor_init (GimpControllerEditor *editor)
 {
-  editor->info = NULL;
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
+
+  editor->info = NULL;
 }
 
 static GObject *
@@ -285,7 +288,7 @@ gimp_controller_editor_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (sw), tv);
   gtk_widget_show (tv);
 
-  gtk_container_add (GTK_CONTAINER (vbox), sw);
+  gtk_box_pack_start (GTK_BOX (vbox), sw, TRUE, TRUE, 0);
   gtk_widget_show (sw);
 
   g_signal_connect (tv, "row-activated",
@@ -692,8 +695,8 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
       view = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
                                      action_name, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (view), 12);
-      gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (editor->edit_dialog))),
-                         view);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (editor->edit_dialog))),
+                          view, TRUE, TRUE, 0);
       gtk_widget_show (view);
 
       g_signal_connect (GIMP_ACTION_EDITOR (view)->view, "row-activated",

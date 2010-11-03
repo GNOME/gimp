@@ -61,8 +61,8 @@ keyboard_shortcuts_dialog_new (Gimp *gimp)
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     vbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   editor = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,

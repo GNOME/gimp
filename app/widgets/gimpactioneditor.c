@@ -40,7 +40,7 @@ static void   gimp_action_editor_filter_changed (GtkEntry         *entry,
                                                  GimpActionEditor *editor);
 
 
-G_DEFINE_TYPE (GimpActionEditor, gimp_action_editor, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GimpActionEditor, gimp_action_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_action_editor_parent_class
 
@@ -56,6 +56,9 @@ gimp_action_editor_init (GimpActionEditor *editor)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_VERTICAL);
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
 

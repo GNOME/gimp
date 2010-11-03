@@ -43,10 +43,10 @@
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpsessioninfo.h"
 
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
-#include "display/gimpdisplayshell-draw.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
 
@@ -55,6 +55,9 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
+
+
+#define SAMPLE_POINT_POSITION_INVALID G_MININT
 
 
 enum
@@ -68,9 +71,6 @@ enum
 
 static void   gimp_color_tool_finalize       (GObject               *object);
 
-static void   gimp_color_tool_control        (GimpTool              *tool,
-                                              GimpToolAction         action,
-                                              GimpDisplay           *display);
 static void   gimp_color_tool_button_press   (GimpTool              *tool,
                                               const GimpCoords      *coords,
                                               guint32                time,
@@ -146,7 +146,6 @@ gimp_color_tool_class_init (GimpColorToolClass *klass)
 
   object_class->finalize     = gimp_color_tool_finalize;
 
-  tool_class->control        = gimp_color_tool_control;
   tool_class->button_press   = gimp_color_tool_button_press;
   tool_class->button_release = gimp_color_tool_button_release;
   tool_class->motion         = gimp_color_tool_motion;
@@ -176,8 +175,8 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 
   color_tool->sample_point        = NULL;
   color_tool->moving_sample_point = FALSE;
-  color_tool->sample_point_x      = -1;
-  color_tool->sample_point_y      = -1;
+  color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+  color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 }
 
 static void
@@ -192,45 +191,6 @@ gimp_color_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_color_tool_control (GimpTool       *tool,
-                         GimpToolAction  action,
-                         GimpDisplay    *display)
-{
-  GimpColorTool    *color_tool = GIMP_COLOR_TOOL (tool);
-  GimpDisplayShell *shell      = gimp_display_get_shell (display);
-
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-      break;
-
-    case GIMP_TOOL_ACTION_RESUME:
-      if (color_tool->sample_point &&
-          gimp_display_shell_get_show_sample_points (shell))
-       {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_sample_point (shell, cr,
-                                                color_tool->sample_point, TRUE);
-          cairo_destroy (cr);
-       }
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      if (color_tool->sample_point &&
-          gimp_display_shell_get_show_sample_points (shell))
-       {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_sample_point (shell, cr,
-                                                color_tool->sample_point, FALSE);
-          cairo_destroy (cr);
-       }
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void
@@ -259,7 +219,7 @@ gimp_color_tool_button_press (GimpTool            *tool,
 
       gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
+      gimp_display_shell_selection_pause (shell);
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
@@ -314,10 +274,10 @@ gimp_color_tool_button_release (GimpTool              *tool,
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
         {
           color_tool->moving_sample_point = FALSE;
-          color_tool->sample_point_x      = -1;
-          color_tool->sample_point_y      = -1;
+          color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+          color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 
-          gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+          gimp_display_shell_selection_resume (shell);
           return;
         }
 
@@ -355,20 +315,15 @@ gimp_color_tool_button_release (GimpTool              *tool,
             }
         }
 
-      gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+      gimp_display_shell_selection_resume (shell);
       gimp_image_flush (image);
 
-      if (color_tool->sample_point)
-        {
-          cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-          gimp_display_shell_draw_sample_point (shell, cr,
-                                                color_tool->sample_point, TRUE);
-          cairo_destroy (cr);
-        }
-
       color_tool->moving_sample_point = FALSE;
-      color_tool->sample_point_x      = -1;
-      color_tool->sample_point_y      = -1;
+      color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+      color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
+
+      if (color_tool->sample_point)
+        gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
     }
   else
     {
@@ -403,8 +358,8 @@ gimp_color_tool_motion (GimpTool         *tool,
       if (tx < 0 || tx > shell->disp_width ||
           ty < 0 || ty > shell->disp_height)
         {
-          color_tool->sample_point_x = -1;
-          color_tool->sample_point_y = -1;
+          color_tool->sample_point_x = SAMPLE_POINT_POSITION_INVALID;
+          color_tool->sample_point_y = SAMPLE_POINT_POSITION_INVALID;
 
           delete_point = TRUE;
         }
@@ -491,18 +446,22 @@ gimp_color_tool_oper_update (GimpTool         *tool,
                                       FUNSCALEY (shell, snap_distance));
     }
 
-  if (color_tool->sample_point &&
-      color_tool->sample_point != sample_point)
-    gimp_image_update_sample_point (image, color_tool->sample_point);
-
-  color_tool->sample_point = sample_point;
-
-  if (color_tool->sample_point)
+  if (color_tool->sample_point != sample_point)
     {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_sample_point (shell, cr,
-                                            color_tool->sample_point, TRUE);
-      cairo_destroy (cr);
+      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+      gimp_draw_tool_pause (draw_tool);
+
+      if (gimp_draw_tool_is_active (draw_tool) &&
+          draw_tool->display != display)
+        gimp_draw_tool_stop (draw_tool);
+
+      color_tool->sample_point = sample_point;
+
+      if (! gimp_draw_tool_is_active (draw_tool))
+        gimp_draw_tool_start (draw_tool, display);
+
+      gimp_draw_tool_resume (draw_tool);
     }
 }
 
@@ -568,36 +527,43 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
 
   if (color_tool->enabled)
     {
+      if (color_tool->sample_point)
+        {
+          GimpImage      *image = gimp_display_get_image (draw_tool->display);
+          GimpCanvasItem *item;
+          gint            index;
+
+          index = g_list_index (gimp_image_get_sample_points (image),
+                                color_tool->sample_point) + 1;
+
+          item = gimp_draw_tool_add_sample_point (draw_tool,
+                                                  color_tool->sample_point->x,
+                                                  color_tool->sample_point->y,
+                                                  index);
+          gimp_canvas_item_set_highlight (item, TRUE);
+        }
+
       if (color_tool->moving_sample_point)
         {
-          if (color_tool->sample_point_x != -1 &&
-              color_tool->sample_point_y != -1)
+          if (color_tool->sample_point_x != SAMPLE_POINT_POSITION_INVALID &&
+              color_tool->sample_point_y != SAMPLE_POINT_POSITION_INVALID)
             {
-              GimpImage *image = gimp_display_get_image (draw_tool->display);
-
-              gimp_draw_tool_add_line (draw_tool,
-                                       0, color_tool->sample_point_y + 0.5,
-                                       gimp_image_get_width (image),
-                                       color_tool->sample_point_y + 0.5);
-              gimp_draw_tool_add_line (draw_tool,
-                                       color_tool->sample_point_x + 0.5, 0,
-                                       color_tool->sample_point_x + 0.5,
-                                       gimp_image_get_height (image));
+              gimp_draw_tool_add_crosshair (draw_tool,
+                                            color_tool->sample_point_x,
+                                            color_tool->sample_point_y);
             }
         }
-      else
+      else if (color_tool->options->sample_average &&
+               gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
         {
-          if (color_tool->options->sample_average)
-            {
-              gdouble radius = color_tool->options->average_radius;
+          gdouble radius = color_tool->options->average_radius;
 
-              gimp_draw_tool_add_rectangle (draw_tool,
-                                            FALSE,
-                                            color_tool->center_x - radius,
-                                            color_tool->center_y - radius,
-                                            2 * radius + 1,
-                                            2 * radius + 1);
-            }
+          gimp_draw_tool_add_rectangle (draw_tool,
+                                        FALSE,
+                                        color_tool->center_x - radius,
+                                        color_tool->center_y - radius,
+                                        2 * radius + 1,
+                                        2 * radius + 1);
         }
     }
 
@@ -818,26 +784,19 @@ gimp_color_tool_start_sample_point (GimpTool    *tool,
 
   color_tool = GIMP_COLOR_TOOL (tool);
 
-  gimp_display_shell_selection_control (gimp_display_get_shell (display),
-                                        GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_pause (gimp_display_get_shell (display));
 
   tool->display = display;
   gimp_tool_control_activate (tool->control);
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
-  if (color_tool->sample_point)
-    {
-      GimpDisplayShell *shell = gimp_display_get_shell (display);
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (shell->canvas));
-      gimp_display_shell_draw_sample_point (shell, cr,
-                                            color_tool->sample_point, FALSE);
-      cairo_destroy (cr);
-    }
+  if (gimp_draw_tool_is_active  (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   color_tool->sample_point        = NULL;
   color_tool->moving_sample_point = TRUE;
-  color_tool->sample_point_x      = -1;
-  color_tool->sample_point_y      = -1;
+  color_tool->sample_point_x      = SAMPLE_POINT_POSITION_INVALID;
+  color_tool->sample_point_y      = SAMPLE_POINT_POSITION_INVALID;
 
   gimp_tool_set_cursor (tool, display,
                         GIMP_CURSOR_MOUSE,

@@ -67,7 +67,7 @@ struct _GimpToolEditorPrivate
 };
 
 
-static void   gimp_tool_editor_destroy     (GtkObject             *object);
+static void   gimp_tool_editor_dispose     (GObject               *object);
 static void   gimp_tool_editor_finalize    (GObject               *object);
 
 static void   gimp_tool_editor_visible_notify
@@ -116,13 +116,12 @@ G_DEFINE_TYPE (GimpToolEditor, gimp_tool_editor, GIMP_TYPE_CONTAINER_TREE_VIEW)
 static void
 gimp_tool_editor_class_init (GimpToolEditorClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->dispose  = gimp_tool_editor_dispose;
+  object_class->finalize = gimp_tool_editor_finalize;
 
   g_type_class_add_private (klass, sizeof (GimpToolEditorPrivate));
-
-  object_class->finalize     = gimp_tool_editor_finalize;
-  gtk_object_class->destroy  = gimp_tool_editor_destroy;
 }
 
 static void
@@ -145,6 +144,30 @@ gimp_tool_editor_init (GimpToolEditor *tool_editor)
   priv->raise_button            = NULL;
   priv->lower_button            = NULL;
   priv->reset_button            = NULL;
+}
+
+static void
+gimp_tool_editor_dispose (GObject *object)
+{
+  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (object);
+
+  if (priv->visible_handler_id)
+    {
+      gimp_container_remove_handler (priv->container,
+                                     priv->visible_handler_id);
+      priv->visible_handler_id = 0;
+    }
+
+  priv->context      = NULL;
+  priv->container    = NULL;
+
+  priv->raise_button = NULL;
+  priv->lower_button = NULL;
+  priv->reset_button = NULL;
+
+  priv->scrolled     = NULL;
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -178,30 +201,6 @@ gimp_tool_editor_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_tool_editor_destroy (GtkObject *object)
-{
-  GimpToolEditorPrivate *priv = GIMP_TOOL_EDITOR_GET_PRIVATE (object);
-
-  if (priv->visible_handler_id)
-    {
-      gimp_container_remove_handler (priv->container,
-                                     priv->visible_handler_id);
-      priv->visible_handler_id = 0;
-    }
-
-  priv->context      = NULL;
-  priv->container    = NULL;
-
-  priv->raise_button = NULL;
-  priv->lower_button = NULL;
-  priv->reset_button = NULL;
-
-  priv->scrolled     = NULL;
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

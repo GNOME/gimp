@@ -61,19 +61,19 @@ struct _GimpCanvasLinePrivate
 
 /*  local function prototypes  */
 
-static void        gimp_canvas_line_set_property (GObject          *object,
-                                                  guint             property_id,
-                                                  const GValue     *value,
-                                                  GParamSpec       *pspec);
-static void        gimp_canvas_line_get_property (GObject          *object,
-                                                  guint             property_id,
-                                                  GValue           *value,
-                                                  GParamSpec       *pspec);
-static void        gimp_canvas_line_draw         (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell,
-                                                  cairo_t          *cr);
-static GdkRegion * gimp_canvas_line_get_extents  (GimpCanvasItem   *item,
-                                                  GimpDisplayShell *shell);
+static void             gimp_canvas_line_set_property (GObject          *object,
+                                                       guint             property_id,
+                                                       const GValue     *value,
+                                                       GParamSpec       *pspec);
+static void             gimp_canvas_line_get_property (GObject          *object,
+                                                       guint             property_id,
+                                                       GValue           *value,
+                                                       GParamSpec       *pspec);
+static void             gimp_canvas_line_draw         (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell,
+                                                       cairo_t          *cr);
+static cairo_region_t * gimp_canvas_line_get_extents  (GimpCanvasItem   *item,
+                                                       GimpDisplayShell *shell);
 
 
 G_DEFINE_TYPE (GimpCanvasLine, gimp_canvas_line, GIMP_TYPE_CANVAS_ITEM)
@@ -200,10 +200,10 @@ gimp_canvas_line_transform (GimpCanvasItem   *item,
                                      private->x2, private->y2,
                                      x2, y2);
 
-  *x1 = PROJ_ROUND (*x1) + 0.5;
-  *y1 = PROJ_ROUND (*y1) + 0.5;
-  *x2 = PROJ_ROUND (*x2) + 0.5;
-  *y2 = PROJ_ROUND (*y2) + 0.5;
+  *x1 = floor (*x1) + 0.5;
+  *y1 = floor (*y1) + 0.5;
+  *x2 = floor (*x2) + 0.5;
+  *y2 = floor (*y2) + 0.5;
 }
 
 static void
@@ -219,10 +219,10 @@ gimp_canvas_line_draw (GimpCanvasItem   *item,
   cairo_move_to (cr, x1, y1);
   cairo_line_to (cr, x2, y2);
 
-  _gimp_canvas_item_stroke (item, shell, cr);
+  _gimp_canvas_item_stroke (item, cr);
 }
 
-static GdkRegion *
+static cairo_region_t *
 gimp_canvas_line_get_extents (GimpCanvasItem   *item,
                               GimpDisplayShell *shell)
 {
@@ -247,19 +247,23 @@ gimp_canvas_line_get_extents (GimpCanvasItem   *item,
       rectangle.height = ceil (ABS (y2 - y1) + 5.0);
     }
 
-  return gdk_region_rectangle (&rectangle);
+  return cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rectangle);
 }
 
 GimpCanvasItem *
-gimp_canvas_line_new (gdouble  x1,
-                      gdouble  y1,
-                      gdouble  x2,
-                      gdouble  y2)
+gimp_canvas_line_new (GimpDisplayShell *shell,
+                      gdouble           x1,
+                      gdouble           y1,
+                      gdouble           x2,
+                      gdouble           y2)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS_LINE,
-                       "x1", x1,
-                       "y1", y1,
-                       "x2", x2,
-                       "y2", y2,
+                       "shell", shell,
+                       "x1",    x1,
+                       "y1",    y1,
+                       "x2",    x2,
+                       "y2",    y2,
                        NULL);
 }

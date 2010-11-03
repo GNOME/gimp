@@ -697,16 +697,16 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                      x, y, MARKER_WIDTH, MARKER_WIDTH,
-                                     GTK_ANCHOR_NORTH_WEST);
+                                     GIMP_HANDLE_ANCHOR_NORTH_WEST);
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                      x + w, y, MARKER_WIDTH, MARKER_WIDTH,
-                                     GTK_ANCHOR_NORTH_EAST);
+                                     GIMP_HANDLE_ANCHOR_NORTH_EAST);
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                      x, y + h, MARKER_WIDTH, MARKER_WIDTH,
-                                     GTK_ANCHOR_SOUTH_WEST);
+                                     GIMP_HANDLE_ANCHOR_SOUTH_WEST);
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                      x + w, y + h, MARKER_WIDTH, MARKER_WIDTH,
-                                     GTK_ANCHOR_SOUTH_EAST);
+                                     GIMP_HANDLE_ANCHOR_SOUTH_EAST);
         }
       else if (GIMP_IS_GUIDE (list->data))
         {
@@ -722,10 +722,10 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
               h = gimp_image_get_height (image);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                          x, h, MARKER_WIDTH, MARKER_WIDTH,
-                                         GTK_ANCHOR_SOUTH);
+                                         GIMP_HANDLE_ANCHOR_SOUTH);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                          x, 0, MARKER_WIDTH, MARKER_WIDTH,
-                                         GTK_ANCHOR_NORTH);
+                                         GIMP_HANDLE_ANCHOR_NORTH);
               break;
 
             case GIMP_ORIENTATION_HORIZONTAL:
@@ -733,10 +733,10 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
               w = gimp_image_get_width (image);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                          w, y, MARKER_WIDTH, MARKER_WIDTH,
-                                         GTK_ANCHOR_EAST);
+                                         GIMP_HANDLE_ANCHOR_EAST);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                          0, y, MARKER_WIDTH, MARKER_WIDTH,
-                                         GTK_ANCHOR_WEST);
+                                         GIMP_HANDLE_ANCHOR_WEST);
               break;
 
             default:
@@ -892,7 +892,7 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&align_tool->horz_offset_adjustment,
+  spinbutton = gimp_spin_button_new ((GtkObject **) &align_tool->horz_offset_adjustment,
                                      0,
                                      -100000,
                                      100000,

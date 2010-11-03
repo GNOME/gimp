@@ -26,8 +26,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
 
 #include "config/gimpguiconfig.h"
 
@@ -82,13 +80,6 @@
 #include "tips-dialog.h"
 
 #include "gimp-intl.h"
-
-
-/*  local function prototypes  */
-
-static void   dialogs_indexed_palette_selected (GimpColormapEditor *editor,
-                                                GdkModifierType     state,
-                                                gpointer            data);
 
 
 /**********************/
@@ -392,7 +383,8 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
                                      context->gimp->gradient_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Gradients>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Gradients>",
                                      "/gradients-popup",
                                      "gradients");
 }
@@ -407,7 +399,8 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
                                      context->gimp->palette_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Palettes>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Palettes>",
                                      "/palettes-popup",
                                      "palettes");
 }
@@ -530,7 +523,8 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
                                      context->gimp->gradient_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Gradients>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Gradients>",
                                      "/gradients-popup",
                                      "gradients");
 }
@@ -545,7 +539,8 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
                                      context->gimp->palette_factory,
                                      context,
                                      view_size, 1,
-                                     gimp_dialog_factory_get_menu_factory (factory), "<Palettes>",
+                                     gimp_dialog_factory_get_menu_factory (factory),
+                                     "<Palettes>",
                                      "/palettes-popup",
                                      "palettes");
 }
@@ -617,7 +612,8 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
   return gimp_item_tree_view_new (GIMP_TYPE_LAYER_TREE_VIEW,
                                   view_size, 2,
                                   gimp_context_get_image (context),
-                                  gimp_dialog_factory_get_menu_factory (factory), "<Layers>",
+                                  gimp_dialog_factory_get_menu_factory (factory),
+                                  "<Layers>",
                                   "/layers-popup");
 }
 
@@ -633,7 +629,8 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   return gimp_item_tree_view_new (GIMP_TYPE_CHANNEL_TREE_VIEW,
                                   view_size, 1,
                                   gimp_context_get_image (context),
-                                  gimp_dialog_factory_get_menu_factory (factory), "<Channels>",
+                                  gimp_dialog_factory_get_menu_factory (factory),
+                                  "<Channels>",
                                   "/channels-popup");
 }
 
@@ -649,7 +646,8 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   return gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
                                   view_size, 1,
                                   gimp_context_get_image (context),
-                                  gimp_dialog_factory_get_menu_factory (factory), "<Vectors>",
+                                  gimp_dialog_factory_get_menu_factory (factory),
+                                  "<Vectors>",
                                   "/vectors-popup");
 }
 
@@ -659,15 +657,7 @@ dialogs_colormap_editor_new (GimpDialogFactory *factory,
                              GimpUIManager     *ui_manager,
                              gint               view_size)
 {
-  GtkWidget *view;
-
-  view = gimp_colormap_editor_new (gimp_dialog_factory_get_menu_factory (factory));
-
-  g_signal_connect (view, "selected",
-                    G_CALLBACK (dialogs_indexed_palette_selected),
-                    NULL);
-
-  return view;
+  return gimp_colormap_editor_new (gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *
@@ -732,9 +722,9 @@ dialogs_color_editor_new (GimpDialogFactory *factory,
 }
 
 
-/*********************/
-/*****  editors  *****/
-/*********************/
+/*************/
+/*  editors  */
+/*************/
 
 GtkWidget *
 dialogs_brush_editor_get (GimpDialogFactory *factory,
@@ -784,30 +774,4 @@ dialogs_tool_preset_editor_get (GimpDialogFactory *factory,
 {
   return gimp_tool_preset_editor_new (context,
                                       gimp_dialog_factory_get_menu_factory (factory));
-}
-
-
-/*  private functions  */
-
-static void
-dialogs_indexed_palette_selected (GimpColormapEditor *editor,
-                                  GdkModifierType     state,
-                                  gpointer            data)
-{
-  GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
-
-  if (image_editor->image)
-    {
-      GimpRGB color;
-      gint    index;
-
-      index = gimp_colormap_editor_get_index (editor, NULL);
-
-      gimp_image_get_colormap_entry (image_editor->image, index, &color);
-
-      if (state & GDK_CONTROL_MASK)
-        gimp_context_set_background (image_editor->context, &color);
-      else
-        gimp_context_set_foreground (image_editor->context, &color);
-    }
 }

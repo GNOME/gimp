@@ -12,10 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-21 15:33+0300\n"
+"POT-Creation-Date: 2010-09-28 16:13+0200\n"
 "PO-Revision-Date: 2010-08-04 02:05+0300\n"
 "Last-Translator: Barak Itkin <lightningismyname@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,15 +31,17 @@ msgstr "GIMP"
 msgid "GNU Image Manipulation Program"
 msgstr "תוכנת עיבוד התמונה של GNU"
 
-#: ../app/about.h:29
+#. The year of the last commit (UTC) will be inserted into this string.
+#: ../app/about.h:30
+#, c-format
 msgid ""
-"Copyright © 1995-2009\n"
+"Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"זכויות יוצרים © 1995-2009\n"
+"זכויות יוצרים © 1995-%s\n"
 "Spencer Kimball, Peter Mattis וצוות הפיתוח של GIMP"
 
-#: ../app/about.h:33
+#: ../app/about.h:34
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -66,7 +69,7 @@ msgstr ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP.  If not, see <http://www.gnu.org/licenses/>."
 
-#: ../app/app.c:219
+#: ../app/app.c:220
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -89,101 +92,102 @@ msgstr "No batch interpreter specified, using the default '%s'.\n"
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "The batch interpreter '%s' is not available. Batch mode disabled."
 
-#: ../app/main.c:135 ../tools/gimp-remote.c:59
+#: ../app/main.c:139 ../tools/gimp-remote.c:59
 msgid "Show version information and exit"
 msgstr "Show version information and exit"
 
-#: ../app/main.c:140
+#: ../app/main.c:144
 msgid "Show license information and exit"
 msgstr "Show license information and exit"
 
-#: ../app/main.c:145
+#: ../app/main.c:149
 msgid "Be more verbose"
 msgstr "Be more verbose"
 
-#: ../app/main.c:150
+#: ../app/main.c:154
 msgid "Start a new GIMP instance"
 msgstr "Start a new GIMP instance"
 
-#: ../app/main.c:155
+#: ../app/main.c:159
 msgid "Open images as new"
 msgstr "Open images as new"
 
-#: ../app/main.c:160
+#: ../app/main.c:164
 msgid "Run without a user interface"
 msgstr "Run without a user interface"
 
-#: ../app/main.c:165
+#: ../app/main.c:169
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Do not load brushes, gradients, patterns, ..."
 
-#: ../app/main.c:170
+#: ../app/main.c:174
 msgid "Do not load any fonts"
 msgstr "Do not load any fonts"
 
-#: ../app/main.c:175
-msgid "Do not show a startup window"
+#: ../app/main.c:179
+#, fuzzy
+msgid "Do not show a splash screen"
 msgstr "Do not show a startup window"
 
-#: ../app/main.c:180
+#: ../app/main.c:184
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Do not use shared memory between GIMP and plugins"
 
-#: ../app/main.c:185
+#: ../app/main.c:189
 msgid "Do not use special CPU acceleration functions"
 msgstr "Do not use special CPU acceleration functions"
 
-#: ../app/main.c:190
+#: ../app/main.c:194
 msgid "Use an alternate sessionrc file"
 msgstr "Use an alternate sessionrc file"
 
-#: ../app/main.c:195
+#: ../app/main.c:199
 msgid "Use an alternate user gimprc file"
 msgstr "Use an alternate user gimprc file"
 
-#: ../app/main.c:200
+#: ../app/main.c:204
 msgid "Use an alternate system gimprc file"
 msgstr "Use an alternate system gimprc file"
 
-#: ../app/main.c:205
+#: ../app/main.c:209
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batch command to run (can be used multiple times)"
 
-#: ../app/main.c:210
+#: ../app/main.c:214
 msgid "The procedure to process batch commands with"
 msgstr "The procedure to process batch commands with"
 
-#: ../app/main.c:215
+#: ../app/main.c:219
 msgid "Send messages to console instead of using a dialog"
 msgstr "Send messages to console instead of using a dialog"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:221
+#: ../app/main.c:225
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB compatibility mode (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:227
+#: ../app/main.c:231
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Debug in case of a crash (never|query|always)"
 
-#: ../app/main.c:232
+#: ../app/main.c:236
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Enable non-fatal debugging signal handlers"
 
-#: ../app/main.c:237
+#: ../app/main.c:241
 msgid "Make all warnings fatal"
 msgstr "Make all warnings fatal"
 
-#: ../app/main.c:242
+#: ../app/main.c:246
 msgid "Output a gimprc file with default settings"
 msgstr "Output a gimprc file with default settings"
 
-#: ../app/main.c:346
+#: ../app/main.c:374
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:364
+#: ../app/main.c:392
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -191,24 +195,24 @@ msgstr ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: ../app/main.c:383
+#: ../app/main.c:411
 msgid "Another GIMP instance is already running."
 msgstr "Another GIMP instance is already running."
 
-#: ../app/main.c:453
+#: ../app/main.c:481
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP output. Type any character to close this window."
 
-#: ../app/main.c:454
+#: ../app/main.c:482
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Type any character to close this window)\n"
 
-#: ../app/main.c:471
+#: ../app/main.c:499
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP output. You can minimize this window, but don't close it."
 
-#: ../app/sanity.c:363
+#: ../app/sanity.c:398
 #, c-format
 msgid ""
 "The configured filename encoding cannot be converted to UTF-8: %s\n"
@@ -219,7 +223,7 @@ msgstr ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 
-#: ../app/sanity.c:382
+#: ../app/sanity.c:417
 #, c-format
 msgid ""
 "The name of the directory holding the GIMP user configuration cannot be "
@@ -237,12 +241,12 @@ msgstr ""
 "G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
-#: ../app/version.c:63
+#: ../app/version.c:64
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
 msgstr "using %s version %s (compiled against version %s)"
 
-#: ../app/version.c:126 ../tools/gimp-remote.c:94
+#: ../app/version.c:127 ../tools/gimp-remote.c:94
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
@@ -253,7 +257,7 @@ msgid "Brush Editor"
 msgstr "עורך מברשות"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:112 ../app/core/gimp.c:951
+#: ../app/actions/actions.c:112 ../app/core/gimp.c:953
 #: ../app/dialogs/dialogs.c:282 ../app/dialogs/preferences-dialog.c:2720
 msgid "Brushes"
 msgstr "מברשות"
@@ -346,21 +350,21 @@ msgid "Gradient Editor"
 msgstr "עורך מדרגים"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:172 ../app/core/gimp.c:971
+#: ../app/actions/actions.c:172 ../app/core/gimp.c:973
 #: ../app/dialogs/dialogs.c:286 ../app/dialogs/preferences-dialog.c:2736
 msgid "Gradients"
 msgstr "מדרגים"
 
 #. initialize the list of gimp tool presets
-#: ../app/actions/actions.c:175 ../app/core/gimp.c:981
-#, fuzzy
+#: ../app/actions/actions.c:175 ../app/core/gimp.c:983
 #: ../app/dialogs/dialogs.c:302
+#, fuzzy
 msgid "Tool Presets"
 msgstr "הגדרות כלים"
 
 #: ../app/actions/actions.c:178 ../app/dialogs/dialogs.c:369
-#, fuzzy
 #: ../app/widgets/gimptoolpreseteditor.c:75
+#, fuzzy
 msgid "Tool Preset Editor"
 msgstr "עורך הגדרות כלים"
 
@@ -383,18 +387,18 @@ msgid "Layers"
 msgstr "שכבות"
 
 #: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:365
-#: ../app/widgets/gimppaletteeditor.c:154
+#: ../app/widgets/gimppaletteeditor.c:152
 msgid "Palette Editor"
 msgstr "עורך לוחות צבעים"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:966
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:968
 #: ../app/dialogs/dialogs.c:288 ../app/dialogs/preferences-dialog.c:2732
 msgid "Palettes"
 msgstr "לוחות צבעים"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:199 ../app/core/gimp.c:961
+#: ../app/actions/actions.c:199 ../app/core/gimp.c:963
 #: ../app/dialogs/dialogs.c:284 ../app/dialogs/preferences-dialog.c:2728
 msgid "Patterns"
 msgstr "דוגמאות"
@@ -403,7 +407,7 @@ msgstr "דוגמאות"
 msgid "Plug-Ins"
 msgstr "תוספים"
 
-#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:369
+#: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:385
 msgid "Quick Mask"
 msgstr "מסיכה מהירה"
 
@@ -417,7 +421,7 @@ msgid "Select"
 msgstr "בחירה"
 
 #. initialize the template list
-#: ../app/actions/actions.c:214 ../app/core/gimp.c:986
+#: ../app/actions/actions.c:214 ../app/core/gimp.c:988
 #: ../app/dialogs/dialogs.c:296
 msgid "Templates"
 msgstr "תבניות"
@@ -436,7 +440,7 @@ msgstr "עורך טקסט"
 msgid "Tool Options"
 msgstr "אפשרויות כלים"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:934
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:927
 msgid "Tools"
 msgstr "כלים"
 
@@ -455,13 +459,13 @@ msgid "Windows"
 msgstr "חלונות"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:583
+#: ../app/actions/actions.c:584
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:609
+#: ../app/actions/actions.c:610
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -734,7 +738,7 @@ msgid "Intersect this channel with the current selection"
 msgstr "חתוך ערוץ זה עם הבחירה הנוכחית"
 
 #: ../app/actions/channels-commands.c:85
-#: ../app/actions/channels-commands.c:404
+#: ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "מאפייני ערוץ"
 
@@ -751,14 +755,14 @@ msgstr "ערוך צבע ערוץ"
 msgid "_Fill opacity:"
 msgstr "אטימות ה_מילוי:"
 
-#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:263
-#: ../app/widgets/gimpchanneltreeview.c:345
+#: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:271
+#: ../app/widgets/gimpchanneltreeview.c:334
 msgid "Channel"
 msgstr "ערוץ"
 
 #: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:159
-#: ../app/widgets/gimpchanneltreeview.c:340
+#: ../app/widgets/gimpchanneltreeview.c:329
 msgid "New Channel"
 msgstr "ערוץ חדש"
 
@@ -773,16 +777,11 @@ msgstr "צבע ערוץ החדש"
 # יש פה התייחסות לשם של הערוץ שנוצר מהעתקת ערוץ של התמונה (כגון הערוץ האדום, הכחול וכד') כאשר %s יוחלף בשם הערוץ.
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:252
 #: ../app/display/gimpdisplayshell-dnd.c:599
-#: ../app/widgets/gimpchanneltreeview.c:272
-#: ../app/widgets/gimplayertreeview.c:802
+#: ../app/widgets/gimpchanneltreeview.c:261
+#: ../app/widgets/gimplayertreeview.c:785
 #, c-format
 msgid "%s Channel Copy"
 msgstr "העתק של ערוץ %s"
-
-#: ../app/actions/channels-commands.c:315 ../app/pdb/selection-cmds.c:454
-#: ../app/pdb/selection-cmds.c:521
-msgid "Channel to Selection"
-msgstr "בחירה לפי הערוץ"
 
 #: ../app/actions/colormap-actions.c:44
 msgctxt "colormap-action"
@@ -977,13 +976,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "השתמש בצבע המורכב מכל השכבות הנראות"
 
 #: ../app/actions/data-commands.c:104 ../app/actions/documents-commands.c:343
-#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:221
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/actions/file-commands.c:194 ../app/dialogs/file-open-dialog.c:233
+#: ../app/dialogs/file-open-dialog.c:278
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
-#: ../app/widgets/gimplayertreeview.c:762 ../app/widgets/gimptoolbox-dnd.c:178
-#: ../app/widgets/gimptoolbox.c:1229
+#: ../app/widgets/gimplayertreeview.c:745 ../app/widgets/gimptoolbox-dnd.c:178
+#: ../app/widgets/gimptoolbox.c:1222
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -995,9 +994,9 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1522
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1624
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:378 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:379 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "חסר-שם"
@@ -1378,7 +1377,7 @@ msgid "About GIMP"
 msgstr "אודות GIMP"
 
 #: ../app/actions/dialogs-actions.c:304
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:777
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:770
 msgid "Toolbox"
 msgstr "תיבת כלים"
 
@@ -1663,8 +1662,8 @@ msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
-"ניקוי רשימת היסטוריית המסמכים יסיר לצמיתות את כל התמונות מרשימת "
-"המסמכים האחרונים."
+"ניקוי רשימת היסטוריית המסמכים יסיר לצמיתות את כל התמונות מרשימת המסמכים "
+"האחרונים."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -2387,8 +2386,10 @@ msgstr "שמור _עותק..."
 
 #: ../app/actions/file-actions.c:135
 msgctxt "file-action"
-msgid "Save this image with a different name, but keep its current name"
-msgstr "שמור את התמונה הנוכחית עם שם אחר, אך שמור על שמה הנוכחי"
+msgid ""
+"Save a copy of this image, without affecting the source file (if any) or the "
+"current state of the image"
+msgstr ""
 
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
@@ -2493,8 +2494,8 @@ msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
-"על ידי שחזור התמונה למצב השמור בדיסק, יאבדו כל השינויים כולל "
-"היסטוריית הפעולות."
+"על ידי שחזור התמונה למצב השמור בדיסק, יאבדו כל השינויים כולל היסטוריית "
+"הפעולות."
 
 #: ../app/actions/file-commands.c:638
 msgid "(Unnamed Template)"
@@ -2705,8 +2706,8 @@ msgid "Zoom In"
 msgstr "התמקדות"
 
 #: ../app/actions/gradient-editor-actions.c:374
-#, fuzzy
 #: ../app/actions/palette-editor-actions.c:89
+#, fuzzy
 msgid "Zoom in"
 msgstr "מיקוד צפיה"
 
@@ -2716,8 +2717,8 @@ msgid "Zoom Out"
 msgstr "התרחקות"
 
 #: ../app/actions/gradient-editor-actions.c:380
-#, fuzzy
 #: ../app/actions/palette-editor-actions.c:95
+#, fuzzy
 msgid "Zoom out"
 msgstr "ריחוק צפיה"
 
@@ -2727,8 +2728,8 @@ msgid "Zoom All"
 msgstr "מיקוד בהכל"
 
 #: ../app/actions/gradient-editor-actions.c:386
-#, fuzzy
 #: ../app/actions/palette-editor-actions.c:101
+#, fuzzy
 msgid "Zoom all"
 msgstr "מיקוד בהכל"
 
@@ -2765,7 +2766,6 @@ msgid "Re-_center Segment's Midpoint"
 msgstr "מרכז את נקודת האמצע של המקטע"
 
 #: ../app/actions/gradient-editor-actions.c:793
-#, fuzzy
 msgid "Re-distribute _Handles in Segment"
 msgstr ""
 
@@ -2855,16 +2855,16 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
-"בחר את מספר הפעמים\n "
-"אשר יש לשכפל את המקטע הנבחר."
+"בחר את מספר הפעמים\n"
+" אשר יש לשכפל את המקטע הנבחר."
 
 #: ../app/actions/gradient-editor-commands.c:494
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
-"בחר את מספר הפעמים\n "
-"אשר יש לשכפל את הבחירה."
+"בחר את מספר הפעמים\n"
+" אשר יש לשכפל את הבחירה."
 
 #: ../app/actions/gradient-editor-commands.c:553
 #, fuzzy
@@ -3330,21 +3330,23 @@ msgid "Set Image Print Resolution"
 msgstr "שינוי הפרדת תמונה"
 
 #: ../app/actions/image-commands.c:378
-#: ../app/pdb/drawable-transform-cmds.c:147
-#: ../app/pdb/drawable-transform-cmds.c:222
+#: ../app/pdb/drawable-transform-cmds.c:153
+#: ../app/pdb/drawable-transform-cmds.c:230
+#: ../app/pdb/item-transform-cmds.c:158
 #, fuzzy
 msgid "Flipping"
 msgstr "היפוך..."
 
 #: ../app/actions/image-commands.c:402
-#: ../app/pdb/drawable-transform-cmds.c:524
-#: ../app/pdb/drawable-transform-cmds.c:603 ../app/pdb/image-cmds.c:533
-#: ../app/pdb/transform-tools-cmds.c:214 ../app/tools/gimprotatetool.c:122
+#: ../app/pdb/drawable-transform-cmds.c:547
+#: ../app/pdb/drawable-transform-cmds.c:628 ../app/pdb/image-cmds.c:536
+#: ../app/pdb/item-transform-cmds.c:423 ../app/pdb/transform-tools-cmds.c:224
+#: ../app/tools/gimprotatetool.c:122
 #, fuzzy
 msgid "Rotating"
 msgstr "מסובב..."
 
-#: ../app/actions/image-commands.c:428 ../app/actions/layers-commands.c:692
+#: ../app/actions/image-commands.c:428 ../app/actions/layers-commands.c:691
 msgid "Cannot crop because the current selection is empty."
 msgstr "אין אפשרות לגזוז מאחר והאזור הנבחר ריק"
 
@@ -3358,13 +3360,13 @@ msgid "Scale Image"
 msgstr "שינוי קנה-מידת תמונה"
 
 #. Scaling
-#: ../app/actions/image-commands.c:680 ../app/actions/layers-commands.c:1158
+#: ../app/actions/image-commands.c:680 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:681
-#: ../app/pdb/drawable-transform-cmds.c:757 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:298
-#: ../app/pdb/layer-cmds.c:343 ../app/pdb/transform-tools-cmds.c:290
-#: ../app/tools/gimpscaletool.c:106
+#: ../app/pdb/drawable-transform-cmds.c:708
+#: ../app/pdb/drawable-transform-cmds.c:786 ../app/pdb/image-cmds.c:408
+#: ../app/pdb/image-cmds.c:444 ../app/pdb/item-transform-cmds.c:512
+#: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
+#: ../app/pdb/transform-tools-cmds.c:302 ../app/tools/gimpscaletool.c:106
 msgid "Scaling"
 msgstr ""
 
@@ -3410,672 +3412,643 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "מחיקת תמונה זו"
 
-#: ../app/actions/layers-actions.c:48
+#: ../app/actions/layers-actions.c:49
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "שכבות"
 
-#: ../app/actions/layers-actions.c:52
+#: ../app/actions/layers-actions.c:53
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "/_שכבה"
 
-#: ../app/actions/layers-actions.c:54
+#: ../app/actions/layers-actions.c:55
 #, fuzzy
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "/שכבה/_ערימה"
 
-#: ../app/actions/layers-actions.c:56
-#, fuzzy
-msgctxt "layers-action"
-msgid "Te_xt to Selection"
-msgstr "/הוספה לאזור נבחר"
-
-#: ../app/actions/layers-actions.c:58
+#: ../app/actions/layers-actions.c:57
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "_מסיכה"
 
-#: ../app/actions/layers-actions.c:60
+#: ../app/actions/layers-actions.c:59
 #, fuzzy
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "שקיפות"
 
-#: ../app/actions/layers-actions.c:62
+#: ../app/actions/layers-actions.c:61
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "הסבה"
 
-#: ../app/actions/layers-actions.c:64
+#: ../app/actions/layers-actions.c:63
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "פרספקטיבה"
 
-#: ../app/actions/layers-actions.c:66
+#: ../app/actions/layers-actions.c:65
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "אטימות"
 
-#: ../app/actions/layers-actions.c:68
+#: ../app/actions/layers-actions.c:67
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "שכבות"
 
-#: ../app/actions/layers-actions.c:71
+#: ../app/actions/layers-actions.c:70
 #, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "צבע טקסט"
 
-#: ../app/actions/layers-actions.c:72
+#: ../app/actions/layers-actions.c:71
 #, fuzzy
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "בחירת צורה מתוך תמונה"
 
-#: ../app/actions/layers-actions.c:77
+#: ../app/actions/layers-actions.c:76
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "/עריכת מאפייני שכבה..."
 
-#: ../app/actions/layers-actions.c:78
+#: ../app/actions/layers-actions.c:77
 #, fuzzy
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "עריכת מאפייני שכבה"
 
-#: ../app/actions/layers-actions.c:83 ../app/actions/layers-actions.c:591
+#: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:598
 #, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "/שכבה חדשה"
 
-#: ../app/actions/layers-actions.c:84
+#: ../app/actions/layers-actions.c:83
 #, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "צור תצוגה חדשה לתמונה זו"
 
-#: ../app/actions/layers-actions.c:89 ../app/actions/layers-actions.c:592
+#: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:599
 #, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "שכבה חדשה"
 
-#: ../app/actions/layers-actions.c:90
+#: ../app/actions/layers-actions.c:89
 #, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "שכבה חדשה עם ערכים אחרונים"
 
-#: ../app/actions/layers-actions.c:95
+#: ../app/actions/layers-actions.c:94
 #, fuzzy
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "/_קובץ"
 
-#: ../app/actions/layers-actions.c:97
+#: ../app/actions/layers-actions.c:96
 #, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "יצירת תבנית חדשה"
 
-#: ../app/actions/layers-actions.c:102
+#: ../app/actions/layers-actions.c:101
 #, fuzzy
 msgctxt "layers-action"
 msgid "New Layer _Group..."
 msgstr "/שכבה חדשה"
 
-#: ../app/actions/layers-actions.c:103
+#: ../app/actions/layers-actions.c:102
 #, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
 msgstr "יצירת תבנית חדשה"
 
-#: ../app/actions/layers-actions.c:108
+#: ../app/actions/layers-actions.c:107
 #, fuzzy
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "/שכפול שכבה"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:109
 #, fuzzy
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "מחיקת תמונה זו"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:114
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "/מחיקת שכבה"
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:115
 #, fuzzy
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "מחיקת שכבה"
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:120
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "/הגבהת שכבה"
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:121
 #, fuzzy
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "אזור נבחר למשיכת (קולמוס)"
 
-#: ../app/actions/layers-actions.c:127
+#: ../app/actions/layers-actions.c:126
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "/הגבהת שכבה לשיא"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:127
 #, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "הנמכת הערוץ לתחתית"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:132
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "/הנמכת שכבה"
 
-#: ../app/actions/layers-actions.c:134
+#: ../app/actions/layers-actions.c:133
 #, fuzzy
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "הנמכת הערוץ לתחתית"
 
-#: ../app/actions/layers-actions.c:139
+#: ../app/actions/layers-actions.c:138
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "/הנמכת שכבה לתחתית"
 
-#: ../app/actions/layers-actions.c:140
+#: ../app/actions/layers-actions.c:139
 #, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "הנמכת הערוץ לתחתית"
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:144
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "/עיגון שכבה"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:145
 #, fuzzy
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "/עיגון שכבה"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:150
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "/מיזוג כלפי מטה"
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:151
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:156
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Group"
 msgstr "מיזוג שכבות"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:157
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
 msgstr "מיזוג שכבות נראות"
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:162
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "מיזוג שכבות נראות"
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:163
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "מיזוג שכבות נראות"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:168
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "שיטוח תמונה"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:169
 #, fuzzy
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "מיזוג שכבות נראות"
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:174
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "מידע אודות התמונה"
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:175
 #, fuzzy
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "מיזוג שכבות נראות"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:180
 #, fuzzy
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "הזזת נתיב"
 
-#: ../app/actions/layers-actions.c:182
+#: ../app/actions/layers-actions.c:181
 #, fuzzy
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "בחירת צורה מתוך תמונה"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:186
 #, fuzzy
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "הזזת נתיב"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:187
 #, fuzzy
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "הוספה לאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:193
+#: ../app/actions/layers-actions.c:192
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "/גודל תחום שכבה"
 
-#: ../app/actions/layers-actions.c:194
+#: ../app/actions/layers-actions.c:193
 #, fuzzy
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "התאמת גוון ורוויה"
 
-#: ../app/actions/layers-actions.c:199
+#: ../app/actions/layers-actions.c:198
 #, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "/שינוי גודל שכבה לגודל תמונה"
 
-#: ../app/actions/layers-actions.c:200
+#: ../app/actions/layers-actions.c:199
 #, fuzzy
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "שינוי פרספקטיבת שכבה או אזור נבחר"
 
-#: ../app/actions/layers-actions.c:205
+#: ../app/actions/layers-actions.c:204
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "/שינוי קנה מידת שכבה"
 
-#: ../app/actions/layers-actions.c:206
+#: ../app/actions/layers-actions.c:205
 #, fuzzy
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "שינוי פרספקטיבת שכבה או אזור נבחר"
 
-#: ../app/actions/layers-actions.c:211
+#: ../app/actions/layers-actions.c:210
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "/אלפא לאזור נבחר"
 
-#: ../app/actions/layers-actions.c:212
+#: ../app/actions/layers-actions.c:211
 #, fuzzy
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "היפוך שכבה או אזור נבחר"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:216
 #, fuzzy
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "/הוספת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:219
+#: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
 
-#: ../app/actions/layers-actions.c:224
+#: ../app/actions/layers-actions.c:223
 #, fuzzy
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "/הוספת ערוץ אלפא"
 
-#: ../app/actions/layers-actions.c:225
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr ""
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:229
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "הסרת ערוץ"
 
-#: ../app/actions/layers-actions.c:231
+#: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr ""
 
-#: ../app/actions/layers-actions.c:239
+#: ../app/actions/layers-actions.c:238
 #, fuzzy
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "הוספת ערוץ אלפא"
 
-#: ../app/actions/layers-actions.c:241
+#: ../app/actions/layers-actions.c:240
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr ""
 
-#: ../app/actions/layers-actions.c:247
+#: ../app/actions/layers-actions.c:246
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "קיזוז מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:248
+#: ../app/actions/layers-actions.c:247
 #, fuzzy
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:254
+#: ../app/actions/layers-actions.c:253
 #, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "הזזת שכבה"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:259
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:261
+#: ../app/actions/layers-actions.c:260
 #, fuzzy
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:270
+#: ../app/actions/layers-actions.c:269
 #, fuzzy
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "/החלת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:271
+#: ../app/actions/layers-actions.c:270
 #, fuzzy
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:276
+#: ../app/actions/layers-actions.c:275
 #, fuzzy
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/actions/layers-actions.c:277
+#: ../app/actions/layers-actions.c:276
 #, fuzzy
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "סיבוב שכבה או אזור נבחר"
 
-#: ../app/actions/layers-actions.c:285
+#: ../app/actions/layers-actions.c:284
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "מסיכה לאזור נבחר"
 
-#: ../app/actions/layers-actions.c:286
+#: ../app/actions/layers-actions.c:285
 #, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "אזור נבחר למשיכת (קולמוס)"
 
-#: ../app/actions/layers-actions.c:291
+#: ../app/actions/layers-actions.c:290
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "/הוספה לאזור נבחר"
 
-#: ../app/actions/layers-actions.c:292
+#: ../app/actions/layers-actions.c:291
 #, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "הוספה לאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:297 ../app/actions/layers-actions.c:326
-#: ../app/actions/layers-actions.c:356
+#: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "/הסרה מאזור נבחר"
 
-#: ../app/actions/layers-actions.c:298
+#: ../app/actions/layers-actions.c:297
 #, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:303 ../app/actions/layers-actions.c:333
-#: ../app/actions/layers-actions.c:363
+#: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
 #, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "/הצלבה עם אזור נבחר"
 
-#: ../app/actions/layers-actions.c:304
+#: ../app/actions/layers-actions.c:303
 #, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:312
+#: ../app/actions/layers-actions.c:311
 #, fuzzy
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "/אלפא לאזור נבחר"
 
-#: ../app/actions/layers-actions.c:314
+#: ../app/actions/layers-actions.c:313
 #, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "ערוץ ה_אלפא של השכבה"
 
-#: ../app/actions/layers-actions.c:319 ../app/actions/layers-actions.c:349
+#: ../app/actions/layers-actions.c:318
 #, fuzzy
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "/הוספה לאזור נבחר"
 
-#: ../app/actions/layers-actions.c:321
+#: ../app/actions/layers-actions.c:320
 #, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "הוספה לאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:328
+#: ../app/actions/layers-actions.c:327
 #, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:335
+#: ../app/actions/layers-actions.c:334
 #, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:343
-#, fuzzy
-msgctxt "layers-action"
-msgid "_Text to Selection"
-msgstr "/הוספה לאזור נבחר"
-
-#: ../app/actions/layers-actions.c:344
-#, fuzzy
-msgctxt "layers-action"
-msgid "Replace the selection with the text layer's outline"
-msgstr "ערוץ ה_אלפא של השכבה"
-
-#: ../app/actions/layers-actions.c:351
-#, fuzzy
-msgctxt "layers-action"
-msgid "Add the text layer's outline to the current selection"
-msgstr "הוספה לאזור נבחר נוכחי"
-
-#: ../app/actions/layers-actions.c:358
-#, fuzzy
-msgctxt "layers-action"
-msgid "Subtract the text layer's outline from the current selection"
-msgstr "החסרה מאזור נבחר נוכחי"
-
-#: ../app/actions/layers-actions.c:365
-#, fuzzy
-msgctxt "layers-action"
-msgid "Intersect the text layer's outline with the current selection"
-msgstr "החסרה מאזור נבחר נוכחי"
-
-#: ../app/actions/layers-actions.c:373
+#: ../app/actions/layers-actions.c:342
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "/שכבה/ערימה/בחירת שכבה _עליונה"
 
-#: ../app/actions/layers-actions.c:374
+#: ../app/actions/layers-actions.c:343
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "/שכבה/ערימה/בחירת שכבה _תחתונה"
 
-#: ../app/actions/layers-actions.c:379
+#: ../app/actions/layers-actions.c:348
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "/שכבה/ערימה/בחירת שכבה _תחתונה"
 
-#: ../app/actions/layers-actions.c:380
+#: ../app/actions/layers-actions.c:349
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "/שכבה/ערימה/בחירת שכבה _תחתונה"
 
-#: ../app/actions/layers-actions.c:385
+#: ../app/actions/layers-actions.c:354
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "/שכבה/ערימה/בחירת שכבה _קודמת"
 
-#: ../app/actions/layers-actions.c:386
+#: ../app/actions/layers-actions.c:355
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:391
+#: ../app/actions/layers-actions.c:360
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "/שכבה/ערימה/בחירת השכבה ה_באה"
 
-#: ../app/actions/layers-actions.c:392
+#: ../app/actions/layers-actions.c:361
 #, fuzzy
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "החסרה מאזור נבחר נוכחי"
 
-#: ../app/actions/layers-actions.c:586 ../app/actions/layers-actions.c:587
+#. Will be followed with e.g. "Shift-Click
+#. on thumbnail"
+#.
+#: ../app/actions/layers-actions.c:442
+msgid "Shortcut: "
+msgstr ""
+
+#. Will be prepended with a modifier key
+#. string, e.g. "Shift"
+#.
+#: ../app/actions/layers-actions.c:447
+msgid "-Click on thumbnail in Layers dockable"
+msgstr ""
+
+#: ../app/actions/layers-actions.c:593 ../app/actions/layers-actions.c:594
 #, fuzzy
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "שכבה חדשה"
 
-#: ../app/actions/layers-commands.c:204
+#: ../app/actions/layers-commands.c:203
 msgid "Layer Attributes"
 msgstr "מאפייני שכבה"
 
-#: ../app/actions/layers-commands.c:207
+#: ../app/actions/layers-commands.c:206
 msgid "Edit Layer Attributes"
 msgstr "עריכת מאפייני שכבה"
 
-#: ../app/actions/layers-commands.c:251 ../app/core/gimplayer.c:257
+#: ../app/actions/layers-commands.c:250 ../app/core/gimplayer.c:265
 msgid "Layer"
 msgstr "שכבה"
 
-#: ../app/actions/layers-commands.c:253 ../app/actions/layers-commands.c:321
+#: ../app/actions/layers-commands.c:252 ../app/actions/layers-commands.c:320
 #: ../app/widgets/gimpdrawabletreeview.c:337
-#: ../app/widgets/gimplayertreeview.c:863
+#: ../app/widgets/gimplayertreeview.c:846
 msgid "New Layer"
 msgstr "שכבה חדשה"
 
-#: ../app/actions/layers-commands.c:256
+#: ../app/actions/layers-commands.c:255
 msgid "Create a New Layer"
 msgstr "יצירת שכבה חדשה"
 
-#: ../app/actions/layers-commands.c:357
+#: ../app/actions/layers-commands.c:356
 #, fuzzy
 msgid "Visible"
 msgstr "/_קובץ"
 
-#: ../app/actions/layers-commands.c:619
+#: ../app/actions/layers-commands.c:618
 msgid "Set Layer Boundary Size"
 msgstr ""
 
-#: ../app/actions/layers-commands.c:664
+#: ../app/actions/layers-commands.c:663
 msgid "Scale Layer"
 msgstr "שינוי קנה-מידת שכבה"
 
-#: ../app/actions/layers-commands.c:702
+#: ../app/actions/layers-commands.c:701
 msgid "Crop Layer"
 msgstr "גזיזת שכבה"
 
-#: ../app/actions/layers-commands.c:841
-#, fuzzy
-msgid "Layer Mask to Selection"
-msgstr "מסיכה לאזור נבחר"
-
-#: ../app/actions/layers-commands.c:1093
+#: ../app/actions/layers-commands.c:1080
 #, fuzzy
 msgid "Please select a channel first"
 msgstr "בחירה מערוץ"
 
-#: ../app/actions/layers-commands.c:1101
+#: ../app/actions/layers-commands.c:1088
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "הוסף מסיכת שכבה"
@@ -4759,66 +4732,66 @@ msgctxt "select-action"
 msgid "Stroke the selection with last used values"
 msgstr "אזור נבחר למשיכת (קולמוס)"
 
-#: ../app/actions/select-commands.c:156
+#: ../app/actions/select-commands.c:155
 msgid "Feather Selection"
 msgstr "החלקת אזור נבחר"
 
-#: ../app/actions/select-commands.c:160
+#: ../app/actions/select-commands.c:159
 #, fuzzy
 msgid "Feather selection by"
 msgstr "החלקת אזור נבחר"
 
-#: ../app/actions/select-commands.c:197
+#: ../app/actions/select-commands.c:196
 msgid "Shrink Selection"
 msgstr "הקטנת אזור נבחר"
 
-#: ../app/actions/select-commands.c:201
+#: ../app/actions/select-commands.c:200
 #, fuzzy
 msgid "Shrink selection by"
 msgstr "כיווץ אזור נבחר ב:"
 
-#: ../app/actions/select-commands.c:209
+#: ../app/actions/select-commands.c:208
 #, fuzzy
 msgid "_Shrink from image border"
 msgstr "כיווץ מגבול התמונה"
 
-#: ../app/actions/select-commands.c:237
+#: ../app/actions/select-commands.c:236
 msgid "Grow Selection"
 msgstr "הגדלת אזור נבחר"
 
-#: ../app/actions/select-commands.c:241
+#: ../app/actions/select-commands.c:240
 #, fuzzy
 msgid "Grow selection by"
 msgstr "הגדלת אזור נבחר ב:"
 
-#: ../app/actions/select-commands.c:267
+#: ../app/actions/select-commands.c:266
 msgid "Border Selection"
 msgstr "מיסגור אזור נבחר"
 
-#: ../app/actions/select-commands.c:271
+#: ../app/actions/select-commands.c:270
 #, fuzzy
 msgid "Border selection by"
 msgstr "מיסגור אזור נבחר ב:"
 
 #. Feather button
-#: ../app/actions/select-commands.c:280
+#: ../app/actions/select-commands.c:279
 #, fuzzy
 msgid "_Feather border"
 msgstr "החלקת אזור נבחר"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:293
+#: ../app/actions/select-commands.c:292
 msgid "_Lock selection to image edges"
 msgstr ""
 
-#: ../app/actions/select-commands.c:343 ../app/actions/select-commands.c:376
-#: ../app/actions/vectors-commands.c:391 ../app/actions/vectors-commands.c:425
+#: ../app/actions/select-commands.c:342 ../app/actions/select-commands.c:375
+#: ../app/actions/vectors-commands.c:386 ../app/actions/vectors-commands.c:420
 #: ../app/dialogs/stroke-dialog.c:289
 #, fuzzy
 msgid "There is no active layer or channel to stroke to."
 msgstr "אין שכבה פעילה או ערוץ למשוך (קולמוס) בהן"
 
-#: ../app/actions/select-commands.c:349
+#: ../app/actions/select-commands.c:348
 msgid "Stroke Selection"
 msgstr "אזור נבחר למשיכת (קולמוס)"
 
@@ -4972,7 +4945,7 @@ msgstr "פתיחת קובץ טקסט (יוניקוד)"
 #: ../app/core/gimppalette-load.c:376 ../app/core/gimppalette-load.c:466
 #: ../app/core/gimppalette-load.c:633 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:637 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:328
+#: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr ""
@@ -5586,35 +5559,29 @@ msgctxt "vectors-action"
 msgid "Advanced options"
 msgstr "פעולות קבצים"
 
-#: ../app/actions/vectors-commands.c:138
+#: ../app/actions/vectors-commands.c:137
 msgid "Path Attributes"
 msgstr "מאפייני נתיב"
 
-#: ../app/actions/vectors-commands.c:141
+#: ../app/actions/vectors-commands.c:140
 msgid "Edit Path Attributes"
 msgstr "עריכת מאפייני נתיב"
 
-#: ../app/actions/vectors-commands.c:165 ../app/vectors/gimpvectors.c:194
-#: ../app/widgets/gimpvectorstreeview.c:262
+#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:205
+#: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "נתיב"
 
-#: ../app/actions/vectors-commands.c:166
+#: ../app/actions/vectors-commands.c:165
 msgid "New Path"
 msgstr "נתיב חדש"
 
-#: ../app/actions/vectors-commands.c:169
+#: ../app/actions/vectors-commands.c:168
 msgid "New Path Options"
 msgstr "אפשרויות נתיב חדשות:"
 
-#: ../app/actions/vectors-commands.c:314 ../app/pdb/paths-cmds.c:645
-#: ../app/pdb/vectors-cmds.c:1405
-#, fuzzy
-msgid "Path to Selection"
-msgstr "/נתיב לאזור נבחר"
-
-#: ../app/actions/vectors-commands.c:397 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1990 ../app/vectors/gimpvectors.c:202
+#: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
+#: ../app/tools/gimpvectortool.c:1990
 msgid "Stroke Path"
 msgstr "נתיב משיכת (קולמוס)"
 
@@ -6541,7 +6508,7 @@ msgstr ""
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:55
 #: ../app/gui/themes.c:238 ../app/tools/gimpcurvestool.c:690
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
-#: ../app/xcf/xcf.c:421
+#: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr ""
@@ -7456,7 +7423,7 @@ msgid "Quick Mask"
 msgstr "הסוואה מהירה"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:911
-#: ../app/core/gimpimage-grid.c:62
+#: ../app/core/gimpimage-grid.c:63
 #, fuzzy
 msgctxt "undo-type"
 msgid "Grid"
@@ -7563,13 +7530,13 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "/עיגון שכבה"
 
-#: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:261
+#: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:262
 #, fuzzy
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "העתקה"
 
-#: ../app/core/core-enums.c:900 ../app/core/gimp-edit.c:500
+#: ../app/core/core-enums.c:900 ../app/core/gimp-edit.c:501
 #, fuzzy
 msgctxt "undo-type"
 msgid "Cut"
@@ -7582,7 +7549,7 @@ msgid "Text"
 msgstr "טקסט"
 
 #: ../app/core/core-enums.c:902 ../app/core/core-enums.c:944
-#: ../app/core/gimpdrawable-transform.c:566
+#: ../app/core/gimpdrawable-transform.c:567
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transform"
@@ -7919,7 +7886,7 @@ msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "צג"
 
-#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:326
+#: ../app/core/gimp-contexts.c:154 ../app/core/gimptooloptions.c:344
 #: ../app/gui/session.c:349 ../app/menus/menus.c:464
 #: ../app/widgets/gimpdevices.c:269
 #, fuzzy, c-format
@@ -7932,43 +7899,43 @@ msgstr ""
 msgid "Pasted Layer"
 msgstr "שכבה מודבקת"
 
-#: ../app/core/gimp-edit.c:388
+#: ../app/core/gimp-edit.c:389
 #, fuzzy
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "ניקוי"
 
-#: ../app/core/gimp-edit.c:407
+#: ../app/core/gimp-edit.c:408
 #, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "עריכת צבע קדמה"
 
-#: ../app/core/gimp-edit.c:411
+#: ../app/core/gimp-edit.c:412
 #, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "עריכת צבע רקע"
 
-#: ../app/core/gimp-edit.c:415
+#: ../app/core/gimp-edit.c:416
 #, fuzzy
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "מילוי עם לבן"
 
-#: ../app/core/gimp-edit.c:419
+#: ../app/core/gimp-edit.c:420
 #, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "מילוי עם שקיפות"
 
-#: ../app/core/gimp-edit.c:423
+#: ../app/core/gimp-edit.c:424
 #, fuzzy
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "/עריכה/מילוי עם _דוגמה"
 
-#: ../app/core/gimp-edit.c:512
+#: ../app/core/gimp-edit.c:513
 #, fuzzy
 msgid "Global Buffer"
 msgstr "חוצצים"
@@ -8033,42 +8000,42 @@ msgstr ""
 msgid "Cannot create folder '%s': %s"
 msgstr ""
 
-#: ../app/core/gimp.c:595
+#: ../app/core/gimp.c:597
 #, fuzzy
 msgid "Initialization"
 msgstr "יחס מיקוד:"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:696
+#: ../app/core/gimp.c:698
 msgid "Internal Procedures"
 msgstr "נהלים פנימיים"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:947
+#: ../app/core/gimp.c:949
 msgid "Looking for data files"
 msgstr "מחפש קבצי מידע"
 
-#: ../app/core/gimp.c:947
+#: ../app/core/gimp.c:949
 msgid "Parasites"
 msgstr "טפילים"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2724
+#: ../app/core/gimp.c:958 ../app/dialogs/preferences-dialog.c:2724
 msgid "Dynamics"
 msgstr ""
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:976
+#: ../app/core/gimp.c:978
 msgid "Fonts (this may take a while)"
 msgstr ""
 
 #. initialize the module list
-#: ../app/core/gimp.c:990 ../app/dialogs/preferences-dialog.c:2752
+#: ../app/core/gimp.c:992 ../app/dialogs/preferences-dialog.c:2752
 msgid "Modules"
 msgstr "רכיבים"
 
 #. update tag cache
-#: ../app/core/gimp.c:994
+#: ../app/core/gimp.c:996
 msgid "Updating tag cache"
 msgstr ""
 
@@ -8195,12 +8162,12 @@ msgstr "מברשות"
 msgid "Brush Hardness"
 msgstr "קושי"
 
-#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:141
+#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:143
 #, fuzzy
 msgid "Brush Aspect Ratio"
 msgstr "יחס הצגה:"
 
-#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:145
+#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:147
 #, fuzzy
 msgid "Brush Angle"
 msgstr "מברשות"
@@ -8229,7 +8196,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "בחירת מלבן"
 
-#: ../app/core/gimpchannel-select.c:433
+#: ../app/core/gimpchannel-select.c:433 ../app/core/gimplayer.c:273
 #, fuzzy
 msgctxt "undo-type"
 msgid "Alpha to Selection"
@@ -8253,127 +8220,171 @@ msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "בחירה לפי צבע"
 
-#: ../app/core/gimpchannel.c:264
+#: ../app/core/gimpchannel.c:272
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rename Channel"
 msgstr "שינוי שם ערוץ"
 
-#: ../app/core/gimpchannel.c:265
+#: ../app/core/gimpchannel.c:273
 #, fuzzy
 msgctxt "undo-type"
 msgid "Move Channel"
 msgstr "הזזת ערוץ"
 
-#: ../app/core/gimpchannel.c:266
+#: ../app/core/gimpchannel.c:274
 #, fuzzy
 msgctxt "undo-type"
 msgid "Scale Channel"
 msgstr "שינוי קנה-מידת ערוץ"
 
-#: ../app/core/gimpchannel.c:267
+#: ../app/core/gimpchannel.c:275
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Channel"
 msgstr "שינוי גודל ערוץ"
 
-#: ../app/core/gimpchannel.c:268
+#: ../app/core/gimpchannel.c:276
 #, fuzzy
 msgctxt "undo-type"
 msgid "Flip Channel"
 msgstr "היפוך ערוץ"
 
-#: ../app/core/gimpchannel.c:269
+#: ../app/core/gimpchannel.c:277
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "סיבוב ערוץ"
 
-#: ../app/core/gimpchannel.c:270 ../app/core/gimpdrawable-transform.c:885
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:845
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "הסבת ערוץ"
 
-#: ../app/core/gimpchannel.c:271
+#: ../app/core/gimpchannel.c:279
 #, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "הקטנת ערוץ"
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:280 ../app/core/gimpselection.c:584
+#, fuzzy
+msgctxt "undo-type"
+msgid "Channel to Selection"
+msgstr "ערוץ לאזור נבחר"
+
+#: ../app/core/gimpchannel.c:281
+#, fuzzy
+msgctxt "undo-type"
+msgid "Reorder Channel"
+msgstr "סידור ערוץ מחדש"
+
+#: ../app/core/gimpchannel.c:282
+#, fuzzy
+msgctxt "undo-type"
+msgid "Raise Channel"
+msgstr "הגבהת ערוץ"
+
+#: ../app/core/gimpchannel.c:283
+#, fuzzy
+msgctxt "undo-type"
+msgid "Raise Channel to Top"
+msgstr "הגבהת הערוץ לשיא"
+
+#: ../app/core/gimpchannel.c:284
+#, fuzzy
+msgctxt "undo-type"
+msgid "Lower Channel"
+msgstr "הנמכת ערוץ"
+
+#: ../app/core/gimpchannel.c:285
+#, fuzzy
+msgctxt "undo-type"
+msgid "Lower Channel to Bottom"
+msgstr "הנמכת הערוץ לתחתית"
+
+#: ../app/core/gimpchannel.c:286
+msgid "Channel cannot be raised higher."
+msgstr "אין אפשרות להגביה את הערוץ יותר"
+
+#: ../app/core/gimpchannel.c:287
+msgid "Channel cannot be lowered more."
+msgstr "אין אפשרות להנמיך את הערוץ יותר"
+
+#: ../app/core/gimpchannel.c:309
 #, fuzzy
 msgctxt "undo-type"
 msgid "Feather Channel"
 msgstr "ריפוד ערוץ"
 
-#: ../app/core/gimpchannel.c:294
+#: ../app/core/gimpchannel.c:310
 #, fuzzy
 msgctxt "undo-type"
 msgid "Sharpen Channel"
 msgstr "חידוד ערוץ"
 
-#: ../app/core/gimpchannel.c:295
+#: ../app/core/gimpchannel.c:311
 #, fuzzy
 msgctxt "undo-type"
 msgid "Clear Channel"
 msgstr "ניקוי ערוץ"
 
-#: ../app/core/gimpchannel.c:296
+#: ../app/core/gimpchannel.c:312
 #, fuzzy
 msgctxt "undo-type"
 msgid "Fill Channel"
 msgstr "מילוי ערוץ"
 
-#: ../app/core/gimpchannel.c:297
+#: ../app/core/gimpchannel.c:313
 #, fuzzy
 msgctxt "undo-type"
 msgid "Invert Channel"
 msgstr "היפוך ערוץ"
 
-#: ../app/core/gimpchannel.c:298
+#: ../app/core/gimpchannel.c:314
 #, fuzzy
 msgctxt "undo-type"
 msgid "Border Channel"
 msgstr "מיסגור ערוץ"
 
-#: ../app/core/gimpchannel.c:299
+#: ../app/core/gimpchannel.c:315
 #, fuzzy
 msgctxt "undo-type"
 msgid "Grow Channel"
 msgstr "הגדלת ערוץ"
 
-#: ../app/core/gimpchannel.c:300
+#: ../app/core/gimpchannel.c:316
 #, fuzzy
 msgctxt "undo-type"
 msgid "Shrink Channel"
 msgstr "הקטנת ערוץ"
 
-#: ../app/core/gimpchannel.c:712
+#: ../app/core/gimpchannel.c:728
 msgid "Cannot stroke empty channel."
 msgstr ""
 
-#: ../app/core/gimpchannel.c:1715
+#: ../app/core/gimpchannel.c:1752
 #, fuzzy
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "קביעת צבע ערוץ"
 
-#: ../app/core/gimpchannel.c:1781
+#: ../app/core/gimpchannel.c:1818
 #, fuzzy
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "קביעת אטימות ערוץ"
 
-#: ../app/core/gimpchannel.c:1889 ../app/core/gimpselection.c:532
+#: ../app/core/gimpchannel.c:1926 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
 msgstr "מסיכת אזור לבחירה"
 
-#: ../app/core/gimpcontext.c:650
+#: ../app/core/gimpcontext.c:640
 msgid "Opacity"
 msgstr "אטימות"
 
-#: ../app/core/gimpcontext.c:658
+#: ../app/core/gimpcontext.c:648
 #, fuzzy
 msgid "Paint Mode"
 msgstr "נוהלי עריכה"
@@ -8393,11 +8404,11 @@ msgid ""
 msgstr ""
 
 #: ../app/core/gimpdatafactory.c:536 ../app/core/gimpdatafactory.c:539
-#: ../app/core/gimpitem.c:424 ../app/core/gimpitem.c:427
+#: ../app/core/gimpitem.c:425 ../app/core/gimpitem.c:428
 msgid "copy"
 msgstr "העתקה"
 
-#: ../app/core/gimpdatafactory.c:548 ../app/core/gimpitem.c:436
+#: ../app/core/gimpdatafactory.c:548 ../app/core/gimpitem.c:437
 #, c-format
 msgid "%s copy"
 msgstr "העתקה %s"
@@ -8543,19 +8554,19 @@ msgctxt "undo-type"
 msgid "Flip"
 msgstr "היפוך"
 
-#: ../app/core/gimpdrawable-transform.c:744
+#: ../app/core/gimpdrawable-transform.c:718
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "סיבוב"
 
-#: ../app/core/gimpdrawable-transform.c:883 ../app/core/gimplayer.c:264
+#: ../app/core/gimpdrawable-transform.c:843 ../app/core/gimplayer.c:272
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "הסבת שכבה"
 
-#: ../app/core/gimpdrawable-transform.c:898
+#: ../app/core/gimpdrawable-transform.c:858
 msgid "Transformation"
 msgstr "הסבה"
 
@@ -8642,7 +8653,7 @@ msgstr ""
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 
-#: ../app/core/gimpgrouplayer.c:178 ../app/core/gimpgrouplayer.c:837
+#: ../app/core/gimpgrouplayer.c:178
 #, fuzzy
 msgid "Layer Group"
 msgstr "/הגבהת שכבה לשיא"
@@ -8757,25 +8768,25 @@ msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "שינוי גודל תמונה"
 
-#: ../app/core/gimpimage-guides.c:51
+#: ../app/core/gimpimage-guides.c:52
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "אופקי"
 
-#: ../app/core/gimpimage-guides.c:74
+#: ../app/core/gimpimage-guides.c:76
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "הוספת מדריכים"
 
-#: ../app/core/gimpimage-guides.c:117
+#: ../app/core/gimpimage-guides.c:119
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "הסרת מדריך"
 
-#: ../app/core/gimpimage-guides.c:142
+#: ../app/core/gimpimage-guides.c:144
 #, fuzzy
 msgctxt "undo-type"
 msgid "Move Guide"
@@ -8897,167 +8908,71 @@ msgstr "שינוי קנה-מידת תמונה"
 msgid "Can't undo %s"
 msgstr "אין אפשרות לבטל פעולה %s"
 
-#: ../app/core/gimpimage.c:1632
+#: ../app/core/gimpimage.c:1734
 #, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "שינוי הפרדת תמונה"
 
-#: ../app/core/gimpimage.c:1684
+#: ../app/core/gimpimage.c:1786
 #, fuzzy
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "שינוי יחידת התמונה"
 
-#: ../app/core/gimpimage.c:2654
+#: ../app/core/gimpimage.c:2767
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "חיבור טפיל לפריט"
 
-#: ../app/core/gimpimage.c:2695
+#: ../app/core/gimpimage.c:2808
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "הסרת טפיל מתמונה"
 
-#: ../app/core/gimpimage.c:3283
+#: ../app/core/gimpimage.c:3517
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "הוספת שכבה"
 
-#: ../app/core/gimpimage.c:3333 ../app/core/gimpimage.c:3353
+#: ../app/core/gimpimage.c:3567 ../app/core/gimpimage.c:3587
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "הסרת שכבה"
 
-#: ../app/core/gimpimage.c:3346
+#: ../app/core/gimpimage.c:3580
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "בחירות צפות"
 
-#: ../app/core/gimpimage.c:3503
-msgid "Layer cannot be raised higher."
-msgstr "אין אפשרות להגביה את השכבה יותר"
-
-#: ../app/core/gimpimage.c:3509
-#, fuzzy
-msgctxt "undo-type"
-msgid "Raise Layer"
-msgstr "העלאת שכבה"
-
-#: ../app/core/gimpimage.c:3521
-#, fuzzy
-msgctxt "undo-type"
-msgid "Raise Layer to Top"
-msgstr "הגבהת שכבה לשיא"
-
-#: ../app/core/gimpimage.c:3543
-msgid "Layer cannot be lowered more."
-msgstr "אין אפשרות להנמיך את השכבה יותר"
-
-#: ../app/core/gimpimage.c:3549
-#, fuzzy
-msgctxt "undo-type"
-msgid "Lower Layer"
-msgstr "הנמכת שכבה"
-
-#: ../app/core/gimpimage.c:3568
-#, fuzzy
-msgctxt "undo-type"
-msgid "Lower Layer to Bottom"
-msgstr "הנמכת שכבה לתחתית"
-
-#: ../app/core/gimpimage.c:3615
+#: ../app/core/gimpimage.c:3746
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "הוספת ערוץ"
 
-#: ../app/core/gimpimage.c:3653 ../app/core/gimpimage.c:3665
+#: ../app/core/gimpimage.c:3784 ../app/core/gimpimage.c:3796
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "הסרת ערוץ"
 
-#: ../app/core/gimpimage.c:3703
-msgid "Channel cannot be raised higher."
-msgstr "אין אפשרות להגביה את הערוץ יותר"
-
-#: ../app/core/gimpimage.c:3709
-#, fuzzy
-msgctxt "undo-type"
-msgid "Raise Channel"
-msgstr "הגבהת ערוץ"
-
-#: ../app/core/gimpimage.c:3721
-#, fuzzy
-msgctxt "undo-type"
-msgid "Raise Channel to Top"
-msgstr "הגבהת הערוץ לשיא"
-
-#: ../app/core/gimpimage.c:3744
-msgid "Channel cannot be lowered more."
-msgstr "אין אפשרות להנמיך את הערוץ יותר"
-
-#: ../app/core/gimpimage.c:3750
-#, fuzzy
-msgctxt "undo-type"
-msgid "Lower Channel"
-msgstr "הנמכת ערוץ"
-
-#: ../app/core/gimpimage.c:3769
-#, fuzzy
-msgctxt "undo-type"
-msgid "Lower Channel to Bottom"
-msgstr "הנמכת הערוץ לתחתית"
-
-#: ../app/core/gimpimage.c:3816
+#: ../app/core/gimpimage.c:3843
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "הוספת נתיב"
 
-#: ../app/core/gimpimage.c:3847
+#: ../app/core/gimpimage.c:3874
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "הסרת נתיב"
-
-#: ../app/core/gimpimage.c:3877
-msgid "Path cannot be raised higher."
-msgstr "אין אפשרות להגביה את הנתיב יותר."
-
-#: ../app/core/gimpimage.c:3883
-#, fuzzy
-msgctxt "undo-type"
-msgid "Raise Path"
-msgstr "הגבהת נתיב"
-
-#: ../app/core/gimpimage.c:3895
-#, fuzzy
-msgctxt "undo-type"
-msgid "Raise Path to Top"
-msgstr "הגבהת שכבה לשיא"
-
-#: ../app/core/gimpimage.c:3917
-msgid "Path cannot be lowered more."
-msgstr "אין אפשרות להנמיך את הנתיב יותר"
-
-#: ../app/core/gimpimage.c:3923
-#, fuzzy
-msgctxt "undo-type"
-msgid "Lower Path"
-msgstr "נתיב תחתון"
-
-#: ../app/core/gimpimage.c:3942
-#, fuzzy
-msgctxt "undo-type"
-msgid "Lower Path to Bottom"
-msgstr "הנמכת שכבה לתחתית"
 
 #: ../app/core/gimpimagefile.c:534 ../app/dialogs/preferences-dialog.c:1711
 #, fuzzy
@@ -9098,7 +9013,7 @@ msgstr "גרסת העיון מיושנת"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:611 ../app/widgets/gimpimagepropview.c:446
-#: ../app/widgets/gimpsizebox.c:437 ../app/widgets/gimptemplateeditor.c:565
+#: ../app/widgets/gimpsizebox.c:434 ../app/widgets/gimptemplateeditor.c:565
 #, fuzzy, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -9117,19 +9032,19 @@ msgstr[1] "%d שכבות"
 msgid "Could not open thumbnail '%s': %s"
 msgstr ""
 
-#: ../app/core/gimpitem.c:1543
+#: ../app/core/gimpitem.c:1564
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "הוספת טפיל"
 
-#: ../app/core/gimpitem.c:1553
+#: ../app/core/gimpitem.c:1574
 #, fuzzy
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "חיבור טפיל לפריט"
 
-#: ../app/core/gimpitem.c:1595 ../app/core/gimpitem.c:1602
+#: ../app/core/gimpitem.c:1616 ../app/core/gimpitem.c:1623
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
@@ -9141,7 +9056,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "/עיגון שכבה"
 
-#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:579
+#: ../app/core/gimplayer-floating-sel.c:126 ../app/core/gimplayer.c:595
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -9153,100 +9068,138 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "בחירות צפות"
 
-#: ../app/core/gimplayer.c:258
+#: ../app/core/gimplayer.c:266
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "שינוי שם שכבה"
 
-#: ../app/core/gimplayer.c:259
+#: ../app/core/gimplayer.c:267
 #, fuzzy
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "הזזת שכבה"
 
-#: ../app/core/gimplayer.c:260
+#: ../app/core/gimplayer.c:268
 #, fuzzy
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "שינוי קנה-מידת שכבה"
 
-#: ../app/core/gimplayer.c:261
+#: ../app/core/gimplayer.c:269
 #, fuzzy
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "שינוי גודל שכבה"
 
-#: ../app/core/gimplayer.c:262
+#: ../app/core/gimplayer.c:270
 #, fuzzy
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "היפוך שכבה"
 
-#: ../app/core/gimplayer.c:263
+#: ../app/core/gimplayer.c:271
 #, fuzzy
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "סיבוב שכבה"
 
-#: ../app/core/gimplayer.c:421 ../app/core/gimplayer.c:1458
-#: ../app/core/gimplayermask.c:234
+#: ../app/core/gimplayer.c:274
+#, fuzzy
+msgctxt "undo-type"
+msgid "Reorder Layer"
+msgstr "סידור שכבה מחדש"
+
+#: ../app/core/gimplayer.c:275
+#, fuzzy
+msgctxt "undo-type"
+msgid "Raise Layer"
+msgstr "העלאת שכבה"
+
+#: ../app/core/gimplayer.c:276
+#, fuzzy
+msgctxt "undo-type"
+msgid "Raise Layer to Top"
+msgstr "הגבהת שכבה לשיא"
+
+#: ../app/core/gimplayer.c:277
+#, fuzzy
+msgctxt "undo-type"
+msgid "Lower Layer"
+msgstr "הנמכת שכבה"
+
+#: ../app/core/gimplayer.c:278
+#, fuzzy
+msgctxt "undo-type"
+msgid "Lower Layer to Bottom"
+msgstr "הנמכת שכבה לתחתית"
+
+#: ../app/core/gimplayer.c:279
+msgid "Layer cannot be raised higher."
+msgstr "אין אפשרות להגביה את השכבה יותר"
+
+#: ../app/core/gimplayer.c:280
+msgid "Layer cannot be lowered more."
+msgstr "אין אפשרות להנמיך את השכבה יותר"
+
+#: ../app/core/gimplayer.c:437 ../app/core/gimplayer.c:1491
+#: ../app/core/gimplayermask.c:235
 #, c-format
 msgid "%s mask"
 msgstr "%s מסכה"
 
-#: ../app/core/gimplayer.c:460
+#: ../app/core/gimplayer.c:476
 #, fuzzy, c-format
 msgid ""
 "Floating Selection\n"
 "(%s)"
 msgstr "בחירות צפות"
 
-#: ../app/core/gimplayer.c:1382
+#: ../app/core/gimplayer.c:1415
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 
-#: ../app/core/gimplayer.c:1393
+#: ../app/core/gimplayer.c:1426
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: ../app/core/gimplayer.c:1399
+#: ../app/core/gimplayer.c:1432
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "הוסף מסיכת שכבה"
 
-#: ../app/core/gimplayer.c:1513
+#: ../app/core/gimplayer.c:1546
 #, fuzzy
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "המרת נתיב"
 
-#: ../app/core/gimplayer.c:1683 ../app/core/gimplayermask.c:260
+#: ../app/core/gimplayer.c:1716 ../app/core/gimplayermask.c:261
 #, fuzzy
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "החל מסיכת שכבה"
 
-#: ../app/core/gimplayer.c:1684
+#: ../app/core/gimplayer.c:1717
 #, fuzzy
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/core/gimplayer.c:1803
+#: ../app/core/gimplayer.c:1836
 #, fuzzy
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "הוספת ערוץ אלפא"
 
-#: ../app/core/gimplayer.c:1857
+#: ../app/core/gimplayer.c:1890
 #, fuzzy
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "הסרת ערוץ"
 
-#: ../app/core/gimplayer.c:1877
+#: ../app/core/gimplayer.c:1910
 #, fuzzy
 msgctxt "undo-type"
 msgid "Layer to Image Size"
@@ -9258,12 +9211,18 @@ msgctxt "undo-type"
 msgid "Move Layer Mask"
 msgstr "הזזת שכבה"
 
-#: ../app/core/gimplayermask.c:184
+#: ../app/core/gimplayermask.c:111
+#, fuzzy
+msgctxt "undo-type"
+msgid "Layer Mask to Selection"
+msgstr "מסיכה לאזור נבחר"
+
+#: ../app/core/gimplayermask.c:185
 #, fuzzy, c-format
 msgid "Cannot rename layer masks."
 msgstr "/מחיקת מסיכת שכבה"
 
-#: ../app/core/gimplayermask.c:328
+#: ../app/core/gimplayermask.c:329
 #, fuzzy
 msgctxt "undo-type"
 msgid "Show Layer Mask"
@@ -9274,7 +9233,7 @@ msgstr "הזזת שכבה"
 msgid "Index %d"
 msgstr "ממופתח"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:548
 #, fuzzy, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "/עריכת לוח צבעים"
@@ -9357,7 +9316,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr ""
 
-#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:351
+#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:339
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -9367,94 +9326,88 @@ msgstr ""
 msgid "Please wait"
 msgstr "נא להמתין..."
 
-#: ../app/core/gimpselection.c:154
+#: ../app/core/gimpselection.c:155
 #, fuzzy
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "הזזת אזור נבחר"
 
-#: ../app/core/gimpselection.c:155
+#: ../app/core/gimpselection.c:156
 #, fuzzy
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "אזור נבחר למשיכת (קולמוס)"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:172
 #, fuzzy
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "החלקת אזור נבחר"
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:173
 #, fuzzy
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "חידוד אזור נבחר"
 
-#: ../app/core/gimpselection.c:173
+#: ../app/core/gimpselection.c:174
 #, fuzzy
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "ביטול אזור נבחר"
 
-#: ../app/core/gimpselection.c:174
+#: ../app/core/gimpselection.c:175
 #, fuzzy
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "בחירת הכל"
 
-#: ../app/core/gimpselection.c:175
+#: ../app/core/gimpselection.c:176
 #, fuzzy
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "היפוך אזור נבחר"
 
-#: ../app/core/gimpselection.c:176
+#: ../app/core/gimpselection.c:177
 #, fuzzy
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "מיסגור אזור נבחר"
 
-#: ../app/core/gimpselection.c:177
+#: ../app/core/gimpselection.c:178
 #, fuzzy
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "הגדלת אזור נבחר"
 
-#: ../app/core/gimpselection.c:178
+#: ../app/core/gimpselection.c:179
 #, fuzzy
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "הקטנת אזור נבחר"
 
-#: ../app/core/gimpselection.c:285
+#: ../app/core/gimpselection.c:286
 #, fuzzy
 msgid "There is no selection to stroke."
 msgstr "אין אזור נבחר למשיכת (קולמוס)"
 
-#: ../app/core/gimpselection.c:583
-#, fuzzy
-msgctxt "undo-type"
-msgid "Channel to Selection"
-msgstr "ערוץ לאזור נבחר"
-
-#: ../app/core/gimpselection.c:669
+#: ../app/core/gimpselection.c:670
 #, fuzzy
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "אין אפשרות לגזוז מאחר והאזור הנבחר ריק"
 
-#: ../app/core/gimpselection.c:844
+#: ../app/core/gimpselection.c:845
 #, fuzzy
 msgid "Cannot float selection because the selected region is empty."
 msgstr "אין אפשרות לגזוז מאחר והאזור הנבחר ריק"
 
-#: ../app/core/gimpselection.c:851
+#: ../app/core/gimpselection.c:852
 #, fuzzy
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "אזור נבחר צף"
 
-#: ../app/core/gimpselection.c:867
+#: ../app/core/gimpselection.c:868
 #, fuzzy
 msgid "Floated Layer"
 msgstr "סיבוב שכבה"
@@ -9551,25 +9504,25 @@ msgctxt "plural"
 msgid "percent"
 msgstr "אחוזים"
 
-#: ../app/dialogs/about-dialog.c:102 ../app/gui/gui.c:484
+#: ../app/dialogs/about-dialog.c:106 ../app/gui/gui.c:484
 #, fuzzy
 msgid "About GIMP"
 msgstr "אודות GIMP"
 
-#: ../app/dialogs/about-dialog.c:111
+#: ../app/dialogs/about-dialog.c:115
 msgid "Visit the GIMP website"
 msgstr ""
 
 #. Translators: insert your names here, separated by newline
-#: ../app/dialogs/about-dialog.c:116
+#: ../app/dialogs/about-dialog.c:120
 msgid "translator-credits"
 msgstr ""
 
-#: ../app/dialogs/about-dialog.c:509
+#: ../app/dialogs/about-dialog.c:515
 msgid "GIMP is brought to you by"
 msgstr ""
 
-#: ../app/dialogs/about-dialog.c:583
+#: ../app/dialogs/about-dialog.c:589
 msgid "This is an unstable development release."
 msgstr ""
 
@@ -9717,7 +9670,7 @@ msgstr "מצב"
 msgid "_Opacity:"
 msgstr "אטימות"
 
-#: ../app/dialogs/file-open-dialog.c:255
+#: ../app/dialogs/file-open-dialog.c:267
 #, fuzzy
 msgid "Open layers"
 msgstr "שכבה חדשה"
@@ -9954,12 +9907,12 @@ msgstr "_שם שכבה:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1074
+#: ../app/tools/gimpmeasuretool.c:1088
 msgid "Width:"
 msgstr "רוחב:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1102
+#: ../app/tools/gimpmeasuretool.c:1116
 msgid "Height:"
 msgstr "גובה:"
 
@@ -11032,32 +10985,32 @@ msgid "Print Size"
 msgstr "/תצוגה מוקדמת/ענק"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:201
+#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:198
 #: ../app/widgets/gimptemplateeditor.c:160
 #, fuzzy
 msgid "_Width:"
 msgstr "רוחב:"
 
-#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:205
+#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:167
 #, fuzzy
 msgid "H_eight:"
 msgstr "גובה:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:263
+#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:287
 #, fuzzy
 msgid "_X resolution:"
 msgstr "הפרדה:"
 
-#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:266
+#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:294
 #, fuzzy
 msgid "_Y resolution:"
 msgstr "הפרדה:"
 
-#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:259
+#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #: ../app/widgets/gimptemplateeditor.c:307
 #, c-format
 msgid "pixels/%a"
@@ -11315,27 +11268,27 @@ msgstr "H:"
 msgid "_Sample Merged"
 msgstr "שינוי קנה-מידת תמונה"
 
-#: ../app/display/gimpdisplayshell.c:502
+#: ../app/display/gimpdisplayshell.c:499
 #, fuzzy
 msgid "Access the image menu"
 msgstr "התאמת גוון ורוויה"
 
-#: ../app/display/gimpdisplayshell.c:616
+#: ../app/display/gimpdisplayshell.c:613
 msgid "Zoom image when window size changes"
 msgstr ""
 
-#: ../app/display/gimpdisplayshell.c:645
+#: ../app/display/gimpdisplayshell.c:642
 #, fuzzy
 msgid "Toggle Quick Mask"
 msgstr "הסוואה מהירה"
 
-#: ../app/display/gimpdisplayshell.c:668
+#: ../app/display/gimpdisplayshell.c:665
 #, fuzzy
 msgid "Navigate the image display"
 msgstr "הגבה תצוגת תמונה זו"
 
-#: ../app/display/gimpdisplayshell.c:736
-#: ../app/display/gimpdisplayshell.c:1321 ../app/widgets/gimptoolbox.c:315
+#: ../app/display/gimpdisplayshell.c:733
+#: ../app/display/gimpdisplayshell.c:1311 ../app/widgets/gimptoolbox.c:315
 msgid "Drop image files here to open them"
 msgstr ""
 
@@ -11401,19 +11354,19 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
 #: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:335
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:286
-#: ../app/tools/gimptransformtool.c:349 ../app/tools/gimptransformtool.c:1193
+#: ../app/tools/gimptransformtool.c:350 ../app/tools/gimptransformtool.c:1178
 msgid "The active layer's pixels are locked."
 msgstr ""
 
 #: ../app/display/gimpdisplayshell-dnd.c:512
-#: ../app/widgets/gimplayertreeview.c:751
+#: ../app/widgets/gimplayertreeview.c:734
 #, fuzzy
 msgid "Drop layers"
 msgstr "גזיזת שכבה"
 
 #: ../app/display/gimpdisplayshell-dnd.c:635
 #: ../app/display/gimpdisplayshell-dnd.c:657
-#: ../app/widgets/gimplayertreeview.c:828 ../app/widgets/gimptoolbox-dnd.c:274
+#: ../app/widgets/gimplayertreeview.c:811 ../app/widgets/gimptoolbox-dnd.c:274
 #, fuzzy
 msgid "Dropped Buffer"
 msgstr "/מחיקת תכולת חוצץ"
@@ -11427,12 +11380,12 @@ msgstr "מסנני הצגת צבע"
 msgid "Configure Color Display Filters"
 msgstr "מסנני הצגת צבע"
 
-#: ../app/display/gimpdisplayshell-handlers.c:605
+#: ../app/display/gimpdisplayshell-handlers.c:561
 #, c-format
 msgid "Image saved to '%s'"
 msgstr ""
 
-#: ../app/display/gimpdisplayshell-handlers.c:619
+#: ../app/display/gimpdisplayshell-handlers.c:575
 #, c-format
 msgid "Image exported to '%s'"
 msgstr ""
@@ -11470,7 +11423,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-title.c:356
 #: ../app/display/gimpdisplayshell-title.c:369
-#: ../app/widgets/gimpactiongroup.c:848
+#: ../app/widgets/gimpactiongroup.c:870
 msgid "(none)"
 msgstr "(כלום)"
 
@@ -11487,7 +11440,7 @@ msgstr ""
 msgid " (imported)"
 msgstr "יבוא חדש"
 
-#: ../app/display/gimpstatusbar.c:361
+#: ../app/display/gimpstatusbar.c:358
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr ""
@@ -11561,7 +11514,7 @@ msgstr "לא קובץ רגיל"
 msgid "Documents"
 msgstr "מסמכים"
 
-#: ../app/gui/splash.c:115
+#: ../app/gui/splash.c:114
 msgid "GIMP Startup"
 msgstr "אתחול GIMP"
 
@@ -11637,7 +11590,7 @@ msgstr ""
 msgid "Paint"
 msgstr "צביעה"
 
-#: ../app/paint/gimppaintoptions.c:136
+#: ../app/paint/gimppaintoptions.c:138
 #, fuzzy
 msgid "Brush Scale"
 msgstr "מברשות"
@@ -11647,7 +11600,7 @@ msgid "Pencil"
 msgstr "עיפרון"
 
 #: ../app/paint/gimpperspectiveclone.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:127
+#: ../app/tools/gimpperspectiveclonetool.c:128
 #, fuzzy
 msgid "Perspective Clone"
 msgstr "פרספקטיבה"
@@ -11717,32 +11670,35 @@ msgstr "חידוד"
 msgid "Combine Masks"
 msgstr "המשך"
 
-#: ../app/pdb/drawable-cmds.c:941
+#: ../app/pdb/drawable-cmds.c:474
 msgid "Plug-In"
 msgstr "תוסף"
 
-#: ../app/pdb/drawable-transform-cmds.c:309
-#: ../app/pdb/drawable-transform-cmds.c:394
-#: ../app/pdb/transform-tools-cmds.c:145 ../app/tools/gimpperspectivetool.c:69
+#: ../app/pdb/drawable-transform-cmds.c:319
+#: ../app/pdb/drawable-transform-cmds.c:406
+#: ../app/pdb/item-transform-cmds.c:256 ../app/pdb/transform-tools-cmds.c:153
+#: ../app/tools/gimpperspectivetool.c:69
 msgid "Perspective"
 msgstr "פרספקטיבה"
 
-#: ../app/pdb/drawable-transform-cmds.c:831
-#: ../app/pdb/drawable-transform-cmds.c:903
-#: ../app/pdb/transform-tools-cmds.c:361 ../app/tools/gimpsheartool.c:110
+#: ../app/pdb/drawable-transform-cmds.c:862
+#: ../app/pdb/drawable-transform-cmds.c:936
+#: ../app/pdb/item-transform-cmds.c:597 ../app/pdb/transform-tools-cmds.c:375
+#: ../app/tools/gimpsheartool.c:110
 #, fuzzy
 msgid "Shearing"
 msgstr "גוזם..."
 
-#: ../app/pdb/drawable-transform-cmds.c:988
-#: ../app/pdb/transform-tools-cmds.c:437
+#: ../app/pdb/drawable-transform-cmds.c:1023
+#: ../app/pdb/item-transform-cmds.c:693 ../app/pdb/transform-tools-cmds.c:453
 #, fuzzy
 msgid "2D Transform"
 msgstr "ממיר..."
 
-#: ../app/pdb/drawable-transform-cmds.c:1071
-#: ../app/pdb/drawable-transform-cmds.c:1164
-#: ../app/pdb/drawable-transform-cmds.c:1255
+#: ../app/pdb/drawable-transform-cmds.c:1108
+#: ../app/pdb/drawable-transform-cmds.c:1203
+#: ../app/pdb/drawable-transform-cmds.c:1296
+#: ../app/pdb/item-transform-cmds.c:797
 #, fuzzy
 msgid "2D Transforming"
 msgstr "ממיר..."
@@ -11856,48 +11812,76 @@ msgstr ""
 msgid "Paint method '%s' does not exist"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:316
+#: ../app/pdb/gimppdb-utils.c:318
 #, c-format
-msgid ""
-"Item '%s' (%d) can not be used because it has not been added to an image"
+msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:341
+#: ../app/pdb/gimppdb-utils.c:328
+#, c-format
+msgid "Item '%s' (%d) cannot be used because it is attached to another image"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:357
+#, c-format
+msgid ""
+"Item '%s' (%d) cannot be used because it is not a direct child of an item "
+"tree"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:385
+#, c-format
+msgid ""
+"Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
+"the same item tree"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:410
+#, c-format
+msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:434
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:349
+#: ../app/pdb/gimppdb-utils.c:442
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:368
+#: ../app/pdb/gimppdb-utils.c:461
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:388
+#: ../app/pdb/gimppdb-utils.c:481
+#, c-format
+msgid "Item '%s' (%d) cannot be used because it is not a group item"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:501
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:409
+#: ../app/pdb/gimppdb-utils.c:522
 #, c-format
-msgid "Layer '%s' (%d) can not be used because it is not a text layer"
+msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:450
+#: ../app/pdb/gimppdb-utils.c:563
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:473
+#: ../app/pdb/gimppdb-utils.c:586
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr ""
 
-#: ../app/pdb/gimppdb-utils.c:501
+#: ../app/pdb/gimppdb-utils.c:614
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr ""
@@ -11905,81 +11889,87 @@ msgstr ""
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:365 ../app/plug-in/gimppluginprocframe.c:208
+#: ../app/pdb/gimppdbcontext.c:78
+#: ../app/tools/gimpforegroundselectoptions.c:78
+#: ../app/tools/gimpselectionoptions.c:78
+msgid "Smooth edges"
+msgstr "החלקת קצוות"
+
+#: ../app/pdb/gimpprocedure.c:371 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:621
+#: ../app/pdb/gimpprocedure.c:634
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:633
+#: ../app/pdb/gimpprocedure.c:646
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:665
+#: ../app/pdb/gimpprocedure.c:678
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:677
+#: ../app/pdb/gimpprocedure.c:690
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:693
+#: ../app/pdb/gimpprocedure.c:706
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:705
+#: ../app/pdb/gimpprocedure.c:718
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:725
+#: ../app/pdb/gimpprocedure.c:738
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
 
-#: ../app/pdb/gimpprocedure.c:738
+#: ../app/pdb/gimpprocedure.c:751
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
 
-#: ../app/pdb/image-cmds.c:2311
+#: ../app/pdb/image-cmds.c:2650
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 
-#: ../app/pdb/layer-cmds.c:443 ../app/pdb/layer-cmds.c:481
+#: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
 msgid "Move Layer"
 msgstr "הזזת שכבה"
 
-#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:198
+#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:199
 msgid "Free Select"
 msgstr ""
 
@@ -12000,43 +11990,43 @@ msgstr ""
 msgid "Set text layer attribute"
 msgstr "עריכת מאפייני שכבה"
 
-#: ../app/pdb/vectors-cmds.c:644
+#: ../app/pdb/vectors-cmds.c:323
 #, fuzzy
 msgid "Remove path stroke"
 msgstr "הסרת טפיל"
 
-#: ../app/pdb/vectors-cmds.c:680
+#: ../app/pdb/vectors-cmds.c:359
 msgid "Close path stroke"
 msgstr ""
 
-#: ../app/pdb/vectors-cmds.c:720
+#: ../app/pdb/vectors-cmds.c:399
 #, fuzzy
 msgid "Translate path stroke"
 msgstr "הסבה"
 
-#: ../app/pdb/vectors-cmds.c:760
+#: ../app/pdb/vectors-cmds.c:439
 #, fuzzy
 msgid "Scale path stroke"
 msgstr "שינוי קנה-מידת נתיב"
 
-#: ../app/pdb/vectors-cmds.c:802
+#: ../app/pdb/vectors-cmds.c:481
 #, fuzzy
 msgid "Rotate path stroke"
 msgstr "סיבוב נתיב"
 
-#: ../app/pdb/vectors-cmds.c:842 ../app/pdb/vectors-cmds.c:886
+#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
 #, fuzzy
 msgid "Flip path stroke"
 msgstr "היפוך נתיב"
 
-#: ../app/pdb/vectors-cmds.c:1015 ../app/pdb/vectors-cmds.c:1137
-#: ../app/pdb/vectors-cmds.c:1356
+#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:816
+#: ../app/pdb/vectors-cmds.c:1035
 #, fuzzy
 msgid "Add path stroke"
 msgstr "/עריכת לוח צבעים"
 
-#: ../app/pdb/vectors-cmds.c:1189 ../app/pdb/vectors-cmds.c:1242
-#: ../app/pdb/vectors-cmds.c:1303
+#: ../app/pdb/vectors-cmds.c:868 ../app/pdb/vectors-cmds.c:921
+#: ../app/pdb/vectors-cmds.c:982
 msgid "Extend path stroke"
 msgstr ""
 
@@ -12079,7 +12069,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "ביטול"
 
-#: ../app/plug-in/gimpplugin.c:638
+#: ../app/plug-in/gimpplugin.c:639
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -12089,31 +12079,31 @@ msgid ""
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
 
-#: ../app/plug-in/gimppluginmanager-call.c:172
-#: ../app/plug-in/gimppluginmanager-call.c:222
-#: ../app/plug-in/gimppluginmanager-call.c:320
+#: ../app/plug-in/gimppluginmanager-call.c:173
+#: ../app/plug-in/gimppluginmanager-call.c:223
+#: ../app/plug-in/gimppluginmanager-call.c:321
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr ""
 
-#: ../app/plug-in/gimppluginmanager-restore.c:225
+#: ../app/plug-in/gimppluginmanager-restore.c:230
 #, fuzzy
 msgid "Searching Plug-Ins"
 msgstr "מחפש תוספים חדשים"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:274
+#: ../app/plug-in/gimppluginmanager-restore.c:279
 msgid "Resource configuration"
 msgstr ""
 
-#: ../app/plug-in/gimppluginmanager-restore.c:310
+#: ../app/plug-in/gimppluginmanager-restore.c:315
 msgid "Querying new Plug-ins"
 msgstr "מחפש תוספים חדשים"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:360
+#: ../app/plug-in/gimppluginmanager-restore.c:365
 msgid "Initializing Plug-ins"
 msgstr ""
 
-#: ../app/plug-in/gimppluginmanager-restore.c:432
+#: ../app/plug-in/gimppluginmanager-restore.c:437
 msgid "Starting Extensions"
 msgstr "מאתחל הרחבות"
 
@@ -12177,59 +12167,59 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1368
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1386
 msgid "Add Text Layer"
 msgstr "הוספת שכבת טקסט"
 
-#: ../app/text/gimptextlayer.c:139
+#: ../app/text/gimptextlayer.c:141
 msgid "Text Layer"
 msgstr "שכבת טקסט"
 
-#: ../app/text/gimptextlayer.c:140
+#: ../app/text/gimptextlayer.c:142
 #, fuzzy
 msgid "Rename Text Layer"
 msgstr "שינוי שם שכבה"
 
-#: ../app/text/gimptextlayer.c:141
+#: ../app/text/gimptextlayer.c:143
 #, fuzzy
 msgid "Move Text Layer"
 msgstr "סיבוב שכבה"
 
-#: ../app/text/gimptextlayer.c:142
+#: ../app/text/gimptextlayer.c:144
 #, fuzzy
 msgid "Scale Text Layer"
 msgstr "שינוי קנה-מידת שכבה"
 
-#: ../app/text/gimptextlayer.c:143
+#: ../app/text/gimptextlayer.c:145
 #, fuzzy
 msgid "Resize Text Layer"
 msgstr "שינוי גודל שכבה"
 
-#: ../app/text/gimptextlayer.c:144
+#: ../app/text/gimptextlayer.c:146
 #, fuzzy
 msgid "Flip Text Layer"
 msgstr "היפוך שכבה"
 
-#: ../app/text/gimptextlayer.c:145
+#: ../app/text/gimptextlayer.c:147
 #, fuzzy
 msgid "Rotate Text Layer"
 msgstr "סיבוב שכבה"
 
-#: ../app/text/gimptextlayer.c:146
+#: ../app/text/gimptextlayer.c:148
 #, fuzzy
 msgid "Transform Text Layer"
 msgstr "הסבת שכבה"
 
-#: ../app/text/gimptextlayer.c:507
+#: ../app/text/gimptextlayer.c:509
 #, fuzzy
 msgid "Discard Text Information"
 msgstr "מידע אודות התמונה"
 
-#: ../app/text/gimptextlayer.c:560
+#: ../app/text/gimptextlayer.c:562
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 
-#: ../app/text/gimptextlayer.c:611
+#: ../app/text/gimptextlayer.c:613
 msgid "Empty Text Layer"
 msgstr "ריקון שכבת טקסט"
 
@@ -12254,7 +12244,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "ממולא"
 
-#: ../app/tools/gimp-tools.c:335
+#: ../app/tools/gimp-tools.c:352
 #, fuzzy
 msgid ""
 "This tool has\n"
@@ -12286,7 +12276,7 @@ msgstr "שיעור:"
 msgid "Flow:"
 msgstr "צהוב"
 
-#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:768
+#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:764
 #, fuzzy
 msgid "Align"
 msgstr "מסודר"
@@ -12300,99 +12290,99 @@ msgstr ""
 msgid "_Align"
 msgstr "מסודר"
 
-#: ../app/tools/gimpaligntool.c:600
+#: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:609
+#: ../app/tools/gimpaligntool.c:608
 #, fuzzy
 msgid "Click to pick this layer as first item"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:616
 #, fuzzy
 msgid "Click to add this layer to the list"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpaligntool.c:621
+#: ../app/tools/gimpaligntool.c:620
 #, fuzzy
 msgid "Click to pick this guide as first item"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpaligntool.c:629
+#: ../app/tools/gimpaligntool.c:628
 #, fuzzy
 msgid "Click to add this guide to the list"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:632
 #, fuzzy
 msgid "Click to pick this path as first item"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpaligntool.c:641
+#: ../app/tools/gimpaligntool.c:640
 #, fuzzy
 msgid "Click to add this path to the list"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpaligntool.c:780
+#: ../app/tools/gimpaligntool.c:776
 #, fuzzy
 msgid "Relative to:"
 msgstr "הפרדה:"
 
-#: ../app/tools/gimpaligntool.c:798
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align left edge of target"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:804
+#: ../app/tools/gimpaligntool.c:800
 msgid "Align center of target"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:810
+#: ../app/tools/gimpaligntool.c:806
 msgid "Align right edge of target"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:820
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align top edge of target"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:826
+#: ../app/tools/gimpaligntool.c:822
 msgid "Align middle of target"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:832
+#: ../app/tools/gimpaligntool.c:828
 msgid "Align bottom of target"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:836
+#: ../app/tools/gimpaligntool.c:832
 #, fuzzy
 msgid "Distribute"
 msgstr "היסטוריה"
 
-#: ../app/tools/gimpaligntool.c:850
+#: ../app/tools/gimpaligntool.c:846
 msgid "Distribute left edges of targets"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:857
+#: ../app/tools/gimpaligntool.c:853
 msgid "Distribute horizontal centers of targets"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:864
+#: ../app/tools/gimpaligntool.c:860
 msgid "Distribute right edges of targets"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:874
+#: ../app/tools/gimpaligntool.c:870
 msgid "Distribute top edges of targets"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:881
+#: ../app/tools/gimpaligntool.c:877
 msgid "Distribute vertical centers of targets"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:887
+#: ../app/tools/gimpaligntool.c:883
 msgid "Distribute bottoms of targets"
 msgstr ""
 
-#: ../app/tools/gimpaligntool.c:895 ../app/tools/gimpblendoptions.c:221
+#: ../app/tools/gimpaligntool.c:891 ../app/tools/gimpblendoptions.c:221
 msgid "Offset:"
 msgstr "הסטה:"
 
@@ -12442,17 +12432,17 @@ msgstr "מיזוג"
 msgid "Blend does not operate on indexed layers."
 msgstr ""
 
-#: ../app/tools/gimpblendtool.c:423 ../app/tools/gimppainttool.c:634
+#: ../app/tools/gimpblendtool.c:420 ../app/tools/gimppainttool.c:634
 #, fuzzy, c-format
 msgid "%s for constrained angles"
 msgstr "מדידת זוויות ואורכים"
 
-#: ../app/tools/gimpblendtool.c:424
+#: ../app/tools/gimpblendtool.c:421
 #, fuzzy, c-format
 msgid "%s to move the whole line"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpblendtool.c:428
+#: ../app/tools/gimpblendtool.c:425
 msgid "Blend: "
 msgstr "מיזוג:"
 
@@ -12546,7 +12536,7 @@ msgstr "מילוי עם שקיפות"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:150 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:951
+#: ../app/tools/gimpperspectiveclonetool.c:963
 #: ../app/tools/gimpregionselectoptions.c:207
 #, fuzzy
 msgid "Sample merged"
@@ -12614,12 +12604,12 @@ msgid "Click to set a new clone source"
 msgstr "יצירת תבנית חדשה"
 
 #: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:946
+#: ../app/tools/gimpperspectiveclonetool.c:958
 msgid "Source"
 msgstr "מקור:"
 
 #: ../app/tools/gimpclonetool.c:129 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:967
+#: ../app/tools/gimpperspectiveclonetool.c:979
 #, fuzzy
 msgid "Alignment:"
 msgstr "יישור:"
@@ -12821,21 +12811,21 @@ msgstr "שינוי צבע קדמה של הרשת"
 msgid "Color Picker Information"
 msgstr ""
 
-#: ../app/tools/gimpcolortool.c:260 ../app/tools/gimpcolortool.c:440
+#: ../app/tools/gimpcolortool.c:268 ../app/tools/gimpcolortool.c:446
 #, fuzzy
 msgid "Move Sample Point: "
 msgstr "הזזת אזור נבחר"
 
-#: ../app/tools/gimpcolortool.c:432
+#: ../app/tools/gimpcolortool.c:438
 #, fuzzy
 msgid "Remove Sample Point"
 msgstr "הסרת נתיב"
 
-#: ../app/tools/gimpcolortool.c:433
+#: ../app/tools/gimpcolortool.c:439
 msgid "Cancel Sample Point"
 msgstr ""
 
-#: ../app/tools/gimpcolortool.c:441
+#: ../app/tools/gimpcolortool.c:447
 msgid "Add Sample Point: "
 msgstr ""
 
@@ -13004,7 +12994,7 @@ msgstr "הסרת מדריך"
 
 #: ../app/tools/gimpdesaturatetool.c:124
 #, fuzzy
-msgid "Desaturate does only operate on RGB layers."
+msgid "Desaturate only operates on RGB layers."
 msgstr "רוויה עובדת רק על שכבות עם צבע RGB"
 
 #: ../app/tools/gimpdesaturatetool.c:193
@@ -13069,18 +13059,18 @@ msgstr "שיעור"
 msgid "Exposure:"
 msgstr "חשיפה:"
 
-#: ../app/tools/gimpeditselectiontool.c:241
+#: ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
 msgstr "הזזת אזור נבחר"
 
-#: ../app/tools/gimpeditselectiontool.c:245
-#: ../app/tools/gimpeditselectiontool.c:1249
+#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:1233
 #, fuzzy
 msgid "Move Floating Selection"
 msgstr "בחירות צפות"
 
-#: ../app/tools/gimpeditselectiontool.c:464
-#: ../app/tools/gimpeditselectiontool.c:739
+#: ../app/tools/gimpeditselectiontool.c:453
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "הזזה:"
 
@@ -13158,11 +13148,6 @@ msgstr "היפוך"
 msgctxt "command"
 msgid "Flip"
 msgstr "היפוך"
-
-#: ../app/tools/gimpforegroundselectoptions.c:78
-#: ../app/tools/gimpselectionoptions.c:78
-msgid "Smooth edges"
-msgstr "החלקת קצוות"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
 #, fuzzy
@@ -13265,42 +13250,42 @@ msgstr ""
 msgid "Roughly outline the object to extract"
 msgstr ""
 
-#: ../app/tools/gimpforegroundselecttool.c:769
+#: ../app/tools/gimpforegroundselecttool.c:774
 #, fuzzy
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "קדמה"
 
-#: ../app/tools/gimpfreeselecttool.c:199
+#: ../app/tools/gimpfreeselecttool.c:200
 #, fuzzy
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "בחירת אזור מצויר ביד"
 
-#: ../app/tools/gimpfreeselecttool.c:200
+#: ../app/tools/gimpfreeselecttool.c:201
 #, fuzzy
 msgid "_Free Select"
 msgstr "/בחירת אזור"
 
-#: ../app/tools/gimpfreeselecttool.c:1119
+#: ../app/tools/gimpfreeselecttool.c:1120
 #, fuzzy
 msgid "Click to complete selection"
 msgstr "יצירת תבנית חדשה"
 
-#: ../app/tools/gimpfreeselecttool.c:1123
+#: ../app/tools/gimpfreeselecttool.c:1124
 #, fuzzy
 msgid "Click-Drag to move segment vertex"
 msgstr "העלאת המסנן הנבחר"
 
-#: ../app/tools/gimpfreeselecttool.c:1128
+#: ../app/tools/gimpfreeselecttool.c:1129
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 
-#: ../app/tools/gimpfreeselecttool.c:1132
+#: ../app/tools/gimpfreeselecttool.c:1133
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 
-#: ../app/tools/gimpfreeselecttool.c:1625
+#: ../app/tools/gimpfreeselecttool.c:1643
 #, fuzzy
 msgctxt "command"
 msgid "Free Select"
@@ -13488,11 +13473,11 @@ msgid "Adjustment"
 msgstr "התאמה"
 
 #: ../app/tools/gimpinkoptions-gui.c:67 ../app/tools/gimpinkoptions-gui.c:92
-#: ../app/tools/gimprectangleoptions.c:972 ../app/tools/gimptextoptions.c:471
+#: ../app/tools/gimprectangleoptions.c:972 ../app/tools/gimptextoptions.c:489
 msgid "Size:"
 msgstr "גודל:"
 
-#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1046
+#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1060
 #: ../app/tools/gimppaintoptions-gui.c:137
 #: ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
@@ -13547,36 +13532,36 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "/כלים/כלי בחירה/_מספריים נבונות"
 
-#: ../app/tools/gimpiscissorstool.c:938 ../app/tools/gimpmeasuretool.c:617
+#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:617
 #, fuzzy
 msgid "Click-Drag to move this point"
 msgstr "העלאת המסנן הנבחר"
 
-#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpiscissorstool.c:1005
+#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:997
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr ""
 
-#: ../app/tools/gimpiscissorstool.c:957
+#: ../app/tools/gimpiscissorstool.c:949
 #, fuzzy
 msgid "Click to close the curve"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimpiscissorstool.c:963
+#: ../app/tools/gimpiscissorstool.c:955
 #, fuzzy
 msgid "Click to add a point on this segment"
 msgstr "יצירת תבנית חדשה"
 
-#: ../app/tools/gimpiscissorstool.c:977
+#: ../app/tools/gimpiscissorstool.c:969
 #, fuzzy
 msgid "Click or press Enter to convert to a selection"
 msgstr "יצירת תבנית חדשה"
 
-#: ../app/tools/gimpiscissorstool.c:987
+#: ../app/tools/gimpiscissorstool.c:979
 msgid "Press Enter to convert to a selection"
 msgstr ""
 
-#: ../app/tools/gimpiscissorstool.c:1002
+#: ../app/tools/gimpiscissorstool.c:994
 #, fuzzy
 msgid "Click or Click-Drag to add a point"
 msgstr "יצירת תבנית חדשה"
@@ -13685,21 +13670,21 @@ msgstr "צפיה 1:1"
 msgid "Use info window"
 msgstr "שימוש בחלון מידע"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:125
 msgid "Measure"
 msgstr "מדידה"
 
-#: ../app/tools/gimpmeasuretool.c:124
+#: ../app/tools/gimpmeasuretool.c:126
 #, fuzzy
 msgid "Measure Tool: Measure distances and angles"
 msgstr "מדידת זוויות ואורכים"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:127
 #, fuzzy
 msgid "_Measure"
 msgstr "מדידה"
 
-#: ../app/tools/gimpmeasuretool.c:245
+#: ../app/tools/gimpmeasuretool.c:246
 msgid "Add Guides"
 msgstr "הוספת מדריכים"
 
@@ -13727,18 +13712,18 @@ msgstr "יצירת תבנית חדשה"
 msgid "Click-Drag to move all points"
 msgstr "העלאת המסנן הנבחר"
 
-#: ../app/tools/gimpmeasuretool.c:884 ../app/tools/gimpmeasuretool.c:1029
-#: ../app/tools/gimpmeasuretool.c:1085 ../app/tools/gimpmeasuretool.c:1113
+#: ../app/tools/gimpmeasuretool.c:898 ../app/tools/gimpmeasuretool.c:1043
+#: ../app/tools/gimpmeasuretool.c:1099 ../app/tools/gimpmeasuretool.c:1127
 #: ../app/tools/gimppainttool.c:643
 msgid "pixels"
 msgstr "פיקסלים"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:997
+#: ../app/tools/gimpmeasuretool.c:1011
 msgid "Measure Distances and Angles"
 msgstr ""
 
-#: ../app/tools/gimpmeasuretool.c:1018
+#: ../app/tools/gimpmeasuretool.c:1032
 msgid "Distance:"
 msgstr "מרחק:"
 
@@ -13787,21 +13772,21 @@ msgstr ""
 msgid "_Move"
 msgstr "הזזה"
 
-#: ../app/tools/gimpmovetool.c:277 ../app/tools/gimpmovetool.c:569
+#: ../app/tools/gimpmovetool.c:285 ../app/tools/gimpmovetool.c:580
 #, fuzzy
 msgid "Move Guide: "
 msgstr "הזזת מדריך"
 
-#: ../app/tools/gimpmovetool.c:563
+#: ../app/tools/gimpmovetool.c:574
 msgid "Remove Guide"
 msgstr "הסרת מדריך"
 
-#: ../app/tools/gimpmovetool.c:563
+#: ../app/tools/gimpmovetool.c:574
 #, fuzzy
 msgid "Cancel Guide"
 msgstr "ביטול"
 
-#: ../app/tools/gimpmovetool.c:569
+#: ../app/tools/gimpmovetool.c:580
 #, fuzzy
 msgid "Add Guide: "
 msgstr "הוספת מדריכים"
@@ -13817,13 +13802,13 @@ msgstr "מברשת"
 
 #: ../app/tools/gimppaintoptions-gui.c:90
 #: ../app/tools/gimpselectionoptions.c:210
-#: ../app/widgets/gimpbrushselect.c:193 ../app/widgets/gimplayertreeview.c:283
+#: ../app/widgets/gimpbrushselect.c:193 ../app/widgets/gimplayertreeview.c:266
 msgid "Mode:"
 msgstr "מצב:"
 
 #: ../app/tools/gimppaintoptions-gui.c:105
 #: ../app/tools/gimptransformoptions.c:347
-#: ../app/widgets/gimpbrushselect.c:180 ../app/widgets/gimplayertreeview.c:306
+#: ../app/widgets/gimpbrushselect.c:180 ../app/widgets/gimplayertreeview.c:289
 msgid "Opacity:"
 msgstr "אטימות:"
 
@@ -13911,18 +13896,18 @@ msgstr ""
 msgid "Pe_ncil"
 msgstr "עיפרון"
 
-#: ../app/tools/gimpperspectiveclonetool.c:128
+#: ../app/tools/gimpperspectiveclonetool.c:129
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
 
-#: ../app/tools/gimpperspectiveclonetool.c:130
+#: ../app/tools/gimpperspectiveclonetool.c:131
 #, fuzzy
 msgid "_Perspective Clone"
 msgstr "פרספקטיבה"
 
-#: ../app/tools/gimpperspectiveclonetool.c:703
+#: ../app/tools/gimpperspectiveclonetool.c:704
 msgid "Ctrl-Click to set a clone source"
 msgstr ""
 
@@ -14033,7 +14018,7 @@ msgstr "בחירת אזור מלבני"
 msgid "_Rectangle Select"
 msgstr "בחירת מלבן"
 
-#: ../app/tools/gimprectangletool.c:1156 ../app/tools/gimprectangletool.c:2103
+#: ../app/tools/gimprectangletool.c:1158 ../app/tools/gimprectangletool.c:2220
 #, fuzzy
 msgid "Rectangle: "
 msgstr "שינוי גודל תמונה"
@@ -14043,8 +14028,9 @@ msgid "Allow completely transparent regions to be selected"
 msgstr ""
 
 #: ../app/tools/gimpregionselectoptions.c:89
-msgid "Base region_select on all visible layers"
-msgstr ""
+#, fuzzy
+msgid "Base selection on all visible layers"
+msgstr "השתמש בצבע המורכב מכל השכבות הנראות"
 
 #: ../app/tools/gimpregionselectoptions.c:201
 #, fuzzy
@@ -14056,7 +14042,7 @@ msgstr "בחירת אזור מלבני"
 msgid "Select by:"
 msgstr "/בחירת אזור"
 
-#: ../app/tools/gimpregionselecttool.c:164
+#: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
 msgstr ""
 
@@ -14115,7 +14101,7 @@ msgctxt "command"
 msgid "Scale"
 msgstr "קנה מידה"
 
-#: ../app/tools/gimpselectionoptions.c:257 ../app/tools/gimptextoptions.c:484
+#: ../app/tools/gimpselectionoptions.c:257 ../app/tools/gimptextoptions.c:502
 msgid "Antialiasing"
 msgstr "החלקת קצוות"
 
@@ -14213,102 +14199,102 @@ msgstr ""
 msgid "Click to smudge the line"
 msgstr "אין אפשרות ליצר גרסת עיון"
 
-#: ../app/tools/gimptextoptions.c:133
+#: ../app/tools/gimptextoptions.c:137
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
-#: ../app/tools/gimptextoptions.c:141
+#: ../app/tools/gimptextoptions.c:145
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr ""
 
-#: ../app/tools/gimptextoptions.c:157
+#: ../app/tools/gimptextoptions.c:161
 msgid "Indentation of the first line"
 msgstr ""
 
-#: ../app/tools/gimptextoptions.c:163
+#: ../app/tools/gimptextoptions.c:167
 #, fuzzy
 msgid "Adjust line spacing"
 msgstr "ריווח שורות ברשת"
 
-#: ../app/tools/gimptextoptions.c:169
+#: ../app/tools/gimptextoptions.c:173
 #, fuzzy
 msgid "Adjust letter spacing"
 msgstr "ריווח שורות ברשת"
 
-#: ../app/tools/gimptextoptions.c:175
+#: ../app/tools/gimptextoptions.c:179
 msgid "Text box resize mode"
 msgstr ""
 
-#: ../app/tools/gimptextoptions.c:182
+#: ../app/tools/gimptextoptions.c:186
 msgid ""
 "Use an external editor window for text entry, instead of direct-on-canvas "
 "editing"
 msgstr ""
 
-#: ../app/tools/gimptextoptions.c:464
+#: ../app/tools/gimptextoptions.c:482
 msgid "Font:"
 msgstr "גופן:"
 
-#: ../app/tools/gimptextoptions.c:480
+#: ../app/tools/gimptextoptions.c:498
 #, fuzzy
 msgid "Use editor"
 msgstr "עורך הטקסט של GIMP"
 
-#: ../app/tools/gimptextoptions.c:500
+#: ../app/tools/gimptextoptions.c:518
 #, fuzzy
 msgid "Hinting:"
 msgstr "_רמיזה"
 
-#: ../app/tools/gimptextoptions.c:504
+#: ../app/tools/gimptextoptions.c:522
 msgid "Text Color"
 msgstr "צבע טקסט"
 
-#: ../app/tools/gimptextoptions.c:509
+#: ../app/tools/gimptextoptions.c:527
 msgid "Color:"
 msgstr "צבע:"
 
-#: ../app/tools/gimptextoptions.c:515
+#: ../app/tools/gimptextoptions.c:533
 msgid "Justify:"
 msgstr "יישור:"
 
-#: ../app/tools/gimptextoptions.c:538
+#: ../app/tools/gimptextoptions.c:556
 #, fuzzy
 msgid "Box:"
 msgstr "B:"
 
-#: ../app/tools/gimptextoptions.c:552
+#: ../app/tools/gimptextoptions.c:570
 msgid "Language:"
 msgstr ""
 
-#: ../app/tools/gimptexttool.c:193
+#: ../app/tools/gimptexttool.c:194
 msgid "Text"
 msgstr "טקסט"
 
-#: ../app/tools/gimptexttool.c:194
+#: ../app/tools/gimptexttool.c:195
 msgid "Text Tool: Create or edit text layers"
 msgstr ""
 
-#: ../app/tools/gimptexttool.c:195
+#: ../app/tools/gimptexttool.c:196
 #, fuzzy
 msgid "Te_xt"
 msgstr "טקסט"
 
-#: ../app/tools/gimptexttool.c:941
+#: ../app/tools/gimptexttool.c:959
 #, fuzzy
 msgid "Reshape Text Layer"
 msgstr "שינוי שם שכבה"
 
-#: ../app/tools/gimptexttool.c:1479 ../app/tools/gimptexttool.c:1482
+#: ../app/tools/gimptexttool.c:1497 ../app/tools/gimptexttool.c:1500
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: ../app/tools/gimptexttool.c:1486
+#: ../app/tools/gimptexttool.c:1504
 #, fuzzy
 msgid "Create _New Layer"
 msgstr "יצירת שכבה חדשה"
 
-#: ../app/tools/gimptexttool.c:1510
+#: ../app/tools/gimptexttool.c:1528
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -14392,22 +14378,22 @@ msgstr "מעלות"
 msgid "Keep aspect  (%s)"
 msgstr "יחס הצגה:"
 
-#: ../app/tools/gimptransformtool.c:239
+#: ../app/tools/gimptransformtool.c:240
 #, fuzzy
 msgid "Transforming"
 msgstr "ממיר..."
 
-#: ../app/tools/gimptransformtool.c:1192
+#: ../app/tools/gimptransformtool.c:1177
 #, fuzzy
 msgid "There is no layer to transform."
 msgstr "אין שכבה פעילה או ערוץ למשוך (קולמוס) בהן"
 
-#: ../app/tools/gimptransformtool.c:1205
+#: ../app/tools/gimptransformtool.c:1190
 #, fuzzy
 msgid "There is no path to transform."
 msgstr "אין שכבה פעילה או ערוץ למשוך (קולמוס) בהן"
 
-#: ../app/tools/gimptransformtool.c:1206
+#: ../app/tools/gimptransformtool.c:1191
 msgid "The active path's strokes are locked."
 msgstr ""
 
@@ -14587,188 +14573,269 @@ msgstr "יצירת תבנית חדשה"
 msgid "Click to make this node angular"
 msgstr ""
 
-#: ../app/tools/gimpvectortool.c:1811
+#: ../app/tools/gimpvectortool.c:1813
 #, fuzzy
 msgid "Delete Anchors"
 msgstr "מחיקת וקטורים"
-
-#: ../app/tools/gimpvectortool.c:1957
-#, fuzzy
-msgid "Path to selection"
-msgstr "/נתיב לאזור נבחר"
 
 #: ../app/tools/gimpvectortool.c:1984
 #, fuzzy
 msgid "There is no active layer or channel to stroke to"
 msgstr "אין שכבה פעילה או ערוץ למשוך (קולמוס) בהן"
 
-#: ../app/tools/tools-enums.c:91
+#: ../app/tools/tools-enums.c:92
 #, fuzzy
 msgctxt "rectangle-guide"
 msgid "No guides"
 msgstr "/צפיה/הצגת _מדריכים"
 
-#: ../app/tools/tools-enums.c:92
+#: ../app/tools/tools-enums.c:93
 #, fuzzy
 msgctxt "rectangle-guide"
 msgid "Center lines"
 msgstr "ממורכז"
 
-#: ../app/tools/tools-enums.c:93
+#: ../app/tools/tools-enums.c:94
 #, fuzzy
 msgctxt "rectangle-guide"
 msgid "Rule of thirds"
 msgstr "מספר _צבעים:"
 
-#: ../app/tools/tools-enums.c:94
+#: ../app/tools/tools-enums.c:95
+#, fuzzy
+msgctxt "rectangle-guide"
+msgid "Rule of fifths"
+msgstr "מספר _צבעים:"
+
+#: ../app/tools/tools-enums.c:96
 #, fuzzy
 msgctxt "rectangle-guide"
 msgid "Golden sections"
 msgstr "הזזת אזור נבחר"
 
-#: ../app/tools/tools-enums.c:95
+#: ../app/tools/tools-enums.c:97
 msgctxt "rectangle-guide"
 msgid "Diagonal lines"
 msgstr ""
 
-#: ../app/tools/tools-enums.c:185
+#: ../app/tools/tools-enums.c:187
 #, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Aspect ratio"
 msgstr "יחס הצגה:"
 
-#: ../app/tools/tools-enums.c:186
+#: ../app/tools/tools-enums.c:188
 #, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Width"
 msgstr "רוחב"
 
-#: ../app/tools/tools-enums.c:187
+#: ../app/tools/tools-enums.c:189
 #, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Height"
 msgstr "גובה"
 
-#: ../app/tools/tools-enums.c:188
+#: ../app/tools/tools-enums.c:190
 #, fuzzy
 msgctxt "rectangle-tool-fixed-rule"
 msgid "Size"
 msgstr "גודל"
 
-#: ../app/tools/tools-enums.c:217
+#: ../app/tools/tools-enums.c:219
 #, fuzzy
 msgctxt "rect-select-mode"
 msgid "Free select"
 msgstr "/בחירת אזור"
 
-#: ../app/tools/tools-enums.c:218
+#: ../app/tools/tools-enums.c:220
 #, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed size"
 msgstr "גודל קבוע"
 
-#: ../app/tools/tools-enums.c:219
+#: ../app/tools/tools-enums.c:221
 #, fuzzy
 msgctxt "rect-select-mode"
 msgid "Fixed aspect ratio"
 msgstr "יחס הצגה:"
 
-#: ../app/tools/tools-enums.c:248
+#: ../app/tools/tools-enums.c:250
 #, fuzzy
 msgctxt "transform-type"
 msgid "Layer"
 msgstr "שכבה"
 
-#: ../app/tools/tools-enums.c:249
+#: ../app/tools/tools-enums.c:251
 #, fuzzy
 msgctxt "transform-type"
 msgid "Selection"
 msgstr "בחירת אזור"
 
-#: ../app/tools/tools-enums.c:250
+#: ../app/tools/tools-enums.c:252
 #, fuzzy
 msgctxt "transform-type"
 msgid "Path"
 msgstr "נתיב"
 
-#: ../app/tools/tools-enums.c:280
+#: ../app/tools/tools-enums.c:282
 msgctxt "transform-preview-type"
 msgid "Outline"
 msgstr ""
 
-#: ../app/tools/tools-enums.c:281
+#: ../app/tools/tools-enums.c:283
 #, fuzzy
 msgctxt "transform-preview-type"
 msgid "Grid"
 msgstr "רשת"
 
-#: ../app/tools/tools-enums.c:282
+#: ../app/tools/tools-enums.c:284
 #, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image"
 msgstr "תמונה"
 
-#: ../app/tools/tools-enums.c:283
+#: ../app/tools/tools-enums.c:285
 #, fuzzy
 msgctxt "transform-preview-type"
 msgid "Image + Grid"
 msgstr "טבלת תמונות"
 
-#: ../app/tools/tools-enums.c:311
+#: ../app/tools/tools-enums.c:313
 #, fuzzy
 msgctxt "transform-grid-type"
 msgid "Number of grid lines"
 msgstr "מספר שורות ברשת"
 
-#: ../app/tools/tools-enums.c:312
+#: ../app/tools/tools-enums.c:314
 #, fuzzy
 msgctxt "transform-grid-type"
 msgid "Grid line spacing"
 msgstr "ריווח שורות ברשת"
 
-#: ../app/tools/tools-enums.c:341
+#: ../app/tools/tools-enums.c:343
 #, fuzzy
 msgctxt "vector-mode"
 msgid "Design"
 msgstr "גרסה:"
 
-#: ../app/tools/tools-enums.c:342
+#: ../app/tools/tools-enums.c:344
 #, fuzzy
 msgctxt "vector-mode"
 msgid "Edit"
 msgstr "עריכה"
 
-#: ../app/tools/tools-enums.c:343
+#: ../app/tools/tools-enums.c:345
 #, fuzzy
 msgctxt "vector-mode"
 msgid "Move"
 msgstr "הזזה"
 
-#: ../app/vectors/gimpvectors.c:195
+#: ../app/vectors/gimpvectors.c:206
+#, fuzzy
+msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "שינוי שם נתיב"
 
-#: ../app/vectors/gimpvectors.c:196 ../app/vectors/gimpvectors.c:335
+#: ../app/vectors/gimpvectors.c:207
+#, fuzzy
+msgctxt "undo-type"
 msgid "Move Path"
 msgstr "הזזת נתיב"
 
-#: ../app/vectors/gimpvectors.c:197
+#: ../app/vectors/gimpvectors.c:208
+#, fuzzy
+msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "שינוי קנה-מידת נתיב"
 
-#: ../app/vectors/gimpvectors.c:198
+#: ../app/vectors/gimpvectors.c:209
+#, fuzzy
+msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "שינוי גודל נתיב"
 
-#: ../app/vectors/gimpvectors.c:199 ../app/vectors/gimpvectors.c:434
+#: ../app/vectors/gimpvectors.c:210
+#, fuzzy
+msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "היפוך נתיב"
 
-#: ../app/vectors/gimpvectors.c:200 ../app/vectors/gimpvectors.c:465
+#: ../app/vectors/gimpvectors.c:211
+#, fuzzy
+msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "סיבוב נתיב"
 
-#: ../app/vectors/gimpvectors.c:201 ../app/vectors/gimpvectors.c:495
+#: ../app/vectors/gimpvectors.c:212
+#, fuzzy
+msgctxt "undo-type"
+msgid "Transform Path"
+msgstr "המרת נתיב"
+
+#: ../app/vectors/gimpvectors.c:213
+#, fuzzy
+msgctxt "undo-type"
+msgid "Stroke Path"
+msgstr "נתיב משיכת (קולמוס)"
+
+#: ../app/vectors/gimpvectors.c:214
+#, fuzzy
+msgctxt "undo-type"
+msgid "Path to Selection"
+msgstr "/נתיב לאזור נבחר"
+
+#: ../app/vectors/gimpvectors.c:215
+#, fuzzy
+msgctxt "undo-type"
+msgid "Reorder Path"
+msgstr "סידור נתיב"
+
+#: ../app/vectors/gimpvectors.c:216
+#, fuzzy
+msgctxt "undo-type"
+msgid "Raise Path"
+msgstr "הגבהת נתיב"
+
+#: ../app/vectors/gimpvectors.c:217
+#, fuzzy
+msgctxt "undo-type"
+msgid "Raise Path to Top"
+msgstr "הגבהת שכבה לשיא"
+
+#: ../app/vectors/gimpvectors.c:218
+#, fuzzy
+msgctxt "undo-type"
+msgid "Lower Path"
+msgstr "נתיב תחתון"
+
+#: ../app/vectors/gimpvectors.c:219
+#, fuzzy
+msgctxt "undo-type"
+msgid "Lower Path to Bottom"
+msgstr "הנמכת שכבה לתחתית"
+
+#: ../app/vectors/gimpvectors.c:220
+msgid "Path cannot be raised higher."
+msgstr "אין אפשרות להגביה את הנתיב יותר."
+
+#: ../app/vectors/gimpvectors.c:221
+msgid "Path cannot be lowered more."
+msgstr "אין אפשרות להנמיך את הנתיב יותר"
+
+#: ../app/vectors/gimpvectors.c:364
+msgid "Move Path"
+msgstr "הזזת נתיב"
+
+#: ../app/vectors/gimpvectors.c:463
+msgid "Flip Path"
+msgstr "היפוך נתיב"
+
+#: ../app/vectors/gimpvectors.c:494
+msgid "Rotate Path"
+msgstr "סיבוב נתיב"
+
+#: ../app/vectors/gimpvectors.c:524
 msgid "Transform Path"
 msgstr "המרת נתיב"
 
@@ -14806,7 +14873,7 @@ msgstr ""
 msgid "_Search:"
 msgstr "גזירה"
 
-#: ../app/widgets/gimpactiongroup.c:845
+#: ../app/widgets/gimpactiongroup.c:867
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
@@ -14885,10 +14952,6 @@ msgstr ""
 msgid "(None)"
 msgstr "(כלום)"
 
-#: ../app/widgets/gimpchanneltreeview.c:134
-msgid "Reorder Channel"
-msgstr "סידור ערוץ מחדש"
-
 #: ../app/widgets/gimpcolordialog.c:149
 msgid "Add the current color to the color history"
 msgstr "הוספת צבע נוכחי להיסטוריית הצבעים"
@@ -14928,7 +14991,7 @@ msgstr "איפוס המסנן הנבחר לערכי ברירת מחדל"
 msgid "No filter selected"
 msgstr "לא נבחר מסנן"
 
-#: ../app/widgets/gimpcoloreditor.c:262
+#: ../app/widgets/gimpcoloreditor.c:259
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -14990,16 +15053,16 @@ msgstr "שחור:"
 msgid "Alpha:"
 msgstr "אלפא:"
 
-#: ../app/widgets/gimpcolormapeditor.c:223
+#: ../app/widgets/gimpcolormapeditor.c:208
 #, fuzzy
 msgid "Color index:"
 msgstr "מפתוח צבעים:"
 
-#: ../app/widgets/gimpcolormapeditor.c:233
+#: ../app/widgets/gimpcolormapeditor.c:218
 msgid "HTML notation:"
 msgstr "סימון HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:487
+#: ../app/widgets/gimpcolormapeditor.c:472
 #, fuzzy
 msgid "Only indexed images have a colormap."
 msgstr "עריכת צבע ממופתח"
@@ -15008,11 +15071,11 @@ msgstr "עריכת צבע ממופתח"
 msgid "Palette"
 msgstr "לוח צבעים"
 
-#: ../app/widgets/gimpcontainerpopup.c:547
+#: ../app/widgets/gimpcontainerpopup.c:578
 msgid "Smaller Previews"
 msgstr "גרסאות עיון מוקטנות"
 
-#: ../app/widgets/gimpcontainerpopup.c:552
+#: ../app/widgets/gimpcontainerpopup.c:583
 msgid "Larger Previews"
 msgstr "גרסאות עיון מוגדלות"
 
@@ -15410,11 +15473,11 @@ msgid "Configure this tab"
 msgstr "הגדר לשונית זו"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:351
+#: ../app/widgets/gimpdockwindow.c:353
 msgid "Auto"
 msgstr "אוטומטי"
 
-#: ../app/widgets/gimpdockwindow.c:362
+#: ../app/widgets/gimpdockwindow.c:364
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr "כאשר מופעל, תיבת הדו-שיח עוקבת באופן אוטומטי אחר התמונה עליה אתה עובד."
@@ -15804,42 +15867,38 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "צבעים"
 
-#: ../app/widgets/gimpitemtreeview.c:702
+#: ../app/widgets/gimpitemtreeview.c:708
 msgid "Lock:"
 msgstr ""
 
-#: ../app/widgets/gimpitemtreeview.c:1417
+#: ../app/widgets/gimpitemtreeview.c:1481
 msgid "Set Item Exclusive Visible"
 msgstr ""
 
-#: ../app/widgets/gimpitemtreeview.c:1425
+#: ../app/widgets/gimpitemtreeview.c:1489
 msgid "Set Item Exclusive Linked"
 msgstr ""
 
-#: ../app/widgets/gimplayertreeview.c:236
-msgid "Reorder Layer"
-msgstr "סידור שכבה מחדש"
-
 # תרגום ל"נעל" פשוט לא נראה טוב
-#: ../app/widgets/gimplayertreeview.c:326
+#: ../app/widgets/gimplayertreeview.c:309
 msgid "Lock alpha channel"
 msgstr "נעילת ערוץ אלפא"
 
-#: ../app/widgets/gimpmessagebox.c:442
+#: ../app/widgets/gimpmessagebox.c:439
 #, c-format
 msgid "Message repeated %d times."
 msgstr "ההודעה חזרה %d פעמים."
 
-#: ../app/widgets/gimpmessagebox.c:444
+#: ../app/widgets/gimpmessagebox.c:441
 msgid "Message repeated once."
 msgstr "ההודעה חזרה פעם אחת."
 
-#: ../app/widgets/gimppaletteeditor.c:254
-#: ../app/widgets/gimppaletteeditor.c:745
+#: ../app/widgets/gimppaletteeditor.c:252
+#: ../app/widgets/gimppaletteeditor.c:743
 msgid "Undefined"
 msgstr "לא-מוגדר"
 
-#: ../app/widgets/gimppaletteeditor.c:262
+#: ../app/widgets/gimppaletteeditor.c:260
 msgid "Columns:"
 msgstr "עמודות:"
 
@@ -15922,12 +15981,12 @@ msgstr "שמירת הגדרות עקומות לקובץ"
 msgid "Delete the selected settings"
 msgstr "מחיקת התבנית הנבחרת"
 
-#: ../app/widgets/gimpsizebox.c:463
+#: ../app/widgets/gimpsizebox.c:460
 #, fuzzy, c-format
 msgid "%d × %d ppi"
 msgstr "נקודת לאינץ'"
 
-#: ../app/widgets/gimpsizebox.c:465
+#: ../app/widgets/gimpsizebox.c:462
 #, fuzzy, c-format
 msgid "%d ppi"
 msgstr "נקודת לאינץ'"
@@ -16037,7 +16096,7 @@ msgstr ""
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr ""
 
-#: ../app/widgets/gimptextbuffer.c:1319
+#: ../app/widgets/gimptextbuffer.c:1456
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr ""
@@ -16047,48 +16106,53 @@ msgstr ""
 msgid "_Use selected font"
 msgstr "העלאת המסנן הנבחר"
 
-#: ../app/widgets/gimptextstyleeditor.c:192
+#: ../app/widgets/gimptextstyleeditor.c:199
 #, fuzzy
 msgid "Change size of selected text"
 msgstr "שינוי פרספקטיבת שכבה או אזור נבחר"
 
-#: ../app/widgets/gimptextstyleeditor.c:211
+#: ../app/widgets/gimptextstyleeditor.c:206
+#, fuzzy
+msgid "Change color of selected text"
+msgstr "שינוי פרספקטיבת שכבה או אזור נבחר"
+
+#: ../app/widgets/gimptextstyleeditor.c:231
 #, fuzzy
 msgid "Clear style of selected text"
 msgstr "מחיקת התבנית הנבחרת"
 
-#: ../app/widgets/gimptextstyleeditor.c:231
+#: ../app/widgets/gimptextstyleeditor.c:251
 msgid "Change kerning of selected text"
 msgstr ""
 
-#: ../app/widgets/gimptextstyleeditor.c:247
+#: ../app/widgets/gimptextstyleeditor.c:267
 #, fuzzy
 msgid "Change baseline of selected text"
 msgstr "שינוי פרספקטיבת שכבה או אזור נבחר"
 
-#: ../app/widgets/gimpthumbbox.c:343
+#: ../app/widgets/gimpthumbbox.c:330
 #, c-format
 msgid ""
 "Click to update preview\n"
 "%s%sClick to force update even if preview is up-to-date"
 msgstr ""
 
-#: ../app/widgets/gimpthumbbox.c:361
+#: ../app/widgets/gimpthumbbox.c:348
 #, fuzzy
 msgid "Pr_eview"
 msgstr "גרסת עיון"
 
-#: ../app/widgets/gimpthumbbox.c:416 ../app/widgets/gimpthumbbox.c:480
+#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
 #, fuzzy
 msgid "No selection"
 msgstr "כלום לא נבחר"
 
-#: ../app/widgets/gimpthumbbox.c:608 ../app/widgets/gimpthumbbox.c:629
+#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr ""
 
-#: ../app/widgets/gimpthumbbox.c:742 ../app/widgets/gimpthumbbox.c:752
+#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
 #, fuzzy
 msgid "Creating preview..."
 msgstr "טוען גרסת עיון..."
@@ -16142,46 +16206,46 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 
-#: ../app/widgets/gimptooleditor.c:295
+#: ../app/widgets/gimptooleditor.c:294
 #, fuzzy
 msgid "Raise this tool"
 msgstr "הגבהת נתיב"
 
-#: ../app/widgets/gimptooleditor.c:296
+#: ../app/widgets/gimptooleditor.c:295
 #, fuzzy
 msgid "Raise this tool to the top"
 msgstr "הגבהת שכבה לשיא"
 
-#: ../app/widgets/gimptooleditor.c:303
+#: ../app/widgets/gimptooleditor.c:302
 #, fuzzy
 msgid "Lower this tool"
 msgstr "נתיב תחתון"
 
-#: ../app/widgets/gimptooleditor.c:304
+#: ../app/widgets/gimptooleditor.c:303
 #, fuzzy
 msgid "Lower this tool to the bottom"
 msgstr "הנמכת שכבה לתחתית"
 
-#: ../app/widgets/gimptooleditor.c:311
+#: ../app/widgets/gimptooleditor.c:310
 msgid "Reset tool order and visibility"
 msgstr ""
 
-#: ../app/widgets/gimptooloptionseditor.c:208
+#: ../app/widgets/gimptooloptionseditor.c:218
 #, fuzzy
 msgid "Save options to..."
 msgstr "/שמירת אזור נבחר לקובץ..."
 
-#: ../app/widgets/gimptooloptionseditor.c:216
+#: ../app/widgets/gimptooloptionseditor.c:226
 #, fuzzy
 msgid "Restore options from..."
 msgstr "צריכת משאבים"
 
-#: ../app/widgets/gimptooloptionseditor.c:224
+#: ../app/widgets/gimptooloptionseditor.c:234
 #, fuzzy
 msgid "Delete saved options..."
 msgstr "/מחיקת מדרג צבעים..."
 
-#: ../app/widgets/gimptooloptionseditor.c:573
+#: ../app/widgets/gimptooloptionseditor.c:592
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "שגיאה בעת שמירת הגדרת אפשרויות הכלים: %s"
@@ -16245,12 +16309,7 @@ msgstr "אירעה שגיאה בפענוח הגדרות התפריטים מתו�
 msgid "[ Base Image ]"
 msgstr "[ התמונה התחלתית ]"
 
-#: ../app/widgets/gimpvectorstreeview.c:116
-#, fuzzy
-msgid "Reorder path"
-msgstr "סידור נתיב"
-
-#: ../app/widgets/gimpvectorstreeview.c:118
+#: ../app/widgets/gimpvectorstreeview.c:112
 msgid "Lock path strokes"
 msgstr ""
 
@@ -16418,19 +16477,19 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "לא-מוגדר"
 
-#: ../app/xcf/xcf-load.c:329
+#: ../app/xcf/xcf-load.c:332
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
 
-#: ../app/xcf/xcf-load.c:340
+#: ../app/xcf/xcf-load.c:343
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 
-#: ../app/xcf/xcf-load.c:404
+#: ../app/xcf/xcf-load.c:407
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -16452,28 +16511,28 @@ msgstr ""
 msgid "Could not seek in XCF file: %s"
 msgstr ""
 
-#: ../app/xcf/xcf.c:98 ../app/xcf/xcf.c:166
+#: ../app/xcf/xcf.c:99 ../app/xcf/xcf.c:167
 msgid "GIMP XCF image"
 msgstr ""
 
-#: ../app/xcf/xcf.c:270
+#: ../app/xcf/xcf.c:271
 #, fuzzy, c-format
 msgid "Opening '%s'"
 msgstr ""
 "פתיחת '%s' נכשלה:\n"
 "%s"
 
-#: ../app/xcf/xcf.c:312
+#: ../app/xcf/xcf.c:313
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
 
-#: ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf.c:383
 #, fuzzy, c-format
 msgid "Saving '%s'"
 msgstr "שמירת '%s'\n"
 
-#: ../app/xcf/xcf.c:402
+#: ../app/xcf/xcf.c:403
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr ""
@@ -16527,6 +16586,47 @@ msgstr ""
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr ""
+
+#~ msgid "Channel to Selection"
+#~ msgstr "בחירה לפי הערוץ"
+
+#~ msgctxt "file-action"
+#~ msgid "Save this image with a different name, but keep its current name"
+#~ msgstr "שמור את התמונה הנוכחית עם שם אחר, אך שמור על שמה הנוכחי"
+
+#, fuzzy
+#~ msgctxt "layers-action"
+#~ msgid "Te_xt to Selection"
+#~ msgstr "/הוספה לאזור נבחר"
+
+#, fuzzy
+#~ msgctxt "layers-action"
+#~ msgid "_Text to Selection"
+#~ msgstr "/הוספה לאזור נבחר"
+
+#, fuzzy
+#~ msgctxt "layers-action"
+#~ msgid "Replace the selection with the text layer's outline"
+#~ msgstr "ערוץ ה_אלפא של השכבה"
+
+#, fuzzy
+#~ msgctxt "layers-action"
+#~ msgid "Add the text layer's outline to the current selection"
+#~ msgstr "הוספה לאזור נבחר נוכחי"
+
+#, fuzzy
+#~ msgctxt "layers-action"
+#~ msgid "Subtract the text layer's outline from the current selection"
+#~ msgstr "החסרה מאזור נבחר נוכחי"
+
+#, fuzzy
+#~ msgctxt "layers-action"
+#~ msgid "Intersect the text layer's outline with the current selection"
+#~ msgstr "החסרה מאזור נבחר נוכחי"
+
+#, fuzzy
+#~ msgid "Path to selection"
+#~ msgstr "/נתיב לאזור נבחר"
 
 #~ msgid "(This console window will close in ten seconds)\n"
 #~ msgstr "(חלון מסוף זה ייסגר תוך עשר שניות)\n"

@@ -8,170 +8,192 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-07 20:08+0800\n"
-"PO-Revision-Date: 2005-07-07 22:49+0800\n"
-"Last-Translator: Abel Cheung <abel@oaka.org>\n"
+"POT-Creation-Date: 2010-10-30 19:47+0800\n"
+"PO-Revision-Date: 2010-10-04 19:57+0800\n"
+"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../libgimp/gimpbrushmenu.c:140
+#. procedure executed successfully
+#: ../libgimp/gimp.c:1080
+msgid "success"
+msgstr "成功"
+
+#. procedure execution failed
+#: ../libgimp/gimp.c:1084
+msgid "execution error"
+msgstr "執行錯誤"
+
+#. procedure called incorrectly
+#: ../libgimp/gimp.c:1088
+msgid "calling error"
+msgstr "調用錯誤"
+
+#. procedure execution cancelled
+#: ../libgimp/gimp.c:1092
+msgid "cancelled"
+msgstr "已取消"
+
+#: ../libgimp/gimpbrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "筆刷選擇"
 
-#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
+#: ../libgimp/gimpbrushselectbutton.c:927
+#: ../libgimp/gimppatternselectbutton.c:725
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s 無法處理圖層"
+msgid "%s plug-in can't handle layers"
+msgstr "%s 外掛程式無法處理圖層"
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234
+#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
 msgid "Merge Visible Layers"
 msgstr "合併可見圖層"
 
-#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:252
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s 無法處理圖層的偏移、尺寸或透明度"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s 外掛程式無法處理圖層的偏移、尺寸或不透明度"
 
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s 只能以動畫畫格的方式處理圖層"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s 外掛程式只能以動畫畫格的方式處理圖層"
 
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
 msgstr "儲存為動畫"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
-msgstr "影像平面化"
+msgstr "圖片平面化"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:288
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s 無法處理透明度"
+msgid "%s plug-in can't handle transparency"
+msgstr "%s 外掛程式無法處理透明度"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:297
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s 無法處理圖層遮罩"
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s 外掛程式無法處理圖層遮罩"
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
 msgstr "套用圖層遮罩"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:306
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s 只能處理 RGB 影像"
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s 外掛程式只能處理 RGB 圖片"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:354
 msgid "Convert to RGB"
 msgstr "轉換成 RGB"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:315
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s 只能處理灰階影像"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s 外掛程式只能處理灰階圖片"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
 msgstr "轉換成灰階"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:324
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s 只能處理索引色影像"
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s 外掛程式只能處理索引色圖片"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"根據預設設定轉換成索引色影像\n"
+"根據預設設定轉換成索引色圖片\n"
 "(請自行調整結果)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:334
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s 只能處理黑白點陣圖"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s 外掛程式只能處理黑白點陣圖"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:335
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"根據預設的點陣圖設定轉換成索引色影像\n"
+"根據預設的點陣圖設定轉換成索引色圖片\n"
 "(請自行調整結果)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:344
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s 只能處理 RGB 或灰階影像"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s 外掛程式只能處理 RGB 或灰階圖片"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:353
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s 只能處理 RGB 或索引色影像"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "%s 外掛程式只能處理 RGB 或索引色圖片"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:363
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s 只能處理灰階或索引色影像"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s 外掛程式只能處理灰階或索引色圖片"
 
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:374
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s 需要透明色版"
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s 外掛程式需要一透明色版"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:375
 msgid "Add Alpha Channel"
-msgstr "新增透明色版"
+msgstr "加入透明色版"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:430
 msgid "Confirm Save"
 msgstr "確認儲存"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:436
 msgid "Confirm"
 msgstr "確認"
 
-#: ../libgimp/gimpexport.c:459
+#: ../libgimp/gimpexport.c:512
 msgid "Export File"
 msgstr "匯出檔案"
 
-#: ../libgimp/gimpexport.c:463
+#: ../libgimp/gimpexport.c:516
 msgid "_Ignore"
 msgstr "忽略(_I)"
 
-#: ../libgimp/gimpexport.c:465
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:989
 msgid "_Export"
 msgstr "匯出(_E)"
 
 #. the headline
-#: ../libgimp/gimpexport.c:493
+#: ../libgimp/gimpexport.c:548
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "影像在儲存至 %s 前必須匯出，原因如下："
+msgstr "圖片在儲存至 %s 前必須匯出，原因如下："
 
 #. the footline
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
-msgstr "匯出時的影像轉換程序不會更改原有的影像。"
+msgstr "匯出時的圖片轉換程序不會更改原有的圖片。"
 
-#: ../libgimp/gimpexport.c:664
+#: ../libgimp/gimpexport.c:725
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -180,541 +202,865 @@ msgstr ""
 "準備將圖層遮罩儲存為 %s。\n"
 "本程序不會儲存可見的圖層。"
 
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:731
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"準備將色版(已儲存的選擇區域)儲存為 %s。\n"
-"本程序不會儲存可見的圖層。"
+"準備將色版(已儲存的選取區域)儲存為 %s。\n"
+" 本程序不會儲存可見的圖層。"
 
-#: ../libgimp/gimpfontselectbutton.c:124 ../libgimp/gimpfontselectbutton.c:169
+#: ../libgimp/gimpexport.c:980
+msgid "Export Image as "
+msgstr "匯出圖片為"
+
+#: ../libgimp/gimpfontselectbutton.c:138
 msgid "Font Selection"
 msgstr "字型選擇"
 
-#: ../libgimp/gimpfontselectbutton.c:137 ../libgimp/gimpfontselectbutton.c:170
+#: ../libgimp/gimpfontselectbutton.c:153
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientmenu.c:115
+#: ../libgimp/gimpgradientselectbutton.c:156
 msgid "Gradient Selection"
 msgstr "漸層選擇"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:167
+#: ../libgimp/gimpmenu.c:459 ../libgimpwidgets/gimpintstore.c:248
 msgid "(Empty)"
 msgstr "(空白)"
 
-#: ../libgimp/gimppalettemenu.c:102
+#: ../libgimp/gimppaletteselectbutton.c:138
 msgid "Palette Selection"
 msgstr "色盤選擇"
 
-#: ../libgimp/gimppatternmenu.c:125
+#: ../libgimp/gimppatternselectbutton.c:164
 msgid "Pattern Selection"
 msgstr "圖樣選擇"
 
-#: ../libgimp/gimpunitcache.c:57
+#: ../libgimp/gimpprocbrowserdialog.c:149
+msgid "by name"
+msgstr "依名稱"
+
+#: ../libgimp/gimpprocbrowserdialog.c:150
+msgid "by description"
+msgstr "依描述"
+
+#: ../libgimp/gimpprocbrowserdialog.c:151
+msgid "by help"
+msgstr "依說明"
+
+#: ../libgimp/gimpprocbrowserdialog.c:152
+msgid "by author"
+msgstr "依作者"
+
+#: ../libgimp/gimpprocbrowserdialog.c:153
+msgid "by copyright"
+msgstr "依版權資訊"
+
+#: ../libgimp/gimpprocbrowserdialog.c:154
+msgid "by date"
+msgstr "依修改日期"
+
+#: ../libgimp/gimpprocbrowserdialog.c:155
+msgid "by type"
+msgstr "依類型"
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:394
+#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
+msgid "No matches"
+msgstr "沒有符合的"
+
+#: ../libgimp/gimpprocbrowserdialog.c:397
+msgid "Search term invalid or incomplete"
+msgstr ""
+
+#: ../libgimp/gimpprocbrowserdialog.c:406
+msgid "Searching"
+msgstr "正在搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:417
+msgid "Searching by name"
+msgstr "正依名稱搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:438
+msgid "Searching by description"
+msgstr "正依描述搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:445
+msgid "Searching by help"
+msgstr "正依說明搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:452
+msgid "Searching by author"
+msgstr "正依作者搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:459
+msgid "Searching by copyright"
+msgstr "正依版權資訊搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:466
+msgid "Searching by date"
+msgstr "正依修改日期搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:473
+msgid "Searching by type"
+msgstr "正依類型搜尋"
+
+#: ../libgimp/gimpprocbrowserdialog.c:483
+#, fuzzy, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "程序"
+
+#: ../libgimp/gimpprocbrowserdialog.c:492
+msgid "No matches for your query"
+msgstr "沒有符合您查詢的"
+
+#: ../libgimp/gimpprocbrowserdialog.c:496
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] ""
+
+#: ../libgimp/gimpprocview.c:172
+msgid "Parameters"
+msgstr "參數"
+
+#: ../libgimp/gimpprocview.c:185
+#, fuzzy
+msgid "Return Values"
+msgstr "是否改變數值？"
+
+#: ../libgimp/gimpprocview.c:198
+msgid "Additional Information"
+msgstr "額外的資訊"
+
+#: ../libgimp/gimpprocview.c:238
+msgid "Author:"
+msgstr "作者："
+
+#: ../libgimp/gimpprocview.c:250
+msgid "Date:"
+msgstr "日期："
+
+#: ../libgimp/gimpprocview.c:262
+msgid "Copyright:"
+msgstr "版權："
+
+#: ../libgimp/gimpunitcache.c:56
 msgid "percent"
 msgstr "百分比"
 
-#: ../libgimpbase/gimpbaseenums.c:26
-msgid "_White (full opacity)"
-msgstr "白色[完全不透明] (_W)"
-
-#: ../libgimpbase/gimpbaseenums.c:27
-msgid "_Black (full transparency)"
-msgstr "黑色[完全透明] (_B)"
-
 #: ../libgimpbase/gimpbaseenums.c:28
+msgctxt "add-mask-type"
+msgid "_White (full opacity)"
+msgstr "白色[完全不透明](_W)"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgctxt "add-mask-type"
+msgid "_Black (full transparency)"
+msgstr "黑色[完全透明](_B)"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "圖層的透明色版(_A)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
-msgid "_Transfer layer's alpha channel"
-msgstr ""
-
-#: ../libgimpbase/gimpbaseenums.c:30
-msgid "_Selection"
-msgstr "選擇區域(_S)"
-
 #: ../libgimpbase/gimpbaseenums.c:31
-msgid "_Grayscale copy of layer"
-msgstr "圖層的灰階複製本(_G)"
+msgctxt "add-mask-type"
+msgid "_Transfer layer's alpha channel"
+msgstr "轉移圖層的透明色版(_T)"
 
-#: ../libgimpbase/gimpbaseenums.c:61
+#: ../libgimpbase/gimpbaseenums.c:32
+msgctxt "add-mask-type"
+msgid "_Selection"
+msgstr "選取區域(_S) "
+
+#: ../libgimpbase/gimpbaseenums.c:33
+msgctxt "add-mask-type"
+msgid "_Grayscale copy of layer"
+msgstr "圖層的灰階複製(_G)"
+
+#: ../libgimpbase/gimpbaseenums.c:34
+msgctxt "add-mask-type"
+msgid "C_hannel"
+msgstr "色版(_H)"
+
+#: ../libgimpbase/gimpbaseenums.c:65
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "前景色至背景色(RGB)"
 
-#: ../libgimpbase/gimpbaseenums.c:62
+#: ../libgimpbase/gimpbaseenums.c:66
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
-msgstr "前景色至背景色(HSV)"
+msgstr "前景色至背景色(HSV 逆時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:63
+#: ../libgimpbase/gimpbaseenums.c:67
+#, fuzzy
+msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "前景色至透明"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:68
+#, fuzzy
+msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "自選漸層"
+msgstr "事件漸層效果"
 
-#: ../libgimpbase/gimpbaseenums.c:93
+#: ../libgimpbase/gimpbaseenums.c:98
+msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "填上前景顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:94
+#: ../libgimpbase/gimpbaseenums.c:99
+msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "填上背景顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:100
+msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "填上圖樣"
 
-#: ../libgimpbase/gimpbaseenums.c:125
+#: ../libgimpbase/gimpbaseenums.c:131
+msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "加入至目前的選擇區域"
 
-#: ../libgimpbase/gimpbaseenums.c:126
+#: ../libgimpbase/gimpbaseenums.c:132
+msgctxt "channel-ops"
 msgid "Subtract from the current selection"
-msgstr "從目前的選擇區域刪減"
+msgstr "從目前的選取區域刪除"
 
-#: ../libgimpbase/gimpbaseenums.c:127
+#: ../libgimpbase/gimpbaseenums.c:133
+msgctxt "channel-ops"
 msgid "Replace the current selection"
-msgstr "取代目前的選擇區域"
+msgstr "取代目前的選取區域"
 
-#: ../libgimpbase/gimpbaseenums.c:128
+#: ../libgimpbase/gimpbaseenums.c:134
+msgctxt "channel-ops"
 msgid "Intersect with the current selection"
-msgstr "計算和目前選擇區域的交集區域"
+msgstr "和目前選取區域的交集"
 
-#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:167
+msgctxt "channel-type"
 msgid "Red"
 msgstr "紅"
 
-#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:168
+msgctxt "channel-type"
 msgid "Green"
 msgstr "綠"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:169
+msgctxt "channel-type"
 msgid "Blue"
 msgstr "藍"
 
-#: ../libgimpbase/gimpbaseenums.c:163
+#: ../libgimpbase/gimpbaseenums.c:170
+msgctxt "channel-type"
 msgid "Gray"
-msgstr "灰"
+msgstr "灰色"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:467
+#: ../libgimpbase/gimpbaseenums.c:171
+#, fuzzy
+msgctxt "channel-type"
 msgid "Indexed"
-msgstr "索引色"
+msgstr "已索引欄位"
 
-#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:172
+msgctxt "channel-type"
 msgid "Alpha"
 msgstr "透明"
 
-#: ../libgimpbase/gimpbaseenums.c:194
+#: ../libgimpbase/gimpbaseenums.c:202
+msgctxt "check-size"
 msgid "Small"
 msgstr "小"
 
-#: ../libgimpbase/gimpbaseenums.c:195
+#: ../libgimpbase/gimpbaseenums.c:203
+msgctxt "check-size"
 msgid "Medium"
 msgstr "中"
 
-#: ../libgimpbase/gimpbaseenums.c:196
+#: ../libgimpbase/gimpbaseenums.c:204
+msgctxt "check-size"
 msgid "Large"
 msgstr "大"
 
-#: ../libgimpbase/gimpbaseenums.c:228
-msgid "Light Checks"
-msgstr "淺色方格"
+#: ../libgimpbase/gimpbaseenums.c:237
+msgctxt "check-type"
+msgid "Light checks"
+msgstr "棋盤格中的淺色"
 
-#: ../libgimpbase/gimpbaseenums.c:229
-msgid "Mid-Tone Checks"
-msgstr "中度灰色方格"
+#: ../libgimpbase/gimpbaseenums.c:238
+msgctxt "check-type"
+msgid "Mid-tone checks"
+msgstr "中間色調的棋盤格顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:230
-msgid "Dark Checks"
-msgstr "深色方格"
+#: ../libgimpbase/gimpbaseenums.c:239
+msgctxt "check-type"
+msgid "Dark checks"
+msgstr "棋盤格中的深色"
 
-#: ../libgimpbase/gimpbaseenums.c:231
-msgid "White Only"
-msgstr "全白"
+#: ../libgimpbase/gimpbaseenums.c:240
+msgctxt "check-type"
+msgid "White only"
+msgstr "白色"
 
-#: ../libgimpbase/gimpbaseenums.c:232
-msgid "Gray Only"
-msgstr "全灰"
+#: ../libgimpbase/gimpbaseenums.c:241
+msgctxt "check-type"
+msgid "Gray only"
+msgstr "灰色"
 
-#: ../libgimpbase/gimpbaseenums.c:233
-msgid "Black Only"
-msgstr "全黑"
+#: ../libgimpbase/gimpbaseenums.c:242
+msgctxt "check-type"
+msgid "Black only"
+msgstr "黑色"
 
-#: ../libgimpbase/gimpbaseenums.c:261
-msgid "Image source"
-msgstr "影像來源"
+#: ../libgimpbase/gimpbaseenums.c:271
+msgctxt "clone-type"
+msgid "Image"
+msgstr "圖片"
 
-#: ../libgimpbase/gimpbaseenums.c:262
-msgid "Pattern source"
-msgstr "圖樣來源"
+#: ../libgimpbase/gimpbaseenums.c:272
+msgctxt "clone-type"
+msgid "Pattern"
+msgstr "圖樣"
 
-#: ../libgimpbase/gimpbaseenums.c:291
+#: ../libgimpbase/gimpbaseenums.c:302
+msgctxt "desaturate-mode"
 msgid "Lightness"
-msgstr ""
+msgstr "亮度"
 
-#: ../libgimpbase/gimpbaseenums.c:292
+#: ../libgimpbase/gimpbaseenums.c:303
+msgctxt "desaturate-mode"
 msgid "Luminosity"
-msgstr ""
+msgstr "發光強度"
 
-#: ../libgimpbase/gimpbaseenums.c:293
+#: ../libgimpbase/gimpbaseenums.c:304
+msgctxt "desaturate-mode"
 msgid "Average"
-msgstr ""
+msgstr "平均值"
 
-#: ../libgimpbase/gimpbaseenums.c:321
+#: ../libgimpbase/gimpbaseenums.c:333
+msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "漂白"
 
-#: ../libgimpbase/gimpbaseenums.c:322
+#: ../libgimpbase/gimpbaseenums.c:334
+msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "燻黑"
 
-#: ../libgimpbase/gimpbaseenums.c:359 ../libgimpbase/gimpbaseenums.c:499
+#: ../libgimpbase/gimpbaseenums.c:400
+msgctxt "gradient-type"
 msgid "Linear"
 msgstr "線性"
 
-#: ../libgimpbase/gimpbaseenums.c:360
+#: ../libgimpbase/gimpbaseenums.c:401
+msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "雙線性"
 
-#: ../libgimpbase/gimpbaseenums.c:361
+#: ../libgimpbase/gimpbaseenums.c:402
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Radial"
 msgstr "放射狀"
 
-#: ../libgimpbase/gimpbaseenums.c:362
+#: ../libgimpbase/gimpbaseenums.c:403
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Square"
-msgstr "方形"
+msgstr "正方形"
 
-#: ../libgimpbase/gimpbaseenums.c:363
+#: ../libgimpbase/gimpbaseenums.c:404
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "圓錐形(對稱)"
 
-#: ../libgimpbase/gimpbaseenums.c:364
+#: ../libgimpbase/gimpbaseenums.c:405
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "圓錐形(不對稱)"
 
-#: ../libgimpbase/gimpbaseenums.c:365
+#: ../libgimpbase/gimpbaseenums.c:406
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Shaped (angular)"
-msgstr "依形狀擴展(菱角)"
+msgstr "x型項目符號"
 
-#: ../libgimpbase/gimpbaseenums.c:366
+#: ../libgimpbase/gimpbaseenums.c:407
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Shaped (spherical)"
-msgstr "依形狀擴展(球狀)"
+msgstr "x型項目符號"
 
-#: ../libgimpbase/gimpbaseenums.c:367
+#: ../libgimpbase/gimpbaseenums.c:408
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
-msgstr "依形狀擴展(酒渦)"
+msgstr "x型項目符號"
 
-#: ../libgimpbase/gimpbaseenums.c:368
+#: ../libgimpbase/gimpbaseenums.c:409
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:369
+#: ../libgimpbase/gimpbaseenums.c:410
+#, fuzzy
+msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "螺旋(順時針)"
 
-#: ../libgimpbase/gimpbaseenums.c:398
+#: ../libgimpbase/gimpbaseenums.c:442
+msgctxt "grid-style"
+msgid "Intersections (dots)"
+msgstr "交叉口（點）"
+
+#: ../libgimpbase/gimpbaseenums.c:443
+msgctxt "grid-style"
+msgid "Intersections (crosshairs)"
+msgstr "交叉口（十字線）"
+
+#: ../libgimpbase/gimpbaseenums.c:444
+msgctxt "grid-style"
+msgid "Dashed"
+msgstr "虛線"
+
+#: ../libgimpbase/gimpbaseenums.c:445
+msgctxt "grid-style"
+msgid "Double dashed"
+msgstr "雙虛線"
+
+#: ../libgimpbase/gimpbaseenums.c:446
+msgctxt "grid-style"
+msgid "Solid"
+msgstr "單色"
+
+#: ../libgimpbase/gimpbaseenums.c:476
+#, fuzzy
+msgctxt "icon-type"
 msgid "Stock ID"
-msgstr ""
+msgstr "內建圖示代碼"
 
-#: ../libgimpbase/gimpbaseenums.c:399
+#: ../libgimpbase/gimpbaseenums.c:477
+#, fuzzy
+msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr ""
+msgstr "Pixbuf 物件"
 
-#: ../libgimpbase/gimpbaseenums.c:400
+#: ../libgimpbase/gimpbaseenums.c:478
+#, fuzzy
+msgctxt "icon-type"
 msgid "Image file"
-msgstr "影像檔"
+msgstr "圖型檔(_F):"
 
-#: ../libgimpbase/gimpbaseenums.c:429
+#: ../libgimpbase/gimpbaseenums.c:508
+msgctxt "image-base-type"
 msgid "RGB color"
-msgstr "RGB 色彩"
+msgstr "RGB 顏色"
 
-#: ../libgimpbase/gimpbaseenums.c:430 ../libgimpbase/gimpbaseenums.c:465
+#: ../libgimpbase/gimpbaseenums.c:509
+msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "灰階"
 
-#: ../libgimpbase/gimpbaseenums.c:431
+#: ../libgimpbase/gimpbaseenums.c:510
+msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "索引色"
 
-#: ../libgimpbase/gimpbaseenums.c:463
+#: ../libgimpbase/gimpbaseenums.c:543
+msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:464
+#: ../libgimpbase/gimpbaseenums.c:544
+msgctxt "image-type"
 msgid "RGB-alpha"
-msgstr "RGB-透明"
+msgstr "RGB 模式含有透明度"
 
-#: ../libgimpbase/gimpbaseenums.c:466
+#: ../libgimpbase/gimpbaseenums.c:545
+#, fuzzy
+msgctxt "image-type"
+msgid "Grayscale"
+msgstr "灰階"
+
+#: ../libgimpbase/gimpbaseenums.c:546
+msgctxt "image-type"
 msgid "Grayscale-alpha"
-msgstr "灰階-透明"
+msgstr "灰階模式含有透明度"
 
-#: ../libgimpbase/gimpbaseenums.c:468
+#: ../libgimpbase/gimpbaseenums.c:547
+#, fuzzy
+msgctxt "image-type"
+msgid "Indexed"
+msgstr "已索引欄位"
+
+#: ../libgimpbase/gimpbaseenums.c:548
+msgctxt "image-type"
 msgid "Indexed-alpha"
-msgstr "索引色-透明"
+msgstr "索引色模式含有透明度"
 
-#: ../libgimpbase/gimpbaseenums.c:498
-msgid "None (Fastest)"
-msgstr "無(速度最快)"
-
-#: ../libgimpbase/gimpbaseenums.c:500
-msgid "Cubic"
-msgstr "立方"
-
-#: ../libgimpbase/gimpbaseenums.c:501
-msgid "Lanczos (Best)"
-msgstr "Lanczos(品質最高)"
-
-#: ../libgimpbase/gimpbaseenums.c:529
-msgid "Constant"
-msgstr "常數"
-
-#: ../libgimpbase/gimpbaseenums.c:530
-msgid "Incremental"
-msgstr "遞增模式"
-
-#: ../libgimpbase/gimpbaseenums.c:559 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:579
+msgctxt "interpolation-type"
 msgid "None"
 msgstr "無"
 
-#: ../libgimpbase/gimpbaseenums.c:560
+#: ../libgimpbase/gimpbaseenums.c:580
+msgctxt "interpolation-type"
+msgid "Linear"
+msgstr "線性"
+
+#: ../libgimpbase/gimpbaseenums.c:581
+msgctxt "interpolation-type"
+msgid "Cubic"
+msgstr "立方"
+
+#: ../libgimpbase/gimpbaseenums.c:582
+msgctxt "interpolation-type"
+msgid "Sinc (Lanczos3)"
+msgstr "正弦（lanczos3）"
+
+#: ../libgimpbase/gimpbaseenums.c:611
+#, fuzzy
+msgctxt "paint-application-mode"
+msgid "Constant"
+msgstr "常數"
+
+#: ../libgimpbase/gimpbaseenums.c:612
+#, fuzzy
+msgctxt "paint-application-mode"
+msgid "Incremental"
+msgstr "遞增模式"
+
+#: ../libgimpbase/gimpbaseenums.c:642
+msgctxt "repeat-mode"
+msgid "None"
+msgstr "無"
+
+#: ../libgimpbase/gimpbaseenums.c:643
+msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "鋸齒形波浪紋"
 
-#: ../libgimpbase/gimpbaseenums.c:561
+#: ../libgimpbase/gimpbaseenums.c:644
+msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "三角形波浪紋"
 
-#: ../libgimpbase/gimpbaseenums.c:589
+#: ../libgimpbase/gimpbaseenums.c:674
+#, fuzzy
+msgctxt "run-mode"
+msgid "Run interactively"
+msgstr "執行程式..."
+
+#: ../libgimpbase/gimpbaseenums.c:675
+#, fuzzy
+msgctxt "run-mode"
+msgid "Run non-interactively"
+msgstr "互動設定選項"
+
+#: ../libgimpbase/gimpbaseenums.c:676
+#, fuzzy
+msgctxt "run-mode"
+msgid "Run with last used values"
+msgstr "保留選擇區域"
+
+#: ../libgimpbase/gimpbaseenums.c:705
+msgctxt "size-type"
 msgid "Pixels"
 msgstr "像素"
 
-#: ../libgimpbase/gimpbaseenums.c:590
+#: ../libgimpbase/gimpbaseenums.c:706
+#, fuzzy
+msgctxt "size-type"
 msgid "Points"
 msgstr "點"
 
-#: ../libgimpbase/gimpbaseenums.c:619
+#: ../libgimpbase/gimpbaseenums.c:736
+msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "陰影區域"
 
-#: ../libgimpbase/gimpbaseenums.c:620
+#: ../libgimpbase/gimpbaseenums.c:737
+msgctxt "transfer-mode"
 msgid "Midtones"
-msgstr "半調色區域"
+msgstr "中間色調"
 
-#: ../libgimpbase/gimpbaseenums.c:621
+#: ../libgimpbase/gimpbaseenums.c:738
+msgctxt "transfer-mode"
 msgid "Highlights"
-msgstr "高亮度區域"
+msgstr "高亮度區"
 
-#: ../libgimpbase/gimpbaseenums.c:649
-msgid "Forward"
-msgstr ""
+#: ../libgimpbase/gimpbaseenums.c:767
+msgctxt "transform-direction"
+msgid "Normal (Forward)"
+msgstr "正常(向前)"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: ../libgimpbase/gimpbaseenums.c:768
+msgctxt "transform-direction"
+msgid "Corrective (Backward)"
+msgstr "矯正(向後)"
+
+#: ../libgimpbase/gimpbaseenums.c:799
+msgctxt "transform-resize"
+msgid "Adjust"
+msgstr "旋轉圖片後，擴大圖層尺寸"
+
+#: ../libgimpbase/gimpbaseenums.c:800
+msgctxt "transform-resize"
+msgid "Clip"
+msgstr "旋轉圖片後，裁切以符合畫布邊界"
+
+#: ../libgimpbase/gimpbaseenums.c:801
+msgctxt "transform-resize"
+msgid "Crop to result"
+msgstr "旋轉圖片後，矩形選取不透明區域"
+
+#: ../libgimpbase/gimpbaseenums.c:802
+msgctxt "transform-resize"
+msgid "Crop with aspect"
+msgstr "保持長寬比，矩形選取不透明區域"
+
+#: ../libgimpbase/gimpbaseenums.c:935
 #, fuzzy
-msgid "Backward"
-msgstr "黑"
-
-#: ../libgimpbase/gimpbaseenums.c:751
+msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
-msgstr "GIMP 內部程序"
+msgstr "找不到程序“%s”"
 
-#: ../libgimpbase/gimpbaseenums.c:752
+#: ../libgimpbase/gimpbaseenums.c:936
+msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "GIMP 增效模組"
+msgstr "GIMP 外掛程式"
 
-#: ../libgimpbase/gimpbaseenums.c:753
+#: ../libgimpbase/gimpbaseenums.c:937
+#, fuzzy
+msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
-msgstr "GIMP 擴展功能"
+msgstr "依延伸檔名"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libgimpbase/gimpbaseenums.c:938
+#, fuzzy
+msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
-msgstr "暫時性程序"
+msgstr "暫時檔案系統"
 
-#: ../libgimpbase/gimpmemsize.c:177
-#, c-format
-msgid "%d Bytes"
-msgstr "%d 位元組"
+#: ../libgimpbase/gimpbaseenums.c:1105
+msgctxt "text-direction"
+msgid "From left to right"
+msgstr "從左至右"
 
-#: ../libgimpbase/gimpmemsize.c:182
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f KB"
+#: ../libgimpbase/gimpbaseenums.c:1106
+msgctxt "text-direction"
+msgid "From right to left"
+msgstr "從右至左"
 
-#: ../libgimpbase/gimpmemsize.c:186
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f KB"
+#: ../libgimpbase/gimpbaseenums.c:1137
+msgctxt "text-hint-style"
+msgid "None"
+msgstr "無"
 
-#: ../libgimpbase/gimpmemsize.c:190
-#, c-format
-msgid "%d KB"
-msgstr "%d KB"
+#: ../libgimpbase/gimpbaseenums.c:1138
+msgctxt "text-hint-style"
+msgid "Slight"
+msgstr "輕微的"
 
-#: ../libgimpbase/gimpmemsize.c:197
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+#: ../libgimpbase/gimpbaseenums.c:1139
+msgctxt "text-hint-style"
+msgid "Medium"
+msgstr "中等的"
 
-#: ../libgimpbase/gimpmemsize.c:201
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
+#: ../libgimpbase/gimpbaseenums.c:1140
+msgctxt "text-hint-style"
+msgid "Full"
+msgstr "盡量多的"
 
-#: ../libgimpbase/gimpmemsize.c:205
-#, c-format
-msgid "%d MB"
-msgstr "%d MB"
+#: ../libgimpbase/gimpbaseenums.c:1171
+msgctxt "text-justification"
+msgid "Left justified"
+msgstr "左對齊"
 
-#: ../libgimpbase/gimpmemsize.c:212
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
+#: ../libgimpbase/gimpbaseenums.c:1172
+msgctxt "text-justification"
+msgid "Right justified"
+msgstr "右對齊"
 
-#: ../libgimpbase/gimpmemsize.c:216
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f GB"
+#: ../libgimpbase/gimpbaseenums.c:1173
+msgctxt "text-justification"
+msgid "Centered"
+msgstr "置中"
 
-#: ../libgimpbase/gimpmemsize.c:220
-#, c-format
-msgid "%d GB"
-msgstr "%d GB"
+#: ../libgimpbase/gimpbaseenums.c:1174
+msgctxt "text-justification"
+msgid "Filled"
+msgstr "左右對齊"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
+#: ../modules/color-selector-cmyk-lcms.c:424
+#: ../modules/color-selector-cmyk-lcms.c:430
+#: ../modules/display-filter-lcms.c:182
 msgid "(invalid UTF-8 string)"
 msgstr "無效的 UTF-8 文字)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
-msgid "Mode of operation for color management."
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig.c:42
-msgid "The color profile of your (primary) monitor."
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig.c:44
-msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
-"fallback."
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
-msgstr ""
-
+#. *
+#. * SECTION: gimpcolorconfig
+#. * @title: GimpColorConfig
+#. * @short_description: Color management settings.
+#. *
+#. * Color management settings.
+#. *
 #: ../libgimpconfig/gimpcolorconfig.c:50
-msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
+msgid "Mode of operation for color management."
+msgstr "色彩管理的操作模式"
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
-msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
+msgid "The color profile of your (primary) monitor."
+msgstr "您(主要)螢幕的色彩配置檔。"
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
-msgid "Sets how colors are mapped for your display."
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
 msgstr ""
+"當啟用時，將嘗試從視窗系統使用GIMP的顯示顏色配置檔。然後已配置的螢幕配置檔只"
+"作後備用。"
+
+#: ../libgimpconfig/gimpcolorconfig.c:58
+msgid "The default RGB working space color profile."
+msgstr "預設的 RGB 工作空間的色彩配置檔。"
+
+#: ../libgimpconfig/gimpcolorconfig.c:60
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "CMYK 色彩配置檔，使用於 RGB 和 CMYK 之間的轉換"
+
+#: ../libgimpconfig/gimpcolorconfig.c:62
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "色彩配置檔用於模擬印刷描述（軟打樣）。"
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "Sets how colors are mapped for your display."
+msgstr "設置色彩是如何為您的螢幕映射。"
+
+#: ../libgimpconfig/gimpcolorconfig.c:66
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr "設置色彩是如何轉換，從 RGB 工作空間到列印模擬裝置"
+
+#: ../libgimpconfig/gimpcolorconfig.c:69
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr "啟用後，列印模擬將標記色彩，該色彩不能代表目標色彩空間。"
+
+#: ../libgimpconfig/gimpcolorconfig.c:72
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "這顏色使用於標記超出全色彩範圍的顏色。"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgctxt "color-management-mode"
 msgid "No color management"
-msgstr ""
+msgstr "沒有色彩管理"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgctxt "color-management-mode"
 msgid "Color managed display"
-msgstr ""
+msgstr "色彩管理顯示"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgctxt "color-management-mode"
 msgid "Print simulation"
-msgstr ""
+msgstr "列印模擬"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+msgctxt "color-rendering-intent"
 msgid "Perceptual"
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
-msgid "Relative Colorimetric"
-msgstr "相對色度"
+msgstr "感知"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
-msgid "Saturation"
-msgstr "彩度"
+msgctxt "color-rendering-intent"
+msgid "Relative colorimetric"
+msgstr "相對色度"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
-msgid "Absolute Colorimetric"
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+msgctxt "color-rendering-intent"
+msgid "Saturation"
+msgstr "飽和度"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:60
+msgctxt "color-rendering-intent"
+msgid "Absolute colorimetric"
 msgstr "絕對色度"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr ""
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-#, fuzzy
-msgid "Convert to RGB workspace"
-msgstr "轉換成 RGB"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:105
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s 的值不是有效的 UTF-8 字串"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "%s 布林值應該是‘yes’或者‘no’，但實際上是‘%s’"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "%2$s 的值‘%1$s’無效"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "%2$s 的值‘%1$ld’無效"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "分析‘%s’的值時發生錯誤：%s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:515
-#: ../libgimpconfig/gimpscanner.c:596
+#: ../libgimpconfig/gimpconfig-iface.c:482
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:506
+#: ../libgimpconfig/gimpscanner.c:587
+#: ../libgimpwidgets/gimpcolorprofilestore.c:664
 msgid "fatal parse error"
 msgstr "分析時出現嚴重錯誤"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:387
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "無法展開 ${%s} 變數"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:87
+#: ../libgimpconfig/gimpconfigwriter.c:728
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "寫入‘%s’時發生錯誤：%s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "無法產生‘%s’所需的暫存檔：%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "無法開啟‘%s’來寫入資料：%s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:689
+#: ../libgimpconfig/gimpconfigwriter.c:709
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -723,7 +1069,7 @@ msgstr ""
 "寫入‘%s’的暫存檔時發生錯誤：%s\n"
 "沒有更改原來的檔案。"
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:717
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -732,64 +1078,45 @@ msgstr ""
 "寫入‘%s’的暫存檔時發生錯誤：%s\n"
 "根本沒有產生檔案。"
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "寫入‘%s’時發生錯誤：%s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "無法製作‘%s’：%s"
 
-#: ../libgimpconfig/gimpscanner.c:102
+#: ../libgimpconfig/gimpscanner.c:263
 #, c-format
-msgid "Could not open '%s' for reading: %s"
-msgstr "無法開啟‘%s’來讀取資料：%s"
-
-#: ../libgimpconfig/gimpscanner.c:272
 msgid "invalid UTF-8 string"
 msgstr "無效的 UTF-8 字串"
 
-#: ../libgimpconfig/gimpscanner.c:623
+#: ../libgimpconfig/gimpscanner.c:614
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "分析第 %2$d 行的‘%1$s’時發生錯誤：%3$s"
 
-#: ../libgimpmodule/gimpmodule.c:180
-#, c-format
-msgid "Loading module: '%s'\n"
-msgstr "載入模組：‘%s’\n"
-
-#: ../libgimpmodule/gimpmodule.c:197 ../libgimpmodule/gimpmodule.c:216
-#: ../libgimpmodule/gimpmodule.c:330 ../libgimpmodule/gimpmodule.c:358
-#: ../libgimpmodule/gimpmodule.c:470
+#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
+#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
+#: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "載入模組‘%s’時出現錯誤：%s"
 
-#: ../libgimpmodule/gimpmodule.c:286
-#, c-format
-msgid "Skipping module: '%s'\n"
-msgstr "忽略模組：‘%s’\n"
-
-#: ../libgimpmodule/gimpmodule.c:426
+#: ../libgimpmodule/gimpmodule.c:385
 msgid "Module error"
 msgstr "模組發生錯誤"
 
-#: ../libgimpmodule/gimpmodule.c:427
+#: ../libgimpmodule/gimpmodule.c:386
 msgid "Loaded"
 msgstr "已載入"
 
-#: ../libgimpmodule/gimpmodule.c:428
+#: ../libgimpmodule/gimpmodule.c:387
 msgid "Load failed"
 msgstr "載入失敗"
 
-#: ../libgimpmodule/gimpmodule.c:429
+#: ../libgimpmodule/gimpmodule.c:388
 msgid "Not loaded"
 msgstr "未載入"
 
-#: ../libgimpthumb/gimpthumb-utils.c:125
+#: ../libgimpthumb/gimpthumb-utils.c:131
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -798,428 +1125,1022 @@ msgstr ""
 "找不到正確的個人資料夾。\n"
 "縮圖會改為儲存至存放暫時性檔案的資料夾 (%s)。"
 
-#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "無法建立縮圖資料夾‘%s’。"
 
-#: ../libgimpthumb/gimpthumbnail.c:919
+#: ../libgimpthumb/gimpthumbnail.c:508
+#, c-format
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "縮圖沒有 Thumb::URI 標籤"
+
+#: ../libgimpthumb/gimpthumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "無法產生 %s 的縮圖: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:129
+#: ../libgimpwidgets/gimpbrowser.c:112
 msgid "_Search:"
 msgstr "搜尋(_S):"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:118
+#: ../libgimpwidgets/gimpcolorbutton.c:132
 msgid "_Foreground Color"
 msgstr "前景顏色(_F)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:122
+#: ../libgimpwidgets/gimpcolorbutton.c:136
 msgid "_Background Color"
 msgstr "背景顏色(_B)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:126
+#: ../libgimpwidgets/gimpcolorbutton.c:140
 msgid "Blac_k"
 msgstr "黑(_K)"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:130
+#: ../libgimpwidgets/gimpcolorbutton.c:144
 msgid "_White"
 msgstr "白(_W)"
 
-#: ../libgimpwidgets/gimpcolorscales.c:129
+#: ../libgimpwidgets/gimpcolorprofilestore.c:152
+msgid "Select color profile from disk..."
+msgstr "從磁碟選取色彩配置檔..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:288
+msgctxt "profile"
+msgid "None"
+msgstr "無"
+
+#: ../libgimpwidgets/gimpcolorscales.c:108
 msgid "Scales"
 msgstr "推桿"
 
-#: ../libgimpwidgets/gimpcolorselection.c:214
+#: ../libgimpwidgets/gimpcolorselection.c:217
 msgid "Current:"
 msgstr "目前顏色:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:236
+#: ../libgimpwidgets/gimpcolorselection.c:226
 msgid "Old:"
 msgstr "原有顏色:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:281
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "類似 HTML 和 CSS 所用的 16 進位色彩表示方式"
+#: ../libgimpwidgets/gimpcolorselection.c:311
+#, fuzzy
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr "常用於 HTML 和 CSS 的十六進位顏色碼。這個項目也可以使用 CSS 色彩名稱。"
 
-#: ../libgimpwidgets/gimpcolorselection.c:286
-msgid "HTML _Notation:"
-msgstr "_HTML 表示方式:"
+#: ../libgimpwidgets/gimpcolorselection.c:317
+msgid "HTML _notation:"
+msgstr "網頁標記(_N):"
 
-#: ../libgimpwidgets/gimpfileentry.c:351
+#: ../libgimpwidgets/gimpfileentry.c:197
+msgid "Open a file selector to browse your folders"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:198
+msgid "Open a file selector to browse your files"
+msgstr ""
+
+#: ../libgimpwidgets/gimpfileentry.c:358
 msgid "Select Folder"
 msgstr "選取資料夾"
 
-#: ../libgimpwidgets/gimpfileentry.c:353
+#: ../libgimpwidgets/gimpfileentry.c:360
 msgid "Select File"
 msgstr "選取檔案"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#: ../libgimpwidgets/gimphelpui.c:430
+#, fuzzy
+msgid "Press F1 for more help"
+msgstr "使用「%s --help」以獲得更多資訊。"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:217
 msgid "Kilobytes"
 msgstr "KB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#: ../libgimpwidgets/gimpmemsizeentry.c:218
 msgid "Megabytes"
 msgstr "MB"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#: ../libgimpwidgets/gimpmemsizeentry.c:219
 msgid "Gigabytes"
 msgstr "GB"
 
-#: ../libgimpwidgets/gimppatheditor.c:243
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:278
+#: ../libgimpwidgets/gimppageselector.c:1176
+#, fuzzy
+msgid "Nothing selected"
+msgstr "尚未選擇！"
+
+#: ../libgimpwidgets/gimppageselector.c:296
+#, fuzzy
+msgid "Select _All"
+msgstr "全部選取(_A)"
+
+#: ../libgimpwidgets/gimppageselector.c:316
+#, fuzzy
+msgid "Select _range:"
+msgstr "選擇要調整的範圍"
+
+#: ../libgimpwidgets/gimppageselector.c:328
+#, fuzzy
+msgid "Open _pages as"
+msgstr "開啟為新圖片"
+
+#: ../libgimpwidgets/gimppageselector.c:429
+#, fuzzy
+msgid "Page 000"
+msgstr "官方網頁：%s"
+
+#: ../libgimpwidgets/gimppageselector.c:517
+#: ../libgimpwidgets/gimppageselector.c:754
+#, fuzzy, c-format
+msgid "Page %d"
+msgstr "第 %d 頁"
+
+#: ../libgimpwidgets/gimppageselector.c:1181
+#, fuzzy
+msgid "One page selected"
+msgstr "從游標位置開始選取頁"
+
+#: ../libgimpwidgets/gimppageselector.c:1188
+#: ../libgimpwidgets/gimppageselector.c:1192
+#, fuzzy, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "已選取收件人"
+
+#: ../libgimpwidgets/gimppatheditor.c:234
 msgid "Writable"
 msgstr "可寫入"
 
-#: ../libgimpwidgets/gimppatheditor.c:252
+#: ../libgimpwidgets/gimppatheditor.c:243
 msgid "Folder"
 msgstr "資料夾"
 
-#: ../libgimpwidgets/gimppickbutton.c:138
+#: ../libgimpwidgets/gimppickbutton.c:127
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr "按下滴管，然後在畫面中選取任何想要的顏色。"
 
-#: ../libgimpwidgets/gimppreviewarea.c:126
-msgid "Check Size"
-msgstr "方格大小"
-
-#: ../libgimpwidgets/gimppreviewarea.c:133
-msgid "Check Style"
-msgstr "方格樣式"
-
-#. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:240
+#. toggle button to (de)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:287
 msgid "_Preview"
 msgstr "預覽(_P)"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1798
-#, c-format
-msgid "This text input field is limited to %d characters."
-msgstr "本文字輸入欄位的長度限制為 %d 個字符。"
+#: ../libgimpwidgets/gimppreviewarea.c:103
+msgid "Check Size"
+msgstr "方格大小"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimppreviewarea.c:110
+msgid "Check Style"
+msgstr "方格樣式"
+
+#: ../libgimpwidgets/gimppropwidgets.c:1875
+#, fuzzy, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "本文字輸入欄位的長度限制為 %d 個字符。"
+
+#: ../libgimpwidgets/gimpstock.c:127
 msgid "Anchor"
 msgstr "固定"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:128
 msgid "C_enter"
 msgstr "中央(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:129
 msgid "_Duplicate"
-msgstr "複製(_D)"
+msgstr "重製(_D)"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:130
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:131
 msgid "Linked"
 msgstr "連結"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:132
 msgid "Paste as New"
-msgstr "貼上成為新影像"
+msgstr "貼上成為新圖片"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:133
 msgid "Paste Into"
 msgstr "貼上成為圖層"
 
-#: ../libgimpwidgets/gimpstock.c:120
+#: ../libgimpwidgets/gimpstock.c:134
 msgid "_Reset"
 msgstr "重設(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:121
+#: ../libgimpwidgets/gimpstock.c:135
 msgid "Visible"
 msgstr "可見"
 
-#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
 msgstr "描邊(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:173
+#: ../libgimpwidgets/gimpstock.c:187
 msgid "L_etter Spacing"
 msgstr "字距(_E)"
 
-#: ../libgimpwidgets/gimpstock.c:174
+#: ../libgimpwidgets/gimpstock.c:188
 msgid "L_ine Spacing"
 msgstr "行距(_I)"
 
-#: ../libgimpwidgets/gimpstock.c:190
+#: ../libgimpwidgets/gimpstock.c:204
 msgid "_Resize"
 msgstr "調整尺寸(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:297
+#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:339
 msgid "_Scale"
 msgstr "縮放(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:276
-msgid "Crop"
-msgstr "裁剪"
+#: ../libgimpwidgets/gimpstock.c:314
+#, fuzzy
+msgid "Cr_op"
+msgstr "透明度(_A)："
 
-#: ../libgimpwidgets/gimpstock.c:293
+#: ../libgimpwidgets/gimpstock.c:334
 msgid "_Transform"
 msgstr "變換(_T)"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:338
 msgid "_Rotate"
 msgstr "旋轉(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:340
 msgid "_Shear"
 msgstr "推移(_S)"
 
-#: ../libgimpwidgets/gimpunitmenu.c:302
+#: ../libgimpwidgets/gimpunitmenu.c:290
 msgid "More..."
 msgstr "其它..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:612
+#: ../libgimpwidgets/gimpunitmenu.c:605
 msgid "Unit Selection"
 msgstr "選擇單位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:660
+#: ../libgimpwidgets/gimpunitmenu.c:654
 msgid "Unit"
 msgstr "單位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:664
+#: ../libgimpwidgets/gimpunitmenu.c:658
 msgid "Factor"
 msgstr "比例"
 
-#: ../libgimpwidgets/gimpwidgets.c:1003
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
-#: ../libgimpwidgets/gimpwidgets.c:1007
+#: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
 msgstr "產生隨機數(_N)"
 
-#: ../libgimpwidgets/gimpwidgets.c:1020
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
-#: ../libgimpwidgets/gimpwidgets.c:1024
+#: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgets-private.c:49
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "不可用"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "螢幕"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+msgctxt "input-mode"
+msgid "Window"
+msgstr "視窗"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Square"
+msgstr "正方形"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Portrait"
+msgstr "直向"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#, fuzzy
+msgctxt "aspect-type"
+msgid "Landscape"
+msgstr "橫向"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "色相(_H)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Hue"
 msgstr "色相"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_S"
-msgstr "彩度(_S)"
+msgstr "飽和度(_S)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Saturation"
+msgstr "飽和度"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "明度(_V)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Value"
 msgstr "明度"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_R"
-msgstr "紅(_R)"
+msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
+msgid "Red"
+msgstr "紅"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_G"
-msgstr "綠(_G)"
+msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
+msgid "Green"
+msgstr "綠"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_B"
-msgstr "藍(_B)"
+msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
+msgid "Blue"
+msgstr "藍"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#, fuzzy
+msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "透明(_A)"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
+msgid "Alpha"
+msgstr "透明"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:161
+msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "圖層"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:162
+msgctxt "page-selector-target"
 msgid "Images"
-msgstr "影像"
+msgstr "圖片"
 
-#: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
+#: ../libgimpwidgets/gimpwidgetsenums.c:223
+msgctxt "zoom-type"
+msgid "Zoom in"
+msgstr "拉近"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:224
+msgctxt "zoom-type"
+msgid "Zoom out"
+msgstr "拉遠"
+
+#: ../modules/color-selector-cmyk-lcms.c:86
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK 色彩選擇器（使用色彩配置檔）"
+
+#: ../modules/color-selector-cmyk-lcms.c:149
+#: ../modules/color-selector-cmyk.c:101
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+#: ../modules/color-selector-cmyk-lcms.c:168
+#: ../modules/color-selector-cmyk.c:124
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+#: ../modules/color-selector-cmyk-lcms.c:170
+#: ../modules/color-selector-cmyk.c:126
+msgid "_M"
+msgstr "_M"
+
+#. Yellow
+#: ../modules/color-selector-cmyk-lcms.c:172
+#: ../modules/color-selector-cmyk.c:128
+msgid "_Y"
+msgstr "_Y"
+
+#. Key (Black)
+#: ../modules/color-selector-cmyk-lcms.c:174
+#: ../modules/color-selector-cmyk.c:130
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/color-selector-cmyk-lcms.c:178
+#: ../modules/color-selector-cmyk.c:134
+msgid "Cyan"
+msgstr "氰藍"
+
+#: ../modules/color-selector-cmyk-lcms.c:179
+#: ../modules/color-selector-cmyk.c:135
+msgid "Magenta"
+msgstr "洋紅"
+
+#: ../modules/color-selector-cmyk-lcms.c:180
+#: ../modules/color-selector-cmyk.c:136
+msgid "Yellow"
+msgstr "黃"
+
+#: ../modules/color-selector-cmyk-lcms.c:181
+#: ../modules/color-selector-cmyk.c:137
+msgid "Black"
+msgstr "黑"
+
+#: ../modules/color-selector-cmyk-lcms.c:412
+msgid "Profile: (none)"
+msgstr "配置檔：(無)"
+
+#: ../modules/color-selector-cmyk-lcms.c:433
+#, c-format
+msgid "Profile: %s"
+msgstr "配置檔：%s"
+
+#: ../modules/color-selector-cmyk.c:70
+msgid "CMYK color selector"
+msgstr "CMYK 色彩選擇程序"
+
+#: ../modules/color-selector-cmyk.c:171
+#, fuzzy
+msgid "Black _pullout:"
+msgstr "黑色 joker"
+
+#: ../modules/color-selector-cmyk.c:188
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: ../modules/color-selector-water.c:81
+msgid "Watercolor style color selector"
+msgstr "水彩方式色彩選擇程序"
+
+#: ../modules/color-selector-water.c:117
+msgid "Watercolor"
+msgstr "水彩"
+
+#: ../modules/color-selector-water.c:185
+msgid "Pressure"
+msgstr "壓力"
+
+#: ../modules/color-selector-wheel.c:74
+#, fuzzy
+msgid "HSV color wheel"
+msgstr "色相環的位置。"
+
+#: ../modules/color-selector-wheel.c:105
+msgid "Wheel"
+msgstr "色環"
+
+#: ../modules/controller-dx-dinput.c:155
+#, fuzzy
+msgid "DirectX DirectInput event controller"
+msgstr "選擇控制器事件動作"
+
+#: ../modules/controller-dx-dinput.c:195
+#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
+#, fuzzy
+msgid "Device:"
+msgstr "裝置:"
+
+#: ../modules/controller-dx-dinput.c:196
+msgid "The device to read DirectInput events from."
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:205
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller-dx-dinput.c:419
+#, fuzzy, c-format
+msgid "Button %d"
+msgstr "按鈕"
+
+#: ../modules/controller-dx-dinput.c:422
+#, fuzzy, c-format
+msgid "Button %d Press"
+msgstr "按下滑鼠按鈕"
+
+#: ../modules/controller-dx-dinput.c:425
+#, fuzzy, c-format
+msgid "Button %d Release"
+msgstr "放開滑鼠按鈕"
+
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:89
+#, fuzzy
+msgid "X Move Left"
+msgstr "向左移動"
+
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:90
+#, fuzzy
+msgid "X Move Right"
+msgstr "向右移動"
+
+#: ../modules/controller-dx-dinput.c:451
+#, fuzzy
+msgid "Y Move Away"
+msgstr "將%s 移至%s 上面。"
+
+#: ../modules/controller-dx-dinput.c:454
+#, fuzzy
+msgid "Y Move Near"
+msgstr "下載接近："
+
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:93
+#, fuzzy
+msgid "Z Move Up"
+msgstr "上移"
+
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:94
+#, fuzzy
+msgid "Z Move Down"
+msgstr "下移"
+
+#: ../modules/controller-dx-dinput.c:469
+#, fuzzy
+msgid "X Axis Tilt Away"
+msgstr "Axis related headers"
+
+#: ../modules/controller-dx-dinput.c:472
+#, fuzzy
+msgid "X Axis Tilt Near"
+msgstr "Axis related headers"
+
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:98
+#, fuzzy
+msgid "Y Axis Tilt Right"
+msgstr "右方任何空位"
+
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:99
+#, fuzzy
+msgid "Y Axis Tilt Left"
+msgstr "左方任何空位"
+
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:100
+#, fuzzy
+msgid "Z Axis Turn Left"
+msgstr "禁止左轉"
+
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:101
+#, fuzzy
+msgid "Z Axis Turn Right"
+msgstr "禁止右轉"
+
+#: ../modules/controller-dx-dinput.c:501
+#, fuzzy, c-format
+msgid "Slider %d Increase"
+msgstr "增加音量"
+
+#: ../modules/controller-dx-dinput.c:504
+#, fuzzy, c-format
+msgid "Slider %d Decrease"
+msgstr "減少音量"
+
+#: ../modules/controller-dx-dinput.c:514
+#, fuzzy, c-format
+msgid "POV %d X View"
+msgstr "3_D 國際象棋檢視"
+
+#: ../modules/controller-dx-dinput.c:517
+#, fuzzy, c-format
+msgid "POV %d Y View"
+msgstr "3_D 國際象棋檢視"
+
+#: ../modules/controller-dx-dinput.c:520
+#, fuzzy, c-format
+msgid "POV %d Return"
+msgstr "<b>返回通知</b>"
+
+#: ../modules/controller-dx-dinput.c:1082
+#, fuzzy
+msgid "DirectInput Events"
+msgstr "系統事件"
+
+#: ../modules/controller-dx-dinput.c:1093
+#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
+#, fuzzy
+msgid "No device configured"
+msgstr "找不到任何裝置"
+
+#: ../modules/controller-dx-dinput.c:1118
+#: ../modules/controller-linux-input.c:587
+#, fuzzy
+msgid "Device not available"
+msgstr "無法提供服務"
+
+#: ../modules/controller-linux-input.c:57
+#, fuzzy
+msgid "Button 0"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:58
+#, fuzzy
+msgid "Button 1"
+msgstr "按鈕 1"
+
+#: ../modules/controller-linux-input.c:59
+#, fuzzy
+msgid "Button 2"
+msgstr "按鈕 2"
+
+#: ../modules/controller-linux-input.c:60
+#, fuzzy
+msgid "Button 3"
+msgstr "按鈕 3"
+
+#: ../modules/controller-linux-input.c:61
+#, fuzzy
+msgid "Button 4"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:62
+#, fuzzy
+msgid "Button 5"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:63
+#, fuzzy
+msgid "Button 6"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:64
+#, fuzzy
+msgid "Button 7"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:65
+#, fuzzy
+msgid "Button 8"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:66
+#, fuzzy
+msgid "Button 9"
+msgstr "按鈕"
+
+#: ../modules/controller-linux-input.c:67
+#, fuzzy
+msgid "Button Mouse"
+msgstr "滑鼠按鈕(_B):"
+
+#: ../modules/controller-linux-input.c:68
+#, fuzzy
+msgid "Button Left"
+msgstr "滑鼠左鍵"
+
+#: ../modules/controller-linux-input.c:69
+#, fuzzy
+msgid "Button Right"
+msgstr "滑鼠右鍵"
+
+#: ../modules/controller-linux-input.c:70
+#, fuzzy
+msgid "Button Middle"
+msgstr "滑鼠中鍵"
+
+#: ../modules/controller-linux-input.c:71
+#, fuzzy
+msgid "Button Side"
+msgstr "白方"
+
+#: ../modules/controller-linux-input.c:72
+#, fuzzy
+msgid "Button Extra"
+msgstr "特大"
+
+#: ../modules/controller-linux-input.c:73
+#, fuzzy
+msgid "Button Forward"
+msgstr "往前(_F)"
+
+#: ../modules/controller-linux-input.c:74
+#, fuzzy
+msgid "Button Back"
+msgstr "向後捲動(_B):"
+
+#: ../modules/controller-linux-input.c:75
+#, fuzzy
+msgid "Button Task"
+msgstr "儲存工作"
+
+#: ../modules/controller-linux-input.c:77
+#, fuzzy
+msgid "Button Wheel"
+msgstr "色彩圓盤"
+
+#: ../modules/controller-linux-input.c:80
+#, fuzzy
+msgid "Button Gear Down"
+msgstr "第一按鈕「下」的距離"
+
+#: ../modules/controller-linux-input.c:83
+#, fuzzy
+msgid "Button Gear Up"
+msgstr "第一按鈕「上」的距離"
+
+#: ../modules/controller-linux-input.c:91
+#, fuzzy
+msgid "Y Move Forward"
+msgstr "往前(_F)"
+
+#: ../modules/controller-linux-input.c:92
+#, fuzzy
+msgid "Y Move Back"
+msgstr "向後捲動(_B):"
+
+#: ../modules/controller-linux-input.c:96
+#, fuzzy
+msgid "X Axis Tilt Forward"
+msgstr "次要前進鍵"
+
+#: ../modules/controller-linux-input.c:97
+#, fuzzy
+msgid "X Axis Tilt Back"
+msgstr "回到比對項目"
+
+#: ../modules/controller-linux-input.c:103
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:104
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller-linux-input.c:105
+#, fuzzy
+msgid "Dial Turn Left"
+msgstr "禁止左轉"
+
+#: ../modules/controller-linux-input.c:106
+#, fuzzy
+msgid "Dial Turn Right"
+msgstr "禁止右轉"
+
+#: ../modules/controller-linux-input.c:107
+#, fuzzy
+msgid "Wheel Turn Left"
+msgstr "禁止左轉"
+
+#: ../modules/controller-linux-input.c:108
+#, fuzzy
+msgid "Wheel Turn Right"
+msgstr "禁止右轉"
+
+#: ../modules/controller-linux-input.c:177
+#, fuzzy
+msgid "Linux input event controller"
+msgstr "選擇控制器事件動作"
+
+#: ../modules/controller-linux-input.c:218
+msgid "The name of the device to read Linux Input events from."
+msgstr ""
+
+#: ../modules/controller-linux-input.c:229
+#, fuzzy
+msgid "Linux Input"
+msgstr "輸入法(_I)"
+
+#: ../modules/controller-linux-input.c:512
+#, fuzzy
+msgid "Linux Input Events"
+msgstr "有關用戶界面的事件"
+
+#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
+#: ../modules/controller-midi.c:479
+#, fuzzy, c-format
+msgid "Reading from %s"
+msgstr "從檔案讀取時發生錯誤：%s"
+
+#: ../modules/controller-linux-input.c:568
+#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
+#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
+#, fuzzy, c-format
+msgid "Device not available: %s"
+msgstr "無法提供服務"
+
+#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
+#, fuzzy
+msgid "End of file"
+msgstr "已到達檔案的末端"
+
+#: ../modules/controller-midi.c:163
+#, fuzzy
+msgid "MIDI event controller"
+msgstr "選擇控制器事件動作"
+
+#: ../modules/controller-midi.c:202
+msgid "The name of the device to read MIDI events from."
+msgstr ""
+
+#: ../modules/controller-midi.c:205
+#, fuzzy
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "請輸入密語來使用。"
+
+#: ../modules/controller-midi.c:220
+msgid "Channel:"
+msgstr "色版："
+
+#: ../modules/controller-midi.c:221
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+
+#: ../modules/controller-midi.c:225
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller-midi.c:354
+#, fuzzy, c-format
+msgid "Note %02x on"
+msgstr "在此頁筆記上使用工具"
+
+#: ../modules/controller-midi.c:357
+#, fuzzy, c-format
+msgid "Note %02x off"
+msgstr "將 ~a 移離桌面"
+
+#: ../modules/controller-midi.c:360
+#, fuzzy, c-format
+msgid "Controller %03d"
+msgstr "控制著"
+
+#: ../modules/controller-midi.c:407
+#, fuzzy
+msgid "MIDI Events"
+msgstr "系統事件"
+
+#: ../modules/controller-midi.c:425
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller-midi.c:427
+msgid "GIMP MIDI Input Controller"
+msgstr "GIMP MIDI 輸入控制器"
+
+#: ../modules/display-filter-color-blind.c:66
+msgid "Protanopia (insensitivity to red)"
 msgstr "紅色盲 (Protanopia)"
 
-#: ../modules/cdisplay_colorblind.c:69
+#: ../modules/display-filter-color-blind.c:68
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "綠色盲 (Deuteranopia)"
 
-#: ../modules/cdisplay_colorblind.c:71
+#: ../modules/display-filter-color-blind.c:70
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "藍色盲 (Tritanopia)"
 
-#: ../modules/cdisplay_colorblind.c:200
+#: ../modules/display-filter-color-blind.c:197
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "模擬色盲濾色片 (Brettel-Vienot-Mollon 演算法)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/display-filter-color-blind.c:260
 msgid "Color Deficient Vision"
 msgstr "模擬色盲視覺"
 
-#: ../modules/cdisplay_colorblind.c:503
-msgid "Color _Deficiency Type:"
-msgstr "色盲類型(_D):"
+#: ../modules/display-filter-color-blind.c:482
+#, fuzzy
+msgid "Color _deficiency type:"
+msgstr "背景顏色顯示方式"
 
-#: ../modules/cdisplay_gamma.c:91
+#: ../modules/display-filter-gamma.c:89
 msgid "Gamma color display filter"
 msgstr "Gamma 色彩顯示濾色片"
 
-#: ../modules/cdisplay_gamma.c:160
+#: ../modules/display-filter-gamma.c:128
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/display-filter-gamma.c:231
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../modules/cdisplay_highcontrast.c:91
+#: ../modules/display-filter-high-contrast.c:89
 msgid "High Contrast color display filter"
 msgstr "高對比色彩濾色片"
 
-#: ../modules/cdisplay_highcontrast.c:160
+#: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "對比"
 
-#: ../modules/cdisplay_highcontrast.c:251
-msgid "Contrast C_ycles:"
-msgstr ""
+#: ../modules/display-filter-high-contrast.c:231
+#, fuzzy
+msgid "Contrast c_ycles:"
+msgstr "影片畫面的反差度"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/display-filter-lcms.c:101
 msgid "Color management display filter using ICC color profiles"
-msgstr "應用 ICC 色彩描述檔作為色彩管理的濾色片"
+msgstr "應用 ICC 色彩配置檔作為色彩管理的濾色片"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/display-filter-lcms.c:133
 msgid "Color Management"
 msgstr "色彩管理"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/display-filter-lcms.c:190
+msgid "None"
+msgstr "無"
+
+#: ../modules/display-filter-lcms.c:211
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/display-filter-lcms.c:225
+#, fuzzy
 msgid "Mode of operation:"
-msgstr ""
+msgstr "操作模式(_M):"
 
-#: ../modules/cdisplay_lcms.c:322
-msgid "RGB workspace profile:"
-msgstr ""
+#: ../modules/display-filter-lcms.c:232
+msgid "Image profile:"
+msgstr "圖片配置檔："
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/display-filter-lcms.c:240
 msgid "Monitor profile:"
-msgstr ""
+msgstr "螢幕配置檔："
 
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/display-filter-lcms.c:248
 msgid "Print simulation profile:"
-msgstr ""
+msgstr "列印模擬配置檔："
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/display-filter-proof.c:96
 msgid "Color proof filter using ICC color profile"
-msgstr "應用 ICC 色彩描述檔作為色彩打樣的濾色片"
+msgstr "應用 ICC 色彩配置檔作為色彩打樣的濾色片"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/display-filter-proof.c:144
 msgid "Color Proof"
 msgstr "色彩打樣"
 
-#: ../modules/cdisplay_proof.c:346
-msgid "_Intent:"
-msgstr ""
-
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/display-filter-proof.c:310
 msgid "Choose an ICC Color Profile"
-msgstr "請選擇 ICC 色彩描述檔"
+msgstr "請選擇 ICC 色彩配置檔"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/display-filter-proof.c:337
+#, fuzzy
+msgid "All files (*.*)"
+msgstr "所有檔案 (*.*)"
+
+#: ../modules/display-filter-proof.c:342
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC 色彩配置檔(*.icc, *.icm)"
+
+#: ../modules/display-filter-proof.c:400
 msgid "_Profile:"
-msgstr "描述檔(_P):"
+msgstr "配置檔(_P)："
 
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/display-filter-proof.c:406
+#, fuzzy
+msgid "_Intent:"
+msgstr "繪製目標"
+
+#: ../modules/display-filter-proof.c:411
+#, fuzzy
 msgid "_Black Point Compensation"
-msgstr ""
-
-#: ../modules/colorsel_cmyk.c:73
-msgid "CMYK color selector"
-msgstr "CMYK 色彩選擇程序"
-
-#: ../modules/colorsel_cmyk.c:130
-msgid "CMYK"
-msgstr "CMYK"
-
-#: ../modules/colorsel_cmyk.c:147
-msgid "_C"
-msgstr "_C"
-
-#: ../modules/colorsel_cmyk.c:148
-msgid "_M"
-msgstr "_M"
-
-#: ../modules/colorsel_cmyk.c:149
-msgid "_Y"
-msgstr "_Y"
-
-#: ../modules/colorsel_cmyk.c:150
-msgid "_K"
-msgstr "_K"
-
-#: ../modules/colorsel_cmyk.c:154
-msgid "Cyan"
-msgstr "氰藍"
-
-#: ../modules/colorsel_cmyk.c:155
-msgid "Magenta"
-msgstr "洋紅"
-
-#: ../modules/colorsel_cmyk.c:156
-msgid "Yellow"
-msgstr "黃"
-
-#: ../modules/colorsel_cmyk.c:157
-msgid "Black"
-msgstr "黑"
-
-#: ../modules/colorsel_cmyk.c:191
-msgid "Black _Pullout:"
-msgstr ""
-
-#: ../modules/colorsel_cmyk.c:208
-msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
-
-#: ../modules/colorsel_triangle.c:104
-msgid "Painter-style triangle color selector"
-msgstr "畫家方式的三角形色彩選擇程序"
-
-#: ../modules/colorsel_triangle.c:170
-msgid "Triangle"
-msgstr "三角"
-
-#: ../modules/colorsel_water.c:88
-msgid "Watercolor style color selector"
-msgstr "水彩方式色彩選擇程序"
-
-#: ../modules/colorsel_water.c:154
-msgid "Watercolor"
-msgstr "水彩"
-
-#: ../modules/colorsel_water.c:220
-msgid "Pressure"
-msgstr "壓力"
-
-#~ msgid "Protanopia (insensitivity to red)"
-#~ msgstr "紅色盲 (Protanopia)"
+msgstr "選取黑色位置"

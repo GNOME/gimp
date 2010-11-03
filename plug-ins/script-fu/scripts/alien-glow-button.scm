@@ -75,13 +75,13 @@
         (img (car (gimp-image-new img-width img-height RGB)))
         (bg-layer (car (gimp-layer-new img
                                        img-width img-height RGBA-IMAGE
-                                       "Background" 100 NORMAL-MODE)))
+                                       _"Background" 100 NORMAL-MODE)))
         (glow-layer (car (gimp-layer-new img
                                          img-width img-height RGBA-IMAGE
-                                         "Glow" 100 NORMAL-MODE)))
+                                         _"Glow" 100 NORMAL-MODE)))
         (button-layer (car (gimp-layer-new img
                                            layer-width layer-height RGBA-IMAGE
-                                           "Button" 100 NORMAL-MODE)))
+                                           _"Button" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
@@ -90,15 +90,15 @@
 
     ; Create bumpmap layer
 
-    (gimp-image-add-layer img bg-layer -1)
+    (gimp-image-insert-layer img bg-layer -1 -1)
     (gimp-context-set-foreground '(0 0 0))
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
-    (gimp-image-add-layer img glow-layer -1)
+    (gimp-image-insert-layer img glow-layer -1 -1)
 
     ; Create text layer
 
-    (gimp-image-add-layer img button-layer -1)
+    (gimp-image-insert-layer img button-layer -1 -1)
     (gimp-layer-set-offsets button-layer (/ glow-radius 2) (/ glow-radius 2))
     (gimp-selection-none img)
     (gimp-rect-select img 0 0 img-width img-height CHANNEL-OP-REPLACE FALSE 0)

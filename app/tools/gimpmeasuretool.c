@@ -220,13 +220,12 @@ gimp_measure_tool_button_press (GimpTool            *tool,
                                         measure->x[i],
                                         measure->y[i],
                                         TARGET * 2, TARGET * 2,
-                                        GTK_ANCHOR_CENTER))
+                                        GIMP_HANDLE_ANCHOR_CENTER))
             {
               if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
                 {
-                  GimpGuide *guide;
-                  gboolean   create_hguide;
-                  gboolean   create_vguide;
+                  gboolean create_hguide;
+                  gboolean create_vguide;
 
                   create_hguide = ((state & GDK_CONTROL_MASK) &&
                                    (measure->y[i] ==
@@ -240,32 +239,24 @@ gimp_measure_tool_button_press (GimpTool            *tool,
                                            0,
                                            gimp_image_get_width (image))));
 
-                  if (create_hguide && create_vguide)
-                    gimp_image_undo_group_start (image,
-                                                 GIMP_UNDO_GROUP_GUIDE,
-                                                 _("Add Guides"));
-
-                  if (create_hguide)
-                    {
-                      guide = gimp_image_add_hguide (image,
-                                                     measure->y[i],
-                                                     TRUE);
-                      gimp_image_update_guide (image, guide);
-                    }
-
-                  if (create_vguide)
-                    {
-                      guide = gimp_image_add_vguide (image,
-                                                     measure->x[i],
-                                                     TRUE);
-                      gimp_image_update_guide (image, guide);
-                    }
-
-                  if (create_hguide && create_vguide)
-                    gimp_image_undo_group_end (image);
-
                   if (create_hguide || create_vguide)
-                    gimp_image_flush (image);
+                    {
+                      if (create_hguide && create_vguide)
+                        gimp_image_undo_group_start (image,
+                                                     GIMP_UNDO_GROUP_GUIDE,
+                                                     _("Add Guides"));
+
+                      if (create_hguide)
+                        gimp_image_add_hguide (image, measure->y[i], TRUE);
+
+                      if (create_vguide)
+                        gimp_image_add_vguide (image, measure->x[i], TRUE);
+
+                      if (create_hguide && create_vguide)
+                        gimp_image_undo_group_end (image);
+
+                      gimp_image_flush (image);
+                    }
 
                   measure->function = GUIDING;
                   break;
@@ -556,7 +547,7 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
                                         measure->x[i],
                                         measure->y[i],
                                         TARGET * 2, TARGET * 2,
-                                        GTK_ANCHOR_CENTER))
+                                        GIMP_HANDLE_ANCHOR_CENTER))
             {
               in_handle = TRUE;
 
@@ -664,16 +655,11 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (draw_tool);
   GimpTool        *tool    = GIMP_TOOL (draw_tool);
-  GimpCanvasItem  *stroke_group;
-  GimpCanvasItem  *item;
+  GimpCanvasGroup *stroke_group;
   gint             i;
   gint             draw_arc = 0;
 
-  stroke_group = gimp_canvas_group_new ();
-  gimp_canvas_group_set_group_stroking (GIMP_CANVAS_GROUP (stroke_group),
-                                        TRUE);
-  gimp_draw_tool_add_item (draw_tool, stroke_group);
-  g_object_unref (stroke_group);
+  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
 
   for (i = 0; i < measure->num_points; i++)
     {
@@ -685,7 +671,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                      measure->y[i],
                                      TARGET,
                                      TARGET,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
       else
         {
@@ -695,19 +681,20 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                      measure->y[i],
                                      TARGET * 2,
                                      TARGET * 2,
-                                     GTK_ANCHOR_CENTER);
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
 
       if (i > 0)
         {
-          item = gimp_draw_tool_add_line (draw_tool,
-                                          measure->x[0],
-                                          measure->y[0],
-                                          measure->x[i],
-                                          measure->y[i]);
+          gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-          gimp_draw_tool_remove_item (draw_tool, item);
+          gimp_draw_tool_add_line (draw_tool,
+                                   measure->x[0],
+                                   measure->y[0],
+                                   measure->x[i],
+                                   measure->y[i]);
+
+          gimp_draw_tool_pop_group (draw_tool);
 
           /*  only draw the arc if the lines are long enough  */
           if (gimp_draw_tool_calc_distance (draw_tool, tool->display,
@@ -734,19 +721,20 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
       if (angle2 != 0.0)
         {
+          GimpCanvasItem *item;
+
+          gimp_draw_tool_push_group (draw_tool, stroke_group);
+
           item = gimp_draw_tool_add_handle (draw_tool,
                                             GIMP_HANDLE_CIRCLE,
                                             measure->x[0],
                                             measure->y[0],
                                             ARC_RADIUS * 2 + 1,
                                             ARC_RADIUS * 2 + 1,
-                                            GTK_ANCHOR_CENTER);
+                                            GIMP_HANDLE_ANCHOR_CENTER);
 
           gimp_canvas_handle_set_angles (GIMP_CANVAS_HANDLE (item),
                                          angle1, angle2);
-
-          gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-          gimp_draw_tool_remove_item (draw_tool, item);
 
           if (measure->num_points == 2)
             {
@@ -759,17 +747,16 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
               target     = FUNSCALEX (shell, (TARGET >> 1));
               arc_radius = FUNSCALEX (shell, ARC_RADIUS);
 
-              item = gimp_draw_tool_add_line (draw_tool,
-                                              measure->x[0],
-                                              measure->y[0],
-                                              (measure->x[1] >= measure->x[0] ?
-                                               measure->x[0] + arc_radius + target :
-                                               measure->x[0] - arc_radius - target),
-                                              measure->y[0]);
-
-              gimp_canvas_group_add_item (GIMP_CANVAS_GROUP (stroke_group), item);
-              gimp_draw_tool_remove_item (draw_tool, item);
+              gimp_draw_tool_add_line (draw_tool,
+                                       measure->x[0],
+                                       measure->y[0],
+                                       (measure->x[1] >= measure->x[0] ?
+                                        measure->x[0] + arc_radius + target :
+                                        measure->x[0] - arc_radius - target),
+                                       measure->y[0]);
             }
+
+          gimp_draw_tool_pop_group (draw_tool);
         }
     }
 }
@@ -1024,8 +1011,8 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     table);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
 

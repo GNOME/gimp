@@ -49,14 +49,15 @@ struct _GimpCanvasCornerClass
 
 GType            gimp_canvas_corner_get_type (void) G_GNUC_CONST;
 
-GimpCanvasItem * gimp_canvas_corner_new      (gdouble       x,
-                                              gdouble       y,
-                                              gdouble       width,
-                                              gdouble       height,
-                                              GtkAnchorType anchor,
-                                              gint          corner_width,
-                                              gint          corner_height,
-                                              gboolean      outside);
+GimpCanvasItem * gimp_canvas_corner_new      (GimpDisplayShell *shell,
+                                              gdouble           x,
+                                              gdouble           y,
+                                              gdouble           width,
+                                              gdouble           height,
+                                              GimpHandleAnchor  anchor,
+                                              gint              corner_width,
+                                              gint              corner_height,
+                                              gboolean          outside);
 
 
 #endif /* __GIMP_CANVAS_CORNER_H__ */

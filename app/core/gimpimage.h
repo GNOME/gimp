@@ -119,8 +119,7 @@ struct _GimpImageClass
                                          gint                  previous_height);
   void (* unit_changed)                 (GimpImage            *image);
   void (* quick_mask_changed)           (GimpImage            *image);
-  void (* selection_control)            (GimpImage            *image,
-                                         GimpSelectionControl  control);
+  void (* selection_invalidate)         (GimpImage            *image);
 
   void (* clean)                        (GimpImage            *image,
                                          GimpDirtyMask         dirty_mask);
@@ -131,15 +130,17 @@ struct _GimpImageClass
   void (* exported)                     (GimpImage            *image,
                                          const gchar          *uri);
 
-  void (* update_guide)                 (GimpImage            *image,
+  void (* guide_added)                  (GimpImage            *image,
                                          GimpGuide            *guide);
-  void (* update_sample_point)          (GimpImage            *image,
-                                         GimpSamplePoint      *sample_point);
-  void (* update_vectors)               (GimpImage            *image,
-                                         GimpVectors          *vectors);
+  void (* guide_removed)                (GimpImage            *image,
+                                         GimpGuide            *guide);
+  void (* guide_moved)                  (GimpImage            *image,
+                                         GimpGuide            *guide);
   void (* sample_point_added)           (GimpImage            *image,
                                          GimpSamplePoint      *sample_point);
   void (* sample_point_removed)         (GimpImage            *image,
+                                         GimpSamplePoint      *sample_point);
+  void (* sample_point_moved)           (GimpImage            *image,
                                          GimpSamplePoint      *sample_point);
   void (* parasite_attached)            (GimpImage            *image,
                                          const gchar          *name);
@@ -249,21 +250,22 @@ void            gimp_image_invalidate            (GimpImage          *image,
                                                   gint                y,
                                                   gint                width,
                                                   gint                height);
-void            gimp_image_update_guide          (GimpImage          *image,
+void            gimp_image_guide_added           (GimpImage          *image,
                                                   GimpGuide          *guide);
-void            gimp_image_update_sample_point   (GimpImage          *image,
-                                                  GimpSamplePoint    *sample_point);
-void            gimp_image_update_vectors        (GimpImage          *image,
-                                                  GimpVectors        *vectors);
+void            gimp_image_guide_removed         (GimpImage          *image,
+                                                  GimpGuide          *guide);
+void            gimp_image_guide_moved           (GimpImage          *image,
+                                                  GimpGuide          *guide);
 
 void            gimp_image_sample_point_added    (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
 void            gimp_image_sample_point_removed  (GimpImage          *image,
                                                   GimpSamplePoint    *sample_point);
+void            gimp_image_sample_point_moved    (GimpImage          *image,
+                                                  GimpSamplePoint    *sample_point);
 void            gimp_image_colormap_changed      (GimpImage          *image,
                                                   gint                col);
-void            gimp_image_selection_control     (GimpImage          *image,
-                                                  GimpSelectionControl  control);
+void            gimp_image_selection_invalidate  (GimpImage          *image);
 void            gimp_image_quick_mask_changed    (GimpImage          *image);
 void            gimp_image_size_changed_detailed (GimpImage          *image,
                                                   gint                previous_origin_x,

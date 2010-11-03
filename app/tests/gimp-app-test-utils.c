@@ -15,7 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <glib.h>
+#include "config.h"
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "display/display-types.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
+
+#include "widgets/gimpuimanager.h"
+
+#include "core/gimp.h"
+#include "core/gimpimage.h"
+#include "core/gimplayer.h"
 
 #include "gimp-app-test-utils.h"
 
@@ -31,9 +46,12 @@ gimp_test_utils_set_env_to_subdir (const gchar *root_env_var,
   /* Get root dir */
   root_dir = g_getenv (root_env_var);
   if (! root_dir)
-    g_printerr ("The env var %s is not set, you are probably running\n"
-                "in a debugger. Set it manually, e.g.:\n"
-                "set env %s=%s/source/gimp\n",
+    g_printerr ("*\n"
+                "*  The env var %s is not set, you are probably running\n"
+                "*  in a debugger. Set it manually, e.g.:\n"
+                "*\n"
+                "*    set env %s=%s/source/gimp\n"
+                "*\n",
                 root_env_var,
                 root_env_var, g_get_home_dir ());
 
@@ -76,4 +94,106 @@ gimp_test_utils_setup_menus_dir (void)
   gimp_test_utils_set_env_to_subdir ("GIMP_TESTING_ABS_TOP_SRCDIR" /*root_env_var*/,
                                      "menus" /*subdir*/,
                                      "GIMP_TESTING_MENUS_DIR" /*target_env_var*/);
+}
+
+/**
+ * gimp_test_utils_create_image:
+ * @gimp:   A #Gimp instance.
+ * @width:  Width of image (and layer)
+ * @height: Height of image (and layer)
+ *
+ * Creates a new image of a given size with one layer of same size and
+ * a display.
+ *
+ * Returns: The new #GimpImage.
+ **/
+void
+gimp_test_utils_create_image (Gimp *gimp,
+                              gint  width,
+                              gint  height)
+{
+  GimpImage *image;
+  GimpLayer *layer;
+
+  image = gimp_image_new (gimp,
+                          width,
+                          height,
+                          GIMP_RGB);
+
+  layer = gimp_layer_new (image,
+                          width,
+                          height,
+                          GIMP_RGBA_IMAGE,
+                          "layer1",
+                          1.0,
+                          GIMP_NORMAL_MODE);
+
+  gimp_image_add_layer (image,
+                        layer,
+                        NULL /*parent*/,
+                        0 /*position*/,
+                        FALSE /*push_undo*/);
+
+  gimp_create_display (gimp,
+                       image,
+                       GIMP_UNIT_PIXEL,
+                       1.0 /*scale*/);
+}
+
+/**
+ * gimp_test_utils_synthesize_key_event:
+ * @widget: Widget to target.
+ * @keyval: Keyval, e.g. GDK_Return
+ *
+ * Simulates a keypress and release with gdk_test_simulate_key().
+ **/
+void
+gimp_test_utils_synthesize_key_event (GtkWidget *widget,
+                                      guint      keyval)
+{
+  gdk_test_simulate_key (gtk_widget_get_window (widget),
+                         -1, -1, /*x, y*/
+                         keyval,
+                         0 /*modifiers*/,
+                         GDK_KEY_PRESS);
+  gdk_test_simulate_key (gtk_widget_get_window (widget),
+                         -1, -1, /*x, y*/
+                         keyval,
+                         0 /*modifiers*/,
+                         GDK_KEY_RELEASE);
+}
+
+/**
+ * gimp_test_utils_get_ui_manager:
+ * @gimp: The #Gimp instance.
+ *
+ * Returns the "best" #GimpUIManager to use when performing
+ * actions. It gives the ui manager of the empty display if it exists,
+ * otherwise it gives it the ui manager of the first display.
+ *
+ * Returns: The #GimpUIManager.
+ **/
+GimpUIManager *
+gimp_test_utils_get_ui_manager (Gimp *gimp)
+{
+  GimpDisplay       *display      = NULL;
+  GimpDisplayShell  *shell        = NULL;
+  GtkWidget         *toplevel     = NULL;
+  GimpImageWindow   *image_window = NULL;
+  GimpUIManager     *ui_manager   = NULL;
+
+  display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+
+  /* If there were not empty display, assume that there is at least
+   * one image display and use that
+   */
+  if (! display)
+    display = GIMP_DISPLAY (gimp_get_display_iter (gimp)->data);
+
+  shell            = gimp_display_get_shell (display);
+  toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+  image_window     = GIMP_IMAGE_WINDOW (toplevel);
+  ui_manager       = gimp_image_window_get_ui_manager (image_window);
+
+  return ui_manager;
 }

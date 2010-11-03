@@ -387,7 +387,7 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
                                  source_tool->src_x + off_x,
                                  source_tool->src_y + off_y,
                                  TARGET_SIZE, TARGET_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
 
       draw_tool->display = tmp_display;
     }

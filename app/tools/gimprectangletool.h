@@ -120,7 +120,8 @@ void        gimp_rectangle_tool_cursor_update       (GimpTool                *to
                                                      const GimpCoords        *coords,
                                                      GdkModifierType          state,
                                                      GimpDisplay             *display);
-void        gimp_rectangle_tool_draw                (GimpDrawTool            *draw);
+void        gimp_rectangle_tool_draw                (GimpDrawTool            *draw,
+                                                     GimpCanvasGroup         *stroke_group);
 gboolean    gimp_rectangle_tool_execute             (GimpRectangleTool       *rect_tool);
 void        gimp_rectangle_tool_cancel              (GimpRectangleTool       *rect_tool);
 void        gimp_rectangle_tool_set_constraint      (GimpRectangleTool       *rectangle,

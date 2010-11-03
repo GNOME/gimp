@@ -75,7 +75,7 @@ gimp_image_profile_view_init (GimpImageProfileView *view)
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
-  gtk_container_add (GTK_CONTAINER (view), scrolled_window);
+  gtk_box_pack_start (GTK_BOX (view), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   text_view = gtk_text_view_new ();

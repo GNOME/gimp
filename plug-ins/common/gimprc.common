@@ -62,7 +62,6 @@ file_jp2_load_RC = file-jp2-load.rc.o
 file_mng_RC = file-mng.rc.o
 file_pat_RC = file-pat.rc.o
 file_pcx_RC = file-pcx.rc.o
-file_pdf_load_RC = file-pdf-load.rc.o
 file_pdf_save_RC = file-pdf-save.rc.o
 file_pix_RC = file-pix.rc.o
 file_png_RC = file-png.rc.o

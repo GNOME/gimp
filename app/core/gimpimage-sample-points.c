@@ -79,7 +79,6 @@ gimp_image_add_sample_point (GimpImage       *image,
   gimp_sample_point_ref (sample_point);
 
   gimp_image_sample_point_added (image, sample_point);
-  gimp_image_update_sample_point (image, sample_point);
 }
 
 void
@@ -88,22 +87,16 @@ gimp_image_remove_sample_point (GimpImage       *image,
                                 gboolean         push_undo)
 {
   GimpImagePrivate *private;
-  GList            *list;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (sample_point != NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  gimp_image_update_sample_point (image, sample_point);
-
   if (push_undo)
-    gimp_image_undo_push_sample_point (image, C_("undo-type", "Remove Sample Point"),
+    gimp_image_undo_push_sample_point (image,
+                                       C_("undo-type", "Remove Sample Point"),
                                        sample_point);
-
-  list = g_list_find (private->sample_points, sample_point);
-  if (list)
-    list = g_list_next (list);
 
   private->sample_points = g_list_remove (private->sample_points, sample_point);
 
@@ -112,12 +105,6 @@ gimp_image_remove_sample_point (GimpImage       *image,
   sample_point->x = -1;
   sample_point->y = -1;
   gimp_sample_point_unref (sample_point);
-
-  while (list)
-    {
-      gimp_image_update_sample_point (image, list->data);
-      list = g_list_next (list);
-    }
 }
 
 void
@@ -135,13 +122,14 @@ gimp_image_move_sample_point (GimpImage       *image,
   g_return_if_fail (y < gimp_image_get_height (image));
 
   if (push_undo)
-    gimp_image_undo_push_sample_point (image, C_("undo-type", "Move Sample Point"),
+    gimp_image_undo_push_sample_point (image,
+                                       C_("undo-type", "Move Sample Point"),
                                        sample_point);
 
-  gimp_image_update_sample_point (image, sample_point);
   sample_point->x = x;
   sample_point->y = y;
-  gimp_image_update_sample_point (image, sample_point);
+
+  gimp_image_sample_point_moved (image, sample_point);
 }
 
 GList *

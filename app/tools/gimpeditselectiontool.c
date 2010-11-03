@@ -194,7 +194,6 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   gint                   off_x, off_y;
   const BoundSeg        *segs_in;
   const BoundSeg        *segs_out;
-  gint                   num_groups;
   const gchar           *undo_desc;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL,
@@ -281,13 +280,11 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                          &edit_select->num_segs_in, &edit_select->num_segs_out,
                          0, 0, 0, 0);
 
-  edit_select->segs_in = boundary_sort (segs_in, edit_select->num_segs_in,
-                                        &num_groups);
-  edit_select->num_segs_in += num_groups;
+  edit_select->segs_in = g_memdup (segs_in,
+                                   edit_select->num_segs_in * sizeof (BoundSeg));
 
-  edit_select->segs_out = boundary_sort (segs_out, edit_select->num_segs_out,
-                                         &num_groups);
-  edit_select->num_segs_out += num_groups;
+  edit_select->segs_out = g_memdup (segs_out,
+                                    edit_select->num_segs_out * sizeof (BoundSeg));
 
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     {
@@ -448,7 +445,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   tool_manager_push_tool (display->gimp, tool);
 
   /*  pause the current selection  */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
+  gimp_display_shell_selection_pause (shell);
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, display,
@@ -473,7 +470,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   GimpItem              *active_item;
 
   /*  resume the current selection  */
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+  gimp_display_shell_selection_resume (shell);
 
   gimp_tool_pop_status (tool, display);
 
@@ -815,6 +812,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             gimp_draw_tool_add_boundary (draw_tool,
                                          edit_select->segs_in,
                                          edit_select->num_segs_in,
+                                         NULL,
                                          edit_select->cumlx + off_x,
                                          edit_select->cumly + off_y);
           }
@@ -824,6 +822,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             gimp_draw_tool_add_boundary (draw_tool,
                                          edit_select->segs_out,
                                          edit_select->num_segs_out,
+                                         NULL,
                                          edit_select->cumlx + off_x,
                                          edit_select->cumly + off_y);
           }
@@ -965,6 +964,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_add_boundary (draw_tool,
                                    edit_select->segs_in,
                                    edit_select->num_segs_in,
+                                   NULL,
                                    edit_select->cumlx,
                                    edit_select->cumly);
       break;
@@ -977,7 +977,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                              edit_select->center_y + edit_select->cumly,
                              CENTER_CROSS_SIZE,
                              CENTER_CROSS_SIZE,
-                             GTK_ANCHOR_CENTER);
+                             GIMP_HANDLE_ANCHOR_CENTER);
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }

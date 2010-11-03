@@ -20,10 +20,13 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <pango/pangocairo.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "text-types.h"
@@ -49,7 +52,7 @@ struct _GimpTextLayout
 static void           gimp_text_layout_finalize   (GObject        *object);
 
 static void           gimp_text_layout_position   (GimpTextLayout *layout);
-static void           gimp_text_layout_set_attrs  (GimpTextLayout *layout);
+static void           gimp_text_layout_set_markup (GimpTextLayout *layout);
 
 static PangoContext * gimp_text_get_pango_context (GimpText       *text,
                                                    gdouble         xres,
@@ -144,12 +147,7 @@ gimp_text_layout_new (GimpText  *text,
   pango_layout_set_font_description (layout->layout, font_desc);
   pango_font_description_free (font_desc);
 
-  if (text->markup)
-    pango_layout_set_markup (layout->layout, text->markup, -1);
-  else if (text->text)
-    pango_layout_set_text (layout->layout, text->text, -1);
-  else
-    pango_layout_set_text (layout->layout, NULL, 0);
+  gimp_text_layout_set_markup (layout);
 
   switch (text->justify)
     {
@@ -191,7 +189,6 @@ gimp_text_layout_new (GimpText  *text,
                                                          text->unit,
                                                          yres));
 
-  gimp_text_layout_set_attrs (layout);
   gimp_text_layout_position (layout);
 
   switch (text->box_mode)
@@ -457,40 +454,113 @@ gimp_text_layout_untransform_distance (GimpTextLayout *layout,
     }
 }
 
-static void
-gimp_text_layout_set_attrs (GimpTextLayout *layout)
+static gboolean
+gimp_text_layout_split_markup (const gchar  *markup,
+                               gchar       **open_tag,
+                               gchar       **content,
+                               gchar       **close_tag)
 {
-  GimpText       *text = layout->text;
-  PangoAttrList  *attrs;
-  PangoAttribute *attr;
+  gchar *p_open;
+  gchar *p_close;
 
-  attrs = pango_layout_get_attributes (layout->layout);
-  if (attrs)
-    pango_attr_list_ref (attrs);
+  p_open = strstr (markup, "<markup>");
+  if (! p_open)
+    return FALSE;
+
+  *open_tag = g_strndup (markup, p_open - markup + strlen ("<markup>"));
+
+  p_close = g_strrstr (markup, "</markup>");
+  if (! p_close)
+    {
+      g_free (*open_tag);
+      return FALSE;
+    }
+
+  *close_tag = g_strdup (p_close);
+
+  if (p_open + strlen ("<markup>") < p_close)
+    {
+      *content = g_strndup (p_open + strlen ("<markup>"),
+                            p_close - p_open - strlen ("<markup>"));
+    }
   else
-    attrs = pango_attr_list_new ();
+    {
+      *content = g_strdup ("");
+    }
 
-  attr = pango_attr_foreground_new (text->color.r * 65535,
-                                    text->color.g * 65535,
-                                    text->color.b * 65535);
+  return TRUE;
+}
 
-  attr->start_index = 0;
-  attr->end_index   = -1;
+static gchar *
+gimp_text_layout_apply_tags (GimpTextLayout *layout,
+                             const gchar    *markup)
+{
+  GimpText *text = layout->text;
+  gchar    *result;
 
-  pango_attr_list_insert (attrs, attr);
+  {
+    guchar r, g, b;
+
+    gimp_rgb_get_uchar (&text->color, &r, &g, &b);
+
+    result = g_strdup_printf ("<span color=\"#%02x%02x%02x\">%s</span>",
+                              r, g, b, markup);
+  }
 
   if (fabs (text->letter_spacing) > 0.1)
     {
-      attr = pango_attr_letter_spacing_new (text->letter_spacing * PANGO_SCALE);
-
-      attr->start_index = 0;
-      attr->end_index   = -1;
-
-      pango_attr_list_insert (attrs, attr);
+      gchar *tmp = g_strdup_printf ("<span letter_spacing=\"%d\">%s</span>",
+                                    (gint) (text->letter_spacing * PANGO_SCALE),
+                                    result);
+      g_free (result);
+      result = tmp;
     }
 
-  pango_layout_set_attributes (layout->layout, attrs);
-  pango_attr_list_unref (attrs);
+  return result;
+}
+
+static void
+gimp_text_layout_set_markup (GimpTextLayout *layout)
+{
+  GimpText *text      = layout->text;
+  gchar    *open_tag  = NULL;
+  gchar    *content   = NULL;
+  gchar    *close_tag = NULL;
+  gchar    *tagged;
+  gchar    *markup;
+
+  if (text->markup)
+    {
+      if (! gimp_text_layout_split_markup (text->markup,
+                                           &open_tag, &content, &close_tag))
+        {
+          open_tag  = g_strdup ("<markup>");
+          content   = g_strdup ("");
+          close_tag = g_strdup ("</markup>");
+        }
+    }
+  else
+    {
+      open_tag  = g_strdup ("<markup>");
+      close_tag = g_strdup ("</markup>");
+
+      if (text->text)
+        content = g_markup_escape_text (text->text, -1);
+      else
+        content = g_strdup ("");
+    }
+
+  tagged = gimp_text_layout_apply_tags (layout, content);
+
+  g_free (content);
+
+  markup = g_strconcat (open_tag, tagged, close_tag, NULL);
+
+  g_free (open_tag);
+  g_free (tagged);
+  g_free (close_tag);
+
+  pango_layout_set_markup (layout->layout, markup, -1);
 }
 
 static void

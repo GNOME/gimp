@@ -34,7 +34,7 @@ typedef struct _GimpControllerEditorClass GimpControllerEditorClass;
 
 struct _GimpControllerEditor
 {
-  GtkVBox             parent_instance;
+  GtkBox              parent_instance;
 
   GimpControllerInfo *info;
   GimpContext        *context;
@@ -51,7 +51,7 @@ struct _GimpControllerEditor
 
 struct _GimpControllerEditorClass
 {
-  GtkVBoxClass   parent_class;
+  GtkBoxClass   parent_class;
 };
 
 

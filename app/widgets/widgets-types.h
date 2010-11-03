@@ -196,8 +196,6 @@ typedef struct _GimpTemplateEditor           GimpTemplateEditor;
 typedef struct _GimpTextStyleEditor          GimpTextStyleEditor;
 typedef struct _GimpThumbBox                 GimpThumbBox;
 typedef struct _GimpTranslationStore         GimpTranslationStore;
-typedef struct _GimpUnitStore                GimpUnitStore;
-typedef struct _GimpUnitComboBox             GimpUnitComboBox;
 typedef struct _GimpWindow                   GimpWindow;
 
 
@@ -272,6 +270,19 @@ typedef void     (* GimpMenuPositionFunc)         (GtkMenu         *menu,
 typedef gboolean (* GimpPanedBoxDroppedFunc)      (GtkWidget         *source,
                                                    gint               insert_index,
                                                    gpointer           data);
+
+
+/*  temp hack as replacement for GdkSegment  */
+
+typedef struct _GimpSegment GimpSegment;
+
+struct _GimpSegment
+{
+  gint x1;
+  gint y1;
+  gint x2;
+  gint y2;
+};
 
 
 #endif /* __WIDGETS_TYPES_H__ */

@@ -49,6 +49,7 @@ enum
 };
 
 
+static void   gimp_viewable_dialog_dispose      (GObject            *object);
 static void   gimp_viewable_dialog_set_property (GObject            *object,
                                                  guint               property_id,
                                                  const GValue       *value,
@@ -57,8 +58,6 @@ static void   gimp_viewable_dialog_get_property (GObject            *object,
                                                  guint               property_id,
                                                  GValue             *value,
                                                  GParamSpec         *pspec);
-
-static void   gimp_viewable_dialog_destroy      (GtkObject          *object);
 
 static void   gimp_viewable_dialog_name_changed (GimpObject         *object,
                                                  GimpViewableDialog *dialog);
@@ -73,11 +72,9 @@ G_DEFINE_TYPE (GimpViewableDialog, gimp_viewable_dialog, GIMP_TYPE_DIALOG)
 static void
 gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
 {
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  gtk_object_class->destroy  = gimp_viewable_dialog_destroy;
-
+  object_class->dispose      = gimp_viewable_dialog_dispose;
   object_class->get_property = gimp_viewable_dialog_get_property;
   object_class->set_property = gimp_viewable_dialog_set_property;
 
@@ -130,7 +127,7 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
   gtk_widget_show (dialog->icon);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   dialog->desc_label = gtk_label_new (NULL);
@@ -152,6 +149,17 @@ gimp_viewable_dialog_init (GimpViewableDialog *dialog)
                              -1);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->viewable_label, FALSE, FALSE, 0);
   gtk_widget_show (dialog->viewable_label);
+}
+
+static void
+gimp_viewable_dialog_dispose (GObject *object)
+{
+  GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
+
+  if (dialog->view)
+    gimp_viewable_dialog_set_viewable (dialog, NULL, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -228,17 +236,6 @@ gimp_viewable_dialog_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_viewable_dialog_destroy (GtkObject *object)
-{
-  GimpViewableDialog *dialog = GIMP_VIEWABLE_DIALOG (object);
-
-  if (dialog->view)
-    gimp_viewable_dialog_set_viewable (dialog, NULL, NULL);
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *

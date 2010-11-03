@@ -155,8 +155,8 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
                                  _("by type"),        SEARCH_TYPE_PROC_TYPE,
                                  NULL);
   gtk_container_set_border_width (GTK_CONTAINER (dialog->browser), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     dialog->browser);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      dialog->browser, TRUE, TRUE, 0);
   gtk_widget_show (dialog->browser);
 
   g_signal_connect (dialog->browser, "search",

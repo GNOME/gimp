@@ -25,6 +25,10 @@ libappdisplay_a_sources = \
 	gimpcanvasboundary.h			\
 	gimpcanvascorner.c			\
 	gimpcanvascorner.h			\
+	gimpcanvascursor.c			\
+	gimpcanvascursor.h			\
+	gimpcanvasgrid.c			\
+	gimpcanvasgrid.h			\
 	gimpcanvasgroup.c			\
 	gimpcanvasgroup.h			\
 	gimpcanvasguide.c			\
@@ -33,12 +37,24 @@ libappdisplay_a_sources = \
 	gimpcanvashandle.h			\
 	gimpcanvasitem.c			\
 	gimpcanvasitem.h			\
+	gimpcanvaslayerboundary.c		\
+	gimpcanvaslayerboundary.h		\
 	gimpcanvasline.c			\
 	gimpcanvasline.h			\
+	gimpcanvaspassepartout.c		\
+	gimpcanvaspassepartout.h		\
+	gimpcanvaspath.c			\
+	gimpcanvaspath.h			\
+	gimpcanvaspen.c				\
+	gimpcanvaspen.h				\
 	gimpcanvaspolygon.c			\
 	gimpcanvaspolygon.h			\
+	gimpcanvasproxygroup.c			\
+	gimpcanvasproxygroup.h			\
 	gimpcanvasrectangle.c			\
 	gimpcanvasrectangle.h			\
+	gimpcanvassamplepoint.c			\
+	gimpcanvassamplepoint.h			\
 	gimpcanvastextcursor.c			\
 	gimpcanvastextcursor.h			\
 	gimpcursorview.c			\
@@ -79,6 +95,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-layer-select.h		\
 	gimpdisplayshell-icon.c			\
 	gimpdisplayshell-icon.h			\
+	gimpdisplayshell-items.c		\
+	gimpdisplayshell-items.h		\
 	gimpdisplayshell-preview.c		\
 	gimpdisplayshell-preview.h		\
 	gimpdisplayshell-progress.c		\

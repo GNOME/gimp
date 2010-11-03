@@ -75,6 +75,49 @@ gimp_handle_type_get_type (void)
 }
 
 GType
+gimp_handle_anchor_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_HANDLE_ANCHOR_CENTER, "GIMP_HANDLE_ANCHOR_CENTER", "center" },
+    { GIMP_HANDLE_ANCHOR_NORTH, "GIMP_HANDLE_ANCHOR_NORTH", "north" },
+    { GIMP_HANDLE_ANCHOR_NORTH_WEST, "GIMP_HANDLE_ANCHOR_NORTH_WEST", "north-west" },
+    { GIMP_HANDLE_ANCHOR_NORTH_EAST, "GIMP_HANDLE_ANCHOR_NORTH_EAST", "north-east" },
+    { GIMP_HANDLE_ANCHOR_SOUTH, "GIMP_HANDLE_ANCHOR_SOUTH", "south" },
+    { GIMP_HANDLE_ANCHOR_SOUTH_WEST, "GIMP_HANDLE_ANCHOR_SOUTH_WEST", "south-west" },
+    { GIMP_HANDLE_ANCHOR_SOUTH_EAST, "GIMP_HANDLE_ANCHOR_SOUTH_EAST", "south-east" },
+    { GIMP_HANDLE_ANCHOR_WEST, "GIMP_HANDLE_ANCHOR_WEST", "west" },
+    { GIMP_HANDLE_ANCHOR_EAST, "GIMP_HANDLE_ANCHOR_EAST", "east" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_HANDLE_ANCHOR_CENTER, "GIMP_HANDLE_ANCHOR_CENTER", NULL },
+    { GIMP_HANDLE_ANCHOR_NORTH, "GIMP_HANDLE_ANCHOR_NORTH", NULL },
+    { GIMP_HANDLE_ANCHOR_NORTH_WEST, "GIMP_HANDLE_ANCHOR_NORTH_WEST", NULL },
+    { GIMP_HANDLE_ANCHOR_NORTH_EAST, "GIMP_HANDLE_ANCHOR_NORTH_EAST", NULL },
+    { GIMP_HANDLE_ANCHOR_SOUTH, "GIMP_HANDLE_ANCHOR_SOUTH", NULL },
+    { GIMP_HANDLE_ANCHOR_SOUTH_WEST, "GIMP_HANDLE_ANCHOR_SOUTH_WEST", NULL },
+    { GIMP_HANDLE_ANCHOR_SOUTH_EAST, "GIMP_HANDLE_ANCHOR_SOUTH_EAST", NULL },
+    { GIMP_HANDLE_ANCHOR_WEST, "GIMP_HANDLE_ANCHOR_WEST", NULL },
+    { GIMP_HANDLE_ANCHOR_EAST, "GIMP_HANDLE_ANCHOR_EAST", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpHandleAnchor", values);
+      gimp_type_set_translation_context (type, "handle-anchor");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_zoom_focus_get_type (void)
 {
   static const GEnumValue values[] =

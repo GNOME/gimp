@@ -373,21 +373,26 @@ gimp_chain_line_new (GimpChainPosition  position,
 }
 
 static gboolean
-gimp_chain_line_expose_event (GtkWidget       *widget,
-                              GdkEventExpose  *event)
+gimp_chain_line_expose_event (GtkWidget      *widget,
+                              GdkEventExpose *event)
 {
-  GimpChainLine     *line = ((GimpChainLine *) widget);
+  GtkStyle          *style = gtk_widget_get_style (widget);
+  GimpChainLine     *line  = ((GimpChainLine *) widget);
   GtkAllocation      allocation;
   GdkPoint           points[3];
-  GdkPoint           buf;
-  GtkShadowType      shadow;
   GimpChainPosition  position;
+  cairo_t           *cr;
 
   gtk_widget_get_allocation (widget, &allocation);
 
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
+  gdk_cairo_region (cr, event->region);
+  cairo_translate (cr, allocation.x, allocation.y);
+  cairo_clip (cr);
+
 #define SHORT_LINE 4
-  points[0].x = allocation.x + allocation.width  / 2;
-  points[0].y = allocation.y + allocation.height / 2;
+  points[0].x = allocation.width  / 2;
+  points[0].y = allocation.height / 2;
 
   position = line->position;
 
@@ -416,10 +421,7 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[1].x = points[0].x - SHORT_LINE;
       points[1].y = points[0].y;
       points[2].x = points[1].x;
-      points[2].y = (line->which == 1 ?
-                     allocation.y + allocation.height - 1 :
-                     allocation.y);
-      shadow = GTK_SHADOW_ETCHED_IN;
+      points[2].y = (line->which == 1 ? allocation.height - 1 : 0);
       break;
 
     case GIMP_CHAIN_RIGHT:
@@ -427,54 +429,40 @@ gimp_chain_line_expose_event (GtkWidget       *widget,
       points[1].x = points[0].x + SHORT_LINE;
       points[1].y = points[0].y;
       points[2].x = points[1].x;
-      points[2].y = (line->which == 1 ?
-                     allocation.y + allocation.height - 1 :
-                     allocation.y);
-      shadow = GTK_SHADOW_ETCHED_OUT;
+      points[2].y = (line->which == 1 ? allocation.height - 1 : 0);
       break;
 
     case GIMP_CHAIN_TOP:
       points[0].y += SHORT_LINE;
       points[1].x = points[0].x;
       points[1].y = points[0].y - SHORT_LINE;
-      points[2].x = (line->which == 1 ?
-                     allocation.x + allocation.width - 1 :
-                     allocation.x);
+      points[2].x = (line->which == 1 ? allocation.width - 1 : 0);
       points[2].y = points[1].y;
-      shadow = GTK_SHADOW_ETCHED_OUT;
       break;
 
     case GIMP_CHAIN_BOTTOM:
       points[0].y -= SHORT_LINE;
       points[1].x = points[0].x;
       points[1].y = points[0].y + SHORT_LINE;
-      points[2].x = (line->which == 1 ?
-                     allocation.x + allocation.width - 1 :
-                     allocation.x);
+      points[2].x = (line->which == 1 ? allocation.width - 1 : 0);
       points[2].y = points[1].y;
-      shadow = GTK_SHADOW_ETCHED_IN;
       break;
 
     default:
       return FALSE;
     }
 
-  if ( ((shadow == GTK_SHADOW_ETCHED_OUT) && (line->which == -1)) ||
-       ((shadow == GTK_SHADOW_ETCHED_IN)  && (line->which == 1)) )
-    {
-      buf = points[0];
-      points[0] = points[2];
-      points[2] = buf;
-    }
+  cairo_move_to (cr, points[0].x, points[0].y);
+  cairo_line_to (cr, points[1].x, points[1].y);
+  cairo_line_to (cr, points[2].x, points[2].y);
 
-  gtk_paint_polygon (gtk_widget_get_style (widget),
-                     gtk_widget_get_window (widget), GTK_STATE_NORMAL,
-                     shadow,
-                     &event->area,
-                     widget,
-                     "chainbutton",
-                     points, 3,
-                     FALSE);
+  cairo_set_line_width (cr, 2.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_BUTT);
+  gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+
+  cairo_stroke (cr);
+
+  cairo_destroy (cr);
 
   return TRUE;
 }

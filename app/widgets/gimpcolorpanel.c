@@ -33,10 +33,13 @@
 
 /*  local function prototypes  */
 
-static void       gimp_color_panel_destroy         (GtkObject          *object);
+static void       gimp_color_panel_dispose         (GObject            *object);
+
 static gboolean   gimp_color_panel_button_press    (GtkWidget          *widget,
                                                     GdkEventButton     *bevent);
+
 static void       gimp_color_panel_clicked         (GtkButton          *button);
+
 static void       gimp_color_panel_color_changed   (GimpColorButton    *button);
 static GType      gimp_color_panel_get_action_type (GimpColorButton    *button);
 
@@ -54,12 +57,12 @@ G_DEFINE_TYPE (GimpColorPanel, gimp_color_panel, GIMP_TYPE_COLOR_BUTTON)
 static void
 gimp_color_panel_class_init (GimpColorPanelClass *klass)
 {
-  GtkObjectClass       *object_class       = GTK_OBJECT_CLASS (klass);
+  GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GtkButtonClass       *button_class       = GTK_BUTTON_CLASS (klass);
   GimpColorButtonClass *color_button_class = GIMP_COLOR_BUTTON_CLASS (klass);
 
-  object_class->destroy               = gimp_color_panel_destroy;
+  object_class->dispose               = gimp_color_panel_dispose;
 
   widget_class->button_press_event    = gimp_color_panel_button_press;
 
@@ -77,7 +80,7 @@ gimp_color_panel_init (GimpColorPanel *panel)
 }
 
 static void
-gimp_color_panel_destroy (GtkObject *object)
+gimp_color_panel_dispose (GObject *object)
 {
   GimpColorPanel *panel = GIMP_COLOR_PANEL (object);
 
@@ -87,7 +90,7 @@ gimp_color_panel_destroy (GtkObject *object)
       panel->color_dialog = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static gboolean

@@ -36,17 +36,10 @@ struct _GimpColormapEditor
 {
   GimpImageEditor  parent_instance;
 
-  GtkWidget       *preview;
+  GtkWidget       *view;
   gint             col_index;
-  gint             dnd_col_index;
-  gint             xn;
-  gint             yn;
-  gint             cellsize;
 
   PangoLayout     *layout;
-
-  GtkWidget       *edit_button;
-  GtkWidget       *add_button;
 
   GtkAdjustment   *index_adjustment;
   GtkWidget       *index_spinbutton;
@@ -58,9 +51,6 @@ struct _GimpColormapEditor
 struct _GimpColormapEditorClass
 {
   GimpImageEditorClass  parent_class;
-
-  void (* selected) (GimpColormapEditor *editor,
-                     GdkModifierType     state);
 };
 
 

@@ -10,15 +10,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-08-11 14:51+0530\n"
+"POT-Creation-Date: 2010-09-28 16:13+0200\n"
 "PO-Revision-Date: 2010-08-11 18:01+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: Tamil <<Ubuntu-l10n-tam@lists.ubuntu.com>>\n"
+"Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\\n"
-"\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\\n\n"
 "X-Generator: Lokalize 1.0\n"
 
 #: ../app/about.h:23
@@ -29,15 +29,17 @@ msgstr "கிம்ப்"
 msgid "GNU Image Manipulation Program"
 msgstr "க்னூ பட கையாளல் நிரல்"
 
-#: ../app/about.h:29
+#. The year of the last commit (UTC) will be inserted into this string.
+#: ../app/about.h:30
+#, c-format
 msgid ""
-"Copyright © 1995-2010\n"
+"Copyright © 1995-%s\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"பதிப்புரிமை © 1995-2010\n"
+"பதிப்புரிமை © 1995-%s\n"
 "ஸ்பென்சர் கிம்பால், பீட்டர் மாதி மற்றும் கிம்ப் வளர்ச்சிக்குழு"
 
-#: ../app/about.h:33
+#: ../app/about.h:34
 msgid ""
 "GIMP is free software: you can redistribute it and/or modify it under the "
 "terms of the GNU General Public License as published by the Free Software "
@@ -80,7 +82,8 @@ msgstr ""
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "தொகு வரி மொழி மாற்றி குறிப்படப்படவில்லை. முன்னிருப்பான '%s' ஐ பயன்படுத்துகிறது.\n"
+msgstr ""
+"தொகு வரி மொழி மாற்றி குறிப்படப்படவில்லை. முன்னிருப்பான '%s' ஐ பயன்படுத்துகிறது.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
@@ -89,101 +92,102 @@ msgstr ""
 "தொகு குழு வரி மொழி மாற்றி '%s'  கிடைக்கவில்லை. தொகுப்பு பாங்கு செயல் "
 "நிறுத்தப்பட்டது.. "
 
-#: ../app/main.c:135 ../tools/gimp-remote.c:59
+#: ../app/main.c:139 ../tools/gimp-remote.c:59
 msgid "Show version information and exit"
 msgstr "பதிப்பு எண்னை காட்டி வெளியேறுக"
 
-#: ../app/main.c:140
+#: ../app/main.c:144
 msgid "Show license information and exit"
 msgstr "உரிம தகவலை காட்டி வெளியேறுக"
 
-#: ../app/main.c:145
+#: ../app/main.c:149
 msgid "Be more verbose"
 msgstr "மேலும் அதிகமாக சொல்"
 
-#: ../app/main.c:150
+#: ../app/main.c:154
 msgid "Start a new GIMP instance"
 msgstr "புதிய கிம்ப் நிகர் பக்கம் ஒன்றை துவக்குக"
 
-#: ../app/main.c:155
+#: ../app/main.c:159
 msgid "Open images as new"
 msgstr "படங்களை புதியதாக திறக்கவும்"
 
-#: ../app/main.c:160
+#: ../app/main.c:164
 msgid "Run without a user interface"
 msgstr "பயனர் இடைமுகம் இல்லாமல் இயக்குக"
 
-#: ../app/main.c:165
+#: ../app/main.c:169
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "தூரிகைகள், சீர் நிற மாற்றங்கள், தோரணிகள் போன்றவற்றை ஏற்ற வேண்டாம்..."
 
-#: ../app/main.c:170
+#: ../app/main.c:174
 msgid "Do not load any fonts"
 msgstr "எழுத்துருக்களை ஏற்ற வேண்டாம்"
 
-#: ../app/main.c:175
-msgid "Do not show a startup window"
+#: ../app/main.c:179
+#, fuzzy
+msgid "Do not show a splash screen"
 msgstr "துவக்க சாளரத்தை காட்ட வேண்டாம்"
 
-#: ../app/main.c:180
+#: ../app/main.c:184
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "கிம்ப் மற்றும் சொருகிகளுக்கு இடையே நினைவகத்தை பகிர வேண்டாம்."
 
-#: ../app/main.c:185
+#: ../app/main.c:189
 msgid "Do not use special CPU acceleration functions"
 msgstr "விசேஷ ஸிபியூ முடுக்க விசை செயல்களை பயன்படுத்த வேண்டாம்."
 
-#: ../app/main.c:190
+#: ../app/main.c:194
 msgid "Use an alternate sessionrc file"
 msgstr "மாற்று அமர்வு ஆர்சி (sessionrc) கோப்பு ஐ பயன்படுத்துக "
 
-#: ../app/main.c:195
+#: ../app/main.c:199
 msgid "Use an alternate user gimprc file"
 msgstr "மாற்று பயனர் கிம்ப் ஆர்சி கோப்பு ஐ பயன்படுத்துக"
 
-#: ../app/main.c:200
+#: ../app/main.c:204
 msgid "Use an alternate system gimprc file"
 msgstr "மாற்று கணினி கிம்ப் ஆர்சி கோப்பு ஐ பயன்படுத்துக"
 
-#: ../app/main.c:205
+#: ../app/main.c:209
 msgid "Batch command to run (can be used multiple times)"
 msgstr "இயக்க வேண்டிய தொகுப்பு கட்டளை (பல முறை பயன்படுத்தலாம்)"
 
-#: ../app/main.c:210
+#: ../app/main.c:214
 msgid "The procedure to process batch commands with"
 msgstr "தொகுப்பு கட்டளைகளை இயக்க வழி முறை"
 
-#: ../app/main.c:215
+#: ../app/main.c:219
 msgid "Send messages to console instead of using a dialog"
 msgstr "உரையாடல் ஐ பயன்படுத்துவதை தவிர்த்து முனையத்துக்கு செய்திகளை அனுப்புக."
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:221
+#: ../app/main.c:225
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "பிடிபி (PDB) ஒத்திசைவு பாங்கு (இயக்கமில்லை|இயக்கு|எச்சரி)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:227
+#: ../app/main.c:231
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "நிரல் முறிந்தால் பிழை நீக்கு (எப்போதுமில்லை|கேள்|எப்போதும்)"
 
-#: ../app/main.c:232
+#: ../app/main.c:236
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "உயிராபத்தில்லா வழுநீக்க குறியீடு கையாளிகளை செயல்படுத்து"
 
-#: ../app/main.c:237
+#: ../app/main.c:241
 msgid "Make all warnings fatal"
 msgstr "அனைத்து எச்சரிக்கைகளையும் உயிராபத்தாக ஆக்கு"
 
-#: ../app/main.c:242
+#: ../app/main.c:246
 msgid "Output a gimprc file with default settings"
 msgstr "முன்னிருப்பு அமைப்புடன் ஒரு கிம்ப் ஆர்சி கோப்பை வெளியிடு"
 
-#: ../app/main.c:346
+#: ../app/main.c:374
 msgid "[FILE|URI...]"
 msgstr "[FILE|யூஆர்ஐ (URI)...]"
 
-#: ../app/main.c:364
+#: ../app/main.c:392
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -191,20 +195,20 @@ msgstr ""
 "கிம்ப் வரைகலை பயனர் இடைமுகத்தை துவக்க முடியவில்லை. \n"
 "உங்கள் காட்சி சூழலுக்கு தகுந்த சரியான அமைப்பு உள்ளதா என சோதிக்கவும்."
 
-#: ../app/main.c:383
+#: ../app/main.c:411
 msgid "Another GIMP instance is already running."
 msgstr "வேறொரு கிம்ப் நிகர்பக்கம் ஏற்கெனவே இயங்குகிறது."
 
-#: ../app/main.c:453
+#: ../app/main.c:481
 msgid "GIMP output. Type any character to close this window."
 msgstr "கிம்ப் வெளியீடு. இந்த சாளரத்தை மூட ஏதேனும் ஒரு விசையை தட்டுக."
 
-#: ../app/main.c:454
+#: ../app/main.c:482
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(இந்த சாளரத்தை மூட ஏதேனும் ஒரு விசையை தட்டுக.)\n"
 
-#: ../app/main.c:471
+#: ../app/main.c:499
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "கிம்ப் வெளியீடு. இந்த சாளரத்தை சுருக்குக. ஆனால் மூட வேண்டாம்."
 
@@ -375,7 +379,7 @@ msgid "Layers"
 msgstr "அடுக்குகள்"
 
 #: ../app/actions/actions.c:193 ../app/dialogs/dialogs.c:365
-#: ../app/widgets/gimppaletteeditor.c:154
+#: ../app/widgets/gimppaletteeditor.c:152
 msgid "Palette Editor"
 msgstr "வண்ணத்தட்டு தொகுப்பாளர்"
 
@@ -426,12 +430,12 @@ msgstr "உரை திருத்தி"
 msgid "Tool Options"
 msgstr "கருவி தேர்வுகள்"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:952
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:927
 msgid "Tools"
 msgstr "கருவிகள்"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:315
-#: ../app/tools/gimpvectortool.c:161
+#: ../app/tools/gimpvectortool.c:162
 msgid "Paths"
 msgstr "பாதைகள்"
 
@@ -444,13 +448,13 @@ msgid "Windows"
 msgstr "சாளரங்கள்"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:583
+#: ../app/actions/actions.c:584
 #, c-format
 msgid "%s: %.2f"
 msgstr "%s: %.2f"
 
 #. value description and new value shown in the status bar
-#: ../app/actions/actions.c:609
+#: ../app/actions/actions.c:610
 #, c-format
 msgid "%s: %d"
 msgstr "%s: %d"
@@ -961,7 +965,7 @@ msgstr "அனைத்து காணக்கூடிய அடுக்க�
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
 #: ../app/widgets/gimplayertreeview.c:745 ../app/widgets/gimptoolbox-dnd.c:178
-#: ../app/widgets/gimptoolbox.c:1247
+#: ../app/widgets/gimptoolbox.c:1222
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -973,7 +977,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1522
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1624
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:379 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/widgets/gimpdnd-xds.c:94
@@ -991,7 +995,8 @@ msgstr " '%s' ஐ நீக்கவா?"
 
 #: ../app/actions/data-commands.c:264
 #, c-format
-msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid ""
+"Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "'%s' ஐ பட்டியலிலிருந்து நீக்கி வட்டில் இருந்தும் நிச்சயம் நீக்க விருப்பமா?"
 
 #: ../app/actions/dialogs-actions.c:44
@@ -1350,7 +1355,7 @@ msgid "About GIMP"
 msgstr "கிம்ப் பற்றி "
 
 #: ../app/actions/dialogs-actions.c:304
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:795
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:770
 msgid "Toolbox"
 msgstr "கருவிப் பெட்டி"
 
@@ -2030,7 +2035,8 @@ msgstr "(_V) பார்வையில் உள்ள பெயரிட்�
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
 msgid "Copy what is visible in the selected region to a named buffer"
-msgstr "தேர்ந்தெடுக்கப்பட்ட பகுதியில் இருந்து பார்வையில் உள்ளதை பெயரிட்ட இடையகத்துக்கு படியெடு "
+msgstr ""
+"தேர்ந்தெடுக்கப்பட்ட பகுதியில் இருந்து பார்வையில் உள்ளதை பெயரிட்ட இடையகத்துக்கு படியெடு "
 
 #: ../app/actions/edit-actions.c:178
 msgctxt "edit-action"
@@ -2344,8 +2350,10 @@ msgstr "(_y) ஒரு பிரதியை சேமி..."
 
 #: ../app/actions/file-actions.c:135
 msgctxt "file-action"
-msgid "Save this image with a different name, but keep its current name"
-msgstr "இந்த படத்தின் மூல பெயரை வைத்துக்கொள், வேறு பெயரில் இதை சேமி "
+msgid ""
+"Save a copy of this image, without affecting the source file (if any) or the "
+"current state of the image"
+msgstr ""
 
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
@@ -3204,15 +3212,17 @@ msgid "Set Image Print Resolution"
 msgstr "பட அச்சு பிரிதிறன் ஐ அமைக்கவும்"
 
 #: ../app/actions/image-commands.c:378
-#: ../app/pdb/drawable-transform-cmds.c:147
-#: ../app/pdb/drawable-transform-cmds.c:222
+#: ../app/pdb/drawable-transform-cmds.c:153
+#: ../app/pdb/drawable-transform-cmds.c:230
+#: ../app/pdb/item-transform-cmds.c:158
 msgid "Flipping"
 msgstr "புரட்டுதல்"
 
 #: ../app/actions/image-commands.c:402
-#: ../app/pdb/drawable-transform-cmds.c:524
-#: ../app/pdb/drawable-transform-cmds.c:603 ../app/pdb/image-cmds.c:533
-#: ../app/pdb/transform-tools-cmds.c:214 ../app/tools/gimprotatetool.c:122
+#: ../app/pdb/drawable-transform-cmds.c:547
+#: ../app/pdb/drawable-transform-cmds.c:628 ../app/pdb/image-cmds.c:536
+#: ../app/pdb/item-transform-cmds.c:423 ../app/pdb/transform-tools-cmds.c:224
+#: ../app/tools/gimprotatetool.c:122
 msgid "Rotating"
 msgstr "சுழற்றுதல்"
 
@@ -3231,11 +3241,11 @@ msgstr "படத்தை அளவு மாற்று"
 #. Scaling
 #: ../app/actions/image-commands.c:680 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
-#: ../app/pdb/drawable-transform-cmds.c:681
-#: ../app/pdb/drawable-transform-cmds.c:757 ../app/pdb/image-cmds.c:405
-#: ../app/pdb/image-cmds.c:441 ../app/pdb/layer-cmds.c:298
-#: ../app/pdb/layer-cmds.c:343 ../app/pdb/transform-tools-cmds.c:290
-#: ../app/tools/gimpscaletool.c:106
+#: ../app/pdb/drawable-transform-cmds.c:708
+#: ../app/pdb/drawable-transform-cmds.c:786 ../app/pdb/image-cmds.c:408
+#: ../app/pdb/image-cmds.c:444 ../app/pdb/item-transform-cmds.c:512
+#: ../app/pdb/layer-cmds.c:333 ../app/pdb/layer-cmds.c:378
+#: ../app/pdb/transform-tools-cmds.c:302 ../app/tools/gimpscaletool.c:106
 msgid "Scaling"
 msgstr "அளவு மாற்றுதல்"
 
@@ -3274,519 +3284,502 @@ msgctxt "images-action"
 msgid "Delete this image"
 msgstr "இந்த படத்தை நீக்கு "
 
-#: ../app/actions/layers-actions.c:48
+#: ../app/actions/layers-actions.c:49
 msgctxt "layers-action"
 msgid "Layers Menu"
 msgstr "அடுக்குகள் பட்டி"
 
-#: ../app/actions/layers-actions.c:52
+#: ../app/actions/layers-actions.c:53
 msgctxt "layers-action"
 msgid "_Layer"
 msgstr "(_L) அடுக்கு"
 
-#: ../app/actions/layers-actions.c:54
+#: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
 msgid "Stac_k"
 msgstr "(_k) குவியல்"
 
-#: ../app/actions/layers-actions.c:56
-msgctxt "layers-action"
-msgid "Te_xt to Selection"
-msgstr "(_x) உரையில் இருந்து தேர்வுக்கு"
-
-#: ../app/actions/layers-actions.c:58
+#: ../app/actions/layers-actions.c:57
 msgctxt "layers-action"
 msgid "_Mask"
 msgstr "(_M) மறைமூடி"
 
-#: ../app/actions/layers-actions.c:60
+#: ../app/actions/layers-actions.c:59
 msgctxt "layers-action"
 msgid "Tr_ansparency"
 msgstr "(_a) மறைப்பின்மை"
 
-#: ../app/actions/layers-actions.c:62
+#: ../app/actions/layers-actions.c:61
 msgctxt "layers-action"
 msgid "_Transform"
 msgstr "(_T) உருமாற்று"
 
-#: ../app/actions/layers-actions.c:64
+#: ../app/actions/layers-actions.c:63
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "(_P) பண்புகள்"
 
-#: ../app/actions/layers-actions.c:66
+#: ../app/actions/layers-actions.c:65
 msgctxt "layers-action"
 msgid "_Opacity"
 msgstr "(_O)  ஒளிபுகாத்தன்மை"
 
-#: ../app/actions/layers-actions.c:68
+#: ../app/actions/layers-actions.c:67
 msgctxt "layers-action"
 msgid "Layer _Mode"
 msgstr "(_M) அடுக்கு பாங்கு"
 
-#: ../app/actions/layers-actions.c:71
+#: ../app/actions/layers-actions.c:70
 msgctxt "layers-action"
 msgid "Te_xt Tool"
 msgstr "(_x) உரை கருவி"
 
-#: ../app/actions/layers-actions.c:72
+#: ../app/actions/layers-actions.c:71
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
 msgstr "இந்த உரை அடுக்கில் உரை கருவியை செயல்படுத்து "
 
-#: ../app/actions/layers-actions.c:77
+#: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
 msgstr "(_E) அடுக்கின் பண்புக்கூறுகளை திருத்து..."
 
-#: ../app/actions/layers-actions.c:78
+#: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
 msgid "Edit the layer's name"
 msgstr "அடுக்கின் பெயரை திருத்து "
 
-#: ../app/actions/layers-actions.c:83 ../app/actions/layers-actions.c:591
+#: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:598
 msgctxt "layers-action"
 msgid "_New Layer..."
 msgstr "(_N) புதிய அடுக்கு..."
 
-#: ../app/actions/layers-actions.c:84
+#: ../app/actions/layers-actions.c:83
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
 msgstr "புதிய அடுக்கு ஒன்றை பிம்பாக்கி படத்துடன் சேர்"
 
-#: ../app/actions/layers-actions.c:89 ../app/actions/layers-actions.c:592
+#: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:599
 msgctxt "layers-action"
 msgid "_New Layer"
 msgstr "(_N) புதிய அடுக்கு"
 
-#: ../app/actions/layers-actions.c:90
+#: ../app/actions/layers-actions.c:89
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
 msgstr "கடைசியாக பயன்படுத்திய மதிப்புகளுடன் புதிய அடுக்கு ஒன்றை உருவாக்கு  "
 
-#: ../app/actions/layers-actions.c:95
+#: ../app/actions/layers-actions.c:94
 msgctxt "layers-action"
 msgid "New from _Visible"
 msgstr "(_V) காட்சியில் உள்ளதில் இருந்து புதியது"
 
-#: ../app/actions/layers-actions.c:97
+#: ../app/actions/layers-actions.c:96
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
 msgstr "இந்த படத்தில் காட்சியில் உள்ளதில் இருந்து புதிய அடுக்கு ஒன்றை உருவாக்கு "
 
-#: ../app/actions/layers-actions.c:102
+#: ../app/actions/layers-actions.c:101
 msgctxt "layers-action"
 msgid "New Layer _Group..."
 msgstr "(_G) புதிய அடுக்கு குழு..."
 
-#: ../app/actions/layers-actions.c:103
+#: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
 msgid "Create a new layer group and add it to the image"
 msgstr "புதிய அடுக்கு குழு ஒன்றை உருவாக்கி பிம்பத்துடன் சேர்"
 
-#: ../app/actions/layers-actions.c:108
+#: ../app/actions/layers-actions.c:107
 msgctxt "layers-action"
 msgid "D_uplicate Layer"
 msgstr "(_u) அடுக்கை நகலெடு"
 
-#: ../app/actions/layers-actions.c:110
+#: ../app/actions/layers-actions.c:109
 msgctxt "layers-action"
 msgid "Create a duplicate of the layer and add it to the image"
 msgstr "அடுக்கின் நகல் எடுத்து படத்துடன் சேர்"
 
-#: ../app/actions/layers-actions.c:115
+#: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "_Delete Layer"
 msgstr "(_D) அடுக்கை நீக்கு "
 
-#: ../app/actions/layers-actions.c:116
+#: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
 msgid "Delete this layer"
 msgstr "இந்த அடுக்கை நீக்கு "
 
-#: ../app/actions/layers-actions.c:121
+#: ../app/actions/layers-actions.c:120
 msgctxt "layers-action"
 msgid "_Raise Layer"
 msgstr "(_R) அடுக்கை உயர்த்து "
 
-#: ../app/actions/layers-actions.c:122
+#: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
 msgstr "அடுக்கு குவியலில் இந்த அடுக்கை ஒரு படி உயர்த்து"
 
-#: ../app/actions/layers-actions.c:127
+#: ../app/actions/layers-actions.c:126
 msgctxt "layers-action"
 msgid "Layer to _Top"
 msgstr "(_T) அடுக்கு மேலுக்கு"
 
-#: ../app/actions/layers-actions.c:128
+#: ../app/actions/layers-actions.c:127
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
 msgstr "அடுக்கு குவியலில் இந்த அடுக்கை எல்லாவற்றுக்கும் மேலே உயர்த்து"
 
-#: ../app/actions/layers-actions.c:133
+#: ../app/actions/layers-actions.c:132
 msgctxt "layers-action"
 msgid "_Lower Layer"
 msgstr "(_L) அடுக்கை தாழ்த்து"
 
-#: ../app/actions/layers-actions.c:134
+#: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
 msgstr "அடுக்கு குவியலில் இந்த அடுக்கை ஒரு படி தாழ்த்து"
 
-#: ../app/actions/layers-actions.c:139
+#: ../app/actions/layers-actions.c:138
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
 msgstr "(_B) அடுக்கு கீழுக்கு"
 
-#: ../app/actions/layers-actions.c:140
+#: ../app/actions/layers-actions.c:139
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
 msgstr "அடுக்கு குவியலில் இந்த அடுக்கை எல்லாவற்றுக்கும் கீழே தாழ்த்து"
 
-#: ../app/actions/layers-actions.c:145
+#: ../app/actions/layers-actions.c:144
 msgctxt "layers-action"
 msgid "_Anchor Layer"
 msgstr "(_A) அடுக்குக்கு  நங்கூரமிடு"
 
-#: ../app/actions/layers-actions.c:146
+#: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
 msgid "Anchor the floating layer"
 msgstr "மிதக்கும் அடுக்கை நங்கூரம் இடு"
 
-#: ../app/actions/layers-actions.c:151
+#: ../app/actions/layers-actions.c:150
 msgctxt "layers-action"
 msgid "Merge Do_wn"
 msgstr "(_w) கீழே ஒன்றாக்குக"
 
-#: ../app/actions/layers-actions.c:152
+#: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
 msgstr "இந்த அடுக்கை இதன் கீழே உள்ள முதல் காணக்கூடியதுடன் ஒன்றாக்கவும்"
 
-#: ../app/actions/layers-actions.c:157
+#: ../app/actions/layers-actions.c:156
 msgctxt "layers-action"
 msgid "Merge Layer Group"
 msgstr "அடுக்கு குழுக்களை ஒருங்கிணை"
 
-#: ../app/actions/layers-actions.c:158
+#: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
 msgstr "அடுக்கு குழுவிலுள்ள அனைத்து அடுக்குகளையும் ஒரு சாதாரண அடுக்காக ஒருங்கிணை"
 
-#: ../app/actions/layers-actions.c:163
+#: ../app/actions/layers-actions.c:162
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
 msgstr "(_V) பார்வையில் உள்ள அடுக்குகள் ஐ ஒன்றாக்குக..."
 
-#: ../app/actions/layers-actions.c:164
+#: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
 msgstr "பார்வையிலுள்ள அனைத்து அடுக்குகளையும் ஒரு அடுக்காக ஆக்கு"
 
-#: ../app/actions/layers-actions.c:169
+#: ../app/actions/layers-actions.c:168
 msgctxt "layers-action"
 msgid "_Flatten Image"
 msgstr "(_F) படத்தை தட்டையாக்கு"
 
-#: ../app/actions/layers-actions.c:170
+#: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "அனைத்து அடுக்குகளையும் ஒன்றாக்கி ஒளிபுகும் தன்மையை நீக்குக."
 
-#: ../app/actions/layers-actions.c:175
+#: ../app/actions/layers-actions.c:174
 msgctxt "layers-action"
 msgid "_Discard Text Information"
 msgstr "(_D) உரை தகவல் ஐ நீக்குக"
 
-#: ../app/actions/layers-actions.c:176
+#: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
 msgstr "இந்த உரை அடுக்கை  இயல்பான அடுக்கு ஆக்குக"
 
-#: ../app/actions/layers-actions.c:181
+#: ../app/actions/layers-actions.c:180
 msgctxt "layers-action"
 msgid "Text to _Path"
 msgstr "(_P) உரை இலிருந்து பாதைக்கு"
 
-#: ../app/actions/layers-actions.c:182
+#: ../app/actions/layers-actions.c:181
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
 msgstr "இந்த உரை அடுக்கிலிருந்து ஒரு பாதையை உருவாக்குக"
 
-#: ../app/actions/layers-actions.c:187
+#: ../app/actions/layers-actions.c:186
 msgctxt "layers-action"
 msgid "Text alon_g Path"
 msgstr "(_g) பாதையுடன்  உரை"
 
-#: ../app/actions/layers-actions.c:188
+#: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
 msgid "Warp this layer's text along the current path"
 msgstr "உரையை இப்போதைய  பாதையில் நெளிவாக அமைக்கவும்"
 
-#: ../app/actions/layers-actions.c:193
+#: ../app/actions/layers-actions.c:192
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
 msgstr "(_o) அடுக்கு வரம்பு அளவு..."
 
-#: ../app/actions/layers-actions.c:194
+#: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
 msgstr "அடுக்கு அளவை சரி செய்யவும்"
 
-#: ../app/actions/layers-actions.c:199
+#: ../app/actions/layers-actions.c:198
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
 msgstr "(_I) அடுக்கு இலிருந்து பட அளவுக்கு"
 
-#: ../app/actions/layers-actions.c:200
+#: ../app/actions/layers-actions.c:199
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
 msgstr "பட அளவுக்கு அடுக்கை மறு அளவாக்குக"
 
-#: ../app/actions/layers-actions.c:205
+#: ../app/actions/layers-actions.c:204
 msgctxt "layers-action"
 msgid "_Scale Layer..."
 msgstr "(_S) அடுக்கு ஐ மறுஅளவாக்குக..."
 
-#: ../app/actions/layers-actions.c:206
+#: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
 msgstr "அடுக்கில் உள்ளதின் அளவு மாற்று "
 
-#: ../app/actions/layers-actions.c:211
+#: ../app/actions/layers-actions.c:210
 msgctxt "layers-action"
 msgid "_Crop to Selection"
 msgstr "(_C) தேர்வுக்கு அறுவடை செய்க"
 
-#: ../app/actions/layers-actions.c:212
+#: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
 msgstr "தேர்வின் அளவுக்கு அடுக்கை அறுவடை செய்க"
 
-#: ../app/actions/layers-actions.c:217
+#: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Add La_yer Mask..."
 msgstr "(_y) அடுக்கு மறைமூடியை சேர்க்க"
 
-#: ../app/actions/layers-actions.c:219
+#: ../app/actions/layers-actions.c:218
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr "சேதமில்லா ஒளிபுகும்தன்மை திருத்தத்தை அனுமதிக்கும் மறைமூடி ஒன்றை சேர்க்கவும்"
 
-#: ../app/actions/layers-actions.c:224
+#: ../app/actions/layers-actions.c:223
 msgctxt "layers-action"
 msgid "Add Alpha C_hannel"
 msgstr "(_h) ஆல்பா வாய்காலை சேர்"
 
-#: ../app/actions/layers-actions.c:225
+#: ../app/actions/layers-actions.c:224
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
 msgstr "அடுக்குடன் ஒளிபுகும்தன்மை தகவலை கூட்டு"
 
-#: ../app/actions/layers-actions.c:230
+#: ../app/actions/layers-actions.c:229
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
 msgstr "(_R) ஆல்பா வாய்க்காலை நீக்கு"
 
-#: ../app/actions/layers-actions.c:231
+#: ../app/actions/layers-actions.c:230
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
 msgstr "அடுக்குடன் ஒளிபுகும்தன்மை தகவலை நீக்கு"
 
-#: ../app/actions/layers-actions.c:239
+#: ../app/actions/layers-actions.c:238
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
 msgstr "ஆல்பா வாய்க்காலை பூட்டு (_a)"
 
-#: ../app/actions/layers-actions.c:241
+#: ../app/actions/layers-actions.c:240
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr "இந்த அடுக்கின் ஒளிபுகும்தன்மை தகவலை மாற்றத்தில் இருந்து தவிர்"
 
-#: ../app/actions/layers-actions.c:247
+#: ../app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
 msgstr "(_E) அடுக்கு மறைமூடி ஐ திருத்து"
 
-#: ../app/actions/layers-actions.c:248
+#: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
 msgid "Work on the layer mask"
 msgstr "அடுக்கு மறைமூடி உடன் வேலை செய்"
 
-#: ../app/actions/layers-actions.c:254
+#: ../app/actions/layers-actions.c:253
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
 msgstr "(_h) அடுக்கு மறைமூடியை காட்டு"
 
-#: ../app/actions/layers-actions.c:260
+#: ../app/actions/layers-actions.c:259
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
 msgstr "(_D) அடுக்கு மறைமூடியை செயல்நீக்கு"
 
-#: ../app/actions/layers-actions.c:261
+#: ../app/actions/layers-actions.c:260
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
 msgstr "அடுக்கு மறைமூடியின் விளைவை நீக்கு"
 
-#: ../app/actions/layers-actions.c:270
+#: ../app/actions/layers-actions.c:269
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
 msgstr "(_M) அடுக்கு மறைமூடியை செயலாக்கு"
 
-#: ../app/actions/layers-actions.c:271
+#: ../app/actions/layers-actions.c:270
 msgctxt "layers-action"
 msgid "Apply the effect of the layer mask and remove it"
 msgstr "அடுக்கு மறைமூடியின் விளைவை காட்டி நீக்கு"
 
-#: ../app/actions/layers-actions.c:276
+#: ../app/actions/layers-actions.c:275
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
 msgstr "(_k) அடுக்கு மறைமூடியை நீக்குக"
 
-#: ../app/actions/layers-actions.c:277
+#: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
 msgid "Remove the layer mask and its effect"
 msgstr "அடுக்கு மறைமூடியையும் அதன் விளைவையும் நீக்கு"
 
-#: ../app/actions/layers-actions.c:285
+#: ../app/actions/layers-actions.c:284
 msgctxt "layers-action"
 msgid "_Mask to Selection"
 msgstr "(_M) தேர்வுக்கு மறைமூடி"
 
-#: ../app/actions/layers-actions.c:286
+#: ../app/actions/layers-actions.c:285
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
 msgstr "தேர்வை அடுக்கு மறைமூடியால் மாற்று"
 
-#: ../app/actions/layers-actions.c:291
+#: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
 msgid "_Add to Selection"
 msgstr "(_A) தேர்வுக்கு கூட்டு "
 
-#: ../app/actions/layers-actions.c:292
+#: ../app/actions/layers-actions.c:291
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
 msgstr "இப்போதைய  தேர்வுக்கு அடுக்கு மறைமூடியை சேர்க்க"
 
-#: ../app/actions/layers-actions.c:297 ../app/actions/layers-actions.c:326
-#: ../app/actions/layers-actions.c:356
+#: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
 msgstr "(_S) தேர்விலிருந்து நீக்கு"
 
-#: ../app/actions/layers-actions.c:298
+#: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
 msgid "Subtract the layer mask from the current selection"
 msgstr "இப்போதைய  தேர்வில் இருந்து அடுக்கு மறைமூடியை நீக்குக"
 
-#: ../app/actions/layers-actions.c:303 ../app/actions/layers-actions.c:333
-#: ../app/actions/layers-actions.c:363
+#: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
 msgstr "(_I) தேர்வுடன் இடைவெட்டு"
 
-#: ../app/actions/layers-actions.c:304
+#: ../app/actions/layers-actions.c:303
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
 msgstr "இப்போதைய  தேர்வால் அடுக்கு மறைமூடியை இடைவெட்டு"
 
-#: ../app/actions/layers-actions.c:312
+#: ../app/actions/layers-actions.c:311
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
 msgstr "(_p) ஆல்பாவுக்கு தேர்வு"
 
-#: ../app/actions/layers-actions.c:314
+#: ../app/actions/layers-actions.c:313
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
 msgstr "தேர்வை அடுக்கின் ஆல்பா வாய்க்காலால் மாற்று"
 
-#: ../app/actions/layers-actions.c:319 ../app/actions/layers-actions.c:349
+#: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
 msgid "A_dd to Selection"
 msgstr "(_d) தேர்வுக்கு சேர்க்க"
 
-#: ../app/actions/layers-actions.c:321
+#: ../app/actions/layers-actions.c:320
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
 msgstr "அடுக்கின் ஆல்பா வாய்க்காலை இப்போதைய  தேர்வுடன் சேர்க்க"
 
-#: ../app/actions/layers-actions.c:328
+#: ../app/actions/layers-actions.c:327
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "இப்போதைய  தேர்விலிருந்து அடுக்கின் ஆல்பா வாய்க்காலை நீக்குக"
 
-#: ../app/actions/layers-actions.c:335
+#: ../app/actions/layers-actions.c:334
 msgctxt "layers-action"
 msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "இப்போதைய  தேர்வால் அடுக்கின் ஆல்பா வாய்க்காலை இடைவெட்டு"
 
-#: ../app/actions/layers-actions.c:343
-msgctxt "layers-action"
-msgid "_Text to Selection"
-msgstr "(_T) உரை தேர்வுக்கு"
-
-#: ../app/actions/layers-actions.c:344
-msgctxt "layers-action"
-msgid "Replace the selection with the text layer's outline"
-msgstr "தேர்வை உரையின் திட்ட வரையால் மாற்றுக"
-
-#: ../app/actions/layers-actions.c:351
-msgctxt "layers-action"
-msgid "Add the text layer's outline to the current selection"
-msgstr "இப்போதைய  தேர்வுக்கு  உரையின் திட்டவரையை சேர்க்க"
-
-#: ../app/actions/layers-actions.c:358
-msgctxt "layers-action"
-msgid "Subtract the text layer's outline from the current selection"
-msgstr "இப்போதைய  தேர்விலிருந்து உரையின் திட்ட வரையை நீக்குக"
-
-#: ../app/actions/layers-actions.c:365
-msgctxt "layers-action"
-msgid "Intersect the text layer's outline with the current selection"
-msgstr "இப்போதைய  தேர்வால்  உரையின் திட்டவரையை இடைவெட்டுக"
-
-#: ../app/actions/layers-actions.c:373
+#: ../app/actions/layers-actions.c:342
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "(_T) மேல் அடுக்கை தேர்வு  செய்க"
 
-#: ../app/actions/layers-actions.c:374
+#: ../app/actions/layers-actions.c:343
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "எல்லாவற்றுக்கும் மேலே உள்ள அடுக்கை தேர்வு செய்க"
 
-#: ../app/actions/layers-actions.c:379
+#: ../app/actions/layers-actions.c:348
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "(_B) கீழ் அடுக்கு ஐ தேர்வு  செய்க"
 
-#: ../app/actions/layers-actions.c:380
+#: ../app/actions/layers-actions.c:349
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "எல்லாவற்றுக்கும் கீழே இருக்கும் அடுக்கை தேர்வு செய்க"
 
-#: ../app/actions/layers-actions.c:385
+#: ../app/actions/layers-actions.c:354
 msgctxt "layers-action"
 msgid "Select _Previous Layer"
 msgstr "(_P) முந்தைய அடுக்கு ஐ தேர்வு  செய்க"
 
-#: ../app/actions/layers-actions.c:386
+#: ../app/actions/layers-actions.c:355
 msgctxt "layers-action"
 msgid "Select the layer above the current layer"
 msgstr "இப்போதைய  அடுக்குக்கு முந்தைய அடுக்கை தேர்வு செய்க"
 
-#: ../app/actions/layers-actions.c:391
+#: ../app/actions/layers-actions.c:360
 msgctxt "layers-action"
 msgid "Select _Next Layer"
 msgstr "(_N) அடுத்த அடுக்கை தேர்வு செய்க"
 
-#: ../app/actions/layers-actions.c:392
+#: ../app/actions/layers-actions.c:361
 msgctxt "layers-action"
 msgid "Select the layer below the current layer"
 msgstr "இப்போதைய  அடுக்குக்கு கீழ் உள்ள  அடுக்கை தேர்வு செய்க"
 
-#: ../app/actions/layers-actions.c:586 ../app/actions/layers-actions.c:587
+#. Will be followed with e.g. "Shift-Click
+#. on thumbnail"
+#.
+#: ../app/actions/layers-actions.c:442
+#, fuzzy
+msgid "Shortcut: "
+msgstr "குறுக்கு வழி"
+
+#. Will be prepended with a modifier key
+#. string, e.g. "Shift"
+#.
+#: ../app/actions/layers-actions.c:447
+msgid "-Click on thumbnail in Layers dockable"
+msgstr ""
+
+#: ../app/actions/layers-actions.c:593 ../app/actions/layers-actions.c:594
 msgctxt "layers-action"
 msgid "To _New Layer"
 msgstr "(_N) புதிய அடுக்குக்கு"
@@ -4548,7 +4541,8 @@ msgstr "வார்ப்புருவை அழி"
 
 #: ../app/actions/templates-commands.c:238
 #, c-format
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "பட்டியல் மற்றும் வட்டில் இருந்து வார்ப்புரு '%s-யை உறுதியாக அழித்துவிடலாமா?"
 
 #: ../app/actions/text-editor-actions.c:43
@@ -4606,7 +4600,7 @@ msgstr "உரை கோப்பினை திற (யூடிஎஃப்-8
 #: ../app/core/gimppalette-load.c:376 ../app/core/gimppalette-load.c:466
 #: ../app/core/gimppalette-load.c:633 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:637 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:328
+#: ../app/xcf/xcf.c:329
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "வாசிக்க '%s'ஐ திறக்க முடியவில்லை: %s"
@@ -5130,7 +5124,7 @@ msgstr "பாதை பண்புகள்"
 msgid "Edit Path Attributes"
 msgstr "பாதை பண்புகளை திருத்து"
 
-#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:202
+#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:205
 #: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "பாதை"
@@ -5144,7 +5138,7 @@ msgid "New Path Options"
 msgstr "புதிய பாதை விருப்பங்கள்"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1987
+#: ../app/tools/gimpvectortool.c:1990
 msgid "Stroke Path"
 msgstr "பாதை தீட்டு"
 
@@ -5647,7 +5641,8 @@ msgstr "துறைகளை மறை"
 
 #: ../app/actions/windows-actions.c:103
 msgctxt "windows-action"
-msgid "When enabled docks and other dialogs are hidden, leaving only image windows."
+msgid ""
+"When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
 "செயலாக்கப்பட்டால் துறைகள் மற்ற உரைகள் அனைத்தும் மறைக்கப்படும். பிம்பங்கள் மட்டுமே தெரியும்."
 
@@ -5661,7 +5656,8 @@ msgctxt "windows-action"
 msgid ""
 "When enabled GIMP is in a single-window mode. Far from completely "
 "implemented!"
-msgstr "செயல் படுத்தினால் கிம்ப் ஒற்றை சாளர முறைமையில் இருக்கும். இது இன்னும் முழுமையாகவில்லை!"
+msgstr ""
+"செயல் படுத்தினால் கிம்ப் ஒற்றை சாளர முறைமையில் இருக்கும். இது இன்னும் முழுமையாகவில்லை!"
 
 #: ../app/base/base-enums.c:23
 msgctxt "curve-type"
@@ -5950,7 +5946,7 @@ msgstr "மனதுக்கினிய"
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:55
 #: ../app/gui/themes.c:238 ../app/tools/gimpcurvestool.c:690
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
-#: ../app/xcf/xcf.c:421
+#: ../app/xcf/xcf.c:422
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "எழுதுவதற்கு '%s'ஐ திறக்கமுடியவில்லை: %s"
@@ -6071,7 +6067,8 @@ msgstr "செயலாக்கப்பட்டிருந்தால், �
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr "செயலாக்கப்பட்டிருந்தால், தேர்வு செய்த இயக்கங்கள் அனைத்து கருவிகளிலும் பயன்படுத்தப்படும்"
+msgstr ""
+"செயலாக்கப்பட்டிருந்தால், தேர்வு செய்த இயக்கங்கள் அனைத்து கருவிகளிலும் பயன்படுத்தப்படும்"
 
 #: ../app/config/gimprc-blurbs.h:163
 msgid "When enabled, the selected gradient will be used for all tools."
@@ -6103,14 +6100,17 @@ msgstr ""
 "அல்லது 1:1 அளவையில் அது காண்பிக்கப்படும்."
 
 #: ../app/config/gimprc-blurbs.h:201
-msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid ""
+"Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "தனிப்பட்ட நிறவரைப்படத்தை நிறுவவும்; இது 8-பிட்டு (256 வண்ணங்கள்) காட்சியில் உதவியாக "
 "இருக்கலாம்."
 
 #: ../app/config/gimprc-blurbs.h:204
-msgid "Sets the level of interpolation used for scaling and other transformations."
-msgstr "அளவிடல் மற்றும் இதர உருமாற்றங்களில் பயன்படுத்தப்படும் இடைசெருகல் நிலையை அமைக்கிறது."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
+msgstr ""
+"அளவிடல் மற்றும் இதர உருமாற்றங்களில் பயன்படுத்தப்படும் இடைசெருகல் நிலையை அமைக்கிறது."
 
 #: ../app/config/gimprc-blurbs.h:211
 msgid "Specifies the language to use for the user interface."
@@ -6237,7 +6237,8 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "ஒவ்வொரு துவக்கத்திலும், கிம்ப் நீங்கள் கடைசியாக சேமித்த அமர்வை மீட்க முயற்சிக்கட்டும்."
 
 #: ../app/config/gimprc-blurbs.h:302
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "கிம்ப் அமர்வுகளில் நடப்பு கருவி, தோற்றம், நிறம், மற்றும் தூரிகையை நினைவு வைத்திருக்கவும்."
 
@@ -6890,7 +6891,7 @@ msgid "Quick Mask"
 msgstr "தீட்டு தேர்வி"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:911
-#: ../app/core/gimpimage-grid.c:62
+#: ../app/core/gimpimage-grid.c:63
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "வலைக்கட்டம்"
@@ -6980,12 +6981,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "மிதக்கும் தேர்வை நிலைநிறுத்தவும்"
 
-#: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:261
+#: ../app/core/core-enums.c:899 ../app/core/gimp-edit.c:262
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "ஒட்டு"
 
-#: ../app/core/core-enums.c:900 ../app/core/gimp-edit.c:500
+#: ../app/core/core-enums.c:900 ../app/core/gimp-edit.c:501
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "வெட்டு"
@@ -6996,7 +6997,7 @@ msgid "Text"
 msgstr "உரை"
 
 #: ../app/core/core-enums.c:902 ../app/core/core-enums.c:944
-#: ../app/core/gimpdrawable-transform.c:566
+#: ../app/core/gimpdrawable-transform.c:567
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "உருமாற்று"
@@ -7292,37 +7293,37 @@ msgstr "\"%s\"ஐ அழிப்பதில் தோல்வி: %s"
 msgid "Pasted Layer"
 msgstr "ஒட்டப்பட்ட அடுக்கு"
 
-#: ../app/core/gimp-edit.c:388
+#: ../app/core/gimp-edit.c:389
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "துடை"
 
-#: ../app/core/gimp-edit.c:407
+#: ../app/core/gimp-edit.c:408
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "முன்புல நிறத்தால் நிரப்பு "
 
-#: ../app/core/gimp-edit.c:411
+#: ../app/core/gimp-edit.c:412
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "பின்புல நிறத்தால் நிரப்பு "
 
-#: ../app/core/gimp-edit.c:415
+#: ../app/core/gimp-edit.c:416
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "வெள்ளையால் நிரப்பு"
 
-#: ../app/core/gimp-edit.c:419
+#: ../app/core/gimp-edit.c:420
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "ஒளிபுகு தன்மையால் நிரப்பு"
 
-#: ../app/core/gimp-edit.c:423
+#: ../app/core/gimp-edit.c:424
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "தோரணியால் நிரப்பு"
 
-#: ../app/core/gimp-edit.c:512
+#: ../app/core/gimp-edit.c:513
 msgid "Global Buffer"
 msgstr "முழுமையான இடையகம்"
 
@@ -7461,7 +7462,8 @@ msgstr "தூரிகை கோப்பு '%s' இல் ஆபத்தா�
 #: ../app/core/gimpbrush-load.c:722
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr "தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை : கோப்பு வெட்டப்பட்டது போலிருக்கிறது"
+msgstr ""
+"தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை : கோப்பு வெட்டப்பட்டது போலிருக்கிறது"
 
 #: ../app/core/gimpbrush-load.c:277 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -7471,7 +7473,7 @@ msgstr "தூரிகை கோப்பு '%s' இல் செல்லு�
 
 #: ../app/core/gimpbrush-load.c:284 ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:82
-#: ../app/tools/gimpvectortool.c:318
+#: ../app/tools/gimpvectortool.c:319
 msgid "Unnamed"
 msgstr "பெயரில்லாத"
 
@@ -7486,7 +7488,8 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:450
 #, c-format
-msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid ""
+"Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை :ஏபிஆர் வகை பதிப்பு %d ஐ குறிப்பு மீட்க "
 "முடியவில்லை."
@@ -7494,7 +7497,8 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:617
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
-msgstr "தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை :அகலமான தூரிகைகள் ஆதரிக்கப்படவில்லை."
+msgstr ""
+"தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை :அகலமான தூரிகைகள் ஆதரிக்கப்படவில்லை."
 
 #: ../app/core/gimpbrush.c:136
 msgid "Brush Spacing"
@@ -7507,14 +7511,16 @@ msgstr "தூரிகை கோப்பில் ஆபத்தான பக
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
 "தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை : தெரியாத கிம்ப் தூரிகை பதிப்பு வரி %d "
 "இல்."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 "தூரிகை கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை : தெரியாத கிம்ப் தூரிகை வடிவு வரி %d "
 "இல்."
@@ -7630,7 +7636,7 @@ msgctxt "undo-type"
 msgid "Rotate Channel"
 msgstr "வாய்க்காலை சுழற்று"
 
-#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:885
+#: ../app/core/gimpchannel.c:278 ../app/core/gimpdrawable-transform.c:845
 msgctxt "undo-type"
 msgid "Transform Channel"
 msgstr "வாய்க்காலை உருமாற்று"
@@ -7640,7 +7646,7 @@ msgctxt "undo-type"
 msgid "Stroke Channel"
 msgstr "வாய்க்காலை தீட்டு "
 
-#: ../app/core/gimpchannel.c:280 ../app/core/gimpselection.c:583
+#: ../app/core/gimpchannel.c:280 ../app/core/gimpselection.c:584
 msgctxt "undo-type"
 msgid "Channel to Selection"
 msgstr "தேர்வுக்கு வாய்க்கால்"
@@ -7732,7 +7738,7 @@ msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "வாய்க்கால் ஒளிபுகாமையை அமை"
 
-#: ../app/core/gimpchannel.c:1926 ../app/core/gimpselection.c:532
+#: ../app/core/gimpchannel.c:1926 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
 msgstr "தேர்வு மறைமூடி"
 
@@ -7778,9 +7784,9 @@ msgid ""
 "exist. Please create the folder or fix your configuation in the Preferences "
 "dialog's 'Folders' section."
 msgstr ""
-"நீங்கள் எழுதக்கூடிய தரவு அடைவை (%s) வடிவமைத்து உள்ளீர்கள். ஆனால் இந்த அடைவு இருப்பில் இல்லை. "
-"தயை செய்து இதை உருவாக்குங்கள் அல்லது உங்கள் அமைப்பை தேர்வுகள் உரையாடலில் அடைவுகள் பகுதியில் "
-"சரி செய்து அமையுங்கள்."
+"நீங்கள் எழுதக்கூடிய தரவு அடைவை (%s) வடிவமைத்து உள்ளீர்கள். ஆனால் இந்த அடைவு இருப்பில் "
+"இல்லை. தயை செய்து இதை உருவாக்குங்கள் அல்லது உங்கள் அமைப்பை தேர்வுகள் உரையாடலில் அடைவுகள் "
+"பகுதியில் சரி செய்து அமையுங்கள்."
 
 #: ../app/core/gimpdatafactory.c:762
 #, c-format
@@ -7908,17 +7914,17 @@ msgctxt "undo-type"
 msgid "Flip"
 msgstr "புரட்டு"
 
-#: ../app/core/gimpdrawable-transform.c:744
+#: ../app/core/gimpdrawable-transform.c:718
 msgctxt "undo-type"
 msgid "Rotate"
 msgstr "சுழற்றவும்"
 
-#: ../app/core/gimpdrawable-transform.c:883 ../app/core/gimplayer.c:272
+#: ../app/core/gimpdrawable-transform.c:843 ../app/core/gimplayer.c:272
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "அடுக்கை உருமாற்று"
 
-#: ../app/core/gimpdrawable-transform.c:898
+#: ../app/core/gimpdrawable-transform.c:858
 msgid "Transformation"
 msgstr "உருமாற்றம்"
 
@@ -7958,7 +7964,8 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-msgstr "சீர் நிற மாற்றம் கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை: சிதைந்த துண்டு %d வரி %d. இல்"
+msgstr ""
+"சீர் நிற மாற்றம் கோப்பு '%s' இல் ஆபத்தான பகுத்தல் பிழை: சிதைந்த துண்டு %d வரி %d. இல்"
 
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
@@ -7984,7 +7991,8 @@ msgid "The foreground color of the grid."
 msgstr "வலைக்கட்டத்தின் முன்புல நிறம்"
 
 #: ../app/core/gimpgrid.c:94
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr ""
 "வலைக்கட்டத்தின் பின்புல நிறம்; இரட்டை டேஷ் கோட்டுப்பாங்கில் மட்டுமே பயன்படுத்தப்படுகிறது."
 
@@ -7997,14 +8005,15 @@ msgid "Vertical spacing of grid lines."
 msgstr "வலைக்கட்ட வரிகள் இடையில் செங்குத்தான இடைவெளி"
 
 #: ../app/core/gimpgrid.c:114
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr "முதல் வலைக்கட்ட வரியின் கிடைமட்ட குத்து நீட்டம்; இது எதிர்ம எண்ணாக இருக்கலாம்."
 
 #: ../app/core/gimpgrid.c:121
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "முதல் வலைக்கட்ட வரியின் செங்குத்து குத்து நீட்டம்; இது எதிர்ம எண்ணாக இருக்கலாம்."
 
-#: ../app/core/gimpgrouplayer.c:178 ../app/core/gimpgrouplayer.c:837
+#: ../app/core/gimpgrouplayer.c:178
 msgid "Layer Group"
 msgstr "அடுக்கு குழு"
 
@@ -8100,22 +8109,22 @@ msgctxt "undo-type"
 msgid "Resize Image"
 msgstr "பிம்பத்தை மறுஅளவிடு"
 
-#: ../app/core/gimpimage-guides.c:51
+#: ../app/core/gimpimage-guides.c:52
 msgctxt "undo-type"
 msgid "Add Horizontal Guide"
 msgstr "கிடைமட்ட வழிகாட்டியை சேர்"
 
-#: ../app/core/gimpimage-guides.c:74
+#: ../app/core/gimpimage-guides.c:76
 msgctxt "undo-type"
 msgid "Add Vertical Guide"
 msgstr "செங்குத்து வழிகாட்டியை சேர்"
 
-#: ../app/core/gimpimage-guides.c:117
+#: ../app/core/gimpimage-guides.c:119
 msgctxt "undo-type"
 msgid "Remove Guide"
 msgstr "வழிகாட்டியை நீக்கு"
 
-#: ../app/core/gimpimage-guides.c:142
+#: ../app/core/gimpimage-guides.c:144
 msgctxt "undo-type"
 msgid "Move Guide"
 msgstr "வழிகாட்டியை நகர்த்து"
@@ -8222,57 +8231,57 @@ msgstr "படத்தை அளவு மாற்று"
 msgid "Can't undo %s"
 msgstr "%s-யை செயல்நீக்கமுடியாது"
 
-#: ../app/core/gimpimage.c:1632
+#: ../app/core/gimpimage.c:1734
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "பிம்ப தெளிதிறனை மாற்று"
 
-#: ../app/core/gimpimage.c:1684
+#: ../app/core/gimpimage.c:1786
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "பிம்ப அலகை மாற்று"
 
-#: ../app/core/gimpimage.c:2654
+#: ../app/core/gimpimage.c:2767
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "பிம்பத்துடன் ஒட்டை சேர்"
 
-#: ../app/core/gimpimage.c:2695
+#: ../app/core/gimpimage.c:2808
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "பிம்பத்திலிருந்து ஒட்டை நீக்கு"
 
-#: ../app/core/gimpimage.c:3404
+#: ../app/core/gimpimage.c:3517
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "அடுக்கை சேர்"
 
-#: ../app/core/gimpimage.c:3454 ../app/core/gimpimage.c:3474
+#: ../app/core/gimpimage.c:3567 ../app/core/gimpimage.c:3587
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "அடுக்கை நீக்கு"
 
-#: ../app/core/gimpimage.c:3467
+#: ../app/core/gimpimage.c:3580
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "மிதக்கும் தேர்வை நீக்கு"
 
-#: ../app/core/gimpimage.c:3633
+#: ../app/core/gimpimage.c:3746
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "வாய்க்காலை சேர்"
 
-#: ../app/core/gimpimage.c:3671 ../app/core/gimpimage.c:3683
+#: ../app/core/gimpimage.c:3784 ../app/core/gimpimage.c:3796
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "வாய்க்காலை நீக்கு"
 
-#: ../app/core/gimpimage.c:3730
+#: ../app/core/gimpimage.c:3843
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "பாதையை சேர்"
 
-#: ../app/core/gimpimage.c:3761
+#: ../app/core/gimpimage.c:3874
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "பாதையை நீக்கு"
@@ -8311,7 +8320,7 @@ msgstr "(முன்காட்சி காலாவதியாகி வி
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:611 ../app/widgets/gimpimagepropview.c:446
-#: ../app/widgets/gimpsizebox.c:437 ../app/widgets/gimptemplateeditor.c:565
+#: ../app/widgets/gimpsizebox.c:434 ../app/widgets/gimptemplateeditor.c:565
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -8443,7 +8452,8 @@ msgstr ""
 
 #: ../app/core/gimplayer.c:1415
 msgid "Unable to add a layer mask since the layer already has one."
-msgstr "அடுக்கில் ஏற்கனவே அடுக்கு மறைமூடி இருப்பதால் அடுக்கு மறைமூடியை சேர்க்கமுடியவில்லை."
+msgstr ""
+"அடுக்கில் ஏற்கனவே அடுக்கு மறைமூடி இருப்பதால் அடுக்கு மறைமூடியை சேர்க்கமுடியவில்லை."
 
 #: ../app/core/gimplayer.c:1426
 msgid "Cannot add layer mask of different dimensions than specified layer."
@@ -8511,7 +8521,7 @@ msgstr "அடுக்கு மறைமூடியை காட்டு"
 msgid "Index %d"
 msgstr " %d ஐ வரிசையாக்கு"
 
-#: ../app/core/gimppalette-import.c:547
+#: ../app/core/gimppalette-import.c:548
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "தெரியாத வகை வண்ணத்தட்டு கோப்பு: %s"
@@ -8560,7 +8570,8 @@ msgstr "நிறத்தட்டு கோப்பு '%s'ஐ படிக�
 #: ../app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "நிறத்தட்டு கோப்பு '%s'ஐ படிக்கிறது: வரி %dஇல் ஆர்ஜிபி மதிப்பு எல்லையை மீறியுள்ளது."
+msgstr ""
+"நிறத்தட்டு கோப்பு '%s'ஐ படிக்கிறது: வரி %dஇல் ஆர்ஜிபி மதிப்பு எல்லையை மீறியுள்ளது."
 
 #: ../app/core/gimppalette-load.c:477
 #, c-format
@@ -8576,11 +8587,13 @@ msgstr "நிறத்தட்டு கோப்பு '%s'இல் ஆப�
 #: ../app/core/gimppattern-load.c:162
 #, c-format
 msgid "Fatal parse error in pattern file '%s': File appears truncated."
-msgstr "நிறத்தட்டு கோப்பு '%s'இல் ஆபத்தான பகுத்தல் பிழை: கோப்பு வெட்டுபட்டதுபோல இருக்கிறது."
+msgstr ""
+"நிறத்தட்டு கோப்பு '%s'இல் ஆபத்தான பகுத்தல் பிழை: கோப்பு வெட்டுபட்டதுபோல இருக்கிறது."
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr "தோரணி கோப்பில் ஆபத்தான பகுத்தல் பிழை '%s': அறியாத தோரணி வடிவ பதிப்பு %d."
 
 #: ../app/core/gimppattern-load.c:114
@@ -8597,7 +8610,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "தோரணி கோப்பு இல் '%s'இல் செல்லுபடியாகாத யூடிஎஃப்-8 சரம்."
 
-#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:351
+#: ../app/core/gimppdbprogress.c:287 ../app/widgets/gimppdbdialog.c:339
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr "%s மீட்டழைக்க முடியவில்லை. தொடர்புள்ள கூடுதல்- இணைப்பு நொறுங்கியிருக்கலாம்."
@@ -8606,74 +8619,74 @@ msgstr "%s மீட்டழைக்க முடியவில்லை. த
 msgid "Please wait"
 msgstr "தயவு செய்து காத்திருக்கவும்"
 
-#: ../app/core/gimpselection.c:154
+#: ../app/core/gimpselection.c:155
 msgctxt "undo-type"
 msgid "Move Selection"
 msgstr "தேர்வை நகர்த்து"
 
-#: ../app/core/gimpselection.c:155
+#: ../app/core/gimpselection.c:156
 msgctxt "undo-type"
 msgid "Stroke Selection"
 msgstr "தீட்டல் தேர்வு"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:172
 msgctxt "undo-type"
 msgid "Feather Selection"
 msgstr "நெகிழ்வு தேர்வு"
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:173
 msgctxt "undo-type"
 msgid "Sharpen Selection"
 msgstr "தேர்வை கூர்மையாக்கு"
 
-#: ../app/core/gimpselection.c:173
+#: ../app/core/gimpselection.c:174
 msgctxt "undo-type"
 msgid "Select None"
 msgstr "எதையும் தேர்வு செய்யாதே"
 
-#: ../app/core/gimpselection.c:174
+#: ../app/core/gimpselection.c:175
 msgctxt "undo-type"
 msgid "Select All"
 msgstr "அனைத்தையும் தேர்வு செய்"
 
-#: ../app/core/gimpselection.c:175
+#: ../app/core/gimpselection.c:176
 msgctxt "undo-type"
 msgid "Invert Selection"
 msgstr "தேர்வை தலைகீழாக்கு"
 
-#: ../app/core/gimpselection.c:176
+#: ../app/core/gimpselection.c:177
 msgctxt "undo-type"
 msgid "Border Selection"
 msgstr "எல்லை தேர்வு"
 
-#: ../app/core/gimpselection.c:177
+#: ../app/core/gimpselection.c:178
 msgctxt "undo-type"
 msgid "Grow Selection"
 msgstr "வளர்தல் தேர்வு"
 
-#: ../app/core/gimpselection.c:178
+#: ../app/core/gimpselection.c:179
 msgctxt "undo-type"
 msgid "Shrink Selection"
 msgstr "தேர்வு குறுக்கம்"
 
-#: ../app/core/gimpselection.c:285
+#: ../app/core/gimpselection.c:286
 msgid "There is no selection to stroke."
 msgstr "தீட்ட எந்த தேர்வும் இல்லை"
 
-#: ../app/core/gimpselection.c:669
+#: ../app/core/gimpselection.c:670
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "தேர்வு செய்த பகுதி காலியாக இருப்பதால் வெட்ட அல்லது நகலெடுக்க முடியவில்லை"
 
-#: ../app/core/gimpselection.c:844
+#: ../app/core/gimpselection.c:845
 msgid "Cannot float selection because the selected region is empty."
 msgstr "தேர்வை மிதக்கவைக்க முடியாது, காரணம் தேர்வு செய்த பகுதி காலியாக உள்ளது"
 
-#: ../app/core/gimpselection.c:851
+#: ../app/core/gimpselection.c:852
 msgctxt "undo-type"
 msgid "Float Selection"
 msgstr "தேர்வை மிதக்கவிடு"
 
-#: ../app/core/gimpselection.c:867
+#: ../app/core/gimpselection.c:868
 msgid "Floated Layer"
 msgstr "மிதக்கவிடப்பட்ட அடுக்கு"
 
@@ -8757,24 +8770,24 @@ msgctxt "plural"
 msgid "percent"
 msgstr "சதவீதம்"
 
-#: ../app/dialogs/about-dialog.c:102 ../app/gui/gui.c:484
+#: ../app/dialogs/about-dialog.c:106 ../app/gui/gui.c:484
 msgid "About GIMP"
 msgstr "கிம்ப் பற்றி "
 
-#: ../app/dialogs/about-dialog.c:111
+#: ../app/dialogs/about-dialog.c:115
 msgid "Visit the GIMP website"
 msgstr "கிம்ப் வலையகத்தை விஜயம் செய்க"
 
 #. Translators: insert your names here, separated by newline
-#: ../app/dialogs/about-dialog.c:116
+#: ../app/dialogs/about-dialog.c:120
 msgid "translator-credits"
 msgstr "மொழிபெயர்ப்பாளர்- நன்றி அறிதல்"
 
-#: ../app/dialogs/about-dialog.c:509
+#: ../app/dialogs/about-dialog.c:515
 msgid "GIMP is brought to you by"
 msgstr "கிம்ப் உங்களுக்கு கொண்டுவரப்பட்டது இவரால்"
 
-#: ../app/dialogs/about-dialog.c:583
+#: ../app/dialogs/about-dialog.c:589
 msgid "This is an unstable development release."
 msgstr "இது ஒரு நிலையற்ற வளர்ச்சி பதிப்பு"
 
@@ -9098,8 +9111,10 @@ msgstr ""
 "உரையாடலில் அமைத்ததை விட (இப்போது %s) அதிக நினைவகத்தை பயன்படுத்தும். "
 
 #: ../app/dialogs/image-scale-dialog.c:260
-msgid "Scaling the image to the chosen size will shrink some layers completely away."
-msgstr "பிம்பத்தை தேர்ந்தெடுத்த அளவுக்கு மாற்றுதல் சில அடுக்குகளை முற்றிலும் சுருக்கிவிடும்."
+msgid ""
+"Scaling the image to the chosen size will shrink some layers completely away."
+msgstr ""
+"பிம்பத்தை தேர்ந்தெடுத்த அளவுக்கு மாற்றுதல் சில அடுக்குகளை முற்றிலும் சுருக்கிவிடும்."
 
 #: ../app/dialogs/image-scale-dialog.c:264
 msgid "Is this what you want to do?"
@@ -9143,12 +9158,12 @@ msgstr "(_n) அடுக்கு பெயர்:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1074
+#: ../app/tools/gimpmeasuretool.c:1088
 msgid "Width:"
 msgstr "அகலம்:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1102
+#: ../app/tools/gimpmeasuretool.c:1116
 msgid "Height:"
 msgstr "உயரம்:"
 
@@ -9944,7 +9959,8 @@ msgstr "உள்ளீடு சாதன அமைவுகளை இப்ப
 
 #: ../app/dialogs/preferences-dialog.c:2570
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "சேமித்த உள்ளீடு சாதன அமைவுகளை மீண்டும் முன்னிருப்பு மதிப்புகளுக்கு மீண்டும் அமை (_R)"
+msgstr ""
+"சேமித்த உள்ளீடு சாதன அமைவுகளை மீண்டும் முன்னிருப்பு மதிப்புகளுக்கு மீண்டும் அமை (_R)"
 
 #: ../app/dialogs/preferences-dialog.c:2585
 msgid "Additional Input Controllers"
@@ -10124,28 +10140,28 @@ msgid "Print Size"
 msgstr "அச்சு அளவு"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:201
+#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:198
 #: ../app/widgets/gimptemplateeditor.c:160
 msgid "_Width:"
 msgstr "அகலம் (_W):"
 
-#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:205
+#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:167
 msgid "H_eight:"
 msgstr "உயரம் (_e):"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:263
+#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:287
 msgid "_X resolution:"
 msgstr "_X தெளிதிறன்:"
 
-#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:266
+#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:294
 msgid "_Y resolution:"
 msgstr "_Y தெளிதிறன்:"
 
-#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:259
+#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #: ../app/widgets/gimptemplateeditor.c:307
 #, c-format
 msgid "pixels/%a"
@@ -10383,24 +10399,24 @@ msgstr "H"
 msgid "_Sample Merged"
 msgstr "(_S) இரண்டற கலந்ததை மாதிரி எடு"
 
-#: ../app/display/gimpdisplayshell.c:502
+#: ../app/display/gimpdisplayshell.c:499
 msgid "Access the image menu"
 msgstr "பிம்ப பட்டியை அணுக"
 
-#: ../app/display/gimpdisplayshell.c:616
+#: ../app/display/gimpdisplayshell.c:613
 msgid "Zoom image when window size changes"
 msgstr "சாளர அளவு மாறும்போது பிம்பத்தை அணுகல் மாற்றம் செய்"
 
-#: ../app/display/gimpdisplayshell.c:645
+#: ../app/display/gimpdisplayshell.c:642
 msgid "Toggle Quick Mask"
 msgstr "விரைவு மறைமூடி நிலைமாற்று"
 
-#: ../app/display/gimpdisplayshell.c:668
+#: ../app/display/gimpdisplayshell.c:665
 msgid "Navigate the image display"
 msgstr "பிம்ப காட்சியில் உலாவு"
 
-#: ../app/display/gimpdisplayshell.c:736
-#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:315
+#: ../app/display/gimpdisplayshell.c:733
+#: ../app/display/gimpdisplayshell.c:1311 ../app/widgets/gimptoolbox.c:315
 msgid "Drop image files here to open them"
 msgstr "பிம்ப கோப்புகளை திறக்க இங்கே அவற்றை விடவும்."
 
@@ -10422,7 +10438,8 @@ msgstr "மூடுவதற்கு முன் பிம்பம் '%s'�
 #: ../app/display/gimpdisplayshell-close.c:254
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] "பிம்பத்தை சேமிக்காவிட்டால் கடைசி மணி நேரத்தில் செய்த மாற்றங்களை இழப்பீர்கள்."
 msgstr[1] "பிம்பத்தை சேமிக்காவிட்டால் கடைசி %d மணிகள் நேரத்தில் செய்த மாற்றங்களை இழப்பீர்கள்."
 
@@ -10443,7 +10460,8 @@ msgstr[1] ""
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] "பிம்பத்தை சேமிக்காவிட்டால் கடைசி நிமிட நேரத்தில் செய்த மாற்றங்களை இழப்பீர்கள்."
 msgstr[1] ""
 "பிம்பத்தை சேமிக்காவிட்டால் கடைசி  %d நிமிடங்கள் நேரத்தில் செய்த மாற்றங்களை இழப்பீர்கள்."
@@ -10468,7 +10486,7 @@ msgstr "அடுக்கு குழுக்களின் படதுண�
 #: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
 #: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:335
 #: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:286
-#: ../app/tools/gimptransformtool.c:349 ../app/tools/gimptransformtool.c:1193
+#: ../app/tools/gimptransformtool.c:350 ../app/tools/gimptransformtool.c:1178
 msgid "The active layer's pixels are locked."
 msgstr "நடப்பில் உள்ள அடுக்கின் படதுணுக்குகள் பூட்டப்பட்டுள்ளன."
 
@@ -10491,12 +10509,12 @@ msgstr "நிற காட்சி வடிப்பிகள்"
 msgid "Configure Color Display Filters"
 msgstr "நிற காட்சி வடிப்பிகளை கட்டமைக்கவும்."
 
-#: ../app/display/gimpdisplayshell-handlers.c:605
+#: ../app/display/gimpdisplayshell-handlers.c:561
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "பிம்பம் '%s' க்கு சேமிக்கப்பட்டது"
 
-#: ../app/display/gimpdisplayshell-handlers.c:619
+#: ../app/display/gimpdisplayshell-handlers.c:575
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "பிம்பம் '%s' க்கு ஏற்றுமதி செய்யப்பட்டது"
@@ -10531,7 +10549,7 @@ msgstr "(துடை)"
 
 #: ../app/display/gimpdisplayshell-title.c:356
 #: ../app/display/gimpdisplayshell-title.c:369
-#: ../app/widgets/gimpactiongroup.c:848
+#: ../app/widgets/gimpactiongroup.c:870
 msgid "(none)"
 msgstr "(எதுவும் இல்லை)"
 
@@ -10547,7 +10565,7 @@ msgstr " (மேலெழுதப்பட்டது)"
 msgid " (imported)"
 msgstr " (இறக்குமதி செய்தது)"
 
-#: ../app/display/gimpstatusbar.c:361
+#: ../app/display/gimpstatusbar.c:358
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "ரத்து செய்<i>%s</i>"
@@ -10699,7 +10717,7 @@ msgid "Pencil"
 msgstr "பென்சில்"
 
 #: ../app/paint/gimpperspectiveclone.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:127
+#: ../app/tools/gimpperspectiveclonetool.c:128
 msgid "Perspective Clone"
 msgstr "கண்ணோட்ட மறுவி"
 
@@ -10759,30 +10777,33 @@ msgstr "கூர்மையாக்கு"
 msgid "Combine Masks"
 msgstr "மறைமூடிகளை சேர்"
 
-#: ../app/pdb/drawable-cmds.c:885
+#: ../app/pdb/drawable-cmds.c:474
 msgid "Plug-In"
 msgstr "சொருகி"
 
-#: ../app/pdb/drawable-transform-cmds.c:309
-#: ../app/pdb/drawable-transform-cmds.c:394
-#: ../app/pdb/transform-tools-cmds.c:145 ../app/tools/gimpperspectivetool.c:69
+#: ../app/pdb/drawable-transform-cmds.c:319
+#: ../app/pdb/drawable-transform-cmds.c:406
+#: ../app/pdb/item-transform-cmds.c:256 ../app/pdb/transform-tools-cmds.c:153
+#: ../app/tools/gimpperspectivetool.c:69
 msgid "Perspective"
 msgstr "பிம்பகாட்சி"
 
-#: ../app/pdb/drawable-transform-cmds.c:831
-#: ../app/pdb/drawable-transform-cmds.c:903
-#: ../app/pdb/transform-tools-cmds.c:361 ../app/tools/gimpsheartool.c:110
+#: ../app/pdb/drawable-transform-cmds.c:862
+#: ../app/pdb/drawable-transform-cmds.c:936
+#: ../app/pdb/item-transform-cmds.c:597 ../app/pdb/transform-tools-cmds.c:375
+#: ../app/tools/gimpsheartool.c:110
 msgid "Shearing"
 msgstr "பிளத்தல்"
 
-#: ../app/pdb/drawable-transform-cmds.c:988
-#: ../app/pdb/transform-tools-cmds.c:437
+#: ../app/pdb/drawable-transform-cmds.c:1023
+#: ../app/pdb/item-transform-cmds.c:693 ../app/pdb/transform-tools-cmds.c:453
 msgid "2D Transform"
 msgstr "2டி மாற்றம்"
 
-#: ../app/pdb/drawable-transform-cmds.c:1071
-#: ../app/pdb/drawable-transform-cmds.c:1164
-#: ../app/pdb/drawable-transform-cmds.c:1255
+#: ../app/pdb/drawable-transform-cmds.c:1108
+#: ../app/pdb/drawable-transform-cmds.c:1203
+#: ../app/pdb/drawable-transform-cmds.c:1296
+#: ../app/pdb/item-transform-cmds.c:797
 msgid "2D Transforming"
 msgstr "2டி மாற்றுதல்"
 
@@ -10802,7 +10823,8 @@ msgstr "இது மிதக்கும் தேர்வு இல்லா
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
-msgstr "இது மிதக்கும் தேர்வு இல்லையாதலால் நீங்கள் இந்த அடுக்கை சாதாரண அடுக்காக ஆக்க முடியாது"
+msgstr ""
+"இது மிதக்கும் தேர்வு இல்லையாதலால் நீங்கள் இந்த அடுக்கை சாதாரண அடுக்காக ஆக்க முடியாது"
 
 #: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:376
@@ -10894,59 +10916,80 @@ msgid "Paint method '%s' does not exist"
 msgstr "பூச்சு முறை '%s' ஐ காணவில்லை"
 
 #: ../app/pdb/gimppdb-utils.c:318
-#, c-format
-msgid "Item '%s' (%d) can not be used because it has not been added to an image"
+#, fuzzy, c-format
+msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr "உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அதை பிம்பத்தில் சேர்க்கவில்லை"
 
 #: ../app/pdb/gimppdb-utils.c:328
-#, c-format
-msgid "Item '%s' (%d) can not be used because it is attached to another image"
-msgstr "உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது வேறு பிம்பத்தில் சேர்ந்துள்ளது"
+#, fuzzy, c-format
+msgid "Item '%s' (%d) cannot be used because it is attached to another image"
+msgstr ""
+"உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது வேறு பிம்பத்தில் சேர்ந்துள்ளது"
 
 #: ../app/pdb/gimppdb-utils.c:357
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Item '%s' (%d) can not be used because it is not a direct child of an item "
+"Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
-"உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது உருப்படி மரத்தின் நேரடி சேய் அல்ல."
+"உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது உருப்படி மரத்தின் நேரடி சேய் "
+"அல்ல."
 
-#: ../app/pdb/gimppdb-utils.c:379
+#: ../app/pdb/gimppdb-utils.c:385
+#, fuzzy, c-format
+msgid ""
+"Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
+"the same item tree"
+msgstr ""
+"உருப்படி '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது உருப்படி மரத்தின் நேரடி சேய் "
+"அல்ல."
+
+#: ../app/pdb/gimppdb-utils.c:410
+#, c-format
+msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
+msgstr ""
+
+#: ../app/pdb/gimppdb-utils.c:434
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "உருப்படி '%s' (%d)  ஏற்கெனெவே பிம்பத்தில் சேர்க்கப்பட்டது."
 
-#: ../app/pdb/gimppdb-utils.c:387
+#: ../app/pdb/gimppdb-utils.c:442
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "உருப்படி '%s' (%d) ஐ தவறான பிம்பத்தில் சேர்க்க முயற்சிக்கிறீர்கள்."
 
-#: ../app/pdb/gimppdb-utils.c:406
+#: ../app/pdb/gimppdb-utils.c:461
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "உருப்படி '%s' (%d) ஐ மாற்ற முடியாது; ஏனெனில் அதன் உள்ளடக்கங்கள் பூட்டப்பட்டுள்ளன"
 
-#: ../app/pdb/gimppdb-utils.c:426
+#: ../app/pdb/gimppdb-utils.c:481
+#, fuzzy, c-format
+msgid "Item '%s' (%d) cannot be used because it is not a group item"
+msgstr "உருப்படி '%s' (%d) ஐ மாற்ற முடியாது; ஏனெனில் அது ஒரு குழு உருப்படி"
+
+#: ../app/pdb/gimppdb-utils.c:501
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "உருப்படி '%s' (%d) ஐ மாற்ற முடியாது; ஏனெனில் அது ஒரு குழு உருப்படி"
 
-#: ../app/pdb/gimppdb-utils.c:447
-#, c-format
-msgid "Layer '%s' (%d) can not be used because it is not a text layer"
+#: ../app/pdb/gimppdb-utils.c:522
+#, fuzzy, c-format
+msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "அடுக்கு '%s' (%d) ஐ பயன்படுத்த முடியாது; ஏனெனில் அது உரை அடுக்கு அல்ல."
 
-#: ../app/pdb/gimppdb-utils.c:488
+#: ../app/pdb/gimppdb-utils.c:563
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "பிம்பம் '%s' (%d) '%s' வகை ஆகும். ஆனால் '%s' வகை பிம்பம் எதிர்பார்க்கப்பட்டது"
 
-#: ../app/pdb/gimppdb-utils.c:511
+#: ../app/pdb/gimppdb-utils.c:586
 #, c-format
 msgid "Image '%s' (%d) is already of type '%s'"
 msgstr "பிம்பம் '%s' (%d) ஏற்கெனெவே '%s' வகை ஆகும்."
 
-#: ../app/pdb/gimppdb-utils.c:539
+#: ../app/pdb/gimppdb-utils.c:614
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "திசையன் பொருள் %d  இல் %d அடையாளத்துடன் கோடு காணப்படவில்லை"
@@ -10954,16 +10997,23 @@ msgstr "திசையன் பொருள் %d  இல் %d அடைய�
 #: ../app/pdb/gimppdb.c:410
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong type for argument #%d. Expected %"
-"s, got %s."
-msgstr "செயல்முறை '%s' தவறான தரவு #%d உடன் அழைக்கப்பட்டது. எதிர்பார்த்தது %s , கிடைத்தது %s."
+"Procedure '%s' has been called with a wrong type for argument #%d. Expected "
+"%s, got %s."
+msgstr ""
+"செயல்முறை '%s' தவறான தரவு #%d உடன் அழைக்கப்பட்டது. எதிர்பார்த்தது %s , கிடைத்தது %s."
 
-#: ../app/pdb/gimpprocedure.c:365 ../app/plug-in/gimppluginprocframe.c:208
+#: ../app/pdb/gimppdbcontext.c:78
+#: ../app/tools/gimpforegroundselectoptions.c:78
+#: ../app/tools/gimpselectionoptions.c:78
+msgid "Smooth edges"
+msgstr "ஓரங்களை மென்மையாக்கு"
+
+#: ../app/pdb/gimpprocedure.c:371 ../app/plug-in/gimppluginprocframe.c:208
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "செயல்முறை '%s' ஒரு விடையும் தரவில்லை"
 
-#: ../app/pdb/gimpprocedure.c:621
+#: ../app/pdb/gimpprocedure.c:634
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -10972,16 +11022,16 @@ msgstr ""
 "செயல்முறை '%s'  '%s' விடைக்கு தவறான மதிப்பு வகையை திருப்பியது (#%d). எதிர்பார்த்தது "
 "%s , கிடைத்தது %s."
 
-#: ../app/pdb/gimpprocedure.c:633
+#: ../app/pdb/gimpprocedure.c:646
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
-"d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "செயல்முறை '%s'  '%s' தரவுக்கு தவறான மதிப்பு வகையுடன் அழைக்கப்பட்டது  (#%d). "
 "எதிர்பார்த்தது %s , கிடைத்தது %s."
 
-#: ../app/pdb/gimpprocedure.c:665
+#: ../app/pdb/gimpprocedure.c:678
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -10991,7 +11041,7 @@ msgstr ""
 "ஒரு சொருகி ஒரு அடுக்கில் வேலை செய்ய முயற்சிக்கிறது, ஆனால் அந்த அடுக்கு இப்போது "
 "இருப்பில் இல்லை."
 
-#: ../app/pdb/gimpprocedure.c:677
+#: ../app/pdb/gimpprocedure.c:690
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11001,7 +11051,7 @@ msgstr ""
 "அனேகமாக ஒரு சொருகி ஒரு அடுக்கில் வேலை செய்ய முயற்சிக்கிறது, ஆனால் அந்த அடுக்கு "
 "இப்போது இருப்பில் இல்லை."
 
-#: ../app/pdb/gimpprocedure.c:693
+#: ../app/pdb/gimpprocedure.c:706
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -11011,7 +11061,7 @@ msgstr ""
 "ஒரு சொருகி ஒரு பிம்பத்தில் வேலை செய்ய முயற்சிக்கிறது, ஆனால் அந்த பிம்பம் இப்போது "
 "இருப்பில் இல்லை."
 
-#: ../app/pdb/gimpprocedure.c:705
+#: ../app/pdb/gimpprocedure.c:718
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -11021,7 +11071,7 @@ msgstr ""
 "அனேகமாக ஒரு சொருகி ஒரு பிம்பத்தில் வேலை செய்ய முயற்சிக்கிறது, ஆனால் அந்த பிம்பம் "
 "இப்போது இருப்பில் இல்லை."
 
-#: ../app/pdb/gimpprocedure.c:725
+#: ../app/pdb/gimpprocedure.c:738
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -11030,24 +11080,26 @@ msgstr ""
 "செயல்முறை  '%s' '%s' ஐ விடையாக திருப்பியது '%s' (#%d, type %s).இந்த மதிப்பு "
 "வீச்சில் இல்லை."
 
-#: ../app/pdb/gimpprocedure.c:738
+#: ../app/pdb/gimpprocedure.c:751
 #, c-format
 msgid ""
-"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
-"s). This value is out of range."
+"Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
+"%s). This value is out of range."
 msgstr ""
 "செயல்முறை  '%s' ' மதிப்பு '%s'  உடன் '%s' (#%d, வகை %s) தரவுக்கு அழைக்கப்பட்டது ."
 "இந்த மதிப்பு வீச்சில் இல்லை."
 
-#: ../app/pdb/image-cmds.c:2341
-msgid "Image resolution is out of bounds, using the default resolution instead."
-msgstr "பிம்ப தெளிதிறன் எல்லை மீறியுள்ளது, அதனால் முன்னிருப்பு தெளிதிறனை பயன்படுத்துகிறோம்"
+#: ../app/pdb/image-cmds.c:2650
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
+msgstr ""
+"பிம்ப தெளிதிறன் எல்லை மீறியுள்ளது, அதனால் முன்னிருப்பு தெளிதிறனை பயன்படுத்துகிறோம்"
 
-#: ../app/pdb/layer-cmds.c:443 ../app/pdb/layer-cmds.c:481
+#: ../app/pdb/layer-cmds.c:478 ../app/pdb/layer-cmds.c:516
 msgid "Move Layer"
 msgstr "அடுக்கை நகர்த்துக"
 
-#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:198
+#: ../app/pdb/selection-tools-cmds.c:217 ../app/tools/gimpfreeselecttool.c:199
 msgid "Free Select"
 msgstr "சுதந்திர தேர்வு"
 
@@ -11067,37 +11119,37 @@ msgstr "உரை அடுக்கை உருவாக்குதல் த
 msgid "Set text layer attribute"
 msgstr "உரை அடுக்கு மதிப்புரு அமைக்கவும்"
 
-#: ../app/pdb/vectors-cmds.c:587
+#: ../app/pdb/vectors-cmds.c:323
 msgid "Remove path stroke"
 msgstr "பாதை தீட்டலை நீக்கு"
 
-#: ../app/pdb/vectors-cmds.c:623
+#: ../app/pdb/vectors-cmds.c:359
 msgid "Close path stroke"
 msgstr "பாதை தீட்டலை மூடு"
 
-#: ../app/pdb/vectors-cmds.c:663
+#: ../app/pdb/vectors-cmds.c:399
 msgid "Translate path stroke"
 msgstr "பாதை தீட்டலை மொழிபெயர்க்கவும்"
 
-#: ../app/pdb/vectors-cmds.c:703
+#: ../app/pdb/vectors-cmds.c:439
 msgid "Scale path stroke"
 msgstr "பாதை தீட்டலை அளவிடு"
 
-#: ../app/pdb/vectors-cmds.c:745
+#: ../app/pdb/vectors-cmds.c:481
 msgid "Rotate path stroke"
 msgstr "பாதை தீட்டலை சுழற்று"
 
-#: ../app/pdb/vectors-cmds.c:785 ../app/pdb/vectors-cmds.c:829
+#: ../app/pdb/vectors-cmds.c:521 ../app/pdb/vectors-cmds.c:565
 msgid "Flip path stroke"
 msgstr "பாதை தீட்டலை புரட்டு"
 
-#: ../app/pdb/vectors-cmds.c:958 ../app/pdb/vectors-cmds.c:1080
-#: ../app/pdb/vectors-cmds.c:1299
+#: ../app/pdb/vectors-cmds.c:694 ../app/pdb/vectors-cmds.c:816
+#: ../app/pdb/vectors-cmds.c:1035
 msgid "Add path stroke"
 msgstr "பாதை தீட்டலை சேர் "
 
-#: ../app/pdb/vectors-cmds.c:1132 ../app/pdb/vectors-cmds.c:1185
-#: ../app/pdb/vectors-cmds.c:1246
+#: ../app/pdb/vectors-cmds.c:868 ../app/pdb/vectors-cmds.c:921
+#: ../app/pdb/vectors-cmds.c:982
 msgid "Extend path stroke"
 msgstr "நீட்டிக்கப்பட்ட பாதை தீட்டல்"
 
@@ -11143,7 +11195,7 @@ msgstr ""
 msgid "Cancelled"
 msgstr "ரத்து செய்யப்பட்டது"
 
-#: ../app/plug-in/gimpplugin.c:638
+#: ../app/plug-in/gimpplugin.c:639
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -11158,30 +11210,30 @@ msgstr ""
 "இறந்த சொருகி உங்கள் கிம்பின் உள்ளமை நிலையை சிதைத்து இருக்கலாம். எதற்கும் பிம்பத்தை "
 "சேமித்துவிட்டு கிம்பை மீள்துவக்கவும்."
 
-#: ../app/plug-in/gimppluginmanager-call.c:172
-#: ../app/plug-in/gimppluginmanager-call.c:222
-#: ../app/plug-in/gimppluginmanager-call.c:320
+#: ../app/plug-in/gimppluginmanager-call.c:173
+#: ../app/plug-in/gimppluginmanager-call.c:223
+#: ../app/plug-in/gimppluginmanager-call.c:321
 #, c-format
 msgid "Failed to run plug-in \"%s\""
 msgstr "சொருகி \"%s\" ஐ இயக்குதல் தோற்றது."
 
-#: ../app/plug-in/gimppluginmanager-restore.c:225
+#: ../app/plug-in/gimppluginmanager-restore.c:230
 msgid "Searching Plug-Ins"
 msgstr "சொருகிகளை தேடுகிறது "
 
-#: ../app/plug-in/gimppluginmanager-restore.c:274
+#: ../app/plug-in/gimppluginmanager-restore.c:279
 msgid "Resource configuration"
 msgstr "மூல வளத்தின் கட்டமைப்பு"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:310
+#: ../app/plug-in/gimppluginmanager-restore.c:315
 msgid "Querying new Plug-ins"
 msgstr "புதிய சொருகிகளை வினவுகிறது"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:360
+#: ../app/plug-in/gimppluginmanager-restore.c:365
 msgid "Initializing Plug-ins"
 msgstr "சொருகிகளை  தொடங்குகிறது"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:432
+#: ../app/plug-in/gimppluginmanager-restore.c:437
 msgid "Starting Extensions"
 msgstr "விரிவாக்கங்களை ஆரம்பிக்கிறது"
 
@@ -11250,51 +11302,51 @@ msgstr ""
 "என் பெட்டியில் ஐந்து டஜன்\n"
 "மது குடுவைகளை பேக் செய்யவும்"
 
-#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1368
+#: ../app/text/gimptext-compat.c:107 ../app/tools/gimptexttool.c:1386
 msgid "Add Text Layer"
 msgstr "உரை அடுக்கை சேர்"
 
-#: ../app/text/gimptextlayer.c:139
+#: ../app/text/gimptextlayer.c:141
 msgid "Text Layer"
 msgstr "உரை அடுக்கு"
 
-#: ../app/text/gimptextlayer.c:140
+#: ../app/text/gimptextlayer.c:142
 msgid "Rename Text Layer"
 msgstr "உரை அடுக்கிற்கு மறுபெயரிடு"
 
-#: ../app/text/gimptextlayer.c:141
+#: ../app/text/gimptextlayer.c:143
 msgid "Move Text Layer"
 msgstr "உரை அடுக்கை நகர்த்து"
 
-#: ../app/text/gimptextlayer.c:142
+#: ../app/text/gimptextlayer.c:144
 msgid "Scale Text Layer"
 msgstr "உரை அடுக்கை அளவிடு"
 
-#: ../app/text/gimptextlayer.c:143
+#: ../app/text/gimptextlayer.c:145
 msgid "Resize Text Layer"
 msgstr "உரை அடுக்கின் அளவை மாற்று"
 
-#: ../app/text/gimptextlayer.c:144
+#: ../app/text/gimptextlayer.c:146
 msgid "Flip Text Layer"
 msgstr "உரை அடுக்கை புரட்டு"
 
-#: ../app/text/gimptextlayer.c:145
+#: ../app/text/gimptextlayer.c:147
 msgid "Rotate Text Layer"
 msgstr "உரை அடுக்கை சுழற்று"
 
-#: ../app/text/gimptextlayer.c:146
+#: ../app/text/gimptextlayer.c:148
 msgid "Transform Text Layer"
 msgstr "உரை அடுக்கை உருமாற்று"
 
-#: ../app/text/gimptextlayer.c:507
+#: ../app/text/gimptextlayer.c:509
 msgid "Discard Text Information"
 msgstr "உரை விவரத்தை எறிந்துவிடு"
 
-#: ../app/text/gimptextlayer.c:560
+#: ../app/text/gimptextlayer.c:562
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "எந்த எழுத்துருவும் இல்லாததால், உரை செயற்திறன் கிடைக்கவில்லை"
 
-#: ../app/text/gimptextlayer.c:611
+#: ../app/text/gimptextlayer.c:613
 msgid "Empty Text Layer"
 msgstr "உரை அடுக்கை வெறுமையாக்கு"
 
@@ -11352,7 +11404,7 @@ msgstr "வீதம்:"
 msgid "Flow:"
 msgstr "பாய்வு:"
 
-#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:768
+#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:764
 msgid "Align"
 msgstr "ஒழுங்கு"
 
@@ -11364,93 +11416,93 @@ msgstr "பொருத்த கருவி:அடுக்குகளைய�
 msgid "_Align"
 msgstr "(_A) ஒழுங்கு"
 
-#: ../app/tools/gimpaligntool.c:600
+#: ../app/tools/gimpaligntool.c:599
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
 "ஒரு அடுக்கில், பாதையில் அல்லது வழிகாட்டியில் சொடுக்கவும், அல்லது பல அடுக்குகளை தேர்ந்து "
 "எடுக்க சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:609
+#: ../app/tools/gimpaligntool.c:608
 msgid "Click to pick this layer as first item"
 msgstr "இந்த அடுக்கை முதல் உருப்படியாக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:616
 msgid "Click to add this layer to the list"
 msgstr "இந்த அடுக்கை பட்டியலில் சேர்க்க சொடுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:621
+#: ../app/tools/gimpaligntool.c:620
 msgid "Click to pick this guide as first item"
 msgstr "இந்த வழிகாட்டியை முதல் உருப்படியாக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:629
+#: ../app/tools/gimpaligntool.c:628
 msgid "Click to add this guide to the list"
 msgstr "இந்த வழிகாட்டியை பட்டியலில் சேர்க்க சொடுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:632
 msgid "Click to pick this path as first item"
 msgstr "இந்த பாதையை முதல் உருப்படியாக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:641
+#: ../app/tools/gimpaligntool.c:640
 msgid "Click to add this path to the list"
 msgstr "இந்த பாதையை பட்டியலில் சேர்க்க சொடுக்கவும்"
 
-#: ../app/tools/gimpaligntool.c:780
+#: ../app/tools/gimpaligntool.c:776
 msgid "Relative to:"
 msgstr "இதற்கு தொடர்பானது"
 
-#: ../app/tools/gimpaligntool.c:798
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align left edge of target"
 msgstr "இலக்கின் இடது ஓரத்தில் ஒழுங்கு செய்"
 
-#: ../app/tools/gimpaligntool.c:804
+#: ../app/tools/gimpaligntool.c:800
 msgid "Align center of target"
 msgstr "இலக்கின் நடுவில் ஒழுங்கு செய்"
 
-#: ../app/tools/gimpaligntool.c:810
+#: ../app/tools/gimpaligntool.c:806
 msgid "Align right edge of target"
 msgstr "இலக்கின் வலது ஓரத்தில் ஒழுங்கு செய்"
 
-#: ../app/tools/gimpaligntool.c:820
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align top edge of target"
 msgstr "இலக்கின் மேல் ஓரத்தில் ஒழுங்கு செய்"
 
-#: ../app/tools/gimpaligntool.c:826
+#: ../app/tools/gimpaligntool.c:822
 msgid "Align middle of target"
 msgstr "இலக்கின் நடுவில் ஒழுங்கு செய்"
 
-#: ../app/tools/gimpaligntool.c:832
+#: ../app/tools/gimpaligntool.c:828
 msgid "Align bottom of target"
 msgstr "இலக்கின் கீழ் ஓரத்தில் ஒழுங்கு செய்"
 
-#: ../app/tools/gimpaligntool.c:836
+#: ../app/tools/gimpaligntool.c:832
 msgid "Distribute"
 msgstr "வினியோகி"
 
-#: ../app/tools/gimpaligntool.c:850
+#: ../app/tools/gimpaligntool.c:846
 msgid "Distribute left edges of targets"
 msgstr "இலக்குகளின் இடது ஓரங்களை வினியோகம் செய்"
 
-#: ../app/tools/gimpaligntool.c:857
+#: ../app/tools/gimpaligntool.c:853
 msgid "Distribute horizontal centers of targets"
 msgstr "இலக்குகளின் கிடைமட்ட மையங்களை வினியோகம் செய்"
 
-#: ../app/tools/gimpaligntool.c:864
+#: ../app/tools/gimpaligntool.c:860
 msgid "Distribute right edges of targets"
 msgstr "இலக்குகளின் வலது ஓரங்களை வினியோகம் செய்"
 
-#: ../app/tools/gimpaligntool.c:874
+#: ../app/tools/gimpaligntool.c:870
 msgid "Distribute top edges of targets"
 msgstr "இலக்குகளின் மேல் ஓரங்களை வினியோகம் செய்"
 
-#: ../app/tools/gimpaligntool.c:881
+#: ../app/tools/gimpaligntool.c:877
 msgid "Distribute vertical centers of targets"
 msgstr "இலக்குகளின் செங்குத்து மையங்களை வினியோகம் செய்"
 
-#: ../app/tools/gimpaligntool.c:887
+#: ../app/tools/gimpaligntool.c:883
 msgid "Distribute bottoms of targets"
 msgstr "இலக்கின் இடது ஓரங்களை வினியோகம் செய்இதில்"
 
-#: ../app/tools/gimpaligntool.c:895 ../app/tools/gimpblendoptions.c:221
+#: ../app/tools/gimpaligntool.c:891 ../app/tools/gimpblendoptions.c:221
 msgid "Offset:"
 msgstr "குத்து நீட்டம்:"
 
@@ -11496,17 +11548,17 @@ msgstr "கலப்பு (_d)"
 msgid "Blend does not operate on indexed layers."
 msgstr "கலப்பு கருவி வரிசைப்படுத்தப்பட்ட அடுக்குகளில் வேலை செய்யாது"
 
-#: ../app/tools/gimpblendtool.c:423 ../app/tools/gimppainttool.c:634
+#: ../app/tools/gimpblendtool.c:420 ../app/tools/gimppainttool.c:634
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s கட்டுப்படுத்திய கோணங்களுக்கு "
 
-#: ../app/tools/gimpblendtool.c:424
+#: ../app/tools/gimpblendtool.c:421
 #, c-format
 msgid "%s to move the whole line"
 msgstr "முழு வரியை நகர்த்த %s "
 
-#: ../app/tools/gimpblendtool.c:428
+#: ../app/tools/gimpblendtool.c:425
 msgid "Blend: "
 msgstr "கலப்பு: "
 
@@ -11593,7 +11645,7 @@ msgstr "ஒளிபுகும்தன்மையுள்ள பகுத�
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:150 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:951
+#: ../app/tools/gimpperspectiveclonetool.c:963
 #: ../app/tools/gimpregionselectoptions.c:207
 msgid "Sample merged"
 msgstr "மாதிரி ஒருங்கிணைக்கப்பட்டது"
@@ -11608,7 +11660,8 @@ msgstr "வாளி நிரப்பல்"
 
 #: ../app/tools/gimpbucketfilltool.c:86
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "வாளி நிரப்பல் கருவி: தேர்ந்தெடுக்கப்பட்ட இடத்தை ஒரு நிறம் அல்லது தோரணிொயால நிரப்பல்்"
+msgstr ""
+"வாளி நிரப்பல் கருவி: தேர்ந்தெடுக்கப்பட்ட இடத்தை ஒரு நிறம் அல்லது தோரணிொயால நிரப்பல்்"
 
 #: ../app/tools/gimpbucketfilltool.c:87
 msgid "_Bucket Fill"
@@ -11633,7 +11686,8 @@ msgstr "நிறப்படி தேர்ந்தெடு"
 
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr "மறுவி எடுக்கும் கருவி: ஒரு தூரிகையால் ஒரு பிம்பம் அல்லது தோரணியை பகுதி தேர்வு செய்க."
+msgstr ""
+"மறுவி எடுக்கும் கருவி: ஒரு தூரிகையால் ஒரு பிம்பம் அல்லது தோரணியை பகுதி தேர்வு செய்க."
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "_Clone"
@@ -11653,12 +11707,12 @@ msgid "Click to set a new clone source"
 msgstr "மறுவி எடுக்க புதிய மூலத்தை அமைக்க சொடுக்கு"
 
 #: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:946
+#: ../app/tools/gimpperspectiveclonetool.c:958
 msgid "Source"
 msgstr "மூலம்"
 
 #: ../app/tools/gimpclonetool.c:129 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:967
+#: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
 msgstr "சீரமைப்பு:"
 
@@ -11843,19 +11897,19 @@ msgstr "வண்ணத்தட்டுக்கு வண்ணத்தை �
 msgid "Color Picker Information"
 msgstr "நிற தேர்வி விவரம்"
 
-#: ../app/tools/gimpcolortool.c:260 ../app/tools/gimpcolortool.c:440
+#: ../app/tools/gimpcolortool.c:268 ../app/tools/gimpcolortool.c:446
 msgid "Move Sample Point: "
 msgstr "மாதிரி புள்ளியை நகர்த்து:"
 
-#: ../app/tools/gimpcolortool.c:432
+#: ../app/tools/gimpcolortool.c:438
 msgid "Remove Sample Point"
 msgstr "மாதிரி புள்ளியை  நீக்கு "
 
-#: ../app/tools/gimpcolortool.c:433
+#: ../app/tools/gimpcolortool.c:439
 msgid "Cancel Sample Point"
 msgstr "மாதிரி புள்ளியை ரத்து செய் "
 
-#: ../app/tools/gimpcolortool.c:441
+#: ../app/tools/gimpcolortool.c:447
 msgid "Add Sample Point: "
 msgstr "மாதிரி புள்ளியை கூட்டு:"
 
@@ -12070,17 +12124,17 @@ msgstr "வீச்சு"
 msgid "Exposure:"
 msgstr "வெளிக்காட்டல்:"
 
-#: ../app/tools/gimpeditselectiontool.c:241
+#: ../app/tools/gimpeditselectiontool.c:240
 msgid "Move Selection"
 msgstr "தேர்வை நகர்த்து"
 
-#: ../app/tools/gimpeditselectiontool.c:245
-#: ../app/tools/gimpeditselectiontool.c:1249
+#: ../app/tools/gimpeditselectiontool.c:244
+#: ../app/tools/gimpeditselectiontool.c:1233
 msgid "Move Floating Selection"
 msgstr "மிதக்கும் தேர்வை நகர்த்து"
 
-#: ../app/tools/gimpeditselectiontool.c:464
-#: ../app/tools/gimpeditselectiontool.c:739
+#: ../app/tools/gimpeditselectiontool.c:453
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "நகர்த்து: "
 
@@ -12138,7 +12192,8 @@ msgid "Flip"
 msgstr "புரட்டு"
 
 #: ../app/tools/gimpfliptool.c:80
-msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid ""
+"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "புரட்டல் கருவி: கிடை மட்டமாகவோ அல்லது செங்குத்தாகவோ ஒரு அடுக்கு, தேர்வு அல்லது பாதையை "
 "திருப்ப"
@@ -12151,11 +12206,6 @@ msgstr "புரட்டு (_F)"
 msgctxt "command"
 msgid "Flip"
 msgstr "புரட்டு"
-
-#: ../app/tools/gimpforegroundselectoptions.c:78
-#: ../app/tools/gimpselectionoptions.c:78
-msgid "Smooth edges"
-msgstr "ஓரங்களை மென்மையாக்கு"
 
 #: ../app/tools/gimpforegroundselectoptions.c:84
 msgid "Select a single contiguous area"
@@ -12247,42 +12297,43 @@ msgstr "பிரிக்க வேண்டிய பொருட்கள் 
 msgid "Roughly outline the object to extract"
 msgstr "பிரிக்க வேண்டிய பொருளை தோராயமாக வெளிக்கோடிடவும்."
 
-#: ../app/tools/gimpforegroundselecttool.c:769
+#: ../app/tools/gimpforegroundselecttool.c:774
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "முன்புலம் தேர்வு"
 
-#: ../app/tools/gimpfreeselecttool.c:199
-msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
+#: ../app/tools/gimpfreeselecttool.c:200
+msgid ""
+"Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr ""
 "கட்டற்ற தேர்வு கருவி: கைமுறையாக கட்டற்று பல்கோண துண்டுகளால் வரைந்த ஒரு இடத்தை தேர்வு "
 "செய்கிறது."
 
-#: ../app/tools/gimpfreeselecttool.c:200
+#: ../app/tools/gimpfreeselecttool.c:201
 msgid "_Free Select"
 msgstr "கட்டற்ற தேர்வு (_F)"
 
-#: ../app/tools/gimpfreeselecttool.c:1119
+#: ../app/tools/gimpfreeselecttool.c:1120
 msgid "Click to complete selection"
 msgstr "தேர்வை முழுமையாக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpfreeselecttool.c:1123
+#: ../app/tools/gimpfreeselecttool.c:1124
 msgid "Click-Drag to move segment vertex"
 msgstr "துண்டின் உச்சியை நகர்த்த சொடுக்கி இழுக்கவும்."
 
-#: ../app/tools/gimpfreeselecttool.c:1128
+#: ../app/tools/gimpfreeselecttool.c:1129
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "உள்ளீட்டு விசை ஒப்புக்கொள்கிறது; எஸ்கேப் விசை ரத்து செய்கிறது; பின்நோக்கு விசை கடைசி "
 "துண்டை நீக்குகிறது."
 
-#: ../app/tools/gimpfreeselecttool.c:1132
+#: ../app/tools/gimpfreeselecttool.c:1133
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr ""
 "சொடுக்கு இழுத்தல் ஒரு சுதந்திர துண்டை சேர்க்கிறது. சொடுக்குதல் ஒரு பல்கோண துண்டை "
 "சேர்க்கிறது."
 
-#: ../app/tools/gimpfreeselecttool.c:1625
+#: ../app/tools/gimpfreeselecttool.c:1643
 msgctxt "command"
 msgid "Free Select"
 msgstr "கட்டற்ற தேர்வு"
@@ -12293,7 +12344,8 @@ msgstr "தற்போக்கு தேர்வு"
 
 #: ../app/tools/gimpfuzzyselecttool.c:66
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "தற்போக்கு தேர்வு கருவி: நிற அடிப்படையில் ஒரு தொடர்ச்சியான இடத்தை  தேர்வு செய்கிறது"
+msgstr ""
+"தற்போக்கு தேர்வு கருவி: நிற அடிப்படையில் ஒரு தொடர்ச்சியான இடத்தை  தேர்வு செய்கிறது"
 
 #: ../app/tools/gimpfuzzyselecttool.c:67
 msgid "Fu_zzy Select"
@@ -12453,7 +12505,7 @@ msgstr "ஒழுங்குபடுத்தல்"
 msgid "Size:"
 msgstr "அளவு:"
 
-#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1046
+#: ../app/tools/gimpinkoptions-gui.c:75 ../app/tools/gimpmeasuretool.c:1060
 #: ../app/tools/gimppaintoptions-gui.c:137
 #: ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
@@ -12499,38 +12551,39 @@ msgstr "கத்திரி"
 
 #: ../app/tools/gimpiscissorstool.c:280
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr "கத்தரி தேர்வு கருவி: உருவங்களை புத்திசாலித்தனமாக விளிம்பை ஒட்டி தேர்வு செய்கிறது"
+msgstr ""
+"கத்தரி தேர்வு கருவி: உருவங்களை புத்திசாலித்தனமாக விளிம்பை ஒட்டி தேர்வு செய்கிறது"
 
 #: ../app/tools/gimpiscissorstool.c:281
 msgid "Intelligent _Scissors"
 msgstr "புத்திசாலி கத்திரி (_S)"
 
-#: ../app/tools/gimpiscissorstool.c:938 ../app/tools/gimpmeasuretool.c:617
+#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:617
 msgid "Click-Drag to move this point"
 msgstr "இந்த புள்ளியை நகர்த்த சொடுக்கி இழுக்கவும்."
 
-#: ../app/tools/gimpiscissorstool.c:940 ../app/tools/gimpiscissorstool.c:1005
+#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:997
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: தானியங்கி ஒட்டுதலை செயல் நீக்குக."
 
-#: ../app/tools/gimpiscissorstool.c:957
+#: ../app/tools/gimpiscissorstool.c:949
 msgid "Click to close the curve"
 msgstr "வளைவை மூட சொடுக்கு"
 
-#: ../app/tools/gimpiscissorstool.c:963
+#: ../app/tools/gimpiscissorstool.c:955
 msgid "Click to add a point on this segment"
 msgstr "இந்த துண்டுக்கு ஒரு புள்ளி சேர்க்க சொடுக்குக"
 
-#: ../app/tools/gimpiscissorstool.c:977
+#: ../app/tools/gimpiscissorstool.c:969
 msgid "Click or press Enter to convert to a selection"
 msgstr "ஒரு தேர்வாக மாற்ற சொடுக்குக அல்லது உள்ளீட்டு விசையை அழுத்துக"
 
-#: ../app/tools/gimpiscissorstool.c:987
+#: ../app/tools/gimpiscissorstool.c:979
 msgid "Press Enter to convert to a selection"
 msgstr "ஒரு தேர்வாக மாற்ற உள்ளீட்டு விசையை அழுத்துக"
 
-#: ../app/tools/gimpiscissorstool.c:1002
+#: ../app/tools/gimpiscissorstool.c:994
 msgid "Click or Click-Drag to add a point"
 msgstr "ஒரு புள்ளி சேர்க்க சொடுக்குக அல்லது சொடுக்கி இழுக்கவும்."
 
@@ -12628,19 +12681,19 @@ msgstr "அளவிடு (_Z)"
 msgid "Use info window"
 msgstr "தகவல் சாளரத்தை பயன்படுத்தவும்"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:125
 msgid "Measure"
 msgstr "அளவு"
 
-#: ../app/tools/gimpmeasuretool.c:124
+#: ../app/tools/gimpmeasuretool.c:126
 msgid "Measure Tool: Measure distances and angles"
 msgstr "அளக்கும் கருவி: தூரங்கள் மற்றும் கோணங்களை அளக்கவும்"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:127
 msgid "_Measure"
 msgstr "அளவு (_M)"
 
-#: ../app/tools/gimpmeasuretool.c:245
+#: ../app/tools/gimpmeasuretool.c:246
 msgid "Add Guides"
 msgstr "வழிகாட்டிகளை சேர்"
 
@@ -12664,18 +12717,18 @@ msgstr "புதிய புள்ளியை சேர்க்க சொட
 msgid "Click-Drag to move all points"
 msgstr "அனைத்து புள்ளிகளையும் நகர்த்த சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpmeasuretool.c:884 ../app/tools/gimpmeasuretool.c:1029
-#: ../app/tools/gimpmeasuretool.c:1085 ../app/tools/gimpmeasuretool.c:1113
+#: ../app/tools/gimpmeasuretool.c:898 ../app/tools/gimpmeasuretool.c:1043
+#: ../app/tools/gimpmeasuretool.c:1099 ../app/tools/gimpmeasuretool.c:1127
 #: ../app/tools/gimppainttool.c:643
 msgid "pixels"
 msgstr "படத்துணுக்குகள்"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:997
+#: ../app/tools/gimpmeasuretool.c:1011
 msgid "Measure Distances and Angles"
 msgstr "தூரங்கள் மற்றும் கோணங்களை அளக்கவும்"
 
-#: ../app/tools/gimpmeasuretool.c:1018
+#: ../app/tools/gimpmeasuretool.c:1032
 msgid "Distance:"
 msgstr "தொலைவு:"
 
@@ -12716,19 +12769,19 @@ msgstr "நகர்த்தும் கருவி: அடுக்குக
 msgid "_Move"
 msgstr "நகர்த்தவும் (_M)"
 
-#: ../app/tools/gimpmovetool.c:277 ../app/tools/gimpmovetool.c:569
+#: ../app/tools/gimpmovetool.c:285 ../app/tools/gimpmovetool.c:580
 msgid "Move Guide: "
 msgstr "வழிகாட்டியை நகர்த்து: "
 
-#: ../app/tools/gimpmovetool.c:563
+#: ../app/tools/gimpmovetool.c:574
 msgid "Remove Guide"
 msgstr "வழிகாட்டியை நீக்கு"
 
-#: ../app/tools/gimpmovetool.c:563
+#: ../app/tools/gimpmovetool.c:574
 msgid "Cancel Guide"
 msgstr "வழிகாட்டியை ரத்து செய்"
 
-#: ../app/tools/gimpmovetool.c:569
+#: ../app/tools/gimpmovetool.c:580
 msgid "Add Guide: "
 msgstr "வழிகாட்டியை சேர்: "
 
@@ -12827,7 +12880,7 @@ msgstr "பென்சில் கருவி: தூரிகையால்
 msgid "Pe_ncil"
 msgstr "பென்சில் (_n)"
 
-#: ../app/tools/gimpperspectiveclonetool.c:128
+#: ../app/tools/gimpperspectiveclonetool.c:129
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
@@ -12835,17 +12888,18 @@ msgstr ""
 "இயலுறுத் தோற்ற மறுவி கருவி: மூலத்தில் இருந்து ஒரு இயலுறுத் தோற்றம் அமைத்த பின் போன்றி "
 "உருவாக்குதல்."
 
-#: ../app/tools/gimpperspectiveclonetool.c:130
+#: ../app/tools/gimpperspectiveclonetool.c:131
 msgid "_Perspective Clone"
 msgstr "(_P) இயலுறுத் தோற்ற மறுவி"
 
-#: ../app/tools/gimpperspectiveclonetool.c:703
+#: ../app/tools/gimpperspectiveclonetool.c:704
 msgid "Ctrl-Click to set a clone source"
 msgstr "மறுவி மூலம் அமைக்க கண்ட்ரோல் விசையை அழுத்தி சொடுக்கவும்."
 
 #: ../app/tools/gimpperspectivetool.c:70
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "இயலுறுத் தோற்ற கருவி: ஒரு அடுக்கு, தேர்வு அல்லது பாதையின் இயலுறுத் தோற்றம் மாற்றுதல்."
+msgstr ""
+"இயலுறுத் தோற்ற கருவி: ஒரு அடுக்கு, தேர்வு அல்லது பாதையின் இயலுறுத் தோற்றம் மாற்றுதல்."
 
 #: ../app/tools/gimpperspectivetool.c:72
 msgid "_Perspective"
@@ -12934,7 +12988,7 @@ msgstr "நீள்சதுர தேர்வு கருவி: ஒரு �
 msgid "_Rectangle Select"
 msgstr "(_R) நீள்சதுரம் தேர்வு"
 
-#: ../app/tools/gimprectangletool.c:1156 ../app/tools/gimprectangletool.c:2130
+#: ../app/tools/gimprectangletool.c:1158 ../app/tools/gimprectangletool.c:2220
 msgid "Rectangle: "
 msgstr "நீள்சதுரம்:"
 
@@ -12943,7 +12997,8 @@ msgid "Allow completely transparent regions to be selected"
 msgstr "முழுவதுமே ஒளிபுகும்தன்மையுள்ள பகுதிகளை தேர்வு செய்ய அனுமதிக்கவும்"
 
 #: ../app/tools/gimpregionselectoptions.c:89
-msgid "Base region_select on all visible layers"
+#, fuzzy
+msgid "Base selection on all visible layers"
 msgstr "அனைத்து காணக்கூடிய அடுக்குகளிலும் தேர்ந்தெடுக்க வேண்டிய அடிப்படை இடம்"
 
 #: ../app/tools/gimpregionselectoptions.c:201
@@ -12954,7 +13009,7 @@ msgstr "ஒளிபுகுதன்மையுள்ள பகுதிக�
 msgid "Select by:"
 msgstr "இதனால் தேர்வு:"
 
-#: ../app/tools/gimpregionselecttool.c:164
+#: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
 msgstr "மாறுநிலை ஐ மாற்ற சொடுக்கியை நகர்த்தவும்"
 
@@ -13090,7 +13145,8 @@ msgid "Click to smudge the line"
 msgstr "கோட்டை விரல் தேய்ப்பால் இதப்படுத்துக"
 
 #: ../app/tools/gimptextoptions.c:137
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "விளிம்பு பலப்படுத்தல் எழுத்துரு வெளிக்கோடை மாற்றி,  சிறு அளவுகளில் தெளிவான "
 "பிட்டுபடமாக்குகிறது."
@@ -13155,31 +13211,31 @@ msgstr "பெட்டி:"
 msgid "Language:"
 msgstr "மொழி:"
 
-#: ../app/tools/gimptexttool.c:193
+#: ../app/tools/gimptexttool.c:194
 msgid "Text"
 msgstr "உரை"
 
-#: ../app/tools/gimptexttool.c:194
+#: ../app/tools/gimptexttool.c:195
 msgid "Text Tool: Create or edit text layers"
 msgstr "உரை கருவி: உரை அடுக்குகளை உருவாக்க அல்லது திருத்த"
 
-#: ../app/tools/gimptexttool.c:195
+#: ../app/tools/gimptexttool.c:196
 msgid "Te_xt"
 msgstr "உரை (_x)"
 
-#: ../app/tools/gimptexttool.c:941
+#: ../app/tools/gimptexttool.c:959
 msgid "Reshape Text Layer"
 msgstr "உரை அடுக்கை மறு வடிவாக்குக"
 
-#: ../app/tools/gimptexttool.c:1479 ../app/tools/gimptexttool.c:1482
+#: ../app/tools/gimptexttool.c:1497 ../app/tools/gimptexttool.c:1500
 msgid "Confirm Text Editing"
 msgstr "உரை திருத்தலை உறுதிசெய்"
 
-#: ../app/tools/gimptexttool.c:1486
+#: ../app/tools/gimptexttool.c:1504
 msgid "Create _New Layer"
 msgstr "(_N)  புதிய அடுக்கு உருவாக்கு"
 
-#: ../app/tools/gimptexttool.c:1510
+#: ../app/tools/gimptexttool.c:1528
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13262,19 +13318,19 @@ msgstr "15 பாகைகள்  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "பார்வையை வைத்துக்கொள் (%s)"
 
-#: ../app/tools/gimptransformtool.c:239
+#: ../app/tools/gimptransformtool.c:240
 msgid "Transforming"
 msgstr "உருமாற்றுகிறது"
 
-#: ../app/tools/gimptransformtool.c:1192
+#: ../app/tools/gimptransformtool.c:1177
 msgid "There is no layer to transform."
 msgstr "உரு மாற்ற அடுக்கு ஏதும் இல்லை."
 
-#: ../app/tools/gimptransformtool.c:1205
+#: ../app/tools/gimptransformtool.c:1190
 msgid "There is no path to transform."
 msgstr "உரு மாற்ற பாதை ஏதும் இல்லை."
 
-#: ../app/tools/gimptransformtool.c:1206
+#: ../app/tools/gimptransformtool.c:1191
 msgid "The active path's strokes are locked."
 msgstr "செயலிலுள்ள பாதையின் தீட்டல்கள் பூட்டப்பட்டுள்ளன."
 
@@ -13308,144 +13364,144 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "பாதையில் இருந்து தேர்வு"
 
-#: ../app/tools/gimpvectortool.c:162
+#: ../app/tools/gimpvectortool.c:163
 msgid "Paths Tool: Create and edit paths"
 msgstr "பாதைகள் கருவி: பாதைகளை உருவாக்க மற்றும் திருத்த"
 
-#: ../app/tools/gimpvectortool.c:163
+#: ../app/tools/gimpvectortool.c:164
 msgid "Pat_hs"
 msgstr "(_h) பாதைகள்"
 
-#: ../app/tools/gimpvectortool.c:253
+#: ../app/tools/gimpvectortool.c:254
 msgid "The active path is locked."
 msgstr "செயலில் உள்ள பாதை பூட்டப்பட்டது."
 
-#: ../app/tools/gimpvectortool.c:341
+#: ../app/tools/gimpvectortool.c:342
 msgid "Add Stroke"
 msgstr "தீட்டுகை சேர் "
 
-#: ../app/tools/gimpvectortool.c:365
+#: ../app/tools/gimpvectortool.c:366
 msgid "Add Anchor"
 msgstr "நிலை நிறுத்தியை சேர்"
 
-#: ../app/tools/gimpvectortool.c:391
+#: ../app/tools/gimpvectortool.c:392
 msgid "Insert Anchor"
 msgstr "நிலை நிறுத்தியை நுழை"
 
-#: ../app/tools/gimpvectortool.c:422
+#: ../app/tools/gimpvectortool.c:423
 msgid "Drag Handle"
 msgstr "கைப்பிடியை இழு"
 
-#: ../app/tools/gimpvectortool.c:452
+#: ../app/tools/gimpvectortool.c:453
 msgid "Drag Anchor"
 msgstr "நிலை நிறுத்தியை இழு"
 
-#: ../app/tools/gimpvectortool.c:470
+#: ../app/tools/gimpvectortool.c:471
 msgid "Drag Anchors"
 msgstr "நிலை நிறுத்திகளை இழு"
 
-#: ../app/tools/gimpvectortool.c:493
+#: ../app/tools/gimpvectortool.c:494
 msgid "Drag Curve"
 msgstr "வளைகோடை இழு"
 
-#: ../app/tools/gimpvectortool.c:522
+#: ../app/tools/gimpvectortool.c:523
 msgid "Connect Strokes"
 msgstr "தீட்டுதல்களை இணை"
 
-#: ../app/tools/gimpvectortool.c:554
+#: ../app/tools/gimpvectortool.c:555
 msgid "Drag Path"
 msgstr "பாதையை இழு"
 
-#: ../app/tools/gimpvectortool.c:565
+#: ../app/tools/gimpvectortool.c:566
 msgid "Convert Edge"
 msgstr "முனையை மாற்று"
 
-#: ../app/tools/gimpvectortool.c:596
+#: ../app/tools/gimpvectortool.c:597
 msgid "Delete Anchor"
 msgstr "நிலை நிறுத்தியை அழி "
 
-#: ../app/tools/gimpvectortool.c:619
+#: ../app/tools/gimpvectortool.c:620
 msgid "Delete Segment"
 msgstr "துண்டை அழி "
 
-#: ../app/tools/gimpvectortool.c:838
+#: ../app/tools/gimpvectortool.c:839
 msgid "Move Anchors"
 msgstr "நிலை நிறுத்திகளை நகர்த்து"
 
-#: ../app/tools/gimpvectortool.c:1198
+#: ../app/tools/gimpvectortool.c:1199
 msgid "Click to pick path to edit"
 msgstr "திருத்த பாதையை தேர்ந்தெடுக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1202
+#: ../app/tools/gimpvectortool.c:1203
 msgid "Click to create a new path"
 msgstr "புதிய பாதையை உருவாக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1206
+#: ../app/tools/gimpvectortool.c:1207
 msgid "Click to create a new component of the path"
 msgstr "பாதையின் புதிய பொருளை உருவாக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1210
+#: ../app/tools/gimpvectortool.c:1211
 msgid "Click or Click-Drag to create a new anchor"
 msgstr " புதிய நிலை நிறுத்தியை உருவாக்க சொடுக்கவும் அல்லது சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1220 ../app/tools/gimpvectortool.c:1227
+#: ../app/tools/gimpvectortool.c:1221 ../app/tools/gimpvectortool.c:1228
 msgid "Click-Drag to move the anchor around"
 msgstr "நிலை நிறுத்தியை நகர்த்த  சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1231 ../app/tools/gimpvectortool.c:1254
+#: ../app/tools/gimpvectortool.c:1232 ../app/tools/gimpvectortool.c:1255
 msgid "Click-Drag to move the anchors around"
 msgstr "நிலை நிறுத்திகளை நகர்த்த  சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1237
+#: ../app/tools/gimpvectortool.c:1238
 msgid "Click-Drag to move the handle around"
 msgstr "கைப்பிடி  நகர்த்த  சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1244
+#: ../app/tools/gimpvectortool.c:1245
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "கைப்பிடிகளை சமமாக இங்குமங்கும் நகர்த்த  சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1259
+#: ../app/tools/gimpvectortool.c:1260
 msgid "Click-Drag to change the shape of the curve"
 msgstr "வளைவின் வடிவத்தை மாற்ற  சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1262
+#: ../app/tools/gimpvectortool.c:1263
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: சமச்சீரான"
 
-#: ../app/tools/gimpvectortool.c:1267
+#: ../app/tools/gimpvectortool.c:1268
 msgid "Click-Drag to move the component around"
 msgstr "பொருளை நகர்த்த  சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1275
+#: ../app/tools/gimpvectortool.c:1276
 msgid "Click-Drag to move the path around"
 msgstr "பாதையை நகர்த்த சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1279
+#: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "நிலை நிறுத்தி அல்லது பாதையை இடை செருக சொடுக்கி இழுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1287
+#: ../app/tools/gimpvectortool.c:1288
 msgid "Click to delete this anchor"
 msgstr "இந்த நிலை நிறுத்தியை நீக்க சொடுக்குகு"
 
-#: ../app/tools/gimpvectortool.c:1291
+#: ../app/tools/gimpvectortool.c:1292
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "தேர்ந்தெடுத்த முடிவு புள்ளியுடன் இந்த நிலைநிறுத்தியை இணைக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1296
+#: ../app/tools/gimpvectortool.c:1297
 msgid "Click to open up the path"
 msgstr "பாதையை திறக்க சொடுக்கவும்"
 
-#: ../app/tools/gimpvectortool.c:1300
+#: ../app/tools/gimpvectortool.c:1301
 msgid "Click to make this node angular"
 msgstr "இந்த கணுவை கோணலாக செய்ய சொடுக்குக"
 
-#: ../app/tools/gimpvectortool.c:1810
+#: ../app/tools/gimpvectortool.c:1813
 msgid "Delete Anchors"
 msgstr "நிலைநிறுத்திகளை அழி"
 
-#: ../app/tools/gimpvectortool.c:1981
+#: ../app/tools/gimpvectortool.c:1984
 msgid "There is no active layer or channel to stroke to"
 msgstr "தீட்ட  நடப்பில் உள்ள அடுக்கு அல்லது வாய்க்காலோ நடப்பில் இல்லை"
 
@@ -13574,97 +13630,97 @@ msgctxt "vector-mode"
 msgid "Move"
 msgstr "நகர்த்து"
 
-#: ../app/vectors/gimpvectors.c:203
+#: ../app/vectors/gimpvectors.c:206
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "பாதைக்கு மறுபெயரிடு"
 
-#: ../app/vectors/gimpvectors.c:204
+#: ../app/vectors/gimpvectors.c:207
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "பாதையை நகர்த்து"
 
-#: ../app/vectors/gimpvectors.c:205
+#: ../app/vectors/gimpvectors.c:208
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "பாதையை அளவிடு"
 
-#: ../app/vectors/gimpvectors.c:206
+#: ../app/vectors/gimpvectors.c:209
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "பாதையை மறுஅளவிடு"
 
-#: ../app/vectors/gimpvectors.c:207
+#: ../app/vectors/gimpvectors.c:210
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "பாதையை புரட்டு"
 
-#: ../app/vectors/gimpvectors.c:208
+#: ../app/vectors/gimpvectors.c:211
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "பாதையை சுழற்று"
 
-#: ../app/vectors/gimpvectors.c:209
+#: ../app/vectors/gimpvectors.c:212
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "பாதையை உருமாற்று"
 
-#: ../app/vectors/gimpvectors.c:210
+#: ../app/vectors/gimpvectors.c:213
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "பாதை தீட்டு"
 
-#: ../app/vectors/gimpvectors.c:211
+#: ../app/vectors/gimpvectors.c:214
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "தேர்வுக்குப் பாதை"
 
-#: ../app/vectors/gimpvectors.c:212
+#: ../app/vectors/gimpvectors.c:215
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "பாதையை மீண்டும் ஒழுங்குப்படுத்து"
 
-#: ../app/vectors/gimpvectors.c:213
+#: ../app/vectors/gimpvectors.c:216
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "பாதையை உயர்த்து"
 
-#: ../app/vectors/gimpvectors.c:214
+#: ../app/vectors/gimpvectors.c:217
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "பாதையை உச்சிக்கு உயர்த்து"
 
-#: ../app/vectors/gimpvectors.c:215
+#: ../app/vectors/gimpvectors.c:218
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "பாதையை இறக்கு"
 
-#: ../app/vectors/gimpvectors.c:216
+#: ../app/vectors/gimpvectors.c:219
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "பாதையை அடிக்கு இறக்கு"
 
-#: ../app/vectors/gimpvectors.c:217
+#: ../app/vectors/gimpvectors.c:220
 msgid "Path cannot be raised higher."
 msgstr "பாதையை இன்னும் உயர்த்த முடியாது"
 
-#: ../app/vectors/gimpvectors.c:218
+#: ../app/vectors/gimpvectors.c:221
 msgid "Path cannot be lowered more."
 msgstr "பாதையை இன்னும் இறக்கமுடியாது"
 
-#: ../app/vectors/gimpvectors.c:351
+#: ../app/vectors/gimpvectors.c:364
 msgid "Move Path"
 msgstr "பாதையை நகர்த்து"
 
-#: ../app/vectors/gimpvectors.c:450
+#: ../app/vectors/gimpvectors.c:463
 msgid "Flip Path"
 msgstr "பாதையை புரட்டு"
 
-#: ../app/vectors/gimpvectors.c:481
+#: ../app/vectors/gimpvectors.c:494
 msgid "Rotate Path"
 msgstr "பாதையை சுழற்று"
 
-#: ../app/vectors/gimpvectors.c:511
+#: ../app/vectors/gimpvectors.c:524
 msgid "Transform Path"
 msgstr "பாதையை உருமாற்று"
 
@@ -13699,7 +13755,7 @@ msgstr "'%s'லிருந்து பாதைகளை இறக்கும
 msgid "_Search:"
 msgstr "தேடல்: (_S)"
 
-#: ../app/widgets/gimpactiongroup.c:845
+#: ../app/widgets/gimpactiongroup.c:867
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -13814,7 +13870,7 @@ msgstr "'%s' ஐ செயலில் உள்ள வடிப்பிகள�
 msgid "No filter selected"
 msgstr "எந்த வடிப்பியும்  தேர்ந்தெடுக்கப்படவில்லை"
 
-#: ../app/widgets/gimpcoloreditor.c:262
+#: ../app/widgets/gimpcoloreditor.c:259
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -13874,15 +13930,15 @@ msgstr "கருப்பு:"
 msgid "Alpha:"
 msgstr "ஆல்ஃபா:"
 
-#: ../app/widgets/gimpcolormapeditor.c:223
+#: ../app/widgets/gimpcolormapeditor.c:208
 msgid "Color index:"
 msgstr "நிற சுட்டு:"
 
-#: ../app/widgets/gimpcolormapeditor.c:233
+#: ../app/widgets/gimpcolormapeditor.c:218
 msgid "HTML notation:"
 msgstr "ஹெச்டிஎம்எல் (html) குறிமானம்:"
 
-#: ../app/widgets/gimpcolormapeditor.c:487
+#: ../app/widgets/gimpcolormapeditor.c:472
 msgid "Only indexed images have a colormap."
 msgstr "வரிசை படுத்திய பிம்பங்கள் மட்டுமே வண்ணப்படம் கொண்டு இருக்கும்."
 
@@ -14291,7 +14347,8 @@ msgid "Auto"
 msgstr "தானியங்கி"
 
 #: ../app/widgets/gimpdockwindow.c:364
-msgid "When enabled the dialog automatically follows the image you are working on."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
 msgstr "செயலாக்கப்பட்டால், உரையாடல் தானியங்கியாக நீங்க வேலை செய்யும் பிம்பத்தை தொடர்கிறது."
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
@@ -14675,21 +14732,21 @@ msgstr "உருப்படியை விசேஷமாக  இணைக்
 msgid "Lock alpha channel"
 msgstr "ஆல்பா வாய்க்காலை பூட்டு"
 
-#: ../app/widgets/gimpmessagebox.c:442
+#: ../app/widgets/gimpmessagebox.c:439
 #, c-format
 msgid "Message repeated %d times."
 msgstr "செய்தி %d தடவைகள் மீண்டும் சொல்லப்பட்டது."
 
-#: ../app/widgets/gimpmessagebox.c:444
+#: ../app/widgets/gimpmessagebox.c:441
 msgid "Message repeated once."
 msgstr "செய்தி ஒரு தடவை மீண்டும் சொல்லப்பட்டது"
 
-#: ../app/widgets/gimppaletteeditor.c:254
-#: ../app/widgets/gimppaletteeditor.c:745
+#: ../app/widgets/gimppaletteeditor.c:252
+#: ../app/widgets/gimppaletteeditor.c:743
 msgid "Undefined"
 msgstr "குறிப்பில்லா"
 
-#: ../app/widgets/gimppaletteeditor.c:262
+#: ../app/widgets/gimppaletteeditor.c:260
 msgid "Columns:"
 msgstr "நெடுவரிசைகள்:"
 
@@ -14764,12 +14821,12 @@ msgstr "தேர்ந்தெடுக்கப்பட்ட அமைப�
 msgid "Delete the selected settings"
 msgstr "தேர்ந்தெடுக்கப்பட்ட அமைப்புகளை நீக்கு"
 
-#: ../app/widgets/gimpsizebox.c:463
+#: ../app/widgets/gimpsizebox.c:460
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d × %d பிபிஐ"
 
-#: ../app/widgets/gimpsizebox.c:465
+#: ../app/widgets/gimpsizebox.c:462
 #, c-format
 msgid "%d ppi"
 msgstr "%d பிபிஐ"
@@ -14867,7 +14924,7 @@ msgstr "பண்பு \"%s\" <%s>  பயன்பாட்டிற்கு 
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "உரையில் வெளியிலுள்ள உருப்படி <markup> இல்லை <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1319
+#: ../app/widgets/gimptextbuffer.c:1456
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "கோப்பு '%s'-ல் தவறான UTF-8 தரவு ."
@@ -14876,23 +14933,28 @@ msgstr "கோப்பு '%s'-ல் தவறான UTF-8 தரவு ."
 msgid "_Use selected font"
 msgstr "(_U) தேர்ந்தெடுக்கப்பட்ட எழுத்துருவை பயன்படுத்து"
 
-#: ../app/widgets/gimptextstyleeditor.c:192
+#: ../app/widgets/gimptextstyleeditor.c:199
 msgid "Change size of selected text"
 msgstr "தேர்ந்தெடுத்த உரையை அளவு மாற்று "
 
-#: ../app/widgets/gimptextstyleeditor.c:211
+#: ../app/widgets/gimptextstyleeditor.c:206
+#, fuzzy
+msgid "Change color of selected text"
+msgstr "தேர்ந்தெடுத்த உரையை அளவு மாற்று "
+
+#: ../app/widgets/gimptextstyleeditor.c:231
 msgid "Clear style of selected text"
 msgstr "தேர்ந்தெடுக்கப்பட்ட உரையில் பாங்கை மாற்றுக"
 
-#: ../app/widgets/gimptextstyleeditor.c:231
+#: ../app/widgets/gimptextstyleeditor.c:251
 msgid "Change kerning of selected text"
 msgstr "தேர்ந்தெடுத்த உரையில் வெள்ளையிடம் சமம் செய்ததை மாற்று"
 
-#: ../app/widgets/gimptextstyleeditor.c:247
+#: ../app/widgets/gimptextstyleeditor.c:267
 msgid "Change baseline of selected text"
 msgstr "தேர்ந்தெடுத்த உரையை அடிக்கோடு மாற்று "
 
-#: ../app/widgets/gimpthumbbox.c:343
+#: ../app/widgets/gimpthumbbox.c:330
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -14901,20 +14963,20 @@ msgstr ""
 "முன் பார்வை இற்றைப்படுத்தலுக்கு சொடுக்குக\n"
 "முன்காட்சி இற்றைப்படுத்தி இருப்பினும் காண %s%s  சொடுக்கவும்."
 
-#: ../app/widgets/gimpthumbbox.c:361
+#: ../app/widgets/gimpthumbbox.c:348
 msgid "Pr_eview"
 msgstr "(_e) முன்காட்சி"
 
-#: ../app/widgets/gimpthumbbox.c:416 ../app/widgets/gimpthumbbox.c:480
+#: ../app/widgets/gimpthumbbox.c:403 ../app/widgets/gimpthumbbox.c:467
 msgid "No selection"
 msgstr "எந்த தேர்வுமில்லை"
 
-#: ../app/widgets/gimpthumbbox.c:608 ../app/widgets/gimpthumbbox.c:629
+#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "சிறுபடம் %d %d இல்"
 
-#: ../app/widgets/gimpthumbbox.c:742 ../app/widgets/gimpthumbbox.c:752
+#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
 msgid "Creating preview..."
 msgstr "முன்காட்சியை அமைக்கிறது..."
 
@@ -14975,39 +15037,39 @@ msgstr ""
 "நடப்பு சீர் நிற மாற்றம்.\n"
 "சீர் நிற மாற்றம் உரையாடலை திறக்க சொடுக்கவும்."
 
-#: ../app/widgets/gimptooleditor.c:295
+#: ../app/widgets/gimptooleditor.c:294
 msgid "Raise this tool"
 msgstr "இந்த கருவியை உயர்த்து"
 
-#: ../app/widgets/gimptooleditor.c:296
+#: ../app/widgets/gimptooleditor.c:295
 msgid "Raise this tool to the top"
 msgstr "இந்த கருவியை மேலுக்கு ஏற்று"
 
-#: ../app/widgets/gimptooleditor.c:303
+#: ../app/widgets/gimptooleditor.c:302
 msgid "Lower this tool"
 msgstr "இந்த கருவியை கீழே இறக்கு"
 
-#: ../app/widgets/gimptooleditor.c:304
+#: ../app/widgets/gimptooleditor.c:303
 msgid "Lower this tool to the bottom"
 msgstr "இந்த கருவியை அடிக்கு கீழே இறக்கு"
 
-#: ../app/widgets/gimptooleditor.c:311
+#: ../app/widgets/gimptooleditor.c:310
 msgid "Reset tool order and visibility"
 msgstr "கருவி வரிசை மற்றும் தெளிதிறனை மறுஅமை "
 
-#: ../app/widgets/gimptooloptionseditor.c:208
+#: ../app/widgets/gimptooloptionseditor.c:218
 msgid "Save options to..."
 msgstr "விருப்பங்களை சேமிக்கவும் இதில்..."
 
-#: ../app/widgets/gimptooloptionseditor.c:216
+#: ../app/widgets/gimptooloptionseditor.c:226
 msgid "Restore options from..."
 msgstr "இதிலிருந்து விருப்பங்களை மீட்கவும்..."
 
-#: ../app/widgets/gimptooloptionseditor.c:224
+#: ../app/widgets/gimptooloptionseditor.c:234
 msgid "Delete saved options..."
 msgstr "சேமித்த விருப்பங்களை அழிக்கவும்..."
 
-#: ../app/widgets/gimptooloptionseditor.c:573
+#: ../app/widgets/gimptooloptionseditor.c:592
 #, c-format
 msgid "Error saving tool options presets: %s"
 msgstr "கருவி தேர்வுகள் முன்னிருப்பை சேமிப்பதில் பிழை: %s"
@@ -15254,26 +15316,26 @@ msgstr "எக்ஸ்சிஎஃப் ஐ எழுதுவதில் ப
 msgid "Could not seek in XCF file: %s"
 msgstr "எக்ஸ்சிஎஃப் கோப்பில் தேடமுடியவில்லை: %s"
 
-#: ../app/xcf/xcf.c:98 ../app/xcf/xcf.c:166
+#: ../app/xcf/xcf.c:99 ../app/xcf/xcf.c:167
 msgid "GIMP XCF image"
 msgstr "கிம்ப் எக்ஸ்சிஎஃப் பிம்பம்"
 
-#: ../app/xcf/xcf.c:270
+#: ../app/xcf/xcf.c:271
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s' ஐ திறக்கிறது"
 
-#: ../app/xcf/xcf.c:312
+#: ../app/xcf/xcf.c:313
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "எக்ஸ்சிஎஃப் பிழை: ஆதரவில்லாத எக்ஸ்சிஎஃப் கோப்பு பதிப்பு %d எதிர்கொள்ளப்பட்டது"
 
-#: ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' ஐ சேமிக்கிறது"
 
-#: ../app/xcf/xcf.c:402
+#: ../app/xcf/xcf.c:403
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "எக்ஸ்சிஎஃப் கோப்பை சேமிப்பதில் பிழை: %s"
@@ -15323,6 +15385,34 @@ msgstr "கருவிப்பெட்டி தெரிவதை உறு�
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "'%s' ஐ துவக்க முடியவில்லை: %s"
+
+#~ msgctxt "file-action"
+#~ msgid "Save this image with a different name, but keep its current name"
+#~ msgstr "இந்த படத்தின் மூல பெயரை வைத்துக்கொள், வேறு பெயரில் இதை சேமி "
+
+#~ msgctxt "layers-action"
+#~ msgid "Te_xt to Selection"
+#~ msgstr "(_x) உரையில் இருந்து தேர்வுக்கு"
+
+#~ msgctxt "layers-action"
+#~ msgid "_Text to Selection"
+#~ msgstr "(_T) உரை தேர்வுக்கு"
+
+#~ msgctxt "layers-action"
+#~ msgid "Replace the selection with the text layer's outline"
+#~ msgstr "தேர்வை உரையின் திட்ட வரையால் மாற்றுக"
+
+#~ msgctxt "layers-action"
+#~ msgid "Add the text layer's outline to the current selection"
+#~ msgstr "இப்போதைய  தேர்வுக்கு  உரையின் திட்டவரையை சேர்க்க"
+
+#~ msgctxt "layers-action"
+#~ msgid "Subtract the text layer's outline from the current selection"
+#~ msgstr "இப்போதைய  தேர்விலிருந்து உரையின் திட்ட வரையை நீக்குக"
+
+#~ msgctxt "layers-action"
+#~ msgid "Intersect the text layer's outline with the current selection"
+#~ msgstr "இப்போதைய  தேர்வால்  உரையின் திட்டவரையை இடைவெட்டுக"
 
 #~ msgid "Reset Tool Options"
 #~ msgstr "கருவி தேர்வுகளை மறுஅமை"

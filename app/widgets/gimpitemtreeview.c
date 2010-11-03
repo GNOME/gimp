@@ -100,8 +100,7 @@ static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked
 static GObject * gimp_item_tree_view_constructor    (GType              type,
                                                      guint              n_params,
                                                      GObjectConstructParam *params);
-
-static void   gimp_item_tree_view_destroy           (GtkObject         *object);
+static void   gimp_item_tree_view_dispose           (GObject           *object);
 
 static void   gimp_item_tree_view_style_set         (GtkWidget         *widget,
                                                      GtkStyle          *prev_style);
@@ -221,9 +220,8 @@ static guint view_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 {
-  GObjectClass               *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass             *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass             *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass               *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass             *widget_class = GTK_WIDGET_CLASS (klass);
   GimpContainerTreeViewClass *tree_view_class;
 
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
@@ -239,8 +237,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
                   GIMP_TYPE_OBJECT);
 
   object_class->constructor      = gimp_item_tree_view_constructor;
-
-  gtk_object_class->destroy      = gimp_item_tree_view_destroy;
+  object_class->dispose          = gimp_item_tree_view_dispose;
 
   widget_class->style_set        = gimp_item_tree_view_style_set;
 
@@ -488,14 +485,14 @@ gimp_item_tree_view_constructor (GType                  type,
 }
 
 static void
-gimp_item_tree_view_destroy (GtkObject *object)
+gimp_item_tree_view_dispose (GObject *object)
 {
   GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (object);
 
   if (view->priv->image)
     gimp_item_tree_view_set_image (view, NULL);
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

@@ -88,7 +88,8 @@ window_open_display_cmd_callback (GtkAction *action,
 
   entry = gtk_entry_new ();
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
-  gtk_container_add (GTK_CONTAINER (GIMP_MESSAGE_DIALOG (dialog)->box), entry);
+  gtk_box_pack_start (GTK_BOX (GIMP_MESSAGE_DIALOG (dialog)->box), entry,
+                      TRUE, TRUE, 0);
 
   gtk_widget_grab_focus (entry);
   gtk_widget_show_all (dialog);

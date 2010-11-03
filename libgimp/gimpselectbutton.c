@@ -41,7 +41,7 @@
 
 /*  local function prototypes  */
 
-static void   gimp_select_button_destroy (GtkObject *object);
+static void   gimp_select_button_dispose (GObject *object);
 
 
 G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_HBOX)
@@ -49,15 +49,23 @@ G_DEFINE_TYPE (GimpSelectButton, gimp_select_button, GTK_TYPE_HBOX)
 static void
 gimp_select_button_class_init (GimpSelectButtonClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->destroy = gimp_select_button_destroy;
+  object_class->dispose = gimp_select_button_dispose;
 }
 
 static void
 gimp_select_button_init (GimpSelectButton *select_button)
 {
   select_button->temp_callback = NULL;
+}
+
+static void
+gimp_select_button_dispose (GObject *object)
+{
+  gimp_select_button_close_popup (GIMP_SELECT_BUTTON (object));
+
+  G_OBJECT_CLASS (gimp_select_button_parent_class)->dispose (object);
 }
 
 /**
@@ -81,15 +89,4 @@ gimp_select_button_close_popup (GimpSelectButton *button)
 
       button->temp_callback = NULL;
     }
-}
-
-
-/*  private functions  */
-
-static void
-gimp_select_button_destroy (GtkObject *object)
-{
-  gimp_select_button_close_popup (GIMP_SELECT_BUTTON (object));
-
-  GTK_OBJECT_CLASS (gimp_select_button_parent_class)->destroy (object);
 }

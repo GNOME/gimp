@@ -100,11 +100,11 @@
         (feather (sota-scale size 0.5 chrome-factor))
         (brush-size (sota-scale size 0.5 chrome-factor))
         (mask (car (gimp-channel-new img width height "Chrome Stencil" 50 '(0 0 0))))
-        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE "Background" 100 NORMAL-MODE)))
-        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type "Layer1" 100 NORMAL-MODE)))
-        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 2" 100 DIFFERENCE-MODE)))
-        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
-        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
+        (bg-layer (car (gimp-layer-new img width height GRAY-IMAGE _"Background" 100 NORMAL-MODE)))
+        (layer1 (car (gimp-layer-new img banding-width banding-height banding-type _"Layer1" 100 NORMAL-MODE)))
+        (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 DIFFERENCE-MODE)))
+        (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 NORMAL-MODE)))
+        (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 NORMAL-MODE)))
         (mask-fs 0)
         (layer-mask 0)
         )
@@ -113,11 +113,11 @@
 
     (gimp-image-undo-disable img)
 
-    (gimp-image-add-channel img mask 0)
-    (gimp-image-add-layer img bg-layer 0)
-    (gimp-image-add-layer img shadow 0)
-    (gimp-image-add-layer img layer3 0)
-    (gimp-image-add-layer img layer2 0)
+    (gimp-image-insert-channel img mask -1 0)
+    (gimp-image-insert-layer img bg-layer -1 0)
+    (gimp-image-insert-layer img shadow -1 0)
+    (gimp-image-insert-layer img layer3 -1 0)
+    (gimp-image-insert-layer img layer2 -1 0)
 
     (gimp-edit-copy mask-drawable)
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
@@ -135,7 +135,7 @@
     (gimp-item-set-visible bg-layer FALSE)
     (gimp-item-set-visible shadow FALSE)
 
-    (gimp-selection-load mask)
+    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
     (gimp-context-set-background '(0 0 0))
     (gimp-selection-translate img offx1 offy1)
     (gimp-selection-feather img feather)
@@ -146,7 +146,7 @@
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
 
-    (gimp-image-add-layer img layer1 0)
+    (gimp-image-insert-layer img layer1 -1 0)
     (copy-layer-chrome-it img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height FALSE)
@@ -157,12 +157,12 @@
 
     (set! layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer1 layer-mask)
-    (gimp-selection-load mask)
+    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
-    (gimp-image-add-layer img layer2 0)
+    (gimp-image-insert-layer img layer2 -1 0)
     (gimp-context-set-brush (brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke layer-mask)
@@ -197,8 +197,8 @@
     (gimp-item-set-visible shadow TRUE)
     (gimp-item-set-visible bg-layer TRUE)
 
-    (gimp-item-set-name layer2 "Chrome")
-    (gimp-item-set-name layer1 "Highlight")
+    (gimp-item-set-name layer2 _"Chrome")
+    (gimp-item-set-name layer1 _"Highlight")
 
     (gimp-image-remove-channel img mask)
 

@@ -293,6 +293,8 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
 
   if (cellviewable->renderer)
     {
+      cairo_t *cr;
+
       if (! (flags & GTK_CELL_RENDERER_SELECTED))
         {
           /* this is an ugly hack. The cell state should be passed to
@@ -305,8 +307,17 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
           gimp_view_renderer_remove_idle (cellviewable->renderer);
         }
 
-      gimp_view_renderer_draw (cellviewable->renderer, window, widget,
-                               cell_area, expose_area);
+      cr = gdk_cairo_create (window);
+      gdk_cairo_rectangle (cr, expose_area);
+      cairo_clip (cr);
+
+      cairo_translate (cr, cell_area->x, cell_area->y);
+
+      gimp_view_renderer_draw (cellviewable->renderer, widget, cr,
+                               cell_area->width,
+                               cell_area->height);
+
+      cairo_destroy (cr);
     }
 }
 
@@ -373,31 +384,36 @@ gimp_cell_renderer_viewable_clicked (GimpCellRendererViewable *cell,
                                      const gchar              *path,
                                      GdkModifierType           state)
 {
-  GdkEvent *event;
 
   g_return_if_fail (GIMP_IS_CELL_RENDERER_VIEWABLE (cell));
   g_return_if_fail (path != NULL);
 
-  g_signal_emit (cell, viewable_cell_signals[CLICKED], 0, path, state);
-
-  event = gtk_get_current_event ();
-
-  if (event)
+  if (cell->renderer)
     {
-      GdkEventButton *bevent = (GdkEventButton *) event;
+      GdkEvent *event = gtk_get_current_event ();
 
-      if (bevent->type == GDK_BUTTON_PRESS &&
-          (bevent->button == 1 || bevent->button == 2))
+      if (event)
         {
-          gimp_view_popup_show (gtk_get_event_widget (event),
-                                bevent,
-                                cell->renderer->context,
-                                cell->renderer->viewable,
-                                cell->renderer->width,
-                                cell->renderer->height,
-                                cell->renderer->dot_for_dot);
-        }
+          GdkEventButton *bevent = (GdkEventButton *) event;
 
-      gdk_event_free (event);
+          if (bevent->type == GDK_BUTTON_PRESS &&
+              (bevent->button == 1 || bevent->button == 2))
+            {
+              gimp_view_popup_show (gtk_get_event_widget (event),
+                                    bevent,
+                                    cell->renderer->context,
+                                    cell->renderer->viewable,
+                                    cell->renderer->width,
+                                    cell->renderer->height,
+                                    cell->renderer->dot_for_dot);
+            }
+
+          gdk_event_free (event);
+        }
     }
+
+  /*  emit the signal last so no callback effects can set
+   *  cell->renderer to NULL.
+   */
+  g_signal_emit (cell, viewable_cell_signals[CLICKED], 0, path, state);
 }

@@ -179,7 +179,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gint              title_len,
                                  const gchar      *format)
 {
-  Gimp      *gimp;
   GimpImage *image;
   gint       num, denom;
   gint       i = 0;
@@ -187,7 +186,6 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
   image = gimp_display_get_image (shell->display);
-  gimp  = gimp_display_get_gimp (shell->display);
 
   if (! image)
     {
@@ -320,6 +318,12 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
                 g_free (str);
               }
+              break;
+
+            case 'M': /* image size in megapixels */
+              i += print (title, title_len, i, "%.1f",
+                          (gdouble) gimp_image_get_width (image) *
+                          (gdouble) gimp_image_get_height (image) / 1000000.0);
               break;
 
             case 'l': /* number of layers */

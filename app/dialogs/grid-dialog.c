@@ -108,8 +108,8 @@ grid_dialog_new (GimpImage   *image,
 
   editor = gimp_grid_editor_new (grid, context, xres, yres);
   gtk_container_set_border_width (GTK_CONTAINER (editor), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     editor);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      editor, TRUE, TRUE, 0);
 
   gtk_widget_show (editor);
 

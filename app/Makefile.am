@@ -8,7 +8,6 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
-
 # Sort this by architectural dependencies, lowest level at the top,
 # so that when e.g. changing a header-file the subdirs are built in
 # the right order
@@ -74,6 +73,10 @@ libapp_sources = \
 
 libapp_generated_sources = \
 	git-version.h
+
+# Build git-version.h before anything in the subdirs as this is needed
+# in the about dialog.
+BUILT_SOURCES = $(libapp_generated_sources)
 
 CLEANFILES = $(libapp_generated_sources)
 
@@ -275,10 +278,21 @@ dist-hook: dist-check-gimp-console dist-dump-gimprc
 # in which case the git-version.h we ship is correct.
 git-version.h: update-git-version-header
 	@if test -d "$(top_srcdir)/.git"; then \
-	  echo "#define GIMP_GIT_VERSION \"`git describe`\"" > "$@.tmp"; \
+	  git_version="`git describe`"; \
+	  git_last_commit_timestamp="`git log -n1 --reverse --pretty=%ct`"; \
+	  git_last_commit_year="`date --utc -d \"1970-01-01 + $$git_last_commit_timestamp seconds\" '+%Y'`"; \
 	elif test ! -f "$@"; then \
-	  echo "#define GIMP_GIT_VERSION \"Unknown, shouldn't happen\"" > "$@.tmp"; \
-	fi
+	  git_version="Unknown, shouldn't happen"; \
+	  git_last_commit_timestamp=-1; \
+	  git_last_commit_year="`date --utc '+%Y'`"; \
+	fi; \
+	echo "#ifndef __GIT_VERSION_H__" > "$@.tmp"; \
+	echo "#define __GIT_VERSION_H__" >> "$@.tmp"; \
+	echo "#include <time.h>" >> "$@.tmp"; \
+	echo "#define GIMP_GIT_VERSION \"$$git_version\"" >> "$@.tmp"; \
+	echo "#define GIMP_GIT_LAST_COMMIT_TIMESTAMP ((time_t)$$git_last_commit_timestamp)" >> "$@.tmp"; \
+	echo "#define GIMP_GIT_LAST_COMMIT_YEAR \"$$git_last_commit_year\"" >> "$@.tmp"; \
+	echo "#endif /* __GIT_VERSION_H__ */" >> "$@.tmp"
 	@if ( test -f "$@.tmp" && test -f "$@" && cmp "$@.tmp" "$@" > /dev/null ); then \
 	  rm -f "$@.tmp"; \
 	elif test -f "$@.tmp"; then \

@@ -880,5 +880,7 @@ print_preview_get_thumbnail (GimpDrawable *drawable,
 
   g_free (data);
 
+  cairo_surface_mark_dirty (surface);
+
   return surface;
 }

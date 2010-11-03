@@ -239,6 +239,7 @@ tile_update_rowhints (Tile *tile,
                             }
                         }
                     }
+
                   tile_set_rowhint (tile, y,
                                     (alpha == 0) ?
                                     TILEROWHINT_TRANSPARENT :

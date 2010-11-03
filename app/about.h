@@ -25,8 +25,9 @@
 #define GIMP_NAME \
   _("GNU Image Manipulation Program")
 
+/* The year of the last commit (UTC) will be inserted into this string. */
 #define GIMP_COPYRIGHT \
-  _("Copyright © 1995-2010\n" \
+  _("Copyright © 1995-%s\n" \
     "Spencer Kimball, Peter Mattis and the GIMP Development Team")
 
 #define GIMP_LICENSE \

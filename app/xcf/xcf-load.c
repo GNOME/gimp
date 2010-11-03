@@ -398,6 +398,15 @@ xcf_load_image_props (XcfInfo   *info,
 
             info->cp += xcf_read_int32 (info->fp, &n_colors, 1);
 
+            if (n_colors > (GIMP_IMAGE_COLORMAP_SIZE / 3))
+              {
+                gimp_message (info->gimp, G_OBJECT (info->progress),
+                              GIMP_MESSAGE_ERROR,
+                              "Maximum colormap size (%d) exceeded",
+			      GIMP_IMAGE_COLORMAP_SIZE);
+                return FALSE;
+              }
+
             if (info->file_version == 0)
               {
                 gint i;

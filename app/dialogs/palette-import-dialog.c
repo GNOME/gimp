@@ -189,8 +189,8 @@ palette_import_dialog_new (GimpContext *context)
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
-                     main_hbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
+                      main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   vbox = gtk_vbox_new (FALSE, 12);
@@ -864,7 +864,7 @@ palette_import_make_palette (ImportDialog *dialog)
       if (dialog->palette)
         g_object_unref (dialog->palette);
 
-      palette->n_columns = n_columns;
+      gimp_palette_set_columns (palette, n_columns);
 
       gimp_view_set_viewable (GIMP_VIEW (dialog->preview),
                               GIMP_VIEWABLE (palette));
@@ -873,5 +873,6 @@ palette_import_make_palette (ImportDialog *dialog)
     }
 
   gtk_widget_set_visible (dialog->no_colors_label,
-                          dialog->palette && dialog->palette->n_colors > 0);
+                          dialog->palette &&
+                          gimp_palette_get_n_colors (dialog->palette) > 0);
 }

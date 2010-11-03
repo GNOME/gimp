@@ -34,17 +34,17 @@ typedef struct _GimpGridEditorClass GimpGridEditorClass;
 
 struct _GimpGridEditor
 {
-  GtkVBox       parent_instance;
+  GtkBox       parent_instance;
 
-  GimpGrid     *grid;
-  GimpContext  *context;
-  gdouble       xresolution;
-  gdouble       yresolution;
+  GimpGrid    *grid;
+  GimpContext *context;
+  gdouble      xresolution;
+  gdouble      yresolution;
 };
 
 struct _GimpGridEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

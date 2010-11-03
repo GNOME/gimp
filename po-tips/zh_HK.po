@@ -1,0 +1,217 @@
+# Chinese (Hong Kong) translation of gimp-tips.
+# Copyright (C) 2003, 04 Free Software Foundation, Inc.
+# (partially based on Harry C.H. Chou's work)
+# Abel Cheung <maddog@linux.org.hk>, 2003-04.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp20-tips 2.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-30 19:53+0800\n"
+"PO-Revision-Date: 2010-10-30 19:53+0800\n"
+"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
+"Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/tips/gimp-tips.xml.in.h:1
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr "使用「油漆桶填色」工具時，按 <tt>Ctrl</tt> 鍵加上滑鼠按鈕會令填色時使用背景顏色而非前景顏色。同樣的，使用「眼藥水」工具時，按 <tt>Ctrl</tt> 鍵加上滑鼠按鈕會令填色時使用背景顏色而非前景顏色。"
+
+#: ../data/tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr "在「圖層」對話盒的圖層遮罩預覽圖內，按 <tt>Ctrl</tt> 鍵加上滑鼠按鈕可切換圖層遮罩的效果。在同樣的預覽圖中，按 <tt>Alt</tt> 鍵加上滑鼠按鈕可直接切換檢視的遮罩。"
+
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr "在旋轉工具中，按 <tt>Ctrl</tt> 鍵加上滑鼠按鈕會將旋轉角度限制為 15°的倍數。"
+
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr "在「圖層」對話方塊的眼形圖示中，按 <tt>Shift</tt> 鍵加上滑鼠按鈕會只顯示指定圖層而隱藏其它圖層。再做一次則會顯示所有圖層。"
+
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr "對圖片進行任何操作前，浮動選擇區域必須先固定在新的圖層或是最後使用的圖層上。要進行以上的程序，可以在「圖層」對話方塊中選取 &quot;新增圖層」&quot; 或 &quot;固定圖層&quot; 按鈕。另外在選單中也可以使用同樣的方法。"
+
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
+msgstr "在偏好設定對話方塊中啟用 &quot;動態鍵盤捷徑鍵&quot; 後，你可以重新安排選單上的捷徑鍵。方法是先用滑鼠選取選單的某個項目，然後按下新的捷徑鍵組合。如果已啟用 &quot;儲存捷徑鍵設定&quot; ，結束 GIMP 時，這些捷徑鍵組合會被儲存下來。你應該在設定完成後停用 &quot;動態鍵盤捷徑鍵&quot; ，以避免意外的重新指定捷徑鍵。"
+
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr "在尺規上按下滑鼠左鍵並拖曳至圖片內就可以加入參考線。以後任何拖曳的選擇區域都會自動吸引至參考網上。如果要去除參考線，可利用「移動」工具將參考線拖曳到圖片範圍以外。"
+
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr "GIMP 支援 gzip 直接壓縮/解壓。只要在檔名加上 <tt>.gz</tt> (或在安裝了 bzip2 的情況下使用 <tt>.bz2</tt>)，圖片會以壓縮狀態儲存。 當然直接打開壓縮圖檔也可以。"
+
+#: ../data/tips/gimp-tips.xml.in.h:9
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr "GIMP 使用圖層來組織圖片。可將圖層想像成一疊投影片或濾鏡，將它們重疊後可以看到整合後的內容。"
+
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr "如果圖層的名稱在圖層對話盒中以<b>粗體</b>顯示，表示這個圖層沒有 alpha-色版。你可以使用圖層→透明度→加入 Alpha 色版來加入 alpha-色版。"
+
+#: ../data/tips/gimp-tips.xml.in.h:11
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
+msgstr "如果掃描出來的相片色彩不太鮮豔，可以使用「色階」工具（顏色→色階）中的 &quot;自動&quot; 按鈕來改善圖片的色彩範圍。如果色彩有任何走樣，可以利用「曲線」工具（顏色→曲線）來修正。"
+
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr "描畫路徑時（編輯→根據路徑描邊），可以使用目前的繪畫工具和設定。你可以在漸變色模式中使用「畫筆」，甚至「橡皮擦」或「塗污」工具也可以。"
+
+#: ../data/tips/gimp-tips.xml.in.h:13
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr "如果畫面過於混亂，你可以在圖片視窗中重複按下 <tt>Tab</tt> 鍵來隱藏或顯示工具箱及其他對話方塊。"
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
+msgstr "絕大多數的增效模組只會對圖片目前的圖層產生效用。在某些情況下，你必須先合併所有圖層 (圖片→圖片平面化)，增效模組才會對整幅圖片產生效用。"
+
+#: ../data/tips/gimp-tips.xml.in.h:15
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr "並非所有效果都適用於各類圖片。當某項功能無法使用時，選單的文字會以淺灰色表示。如果需要該種效果，可能需要將圖片的色系轉為 RGB (圖片→模式→RGB)、加入透明色版 (圖層→透明度→新增透明色版) 或者將它平面化 (圖片→圖片平面化)。"
+
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr "在選取區域之前按下 <tt>Shift</tt> 鍵，便會將新選擇的區域加到舊的區域一起而非代替舊的區域。使用 <tt>Ctrl</tt> 則是將舊的區域減去新的區域。"
+
+#: ../data/tips/gimp-tips.xml.in.h:17
+msgid ""
+"When you save an image to work on it again later, try using XCF, GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr "如果儲存一幅將來可能會再修改的圖片，可試試使用 XCF，即 GIMP 內定使用的圖片格式 (延伸檔名為 <tt>.xcf</tt>)。這樣會保留所有圖層及任何正在處理中的圖片細節。在圖片完成後，可以將它另存為 JPEG、PNG、GIF 等等..."
+
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr "按 <tt>Alt</tt> 鍵再用滑鼠拖曳可以調整和重新放置選擇區域。如果這個組合令視窗移動，即表示視窗管理程式已經使用了 <tt>Alt</tt> 鍵。大部分視窗管理程式可以設定為忽略 <tt>Alt</tt> 鍵，或是使用 <tt>Super</tt> 鍵 (或「Windows logo」) 來代替。"
+
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr "你可以使用路徑工具來製作及修改複雜的選擇區域。在「路徑」對話方塊中，你可以同時處理多個路徑並將它們轉換為選擇區域。"
+
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr "你可以在「圖層」對話方塊中拖曳一個圖層並將之放進工具箱內。這樣會產生一幅只含有該圖層的圖片。"
+
+#: ../data/tips/gimp-tips.xml.in.h:21
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current selection with that color."
+msgstr "GIMP 裏面很多東西都是可以拖曳的。舉個例子，從工具箱或色盤裏拖曳一種顏色出來並放到圖片上，會將目前的圖片或選擇區域填滿該種顏色。"
+
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid ""
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters→Render→Gfig."
+msgstr "你可以用「編輯→根據選擇區域描邊」來繪畫簡單的矩形或圓形。它會用畫筆描出目前的選擇區域的邊界。至於更複雜的圖形，可以使用「路徑」工具或者「濾鏡→描繪→Gfig」來繪畫。"
+
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid ""
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr "你可以在任何時候按下 F1 來瀏覽 GIMP 功能的相關說明文件，即使在選單中也同樣適用。"
+
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr "在「圖層」對話方塊中，在圖層名稱上按下右邊滑鼠按鈕，可以執行很多不同的圖層功能。"
+
+#: ../data/tips/gimp-tips.xml.in.h:25
+msgid ""
+"You can save a selection to a channel (Select→Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr "你可以將選擇區域儲存為色版 (選擇→儲存為色版) 然後使用任何繪畫工具修改該色版。利用「色版」對話方塊的按鈕，你可以切換是否顯示這個新的色版或將它轉換為選擇區域。"
+
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr "你可以用 <tt>Ctrl</tt>-<tt>Tab</tt> 來逐層顯示圖片中的所有圖層。(但必須注意視窗管理程式會否攔截這個按鍵組合...)"
+
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr "你可以用中央滑鼠按鈕抓住圖片在視窗內移動（或選擇在移動滑鼠時按住 <tt>Spacebar</tt>）。"
+
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr "你可以使用繪畫工具來更改選擇區域。按下圖片視窗左下角的 &quot;快速遮罩&quot; 按鈕。透過在圖片上繪圖可以更改選擇區域，然後再按一次按鈕可以將它轉換為普通的選擇區域。"

@@ -27,45 +27,29 @@ void   gimp_display_shell_draw_get_scaled_image_size_for_scale
                                                       gdouble             scale,
                                                       gint               *w,
                                                       gint               *h);
-void   gimp_display_shell_draw_guide                 (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      GimpGuide          *guide,
-                                                      gboolean            active);
-void   gimp_display_shell_draw_guides                (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr);
-void   gimp_display_shell_draw_grid                  (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr);
-void   gimp_display_shell_draw_pen                   (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      const GimpVector2  *points,
-                                                      gint                n_points,
-                                                      GimpContext        *context,
-                                                      GimpActiveColor     color,
-                                                      gint                width);
-void   gimp_display_shell_draw_sample_point          (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      GimpSamplePoint    *sample_point,
-                                                      gboolean            active);
-void   gimp_display_shell_draw_sample_points         (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr);
-void   gimp_display_shell_draw_layer_boundary        (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr,
-                                                      GimpDrawable       *drawable,
-                                                      GdkSegment         *segs,
-                                                      gint                n_segs);
+
 void   gimp_display_shell_draw_selection_out         (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
-                                                      GdkSegment         *segs,
+                                                      GimpSegment        *segs,
                                                       gint                n_segs);
 void   gimp_display_shell_draw_selection_in          (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       cairo_pattern_t    *mask,
                                                       gint                index);
-void   gimp_display_shell_draw_vectors               (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr);
-void   gimp_display_shell_draw_cursor                (GimpDisplayShell   *shell,
-                                                      cairo_t            *cr);
-void   gimp_display_shell_draw_area                  (GimpDisplayShell   *shell,
+
+void   gimp_display_shell_draw_image                 (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      gint                x,
+                                                      gint                y,
+                                                      gint                w,
+                                                      gint                h);
+void   gimp_display_shell_draw_checkerboard          (GimpDisplayShell   *shell,
+                                                      cairo_t            *cr,
+                                                      gint                x,
+                                                      gint                y,
+                                                      gint                w,
+                                                      gint                h);
+void   gimp_display_shell_draw_highlight             (GimpDisplayShell   *shell,
                                                       cairo_t            *cr,
                                                       gint                x,
                                                       gint                y,

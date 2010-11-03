@@ -67,7 +67,7 @@ void        gimp_text_layer_set         (GimpTextLayer *layer,
                                          const gchar   *first_property_name,
                                          ...) G_GNUC_NULL_TERMINATED;
 
-gboolean    gimp_drawable_is_text_layer (GimpDrawable  *drawable);
+gboolean    gimp_item_is_text_layer     (GimpItem      *item);
 
 
 #endif /* __GIMP_TEXT_LAYER_H__ */

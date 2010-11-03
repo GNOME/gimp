@@ -74,7 +74,7 @@ struct _GimpPaintOptions
 
   GimpPaintInfo            *paint_info;
 
-  gdouble                   brush_scale;
+  gdouble                   brush_size;
   gdouble                   brush_angle;
   gdouble                   brush_aspect_ratio;
 
@@ -89,6 +89,8 @@ struct _GimpPaintOptions
 
   GimpViewType              brush_view_type;
   GimpViewSize              brush_view_size;
+  GimpViewType              dynamics_view_type;
+  GimpViewSize              dynamics_view_size;
   GimpViewType              pattern_view_type;
   GimpViewSize              pattern_view_size;
   GimpViewType              gradient_view_type;

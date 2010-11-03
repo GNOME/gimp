@@ -72,7 +72,7 @@ static void   gimp_sample_point_editor_point_added    (GimpImage             *im
 static void   gimp_sample_point_editor_point_removed  (GimpImage             *image,
                                                        GimpSamplePoint       *sample_point,
                                                        GimpSamplePointEditor *editor);
-static void   gimp_sample_point_editor_point_update   (GimpImage             *image,
+static void   gimp_sample_point_editor_point_moved    (GimpImage             *image,
                                                        GimpSamplePoint       *sample_point,
                                                        GimpSamplePointEditor *editor);
 static void   gimp_sample_point_editor_proj_update    (GimpImage             *image,
@@ -267,7 +267,7 @@ gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
                                             gimp_sample_point_editor_point_removed,
                                             editor);
       g_signal_handlers_disconnect_by_func (image_editor->image,
-                                            gimp_sample_point_editor_point_update,
+                                            gimp_sample_point_editor_point_moved,
                                             editor);
 
       g_signal_handlers_disconnect_by_func (gimp_image_get_projection (image_editor->image),
@@ -285,8 +285,8 @@ gimp_sample_point_editor_set_image (GimpImageEditor *image_editor,
       g_signal_connect (image, "sample-point-removed",
                         G_CALLBACK (gimp_sample_point_editor_point_removed),
                         editor);
-      g_signal_connect (image, "update-sample-point",
-                        G_CALLBACK (gimp_sample_point_editor_point_update),
+      g_signal_connect (image, "sample-point-moved",
+                        G_CALLBACK (gimp_sample_point_editor_point_moved),
                         editor);
 
       g_signal_connect (gimp_image_get_projection (image), "update",
@@ -362,9 +362,9 @@ gimp_sample_point_editor_point_removed (GimpImage             *image,
 }
 
 static void
-gimp_sample_point_editor_point_update (GimpImage             *image,
-                                       GimpSamplePoint       *sample_point,
-                                       GimpSamplePointEditor *editor)
+gimp_sample_point_editor_point_moved (GimpImage             *image,
+                                      GimpSamplePoint       *sample_point,
+                                      GimpSamplePointEditor *editor)
 {
   gint i = g_list_index (gimp_image_get_sample_points (image), sample_point);
 

@@ -219,7 +219,6 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->rand                         = g_rand_new ();
 
   core->brush_bound_segs             = NULL;
-  core->transformed_brush_bound_segs = NULL;
   core->n_brush_bound_segs           = 0;
   core->brush_bound_width            = 0;
   core->brush_bound_height           = 0;
@@ -322,12 +321,6 @@ gimp_brush_core_finalize (GObject *object)
       core->brush_bound_height = 0;
     }
 
-  if (core->transformed_brush_bound_segs)
-    {
-      g_free (core->transformed_brush_bound_segs);
-      core->transformed_brush_bound_segs = NULL;
-    }
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -373,12 +366,16 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
               fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                         paint_core->pixel_dist);
 
-              scale = paint_options->brush_scale *
+              scale = paint_options->brush_size /
+                      MAX (core->main_brush->mask->width,
+                           core->main_brush->mask->height) *
                       gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
                                                              &current_coords,
                                                              paint_options,
                                                              fade_point);
-              if (scale < 0.0001) return FALSE;
+
+              if (scale < 0.0001)
+                return FALSE;
             }
         }
 
@@ -943,21 +940,19 @@ gimp_brush_core_set_dynamics (GimpBrushCore *core,
 }
 
 void
-gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
-                                   GimpPaintOptions *paint_options)
+gimp_brush_core_create_boundary (GimpBrushCore    *core,
+                                 GimpPaintOptions *paint_options)
 {
-  TempBuf *mask  = NULL;
+  TempBuf *mask = NULL;
   gdouble  scale;
-  gdouble  angle;
-  gdouble  aspect_ratio;
 
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (core->main_brush != NULL);
   g_return_if_fail (core->brush_bound_segs == NULL);
 
-  scale = paint_options->brush_scale;
-  angle = paint_options->brush_angle;
-  aspect_ratio = paint_options->brush_aspect_ratio;
+  scale = paint_options->brush_size /
+          MAX (core->main_brush->mask->width,
+               core->main_brush->mask->height);
 
   if (scale > 0.0)
     {
@@ -997,9 +992,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
 
   if (mask)
     {
-      PixelRegion  PR = { 0, };
-      BoundSeg    *boundary;
-      gint         num_groups;
+      PixelRegion PR = { 0, };
 
       pixel_region_init_temp_buf (&PR, mask,
                                   0, 0, mask->width, mask->height);
@@ -1010,19 +1003,10 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
       if (mask->width > 32 && mask->height > 32)
         smooth_region (&PR);
 
-
-      boundary = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
-                                0, 0, PR.w, PR.h,
-                                0,
-                                &core->n_brush_bound_segs);
-
-      core->brush_bound_segs = boundary_sort (boundary,
-                                              core->n_brush_bound_segs,
-                                              &num_groups);
-
-      core->n_brush_bound_segs += num_groups;
-
-      g_free (boundary);
+      core->brush_bound_segs = boundary_find (&PR, BOUNDARY_WITHIN_BOUNDS,
+                                              0, 0, PR.w, PR.h,
+                                              0,
+                                              &core->n_brush_bound_segs);
 
       core->brush_bound_width  = mask->width;
       core->brush_bound_height = mask->height;
@@ -1031,23 +1015,24 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
     }
 }
 
-void
-gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
-                                      GimpPaintOptions *paint_options)
+gboolean
+gimp_brush_core_get_transform (GimpBrushCore *core,
+                               GimpMatrix3   *matrix)
 {
-  gdouble      scale;
-  gdouble      angle;
-  gdouble      aspect_ratio;
-  gdouble      height;
-  gdouble      width;
-  GimpMatrix3  matrix;
-  gdouble      scale_x;
-  gdouble      scale_y;
+  gdouble scale;
+  gdouble angle;
+  gdouble aspect_ratio;
+  gdouble height;
+  gdouble width;
+  gdouble scale_x;
+  gdouble scale_y;
 
+  g_return_val_if_fail (GIMP_IS_BRUSH_CORE (core), FALSE);
+  g_return_val_if_fail (matrix != 0, FALSE);
+  g_return_val_if_fail (core->main_brush != NULL, FALSE);
+  g_return_val_if_fail (core->brush_bound_segs != NULL, FALSE);
 
-  g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
-  g_return_if_fail (core->main_brush != NULL);
-  g_return_if_fail (core->brush_bound_segs != NULL);
+  gimp_matrix3_identity (matrix);
 
   scale = core->scale;
   angle = core->angle;
@@ -1083,28 +1068,21 @@ gimp_brush_core_transform_bound_segs (GimpBrushCore    *core,
       scale_y = scale / aspect_ratio;
     }
 
-  if (core->transformed_brush_bound_segs)
-    {
-      g_free (core->transformed_brush_bound_segs);
-      core->transformed_brush_bound_segs = NULL;
-    }
-
   if ((scale > 0.0) && (aspect_ratio > 0.0))
     {
       scale = gimp_brush_core_clamp_brush_scale (core, scale);
 
       gimp_brush_transform_matrix (height, width,
-                                   scale, aspect_ratio, angle, &matrix);
-
-      core->transformed_brush_bound_segs =
-        boundary_transform (core->brush_bound_segs,
-                            &core->n_brush_bound_segs,
-                            &matrix);
+                                   scale, aspect_ratio, angle, matrix);
 
       /* FIXME. Do noy use scale_x/scale_y */
       core->transformed_brush_bound_width  = core->brush_bound_width  * scale_x;
       core->transformed_brush_bound_height = core->brush_bound_height * scale_y;
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
 void
@@ -1722,50 +1700,55 @@ gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
                                          const GimpCoords  *coords)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
-  GimpImage *image;
   gdouble    fade_point = 1.0;
 
-  core->scale = paint_options->brush_scale;
-  core->angle = paint_options->brush_angle;
+  if (core->main_brush)
+    core->scale = paint_options->brush_size /
+                  MAX (core->main_brush->mask->width,
+                       core->main_brush->mask->height);
+  else
+    core->scale = -1;
+
+  core->angle        = paint_options->brush_angle;
   core->aspect_ratio = paint_options->brush_aspect_ratio;
 
-  if (!GIMP_IS_DYNAMICS (core->dynamics))
+  if (! GIMP_IS_DYNAMICS (core->dynamics))
     return;
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
     {
       if (drawable)
         {
-          image = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+
           fade_point = gimp_paint_options_get_fade (paint_options, image,
                                                     paint_core->pixel_dist);
         }
 
       core->scale *=
-            gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+        gimp_dynamics_output_get_linear_value (core->dynamics->size_output,
+                                               coords,
+                                               paint_options,
+                                               fade_point);
 
       core->angle +=
-            gimp_dynamics_output_get_angular_value (core->dynamics->angle_output,
-                                                    coords,
-                                                    paint_options,
-                                                    fade_point);
+        gimp_dynamics_output_get_angular_value (core->dynamics->angle_output,
+                                                coords,
+                                                paint_options,
+                                                fade_point);
 
       core->hardness =
-            gimp_dynamics_output_get_linear_value (core->dynamics->hardness_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+        gimp_dynamics_output_get_linear_value (core->dynamics->hardness_output,
+                                               coords,
+                                               paint_options,
+                                               fade_point);
 
       core->aspect_ratio *=
-            gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
-                                                   coords,
-                                                   paint_options,
-                                                   fade_point);
+        gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
+                                               coords,
+                                               paint_options,
+                                               fade_point);
     }
-
 }
 
 

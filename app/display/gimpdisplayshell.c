@@ -53,16 +53,17 @@
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
+#include "gimpcanvaslayerboundary.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-dnd.h"
-#include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-items.h"
 #include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
@@ -102,11 +103,11 @@ typedef struct _GimpDisplayShellOverlay GimpDisplayShellOverlay;
 
 struct _GimpDisplayShellOverlay
 {
-  gdouble       image_x;
-  gdouble       image_y;
-  GtkAnchorType anchor;
-  gint          spacing_x;
-  gint          spacing_y;
+  gdouble          image_x;
+  gdouble          image_y;
+  GimpHandleAnchor anchor;
+  gint             spacing_x;
+  gint             spacing_y;
 };
 
 
@@ -117,6 +118,7 @@ static void      gimp_color_managed_iface_init     (GimpColorManagedInterface *i
 static GObject * gimp_display_shell_constructor    (GType             type,
                                                     guint             n_params,
                                                     GObjectConstructParam *params);
+static void      gimp_display_shell_dispose        (GObject          *object);
 static void      gimp_display_shell_finalize       (GObject          *object);
 static void      gimp_display_shell_set_property   (GObject          *object,
                                                     guint             property_id,
@@ -126,8 +128,6 @@ static void      gimp_display_shell_get_property   (GObject          *object,
                                                     guint             property_id,
                                                     GValue           *value,
                                                     GParamSpec       *pspec);
-
-static void      gimp_display_shell_destroy        (GtkObject        *object);
 
 static void      gimp_display_shell_unrealize      (GtkWidget        *widget);
 static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
@@ -160,7 +160,7 @@ static void   gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell,
-                         GTK_TYPE_VBOX,
+                         GTK_TYPE_BOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
                                                 gimp_display_shell_progress_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
@@ -183,9 +183,8 @@ static const gchar display_rc_style[] =
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   display_shell_signals[SCALED] =
     g_signal_new ("scaled",
@@ -215,11 +214,10 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   G_TYPE_NONE, 0);
 
   object_class->constructor        = gimp_display_shell_constructor;
+  object_class->dispose            = gimp_display_shell_dispose;
   object_class->finalize           = gimp_display_shell_finalize;
   object_class->set_property       = gimp_display_shell_set_property;
   object_class->get_property       = gimp_display_shell_get_property;
-
-  gtk_object_class->destroy        = gimp_display_shell_destroy;
 
   widget_class->unrealize          = gimp_display_shell_unrealize;
   widget_class->screen_changed     = gimp_display_shell_screen_changed;
@@ -276,6 +274,9 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (shell),
+                                  GTK_ORIENTATION_VERTICAL);
+
   shell->options            = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
   shell->fullscreen_options = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
   shell->no_image_options   = g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_NO_IMAGE, NULL);
@@ -289,9 +290,11 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->x_src_dec   = 1;
   shell->y_src_dec   = 1;
 
-  shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+  shell->render_surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
                                                       GIMP_DISPLAY_RENDER_BUF_WIDTH,
                                                       GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+
+  gimp_display_shell_items_init (shell);
 
   shell->icon_size  = 32;
 
@@ -746,6 +749,106 @@ gimp_display_shell_constructor (GType                  type,
 }
 
 static void
+gimp_display_shell_dispose (GObject *object)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  if (shell->display && gimp_display_get_shell (shell->display))
+    gimp_display_shell_disconnect (shell);
+
+  shell->popup_manager = NULL;
+
+  gimp_display_shell_selection_free (shell);
+
+  if (shell->filter_stack)
+    gimp_display_shell_filter_set (shell, NULL);
+
+  if (shell->filter_idle_id)
+    {
+      g_source_remove (shell->filter_idle_id);
+      shell->filter_idle_id = 0;
+    }
+
+  if (shell->render_surface)
+    {
+      cairo_surface_destroy (shell->render_surface);
+      shell->render_surface = NULL;
+    }
+
+  if (shell->mask_surface)
+    {
+      cairo_surface_destroy (shell->mask_surface);
+      shell->mask_surface = NULL;
+    }
+
+  if (shell->checkerboard)
+    {
+      cairo_pattern_destroy (shell->checkerboard);
+      shell->checkerboard = NULL;
+    }
+
+  if (shell->highlight)
+    {
+      g_slice_free (GdkRectangle, shell->highlight);
+      shell->highlight = NULL;
+    }
+
+  if (shell->mask)
+    {
+      g_object_unref (shell->mask);
+      shell->mask = NULL;
+    }
+
+  gimp_display_shell_items_free (shell);
+
+  if (shell->event_history)
+    {
+      g_array_free (shell->event_history, TRUE);
+      shell->event_history = NULL;
+    }
+
+  if (shell->event_queue)
+    {
+      g_array_free (shell->event_queue, TRUE);
+      shell->event_queue = NULL;
+    }
+
+  if (shell->zoom_focus_pointer_queue)
+    {
+      g_queue_free (shell->zoom_focus_pointer_queue);
+      shell->zoom_focus_pointer_queue = NULL;
+    }
+
+  if (shell->title_idle_id)
+    {
+      g_source_remove (shell->title_idle_id);
+      shell->title_idle_id = 0;
+    }
+
+  if (shell->fill_idle_id)
+    {
+      g_source_remove (shell->fill_idle_id);
+      shell->fill_idle_id = 0;
+    }
+
+  if (shell->nav_popup)
+    {
+      gtk_widget_destroy (shell->nav_popup);
+      shell->nav_popup = NULL;
+    }
+
+  if (shell->grid_dialog)
+    {
+      gtk_widget_destroy (shell->grid_dialog);
+      shell->grid_dialog = NULL;
+    }
+
+  shell->display = NULL;
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_display_shell_finalize (GObject *object)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
@@ -845,92 +948,6 @@ gimp_display_shell_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_display_shell_destroy (GtkObject *object)
-{
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
-
-  if (shell->display && gimp_display_get_shell (shell->display))
-    gimp_display_shell_disconnect (shell);
-
-  shell->popup_manager = NULL;
-
-  gimp_display_shell_selection_free (shell);
-
-  if (shell->filter_stack)
-    gimp_display_shell_filter_set (shell, NULL);
-
-  if (shell->filter_idle_id)
-    {
-      g_source_remove (shell->filter_idle_id);
-      shell->filter_idle_id = 0;
-    }
-
-  if (shell->render_surface)
-    {
-      cairo_surface_destroy (shell->render_surface);
-      shell->render_surface = NULL;
-    }
-
-  if (shell->highlight)
-    {
-      g_slice_free (GdkRectangle, shell->highlight);
-      shell->highlight = NULL;
-    }
-
-  if (shell->mask)
-    {
-      g_object_unref (shell->mask);
-      shell->mask = NULL;
-    }
-
-  if (shell->event_history)
-    {
-      g_array_free (shell->event_history, TRUE);
-      shell->event_history = NULL;
-    }
-
-  if (shell->event_queue)
-    {
-      g_array_free (shell->event_queue, TRUE);
-      shell->event_queue = NULL;
-    }
-
-  if (shell->zoom_focus_pointer_queue)
-    {
-      g_queue_free (shell->zoom_focus_pointer_queue);
-      shell->zoom_focus_pointer_queue = NULL;
-    }
-
-  if (shell->title_idle_id)
-    {
-      g_source_remove (shell->title_idle_id);
-      shell->title_idle_id = 0;
-    }
-
-  if (shell->fill_idle_id)
-    {
-      g_source_remove (shell->fill_idle_id);
-      shell->fill_idle_id = 0;
-    }
-
-  if (shell->nav_popup)
-    {
-      gtk_widget_destroy (shell->nav_popup);
-      shell->nav_popup = NULL;
-    }
-
-  if (shell->grid_dialog)
-    {
-      gtk_widget_destroy (shell->grid_dialog);
-      shell->grid_dialog = NULL;
-    }
-
-  shell->display = NULL;
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -1099,47 +1116,47 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 
   switch (overlay->anchor)
     {
-    case GTK_ANCHOR_CENTER:
+    case GIMP_HANDLE_ANCHOR_CENTER:
       *x -= requisition.width  / 2;
       *y -= requisition.height / 2;
       break;
 
-    case GTK_ANCHOR_NORTH:
+    case GIMP_HANDLE_ANCHOR_NORTH:
       *x -= requisition.width / 2;
       *y += overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_NORTH_WEST:
+    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
       *x += overlay->spacing_x;
       *y += overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_NORTH_EAST:
+    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
       *x -= requisition.width + overlay->spacing_x;
       *y += overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_SOUTH:
+    case GIMP_HANDLE_ANCHOR_SOUTH:
       *x -= requisition.width / 2;
       *y -= requisition.height + overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_SOUTH_WEST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
       *x += overlay->spacing_x;
       *y -= requisition.height + overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_SOUTH_EAST:
+    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
       *x -= requisition.width + overlay->spacing_x;
       *y -= requisition.height + overlay->spacing_y;
       break;
 
-    case GTK_ANCHOR_WEST:
+    case GIMP_HANDLE_ANCHOR_WEST:
       *x += overlay->spacing_x;
       *y -= requisition.height / 2;
       break;
 
-    case GTK_ANCHOR_EAST:
+    case GIMP_HANDLE_ANCHOR_EAST:
       *x -= requisition.width + overlay->spacing_x;
       *y -= requisition.height / 2;
       break;
@@ -1170,7 +1187,7 @@ gimp_display_shell_add_overlay (GimpDisplayShell *shell,
                                 GtkWidget        *child,
                                 gdouble           image_x,
                                 gdouble           image_y,
-                                GtkAnchorType     anchor,
+                                GimpHandleAnchor  anchor,
                                 gint              spacing_x,
                                 gint              spacing_y)
 {
@@ -1205,7 +1222,7 @@ gimp_display_shell_move_overlay (GimpDisplayShell *shell,
                                  GtkWidget        *child,
                                  gdouble           image_x,
                                  gdouble           image_y,
-                                 GtkAnchorType     anchor,
+                                 GimpHandleAnchor  anchor,
                                  gint              spacing_x,
                                  gint              spacing_y)
 {
@@ -1304,7 +1321,7 @@ gimp_display_shell_empty (GimpDisplayShell *shell)
       shell->fill_idle_id = 0;
     }
 
-  gimp_display_shell_selection_control (shell, GIMP_SELECTION_OFF);
+  gimp_display_shell_selection_undraw (shell);
 
   gimp_display_shell_unset_cursor (shell);
 
@@ -1647,6 +1664,9 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
   /* make sure the information is up-to-date */
   gimp_display_shell_scale_changed (shell);
 
+  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
+
   if (now)
     {
       gdk_window_process_updates (gtk_widget_get_window (shell->canvas),
@@ -1745,34 +1765,23 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
     {
       if (highlight)
         {
-          GdkRectangle *rects;
-          GdkRegion    *old;
-          GdkRegion    *new;
-          gint          num_rects, i;
+          cairo_region_t *old;
+          cairo_region_t *new;
 
           if (memcmp (shell->highlight, highlight, sizeof (GdkRectangle)) == 0)
             return;
 
-          old = gdk_region_rectangle (shell->highlight);
+          old = cairo_region_create_rectangle ((cairo_rectangle_int_t *) shell->highlight);
 
           *shell->highlight = *highlight;
 
-          new = gdk_region_rectangle (shell->highlight);
+          new = cairo_region_create_rectangle ((cairo_rectangle_int_t *) shell->highlight);
+          cairo_region_xor (old, new);
 
-          gdk_region_xor (old, new);
+          gimp_display_shell_expose_region (shell, old);
 
-          gdk_region_get_rectangles (old, &rects, &num_rects);
-
-          gdk_region_destroy (old);
-          gdk_region_destroy (new);
-
-          for (i = 0; i < num_rects; i++)
-            gimp_display_update_area (shell->display, TRUE,
-                                      rects[i].x,
-                                      rects[i].y,
-                                      rects[i].width,
-                                      rects[i].height);
-          g_free (rects);
+          cairo_region_destroy (old);
+          cairo_region_destroy (new);
         }
       else
         {
@@ -1799,20 +1808,18 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  *
  * Allows to preview a selection (used by the foreground selection
  * tool).  Pixels that are not selected (> 127) in the mask are tinted
- * with dark blue.
+ * with the given color.
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
                              GimpDrawable     *mask,
-                             GimpChannelType   color)
+                             const GimpRGB    *color)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (mask == NULL ||
                     (GIMP_IS_DRAWABLE (mask) &&
                      gimp_drawable_bytes (mask) == 1));
-
-  if (shell->mask == mask && shell->mask_color == color)
-    return;
+  g_return_if_fail (mask == NULL || color != NULL);
 
   if (mask)
     g_object_ref (mask);
@@ -1821,7 +1828,9 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
     g_object_unref (shell->mask);
 
   shell->mask = mask;
-  shell->mask_color = color;
+
+  if (mask)
+    shell->mask_color = *color;
 
   gimp_display_shell_expose_full (shell);
 }

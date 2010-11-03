@@ -112,9 +112,9 @@ gimp_cairo_add_arc (cairo_t *cr,
 }
 
 void
-gimp_cairo_add_segments (cairo_t    *cr,
-                         GdkSegment *segs,
-                         gint        n_segs)
+gimp_cairo_add_segments (cairo_t     *cr,
+                         GimpSegment *segs,
+                         gint         n_segs)
 {
   gint i;
 
@@ -126,12 +126,12 @@ gimp_cairo_add_segments (cairo_t    *cr,
       if (segs[i].x1 == segs[i].x2)
         {
           cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2 - 1.0);
+          cairo_line_to (cr, segs[i].x2 + 0.5, segs[i].y2 - 0.5);
         }
       else
         {
           cairo_move_to (cr, segs[i].x1 + 0.5, segs[i].y1 + 0.5);
-          cairo_line_to (cr, segs[i].x2 - 1.0, segs[i].y2 + 0.5);
+          cairo_line_to (cr, segs[i].x2 - 0.5, segs[i].y2 + 0.5);
         }
     }
 }

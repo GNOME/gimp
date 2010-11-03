@@ -38,7 +38,7 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable -1 0)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
@@ -97,7 +97,7 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable -1 0)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
@@ -157,7 +157,7 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable -1 0)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)
@@ -216,7 +216,7 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable -1 0)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-drawable-fill drawable BACKGROUND-FILL)

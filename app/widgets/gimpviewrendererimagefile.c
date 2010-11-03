@@ -180,12 +180,15 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
               GtkIconInfo *info;
 
               info = gtk_icon_theme_lookup_by_gicon (icon_theme, icon, size, 0);
-              pixbuf = gtk_icon_info_load_icon (info, NULL);
+
+              if (info)
+                pixbuf = gtk_icon_info_load_icon (info, NULL);
             }
           else
             {
 #ifdef GIMP_UNSTABLE
-              g_printerr ("no icon for: %s\n", gimp_object_get_name (imagefile));
+              g_printerr ("no icon for: %s\n",
+                          gimp_object_get_name (imagefile));
 #endif
             }
 

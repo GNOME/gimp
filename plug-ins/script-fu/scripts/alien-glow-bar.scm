@@ -29,22 +29,22 @@
         (border (/ height 4))
         (ruler-layer (car (gimp-layer-new img
                                           (+ length height) (+ height height)
-                                          RGBA-IMAGE "Ruler" 100 NORMAL-MODE)))
+                                          RGBA-IMAGE _"Bar" 100 NORMAL-MODE)))
         (glow-layer (car (gimp-layer-new img
                                          (+ length height) (+ height height)
-                                         RGBA-IMAGE "Alien Glow" 100 NORMAL-MODE)))
+                                         RGBA-IMAGE _"Alien Glow" 100 NORMAL-MODE)))
         (bg-layer (car (gimp-layer-new img
                                        (+ length height) (+ height height)
-                                       RGB-IMAGE "Background" 100 NORMAL-MODE)))
+                                       RGB-IMAGE _"Background" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img (+ length height) (+ height height) 0 0)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img glow-layer -1)
-    (gimp-image-add-layer img ruler-layer -1)
+    (gimp-image-insert-layer img bg-layer -1 1)
+    (gimp-image-insert-layer img glow-layer -1 -1)
+    (gimp-image-insert-layer img ruler-layer -1 -1)
 
    ; (gimp-layer-set-lock-alpha ruler-layer TRUE)
     (gimp-context-set-background bg-color)

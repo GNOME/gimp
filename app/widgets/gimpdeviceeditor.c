@@ -105,7 +105,7 @@ static void      gimp_device_editor_delete_clicked (GtkWidget             *butto
                                                     GimpDeviceEditor      *editor);
 
 
-G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_BOX)
 
 #define parent_class gimp_device_editor_parent_class
 
@@ -139,6 +139,9 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   GtkWidget               *hbox;
   gint                     icon_width;
   gint                     icon_height;
+
+  gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
+                                  GTK_ORIENTATION_HORIZONTAL);
 
   gtk_box_set_spacing (GTK_BOX (editor), 12);
 

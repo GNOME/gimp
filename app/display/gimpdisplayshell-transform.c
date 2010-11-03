@@ -172,14 +172,14 @@ gimp_display_shell_untransform_xy (const GimpDisplayShell *shell,
 
 /**
  * gimp_display_shell_transform_xy_f:
- * @shell:       a #GimpDisplayShell
- * @x:           x coordinate of point in image coordinates
- * @y:           y coordinate of point in image coordinate
- * @nx:          returns the transformed x coordinate
- * @ny:          returns the transformed y coordinate
+ * @shell: a #GimpDisplayShell
+ * @x:     image x coordinate of point
+ * @y:     image y coordinate of point
+ * @nx:    returned shell canvas x coordinate
+ * @ny:    returned shell canvas y coordinate
  *
- * This function is identical to gimp_display_shell_transfrom_xy(),
- * except that it returns its results as doubles rather than ints.
+ * Transforms from image coordinates to display shell canvas
+ * coordinates.
  **/
 void
 gimp_display_shell_transform_xy_f  (const GimpDisplayShell *shell,
@@ -224,76 +224,6 @@ gimp_display_shell_untransform_xy_f (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_transform_points:
- * @shell:       a #GimpDisplayShell
- * @points:      array of GimpVectors2 coordinate pairs
- * @coords:      returns the corresponding display coordinates
- * @n_points:    number of points
- *
- * Transforms from image coordinates to display coordinates, so that
- * objects can be rendered at the correct points on the display.
- **/
-void
-gimp_display_shell_transform_points (const GimpDisplayShell *shell,
-                                     const GimpVector2      *points,
-                                     GdkPoint               *coords,
-                                     gint                    n_points)
-{
-  gint i;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  for (i = 0; i < n_points ; i++)
-    {
-      gdouble x = points[i].x;
-      gdouble y = points[i].y;
-
-      x = x * shell->x_src_dec / shell->x_dest_inc;
-      y = y * shell->y_src_dec / shell->y_dest_inc;
-
-      coords[i].x = CLAMP (PROJ_ROUND64 (x) - shell->offset_x,
-                           G_MININT, G_MAXINT);
-      coords[i].y = CLAMP (PROJ_ROUND64 (y) - shell->offset_y,
-                           G_MININT, G_MAXINT);
-    }
-}
-
-/**
- * gimp_display_shell_transform_coords:
- * @shell:        a #GimpDisplayShell
- * @image_coords: array of image coordinates
- * @disp_coords:  returns the corresponding display coordinates
- * @n_coords:     number of coordinates
- *
- * Transforms from image coordinates to display coordinates, so that
- * objects can be rendered at the correct points on the display.
- **/
-void
-gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
-                                     const GimpCoords       *image_coords,
-                                     GdkPoint               *disp_coords,
-                                     gint                    n_coords)
-{
-  gint i;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  for (i = 0; i < n_coords ; i++)
-    {
-      gdouble x = image_coords[i].x;
-      gdouble y = image_coords[i].y;
-
-      x = x * shell->x_src_dec / shell->x_dest_inc;
-      y = y * shell->y_src_dec / shell->y_dest_inc;
-
-      disp_coords[i].x = CLAMP (PROJ_ROUND64 (x) - shell->offset_x,
-                                G_MININT, G_MAXINT);
-      disp_coords[i].y = CLAMP (PROJ_ROUND64 (y) - shell->offset_y,
-                                G_MININT, G_MAXINT);
-    }
-}
-
-/**
  * gimp_display_shell_transform_segments:
  * @shell:       a #GimpDisplayShell
  * @src_segs:    array of segments in image coordinates
@@ -306,8 +236,10 @@ gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
 void
 gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
                                        const BoundSeg         *src_segs,
-                                       GdkSegment             *dest_segs,
-                                       gint                    n_segs)
+                                       GimpSegment            *dest_segs,
+                                       gint                    n_segs,
+                                       gdouble                 offset_x,
+                                       gdouble                 offset_y)
 {
   gint i;
 
@@ -315,23 +247,18 @@ gimp_display_shell_transform_segments (const GimpDisplayShell *shell,
 
   for (i = 0; i < n_segs ; i++)
     {
-      gint64 x1, x2;
-      gint64 y1, y2;
+      gdouble x1, x2;
+      gdouble y1, y2;
 
-      x1 = src_segs[i].x1;
-      x2 = src_segs[i].x2;
-      y1 = src_segs[i].y1;
-      y2 = src_segs[i].y2;
+      x1 = src_segs[i].x1 + offset_x;
+      x2 = src_segs[i].x2 + offset_x;
+      y1 = src_segs[i].y1 + offset_y;
+      y2 = src_segs[i].y2 + offset_y;
 
-      x1 = (x1 * shell->x_src_dec) / shell->x_dest_inc;
-      x2 = (x2 * shell->x_src_dec) / shell->x_dest_inc;
-      y1 = (y1 * shell->y_src_dec) / shell->y_dest_inc;
-      y2 = (y2 * shell->y_src_dec) / shell->y_dest_inc;
-
-      dest_segs[i].x1 = CLAMP (x1 - shell->offset_x, G_MININT, G_MAXINT);
-      dest_segs[i].x2 = CLAMP (x2 - shell->offset_x, G_MININT, G_MAXINT);
-      dest_segs[i].y1 = CLAMP (y1 - shell->offset_y, G_MININT, G_MAXINT);
-      dest_segs[i].y2 = CLAMP (y2 - shell->offset_y, G_MININT, G_MAXINT);
+      dest_segs[i].x1 = SCALEX (shell, x1) - shell->offset_x;
+      dest_segs[i].x2 = SCALEX (shell, x2) - shell->offset_x;
+      dest_segs[i].y1 = SCALEY (shell, y1) - shell->offset_y;
+      dest_segs[i].y2 = SCALEY (shell, y2) - shell->offset_y;
     }
 }
 

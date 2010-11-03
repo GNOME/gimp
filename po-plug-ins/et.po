@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-25 22:07+0100\n"
-"PO-Revision-Date: 2010-02-01 12:29+0300\n"
+"PO-Revision-Date: 2010-10-06 15:52+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz gmail com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -799,7 +799,7 @@ msgstr ""
 
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr ""
-"BMP faili formaati ei saa läbipaistvusega indekseeritud pilti salvestada."
+"BMP vormingusse pole võimalik läbipaistvat indekseeritud pilti salvestada."
 
 msgid "Alpha channel will be ignored."
 msgstr "Alfa kanalit ignoreeritakse."
@@ -1230,14 +1230,14 @@ msgstr "Viga: see ei ole CML parameetrifail."
 
 #, c-format
 msgid "Warning: '%s' is an old format file."
-msgstr "Hoiatus: fail '%s' on vanas formaadis."
+msgstr "Hoiatus: fail '%s' on vanas vormingus."
 
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
 msgstr "Hoiatus: parameetrite fail '%s' on uuemale CML_explorer'ile kui mina."
 
 msgid "Error: failed to load parameters"
-msgstr "Viga: parameetrite lugemine ebaõnnestus"
+msgstr "Viga: parameetrite lugemine nurjus"
 
 msgid "ASCII art"
 msgstr ""
@@ -2952,7 +2952,7 @@ msgid "GIMP brush"
 msgstr "GIMPi pintsel"
 
 msgid "Unsupported brush format"
-msgstr "Sellist pintsli formaati ei toetata"
+msgstr "Sellist pintsli vormingut ei toetata"
 
 #, c-format
 msgid "Error in GIMP brush file '%s'"
@@ -2966,7 +2966,7 @@ msgid "Unnamed"
 msgstr "Nimetu"
 
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMPi pintslid on kas HALLTOONIDES või RGBA formaadis"
+msgstr "GIMPi pintslid on kas HALLTOONIDES või RGBA värvides"
 
 msgid "Save as Brush"
 msgstr "Salvesta pintslina"
@@ -3036,8 +3036,8 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"GIF formaat toetab ainult 7bit ASCII kodeeringus kommentaare. Kommentaari ei "
-"salvestatud."
+"GIF vorming toetab ainult 7 biti ASCII kodeeringus kommentaare. Kommentaari "
+"ei salvestatud."
 
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
@@ -3059,7 +3059,7 @@ msgid ""
 msgstr ""
 
 msgid "Save as GIF"
-msgstr "Salvesta GIF formaadis"
+msgstr "Salvesta GIF vormingus"
 
 #. regular gif parameter settings
 msgid "GIF Options"
@@ -4469,7 +4469,7 @@ msgid "Invalid file."
 msgstr "Vigane fail."
 
 msgid "File not in a supported format."
-msgstr "Fail ei ole toetatud formaadis."
+msgstr "Fail ei ole toetatud vormingus."
 
 msgid "Invalid X resolution."
 msgstr "Vigane X eraldusvõime."
@@ -4773,16 +4773,16 @@ msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
 msgstr ""
-"Ei saa '%s' salvestada. PSD failiformaat ei toeta pilte mis on rohkem kui "
-"30000 pikslit lai või kõrge"
+"Pole võimalik '%s' salvestada. PSD failivorming ei toeta pilte, mis on "
+"rohkem kui 30000 pikslit lai või kõrge"
 
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
 msgstr ""
-"Ei saa '%s' salvestada. PSD failiformaat ei toeta pilte mille kihid on "
-"rohkem kui 30000 pikslit laiad või kõrged."
+"Pole võimalik '%s' salvestada. PSD failivorming ei toeta pilte, mille kihid "
+"on rohkem kui 30000 pikslit laiad või kõrged."
 
 msgid "Paint Shop Pro image"
 msgstr "Paint Shop Pro pilt"
@@ -5814,8 +5814,8 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"TIFF formaat toetab kommentaare ainult\n"
-"7bit ASCII kodeeringus. Kommentaari ei salvestatud."
+"TIFF vorming toetab kommentaare ainult\n"
+"7 biti ASCII kodeeringus. Kommentaari ei salvestatud."
 
 msgid "Save as TIFF"
 msgstr "Salvesta TIFF failina"
@@ -6941,7 +6941,7 @@ msgstr ""
 
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "GFlare faili '%s' kirjutamine ebaõnnestus: %s"
+msgstr "GFlare faili '%s' kirjutamine nurjus: %s"
 
 msgid "A_uto update preview"
 msgstr "_Uuenda eelvaadet automaatselt"
@@ -7715,10 +7715,10 @@ msgid "Transformation %s"
 msgstr ""
 
 msgid "Save failed"
-msgstr "Salvestamine ebaõnnestus"
+msgstr "Salvestamine nurjus"
 
 msgid "Open failed"
-msgstr "Avamine ebaõnnestus"
+msgstr "Avamine nurjus"
 
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."

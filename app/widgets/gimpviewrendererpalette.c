@@ -91,25 +91,29 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   palette = GIMP_PALETTE (renderer->viewable);
 
-  if (palette->n_colors < 1)
+  if (gimp_palette_get_n_colors (palette) == 0)
     return;
 
   grid_width = renderpal->draw_grid ? 1 : 0;
 
   if (renderpal->cell_size > 0)
     {
-      if (palette->n_columns > 0)
+      gint n_columns = gimp_palette_get_columns (palette);
+
+      if (n_columns > 0)
         cell_width = MAX ((gdouble) renderpal->cell_size,
                           (gdouble) (renderer->width - grid_width) /
-                          (gdouble) palette->n_columns);
+                          (gdouble) n_columns);
       else
         cell_width = renderpal->cell_size;
     }
   else
     {
-      if (palette->n_columns > 0)
+      gint n_columns = gimp_palette_get_columns (palette);
+
+      if (n_columns > 0)
         cell_width = ((gdouble) (renderer->width - grid_width) /
-                      (gdouble) palette->n_columns);
+                      (gdouble) n_columns);
       else
         cell_width = (gdouble) (renderer->width - grid_width) / 16.0;
     }
@@ -120,8 +124,8 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
 
   renderpal->columns = (gdouble) (renderer->width - grid_width) / cell_width;
 
-  renderpal->rows = palette->n_colors / renderpal->columns;
-  if (palette->n_colors % renderpal->columns)
+  renderpal->rows = gimp_palette_get_n_colors (palette) / renderpal->columns;
+  if (gimp_palette_get_n_colors (palette) % renderpal->columns)
     renderpal->rows += 1;
 
   renderpal->cell_height = MAX (4, ((renderer->height - grid_width) /
@@ -131,7 +135,7 @@ gimp_view_renderer_palette_render (GimpViewRenderer *renderer,
     renderpal->cell_height = MIN (renderpal->cell_height,
                                   renderpal->cell_width);
 
-  list = palette->colors;
+  list = gimp_palette_get_colors (palette);
 
   if (! renderer->surface)
     renderer->surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,

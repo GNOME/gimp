@@ -123,8 +123,6 @@ static void      gimp_image_window_get_property        (GObject             *obj
                                                         GValue              *value,
                                                         GParamSpec          *pspec);
 
-static void      gimp_image_window_real_destroy        (GtkObject           *object);
-
 static gboolean  gimp_image_window_delete_event        (GtkWidget           *widget,
                                                         GdkEventAny         *event);
 static gboolean  gimp_image_window_configure_event     (GtkWidget           *widget,
@@ -202,17 +200,14 @@ static const gchar image_window_rc_style[] =
 static void
 gimp_image_window_class_init (GimpImageWindowClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor        = gimp_image_window_constructor;
   object_class->dispose            = gimp_image_window_dispose;
   object_class->finalize           = gimp_image_window_finalize;
   object_class->set_property       = gimp_image_window_set_property;
   object_class->get_property       = gimp_image_window_get_property;
-
-  gtk_object_class->destroy        = gimp_image_window_real_destroy;
 
   widget_class->delete_event       = gimp_image_window_delete_event;
   widget_class->configure_event    = gimp_image_window_configure_event;
@@ -398,6 +393,12 @@ gimp_image_window_dispose (GObject *object)
       private->dialog_factory = NULL;
     }
 
+  if (private->menubar_manager)
+    {
+      g_object_unref (private->menubar_manager);
+      private->menubar_manager = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -479,21 +480,6 @@ gimp_image_window_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_image_window_real_destroy (GtkObject *object)
-{
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-
-  if (private->menubar_manager)
-    {
-      g_object_unref (private->menubar_manager);
-      private->menubar_manager = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean
@@ -1310,9 +1296,10 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
 
   active_display = private->active_shell->display;
 
-  g_signal_handlers_disconnect_by_func (active_display,
-                                        gimp_image_window_image_notify,
-                                        window);
+  if (active_display)
+    g_signal_handlers_disconnect_by_func (active_display,
+                                          gimp_image_window_image_notify,
+                                          window);
 
   g_signal_handlers_disconnect_by_func (private->active_shell,
                                         gimp_image_window_shell_scaled,
@@ -1324,7 +1311,8 @@ gimp_image_window_disconnect_from_active_shell (GimpImageWindow *window)
                                         gimp_image_window_shell_icon_notify,
                                         window);
 
-  gimp_image_window_hide_tooltip (private->menubar_manager, window);
+  if (private->menubar_manager)
+    gimp_image_window_hide_tooltip (private->menubar_manager, window);
 }
 
 static void

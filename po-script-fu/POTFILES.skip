@@ -38,6 +38,7 @@ plug-ins/metadata
 plug-ins/pagecurl
 plug-ins/print
 plug-ins/pygimp
+plug-ins/script-fu/scripts/contactsheet.scm
 plug-ins/selection-to-path
 plug-ins/twain
 plug-ins/ui

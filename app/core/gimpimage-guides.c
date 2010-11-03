@@ -98,7 +98,7 @@ gimp_image_add_guide (GimpImage *image,
   gimp_guide_set_position (guide, position);
   g_object_ref (G_OBJECT (guide));
 
-  gimp_image_update_guide (image, guide);
+  gimp_image_guide_added (image, guide);
 }
 
 void
@@ -113,13 +113,13 @@ gimp_image_remove_guide (GimpImage *image,
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  gimp_image_update_guide (image, guide);
-
   if (push_undo)
     gimp_image_undo_push_guide (image, C_("undo-type", "Remove Guide"), guide);
 
   private->guides = g_list_remove (private->guides, guide);
   gimp_guide_removed (guide);
+
+  gimp_image_guide_removed (image, guide);
 
   gimp_guide_set_position (guide, -1);
   g_object_unref (G_OBJECT (guide));
@@ -143,9 +143,9 @@ gimp_image_move_guide (GimpImage *image,
   if (push_undo)
     gimp_image_undo_push_guide (image, C_("undo-type", "Move Guide"), guide);
 
-  gimp_image_update_guide (image, guide);
   gimp_guide_set_position (guide, position);
-  gimp_image_update_guide (image, guide);
+
+  gimp_image_guide_moved (image, guide);
 }
 
 GList *

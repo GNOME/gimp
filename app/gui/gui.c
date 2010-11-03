@@ -42,7 +42,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
-#include "display/gimpdisplayshell-render.h"
 #include "display/gimpstatusbar.h"
 
 #include "tools/gimp-tools.h"
@@ -175,8 +174,8 @@ gui_abort (const gchar *abort_message)
 
   gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), "%s", abort_message);
 
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     box);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      box, TRUE, TRUE, 0);
   gtk_widget_show (box);
 
   gimp_dialog_run (GIMP_DIALOG (dialog));
@@ -216,9 +215,6 @@ gui_init (Gimp     *gimp,
   gimp_dnd_init (gimp);
 
   themes_init (gimp);
-
-  gdk_rgb_set_min_colors (CLAMP (gimp->config->min_colors, 27, 256));
-  gdk_rgb_set_install (gimp->config->install_cmap);
 
   screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
@@ -406,7 +402,6 @@ gui_restore_callback (Gimp               *gimp,
   actions_init (gimp);
   menus_init (gimp, global_action_factory);
   gimp_render_init (gimp);
-  gimp_display_shell_render_init (gimp);
 
   dialogs_init (gimp, global_menu_factory);
 
@@ -630,7 +625,6 @@ gui_exit_after_callback (Gimp     *gimp,
   session_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
-  gimp_display_shell_render_exit (gimp);
   gimp_render_exit (gimp);
 
   gimp_controllers_exit (gimp);

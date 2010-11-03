@@ -41,14 +41,14 @@ typedef struct _GimpDockColumnsPrivate  GimpDockColumnsPrivate;
  */
 struct _GimpDockColumns
 {
-  GtkHBox parent_instance;
+  GtkBox parent_instance;
 
   GimpDockColumnsPrivate *p;
 };
 
 struct _GimpDockColumnsClass
 {
-  GtkHBoxClass parent_class;
+  GtkBoxClass parent_class;
 
   void (* dock_added)   (GimpDockColumns *dock_columns,
                          GimpDock        *dock);

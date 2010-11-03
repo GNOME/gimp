@@ -151,7 +151,10 @@ static X86Vendor
 arch_get_vendor (void)
 {
   guint32 eax, ebx, ecx, edx;
-  gchar   id[16];
+  union{
+      gchar idaschar[16];
+      int   idasint[4];
+  }id;
 
 #ifndef ARCH_X86_64
   /* Only need to check this on ia32 */
@@ -179,38 +182,38 @@ arch_get_vendor (void)
   if (eax == 0)
     return ARCH_X86_VENDOR_NONE;
 
-  *(int *)&id[0] = ebx;
-  *(int *)&id[4] = edx;
-  *(int *)&id[8] = ecx;
+  id.idasint[0] = ebx;
+  id.idasint[1] = edx;
+  id.idasint[2] = ecx;
 
-  id[12] = '\0';
+  id.idaschar[12] = '\0';
 
 #ifdef ARCH_X86_64
-  if (strcmp (id, "AuthenticAMD") == 0)
+  if (strcmp (id.idaschar, "AuthenticAMD") == 0)
     return ARCH_X86_VENDOR_AMD;
-  else if (strcmp (id, "GenuineIntel") == 0)
+  else if (strcmp (id.idaschar, "GenuineIntel") == 0)
     return ARCH_X86_VENDOR_INTEL;
 #else
-  if (strcmp (id, "GenuineIntel") == 0)
+  if (strcmp (id.idaschar, "GenuineIntel") == 0)
     return ARCH_X86_VENDOR_INTEL;
-  else if (strcmp (id, "AuthenticAMD") == 0)
+  else if (strcmp (id.idaschar, "AuthenticAMD") == 0)
     return ARCH_X86_VENDOR_AMD;
-  else if (strcmp (id, "CentaurHauls") == 0)
+  else if (strcmp (id.idaschar, "CentaurHauls") == 0)
     return ARCH_X86_VENDOR_CENTAUR;
-  else if (strcmp (id, "CyrixInstead") == 0)
+  else if (strcmp (id.idaschar, "CyrixInstead") == 0)
     return ARCH_X86_VENDOR_CYRIX;
-  else if (strcmp (id, "Geode by NSC") == 0)
+  else if (strcmp (id.idaschar, "Geode by NSC") == 0)
     return ARCH_X86_VENDOR_NSC;
-  else if (strcmp (id, "GenuineTMx86") == 0 ||
-           strcmp (id, "TransmetaCPU") == 0)
+  else if (strcmp (id.idaschar, "GenuineTMx86") == 0 ||
+           strcmp (id.idaschar, "TransmetaCPU") == 0)
     return ARCH_X86_VENDOR_TRANSMETA;
-  else if (strcmp (id, "NexGenDriven") == 0)
+  else if (strcmp (id.idaschar, "NexGenDriven") == 0)
     return ARCH_X86_VENDOR_NEXGEN;
-  else if (strcmp (id, "RiseRiseRise") == 0)
+  else if (strcmp (id.idaschar, "RiseRiseRise") == 0)
     return ARCH_X86_VENDOR_RISE;
-  else if (strcmp (id, "UMC UMC UMC ") == 0)
+  else if (strcmp (id.idaschar, "UMC UMC UMC ") == 0)
     return ARCH_X86_VENDOR_UMC;
-  else if (strcmp (id, "SiS SiS SiS ") == 0)
+  else if (strcmp (id.idaschar, "SiS SiS SiS ") == 0)
     return ARCH_X86_VENDOR_SIS;
 #endif
 

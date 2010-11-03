@@ -109,8 +109,8 @@ layer_options_dialog_new (GimpImage    *image,
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
-                     vbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (options->dialog))),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (layer ? 1 : 3, 2, FALSE);
@@ -211,7 +211,7 @@ layer_options_dialog_new (GimpImage    *image,
   else
     {
       /*  For text layers add a toggle to control "auto-rename"  */
-      if (gimp_drawable_is_text_layer (GIMP_DRAWABLE (layer)))
+      if (gimp_item_is_text_layer (GIMP_ITEM (layer)))
         {
           options->rename_toggle =
             gtk_check_button_new_with_mnemonic (_("Set name from _text"));
@@ -240,7 +240,7 @@ layer_options_dialog_toggle_rename (GtkWidget          *widget,
                                     LayerOptionsDialog *options)
 {
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) &&
-      gimp_drawable_is_text_layer (GIMP_DRAWABLE (options->layer)))
+      gimp_item_is_text_layer (GIMP_ITEM (options->layer)))
     {
       GimpTextLayer *text_layer = GIMP_TEXT_LAYER (options->layer);
       GimpText      *text       = gimp_text_layer_get_text (text_layer);

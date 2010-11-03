@@ -34,8 +34,7 @@
  * @title: gimpui
  * @short_description: Common user interface functions. This header includes
  *                     all other GIMP User Interface Library headers.
- * @see_also: gtk_init(), gdk_set_use_xshm(), gdk_rgb_set_min_colors(),
- *            gdk_rgb_set_install(), gdk_rgb_get_visual(),
+ * @see_also: gtk_init(), gdk_set_use_xshm(), gdk_rgb_get_visual(),
  *            gdk_rgb_get_cmap(), gtk_widget_set_default_visual(),
  *            gtk_widget_set_default_colormap(), gtk_preview_set_gamma().
  *
@@ -122,9 +121,6 @@ gimp_ui_init (const gchar *prog_name,
   g_free (themerc);
 
   gdk_set_program_class (gimp_wm_class ());
-
-  gdk_rgb_set_min_colors (gimp_min_colors ());
-  gdk_rgb_set_install (gimp_install_cmap ());
 
   screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));

@@ -16,8 +16,11 @@
  */
 
 #include <gegl.h>
+#include <gtk/gtk.h>
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
+
+#include "widgets/gimpuimanager.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
@@ -178,6 +181,8 @@ int
 main (int    argc,
       char **argv)
 {
+  int result;
+
   g_thread_init (NULL);
   g_type_init ();
   g_test_init (&argc, &argv, NULL);
@@ -186,12 +191,17 @@ main (int    argc,
                                        "app/tests/gimpdir");
 
   /* We share the same application instance across all tests */
-  gimp = gimp_init_for_testing (TRUE);
+  gimp = gimp_init_for_testing ();
 
   /* Add tests */
   ADD_IMAGE_TEST (add_layer);
   ADD_IMAGE_TEST (remove_layer);
 
-  /* Run the tests and return status */
-  return g_test_run ();
+  /* Run the tests */
+  result = g_test_run ();
+
+  /* Exit so we don't break script-fu plug-in wire */
+  gimp_exit (gimp, TRUE);
+
+  return result;
 }

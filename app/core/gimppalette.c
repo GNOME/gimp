@@ -362,6 +362,25 @@ gimp_palette_get_checksum (GimpTagged *tagged)
   return checksum_string;
 }
 
+
+/*  public functions  */
+
+GList *
+gimp_palette_get_colors (GimpPalette *palette)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+
+  return palette->colors;
+}
+
+gint
+gimp_palette_get_n_colors (GimpPalette *palette)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
+
+  return palette->n_colors;
+}
+
 GimpPaletteEntry *
 gimp_palette_add_entry (GimpPalette   *palette,
                         gint           position,
@@ -440,6 +459,89 @@ gimp_palette_delete_entry (GimpPalette      *palette,
     }
 }
 
+gboolean
+gimp_palette_set_entry (GimpPalette   *palette,
+                        gint           position,
+                        const gchar   *name,
+                        const GimpRGB *color)
+{
+  GimpPaletteEntry *entry;
+
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  entry = gimp_palette_get_entry (palette, position);
+
+  if (! entry)
+    return FALSE;
+
+  entry->color = *color;
+
+  if (entry->name)
+    g_free (entry->name);
+
+  entry->name = g_strdup (name);
+
+  gimp_data_dirty (GIMP_DATA (palette));
+
+  return TRUE;
+}
+
+gboolean
+gimp_palette_set_entry_color (GimpPalette   *palette,
+                              gint           position,
+                              const GimpRGB *color)
+{
+  GimpPaletteEntry *entry;
+
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  entry = gimp_palette_get_entry (palette, position);
+
+  if (! entry)
+    return FALSE;
+
+  entry->color = *color;
+
+  gimp_data_dirty (GIMP_DATA (palette));
+
+  return TRUE;
+}
+
+gboolean
+gimp_palette_set_entry_name (GimpPalette *palette,
+                             gint         position,
+                             const gchar *name)
+{
+  GimpPaletteEntry *entry;
+
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), FALSE);
+
+  entry = gimp_palette_get_entry (palette, position);
+
+  if (! entry)
+    return FALSE;
+
+  if (entry->name)
+    g_free (entry->name);
+
+  entry->name = g_strdup (name);
+
+  gimp_data_dirty (GIMP_DATA (palette));
+
+  return TRUE;
+}
+
+GimpPaletteEntry *
+gimp_palette_get_entry (GimpPalette *palette,
+                        gint         position)
+{
+  g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
+
+  return g_list_nth_data (palette->colors, position);
+}
+
 void
 gimp_palette_set_columns (GimpPalette *palette,
                           gint         columns)
@@ -457,7 +559,7 @@ gimp_palette_set_columns (GimpPalette *palette,
 }
 
 gint
-gimp_palette_get_columns  (GimpPalette *palette)
+gimp_palette_get_columns (GimpPalette *palette)
 {
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
 

@@ -126,8 +126,8 @@ gimp_color_dialog_init (GimpColorDialog *dialog)
 
   dialog->selection = gimp_color_selection_new ();
   gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     dialog->selection);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      dialog->selection, TRUE, TRUE, 0);
   gtk_widget_show (dialog->selection);
 
   g_signal_connect (dialog->selection, "color-changed",

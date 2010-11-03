@@ -74,10 +74,10 @@
 
         (bumpmap (car (gimp-layer-new img
                                       img-width img-height RGBA-IMAGE
-                                      "Bumpmap" 100 NORMAL-MODE)))
+                                      _"Bumpmap" 100 NORMAL-MODE)))
         (gradient (car (gimp-layer-new img
                                        img-width img-height RGBA-IMAGE
-                                       "Gradient" 100 NORMAL-MODE)))
+                                       _"Gradient" 100 NORMAL-MODE)))
         )
 
     (gimp-context-push)
@@ -86,7 +86,7 @@
 
     ; Create bumpmap layer
 
-    (gimp-image-add-layer img bumpmap -1)
+    (gimp-image-insert-layer img bumpmap -1 -1)
     (gimp-context-set-foreground '(0 0 0))
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
@@ -107,7 +107,7 @@
 
     ; Create gradient layer
 
-    (gimp-image-add-layer img gradient -1)
+    (gimp-image-insert-layer img gradient -1 -1)
     (gimp-context-set-foreground ul-color)
     (gimp-context-set-background lr-color)
 

@@ -48,7 +48,7 @@
  **/
 
 
-static void     gimp_progress_bar_destroy    (GtkObject   *object);
+static void     gimp_progress_bar_dispose    (GObject     *object);
 
 static void     gimp_progress_bar_start      (const gchar *message,
                                               gboolean     cancelable,
@@ -70,9 +70,9 @@ G_DEFINE_TYPE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR)
 static void
 gimp_progress_bar_class_init (GimpProgressBarClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->destroy = gimp_progress_bar_destroy;
+  object_class->dispose = gimp_progress_bar_dispose;
 }
 
 static void
@@ -94,7 +94,7 @@ gimp_progress_bar_init (GimpProgressBar *bar)
 }
 
 static void
-gimp_progress_bar_destroy (GtkObject *object)
+gimp_progress_bar_dispose (GObject *object)
 {
   GimpProgressBar *bar = GIMP_PROGRESS_BAR (object);
 
@@ -104,7 +104,7 @@ gimp_progress_bar_destroy (GtkObject *object)
       bar->progress_callback = NULL;
     }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

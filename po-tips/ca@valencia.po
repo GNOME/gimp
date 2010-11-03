@@ -1,19 +1,20 @@
-# translation of ca.po to Valencian (southern Catalan)
-# Valencian (southern Catalan) translation of gimp-tips.
+# translation of ca.po to Catalan
+# Catalan translation of gimp-tips.
 # Copyright © 2004, 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
+# Softcatala <gimp a llistes.softcatala.org>, 2000-2008.
+# Quim Perez i Noguer <noguer a gmail.com>, 2005-2008.
 # Xavier Beà <xbea a pie.xtec.es>, 2004, 2006.
-# Quim Perez i Noguer <noguer a gmail.com>, 2006.
-# Joaquim Perez <noguer@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-25 15:38+0200\n"
+"POT-Creation-Date: 2010-10-29 00:32+0100\n"
 "PO-Revision-Date: 2007-10-14 11:46+0200\n"
-"Last-Translator: Robert Millan <rmh@aybabtu.com>\n"
+"Last-Translator: Joaquim Perez <noguer@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,10 +22,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
-msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Benvingut al programa de manipulació d'imatges de GNU!</big>"
-
-#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -34,10 +31,10 @@ msgstr ""
 "Amb l'eina Cubell de pintura, si l'utilitzeu prement <tt>Ctrl</tt>quan "
 "cliqueu per a omplir, utilitzareu el color de fons en comptes del color de "
 "primer pla. De la mateixa manera que amb l'eina Capturador de color podeu "
-"prémer <tt>Ctrl</tt> quan cliqueu, per a obtenir el color de fons en comptes "
-"del color de primer pla."
+"prémer <tt>Ctrl</tt> quan cliqueu, per a obtindre el color de fons en "
+"comptes del color de primer pla."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -48,7 +45,7 @@ msgstr ""
 "<tt>Alt</tt> i cliqueu la màscara de la capa del diàleg de capes per a "
 "commutar la visualització de la màscara directament."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -56,7 +53,7 @@ msgstr ""
 "Si premeu <tt>Ctrl</tt> quan utilitzeu l'eina de girar girareu de 15 graus "
 "en 15 graus."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -65,7 +62,7 @@ msgstr ""
 "del diàleg de capes per a amagar totes les altres capes. Torneu a fer el "
 "mateix per a mostrar-les totes un altre cop."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -73,11 +70,11 @@ msgid ""
 "use the menus to do the same."
 msgstr ""
 "Si teniu una selecció flotant, abans d'operarar amb la imatge cal ancorar-"
-"la, ja sigui en una nova capa o a l'última capa activa. Per fer-ho, cliqueu "
+"la, ja siga en una nova capa o a l'última capa activa. Per fer-ho, cliqueu "
 "els botons &quot;Nova capa&quot; o &quot;Ancora la capa&quot; del diàleg de "
 "capes, o utilitzeu els menús."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -95,7 +92,7 @@ msgstr ""
 "Dreceres de teclat dinàmiques&quot; per a prevenir una assignació accidental "
 "de dreceres."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -105,15 +102,7 @@ msgstr ""
 "les seleccions que creeu s'ajustaran a les guies. Podeu treure les guies "
 "arrossegant-les fora de la imatge amb l'eina Mou."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
-msgstr ""
-"El GIMP us permet desfer la majoria de canvis, així podeu experimentar sense "
-"por."
-
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -123,7 +112,7 @@ msgstr ""
 "tt> (o <tt>.bz2</tt> si teniu el bzip2 instal·lat) al nom de fitxer i la "
 "imatge s'alçarà comprimida. Naturalment, també carrega imatges comprimides."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -132,7 +121,7 @@ msgstr ""
 "El GIMP utilitza capes per estructurar la vostra imatge. Penseu-hi com si "
 "fossin una pila de diapositives o filtres, transparents, que se sobreposen."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -143,7 +132,7 @@ msgstr ""
 "afegir un canal alfa anant al menú Capes-&gt;Transparència-&gt;Afig canal "
 "alfa."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -155,7 +144,7 @@ msgstr ""
 "&gt;Colors-&gt;Nivells). Si hi ha algun color buit, el podeu corregir amb "
 "l'eina Corbes de color (menú Colors-&gt;Corbes de color)."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -165,7 +154,7 @@ msgstr ""
 "pintura amb els seus paràmetres actuals. Podeu, fins i tot, utilitzar el "
 "pinzell en mode degradat o fins i tot la goma d'esborrar o el dit."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -174,7 +163,7 @@ msgstr ""
 "finestra d'imatge per a amagar o mostrar la caixa d'eines i els altres "
 "diàlegs."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -184,7 +173,7 @@ msgstr ""
 "Si voleu que el connector afecti tota la imatge haureu de fusionar totes les "
 "capes (Imatge-&gt;Aplana la imatge) ."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -192,35 +181,23 @@ msgid ""
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
 "No tots els efectes es poden aplicar a tots els tipus d'imatges. Els efectes "
-"que no es puguen utilitzar estaran deshabilitats. Per activar-los potser us "
+"que no es puguen utilitzar estaran deshabilitats. Per activar-los potser vos "
 "caldrà canviar el mode de la imatge a RGB (Imatge-&gt;Mode-&gt;RGB), afegir "
-"un canal alfa (Capes-&gt; Transparència-&gt; Afig canal alfa) o aplanar "
-"la imatge (Imatge-&gt;Aplana la imatge)."
+"un canal alfa (Capes-&gt; Transparència-&gt; Afig canal alfa) o aplanar la "
+"imatge (Imatge-&gt;Aplana la imatge)."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
 "Premeu i manteniu la tecla <tt>majúscules</tt> abans de fer una selecció i "
-"us permetrà afegir la selecció actual en comptes de reemplaçar-la. Utilitzeu "
-"<tt>Ctrl</tt> abans de fer una selecció per sostreure-la de l'actual."
+"vos permetrà afegir la selecció actual en comptes de reemplaçar-la. "
+"Utilitzeu <tt>Ctrl</tt> abans de fer una selecció per sostreure-la de "
+"l'actual."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
-"Per crear un cercle, premeu i manteniu la tecla <tt>majúscules</tt> mentre "
-"feu una selecció el·líptica. Per col·locar un cercle amb precisió, "
-"arrossegueu les guies horitzontals i verticals tangents al cercle que voleu "
-"fer i a continuaciófeu el cercle a partir de la intersecció de les guies."
-
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -229,10 +206,10 @@ msgid ""
 msgstr ""
 "Quan alceu una imatge per tornar-hi a treballar més tard, feu servir el "
 "format XCF, el format de fitxer natiu del GIMP (utilitzeu l'extensió de "
-"fitxer <tt>.xcf</tt>). Este format preserva totes les capes i tot el que "
-"hi esteu fent. Un cop acabat el projecte, alceu-ho com a JPEG, PNG, GIF..."
+"fitxer <tt>.xcf</tt>). Este format preserva totes les capes i tot el que hi "
+"esteu fent. Un cop acabat el projecte, alceu-ho com a JPEG, PNG, GIF..."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -243,20 +220,20 @@ msgstr ""
 "arrossega. Si això fa que es mogui la finestra serà perquè el vostre gestor "
 "de finestres ja fa servir la tecla <tt>Alt</tt>. La majoria de gestors de "
 "finestres es poden configurar perquè ignorin la tecla <tt>Alt</tt> o bé "
-"perquè permetin substituir-la per la tecla <tt>Super</tt> ( o bé el «logotip "
+"perquè permeten substituir-la per la tecla <tt>Super</tt> ( o bé el «logotip "
 "de Windows» )."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
 "Podeu crear i editar seleccions complexes utilitzant l'eina Camí. El diàleg "
-"de camins us permet treballar en múltiples camins i convertir-los a "
+"de camins vos permet treballar en múltiples camins i convertir-los a "
 "seleccions."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -264,7 +241,7 @@ msgstr ""
 "Podeu arrossegar una capa des del diàleg de capes cap a la caixa d'eines. "
 "Això crearà una nova imatge amb només esta capa."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -274,7 +251,7 @@ msgstr ""
 "des de la caixa d'eines o des d'una paleta de colors i deixeu-lo anar dins "
 "d'una imatge: omplireu la selecció actual amb el color escollit."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -285,16 +262,16 @@ msgstr ""
 "dibuixar figures més complexes utilitzeu l'eina Camí o bé Filtres-&gt;Compon-"
 "&gt;Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Podeu obtenir ajuda contextual per a la majoria de les característiques del "
+"Podeu obtindre ajuda contextual per a la majoria de les característiques del "
 "GIMP prement la tecla F1 en qualsevol moment. Això també funciona dins els "
 "menús."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -302,7 +279,7 @@ msgstr ""
 "Podeu realitzar moltes operacions de capa anant al diàleg de capes i clicant "
 "amb el botó dret a l'etiqueta de la capa."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -311,10 +288,10 @@ msgid ""
 msgstr ""
 "Podeu alçar una selecció en un canal (Selecciona-&gt;Alça en un canal) i "
 "després modificar este canal amb qualsevol eina de pintura. Utilitzeu els "
-"botons del diàleg de canals per a commutar la visibilitat d'este nou canal "
-"o per a convertir-lo en una selecció de nou."
+"botons del diàleg de canals per a commutar la visibilitat d'este nou canal o "
+"per a convertir-lo en una selecció de nou."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -323,7 +300,7 @@ msgstr ""
 "capes d'una imatge (si no és que el vostre gestor de finestres bloqueja "
 "estes tecles...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -331,7 +308,7 @@ msgstr ""
 "Podeu utilitzar el botó del mig del ratolí per a desplaçar la imatge (o "
 "opcionalment podeu prémer la <tt>barra d'espai</tt> mentre moveu el ratolí)."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -342,3 +319,26 @@ msgstr ""
 "botó &quot;Màscara ràpida&quot; a la part inferior esquerre de la finestra "
 "de la imatge. A continuació, canvieu la vostra selecció pintant la imatge i "
 "cliqueu el botó de nou per a tornar-la a convertir en una selecció normal."
+
+#~ msgid ""
+#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
+#~ "guides tangent to the circle you want to select, place your cursor at the "
+#~ "intersection of the guides, and the resulting selection will just touch "
+#~ "the guides."
+#~ msgstr ""
+#~ "Per crear un cercle, premeu i manteniu la tecla <tt>majúscules</tt> "
+#~ "mentre feu una selecció el·líptica. Per col·locar un cercle amb precisió, "
+#~ "arrossegueu les guies horitzontals i verticals tangents al cercle que "
+#~ "voleu fer i a continuaciófeu el cercle a partir de la intersecció de les "
+#~ "guies."
+
+#~ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+#~ msgstr "<big>Benvingut al programa de manipulació d'imatges de GNU!</big>"
+
+#~ msgid ""
+#~ "GIMP allows you to undo most changes to the image, so feel free to "
+#~ "experiment."
+#~ msgstr ""
+#~ "El GIMP us permet desfer la majoria de canvis, així podeu experimentar "
+#~ "sense por."

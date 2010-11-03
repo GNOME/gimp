@@ -239,7 +239,7 @@ palette_get_info_invoker (GimpProcedure      *procedure,
       GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
       if (palette)
-        num_colors = palette->n_colors;
+        num_colors = gimp_palette_get_n_colors (palette);
       else
         success = FALSE;
     }
@@ -275,19 +275,21 @@ palette_get_colors_invoker (GimpProcedure      *procedure,
 
       if (palette)
         {
-          GList *list = palette->colors;
+          GList *list = gimp_palette_get_colors (palette);
           gint   i;
 
-          num_colors = palette->n_colors;
+          num_colors = gimp_palette_get_n_colors (palette);
           colors     = g_new (GimpRGB, num_colors);
 
           for (i = 0; i < num_colors; i++, list = g_list_next (list))
-            colors[i] = ((GimpPaletteEntry *)(list->data))->color;
+            {
+              GimpPaletteEntry *entry = list->data;
+
+              colors[i] = entry->color;
+            }
         }
       else
-        {
-          success = FALSE;
-        }
+        success = FALSE;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -322,7 +324,7 @@ palette_get_columns_invoker (GimpProcedure      *procedure,
       GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
 
       if (palette)
-        num_columns = palette->n_columns;
+        num_columns = gimp_palette_get_columns (palette);
       else
         success = FALSE;
     }
@@ -429,12 +431,10 @@ palette_delete_entry_invoker (GimpProcedure      *procedure,
 
       if (palette)
         {
-          if (entry_num >= 0 && entry_num < palette->n_colors)
-            {
-              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
-              gimp_palette_delete_entry (palette, entry);
-            }
+          if (entry)
+            gimp_palette_delete_entry (palette, entry);
           else
             success = FALSE;
         }
@@ -469,12 +469,10 @@ palette_entry_get_color_invoker (GimpProcedure      *procedure,
 
       if (palette)
         {
-          if (entry_num >= 0 && entry_num < palette->n_colors)
-            {
-              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
-              color = entry->color;
-            }
+          if (entry)
+            color = entry->color;
           else
             success = FALSE;
         }
@@ -513,18 +511,7 @@ palette_entry_set_color_invoker (GimpProcedure      *procedure,
       GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
       if (palette)
-        {
-          if (entry_num >= 0 && entry_num < palette->n_colors)
-            {
-              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
-
-              entry->color = color;
-
-              gimp_data_dirty (GIMP_DATA (palette));
-            }
-          else
-            success = FALSE;
-        }
+        success = gimp_palette_set_entry_color (palette, entry_num, &color);
       else
         success = FALSE;
     }
@@ -556,12 +543,10 @@ palette_entry_get_name_invoker (GimpProcedure      *procedure,
 
       if (palette)
         {
-          if (entry_num >= 0 && entry_num < palette->n_colors)
-            {
-              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
+          GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
-              entry_name = g_strdup (entry->name);
-            }
+          if (entry)
+            entry_name = g_strdup (entry->name);
           else
             success = FALSE;
         }
@@ -600,19 +585,7 @@ palette_entry_set_name_invoker (GimpProcedure      *procedure,
       GimpPalette *palette = gimp_pdb_get_palette (gimp, name, TRUE, error);
 
       if (palette)
-        {
-          if (entry_num >= 0 && entry_num < palette->n_colors)
-            {
-              GimpPaletteEntry *entry = g_list_nth_data (palette->colors, entry_num);
-
-              g_free (entry->name);
-              entry->name = g_strdup (entry_name);
-
-              gimp_data_dirty (GIMP_DATA (palette));
-            }
-          else
-            success = FALSE;
-        }
+        success = gimp_palette_set_entry_name (palette, entry_num, entry_name);
       else
         success = FALSE;
     }

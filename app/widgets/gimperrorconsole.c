@@ -43,8 +43,8 @@
 static GObject * gimp_error_console_constructor  (GType             type,
                                                   guint             n_params,
                                                   GObjectConstructParam *params);
+static void      gimp_error_console_dispose      (GObject          *object);
 
-static void      gimp_error_console_destroy      (GtkObject        *object);
 static void      gimp_error_console_unmap        (GtkWidget        *widget);
 
 static gboolean  gimp_error_console_button_press (GtkWidget        *widget,
@@ -60,12 +60,12 @@ G_DEFINE_TYPE (GimpErrorConsole, gimp_error_console, GIMP_TYPE_EDITOR)
 static void
 gimp_error_console_class_init (GimpErrorConsoleClass *klass)
 {
-  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
-  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class     = GTK_WIDGET_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor = gimp_error_console_constructor;
-  gtk_object_class->destroy = gimp_error_console_destroy;
+  object_class->dispose     = gimp_error_console_dispose;
+
   widget_class->unmap       = gimp_error_console_unmap;
 }
 
@@ -87,7 +87,7 @@ gimp_error_console_init (GimpErrorConsole *console)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (console), scrolled_window);
+  gtk_box_pack_start (GTK_BOX (console), scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   console->text_view = gtk_text_view_new_with_buffer (console->text_buffer);
@@ -133,7 +133,7 @@ gimp_error_console_constructor (GType                  type,
 }
 
 static void
-gimp_error_console_destroy (GtkObject *object)
+gimp_error_console_dispose (GObject *object)
 {
   GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
 
@@ -142,7 +142,7 @@ gimp_error_console_destroy (GtkObject *object)
 
   console->gimp->message_handler = GIMP_MESSAGE_BOX;
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

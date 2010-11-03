@@ -158,8 +158,8 @@ convert_dialog_new (GimpImage    *image,
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
-                     main_vbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog->dialog))),
+                      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
 
@@ -396,7 +396,8 @@ convert_dialog_palette_filter (const GimpObject *object,
 {
   GimpPalette *palette = GIMP_PALETTE (object);
 
-  return palette->n_colors > 0 && palette->n_colors <= 256;
+  return (gimp_palette_get_n_colors (palette) > 0 &&
+          gimp_palette_get_n_colors (palette) <= 256);
 }
 
 static void
@@ -407,7 +408,7 @@ convert_dialog_palette_changed (GimpContext   *context,
   if (! palette)
     return;
 
-  if (palette->n_colors > 256)
+  if (gimp_palette_get_n_colors (palette) > 256)
     {
       gimp_message (dialog->image->gimp, G_OBJECT (dialog->dialog),
                     GIMP_MESSAGE_WARNING,

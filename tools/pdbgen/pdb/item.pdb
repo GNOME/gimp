@@ -187,8 +187,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  text_layer = (GIMP_IS_DRAWABLE (item) &&
-                gimp_drawable_is_text_layer (GIMP_DRAWABLE (item)));
+  text_layer = gimp_item_is_text_layer (item);
 }
 CODE
     );

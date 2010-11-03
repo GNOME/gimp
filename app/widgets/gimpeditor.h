@@ -34,7 +34,7 @@ typedef struct _GimpEditorClass  GimpEditorClass;
 
 struct _GimpEditor
 {
-  GtkVBox          parent_instance;
+  GtkBox           parent_instance;
 
   GimpMenuFactory *menu_factory;
   gchar           *menu_identifier;
@@ -49,7 +49,7 @@ struct _GimpEditor
 
 struct _GimpEditorClass
 {
-  GtkVBoxClass  parent_class;
+  GtkBoxClass  parent_class;
 };
 
 

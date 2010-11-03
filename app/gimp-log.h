@@ -37,7 +37,8 @@ typedef enum
   GIMP_LOG_TEXT_EDITING       = 1 << 13,
   GIMP_LOG_KEY_EVENTS         = 1 << 14,
   GIMP_LOG_AUTO_TAB_STYLE     = 1 << 15,
-  GIMP_LOG_INSTANCES          = 1 << 16
+  GIMP_LOG_INSTANCES          = 1 << 16,
+  GIMP_LOG_RECTANGLE_TOOL     = 1 << 17
 } GimpLogFlags;
 
 
@@ -95,6 +96,7 @@ void   gimp_logv     (const gchar *function,
 #define KEY_EVENTS         GIMP_LOG_KEY_EVENTS
 #define AUTO_TAB_STYLE     GIMP_LOG_AUTO_TAB_STYLE
 #define INSTANCES          GIMP_LOG_INSTANCES
+#define RECTANGLE_TOOL     GIMP_LOG_RECTANGLE_TOOL
 
 #if 0 /* last resort */
 #  define GIMP_LOG /* nothing => no varargs, no log */

@@ -290,21 +290,6 @@ typedef enum  /*< pdb-skip >*/
 } GimpViewType;
 
 
-#define GIMP_TYPE_SELECTION_CONTROL (gimp_selection_control_get_type ())
-
-GType gimp_selection_control_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_SELECTION_OFF,
-  GIMP_SELECTION_LAYER_OFF,
-  GIMP_SELECTION_LAYER_ON,
-  GIMP_SELECTION_ON,
-  GIMP_SELECTION_PAUSE,
-  GIMP_SELECTION_RESUME
-} GimpSelectionControl;
-
-
 #define GIMP_TYPE_THUMBNAIL_SIZE (gimp_thumbnail_size_get_type ())
 
 GType gimp_thumbnail_size_get_type (void) G_GNUC_CONST;

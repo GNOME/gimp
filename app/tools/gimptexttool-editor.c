@@ -174,7 +174,7 @@ gimp_text_tool_editor_start (GimpTextTool *text_tool)
       gimp_display_shell_add_overlay (shell,
                                       text_tool->style_overlay,
                                       0, 0,
-                                      GTK_ANCHOR_CENTER, 0, 0);
+                                      GIMP_HANDLE_ANCHOR_CENTER, 0, 0);
       gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
                                           text_tool->style_overlay, 0.7);
 
@@ -214,7 +214,7 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
       gimp_display_shell_move_overlay (shell,
                                        text_tool->style_overlay,
                                        x, y,
-                                       GTK_ANCHOR_SOUTH_WEST, 4, 12);
+                                       GIMP_HANDLE_ANCHOR_SOUTH_WEST, 4, 12);
 
 #if 0
       gimp_overlay_box_set_child_angle (GIMP_OVERLAY_BOX (shell->canvas),
@@ -515,6 +515,7 @@ gimp_text_tool_reset_im_context (GimpTextTool *text_tool)
 
 void
 gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
+                                       gboolean        overwrite,
                                        PangoRectangle *cursor_rect)
 {
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
@@ -538,7 +539,11 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
 
   gimp_text_layout_get_offsets (text_tool->layout, &offset_x, &offset_y);
 
-  pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
+  if (overwrite)
+    pango_layout_index_to_pos (layout, cursor_index, cursor_rect);
+  else
+    pango_layout_get_cursor_pos (layout, cursor_index, cursor_rect, NULL);
+
   gimp_text_layout_transform_rect (text_tool->layout, cursor_rect);
 
   cursor_rect->x      = PANGO_PIXELS (cursor_rect->x) + offset_x;
@@ -675,10 +680,44 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
     case GTK_MOVEMENT_VISUAL_POSITIONS:
       if (! cancel_selection)
         {
-          if (count < 0)
-            gtk_text_iter_backward_cursor_position (&cursor);
-          else if (count > 0)
-            gtk_text_iter_forward_cursor_position (&cursor);
+          PangoLayout *layout;
+
+          if (! gimp_text_tool_ensure_layout (text_tool))
+            break;
+
+          layout = gimp_text_layout_get_pango_layout (text_tool->layout);
+
+          while (count != 0)
+            {
+              gint index;
+              gint trailing;
+              gint new_index;
+
+              index = gimp_text_buffer_get_iter_index (text_tool->buffer,
+                                                       &cursor, TRUE);
+
+             if (count > 0)
+                {
+                  pango_layout_move_cursor_visually (layout, TRUE, index, 0, 1,
+                                                     &new_index, &trailing);
+                  count--;
+                }
+              else
+                {
+                  pango_layout_move_cursor_visually (layout, TRUE, index, 0, -1,
+                                                     &new_index, &trailing);
+                  count++;
+                }
+
+             if (new_index != G_MAXINT && new_index != -1)
+               index = new_index;
+             else
+               break;
+
+             gimp_text_buffer_get_iter_at_index (text_tool->buffer,
+                                                 &cursor, index, TRUE);
+             gtk_text_iter_forward_chars (&cursor, trailing);
+            }
         }
       break;
 
@@ -712,7 +751,8 @@ gimp_text_tool_move_cursor (GimpTextTool    *text_tool,
         cursor_index = gimp_text_buffer_get_iter_index (text_tool->buffer,
                                                         &cursor, TRUE);
 
-        gimp_text_tool_ensure_layout (text_tool);
+        if (! gimp_text_tool_ensure_layout (text_tool))
+          break;
 
         layout = gimp_text_layout_get_pango_layout (text_tool->layout);
 
@@ -1226,7 +1266,9 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
   gint              off_x, off_y;
 
   if (text_tool->text)
-    gimp_text_tool_editor_get_cursor_rect (text_tool, &cursor_rect);
+    gimp_text_tool_editor_get_cursor_rect (text_tool,
+                                           text_tool->overwrite_mode,
+                                           &cursor_rect);
 
   g_object_get (text_tool, "x1", &off_x, "y1", &off_y, NULL);
 
@@ -1237,7 +1279,7 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
                                   text_tool->preedit_overlay,
                                   cursor_rect.x + off_x,
                                   cursor_rect.y + off_y,
-                                  GTK_ANCHOR_NORTH_WEST, 0, 0);
+                                  GIMP_HANDLE_ANCHOR_NORTH_WEST, 0, 0);
   gimp_overlay_box_set_child_opacity (GIMP_OVERLAY_BOX (shell->canvas),
                                       text_tool->preedit_overlay, 0.7);
   gtk_widget_show (text_tool->preedit_overlay);
