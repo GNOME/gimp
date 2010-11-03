@@ -36,15 +36,16 @@
 #include "core/core-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpprogress.h"
-#include "core/gimpimage.h"
-#include "core/gimplayer.h"
 #include "core/gimp-transform-utils.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable-shadow.h"
+#include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimplayer.h"
 #include "core/gimpprojection.h"
+#include "core/gimpprogress.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -234,6 +235,10 @@ gimp_cage_tool_start (GimpCageTool       *ct,
 {
   GimpTool                  *tool      = GIMP_TOOL (ct);
   GimpDrawTool              *draw_tool = GIMP_DRAW_TOOL (tool);
+  GimpImage     *image    = gimp_display_get_image (display);
+  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
+  gint off_x;
+  gint off_y;
 
   gimp_tool_control_activate (tool->control);
 
@@ -255,6 +260,15 @@ gimp_cage_tool_start (GimpCageTool       *ct,
   ct->cursor_position.y = -1000;
   ct->handle_moved = -1;
   ct->cage_complete = FALSE;
+
+   /*Setting up cage offset to convert the cage point coords to drawable coords*/
+  gimp_item_get_offset (GIMP_ITEM (drawable),
+                       &off_x,
+                       &off_y);
+
+
+  ct->config->offset_x = off_x;
+  ct->config->offset_y = off_y;
 
   gimp_draw_tool_start (draw_tool, display);
 }
@@ -547,26 +561,26 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   }
 
 
-  gimp_draw_tool_add_lines (draw_tool,
+  /*gimp_draw_tool_add_lines (draw_tool,
                              vertices,
                              config->cage_vertice_number,
-                             FALSE);
+                             FALSE);*/
 
   if (!ct->cage_complete && ct->cursor_position.x != -1000)
   {
     gimp_draw_tool_add_line (draw_tool,
-                              vertices[config->cage_vertice_number - 1].x,
-                              vertices[config->cage_vertice_number - 1].y,
+                              vertices[config->cage_vertice_number - 1].x + ct->config->offset_x,
+                              vertices[config->cage_vertice_number - 1].y + ct->config->offset_y,
                               ct->cursor_position.x,
                               ct->cursor_position.y);
   }
   else
   {
     gimp_draw_tool_add_line (draw_tool,
-                              vertices[config->cage_vertice_number - 1].x,
-                              vertices[config->cage_vertice_number - 1].y,
-                              vertices[0].x,
-                              vertices[0].y);
+                              vertices[config->cage_vertice_number - 1].x + ct->config->offset_x,
+                              vertices[config->cage_vertice_number - 1].y + ct->config->offset_y,
+                              vertices[0].x + ct->config->offset_x,
+                              vertices[0].y + ct->config->offset_y);
   }
 
   on_handle = gimp_cage_tool_is_on_handle (config,
@@ -579,7 +593,6 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 
   for(i = 0; i < config->cage_vertice_number; i++)
   {
-    GimpVector2 point = vertices[i];
 
     GimpHandleType handle = GIMP_HANDLE_CIRCLE;
 
@@ -588,12 +601,19 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
       handle = GIMP_HANDLE_FILLED_CIRCLE;
     }
 
+    if (i > 0)
+      gimp_draw_tool_add_line (draw_tool,
+                                vertices[i - 1].x + ct->config->offset_x,
+                                vertices[i - 1].y + ct->config->offset_y,
+                                vertices[i].x + ct->config->offset_x,
+                                vertices[i].y + ct->config->offset_y);
+
     gimp_draw_tool_add_handle (draw_tool,
-                              handle,
-                              point.x,
-                              point.y,
-                              HANDLE_SIZE, HANDLE_SIZE,
-                              GTK_ANCHOR_CENTER);
+                               handle,
+                               vertices[i].x + ct->config->offset_x,
+                               vertices[i].y + ct->config->offset_y,
+                               HANDLE_SIZE, HANDLE_SIZE,
+                               GTK_ANCHOR_CENTER);
   }
 }
 
@@ -620,13 +640,13 @@ gimp_cage_tool_is_on_handle (GimpCageConfig  *gcc,
   {
     if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
     {
-      vert_x = gcc->cage_vertices[i].x;
-      vert_y = gcc->cage_vertices[i].y;
+      vert_x = gcc->cage_vertices[i].x + gcc->offset_x;
+      vert_y = gcc->cage_vertices[i].y + gcc->offset_y;
     }
     else
     {
-      vert_x = gcc->cage_vertices_d[i].x;
-      vert_y = gcc->cage_vertices_d[i].y;
+      vert_x = gcc->cage_vertices_d[i].x + gcc->offset_x;
+      vert_y = gcc->cage_vertices_d[i].y + gcc->offset_y;
     }
 
     dist = gimp_draw_tool_calc_distance_square (GIMP_DRAW_TOOL (draw_tool),
@@ -669,12 +689,12 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 {
   GimpCageConfig    *config   = ct->config;
 
-  Babl *format;
-  GeglNode *gegl, *input, *output;
+  Babl          *format;
+  GeglNode      *gegl, *input, *output;
   GeglProcessor *processor;
-  GimpProgress *progress;
-  GeglBuffer *buffer;
-  gdouble value;
+  GimpProgress  *progress;
+  GeglBuffer    *buffer;
+  gdouble        value;
 
   if (ct->coef)
   {
@@ -839,7 +859,9 @@ gimp_cage_tool_process (GimpCageTool *ct,
 
   if (GIMP_IS_DRAWABLE (drawable))
    {
+
     GimpProgress      *progress;
+
     progress = gimp_progress_start (GIMP_PROGRESS (display),
                                    _("Rendering cage transform"),
                                   FALSE);

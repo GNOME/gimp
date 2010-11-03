@@ -41,6 +41,9 @@ struct _GimpCageConfig
   gint                      cage_vertice_number; /* number of vertices used by the cage */
   gint                      cage_vertices_max; /* number of vertices allocated in memory */
   
+  gint                      offset_x;
+  gint                      offset_y;
+
   GimpVector2              *cage_vertices; /* cage before deformation */
   GimpVector2              *cage_vertices_d; /* cage after deformation */
   gdouble                  *scaling_factor;
@@ -136,4 +139,5 @@ void          gimp_cage_config_reverse_cage           (GimpCageConfig *gcc);
 gboolean      gimp_cage_config_point_inside           (GimpCageConfig *gcc,
                                                        gfloat          x,
                                                        gfloat          y);
+
 #endif /* __GIMP_CAGE_CONFIG_H__ */

@@ -78,6 +78,7 @@ print_cage (GimpCageConfig *gcc)
     printf("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f\n", gcc->cage_vertices[i].x, gcc->cage_vertices[i].y, gcc->cage_vertices_d[i].x,  gcc->cage_vertices_d[i].y, gcc->scaling_factor[i], gcc->normal_d[i].x, gcc->normal_d[i].y);
   }
   printf("bounding box: x: %d  y: %d  width: %d  height: %d\n", bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height);
+  printf("offsets: (%d, %d)", gcc->offset_x, gcc->offset_y);
   printf("done\n");
 }
 #endif
@@ -178,11 +179,11 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                             gcc->cage_vertices_max);
   }
 
-  gcc->cage_vertices[gcc->cage_vertice_number].x = x + DELTA;
-  gcc->cage_vertices[gcc->cage_vertice_number].y = y + DELTA;
+  gcc->cage_vertices[gcc->cage_vertice_number].x = x + DELTA - gcc->offset_x;
+  gcc->cage_vertices[gcc->cage_vertice_number].y = y + DELTA - gcc->offset_y;
 
-  gcc->cage_vertices_d[gcc->cage_vertice_number].x = x + DELTA;
-  gcc->cage_vertices_d[gcc->cage_vertice_number].y = y + DELTA;
+  gcc->cage_vertices_d[gcc->cage_vertice_number].x = x + DELTA - gcc->offset_x;
+  gcc->cage_vertices_d[gcc->cage_vertice_number].y = y + DELTA - gcc->offset_y;
 
   gcc->cage_vertice_number++;
 
@@ -217,13 +218,13 @@ gimp_cage_config_move_cage_point  (GimpCageConfig  *gcc,
 
   if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
   {
-    gcc->cage_vertices[point_number].x = x + DELTA;
-    gcc->cage_vertices[point_number].y = y + DELTA;
+    gcc->cage_vertices[point_number].x = x + DELTA - gcc->offset_x;
+    gcc->cage_vertices[point_number].y = y + DELTA - gcc->offset_y;
   }
   else
   {
-    gcc->cage_vertices_d[point_number].x = x + DELTA;
-    gcc->cage_vertices_d[point_number].y = y + DELTA;
+    gcc->cage_vertices_d[point_number].x = x + DELTA - gcc->offset_x;
+    gcc->cage_vertices_d[point_number].y = y + DELTA - gcc->offset_y;
   }
 
   gimp_cage_config_compute_scaling_factor (gcc);
