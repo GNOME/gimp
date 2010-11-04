@@ -1818,6 +1818,14 @@ AC_PATH_PROG(XSLTPROC, xsltproc, no)
 AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 
 
+####################
+# Check for xvfb-run
+####################
+
+AC_PATH_PROG(XVFB_RUN, xvfb-run, no)
+AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$XVFB_RUN" != "xno")
+
+
 ######################################
 # Checks for gtk-doc and docbook-tools
 ######################################

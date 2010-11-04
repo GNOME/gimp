@@ -48,6 +48,9 @@
 #include "gimp-intl.h"
 
 
+#define GIMP_TOOL_OPTIONS_GUI_KEY "gimp-tool-options-gui"
+
+
 /**
  * gimp_menu_position:
  * @menu: a #GtkMenu widget
@@ -1133,4 +1136,21 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
     }
 
   return dock;
+}
+
+GtkWidget *
+gimp_tools_get_tool_options_gui (GimpToolOptions *tool_options)
+{
+  return g_object_get_data (G_OBJECT (tool_options),
+                            GIMP_TOOL_OPTIONS_GUI_KEY);
+}
+
+void
+gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
+                                 GtkWidget         *widget)
+{
+      g_object_set_data_full (G_OBJECT (tool_options),
+                              GIMP_TOOL_OPTIONS_GUI_KEY,
+                              widget,
+                              widget ? (GDestroyNotify) g_object_unref : NULL);
 }

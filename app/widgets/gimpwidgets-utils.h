@@ -85,7 +85,10 @@ void              gimp_highlight_widget            (GtkWidget            *widget
                                                     gboolean              highlight);
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
                                                     GdkScreen            *screen,
-                                                    gboolean             toolbox);
+                                                    gboolean              toolbox);
+GtkWidget *       gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
+void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
+                                                    GtkWidget            *widget);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

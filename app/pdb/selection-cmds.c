@@ -937,12 +937,12 @@ register_selection_procs (GimpPDB *pdb)
                                "gimp-selection-layer-alpha");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-layer-alpha",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-item-to-selection");
+                                     "gimp-image-select-item");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",
                                                          "layer",
@@ -960,12 +960,12 @@ register_selection_procs (GimpPDB *pdb)
                                "gimp-selection-load");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-load",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-item-to-selection");
+                                     "gimp-image-select-item");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel_id ("channel",
                                                            "channel",
@@ -1012,12 +1012,12 @@ register_selection_procs (GimpPDB *pdb)
                                "gimp-selection-combine");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-combine",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-item-to-selection");
+                                     "gimp-image-select-item");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_channel_id ("channel",
                                                            "channel",

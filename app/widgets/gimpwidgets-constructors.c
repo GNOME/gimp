@@ -184,24 +184,34 @@ gimp_stock_button_new (const gchar *stock_id,
                        const gchar *label)
 {
   GtkWidget *button;
-  GtkWidget *hbox;
   GtkWidget *image;
-  GtkWidget *lab;
 
   button = gtk_button_new ();
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (button), hbox);
-  gtk_widget_show (hbox);
+  if (label)
+    {
+      GtkWidget *hbox;
+      GtkWidget *lab;
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);
+      hbox = gtk_hbox_new (FALSE, 6);
+      gtk_container_add (GTK_CONTAINER (button), hbox);
+      gtk_widget_show (hbox);
 
-  lab = gtk_label_new_with_mnemonic (label);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (lab), button);
-  gtk_box_pack_start (GTK_BOX (hbox), lab, TRUE, TRUE, 0);
-  gtk_widget_show (lab);
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+      gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+
+      lab = gtk_label_new_with_mnemonic (label);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (lab), button);
+      gtk_box_pack_start (GTK_BOX (hbox), lab, TRUE, TRUE, 0);
+      gtk_widget_show (lab);
+    }
+  else
+    {
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+      gtk_container_add (GTK_CONTAINER (button), image);
+      gtk_widget_show (image);
+    }
 
   return button;
 }

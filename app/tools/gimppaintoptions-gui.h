@@ -19,9 +19,6 @@
 #define __GIMP_PAINT_OPTIONS_GUI_H__
 
 
-#define GIMP_PAINT_OPTIONS_TABLE_KEY "gimp-paint-options-table"
-
-
 GtkWidget * gimp_paint_options_gui (GimpToolOptions *tool_options);
 
 

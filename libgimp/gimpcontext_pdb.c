@@ -902,8 +902,12 @@ gimp_context_get_antialias (void)
  *
  * Set the antialias setting.
  *
- * This procedure modifies the antialias setting. This settings affects
- * the following procedures: gimp-item-to-selection.
+ * This procedure modifies the antialias setting. If antialiasing is
+ * turned on, the edges of selected region will contain intermediate
+ * values which give the appearance of a sharper, less pixelized edge.
+ * This should be set as TRUE most of the time unless a binary-only
+ * selection is wanted. This settings affects the following procedures:
+ * The entire gimp-image-select-foo group of procedures.
  *
  * Returns: TRUE on success.
  *
@@ -964,8 +968,12 @@ gimp_context_get_feather (void)
  *
  * Set the feather setting.
  *
- * This procedure modifies the feather setting. This settings affects
- * the following procedures: gimp-item-to-selection.
+ * This procedure modifies the feather setting. If the feather option
+ * is enabled, selections will be blurred before combining. The blur is
+ * a gaussian blur; its radii can be controlled using
+ * gimp_context_set_feather_radius(). This settings affects the
+ * following procedures: The entire gimp-image-select-foo group of
+ * procedures.
  *
  * Returns: TRUE on success.
  *
@@ -1039,7 +1047,8 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  * Set the feather radius setting.
  *
  * This procedure modifies the feather radius setting. This settings
- * affects the following procedures: gimp-item-to-selection.
+ * affects the following procedures: The entire gimp-image-select-foo
+ * group of procedures.
  *
  * Returns: TRUE on success.
  *

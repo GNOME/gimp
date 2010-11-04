@@ -506,7 +506,7 @@ gimp_selection_shrink (gint32 image_ID,
  * gimp_selection_layer_alpha:
  * @layer_ID: Layer with alpha.
  *
- * Deprecated: Use gimp_item_to_selection() instead.
+ * Deprecated: Use gimp_image_select_item() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -533,7 +533,7 @@ gimp_selection_layer_alpha (gint32 layer_ID)
  * gimp_selection_load:
  * @channel_ID: The channel.
  *
- * Deprecated: Use gimp_item_to_selection() instead.
+ * Deprecated: Use gimp_image_select_item() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -593,7 +593,7 @@ gimp_selection_save (gint32 image_ID)
  * @channel_ID: The channel.
  * @operation: The selection operation.
  *
- * Deprecated: Use gimp_item_to_selection() instead.
+ * Deprecated: Use gimp_image_select_item() instead.
  *
  * Returns: TRUE on success.
  **/

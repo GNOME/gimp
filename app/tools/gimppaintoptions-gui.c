@@ -76,26 +76,23 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *frame;
   GtkWidget        *table;
   GtkWidget        *menu;
+  GtkWidget        *scale;
   GtkWidget        *label;
   GtkWidget        *button;
   GtkWidget        *incremental_toggle = NULL;
-  gint              table_row          = 0;
   GType             tool_type;
 
   tool_type = tool_options->tool_info->tool_type;
 
   /*  the main table  */
-  table = gtk_table_new (3, 4, FALSE);
+  table = gtk_table_new (3, 1, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  g_object_set_data (G_OBJECT (vbox), GIMP_PAINT_OPTIONS_TABLE_KEY, table);
-
   /*  the paint mode menu  */
   menu  = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE, FALSE);
-  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                                      _("Mode:"), 0.0, 0.5,
                                      menu, 2, FALSE);
 
@@ -109,63 +106,62 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the opacity scale  */
-  gimp_prop_opacity_entry_new (config, "opacity",
-                               GTK_TABLE (table), 0, table_row++,
-                               _("Opacity:"));
+  scale = gimp_prop_opacity_spin_scale_new (config, "opacity",
+                                            _("Opacity"));
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   /*  the brush  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
-      GtkObject *adj_scale;
-      GtkObject *adj_angle;
-      GtkObject *adj_aspect_ratio;
+      GtkWidget *hbox;
 
-      button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
+      button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                        _("Brush"), 2,
                                         "brush-view-type", "brush-view-size");
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Brush:"), 0.0, 0.5,
-                                 button, 2, FALSE);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options), 2,
-                                           "dynamics-view-type", "dynamics-view-size");
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Dynamics:"), 0.0, 0.5,
-                                 button, 2, FALSE);
+      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                           _("Dynamics"), 2,
+                                           "dynamics-view-type",
+                                           "dynamics-view-size");
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-      adj_scale = gimp_prop_scale_entry_new (config, "brush-size",
-                                             GTK_TABLE (table), 0, table_row++,
-                                             _("Size:"),
-                                             0.01, 0.1, 2,
-                                             FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj_scale, TRUE);
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
+      scale = gimp_prop_spin_scale_new (config, "brush-size",
+                                        _("Size"),
+                                        0.01, 1.0, 2);
+      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+      gtk_widget_show (scale);
 
-      button = gimp_stock_button_new (GTK_STOCK_REFRESH, _("Reset size"));
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 "", 0.0, 0.5,
-                                 button, 2, FALSE);
+      button = gimp_stock_button_new (GTK_STOCK_REFRESH, NULL);
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+      gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                GTK_STOCK_REFRESH, GTK_ICON_SIZE_MENU);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (gimp_paint_options_gui_reset_size),
                         options);
 
-      adj_aspect_ratio = gimp_prop_scale_entry_new (config, "brush-aspect-ratio",
-                                                    GTK_TABLE (table), 0, table_row++,
-                                                    /* Label for a slider that affects
-                                                       aspect ratio for brushes */
-                                                    _("Aspect:"),
-                                                    0.01, 0.1, 2,
-                                                    FALSE, 0.0, 0.0);
-      gimp_scale_entry_set_logarithmic (adj_aspect_ratio, TRUE);
+      scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
+                                        _("Aspect Ratio"),
+                                        0.01, 0.1, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+      gtk_widget_show (scale);
 
-      adj_angle = gimp_prop_scale_entry_new (config, "brush-angle",
-                                             GTK_TABLE (table), 0, table_row++,
-                                             _("Angle:"),
-                                             1.0, 5.0, 2,
-                                             FALSE, 0.0, 0.0);
+      scale = gimp_prop_spin_scale_new (config, "brush-angle",
+                                        _("Angle"),
+                                        1.0, 5.0, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+      gtk_widget_show (scale);
     }
-
 
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
@@ -227,26 +223,25 @@ fade_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *spinbutton;
+  GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *combo;
   GtkWidget *checkbox;
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-fade",
                                          _("Fade out"),
                                          table, NULL);
 
   /*  the fade-out sizeentry  */
-  spinbutton = gimp_prop_spin_button_new (config, "fade-length",
-                                          1.0, 50.0, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 6);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Length:"), 0.0, 0.5,
-                             spinbutton, 1, FALSE);
+  scale = gimp_prop_spin_scale_new (config, "fade-length",
+                                    _("Length"), 1.0, 50.0, 0);
+  gtk_table_attach (GTK_TABLE (table), scale, 0, 2, 0, 1,
+                    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (scale);
 
   /*  the fade-out unitmenu  */
   menu = gimp_prop_unit_combo_box_new (config, "fade-unit");
@@ -282,20 +277,15 @@ jitter_options_gui (GimpPaintOptions *paint_options,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *scale;
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  scale = gimp_prop_spin_scale_new (config, "jitter-amount",
+                                    _("Amount"),
+                                    0.01, 1.0, 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-jitter",
                                          _("Apply Jitter"),
-                                         table, NULL);
-
-  gimp_prop_scale_entry_new (config, "jitter-amount",
-                             GTK_TABLE (table), 0, 0,
-                             _("Amount:"),
-                             0.01, 0.1, 2,
-                             TRUE, 0.0, 5.0);
+                                         scale, NULL);
 
   return frame;
 }
@@ -307,16 +297,19 @@ gradient_options_gui (GimpPaintOptions *paint_options,
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *box;
   GtkWidget *button;
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  /*  the gradient view  */
+  box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
+                                    _("Gradient"), 2,
+                                    "gradient-view-type",
+                                    "gradient-view-size",
+                                    "gradient-reverse");
 
   frame = gimp_prop_expanding_frame_new (config, "use-gradient",
                                          _("Use color from gradient"),
-                                         table, &button);
+                                         box, &button);
 
   if (incremental_toggle)
     {
@@ -325,15 +318,6 @@ gradient_options_gui (GimpPaintOptions *paint_options,
       g_object_set_data (G_OBJECT (button), "inverse_sensitive",
                          incremental_toggle);
     }
-
-  /*  the gradient view  */
-  button = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config), 2,
-                                       "gradient-view-type",
-                                       "gradient-view-size",
-                                       "gradient-reverse");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Gradient:"), 0.0, 0.5,
-                             button, 2, TRUE);
 
   return frame;
 }

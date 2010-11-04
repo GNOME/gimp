@@ -263,23 +263,18 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   /*  the feather frame  */
   {
     GtkWidget *frame;
-    GtkWidget *table;
+    GtkWidget *scale;
 
-    table = gtk_table_new (1, 3, FALSE);
-    gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+    /*  the feather radius scale  */
+    scale = gimp_prop_spin_scale_new (config, "feather-radius",
+                                      _("Radius"),
+                                      1.0, 10.0, 1);
 
     frame = gimp_prop_expanding_frame_new (config, "feather",
                                            _("Feather edges"),
-                                           table, NULL);
+                                           scale, NULL);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
-
-    /*  the feather radius scale  */
-    gimp_prop_scale_entry_new (config, "feather-radius",
-                               GTK_TABLE (table), 0, 0,
-                               _("Radius:"),
-                               1.0, 10.0, 1,
-                               FALSE, 0.0, 0.0);
   }
 
   return vbox;

@@ -42,6 +42,7 @@
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
 #include "gimpscalebutton.h"
+#include "gimpspinscale.h"
 #include "gimpview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
@@ -67,6 +68,13 @@ static GParamSpec * check_param_spec   (GObject     *object,
 static GParamSpec * check_param_spec_w (GObject     *object,
                                         const gchar *property_name,
                                         GType         type,
+                                        const gchar *strloc);
+
+static gboolean     get_numeric_values (GObject     *object,
+                                        GParamSpec  *param_spec,
+                                        gdouble     *value,
+                                        gdouble     *lower,
+                                        gdouble     *upper,
                                         const gchar *strloc);
 
 static void         connect_notify     (GObject     *config,
@@ -439,6 +447,274 @@ gimp_prop_scale_button_notify (GObject    *config,
   g_signal_handlers_unblock_by_func (button,
                                      gimp_prop_scale_button_callback,
                                      config);
+}
+
+
+/*****************/
+/*  adjustments  */
+/*****************/
+
+static void   gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
+                                             GObject       *config);
+static void   gimp_prop_adjustment_notify   (GObject       *config,
+                                             GParamSpec    *param_spec,
+                                             GtkAdjustment *adjustment);
+
+/**
+ * gimp_prop_spin_scale_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of gdouble property
+ *
+ * Creates a #GimpSpinScale to set and display the value of a
+ * gdouble property in a very space-efficient way.
+ *
+ * Return value:  A new #GimpSpinScale widget.
+ *
+ * Since GIMP 2.8
+ */
+GtkWidget *
+gimp_prop_spin_scale_new (GObject     *config,
+                          const gchar *property_name,
+                          const gchar *label,
+                          gdouble      step_increment,
+                          gdouble      page_increment,
+                          gint         digits)
+{
+  GParamSpec *param_spec;
+  GtkObject  *adjustment;
+  GtkWidget  *scale;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
+    return NULL;
+
+  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    digits = 0;
+
+  adjustment = gtk_adjustment_new (value, lower, upper,
+                                   step_increment, page_increment, 0.0);
+
+  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, digits);
+
+  set_param_spec (G_OBJECT (adjustment), scale, param_spec);
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
+
+  return scale;
+}
+
+/**
+ * gimp_prop_opacity_spin_scale_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of gdouble property
+ *
+ * Creates a #GimpSpinScale to set and display the value of a
+ * gdouble property in a very space-efficient way.
+ *
+ * Return value:  A new #GimpSpinScale widget.
+ *
+ * Since GIMP 2.8
+ */
+GtkWidget *
+gimp_prop_opacity_spin_scale_new (GObject     *config,
+                                  const gchar *property_name,
+                                  const gchar *label)
+{
+  GParamSpec *param_spec;
+  GtkObject  *adjustment;
+  GtkWidget  *scale;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config, property_name, &value, NULL);
+
+  value *= 100.0;
+  lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
+  upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
+
+  adjustment = gtk_adjustment_new (value, lower, upper, 1.0, 10.0, 0.0);
+
+  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, 1);
+
+  set_param_spec (G_OBJECT (adjustment), scale, param_spec);
+  g_object_set_data (G_OBJECT (adjustment),
+                     "opacity-scale", GINT_TO_POINTER (TRUE));
+
+  g_signal_connect (adjustment, "value-changed",
+                    G_CALLBACK (gimp_prop_adjustment_callback),
+                    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_adjustment_notify),
+                  adjustment);
+
+  return scale;
+}
+
+static void
+gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
+                               GObject       *config)
+{
+  GParamSpec *param_spec;
+  gdouble     value;
+
+  param_spec = get_param_spec (G_OBJECT (adjustment));
+  if (! param_spec)
+    return;
+
+  value = gtk_adjustment_get_value (adjustment);
+
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (gint) value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_UINT (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (guint) value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_LONG (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (glong) value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_ULONG (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (gulong) value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_INT64 (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (gint64) value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, (guint64) value,
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
+                                              "opacity-scale")))
+        value /= 100.0;
+
+      g_object_set (config, param_spec->name, value, NULL);
+    }
+}
+
+static void
+gimp_prop_adjustment_notify (GObject       *config,
+                             GParamSpec    *param_spec,
+                             GtkAdjustment *adjustment)
+{
+  gdouble value;
+
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      gint int_value;
+
+      g_object_get (config, param_spec->name, &int_value, NULL);
+
+      value = int_value;
+    }
+  else if (G_IS_PARAM_SPEC_UINT (param_spec))
+    {
+      guint uint_value;
+
+      g_object_get (config, param_spec->name, &uint_value, NULL);
+
+      value = uint_value;
+    }
+  else if (G_IS_PARAM_SPEC_LONG (param_spec))
+    {
+      glong long_value;
+
+      g_object_get (config, param_spec->name, &long_value, NULL);
+
+      value = long_value;
+    }
+  else if (G_IS_PARAM_SPEC_ULONG (param_spec))
+    {
+      gulong ulong_value;
+
+      g_object_get (config, param_spec->name, &ulong_value, NULL);
+
+      value = ulong_value;
+    }
+  else if (G_IS_PARAM_SPEC_INT64 (param_spec))
+    {
+      gint64 int64_value;
+
+      g_object_get (config, param_spec->name, &int64_value, NULL);
+
+      value = int64_value;
+    }
+  else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
+    {
+      guint64 uint64_value;
+
+      g_object_get (config, param_spec->name, &uint64_value, NULL);
+
+#if defined _MSC_VER && (_MSC_VER < 1300)
+      value = (gint64) uint64_value;
+#else
+      value = uint64_value;
+#endif
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      g_object_get (config, param_spec->name, &value, NULL);
+
+      if (GPOINTER_TO_INT (g_object_get_data (G_OBJECT (adjustment),
+                                              "opacity-scale")))
+        value *= 100.0;
+    }
+  else
+    {
+      g_warning ("%s: unhandled param spec of type %s",
+                 G_STRFUNC, G_PARAM_SPEC_TYPE_NAME (param_spec));
+      return;
+    }
+
+  if (gtk_adjustment_get_value (adjustment) != value)
+    {
+      g_signal_handlers_block_by_func (adjustment,
+                                       gimp_prop_adjustment_callback,
+                                       config);
+
+      gtk_adjustment_set_value (adjustment, value);
+
+      g_signal_handlers_unblock_by_func (adjustment,
+                                         gimp_prop_adjustment_callback,
+                                         config);
+    }
 }
 
 
@@ -1253,6 +1529,57 @@ check_param_spec_w (GObject     *object,
     }
 
   return param_spec;
+}
+
+static gboolean
+get_numeric_values (GObject     *object,
+                    GParamSpec  *param_spec,
+                    gdouble     *value,
+                    gdouble     *lower,
+                    gdouble     *upper,
+                    const gchar *strloc)
+{
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      GParamSpecInt *int_spec = G_PARAM_SPEC_INT (param_spec);
+      gint           int_value;
+
+      g_object_get (object, param_spec->name, &int_value, NULL);
+
+      *value = int_value;
+      *lower = int_spec->minimum;
+      *upper = int_spec->maximum;
+    }
+  else if (G_IS_PARAM_SPEC_UINT (param_spec))
+    {
+      GParamSpecUInt *uint_spec = G_PARAM_SPEC_UINT (param_spec);
+      guint           uint_value;
+
+      g_object_get (object, param_spec->name, &uint_value, NULL);
+
+      *value = uint_value;
+      *lower = uint_spec->minimum;
+      *upper = uint_spec->maximum;
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      GParamSpecDouble *double_spec = G_PARAM_SPEC_DOUBLE (param_spec);
+
+      g_object_get (object, param_spec->name, value, NULL);
+
+      *lower = double_spec->minimum;
+      *upper = double_spec->maximum;
+    }
+  else
+    {
+      g_warning ("%s: property '%s' of %s is not numeric",
+                 strloc,
+                 param_spec->name,
+                 g_type_name (G_TYPE_FROM_INSTANCE (object)));
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 static void

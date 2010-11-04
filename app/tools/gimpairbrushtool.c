@@ -26,6 +26,7 @@
 #include "paint/gimpairbrushoptions.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppropwidgets.h"
 
 #include "gimpairbrushtool.h"
 #include "gimppaintoptions-gui.h"
@@ -79,30 +80,24 @@ gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_paint_options_gui (tool_options);
-  GtkWidget *table;
   GtkWidget *button;
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+  GtkWidget *scale;
 
   button = gimp_prop_check_button_new (config, "motion-only", _("Motion only"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  scale = gimp_prop_spin_scale_new (config, "rate",
+                                    _("Rate"),
+                                    1.0, 10.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
-  gimp_prop_scale_entry_new (config, "rate",
-                             GTK_TABLE (table), 0, 0,
-                             _("Rate:"),
-                             1.0, 1.0, 1,
-                             FALSE, 0.0, 0.0);
-
-  gimp_prop_scale_entry_new (config, "flow",
-                             GTK_TABLE (table), 0, 1,
-                             _("Flow:"),
-                             1.0, 1.0, 1,
-                             FALSE, 0.0, 0.0);
+  scale = gimp_prop_spin_scale_new (config, "flow",
+                                    _("Flow"),
+                                    1.0, 10.0, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   return vbox;
 }

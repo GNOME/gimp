@@ -28,6 +28,7 @@
 
 #include "tools/tools-types.h"
 
+#include "tools/gimprectangleoptions.h"
 #include "tools/tool_manager.h"
 
 #include "display/gimpdisplay.h"
@@ -123,6 +124,26 @@ gimp_tools_teardown_image (GimpTestFixture *fixture,
   g_object_unref (gimp_test_get_only_image (gimp));
   gimp_display_close (gimp_test_get_only_display (gimp));
   gimp_test_run_mainloop_until_idle ();
+}
+
+/**
+ * gimp_tools_set_tool:
+ * @gimp:
+ * @tool_id:
+ * @display:
+ *
+ * Makes sure the given tool is the active tool and that the passed
+ * display is the focused tool display.
+ **/
+static void
+gimp_tools_set_tool (Gimp        *gimp,
+                     const gchar *tool_id,
+                     GimpDisplay *display)
+{
+  /* Activate tool and setup active display for the new tool */
+  gimp_context_set_tool (gimp_get_user_context (gimp),
+                         gimp_get_tool_info (gimp, tool_id));
+  tool_manager_focus_display_active (gimp, display);
 }
 
 /**
@@ -376,10 +397,8 @@ crop_tool_can_crop (GimpTestFixture *fixture,
   gimp_test_run_mainloop_until_idle ();
   gimp_test_run_mainloop_until_idle ();
 
-  /* Activate tool and setup active display for the new tool */
-  gimp_context_set_tool (gimp_get_user_context (gimp),
-                         gimp_get_tool_info (gimp, "gimp-crop-tool"));
-  tool_manager_focus_display_active (gimp, shell->display);
+  /* Activate crop tool */
+  gimp_tools_set_tool (gimp, "gimp-crop-tool", shell->display);
 
   /* Do the crop rect */
   gimp_tools_synthesize_image_click_drag_release (shell,
@@ -397,6 +416,45 @@ crop_tool_can_crop (GimpTestFixture *fixture,
   /* Make sure the new image has the expected size */
   g_assert_cmpint (cropped_w, ==, gimp_image_get_width (image));
   g_assert_cmpint (cropped_h, ==, gimp_image_get_height (image));
+}
+
+/**
+ * crop_tool_can_crop:
+ * @fixture:
+ * @data:
+ *
+ * Make sure it's possible to change width of crop rect in tool
+ * options without there being a pending rectangle. Regression test
+ * for "Bug 322396 - Crop dimension entering causes crash".
+ **/
+static void
+crop_set_width_without_pending_rect (GimpTestFixture *fixture,
+                                     gconstpointer    data)
+{
+  Gimp                 *gimp    = GIMP (data);
+  GimpDisplay          *display = gimp_test_get_only_display (gimp);
+  GimpToolInfo         *tool_info;
+  GimpRectangleOptions *rectangle_options;
+  GtkWidget            *tool_options_gui;
+  GtkWidget            *size_entry;
+
+  /* Activate crop tool */
+  gimp_tools_set_tool (gimp, "gimp-crop-tool", display);
+
+  /* Get tool options */
+  tool_info         = gimp_get_tool_info (gimp, "gimp-crop-tool");
+  tool_options_gui  = gimp_tools_get_tool_options_gui (tool_info->tool_options);
+  rectangle_options = GIMP_RECTANGLE_OPTIONS (tool_info->tool_options);
+
+  /* Find 'Width' or 'Height' GtkTextEntry in tool options */
+  size_entry = gimp_rectangle_options_get_width_entry (rectangle_options);
+
+  /* Set arbitrary non-0 value */
+  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (size_entry),
+                             0 /*field*/,
+                             42.0 /*lower*/);
+
+  /* If we don't crash, everything s fine */
 }
 
 int main(int argc, char **argv)
@@ -417,6 +475,7 @@ int main(int argc, char **argv)
 
   /* Add tests */
   ADD_TEST (crop_tool_can_crop);
+  ADD_TEST (crop_set_width_without_pending_rect);
 
   /* Run the tests and return status */
   result = g_test_run ();

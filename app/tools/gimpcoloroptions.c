@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "widgets/gimppropwidgets.h"
+
 #include "gimphistogramoptions.h"
 #include "gimpcoloroptions.h"
 #include "gimptooloptions-gui.h"
@@ -138,9 +140,8 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *scale;
   GtkWidget *button;
-  GtkObject *adj;
 
   if (GIMP_IS_HISTOGRAM_OPTIONS (tool_options))
     vbox = gimp_histogram_options_gui (tool_options);
@@ -152,26 +153,20 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  scale = gimp_prop_spin_scale_new (config, "average-radius",
+                                    _("Radius"),
+                                    1.0, 10.0, 0);
+  gtk_container_add (GTK_CONTAINER (frame), scale);
+  gtk_widget_show (scale);
 
   button = gimp_prop_check_button_new (config, "sample-average",
                                        _("Sample average"));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
 
-  gtk_widget_set_sensitive (table,
+  gtk_widget_set_sensitive (scale,
                             GIMP_COLOR_OPTIONS (config)->sample_average);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", table);
-
-  adj = gimp_prop_scale_entry_new (config, "average-radius",
-                                   GTK_TABLE (table), 0, 0,
-                                   _("Radius:"),
-                                   1.0, 10.0, 0,
-                                   FALSE, 0.0, 0.0);
-  gimp_scale_entry_set_logarithmic (adj, TRUE);
+  g_object_set_data (G_OBJECT (button), "set_sensitive", scale);
 
   return vbox;
 }

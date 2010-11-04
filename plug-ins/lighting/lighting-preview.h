@@ -20,19 +20,9 @@
 #define PREVIEW_WIDTH  200
 #define PREVIEW_HEIGHT 200
 
-typedef struct
-{
-  gint      x, y, w, h;
-  GdkImage *image;
-} BackBuffer;
-
 /* Externally visible variables */
 
-extern gint        lightx, lighty;
-extern BackBuffer  backbuf;
 extern gdouble    *xpostab, *ypostab;
-extern gboolean    light_hit;
-extern gboolean    left_button_pressed;
 
 /* Externally visible functions */
 

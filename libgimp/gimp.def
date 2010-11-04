@@ -407,6 +407,13 @@ EXPORTS
 	gimp_image_rotate
 	gimp_image_scale
 	gimp_image_scale_full
+	gimp_image_select_color
+	gimp_image_select_ellipse
+	gimp_image_select_fuzzy
+	gimp_image_select_item
+	gimp_image_select_polygon
+	gimp_image_select_rectangle
+	gimp_image_select_round_rectangle
 	gimp_image_set_active_channel
 	gimp_image_set_active_layer
 	gimp_image_set_active_vectors
@@ -458,7 +465,6 @@ EXPORTS
 	gimp_item_set_name
 	gimp_item_set_tattoo
 	gimp_item_set_visible
-	gimp_item_to_selection
 	gimp_item_transform_2d
 	gimp_item_transform_flip
 	gimp_item_transform_flip_simple

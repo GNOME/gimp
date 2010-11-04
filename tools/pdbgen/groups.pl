@@ -24,6 +24,7 @@
     guides
     help
     image
+    image_select
     item
     item_transform
     layer

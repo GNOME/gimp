@@ -345,6 +345,144 @@ gimp_unit_get_plural (GimpUnit unit)
   return _gimp_unit_vtable.unit_get_plural (unit);
 }
 
+static gint
+print (gchar       *buf,
+       gint         len,
+       gint         start,
+       const gchar *fmt,
+       ...)
+{
+  va_list args;
+  gint printed;
+
+  va_start (args, fmt);
+
+  printed = g_vsnprintf (buf + start, len - start, fmt, args);
+  if (printed < 0)
+    printed = len - start;
+
+  va_end (args);
+
+  return printed;
+}
+
+/**
+ * gimp_unit_format_string:
+ * @format: A printf-like format string which is used to create the unit
+ *          string.
+ * @unit:   A unit.
+ *
+ * The @format string supports the following percent expansions:
+ *
+ * <informaltable pgwide="1" frame="none" role="enum">
+ *   <tgroup cols="2"><colspec colwidth="1*"/><colspec colwidth="8*"/>
+ *     <tbody>
+ *       <row>
+ *         <entry>% f</entry>
+ *         <entry>Factor (how many units make up an inch)</entry>
+ *        </row>
+ *       <row>
+ *         <entry>% y</entry>
+ *         <entry>Symbol (e.g. "''" for GIMP_UNIT_INCH)</entry>
+ *       </row>
+ *       <row>
+ *         <entry>% a</entry>
+ *         <entry>Abbreviation</entry>
+ *       </row>
+ *       <row>
+ *         <entry>% s</entry>
+ *         <entry>Singular</entry>
+ *       </row>
+ *       <row>
+ *         <entry>% p</entry>
+ *         <entry>Plural</entry>
+ *       </row>
+ *       <row>
+ *         <entry>%%</entry>
+ *         <entry>Literal percent</entry>
+ *       </row>
+ *     </tbody>
+ *   </tgroup>
+ * </informaltable>
+ *
+ * Returns: A newly allocated string with above percent expressions
+ *          replaced with the resp. strings for @unit.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar *
+gimp_unit_format_string (const gchar *format,
+                         GimpUnit     unit)
+{
+  gchar buffer[1024];
+  gint  i = 0;
+
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (unit == GIMP_UNIT_PERCENT ||
+                        (unit >= GIMP_UNIT_PIXEL &&
+                         unit < gimp_unit_get_number_of_units ()), NULL);
+
+  while (i < (sizeof (buffer) - 1) && *format)
+    {
+      switch (*format)
+        {
+        case '%':
+          format++;
+          switch (*format)
+            {
+            case 0:
+              g_warning ("%s: unit-menu-format string ended within %%-sequence",
+                         G_STRFUNC);
+              break;
+
+            case '%':
+              buffer[i++] = '%';
+              break;
+
+            case 'f': /* factor (how many units make up an inch) */
+              i += print (buffer, sizeof (buffer), i, "%f",
+                          gimp_unit_get_factor (unit));
+              break;
+
+            case 'y': /* symbol ("''" for inch) */
+              i += print (buffer, sizeof (buffer), i, "%s",
+                          gimp_unit_get_symbol (unit));
+              break;
+
+            case 'a': /* abbreviation */
+              i += print (buffer, sizeof (buffer), i, "%s",
+                          gimp_unit_get_abbreviation (unit));
+              break;
+
+            case 's': /* singular */
+              i += print (buffer, sizeof (buffer), i, "%s",
+                          gimp_unit_get_singular (unit));
+              break;
+
+            case 'p': /* plural */
+              i += print (buffer, sizeof (buffer), i, "%s",
+                          gimp_unit_get_plural (unit));
+              break;
+
+            default:
+              g_warning ("%s: unit-menu-format contains unknown format "
+                         "sequence '%%%c'", G_STRFUNC, *format);
+              break;
+            }
+          break;
+
+        default:
+          buffer[i++] = *format;
+          break;
+        }
+
+      format++;
+    }
+
+  buffer[MIN (i, sizeof (buffer) - 1)] = 0;
+
+  return g_strdup (buffer);
+}
 
 /*
  * GIMP_TYPE_PARAM_UNIT

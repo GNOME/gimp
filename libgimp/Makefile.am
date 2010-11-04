@@ -92,6 +92,7 @@ PDB_WRAPPERS_C = \
 	gimpgrid_pdb.c			\
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
+	gimpimageselect_pdb.c		\
 	gimpitem_pdb.c			\
 	gimpitemtransform_pdb.c		\
 	gimplayer_pdb.c			\
@@ -144,6 +145,7 @@ PDB_WRAPPERS_H = \
 	gimpguides_pdb.h		\
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
+	gimpimageselect_pdb.h		\
 	gimpitem_pdb.h			\
 	gimpitemtransform_pdb.h		\
 	gimplayer_pdb.h			\

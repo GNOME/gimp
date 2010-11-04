@@ -657,6 +657,23 @@ gimp_rectangle_options_get_property (GObject      *object,
 }
 
 /**
+ * gimp_rectangle_options_get_width_entry:
+ * @rectangle_options:
+ *
+ * Returns: GtkEntry used to enter desired width of rectangle. For
+ *          testing purposes.
+ **/
+GtkWidget *
+gimp_rectangle_options_get_width_entry (GimpRectangleOptions *rectangle_options)
+{
+  GimpRectangleOptionsPrivate *private;
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+
+  return private->width_entry;
+}
+  
+/**
  * gimp_rectangle_options_fixed_rule_changed:
  * @combo_box:
  * @private:

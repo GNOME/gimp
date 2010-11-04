@@ -20,9 +20,15 @@
 
 #define LIGHT_SYMBOL_SIZE 8
 
+typedef struct
+{
+  gint      x, y, w, h;
+  cairo_surface_t *image;
+} BackBuffer;
+
 static gint handle_xpos = 0, handle_ypos = 0;
 
-BackBuffer backbuf = { 0, 0, 0, 0, NULL };
+static BackBuffer backbuf = { 0, 0, 0, 0, NULL };
 
 /* g_free()'ed on exit */
 gdouble *xpostab = NULL;
@@ -31,8 +37,8 @@ gdouble *ypostab = NULL;
 static gint xpostab_size = -1;  /* if preview size change, do realloc */
 static gint ypostab_size = -1;
 
-gboolean    light_hit           = FALSE;
-gboolean    left_button_pressed = FALSE;
+static gboolean    light_hit           = FALSE;
+static gboolean    left_button_pressed = FALSE;
 static guint preview_update_timer = 0;
 
 
@@ -45,6 +51,7 @@ static void
 compute_preview (gint startx, gint starty, gint w, gint h)
 {
   gint xcnt, ycnt, f1, f2;
+  guchar r, g, b;
   gdouble imagex, imagey;
   gint32 index = 0;
   GimpRGB color;
@@ -124,8 +131,11 @@ compute_preview (gint startx, gint starty, gint w, gint h)
         ray_func = get_ray_color_no_bilinear_ref;
     }
 
+  cairo_surface_flush (preview_surface);
+
   for (ycnt = 0; ycnt < PREVIEW_HEIGHT; ycnt++)
     {
+      index = ycnt * preview_rgb_stride;
       for (xcnt = 0; xcnt < PREVIEW_WIDTH; xcnt++)
         {
           if ((ycnt >= starty && ycnt < (starty + h)) &&
@@ -171,13 +181,9 @@ compute_preview (gint startx, gint starty, gint w, gint h)
                     }
                 }
 
-              gimp_rgb_get_uchar (&color,
-                                  preview_rgb_data + index,
-                                  preview_rgb_data + index +
-                                  1,
-                                  preview_rgb_data + index +
-                                  2);
-              index += 3;
+              gimp_rgb_get_uchar (&color, &r, &g, &b);
+              GIMP_CAIRO_RGB24_SET_PIXEL((preview_rgb_data + index), r, g, b);
+              index += 4;
               imagex++;
             }
           else
@@ -185,9 +191,11 @@ compute_preview (gint startx, gint starty, gint w, gint h)
               preview_rgb_data[index++] = 200;
               preview_rgb_data[index++] = 200;
               preview_rgb_data[index++] = 200;
+              index++;
             }
         }
     }
+  cairo_surface_mark_dirty (preview_surface);
 }
 
 static void
@@ -296,22 +304,28 @@ draw_handles (void)
       break;
     }
 
-  gdk_gc_set_function (gc, GDK_COPY);
-
   if (mapvals.lightsource[k].type != NO_LIGHT)
     {
       GdkColor  color;
+      cairo_t *cr;
+      cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
+
+      cairo_set_line_width (cr, 1.0);
 
       /* Restore background if it has been saved */
       /* ======================================= */
 
       if (backbuf.image != NULL)
         {
-          gdk_gc_set_function (gc, GDK_COPY);
-          gdk_draw_image (gtk_widget_get_window (previewarea), gc,
-                          backbuf.image, 0, 0, backbuf.x,
-                          backbuf.y, backbuf.w, backbuf.h);
-          g_object_unref (backbuf.image);
+          cairo_rectangle (cr, backbuf.x, backbuf.y, backbuf.w, backbuf.h);
+          cairo_clip (cr);
+          cairo_set_source_surface (cr, backbuf.image, 0.0, 0.0);
+          cairo_paint (cr);
+
+          cairo_surface_destroy (backbuf.image);
+          cairo_reset_clip (cr);
+          cairo_rectangle (cr, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+          cairo_clip (cr);
           backbuf.image = NULL;
         }
 
@@ -319,10 +333,10 @@ draw_handles (void)
       switch (mapvals.lightsource[k].type)
         {
         case POINT_LIGHT:
-          backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2;
-          backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2;
-          backbuf.w = LIGHT_SYMBOL_SIZE;
-          backbuf.h = LIGHT_SYMBOL_SIZE;
+          backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2 - 1;
+          backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2 - 1;
+          backbuf.w = LIGHT_SYMBOL_SIZE + 2;
+          backbuf.h = LIGHT_SYMBOL_SIZE + 2;
           break;
         case DIRECTIONAL_LIGHT:
           if (delta_x <= 0)
@@ -333,16 +347,16 @@ draw_handles (void)
             backbuf.y = handle_ypos;
           else
             backbuf.y = starty + ph/2;
-          backbuf.x -= LIGHT_SYMBOL_SIZE/2;
-          backbuf.y -= LIGHT_SYMBOL_SIZE/2;
-          backbuf.w = fabs(delta_x) + LIGHT_SYMBOL_SIZE;
-          backbuf.h = fabs(delta_y) + LIGHT_SYMBOL_SIZE;
+          backbuf.x -= LIGHT_SYMBOL_SIZE/2 + 1;
+          backbuf.y -= LIGHT_SYMBOL_SIZE/2 + 1;
+          backbuf.w = fabs(delta_x) + LIGHT_SYMBOL_SIZE + 2;
+          backbuf.h = fabs(delta_y) + LIGHT_SYMBOL_SIZE + 2;
           break;
         case SPOT_LIGHT:
-          backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2;
-          backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2;
-          backbuf.w = LIGHT_SYMBOL_SIZE;
-          backbuf.h = LIGHT_SYMBOL_SIZE;
+          backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2 - 1;
+          backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2 - 1;
+          backbuf.w = LIGHT_SYMBOL_SIZE + 2;
+          backbuf.h = LIGHT_SYMBOL_SIZE + 2;
           break;
         case NO_LIGHT:
           break;
@@ -350,10 +364,17 @@ draw_handles (void)
 
       /* Save background */
       /* =============== */
-      if ((backbuf.x >= 0) &&
+      if ((backbuf.x + backbuf.w >= 0) &&
           (backbuf.x <= PREVIEW_WIDTH) &&
-          (backbuf.y >= 0) && (backbuf.y <= PREVIEW_HEIGHT))
+          (backbuf.y + backbuf.h >= 0) && (backbuf.y <= PREVIEW_HEIGHT))
         {
+          cairo_t *cr;
+
+          backbuf.image = cairo_surface_create_similar (preview_surface,
+                                                        CAIRO_CONTENT_COLOR,
+                                                        PREVIEW_WIDTH,
+                                                        PREVIEW_HEIGHT);
+          cr = cairo_create (backbuf.image);
           /* clip coordinates to preview widget sizes */
           if ((backbuf.x + backbuf.w) > PREVIEW_WIDTH)
             backbuf.w = (PREVIEW_WIDTH - backbuf.x);
@@ -361,44 +382,44 @@ draw_handles (void)
           if ((backbuf.y + backbuf.h) > PREVIEW_HEIGHT)
             backbuf.h = (PREVIEW_HEIGHT - backbuf.y);
 
-          backbuf.image = gdk_drawable_get_image (gtk_widget_get_window (previewarea),
-                                                  backbuf.x, backbuf.y,
-                                                  backbuf.w, backbuf.h);
+          cairo_rectangle (cr, backbuf.x, backbuf.y, backbuf.w, backbuf.h);
+          cairo_clip (cr);
+          cairo_set_source_surface (cr, preview_surface, 0.0, 0.0);
+          cairo_paint (cr);
+          cairo_destroy (cr);
         }
 
       color.red   = 0x0;
       color.green = 0x0;
       color.blue  = 0x0;
-      gdk_gc_set_rgb_bg_color (gc, &color);
+      gdk_cairo_set_source_color (cr, &color);
 
       color.red   = 0x0;
       color.green = 0x4000;
       color.blue  = 0xFFFF;
-      gdk_gc_set_rgb_fg_color (gc, &color);
+      gdk_cairo_set_source_color (cr, &color);
 
       /* draw circle at light position */
       switch (mapvals.lightsource[k].type)
         {
         case POINT_LIGHT:
         case SPOT_LIGHT:
-          gdk_draw_arc (gtk_widget_get_window (previewarea), gc, TRUE,
-                        handle_xpos - LIGHT_SYMBOL_SIZE / 2,
-                        handle_ypos - LIGHT_SYMBOL_SIZE / 2,
-                        LIGHT_SYMBOL_SIZE,
-                        LIGHT_SYMBOL_SIZE, 0, 360 * 64);
+          cairo_arc (cr, handle_xpos, handle_ypos,
+                     LIGHT_SYMBOL_SIZE/2, 0, 2 * M_PI);
+          cairo_fill (cr);
           break;
         case DIRECTIONAL_LIGHT:
-          gdk_draw_arc (gtk_widget_get_window (previewarea), gc, TRUE,
-                        handle_xpos - LIGHT_SYMBOL_SIZE / 2,
-                        handle_ypos - LIGHT_SYMBOL_SIZE / 2,
-                        LIGHT_SYMBOL_SIZE,
-                        LIGHT_SYMBOL_SIZE, 0, 360 * 64);
-          gdk_draw_line (gtk_widget_get_window (previewarea), gc,
-                         handle_xpos, handle_ypos, startx+pw/2 , starty + ph/2);
+          cairo_arc (cr, handle_xpos, handle_ypos,
+                     LIGHT_SYMBOL_SIZE/2, 0, 2 * M_PI);
+          cairo_fill (cr);
+          cairo_move_to (cr, handle_xpos, handle_ypos);
+          cairo_line_to (cr, startx + pw/2, starty + ph/2);
+          cairo_stroke (cr);
           break;
         case NO_LIGHT:
           break;
         }
+      cairo_destroy (cr);
     }
 }
 
@@ -450,19 +471,7 @@ void
 draw_preview_image (gboolean recompute)
 {
   gint      startx, starty, pw, ph;
-  GdkColor  color;
-
-  color.red   = 0x0;
-  color.green = 0x0;
-  color.blue  = 0x0;
-  gdk_gc_set_rgb_bg_color (gc, &color);
-
-  color.red   = 0xFFFF;
-  color.green = 0xFFFF;
-  color.blue  = 0xFFFF;
-  gdk_gc_set_rgb_fg_color (gc, &color);
-
-  gdk_gc_set_function (gc, GDK_COPY);
+  cairo_t  *cr;
 
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
@@ -486,15 +495,18 @@ draw_preview_image (gboolean recompute)
        * restore the wrong bitmap */
       if (backbuf.image != NULL)
         {
-          g_object_unref (backbuf.image);
+          cairo_surface_destroy (backbuf.image);
           backbuf.image = NULL;
         }
     }
 
-  gdk_draw_rgb_image (gtk_widget_get_window (previewarea), gc,
-                      0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT,
-                      GDK_RGB_DITHER_MAX, preview_rgb_data,
-                      3 * PREVIEW_WIDTH);
+  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
+
+  cairo_set_source_surface (cr, preview_surface, 0.0, 0.0);
+
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
 
   /* draw symbols if enabled in UI */
   if (mapvals.interactive_preview)
@@ -515,15 +527,7 @@ preview_events (GtkWidget *area,
     {
     case GDK_EXPOSE:
 
-      /* Is this the first exposure? */
-      /* =========================== */
-      if (!gc)
-        {
-          gc = gdk_gc_new (gtk_widget_get_window (area));
-          draw_preview_image (TRUE);
-        }
-      else
-        draw_preview_image (FALSE);
+      draw_preview_image (FALSE);
       break;
     case GDK_ENTER_NOTIFY:
       break;
