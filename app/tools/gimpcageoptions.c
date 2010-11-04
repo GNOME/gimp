@@ -61,7 +61,7 @@ static void   gimp_cage_options_get_property (GObject    *object,
 
 
 G_DEFINE_TYPE (GimpCageOptions, gimp_cage_options,
-               GIMP_TYPE_TRANSFORM_OPTIONS)
+               GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_cage_options_parent_class
 
@@ -89,7 +89,6 @@ gimp_cage_options_class_init (GimpCageOptionsClass *klass)
 static void
 gimp_cage_options_init (GimpCageOptions *options)
 {
-
 }
 
 static void

@@ -21,7 +21,7 @@
 #define __GIMP_CAGE_OPTIONS_H__
 
 
-#include "tools/gimptransformoptions.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_CAGE_OPTIONS            (gimp_cage_options_get_type ())
@@ -37,10 +37,10 @@ typedef struct _GimpCageOptionsClass GimpCageOptionsClass;
 
 struct _GimpCageOptions
 {
-  GimpTransformOptions  parent_instance;
+  GimpToolOptions  parent_instance;
 
-  GimpCageMode          cage_mode;
-  gboolean              fill_plain_color;
+  GimpCageMode     cage_mode;
+  gboolean         fill_plain_color;
 };
 
 struct _GimpCageOptionsClass
