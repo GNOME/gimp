@@ -545,7 +545,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                            ct->cursor_position.y,
                                            HANDLE_SIZE);
 
-  for(i = 0; i < config->cage_vertice_number; i++)
+  for (i = 0; i < config->cage_vertice_number; i++)
     {
       GimpHandleType handle = GIMP_HANDLE_CIRCLE;
 
@@ -564,7 +564,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                  vertices[i].x + ct->config->offset_x,
                                  vertices[i].y + ct->config->offset_y,
                                  HANDLE_SIZE, HANDLE_SIZE,
-                                 GTK_ANCHOR_CENTER);
+                                 GIMP_HANDLE_ANCHOR_CENTER);
     }
 }
 
@@ -638,7 +638,9 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 {
   GimpCageConfig *config   = ct->config;
   Babl           *format;
-  GeglNode       *gegl, *input, *output;
+  GeglNode       *gegl;
+  GeglNode       *input;
+  GeglNode       *output;
   GeglProcessor  *processor;
   GimpProgress   *progress;
   GeglBuffer     *buffer;
@@ -790,7 +792,7 @@ gimp_cage_tool_process (GimpCageTool *ct,
   GimpImage    *image    = gimp_display_get_image (display);
   GimpLayer    *layer    = gimp_image_get_active_layer (image);
   GimpDrawable *drawable = GIMP_DRAWABLE (layer);
-  GimpDrawable *mask     = GIMP_DRAWABLE (gimp_layer_get_mask(layer));
+  GimpDrawable *mask     = GIMP_DRAWABLE (gimp_layer_get_mask (layer));
 
   g_return_if_fail (ct->coef);
 
@@ -826,7 +828,6 @@ static void
 gimp_cage_tool_process_drawable (GimpCageTool *ct,
                                  GimpDrawable *drawable,
                                  GimpProgress *progress)
-
 {
   TileManager   *new_tiles = NULL;
   TileManager   *old_tiles = NULL;
