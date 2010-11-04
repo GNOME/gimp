@@ -34,9 +34,7 @@
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
-#include "core/gimp-transform-utils.h"
 #include "core/gimpchannel.h"
-#include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable-shadow.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
@@ -101,13 +99,13 @@ static void       gimp_cage_tool_oper_update        (GimpTool              *tool
 
 static void       gimp_cage_tool_draw               (GimpDrawTool          *draw_tool);
 
-static gint       gimp_cage_tool_is_on_handle       (GimpCageConfig  *gcc,
-                                                     GimpDrawTool    *draw_tool,
-                                                     GimpDisplay     *display,
-                                                     GimpCageMode     mode,
-                                                     gdouble          x,
-                                                     gdouble          y,
-                                                     gint             handle_size);
+static gint       gimp_cage_tool_is_on_handle       (GimpCageConfig        *gcc,
+                                                     GimpDrawTool          *draw_tool,
+                                                     GimpDisplay           *display,
+                                                     GimpCageMode           mode,
+                                                     gdouble                x,
+                                                     gdouble                y,
+                                                     gint                   handle_size);
 
 static void       gimp_cage_tool_switch_to_deform   (GimpCageTool          *ct);
 static void       gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
@@ -122,8 +120,8 @@ static void       gimp_cage_tool_prepare_preview    (GimpCageTool          *ct,
                                                      GimpDisplay           *display);
 static gboolean   gimp_cage_tool_update_preview     (GimpTool              *tool);
 
-static GeglNode * gimp_cage_tool_get_render_node    (GimpCageTool    *ct,
-                                                     GeglNode        *parent);
+static GeglNode * gimp_cage_tool_get_render_node    (GimpCageTool          *ct,
+                                                     GeglNode              *parent);
 
 
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
@@ -133,7 +131,7 @@ G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
 
 void
 gimp_cage_tool_register (GimpToolRegisterCallback  callback,
-                           gpointer                  data)
+                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CAGE_TOOL,
                 GIMP_TYPE_CAGE_OPTIONS,
@@ -256,7 +254,6 @@ gimp_cage_tool_start (GimpCageTool *ct,
   gimp_draw_tool_start (draw_tool, display);
 }
 
-
 static gboolean
 gimp_cage_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
@@ -347,7 +344,7 @@ gimp_cage_tool_oper_update (GimpTool         *tool,
                                                  coords->y,
                                                  HANDLE_SIZE);
 
-  if (!ct->cage_complete || (active_handle > -1))
+  if (! ct->cage_complete || (active_handle > -1))
     {
       gimp_draw_tool_pause (draw_tool);
 
@@ -396,7 +393,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
         }
     }
 
-  if (ct->handle_moved < 0 && !ct->cage_complete)
+  if (ct->handle_moved < 0 && ! ct->cage_complete)
     {
       gimp_cage_config_add_cage_point (config, coords->x, coords->y);
     }
@@ -406,7 +403,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   /* user is clicking on the first handle, we close the cage and
    * switch to deform mode
    */
-  if (ct->handle_moved == 0 && config->cage_vertice_number > 2 && !ct->coef)
+  if (ct->handle_moved == 0 && config->cage_vertice_number > 2 && ! ct->coef)
     {
       ct->cage_complete = TRUE;
       gimp_cage_tool_switch_to_deform (ct);
@@ -523,7 +520,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                              config->cage_vertice_number,
                              FALSE);*/
 
-  if (!ct->cage_complete && ct->cursor_position.x != -1000)
+  if (! ct->cage_complete && ct->cursor_position.x != -1000)
     {
       gimp_draw_tool_add_line (draw_tool,
                                vertices[config->cage_vertice_number - 1].x + ct->config->offset_x,
@@ -768,7 +765,7 @@ gimp_cage_tool_update_preview (GimpTool *tool)
   GimpCageTool *ct    = GIMP_CAGE_TOOL (tool);
   GimpImage    *image = gimp_display_get_image (tool->display);
 
-  if (!ct->image_map)
+  if (! ct->image_map)
     {
       /*Destroyed, bailing out*/
       ct->idle_id = 0;
