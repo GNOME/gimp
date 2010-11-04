@@ -23,19 +23,10 @@
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpcoreconfig.h"
-
-#include "core/gimp.h"
-#include "core/gimptoolinfo.h"
-
-#include "widgets/gimpwidgets-utils.h"
-
-#include "gimpcagetool.h"
 #include "gimpcageoptions.h"
 #include "gimptooloptions-gui.h"
 
