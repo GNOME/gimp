@@ -45,10 +45,10 @@ static void   gimp_cage_options_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
                                               GParamSpec   *pspec);
-static void   gimp_cage_options_get_property (GObject    *object,
-                                              guint       property_id,
-                                              GValue     *value,
-                                              GParamSpec *pspec);
+static void   gimp_cage_options_get_property (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpCageOptions, gimp_cage_options,
@@ -133,13 +133,8 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *hbox;
   GtkWidget *mode;
   GtkWidget *button;
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
 
   mode = gimp_prop_enum_radio_box_new (config, "cage-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
