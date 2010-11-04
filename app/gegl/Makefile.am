@@ -23,8 +23,8 @@ libappgegl_a_SOURCES = \
 	\
 	gimpbrightnesscontrastconfig.c	\
 	gimpbrightnesscontrastconfig.h	\
-	gimpcageconfig.c	\
-	gimpcageconfig.h	\
+	gimpcageconfig.c		\
+	gimpcageconfig.h		\
 	gimpcolorbalanceconfig.c	\
 	gimpcolorbalanceconfig.h	\
 	gimpcolorizeconfig.c		\
