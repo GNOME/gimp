@@ -1,5 +1,5 @@
 /* GIMP - The GNU Image Manipulation Program
- * 
+ *
  * gimpcageconfig.c
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
@@ -20,23 +20,34 @@
 #include "config.h"
 
 #include <gegl.h>
+
 #include "gimp-gegl-types.h"
 
 #include "libgimpconfig/gimpconfig.h"
-#include "libgimpmodule/gimpmodule.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
-#include "libgimpmath/gimpmathtypes.h"
-#include "tools/tools-enums.h"
-
-#include "libgimpmath/gimpvector.h"
-#include <math.h>
-
-#include <stdio.h>
-
 #include "gimpcageconfig.h"
+
+
+/*#define DEBUG_CAGE */
+
+#define N_ITEMS_PER_ALLOC 10
+#define DELTA             0.010309278351
+
+
+static void   gimp_cage_config_finalize               (GObject        *object);
+static void   gimp_cage_config_get_property           (GObject        *object,
+                                                       guint           property_id,
+                                                       GValue         *value,
+                                                       GParamSpec     *pspec);
+static void   gimp_cage_config_set_property           (GObject        *object,
+                                                       guint           property_id,
+                                                       const GValue   *value,
+                                                       GParamSpec     *pspec);
+
+static void   gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc);
+static void   gimp_cage_config_compute_edge_normal    (GimpCageConfig *gcc);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
@@ -46,22 +57,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
 
 #define parent_class gimp_cage_config_parent_class
 
-#define N_ITEMS_PER_ALLOC       10
-#define DELTA                   0.010309278351
-
-static void       gimp_cage_config_finalize                   (GObject *object);
-static void       gimp_cage_config_get_property               (GObject    *object,
-                                                               guint       property_id,
-                                                               GValue     *value,
-                                                               GParamSpec *pspec);
-static void       gimp_cage_config_set_property               (GObject      *object,
-                                                               guint         property_id,
-                                                               const GValue *value,
-                                                               GParamSpec   *pspec);
-static void       gimp_cage_config_compute_scaling_factor     (GimpCageConfig *gcc);
-static void       gimp_cage_config_compute_edge_normal        (GimpCageConfig *gcc);
-
-/*#define DEBUG_CAGE */
 
 #ifdef DEBUG_CAGE
 static void
@@ -86,24 +81,24 @@ print_cage (GimpCageConfig *gcc)
 static void
 gimp_cage_config_class_init (GimpCageConfigClass *klass)
 {
-  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->set_property       = gimp_cage_config_set_property;
-  object_class->get_property       = gimp_cage_config_get_property;
+  object_class->set_property = gimp_cage_config_set_property;
+  object_class->get_property = gimp_cage_config_get_property;
 
-  object_class->finalize           = gimp_cage_config_finalize;
+  object_class->finalize     = gimp_cage_config_finalize;
 }
 
 static void
 gimp_cage_config_init (GimpCageConfig *self)
 {
   self->cage_vertice_number = 0;
-  self->cage_vertices_max = 50; /*pre-allocation for 50 vertices for the cage.*/
+  self->cage_vertices_max   = 50; /*pre-allocation for 50 vertices for the cage.*/
 
-  self->cage_vertices = g_new(GimpVector2, self->cage_vertices_max);
-  self->cage_vertices_d = g_new(GimpVector2, self->cage_vertices_max);
-  self->scaling_factor = g_malloc (self->cage_vertices_max * sizeof(gdouble));
-  self->normal_d = g_new(GimpVector2, self->cage_vertices_max);
+  self->cage_vertices   = g_new0 (GimpVector2, self->cage_vertices_max);
+  self->cage_vertices_d = g_new0 (GimpVector2, self->cage_vertices_max);
+  self->scaling_factor  = g_malloc0 (self->cage_vertices_max * sizeof (gdouble));
+  self->normal_d        = g_new0 (GimpVector2, self->cage_vertices_max);
 }
 
 static void
@@ -111,10 +106,10 @@ gimp_cage_config_finalize (GObject *object)
 {
   GimpCageConfig  *gcc = GIMP_CAGE_CONFIG (object);
 
-  g_free(gcc->cage_vertices);
-  g_free(gcc->cage_vertices_d);
-  g_free(gcc->scaling_factor);
-  g_free(gcc->normal_d);
+  g_free (gcc->cage_vertices);
+  g_free (gcc->cage_vertices_d);
+  g_free (gcc->scaling_factor);
+  g_free (gcc->normal_d);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -125,10 +120,8 @@ gimp_cage_config_get_property (GObject    *object,
                                GValue     *value,
                                GParamSpec *pspec)
 {
-
   switch (property_id)
     {
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -141,16 +134,23 @@ gimp_cage_config_set_property (GObject      *object,
                                const GValue *value,
                                GParamSpec   *pspec)
 {
-
   switch (property_id)
     {
-
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
 
+/**
+ * gimp_cage_config_add_cage_point:
+ * @gcc: the cage config
+ * @x: x value of the new point
+ * @y: y value of the new point
+ *
+ * Add a new point in the polygon of the cage, and make allocation if needed.
+ * Point is added in both source and destination cage
+ */
 void
 gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                                  gdouble          x,
@@ -160,24 +160,24 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
 
   /* reallocate memory if needed */
   if (gcc->cage_vertice_number >= gcc->cage_vertices_max)
-  {
-    gcc->cage_vertices_max += N_ITEMS_PER_ALLOC;
+    {
+      gcc->cage_vertices_max += N_ITEMS_PER_ALLOC;
 
-    gcc->cage_vertices = g_renew(GimpVector2,
-                                 gcc->cage_vertices,
-                                 gcc->cage_vertices_max);
+      gcc->cage_vertices = g_renew (GimpVector2,
+                                    gcc->cage_vertices,
+                                    gcc->cage_vertices_max);
 
-    gcc->cage_vertices_d = g_renew(GimpVector2,
-                                   gcc->cage_vertices_d,
-                                   gcc->cage_vertices_max);
+      gcc->cage_vertices_d = g_renew (GimpVector2,
+                                      gcc->cage_vertices_d,
+                                      gcc->cage_vertices_max);
 
-    gcc->scaling_factor = g_realloc (gcc->scaling_factor,
-                                     gcc->cage_vertices_max * sizeof(gdouble));
+      gcc->scaling_factor = g_realloc (gcc->scaling_factor,
+                                       gcc->cage_vertices_max * sizeof (gdouble));
 
-    gcc->normal_d = g_renew(GimpVector2,
-                            gcc->normal_d,
-                            gcc->cage_vertices_max);
-  }
+      gcc->normal_d = g_renew (GimpVector2,
+                               gcc->normal_d,
+                               gcc->cage_vertices_max);
+    }
 
   gcc->cage_vertices[gcc->cage_vertice_number].x = x + DELTA - gcc->offset_x;
   gcc->cage_vertices[gcc->cage_vertice_number].y = y + DELTA - gcc->offset_y;
@@ -190,7 +190,13 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
   gimp_cage_config_compute_scaling_factor (gcc);
   gimp_cage_config_compute_edge_normal (gcc);
 }
-                           
+
+/**
+ * gimp_cage_config_remove_last_cage_point:
+ * @gcc: the cage config
+ *
+ * Remove the last point of the cage, in both source and destination cage
+ */
 void
 gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
 {
@@ -203,39 +209,56 @@ gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
   gimp_cage_config_compute_edge_normal (gcc);
 }
 
-
-                                              
+/**
+ * gimp_cage_config_move_cage_point:
+ * @gcc: the cage config
+ * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
+ * @point_number: the point of the cage to move
+ * @x: new x value
+ * @y: new y value
+ *
+ * Move a point of the source or destination cage, according to the
+ * cage mode provided
+ */
 void
-gimp_cage_config_move_cage_point  (GimpCageConfig  *gcc,
-                                   GimpCageMode     mode,
-                                   gint             point_number,
-                                   gdouble          x,
-                                   gdouble          y)
+gimp_cage_config_move_cage_point (GimpCageConfig  *gcc,
+                                  GimpCageMode     mode,
+                                  gint             point_number,
+                                  gdouble          x,
+                                  gdouble          y)
 {
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
   g_return_if_fail (point_number < gcc->cage_vertice_number);
   g_return_if_fail (point_number >= 0);
 
   if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
-  {
-    gcc->cage_vertices[point_number].x = x + DELTA - gcc->offset_x;
-    gcc->cage_vertices[point_number].y = y + DELTA - gcc->offset_y;
-  }
+    {
+      gcc->cage_vertices[point_number].x = x + DELTA - gcc->offset_x;
+      gcc->cage_vertices[point_number].y = y + DELTA - gcc->offset_y;
+    }
   else
-  {
-    gcc->cage_vertices_d[point_number].x = x + DELTA - gcc->offset_x;
-    gcc->cage_vertices_d[point_number].y = y + DELTA - gcc->offset_y;
-  }
+    {
+      gcc->cage_vertices_d[point_number].x = x + DELTA - gcc->offset_x;
+      gcc->cage_vertices_d[point_number].y = y + DELTA - gcc->offset_y;
+    }
 
   gimp_cage_config_compute_scaling_factor (gcc);
   gimp_cage_config_compute_edge_normal (gcc);
 }
 
+/**
+ * gimp_cage_config_get_bounding_box:
+ * @gcc: the cage config
+ *
+ * Compute the bounding box of the destination cage
+ *
+ * Returns: the bounding box of the destination cage, as a GeglRectangle
+ */
 GeglRectangle
-gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc)
+gimp_cage_config_get_bounding_box (GimpCageConfig  *gcc)
 {
-  gint i;
-  GeglRectangle bounding_box = {0, };
+  GeglRectangle bounding_box = { 0, };
+  gint          i;
 
   g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), bounding_box);
   g_return_val_if_fail (gcc->cage_vertice_number >= 0, bounding_box);
@@ -246,65 +269,82 @@ gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc)
   bounding_box.width = 0;
 
   for (i = 1; i < gcc->cage_vertice_number; i++)
-  {
-    gdouble x,y;
-
-    x = gcc->cage_vertices[i].x;
-    y = gcc->cage_vertices[i].y;
-
-    if (x < bounding_box.x)
     {
-      bounding_box.width += bounding_box.x - x;
-      bounding_box.x = x;
-    }
+      gdouble x,y;
 
-    if (y < bounding_box.y)
-    {
-      bounding_box.height += bounding_box.y - y;
-      bounding_box.y = y;
-    }
+      x = gcc->cage_vertices[i].x;
+      y = gcc->cage_vertices[i].y;
 
-    if (x > bounding_box.x + bounding_box.width)
-    {
-      bounding_box.width = x - bounding_box.x;
-    }
+      if (x < bounding_box.x)
+        {
+          bounding_box.width += bounding_box.x - x;
+          bounding_box.x = x;
+        }
 
-    if (y > bounding_box.y + bounding_box.height)
-    {
-      bounding_box.height = y - bounding_box.y;
+      if (y < bounding_box.y)
+        {
+          bounding_box.height += bounding_box.y - y;
+          bounding_box.y = y;
+        }
+
+      if (x > bounding_box.x + bounding_box.width)
+        {
+          bounding_box.width = x - bounding_box.x;
+        }
+
+      if (y > bounding_box.y + bounding_box.height)
+        {
+          bounding_box.height = y - bounding_box.y;
+        }
     }
-  }
 
   return bounding_box;
 }
 
+/**
+ * gimp_cage_config_reverse_cage:
+ * @gcc: the cage config
+ *
+ * When using non-simple cage (like a cage in 8), user may want to
+ * manually inverse inside and outside of the cage. This function
+ * reverse the cage
+ */
 void
-gimp_cage_config_reverse_cage  (GimpCageConfig *gcc)
+gimp_cage_config_reverse_cage (GimpCageConfig *gcc)
 {
-  gint i;
   GimpVector2 temp;
+  gint        i;
 
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
   for (i = 0; i < gcc->cage_vertice_number / 2; i++)
-  {
-    temp = gcc->cage_vertices[i];
-    gcc->cage_vertices[i] = gcc->cage_vertices[gcc->cage_vertice_number - i -1];
-    gcc->cage_vertices[gcc->cage_vertice_number - i -1] = temp;
+    {
+      temp = gcc->cage_vertices[i];
+      gcc->cage_vertices[i] = gcc->cage_vertices[gcc->cage_vertice_number - i -1];
+      gcc->cage_vertices[gcc->cage_vertice_number - i -1] = temp;
 
-    temp = gcc->cage_vertices_d[i];
-    gcc->cage_vertices_d[i] = gcc->cage_vertices_d[gcc->cage_vertice_number - i -1];
-    gcc->cage_vertices_d[gcc->cage_vertice_number - i -1] = temp;
-  }
+      temp = gcc->cage_vertices_d[i];
+      gcc->cage_vertices_d[i] = gcc->cage_vertices_d[gcc->cage_vertice_number - i -1];
+      gcc->cage_vertices_d[gcc->cage_vertice_number - i -1] = temp;
+    }
 
   gimp_cage_config_compute_scaling_factor (gcc);
   gimp_cage_config_compute_edge_normal (gcc);
 }
 
+/**
+ * gimp_cage_config_reverse_cage_if_needed:
+ * @gcc: the cage config
+ *
+ * Since the cage need to be defined counter-clockwise to have the
+ * topological inside in the actual 'physical' inside of the cage,
+ * this function compute if the cage is clockwise or not, and reverse
+ * the cage if needed.
+ */
 void
 gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
 {
-  gint i;
+  gint    i;
   gdouble sum;
 
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
@@ -312,47 +352,59 @@ gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
   sum = 0.0;
 
   /* this is a bit crappy, but should works most of the case */
-  /* we do the sum of the projection of each point to the previous segment, and see the final sign */
+  /* we do the sum of the projection of each point to the previous
+     segment, and see the final sign */
   for (i = 0; i < gcc->cage_vertice_number ; i++)
-  {
-    GimpVector2 P1, P2, P3;
-    gdouble z;
+    {
+      GimpVector2 P1, P2, P3;
+      gdouble     z;
 
-    P1 = gcc->cage_vertices[i];
-    P2 = gcc->cage_vertices[(i+1) % gcc->cage_vertice_number];
-    P3 = gcc->cage_vertices[(i+2) % gcc->cage_vertice_number];
+      P1 = gcc->cage_vertices[i];
+      P2 = gcc->cage_vertices[(i+1) % gcc->cage_vertice_number];
+      P3 = gcc->cage_vertices[(i+2) % gcc->cage_vertice_number];
 
-    z = P1.x * (P2.y - P3.y) + P2.x * (P3.y - P1.y) + P3.x * (P1.y - P2.y);
+      z = P1.x * (P2.y - P3.y) + P2.x * (P3.y - P1.y) + P3.x * (P1.y - P2.y);
 
-    sum += z;
-  }
+      sum += z;
+    }
 
   /* sum > 0 mean a cage defined counter-clockwise, so we reverse it */
   if (sum > 0)
-  {
-    gimp_cage_config_reverse_cage (gcc);
-  }
+    {
+      gimp_cage_config_reverse_cage (gcc);
+    }
 }
 
+/**
+ * gimp_cage_config_point_inside:
+ * @gcc: the cage config
+ * @x: x coordinate of the point to test
+ * @y: y coordinate of the point to test
+ *
+ * Check if the given point is inside the cage. This test is done in
+ * the regard of the topological inside of the cage.
+ *
+ * Returns: TRUE if the point is inside, FALSE if not.
+ */
 static void
 gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 {
-  gint i;
   GimpVector2 edge;
-  gdouble length, length_d;
+  gdouble     length, length_d;
+  gint        i;
 
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
   for (i = 0; i < gcc->cage_vertice_number; i++)
-  {
-    gimp_vector2_sub ( &edge, &gcc->cage_vertices[i], &gcc->cage_vertices[(i+1) % gcc->cage_vertice_number]);
-    length = gimp_vector2_length (&edge);
+    {
+      gimp_vector2_sub ( &edge, &gcc->cage_vertices[i], &gcc->cage_vertices[(i+1) % gcc->cage_vertice_number]);
+      length = gimp_vector2_length (&edge);
 
-    gimp_vector2_sub ( &edge, &gcc->cage_vertices_d[i], &gcc->cage_vertices_d[(i+1) % gcc->cage_vertice_number]);
-    length_d = gimp_vector2_length (&edge);
+      gimp_vector2_sub ( &edge, &gcc->cage_vertices_d[i], &gcc->cage_vertices_d[(i+1) % gcc->cage_vertice_number]);
+      length_d = gimp_vector2_length (&edge);
 
-    gcc->scaling_factor[i] = length_d / length;
-  }
+      gcc->scaling_factor[i] = length_d / length;
+    }
 
 #ifdef DEBUG_CAGE
   print_cage (gcc);
@@ -362,19 +414,19 @@ gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 static void
 gimp_cage_config_compute_edge_normal (GimpCageConfig *gcc)
 {
-  gint i;
   GimpVector2 normal;
+  gint        i;
 
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
   for (i = 0; i < gcc->cage_vertice_number; i++)
-  {
-    gimp_vector2_sub (&normal,
-                      &gcc->cage_vertices_d[(i+1) % gcc->cage_vertice_number],
-                      &gcc->cage_vertices_d[i]);
+    {
+      gimp_vector2_sub (&normal,
+                        &gcc->cage_vertices_d[(i+1) % gcc->cage_vertice_number],
+                        &gcc->cage_vertices_d[i]);
 
-    gcc->normal_d[i] = gimp_vector2_normal (&normal);
-  }
+      gcc->normal_d[i] = gimp_vector2_normal (&normal);
+    }
 }
 
 gboolean
@@ -382,21 +434,25 @@ gimp_cage_config_point_inside (GimpCageConfig *gcc,
                                gfloat          x,
                                gfloat          y)
 {
-  gint i, j;
-  gboolean inside = FALSE;
-  GimpVector2 *cv = gcc->cage_vertices;
+  GimpVector2 *cv;
+  gboolean     inside = FALSE;
+  gint         i, j;
 
   g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), FALSE);
 
-  for (i = 0, j = gcc->cage_vertice_number - 1; i < gcc->cage_vertice_number; j = i++)
-  {
-    if ((((cv[i].y <= y) && (y < cv[j].y))
-        || ((cv[j].y <= y) && (y < cv[i].y)))
-        && (x < (cv[j].x - cv[i].x) * (y - cv[i].y) / (cv[j].y - cv[i].y) + cv[i].x))
+  cv = gcc->cage_vertices;
+
+  for (i = 0, j = gcc->cage_vertice_number - 1;
+       i < gcc->cage_vertice_number;
+       j = i++)
     {
-      inside = !inside;
+      if ((((cv[i].y <= y) && (y < cv[j].y))
+           || ((cv[j].y <= y) && (y < cv[i].y)))
+          && (x < (cv[j].x - cv[i].x) * (y - cv[i].y) / (cv[j].y - cv[i].y) + cv[i].x))
+        {
+          inside = !inside;
+        }
     }
-  }
 
   return inside;
 }

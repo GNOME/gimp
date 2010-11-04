@@ -20,8 +20,8 @@
 #ifndef __GIMP_CAGE_OPTIONS_H__
 #define __GIMP_CAGE_OPTIONS_H__
 
+
 #include "tools/gimptransformoptions.h"
-#include "libgimpbase/gimpbase.h"
 
 
 #define GIMP_TYPE_CAGE_OPTIONS            (gimp_cage_options_get_type ())
@@ -32,27 +32,26 @@
 #define GIMP_CAGE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CAGE_OPTIONS, GimpCageOptionsClass))
 
 
+typedef struct _GimpCageOptions      GimpCageOptions;
 typedef struct _GimpCageOptionsClass GimpCageOptionsClass;
-typedef struct _GimpCageOptions GimpCageOptions;
-
 
 struct _GimpCageOptions
 {
-  GimpTransformOptions    parent_instance;
-  
-  GimpCageMode            cage_mode;
-  gboolean                fill_plain_color;
-};
+  GimpTransformOptions  parent_instance;
 
+  GimpCageMode          cage_mode;
+  gboolean              fill_plain_color;
+};
 
 struct _GimpCageOptionsClass
 {
-  GimpToolOptionsClass parent_class;
+  GimpToolOptionsClass  parent_class;
 };
 
 
 GType       gimp_cage_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_cage_options_gui      (GimpToolOptions *tool_options);
+
 
 #endif  /*  __GIMP_CAGE_OPTIONS_H__  */

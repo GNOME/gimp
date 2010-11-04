@@ -20,9 +20,9 @@
 #ifndef __GIMP_CAGE_TOOL_H__
 #define __GIMP_CAGE_TOOL_H__
 
+
 #include "gimpdrawtool.h"
 #include "libgimpmath/gimpvector.h"
-#include "gegl/gimpcageconfig.h"
 
 
 #define GIMP_TYPE_CAGE_TOOL            (gimp_cage_tool_get_type ())
@@ -34,37 +34,39 @@
 
 #define GIMP_CAGE_TOOL_GET_OPTIONS(t)  (GIMP_CAGE_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
 
+
+typedef struct _GimpCageTool      GimpCageTool;
 typedef struct _GimpCageToolClass GimpCageToolClass;
-typedef struct _GimpCageTool GimpCageTool;
 
 struct _GimpCageTool
 {
-  GimpDrawTool          parent_instance;
-  GimpCageConfig       *config;
+  GimpDrawTool    parent_instance;
 
-  GimpVector2           cursor_position;
-  gint                  handle_moved;
-  gboolean              cage_complete;
+  GimpCageConfig *config;
 
-  GeglBuffer           *coef;
+  GimpVector2     cursor_position;
+  gint            handle_moved;
+  gboolean        cage_complete;
 
-  GimpImageMap         *image_map;
+  GeglBuffer     *coef;
 
-  GeglNode             *node_preview;
+  GimpImageMap   *image_map;
 
-  guint                 idle_id;
+  GeglNode       *node_preview;
 
+  guint           idle_id;
 };
-
 
 struct _GimpCageToolClass
 {
-  GimpDrawToolClass     parent_class;
+  GimpDrawToolClass parent_class;
 };
 
+
 void    gimp_cage_tool_register (GimpToolRegisterCallback  callback,
-                                   gpointer                  data);
+                                 gpointer                  data);
 
 GType   gimp_cage_tool_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_CAGE_TOOL_H__  */

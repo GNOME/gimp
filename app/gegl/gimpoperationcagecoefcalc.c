@@ -20,10 +20,11 @@
 #include "config.h"
 
 #include <gegl.h>
-#include "gimp-gegl-types.h"
 #include <gegl-buffer-iterator.h>
 
 #include "libgimpmath/gimpmath.h"
+
+#include "gimp-gegl-types.h"
 
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpcageconfig.h"
@@ -90,8 +91,8 @@ gimp_operation_cage_coef_calc_init (GimpOperationCageCoefCalc *self)
 static void
 gimp_operation_cage_coef_calc_prepare (GeglOperation *operation)
 {
-  GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
-  GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
+  GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
+  GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
 
   gegl_operation_set_format (operation,
                              "output",
@@ -114,12 +115,12 @@ gimp_operation_cage_coef_calc_finalize (GObject *object)
 }
 
 static void
-gimp_operation_cage_coef_calc_get_property  (GObject    *object,
-                                             guint       property_id,
-                                             GValue     *value,
-                                             GParamSpec *pspec)
+gimp_operation_cage_coef_calc_get_property (GObject    *object,
+                                            guint       property_id,
+                                            GValue     *value,
+                                            GParamSpec *pspec)
 {
-  GimpOperationCageCoefCalc   *self   = GIMP_OPERATION_CAGE_COEF_CALC (object);
+  GimpOperationCageCoefCalc *self = GIMP_OPERATION_CAGE_COEF_CALC (object);
 
   switch (property_id)
     {
@@ -134,12 +135,12 @@ gimp_operation_cage_coef_calc_get_property  (GObject    *object,
 }
 
 static void
-gimp_operation_cage_coef_calc_set_property  (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec)
+gimp_operation_cage_coef_calc_set_property (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec)
 {
-  GimpOperationCageCoefCalc   *self   = GIMP_OPERATION_CAGE_COEF_CALC (object);
+  GimpOperationCageCoefCalc *self = GIMP_OPERATION_CAGE_COEF_CALC (object);
 
   switch (property_id)
     {
@@ -161,7 +162,7 @@ gimp_operation_cage_coef_calc_is_on_straight (GimpVector2 *d1,
                                               GimpVector2 *p)
 {
   GimpVector2 v1, v2;
-  gfloat deter;
+  gfloat      deter;
 
   v1.x = p->x - d1->x;
   v1.y = p->y - d1->y;
@@ -179,8 +180,8 @@ gimp_operation_cage_coef_calc_is_on_straight (GimpVector2 *d1,
 static GeglRectangle
 gimp_operation_cage_coef_calc_get_bounding_box (GeglOperation *operation)
 {
-  GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
-  GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
+  GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
+  GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
 
   return gimp_cage_config_get_bounding_box (config);
 }
@@ -190,8 +191,8 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
                                        GeglBuffer          *output,
                                        const GeglRectangle *roi)
 {
-  GimpOperationCageCoefCalc   *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
-  GimpCageConfig              *config = GIMP_CAGE_CONFIG (occc->config);
+  GimpOperationCageCoefCalc *occc   = GIMP_OPERATION_CAGE_COEF_CALC (operation);
+  GimpCageConfig            *config = GIMP_CAGE_CONFIG (occc->config);
 
   Babl *format = babl_format_n (babl_type ("float"), 2 * config->cage_vertice_number);
 
@@ -203,75 +204,75 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
   it = gegl_buffer_iterator_new (output, roi, format, GEGL_BUFFER_READWRITE);
 
   while (gegl_buffer_iterator_next (it))
-  {
-    /* iterate inside the roi */
-    gint  n_pixels = it->length;
-    gint  x = it->roi->x; /* initial x                   */
-    gint  y = it->roi->y; /*           and y coordinates */
-    gint  j;
-
-    gfloat      *coef = it->data[0];
-
-    while(n_pixels--)
     {
-      if (gimp_cage_config_point_inside(config, x, y))
-      {
-        for( j = 0; j < config->cage_vertice_number; j++)
+      /* iterate inside the roi */
+      gint  n_pixels = it->length;
+      gint  x = it->roi->x; /* initial x                   */
+      gint  y = it->roi->y; /*           and y coordinates */
+      gint  j;
+
+      gfloat      *coef = it->data[0];
+
+      while(n_pixels--)
         {
-          GimpVector2 v1,v2,a,b,p;
-          gdouble BA,SRT,L0,L1,A0,A1,A10,L10, Q,S,R, absa;
+          if (gimp_cage_config_point_inside(config, x, y))
+            {
+              for( j = 0; j < config->cage_vertice_number; j++)
+                {
+                  GimpVector2 v1,v2,a,b,p;
+                  gdouble BA,SRT,L0,L1,A0,A1,A10,L10, Q,S,R, absa;
 
-          v1 = config->cage_vertices[j];
-          v2 = config->cage_vertices[(j+1)%config->cage_vertice_number];
-          p.x = x;
-          p.y = y;
-          a.x = v2.x - v1.x;
-          a.y = v2.y - v1.y;
-          absa = gimp_vector2_length (&a);
+                  v1 = config->cage_vertices[j];
+                  v2 = config->cage_vertices[(j+1)%config->cage_vertice_number];
+                  p.x = x;
+                  p.y = y;
+                  a.x = v2.x - v1.x;
+                  a.y = v2.y - v1.y;
+                  absa = gimp_vector2_length (&a);
 
-          b.x = v1.x - x;
-          b.y = v1.y - y;
-          Q = a.x * a.x + a.y * a.y;
-          S = b.x * b.x + b.y * b.y;
-          R = 2.0 * (a.x * b.x + a.y * b.y);
-          BA = b.x * a.y - b.y * a.x;
-          SRT = sqrt(4.0 * S * Q - R * R);
+                  b.x = v1.x - x;
+                  b.y = v1.y - y;
+                  Q = a.x * a.x + a.y * a.y;
+                  S = b.x * b.x + b.y * b.y;
+                  R = 2.0 * (a.x * b.x + a.y * b.y);
+                  BA = b.x * a.y - b.y * a.x;
+                  SRT = sqrt(4.0 * S * Q - R * R);
 
-          L0 = log(S);
-          L1 = log(S + Q + R);
-          A0 = atan2(R, SRT) / SRT;
-          A1 = atan2(2.0 * Q + R, SRT) / SRT;
-          A10 = A1 - A0;
-          L10 = L1 - L0;
+                  L0 = log(S);
+                  L1 = log(S + Q + R);
+                  A0 = atan2(R, SRT) / SRT;
+                  A1 = atan2(2.0 * Q + R, SRT) / SRT;
+                  A10 = A1 - A0;
+                  L10 = L1 - L0;
 
-          /* edge coef */
-          coef[j + config->cage_vertice_number] = (-absa / (4.0 * M_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
+                  /* edge coef */
+                  coef[j + config->cage_vertice_number] = (-absa / (4.0 * M_PI)) * ((4.0*S-(R*R)/Q) * A10 + (R / (2.0 * Q)) * L10 + L1 - 2.0);
 
-          if (isnan(coef[j + config->cage_vertice_number]))
-          {
-            coef[j + config->cage_vertice_number] = 0.0;
-          }
+                  if (isnan(coef[j + config->cage_vertice_number]))
+                    {
+                      coef[j + config->cage_vertice_number] = 0.0;
+                    }
 
-          /* vertice coef */
-          if (!gimp_operation_cage_coef_calc_is_on_straight (&v1, &v2, &p))
-          {
-            coef[j] += (BA / (2.0 * M_PI)) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
-            coef[(j+1)%config->cage_vertice_number] -= (BA / (2.0 * M_PI)) * (L10 / (2.0 * Q) - A10 * (R / Q));
-          }
+                  /* vertice coef */
+                  if (!gimp_operation_cage_coef_calc_is_on_straight (&v1, &v2, &p))
+                    {
+                      coef[j] += (BA / (2.0 * M_PI)) * (L10 /(2.0*Q) - A10 * (2.0 + R / Q));
+                      coef[(j+1)%config->cage_vertice_number] -= (BA / (2.0 * M_PI)) * (L10 / (2.0 * Q) - A10 * (R / Q));
+                    }
+                }
+            }
+
+          coef += 2 * config->cage_vertice_number;
+
+          /* update x and y coordinates */
+          x++;
+          if (x >= (it->roi->x + it->roi->width))
+            {
+              x = it->roi->x;
+              y++;
+            }
         }
-      }
-
-      coef += 2 * config->cage_vertice_number;
-
-      /* update x and y coordinates */
-      x++;
-      if (x >= (it->roi->x + it->roi->width))
-      {
-        x = it->roi->x;
-        y++;
-      }
     }
-  }
 
   return TRUE;
 }

@@ -22,6 +22,8 @@
 
 #include "core/core-types.h"
 
+#include "gegl/gimp-gegl-enums.h"
+
 
 /*  operations  */
 

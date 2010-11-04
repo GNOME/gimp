@@ -20,8 +20,10 @@
 #ifndef __GIMP_OPERATION_CAGE_COEF_CALC_H__
 #define __GIMP_OPERATION_CAGE_COEF_CALC_H__
 
+
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-source.h>
+
 
 enum
 {
@@ -42,9 +44,9 @@ typedef struct _GimpOperationCageCoefCalcClass GimpOperationCageCoefCalcClass;
 
 struct _GimpOperationCageCoefCalc
 {
-  GeglOperationSource   parent_instance;
+  GeglOperationSource  parent_instance;
 
-  GimpCageConfig       *config;
+  GimpCageConfig      *config;
 };
 
 struct _GimpOperationCageCoefCalcClass

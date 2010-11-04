@@ -1,5 +1,5 @@
 /* GIMP - The GNU Image Manipulation Program
- * 
+ *
  * gimpcageconfig.h
  * Copyright (C) 2010 Michael Muré <batolettre@gmail.com>
  *
@@ -20,10 +20,9 @@
 #ifndef __GIMP_CAGE_CONFIG_H__
 #define __GIMP_CAGE_CONFIG_H__
 
+
 #include "core/gimpimagemapconfig.h"
-#include <gegl.h>
-#include "gimp-gegl-types.h"
-#include "tools/tools-enums.h"
+
 
 #define GIMP_TYPE_CAGE_CONFIG            (gimp_cage_config_get_type ())
 #define GIMP_CAGE_CONFIG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CAGE_CONFIG, GimpCageConfig))
@@ -37,108 +36,42 @@ typedef struct _GimpCageConfigClass GimpCageConfigClass;
 
 struct _GimpCageConfig
 {
-  GimpImageMapConfig        parent_instance;
-  
-  gint                      cage_vertice_number; /* number of vertices used by the cage */
-  gint                      cage_vertices_max; /* number of vertices allocated in memory */
-  
-  gint                      offset_x;
-  gint                      offset_y;
+  GimpImageMapConfig  parent_instance;
 
-  GimpVector2              *cage_vertices; /* cage before deformation */
-  GimpVector2              *cage_vertices_d; /* cage after deformation */
-  gdouble                  *scaling_factor;
-  GimpVector2              *normal_d;
+  gint                cage_vertice_number; /* number of vertices used by the cage */
+  gint                cage_vertices_max; /* number of vertices allocated in memory */
+
+  gint                offset_x;
+  gint                offset_y;
+
+  GimpVector2        *cage_vertices; /* cage before deformation */
+  GimpVector2        *cage_vertices_d; /* cage after deformation */
+  gdouble            *scaling_factor;
+  GimpVector2        *normal_d;
 };
-
 
 struct _GimpCageConfigClass
 {
-  GimpImageMapConfigClass parent_class;
+  GimpImageMapConfigClass  parent_class;
 };
 
-GType         gimp_cage_config_get_type          (void) G_GNUC_CONST;
+GType         gimp_cage_config_get_type               (void) G_GNUC_CONST;
 
-/**
- * gimp_cage_config_add_cage_point:
- * @gcc: the cage config
- * @x: x value of the new point
- * @y: y value of the new point
- * 
- * Add a new point in the polygon of the cage, and make allocation if needed.
- * Point is added in both source and destination cage
- */
 void          gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
                                                        gdouble          x,
                                                        gdouble          y);
-
-/**
- * gimp_cage_config_remove_last_cage_point:
- * @gcc: the cage config
- * 
- * Remove the last point of the cage, in both source and destination cage
- */
 void          gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
-
-
-
-/**
- * gimp_cage_config_move_cage_point:
- * @gcc: the cage config
- * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
- * @point_number: the point of the cage to move
- * @x: new x value
- * @y: new y value
- * 
- * Move a point of the source or destination cage, according to the cage mode provided
- */ 
 void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
                                                        GimpCageMode     mode,
                                                        gint             point_number,
                                                        gdouble          x,
                                                        gdouble          y);
-
-/**
- * gimp_cage_config_get_bounding_box:
- * @gcc: the cage config
- * 
- * Compute the bounding box of the destination cage
- * 
- * Returns: the bounding box of the destination cage, as a GeglRectangle
- */
 GeglRectangle gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc);
-
-/**
- * gimp_cage_config_reverse_cage_if_needed:
- * @gcc: the cage config
- * 
- * Since the cage need to be defined counter-clockwise to have the topological inside in the actual 'physical' inside of the cage,
- * this function compute if the cage is clockwise or not, and reverse the cage if needed.
- */
 void          gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
+void          gimp_cage_config_reverse_cage           (GimpCageConfig  *gcc);
+gboolean      gimp_cage_config_point_inside           (GimpCageConfig  *gcc,
+                                                       gfloat           x,
+                                                       gfloat           y);
 
-/**
- * gimp_cage_config_reverse_cage:
- * @gcc: the cage config
- * 
- * When using non-simple cage (like a cage in 8), user may want to manually inverse inside and outside of the cage.
- * This function reverse the cage
- */
-void          gimp_cage_config_reverse_cage           (GimpCageConfig *gcc);
-
-
-/**
- * gimp_cage_config_point_inside:
- * @gcc: the cage config
- * @x: x coordinate of the point to test
- * @y: y coordinate of the point to test
- * 
- * Check if the given point is inside the cage. This test is done in the regard of the topological inside of the cage.
- * 
- * Returns: TRUE if the point is inside, FALSE if not.
- */
-gboolean      gimp_cage_config_point_inside           (GimpCageConfig *gcc,
-                                                       gfloat          x,
-                                                       gfloat          y);
 
 #endif /* __GIMP_CAGE_CONFIG_H__ */

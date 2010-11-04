@@ -19,8 +19,10 @@
 
 #include "config.h"
 
+#include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -47,15 +49,16 @@ enum
   PROP_FILL_PLAIN_COLOR
 };
 
-static void gimp_cage_options_set_property  (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
 
-static void gimp_cage_options_get_property  (GObject    *object,
-                                             guint       property_id,
-                                             GValue     *value,
-                                             GParamSpec *pspec);
+static void   gimp_cage_options_set_property (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void   gimp_cage_options_get_property (GObject    *object,
+                                              guint       property_id,
+                                              GValue     *value,
+                                              GParamSpec *pspec);
+
 
 G_DEFINE_TYPE (GimpCageOptions, gimp_cage_options,
                GIMP_TYPE_TRANSFORM_OPTIONS)
@@ -90,10 +93,10 @@ gimp_cage_options_init (GimpCageOptions *options)
 }
 
 static void
-gimp_cage_options_set_property  (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+gimp_cage_options_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
 {
   GimpCageOptions *options = GIMP_CAGE_OPTIONS (object);
 
@@ -102,7 +105,6 @@ gimp_cage_options_set_property  (GObject      *object,
     case PROP_CAGE_MODE:
       options->cage_mode = g_value_get_enum (value);
       break;
-
     case PROP_FILL_PLAIN_COLOR:
       options->fill_plain_color = g_value_get_boolean (value);
       break;
@@ -114,10 +116,10 @@ gimp_cage_options_set_property  (GObject      *object,
 }
 
 static void
-gimp_cage_options_get_property  (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
+gimp_cage_options_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
 {
   GimpCageOptions *options = GIMP_CAGE_OPTIONS (object);
 
@@ -126,7 +128,6 @@ gimp_cage_options_get_property  (GObject    *object,
     case PROP_CAGE_MODE:
       g_value_set_enum (value, options->cage_mode);
       break;
-
     case PROP_FILL_PLAIN_COLOR:
       g_value_set_boolean (value, options->fill_plain_color);
       break;
@@ -150,16 +151,14 @@ gimp_cage_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-
   mode = gimp_prop_enum_radio_box_new (config, "cage-mode", 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), mode, FALSE, FALSE, 0);
   gtk_widget_show (mode);
-
 
   button = gimp_prop_check_button_new (config, "fill-plain-color",
                                        _("Fill from first point"));
   gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  
+
   return vbox;
 }
