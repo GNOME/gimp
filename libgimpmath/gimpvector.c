@@ -468,6 +468,8 @@ gimp_vector2_rotate_val (GimpVector2 vector,
  * Compute a normalized perpendicular vector to @vector
  *
  * Returns: a #GimpVector2 perpendicular to @vector, with a length of 1.0.
+ * 
+ * Since: 2.8
  **/
 GimpVector2
 gimp_vector2_normal (GimpVector2  *vector)
@@ -490,6 +492,8 @@ gimp_vector2_normal (GimpVector2  *vector)
  * is passed by value rather than by reference.
  *
  * Returns: a #GimpVector2 perpendicular to @vector, with a length of 1.0.
+ *
+ * Since: 2.8
  **/
 GimpVector2
 gimp_vector2_normal_val (GimpVector2  vector)

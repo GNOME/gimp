@@ -29,7 +29,7 @@
 
 #include "core/core-types.h"
 #include "libgimpmath/gimpmathtypes.h"
-#include "libgimpbase/gimpbaseenums.h"
+#include "tools/tools-enums.h"
 
 #include "libgimpmath/gimpvector.h"
 #include <math.h>
