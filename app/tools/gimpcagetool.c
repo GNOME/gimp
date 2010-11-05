@@ -175,6 +175,8 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->image_map       = NULL;
 
   gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_TOOL_CURSOR_PERSPECTIVE);
 }
 
 static void
@@ -455,32 +457,25 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
                               GdkModifierType   state,
                               GimpDisplay      *display)
 {
-  GimpCageTool    *ct      = GIMP_CAGE_TOOL (tool);
-  GimpCageOptions *options = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
+  GimpCageTool       *ct       = GIMP_CAGE_TOOL (tool);
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_PLUS;
 
-  if (tool->display == NULL)
+  if (tool->display)
     {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
-                                                     display);
-    }
-  else
-    {
-      GimpCursorModifier modifier;
-
-      if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
-        {
-          modifier = GIMP_CURSOR_MODIFIER_ANCHOR;
-        }
-      else
+      if (ct->hovering_handle != -1)
         {
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
         }
-
-      gimp_tool_set_cursor (tool, display,
-                            gimp_tool_control_get_cursor (tool->control),
-                            gimp_tool_control_get_tool_cursor (tool->control),
-                            modifier);
+      else
+        {
+          if (ct->cage_complete)
+            modifier = GIMP_CURSOR_MODIFIER_BAD;
+        }
     }
+
+  gimp_tool_control_set_cursor_modifier (tool->control, modifier);
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
