@@ -215,10 +215,9 @@ static void
 gimp_cage_tool_start (GimpCageTool *ct,
                       GimpDisplay  *display)
 {
-  GimpTool     *tool      = GIMP_TOOL (ct);
-  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
-  GimpImage    *image     = gimp_display_get_image (display);
-  GimpDrawable *drawable  = gimp_image_get_active_drawable (image);
+  GimpTool     *tool     = GIMP_TOOL (ct);
+  GimpImage    *image    = gimp_display_get_image (display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
   gint          off_x;
   gint          off_y;
 
@@ -251,7 +250,7 @@ gimp_cage_tool_start (GimpCageTool *ct,
   ct->config->offset_x = off_x;
   ct->config->offset_y = off_y;
 
-  gimp_draw_tool_start (draw_tool, display);
+  gimp_draw_tool_start (GIMP_DRAW_TOOL (ct), display);
 }
 
 static gboolean
