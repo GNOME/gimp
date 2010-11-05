@@ -51,8 +51,6 @@ struct _GimpCageTool
   GeglBuffer     *coef;
 
   GimpImageMap   *image_map;
-
-  GeglNode       *node_preview;
 };
 
 struct _GimpCageToolClass

@@ -111,18 +111,12 @@ static void       gimp_cage_tool_switch_to_deform   (GimpCageTool          *ct);
 static void       gimp_cage_tool_remove_last_handle (GimpCageTool          *ct);
 static void       gimp_cage_tool_compute_coef       (GimpCageTool          *ct,
                                                      GimpDisplay           *display);
-static void       gimp_cage_tool_process            (GimpCageTool          *ct,
-                                                     GimpDisplay           *display);
-static void       gimp_cage_tool_process_drawable   (GimpCageTool          *ct,
-                                                     GimpDrawable          *drawable,
-                                                     GimpProgress          *progress);
 static void       gimp_cage_tool_create_image_map   (GimpCageTool          *ct,
                                                      GimpDrawable          *drawable);
 static void       gimp_cage_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 
-static GeglNode * gimp_cage_tool_get_render_node    (GimpCageTool          *ct,
-                                                     GeglNode              *parent);
+static GeglNode * gimp_cage_tool_create_render_node (GimpCageTool          *ct);
 
 
 G_DEFINE_TYPE (GimpCageTool, gimp_cage_tool, GIMP_TYPE_DRAW_TOOL)
@@ -178,7 +172,6 @@ gimp_cage_tool_init (GimpCageTool *self)
 
   self->coef              = NULL;
   self->image_map         = NULL;
-  self->node_preview      = NULL;
 }
 
 static void
@@ -689,31 +682,30 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 }
 
 static GeglNode *
-gimp_cage_tool_get_render_node (GimpCageTool *ct,
-                                GeglNode     *parent)
+gimp_cage_tool_create_render_node (GimpCageTool *ct)
 {
   GimpCageOptions *options  = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
   GeglNode        *coef, *cage, *render; /* Render nodes */
   GeglNode        *input, *output; /* Proxy nodes*/
   GeglNode        *node; /* wraper to be returned */
 
-  node = gegl_node_new_child (parent, NULL, NULL);
+  node = gegl_node_new ();
 
   input  = gegl_node_get_input_proxy  (node, "input");
   output = gegl_node_get_output_proxy (node, "output");
 
-  coef = gegl_node_new_child (ct->node_preview,
+  coef = gegl_node_new_child (node,
                               "operation", "gegl:buffer-source",
                               "buffer",    ct->coef,
                               NULL);
 
-  cage = gegl_node_new_child (parent,
+  cage = gegl_node_new_child (node,
                               "operation",        "gimp:cage-transform",
                               "config",           ct->config,
                               "fill_plain_color", options->fill_plain_color,
                               NULL);
 
-  render = gegl_node_new_child (parent,
+  render = gegl_node_new_child (node,
                                 "operation", "gegl:map-absolute",
                                 NULL);
 
@@ -741,21 +733,15 @@ gimp_cage_tool_create_image_map (GimpCageTool *ct,
 {
   GeglNode *node;
 
-  if (ct->node_preview)
-    {
-      g_object_unref (ct->node_preview);
-      ct->node_preview = NULL;
-    }
-
-  ct->node_preview = gegl_node_new ();
-
-  node = gimp_cage_tool_get_render_node (ct, ct->node_preview);
+  node = gimp_cage_tool_create_render_node (ct);
 
   ct->image_map = gimp_image_map_new (drawable,
                                       _("Cage transform"),
                                       node,
                                       NULL,
                                       NULL);
+
+  g_object_unref (node);
 
   g_signal_connect (ct->image_map, "flush",
                     G_CALLBACK (gimp_cage_tool_image_map_flush),
@@ -770,123 +756,6 @@ gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
 
   gimp_projection_flush_now (gimp_image_get_projection (image));
   gimp_display_flush_now (tool->display);
-}
-
-static void
-gimp_cage_tool_process (GimpCageTool *ct,
-                        GimpDisplay  *display)
-{
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpLayer    *layer    = gimp_image_get_active_layer (image);
-  GimpDrawable *drawable = GIMP_DRAWABLE (layer);
-  GimpDrawable *mask     = GIMP_DRAWABLE (gimp_layer_get_mask (layer));
-
-  g_return_if_fail (ct->coef);
-
-  if (GIMP_IS_DRAWABLE (drawable))
-    {
-      GimpProgress *progress;
-
-      progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                      _("Rendering cage transform"),
-                                      FALSE);
-
-      gimp_cage_tool_process_drawable (ct, drawable, progress);
-
-      gimp_progress_end (progress);
-
-      if (mask)
-        {
-          progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                          _("Rendering mask cage transform"),
-                                          FALSE);
-          gimp_cage_tool_process_drawable (ct, mask, progress);
-
-          gimp_progress_end (progress);
-        }
-
-      gimp_image_flush (image);
-
-      gimp_cage_tool_halt (ct);
-    }
-}
-
-static void
-gimp_cage_tool_process_drawable (GimpCageTool *ct,
-                                 GimpDrawable *drawable,
-                                 GimpProgress *progress)
-{
-  TileManager   *new_tiles = NULL;
-  TileManager   *old_tiles = NULL;
-  GeglRectangle  rect;
-  GeglProcessor *processor;
-  gdouble        value;
-
-  if (GIMP_IS_DRAWABLE (drawable))
-    {
-      GeglNode *gegl = gegl_node_new ();
-
-      /* reverse transform */
-      GeglNode *node, *input, *output;
-
-      old_tiles = gimp_drawable_get_tiles (drawable);
-
-      input  = gegl_node_new_child (gegl,
-                                    "operation",    "gimp:tilemanager-source",
-                                    "tile-manager", old_tiles,
-                                    "linear",       TRUE,
-                                    NULL);
-
-      node = gimp_cage_tool_get_render_node (ct, gegl);
-
-      new_tiles = gimp_drawable_get_shadow_tiles (drawable);
-      output = gegl_node_new_child (gegl,
-                                    "operation",    "gimp:tilemanager-sink",
-                                    "tile-manager", new_tiles,
-                                    "linear",       TRUE,
-                                    NULL);
-
-      gegl_node_connect_to (input, "output",
-                            node, "input");
-
-      gegl_node_connect_to (node, "output",
-                            output, "input");
-
-    /* Debug code sample for debugging coef calculation.*/
-
-    /*
-    debug = gegl_node_new_child (gegl,
-                                  "operation", "gegl:debugit",
-                                  NULL);
-
-    gegl_node_connect_to (coef, "output",
-                          debug, "input");
-
-    gegl_node_connect_to (debug, "output",
-                          output, "input");*/
-
-
-      processor = gegl_node_new_processor (output, NULL);
-
-      while (gegl_processor_work (processor, &value))
-        {
-          gimp_progress_set_value (progress, value);
-        }
-
-      rect.x      = 0;
-      rect.y      = 0;
-      rect.width  = tile_manager_width  (new_tiles);
-      rect.height = tile_manager_height (new_tiles);
-
-      gimp_drawable_merge_shadow_tiles (drawable, TRUE, _("Cage transform"));
-      gimp_drawable_free_shadow_tiles (drawable);
-
-      gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
-
-      g_object_unref (gegl);
-
-      gegl_processor_destroy (processor);
-    }
 }
 
 static void
@@ -924,12 +793,6 @@ gimp_cage_tool_halt (GimpCageTool *ct)
       gimp_tool_control_set_preserve (tool->control, FALSE);
 
       gimp_image_flush (gimp_display_get_image (tool->display));
-    }
-
-  if (ct->node_preview)
-    {
-      g_object_unref (ct->node_preview);
-      ct->node_preview = NULL;
     }
 
   tool->display  = NULL;
