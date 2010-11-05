@@ -57,7 +57,6 @@ G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
 
 #define parent_class gimp_cage_config_parent_class
 
-
 #ifdef DEBUG_CAGE
 static void
 print_cage (GimpCageConfig *gcc)
@@ -235,6 +234,8 @@ gimp_cage_config_move_cage_point (GimpCageConfig  *gcc,
     {
       gcc->cage_vertices[point_number].x = x + DELTA - gcc->offset_x;
       gcc->cage_vertices[point_number].y = y + DELTA - gcc->offset_y;
+      gcc->cage_vertices_d[point_number].x = x + DELTA - gcc->offset_x;
+      gcc->cage_vertices_d[point_number].y = y + DELTA - gcc->offset_y;
     }
   else
     {
