@@ -220,12 +220,14 @@ gimp_cage_tool_start (GimpCageTool *ct,
   if (ct->config)
     {
       g_object_unref (ct->config);
+      ct->config = NULL;
     }
 
   if (ct->image_map)
     {
       gimp_image_map_abort (ct->image_map);
       g_object_unref (ct->image_map);
+      ct->image_map = NULL;
     }
 
   ct->config            = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
@@ -491,6 +493,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   GimpCageTool    *ct        = GIMP_CAGE_TOOL (draw_tool);
   GimpCageOptions *options   = GIMP_CAGE_TOOL_GET_OPTIONS (ct);
   GimpCageConfig  *config    = ct->config;
+  GimpCanvasGroup *stroke_group;
   gint             i         = 0;
   gint             on_handle = -1;
   GimpVector2     *vertices;
@@ -499,6 +502,8 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   if (config->n_cage_vertices <= 0)
     return;
 
+  stroke_group = gimp_draw_tool_add_stroke_group (draw_tool);
+
   if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
     vertices = config->cage_vertices;
   else
@@ -506,10 +511,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 
   n_vertices = config->n_cage_vertices;
 
-  /*gimp_draw_tool_add_lines (draw_tool,
-                             vertices,
-                             config->n_cage_vertices,
-                             FALSE);*/
+  gimp_draw_tool_push_group (draw_tool, stroke_group);
 
   if (! ct->cage_complete && ct->cursor_position.x != -1000)
     {
@@ -528,6 +530,8 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                vertices[0].y + ct->config->offset_y);
     }
 
+  gimp_draw_tool_pop_group (draw_tool);
+
   on_handle = gimp_cage_tool_is_on_handle (config,
                                            draw_tool,
                                            draw_tool->display,
@@ -538,17 +542,25 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 
   for (i = 0; i < n_vertices; i++)
     {
-      GimpHandleType handle = GIMP_HANDLE_CIRCLE;
+      GimpHandleType handle;
+
+      if (i > 0)
+        {
+          gimp_draw_tool_push_group (draw_tool, stroke_group);
+
+          gimp_draw_tool_add_line (draw_tool,
+                                   vertices[i - 1].x + ct->config->offset_x,
+                                   vertices[i - 1].y + ct->config->offset_y,
+                                   vertices[i].x + ct->config->offset_x,
+                                   vertices[i].y + ct->config->offset_y);
+
+          gimp_draw_tool_pop_group (draw_tool);
+        }
 
       if (i == on_handle)
         handle = GIMP_HANDLE_FILLED_CIRCLE;
-
-      if (i > 0)
-        gimp_draw_tool_add_line (draw_tool,
-                                 vertices[i - 1].x + ct->config->offset_x,
-                                 vertices[i - 1].y + ct->config->offset_y,
-                                 vertices[i].x + ct->config->offset_x,
-                                 vertices[i].y + ct->config->offset_y);
+      else
+        handle = GIMP_HANDLE_CIRCLE;
 
       gimp_draw_tool_add_handle (draw_tool,
                                  handle,
