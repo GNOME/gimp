@@ -46,6 +46,7 @@ struct _GimpCageTool
 
   gdouble         cursor_x;
   gdouble         cursor_y;
+  gint            hovering_handle;
   gint            moving_handle;
   gboolean        cage_complete;
 
