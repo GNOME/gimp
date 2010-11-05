@@ -572,7 +572,7 @@ new_callback (GtkAction   *action,
           gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv),
                                           &iter);
 
-          adj = gtk_tree_view_get_vadjustment (tv);
+          adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (tv));
           gtk_adjustment_set_value (adj, gtk_adjustment_get_upper (adj));
         }
     }
@@ -614,7 +614,7 @@ duplicate_callback (GtkAction   *action,
 
               gtk_tree_selection_select_iter (sel, &iter);
 
-              adj = gtk_tree_view_get_vadjustment (tv);
+              adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (tv));
               gtk_adjustment_set_value (adj, gtk_adjustment_get_upper (adj));
             }
         }
