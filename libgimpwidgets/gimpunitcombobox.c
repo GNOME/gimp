@@ -63,7 +63,7 @@ gimp_unit_combo_box_init (GimpUnitComboBox *combo)
   cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
-                                  "text", GIMP_UNIT_STORE_UNIT_PLURAL,
+                                  "text", GIMP_UNIT_STORE_UNIT_LONG_FORMAT,
                                   NULL);
 }
 
@@ -88,7 +88,7 @@ gimp_unit_combo_box_style_set (GtkWidget *widget,
                        NULL);
   gtk_cell_layout_pack_start (layout, cell, TRUE);
   gtk_cell_layout_set_attributes (layout, cell,
-                                  "text",  GIMP_UNIT_STORE_UNIT_ABBREVIATION,
+                                  "text",  GIMP_UNIT_STORE_UNIT_SHORT_FORMAT,
                                   NULL);
 }
 
