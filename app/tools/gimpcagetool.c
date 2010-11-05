@@ -614,7 +614,7 @@ gimp_cage_tool_is_on_handle (GimpCageConfig *gcc,
                                                   x, y,
                                                   vert_x, vert_y);
 
-      if (dist <= (handle_size * handle_size))
+      if (dist <= SQR (handle_size / 2))
         return i;
     }
 
