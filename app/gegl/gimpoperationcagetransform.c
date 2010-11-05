@@ -83,23 +83,22 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
   GeglOperationClass         *operation_class = GEGL_OPERATION_CLASS (klass);
   GeglOperationComposerClass *filter_class    = GEGL_OPERATION_COMPOSER_CLASS (klass);
 
-  object_class->get_property          = gimp_operation_cage_transform_get_property;
-  object_class->set_property          = gimp_operation_cage_transform_set_property;
-  object_class->finalize              = gimp_operation_cage_transform_finalize;
+  object_class->get_property               = gimp_operation_cage_transform_get_property;
+  object_class->set_property               = gimp_operation_cage_transform_set_property;
+  object_class->finalize                   = gimp_operation_cage_transform_finalize;
 
-  /* FIXME: wrong categories and name, to appears in the gegl tool */
-  operation_class->name         = "gimp:cage_transform";
-  operation_class->categories   = "transform";
-  operation_class->description  = "GIMP cage reverse transform";
+  operation_class->name                    = "gimp:cage-transform";
+  operation_class->categories              = "transform";
+  operation_class->description             = "GIMP cage reverse transform";
 
-  operation_class->prepare      = gimp_operation_cage_transform_prepare;
+  operation_class->prepare                 = gimp_operation_cage_transform_prepare;
 
-  operation_class->get_required_for_output  = gimp_operation_cage_transform_get_required_for_output;
-  operation_class->get_cached_region        = gimp_operation_cage_transform_get_cached_region;
-  operation_class->no_cache                 = FALSE;
-  operation_class->get_bounding_box         = gimp_operation_cage_transform_get_bounding_box;
+  operation_class->get_required_for_output = gimp_operation_cage_transform_get_required_for_output;
+  operation_class->get_cached_region       = gimp_operation_cage_transform_get_cached_region;
+  operation_class->no_cache                = FALSE;
+  operation_class->get_bounding_box        = gimp_operation_cage_transform_get_bounding_box;
 
-  filter_class->process         = gimp_operation_cage_transform_process;
+  filter_class->process                    = gimp_operation_cage_transform_process;
 
   g_object_class_install_property (object_class,
                                    GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG,
@@ -108,7 +107,8 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class, GIMP_OPERATION_CAGE_TRANSFORM_PROP_FILL,
+  g_object_class_install_property (object_class,
+                                   GIMP_OPERATION_CAGE_TRANSFORM_PROP_FILL,
                                    g_param_spec_boolean ("fill_plain_color",
                                                          "Blocking render",
                                                          "Fill the original position of the cage with a plain color",

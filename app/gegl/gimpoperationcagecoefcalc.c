@@ -59,7 +59,7 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
   GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
 
-  operation_class->name               = "gimp:cage_coef_calc";
+  operation_class->name               = "gimp:cage-coef-calc";
   operation_class->categories         = "transform";
   operation_class->description        = "GIMP cage transform coefficient calc";
 
@@ -85,7 +85,6 @@ gimp_operation_cage_coef_calc_class_init (GimpOperationCageCoefCalcClass *klass)
 static void
 gimp_operation_cage_coef_calc_init (GimpOperationCageCoefCalc *self)
 {
-
 }
 
 static void

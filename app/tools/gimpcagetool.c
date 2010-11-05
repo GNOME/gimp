@@ -664,7 +664,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   gegl = gegl_node_new ();
 
   input = gegl_node_new_child (gegl,
-                               "operation", "gimp:cage_coef_calc",
+                               "operation", "gimp:cage-coef-calc",
                                "config",    ct->config,
                                NULL);
 
@@ -712,7 +712,7 @@ gimp_cage_tool_get_render_node (GimpCageTool *ct,
                               NULL);
 
   cage = gegl_node_new_child (parent,
-                              "operation",        "gimp:cage_transform",
+                              "operation",        "gimp:cage-transform",
                               "config",           ct->config,
                               "fill_plain_color", options->fill_plain_color,
                               NULL);
