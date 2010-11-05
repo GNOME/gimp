@@ -116,9 +116,10 @@ static void       gimp_cage_tool_process            (GimpCageTool          *ct,
 static void       gimp_cage_tool_process_drawable   (GimpCageTool          *ct,
                                                      GimpDrawable          *drawable,
                                                      GimpProgress          *progress);
-static void       gimp_cage_tool_prepare_preview    (GimpCageTool          *ct,
+static void       gimp_cage_tool_create_image_map   (GimpCageTool          *ct,
                                                      GimpDisplay           *display);
-static gboolean   gimp_cage_tool_update_preview     (GimpTool              *tool);
+static void       gimp_cage_tool_image_map_flush    (GimpImageMap          *image_map,
+                                                     GimpTool              *tool);
 
 static GeglNode * gimp_cage_tool_get_render_node    (GimpCageTool          *ct,
                                                      GeglNode              *parent);
@@ -178,8 +179,6 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->coef              = NULL;
   self->image_map         = NULL;
   self->node_preview      = NULL;
-
-  self->idle_id           = 0;
 }
 
 static void
@@ -271,16 +270,17 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_ISO_Enter:
       if (ct->cage_complete)
         {
-          gimp_image_map_abort (ct->image_map);
+          gimp_tool_control_set_preserve (tool->control, TRUE);
+
+          gimp_image_map_commit (ct->image_map);
           g_object_unref (ct->image_map);
           ct->image_map = NULL;
-          if (ct->idle_id)
-            {
-              g_source_remove (ct->idle_id);
-              ct->idle_id = 0;
-            }
 
-          gimp_cage_tool_process (ct, display);
+          gimp_tool_control_set_preserve (tool->control, FALSE);
+
+          gimp_image_flush (gimp_display_get_image (display));
+
+          gimp_cage_tool_halt (ct);
         }
       return TRUE;
 
@@ -385,10 +385,9 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                                                       coords->x,
                                                       coords->y,
                                                       HANDLE_SIZE);
-      if (ct->handle_moved > 0 && ct->idle_id > 0)
+      if (ct->handle_moved > 0 && ct->image_map)
         {
-          g_source_remove(ct->idle_id);
-          ct->idle_id = 0; /*Stop preview update for now*/
+          gimp_image_map_abort (ct->image_map);
         }
     }
 
@@ -409,7 +408,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
 
       gimp_cage_config_reverse_cage_if_needed (config);
       gimp_cage_tool_compute_coef (ct, display);
-      gimp_cage_tool_prepare_preview (ct, display);
+      gimp_cage_tool_create_image_map (ct, display);
     }
 }
 
@@ -449,14 +448,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
       visible.x -= off_x;
       visible.y -= off_y;
 
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
-
       gimp_image_map_apply (ct->image_map, &visible);
-
-      ct->idle_id = g_idle_add ((GSourceFunc) gimp_cage_tool_update_preview,
-                                tool);
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (ct));
     }
 
   ct->handle_moved = -1;
@@ -735,12 +727,13 @@ gimp_cage_tool_get_render_node (GimpCageTool *ct,
 
   gegl_node_connect_to (render, "output",
                         output, "input");
+
   return node;
 }
 
 static void
-gimp_cage_tool_prepare_preview (GimpCageTool *ct,
-                                GimpDisplay  *display)
+gimp_cage_tool_create_image_map (GimpCageTool *ct,
+                                 GimpDisplay  *display)
 {
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
@@ -752,7 +745,7 @@ gimp_cage_tool_prepare_preview (GimpCageTool *ct,
       ct->node_preview = NULL;
     }
 
-  ct->node_preview  = gegl_node_new ();
+  ct->node_preview = gegl_node_new ();
 
   node = gimp_cage_tool_get_render_node (ct, ct->node_preview);
 
@@ -761,30 +754,20 @@ gimp_cage_tool_prepare_preview (GimpCageTool *ct,
                                       node,
                                       NULL,
                                       NULL);
+
+  g_signal_connect (ct->image_map, "flush",
+                    G_CALLBACK (gimp_cage_tool_image_map_flush),
+                    ct);
 }
 
-static gboolean
-gimp_cage_tool_update_preview (GimpTool *tool)
+static void
+gimp_cage_tool_image_map_flush (GimpImageMap *image_map,
+                                GimpTool     *tool)
 {
-  GimpCageTool *ct    = GIMP_CAGE_TOOL (tool);
-  GimpImage    *image = gimp_display_get_image (tool->display);
+  GimpImage *image = gimp_display_get_image (tool->display);
 
-  if (! ct->image_map)
-    {
-      /*Destroyed, bailing out*/
-      ct->idle_id = 0;
-      return FALSE;
-    }
-
-  if (! gimp_image_map_is_busy (ct->image_map))
-    {
-      ct->idle_id = 0;
-      gimp_projection_flush_now (gimp_image_get_projection (image));
-      gimp_display_flush_now (tool->display);
-      return FALSE;
-    }
-
-  return TRUE;
+  gimp_projection_flush_now (gimp_image_get_projection (image));
+  gimp_display_flush_now (tool->display);
 }
 
 static void
@@ -930,12 +913,6 @@ gimp_cage_tool_halt (GimpCageTool *ct)
 
   if (ct->image_map)
     {
-      if (ct->idle_id > 0)
-        {
-          g_source_remove (ct->idle_id);
-          ct->idle_id = 0;
-        }
-
       gimp_tool_control_set_preserve (tool->control, TRUE);
 
       gimp_image_map_abort (ct->image_map);
