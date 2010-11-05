@@ -117,7 +117,7 @@ static void       gimp_cage_tool_process_drawable   (GimpCageTool          *ct,
                                                      GimpDrawable          *drawable,
                                                      GimpProgress          *progress);
 static void       gimp_cage_tool_create_image_map   (GimpCageTool          *ct,
-                                                     GimpDisplay           *display);
+                                                     GimpDrawable          *drawable);
 static void       gimp_cage_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 
@@ -403,12 +403,16 @@ gimp_cage_tool_button_press (GimpTool            *tool,
    */
   if (ct->handle_moved == 0 && config->n_cage_vertices > 2 && ! ct->coef)
     {
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
       ct->cage_complete = TRUE;
       gimp_cage_tool_switch_to_deform (ct);
 
       gimp_cage_config_reverse_cage_if_needed (config);
       gimp_cage_tool_compute_coef (ct, display);
-      gimp_cage_tool_create_image_map (ct, display);
+
+      gimp_cage_tool_create_image_map (ct, drawable);
     }
 }
 
@@ -733,11 +737,9 @@ gimp_cage_tool_get_render_node (GimpCageTool *ct,
 
 static void
 gimp_cage_tool_create_image_map (GimpCageTool *ct,
-                                 GimpDisplay  *display)
+                                 GimpDrawable *drawable)
 {
-  GimpImage    *image    = gimp_display_get_image (display);
-  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  GeglNode     *node;
+  GeglNode *node;
 
   if (ct->node_preview)
     {
