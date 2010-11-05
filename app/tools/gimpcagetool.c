@@ -164,14 +164,14 @@ gimp_cage_tool_class_init (GimpCageToolClass *klass)
 static void
 gimp_cage_tool_init (GimpCageTool *self)
 {
-  self->config            = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
-  self->cursor_position.x = 0;
-  self->cursor_position.y = 0;
-  self->moving_handle     = -1;
-  self->cage_complete     = FALSE;
+  self->config        = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
+  self->cursor_x      = 0;
+  self->cursor_y      = 0;
+  self->moving_handle = -1;
+  self->cage_complete = FALSE;
 
-  self->coef              = NULL;
-  self->image_map         = NULL;
+  self->coef          = NULL;
+  self->image_map     = NULL;
 }
 
 static void
@@ -230,11 +230,11 @@ gimp_cage_tool_start (GimpCageTool *ct,
       ct->image_map = NULL;
     }
 
-  ct->config            = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
-  ct->cursor_position.x = G_MINDOUBLE;
-  ct->cursor_position.y = G_MINDOUBLE;
-  ct->moving_handle     = -1;
-  ct->cage_complete     = FALSE;
+  ct->config        = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
+  ct->cursor_x      = G_MINDOUBLE;
+  ct->cursor_y      = G_MINDOUBLE;
+  ct->moving_handle = -1;
+  ct->cage_complete = FALSE;
 
   /* Setting up cage offset to convert the cage point coords to
    * drawable coords
@@ -342,8 +342,8 @@ gimp_cage_tool_oper_update (GimpTool         *tool,
     {
       gimp_draw_tool_pause (draw_tool);
 
-      ct->cursor_position.x = coords->x;
-      ct->cursor_position.y = coords->y;
+      ct->cursor_x = coords->x;
+      ct->cursor_y = coords->y;
 
       gimp_draw_tool_resume (draw_tool);
     }
@@ -509,13 +509,13 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-  if (! ct->cage_complete && ct->cursor_position.x != G_MINDOUBLE)
+  if (! ct->cage_complete && ct->cursor_x != G_MINDOUBLE)
     {
       gimp_draw_tool_add_line (draw_tool,
                                vertices[n_vertices - 1].x + ct->config->offset_x,
                                vertices[n_vertices - 1].y + ct->config->offset_y,
-                               ct->cursor_position.x,
-                               ct->cursor_position.y);
+                               ct->cursor_x,
+                               ct->cursor_y);
     }
   else
     {
@@ -532,8 +532,8 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                            draw_tool,
                                            draw_tool->display,
                                            options->cage_mode,
-                                           ct->cursor_position.x,
-                                           ct->cursor_position.y,
+                                           ct->cursor_x,
+                                           ct->cursor_y,
                                            HANDLE_SIZE);
 
   for (i = 0; i < n_vertices; i++)
