@@ -402,7 +402,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   /* user is clicking on the first handle, we close the cage and
    * switch to deform mode
    */
-  if (ct->handle_moved == 0 && config->cage_vertice_number > 2 && ! ct->coef)
+  if (ct->handle_moved == 0 && config->n_cage_vertices > 2 && ! ct->coef)
     {
       ct->cage_complete = TRUE;
       gimp_cage_tool_switch_to_deform (ct);
@@ -505,8 +505,9 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   gint             i         = 0;
   gint             on_handle = -1;
   GimpVector2     *vertices;
+  gint             n_vertices;
 
-  if (config->cage_vertice_number <= 0)
+  if (config->n_cage_vertices <= 0)
     return;
 
   if (options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
@@ -514,24 +515,26 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
   else
     vertices = config->cage_vertices_d;
 
+  n_vertices = config->n_cage_vertices;
+
   /*gimp_draw_tool_add_lines (draw_tool,
                              vertices,
-                             config->cage_vertice_number,
+                             config->n_cage_vertices,
                              FALSE);*/
 
   if (! ct->cage_complete && ct->cursor_position.x != -1000)
     {
       gimp_draw_tool_add_line (draw_tool,
-                               vertices[config->cage_vertice_number - 1].x + ct->config->offset_x,
-                               vertices[config->cage_vertice_number - 1].y + ct->config->offset_y,
+                               vertices[n_vertices - 1].x + ct->config->offset_x,
+                               vertices[n_vertices - 1].y + ct->config->offset_y,
                                ct->cursor_position.x,
                                ct->cursor_position.y);
     }
   else
     {
       gimp_draw_tool_add_line (draw_tool,
-                               vertices[config->cage_vertice_number - 1].x + ct->config->offset_x,
-                               vertices[config->cage_vertice_number - 1].y + ct->config->offset_y,
+                               vertices[n_vertices - 1].x + ct->config->offset_x,
+                               vertices[n_vertices - 1].y + ct->config->offset_y,
                                vertices[0].x + ct->config->offset_x,
                                vertices[0].y + ct->config->offset_y);
     }
@@ -544,7 +547,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                            ct->cursor_position.y,
                                            HANDLE_SIZE);
 
-  for (i = 0; i < config->cage_vertice_number; i++)
+  for (i = 0; i < n_vertices; i++)
     {
       GimpHandleType handle = GIMP_HANDLE_CIRCLE;
 
@@ -583,10 +586,10 @@ gimp_cage_tool_is_on_handle (GimpCageConfig *gcc,
 
   g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), -1);
 
-  if (gcc->cage_vertice_number == 0)
+  if (gcc->n_cage_vertices == 0)
     return -1;
 
-  for (i = 0; i < gcc->cage_vertice_number; i++)
+  for (i = 0; i < gcc->n_cage_vertices; i++)
     {
       if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
         {
@@ -652,7 +655,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
     }
 
   format = babl_format_n (babl_type ("float"),
-                          config->cage_vertice_number * 2);
+                          config->n_cage_vertices * 2);
 
   progress = gimp_progress_start (GIMP_PROGRESS (display),
                                   _("Coefficient computation"),

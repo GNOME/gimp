@@ -192,7 +192,7 @@ gimp_operation_cage_transform_prepare (GeglOperation  *operation)
 
   gegl_operation_set_format (operation, "input",
                              babl_format_n (babl_type ("float"),
-                                            2 * config->cage_vertice_number));
+                                            2 * config->n_cage_vertices));
   gegl_operation_set_format (operation, "output",
                              babl_format_n (babl_type ("float"), 2));
 }
@@ -476,7 +476,7 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   gint           i;
   GeglRectangle  rect;
   GimpVector2    result;
-  gint           cvn = config->cage_vertice_number;
+  gint           cvn = config->n_cage_vertices;
   Babl          *format_coef = babl_format_n (babl_type ("float"), 2 * cvn);
 
   rect.height = 1;
@@ -484,7 +484,7 @@ gimp_cage_transform_compute_destination (GimpCageConfig *config,
   rect.x      = coords.x;
   rect.y      = coords.y;
 
-  coef = g_malloc (config->cage_vertice_number * 2 * sizeof(gfloat));
+  coef = g_malloc (config->n_cage_vertices * 2 * sizeof(gfloat));
 
   gegl_buffer_get (coef_buf, 1, &rect, format_coef, coef, GEGL_AUTO_ROWSTRIDE);
 

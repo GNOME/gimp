@@ -38,14 +38,14 @@ struct _GimpCageConfig
 {
   GimpImageMapConfig  parent_instance;
 
-  gint                cage_vertice_number; /* number of vertices used by the cage */
-  gint                cage_vertices_max; /* number of vertices allocated in memory */
+  gint                n_cage_vertices;   /* vertices used by the cage */
+  gint                max_cage_vertices; /* vertices allocated        */
 
   gint                offset_x;
   gint                offset_y;
 
-  GimpVector2        *cage_vertices; /* cage before deformation */
-  GimpVector2        *cage_vertices_d; /* cage after deformation */
+  GimpVector2        *cage_vertices;   /* cage before deformation */
+  GimpVector2        *cage_vertices_d; /* cage after deformation  */
   gdouble            *scaling_factor;
   GimpVector2        *normal_d;
 };
