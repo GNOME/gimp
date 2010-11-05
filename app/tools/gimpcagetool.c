@@ -231,8 +231,8 @@ gimp_cage_tool_start (GimpCageTool *ct,
     }
 
   ct->config            = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
-  ct->cursor_position.x = -1000;
-  ct->cursor_position.y = -1000;
+  ct->cursor_position.x = G_MINDOUBLE;
+  ct->cursor_position.y = G_MINDOUBLE;
   ct->moving_handle     = -1;
   ct->cage_complete     = FALSE;
 
@@ -509,7 +509,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
 
   gimp_draw_tool_push_group (draw_tool, stroke_group);
 
-  if (! ct->cage_complete && ct->cursor_position.x != -1000)
+  if (! ct->cage_complete && ct->cursor_position.x != G_MINDOUBLE)
     {
       gimp_draw_tool_add_line (draw_tool,
                                vertices[n_vertices - 1].x + ct->config->offset_x,
