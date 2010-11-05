@@ -307,7 +307,7 @@ gimp_template_editor_constructor (GType                  type,
   gtk_widget_show (hbox);
 
   editor->resolution_se =
-    gimp_size_entry_new (0, editor->template->resolution_unit, _("pixels/%a"),
+    gimp_size_entry_new (0, editor->template->resolution_unit, _("pixels/%s"),
                          FALSE, FALSE, FALSE, SB_WIDTH,
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
