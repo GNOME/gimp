@@ -379,6 +379,27 @@ gimp_size_entry_new (gint                       number_of_fields,
   gimp_unit_store_set_has_pixels (store, gse->menu_show_pixels);
   gimp_unit_store_set_has_percent (store, gse->menu_show_percent);
 
+  if (unit_format)
+    {
+      gchar *short_format = g_strdup (unit_format);
+      gchar *p;
+
+      p = strstr (short_format, "%s");
+      if (p)
+        strcpy (p, "%a");
+
+      p = strstr (short_format, "%p");
+      if (p)
+        strcpy (p, "%a");
+
+      g_object_set (store,
+                    "short-format", short_format,
+                    "long-format",  unit_format,
+                    NULL);
+
+      g_free (short_format);
+    }
+
   gse->unitmenu = gimp_unit_combo_box_new_with_model (store);
   g_object_unref (store);
 
