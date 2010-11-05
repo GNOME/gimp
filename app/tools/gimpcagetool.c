@@ -380,10 +380,6 @@ gimp_cage_tool_button_press (GimpTool            *tool,
                                                       coords->x,
                                                       coords->y,
                                                       HANDLE_SIZE);
-      if (ct->handle_moved > 0 && ct->image_map)
-        {
-          gimp_image_map_abort (ct->image_map);
-        }
     }
 
   if (ct->handle_moved < 0 && ! ct->cage_complete)
