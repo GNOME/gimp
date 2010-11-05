@@ -35,7 +35,9 @@ enum
   PROP_0,
   PROP_NUM_VALUES,
   PROP_HAS_PIXELS,
-  PROP_HAS_PERCENT
+  PROP_HAS_PERCENT,
+  PROP_SHORT_FORMAT,
+  PROP_LONG_FORMAT
 };
 
 typedef struct
@@ -43,6 +45,9 @@ typedef struct
   gint      num_values;
   gboolean  has_pixels;
   gboolean  has_percent;
+
+  gchar    *short_format;
+  gchar    *long_format;
 
   gdouble  *values;
   gdouble  *resolutions;
@@ -112,6 +117,8 @@ static GType column_types[GIMP_UNIT_STORE_UNIT_COLUMNS] =
   G_TYPE_STRING,
   G_TYPE_STRING,
   G_TYPE_STRING,
+  G_TYPE_STRING,
+  G_TYPE_STRING,
   G_TYPE_STRING
 };
 
@@ -146,6 +153,18 @@ gimp_unit_store_class_init (GimpUnitStoreClass *klass)
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_SHORT_FORMAT,
+                                   g_param_spec_string ("short-format",
+                                                        NULL, NULL,
+                                                        "%a",
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_LONG_FORMAT,
+                                   g_param_spec_string ("long-format",
+                                                        NULL, NULL,
+                                                        "%p",
+                                                        GIMP_PARAM_READWRITE));
+
   g_type_class_add_private (object_class, sizeof (GimpUnitStorePrivate));
 }
 
@@ -154,8 +173,10 @@ gimp_unit_store_init (GimpUnitStore *store)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (store);
 
-  private->has_pixels  = TRUE;
-  private->has_percent = FALSE;
+  private->has_pixels   = TRUE;
+  private->has_percent  = FALSE;
+  private->short_format = g_strdup ("%a");
+  private->long_format  = g_strdup ("%p");
 }
 
 static void
@@ -179,6 +200,18 @@ static void
 gimp_unit_store_finalize (GObject *object)
 {
   GimpUnitStorePrivate *private = GET_PRIVATE (object);
+
+  if (private->short_format)
+    {
+      g_free (private->short_format);
+      private->short_format = NULL;
+    }
+
+  if (private->long_format)
+    {
+      g_free (private->long_format);
+      private->long_format = NULL;
+    }
 
   if (private->num_values > 0)
     {
@@ -217,6 +250,18 @@ gimp_unit_store_set_property (GObject      *object,
       gimp_unit_store_set_has_percent (GIMP_UNIT_STORE (object),
                                        g_value_get_boolean (value));
       break;
+    case PROP_SHORT_FORMAT:
+      g_free (private->short_format);
+      private->short_format = g_value_dup_string (value);
+      if (! private->short_format)
+        private->short_format = g_strdup ("%a");
+      break;
+    case PROP_LONG_FORMAT:
+      g_free (private->long_format);
+      private->long_format = g_value_dup_string (value);
+      if (! private->long_format)
+        private->long_format = g_strdup ("%a");
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -242,6 +287,12 @@ gimp_unit_store_get_property (GObject      *object,
       break;
     case PROP_HAS_PERCENT:
       g_value_set_boolean (value, private->has_percent);
+      break;
+    case PROP_SHORT_FORMAT:
+      g_value_set_string (value, private->short_format);
+      break;
+    case PROP_LONG_FORMAT:
+      g_value_set_string (value, private->long_format);
       break;
 
     default:
@@ -406,6 +457,16 @@ gimp_unit_store_tree_model_get_value (GtkTreeModel *tree_model,
           break;
         case GIMP_UNIT_STORE_UNIT_PLURAL:
           g_value_set_static_string (value, gimp_unit_get_plural (unit));
+          break;
+        case GIMP_UNIT_STORE_UNIT_SHORT_FORMAT:
+          g_value_take_string (value,
+                               gimp_unit_format_string (private->short_format,
+                                                        unit));
+          break;
+        case GIMP_UNIT_STORE_UNIT_LONG_FORMAT:
+          g_value_take_string (value,
+                               gimp_unit_format_string (private->long_format,
+                                                        unit));
           break;
 
         default:
