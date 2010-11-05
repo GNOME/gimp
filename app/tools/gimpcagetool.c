@@ -167,7 +167,7 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->config            = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   self->cursor_position.x = 0;
   self->cursor_position.y = 0;
-  self->handle_moved      = -1;
+  self->moving_handle     = -1;
   self->cage_complete     = FALSE;
 
   self->coef              = NULL;
@@ -233,7 +233,7 @@ gimp_cage_tool_start (GimpCageTool *ct,
   ct->config            = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   ct->cursor_position.x = -1000;
   ct->cursor_position.y = -1000;
-  ct->handle_moved      = -1;
+  ct->moving_handle     = -1;
   ct->cage_complete     = FALSE;
 
   /* Setting up cage offset to convert the cage point coords to
@@ -304,11 +304,11 @@ gimp_cage_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  if (ct->handle_moved >= 0)
+  if (ct->moving_handle >= 0)
     {
       gimp_cage_config_move_cage_point (config,
                                         options->cage_mode,
-                                        ct->handle_moved,
+                                        ct->moving_handle,
                                         coords->x,
                                         coords->y);
     }
@@ -371,18 +371,18 @@ gimp_cage_tool_button_press (GimpTool            *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
 
-  if (ct->handle_moved < 0)
+  if (ct->moving_handle < 0)
     {
-      ct->handle_moved = gimp_cage_tool_is_on_handle (config,
-                                                      GIMP_DRAW_TOOL (ct),
-                                                      display,
-                                                      options->cage_mode,
-                                                      coords->x,
-                                                      coords->y,
-                                                      HANDLE_SIZE);
+      ct->moving_handle = gimp_cage_tool_is_on_handle (config,
+                                                       GIMP_DRAW_TOOL (ct),
+                                                       display,
+                                                       options->cage_mode,
+                                                       coords->x,
+                                                       coords->y,
+                                                       HANDLE_SIZE);
     }
 
-  if (ct->handle_moved < 0 && ! ct->cage_complete)
+  if (ct->moving_handle < 0 && ! ct->cage_complete)
     {
       gimp_cage_config_add_cage_point (config, coords->x, coords->y);
     }
@@ -392,7 +392,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
   /* user is clicking on the first handle, we close the cage and
    * switch to deform mode
    */
-  if (ct->handle_moved == 0 && config->n_cage_vertices > 2 && ! ct->coef)
+  if (ct->moving_handle == 0 && config->n_cage_vertices > 2 && ! ct->coef)
     {
       GimpImage    *image    = gimp_display_get_image (display);
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
@@ -417,7 +417,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
 {
   GimpCageTool *ct = GIMP_CAGE_TOOL (tool);
 
-  if (ct->coef && ct->handle_moved > -1)
+  if (ct->coef && ct->moving_handle > -1)
     {
       GimpDisplayShell *shell = gimp_display_get_shell (tool->display);
       GimpItem         *item  = GIMP_ITEM (tool->drawable);
@@ -446,7 +446,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
       gimp_image_map_apply (ct->image_map, &visible);
     }
 
-  ct->handle_moved = -1;
+  ct->moving_handle = -1;
 }
 
 static void

@@ -45,7 +45,7 @@ struct _GimpCageTool
   GimpCageConfig *config;
 
   GimpVector2     cursor_position;
-  gint            handle_moved;
+  gint            moving_handle;
   gboolean        cage_complete;
 
   GeglBuffer     *coef;
