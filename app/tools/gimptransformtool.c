@@ -424,9 +424,6 @@ gimp_transform_tool_button_release (GimpTool              *tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      /* get rid of preview artifacts left outside the drawable's area */
-      gimp_transform_tool_expose_preview (tr_tool);
-
       /*  Restore the previous transformation info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
         tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
@@ -436,6 +433,9 @@ gimp_transform_tool_button_release (GimpTool              *tool,
 
       /*  recalculate the tool's transformation matrix  */
       gimp_transform_tool_recalc (tr_tool, display);
+
+      /* get rid of preview artifacts left outside the drawable's area */
+      gimp_transform_tool_expose_preview (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
@@ -1866,7 +1866,7 @@ gimp_transform_tool_response (GtkWidget         *widget,
         /*  recalculate the tool's transformation matrix  */
         gimp_transform_tool_recalc (tr_tool, tool->display);
 
-        /* update preview */
+        /* get rid of preview artifacts left outside the drawable's area */
         gimp_transform_tool_expose_preview (tr_tool);
 
         gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
