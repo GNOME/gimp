@@ -34,6 +34,8 @@ EXPORTS
 	gimp_vector2_neg
 	gimp_vector2_neg_val
 	gimp_vector2_new
+	gimp_vector2_normal
+	gimp_vector2_normal_val
 	gimp_vector2_normalize
 	gimp_vector2_normalize_val
 	gimp_vector2_rotate
