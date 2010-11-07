@@ -69,8 +69,8 @@ struct _GimpTransformTool
 
   GimpMatrix3     transform;       /*  transformation matrix             */
   TransInfo       trans_info;      /*  transformation info               */
-
-  TransInfo       old_trans_info;  /*  for cancelling a drag operation   */
+  TransInfo       old_trans_info;  /*  for resetting everything          */
+  TransInfo       prev_trans_info; /*  for cancelling a drag operation   */
 
   TileManager    *original;        /*  pointer to original tiles         */
 

@@ -209,8 +209,9 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   for (i = 0; i < TRANS_INFO_SIZE; i++)
     {
-      tr_tool->trans_info[i]     = 0.0;
-      tr_tool->old_trans_info[i] = 0.0;
+      tr_tool->trans_info[i]      = 0.0;
+      tr_tool->old_trans_info[i]  = 0.0;
+      tr_tool->prev_trans_info[i] = 0.0;
     }
 
   gimp_matrix3_identity (&tr_tool->transform);
@@ -347,7 +348,10 @@ gimp_transform_tool_initialize (GimpTool     *tool,
 
       /*  Save the current transformation info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
-        tr_tool->old_trans_info[i] = tr_tool->trans_info[i];
+        {
+          tr_tool->old_trans_info[i]  = tr_tool->trans_info[i];
+          tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
+        }
     }
 
   return TRUE;
@@ -419,6 +423,10 @@ gimp_transform_tool_button_release (GimpTool              *tool,
         {
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, tr_tool);
         }
+
+      /*  Restore the previous transformation info  */
+      for (i = 0; i < TRANS_INFO_SIZE; i++)
+        tr_tool->prev_trans_info[i] = tr_tool->trans_info[i];
     }
   else
     {
@@ -426,7 +434,7 @@ gimp_transform_tool_button_release (GimpTool              *tool,
 
       /*  Restore the previous transformation info  */
       for (i = 0; i < TRANS_INFO_SIZE; i++)
-        tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
+        tr_tool->trans_info[i] = tr_tool->prev_trans_info[i];
 
       /*  reget the selection bounds  */
       gimp_transform_tool_bounds (tr_tool, display);
