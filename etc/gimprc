@@ -275,16 +275,6 @@
 # 
 # (thumbnail-filesize-limit 4M)
 
-# Install a private colormap; might be useful on 8-bit (256 colors) displays.
-#  Possible values are yes and no.
-# 
-# (install-colormap no)
-
-# Generally only a concern for 8-bit displays, this sets the minimum number
-# of system colors allocated for GIMP.  This is an integer value.
-# 
-# (min-colors 144)
-
 # Defines the color management behavior.  This is a parameter list.
 # 
 # (color-management

@@ -342,18 +342,6 @@ as being specified in bytes, kilobytes, megabytes or gigabytes. If no suffix
 is specified the size defaults to being specified in kilobytes.
 
 .TP
-(install-colormap no)
-
-Install a private colormap; might be useful on 8-bit (256 colors) displays. 
-Possible values are yes and no.
-
-.TP
-(min-colors 144)
-
-Generally only a concern for 8-bit displays, this sets the minimum number of
-system colors allocated for GIMP.  This is an integer value.
-
-.TP
 (color-management
     (mode display)
     (display-profile-from-gdk no)
