@@ -57,9 +57,6 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE 25
-
-
 static void       gimp_cage_tool_finalize           (GObject               *object);
 static void       gimp_cage_tool_start              (GimpCageTool          *ct,
                                                      GimpDisplay           *display);
@@ -332,7 +329,7 @@ gimp_cage_tool_oper_update (GimpTool         *tool,
                                           options->cage_mode,
                                           coords->x,
                                           coords->y,
-                                          HANDLE_SIZE);
+                                          GIMP_TOOL_HANDLE_SIZE_CIRCLE);
 
   gimp_draw_tool_pause (draw_tool);
 
@@ -572,7 +569,8 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                  handle,
                                  x1 + ct->config->offset_x,
                                  y1 + ct->config->offset_y,
-                                 HANDLE_SIZE, HANDLE_SIZE,
+                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                 GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
     }
 }

@@ -49,9 +49,8 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE             13
-#define POINT_GRAB_THRESHOLD_SQ SQR(HANDLE_SIZE / 2)
-#define POINT_SHOW_THRESHOLD_SQ SQR(HANDLE_SIZE * 7)
+#define POINT_GRAB_THRESHOLD_SQ SQR (GIMP_TOOL_HANDLE_SIZE_CIRCLE / 2)
+#define POINT_SHOW_THRESHOLD_SQ SQR (GIMP_TOOL_HANDLE_SIZE_CIRCLE * 7)
 #define N_ITEMS_PER_ALLOC       1024
 #define INVALID_INDEX           (-1)
 #define NO_CLICK_TIME_AVAILABLE 0
@@ -1602,7 +1601,8 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
             gimp_draw_tool_add_handle (draw_tool, handle_type,
                                        point->x,
                                        point->y,
-                                       HANDLE_SIZE, HANDLE_SIZE,
+                                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                       GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                        GIMP_HANDLE_ANCHOR_CENTER);
         }
     }

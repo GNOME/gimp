@@ -67,8 +67,7 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE      25
-#define MIN_HANDLE_SIZE  6
+#define MIN_HANDLE_SIZE 6
 
 
 static GObject * gimp_transform_tool_constructor            (GType                  type,
@@ -224,8 +223,8 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->use_center       = FALSE;
   tr_tool->use_mid_handles  = FALSE;
 
-  tr_tool->handle_w         = HANDLE_SIZE;
-  tr_tool->handle_h         = HANDLE_SIZE;
+  tr_tool->handle_w         = GIMP_TOOL_HANDLE_SIZE_LARGE;
+  tr_tool->handle_h         = GIMP_TOOL_HANDLE_SIZE_LARGE;
 
   tr_tool->ngx              = 0;
   tr_tool->ngy              = 0;
@@ -1665,8 +1664,10 @@ gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
   x2 = MAX (MAX (dx1, dx2), MAX (dx3, dx4));
   y2 = MAX (MAX (dy1, dy2), MAX (dy3, dy4));
 
-  tr_tool->handle_w = CLAMP ((x2 - x1) / 3, MIN_HANDLE_SIZE, HANDLE_SIZE);
-  tr_tool->handle_h = CLAMP ((y2 - y1) / 3, MIN_HANDLE_SIZE, HANDLE_SIZE);
+  tr_tool->handle_w = CLAMP ((x2 - x1) / 3,
+                             MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
+  tr_tool->handle_h = CLAMP ((y2 - y1) / 3,
+                             MIN_HANDLE_SIZE, GIMP_TOOL_HANDLE_SIZE_LARGE);
 }
 
 static void

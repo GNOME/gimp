@@ -51,9 +51,6 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE 15
-
-
 static GObject * gimp_paint_tool_constructor (GType                  type,
                                               guint                  n_params,
                                               GObjectConstructParam *params);
@@ -744,8 +741,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_CROSS,
                                      core->last_coords.x + off_x,
                                      core->last_coords.y + off_y,
-                                     HANDLE_SIZE,
-                                     HANDLE_SIZE,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
 
           /*  Draw end target  */
@@ -753,8 +750,8 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_CROSS,
                                      core->cur_coords.x + off_x,
                                      core->cur_coords.y + off_y,
-                                     HANDLE_SIZE,
-                                     HANDLE_SIZE,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
     }

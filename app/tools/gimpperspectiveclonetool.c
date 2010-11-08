@@ -46,10 +46,6 @@
 #include "gimp-intl.h"
 
 
-#define HANDLE_SIZE  25
-#define TARGET_SIZE  15
-
-
 static GObject *     gimp_perspective_clone_tool_constructor   (GType                type,
                                                                 guint                n_params,
                                                                 GObjectConstructParam *params);
@@ -773,22 +769,26 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx1, clone_tool->ty1,
-                                 HANDLE_SIZE, HANDLE_SIZE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx2, clone_tool->ty2,
-                                 HANDLE_SIZE, HANDLE_SIZE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx3, clone_tool->ty3,
-                                 HANDLE_SIZE, HANDLE_SIZE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_SQUARE,
                                  clone_tool->tx4, clone_tool->ty4,
-                                 HANDLE_SIZE, HANDLE_SIZE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
+                                 GIMP_TOOL_HANDLE_SIZE_LARGE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
     }
 
@@ -804,7 +804,8 @@ gimp_perspective_clone_tool_draw (GimpDrawTool *draw_tool)
                                  GIMP_HANDLE_CROSS,
                                  clone_tool->src_x,
                                  clone_tool->src_y,
-                                 TARGET_SIZE, TARGET_SIZE,
+                                 GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                 GIMP_TOOL_HANDLE_SIZE_CROSS,
                                  GIMP_HANDLE_ANCHOR_CENTER);
 
       draw_tool->display = tmp_display;

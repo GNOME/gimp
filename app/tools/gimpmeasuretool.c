@@ -55,8 +55,7 @@
 #include "gimp-intl.h"
 
 
-#define  TARGET      12
-#define  ARC_RADIUS  30
+#define ARC_RADIUS 30
 
 
 /*  local function prototypes  */
@@ -219,7 +218,8 @@ gimp_measure_tool_button_press (GimpTool            *tool,
                                         GIMP_HANDLE_CIRCLE,
                                         measure->x[i],
                                         measure->y[i],
-                                        TARGET * 2, TARGET * 2,
+                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
                                         GIMP_HANDLE_ANCHOR_CENTER))
             {
               if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
@@ -546,7 +546,8 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
                                         GIMP_HANDLE_CIRCLE,
                                         measure->x[i],
                                         measure->y[i],
-                                        TARGET * 2, TARGET * 2,
+                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
                                         GIMP_HANDLE_ANCHOR_CENTER))
             {
               in_handle = TRUE;
@@ -669,8 +670,8 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_CIRCLE,
                                      measure->x[i],
                                      measure->y[i],
-                                     TARGET,
-                                     TARGET,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
       else
@@ -679,8 +680,8 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_CROSS,
                                      measure->x[i],
                                      measure->y[i],
-                                     TARGET * 2,
-                                     TARGET * 2,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
 
@@ -744,7 +745,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
               shell = gimp_display_get_shell (tool->display);
 
-              target     = FUNSCALEX (shell, (TARGET >> 1));
+              target     = FUNSCALEX (shell, (GIMP_TOOL_HANDLE_SIZE_CROSS >> 1));
               arc_radius = FUNSCALEX (shell, ARC_RADIUS);
 
               gimp_draw_tool_add_line (draw_tool,
