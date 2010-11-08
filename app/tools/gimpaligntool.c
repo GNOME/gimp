@@ -51,7 +51,7 @@
 #include "gimp-intl.h"
 
 #define EPSILON      3   /* move distance after which we do a box-select */
-#define MARKER_WIDTH 5   /* size (in pixels) of the square handles */
+
 
 /*  local function prototypes  */
 
@@ -696,16 +696,24 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
             }
 
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                     x, y, MARKER_WIDTH, MARKER_WIDTH,
+                                     x, y,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_HANDLE_ANCHOR_NORTH_WEST);
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                     x + w, y, MARKER_WIDTH, MARKER_WIDTH,
+                                     x + w, y,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_HANDLE_ANCHOR_NORTH_EAST);
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                     x, y + h, MARKER_WIDTH, MARKER_WIDTH,
+                                     x, y + h,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_HANDLE_ANCHOR_SOUTH_WEST);
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                     x + w, y + h, MARKER_WIDTH, MARKER_WIDTH,
+                                     x + w, y + h,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_HANDLE_ANCHOR_SOUTH_EAST);
         }
       else if (GIMP_IS_GUIDE (list->data))
@@ -721,10 +729,14 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
               x = gimp_guide_get_position (guide);
               h = gimp_image_get_height (image);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                         x, h, MARKER_WIDTH, MARKER_WIDTH,
+                                         x, h,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
                                          GIMP_HANDLE_ANCHOR_SOUTH);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                         x, 0, MARKER_WIDTH, MARKER_WIDTH,
+                                         x, 0,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
                                          GIMP_HANDLE_ANCHOR_NORTH);
               break;
 
@@ -732,10 +744,14 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
               y = gimp_guide_get_position (guide);
               w = gimp_image_get_width (image);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                         w, y, MARKER_WIDTH, MARKER_WIDTH,
+                                         w, y,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
                                          GIMP_HANDLE_ANCHOR_EAST);
               gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                         0, y, MARKER_WIDTH, MARKER_WIDTH,
+                                         0, y,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                         GIMP_TOOL_HANDLE_SIZE_SMALL,
                                          GIMP_HANDLE_ANCHOR_WEST);
               break;
 

@@ -69,10 +69,7 @@ enum
 #define MIN_HANDLE_SIZE         15
 #define NARROW_MODE_HANDLE_SIZE 15
 #define NARROW_MODE_THRESHOLD   45
-#define CENTER_CROSS_SIZE       7
-
-
-#define SQRT5   2.236067977
+#define SQRT5                    2.236067977
 
 typedef enum
 {
@@ -1778,8 +1775,8 @@ gimp_rectangle_tool_draw (GimpDrawTool    *draw_tool,
                                      GIMP_HANDLE_CROSS,
                                      (pub_x1 + pub_x2) / 2.0,
                                      (pub_y1 + pub_y2) / 2.0,
-                                     CENTER_CROSS_SIZE,
-                                     CENTER_CROSS_SIZE,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
                                      GIMP_HANDLE_ANCHOR_CENTER);
           break;
         }

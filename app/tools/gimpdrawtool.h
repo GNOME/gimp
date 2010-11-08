@@ -25,6 +25,7 @@
 #define GIMP_TOOL_HANDLE_SIZE_CIRCLE 13
 #define GIMP_TOOL_HANDLE_SIZE_CROSS  15
 #define GIMP_TOOL_HANDLE_SIZE_LARGE  25
+#define GIMP_TOOL_HANDLE_SIZE_SMALL   7
 
 
 #define GIMP_TYPE_DRAW_TOOL            (gimp_draw_tool_get_type ())
