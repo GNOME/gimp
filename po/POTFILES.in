@@ -230,6 +230,7 @@ app/file/file-procedure.c
 app/file/file-save.c
 app/file/file-utils.c
 
+app/gegl/gimp-gegl-enums.c
 app/gegl/gimpcurvesconfig.c
 app/gegl/gimplevelsconfig.c
 
@@ -317,6 +318,8 @@ app/tools/gimpbrightnesscontrasttool.c
 app/tools/gimpbucketfilloptions.c
 app/tools/gimpbucketfilltool.c
 app/tools/gimpbycolorselecttool.c
+app/tools/gimpcageoptions.c
+app/tools/gimpcagetool.c
 app/tools/gimpclonetool.c
 app/tools/gimpcolorbalancetool.c
 app/tools/gimpcolorizetool.c
