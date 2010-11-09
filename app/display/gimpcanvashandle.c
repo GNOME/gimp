@@ -31,6 +31,7 @@
 #include "widgets/gimpcairo.h"
 
 #include "gimpcanvashandle.h"
+#include "gimpcanvasitem-utils.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-transform.h"
 
@@ -245,130 +246,6 @@ gimp_canvas_handle_get_property (GObject    *object,
     }
 }
 
-static inline void
-gimp_canvas_handle_shift_to_north_west (GimpHandleAnchor  anchor,
-                                        gdouble           x,
-                                        gdouble           y,
-                                        gint              handle_width,
-                                        gint              handle_height,
-                                        gdouble          *shifted_x,
-                                        gdouble          *shifted_y)
-{
-  switch (anchor)
-    {
-    case GIMP_HANDLE_ANCHOR_CENTER:
-      x -= handle_width  / 2;
-      y -= handle_height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_NORTH:
-      x -= handle_width / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
-      /*  nothing, this is the default  */
-      break;
-
-    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
-      x -= handle_width;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_SOUTH:
-      x -= handle_width / 2;
-      y -= handle_height;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
-      y -= handle_height;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
-      x -= handle_width;
-      y -= handle_height;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_WEST:
-      y -= handle_height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_EAST:
-      x -= handle_width;
-      y -= handle_height / 2;
-      break;
-
-    default:
-      break;
-    }
-
-  if (shifted_x)
-    *shifted_x = x;
-
-  if (shifted_y)
-    *shifted_y = y;
-}
-
-static inline void
-gimp_canvas_handle_shift_to_center (GimpHandleAnchor  anchor,
-                                    gdouble           x,
-                                    gdouble           y,
-                                    gint              width,
-                                    gint              height,
-                                    gdouble          *shifted_x,
-                                    gdouble          *shifted_y)
-{
-  switch (anchor)
-    {
-    case GIMP_HANDLE_ANCHOR_CENTER:
-      /*  nothing, this is the default  */
-      break;
-
-    case GIMP_HANDLE_ANCHOR_NORTH:
-      y += height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_NORTH_WEST:
-      x += width  / 2;
-      y += height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_NORTH_EAST:
-      x -= width  / 2;
-      y += height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_SOUTH:
-      y -= height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_SOUTH_WEST:
-      x += width  / 2;
-      y -= height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_SOUTH_EAST:
-      x -= width  / 2;
-      y -= height / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_WEST:
-      x += width / 2;
-      break;
-
-    case GIMP_HANDLE_ANCHOR_EAST:
-      x -= width / 2;
-      break;
-
-    default:
-      break;
-    }
-
-  if (shifted_x)
-    *shifted_x = x;
-
-  if (shifted_y)
-    *shifted_y = y;
-}
-
 static void
 gimp_canvas_handle_transform (GimpCanvasItem   *item,
                               GimpDisplayShell *shell,
@@ -385,21 +262,21 @@ gimp_canvas_handle_transform (GimpCanvasItem   *item,
     {
     case GIMP_HANDLE_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
-      gimp_canvas_handle_shift_to_north_west (private->anchor,
-                                              *x, *y,
-                                              private->width,
-                                              private->height,
-                                              x, y);
+      gimp_canvas_item_shift_to_north_west (private->anchor,
+                                            *x, *y,
+                                            private->width,
+                                            private->height,
+                                            x, y);
       break;
 
     case GIMP_HANDLE_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
-      gimp_canvas_handle_shift_to_center (private->anchor,
-                                          *x, *y,
-                                          private->width,
-                                          private->height,
-                                          x, y);
+      gimp_canvas_item_shift_to_center (private->anchor,
+                                        *x, *y,
+                                        private->width,
+                                        private->height,
+                                        x, y);
       break;
 
     default:
