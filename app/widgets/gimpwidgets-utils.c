@@ -1149,16 +1149,21 @@ void
 gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
                                  GtkWidget         *widget)
 {
-      g_object_set_data_full (G_OBJECT (tool_options),
-                              GIMP_TOOL_OPTIONS_GUI_KEY,
-                              widget,
-                              widget ? (GDestroyNotify) g_object_unref : NULL);
+  g_object_set_data_full (G_OBJECT (tool_options),
+                          GIMP_TOOL_OPTIONS_GUI_KEY,
+                          widget,
+                          widget ? (GDestroyNotify) g_object_unref : NULL);
 }
 
 void
 gimp_widget_flush_expose (GtkWidget *widget)
 {
   GList *event_list = NULL;
+
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  if (! gtk_widget_is_drawable (widget))
+    return;
 
   gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
 
