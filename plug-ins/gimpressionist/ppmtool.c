@@ -339,6 +339,7 @@ ppm_load (const char *fn, ppm_t *p)
   readline (f, line, 200);
   if (strcmp (line, "255"))
   {
+    fclose (f);
     g_printerr ("ppm_load: File \"%s\" not valid PPM/PGM? (line=\"%s\")%c\n",
                 gimp_filename_to_utf8 (fn), line, 7);
     ppm_new (p, 10,10);

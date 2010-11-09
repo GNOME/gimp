@@ -1869,12 +1869,14 @@ explorer_load (void)
     {
       g_message (_("'%s' is not a FractalExplorer file"),
                  gimp_filename_to_utf8 (filename));
+      fclose (fp);
       return;
     }
   if (load_options (current_obj,fp))
     {
       g_message (_("'%s' is corrupt. Line %d Option section incorrect"),
                  gimp_filename_to_utf8 (filename), line_no);
+      fclose (fp);
       return;
     }
 

@@ -356,6 +356,8 @@ load_image (const gchar  *filename,
       g_message ("'%s' is a PAPYRUS DICOM file.\n"
                  "This plug-in does not support this type yet.",
                  gimp_filename_to_utf8 (filename));
+      g_free (dicominfo);
+      fclose (DICOM);
       return -1;
     }
 
@@ -365,6 +367,8 @@ load_image (const gchar  *filename,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a DICOM file."),
                    gimp_filename_to_utf8 (filename));
+      g_free (dicominfo);
+      fclose (DICOM);
       return -1;
     }
 

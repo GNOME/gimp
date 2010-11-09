@@ -1025,6 +1025,7 @@ ico_save_image (const gchar  *filename,
   if (fwrite (entries, sizeof (IcoFileEntry), info.num_icons, fp) <= 0)
     {
       ico_save_info_free (&info);
+      g_free (entries);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }

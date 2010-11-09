@@ -366,7 +366,10 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
                                                      guid,
                                                      &didevice8,
                                                      NULL))))
-    return FALSE;
+    {
+      g_free (guidstring);
+      return FALSE;
+    }
 
   if (FAILED ((hresult = IDirectInputDevice8_SetCooperativeLevel (didevice8,
                                                                   (HWND) gdk_win32_drawable_get_handle (store->window),
@@ -374,6 +377,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
     {
       g_warning ("IDirectInputDevice8::SetCooperativeLevel failed: %s",
                  g_win32_error_message (hresult));
+      g_free (guidstring);
       return FALSE;
     }
 
@@ -383,6 +387,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
     {
       g_warning ("IDirectInputDevice8::GetDeviceInfo failed: %s",
                  g_win32_error_message (hresult));
+      g_free (guidstring);
       return FALSE;
     }
 

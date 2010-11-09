@@ -949,6 +949,7 @@ fractalexplorer_load (const gchar *filename,
       g_message (_("File '%s' is not a FractalExplorer file"),
                  gimp_filename_to_utf8 (filename));
       fclose (fp);
+      fractalexplorer_free (fractalexplorer);
 
       return NULL;
     }
@@ -958,6 +959,7 @@ fractalexplorer_load (const gchar *filename,
       g_message (_("File '%s' is corrupt.\nLine %d Option section incorrect"),
                  gimp_filename_to_utf8 (filename), line_no);
       fclose (fp);
+      fractalexplorer_free (fractalexplorer);
 
       return NULL;
     }

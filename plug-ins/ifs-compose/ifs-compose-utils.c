@@ -264,6 +264,7 @@ ipolygon_convex_hull (IPolygon *poly)
     {
       memcpy (new_points, poly->points, num_new * sizeof (GdkPoint));
       new_poly->npoints = num_new;
+      g_free (sort_points);
       return new_poly;
     }
 

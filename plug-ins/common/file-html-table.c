@@ -234,6 +234,7 @@ save_image (const gchar   *filename,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
+      g_free (palloc);
       return FALSE;
     }
 

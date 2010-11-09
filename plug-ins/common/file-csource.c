@@ -654,6 +654,7 @@ save_image (Config  *config,
       break;
     default:
       g_warning ("unhandled drawable type (%d)", drawable_type);
+      fclose (fp);
       return FALSE;
     }
   if (!config->use_macros)

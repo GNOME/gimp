@@ -170,6 +170,7 @@ ReadBMP (const gchar  *name,
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("'%s' is not a valid BMP file"),
                    gimp_filename_to_utf8 (filename));
+      fclose (fd);
       return -1;
     }
 

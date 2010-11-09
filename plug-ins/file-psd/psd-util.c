@@ -102,6 +102,7 @@ fread_pascal_string (gint32         *bytes_read,
   if (fread (str, len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (str);
       return NULL;
     }
   *bytes_read += len;
@@ -247,6 +248,7 @@ fread_unicode_string (gint32         *bytes_read,
       if (fread (&utf16_str[i], 2, 1, f) < 1)
         {
           psd_set_error (feof (f), errno, error);
+          g_free (utf16_str);
           return NULL;
         }
       *bytes_read += 2;

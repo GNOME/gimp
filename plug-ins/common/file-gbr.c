@@ -578,6 +578,7 @@ load_image (const gchar  *filename,
       g_message ("Unsupported brush depth: %d\n"
                  "GIMP Brushes must be GRAY or RGBA\n",
                  bh.bytes);
+      g_free (name);
       return -1;
     }
 

@@ -236,6 +236,8 @@ do_zcrop (GimpDrawable *drawable,
       (livingcols == width && livingrows == height))
     {
       g_message (_("Nothing to crop."));
+      g_free (killrows);
+      g_free (killcols);
       return;
     }
 

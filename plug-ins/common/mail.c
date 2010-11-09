@@ -606,6 +606,8 @@ find_extension (const gchar *filename)
         }
     }
 
+  g_free (filename_copy);
+
   return ext;
 }
 

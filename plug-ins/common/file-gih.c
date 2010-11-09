@@ -575,6 +575,7 @@ gih_load_one_brush (gint   fd,
       g_message ("Unsupported brush depth: %d\n"
                  "GIMP Brushes must be GRAY or RGBA\n",
                  bh.bytes);
+      g_free (name);
       return FALSE;
     }
 

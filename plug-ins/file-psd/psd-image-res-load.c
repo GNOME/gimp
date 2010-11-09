@@ -437,6 +437,7 @@ load_resource_unknown (const PSDimageres  *res_a,
   if (fread (data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (data);
       return -1;
     }
 
@@ -471,6 +472,7 @@ load_resource_ps_only (const PSDimageres  *res_a,
   if (fread (data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (data);
       return -1;
     }
 
@@ -800,6 +802,7 @@ load_resource_1028 (const PSDimageres  *res_a,
   if (fread (res_data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (res_data);
       return -1;
     }
 
@@ -1067,6 +1070,7 @@ load_resource_1039 (const PSDimageres  *res_a,
   if (fread (icc_profile, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (icc_profile);
       return -1;
     }
 
@@ -1226,6 +1230,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   if (fread (res_data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (res_data);
       return -1;
     }
 
@@ -1336,6 +1341,7 @@ load_resource_1060 (const PSDimageres  *res_a,
   if (fread (res_data, res_a->data_len, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
+      g_free (res_data);
       return -1;
     }
   /* Null terminate metadata block for decode procedure */
@@ -1472,6 +1478,7 @@ load_resource_2000 (const PSDimageres  *res_a,
           if (fseek (f, 22, SEEK_CUR) < 0)
             {
               psd_set_error (feof (f), errno, error);
+              g_free (controlpoints);
               return -1;
             }
 

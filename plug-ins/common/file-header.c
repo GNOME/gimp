@@ -290,6 +290,8 @@ save_image (const gchar *filename,
 
     default:
       g_warning ("unhandled drawable type (%d)", drawable_type);
+      fclose (fp);
+      g_free (data);
       return FALSE;
     }
 

@@ -900,6 +900,7 @@ p_load_pointfile (BenderDialog *cd,
     {
       g_message (_("Error while reading '%s': %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
+      fclose (l_fp);
       return -1;
     }
 

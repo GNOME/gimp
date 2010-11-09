@@ -351,6 +351,7 @@ load_image (const gchar  *file,
   if (image == -1)
     {
       g_message (_("Can't create a new image"));
+      fclose (fp);
       return -1;
     }
 

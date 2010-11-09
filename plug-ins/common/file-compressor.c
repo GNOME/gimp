@@ -601,6 +601,7 @@ load_image (const Compressor   *compressor,
 
         g_unlink (tmpname);
         g_free (tmpname);
+        fclose (f);
 
         *status = GIMP_PDB_EXECUTION_ERROR;
         return -1;

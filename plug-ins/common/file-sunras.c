@@ -440,6 +440,7 @@ load_image (const gchar  *filename,
           g_message (_("Could not read color entries from '%s'"),
                      gimp_filename_to_utf8 (filename));
           fclose (ifp);
+          g_free (suncolmap);
           return (-1);
         }
     }

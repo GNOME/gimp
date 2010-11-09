@@ -886,6 +886,7 @@ read_creator_block (FILE     *f,
           if (fread (string, length, 1, f) < 1)
             {
               g_message ("Error reading creator keyword data");
+              g_free (string);
               return -1;
             }
           switch (keyword)
