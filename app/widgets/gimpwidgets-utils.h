@@ -90,5 +90,7 @@ GtkWidget *       gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_o
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
                                                     GtkWidget            *widget);
 
+void              gimp_widget_flush_expose         (GtkWidget            *widget);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */
