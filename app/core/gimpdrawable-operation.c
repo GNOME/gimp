@@ -166,17 +166,7 @@ gimp_drawable_apply_operation_private (GimpDrawable       *drawable,
 
   while (gegl_processor_work (processor, &value))
     if (progress)
-      {
-        gimp_progress_set_value (progress, value);
-
-        /* FIXME: this needs to move to GimpProgress, it seems the
-         * introduction of client-side windows has somehow changed
-         * things, so calling gdk_window_process_updates() is not
-         * enough any longer.
-         */
-        while (g_main_context_pending (NULL))
-          g_main_context_iteration (NULL, TRUE);
-      }
+      gimp_progress_set_value (progress, value);
 
   g_object_unref (processor);
 
