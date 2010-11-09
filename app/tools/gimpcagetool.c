@@ -45,9 +45,12 @@
 #include "gegl/gimpcageconfig.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasprogress.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-items.h"
 #include "display/gimpdisplayshell-transform.h"
 
 #include "gimpcagetool.h"
@@ -643,15 +646,33 @@ static void
 gimp_cage_tool_compute_coef (GimpCageTool *ct,
                              GimpDisplay  *display)
 {
-  GimpCageConfig *config   = ct->config;
-  Babl           *format;
-  GeglNode       *gegl;
-  GeglNode       *input;
-  GeglNode       *output;
-  GeglProcessor  *processor;
-  GimpProgress   *progress;
-  GeglBuffer     *buffer;
-  gdouble         value;
+  GimpDisplayShell *shell  = gimp_display_get_shell (display);
+  GimpCageConfig   *config = ct->config;
+  Babl             *format;
+  GeglNode         *gegl;
+  GeglNode         *input;
+  GeglNode         *output;
+  GeglProcessor    *processor;
+  GimpCanvasItem   *p;
+  GimpProgress     *progress;
+  GeglBuffer       *buffer;
+  gdouble           value;
+
+  {
+    gint x, y, w, h;
+
+    gimp_display_shell_untransform_viewport (shell, &x, &y, &w, &h);
+
+    p = gimp_canvas_progress_new (shell, GIMP_HANDLE_ANCHOR_CENTER,
+                                  x + w / 2, y + h / 2);
+    gimp_display_shell_add_item (shell, p);
+    g_object_unref (p);
+  }
+
+  progress = gimp_progress_start (GIMP_PROGRESS (p),
+                                  _("Coefficient computation"),
+                                  FALSE);
+  gimp_widget_flush_expose (shell->canvas);
 
   if (ct->coef)
     {
@@ -662,9 +683,6 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   format = babl_format_n (babl_type ("float"),
                           config->n_cage_vertices * 2);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                  _("Coefficient computation"),
-                                  FALSE);
 
   gegl = gegl_node_new ();
 
@@ -687,6 +705,7 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
   while (gegl_processor_work (processor, &value))
     {
       gimp_progress_set_value (progress, value);
+      gimp_widget_flush_expose (shell->canvas);
     }
 
   gimp_progress_end (progress);
@@ -695,6 +714,8 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct,
 
   ct->coef = buffer;
   g_object_unref (gegl);
+
+  gimp_display_shell_remove_item (shell, p);
 }
 
 static GeglNode *
