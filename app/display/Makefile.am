@@ -51,6 +51,8 @@ libappdisplay_a_sources = \
 	gimpcanvaspen.h				\
 	gimpcanvaspolygon.c			\
 	gimpcanvaspolygon.h			\
+	gimpcanvasprogress.c			\
+	gimpcanvasprogress.h			\
 	gimpcanvasproxygroup.c			\
 	gimpcanvasproxygroup.h			\
 	gimpcanvasrectangle.c			\
