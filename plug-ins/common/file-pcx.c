@@ -674,14 +674,6 @@ save_image (const gchar  *filename,
       return FALSE;
   }
 
-  if ((fp = g_fopen (filename, "wb")) == NULL)
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return FALSE;
-    }
-
   pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
   gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0, width, height);
 
@@ -708,6 +700,14 @@ save_image (const gchar  *filename,
     {
       g_message (_("Bottom border out of bounds (must be < %d): %d"), (1<<16),
                  offset_y + height - 1);
+      return FALSE;
+    }
+
+  if ((fp = g_fopen (filename, "wb")) == NULL)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
