@@ -26,7 +26,7 @@ from gimpfu import *
 
 gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 
-(CHARS_SOURCE, CHARS_FILE, CHARS_PARAMETER) = range(3)
+all_source_types = (CHARS_SOURCE, CHARS_FILE, CHARS_PARAMETER) = range(3)
 
 escape_table = {
     '&': '&amp;',
@@ -64,6 +64,9 @@ def colorxhtml(img, drawable, filename, raw_filename,
     bpp = drawable.bpp
 
     if not drawable.is_rgb or drawable.has_alpha:
+        return
+
+    if source_type not in all_source_types:
         return
 
     gimp.tile_cache_ntiles(width / gimp.tile_width() + 1)
