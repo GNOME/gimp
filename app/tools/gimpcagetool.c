@@ -372,7 +372,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (ct));
 
-  if (state & GDK_BUTTON3_MASK)
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       /* operation canceled, do nothing */
     }
