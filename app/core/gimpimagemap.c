@@ -657,15 +657,6 @@ gimp_image_map_update_undo_tiles (GimpImageMap        *image_map,
     }
 }
 
-gboolean
-gimp_image_map_is_busy (GimpImageMap *image_map)
-{
-  if (image_map->idle_id > 0)
-    return TRUE;
-
-  return FALSE;
-}
-
 static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
