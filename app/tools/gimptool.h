@@ -137,6 +137,10 @@ struct _GimpToolClass
                                            GdkModifierType        state,
                                            GimpDisplay           *display,
                                            const gchar          **ui_path);
+
+  void            (* options_notify)      (GimpTool              *tool,
+                                           GimpToolOptions       *options,
+                                           const GParamSpec      *pspec);
 };
 
 

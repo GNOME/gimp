@@ -48,6 +48,7 @@ enum
 };
 
 
+static void       gimp_tool_constructed         (GObject               *object);
 static void       gimp_tool_finalize            (GObject               *object);
 static void       gimp_tool_set_property        (GObject               *object,
                                                  guint                  property_id,
@@ -115,7 +116,13 @@ static GimpUIManager * gimp_tool_real_get_popup (GimpTool              *tool,
                                                  GdkModifierType        state,
                                                  GimpDisplay           *display,
                                                  const gchar          **ui_path);
+static void       gimp_tool_real_options_notify (GimpTool              *tool,
+                                                 GimpToolOptions       *options,
+                                                 const GParamSpec      *pspec);
 
+static void       gimp_tool_options_notify      (GimpToolOptions       *options,
+                                                 const GParamSpec      *pspec,
+                                                 GimpTool              *tool);
 static void       gimp_tool_clear_status        (GimpTool              *tool);
 
 
@@ -131,6 +138,7 @@ gimp_tool_class_init (GimpToolClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->constructed  = gimp_tool_constructed;
   object_class->finalize     = gimp_tool_finalize;
   object_class->set_property = gimp_tool_set_property;
   object_class->get_property = gimp_tool_get_property;
@@ -149,6 +157,7 @@ gimp_tool_class_init (GimpToolClass *klass)
   klass->oper_update         = gimp_tool_real_oper_update;
   klass->cursor_update       = gimp_tool_real_cursor_update;
   klass->get_popup           = gimp_tool_real_get_popup;
+  klass->options_notify      = gimp_tool_real_options_notify;
 
   g_object_class_install_property (object_class, PROP_TOOL_INFO,
                                    g_param_spec_object ("tool-info",
@@ -171,6 +180,21 @@ gimp_tool_init (GimpTool *tool)
   tool->active_modifier_state = 0;
   tool->button_press_state    = 0;
   tool->max_coord_smooth      = 0.0;
+}
+
+static void
+gimp_tool_constructed (GObject *object)
+{
+  GimpTool *tool = GIMP_TOOL (object);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
+
+  g_signal_connect_object (gimp_tool_get_options (tool), "notify",
+                           G_CALLBACK (gimp_tool_options_notify),
+                           tool, 0);
 }
 
 static void
@@ -396,6 +420,13 @@ gimp_tool_real_get_popup (GimpTool         *tool,
   *ui_path = NULL;
 
   return NULL;
+}
+
+static void
+gimp_tool_real_options_notify (GimpTool         *tool,
+                               GimpToolOptions  *options,
+                               const GParamSpec *pspec)
+{
 }
 
 
@@ -1098,6 +1129,14 @@ gimp_tool_set_cursor (GimpTool           *tool,
 
 
 /*  private functions  */
+
+static void
+gimp_tool_options_notify (GimpToolOptions  *options,
+                          const GParamSpec *pspec,
+                          GimpTool         *tool)
+{
+  GIMP_TOOL_GET_CLASS (tool)->options_notify (tool, options, pspec);
+}
 
 static void
 gimp_tool_clear_status (GimpTool *tool)
