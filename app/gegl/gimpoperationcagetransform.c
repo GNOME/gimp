@@ -31,6 +31,14 @@
 #include "gimpcageconfig.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_CONFIG,
+  PROP_FILL
+};
+
+
 static void         gimp_operation_cage_transform_finalize                (GObject             *object);
 static void         gimp_operation_cage_transform_get_property            (GObject             *object,
                                                                            guint                property_id,
@@ -99,16 +107,14 @@ gimp_operation_cage_transform_class_init (GimpOperationCageTransformClass *klass
 
   filter_class->process                    = gimp_operation_cage_transform_process;
 
-  g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG,
+  g_object_class_install_property (object_class, PROP_CONFIG,
                                    g_param_spec_object ("config", NULL, NULL,
                                                         GIMP_TYPE_CAGE_CONFIG,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
-  g_object_class_install_property (object_class,
-                                   GIMP_OPERATION_CAGE_TRANSFORM_PROP_FILL,
-                                   g_param_spec_boolean ("fill_plain_color",
+  g_object_class_install_property (object_class, PROP_FILL,
+                                   g_param_spec_boolean ("fill-plain-color",
                                                          "Blocking render",
                                                          "Fill the original position of the cage with a plain color",
                                                          FALSE,
@@ -145,10 +151,10 @@ gimp_operation_cage_transform_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG:
+    case PROP_CONFIG:
       g_value_set_object (value, self->config);
       break;
-    case GIMP_OPERATION_CAGE_TRANSFORM_PROP_FILL:
+    case PROP_FILL:
       g_value_set_boolean (value, self->fill_plain_color);
       break;
 
@@ -168,12 +174,12 @@ gimp_operation_cage_transform_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG:
+    case PROP_CONFIG:
       if (self->config)
         g_object_unref (self->config);
       self->config = g_value_dup_object (value);
       break;
-    case GIMP_OPERATION_CAGE_TRANSFORM_PROP_FILL:
+    case PROP_FILL:
       self->fill_plain_color = g_value_get_boolean (value);
       break;
 

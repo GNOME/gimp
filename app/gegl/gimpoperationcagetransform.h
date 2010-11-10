@@ -24,13 +24,6 @@
 #include <gegl-plugin.h>
 #include <operation/gegl-operation-composer.h>
 
-enum
-{
-  GIMP_OPERATION_CAGE_TRANSFORM_PROP_0,
-  GIMP_OPERATION_CAGE_TRANSFORM_PROP_CONFIG,
-  GIMP_OPERATION_CAGE_TRANSFORM_PROP_FILL
-};
-
 
 #define GIMP_TYPE_OPERATION_CAGE_TRANSFORM            (gimp_operation_cage_transform_get_type ())
 #define GIMP_OPERATION_CAGE_TRANSFORM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OPERATION_CAGE_TRANSFORM, GimpOperationCageTransform))
