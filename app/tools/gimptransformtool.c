@@ -115,6 +115,9 @@ static void      gimp_transform_tool_cursor_update          (GimpTool           
                                                              const GimpCoords      *coords,
                                                              GdkModifierType        state,
                                                              GimpDisplay           *display);
+static void      gimp_transform_tool_options_notify         (GimpTool              *tool,
+                                                             GimpToolOptions       *options,
+                                                             const GParamSpec      *pspec);
 
 static void      gimp_transform_tool_draw                   (GimpDrawTool          *draw_tool);
 
@@ -145,13 +148,6 @@ static void      gimp_transform_tool_response               (GtkWidget          
                                                              gint                   response_id,
                                                              GimpTransformTool     *tr_tool);
 
-static void      gimp_transform_tool_notify_type            (GimpTransformOptions  *options,
-                                                             GParamSpec            *pspec,
-                                                             GimpTransformTool     *tr_tool);
-static void      gimp_transform_tool_notify_preview         (GimpTransformOptions  *options,
-                                                             GParamSpec            *pspec,
-                                                             GimpTransformTool     *tr_tool);
-
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -178,6 +174,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class->active_modifier_key = gimp_transform_tool_modifier_key;
   tool_class->oper_update         = gimp_transform_tool_oper_update;
   tool_class->cursor_update       = gimp_transform_tool_cursor_update;
+  tool_class->options_notify      = gimp_transform_tool_options_notify;
 
   draw_class->draw                = gimp_transform_tool_draw;
 
@@ -260,39 +257,7 @@ gimp_transform_tool_constructor (GType                  type,
     {
       tr_tool->type      = options->type;
       tr_tool->direction = options->direction;
-
-      g_signal_connect_object (options, "notify::type",
-                               G_CALLBACK (gimp_transform_tool_notify_type),
-                               tr_tool, 0);
-      g_signal_connect_object (options, "notify::type",
-                               G_CALLBACK (gimp_transform_tool_notify_preview),
-                               tr_tool, 0);
-
-      g_signal_connect_object (options, "notify::direction",
-                               G_CALLBACK (gimp_transform_tool_notify_type),
-                               tr_tool, 0);
-      g_signal_connect_object (options, "notify::direction",
-                               G_CALLBACK (gimp_transform_tool_notify_preview),
-                               tr_tool, 0);
-
-      g_signal_connect_object (options, "notify::preview-type",
-                               G_CALLBACK (gimp_transform_tool_notify_preview),
-                               tr_tool, 0);
-      g_signal_connect_object (options, "notify::grid-type",
-                               G_CALLBACK (gimp_transform_tool_notify_preview),
-                               tr_tool, 0);
-      g_signal_connect_object (options, "notify::grid-size",
-                               G_CALLBACK (gimp_transform_tool_notify_preview),
-                               tr_tool, 0);
-      g_signal_connect_object (tool->tool_info->tool_options,
-                               "notify::preview-opacity",
-                               G_CALLBACK (gimp_transform_tool_notify_preview),
-                               tr_tool, 0);
     }
-
-  g_signal_connect_object (options, "notify::constrain",
-                           G_CALLBACK (gimp_transform_tool_dialog_update),
-                           tr_tool, G_CONNECT_SWAPPED);
 
   return object;
 }
@@ -772,6 +737,129 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static void
+gimp_transform_tool_options_notify (GimpTool         *tool,
+                                    GimpToolOptions  *options,
+                                    const GParamSpec *pspec)
+{
+  GimpTransformTool *tr_tool = GIMP_TRANSFORM_TOOL (tool);
+
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (tr_tool->use_grid)
+    {
+      GimpTransformOptions *tr_options = GIMP_TRANSFORM_OPTIONS (options);
+
+      if (! strcmp (pspec->name, "type") ||
+          ! strcmp (pspec->name, "direction"))
+        {
+          if (tr_tool->function != TRANSFORM_CREATING)
+            gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+          tr_tool->type      = tr_options->type;
+          tr_tool->direction = tr_options->direction;
+
+          if (tr_tool->function != TRANSFORM_CREATING)
+            {
+              if (tool->display)
+                {
+                  /*  reget the selection bounds  */
+                  gimp_transform_tool_bounds (tr_tool, tool->display);
+
+                  /*  recalculate the tool's transformation matrix  */
+                  gimp_transform_tool_recalc (tr_tool, tool->display);
+                }
+
+              gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+            }
+        }
+
+      if (! strcmp (pspec->name, "type")         ||
+          ! strcmp (pspec->name, "direction")    ||
+          ! strcmp (pspec->name, "preview-type") ||
+          ! strcmp (pspec->name, "grid-type")    ||
+          ! strcmp (pspec->name, "grid-size")    ||
+          ! strcmp (pspec->name, "preview-opacity"))
+        {
+          GimpDisplayShell *shell = NULL;
+
+          if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
+            shell = gimp_display_get_shell (GIMP_DRAW_TOOL (tr_tool)->display);
+
+          switch (tr_options->preview_type)
+            {
+            default:
+            case GIMP_TRANSFORM_PREVIEW_TYPE_OUTLINE:
+              if (shell)
+                {
+                  gimp_display_shell_set_show_transform (shell, FALSE);
+                  gimp_transform_tool_force_expose_preview (tr_tool);
+                }
+              break;
+
+            case GIMP_TRANSFORM_PREVIEW_TYPE_GRID:
+              if (shell)
+                {
+                  gimp_display_shell_set_show_transform (shell, FALSE);
+                  gimp_transform_tool_force_expose_preview (tr_tool);
+                }
+
+              if (tr_tool->function != TRANSFORM_CREATING)
+                {
+                  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+                  gimp_transform_tool_grid_recalc (tr_tool);
+                  gimp_transform_tool_transform_bounding_box (tr_tool);
+
+                  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+                }
+              break;
+
+            case GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE:
+              if (shell)
+                {
+                  if (tr_options->type      == GIMP_TRANSFORM_TYPE_LAYER &&
+                      tr_options->direction == GIMP_TRANSFORM_FORWARD)
+                    gimp_display_shell_set_show_transform (shell, TRUE);
+                  else
+                    gimp_display_shell_set_show_transform (shell, FALSE);
+
+                  gimp_transform_tool_force_expose_preview (tr_tool);
+                }
+              break;
+
+            case GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID:
+              if (shell)
+                {
+                  if (tr_options->type      == GIMP_TRANSFORM_TYPE_LAYER &&
+                      tr_options->direction == GIMP_TRANSFORM_FORWARD)
+                    gimp_display_shell_set_show_transform (shell, TRUE);
+                  else
+                    gimp_display_shell_set_show_transform (shell, FALSE);
+
+                  gimp_transform_tool_force_expose_preview (tr_tool);
+                }
+
+              if (tr_tool->function != TRANSFORM_CREATING)
+                {
+                  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
+
+                  gimp_transform_tool_grid_recalc (tr_tool);
+                  gimp_transform_tool_transform_bounding_box (tr_tool);
+
+                  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
+                }
+              break;
+            }
+        }
+    }
+
+  if (! strcmp (pspec->name, "constrain"))
+    {
+      gimp_transform_tool_dialog_update (tr_tool);
+    }
 }
 
 static void
@@ -1792,111 +1880,6 @@ gimp_transform_tool_response (GtkWidget         *widget,
 
     default:
       gimp_transform_tool_halt (tr_tool);
-      break;
-    }
-}
-
-static void
-gimp_transform_tool_notify_type (GimpTransformOptions *options,
-                                 GParamSpec           *pspec,
-                                 GimpTransformTool    *tr_tool)
-{
-  GimpDisplay *display = GIMP_TOOL (tr_tool)->display;
-
-  if (tr_tool->function != TRANSFORM_CREATING)
-    gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-  tr_tool->type      = options->type;
-  tr_tool->direction = options->direction;
-
-  if (tr_tool->function != TRANSFORM_CREATING)
-    {
-      if (display)
-        {
-          /*  reget the selection bounds  */
-          gimp_transform_tool_bounds (tr_tool, display);
-
-          /*  recalculate the tool's transformation matrix  */
-          gimp_transform_tool_recalc (tr_tool, display);
-        }
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-    }
-}
-
-static void
-gimp_transform_tool_notify_preview (GimpTransformOptions *options,
-                                    GParamSpec           *pspec,
-                                    GimpTransformTool    *tr_tool)
-{
-  GimpDisplayShell *shell = NULL;
-
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
-    shell = gimp_display_get_shell (GIMP_DRAW_TOOL (tr_tool)->display);
-
-  switch (options->preview_type)
-    {
-    default:
-    case GIMP_TRANSFORM_PREVIEW_TYPE_OUTLINE:
-      if (shell)
-        {
-          gimp_display_shell_set_show_transform (shell, FALSE);
-          gimp_transform_tool_force_expose_preview (tr_tool);
-        }
-      break;
-
-    case GIMP_TRANSFORM_PREVIEW_TYPE_GRID:
-      if (shell)
-        {
-          gimp_display_shell_set_show_transform (shell, FALSE);
-          gimp_transform_tool_force_expose_preview (tr_tool);
-        }
-
-      if (tr_tool->function != TRANSFORM_CREATING)
-        {
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-          gimp_transform_tool_grid_recalc (tr_tool);
-          gimp_transform_tool_transform_bounding_box (tr_tool);
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-        }
-      break;
-
-    case GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE:
-      if (shell)
-        {
-          if (options->type      == GIMP_TRANSFORM_TYPE_LAYER &&
-              options->direction == GIMP_TRANSFORM_FORWARD)
-            gimp_display_shell_set_show_transform (shell, TRUE);
-          else
-            gimp_display_shell_set_show_transform (shell, FALSE);
-
-          gimp_transform_tool_force_expose_preview (tr_tool);
-        }
-      break;
-
-    case GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID:
-      if (shell)
-        {
-          if (options->type      == GIMP_TRANSFORM_TYPE_LAYER &&
-              options->direction == GIMP_TRANSFORM_FORWARD)
-            gimp_display_shell_set_show_transform (shell, TRUE);
-          else
-            gimp_display_shell_set_show_transform (shell, FALSE);
-
-          gimp_transform_tool_force_expose_preview (tr_tool);
-        }
-
-      if (tr_tool->function != TRANSFORM_CREATING)
-        {
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
-
-          gimp_transform_tool_grid_recalc (tr_tool);
-          gimp_transform_tool_transform_bounding_box (tr_tool);
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
-        }
       break;
     }
 }

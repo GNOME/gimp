@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -59,14 +61,14 @@ static void   gimp_brush_tool_cursor_update  (GimpTool            *tool,
                                               const GimpCoords    *coords,
                                               GdkModifierType      state,
                                               GimpDisplay         *display);
+static void   gimp_brush_tool_options_notify (GimpTool            *tool,
+                                              GimpToolOptions     *options,
+                                              const GParamSpec    *pspec);
 
 static void   gimp_brush_tool_draw           (GimpDrawTool        *draw_tool);
 
 static void   gimp_brush_tool_brush_changed     (GimpContext         *context,
                                                  GimpBrush           *brush,
-                                                 GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_brush_transformed (GimpPaintOptions    *options,
-                                                 GParamSpec          *pspec,
                                                  GimpBrushTool       *brush_tool);
 static void   gimp_brush_tool_set_brush         (GimpBrushCore       *brush_core,
                                                  GimpBrush           *brush,
@@ -93,9 +95,10 @@ gimp_brush_tool_class_init (GimpBrushToolClass *klass)
 
   object_class->constructor = gimp_brush_tool_constructor;
 
-  tool_class->motion        = gimp_brush_tool_motion;
-  tool_class->oper_update   = gimp_brush_tool_oper_update;
-  tool_class->cursor_update = gimp_brush_tool_cursor_update;
+  tool_class->motion         = gimp_brush_tool_motion;
+  tool_class->oper_update    = gimp_brush_tool_oper_update;
+  tool_class->cursor_update  = gimp_brush_tool_cursor_update;
+  tool_class->options_notify = gimp_brush_tool_options_notify;
 
   draw_tool_class->draw     = gimp_brush_tool_draw;
 }
@@ -153,17 +156,6 @@ gimp_brush_tool_constructor (GType                  type,
 
   g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),
-                           brush_tool, 0);
-  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-size",
-                           G_CALLBACK (gimp_brush_tool_brush_transformed),
-                           brush_tool, 0);
-
-  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-angle",
-                           G_CALLBACK (gimp_brush_tool_brush_transformed),
-                           brush_tool, 0);
-
-  g_signal_connect_object (gimp_tool_get_options (tool), "notify::brush-aspect-ratio",
-                           G_CALLBACK (gimp_brush_tool_brush_transformed),
                            brush_tool, 0);
 
   g_signal_connect (paint_tool->core, "set-brush",
@@ -273,6 +265,24 @@ gimp_brush_tool_cursor_update (GimpTool         *tool,
 }
 
 static void
+gimp_brush_tool_options_notify (GimpTool         *tool,
+                                GimpToolOptions  *options,
+                                const GParamSpec *pspec)
+{
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (! strcmp (pspec->name, "brush-size")  ||
+      ! strcmp (pspec->name, "brush-angle") ||
+      ! strcmp (pspec->name, "brush-aspect-ratio"))
+    {
+      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
+      GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
+
+      gimp_brush_core_set_brush (brush_core, brush_core->main_brush);
+    }
+}
+
+static void
 gimp_brush_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
@@ -361,17 +371,6 @@ gimp_brush_tool_brush_changed (GimpContext   *context,
   if (brush_core->main_brush != brush)
     gimp_brush_core_set_brush (brush_core, brush);
 
-}
-
-static void
-gimp_brush_tool_brush_transformed (GimpPaintOptions *options,
-                                   GParamSpec       *pspec,
-                                   GimpBrushTool    *brush_tool)
-{
-  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (brush_tool);
-  GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
-
-  gimp_brush_core_set_brush (brush_core, brush_core->main_brush);
 }
 
 static void
