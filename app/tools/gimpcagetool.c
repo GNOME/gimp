@@ -393,6 +393,8 @@ gimp_cage_tool_button_release (GimpTool              *tool,
           gimp_cage_tool_compute_coef (ct, display);
 
           gimp_cage_tool_create_image_map (ct, drawable);
+
+          gimp_tool_push_status (tool, display, _("Press ENTER to commit the transform"));
         }
     }
   else if (ct->moving_handle == -1)
