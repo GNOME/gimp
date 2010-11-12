@@ -1761,42 +1761,19 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  if (shell->highlight)
+  if (highlight)
     {
-      if (highlight)
-        {
-          cairo_region_t *old;
-          cairo_region_t *new;
-
-          if (memcmp (shell->highlight, highlight, sizeof (GdkRectangle)) == 0)
-            return;
-
-          old = cairo_region_create_rectangle ((cairo_rectangle_int_t *) shell->highlight);
-
-          *shell->highlight = *highlight;
-
-          new = cairo_region_create_rectangle ((cairo_rectangle_int_t *) shell->highlight);
-          cairo_region_xor (old, new);
-
-          gimp_display_shell_expose_region (shell, old);
-
-          cairo_region_destroy (old);
-          cairo_region_destroy (new);
-        }
-      else
-        {
-          g_slice_free (GdkRectangle, shell->highlight);
-          shell->highlight = NULL;
-
-          gimp_display_shell_expose_full (shell);
-        }
+      g_object_set (shell->passe_partout,
+                    "visible", TRUE,
+                    "x",       (gdouble) highlight->x,
+                    "y",       (gdouble) highlight->y,
+                    "width",   (gdouble) highlight->width,
+                    "height",  (gdouble) highlight->height,
+                    NULL);
     }
-  else if (highlight)
+  else
     {
-      shell->highlight = g_slice_new (GdkRectangle);
-      *shell->highlight = *highlight;
-
-      gimp_display_shell_expose_full (shell);
+      gimp_canvas_item_set_visible (shell->passe_partout, FALSE);
     }
 }
 

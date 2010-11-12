@@ -2307,17 +2307,6 @@ gimp_display_shell_canvas_expose_image (GimpDisplayShell *shell,
 
       g_free (rects);
       cairo_restore (cr);
-
-      if (shell->highlight)
-        {
-          cairo_save (cr);
-          gimp_display_shell_draw_highlight (shell, cr,
-                                             image_rect.x,
-                                             image_rect.y,
-                                             image_rect.width,
-                                             image_rect.height);
-          cairo_restore (cr);
-        }
     }
 
   gdk_region_destroy (image_region);

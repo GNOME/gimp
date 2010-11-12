@@ -234,30 +234,3 @@ gimp_display_shell_draw_checkerboard (GimpDisplayShell *shell,
   cairo_set_source (cr, shell->checkerboard);
   cairo_paint (cr);
 }
-
-void
-gimp_display_shell_draw_highlight (GimpDisplayShell *shell,
-                                   cairo_t          *cr,
-                                   gint              x,
-                                   gint              y,
-                                   gint              w,
-                                   gint              h)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (shell->highlight != NULL);
-  g_return_if_fail (cr != NULL);
-
-  cairo_rectangle (cr, x, y, w, h);
-
-  cairo_translate (cr, - shell->offset_x, - shell->offset_y);
-  cairo_scale (cr, shell->scale_x, shell->scale_y);
-  cairo_rectangle (cr,
-                   shell->highlight->x, shell->highlight->y,
-                   shell->highlight->width, shell->highlight->height);
-
-  cairo_set_fill_rule (cr, CAIRO_FILL_RULE_EVEN_ODD);
-  cairo_clip (cr);
-
-  gimp_display_shell_set_passe_partout_style (shell, cr);
-  cairo_paint (cr);
-}
