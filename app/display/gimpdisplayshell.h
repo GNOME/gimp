@@ -195,7 +195,6 @@ struct _GimpDisplayShell
 
   gboolean           button_press_before_focus;
 
-  GdkRectangle      *highlight;        /* in image coordinates, can be NULL   */
   GimpDrawable      *mask;
   GimpRGB            mask_color;
 

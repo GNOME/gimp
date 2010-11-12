@@ -787,12 +787,6 @@ gimp_display_shell_dispose (GObject *object)
       shell->checkerboard = NULL;
     }
 
-  if (shell->highlight)
-    {
-      g_slice_free (GdkRectangle, shell->highlight);
-      shell->highlight = NULL;
-    }
-
   if (shell->mask)
     {
       g_object_unref (shell->mask);
@@ -1761,6 +1755,8 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  gimp_canvas_item_begin_change (shell->passe_partout);
+
   if (highlight)
     {
       g_object_set (shell->passe_partout,
@@ -1775,6 +1771,8 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
     {
       gimp_canvas_item_set_visible (shell->passe_partout, FALSE);
     }
+
+  gimp_canvas_item_end_change (shell->passe_partout);
 }
 
 /**
