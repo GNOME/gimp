@@ -17,19 +17,13 @@
 
 #include "config.h"
 
-#include <gegl.h>
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-
 #include "display-types.h"
-
-#include "vectors/gimpvectors.h"
 
 #include "gimpcanvasitem.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
-#include "gimpdisplayshell-transform.h"
 
 
 void
@@ -79,36 +73,6 @@ gimp_display_shell_expose_region (GimpDisplayShell *shell,
   gdk_window_invalidate_region (gtk_widget_get_window (shell->canvas),
                                 region, TRUE);
 #endif
-}
-
-void
-gimp_display_shell_expose_vectors (GimpDisplayShell *shell,
-                                   GimpVectors      *vectors)
-{
-  gdouble x1, y1;
-  gdouble x2, y2;
-
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (vectors != NULL);
-
-  if (gimp_vectors_bounds (vectors, &x1, &y1, &x2, &y2))
-    {
-      gint x, y, w, h;
-
-      gimp_display_shell_transform_xy_f (shell, x1, y1, &x1, &y1);
-      gimp_display_shell_transform_xy_f (shell, x2, y2, &x2, &y2);
-
-      x = floor (x1);
-      y = floor (y1);
-      w = ceil (x2) - x;
-      h = ceil (y2) - y;
-
-      gimp_display_shell_expose_area (shell,
-                                      x - 2,
-                                      y - 2,
-                                      w + 4,
-                                      h + 4);
-    }
 }
 
 void
