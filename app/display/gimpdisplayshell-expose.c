@@ -51,6 +51,9 @@ gimp_display_shell_expose_region (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (region != NULL);
 
+  if (! gtk_widget_get_realized (shell->canvas))
+    return;
+
 #ifdef USE_CAIRO_REGION
   {
     GdkRegion *gdk_region = gdk_region_new ();
