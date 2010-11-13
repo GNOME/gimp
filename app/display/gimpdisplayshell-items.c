@@ -60,6 +60,7 @@ gimp_display_shell_items_init (GimpDisplayShell *shell)
   g_object_unref (shell->vectors);
 
   shell->grid = gimp_canvas_grid_new (shell, NULL);
+  gimp_canvas_item_set_visible (shell->grid, FALSE);
   g_object_set (shell->grid, "grid-style", TRUE, NULL);
   gimp_display_shell_add_item (shell, shell->grid);
   g_object_unref (shell->grid);
