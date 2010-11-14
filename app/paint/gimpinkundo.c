@@ -79,7 +79,7 @@ gimp_ink_undo_constructor (GType                  type,
   ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
 
   if (ink->start_blob)
-    ink_undo->last_blob = blob_duplicate (ink->start_blob);
+    ink_undo->last_blob = gimp_blob_duplicate (ink->start_blob);
 
   return object;
 }
@@ -95,8 +95,8 @@ gimp_ink_undo_pop (GimpUndo              *undo,
 
   if (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core)
     {
-      GimpInk *ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
-      Blob    *tmp_blob;
+      GimpInk  *ink = GIMP_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core);
+      GimpBlob *tmp_blob;
 
       tmp_blob = ink->last_blob;
       ink->last_blob = ink_undo->last_blob;

@@ -37,10 +37,10 @@ struct _GimpInk
 {
   GimpPaintCore  parent_instance;
 
-  Blob          *start_blob;   /*  starting blob (for undo)       */
+  GimpBlob      *start_blob;   /*  starting blob (for undo)       */
 
-  Blob          *cur_blob;     /*  current blob                   */
-  Blob          *last_blob;    /*  blob for last cursor position  */
+  GimpBlob      *cur_blob;     /*  current blob                   */
+  GimpBlob      *last_blob;    /*  blob for last cursor position  */
 };
 
 struct _GimpInkClass

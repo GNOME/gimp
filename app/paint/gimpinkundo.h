@@ -36,7 +36,7 @@ struct _GimpInkUndo
 {
   GimpPaintCoreUndo  parent_instance;
 
-  Blob              *last_blob;
+  GimpBlob         *last_blob;
 };
 
 struct _GimpInkUndoClass
