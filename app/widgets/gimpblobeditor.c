@@ -87,7 +87,7 @@ gimp_blob_editor_class_init (GimpBlobEditorClass *klass)
                                    g_param_spec_enum ("blob-type",
                                                       NULL, NULL,
                                                       GIMP_TYPE_INK_BLOB_TYPE,
-                                                      GIMP_INK_BLOB_TYPE_ELLIPSE,
+                                                      GIMP_INK_BLOB_TYPE_CIRCLE,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ASPECT,
@@ -336,7 +336,7 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
 
   switch (editor->type)
     {
-    case GIMP_INK_BLOB_TYPE_ELLIPSE:
+    case GIMP_INK_BLOB_TYPE_CIRCLE:
       function = blob_ellipse;
       break;
 

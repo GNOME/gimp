@@ -438,7 +438,7 @@ ink_pen_ellipse (GimpInkOptions *options,
 
   switch (options->blob_type)
     {
-    case GIMP_INK_BLOB_TYPE_ELLIPSE:
+    case GIMP_INK_BLOB_TYPE_CIRCLE:
       blob_function = blob_ellipse;
       break;
 
