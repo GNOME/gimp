@@ -1,10 +1,8 @@
-/* blob.h: routines for manipulating scan converted convex
- *         polygons.
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
+ * gimpink-blob.h: routines for manipulating scan converted convex polygons.
  * Copyright 1998, Owen Taylor <otaylor@gtk.org>
- *
- * > Please contact the above author before modifying the copy <
- * > of this file in the GIMP distribution. Thanks.            <
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,8 +48,8 @@ struct _GimpBlobSpan
 
 struct _GimpBlob
 {
-  gint     y;
-  gint     height;
+  gint         y;
+  gint         height;
   GimpBlobSpan data[1];
 };
 
