@@ -21,7 +21,6 @@
 
 #include "display-types.h"
 
-#include "gimpcanvasitem.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 
