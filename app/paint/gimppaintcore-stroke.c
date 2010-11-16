@@ -27,6 +27,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimperror.h"
+#include "core/gimpcoords.h"
 
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
@@ -379,34 +380,13 @@ gimp_paint_core_stroke_emulate_dynamics (GimpCoords *coords,
   if (length > 1)
     {
       gint i;
-      gdouble delta_x;
-      gdouble delta_y;
-
       /* Fill in direction */
       for (i = 1; i < length; i++)
         {
-          delta_x = coords[i - 1].x - coords[i].x;
-          delta_y = coords[i - 1].y - coords[i].y;
-
-          if ((delta_x == 0) && (delta_y == 0))
-            {
-              coords[i].direction = coords[i - 1].direction;
-            }
-          else
-            {
-              coords[i].direction = atan (delta_y / delta_x) / (2 * G_PI);
-
-              if (coords[i].direction < 0)
-                coords[i].direction += 1.0;
-
-              coords[i].direction = 1.0 - coords[i].direction;
-            }
+           coords[i].direction = gimp_coords_direction (&coords[i-1], &coords[i]);
 
         }
 
-      if (length > 1)
-        {
-          coords[0].direction = coords[1].direction;
-        }
+      coords[0].direction = coords[1].direction;
     }
 }

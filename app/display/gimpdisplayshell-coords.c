@@ -26,6 +26,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-coords.h"
 
+#include "core/gimpcoords.h"
 #include "core/gimpcoords-interpolate.h"
 
 /* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
@@ -118,9 +119,10 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       gdouble filter;
       gdouble dist;
       gdouble delta_dir;
+      GimpCoords last_dir_event = shell->last_coords;
 
-      delta_x = shell->last_coords.x - coords->x;
-      delta_y = shell->last_coords.y - coords->y;
+      delta_x = last_dir_event.x - coords->x;
+      delta_y = last_dir_event.y - coords->y;
 
       /* Events with distances less than the screen resolution are not
        * worth handling.
@@ -178,11 +180,11 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
                   (fabs (dir_delta_y) < DIRECTION_RADIUS)) &&
                   (x >= 0))
             {
-              const GimpCoords old_event = g_array_index (shell->event_history,
-                                                          GimpCoords, x);
+              last_dir_event = g_array_index (shell->event_history,
+                                                        GimpCoords, x);
 
-              dir_delta_x = old_event.x - coords->x;
-              dir_delta_y = old_event.y - coords->y;
+              dir_delta_x = last_dir_event.x - coords->x;
+              dir_delta_y = last_dir_event.y - coords->y;
 
               x--;
             }
@@ -195,11 +197,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         }
       else
         {
-          coords->direction = atan ((- 1.0 * dir_delta_y) /
-                                    dir_delta_x) / (2 * G_PI);
-
-          if (dir_delta_x > 0.0)
-            coords->direction = coords->direction + 0.5;
+          coords->direction = gimp_coords_direction (&last_dir_event, coords);
         }
 
       coords->direction = coords->direction - floor (coords->direction);

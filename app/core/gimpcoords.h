@@ -50,5 +50,8 @@ gdouble  gimp_coords_manhattan_dist (const GimpCoords *a,
 gboolean gimp_coords_equal          (const GimpCoords *a,
                                      const GimpCoords *b);
 
+gdouble  gimp_coords_direction      (const GimpCoords *a,
+                                     const GimpCoords *b);
+
 
 #endif /* __GIMP_COORDS_H__ */
