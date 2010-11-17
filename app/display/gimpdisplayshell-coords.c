@@ -222,6 +222,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
       coords->direction = coords->direction - floor (coords->direction);
 
+#ifdef USE_MOTION_INERTIA
       /* High speed -> less smooth*/
       inertia_factor *= (1 - coords->velocity);
 
@@ -277,6 +278,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
           /* Recalculate distance */
           distance = sqrt (SQR (delta_x) + SQR (delta_y));
         }
+#endif
 
         /* do event fill for devices that do not provide enough events*/
         if (distance >= EVENT_FILL_PRECISION &&
