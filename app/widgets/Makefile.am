@@ -340,6 +340,8 @@ libappwidgets_a_sources = \
 	gimptooleditor.h		\
 	gimptooloptionseditor.c		\
 	gimptooloptionseditor.h		\
+	gimptoolpalette.c		\
+	gimptoolpalette.h		\
 	gimptoolpreseteditor.c		\
 	gimptoolpreseteditor.h		\
 	gimptoolpresetfactoryview.c	\
