@@ -213,15 +213,29 @@ gimp_overlay_child_unrealize (GimpOverlayBox   *box,
 }
 
 void
-gimp_overlay_child_size_request (GimpOverlayBox   *box,
-                                 GimpOverlayChild *child)
+gimp_overlay_child_get_preferred_width (GimpOverlayBox   *box,
+                                        GimpOverlayChild *child)
 {
-  GtkRequisition child_requisition;
+  gint minimum;
+  gint natural;
 
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (child != NULL);
 
-  gtk_widget_get_preferred_size (child->widget, &child_requisition, NULL);
+  gtk_widget_get_preferred_width (child->widget, &minimum, &natural);
+}
+
+void
+gimp_overlay_child_get_preferred_height (GimpOverlayBox   *box,
+                                         GimpOverlayChild *child)
+{
+  gint minimum;
+  gint natural;
+
+  g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
+  g_return_if_fail (child != NULL);
+
+  gtk_widget_get_preferred_height (child->widget, &minimum, &natural);
 }
 
 void
