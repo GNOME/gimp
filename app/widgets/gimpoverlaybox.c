@@ -41,8 +41,12 @@ static void        gimp_overlay_box_get_property        (GObject        *object,
 
 static void        gimp_overlay_box_realize             (GtkWidget      *widget);
 static void        gimp_overlay_box_unrealize           (GtkWidget      *widget);
-static void        gimp_overlay_box_size_request        (GtkWidget      *widget,
-                                                         GtkRequisition *requisition);
+static void        gimp_overlay_box_get_preferred_width (GtkWidget      *widget,
+                                                         gint           *minimum_width,
+                                                         gint           *natural_width);
+static void        gimp_overlay_box_get_preferred_height(GtkWidget      *widget,
+                                                         gint           *minimum_height,
+                                                         gint           *natural_height);
 static void        gimp_overlay_box_size_allocate       (GtkWidget      *widget,
                                                          GtkAllocation  *allocation);
 static gboolean    gimp_overlay_box_draw                (GtkWidget      *widget,
@@ -78,14 +82,15 @@ gimp_overlay_box_class_init (GimpOverlayBoxClass *klass)
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->set_property  = gimp_overlay_box_set_property;
-  object_class->get_property  = gimp_overlay_box_get_property;
+  object_class->set_property         = gimp_overlay_box_set_property;
+  object_class->get_property         = gimp_overlay_box_get_property;
 
-  widget_class->realize       = gimp_overlay_box_realize;
-  widget_class->unrealize     = gimp_overlay_box_unrealize;
-  widget_class->size_request  = gimp_overlay_box_size_request;
-  widget_class->size_allocate = gimp_overlay_box_size_allocate;
-  widget_class->draw          = gimp_overlay_box_draw;
+  widget_class->realize              = gimp_overlay_box_realize;
+  widget_class->unrealize            = gimp_overlay_box_unrealize;
+  widget_class->get_preferred_width  = gimp_overlay_box_get_preferred_width;
+  widget_class->get_preferred_height = gimp_overlay_box_get_preferred_height;
+  widget_class->size_allocate        = gimp_overlay_box_size_allocate;
+  widget_class->draw                 = gimp_overlay_box_draw;
 
   g_signal_override_class_handler ("damage-event",
                                    GIMP_TYPE_OVERLAY_BOX,
@@ -186,20 +191,33 @@ gimp_overlay_box_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_overlay_box_size_request (GtkWidget      *widget,
-                               GtkRequisition *requisition)
+gimp_overlay_box_get_preferred_width (GtkWidget *widget,
+                                      gint      *minimum_width,
+                                      gint      *natural_width)
 {
   GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
   GList          *list;
-  gint            border_width;
 
-  border_width = gtk_container_get_border_width (GTK_CONTAINER (widget));
-
-  requisition->width  = 1 + 2 * border_width;
-  requisition->height = 1 + 2 * border_width;
+  *minimum_width = *natural_width =
+    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
 
   for (list = box->children; list; list = g_list_next (list))
-    gimp_overlay_child_size_request (box, list->data);
+    gimp_overlay_child_get_preferred_width (box, list->data);
+}
+
+static void
+gimp_overlay_box_get_preferred_height (GtkWidget *widget,
+                                       gint      *minimum_height,
+                                       gint      *natural_height)
+{
+  GimpOverlayBox *box = GIMP_OVERLAY_BOX (widget);
+  GList          *list;
+
+  *minimum_height = *natural_height =
+    2 * gtk_container_get_border_width (GTK_CONTAINER (widget)) + 1;
+
+  for (list = box->children; list; list = g_list_next (list))
+    gimp_overlay_child_get_preferred_height (box, list->data);
 }
 
 static void
