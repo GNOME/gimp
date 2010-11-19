@@ -268,6 +268,9 @@ gimp_spin_scale_expose (GtkWidget      *widget,
       else
         cairo_move_to (cr, 2, 2);
 
+      gdk_cairo_set_source_color (cr,
+                                  &style->text[gtk_widget_get_state (widget)]);
+
       layout = gtk_widget_create_pango_layout (widget, private->label);
       pango_cairo_show_layout (cr, layout);
       cairo_destroy (cr);
@@ -294,7 +297,7 @@ gimp_spin_scale_on_number (GtkWidget *widget,
     }
 
   return FALSE;
- }
+}
 
 static void
 gimp_spin_scale_set_value (GtkWidget *widget,
