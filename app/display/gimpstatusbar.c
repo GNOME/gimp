@@ -78,8 +78,8 @@ static void     gimp_statusbar_screen_changed     (GtkWidget         *widget,
 static void     gimp_statusbar_style_set          (GtkWidget         *widget,
                                                    GtkStyle          *prev_style);
 
-static void     gimp_statusbar_hbox_size_request  (GtkWidget         *widget,
-                                                   GtkRequisition    *requisition,
+static void     gimp_statusbar_hbox_style_set     (GtkWidget         *widget,
+                                                   GtkStyle          *prev_style,
                                                    GimpStatusbar     *statusbar);
 
 static GimpProgress *
@@ -208,9 +208,9 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
 
   gtk_container_remove (GTK_CONTAINER (hbox), statusbar->label);
 
-  g_signal_connect (hbox, "size-request",
-                    G_CALLBACK (gimp_statusbar_hbox_size_request),
-                    statusbar);
+  g_signal_connect_after (hbox, "style-set",
+                          G_CALLBACK (gimp_statusbar_hbox_style_set),
+                          statusbar);
 
   statusbar->cursor_label = gtk_label_new ("8888, 8888");
   gtk_box_pack_start (GTK_BOX (hbox), statusbar->cursor_label, FALSE, FALSE, 0);
@@ -366,37 +366,39 @@ gimp_statusbar_style_set (GtkWidget *widget,
 }
 
 static void
-gimp_statusbar_hbox_size_request (GtkWidget      *widget,
-                                  GtkRequisition *requisition,
-                                  GimpStatusbar  *statusbar)
+gimp_statusbar_hbox_style_set (GtkWidget     *widget,
+                               GtkStyle      *prev_style,
+                               GimpStatusbar *statusbar)
 {
-  GtkRequisition child_requisition;
-  gint           width = 0;
+  GtkRequisition  requisition;
+  GtkRequisition  child_requisition;
+  gint            width = 0;
+  gint            height;
+
+  gtk_widget_get_preferred_size (widget, &requisition, NULL);
+
+  height = requisition.height;
 
   /*  also consider the children which can be invisible  */
 
   gtk_widget_get_preferred_size (statusbar->cursor_label,
                                  &child_requisition, NULL);
   width += child_requisition.width;
-  requisition->height = MAX (requisition->height,
-                             child_requisition.height);
+  height = MAX (height, child_requisition.height);
 
   gtk_widget_get_preferred_size (statusbar->unit_combo,
                                  &child_requisition, NULL);
   width += child_requisition.width;
-  requisition->height = MAX (requisition->height,
-                             child_requisition.height);
+  height = MAX (height, child_requisition.height);
 
   gtk_widget_get_preferred_size (statusbar->scale_combo,
                                  &child_requisition, NULL);
   width += child_requisition.width;
-  requisition->height = MAX (requisition->height,
-                             child_requisition.height);
+  height = MAX (height, child_requisition.height);
 
   gtk_widget_get_preferred_size (statusbar->progressbar,
                                  &child_requisition, NULL);
-  requisition->height = MAX (requisition->height,
-                             child_requisition.height);
+  height = MAX (height, child_requisition.height);
 
   gtk_widget_get_preferred_size (statusbar->label,
                                  &child_requisition, NULL);
@@ -405,10 +407,11 @@ gimp_statusbar_hbox_size_request (GtkWidget      *widget,
 
   gtk_widget_get_preferred_size (statusbar->cancel_button,
                                  &child_requisition, NULL);
-  requisition->height = MAX (requisition->height,
-                             child_requisition.height);
+  height = MAX (height, child_requisition.height);
 
-  requisition->width = MAX (requisition->width, width + 32);
+  width = MAX (requisition.width, width + 32);
+
+  gtk_widget_set_size_request (widget, width, height);
 }
 
 static GimpProgress *
@@ -1263,9 +1266,14 @@ gimp_statusbar_label_draw (GtkWidget     *widget,
   if (statusbar->icon)
     {
       PangoRectangle  rect;
+      GtkAllocation   allocation;
       gint            x, y;
 
       gtk_label_get_layout_offsets (GTK_LABEL (widget), &x, &y);
+
+      gtk_widget_get_allocation (widget, &allocation);
+      x -= allocation.x;
+      y -= allocation.y;
 
       pango_layout_index_to_pos (gtk_label_get_layout (GTK_LABEL (widget)), 0,
                                  &rect);
