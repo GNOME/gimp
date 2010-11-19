@@ -215,30 +215,28 @@ gimp_coords_direction (const GimpCoords *a,
     }
   else if (delta_x == 0)
     {
-       if (delta_y > 0)
-          direction = 0.25;
-       else
-          direction = 0.75;
-     }
-   else if (delta_y == 0)
-     {
-       if (delta_x < 0)
-         direction = 0.0;
-       else
-         direction = 0.5;
-     }
-    else
-     {
-        direction = atan ((- 1.0 * delta_y) / delta_x) / (2 * G_PI);
+      if (delta_y > 0)
+        direction = 0.25;
+      else
+        direction = 0.75;
+    }
+  else if (delta_y == 0)
+    {
+      if (delta_x < 0)
+        direction = 0.0;
+      else
+        direction = 0.5;
+    }
+  else
+    {
+      direction = atan ((- 1.0 * delta_y) / delta_x) / (2 * G_PI);
 
-        if (delta_x > 0.0)
-          direction = direction + 0.5;
+      if (delta_x > 0.0)
+        direction = direction + 0.5;
 
-        if (direction < 0.0)
-           direction = direction + 1.0;
-
-
-      }
+      if (direction < 0.0)
+        direction = direction + 1.0;
+    }
 
   return direction;
 }
