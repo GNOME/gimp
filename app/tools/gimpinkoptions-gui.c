@@ -85,21 +85,21 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   /* size sens slider */
   scale = gimp_prop_spin_scale_new (config, "size-sensitivity",
                                     _("Size"),
-                                    0.01, 0.1, 1);
+                                    0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /* tilt sens slider */
   scale = gimp_prop_spin_scale_new (config, "tilt-sensitivity",
                                     _("Tilt"),
-                                    0.01, 0.1, 1);
+                                    0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   /* velocity sens slider */
   scale = gimp_prop_spin_scale_new (config, "vel-sensitivity",
                                     _("Speed"),
-                                    0.01, 0.1, 1);
+                                    0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
