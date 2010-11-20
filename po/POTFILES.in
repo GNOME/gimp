@@ -472,6 +472,7 @@ app/widgets/gimptoolbox-indicator-area.c
 app/widgets/gimptoolbox.c
 app/widgets/gimptooleditor.c
 app/widgets/gimptooloptionseditor.c
+app/widgets/gimptoolpalette.c
 app/widgets/gimptoolpreseteditor.c
 app/widgets/gimptranslationstore.c
 app/widgets/gimpuimanager.c
