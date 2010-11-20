@@ -222,6 +222,10 @@ gimp_toolbox_constructed (GObject *object)
   GdkDisplay    *display;
   GList         *list;
 
+  g_assert (GIMP_IS_CONTEXT (toolbox->p->context));
+  g_assert (GIMP_IS_UI_MANAGER (toolbox->p->ui_manager));
+  g_assert (GIMP_IS_DIALOG_FACTORY (toolbox->p->dialog_factory));
+
   config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
 
   main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
@@ -313,7 +317,8 @@ gimp_toolbox_constructed (GObject *object)
                                        GDK_EXTENSION_EVENTS_CURSOR);
     }
 
-  toolbox->p->color_area = toolbox_create_color_area (toolbox, toolbox->p->context);
+  toolbox->p->color_area = toolbox_create_color_area (toolbox,
+                                                      toolbox->p->context);
   gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->p->area_wbox),
                              toolbox->p->color_area,
                              TRUE, TRUE, FALSE, TRUE, TRUE);
@@ -334,7 +339,8 @@ gimp_toolbox_constructed (GObject *object)
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->p->foo_area, 0);
 
-  toolbox->p->image_area = toolbox_create_image_area (toolbox, toolbox->p->context);
+  toolbox->p->image_area = toolbox_create_image_area (toolbox,
+                                                      toolbox->p->context);
   gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->image_area,
                      TRUE, TRUE, FALSE, TRUE);
   if (config->toolbox_image_area)
@@ -344,7 +350,7 @@ gimp_toolbox_constructed (GObject *object)
                            G_CALLBACK (toolbox_area_notify),
                            toolbox->p->image_area, 0);
 
-  gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
+  gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox), toolbox->p->vbox);
 
   gimp_toolbox_style_set (GTK_WIDGET (toolbox),
                           gtk_widget_get_style (GTK_WIDGET (toolbox)));
@@ -441,7 +447,6 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
                             GtkAllocation *allocation)
 {
   GimpToolbox    *toolbox = GIMP_TOOLBOX (widget);
-  Gimp           *gimp;
   GimpGuiConfig  *config;
   GtkRequisition  color_requisition;
   GtkRequisition  foo_requisition;
@@ -454,12 +459,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (! gimp_toolbox_get_context (toolbox))
-    return;
-
-  gimp = gimp_toolbox_get_context (toolbox)->gimp;
-
-  config = GIMP_GUI_CONFIG (gimp->config);
+  config = GIMP_GUI_CONFIG (toolbox->p->context->gimp->config);
 
   gtk_widget_size_request (toolbox->p->color_area, &color_requisition);
   gtk_widget_size_request (toolbox->p->foo_area,   &foo_requisition);
@@ -506,6 +506,8 @@ static gboolean
 gimp_toolbox_button_press_event (GtkWidget      *widget,
                                  GdkEventButton *event)
 {
+  GimpToolbox *toolbox = GIMP_TOOLBOX (widget);
+
   if (event->type == GDK_BUTTON_PRESS && event->button == 2)
     {
       GtkClipboard *clipboard;
@@ -513,7 +515,7 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
       clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
       gtk_clipboard_request_text (clipboard,
                                   toolbox_paste_received,
-                                  g_object_ref (gimp_toolbox_get_context (GIMP_TOOLBOX (widget))));
+                                  g_object_ref (toolbox->p->context));
 
       return TRUE;
     }
@@ -686,6 +688,10 @@ gimp_toolbox_new (GimpDialogFactory *factory,
                   GimpContext       *context,
                   GimpUIManager     *ui_manager)
 {
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (ui_manager), NULL);
+
   return g_object_new (GIMP_TYPE_TOOLBOX,
                        "dialog-factory", factory,
                        "context",        context,
@@ -707,22 +713,6 @@ gimp_toolbox_get_dialog_factory (GimpToolbox *toolbox)
   g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
 
   return toolbox->p->dialog_factory;
-}
-
-GimpUIManager *
-gimp_toolbox_get_ui_manager (GimpToolbox *toolbox)
-{
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
-
-  return toolbox->p->ui_manager;
-}
-
-GtkWidget *
-gimp_toolbox_get_vbox (GimpToolbox *toolbox)
-{
-  g_return_val_if_fail (GIMP_IS_TOOLBOX (toolbox), NULL);
-
-  return toolbox->p->vbox;
 }
 
 void

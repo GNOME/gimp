@@ -174,6 +174,10 @@ gimp_tool_palette_constructed (GObject *object)
   GList                  *list;
   GSList                 *item_group = NULL;
 
+  g_assert (GIMP_IS_CONTEXT (private->context));
+  g_assert (GIMP_IS_UI_MANAGER (private->ui_manager));
+  g_assert (GIMP_IS_DIALOG_FACTORY (private->dialog_factory));
+
   group = gtk_tool_item_group_new (_("Tools"));
   gtk_tool_item_group_set_label_widget (GTK_TOOL_ITEM_GROUP (group), NULL);
   gtk_container_add (GTK_CONTAINER (object), group);
@@ -434,6 +438,10 @@ gimp_tool_palette_new (GimpContext       *context,
                        GimpUIManager     *ui_manager,
                        GimpDialogFactory *dialog_factory)
 {
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (ui_manager), NULL);
+  g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+
   return g_object_new (GIMP_TYPE_TOOL_PALETTE,
                        "context",        context,
                        "ui-manager",     ui_manager,

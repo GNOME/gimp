@@ -84,11 +84,13 @@ static void   gimp_toolbox_drop_pixbuf    (GtkWidget       *widget,
 /*  public functions  */
 
 void
-gimp_toolbox_dnd_init (GimpToolbox *toolbox)
+gimp_toolbox_dnd_init (GimpToolbox *toolbox,
+                       GtkWidget   *vbox)
 {
   GimpContext *context = NULL;
 
   g_return_if_fail (GIMP_IS_TOOLBOX (toolbox));
+  g_return_if_fail (GTK_IS_BOX (vbox));
 
   context = gimp_toolbox_get_context (toolbox);
 
@@ -107,39 +109,39 @@ gimp_toolbox_dnd_init (GimpToolbox *toolbox)
    * manually, otherwise we would not be able to give the drag handler
    * a chance to handle drag events
    */
-  gtk_drag_dest_set (gimp_toolbox_get_vbox (toolbox),
+  gtk_drag_dest_set (vbox,
                      0, NULL, 0,
                      GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
-  gimp_dnd_uri_list_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_uri_list_dest_add (vbox,
                               gimp_toolbox_drop_uri_list,
                               context);
 
-  gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_LAYER,
                               gimp_toolbox_drop_drawable,
                               context);
-  gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_LAYER_MASK,
                               gimp_toolbox_drop_drawable,
                               context);
-  gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_CHANNEL,
                               gimp_toolbox_drop_drawable,
                               context);
-  gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_TOOL_INFO,
                               gimp_toolbox_drop_tool,
                               context);
-  gimp_dnd_viewable_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_BUFFER,
                               gimp_toolbox_drop_buffer,
                               context);
 
-  gimp_dnd_component_dest_add (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_component_dest_add (vbox,
                                gimp_toolbox_drop_component,
                                context);
-  gimp_dnd_pixbuf_dest_add    (gimp_toolbox_get_vbox (toolbox),
+  gimp_dnd_pixbuf_dest_add    (vbox,
                                gimp_toolbox_drop_pixbuf,
                                context);
 }

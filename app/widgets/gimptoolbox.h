@@ -47,13 +47,11 @@ struct _GimpToolboxClass
 
 
 GType               gimp_toolbox_get_type           (void) G_GNUC_CONST;
-GtkWidget *         gimp_toolbox_new                (GimpDialogFactory *factory,
+GtkWidget         * gimp_toolbox_new                (GimpDialogFactory *factory,
                                                      GimpContext       *context,
                                                      GimpUIManager     *ui_manager);
-GimpContext *       gimp_toolbox_get_context        (GimpToolbox       *toolbox);
+GimpContext       * gimp_toolbox_get_context        (GimpToolbox       *toolbox);
 GimpDialogFactory * gimp_toolbox_get_dialog_factory (GimpToolbox       *toolbox);
-GimpUIManager *     gimp_toolbox_get_ui_manager     (GimpToolbox       *toolbox);
-GtkWidget *         gimp_toolbox_get_vbox           (GimpToolbox       *toolbox);
 void                gimp_toolbox_set_drag_handler   (GimpToolbox       *toolbox,
                                                      GimpPanedBox      *drag_handler);
 
