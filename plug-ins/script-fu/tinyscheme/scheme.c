@@ -3783,7 +3783,14 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
      case OP_STRINGP:     /* string? */
           s_retbool(is_string(car(sc->args)));
      case OP_INTEGERP:     /* integer? */
-          s_retbool(is_number(car(sc->args)) && is_integer(car(sc->args)));
+          x = car(sc->args);
+          if (!is_number(x))
+               s_retbool(0);
+          if (is_real(x)) {
+               double r = rvalue(x);
+               s_retbool(r == round_per_R5RS(r));
+          }
+          s_retbool(is_integer(x));
      case OP_REALP:     /* real? */
           s_retbool(is_number(car(sc->args))); /* All numbers are real */
      case OP_CHARP:     /* char? */
