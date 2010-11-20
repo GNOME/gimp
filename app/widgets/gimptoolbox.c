@@ -657,25 +657,23 @@ gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
   if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
                                          &button_width, &button_height))
     {
-      GtkWidget   *main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
-      gint         border_width;
-      GdkGeometry  geometry;
+      GdkGeometry geometry;
 
       gtk_widget_set_size_request (toolbox->p->header,
                                    -1, button_height * PANGO_SCALE_SMALL);
 
-      border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
-
-      geometry.min_width  = (2 * border_width + 2 * button_width);
-      geometry.min_height = -1;
-      geometry.width_inc  = button_width;
-      geometry.height_inc = (gimp_dock_get_dockbooks (GIMP_DOCK (toolbox)) ?
-                             1 : button_height);
+      geometry.min_width   = 2 * button_width;
+      geometry.min_height  = -1;
+      geometry.base_width  = button_width;
+      geometry.base_height = -1;
+      geometry.width_inc   = button_width;
+      geometry.height_inc  = -1;
 
       gtk_window_set_geometry_hints (window,
                                      NULL,
                                      &geometry,
                                      GDK_HINT_MIN_SIZE   |
+                                     GDK_HINT_BASE_SIZE  |
                                      GDK_HINT_RESIZE_INC |
                                      GDK_HINT_USER_POS);
 
