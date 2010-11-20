@@ -96,9 +96,9 @@ static void     gimp_tool_palette_tool_reorder        (GimpContainer   *containe
 static void     gimp_tool_palette_tool_visible_notify (GimpToolInfo    *tool_info,
                                                        GParamSpec      *pspec,
                                                        GtkToolItem     *item);
-static void     gimp_tool_palette_button_toggled      (GtkWidget       *widget,
+static void     gimp_tool_palette_tool_button_toggled (GtkWidget       *widget,
                                                        GimpToolPalette *palette);
-static gboolean gimp_tool_palette_button_press        (GtkWidget       *widget,
+static gboolean gimp_tool_palette_tool_button_press   (GtkWidget       *widget,
                                                        GdkEventButton  *bevent,
                                                        GimpToolPalette *palette);
 
@@ -214,11 +214,11 @@ gimp_tool_palette_constructed (GObject *object)
         gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (item), TRUE);
 
       g_signal_connect (item, "toggled",
-                        G_CALLBACK (gimp_tool_palette_button_toggled),
+                        G_CALLBACK (gimp_tool_palette_tool_button_toggled),
                         object);
 
       g_signal_connect (gtk_bin_get_child (GTK_BIN (item)), "button-press-event",
-                        G_CALLBACK (gimp_tool_palette_button_press),
+                        G_CALLBACK (gimp_tool_palette_tool_button_press),
                         object);
 
       if (private->ui_manager)
@@ -500,14 +500,14 @@ gimp_tool_palette_tool_changed (GimpContext      *context,
           ! gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (tool_button)))
         {
           g_signal_handlers_block_by_func (tool_button,
-                                           gimp_tool_palette_button_toggled,
+                                           gimp_tool_palette_tool_button_toggled,
                                            palette);
 
           gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (tool_button),
                                              TRUE);
 
           g_signal_handlers_unblock_by_func (tool_button,
-                                             gimp_tool_palette_button_toggled,
+                                             gimp_tool_palette_tool_button_toggled,
                                              palette);
         }
     }
@@ -540,8 +540,8 @@ gimp_tool_palette_tool_visible_notify (GimpToolInfo *tool_info,
 }
 
 static void
-gimp_tool_palette_button_toggled (GtkWidget       *widget,
-                                  GimpToolPalette *palette)
+gimp_tool_palette_tool_button_toggled (GtkWidget       *widget,
+                                       GimpToolPalette *palette)
 {
   GimpToolPalettePrivate *private = GET_PRIVATE (palette);
   GimpToolInfo           *tool_info;
@@ -553,9 +553,9 @@ gimp_tool_palette_button_toggled (GtkWidget       *widget,
 }
 
 static gboolean
-gimp_tool_palette_button_press (GtkWidget       *widget,
-                                GdkEventButton  *event,
-                                GimpToolPalette *palette)
+gimp_tool_palette_tool_button_press (GtkWidget       *widget,
+                                     GdkEventButton  *event,
+                                     GimpToolPalette *palette)
 {
   GimpToolPalettePrivate *private = GET_PRIVATE (palette);
 
