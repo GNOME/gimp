@@ -344,38 +344,31 @@ gimp_tool_palette_size_allocate (GtkWidget     *widget,
                                  GtkAllocation *allocation)
 {
   GimpToolPalettePrivate *private = GET_PRIVATE (widget);
-  Gimp                   *gimp;
-  GimpToolInfo           *tool_info;
-  GtkWidget              *tool_button;
+  gint                    button_width;
+  gint                    button_height;
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  gimp = private->context->gimp;
-
-  tool_info   = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
-  tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
-
-  if (tool_button)
+  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (widget),
+                                         &button_width, &button_height))
     {
-      GtkRequisition  button_requisition;
-      GList          *list;
-      gint            n_tools;
-      gint            tool_rows;
-      gint            tool_columns;
-
-      gtk_widget_size_request (tool_button, &button_requisition);
+      Gimp  *gimp = private->context->gimp;
+      GList *list;
+      gint   n_tools;
+      gint   tool_rows;
+      gint   tool_columns;
 
       for (list = gimp_get_tool_info_iter (gimp), n_tools = 0;
            list;
            list = list->next)
         {
-          tool_info = list->data;
+          GimpToolInfo *tool_info = list->data;
 
           if (tool_info->visible)
             n_tools++;
         }
 
-      tool_columns = MAX (1, (allocation->width / button_requisition.width));
+      tool_columns = MAX (1, (allocation->width / button_width));
       tool_rows    = n_tools / tool_columns;
 
       if (n_tools % tool_columns)
@@ -388,7 +381,7 @@ gimp_tool_palette_size_allocate (GtkWidget     *widget,
           private->tool_columns = tool_columns;
 
           gtk_widget_set_size_request (widget, -1,
-                                       tool_rows * button_requisition.height);
+                                       tool_rows * button_height);
         }
     }
 }
@@ -446,6 +439,40 @@ gimp_tool_palette_new (GimpContext       *context,
                        "ui-manager",     ui_manager,
                        "dialog-factory", dialog_factory,
                        NULL);
+}
+
+gboolean
+gimp_tool_palette_get_button_size (GimpToolPalette *palette,
+                                   gint            *width,
+                                   gint            *height)
+{
+  GimpToolPalettePrivate *private;
+  GimpToolInfo           *tool_info;
+  GtkWidget              *tool_button;
+
+  g_return_val_if_fail (GIMP_IS_TOOL_PALETTE (palette), FALSE);
+  g_return_val_if_fail (width != NULL, FALSE);
+  g_return_val_if_fail (height != NULL, FALSE);
+
+  private = GET_PRIVATE (palette);
+
+  tool_info   = gimp_get_tool_info (private->context->gimp,
+                                    "gimp-rect-select-tool");
+  tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
+
+  if (tool_button)
+    {
+      GtkRequisition button_requisition;
+
+      gtk_widget_size_request (tool_button, &button_requisition);
+
+      *width  = button_requisition.width;
+      *height = button_requisition.height;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 

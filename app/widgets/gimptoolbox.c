@@ -57,8 +57,6 @@
 #include "gimp-intl.h"
 
 
-#define TOOL_BUTTON_DATA_KEY "gimp-tool-palette-item"
-
 enum
 {
   PROP_0,
@@ -650,38 +648,27 @@ static void
 gimp_toolbox_set_host_geometry_hints (GimpDock  *dock,
                                       GtkWindow *window)
 {
-  GimpToolbox  *toolbox = GIMP_TOOLBOX (dock);
-  Gimp         *gimp;
-  GimpToolInfo *tool_info;
-  GtkWidget    *tool_button;
+  GimpToolbox *toolbox = GIMP_TOOLBOX (dock);
+  gint         button_width;
+  gint         button_height;
 
-  gimp = gimp_toolbox_get_context (toolbox)->gimp;
-
-  tool_info   = gimp_get_tool_info (gimp, "gimp-rect-select-tool");
-  tool_button = g_object_get_data (G_OBJECT (tool_info), TOOL_BUTTON_DATA_KEY);
-
-  if (tool_button)
+  if (gimp_tool_palette_get_button_size (GIMP_TOOL_PALETTE (toolbox->p->tool_palette),
+                                         &button_width, &button_height))
     {
-      GtkWidget      *main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
-      GtkRequisition  button_requisition;
-      gint            border_width;
-      GdkGeometry     geometry;
-
-      gtk_widget_size_request (tool_button, &button_requisition);
+      GtkWidget   *main_vbox = gimp_dock_get_main_vbox (GIMP_DOCK (toolbox));
+      gint         border_width;
+      GdkGeometry  geometry;
 
       gtk_widget_set_size_request (toolbox->p->header,
-                                   -1,
-                                   button_requisition.height *
-                                   PANGO_SCALE_SMALL);
+                                   -1, button_height * PANGO_SCALE_SMALL);
 
       border_width = gtk_container_get_border_width (GTK_CONTAINER (main_vbox));
 
-      geometry.min_width  = (2 * border_width +
-                             2 * button_requisition.width);
+      geometry.min_width  = (2 * border_width + 2 * button_width);
       geometry.min_height = -1;
-      geometry.width_inc  = button_requisition.width;
+      geometry.width_inc  = button_width;
       geometry.height_inc = (gimp_dock_get_dockbooks (GIMP_DOCK (toolbox)) ?
-                             1 : button_requisition.height);
+                             1 : button_height);
 
       gtk_window_set_geometry_hints (window,
                                      NULL,

@@ -43,11 +43,14 @@ struct _GimpToolPaletteClass
 };
 
 
-GType       gimp_tool_palette_get_type (void) G_GNUC_CONST;
+GType       gimp_tool_palette_get_type        (void) G_GNUC_CONST;
 
-GtkWidget * gimp_tool_palette_new      (GimpContext       *context,
-                                        GimpUIManager     *ui_manager,
-                                        GimpDialogFactory *dialog_factory);
+GtkWidget * gimp_tool_palette_new             (GimpContext       *context,
+                                               GimpUIManager     *ui_manager,
+                                               GimpDialogFactory *dialog_factory);
+gboolean    gimp_tool_palette_get_button_size (GimpToolPalette   *palette,
+                                               gint              *width,
+                                               gint              *height);
 
 
 #endif /* __GIMP_TOOL_PALETTE_H__ */
