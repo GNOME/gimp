@@ -166,6 +166,15 @@ gimp_cage_tool_init (GimpCageTool *self)
 {
   GimpTool *tool = GIMP_TOOL (self);
 
+  gimp_tool_control_set_dirty_mask  (tool->control,
+                                     GIMP_DIRTY_IMAGE           |
+                                     GIMP_DIRTY_IMAGE_STRUCTURE |
+                                     GIMP_DIRTY_DRAWABLE        |
+                                     GIMP_DIRTY_SELECTION);
+  gimp_tool_control_set_wants_click (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor (tool->control,
+                                     GIMP_TOOL_CURSOR_PERSPECTIVE);
+
   self->config          = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   self->hovering_handle = -1;
   self->moving_handle   = -1;
@@ -173,10 +182,6 @@ gimp_cage_tool_init (GimpCageTool *self)
 
   self->coef            = NULL;
   self->image_map       = NULL;
-
-  gimp_tool_control_set_wants_click (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor (tool->control,
-                                     GIMP_TOOL_CURSOR_PERSPECTIVE);
 }
 
 static void
