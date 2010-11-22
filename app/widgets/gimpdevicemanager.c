@@ -390,6 +390,9 @@ gimp_device_manager_device_added (GdkDeviceManager  *gdk_manager,
   GdkDisplay               *display;
   GimpDeviceInfo           *device_info;
 
+  if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
+    return;
+
   display = gdk_device_manager_get_display (gdk_manager);
 
   device_info =
