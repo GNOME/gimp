@@ -282,7 +282,7 @@ gimp_toolbox_constructed (GObject *object)
   devices = gdk_device_manager_list_devices (manager, GDK_DEVICE_TYPE_MASTER);
 
   for (list = devices; list; list = g_list_next (list))
-    if (! ((GdkDevice *) (list->data))->has_cursor)
+    if (! gdk_device_get_has_cursor (list->data))
       break;
 
   g_list_free (devices);
