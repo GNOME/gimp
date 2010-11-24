@@ -1116,7 +1116,7 @@ pygimp_delete(PyObject *self, PyObject *args)
     if (pygimp_image_check(img))
         gimp_image_delete(img->ID);
     else if (pygimp_drawable_check(img))
-        gimp_drawable_delete(img->ID);
+        gimp_item_delete(img->ID);
     else if (pygimp_display_check(img))
         gimp_display_delete(img->ID);
 
@@ -1264,6 +1264,7 @@ pygimp_parasite_attach(PyObject *self, PyObject *args)
 static PyObject *
 pygimp_attach_new_parasite(PyObject *self, PyObject *args)
 {
+    GimpParasite *parasite;
     char *name, *data;
     int flags, size;
 
@@ -1271,10 +1272,15 @@ pygimp_attach_new_parasite(PyObject *self, PyObject *args)
                           &data, &size))
         return NULL;
 
-    if (!gimp_attach_new_parasite(name, flags, size, data)) {
+    parasite = gimp_parasite_new (name, flags, size, data);
+
+    if (!gimp_parasite_attach (parasite)) {
         PyErr_Format(pygimp_error, "could not attach new parasite '%s'", name);
+        gimp_parasite_free (parasite);
         return NULL;
     }
+
+    gimp_parasite_free (parasite);
 
     Py_INCREF(Py_None);
     return Py_None;

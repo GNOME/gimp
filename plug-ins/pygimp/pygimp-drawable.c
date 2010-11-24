@@ -483,10 +483,15 @@ drw_transform_flip(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &recursion_level, &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_flip(self->ID, x0, y0, x1, y1,
-				      transform_direction, interpolation,
-				      supersample, recursion_level,
-				      clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_flip (self->ID, x0, y0, x1, y1);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "flip");
 }
@@ -508,8 +513,13 @@ drw_transform_flip_simple(PyGimpDrawable *self, PyObject *args, PyObject *kwargs
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_flip_simple(self->ID, flip_type, auto_center,
-					     axis, clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_flip_simple (self->ID, flip_type,
+                                          auto_center, axis);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "flip");
 }
@@ -530,8 +540,14 @@ drw_transform_flip_default(PyGimpDrawable *self, PyObject *args, PyObject *kwarg
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_flip_default(self->ID, x0, y0, x1, y1,
-					      interpolate, clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_flip (self->ID, x0, y0, x1, y1);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "flip");
 }
@@ -558,11 +574,16 @@ drw_transform_perspective(PyGimpDrawable *self, PyObject *args, PyObject *kwargs
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_perspective(self->ID,
-					     x0, y0, x1, y1, x2, y2, x3, y3,
-					     transform_direction, interpolation,
-					     supersample, recursion_level,
-					     clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_perspective (self->ID,
+                                          x0, y0, x1, y1, x2, y2, x3, y3);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "apply perspective transform to");
 }
@@ -584,10 +605,15 @@ drw_transform_perspective_default(PyGimpDrawable *self, PyObject *args, PyObject
 				     &interpolate, &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_perspective_default(self->ID,
-						     x0, y0, x1, y1,
-						     x2, y2, x3, y3,
-						     interpolate, clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_perspective (self->ID,
+                                          x0, y0, x1, y1, x2, y2, x3, y3);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "apply perspective transform to");
 }
@@ -614,11 +640,16 @@ drw_transform_rotate(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_rotate(self->ID, angle, auto_center,
-					center_x, center_y,
-					transform_direction, interpolation,
-					supersample, recursion_level,
-					clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_rotate (self->ID, angle, auto_center,
+                                     center_x, center_y);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "rotate");
 }
@@ -641,10 +672,14 @@ drw_transform_rotate_simple(PyGimpDrawable *self, PyObject *args, PyObject *kwar
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_rotate_simple(self->ID, rotate_type,
-					       auto_center,
-					       center_x, center_y,
-					       clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_resize (clip_result);
+
+   id = gimp_item_transform_rotate_simple (self->ID, rotate_type,
+                                           auto_center,
+                                           center_x, center_y);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "rotate");
 }
@@ -666,9 +701,15 @@ drw_transform_rotate_default(PyGimpDrawable *self, PyObject *args, PyObject *kwa
 				     &interpolate, &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_rotate_default(self->ID, angle, auto_center,
-	                                        center_x, center_y,
-						interpolate, clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_rotate (self->ID, angle, auto_center,
+                                     center_x, center_y);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "rotate");
 }
@@ -693,10 +734,15 @@ drw_transform_scale(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &recursion_level, &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_scale(self->ID, x0, y0, x1, y1,
-				       transform_direction, interpolation,
-				       supersample, recursion_level,
-				       clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_scale (self->ID, x0, y0, x1, y1);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "scale");
 }
@@ -717,8 +763,14 @@ drw_transform_scale_default(PyGimpDrawable *self, PyObject *args, PyObject *kwar
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_scale_default(self->ID, x0, y0, x1, y1,
-					       interpolate, clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_scale (self->ID, x0, y0, x1, y1);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "scale");
 }
@@ -744,10 +796,15 @@ drw_transform_shear(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_shear(self->ID, shear_type, magnitude,
-				       transform_direction, interpolation,
-				       supersample, recursion_level,
-				       clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_shear (self->ID, shear_type, magnitude);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "shear");
 }
@@ -769,9 +826,14 @@ drw_transform_shear_default(PyGimpDrawable *self, PyObject *args, PyObject *kwar
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_shear_default(self->ID, shear_type,
-					       magnitude, interpolate,
-					       clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_shear (self->ID, shear_type, magnitude);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "shear");
 }
@@ -799,10 +861,16 @@ drw_transform_2d(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_2d(self->ID, source_x, source_y,
-				    scale_x, scale_y, angle, dest_x, dest_y,
-				    transform_direction, interpolation,
-				    supersample, recursion_level, clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_2d (self->ID, source_x, source_y,
+                                 scale_x, scale_y, angle, dest_x, dest_y);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "apply 2d transform to");
 }
@@ -825,10 +893,15 @@ drw_transform_2d_default(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_2d_default(self->ID, source_x, source_y,
-					    scale_x, scale_y, angle,
-					    dest_x, dest_y, interpolate,
-					    clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_2d (self->ID, source_x, source_y,
+                                 scale_x, scale_y, angle, dest_x, dest_y);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "apply 2d transform to");
 }
@@ -860,13 +933,18 @@ drw_transform_matrix(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 				     &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_matrix(self->ID,
-					coeff_0_0, coeff_0_1, coeff_0_2,
-					coeff_1_0, coeff_1_1, coeff_1_2,
-					coeff_2_0, coeff_2_1, coeff_2_2,
-					transform_direction, interpolation,
-					supersample, recursion_level,
-					clip_result);
+    gimp_context_push ();
+    gimp_context_set_transform_direction (transform_direction);
+    gimp_context_set_interpolation (interpolation);
+    gimp_context_set_transform_recursion (recursion_level);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_matrix (self->ID,
+                                     coeff_0_0, coeff_0_1, coeff_0_2,
+                                     coeff_1_0, coeff_1_1, coeff_1_2,
+                                     coeff_2_0, coeff_2_1, coeff_2_2);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "apply 2d matrix transform to");
 }
@@ -894,11 +972,17 @@ drw_transform_matrix_default(PyGimpDrawable *self, PyObject *args, PyObject *kwa
 				     &interpolate, &clip_result))
 	return NULL;
 
-    id = gimp_drawable_transform_matrix_default(self->ID,
-						coeff_0_0, coeff_0_1, coeff_0_2,
-						coeff_1_0, coeff_1_1, coeff_1_2,
-						coeff_2_0, coeff_2_1, coeff_2_2,
-						interpolate, clip_result);
+    gimp_context_push ();
+    if (! interpolate)
+        gimp_context_set_interpolation (GIMP_INTERPOLATION_NONE);
+    gimp_context_set_transform_resize (clip_result);
+
+    id = gimp_item_transform_matrix (self->ID,
+                                     coeff_0_0, coeff_0_1, coeff_0_2,
+                                     coeff_1_0, coeff_1_1, coeff_1_2,
+                                     coeff_2_0, coeff_2_1, coeff_2_2);
+
+    gimp_context_pop ();
 
     return transform_result(self, id, "apply 2d matrix transform to");
 }
