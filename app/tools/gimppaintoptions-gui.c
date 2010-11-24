@@ -53,11 +53,9 @@
 
 
 
-static GtkWidget * fade_options_gui           (GimpPaintOptions *paint_options,
+static GtkWidget * dynamics_options_gui       (GimpPaintOptions *paint_options,
                                                GType             tool_type);
-static GtkWidget * gradient_options_gui       (GimpPaintOptions *paint_options,
-                                               GType             tool_type,
-                                               GtkWidget        *incremental_toggle);
+
 static GtkWidget * jitter_options_gui         (GimpPaintOptions *paint_options,
                                                GType             tool_type);
 
@@ -122,13 +120,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
-                                           _("Dynamics"), 2,
-                                           "dynamics-view-type",
-                                           "dynamics-view-size");
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -164,11 +155,15 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                         1.0, 5.0, 2);
       gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
       gtk_widget_show (scale);
-    }
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
-    {
-      frame = fade_options_gui (options, tool_type);
+      button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
+                                           _("Dynamics"), 2,
+                                           "dynamics-view-type",
+                                           "dynamics-view-size");
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      frame = dynamics_options_gui (options, tool_type);
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
@@ -206,12 +201,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
     }
 
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
-    {
-      frame = gradient_options_gui (options, tool_type, incremental_toggle);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-    }
+
 
   return vbox;
 }
@@ -220,35 +210,49 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 /*  private functions  */
 
 static GtkWidget *
-fade_options_gui (GimpPaintOptions *paint_options,
-                  GType             tool_type)
+dynamics_options_gui (GimpPaintOptions *paint_options,
+                      GType             tool_type)
 {
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
-  GtkWidget *table;
+  GtkWidget *inner_frame;
+  GtkWidget *fade_table;
+  GtkWidget *gradient_table;
   GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *combo;
   GtkWidget *checkbox;
+  GtkWidget *vbox;
+  GtkWidget *box;
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  frame = gimp_prop_expander_new  (config, "dynamics-expanded",
+                                          _("Dynamics options"));
 
-  frame = gimp_prop_expanding_frame_new (config, "use-fade",
-                                         _("Fade out"),
-                                         table, NULL);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
+  inner_frame = gimp_frame_new (_("Fade options:"));
+  gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
+  gtk_widget_show (inner_frame);
+
+  fade_table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (fade_table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (fade_table), 2);
+  
+  gtk_container_add (GTK_CONTAINER (inner_frame), fade_table);
+  gtk_widget_show (fade_table);
+  
   /*  the fade-out sizeentry  */
   scale = gimp_prop_spin_scale_new (config, "fade-length",
-                                    _("Length"), 1.0, 50.0, 0);
-  gtk_table_attach (GTK_TABLE (table), scale, 0, 2, 0, 1,
+                                    _("Fade length"), 1.0, 50.0, 0);
+  gtk_table_attach (GTK_TABLE (fade_table), scale, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (scale);
 
   /*  the fade-out unitmenu  */
   menu = gimp_prop_unit_combo_box_new (config, "fade-unit");
-  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, 0, 1,
+  gtk_table_attach (GTK_TABLE (fade_table), menu, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (menu);
 
@@ -260,16 +264,41 @@ fade_options_gui (GimpPaintOptions *paint_options,
 
     /*  the repeat type  */
   combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+  gimp_table_attach_aligned (GTK_TABLE (fade_table), 0, 2,
                              _("Repeat:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
   checkbox = gimp_prop_check_button_new (config,
                                          "fade-reverse",
                                           _("Reverse"));
-  gtk_table_attach (GTK_TABLE (table), checkbox, 0, 2, 3, 4,
+  gtk_table_attach (GTK_TABLE (fade_table), checkbox, 0, 2, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (checkbox);
+
+  /*Color UI*/
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
+    {
+      inner_frame = gimp_frame_new (_("Color options:"));
+      gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
+      gtk_widget_show (inner_frame);
+
+      gradient_table = gtk_table_new (1, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (gradient_table), 2);
+      gtk_table_set_row_spacings (GTK_TABLE (gradient_table), 2);
+
+      gtk_container_add (GTK_CONTAINER (inner_frame), gradient_table);
+      gtk_widget_show (gradient_table);
+
+      box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
+                                        _("Gradient"), 2,
+                                        "gradient-view-type",
+                                        "gradient-view-size",
+                                        "gradient-reverse");
+
+      gimp_table_attach_aligned (GTK_TABLE (gradient_table), 0, 1,
+                                 _("Colors:"), 0.0, 0.5,
+                                 box, 2, FALSE);
+    }
 
   return frame;
 }
@@ -289,38 +318,6 @@ jitter_options_gui (GimpPaintOptions *paint_options,
   frame = gimp_prop_expanding_frame_new (config, "use-jitter",
                                          _("Apply Jitter"),
                                          scale, NULL);
-
-  return frame;
-}
-
-static GtkWidget *
-gradient_options_gui (GimpPaintOptions *paint_options,
-                      GType             tool_type,
-                      GtkWidget        *incremental_toggle)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *frame;
-  GtkWidget *box;
-  GtkWidget *button;
-
-  /*  the gradient view  */
-  box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
-                                    _("Gradient"), 2,
-                                    "gradient-view-type",
-                                    "gradient-view-size",
-                                    "gradient-reverse");
-
-  frame = gimp_prop_expanding_frame_new (config, "use-gradient",
-                                         _("Use color from gradient"),
-                                         box, &button);
-
-  if (incremental_toggle)
-    {
-      gtk_widget_set_sensitive (incremental_toggle,
-                                ! paint_options->gradient_options->use_gradient);
-      g_object_set_data (G_OBJECT (button), "inverse_sensitive",
-                         incremental_toggle);
-    }
 
   return frame;
 }

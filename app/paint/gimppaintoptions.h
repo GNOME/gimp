@@ -37,7 +37,6 @@ typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpFadeOptions
 {
-  gboolean        use_fade;
   gboolean        fade_reverse;
   gdouble         fade_length;
   GimpUnit        fade_unit;
@@ -52,7 +51,6 @@ struct _GimpJitterOptions
 
 struct _GimpGradientOptions
 {
-  gboolean        use_gradient;
   gboolean        gradient_reverse;
   GimpRepeatMode  gradient_repeat;
 };
@@ -82,6 +80,8 @@ struct _GimpPaintOptions
   GimpPaintApplicationMode  application_mode_save;
 
   gboolean                  hard;
+
+  gboolean                  dynamics_expanded;
 
   GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;

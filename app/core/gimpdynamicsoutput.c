@@ -460,15 +460,11 @@ gimp_dynamics_output_get_linear_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if ((output->use_fade) && (options))
+  if (output->use_fade)
     {
-      GimpFadeOptions *fade_options = options->fade_options;
+      total += gimp_curve_map_value (output->fade_curve, fade_point);
 
-      if (fade_options->use_fade)
-        {
-          total += gimp_curve_map_value (output->fade_curve, fade_point);
-          factors++;
-        }
+      factors++;
     }
 
   if (factors > 0)
@@ -565,15 +561,11 @@ gimp_dynamics_output_get_angular_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if ((output->use_fade) && (options))
+  if (output->use_fade)
     {
-      GimpFadeOptions *fade_options = options->fade_options;
+      total += gimp_curve_map_value (output->fade_curve, fade_point);
 
-      if (fade_options->use_fade)
-        {
-          total += gimp_curve_map_value (output->fade_curve, fade_point);
-          factors++;
-        }
+      factors++;
     }
 
   if (factors > 0)
@@ -659,15 +651,11 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       factors++;
     }
 
-  if ((output->use_fade) && (options))
+  if (output->use_fade)
     {
-      GimpFadeOptions *fade_options = options->fade_options;
+      total += gimp_curve_map_value (output->fade_curve, fade_point);
 
-      if (fade_options->use_fade)
-        {
-          total += gimp_curve_map_value (output->fade_curve, fade_point);
-          factors++;
-        }
+      factors++;
     }
 
   if (factors > 0)
