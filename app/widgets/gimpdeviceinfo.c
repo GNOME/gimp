@@ -348,8 +348,8 @@ gimp_device_info_set_property (GObject      *object,
                 n_device_values = gimp_value_array_length (array);
 
                 info->n_keys = n_device_values;
-                info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
-                memset (info->keys, 0, info->n_keys * sizeof (GdkDeviceKey));
+                info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
+                memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
               }
 
             for (i = 0; i < n_device_values; i++)
@@ -627,8 +627,8 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
                                        gdk_device_get_axis_use (device, i));
 
       info->n_keys = gdk_device_get_n_keys (device);
-      info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
-      memset (info->keys, 0, info->n_keys * sizeof (GdkDeviceKey));
+      info->keys   = g_renew (GimpDeviceKey, info->keys, info->n_keys);
+      memset (info->keys, 0, info->n_keys * sizeof (GimpDeviceKey));
 
       for (i = 0; i < MIN (info->n_keys, gdk_device_get_n_keys (device)); i++)
         {
