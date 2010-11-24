@@ -35,6 +35,15 @@ G_BEGIN_DECLS
                                        GIMP_CONTEXT_PROP_MASK_GRADIENT)
 
 
+typedef struct _GimpDeviceKey GimpDeviceKey;
+
+struct _GimpDeviceKey
+{
+  guint           keyval;
+  GdkModifierType modifiers;
+};
+
+
 #define GIMP_TYPE_DEVICE_INFO            (gimp_device_info_get_type ())
 #define GIMP_DEVICE_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DEVICE_INFO, GimpDeviceInfo))
 #define GIMP_DEVICE_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DEVICE_INFO, GimpDeviceInfoClass))
@@ -58,7 +67,7 @@ struct _GimpDeviceInfo
   gint           n_axes;
   GdkAxisUse    *axes;
   gint           n_keys;
-  GdkDeviceKey  *keys;
+  GimpDeviceKey *keys;
 
   /*  curves  */
 
