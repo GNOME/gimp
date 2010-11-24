@@ -139,16 +139,19 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
 
-      button = gimp_stock_button_new (GTK_STOCK_REFRESH, NULL);
+      button = gimp_stock_button_new (GIMP_STOCK_RESET, NULL);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
       gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GTK_STOCK_REFRESH, GTK_ICON_SIZE_MENU);
+                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
       g_signal_connect (button, "clicked",
                         G_CALLBACK (gimp_paint_options_gui_reset_size),
                         options);
+
+      gimp_help_set_help_data (button,
+                               _("Reset size to brush's native size"), NULL);
 
       scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
                                         _("Aspect Ratio"),
