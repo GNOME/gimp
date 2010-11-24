@@ -572,7 +572,7 @@ gimp_text_layout_position (GimpTextLayout *layout)
   gint            x2, y2;
 
   layout->extents.x      = 0;
-  layout->extents.x      = 0;
+  layout->extents.y      = 0;
   layout->extents.width  = 0;
   layout->extents.height = 0;
 
