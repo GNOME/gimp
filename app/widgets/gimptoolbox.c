@@ -71,7 +71,7 @@ struct _GimpToolboxPrivate
 
   GtkWidget         *header;
   GtkWidget         *tool_palette;
-  GtkWidget         *area_wbox;
+  GtkWidget         *area_box;
   GtkWidget         *color_area;
   GtkWidget         *foo_area;
   GtkWidget         *image_area;
@@ -258,16 +258,10 @@ gimp_toolbox_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (toolbox->p->tool_palette);
 
-  toolbox->p->area_wbox = gtk_hwrap_box_new (FALSE);
-  gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->p->area_wbox), GTK_JUSTIFY_TOP);
-  gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->p->area_wbox),
-                                 GTK_JUSTIFY_LEFT);
-  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->p->area_wbox),
-                                 2.0 / 15.0);
-
-  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_wbox,
+  toolbox->p->area_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (toolbox->p->vbox), toolbox->p->area_box,
                       FALSE, FALSE, 0);
-  gtk_widget_show (toolbox->p->area_wbox);
+  gtk_widget_show (toolbox->p->area_box);
 
   /* We need to know when the current device changes, so we can update
    * the correct tool - to do this we connect to motion events.
@@ -295,9 +289,8 @@ gimp_toolbox_constructed (GObject *object)
 
   toolbox->p->color_area = toolbox_create_color_area (toolbox,
                                                       toolbox->p->context);
-  gtk_wrap_box_pack_wrapped (GTK_WRAP_BOX (toolbox->p->area_wbox),
-                             toolbox->p->color_area,
-                             TRUE, TRUE, FALSE, TRUE, TRUE);
+  gtk_box_pack_start (GTK_BOX (toolbox->p->area_box), toolbox->p->color_area,
+                      FALSE, FALSE, 0);
   if (config->toolbox_color_area)
     gtk_widget_show (toolbox->p->color_area);
 
@@ -306,8 +299,8 @@ gimp_toolbox_constructed (GObject *object)
                            toolbox->p->color_area, 0);
 
   toolbox->p->foo_area = toolbox_create_foo_area (toolbox, toolbox->p->context);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->foo_area,
-                     TRUE, TRUE, FALSE, TRUE);
+  gtk_box_pack_start (GTK_BOX (toolbox->p->area_box), toolbox->p->foo_area,
+                      FALSE, FALSE, 0);
   if (config->toolbox_foo_area)
     gtk_widget_show (toolbox->p->foo_area);
 
@@ -317,8 +310,8 @@ gimp_toolbox_constructed (GObject *object)
 
   toolbox->p->image_area = toolbox_create_image_area (toolbox,
                                                       toolbox->p->context);
-  gtk_wrap_box_pack (GTK_WRAP_BOX (toolbox->p->area_wbox), toolbox->p->image_area,
-                     TRUE, TRUE, FALSE, TRUE);
+  gtk_box_pack_start (GTK_BOX (toolbox->p->area_box), toolbox->p->image_area,
+                      FALSE, FALSE, 0);
   if (config->toolbox_image_area)
     gtk_widget_show (toolbox->p->image_area);
 
@@ -436,8 +429,10 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
       toolbox->p->area_rows    = area_rows;
       toolbox->p->area_columns = area_columns;
 
-      gtk_widget_set_size_request (toolbox->p->area_wbox, -1,
+#if 0
+      gtk_widget_set_size_request (toolbox->p->area_box, -1,
                                    area_rows * height);
+#endif
     }
 }
 
