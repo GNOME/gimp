@@ -39,6 +39,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-stroke.h"
+#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimpscanconvert.h"
@@ -59,7 +60,8 @@ static GimpScanConvert * gimp_drawable_render_boundary     (GimpDrawable    *dra
                                                             gint             offset_y);
 static GimpScanConvert * gimp_drawable_render_vectors      (GimpDrawable    *drawable,
                                                             GimpVectors     *vectors,
-                                                            gboolean         do_stroke);
+                                                            gboolean         do_stroke,
+                                                            GError         **error);
 static void              gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
                                                             GimpFillOptions *options,
                                                             GimpScanConvert *scan_convert,
@@ -129,54 +131,68 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
     }
 }
 
-void
-gimp_drawable_fill_vectors (GimpDrawable    *drawable,
-                            GimpFillOptions *options,
-                            GimpVectors     *vectors,
-                            gboolean         push_undo)
+gboolean
+gimp_drawable_fill_vectors (GimpDrawable     *drawable,
+                            GimpFillOptions  *options,
+                            GimpVectors      *vectors,
+                            gboolean          push_undo,
+                            GError          **error)
 {
   GimpScanConvert *scan_convert;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_FILL_OPTIONS (options));
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (options->style != GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (options->style != GIMP_FILL_STYLE_PATTERN ||
+                        gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
+                        FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  scan_convert = gimp_drawable_render_vectors (drawable, vectors, FALSE);
+  scan_convert = gimp_drawable_render_vectors (drawable, vectors, FALSE, error);
 
   if (scan_convert)
     {
       gimp_drawable_stroke_scan_convert (drawable, options,
                                          scan_convert, FALSE, push_undo);
       gimp_scan_convert_free (scan_convert);
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
-void
-gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
-                              GimpStrokeOptions *options,
-                              GimpVectors       *vectors,
-                              gboolean           push_undo)
+gboolean
+gimp_drawable_stroke_vectors (GimpDrawable       *drawable,
+                              GimpStrokeOptions  *options,
+                              GimpVectors        *vectors,
+                              gboolean            push_undo,
+                              GError            **error)
 {
   GimpScanConvert *scan_convert;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-  g_return_if_fail (GIMP_FILL_OPTIONS (options)->style != GIMP_FILL_STYLE_PATTERN ||
-                    gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), FALSE);
+  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
+  g_return_val_if_fail (GIMP_FILL_OPTIONS (options)->style != GIMP_FILL_STYLE_PATTERN ||
+                        gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
+                        FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  scan_convert = gimp_drawable_render_vectors (drawable, vectors, TRUE);
+  scan_convert = gimp_drawable_render_vectors (drawable, vectors, TRUE, error);
 
   if (scan_convert)
     {
       gimp_drawable_stroke_scan_convert (drawable, GIMP_FILL_OPTIONS (options),
                                          scan_convert, TRUE, push_undo);
       gimp_scan_convert_free (scan_convert);
+
+      return TRUE;
     }
+
+  return FALSE;
 }
 
 
@@ -254,9 +270,10 @@ gimp_drawable_render_boundary (GimpDrawable    *drawable,
 }
 
 static GimpScanConvert *
-gimp_drawable_render_vectors (GimpDrawable *drawable,
-                              GimpVectors  *vectors,
-                              gboolean      do_stroke)
+gimp_drawable_render_vectors (GimpDrawable  *drawable,
+                              GimpVectors   *vectors,
+                              gboolean       do_stroke,
+                              GError       **error)
 {
   GimpScanConvert *scan_convert;
   GimpStroke      *stroke;
@@ -305,6 +322,9 @@ gimp_drawable_render_vectors (GimpDrawable *drawable,
     return scan_convert;
 
   gimp_scan_convert_free (scan_convert);
+
+  g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                       _("Not enough points to stroke"));
 
   return NULL;
 }

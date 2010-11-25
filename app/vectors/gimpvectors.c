@@ -29,11 +29,12 @@
 #include "vectors-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-transform-utils.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-stroke.h"
-#include "core/gimp-transform-utils.h"
+#include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
@@ -550,17 +551,19 @@ gimp_vectors_stroke (GimpItem           *item,
   GimpVectors *vectors = GIMP_VECTORS (item);
   gboolean     retval  = FALSE;
 
-  /*  return successfully on an empty path, there's nothing to stroke  */
   if (! vectors->strokes)
-    return TRUE;
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("Not enough points to stroke"));
+      return FALSE;
+    }
 
   switch (stroke_options->method)
     {
     case GIMP_STROKE_METHOD_LIBART:
-      gimp_drawable_stroke_vectors (drawable,
-                                    stroke_options,
-                                    vectors, push_undo);
-      retval = TRUE;
+      retval = gimp_drawable_stroke_vectors (drawable,
+                                             stroke_options,
+                                             vectors, push_undo, error);
       break;
 
     case GIMP_STROKE_METHOD_PAINT_CORE:
