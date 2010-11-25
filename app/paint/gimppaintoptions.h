@@ -30,10 +30,15 @@
                                         GIMP_CONTEXT_DYNAMICS_MASK
 
 
-typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpJitterOptions   GimpJitterOptions;
+typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
 
+struct _GimpJitterOptions
+{
+  gboolean  use_jitter;
+  gdouble   jitter_amount;
+};
 
 struct _GimpFadeOptions
 {
@@ -41,12 +46,6 @@ struct _GimpFadeOptions
   gdouble         fade_length;
   GimpUnit        fade_unit;
   GimpRepeatMode  fade_repeat;
-};
-
-struct _GimpJitterOptions
-{
-  gboolean  use_jitter;
-  gdouble   jitter_amount;
 };
 
 struct _GimpGradientOptions
@@ -81,10 +80,10 @@ struct _GimpPaintOptions
 
   gboolean                  hard;
 
-  gboolean                  dynamics_expanded;
-
-  GimpFadeOptions          *fade_options;
   GimpJitterOptions        *jitter_options;
+
+  gboolean                  dynamics_expanded;
+  GimpFadeOptions          *fade_options;
   GimpGradientOptions      *gradient_options;
 
   GimpViewType              brush_view_type;

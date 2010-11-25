@@ -44,7 +44,6 @@
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                   FALSE
 
-
 #define DEFAULT_USE_JITTER             FALSE
 #define DEFAULT_JITTER_AMOUNT          0.2
 
@@ -62,6 +61,7 @@
 
 #define DYNAMIC_MAX_VALUE              1.0
 #define DYNAMIC_MIN_VALUE              0.0
+
 
 enum
 {
@@ -168,12 +168,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    0.0, 50.0, DEFAULT_JITTER_AMOUNT,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DYNAMICS_EXPANDED,
                                      "dynamics-expanded", NULL,
                                     DEFAULT_DYNAMICS_EXPANDED,
                                     GIMP_PARAM_STATIC_STRINGS);
-  
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
                                    "fade-length", NULL,
                                    0.0, 32767.0, DEFAULT_FADE_LENGTH,
@@ -251,8 +250,8 @@ gimp_paint_options_init (GimpPaintOptions *options)
 {
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
-  options->fade_options      = g_slice_new0 (GimpFadeOptions);
   options->jitter_options    = g_slice_new0 (GimpJitterOptions);
+  options->fade_options      = g_slice_new0 (GimpFadeOptions);
   options->gradient_options  = g_slice_new0 (GimpGradientOptions);
 }
 
@@ -275,8 +274,8 @@ gimp_paint_options_finalize (GObject *object)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
-  g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpJitterOptions,   options->jitter_options);
+  g_slice_free (GimpFadeOptions,     options->fade_options);
   g_slice_free (GimpGradientOptions, options->gradient_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -288,10 +287,10 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions    *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions     *fade_options      = options->fade_options;
-  GimpJitterOptions   *jitter_options    = options->jitter_options;
-  GimpGradientOptions *gradient_options  = options->gradient_options;
+  GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
+  GimpJitterOptions   *jitter_options   = options->jitter_options;
+  GimpFadeOptions     *fade_options     = options->fade_options;
+  GimpGradientOptions *gradient_options = options->gradient_options;
 
   switch (property_id)
     {
@@ -395,10 +394,10 @@ gimp_paint_options_get_property (GObject    *object,
                                  GValue     *value,
                                  GParamSpec *pspec)
 {
-  GimpPaintOptions    *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions     *fade_options      = options->fade_options;
-  GimpJitterOptions   *jitter_options    = options->jitter_options;
-  GimpGradientOptions *gradient_options  = options->gradient_options;
+  GimpPaintOptions    *options          = GIMP_PAINT_OPTIONS (object);
+  GimpJitterOptions   *jitter_options   = options->jitter_options;
+  GimpFadeOptions     *fade_options     = options->fade_options;
+  GimpGradientOptions *gradient_options = options->gradient_options;
 
   switch (property_id)
     {
@@ -524,7 +523,6 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
   gdouble          unit_factor;
   gdouble          pos;
 
-
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options),
                         DYNAMIC_MAX_VALUE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), DYNAMIC_MAX_VALUE);
@@ -581,7 +579,6 @@ gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
     z = 1.0 - z;
 
   return z;    /*  ln (1/255)  */
- 
 }
 
 gdouble

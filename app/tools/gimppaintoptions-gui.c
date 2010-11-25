@@ -55,7 +55,6 @@
 
 static GtkWidget * dynamics_options_gui       (GimpPaintOptions *paint_options,
                                                GType             tool_type);
-
 static GtkWidget * jitter_options_gui         (GimpPaintOptions *paint_options,
                                                GType             tool_type);
 
@@ -201,8 +200,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (button);
     }
 
-
-
   return vbox;
 }
 
@@ -216,44 +213,43 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   GObject   *config = G_OBJECT (paint_options);
   GtkWidget *frame;
   GtkWidget *inner_frame;
-  GtkWidget *fade_table;
-  GtkWidget *gradient_table;
+  GtkWidget *table;
   GtkWidget *scale;
   GtkWidget *menu;
   GtkWidget *combo;
   GtkWidget *checkbox;
   GtkWidget *vbox;
+  GtkWidget *inner_vbox;
+  GtkWidget *hbox;
   GtkWidget *box;
 
-  frame = gimp_prop_expander_new  (config, "dynamics-expanded",
-                                          _("Dynamics options"));
+  frame = gimp_prop_expander_new (config, "dynamics-expanded",
+                                  _("Dynamics Options"));
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  inner_frame = gimp_frame_new (_("Fade options:"));
+  inner_frame = gimp_frame_new (_("Fade Options"));
   gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
   gtk_widget_show (inner_frame);
 
-  fade_table = gtk_table_new (3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (fade_table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (fade_table), 2);
-  
-  gtk_container_add (GTK_CONTAINER (inner_frame), fade_table);
-  gtk_widget_show (fade_table);
-  
-  /*  the fade-out sizeentry  */
+  inner_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (inner_frame), inner_vbox);
+  gtk_widget_show (inner_vbox);
+
+  /*  the fade-out scale & unitmenu  */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   scale = gimp_prop_spin_scale_new (config, "fade-length",
                                     _("Fade length"), 1.0, 50.0, 0);
-  gtk_table_attach (GTK_TABLE (fade_table), scale, 0, 2, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
-  /*  the fade-out unitmenu  */
   menu = gimp_prop_unit_combo_box_new (config, "fade-unit");
-  gtk_table_attach (GTK_TABLE (fade_table), menu, 2, 3, 0, 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
 #if 0
@@ -262,42 +258,36 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 0);
 #endif
 
-    /*  the repeat type  */
-  combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
-  gimp_table_attach_aligned (GTK_TABLE (fade_table), 0, 2,
-                             _("Repeat:"), 0.0, 0.5,
-                             combo, 2, FALSE);
+  /*  the repeat type  */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (inner_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  checkbox = gimp_prop_check_button_new (config,
-                                         "fade-reverse",
-                                          _("Reverse"));
-  gtk_table_attach (GTK_TABLE (fade_table), checkbox, 0, 2, 3, 4,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  combo = gimp_prop_enum_combo_box_new (config, "fade-repeat", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Repeat:"), 0.0, 0.5,
+                             combo, 1, FALSE);
+
+  checkbox = gimp_prop_check_button_new (config, "fade-reverse",
+                                         _("Reverse"));
+  gtk_box_pack_start (GTK_BOX (inner_vbox), checkbox, FALSE, FALSE, 0);
   gtk_widget_show (checkbox);
 
-  /*Color UI*/
+  /* Color UI */
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
     {
-      inner_frame = gimp_frame_new (_("Color options:"));
+      inner_frame = gimp_frame_new (_("Color Options"));
       gtk_box_pack_start (GTK_BOX (vbox), inner_frame, FALSE, FALSE, 0);
       gtk_widget_show (inner_frame);
-
-      gradient_table = gtk_table_new (1, 3, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (gradient_table), 2);
-      gtk_table_set_row_spacings (GTK_TABLE (gradient_table), 2);
-
-      gtk_container_add (GTK_CONTAINER (inner_frame), gradient_table);
-      gtk_widget_show (gradient_table);
 
       box = gimp_prop_gradient_box_new (NULL, GIMP_CONTEXT (config),
                                         _("Gradient"), 2,
                                         "gradient-view-type",
                                         "gradient-view-size",
                                         "gradient-reverse");
-
-      gimp_table_attach_aligned (GTK_TABLE (gradient_table), 0, 1,
-                                 _("Colors:"), 0.0, 0.5,
-                                 box, 2, FALSE);
+      gtk_container_add (GTK_CONTAINER (inner_frame), box);
+      gtk_widget_show (box);
     }
 
   return frame;
