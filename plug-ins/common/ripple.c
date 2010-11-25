@@ -224,6 +224,8 @@ run (const gchar      *name,
           /*  run the ripple effect  */
           ripple (drawable, NULL);
 
+          gimp_progress_update (1.0);
+
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
 
