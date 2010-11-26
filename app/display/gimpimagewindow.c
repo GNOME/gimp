@@ -55,6 +55,7 @@
 #include "gimp-log.h"
 #include "gimp-intl.h"
 
+
 #define GIMP_EMPTY_IMAGE_WINDOW_ENTRY_ID  "gimp-empty-image-window"
 #define GIMP_SINGLE_IMAGE_WINDOW_ENTRY_ID "gimp-single-image-window"
 
@@ -109,9 +110,7 @@ typedef struct
 
 /*  local function prototypes  */
 
-static GObject * gimp_image_window_constructor         (GType                type,
-                                                        guint                n_params,
-                                                        GObjectConstructParam *params);
+static void      gimp_image_window_constructed         (GObject             *object);
 static void      gimp_image_window_dispose             (GObject             *object);
 static void      gimp_image_window_finalize            (GObject             *object);
 static void      gimp_image_window_set_property        (GObject             *object,
@@ -152,7 +151,6 @@ static void      gimp_image_window_hide_tooltip        (GimpUIManager       *man
                                                         GimpImageWindow     *window);
 static void      gimp_image_window_update_ui_manager   (GimpImageWindow     *window);
 
-static gboolean  gimp_image_window_resume_shell        (GimpDisplayShell    *shell);
 static void      gimp_image_window_shell_size_allocate (GimpDisplayShell    *shell,
                                                         GtkAllocation       *allocation,
                                                         PosCorrectionData   *data);
@@ -203,7 +201,7 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor        = gimp_image_window_constructor;
+  object_class->constructed        = gimp_image_window_constructed;
   object_class->dispose            = gimp_image_window_dispose;
   object_class->finalize           = gimp_image_window_finalize;
   object_class->set_property       = gimp_image_window_set_property;
@@ -246,20 +244,12 @@ gimp_image_window_init (GimpImageWindow *window)
   gtk_window_set_resizable (GTK_WINDOW (window), TRUE);
 }
 
-static GObject *
-gimp_image_window_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_image_window_constructed (GObject *object)
 {
-  GObject                *object;
+  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpGuiConfig          *config;
-  GimpImageWindow        *window;
-  GimpImageWindowPrivate *private;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  window  = GIMP_IMAGE_WINDOW (object);
-  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
 
   g_assert (GIMP_IS_UI_MANAGER (private->menubar_manager));
 
@@ -375,21 +365,18 @@ gimp_image_window_constructor (GType                  type,
                            window, G_CONNECT_SWAPPED);
 
   private->entry_id = gimp_image_window_config_to_entry_id (config);
-
-  return object;
 }
 
 static void
 gimp_image_window_dispose (GObject *object)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (object);
 
   if (private->dialog_factory)
     {
       g_signal_handlers_disconnect_by_func (private->dialog_factory,
                                             gimp_image_window_update_ui_manager,
-                                            window);
+                                            object);
       private->dialog_factory = NULL;
     }
 
@@ -405,8 +392,7 @@ gimp_image_window_dispose (GObject *object)
 static void
 gimp_image_window_finalize (GObject *object)
 {
-  GimpImageWindow        *window  = GIMP_IMAGE_WINDOW (object);
-  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (object);
 
   if (private->menubar_manager)
     {
@@ -1080,24 +1066,22 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
   gint               image_origin_window_y = -1;
   PosCorrectionData *data                  = NULL;
 
-  /* Freeze the active tool until the UI has stabilized. If it draws
-   * while we hide widgets there will be flicker
-   */
-  gimp_display_shell_pause (shell);
-  g_idle_add ((GSourceFunc) gimp_image_window_resume_shell, shell);
-
   gimp_display_shell_transform_xy (shell,
                                    0.0, 0.0,
-                                   &image_origin_shell_x, &image_origin_shell_y);
+                                   &image_origin_shell_x,
+                                   &image_origin_shell_y);
   gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
                                     GTK_WIDGET (window),
-                                    image_origin_shell_x, image_origin_shell_y,
-                                    &image_origin_window_x, &image_origin_window_y);
+                                    image_origin_shell_x,
+                                    image_origin_shell_y,
+                                    &image_origin_window_x,
+                                    &image_origin_window_y);
 
   data         = g_new0 (PosCorrectionData, 1);
   data->window = window;
   data->x      = image_origin_window_x;
   data->y      = image_origin_window_y;
+
   g_signal_connect_data (shell, "size-allocate",
                          G_CALLBACK (gimp_image_window_shell_size_allocate),
                          data, (GClosureNotify) g_free,
@@ -1170,21 +1154,15 @@ static void
 gimp_image_window_update_ui_manager (GimpImageWindow *window)
 {
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
-  gimp_ui_manager_update (private->menubar_manager, private->active_shell->display);
-}
 
-static gboolean
-gimp_image_window_resume_shell (GimpDisplayShell *shell)
-{
-  gimp_display_shell_resume (shell);
-
-  return FALSE;
+  gimp_ui_manager_update (private->menubar_manager,
+                          private->active_shell->display);
 }
 
 static void
 gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
-                                         GtkAllocation     *allocation,
-                                         PosCorrectionData *data)
+                                       GtkAllocation     *allocation,
+                                       PosCorrectionData *data)
 {
   GimpImageWindow *window               = data->window;
   gint             image_origin_shell_x = -1;
@@ -1193,13 +1171,16 @@ gimp_image_window_shell_size_allocate (GimpDisplayShell  *shell,
   gtk_widget_translate_coordinates (GTK_WIDGET (window),
                                     GTK_WIDGET (shell->canvas),
                                     data->x, data->y,
-                                    &image_origin_shell_x, &image_origin_shell_y);
+                                    &image_origin_shell_x,
+                                    &image_origin_shell_y);
 
   /* Note that the shell offset isn't the offset of the image into the
    * shell, but the offset of the shell relative to the image,
-   * therefor we need to negate
+   * therefore we need to negate
    */
-  gimp_display_shell_scroll_set_offset (shell, -image_origin_shell_x, -image_origin_shell_y);
+  gimp_display_shell_scroll_set_offset (shell,
+                                        -image_origin_shell_x,
+                                        -image_origin_shell_y);
 
   g_signal_handlers_disconnect_by_func (shell,
                                         gimp_image_window_shell_size_allocate,
