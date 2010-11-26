@@ -288,14 +288,9 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   entry->tool = gimp_prop_view_new (G_OBJECT (context), "tool",
                                     context, CELL_SIZE);
-  GIMP_VIEW (entry->tool)->clickable = TRUE;
   gtk_table_attach (GTK_TABLE (entry->table), entry->tool,
                     1, 2, 1, 2, 0, 0, 0, 0);
   gtk_widget_show (entry->tool);
-
-  g_signal_connect (entry->tool, "clicked",
-                    G_CALLBACK (gimp_device_status_view_clicked),
-                    "gimp-tool-list|gimp-tool-grid");
 
   /*  the foreground color  */
 
