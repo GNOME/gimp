@@ -2359,7 +2359,6 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_show (button);
 
   g_object_set_data (G_OBJECT (button), "monitor_resolution_sizeentry", entry);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", label);
   g_object_set_data (G_OBJECT (button), "inverse_sensitive", entry);
 
   g_signal_connect (button, "toggled",
