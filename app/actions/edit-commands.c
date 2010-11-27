@@ -498,7 +498,7 @@ edit_paste (GimpDisplay *display,
   if (svg)
     {
       if (gimp_vectors_import_buffer (image, svg, svg_size,
-                                      TRUE, TRUE,
+                                      TRUE, FALSE,
                                       GIMP_IMAGE_ACTIVE_PARENT, -1,
                                       NULL, NULL))
         {

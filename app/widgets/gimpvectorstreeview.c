@@ -231,7 +231,7 @@ gimp_vectors_tree_view_drop_svg (GimpContainerTreeView   *tree_view,
                                               (GimpViewable **) &parent);
 
   if (! gimp_vectors_import_buffer (image, svg_data, svg_data_len,
-                                    TRUE, TRUE, parent, index, NULL, &error))
+                                    TRUE, FALSE, parent, index, NULL, &error))
     {
       gimp_message_literal (image->gimp,
 			    G_OBJECT (tree_view), GIMP_MESSAGE_ERROR,

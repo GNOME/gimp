@@ -305,7 +305,7 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
 
   if (! gimp_vectors_import_buffer (image,
                                     (const gchar *) svg_data, svg_data_len,
-                                    TRUE, TRUE,
+                                    TRUE, FALSE,
                                     GIMP_IMAGE_ACTIVE_PARENT, -1,
                                     NULL, &error))
     {
