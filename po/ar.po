@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-04 04:21+0200\n"
-"PO-Revision-Date: 2010-11-04 04:21+0300\n"
+"POT-Creation-Date: 2010-11-27 16:36+0200\n"
+"PO-Revision-Date: 2010-11-27 16:36+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
@@ -422,12 +422,12 @@ msgstr "محرر النصوص"
 msgid "Tool Options"
 msgstr "خيارات الأدوات"
 
-#: ../app/actions/actions.c:226 ../app/widgets/gimptoolbox.c:916
+#: ../app/actions/actions.c:226 ../app/widgets/gimptoolpalette.c:181
 msgid "Tools"
 msgstr "الأدوات"
 
 #: ../app/actions/actions.c:229 ../app/dialogs/dialogs.c:315
-#: ../app/tools/gimpvectortool.c:162
+#: ../app/tools/gimpvectortool.c:160
 msgid "Paths"
 msgstr "المسارات"
 
@@ -956,8 +956,8 @@ msgstr "استخدم اللون الممزوج لكل الطبقات المرئ�
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:552
-#: ../app/widgets/gimplayertreeview.c:745 ../app/widgets/gimptoolbox-dnd.c:178
-#: ../app/widgets/gimptoolbox.c:1211
+#: ../app/widgets/gimplayertreeview.c:745 ../app/widgets/gimptoolbox-dnd.c:180
+#: ../app/widgets/gimptoolbox.c:885
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1347,7 +1347,7 @@ msgid "About GIMP"
 msgstr "عن جمب"
 
 #: ../app/actions/dialogs-actions.c:304
-#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:742
+#: ../app/dialogs/preferences-dialog.c:1943 ../app/widgets/gimptoolbox.c:605
 msgid "Toolbox"
 msgstr "صندوق الأدوات"
 
@@ -5116,7 +5116,7 @@ msgstr "صفات المسار"
 msgid "Edit Path Attributes"
 msgstr "حرّر صفات المسار"
 
-#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:206
+#: ../app/actions/vectors-commands.c:164 ../app/vectors/gimpvectors.c:207
 #: ../app/widgets/gimpvectorstreeview.c:252
 msgid "Path"
 msgstr "المسار"
@@ -5130,7 +5130,7 @@ msgid "New Path Options"
 msgstr "خيارات المسار الجديد"
 
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1978
+#: ../app/tools/gimpvectortool.c:1982
 msgid "Stroke Path"
 msgstr "ارسم المسار"
 
@@ -6211,60 +6211,76 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
+"عند تفعيله، سيصبح شريط القوائم مرئيا مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر شريط القوائم\"."
 
 #: ../app/config/gimprc-blurbs.h:329
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
+"عند تفعيله، ستصبح المساطر مرئية مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر المساطر\"."
 
 #: ../app/config/gimprc-blurbs.h:333
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
+"عند تفعيله، ستصبح أشرطة التمرير مرئية مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر شريط التمرير\"."
 
 #: ../app/config/gimprc-blurbs.h:337
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
+"عند تفعيله، سيصبح شريط الحالة مرئيا مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر شريط الحالة\"."
 
 #: ../app/config/gimprc-blurbs.h:341
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
+"عند تفعيله، سيصبح التحديد مرئيا مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر التحديد\"."
 
 #: ../app/config/gimprc-blurbs.h:345
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
+"عند تفعيله، ستصبح حدود الطبقة مرئية مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر حدود الطبقة\"."
 
 #: ../app/config/gimprc-blurbs.h:349
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
+"عند تفعيله، ستصبح الأدلة مرئية مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر الأدلة\"."
 
 #: ../app/config/gimprc-blurbs.h:353
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
+"عند تفعيله، ستصبح الشبكة مرئية مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر الشبكة\"."
 
 #: ../app/config/gimprc-blurbs.h:357
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
-"عند تفعيله، عينات النقاط ستصبح مرئية مبدئيا.يمكن تطبيق هذا أيضا عن طريق "
-"\"عرض -> أظهر عينات النقاط\"."
+"عند تفعيله، ستصبح عينات النقاط مرئية مبدئيا.يمكن التحكم في هذا أيضا عن طريق "
+"\"منظور->أظهر عينات النقاط\"."
 
 #: ../app/config/gimprc-blurbs.h:361
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr ""
+msgstr "أظهر تلميحا عندما يمر المؤشر فوق عنصر ما."
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Use GIMP in a single-window mode."
@@ -7293,7 +7309,7 @@ msgstr "الطفيليات"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:958 ../app/dialogs/preferences-dialog.c:2723
-#: ../app/tools/gimppaintoptions-gui.c:126
+#: ../app/tools/gimppaintoptions-gui.c:159
 msgid "Dynamics"
 msgstr "الحركيات"
 
@@ -7433,11 +7449,11 @@ msgstr "أسنان الفرشاة"
 msgid "Brush Hardness"
 msgstr "صلابة الفرشاة"
 
-#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:145
+#: ../app/core/gimpbrushgenerated.c:159 ../app/paint/gimppaintoptions.c:143
 msgid "Brush Aspect Ratio"
 msgstr "نسبة ارتفاع الفرشاة"
 
-#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:149
+#: ../app/core/gimpbrushgenerated.c:166 ../app/paint/gimppaintoptions.c:147
 msgid "Brush Angle"
 msgstr "زاوية الفرشاة"
 
@@ -7619,7 +7635,7 @@ msgstr "حدد إعتام القناة"
 msgid "Selection Mask"
 msgstr "قناع التحديد"
 
-#: ../app/core/gimpcontext.c:640 ../app/tools/gimppaintoptions-gui.c:110
+#: ../app/core/gimpcontext.c:640 ../app/tools/gimppaintoptions-gui.c:107
 #: ../app/tools/gimptransformoptions.c:332
 msgid "Opacity"
 msgstr "الإعتام"
@@ -7775,7 +7791,12 @@ msgstr "إزاحة القابل للرسم"
 msgid "Posterize"
 msgstr "حوّل إلى مُلصق"
 
-#: ../app/core/gimpdrawable-stroke.c:435
+#: ../app/core/gimpdrawable-stroke.c:327
+#: ../app/paint/gimppaintcore-stroke.c:336 ../app/vectors/gimpvectors.c:557
+msgid "Not enough points to stroke"
+msgstr "لا توجد نقاط كافية لرسم الخط"
+
+#: ../app/core/gimpdrawable-stroke.c:455
 msgctxt "undo-type"
 msgid "Render Stroke"
 msgstr "ارسم الخط"
@@ -7934,7 +7955,7 @@ msgstr "رتّب العناصر"
 #: ../app/core/gimpimage-colormap.c:63
 #, c-format
 msgid "Colormap of Image #%d (%s)"
-msgstr ""
+msgstr "مخطط ألوان الصورة #%d ‏(%s)"
 
 #: ../app/core/gimpimage-colormap.c:161
 msgctxt "undo-type"
@@ -9039,12 +9060,12 @@ msgstr "ا_سم الطبقة:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1075
+#: ../app/tools/gimpmeasuretool.c:1076
 msgid "Width:"
 msgstr "العرض:"
 
 #: ../app/dialogs/layer-options-dialog.c:145
-#: ../app/tools/gimpmeasuretool.c:1103
+#: ../app/tools/gimpmeasuretool.c:1104
 msgid "Height:"
 msgstr "الارتفاع:"
 
@@ -10039,7 +10060,6 @@ msgid "_Y resolution:"
 msgstr "ميْز _ص:"
 
 #: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:259
-#: ../app/widgets/gimptemplateeditor.c:310
 #, c-format
 msgid "pixels/%a"
 msgstr "بكسل/%a"
@@ -10297,7 +10317,7 @@ msgid "Navigate the image display"
 msgstr "تصفّح عرض الصورة"
 
 #: ../app/display/gimpdisplayshell.c:739
-#: ../app/display/gimpdisplayshell.c:1331 ../app/widgets/gimptoolbox.c:318
+#: ../app/display/gimpdisplayshell.c:1325 ../app/widgets/gimptoolbox.c:273
 msgid "Drop image files here to open them"
 msgstr "ألق ملفات الصور هنا لفتحها"
 
@@ -10366,16 +10386,16 @@ msgid "Drop New Path"
 msgstr "أفلت مسارا جديدا"
 
 #: ../app/display/gimpdisplayshell-dnd.c:347
-#: ../app/display/gimpdisplayshell-dnd.c:442 ../app/tools/gimpblendtool.c:174
-#: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:279
+#: ../app/display/gimpdisplayshell-dnd.c:442 ../app/tools/gimpblendtool.c:171
+#: ../app/tools/gimpbucketfilltool.c:135 ../app/tools/gimpimagemaptool.c:280
 msgid "Cannot modify the pixels of layer groups."
 msgstr "تعذّر تعديل بكسلات مجموعات الطبقات."
 
 #: ../app/display/gimpdisplayshell-dnd.c:355
-#: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:181
+#: ../app/display/gimpdisplayshell-dnd.c:450 ../app/tools/gimpblendtool.c:178
 #: ../app/tools/gimpbucketfilltool.c:142 ../app/tools/gimpcroptool.c:342
-#: ../app/tools/gimpimagemaptool.c:286 ../app/tools/gimppainttool.c:288
-#: ../app/tools/gimptransformtool.c:350 ../app/tools/gimptransformtool.c:1166
+#: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:285
+#: ../app/tools/gimptransformtool.c:315 ../app/tools/gimptransformtool.c:1261
 msgid "The active layer's pixels are locked."
 msgstr "بكسلات الطبقة النشطة موصدة"
 
@@ -10386,7 +10406,7 @@ msgstr "أفلت الطبقات"
 
 #: ../app/display/gimpdisplayshell-dnd.c:635
 #: ../app/display/gimpdisplayshell-dnd.c:657
-#: ../app/widgets/gimplayertreeview.c:811 ../app/widgets/gimptoolbox-dnd.c:274
+#: ../app/widgets/gimplayertreeview.c:811 ../app/widgets/gimptoolbox-dnd.c:276
 msgid "Dropped Buffer"
 msgstr "البراح المُفلت"
 
@@ -10506,6 +10526,16 @@ msgstr "'%s:' ليس مسارا صحيحا"
 msgid "Invalid character sequence in URI"
 msgstr "تتبابع محارف غير صالح في المسار"
 
+#: ../app/gegl/gimp-gegl-enums.c:24
+msgctxt "cage-mode"
+msgid "Create or adjust the cage"
+msgstr ""
+
+#: ../app/gegl/gimp-gegl-enums.c:25
+msgctxt "cage-mode"
+msgid "Deform the cage to deform the image"
+msgstr ""
+
 #: ../app/gegl/gimpcurvesconfig.c:384
 msgid "not a GIMP Curves file"
 msgstr "ليس ملف منحنيات جمب"
@@ -10587,25 +10617,20 @@ msgstr "زاوية نقطة الحبر"
 msgid "Paintbrush"
 msgstr "فرشاة تلوين"
 
-#: ../app/paint/gimppaintcore-stroke.c:335
-msgid "Not enough points to stroke"
-msgstr "لا توجد نقاط كافية لرسم الخط"
-
 #: ../app/paint/gimppaintcore.c:140
 msgid "Paint"
 msgstr "لوّن"
 
-#: ../app/paint/gimppaintoptions.c:140
-#, fuzzy
+#: ../app/paint/gimppaintoptions.c:138
 msgid "Brush Size"
-msgstr "أسنان الفرشاة"
+msgstr "حجم الفرشاة"
 
 #: ../app/paint/gimppencil.c:41 ../app/tools/gimppenciltool.c:50
 msgid "Pencil"
 msgstr "قلم"
 
 #: ../app/paint/gimpperspectiveclone.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:128
+#: ../app/tools/gimpperspectiveclonetool.c:124
 msgid "Perspective Clone"
 msgstr "استنساخ منظوري"
 
@@ -10695,7 +10720,7 @@ msgstr "تحويل ثنائي الأبعاد"
 msgid "2D Transforming"
 msgstr "تحويل ثنائي الأبعاد"
 
-#: ../app/pdb/edit-cmds.c:725 ../app/tools/gimpblendtool.c:243
+#: ../app/pdb/edit-cmds.c:725 ../app/tools/gimpblendtool.c:240
 msgid "Blending"
 msgstr "مزج"
 
@@ -10803,28 +10828,30 @@ msgid "Paint method '%s' does not exist"
 msgstr "طريقة التلوين '%s' غير موجودة"
 
 #: ../app/pdb/gimppdb-utils.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن استخدامه، لأنه لم يضف إلى صورة"
+msgstr "تعذّر استخدام العنصر '%s' ‏(%Id) لأنه لم يضف إلى صورة"
 
 #: ../app/pdb/gimppdb-utils.c:328
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن استخدامه، لأنه مرتبط بصورة أخرى."
+msgstr "تعذّر استخدام العنصر '%s' ‏(%Id) لأنه مرتبط بصورة أخرى"
 
 #: ../app/pdb/gimppdb-utils.c:357
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن استخدامه، لأنه لم يضف إلى صورة"
+msgstr "تعذّر استخدام العنصر '%s' ‏(%Id) لأنه ليس ابنا مباشرا لشجرة عنصر"
 
 #: ../app/pdb/gimppdb-utils.c:385
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن استخدامه، لأنه لم يضف إلى صورة"
+msgstr ""
+"تعذّر استخدام العنصرين '%s' ‏(%Id) و '%s' ‏(%Id) لأنهما لا ينتميان إلى نفس شجرة "
+"العنصر"
 
 #: ../app/pdb/gimppdb-utils.c:410
 #, c-format
@@ -10844,22 +10871,22 @@ msgstr "محاولة لإضافة العنصر '%s' ‏(%d) إلى الصورة 
 #: ../app/pdb/gimppdb-utils.c:461
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن تعديله لأن محتوياته موصدة"
+msgstr "تعذّر تعديل العنصر '%s' ‏(%Id) لأن محتوياته موصدة"
 
 #: ../app/pdb/gimppdb-utils.c:481
-#, fuzzy, c-format
+#, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن تعديله لأنه عنصر مجموعة"
+msgstr "تعذّر تعديل العنصر '%s' ‏(%Id) لأنه ليس عنصر مجموعة"
 
 #: ../app/pdb/gimppdb-utils.c:501
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
-msgstr "العنصر '%s' ‏(%Id) لا يمكن تعديله لأنه عنصر مجموعة"
+msgstr "تعذّر تعديل العنصر '%s' ‏(%Id) لأنه عنصر مجموعة"
 
 #: ../app/pdb/gimppdb-utils.c:522
-#, fuzzy, c-format
+#, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr "الطبقة '%s' ‏(%Id) لا يمكن استخدامها، لأنها ليست طبقة نصية"
+msgstr "تعذّر استخدام الطبقة '%s' ‏(%Id) لأنها ليست طبقة نصية"
 
 #: ../app/pdb/gimppdb-utils.c:563
 #, c-format
@@ -10956,7 +10983,7 @@ msgid ""
 msgstr "ميْز الصورة جاوز الحد، سأستخدم الميْز المبدئي بدلا منه."
 
 #: ../app/pdb/image-select-cmds.c:164 ../app/pdb/selection-tools-cmds.c:217
-#: ../app/tools/gimpfreeselecttool.c:199
+#: ../app/tools/gimpfreeselecttool.c:198
 msgid "Free Select"
 msgstr "تحديد حر"
 
@@ -11237,7 +11264,7 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "ثابت"
 
-#: ../app/tools/gimp-tools.c:350
+#: ../app/tools/gimp-tools.c:352
 msgid ""
 "This tool has\n"
 "no options."
@@ -11259,16 +11286,14 @@ msgstr "حركة فقط"
 
 #: ../app/tools/gimpairbrushtool.c:91 ../app/tools/gimpconvolvetool.c:211
 #: ../app/tools/gimpsmudgetool.c:91
-#, fuzzy
 msgid "Rate"
 msgstr "المعدل"
 
 #: ../app/tools/gimpairbrushtool.c:97
-#, fuzzy
 msgid "Flow"
 msgstr "التدفق"
 
-#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:764
+#: ../app/tools/gimpaligntool.c:135 ../app/tools/gimpaligntool.c:780
 msgid "Align"
 msgstr "محاذاة"
 
@@ -11308,76 +11333,75 @@ msgstr "انقر لأخذ هذا المسار كأول عنصر"
 msgid "Click to add this path to the list"
 msgstr "انقر لإضافة هذا المسار إلى القائمة"
 
-#: ../app/tools/gimpaligntool.c:776
+#: ../app/tools/gimpaligntool.c:792
 msgid "Relative to:"
 msgstr "بالنسبة إلى:"
 
-#: ../app/tools/gimpaligntool.c:794
+#: ../app/tools/gimpaligntool.c:810
 msgid "Align left edge of target"
 msgstr "حاذِ الحافة اليسرى للهدف"
 
-#: ../app/tools/gimpaligntool.c:800
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align center of target"
 msgstr "حاذِ مركز الهدف"
 
-#: ../app/tools/gimpaligntool.c:806
+#: ../app/tools/gimpaligntool.c:822
 msgid "Align right edge of target"
 msgstr "حاذِ الحافة اليمنى للهدف"
 
-#: ../app/tools/gimpaligntool.c:816
+#: ../app/tools/gimpaligntool.c:832
 msgid "Align top edge of target"
 msgstr "حاذِ الحافة العليا للهدف"
 
-#: ../app/tools/gimpaligntool.c:822
+#: ../app/tools/gimpaligntool.c:838
 msgid "Align middle of target"
 msgstr "حاذِ وسط الهدف"
 
-#: ../app/tools/gimpaligntool.c:828
+#: ../app/tools/gimpaligntool.c:844
 msgid "Align bottom of target"
 msgstr "حاذِ قاع الهدف"
 
-#: ../app/tools/gimpaligntool.c:832
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute"
 msgstr "وزّع"
 
-#: ../app/tools/gimpaligntool.c:846
+#: ../app/tools/gimpaligntool.c:862
 msgid "Distribute left edges of targets"
 msgstr "وزّع الحافة اليسرى للأهداف"
 
-#: ../app/tools/gimpaligntool.c:853
+#: ../app/tools/gimpaligntool.c:869
 msgid "Distribute horizontal centers of targets"
 msgstr "وزّع المراكز الأفقية للأهداف"
 
-#: ../app/tools/gimpaligntool.c:860
+#: ../app/tools/gimpaligntool.c:876
 msgid "Distribute right edges of targets"
 msgstr "وزّع الحافة اليمنى للأهداف"
 
-#: ../app/tools/gimpaligntool.c:870
+#: ../app/tools/gimpaligntool.c:886
 msgid "Distribute top edges of targets"
 msgstr "وزّع الحافة العليا للأهداف"
 
-#: ../app/tools/gimpaligntool.c:877
+#: ../app/tools/gimpaligntool.c:893
 msgid "Distribute vertical centers of targets"
 msgstr "وزّع المراكز الرأسية للأهداف"
 
-#: ../app/tools/gimpaligntool.c:883
+#: ../app/tools/gimpaligntool.c:899
 msgid "Distribute bottoms of targets"
 msgstr "وزّع قيعان الأهداف"
 
-#: ../app/tools/gimpaligntool.c:891
+#: ../app/tools/gimpaligntool.c:907
 msgid "Offset:"
 msgstr "الإزاحة:"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:305
-#, fuzzy
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:285
 msgid "Gradient"
-msgstr "التدرجات"
+msgstr "تدرج"
 
 #: ../app/tools/gimpblendoptions.c:230 ../app/widgets/gimpbrusheditor.c:145
 msgid "Shape:"
 msgstr "الشكل:"
 
-#: ../app/tools/gimpblendoptions.c:237 ../app/tools/gimppaintoptions-gui.c:261
+#: ../app/tools/gimpblendoptions.c:237 ../app/tools/gimppaintoptions-gui.c:269
 msgid "Repeat:"
 msgstr "التكرار:"
 
@@ -11386,37 +11410,36 @@ msgid "Adaptive supersampling"
 msgstr "نمذجة عالية تكيفي_ة"
 
 #: ../app/tools/gimpblendoptions.c:267
-#, fuzzy
 msgid "Max depth"
-msgstr "العمق الأقصى:"
+msgstr "العمق الأقصى"
 
-#: ../app/tools/gimpblendtool.c:109
+#: ../app/tools/gimpblendtool.c:106
 msgid "Blend"
 msgstr "امزج"
 
-#: ../app/tools/gimpblendtool.c:110
+#: ../app/tools/gimpblendtool.c:107
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "أداة المزج: املأ المناطق المحددة بتدرج لوني"
 
-#: ../app/tools/gimpblendtool.c:111
+#: ../app/tools/gimpblendtool.c:108
 msgid "Blen_d"
 msgstr "ا_مزج"
 
-#: ../app/tools/gimpblendtool.c:167
+#: ../app/tools/gimpblendtool.c:164
 msgid "Blend does not operate on indexed layers."
 msgstr "المزج لا يعمل على الطبقات المفهرسة."
 
-#: ../app/tools/gimpblendtool.c:420 ../app/tools/gimppainttool.c:640
+#: ../app/tools/gimpblendtool.c:417 ../app/tools/gimppainttool.c:637
 #, c-format
 msgid "%s for constrained angles"
 msgstr ""
 
-#: ../app/tools/gimpblendtool.c:421
+#: ../app/tools/gimpblendtool.c:418
 #, c-format
 msgid "%s to move the whole line"
 msgstr "‏%s لنقل كل السطر"
 
-#: ../app/tools/gimpblendtool.c:425
+#: ../app/tools/gimpblendtool.c:422
 msgid "Blend: "
 msgstr "امزج: "
 
@@ -11503,7 +11526,7 @@ msgstr "املأ المناطق الشفافة"
 
 #: ../app/tools/gimpbucketfilloptions.c:278 ../app/tools/gimpclonetool.c:113
 #: ../app/tools/gimpcolorpickeroptions.c:150 ../app/tools/gimphealtool.c:98
-#: ../app/tools/gimpperspectiveclonetool.c:951
+#: ../app/tools/gimpperspectiveclonetool.c:952
 #: ../app/tools/gimpregionselectoptions.c:208
 msgid "Sample merged"
 msgstr "عينة مدموجة"
@@ -11541,6 +11564,37 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "حدّد باللون"
 
+#: ../app/tools/gimpcageoptions.c:144
+msgid "Fill from first point"
+msgstr "املأ من النقطة الأولى"
+
+#: ../app/tools/gimpcagetool.c:136
+#, fuzzy
+msgid "Cage Transform"
+msgstr "حوّل"
+
+#: ../app/tools/gimpcagetool.c:137
+msgid "Cage Transform: Deform a selection with a cage"
+msgstr ""
+
+#: ../app/tools/gimpcagetool.c:138
+#, fuzzy
+msgid "_Cage Transform"
+msgstr "_حوّل"
+
+#: ../app/tools/gimpcagetool.c:402
+msgid "Press ENTER to commit the transform"
+msgstr ""
+
+#: ../app/tools/gimpcagetool.c:680
+msgid "Coefficient computation"
+msgstr ""
+
+#: ../app/tools/gimpcagetool.c:783
+#, fuzzy
+msgid "Cage transform"
+msgstr "حوّل"
+
 #: ../app/tools/gimpclonetool.c:61
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr "أداة الاستنساخ: انسخ اختياريا من صورة أو نمط باستخدام فرشاة"
@@ -11563,12 +11617,12 @@ msgid "Click to set a new clone source"
 msgstr "انقر لتحدد مصدر استنساخ جديد"
 
 #: ../app/tools/gimpclonetool.c:108
-#: ../app/tools/gimpperspectiveclonetool.c:946
+#: ../app/tools/gimpperspectiveclonetool.c:947
 msgid "Source"
 msgstr "المصدر"
 
 #: ../app/tools/gimpclonetool.c:130 ../app/tools/gimphealtool.c:110
-#: ../app/tools/gimpperspectiveclonetool.c:968
+#: ../app/tools/gimpperspectiveclonetool.c:969
 msgid "Alignment:"
 msgstr "المحاذاة:"
 
@@ -11700,9 +11754,8 @@ msgstr "متوسط نصف قطر لاقط اللون"
 #: ../app/tools/gimpcoloroptions.c:157
 #: ../app/tools/gimprectangleselectoptions.c:160
 #: ../app/tools/gimpselectionoptions.c:270
-#, fuzzy
 msgid "Radius"
-msgstr "نصف القطر:"
+msgstr "نصف القطر"
 
 #: ../app/tools/gimpcoloroptions.c:163
 msgid "Sample average"
@@ -11736,11 +11789,11 @@ msgstr "لاقط الأ_لون"
 msgid "Click in any image to view its color"
 msgstr "انقر أي صورة لعرض لونها"
 
-#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:496
+#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:493
 msgid "Click in any image to pick the foreground color"
 msgstr "انقر أي صورة لأخذ لون المقدمة"
 
-#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:502
+#: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the background color"
 msgstr "انقر أي صورة لأخذ لون الخلفية"
 
@@ -11972,21 +12025,20 @@ msgid "Range"
 msgstr "المدى"
 
 #: ../app/tools/gimpdodgeburntool.c:219
-#, fuzzy
 msgid "Exposure"
-msgstr "التعرض:"
+msgstr "التعرض"
 
-#: ../app/tools/gimpeditselectiontool.c:240
+#: ../app/tools/gimpeditselectiontool.c:239
 msgid "Move Selection"
 msgstr "انقل التحديد"
 
-#: ../app/tools/gimpeditselectiontool.c:244
-#: ../app/tools/gimpeditselectiontool.c:1236
+#: ../app/tools/gimpeditselectiontool.c:243
+#: ../app/tools/gimpeditselectiontool.c:1235
 msgid "Move Floating Selection"
 msgstr "انقل التحديد الحر"
 
-#: ../app/tools/gimpeditselectiontool.c:453
-#: ../app/tools/gimpeditselectiontool.c:728
+#: ../app/tools/gimpeditselectiontool.c:452
+#: ../app/tools/gimpeditselectiontool.c:727
 msgid "Move: "
 msgstr "انقل: "
 
@@ -12152,29 +12204,29 @@ msgctxt "command"
 msgid "Foreground Select"
 msgstr "تحديد المقدمة"
 
-#: ../app/tools/gimpfreeselecttool.c:200
+#: ../app/tools/gimpfreeselecttool.c:199
 msgid ""
 "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "أداة التحديد الحر: حدد منطقة مرسومة يدويا بقطع حرة ومضلعة"
 
-#: ../app/tools/gimpfreeselecttool.c:201
+#: ../app/tools/gimpfreeselecttool.c:200
 msgid "_Free Select"
 msgstr "تحديد _حر"
 
-#: ../app/tools/gimpfreeselecttool.c:1120
+#: ../app/tools/gimpfreeselecttool.c:1119
 msgid "Click to complete selection"
 msgstr "انقر لإكمال التحديد"
 
-#: ../app/tools/gimpfreeselecttool.c:1124
+#: ../app/tools/gimpfreeselecttool.c:1123
 msgid "Click-Drag to move segment vertex"
 msgstr "انقر واسحب لنقل قمة النقطة"
 
-#: ../app/tools/gimpfreeselecttool.c:1129
+#: ../app/tools/gimpfreeselecttool.c:1128
 msgid "Return commits, Escape cancels, Backspace removes last segment"
 msgstr ""
 "إدخال (Enter) يودع، و تجاهل (Escape) يُلغي، و تراجع (Backspace) يحذف آخر قطعة"
 
-#: ../app/tools/gimpfreeselecttool.c:1133
+#: ../app/tools/gimpfreeselecttool.c:1132
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
 msgstr "النقر والسحب يضيف قطعة جديدة، النقر يضيف قطعة مضلعة"
 
@@ -12335,45 +12387,42 @@ msgstr "الم_حفوظات:"
 msgid "Settings saved to '%s'"
 msgstr "حُفِظت الإعدادات في '%s'"
 
-#: ../app/tools/gimpimagemaptool.c:367
+#: ../app/tools/gimpimagemaptool.c:368
 msgid "_Preview"
 msgstr "م_عاينة"
 
 #. adjust sliders
-#: ../app/tools/gimpinkoptions-gui.c:57
+#: ../app/tools/gimpinkoptions-gui.c:54
 msgid "Adjustment"
 msgstr "الضبط"
 
-#: ../app/tools/gimpinkoptions-gui.c:67 ../app/tools/gimpinkoptions-gui.c:90
-#: ../app/tools/gimppaintoptions-gui.c:137
-#, fuzzy
+#: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
+#: ../app/tools/gimppaintoptions-gui.c:127
 msgid "Size"
 msgstr "الحجم"
 
-#: ../app/tools/gimpinkoptions-gui.c:74
-#: ../app/tools/gimppaintoptions-gui.c:160
-#, fuzzy
+#: ../app/tools/gimpinkoptions-gui.c:71
+#: ../app/tools/gimppaintoptions-gui.c:153
 msgid "Angle"
 msgstr "الزاوية"
 
 #. sens sliders
-#: ../app/tools/gimpinkoptions-gui.c:80
+#: ../app/tools/gimpinkoptions-gui.c:77
 msgid "Sensitivity"
 msgstr "الحساسية"
 
-#: ../app/tools/gimpinkoptions-gui.c:97
-#: ../app/widgets/gimpdynamicseditor.c:151
+#: ../app/tools/gimpinkoptions-gui.c:94
+#: ../app/widgets/gimpdynamicseditor.c:146
 #: ../app/widgets/gimpdynamicsoutputeditor.c:233
 msgid "Tilt"
 msgstr "الانحناء"
 
-#: ../app/tools/gimpinkoptions-gui.c:104
-#, fuzzy
+#: ../app/tools/gimpinkoptions-gui.c:101
 msgid "Speed"
-msgstr "السرعة:"
+msgstr "السرعة"
 
 #. Blob shape widgets
-#: ../app/tools/gimpinkoptions-gui.c:110
+#: ../app/tools/gimpinkoptions-gui.c:107
 msgid "Shape"
 msgstr "الشكل"
 
@@ -12389,44 +12438,44 @@ msgstr "_حبر"
 msgid "Interactive boundary"
 msgstr "حد تفاعلي"
 
-#: ../app/tools/gimpiscissorstool.c:279
+#: ../app/tools/gimpiscissorstool.c:277
 msgid "Scissors"
 msgstr "مقص"
 
-#: ../app/tools/gimpiscissorstool.c:280
+#: ../app/tools/gimpiscissorstool.c:278
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
 msgstr "أداة المقص للتحديد: حدد الأشكال باستخدام تطابق ذكي للحواف"
 
-#: ../app/tools/gimpiscissorstool.c:281
+#: ../app/tools/gimpiscissorstool.c:279
 msgid "Intelligent _Scissors"
 msgstr "_مقص ذكي"
 
-#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:608
+#: ../app/tools/gimpiscissorstool.c:931 ../app/tools/gimpmeasuretool.c:609
 msgid "Click-Drag to move this point"
 msgstr "انقر واسحب لنقل هذه النقطة"
 
-#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:997
+#: ../app/tools/gimpiscissorstool.c:933 ../app/tools/gimpiscissorstool.c:998
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr ""
 
-#: ../app/tools/gimpiscissorstool.c:949
+#: ../app/tools/gimpiscissorstool.c:950
 msgid "Click to close the curve"
 msgstr "انقر لإغلاق المنحنى"
 
-#: ../app/tools/gimpiscissorstool.c:955
+#: ../app/tools/gimpiscissorstool.c:956
 msgid "Click to add a point on this segment"
 msgstr "انقر لإضافة نقطة على هذه القطعة"
 
-#: ../app/tools/gimpiscissorstool.c:969
+#: ../app/tools/gimpiscissorstool.c:970
 msgid "Click or press Enter to convert to a selection"
 msgstr "انقر أو اضغط إدخال (Enter) للتحويلها إلى تحديد"
 
-#: ../app/tools/gimpiscissorstool.c:979
+#: ../app/tools/gimpiscissorstool.c:980
 msgid "Press Enter to convert to a selection"
 msgstr "اضغط إدخال (Enter) لتحويلها إلى تحديد"
 
-#: ../app/tools/gimpiscissorstool.c:994
+#: ../app/tools/gimpiscissorstool.c:995
 msgid "Click or Click-Drag to add a point"
 msgstr "انقر أو انقر واسحب لإضافة نقطة"
 
@@ -12524,15 +12573,15 @@ msgstr "_قرّب"
 msgid "Use info window"
 msgstr "استخدام نافذة المعلومات"
 
-#: ../app/tools/gimpmeasuretool.c:125
+#: ../app/tools/gimpmeasuretool.c:124
 msgid "Measure"
 msgstr "قِس"
 
-#: ../app/tools/gimpmeasuretool.c:126
+#: ../app/tools/gimpmeasuretool.c:125
 msgid "Measure Tool: Measure distances and angles"
 msgstr "أداة القياس: لقياس المسافات والزوايا"
 
-#: ../app/tools/gimpmeasuretool.c:127
+#: ../app/tools/gimpmeasuretool.c:126
 msgid "_Measure"
 msgstr "_قِس"
 
@@ -12540,42 +12589,42 @@ msgstr "_قِس"
 msgid "Add Guides"
 msgstr "أضِف أدلة"
 
-#: ../app/tools/gimpmeasuretool.c:559
+#: ../app/tools/gimpmeasuretool.c:560
 msgid "Click to place vertical and horizontal guides"
 msgstr "انقر لوضع دليلا أفقيا ورأسيا"
 
-#: ../app/tools/gimpmeasuretool.c:568
+#: ../app/tools/gimpmeasuretool.c:569
 msgid "Click to place a horizontal guide"
 msgstr "انقر لوضع دليلا أفقي"
 
-#: ../app/tools/gimpmeasuretool.c:583
+#: ../app/tools/gimpmeasuretool.c:584
 msgid "Click to place a vertical guide"
 msgstr "انقر لوضع دليلا رأسي"
 
-#: ../app/tools/gimpmeasuretool.c:597
+#: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
 msgstr "انقر واسحب لإضافة نقطة جديدة"
 
-#: ../app/tools/gimpmeasuretool.c:628
+#: ../app/tools/gimpmeasuretool.c:629
 msgid "Click-Drag to move all points"
 msgstr "انقر واسحب لنقل جميع النقاط"
 
-#: ../app/tools/gimpmeasuretool.c:885 ../app/tools/gimpmeasuretool.c:1030
-#: ../app/tools/gimpmeasuretool.c:1086 ../app/tools/gimpmeasuretool.c:1114
-#: ../app/tools/gimppainttool.c:649
+#: ../app/tools/gimpmeasuretool.c:886 ../app/tools/gimpmeasuretool.c:1031
+#: ../app/tools/gimpmeasuretool.c:1087 ../app/tools/gimpmeasuretool.c:1115
+#: ../app/tools/gimppainttool.c:646
 msgid "pixels"
 msgstr "بكسل"
 
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:998
+#: ../app/tools/gimpmeasuretool.c:999
 msgid "Measure Distances and Angles"
 msgstr "قِس المسافات والزوايا"
 
-#: ../app/tools/gimpmeasuretool.c:1019
+#: ../app/tools/gimpmeasuretool.c:1020
 msgid "Distance:"
 msgstr "المسافة:"
 
-#: ../app/tools/gimpmeasuretool.c:1047 ../app/widgets/gimpbrusheditor.c:207
+#: ../app/tools/gimpmeasuretool.c:1048 ../app/widgets/gimpbrusheditor.c:207
 msgid "Angle:"
 msgstr "الزاوية:"
 
@@ -12640,75 +12689,81 @@ msgstr "أداة فرشاة التلوين: ارسم ضربات ناعمة بف�
 msgid "_Paintbrush"
 msgstr "_فرشاة تلوين"
 
-#: ../app/tools/gimppaintoptions-gui.c:96
+#: ../app/tools/gimppaintoptions-gui.c:93
 #: ../app/tools/gimpselectionoptions.c:210
 #: ../app/widgets/gimpbrushselect.c:193 ../app/widgets/gimplayertreeview.c:266
 msgid "Mode:"
 msgstr "النمط:"
 
-#: ../app/tools/gimppaintoptions-gui.c:120
-#, fuzzy
+#: ../app/tools/gimppaintoptions-gui.c:117
 msgid "Brush"
-msgstr "ال_فرشاة"
+msgstr "فرشاة"
 
-#: ../app/tools/gimppaintoptions-gui.c:154
-#, fuzzy
+#: ../app/tools/gimppaintoptions-gui.c:144
+msgid "Reset size to brush's native size"
+msgstr "صفر حجم الفرشاة الطبيعي"
+
+#: ../app/tools/gimppaintoptions-gui.c:147
 msgid "Aspect Ratio"
-msgstr "نسبة الارتفاع:"
+msgstr "نسبة الارتفاع"
 
-#: ../app/tools/gimppaintoptions-gui.c:185
+#: ../app/tools/gimppaintoptions-gui.c:182
 msgid "Incremental"
 msgstr "تزايدي"
 
-#: ../app/tools/gimppaintoptions-gui.c:201
+#: ../app/tools/gimppaintoptions-gui.c:198
 msgid "Hard edge"
 msgstr "حافة قاسية"
 
-#: ../app/tools/gimppaintoptions-gui.c:236
-msgid "Fade out"
+#: ../app/tools/gimppaintoptions-gui.c:227
+msgid "Dynamics Options"
+msgstr "خيارات الحركيات"
+
+#: ../app/tools/gimppaintoptions-gui.c:233
+#, fuzzy
+msgid "Fade Options"
+msgstr "الخيارات المحفوظة"
+
+#: ../app/tools/gimppaintoptions-gui.c:247
+#, fuzzy
+msgid "Fade length"
 msgstr "تلاشي"
 
-#: ../app/tools/gimppaintoptions-gui.c:241
-#, fuzzy
-msgid "Length"
-msgstr "الطول:"
-
-#: ../app/tools/gimppaintoptions-gui.c:266
+#: ../app/tools/gimppaintoptions-gui.c:273
 #: ../app/widgets/gimpviewablebox.c:288
 msgid "Reverse"
 msgstr "اعكس"
 
-#: ../app/tools/gimppaintoptions-gui.c:283
-#, fuzzy
-msgid "Amount"
-msgstr "المقدار:"
+#: ../app/tools/gimppaintoptions-gui.c:280
+msgid "Color Options"
+msgstr "خيارات الألوان"
 
-#: ../app/tools/gimppaintoptions-gui.c:287
+#: ../app/tools/gimppaintoptions-gui.c:305
+msgid "Amount"
+msgstr "المقدار"
+
+#: ../app/tools/gimppaintoptions-gui.c:309
 msgid "Apply Jitter"
 msgstr "طبّق النفّاض"
 
-#: ../app/tools/gimppaintoptions-gui.c:311
-msgid "Use color from gradient"
-msgstr "استخدم اللون من التدريج"
-
-#: ../app/tools/gimppainttool.c:143
+#: ../app/tools/gimppainttool.c:140
 msgid "Click to paint"
 msgstr "انقر لترسم"
 
-#: ../app/tools/gimppainttool.c:144
+#: ../app/tools/gimppainttool.c:141
 msgid "Click to draw the line"
 msgstr "انقر لرسم السطر"
 
-#: ../app/tools/gimppainttool.c:145
+#: ../app/tools/gimppainttool.c:142
 #, c-format
 msgid "%s to pick a color"
 msgstr "‏%s لتلتقط لونا"
 
-#: ../app/tools/gimppainttool.c:281
+#: ../app/tools/gimppainttool.c:278
 msgid "Cannot paint on layer groups."
 msgstr "لا يمكن الرسم على مجموعات الطبقات."
 
-#: ../app/tools/gimppainttool.c:695
+#: ../app/tools/gimppainttool.c:692
 #, c-format
 msgid "%s for a straight line"
 msgstr "‏%s لترسم سطرا مستقيما"
@@ -12721,17 +12776,17 @@ msgstr "أداة القلم: رسم حاد الحواف باستخدام فرش�
 msgid "Pe_ncil"
 msgstr "_قلم"
 
-#: ../app/tools/gimpperspectiveclonetool.c:129
+#: ../app/tools/gimpperspectiveclonetool.c:125
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
 
-#: ../app/tools/gimpperspectiveclonetool.c:131
+#: ../app/tools/gimpperspectiveclonetool.c:127
 msgid "_Perspective Clone"
 msgstr "ا_ستنساخ منظوري"
 
-#: ../app/tools/gimpperspectiveclonetool.c:704
+#: ../app/tools/gimpperspectiveclonetool.c:700
 msgid "Ctrl-Click to set a clone source"
 msgstr "انقر مع ضغط Ctrl لتحدد مصدر الاستنساخ"
 
@@ -12830,7 +12885,7 @@ msgstr "أداة التحديد المستطيل: حدد منطقة مستطيل
 msgid "_Rectangle Select"
 msgstr "تحديد _مستطيل"
 
-#: ../app/tools/gimprectangletool.c:1172 ../app/tools/gimprectangletool.c:2168
+#: ../app/tools/gimprectangletool.c:1169 ../app/tools/gimprectangletool.c:2165
 msgid "Rectangle: "
 msgstr "مستطيل: "
 
@@ -13018,9 +13073,8 @@ msgstr ""
 "استخدم نافذة محرر خارجية لإدخال النصوص بدلا من التحرير المباشر على الرقعة"
 
 #: ../app/tools/gimptextoptions.c:474
-#, fuzzy
 msgid "Font"
-msgstr "الخطوط"
+msgstr "الخط"
 
 #: ../app/tools/gimptextoptions.c:498
 msgid "Use editor"
@@ -13115,7 +13169,7 @@ msgstr "العتبة لا تعمل على الطبقات المفهرسة."
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr ""
 
-#: ../app/tools/gimptool.c:886
+#: ../app/tools/gimptool.c:917
 msgid "Can't work on an empty image, add a layer first"
 msgstr "لا يمكن العمل على صورة خالية، أضف طبقة أولا"
 
@@ -13124,7 +13178,7 @@ msgid "Transform:"
 msgstr "التحويل:"
 
 #: ../app/tools/gimptransformoptions.c:282
-#: ../app/widgets/gimpdynamicseditor.c:150
+#: ../app/widgets/gimpdynamicseditor.c:145
 #: ../app/widgets/gimpdynamicsoutputeditor.c:226
 msgid "Direction"
 msgstr "الاتجاه"
@@ -13152,19 +13206,19 @@ msgstr "15 درجة  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "أبقِ الجانب (%s)"
 
-#: ../app/tools/gimptransformtool.c:240
+#: ../app/tools/gimptransformtool.c:237
 msgid "Transforming"
 msgstr "التحويل"
 
-#: ../app/tools/gimptransformtool.c:1165
+#: ../app/tools/gimptransformtool.c:1260
 msgid "There is no layer to transform."
 msgstr "لا يوجد طبقة لتحويلها."
 
-#: ../app/tools/gimptransformtool.c:1178
+#: ../app/tools/gimptransformtool.c:1273
 msgid "There is no path to transform."
 msgstr "لا يوجد مسار لتحويله."
 
-#: ../app/tools/gimptransformtool.c:1179
+#: ../app/tools/gimptransformtool.c:1274
 msgid "The active path's strokes are locked."
 msgstr ""
 
@@ -13198,15 +13252,15 @@ msgstr ""
 msgid "Selection from Path"
 msgstr "التحديد من المسار"
 
-#: ../app/tools/gimpvectortool.c:163
+#: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
 msgstr "أداة المسارات: أنشئ وحرّر المسارات"
 
-#: ../app/tools/gimpvectortool.c:164
+#: ../app/tools/gimpvectortool.c:162
 msgid "Pat_hs"
 msgstr "ال_مسارات"
 
-#: ../app/tools/gimpvectortool.c:254
+#: ../app/tools/gimpvectortool.c:252
 msgid "The active path is locked."
 msgstr "المسار النشط موصد."
 
@@ -13226,116 +13280,116 @@ msgstr "أدرج مربط"
 msgid "Drag Handle"
 msgstr "اسحب المناول"
 
-#: ../app/tools/gimpvectortool.c:453
+#: ../app/tools/gimpvectortool.c:454
 msgid "Drag Anchor"
 msgstr "اسحب المربط"
 
-#: ../app/tools/gimpvectortool.c:471
+#: ../app/tools/gimpvectortool.c:472
 msgid "Drag Anchors"
 msgstr "اسحب المرابط"
 
-#: ../app/tools/gimpvectortool.c:494
+#: ../app/tools/gimpvectortool.c:495
 msgid "Drag Curve"
 msgstr "اسحب المنحنى"
 
-#: ../app/tools/gimpvectortool.c:523
+#: ../app/tools/gimpvectortool.c:524
 msgid "Connect Strokes"
 msgstr ""
 
-#: ../app/tools/gimpvectortool.c:555
+#: ../app/tools/gimpvectortool.c:556
 msgid "Drag Path"
 msgstr "اسحب المسار"
 
-#: ../app/tools/gimpvectortool.c:566
+#: ../app/tools/gimpvectortool.c:567
 msgid "Convert Edge"
 msgstr "حوّل الحافة"
 
-#: ../app/tools/gimpvectortool.c:597
+#: ../app/tools/gimpvectortool.c:598
 msgid "Delete Anchor"
 msgstr "احذف المربط"
 
-#: ../app/tools/gimpvectortool.c:620
+#: ../app/tools/gimpvectortool.c:621
 msgid "Delete Segment"
 msgstr "احذف القطعة"
 
-#: ../app/tools/gimpvectortool.c:839
+#: ../app/tools/gimpvectortool.c:840
 msgid "Move Anchors"
 msgstr "انقل المربط"
 
-#: ../app/tools/gimpvectortool.c:1199
+#: ../app/tools/gimpvectortool.c:1203
 msgid "Click to pick path to edit"
 msgstr "انقر لأخذ المسار للتعديل"
 
-#: ../app/tools/gimpvectortool.c:1203
+#: ../app/tools/gimpvectortool.c:1207
 msgid "Click to create a new path"
 msgstr "انقر لإنشاء مسار جديد"
 
-#: ../app/tools/gimpvectortool.c:1207
+#: ../app/tools/gimpvectortool.c:1211
 msgid "Click to create a new component of the path"
 msgstr "انقر لإضافة مكون جديد للمسار"
 
-#: ../app/tools/gimpvectortool.c:1211
+#: ../app/tools/gimpvectortool.c:1215
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "انقر أو انقر واسحب لإنشاء مربط جديد"
 
-#: ../app/tools/gimpvectortool.c:1221 ../app/tools/gimpvectortool.c:1228
+#: ../app/tools/gimpvectortool.c:1225 ../app/tools/gimpvectortool.c:1232
 msgid "Click-Drag to move the anchor around"
 msgstr "انقر واسحب لنقل المربط"
 
-#: ../app/tools/gimpvectortool.c:1232 ../app/tools/gimpvectortool.c:1255
+#: ../app/tools/gimpvectortool.c:1236 ../app/tools/gimpvectortool.c:1259
 msgid "Click-Drag to move the anchors around"
 msgstr "انقر واسحب لنقل المرابط"
 
-#: ../app/tools/gimpvectortool.c:1238
+#: ../app/tools/gimpvectortool.c:1242
 msgid "Click-Drag to move the handle around"
 msgstr "انقر واسحب لنقل المناول"
 
-#: ../app/tools/gimpvectortool.c:1245
+#: ../app/tools/gimpvectortool.c:1249
 msgid "Click-Drag to move the handles around symmetrically"
 msgstr "انقر واسحب لنقل المناول بشكل متساو"
 
-#: ../app/tools/gimpvectortool.c:1260
+#: ../app/tools/gimpvectortool.c:1264
 msgid "Click-Drag to change the shape of the curve"
 msgstr "انقر واسحب لتغيير شكل المنحنى"
 
-#: ../app/tools/gimpvectortool.c:1263
+#: ../app/tools/gimpvectortool.c:1267
 #, c-format
 msgid "%s: symmetrical"
 msgstr "‏%s: متماثل"
 
-#: ../app/tools/gimpvectortool.c:1268
+#: ../app/tools/gimpvectortool.c:1272
 msgid "Click-Drag to move the component around"
 msgstr "انقر واسحب لنقل المكون"
 
-#: ../app/tools/gimpvectortool.c:1276
+#: ../app/tools/gimpvectortool.c:1280
 msgid "Click-Drag to move the path around"
 msgstr "انقر واسحب لنقل المسار"
 
-#: ../app/tools/gimpvectortool.c:1280
+#: ../app/tools/gimpvectortool.c:1284
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "انقر واسحب لإدراج مربط في المسار"
 
-#: ../app/tools/gimpvectortool.c:1288
+#: ../app/tools/gimpvectortool.c:1292
 msgid "Click to delete this anchor"
 msgstr "انقر لحذف هذا المربط"
 
-#: ../app/tools/gimpvectortool.c:1292
+#: ../app/tools/gimpvectortool.c:1296
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "انقر لربط هذا المربط بنقطة النهاية المحدد"
 
-#: ../app/tools/gimpvectortool.c:1297
+#: ../app/tools/gimpvectortool.c:1301
 msgid "Click to open up the path"
 msgstr "انقر لفتح المسار"
 
-#: ../app/tools/gimpvectortool.c:1301
+#: ../app/tools/gimpvectortool.c:1305
 msgid "Click to make this node angular"
 msgstr "انقر لجعل هذه العقدة مدببة"
 
-#: ../app/tools/gimpvectortool.c:1801
+#: ../app/tools/gimpvectortool.c:1805
 msgid "Delete Anchors"
 msgstr "احذف المرابط"
 
-#: ../app/tools/gimpvectortool.c:1972
+#: ../app/tools/gimpvectortool.c:1976
 msgid "There is no active layer or channel to stroke to"
 msgstr "لا توجد طبقة أو قناة نشطة لرسم الحواف بها"
 
@@ -13464,97 +13518,97 @@ msgctxt "vector-mode"
 msgid "Move"
 msgstr "انقل"
 
-#: ../app/vectors/gimpvectors.c:207
+#: ../app/vectors/gimpvectors.c:208
 msgctxt "undo-type"
 msgid "Rename Path"
 msgstr "غيّر اسم المسار"
 
-#: ../app/vectors/gimpvectors.c:208
+#: ../app/vectors/gimpvectors.c:209
 msgctxt "undo-type"
 msgid "Move Path"
 msgstr "انقل المسار"
 
-#: ../app/vectors/gimpvectors.c:209
+#: ../app/vectors/gimpvectors.c:210
 msgctxt "undo-type"
 msgid "Scale Path"
 msgstr "حجّم المسار"
 
-#: ../app/vectors/gimpvectors.c:210
+#: ../app/vectors/gimpvectors.c:211
 msgctxt "undo-type"
 msgid "Resize Path"
 msgstr "غيّر حجم المسار"
 
-#: ../app/vectors/gimpvectors.c:211
+#: ../app/vectors/gimpvectors.c:212
 msgctxt "undo-type"
 msgid "Flip Path"
 msgstr "اقلب المسار"
 
-#: ../app/vectors/gimpvectors.c:212
+#: ../app/vectors/gimpvectors.c:213
 msgctxt "undo-type"
 msgid "Rotate Path"
 msgstr "دوّر المسار"
 
-#: ../app/vectors/gimpvectors.c:213
+#: ../app/vectors/gimpvectors.c:214
 msgctxt "undo-type"
 msgid "Transform Path"
 msgstr "حوّل المسار"
 
-#: ../app/vectors/gimpvectors.c:214
+#: ../app/vectors/gimpvectors.c:215
 msgctxt "undo-type"
 msgid "Stroke Path"
 msgstr "ارسم المسار"
 
-#: ../app/vectors/gimpvectors.c:215
+#: ../app/vectors/gimpvectors.c:216
 msgctxt "undo-type"
 msgid "Path to Selection"
 msgstr "المسار إلى التحديد"
 
-#: ../app/vectors/gimpvectors.c:216
+#: ../app/vectors/gimpvectors.c:217
 msgctxt "undo-type"
 msgid "Reorder Path"
 msgstr "غيّر ترتيب المسار"
 
-#: ../app/vectors/gimpvectors.c:217
+#: ../app/vectors/gimpvectors.c:218
 msgctxt "undo-type"
 msgid "Raise Path"
 msgstr "ارفع المسار"
 
-#: ../app/vectors/gimpvectors.c:218
+#: ../app/vectors/gimpvectors.c:219
 msgctxt "undo-type"
 msgid "Raise Path to Top"
 msgstr "ارفع المسار إلى القمة"
 
-#: ../app/vectors/gimpvectors.c:219
+#: ../app/vectors/gimpvectors.c:220
 msgctxt "undo-type"
 msgid "Lower Path"
 msgstr "اخفض المسار"
 
-#: ../app/vectors/gimpvectors.c:220
+#: ../app/vectors/gimpvectors.c:221
 msgctxt "undo-type"
 msgid "Lower Path to Bottom"
 msgstr "اخفض المسار إلى القاع"
 
-#: ../app/vectors/gimpvectors.c:221
+#: ../app/vectors/gimpvectors.c:222
 msgid "Path cannot be raised higher."
 msgstr "لا يمكن رفع المسار أعلى."
 
-#: ../app/vectors/gimpvectors.c:222
+#: ../app/vectors/gimpvectors.c:223
 msgid "Path cannot be lowered more."
 msgstr "لا يمكن خفض المسار أكثر."
 
-#: ../app/vectors/gimpvectors.c:364
+#: ../app/vectors/gimpvectors.c:365
 msgid "Move Path"
 msgstr "انقل مسار"
 
-#: ../app/vectors/gimpvectors.c:463
+#: ../app/vectors/gimpvectors.c:464
 msgid "Flip Path"
 msgstr "اقلب المسار"
 
-#: ../app/vectors/gimpvectors.c:494
+#: ../app/vectors/gimpvectors.c:495
 msgid "Rotate Path"
 msgstr "دوّر المسار"
 
-#: ../app/vectors/gimpvectors.c:524
+#: ../app/vectors/gimpvectors.c:525
 msgid "Transform Path"
 msgstr "حوّل المسار"
 
@@ -14057,7 +14111,7 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:142
-#: ../app/widgets/gimpdynamicseditor.c:148
+#: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:212
 msgid "Pressure"
 msgstr "الضغط"
@@ -14071,7 +14125,7 @@ msgid "Y tilt"
 msgstr "ميل ص"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:145
-#: ../app/widgets/gimpdynamicseditor.c:152
+#: ../app/widgets/gimpdynamicseditor.c:147
 #: ../app/widgets/gimpdynamicsoutputeditor.c:240
 msgid "Wheel"
 msgstr "العجلة"
@@ -14111,12 +14165,12 @@ msgstr "ليس للمحور '%s' منحنيات"
 msgid "Save device status"
 msgstr "احفظ حالة الجهاز"
 
-#: ../app/widgets/gimpdevicestatus.c:445
+#: ../app/widgets/gimpdevicestatus.c:440
 #, c-format
 msgid "Foreground: %d, %d, %d"
 msgstr "المقدمة: %Id، %Id، %Id"
 
-#: ../app/widgets/gimpdevicestatus.c:450
+#: ../app/widgets/gimpdevicestatus.c:445
 #, c-format
 msgid "Background: %d, %d, %d"
 msgstr "الخلفية: %Id، %Id، %Id"
@@ -14182,22 +14236,21 @@ msgstr "عند تفعيله، سيتبع الحوار تلقائيا الصور�
 msgid "Lock pixels"
 msgstr "أوصِد البكسلات"
 
-#: ../app/widgets/gimpdynamicseditor.c:133
-#: ../app/widgets/gimpdynamicseditor.c:139
+#: ../app/widgets/gimpdynamicseditor.c:137
 msgid "Mapping matrix"
 msgstr "مصفوفة المقابلة"
 
-#: ../app/widgets/gimpdynamicseditor.c:149
+#: ../app/widgets/gimpdynamicseditor.c:144
 #: ../app/widgets/gimpdynamicsoutputeditor.c:219
 msgid "Velocity"
 msgstr "السرعة"
 
-#: ../app/widgets/gimpdynamicseditor.c:153
+#: ../app/widgets/gimpdynamicseditor.c:148
 #: ../app/widgets/gimpdynamicsoutputeditor.c:247
 msgid "Random"
 msgstr "عشوائي"
 
-#: ../app/widgets/gimpdynamicseditor.c:154
+#: ../app/widgets/gimpdynamicseditor.c:149
 #: ../app/widgets/gimpdynamicsoutputeditor.c:254
 msgid "Fade"
 msgstr "الإبهات"
@@ -14526,6 +14579,7 @@ msgid "None"
 msgstr "بدون"
 
 #: ../app/widgets/gimpimagepropview.c:470
+#: ../app/widgets/gimptemplateeditor.c:310
 #, c-format
 msgid "pixels/%s"
 msgstr "بكسل/%s"
@@ -14956,9 +15010,8 @@ msgid "Open the brush selection dialog"
 msgstr "افتح حوار اختيار الفرشاة"
 
 #: ../app/widgets/gimpviewablebox.c:141
-#, fuzzy
 msgid "Open the dynamics selection dialog"
-msgstr "افتح حوار اختيار الخط"
+msgstr "افتح حوار اختيار الحركيات"
 
 #: ../app/widgets/gimpviewablebox.c:202
 msgid "Open the pattern selection dialog"
@@ -15204,6 +15257,13 @@ msgstr "رجاء تأكد من أن صندوق الأدوات ظاهر!"
 msgid "Couldn't start '%s': %s"
 msgstr "لا يمكن بدء: '%s'‏: %s"
 
+#, fuzzy
+#~ msgid "Length"
+#~ msgstr "الطول:"
+
+#~ msgid "Use color from gradient"
+#~ msgstr "استخدم اللون من التدريج"
+
 #~ msgid "Brush Scale"
 #~ msgstr "مقياس الفرشاة"
 
@@ -15303,9 +15363,6 @@ msgstr "لا يمكن بدء: '%s'‏: %s"
 #~ msgctxt "command"
 #~ msgid "Bucket Fill"
 #~ msgstr "املأ بالدلو"
-
-#~ msgid "Transform"
-#~ msgstr "حوّل"
 
 #~ msgid "Pressure:"
 #~ msgstr "الضغط:"
