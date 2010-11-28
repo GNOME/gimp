@@ -59,6 +59,7 @@
 enum
 {
   PROP_0,
+  PROP_TEXT,
   PROP_AUTO_RENAME,
   PROP_MODIFIED
 };
@@ -150,6 +151,11 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   drawable_class->set_tiles        = gimp_text_layer_set_tiles;
   drawable_class->push_undo        = gimp_text_layer_push_undo;
 
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
+                                   "text", NULL,
+                                   GIMP_TYPE_TEXT,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RENAME,
                                     "auto-rename", NULL,
                                     TRUE,
@@ -192,6 +198,9 @@ gimp_text_layer_get_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TEXT:
+      g_value_set_object (value, text_layer->text);
+      break;
     case PROP_AUTO_RENAME:
       g_value_set_boolean (value, text_layer->auto_rename);
       break;
@@ -215,6 +224,9 @@ gimp_text_layer_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_TEXT:
+      gimp_text_layer_set_text (text_layer, g_value_get_object (value));
+      break;
     case PROP_AUTO_RENAME:
       text_layer->auto_rename = g_value_get_boolean (value);
       break;
@@ -425,6 +437,7 @@ gimp_text_layer_set_text (GimpTextLayer *layer,
                                layer, G_CONNECT_SWAPPED);
     }
 
+  g_object_notify (G_OBJECT (layer), "text");
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
 }
 
