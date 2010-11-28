@@ -138,14 +138,14 @@ static void      gimp_text_tool_connect         (GimpTextTool      *text_tool,
                                                  GimpText          *text);
 
 static void      gimp_text_tool_layer_notify    (GimpTextLayer     *layer,
-                                                 GParamSpec        *pspec,
+                                                 const GParamSpec  *pspec,
                                                  GimpTextTool      *text_tool);
 static void      gimp_text_tool_proxy_notify    (GimpText          *text,
-                                                 GParamSpec        *pspec,
+                                                 const GParamSpec  *pspec,
                                                  GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_text_notify     (GimpText          *text,
-                                                 GParamSpec        *pspec,
+                                                 const GParamSpec  *pspec,
                                                  GimpTextTool      *text_tool);
 static void      gimp_text_tool_text_changed    (GimpText          *text,
                                                  GimpTextTool      *text_tool);
@@ -1069,26 +1069,35 @@ gimp_text_tool_connect (GimpTextTool  *text_tool,
       text_tool->layer = layer;
 
       if (layer)
-        g_signal_connect_object (text_tool->layer, "notify::modified",
+        g_signal_connect_object (text_tool->layer, "notify",
                                  G_CALLBACK (gimp_text_tool_layer_notify),
                                  text_tool, 0);
     }
 }
 
 static void
-gimp_text_tool_layer_notify (GimpTextLayer *layer,
-                             GParamSpec    *pspec,
-                             GimpTextTool  *text_tool)
+gimp_text_tool_layer_notify (GimpTextLayer    *layer,
+                             const GParamSpec *pspec,
+                             GimpTextTool     *text_tool)
 {
-  if (layer->modified)
-    gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
-                       GIMP_TOOL (text_tool)->display);
+  if (! strcmp (pspec->name, "modified"))
+    {
+      if (layer->modified)
+        gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
+                           GIMP_TOOL (text_tool)->display);
+    }
+  else if (! strcmp (pspec->name, "text"))
+    {
+      if (! layer->text)
+        gimp_tool_control (GIMP_TOOL (text_tool), GIMP_TOOL_ACTION_HALT,
+                           GIMP_TOOL (text_tool)->display);
+    }
 }
 
 static void
-gimp_text_tool_proxy_notify (GimpText     *text,
-                             GParamSpec   *pspec,
-                             GimpTextTool *text_tool)
+gimp_text_tool_proxy_notify (GimpText         *text,
+                             const GParamSpec *pspec,
+                             GimpTextTool     *text_tool)
 {
   if (! text_tool->text)
     return;
@@ -1097,7 +1106,7 @@ gimp_text_tool_proxy_notify (GimpText     *text,
     {
       gimp_text_tool_block_drawing (text_tool);
 
-      text_tool->pending = g_list_append (text_tool->pending, pspec);
+      text_tool->pending = g_list_append (text_tool->pending, (gpointer) pspec);
 
       if (text_tool->idle_id)
         g_source_remove (text_tool->idle_id);
@@ -1110,9 +1119,9 @@ gimp_text_tool_proxy_notify (GimpText     *text,
 }
 
 static void
-gimp_text_tool_text_notify (GimpText     *text,
-                            GParamSpec   *pspec,
-                            GimpTextTool *text_tool)
+gimp_text_tool_text_notify (GimpText         *text,
+                            const GParamSpec *pspec,
+                            GimpTextTool     *text_tool)
 {
   g_return_if_fail (text == text_tool->text);
 
