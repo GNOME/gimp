@@ -681,17 +681,17 @@ gimp_clipboard_free (GimpClipboard *gimp_clip)
   g_slist_free (gimp_clip->pixbuf_formats);
 
   for (i = 0; i < gimp_clip->n_target_entries; i++)
-    g_free (gimp_clip->target_entries[i].target);
+    g_free ((gchar *) gimp_clip->target_entries[i].target);
 
   g_free (gimp_clip->target_entries);
 
   for (i = 0; i < gimp_clip->n_svg_target_entries; i++)
-    g_free (gimp_clip->svg_target_entries[i].target);
+    g_free ((gchar *) gimp_clip->svg_target_entries[i].target);
 
   g_free (gimp_clip->svg_target_entries);
 
   for (i = 0; i < gimp_clip->n_curve_target_entries; i++)
-    g_free (gimp_clip->curve_target_entries[i].target);
+    g_free ((gchar *) gimp_clip->curve_target_entries[i].target);
 
   g_free (gimp_clip->curve_target_entries);
 
