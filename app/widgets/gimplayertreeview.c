@@ -367,8 +367,6 @@ gimp_layer_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_layer_tree_view_mask_clicked),
                     layer_view);
 
-  gimp_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
-                               NULL, tree_view);
   gimp_dnd_component_dest_add (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_CHANNEL,
@@ -376,6 +374,8 @@ gimp_layer_tree_view_constructor (GType                  type,
   gimp_dnd_viewable_dest_add  (GTK_WIDGET (tree_view->view), GIMP_TYPE_LAYER_MASK,
                                NULL, tree_view);
   gimp_dnd_pixbuf_dest_add    (GTK_WIDGET (tree_view->view),
+                               NULL, tree_view);
+  gimp_dnd_uri_list_dest_add  (GTK_WIDGET (tree_view->view),
                                NULL, tree_view);
 
   /*  hide basically useless edit button  */

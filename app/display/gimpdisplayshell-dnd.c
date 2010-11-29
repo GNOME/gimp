@@ -119,9 +119,6 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_dnd_uri_list_dest_add  (shell->canvas,
-                               gimp_display_shell_drop_uri_list,
-                               shell);
   gimp_dnd_viewable_dest_add  (shell->canvas, GIMP_TYPE_LAYER,
                                gimp_display_shell_drop_drawable,
                                shell);
@@ -151,6 +148,9 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
                                shell);
   gimp_dnd_pixbuf_dest_add    (shell->canvas,
                                gimp_display_shell_drop_pixbuf,
+                               shell);
+  gimp_dnd_uri_list_dest_add  (shell->canvas,
+                               gimp_display_shell_drop_uri_list,
                                shell);
 }
 
