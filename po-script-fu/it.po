@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-27 23:47+0200\n"
-"PO-Revision-Date: 2010-10-27 23:51+0200\n"
+"POT-Creation-Date: 2010-11-29 09:24+0100\n"
+"PO-Revision-Date: 2010-11-29 09:30+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1042,15 +1042,13 @@ msgstr "_Camuffamento..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#, fuzzy
 msgid "Bevel Highlight"
-msgstr "Larghezza rilievo"
+msgstr "Rilievo alteluci"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-#, fuzzy
 msgid "Bevel Shadow"
-msgstr "Ombra"
+msgstr "Rilievo ombre"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
@@ -1063,9 +1061,8 @@ msgstr "Superficie scolpita"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#, fuzzy
 msgid "Cast Shadow"
-msgstr "Crea ombra"
+msgstr "Proietta ombra"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
 msgid "Image to carve"
@@ -1073,9 +1070,8 @@ msgstr "Immagine da scolpire"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
-#, fuzzy
 msgid "Inset"
-msgstr "Inverti"
+msgstr "Riquadro"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
@@ -1209,15 +1205,13 @@ msgstr "Mappa ambiente"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight"
-msgstr "Illuminato"
+msgstr "Alteluci"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
-#, fuzzy
 msgid "Highlight balance"
-msgstr "Bilanciamento luminosità"
+msgstr "Bilanciamento alteluci"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
 msgid "Layer 2"
@@ -1258,9 +1252,8 @@ msgid "Circuit seed"
 msgstr "Seme casualità circuiti"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#, fuzzy
 msgid "Effect layer"
-msgstr "Livello separato"
+msgstr "Livello effetto"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid ""
@@ -1336,9 +1329,8 @@ msgid "Darken only"
 msgstr "Solo toni scuri"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-#, fuzzy
 msgid "Stain"
-msgstr "Macchie"
+msgstr "Macchia"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "Stains"
