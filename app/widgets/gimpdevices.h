@@ -22,22 +22,25 @@
 typedef void (* GimpDeviceChangeNotify) (Gimp *gimp);
 
 
-void             gimp_devices_init          (Gimp                   *gimp,
-                                             GimpDeviceChangeNotify  callback);
-void             gimp_devices_exit          (Gimp                   *gimp);
+void             gimp_devices_init           (Gimp                   *gimp,
+                                              GimpDeviceChangeNotify  callback);
+void             gimp_devices_exit           (Gimp                   *gimp);
 
-void             gimp_devices_restore       (Gimp                   *gimp);
-void             gimp_devices_save          (Gimp                   *gimp,
-                                             gboolean                always_save);
+void             gimp_devices_restore        (Gimp                   *gimp);
+void             gimp_devices_save           (Gimp                   *gimp,
+                                              gboolean                always_save);
 
-gboolean         gimp_devices_clear         (Gimp                   *gimp,
-                                             GError                **error);
+gboolean         gimp_devices_clear          (Gimp                   *gimp,
+                                              GError                **error);
 
-GimpContainer  * gimp_devices_get_list      (Gimp                   *gimp);
-GimpDeviceInfo * gimp_devices_get_current   (Gimp                   *gimp);
+GimpContainer  * gimp_devices_get_list       (Gimp                   *gimp);
+GimpDeviceInfo * gimp_devices_get_current    (Gimp                   *gimp);
 
-gboolean         gimp_devices_check_change  (Gimp                   *gimp,
-                                             GdkEvent               *event);
+gboolean         gimp_devices_check_callback (GtkWidget              *widget,
+                                              GdkEvent               *event,
+                                              Gimp                   *gimp);
+gboolean         gimp_devices_check_change   (Gimp                   *gimp,
+                                              GdkEvent               *event);
 
 
 #endif /* __GIMP_DEVICES_H__ */

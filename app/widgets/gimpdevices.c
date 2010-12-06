@@ -312,6 +312,19 @@ gimp_devices_get_current (Gimp *gimp)
 }
 
 gboolean
+gimp_devices_check_callback (GtkWidget *widget,
+                             GdkEvent  *event,
+                             Gimp      *gimp)
+{
+  g_return_val_if_fail (event != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  gimp_devices_check_change (gimp, event);
+
+  return FALSE;
+}
+
+gboolean
 gimp_devices_check_change (Gimp     *gimp,
                            GdkEvent *event)
 {

@@ -144,9 +144,6 @@ static void        toolbox_area_notify                  (GimpGuiConfig  *config,
 static void        toolbox_wilber_notify                (GimpGuiConfig  *config,
                                                          GParamSpec     *pspec,
                                                          GtkWidget      *wilber);
-static gboolean    toolbox_check_device                 (GtkWidget      *widget,
-                                                         GdkEvent       *event,
-                                                         Gimp           *gimp);
 static void        toolbox_paste_received               (GtkClipboard   *clipboard,
                                                          const gchar    *text,
                                                          gpointer        data);
@@ -309,7 +306,7 @@ gimp_toolbox_constructed (GObject *object)
   if (! list)  /* all devices have cursor */
     {
       g_signal_connect (toolbox, "motion-notify-event",
-                        G_CALLBACK (toolbox_check_device),
+                        G_CALLBACK (gimp_devices_check_callback),
                         toolbox->p->context->gimp);
 
       gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
@@ -837,16 +834,6 @@ toolbox_wilber_notify (GimpGuiConfig *config,
 
   g_object_get (config, pspec->name, &visible, NULL);
   g_object_set (wilber, "visible", visible, NULL);
-}
-
-static gboolean
-toolbox_check_device (GtkWidget *widget,
-                      GdkEvent  *event,
-                      Gimp      *gimp)
-{
-  gimp_devices_check_change (gimp, event);
-
-  return FALSE;
 }
 
 static void
