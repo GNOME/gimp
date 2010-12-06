@@ -85,6 +85,9 @@ static void   gimp_devices_device_removed (GdkDisplay        *gdk_display,
                                            GdkDevice         *device,
                                            GimpDeviceManager *manager);
 
+static void   gimp_devices_select_device  (GimpDeviceManager *manager,
+                                           GimpDeviceInfo    *info);
+
 
 /*  public functions  */
 
@@ -308,34 +311,6 @@ gimp_devices_get_current (Gimp *gimp)
   return manager->current_device;
 }
 
-void
-gimp_devices_select_device (Gimp           *gimp,
-                            GimpDeviceInfo *new_device_info)
-{
-  GimpDeviceManager *manager;
-  GimpContext       *user_context;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_DEVICE_INFO (new_device_info));
-
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
-
-  gimp_context_set_parent (GIMP_CONTEXT (manager->current_device), NULL);
-
-  manager->current_device = new_device_info;
-
-  user_context = gimp_get_user_context (gimp);
-
-  gimp_context_copy_properties (GIMP_CONTEXT (new_device_info), user_context,
-                                GIMP_DEVICE_INFO_CONTEXT_MASK);
-  gimp_context_set_parent (GIMP_CONTEXT (new_device_info), user_context);
-
-  if (manager->change_notify)
-    manager->change_notify (gimp);
-}
-
 gboolean
 gimp_devices_check_change (Gimp     *gimp,
                            GdkEvent *event)
@@ -393,7 +368,7 @@ gimp_devices_check_change (Gimp     *gimp,
 
   if (device_info != manager->current_device)
     {
-      gimp_devices_select_device (gimp, device_info);
+      gimp_devices_select_device (manager, device_info);
       return TRUE;
     }
 
@@ -497,7 +472,27 @@ gimp_devices_device_removed (GdkDisplay        *gdk_display,
           device      = gdk_display_get_core_pointer (gdk_display);
           device_info = gimp_device_info_get_by_device (device);
 
-          gimp_devices_select_device (manager->gimp, device_info);
+          gimp_devices_select_device (manager, device_info);
         }
     }
+}
+
+static void
+gimp_devices_select_device (GimpDeviceManager *manager,
+                            GimpDeviceInfo    *info)
+{
+  GimpContext *user_context;
+
+  gimp_context_set_parent (GIMP_CONTEXT (manager->current_device), NULL);
+
+  manager->current_device = info;
+
+  user_context = gimp_get_user_context (manager->gimp);
+
+  gimp_context_copy_properties (GIMP_CONTEXT (info), user_context,
+                                GIMP_DEVICE_INFO_CONTEXT_MASK);
+  gimp_context_set_parent (GIMP_CONTEXT (info), user_context);
+
+  if (manager->change_notify)
+    manager->change_notify (manager->gimp);
 }

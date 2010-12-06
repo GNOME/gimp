@@ -38,8 +38,6 @@ GimpDeviceInfo * gimp_devices_get_current   (Gimp                   *gimp);
 
 gboolean         gimp_devices_check_change  (Gimp                   *gimp,
                                              GdkEvent               *event);
-void             gimp_devices_select_device (Gimp                   *gimp,
-                                             GimpDeviceInfo         *info);
 
 
 #endif /* __GIMP_DEVICES_H__ */
