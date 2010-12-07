@@ -1845,6 +1845,8 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 
       if (active_tool)
         {
+          GdkGrabStatus status;
+
           if (! gtk_widget_has_focus (shell->canvas))
             {
               gimp_display_shell_update_focus (shell, NULL, event->state);
@@ -1858,21 +1860,42 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
                                 gdk_event_get_time ((GdkEvent *) event));
             }
 
-          gdk_pointer_grab (gtk_widget_get_window (shell->canvas), FALSE,
-                            GDK_POINTER_MOTION_HINT_MASK |
-                            GDK_BUTTON1_MOTION_MASK |
-                            GDK_BUTTON_RELEASE_MASK,
-                            NULL, NULL, event->time);
+          status = gdk_pointer_grab (gtk_widget_get_window (shell->canvas), FALSE,
+                                     GDK_POINTER_MOTION_HINT_MASK |
+                                     GDK_BUTTON1_MOTION_MASK |
+                                     GDK_BUTTON_RELEASE_MASK,
+                                     NULL, NULL, event->time);
 
-          gdk_keyboard_grab (gtk_widget_get_window (shell->canvas),
-                             FALSE, event->time);
+          if (status == GDK_GRAB_SUCCESS)
+            {
+              status = gdk_keyboard_grab (gtk_widget_get_window (shell->canvas),
+                                          FALSE, event->time);
 
-          if (sample_point)
-            gimp_color_tool_start_sample_point (active_tool, display);
-          else if (horizontal)
-            gimp_move_tool_start_hguide (active_tool, display);
+              if (status == GDK_GRAB_SUCCESS)
+                {
+                  if (sample_point)
+                    gimp_color_tool_start_sample_point (active_tool, display);
+                  else if (horizontal)
+                    gimp_move_tool_start_hguide (active_tool, display);
+                  else
+                    gimp_move_tool_start_vguide (active_tool, display);
+
+                  return TRUE;
+                }
+              else
+                {
+                  g_printerr ("%s: gdk_keyboard_grab failed with status %d\n",
+                              G_STRFUNC, status);
+
+                  gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas),
+                                              event->time);
+                }
+            }
           else
-            gimp_move_tool_start_vguide (active_tool, display);
+            {
+              g_printerr ("%s: gdk_pointer_grab failed with status %d\n",
+                          G_STRFUNC, status);
+            }
         }
     }
 
