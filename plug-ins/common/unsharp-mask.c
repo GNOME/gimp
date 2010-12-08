@@ -864,7 +864,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              unsharp_params.radius, 0.1, 120.0, 0.1, 1.0, 1,
+                              unsharp_params.radius, 0.1, 500.0, 0.1, 1.0, 1,
                               TRUE, 0, 0,
                               NULL, NULL);
 
