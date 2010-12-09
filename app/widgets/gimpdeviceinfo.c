@@ -846,7 +846,7 @@ gimp_device_info_compare (GimpDeviceInfo *a,
     }
   else
     {
-      return - strcmp (gimp_object_get_name (a),
-                       gimp_object_get_name (b));
+      return gimp_object_name_collate ((GimpObject *) a,
+                                       (GimpObject *) b);
     }
 }
