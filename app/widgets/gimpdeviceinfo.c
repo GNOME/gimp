@@ -609,8 +609,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
       info->device  = NULL;
       info->display = NULL;
 
-      g_object_set_data (G_OBJECT (info->device), GIMP_DEVICE_INFO_DATA_KEY,
-                         NULL);
+      g_object_set_data (G_OBJECT (device), GIMP_DEVICE_INFO_DATA_KEY, NULL);
 
       gimp_device_info_set_mode (info, device->mode);
 
