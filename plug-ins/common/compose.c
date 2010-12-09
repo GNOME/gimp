@@ -1195,9 +1195,9 @@ compose_dialog (const gchar *compose_type,
       combo = gimp_drawable_combo_box_new (check_gray, NULL);
       composeint.channel_menu[j] = combo;
 
-      ico = gtk_widget_render_icon (dialog,
-                                    GIMP_ICON_CHANNEL_GRAY,
-                                    GTK_ICON_SIZE_BUTTON, NULL);
+      ico = gtk_widget_render_icon_pixbuf (dialog,
+                                           GIMP_ICON_CHANNEL_GRAY,
+                                           GTK_ICON_SIZE_BUTTON);
       model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
