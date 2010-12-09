@@ -203,8 +203,6 @@ gimp_devices_restore (Gimp *gimp)
 
   g_free (filename);
 
-  gimp_list_reverse (GIMP_LIST (manager->device_info_list));
-
   gimp_context_copy_properties (GIMP_CONTEXT (manager->current_device),
                                 user_context,
                                 GIMP_DEVICE_INFO_CONTEXT_MASK);
