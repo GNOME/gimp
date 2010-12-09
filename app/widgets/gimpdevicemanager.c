@@ -302,18 +302,22 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
                                     GimpDeviceManager *manager)
 {
   GdkDeviceManager *gdk_manager;
+  GdkDevice        *device;
   GList            *devices;
   GList            *list;
 
   gdk_manager = gdk_display_get_device_manager (gdk_display);
 
+  device = gdk_device_manager_get_client_pointer (gdk_manager);
+  gimp_device_manager_device_added (gdk_manager, device, manager);
+
   devices = gdk_device_manager_list_devices (gdk_manager,
-                                             GDK_DEVICE_TYPE_MASTER);
+                                             GDK_DEVICE_TYPE_SLAVE);
 
   /*  create device info structures for present devices */
   for (list = devices; list; list = g_list_next (list))
     {
-      GdkDevice *device = list->data;
+      device = list->data;
 
       gimp_device_manager_device_added (gdk_manager, device, manager);
     }
@@ -326,7 +330,7 @@ gimp_device_manager_display_opened (GdkDisplayManager *disp_manager,
   /*  create device info structures for present devices */
   for (list = devices; list; list = g_list_next (list))
     {
-      GdkDevice *device = list->data;
+      device = list->data;
 
       gimp_device_manager_device_added (gdk_manager, device, manager);
     }
@@ -351,17 +355,21 @@ gimp_device_manager_display_closed (GdkDisplay        *gdk_display,
                                     GimpDeviceManager *manager)
 {
   GdkDeviceManager *gdk_manager;
+  GdkDevice        *device;
   GList            *devices;
   GList            *list;
 
   gdk_manager = gdk_display_get_device_manager (gdk_display);
 
+  device = gdk_device_manager_get_client_pointer (gdk_manager);
+  gimp_device_manager_device_removed (gdk_manager, device, manager);
+
   devices = gdk_device_manager_list_devices (gdk_manager,
-                                             GDK_DEVICE_TYPE_MASTER);
+                                             GDK_DEVICE_TYPE_SLAVE);
 
   for (list = devices; list; list = list->next)
     {
-      GdkDevice *device = list->data;
+      device = list->data;
 
       gimp_device_manager_device_removed (gdk_manager, device, manager);
     }
@@ -373,7 +381,7 @@ gimp_device_manager_display_closed (GdkDisplay        *gdk_display,
 
   for (list = devices; list; list = list->next)
     {
-      GdkDevice *device = list->data;
+      device = list->data;
 
       gimp_device_manager_device_removed (gdk_manager, device, manager);
     }
@@ -391,6 +399,10 @@ gimp_device_manager_device_added (GdkDeviceManager  *gdk_manager,
   GimpDeviceInfo           *device_info;
 
   if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
+    return;
+
+  if (device != gdk_device_manager_get_client_pointer (gdk_manager) &&
+      gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_MASTER)
     return;
 
   display = gdk_device_manager_get_display (gdk_manager);
