@@ -56,6 +56,8 @@ struct _GimpDeviceEditorPrivate
 {
   Gimp      *gimp;
 
+  GQuark     name_changed_handler;
+
   GtkWidget *treeview;
   GtkWidget *delete_button;
 
@@ -90,6 +92,8 @@ static void      gimp_device_editor_add_device     (GimpContainer         *conta
                                                     GimpDeviceEditor      *editor);
 static void      gimp_device_editor_remove_device  (GimpContainer         *container,
                                                     GimpDeviceInfo        *info,
+                                                    GimpDeviceEditor      *editor);
+static void      gimp_device_editor_device_changed (GimpDeviceInfo        *info,
                                                     GimpDeviceEditor      *editor);
 
 static void      gimp_device_editor_select_device  (GimpContainerView     *view,
@@ -245,6 +249,11 @@ gimp_device_editor_constructor (GType                   type,
                     G_CALLBACK (gimp_device_editor_add_device),
                     editor);
 
+  private->name_changed_handler =
+    gimp_container_add_handler (devices, "name-changed",
+                                G_CALLBACK (gimp_device_editor_device_changed),
+                                editor);
+
   for (list = GIMP_LIST (devices)->list;
        list;
        list = g_list_next (list))
@@ -268,6 +277,12 @@ gimp_device_editor_dispose (GObject *object)
   g_signal_handlers_disconnect_by_func (devices,
                                         gimp_device_editor_remove_device,
                                         object);
+
+  if (private->name_changed_handler)
+    {
+      gimp_container_remove_handler (devices, private->name_changed_handler);
+      private->name_changed_handler = 0;
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -366,6 +381,29 @@ gimp_device_editor_remove_device (GimpContainer    *container,
 
       if (widget)
         gtk_widget_destroy (widget);
+    }
+}
+
+static void
+gimp_device_editor_device_changed (GimpDeviceInfo   *info,
+                                   GimpDeviceEditor *editor)
+{
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  GtkTreeIter             *iter;
+
+  iter = gimp_container_view_lookup (GIMP_CONTAINER_VIEW (private->treeview),
+                                     GIMP_VIEWABLE (info));
+
+  if (iter)
+    {
+      GimpContainerTreeView *treeview;
+
+      treeview = GIMP_CONTAINER_TREE_VIEW (private->treeview);
+
+      gtk_tree_store_set (GTK_TREE_STORE (treeview->model), iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
+                          gimp_device_info_get_device (info, NULL) != NULL,
+                          -1);
     }
 }
 
