@@ -526,7 +526,7 @@ gimp_viewable_box_new (GimpContainer *container,
   /*  set a silly smally size request on the entry to disable
    *  GtkEntry's minimal width of 150 pixels.
    */
-  gtk_widget_set_size_request (entry, 10, -1);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 4);
   gtk_box_pack_start (GTK_BOX (vbox), entry, label ? FALSE: TRUE, FALSE, 0);
   gtk_widget_show (entry);
 
