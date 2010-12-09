@@ -134,12 +134,6 @@ workaround_that_file_depends_on_plug_in = \
 	-u $(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
 	-u $(SYMPREFIX)gimp_image_map_config_get_type
 
-# FIXME: for test only
-workaround_to_test_cage = \
-	-u $(SYMPREFIX)gimp_cage_get_type \
-	-u $(SYMPREFIX)gimp_cage_add_cage_point \
-	-u $(SYMPREFIX)gimp_cage_compute_coefficient
-
 # core, vectors and gegl are on the same architectural layer, prevent
 # the linker from panicing
 calm_down_linker = \
@@ -155,8 +149,7 @@ AM_LDFLAGS = \
 	$(workaround_that_core_depends_on_xcf)		\
 	$(workaround_that_core_depends_on_pdb)		\
 	$(workaround_that_plug_in_depends_on_pdb)	\
-	$(workaround_that_file_depends_on_plug_in)	\
-	$(workaround_to_test_cage)
+	$(workaround_that_file_depends_on_plug_in)
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a			\
