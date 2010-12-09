@@ -529,9 +529,9 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
     }
   else
     {
-      toggle->pixbuf = gtk_widget_render_icon (widget,
-                                               toggle->stock_id,
-                                               toggle->stock_size, NULL);
+      toggle->pixbuf = gtk_widget_render_icon_pixbuf (widget,
+                                                      toggle->stock_id,
+                                                      toggle->stock_size);
     }
 }
 
