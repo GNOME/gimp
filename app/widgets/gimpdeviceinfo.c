@@ -632,8 +632,8 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
       for (i = 0; i < MIN (info->n_keys, gdk_device_get_n_keys (device)); i++)
         {
-          guint           keyval;
-          GdkModifierType modifiers;
+          guint           keyval    = 0;
+          GdkModifierType modifiers = 0;
 
           gdk_device_get_key (device, i, &keyval, &modifiers);
           gimp_device_info_set_key (info, i, keyval, modifiers);
@@ -775,6 +775,9 @@ gimp_device_info_get_key (GimpDeviceInfo  *info,
 
   if (info->device)
     {
+      *keyval    = 0;
+      *modifiers = 0;
+
       gdk_device_get_key (info->device, key,
                           keyval,
                           modifiers);
@@ -884,13 +887,17 @@ gint
 gimp_device_info_compare (GimpDeviceInfo *a,
                           GimpDeviceInfo *b)
 {
+  GdkDeviceManager *manager;
+
   if (a->device && a->display &&
-      a->device == gdk_display_get_core_pointer (a->display))
+      (manager = gdk_display_get_device_manager (a->display)) &&
+      a->device == gdk_device_manager_get_client_pointer (manager))
     {
       return -1;
     }
   else if (b->device && b->display &&
-           b->device == gdk_display_get_core_pointer (b->display))
+           (manager = gdk_display_get_device_manager (b->display)) &&
+           b->device == gdk_device_manager_get_client_pointer (manager))
     {
       return 1;
     }
