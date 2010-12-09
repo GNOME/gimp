@@ -233,7 +233,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                                  const GdkRectangle   *cell_area,
                                  GtkCellRendererState  flags)
 {
-  GimpCellRendererColor *color = GIMP_CELL_RENDERER_COLOR (cell);
+  GimpCellRendererColor *renderer_color = GIMP_CELL_RENDERER_COLOR (cell);
   GdkRectangle           rect;
   gint                   xpad;
   gint                   ypad;
@@ -253,17 +253,18 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
   if (rect.width > 2 && rect.height > 2)
     {
-      GtkStyle     *style = gtk_widget_get_style (widget);
-      GtkStateType  state;
+      GtkStyleContext *context = gtk_widget_get_style_context (widget);
+      GtkStateFlags    state   = 0;
+      GdkRGBA          color;
 
       cairo_rectangle (cr,
                        rect.x + 1, rect.y + 1,
                        rect.width - 2, rect.height - 2);
 
-      gimp_cairo_set_source_rgb (cr, &color->color);
+      gimp_cairo_set_source_rgb (cr, &renderer_color->color);
       cairo_fill (cr);
 
-      if (! color->opaque && color->color.a < 1.0)
+      if (! renderer_color->opaque && renderer_color->color.a < 1.0)
         {
           cairo_pattern_t *pattern;
 
@@ -280,7 +281,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
 
           cairo_fill_preserve (cr);
 
-          gimp_cairo_set_source_rgba (cr, &color->color);
+          gimp_cairo_set_source_rgba (cr, &renderer_color->color);
           cairo_fill (cr);
         }
 
@@ -292,17 +293,18 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
       if (! gtk_cell_renderer_get_sensitive (cell) ||
           ! gtk_widget_is_sensitive (widget))
         {
-          state = GTK_STATE_INSENSITIVE;
+          state |= GTK_STATE_FLAG_INSENSITIVE;
         }
-      else
+
+      if (flags & GTK_CELL_RENDERER_SELECTED)
         {
-          state = (flags & GTK_CELL_RENDERER_SELECTED ?
-                   GTK_STATE_SELECTED : GTK_STATE_NORMAL);
+          state |= GTK_STATE_FLAG_SELECTED;
         }
 
       cairo_set_line_width (cr, 1);
-      gdk_cairo_set_source_color (cr, &style->fg[state]);
-      cairo_stroke_preserve (cr);
+      gtk_style_context_get_color (context, state, &color);
+      gdk_cairo_set_source_rgba (cr, &color);
+      cairo_stroke (cr);
     }
 }
 
