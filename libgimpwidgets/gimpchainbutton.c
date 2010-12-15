@@ -367,11 +367,12 @@ static gboolean
 gimp_chain_line_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-  GtkStyle          *style = gtk_widget_get_style (widget);
-  GimpChainLine     *line  = ((GimpChainLine *) widget);
+  GtkStyleContext   *context = gtk_widget_get_style_context (widget);
+  GimpChainLine     *line    = ((GimpChainLine *) widget);
   GtkAllocation      allocation;
   GdkPoint           points[3];
   GimpChainPosition  position;
+  GdkRGBA            color;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -443,7 +444,8 @@ gimp_chain_line_draw (GtkWidget *widget,
 
   cairo_set_line_width (cr, 2.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_BUTT);
-  gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+  gtk_style_context_get_color (context, 0, &color);
+  gdk_cairo_set_source_rgba (cr, &color);
 
   cairo_stroke (cr);
 
