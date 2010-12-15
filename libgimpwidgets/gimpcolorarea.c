@@ -378,9 +378,9 @@ static gboolean
 gimp_color_area_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-  GimpColorArea        *area  = GIMP_COLOR_AREA (widget);
-  GimpColorAreaPrivate *priv  = GET_PRIVATE (widget);
-  GtkStyle             *style = gtk_widget_get_style (widget);
+  GimpColorArea        *area    = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv    = GET_PRIVATE (widget);
+  GtkStyleContext      *context = gtk_widget_get_style_context (widget);
   cairo_surface_t      *buffer;
 
   if (! area->buf)
@@ -435,9 +435,13 @@ gimp_color_area_draw (GtkWidget *widget,
 
   if (area->draw_border)
     {
+      GdkRGBA color;
+
       cairo_set_line_width (cr, 1.0);
-      gdk_cairo_set_source_color (cr,
-                                  &style->fg[gtk_widget_get_state (widget)]);
+
+      gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                                   &color);
+      gdk_cairo_set_source_rgba (cr, &color);
 
       cairo_rectangle (cr, 0.5, 0.5, area->width - 1, area->height - 1);
 
@@ -644,15 +648,16 @@ gimp_color_area_render_buf (GtkWidget         *widget,
                             guint              rowstride,
                             GimpRGB           *color)
 {
-  GtkStyle *style = gtk_widget_get_style (widget);
-  guint     x, y;
-  guint     check_size = 0;
-  guchar    light[3];
-  guchar    dark[3];
-  guchar    opaque[3];
-  guchar    insens[3];
-  guchar   *p;
-  gdouble   frac;
+  GtkStyleContext *context = gtk_widget_get_style_context (widget);
+  GdkRGBA          bg;
+  guint            x, y;
+  guint            check_size = 0;
+  guchar           light[3];
+  guchar           dark[3];
+  guchar           opaque[3];
+  guchar           insens[3];
+  guchar          *p;
+  gdouble          frac;
 
   switch (type)
     {
@@ -671,9 +676,9 @@ gimp_color_area_render_buf (GtkWidget         *widget,
 
   gimp_rgb_get_uchar (color, opaque, opaque + 1, opaque + 2);
 
-  insens[0] = style->bg[GTK_STATE_INSENSITIVE].red   >> 8;
-  insens[1] = style->bg[GTK_STATE_INSENSITIVE].green >> 8;
-  insens[2] = style->bg[GTK_STATE_INSENSITIVE].blue  >> 8;
+  gtk_style_context_get_background_color (context, GTK_STATE_FLAG_INSENSITIVE,
+                                          &bg);
+  gimp_rgb_get_uchar ((GimpRGB *) &bg, insens, insens + 1, insens + 2);
 
   if (insensitive || check_size == 0 || color->a == 1.0)
     {
