@@ -900,10 +900,11 @@ static void
 gimp_ruler_size_request (GtkWidget      *widget,
                          GtkRequisition *requisition)
 {
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (widget);
-  GtkStyle         *style = gtk_widget_get_style (widget);
+  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (widget);
+  GtkStyleContext  *context = gtk_widget_get_style_context (widget);
   PangoLayout      *layout;
   PangoRectangle    ink_rect;
+  GtkBorder         border;
   gint              size;
 
   layout = gimp_ruler_get_layout (widget, "0123456789");
@@ -911,15 +912,20 @@ gimp_ruler_size_request (GtkWidget      *widget,
 
   size = 2 + ink_rect.height * 1.7;
 
+  gtk_style_context_get_border (context, 0, &border);
+
+  requisition->width  = border.left + border.right;
+  requisition->height = border.top + border.bottom;
+
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      requisition->width  = style->xthickness * 2 + 1;
-      requisition->height = style->ythickness * 2 + size;
+      requisition->width  += 1;
+      requisition->height += size;
     }
   else
     {
-      requisition->width  = style->xthickness * 2 + size;
-      requisition->height = style->ythickness * 2 + 1;
+      requisition->width  += size;
+      requisition->height += 1;
     }
 }
 
@@ -996,16 +1002,15 @@ gimp_ruler_draw (GtkWidget *widget,
 static void
 gimp_ruler_draw_ticks (GimpRuler *ruler)
 {
-  GtkWidget        *widget = GTK_WIDGET (ruler);
-  GtkStyle         *style  = gtk_widget_get_style (widget);
-  GimpRulerPrivate  *priv   = GIMP_RULER_GET_PRIVATE (ruler);
-  GtkStateType       state  = gtk_widget_get_state (widget);
+  GtkWidget         *widget  = GTK_WIDGET (ruler);
+  GtkStyleContext   *context = gtk_widget_get_style_context (widget);
+  GimpRulerPrivate  *priv    = GIMP_RULER_GET_PRIVATE (ruler);
   GtkAllocation      allocation;
+  GtkBorder          border;
+  GdkRGBA            color;
   cairo_t           *cr;
   gint               i;
   gint               width, height;
-  gint               xthickness;
-  gint               ythickness;
   gint               length, ideal_length;
   gdouble            lower, upper;  /* Upper and lower limits, in ruler units */
   gdouble            increment;     /* Number of pixels per unit */
@@ -1026,9 +1031,7 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
     return;
 
   gtk_widget_get_allocation (widget, &allocation);
-
-  xthickness = style->xthickness;
-  ythickness = style->ythickness;
+  gtk_style_context_get_border (context, 0, &border);
 
   layout = gimp_ruler_get_layout (widget, "0123456789");
   pango_layout_get_extents (layout, &ink_rect, &logical_rect);
@@ -1039,46 +1042,38 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       width  = allocation.width;
-      height = allocation.height - ythickness * 2;
+      height = allocation.height - (border.top + border.bottom);
     }
   else
     {
       width  = allocation.height;
-      height = allocation.width - ythickness * 2;
+      height = allocation.width - (border.top + border.bottom);
     }
 
   cr = cairo_create (priv->backing_store);
-  gdk_cairo_set_source_color (cr, &style->bg[state]);
 
-#if 0
-  gtk_paint_box (style, priv->backing_store,
-                 GTK_STATE_NORMAL, GTK_SHADOW_OUT,
-                 NULL, widget,
-                 priv->orientation == GTK_ORIENTATION_HORIZONTAL ?
-                 "hruler" : "vruler",
-                 0, 0,
-                 allocation.width, allocation.height);
-#else
-  cairo_paint (cr);
-#endif
+  gtk_render_background (context, cr, 0, 0, allocation.width, allocation.height);
+  gtk_render_frame (context, cr, 0, 0, allocation.width, allocation.height);
 
-  gdk_cairo_set_source_color (cr, &style->fg[state]);
+  gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                               &color);
+  gdk_cairo_set_source_rgba (cr, &color);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       cairo_rectangle (cr,
-                       xthickness,
-                       height + ythickness,
-                       allocation.width - 2 * xthickness,
+                       border.left,
+                       height + border.top,
+                       allocation.width - (border.left + border.right),
                        1);
     }
   else
     {
       cairo_rectangle (cr,
-                       height + xthickness,
-                       ythickness,
+                       height + border.left,
+                       border.top,
                        1,
-                       allocation.height - 2 * ythickness);
+                       allocation.height - (border.top + border.bottom));
     }
 
   gimp_ruler_get_range (ruler, &lower, &upper, &max_size);
@@ -1158,14 +1153,14 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
           if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
             {
               cairo_rectangle (cr,
-                               pos, height + ythickness - length,
+                               pos, height + border.top - length,
                                1,   length);
             }
           else
             {
               cairo_rectangle (cr,
-                               height + xthickness - length, pos,
-                               length,                       1);
+                               height + border.left - length, pos,
+                               length,                        1);
             }
 
           /* draw label */
@@ -1178,23 +1173,10 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
                   pango_layout_set_text (layout, unit_str, -1);
                   pango_layout_get_extents (layout, &logical_rect, NULL);
 
-#if 0
-                  gtk_paint_layout (style,
-                                    priv->backing_store,
-                                    state,
-                                    FALSE,
-                                    NULL,
-                                    widget,
-                                    "hruler",
-                                    pos + 2,
-                                    ythickness + PANGO_PIXELS (logical_rect.y - digit_offset),
-                                    layout);
-#else
                   cairo_move_to (cr,
                                  pos + 2,
-                                 ythickness + PANGO_PIXELS (logical_rect.y - digit_offset));
+                                 border.top + PANGO_PIXELS (logical_rect.y - digit_offset));
                   pango_cairo_show_layout (cr, layout);
-#endif
                 }
               else
                 {
@@ -1205,23 +1187,10 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
                       pango_layout_set_text (layout, unit_str + j, 1);
                       pango_layout_get_extents (layout, NULL, &logical_rect);
 
-#if 0
-                      gtk_paint_layout (style,
-                                        priv->backing_store,
-                                        state,
-                                        FALSE,
-                                        NULL,
-                                        widget,
-                                        "vruler",
-                                        xthickness + 1,
-                                        pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset),
-                                        layout);
-#else
                       cairo_move_to (cr,
-                                     xthickness + 1,
+                                     border.left + 1,
                                      pos + digit_height * j + 2 + PANGO_PIXELS (logical_rect.y - digit_offset));
                       pango_cairo_show_layout (cr, layout);
-#endif
                     }
                 }
             }
@@ -1240,13 +1209,12 @@ static GdkRectangle
 gimp_ruler_get_pos_rect (GimpRuler *ruler,
                          gdouble    position)
 {
-  GtkWidget        *widget = GTK_WIDGET (ruler);
-  GtkStyle         *style  = gtk_widget_get_style (widget);
-  GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkWidget        *widget  = GTK_WIDGET (ruler);
+  GtkStyleContext  *context = gtk_widget_get_style_context (widget);
+  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (ruler);
   GtkAllocation     allocation;
+  GtkBorder         border;
   gint              width, height;
-  gint              xthickness;
-  gint              ythickness;
   gdouble           upper, lower;
   gdouble           increment;
   GdkRectangle      rect = { 0, };
@@ -1255,14 +1223,12 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
     return rect;
 
   gtk_widget_get_allocation (widget, &allocation);
-
-  xthickness = style->xthickness;
-  ythickness = style->ythickness;
+  gtk_style_context_get_border (context, 0, &border);
 
   if (priv->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
       width  = allocation.width;
-      height = allocation.height - ythickness * 2;
+      height = allocation.height - (border.top + border.bottom);
 
       rect.width = height / 2 + 2;
       rect.width |= 1;  /* make sure it's odd */
@@ -1270,7 +1236,7 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
     }
   else
     {
-      width  = allocation.width - xthickness * 2;
+      width  = allocation.width - (border.left + border.right);
       height = allocation.height;
 
       rect.height = width / 2 + 2;
@@ -1284,15 +1250,15 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
     {
       increment = (gdouble) width / (upper - lower);
 
-      rect.x = ROUND ((position - lower) * increment) + (xthickness - rect.width) / 2 - 1;
-      rect.y = (height + rect.height) / 2 + ythickness;
+      rect.x = ROUND ((position - lower) * increment) + (border.left + border.right - rect.width) / 2 - 1;
+      rect.y = (height + rect.height) / 2 + border.top;
     }
   else
     {
       increment = (gdouble) height / (upper - lower);
 
-      rect.x = (width + rect.width) / 2 + xthickness;
-      rect.y = ROUND ((position - lower) * increment) + (ythickness - rect.height) / 2 - 1;
+      rect.x = (width + rect.width) / 2 + border.left;
+      rect.y = ROUND ((position - lower) * increment) + (border.top + border.bottom - rect.height) / 2 - 1;
     }
 
   rect.x += allocation.x;
@@ -1346,10 +1312,9 @@ static void
 gimp_ruler_draw_pos (GimpRuler *ruler,
                      cairo_t   *cr)
 {
-  GtkWidget        *widget = GTK_WIDGET (ruler);
-  GtkStyle         *style  = gtk_widget_get_style (widget);
-  GimpRulerPrivate *priv   = GIMP_RULER_GET_PRIVATE (ruler);
-  GtkStateType      state  = gtk_widget_get_state (widget);
+  GtkWidget        *widget  = GTK_WIDGET (ruler);
+  GtkStyleContext  *context = gtk_widget_get_style_context (widget);
+  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (ruler);
   GdkRectangle      pos_rect;
 
   if (! gtk_widget_is_drawable (widget))
@@ -1359,7 +1324,11 @@ gimp_ruler_draw_pos (GimpRuler *ruler,
 
   if ((pos_rect.width > 0) && (pos_rect.height > 0))
     {
-      gdk_cairo_set_source_color (cr, &style->fg[state]);
+      GdkRGBA color;
+
+      gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
+                                   &color);
+      gdk_cairo_set_source_rgba (cr, &color);
 
       cairo_move_to (cr, pos_rect.x, pos_rect.y);
 
