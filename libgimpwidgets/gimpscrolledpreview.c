@@ -562,13 +562,14 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
 
   if (event->type == GDK_BUTTON_PRESS && event->button == 1)
     {
-      GtkStyle   *style = gtk_widget_get_style (widget);
-      GtkWidget  *outer;
-      GtkWidget  *inner;
-      GtkWidget  *area;
-      GdkCursor  *cursor;
-      gint        x, y;
-      gdouble     h, v;
+      GtkStyleContext *context = gtk_widget_get_style_context (widget);
+      GtkWidget       *outer;
+      GtkWidget       *inner;
+      GtkWidget       *area;
+      GdkCursor       *cursor;
+      GtkBorder        border;
+      gint             x, y;
+      gdouble          h, v;
 
       preview->nav_popup = gtk_window_new (GTK_WINDOW_POPUP);
 
@@ -622,9 +623,11 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
       x += event->x - h * (gdouble) GIMP_PREVIEW_AREA (area)->width;
       y += event->y - v * (gdouble) GIMP_PREVIEW_AREA (area)->height;
 
+      gtk_style_context_get_border (context, 0, &border);
+
       gtk_window_move (GTK_WINDOW (preview->nav_popup),
-                       x - 2 * style->xthickness,
-                       y - 2 * style->ythickness);
+                       x - (border.left + border.right),
+                       y - (border.top + border.bottom));
 
       gtk_widget_show (preview->nav_popup);
 
