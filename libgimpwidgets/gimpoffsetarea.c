@@ -403,12 +403,12 @@ static gboolean
 gimp_offset_area_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpOffsetArea *area  = GIMP_OFFSET_AREA (widget);
-  GtkStyle       *style = gtk_widget_get_style (widget);
-  GtkAllocation   allocation;
-  GdkPixbuf      *pixbuf;
-  gint            w, h;
-  gint            x, y;
+  GimpOffsetArea  *area    = GIMP_OFFSET_AREA (widget);
+  GtkStyleContext *context = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GdkPixbuf       *pixbuf;
+  gint             w, h;
+  gint             x, y;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -437,15 +437,12 @@ gimp_offset_area_draw (GtkWidget *widget,
 
       cairo_rectangle (cr, x + 0.5, y + 0.5, w - 1, h - 1);
       cairo_set_line_width (cr, 1.0);
-      gdk_cairo_set_source_color (cr, &style->black);
+      cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
       cairo_stroke (cr);
     }
   else
     {
-      gtk_paint_shadow (style, cr, GTK_STATE_NORMAL,
-                        GTK_SHADOW_OUT,
-                        widget, NULL,
-                        x, y, w, h);
+      gtk_render_frame (context, cr, x, y, w, h);
     }
 
   if (area->orig_width > area->width || area->orig_height > area->height)
