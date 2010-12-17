@@ -52,7 +52,11 @@ struct _GimpCageTool
 
   GeglBuffer     *coef;
 
+  gint            tool_state;
+
   GimpImageMap   *image_map;
+
+  GimpVector2    *cage_backup;
 };
 
 struct _GimpCageToolClass

@@ -72,6 +72,9 @@ void          gimp_cage_config_reverse_cage           (GimpCageConfig  *gcc);
 gboolean      gimp_cage_config_point_inside           (GimpCageConfig  *gcc,
                                                        gfloat           x,
                                                        gfloat           y);
-
-
+GimpVector2*  gimp_cage_config_get_cage_point         (GimpCageConfig  *gcc,
+                                                       GimpCageMode     mode);
+void          gimp_cage_config_commit_cage_point      (GimpCageConfig  *gcc,
+                                                       GimpCageMode     mode,
+                                                       GimpVector2     *points);
 #endif /* __GIMP_CAGE_CONFIG_H__ */

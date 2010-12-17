@@ -377,16 +377,69 @@ gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
 }
 
 /**
- * gimp_cage_config_point_inside:
+ * gimp_cage_config_get_cage_point:
  * @gcc: the cage config
- * @x: x coordinate of the point to test
- * @y: y coordinate of the point to test
+ * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
  *
- * Check if the given point is inside the cage. This test is done in
- * the regard of the topological inside of the cage.
- *
- * Returns: TRUE if the point is inside, FALSE if not.
+ * Returns: a copy of the cage's point, for the cage mode provided
  */
+GimpVector2*
+gimp_cage_config_get_cage_point (GimpCageConfig  *gcc,
+                                 GimpCageMode     mode)
+{
+  gint          x;
+  GimpVector2  *vertices_cage;
+  GimpVector2  *vertices_copy;
+
+  g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), NULL);
+
+  vertices_copy = g_new (GimpVector2, gcc->n_cage_vertices);
+
+  if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    vertices_cage = gcc->cage_vertices;
+  else
+    vertices_cage = gcc->cage_vertices_d;
+
+  for(x = 0; x < gcc->n_cage_vertices; x++)
+    {
+      vertices_copy[x] = vertices_cage[x];
+    }
+
+  return vertices_copy;
+}
+
+/**
+ * gimp_cage_config_commit_cage_point:
+ * @gcc: the cage config
+ * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
+ * @points: a GimpVector2 array of point of the same length as the number of point in the cage
+ *
+ * This function update the cage's point with the array provided.
+ */
+void
+gimp_cage_config_commit_cage_point  (GimpCageConfig  *gcc,
+                                     GimpCageMode     mode,
+                                     GimpVector2     *points)
+{
+  gint          i;
+  GimpVector2  *vertices;
+
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+    vertices = gcc->cage_vertices;
+  else
+    vertices = gcc->cage_vertices_d;
+
+  for(i = 0; i < gcc->n_cage_vertices; i++)
+    {
+      vertices[i] = points[i];
+    }
+
+  gimp_cage_config_compute_scaling_factor (gcc);
+  gimp_cage_config_compute_edge_normal (gcc);
+}
+
 static void
 gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 {
@@ -434,6 +487,17 @@ gimp_cage_config_compute_edge_normal (GimpCageConfig *gcc)
     }
 }
 
+/**
+ * gimp_cage_config_point_inside:
+ * @gcc: the cage config
+ * @x: x coordinate of the point to test
+ * @y: y coordinate of the point to test
+ *
+ * Check if the given point is inside the cage. This test is done in
+ * the regard of the topological inside of the cage.
+ *
+ * Returns: TRUE if the point is inside, FALSE if not.
+ */
 gboolean
 gimp_cage_config_point_inside (GimpCageConfig *gcc,
                                gfloat          x,
