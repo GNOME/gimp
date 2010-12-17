@@ -231,8 +231,9 @@ gimp_preview_area_expose (GtkWidget      *widget,
 {
   GimpPreviewArea *area = GIMP_PREVIEW_AREA (widget);
   GtkAllocation    allocation;
+  GdkPixbuf       *pixbuf;
   GdkRectangle     rect;
-  GdkRectangle     render;
+  cairo_t         *cr;
 
   if (! area->buf)
     return FALSE;
@@ -244,25 +245,24 @@ gimp_preview_area_expose (GtkWidget      *widget,
   rect.width  = area->width;
   rect.height = area->height;
 
-  if (gdk_rectangle_intersect (&rect, &event->area, &render))
-    {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      gint      x     = render.x - rect.x;
-      gint      y     = render.y - rect.y;
-      guchar   *buf   = area->buf + x * 3 + y * area->rowstride;
+  pixbuf = gdk_pixbuf_new_from_data (area->buf,
+                                     GDK_COLORSPACE_RGB,
+                                     FALSE,
+                                     8,
+                                     rect.width,
+                                     rect.height,
+                                     area->rowstride,
+                                     NULL, NULL);
+  cr = gdk_cairo_create (gtk_widget_get_window (widget));
 
-      gdk_draw_rgb_image_dithalign (gtk_widget_get_window (widget),
-                                    style->fg_gc[gtk_widget_get_state (widget)],
-                                    render.x,
-                                    render.y,
-                                    render.width,
-                                    render.height,
-                                    GDK_RGB_DITHER_MAX,
-                                    buf,
-                                    area->rowstride,
-                                    area->offset_x - render.x,
-                                    area->offset_y - render.y);
-    }
+  gdk_cairo_region (cr, event->region);
+  cairo_clip (cr);
+
+  gdk_cairo_set_source_pixbuf (cr, pixbuf, rect.x, rect.y);
+  cairo_paint (cr);
+
+  cairo_destroy (cr);
+  g_object_unref (pixbuf);
 
   return FALSE;
 }
