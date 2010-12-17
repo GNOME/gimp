@@ -187,12 +187,14 @@ gimp_operation_tile_sink_set_property (GObject      *object,
     }
 }
 
+
 static gboolean
 gimp_operation_tile_sink_process (GeglOperation       *operation,
                                   GeglBuffer          *input,
                                   const GeglRectangle *result)
 {
   GimpOperationTileSink *self = GIMP_OPERATION_TILE_SINK (operation);
+  static GStaticMutex    mutex = G_STATIC_MUTEX_INIT;
   const Babl            *format;
   PixelRegion            destPR;
   gpointer               pr;
@@ -218,7 +220,13 @@ gimp_operation_tile_sink_process (GeglOperation       *operation,
                        1.0, &rect, format, destPR.data, destPR.rowstride);
     }
 
+  g_static_mutex_lock (&mutex); 
+  /* a lock here serializes all fired signals, this emit gets called from
+   * different worker threads, but the main loop will be blocked by GEGL
+   * when it happens
+   */
   g_signal_emit (operation, tile_sink_signals[DATA_WRITTEN], 0, result);
+  g_static_mutex_unlock (&mutex);
 
   return TRUE;
 }
