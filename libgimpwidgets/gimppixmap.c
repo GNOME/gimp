@@ -23,6 +23,7 @@
 
 #undef GSEAL_ENABLE
 #undef GTK_DISABLE_DEPRECATED
+#undef GDK_DISABLE_DEPRECATED
 
 #include <stdio.h>
 
