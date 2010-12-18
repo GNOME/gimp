@@ -1026,14 +1026,13 @@ view_actions_update (GimpActionGroup *group,
 
       if (shell->canvas)
         {
-          GtkStyle *style = gtk_widget_get_style (shell->canvas);
-          GimpRGB   color;
+          GtkStyleContext *style = gtk_widget_get_style_context (shell->canvas);
+          GdkRGBA          color;
 
-          gtk_widget_ensure_style (shell->canvas);
-          gimp_rgb_set_gdk_color (&color, style->bg + GTK_STATE_NORMAL);
-          gimp_rgb_set_alpha (&color, GIMP_OPACITY_OPAQUE);
+          gtk_style_context_get_background_color (style, 0, &color);
+          gimp_rgb_set_alpha ((GimpRGB *) &color, GIMP_OPACITY_OPAQUE);
 
-          SET_COLOR ("view-padding-color-theme",  &color);
+          SET_COLOR ("view-padding-color-theme", (GimpRGB *) &color);
         }
     }
 
