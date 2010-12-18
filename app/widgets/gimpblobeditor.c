@@ -186,12 +186,11 @@ static gboolean
 gimp_blob_editor_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
-  GtkStyle       *style  = gtk_widget_get_style (widget);
-  GtkStateType    state  = gtk_widget_get_state (widget);
-  GtkAllocation   allocation;
-  GdkRectangle    rect;
-  gint            r0;
+  GimpBlobEditor  *editor = GIMP_BLOB_EDITOR (widget);
+  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GdkRectangle     rect;
+  gint             r0;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -207,14 +206,18 @@ gimp_blob_editor_draw (GtkWidget *widget,
 
   gimp_blob_editor_get_handle (editor, &rect);
 
-  cairo_rectangle (cr,
-                   rect.x + 0.5, rect.y + 0.5, rect.width - 1, rect.width - 1);
-  gdk_cairo_set_source_color (cr, &style->light[state]);
-  cairo_fill_preserve (cr);
+  gtk_style_context_save (style);
 
-  gdk_cairo_set_source_color (cr, &style->dark[state]);
-  cairo_set_line_width (cr, 1);
-  cairo_stroke (cr);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
+
+  gtk_style_context_set_state (style,
+                               editor->in_handle ?
+                               GTK_STATE_FLAG_PRELIGHT : 0);
+
+  gtk_render_background (style, cr, rect.x, rect.y, rect.width, rect.height);
+  gtk_render_frame (style, cr, rect.x, rect.y, rect.width, rect.height);
+
+  gtk_style_context_restore (style);
 
   return TRUE;
 }
@@ -224,15 +227,9 @@ gimp_blob_editor_button_press (GtkWidget      *widget,
                                GdkEventButton *event)
 {
   GimpBlobEditor *editor = GIMP_BLOB_EDITOR (widget);
-  GdkRectangle    rect;
 
-  gimp_blob_editor_get_handle (editor, &rect);
-
-  if ((event->x >= rect.x) && (event->x - rect.x < rect.width) &&
-      (event->y >= rect.y) && (event->y - rect.y < rect.height))
-    {
-      editor->active = TRUE;
-    }
+  if (editor->in_handle)
+    editor->active = TRUE;
 
   return TRUE;
 }
@@ -287,6 +284,30 @@ gimp_blob_editor_motion_notify (GtkWidget      *widget,
                         NULL);
         }
     }
+  else
+    {
+      GdkRectangle rect;
+      gboolean     in_handle;
+
+      gimp_blob_editor_get_handle (editor, &rect);
+
+      if ((event->x >= rect.x) && (event->x - rect.x < rect.width) &&
+          (event->y >= rect.y) && (event->y - rect.y < rect.height))
+        {
+          in_handle = TRUE;
+        }
+      else
+        {
+          in_handle = FALSE;
+        }
+
+      if (in_handle != editor->in_handle)
+        {
+          editor->in_handle = in_handle;
+
+          gtk_widget_queue_draw (widget);
+        }
+    }
 
   return TRUE;
 }
@@ -323,11 +344,12 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
                             gdouble         yc,
                             gdouble         radius)
 {
-  GtkWidget    *widget   = GTK_WIDGET (editor);
-  GtkStyle     *style    = gtk_widget_get_style (widget);
-  GimpBlob     *blob;
-  GimpBlobFunc  function = gimp_blob_ellipse;
-  gint          i;
+  GtkWidget       *widget   = GTK_WIDGET (editor);
+  GtkStyleContext *style    = gtk_widget_get_style_context (widget);
+  GimpBlob        *blob;
+  GimpBlobFunc     function = gimp_blob_ellipse;
+  GdkRGBA          color;
+  gint             i;
 
   switch (editor->type)
     {
@@ -379,6 +401,8 @@ gimp_blob_editor_draw_blob (GimpBlobEditor *editor,
 
   g_free (blob);
 
-  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
+  gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
+                               &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_fill (cr);
 }
