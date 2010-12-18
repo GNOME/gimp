@@ -280,9 +280,10 @@ gimp_paned_box_position_drop_indicator (GimpPanedBox *paned_box,
   /* Create or move the GdkWindow in place */
   if (! paned_box->p->dnd_window)
     {
-      GtkStyle      *style = gtk_widget_get_style (widget);
-      GtkAllocation  allocation;
-      GdkWindowAttr  attributes;
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      GtkAllocation    allocation;
+      GdkWindowAttr    attributes;
+      GdkRGBA          color;
 
       gtk_widget_get_allocation (widget, &allocation);
 
@@ -299,8 +300,9 @@ gimp_paned_box_position_drop_indicator (GimpPanedBox *paned_box,
                                                  GDK_WA_X | GDK_WA_Y);
       gdk_window_set_user_data (paned_box->p->dnd_window, widget);
 
-      gdk_window_set_background (paned_box->p->dnd_window,
-                                 &style->bg[GTK_STATE_SELECTED]);
+      gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
+                                              &color);
+      gdk_window_set_background_rgba (paned_box->p->dnd_window, &color);
     }
   else
     {
