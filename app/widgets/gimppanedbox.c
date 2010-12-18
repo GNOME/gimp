@@ -216,29 +216,27 @@ gimp_paned_box_position_drop_indicator (GimpPanedBox *paned_box,
   /* Create or move the GdkWindow in place */
   if (! paned_box->p->dnd_window)
     {
-      GdkColor      *color;
-      GtkWidget     *paned_box_w = NULL;
-      GtkAllocation  allocation  = { 0, };
-      GdkWindowAttr  attributes = { 0, };
+      GtkStyle      *style = gtk_widget_get_style (widget);
+      GtkAllocation  allocation;
+      GdkWindowAttr  attributes;
 
-      paned_box_w = GTK_WIDGET (paned_box);
-      gtk_widget_get_allocation (paned_box_w, &allocation);
+      gtk_widget_get_allocation (widget, &allocation);
 
-      attributes.x                 = x;
-      attributes.y                 = y;
-      attributes.width             = width;
-      attributes.height            = height;
-      attributes.window_type       = GDK_WINDOW_CHILD;
-      attributes.wclass            = GDK_INPUT_OUTPUT;
-      attributes.event_mask        = gtk_widget_get_events (paned_box_w);
+      attributes.x           = x;
+      attributes.y           = y;
+      attributes.width       = width;
+      attributes.height      = height;
+      attributes.window_type = GDK_WINDOW_CHILD;
+      attributes.wclass      = GDK_INPUT_OUTPUT;
+      attributes.event_mask  = gtk_widget_get_events (widget);
 
-      paned_box->p->dnd_window = gdk_window_new (gtk_widget_get_window (paned_box_w),
+      paned_box->p->dnd_window = gdk_window_new (gtk_widget_get_window (widget),
                                                  &attributes,
                                                  GDK_WA_X | GDK_WA_Y);
-      gdk_window_set_user_data (paned_box->p->dnd_window, paned_box_w);
+      gdk_window_set_user_data (paned_box->p->dnd_window, widget);
 
-      color = gtk_widget_get_style (widget)->bg + GTK_STATE_SELECTED;
-      gdk_window_set_background (paned_box->p->dnd_window, color);
+      gdk_window_set_background (paned_box->p->dnd_window,
+                                 &style->bg[GTK_STATE_SELECTED]);
     }
   else
     {
@@ -246,6 +244,7 @@ gimp_paned_box_position_drop_indicator (GimpPanedBox *paned_box,
                               x, y,
                               width, height);
     }
+
   gdk_window_show (paned_box->p->dnd_window);
 }
 
