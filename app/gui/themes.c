@@ -39,6 +39,8 @@
 
 /*  local function prototypes  */
 
+static void   themes_apply_theme         (Gimp                   *gimp,
+                                          const gchar            *theme_name);
 static void   themes_directories_foreach (const GimpDatafileData *file_data,
                                           gpointer                user_data);
 static void   themes_list_themes_foreach (gpointer                key,
@@ -198,7 +200,10 @@ themes_get_theme_file (Gimp        *gimp,
   return path;
 }
 
-void
+
+/*  private functions  */
+
+static void
 themes_apply_theme (Gimp        *gimp,
                     const gchar *theme_name)
 {
@@ -270,9 +275,6 @@ themes_apply_theme (Gimp        *gimp,
   g_free (gtkrc_user);
   g_free (themerc);
 }
-
-
-/*  private functions  */
 
 static void
 themes_directories_foreach (const GimpDatafileData *file_data,

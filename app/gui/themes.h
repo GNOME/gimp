@@ -29,8 +29,6 @@ const gchar  * themes_get_theme_dir  (Gimp        *gimp,
 gchar        * themes_get_theme_file (Gimp        *gimp,
                                       const gchar *first_component,
                                       ...) G_GNUC_NULL_TERMINATED;
-void           themes_apply_theme    (Gimp        *gimp,
-                                      const gchar *theme_name);
 
 
 #endif /* __THEMES_H__ */
