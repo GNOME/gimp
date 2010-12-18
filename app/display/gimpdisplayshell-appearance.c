@@ -434,13 +434,9 @@ gimp_display_shell_set_padding (GimpDisplayShell      *shell,
     case GIMP_CANVAS_PADDING_MODE_DEFAULT:
       if (shell->canvas)
         {
-          GtkStyle *style;
+          GtkStyleContext *style = gtk_widget_get_style_context (shell->canvas);
 
-          gtk_widget_ensure_style (shell->canvas);
-
-          style = gtk_widget_get_style (shell->canvas);
-
-          gimp_rgb_set_gdk_color (&color, style->bg + GTK_STATE_NORMAL);
+          gtk_style_context_get_background_color (style, 0, (GdkRGBA *) &color);
         }
       break;
 
