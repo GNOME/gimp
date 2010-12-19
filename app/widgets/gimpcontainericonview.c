@@ -287,10 +287,13 @@ gimp_container_icon_view_menu_position (GtkMenu  *menu,
   else
 #endif
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      GtkBorder        border;
 
-      *x += style->xthickness;
-      *y += style->ythickness;
+      gtk_style_context_get_border (style, 0, &border);
+
+      *x += border.left;
+      *y += border.top;
     }
 
   gimp_menu_position (menu, x, y);
