@@ -285,26 +285,32 @@ void
 gimp_component_editor_set_view_size (GimpComponentEditor *editor,
                                      gint                 view_size)
 {
-  GtkWidget   *tree_widget;
-  GtkStyle    *tree_style;
-  GtkIconSize  icon_size;
-  GtkTreeIter  iter;
-  gboolean     iter_valid;
+  GtkWidget       *tree_widget;
+  GtkStyleContext *tree_style;
+  GtkBorder        border;
+  GtkIconSize      icon_size;
+  GtkTreeIter      iter;
+  gboolean         iter_valid;
 
   g_return_if_fail (GIMP_IS_COMPONENT_EDITOR (editor));
   g_return_if_fail (view_size >  0 &&
                     view_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
 
   tree_widget = GTK_WIDGET (editor->view);
-  tree_style  = gtk_widget_get_style (tree_widget);
+  tree_style  = gtk_widget_get_style_context (tree_widget);
+
+  gtk_style_context_save (tree_style);
+  gtk_style_context_add_class (tree_style, GTK_STYLE_CLASS_BUTTON);
+  gtk_style_context_get_border (tree_style, 0, &border);
+  gtk_style_context_restore (tree_style);
 
   icon_size = gimp_get_icon_size (tree_widget,
                                   GIMP_ICON_VISIBLE,
                                   GTK_ICON_SIZE_BUTTON,
                                   view_size -
-                                  2 * tree_style->xthickness,
+                                  (border.left + border.right),
                                   view_size -
-                                  2 * tree_style->ythickness);
+                                  (border.top + border.bottom));
 
   g_object_set (editor->eye_cell,
                 "stock-size", icon_size,
