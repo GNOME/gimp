@@ -46,6 +46,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpdevices.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -544,11 +545,8 @@ gimp_display_shell_constructor (GType                  type,
 
   gimp_help_set_help_data (shell->vrule, NULL, GIMP_HELP_IMAGE_WINDOW_RULER);
 
-  /*  Workaround for GTK+ Wintab bug on Windows when creating guides by
-   *  dragging from the rulers. See bug #168516.
-   */
-  gtk_widget_set_extension_events (shell->hrule, GDK_EXTENSION_EVENTS_ALL);
-  gtk_widget_set_extension_events (shell->vrule, GDK_EXTENSION_EVENTS_ALL);
+  gimp_devices_add_widget (shell->display->gimp, shell->hrule);
+  gimp_devices_add_widget (shell->display->gimp, shell->vrule);
 
   g_signal_connect (shell->canvas, "realize",
                     G_CALLBACK (gimp_display_shell_canvas_realize),

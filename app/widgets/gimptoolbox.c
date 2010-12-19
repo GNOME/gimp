@@ -305,13 +305,8 @@ gimp_toolbox_constructed (GObject *object)
 
   if (! list)  /* all devices have cursor */
     {
-      g_signal_connect (toolbox, "motion-notify-event",
-                        G_CALLBACK (gimp_devices_check_callback),
-                        toolbox->p->context->gimp);
-
       gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
-      gtk_widget_set_extension_events (GTK_WIDGET (toolbox),
-                                       GDK_EXTENSION_EVENTS_CURSOR);
+      gimp_devices_add_widget (toolbox->p->context->gimp, GTK_WIDGET (toolbox));
     }
 
   toolbox->p->color_area = toolbox_create_color_area (toolbox,

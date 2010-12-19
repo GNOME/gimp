@@ -36,6 +36,9 @@ gboolean         gimp_devices_clear          (Gimp                   *gimp,
 GimpContainer  * gimp_devices_get_list       (Gimp                   *gimp);
 GimpDeviceInfo * gimp_devices_get_current    (Gimp                   *gimp);
 
+void             gimp_devices_add_widget     (Gimp                   *gimp,
+                                              GtkWidget              *widget);
+
 gboolean         gimp_devices_check_callback (GtkWidget              *widget,
                                               GdkEvent               *event,
                                               Gimp                   *gimp);
