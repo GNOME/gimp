@@ -360,20 +360,17 @@ static void
 gimp_drawable_visibility_changed (GimpItem *item)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
-  GeglNode     *item_node;
+  GeglNode     *node;
 
   /*  don't use gimp_item_get_node() because that would create
    *  the node.
    */
-  item_node = gimp_item_peek_node (item);
+  node = gimp_item_peek_node (item);
 
-  if (item_node)
+  if (node)
     {
-      GeglNode *input;
-      GeglNode *output;
-
-      input  = gegl_node_get_input_proxy  (item_node, "input");
-      output = gegl_node_get_output_proxy (item_node, "output");
+      GeglNode *input  = gegl_node_get_input_proxy  (node, "input");
+      GeglNode *output = gegl_node_get_output_proxy (node, "output");
 
       if (gimp_item_get_visible (item) &&
           ! (GIMP_IS_LAYER (item) &&

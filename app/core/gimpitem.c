@@ -376,11 +376,8 @@ gimp_item_real_visibility_changed (GimpItem *item)
     }
   else
     {
-      GeglNode *input;
-      GeglNode *output;
-
-      input  = gegl_node_get_input_proxy  (item->node, "input");
-      output = gegl_node_get_output_proxy (item->node, "output");
+      GeglNode *input  = gegl_node_get_input_proxy  (item->node, "input");
+      GeglNode *output = gegl_node_get_output_proxy (item->node, "output");
 
       gegl_node_connect_to (input,  "output",
                             output, "input");
