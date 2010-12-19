@@ -239,8 +239,6 @@ gimp_devices_add_widget (Gimp      *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  gtk_widget_set_extension_events (widget, GDK_EXTENSION_EVENTS_ALL);
-
   g_signal_connect (widget, "motion-notify-event",
                     G_CALLBACK (gimp_devices_check_callback),
                     gimp);
@@ -267,7 +265,6 @@ gimp_devices_check_change (Gimp     *gimp,
   GimpDeviceManager *manager;
   GdkDevice         *device;
   GimpDeviceInfo    *device_info;
-  GtkWidget         *source;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
@@ -275,16 +272,6 @@ gimp_devices_check_change (Gimp     *gimp,
   manager = gimp_devices_get_manager (gimp);
 
   g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
-
-  /* It is possible that the event was propagated from a widget that does not
-     want extension events and therefore always sends core pointer events.
-     This can cause a false switch to the core pointer device. */
-
-  source = gtk_get_event_widget (event);
-
-  if (source &&
-      gtk_widget_get_extension_events (source) == GDK_EXTENSION_EVENTS_NONE)
-    return FALSE;
 
   switch (event->type)
     {
