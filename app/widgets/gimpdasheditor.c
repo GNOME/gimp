@@ -254,19 +254,38 @@ static gboolean
 gimp_dash_editor_draw (GtkWidget *widget,
                        cairo_t   *cr)
 {
-  GimpDashEditor *editor = GIMP_DASH_EDITOR (widget);
-  GtkStyle       *style  = gtk_widget_get_style (widget);
-  GtkAllocation   allocation;
-  gint            x;
-  gint            w, h;
+  GimpDashEditor  *editor = GIMP_DASH_EDITOR (widget);
+  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GdkRGBA          fg_color;
+  GdkRGBA          bg_color;
+  GdkRGBA          mid_color;
+  gint             x;
+  gint             w, h;
 
   gtk_widget_get_allocation (widget, &allocation);
 
+  gtk_style_context_save (style);
+
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
+
   update_blocksize (editor);
+
+  gtk_style_context_get_color (style,
+                               gtk_widget_get_state_flags (widget),
+                               &fg_color);
+  gtk_style_context_get_background_color (style,
+                                          gtk_widget_get_state_flags (widget),
+                                          &bg_color);
+
+  mid_color.red   = (fg_color.red   + bg_color.red)   / 2.0;
+  mid_color.green = (fg_color.green + bg_color.green) / 2.0;
+  mid_color.blue  = (fg_color.blue  + bg_color.blue)  / 2.0;
+  mid_color.alpha = (fg_color.alpha + bg_color.alpha) / 2.0;
 
   /*  draw the background  */
 
-  gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_rgba (cr, &bg_color);
   cairo_paint (cr);
 
   w = editor->block_width;
@@ -290,7 +309,7 @@ gimp_dash_editor_draw (GtkWidget *widget,
         cairo_rectangle (cr, x, editor->y0, w, h);
     }
 
-  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_rgba (cr, &mid_color);
   cairo_fill (cr);
 
   for (; x < editor->x0 + editor->n_segments * w; x += w)
@@ -301,7 +320,7 @@ gimp_dash_editor_draw (GtkWidget *widget,
         cairo_rectangle (cr, x, editor->y0, w, h);
     }
 
-  gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_rgba (cr, &fg_color);
   cairo_fill (cr);
 
   for (; x < allocation.width + w; x += w)
@@ -312,7 +331,7 @@ gimp_dash_editor_draw (GtkWidget *widget,
         cairo_rectangle (cr, x, editor->y0, w, h);
     }
 
-  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_rgba (cr, &mid_color);
   cairo_fill (cr);
 
   /*  draw rulers  */
@@ -347,9 +366,11 @@ gimp_dash_editor_draw (GtkWidget *widget,
   cairo_move_to (cr, editor->x0 - 0.5, editor->y0 - 1);
   cairo_move_to (cr, editor->x0 - 0.5, editor->y0 + h);
 
-  gdk_cairo_set_source_color (cr, &style->text_aa[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_rgba (cr, &mid_color);
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
+
+  gtk_style_context_restore (style);
 
   return FALSE;
 }
