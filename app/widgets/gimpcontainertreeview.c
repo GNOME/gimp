@@ -451,10 +451,13 @@ gimp_container_tree_view_menu_position (GtkMenu  *menu,
     }
   else
     {
-      GtkStyle *style = gtk_widget_get_style (widget);
+      GtkStyleContext *style = gtk_widget_get_style_context (widget);
+      GtkBorder        border;
 
-      *x += style->xthickness;
-      *y += style->ythickness;
+      gtk_style_context_get_border (style, 0, &border);
+
+      *x += border.left;
+      *y += border.top;
     }
 
   gimp_menu_position (menu, x, y);
@@ -856,15 +859,21 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
 
       if (icon_name)
         {
-          GtkStyle *style = gtk_widget_get_style (tree_widget);
+          GtkStyleContext *style = gtk_widget_get_style_context (tree_widget);
+          GtkBorder        border;
+
+          gtk_style_context_save (style);
+          gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
+          gtk_style_context_get_border (style, 0, &border);
+          gtk_style_context_restore (style);
 
           icon_size = gimp_get_icon_size (tree_widget,
                                           icon_name,
                                           GTK_ICON_SIZE_BUTTON,
                                           view_size -
-                                          2 * style->xthickness,
+                                          (border.left + border.right),
                                           view_size -
-                                          2 * style->ythickness);
+                                          (border.top + border.bottom));
 
           g_object_set (list->data, "stock-size", icon_size, NULL);
 
