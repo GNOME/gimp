@@ -422,24 +422,26 @@ gimp_get_icon_size (GtkWidget   *widget,
                     gint         width,
                     gint         height)
 {
-  GtkIconSet   *icon_set;
-  GtkIconSize  *sizes;
-  gint          n_sizes;
-  gint          i;
-  gint          width_diff  = 1024;
-  gint          height_diff = 1024;
-  gint          max_width;
-  gint          max_height;
-  GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
-  GtkSettings  *settings;
+  GtkStyleContext *style;
+  GtkIconSet      *icon_set;
+  GtkIconSize     *sizes;
+  gint             n_sizes;
+  gint             i;
+  gint             width_diff  = 1024;
+  gint             height_diff = 1024;
+  gint             max_width;
+  gint             max_height;
+  GtkIconSize      icon_size = GTK_ICON_SIZE_MENU;
+  GtkSettings     *settings;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
   g_return_val_if_fail (icon_name != NULL, icon_size);
   g_return_val_if_fail (width > 0, icon_size);
   g_return_val_if_fail (height > 0, icon_size);
 
-  icon_set = gtk_style_lookup_icon_set (gtk_widget_get_style (widget),
-                                        icon_name);
+  style = gtk_widget_get_style_context (widget);
+
+  icon_set = gtk_style_context_lookup_icon_set (style, icon_name);
 
   if (! icon_set)
     return GTK_ICON_SIZE_INVALID;
