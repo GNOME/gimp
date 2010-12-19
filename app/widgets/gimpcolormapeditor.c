@@ -504,8 +504,9 @@ gimp_colormap_preview_draw (GtkWidget          *widget,
                             GimpColormapEditor *editor)
 {
   GimpImageEditor *image_editor = GIMP_IMAGE_EDITOR (editor);
-  GtkStyle        *style;
+  GtkStyleContext *style        = gtk_widget_get_style_context (widget);
   GtkAllocation    allocation;
+  GdkRGBA          color;
   gint             width, height;
   gint             y;
 
@@ -513,8 +514,9 @@ gimp_colormap_preview_draw (GtkWidget          *widget,
       gimp_image_get_base_type (image_editor->image) == GIMP_INDEXED)
     return FALSE;
 
-  style = gtk_widget_get_style (widget);
-  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
+  gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
+                               &color);
+  gdk_cairo_set_source_rgba (cr, &color);
 
   gtk_widget_get_allocation (widget, &allocation);
 
