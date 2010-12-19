@@ -242,25 +242,27 @@ static gboolean
 gimp_fg_bg_editor_draw (GtkWidget *widget,
                         cairo_t   *cr)
 {
-  GimpFgBgEditor *editor = GIMP_FG_BG_EDITOR (widget);
-  GtkStyle       *style  = gtk_widget_get_style (widget);
-  GtkAllocation   allocation;
-  gint            width, height;
-  gint            default_w, default_h;
-  gint            swap_w, swap_h;
-  gint            rect_w, rect_h;
-  GimpRGB         color;
-  GimpRGB         transformed_color;
-
-  if (! gtk_widget_is_drawable (widget))
-    return FALSE;
+  GimpFgBgEditor  *editor = GIMP_FG_BG_EDITOR (widget);
+  GtkStyleContext *style  = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GtkBorder        border;
+  gint             width, height;
+  gint             default_w, default_h;
+  gint             swap_w, swap_h;
+  gint             rect_w, rect_h;
+  GimpRGB          color;
+  GimpRGB          transformed_color;
 
   gtk_widget_get_allocation (widget, &allocation);
 
+  gtk_style_context_save (style);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_BUTTON);
+
+  gtk_style_context_get_border (style, gtk_widget_get_state_flags (widget),
+                                &border);
+
   width  = allocation.width;
   height = allocation.height;
-
-  cairo_translate (cr, allocation.x, allocation.y);
 
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
@@ -333,10 +335,10 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       gimp_cairo_set_source_rgb (cr, &transformed_color);
 
       cairo_rectangle (cr,
-                       width - rect_w,
-                       height - rect_h,
-                       rect_w,
-                       rect_h);
+                       width  - rect_w + border.left,
+                       height - rect_h + border.top,
+                       rect_w - (border.left + border.right),
+                       rect_h - (border.top + border.bottom));
       cairo_fill (cr);
 
       if (editor->color_config &&
@@ -357,12 +359,14 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
         }
     }
 
-  gtk_paint_shadow (style, cr, GTK_STATE_NORMAL,
-                    editor->active_color == GIMP_ACTIVE_COLOR_FOREGROUND ?
-                    GTK_SHADOW_OUT : GTK_SHADOW_IN,
-                    widget, NULL,
-                    allocation.x + (width - rect_w),
-                    allocation.y + (height - rect_h),
+  gtk_style_context_set_state (style,
+                               editor->active_color ==
+                               GIMP_ACTIVE_COLOR_FOREGROUND ?
+                               0 : GTK_STATE_FLAG_ACTIVE);
+
+  gtk_render_frame (style, cr,
+                    width  - rect_w,
+                    height - rect_h,
                     rect_w, rect_h);
 
 
@@ -385,8 +389,10 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
       gimp_cairo_set_source_rgb (cr, &transformed_color);
 
       cairo_rectangle (cr,
-                       0, 0,
-                       rect_w, rect_h);
+                       border.left,
+                       border.top,
+                       rect_w - (border.left + border.right),
+                       rect_h - (border.top + border.bottom));
       cairo_fill (cr);
 
       if (editor->color_config &&
@@ -407,13 +413,16 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
         }
     }
 
-  gtk_paint_shadow (style, cr, GTK_STATE_NORMAL,
-                    editor->active_color == GIMP_ACTIVE_COLOR_BACKGROUND ?
-                    GTK_SHADOW_OUT : GTK_SHADOW_IN,
-                    widget, NULL,
-                    allocation.x,
-                    allocation.y,
+  gtk_style_context_set_state (style,
+                               editor->active_color ==
+                               GIMP_ACTIVE_COLOR_BACKGROUND ?
+                               0 : GTK_STATE_FLAG_ACTIVE);
+
+  gtk_render_frame (style, cr,
+                    0, 0,
                     rect_w, rect_h);
+
+  gtk_style_context_restore (style);
 
   return TRUE;
 }
