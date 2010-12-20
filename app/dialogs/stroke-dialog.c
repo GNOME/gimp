@@ -172,10 +172,10 @@ stroke_dialog_new (GimpItem           *item,
     font_desc = pango_font_description_new ();
     pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
 
-    gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (cairo_radio)),
-                            font_desc);
-    gtk_widget_modify_font (gtk_bin_get_child (GTK_BIN (paint_radio)),
-                            font_desc);
+    gtk_widget_override_font (gtk_bin_get_child (GTK_BIN (cairo_radio)),
+                              font_desc);
+    gtk_widget_override_font (gtk_bin_get_child (GTK_BIN (paint_radio)),
+                              font_desc);
 
     pango_font_description_free (font_desc);
   }
