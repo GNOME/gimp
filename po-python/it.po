@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-03 02:03+0100\n"
-"PO-Revision-Date: 2010-01-03 02:05+0100\n"
+"POT-Creation-Date: 2010-12-20 22:16+0100\n"
+"PO-Revision-Date: 2010-12-20 22:40+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Selezione file Python-Fu"
 msgid "Python-Fu Folder Selection"
 msgstr "Selezione cartelle Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:698
+#: ../plug-ins/pygimp/gimpfu.py:696
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Ingresso non valido per \"%s\""
@@ -53,43 +53,43 @@ msgstr "Ingresso non valido per \"%s\""
 msgid "Python-Fu Color Selection"
 msgstr "Selezione colore Python-Fu"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "Salvataggio come XHTML colorato"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
 msgstr "Salva come XHTML colorato"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
 msgstr "XHTML colorato"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
 msgstr "_Sorgente carattere"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "Sorgente codice"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "File di testo"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "Casella di immissione testo"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "_File da leggere o caratteri da usare"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "Dime_nsione carattere in pixel"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "Sc_rivi un file CSS separato"
 
@@ -198,18 +198,16 @@ msgstr "Tavolozza a _gradiente"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:56
 msgid "Slice"
-msgstr "Fetta"
+msgstr "Affetta"
 
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:417
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Taglia un'immagine lungo le sue guide, crea immagini e un pezzo di tabella "
-"HTML "
+msgstr "Taglia l'immagine lungo le guide in più immagini creando un pezzo di codice di tabella HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:428
 msgid "_Slice..."
-msgstr "_Fetta..."
+msgstr "_Affetta..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Path for HTML export"
@@ -312,7 +310,8 @@ msgstr "Spiazzamento _Y ombra generata"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:75
 msgid "Create a new brush with characters from a text sequence"
-msgstr "Crea un nuovo pennello con i caratteri provenienti da una sequenza di testo"
+msgstr ""
+"Crea un nuovo pennello con i caratteri provenienti da una sequenza di testo"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:81
 msgid "New Brush from _Text..."

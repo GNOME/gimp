@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-29 09:21+0100\n"
-"PO-Revision-Date: 2010-11-29 09:23+0100\n"
+"POT-Creation-Date: 2010-12-20 22:13+0100\n"
+"PO-Revision-Date: 2010-12-20 22:14+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -6956,7 +6956,7 @@ msgstr "Rimpiazza la parziale trasparenza con il colore di sfondo corrente"
 
 #: ../plug-ins/common/semi-flatten.c:74
 msgid "_Semi-Flatten"
-msgstr "_Semi-appiattito..."
+msgstr "_Semi-appiattisci"
 
 #: ../plug-ins/common/semi-flatten.c:117
 msgid "Semi-Flattening"
