@@ -68,36 +68,36 @@ struct _GimpColorScalePrivate
                                      GimpColorScalePrivate)
 
 
-static void     gimp_color_scale_dispose           (GObject          *object);
-static void     gimp_color_scale_finalize          (GObject          *object);
-static void     gimp_color_scale_get_property      (GObject          *object,
-                                                    guint             property_id,
-                                                    GValue           *value,
-                                                    GParamSpec       *pspec);
-static void     gimp_color_scale_set_property      (GObject          *object,
-                                                    guint             property_id,
-                                                    const GValue     *value,
-                                                    GParamSpec       *pspec);
+static void     gimp_color_scale_dispose             (GObject        *object);
+static void     gimp_color_scale_finalize            (GObject        *object);
+static void     gimp_color_scale_get_property        (GObject        *object,
+                                                      guint           property_id,
+                                                      GValue         *value,
+                                                      GParamSpec     *pspec);
+static void     gimp_color_scale_set_property        (GObject        *object,
+                                                      guint           property_id,
+                                                      const GValue   *value,
+                                                      GParamSpec     *pspec);
 
-static void     gimp_color_scale_size_allocate     (GtkWidget        *widget,
-                                                    GtkAllocation    *allocation);
-static void     gimp_color_scale_state_changed     (GtkWidget        *widget,
-                                                    GtkStateType      previous_state);
-static gboolean gimp_color_scale_button_press      (GtkWidget        *widget,
-                                                    GdkEventButton   *event);
-static gboolean gimp_color_scale_button_release    (GtkWidget        *widget,
-                                                    GdkEventButton   *event);
-static gboolean gimp_color_scale_scroll            (GtkWidget        *widget,
-                                                    GdkEventScroll   *event);
-static gboolean gimp_color_scale_draw              (GtkWidget        *widget,
-                                                    cairo_t          *cr);
+static void     gimp_color_scale_size_allocate       (GtkWidget      *widget,
+                                                      GtkAllocation  *allocation);
+static void     gimp_color_scale_state_flags_changed (GtkWidget      *widget,
+                                                      GtkStateFlags   previous_state);
+static gboolean gimp_color_scale_button_press        (GtkWidget      *widget,
+                                                      GdkEventButton *event);
+static gboolean gimp_color_scale_button_release      (GtkWidget      *widget,
+                                                      GdkEventButton *event);
+static gboolean gimp_color_scale_scroll              (GtkWidget      *widget,
+                                                      GdkEventScroll *event);
+static gboolean gimp_color_scale_draw                (GtkWidget      *widget,
+                                                      cairo_t        *cr);
 
-static void     gimp_color_scale_render            (GimpColorScale   *scale);
-static void     gimp_color_scale_render_alpha      (GimpColorScale   *scale);
-static void     gimp_color_scale_render_stipple    (GimpColorScale   *scale);
+static void     gimp_color_scale_render              (GimpColorScale *scale);
+static void     gimp_color_scale_render_alpha        (GimpColorScale *scale);
+static void     gimp_color_scale_render_stipple      (GimpColorScale *scale);
 
-static void     gimp_color_scale_create_transform  (GimpColorScale   *scale);
-static void     gimp_color_scale_destroy_transform (GimpColorScale   *scale);
+static void     gimp_color_scale_create_transform    (GimpColorScale *scale);
+static void     gimp_color_scale_destroy_transform   (GimpColorScale *scale);
 
 
 G_DEFINE_TYPE (GimpColorScale, gimp_color_scale, GTK_TYPE_SCALE)
@@ -117,7 +117,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   object_class->set_property         = gimp_color_scale_set_property;
 
   widget_class->size_allocate        = gimp_color_scale_size_allocate;
-  widget_class->state_changed        = gimp_color_scale_state_changed;
+  widget_class->state_flags_changed  = gimp_color_scale_state_flags_changed;
   widget_class->button_press_event   = gimp_color_scale_button_press;
   widget_class->button_release_event = gimp_color_scale_button_release;
   widget_class->scroll_event         = gimp_color_scale_scroll;
@@ -298,17 +298,18 @@ gimp_color_scale_size_allocate (GtkWidget     *widget,
 }
 
 static void
-gimp_color_scale_state_changed (GtkWidget    *widget,
-                                GtkStateType  previous_state)
+gimp_color_scale_state_flags_changed (GtkWidget     *widget,
+                                      GtkStateFlags  previous_state)
 {
-  if (gtk_widget_get_state (widget) == GTK_STATE_INSENSITIVE ||
-      previous_state == GTK_STATE_INSENSITIVE)
+  if ((gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_INSENSITIVE) !=
+      (previous_state & GTK_STATE_FLAG_INSENSITIVE))
     {
       GIMP_COLOR_SCALE (widget)->needs_render = TRUE;
     }
 
-  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
-    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
+  if (GTK_WIDGET_CLASS (parent_class)->state_flags_changed)
+    GTK_WIDGET_CLASS (parent_class)->state_flags_changed (widget,
+                                                          previous_state);
 }
 
 static gboolean
