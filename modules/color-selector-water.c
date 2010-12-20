@@ -181,10 +181,6 @@ colorsel_water_init (ColorselWater *water)
                          GDK_POINTER_MOTION_HINT_MASK |
                          GDK_PROXIMITY_OUT_MASK);
 
-  /* The following call enables tracking and processing of extension
-   * events for the drawing area
-   */
-  gtk_widget_set_extension_events (water->area, GDK_EXTENSION_EVENTS_ALL);
   gtk_widget_grab_focus (water->area);
 
   adj = gtk_adjustment_new (200.0 - water->pressure_adjust * 100.0,
