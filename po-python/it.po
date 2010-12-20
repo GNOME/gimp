@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-07-26 03:26+0200\n"
-"PO-Revision-Date: 2008-07-26 03:26+0200\n"
+"PO-Revision-Date: 2010-12-20 23:28+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -198,17 +198,15 @@ msgstr "Tavolozza a _gradiente"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
-msgstr "Fetta"
+msgstr "Affetta"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Taglia un'immagine lungo le sue guide, crea immagini e un pezzo di tabella "
-"HTML "
+msgstr "Taglia l'immagine lungo le guide in più immagini creando un pezzo di codice di tabella HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
-msgstr "_Fetta..."
+msgstr "_Affetta..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
