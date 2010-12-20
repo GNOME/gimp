@@ -804,14 +804,27 @@ gimp_device_info_map_axis (GimpDeviceInfo *info,
                            GdkAxisUse      use,
                            gdouble         value)
 {
-  GimpCurve *curve;
-
   g_return_val_if_fail (GIMP_IS_DEVICE_INFO (info), value);
 
-  curve = gimp_device_info_get_curve (info, use);
+  /* CLAMP() the return values be safe against buggy XInput drivers */
 
-  if (curve)
-    return gimp_curve_map_value (curve, value);
+  switch (use)
+    {
+    case GDK_AXIS_PRESSURE:
+      return gimp_curve_map_value (info->pressure_curve, value);
+
+    case GDK_AXIS_XTILT:
+      return CLAMP (value, GIMP_COORDS_MIN_TILT, GIMP_COORDS_MAX_TILT);
+
+    case GDK_AXIS_YTILT:
+      return CLAMP (value, GIMP_COORDS_MIN_TILT, GIMP_COORDS_MAX_TILT);
+
+    case GDK_AXIS_WHEEL:
+      return CLAMP (value, GIMP_COORDS_MIN_WHEEL, GIMP_COORDS_MAX_WHEEL);
+
+    default:
+      break;
+    }
 
   return value;
 }
