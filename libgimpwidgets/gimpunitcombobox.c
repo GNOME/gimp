@@ -40,10 +40,9 @@
  **/
 
 
-static void  gimp_unit_combo_box_style_set   (GtkWidget        *widget,
-                                              GtkStyle         *prev_style);
-static void  gimp_unit_combo_box_popup_shown (GtkWidget        *widget,
-                                              const GParamSpec *pspec);
+static void   gimp_unit_combo_box_style_updated (GtkWidget        *widget);
+static void   gimp_unit_combo_box_popup_shown   (GtkWidget        *widget,
+                                                 const GParamSpec *pspec);
 
 
 G_DEFINE_TYPE (GimpUnitComboBox, gimp_unit_combo_box, GTK_TYPE_COMBO_BOX)
@@ -56,7 +55,7 @@ gimp_unit_combo_box_class_init (GimpUnitComboBoxClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->style_set = gimp_unit_combo_box_style_set;
+  widget_class->style_updated = gimp_unit_combo_box_style_updated;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_double ("label-scale",
@@ -85,14 +84,13 @@ gimp_unit_combo_box_init (GimpUnitComboBox *combo)
 }
 
 static void
-gimp_unit_combo_box_style_set (GtkWidget *widget,
-                               GtkStyle  *prev_style)
+gimp_unit_combo_box_style_updated (GtkWidget *widget)
 {
   GtkCellLayout   *layout;
   GtkCellRenderer *cell;
   gdouble          scale;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget, "label-scale", &scale, NULL);
 

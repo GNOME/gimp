@@ -56,8 +56,7 @@ static void      gimp_frame_get_preferred_height (GtkWidget      *widget,
                                                   gint           *natural_height);
 static void      gimp_frame_size_allocate        (GtkWidget      *widget,
                                                   GtkAllocation  *allocation);
-static void      gimp_frame_style_set            (GtkWidget      *widget,
-                                                  GtkStyle       *previous);
+static void      gimp_frame_style_updated        (GtkWidget      *widget);
 static gboolean  gimp_frame_draw                 (GtkWidget      *widget,
                                                   cairo_t        *cr);
 static void      gimp_frame_child_allocate       (GtkFrame       *frame,
@@ -80,7 +79,7 @@ gimp_frame_class_init (GimpFrameClass *klass)
   widget_class->get_preferred_width  = gimp_frame_get_preferred_width;
   widget_class->get_preferred_height = gimp_frame_get_preferred_height;
   widget_class->size_allocate        = gimp_frame_size_allocate;
-  widget_class->style_set            = gimp_frame_style_set;
+  widget_class->style_updated        = gimp_frame_style_updated;
   widget_class->draw                 = gimp_frame_draw;
 
   gtk_widget_class_install_style_property (widget_class,
@@ -248,9 +247,10 @@ gimp_frame_child_allocate (GtkFrame      *frame,
 }
 
 static void
-gimp_frame_style_set (GtkWidget *widget,
-                      GtkStyle  *previous)
+gimp_frame_style_updated (GtkWidget *widget)
 {
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
   /*  font changes invalidate the indentation  */
   g_object_set_data (G_OBJECT (widget), GIMP_FRAME_INDENT_KEY, NULL);
 

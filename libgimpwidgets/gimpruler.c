@@ -116,8 +116,7 @@ static void          gimp_ruler_get_preferred_width   (GtkWidget      *widget,
 static void          gimp_ruler_get_preferred_height  (GtkWidget      *widget,
                                                        gint           *minimum_height,
                                                        gint           *natural_height);
-static void          gimp_ruler_style_set             (GtkWidget      *widget,
-                                                       GtkStyle       *prev_style);
+static void          gimp_ruler_style_updated         (GtkWidget      *widget);
 static gboolean      gimp_ruler_motion_notify         (GtkWidget      *widget,
                                                        GdkEventMotion *event);
 static gboolean      gimp_ruler_draw                  (GtkWidget      *widget,
@@ -158,7 +157,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   widget_class->get_preferred_width  = gimp_ruler_get_preferred_width;
   widget_class->get_preferred_height = gimp_ruler_get_preferred_height;
   widget_class->size_allocate        = gimp_ruler_size_allocate;
-  widget_class->style_set            = gimp_ruler_style_set;
+  widget_class->style_updated        = gimp_ruler_style_updated;
   widget_class->motion_notify_event  = gimp_ruler_motion_notify;
   widget_class->draw                 = gimp_ruler_draw;
 
@@ -945,12 +944,11 @@ gimp_ruler_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-gimp_ruler_style_set (GtkWidget *widget,
-                      GtkStyle  *prev_style)
+gimp_ruler_style_updated (GtkWidget *widget)
 {
   GimpRulerPrivate *priv = GIMP_RULER_GET_PRIVATE (widget);
 
-  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (gimp_ruler_parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
                         "font-scale", &priv->font_scale,
