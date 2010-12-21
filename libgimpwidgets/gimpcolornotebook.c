@@ -54,8 +54,7 @@
 #define DEFAULT_TAB_ICON_SIZE  GTK_ICON_SIZE_BUTTON
 
 
-static void   gimp_color_notebook_style_set       (GtkWidget         *widget,
-                                                   GtkStyle          *prev_style);
+static void   gimp_color_notebook_style_updated   (GtkWidget         *widget);
 
 static void   gimp_color_notebook_togg_visible    (GimpColorSelector *selector,
                                                    gboolean           visible);
@@ -104,7 +103,7 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   GtkWidgetClass         *widget_class   = GTK_WIDGET_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  widget_class->style_set               = gimp_color_notebook_style_set;
+  widget_class->style_updated           = gimp_color_notebook_style_updated;
 
   selector_class->name                  = "Notebook";
   selector_class->help_id               = "gimp-colorselector-notebook";
@@ -176,16 +175,14 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 }
 
 static void
-gimp_color_notebook_style_set (GtkWidget *widget,
-                               GtkStyle  *prev_style)
+gimp_color_notebook_style_updated (GtkWidget *widget)
 {
   GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (widget);
   GList             *list;
   gint               tab_border;
   GtkIconSize        icon_size;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
                         "tab-border",    &tab_border,
