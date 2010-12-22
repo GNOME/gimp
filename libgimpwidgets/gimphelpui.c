@@ -475,7 +475,7 @@ gimp_context_help_idle_start (gpointer widget)
                                  NULL, cursor,
                                  GDK_CURRENT_TIME);
 
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
 
       if (status != GDK_GRAB_SUCCESS)
         {

@@ -259,7 +259,7 @@ gimp_scrolled_preview_area_unrealize (GtkWidget           *widget,
 {
   if (preview->cursor_move)
     {
-      gdk_cursor_unref (preview->cursor_move);
+      g_object_unref (preview->cursor_move);
       preview->cursor_move = NULL;
     }
 }
@@ -389,7 +389,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
               gtk_grab_add (area);
             }
 
-          gdk_cursor_unref (cursor);
+          g_object_unref (cursor);
 
           break;
 
@@ -643,7 +643,7 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                         gtk_widget_get_window (area), cursor,
                         event->time);
 
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
     }
 
   return TRUE;

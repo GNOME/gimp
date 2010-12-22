@@ -396,7 +396,7 @@ gimp_preview_area_unrealize (GtkWidget   *widget,
 {
   if (preview->cursor_busy)
     {
-      gdk_cursor_unref (preview->cursor_busy);
+      g_object_unref (preview->cursor_busy);
       preview->cursor_busy = NULL;
     }
 }
@@ -826,10 +826,10 @@ gimp_preview_set_default_cursor (GimpPreview *preview,
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
 
   if (preview->default_cursor)
-    gdk_cursor_unref (preview->default_cursor);
+    g_object_unref (preview->default_cursor);
 
   if (cursor)
-    gdk_cursor_ref (cursor);
+    g_object_ref (cursor);
 
   preview->default_cursor = cursor;
 }

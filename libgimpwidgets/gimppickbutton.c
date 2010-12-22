@@ -119,7 +119,7 @@ gimp_pick_button_dispose (GObject *object)
 
   if (button->cursor)
     {
-      gdk_cursor_unref (button->cursor);
+      g_object_unref (button->cursor);
       button->cursor = NULL;
     }
 
