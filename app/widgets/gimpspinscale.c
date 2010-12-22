@@ -96,8 +96,7 @@ static void       gimp_spin_scale_get_preferred_width  (GtkWidget        *widget
 static void       gimp_spin_scale_get_preferred_height (GtkWidget        *widget,
                                                         gint             *minimum_width,
                                                         gint             *natural_width);
-static void       gimp_spin_scale_style_set            (GtkWidget        *widget,
-                                                        GtkStyle         *prev_style);
+static void       gimp_spin_scale_style_updated        (GtkWidget        *widget);
 static gboolean   gimp_spin_scale_draw                 (GtkWidget        *widget,
                                                         cairo_t          *cr);
 static gboolean   gimp_spin_scale_button_press         (GtkWidget        *widget,
@@ -143,7 +142,7 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
 
   widget_class->get_preferred_width  = gimp_spin_scale_get_preferred_width;
   widget_class->get_preferred_height = gimp_spin_scale_get_preferred_height;
-  widget_class->style_set            = gimp_spin_scale_style_set;
+  widget_class->style_updated        = gimp_spin_scale_style_updated;
   widget_class->draw                 = gimp_spin_scale_draw;
   widget_class->button_press_event   = gimp_spin_scale_button_press;
   widget_class->button_release_event = gimp_spin_scale_button_release;
@@ -274,7 +273,6 @@ gimp_spin_scale_get_preferred_width (GtkWidget *widget,
                                      gint      *natural_width)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
-  GtkStyle             *style   = gtk_widget_get_style (widget);
   PangoContext         *context = gtk_widget_get_pango_context (widget);
   PangoFontMetrics     *metrics;
 
@@ -282,7 +280,8 @@ gimp_spin_scale_get_preferred_width (GtkWidget *widget,
                                                         minimum_width,
                                                         natural_width);
 
-  metrics = pango_context_get_metrics (context, style->font_desc,
+  metrics = pango_context_get_metrics (context,
+                                       pango_context_get_font_description (context),
                                        pango_context_get_language (context));
 
   if (private->label)
@@ -308,7 +307,6 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
                                       gint      *minimum_height,
                                       gint      *natural_height)
 {
-  GtkStyle         *style   = gtk_widget_get_style (widget);
   PangoContext     *context = gtk_widget_get_pango_context (widget);
   PangoFontMetrics *metrics;
   gint              height;
@@ -317,7 +315,8 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
                                                          minimum_height,
                                                          natural_height);
 
-  metrics = pango_context_get_metrics (context, style->font_desc,
+  metrics = pango_context_get_metrics (context,
+                                       pango_context_get_font_description (context),
                                        pango_context_get_language (context));
 
   height = PANGO_PIXELS (pango_font_metrics_get_ascent (metrics) +
@@ -330,12 +329,11 @@ gimp_spin_scale_get_preferred_height (GtkWidget *widget,
 }
 
 static void
-gimp_spin_scale_style_set (GtkWidget *widget,
-                           GtkStyle  *prev_style)
+gimp_spin_scale_style_updated (GtkWidget *widget)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (private->layout)
     {
@@ -388,7 +386,7 @@ gimp_spin_scale_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
   GimpSpinScalePrivate *private = GET_PRIVATE (widget);
-  GtkStyle             *style   = gtk_widget_get_style (widget);
+  GtkStyleContext      *style   = gtk_widget_get_style_context (widget);
   GtkAllocation         allocation;
 
   cairo_save (cr);
@@ -396,14 +394,6 @@ gimp_spin_scale_draw (GtkWidget *widget,
   cairo_restore (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
-
-  cairo_set_line_width (cr, 1.0);
-
-  cairo_rectangle (cr, 0.5, 0.5,
-                   allocation.width - 1.0, allocation.height - 1.0);
-  gdk_cairo_set_source_color (cr,
-                              &style->text[gtk_widget_get_state (widget)]);
-  cairo_stroke (cr);
 
   if (private->label)
     {
@@ -413,9 +403,9 @@ gimp_spin_scale_draw (GtkWidget *widget,
       PangoRectangle logical;
       gint           layout_offset_x;
       gint           layout_offset_y;
-      GtkStateType   state;
-      GdkColor       text_color;
-      GdkColor       bar_text_color;
+      GtkStateFlags  state;
+      GdkRGBA        text_color;
+      GdkRGBA        bar_text_color;
       gdouble        progress_fraction;
       gint           progress_x;
       gint           progress_y;
@@ -462,11 +452,14 @@ gimp_spin_scale_draw (GtkWidget *widget,
 
       layout_offset_x -= logical.x;
 
-      state = GTK_STATE_SELECTED;
-      if (! gtk_widget_get_sensitive (widget))
-        state = GTK_STATE_INSENSITIVE;
-      text_color     = style->text[gtk_widget_get_state (widget)];
-      bar_text_color = style->fg[state];
+      state = gtk_widget_get_state_flags (widget);
+
+      gtk_style_context_get_color (style, state, &text_color);
+
+      gtk_style_context_save (style);
+      gtk_style_context_add_class (style, GTK_STYLE_CLASS_PROGRESSBAR);
+      gtk_style_context_get_color (style, state, &bar_text_color);
+      gtk_style_context_restore (style);
 
       progress_fraction = gtk_entry_get_progress_fraction (GTK_ENTRY (widget));
 
@@ -497,7 +490,7 @@ gimp_spin_scale_draw (GtkWidget *widget,
       cairo_set_fill_rule (cr, CAIRO_FILL_RULE_WINDING);
 
       cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y);
-      gdk_cairo_set_source_color (cr, &text_color);
+      gdk_cairo_set_source_rgba (cr, &text_color);
       pango_cairo_show_layout (cr, private->layout);
 
       cairo_restore (cr);
@@ -507,7 +500,7 @@ gimp_spin_scale_draw (GtkWidget *widget,
       cairo_clip (cr);
 
       cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y);
-      gdk_cairo_set_source_color (cr, &bar_text_color);
+      gdk_cairo_set_source_rgba (cr, &bar_text_color);
       pango_cairo_show_layout (cr, private->layout);
     }
 
