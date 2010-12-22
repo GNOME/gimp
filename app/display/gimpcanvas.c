@@ -56,8 +56,7 @@ static void       gimp_canvas_get_property    (GObject         *object,
                                                GParamSpec      *pspec);
 
 static void       gimp_canvas_unrealize       (GtkWidget       *widget);
-static void       gimp_canvas_style_set       (GtkWidget       *widget,
-                                               GtkStyle        *prev_style);
+static void       gimp_canvas_style_updated   (GtkWidget       *widget);
 static gboolean   gimp_canvas_focus_in_event  (GtkWidget       *widget,
                                                GdkEventFocus   *event);
 static gboolean   gimp_canvas_focus_out_event (GtkWidget       *widget,
@@ -81,7 +80,7 @@ gimp_canvas_class_init (GimpCanvasClass *klass)
   object_class->get_property    = gimp_canvas_get_property;
 
   widget_class->unrealize       = gimp_canvas_unrealize;
-  widget_class->style_set       = gimp_canvas_style_set;
+  widget_class->style_updated   = gimp_canvas_style_updated;
   widget_class->focus_in_event  = gimp_canvas_focus_in_event;
   widget_class->focus_out_event = gimp_canvas_focus_out_event;
   widget_class->focus           = gimp_canvas_focus;
@@ -157,12 +156,11 @@ gimp_canvas_unrealize (GtkWidget *widget)
 }
 
 static void
-gimp_canvas_style_set (GtkWidget *widget,
-                       GtkStyle  *prev_style)
+gimp_canvas_style_updated (GtkWidget *widget)
 {
   GimpCanvas *canvas = GIMP_CANVAS (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (canvas->layout)
     {

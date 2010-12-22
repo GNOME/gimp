@@ -99,8 +99,7 @@ static void   gimp_cursor_view_get_property          (GObject             *objec
                                                       GValue              *value,
                                                       GParamSpec          *pspec);
 
-static void   gimp_cursor_view_style_set             (GtkWidget           *widget,
-                                                      GtkStyle            *prev_style);
+static void   gimp_cursor_view_style_updated         (GtkWidget           *widget);
 
 static void   gimp_cursor_view_set_aux_info          (GimpDocked          *docked,
                                                       GList               *aux_info);
@@ -149,11 +148,11 @@ gimp_cursor_view_class_init (GimpCursorViewClass* klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose      = gimp_cursor_view_dispose;
-  object_class->get_property = gimp_cursor_view_get_property;
-  object_class->set_property = gimp_cursor_view_set_property;
+  object_class->dispose       = gimp_cursor_view_dispose;
+  object_class->get_property  = gimp_cursor_view_get_property;
+  object_class->set_property  = gimp_cursor_view_set_property;
 
-  widget_class->style_set    = gimp_cursor_view_style_set;
+  widget_class->style_updated = gimp_cursor_view_style_updated;
 
   g_object_class_install_property (object_class, PROP_SAMPLE_MERGED,
                                    g_param_spec_boolean ("sample-merged",
@@ -502,13 +501,12 @@ gimp_cursor_view_set_label_italic (GtkWidget *label,
 }
 
 static void
-gimp_cursor_view_style_set (GtkWidget *widget,
-                            GtkStyle  *prev_style)
+gimp_cursor_view_style_updated (GtkWidget *widget)
 {
   GimpCursorView *view = GIMP_CURSOR_VIEW (widget);
   gint            content_spacing;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (GTK_WIDGET (view),
                         "content-spacing", &content_spacing,
