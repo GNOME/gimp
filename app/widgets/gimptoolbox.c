@@ -526,7 +526,10 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
       dropped = TRUE;
     }
 
-  gtk_drag_finish (context, dropped, (context->action == GDK_ACTION_MOVE), time);
+  gtk_drag_finish (context, dropped,
+                   gdk_drag_context_get_selected_action (context) ==
+                   GDK_ACTION_MOVE,
+                   time);
 
   return TRUE;
 }
