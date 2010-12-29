@@ -91,10 +91,12 @@ void
 gimp_ui_init (const gchar *prog_name,
               gboolean     preview)
 {
-  const gchar  *display_name;
-  gchar        *themerc;
-  GFileMonitor *rc_monitor;
-  GFile        *file;
+  const gchar    *display_name;
+  GtkCssProvider *css_provider;
+  gchar          *theme_css;
+  GFileMonitor   *css_monitor;
+  GFile          *file;
+  GError         *error = NULL;
 
   g_return_if_fail (prog_name != NULL);
 
@@ -127,18 +129,36 @@ gimp_ui_init (const gchar *prog_name,
 
   gtk_init (NULL, NULL);
 
-  themerc = gimp_personal_rc_file ("themerc");
-  gtk_rc_parse (themerc);
+  css_provider = gtk_css_provider_new ();
 
-  file = g_file_new_for_path (themerc);
-  g_free (themerc);
+  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+                                             GTK_STYLE_PROVIDER (css_provider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-  rc_monitor = g_file_monitor (file, G_FILE_MONITOR_NONE, NULL, NULL);
+  g_object_unref (css_provider);
+
+  theme_css = gimp_personal_rc_file ("theme.css");
+
+  if (! gtk_css_provider_load_from_path (css_provider,
+                                         theme_css, &error))
+    {
+      g_printerr ("%s: error parsing %s: %s\n", G_STRFUNC,
+                  gimp_filename_to_utf8 (theme_css), error->message);
+      g_clear_error (&error);
+    }
+
+  file = g_file_new_for_path (theme_css);
+  g_free (theme_css);
+
+  css_monitor = g_file_monitor (file, G_FILE_MONITOR_NONE, NULL, NULL);
   g_object_unref (file);
 
-  g_signal_connect (rc_monitor, "changed",
+#if 0
+  /* FIXME CSS: do we still need such code on gtk3? */
+  g_signal_connect (css_monitor, "changed",
                     G_CALLBACK (gtk_rc_reparse_all),
                     NULL);
+#endif
 
   gdk_set_program_class (gimp_wm_class ());
 
