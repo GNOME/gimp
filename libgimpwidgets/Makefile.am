@@ -147,6 +147,7 @@ libgimpwidgets_sources = \
 	gimppatheditor.h		\
 	gimppickbutton.c		\
 	gimppickbutton.h		\
+	gimppickbutton-private.h	\
 	gimppreview.c			\
 	gimppreview.h			\
 	gimppreviewarea.c		\
