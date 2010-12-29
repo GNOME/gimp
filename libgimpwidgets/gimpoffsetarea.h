@@ -44,24 +44,15 @@ typedef struct _GimpOffsetAreaClass  GimpOffsetAreaClass;
 struct _GimpOffsetArea
 {
   GtkDrawingArea  parent_instance;
-
-  gint            orig_width;
-  gint            orig_height;
-  gint            width;
-  gint            height;
-  gint            offset_x;
-  gint            offset_y;
-  gdouble         display_ratio_x;
-  gdouble         display_ratio_y;
 };
 
 struct _GimpOffsetAreaClass
 {
   GtkDrawingAreaClass  parent_class;
 
-  void (* offsets_changed)  (GimpOffsetArea *offset_area,
-                             gint            offset_x,
-                             gint            offset_y);
+  void (* offsets_changed) (GimpOffsetArea *offset_area,
+                            gint            offset_x,
+                            gint            offset_y);
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
