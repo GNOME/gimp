@@ -34,15 +34,14 @@ G_BEGIN_DECLS
 #define GIMP_PICK_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PICK_BUTTON, GimpPickButtonClass))
 
 
-typedef struct _GimpPickButtonClass GimpPickButtonClass;
+typedef struct _GimpPickButtonPrivate GimpPickButtonPrivate;
+typedef struct _GimpPickButtonClass   GimpPickButtonClass;
 
 struct _GimpPickButton
 {
-  GtkButton   parent_instance;
+  GtkButton              parent_instance;
 
-  /*< private >*/
-  GdkCursor  *cursor;
-  GtkWidget  *grab_widget;
+  GimpPickButtonPrivate *priv;
 };
 
 struct _GimpPickButtonClass

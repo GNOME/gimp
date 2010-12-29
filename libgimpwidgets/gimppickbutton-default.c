@@ -35,6 +35,7 @@
 #include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimppickbutton.h"
+#include "gimppickbutton-private.h"
 #include "gimpwidgetsutils.h"
 
 #include "cursors/gimp-color-picker-cursors.c"
@@ -189,13 +190,13 @@ gimp_pick_button_mouse_release (GtkWidget      *invisible,
 static void
 gimp_pick_button_shutdown (GimpPickButton *button)
 {
-  GdkDisplay *display   = gtk_widget_get_display (button->grab_widget);
+  GdkDisplay *display   = gtk_widget_get_display (button->priv->grab_widget);
   guint32     timestamp = gtk_get_current_event_time ();
 
   gdk_display_keyboard_ungrab (display, timestamp);
   gdk_display_pointer_ungrab (display, timestamp);
 
-  gtk_grab_remove (button->grab_widget);
+  gtk_grab_remove (button->priv->grab_widget);
 }
 
 static void
@@ -302,22 +303,23 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
   GtkWidget *widget;
   guint32    timestamp;
 
-  if (! button->cursor)
-    button->cursor = make_cursor (gtk_widget_get_display (GTK_WIDGET (button)));
+  if (! button->priv->cursor)
+    button->priv->cursor =
+      make_cursor (gtk_widget_get_display (GTK_WIDGET (button)));
 
-  if (! button->grab_widget)
+  if (! button->priv->grab_widget)
     {
-      button->grab_widget = gtk_invisible_new ();
+      button->priv->grab_widget = gtk_invisible_new ();
 
-      gtk_widget_add_events (button->grab_widget,
+      gtk_widget_add_events (button->priv->grab_widget,
                              GDK_BUTTON_RELEASE_MASK |
                              GDK_BUTTON_PRESS_MASK   |
                              GDK_POINTER_MOTION_MASK);
 
-      gtk_widget_show (button->grab_widget);
+      gtk_widget_show (button->priv->grab_widget);
     }
 
-  widget = button->grab_widget;
+  widget = button->priv->grab_widget;
   timestamp = gtk_get_current_event_time ();
 
   if (gdk_keyboard_grab (gtk_widget_get_window (widget), FALSE,
@@ -332,7 +334,7 @@ _gimp_pick_button_default_pick (GimpPickButton *button)
                         GDK_BUTTON_PRESS_MASK   |
                         GDK_POINTER_MOTION_MASK,
                         NULL,
-                        button->cursor,
+                        button->priv->cursor,
                         timestamp) != GDK_GRAB_SUCCESS)
     {
       gdk_display_keyboard_ungrab (gtk_widget_get_display (widget), timestamp);

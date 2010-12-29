@@ -24,6 +24,7 @@
 
 #include "gimpwidgetstypes.h"
 #include "gimppickbutton.h"
+#include "gimppickbutton-private.h"
 
 #include "cursors/gimp-color-picker-cursors.c"
 
