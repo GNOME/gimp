@@ -46,18 +46,7 @@ typedef struct _GimpColorAreaClass  GimpColorAreaClass;
 
 struct _GimpColorArea
 {
-  GtkDrawingArea       parent_instance;
-
-  /*< private >*/
-  guchar              *buf;
-  guint                width;
-  guint                height;
-  guint                rowstride;
-
-  GimpColorAreaType    type;
-  GimpRGB              color;
-  guint                draw_border  : 1;
-  guint                needs_render : 1;
+  GtkDrawingArea  parent_instance;
 };
 
 struct _GimpColorAreaClass
