@@ -114,12 +114,13 @@ gimp_scale_button_image_draw (GtkWidget       *widget,
                               cairo_t         *cr,
                               GimpScaleButton *button)
 {
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  GtkAdjustment *adj;
-  gint           value;
-  gint           steps;
-  gint           i;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GtkAdjustment   *adj;
+  GdkRGBA          color;
+  gint             value;
+  gint             steps;
+  gint             i;
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -154,7 +155,9 @@ gimp_scale_button_image_draw (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &style->fg[gtk_widget_get_state (widget)]);
+  gtk_style_context_get_color (style, gtk_widget_get_state_flags (widget),
+                               &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_stroke (cr);
 
   for ( ; i < steps; i++)
@@ -163,7 +166,9 @@ gimp_scale_button_image_draw (GtkWidget       *widget,
       cairo_line_to (cr, i, i + 0.5);
     }
 
-  gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_INSENSITIVE]);
+  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_INSENSITIVE,
+                                          &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_stroke (cr);
 
   return TRUE;
