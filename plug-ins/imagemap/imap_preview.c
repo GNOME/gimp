@@ -371,7 +371,7 @@ preview_set_cursor(Preview_t *preview, GdkCursorType cursor_type)
                                                             cursor_type);
 
    gdk_window_set_cursor(gtk_widget_get_window (preview->window), cursor);
-   gdk_cursor_unref(cursor);
+   g_object_unref (cursor);
 
    preview->cursor = cursor_type;
 
