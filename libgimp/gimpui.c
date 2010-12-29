@@ -176,7 +176,6 @@ gimp_ui_init (const gchar *prog_name,
   [NSApp activateIgnoringOtherApps:YES];
 #endif
 
-  gimp_ui_fix_pixbuf_style ();
   gimp_ui_initialized = TRUE;
 }
 
