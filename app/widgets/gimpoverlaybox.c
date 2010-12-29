@@ -170,9 +170,8 @@ gimp_overlay_box_realize (GtkWidget *widget)
                     widget);
 
   gtk_widget_style_attach (widget);
-  gtk_style_set_background (gtk_widget_get_style (widget),
-                            gtk_widget_get_window (widget),
-                            GTK_STATE_NORMAL);
+  gtk_style_context_set_background (gtk_widget_get_style_context (widget),
+                                    gtk_widget_get_window (widget));
 
   for (list = box->children; list; list = g_list_next (list))
     gimp_overlay_child_realize (box, list->data);
