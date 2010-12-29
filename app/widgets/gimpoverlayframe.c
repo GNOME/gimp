@@ -130,10 +130,11 @@ static gboolean
 gimp_overlay_frame_draw (GtkWidget *widget,
                          cairo_t   *cr)
 {
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  gboolean       rgba;
-  gint           border_width;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GdkRGBA          color;
+  gboolean         rgba;
+  gint             border_width;
 
   rgba = gdk_screen_get_rgba_visual (gtk_widget_get_screen (widget)) != NULL;
 
@@ -196,13 +197,19 @@ gimp_overlay_frame_draw (GtkWidget *widget,
 
   cairo_clip_preserve (cr);
 
-  gdk_cairo_set_source_color (cr, &style->bg[GTK_STATE_NORMAL]);
+  gtk_style_context_get_background_color (style,
+                                          gtk_widget_get_state_flags (widget),
+                                          &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_paint (cr);
 
   if (border_width > 0)
     {
       cairo_set_line_width (cr, 2.0);
-      gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
+      gtk_style_context_get_color (style,
+                                   gtk_widget_get_state_flags (widget),
+                                   &color);
+      gdk_cairo_set_source_rgba (cr, &color);
       cairo_stroke (cr);
     }
 
