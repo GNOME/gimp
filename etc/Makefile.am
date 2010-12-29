@@ -2,7 +2,7 @@
 
 gimpsysconf = \
 	controllerrc	\
-	gtkrc		\
+	gimp.css	\
 	menurc		\
 	sessionrc	\
 	templaterc	\
