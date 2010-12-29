@@ -71,6 +71,16 @@ struct _GimpColorAreaPrivate
 {
   GimpColorConfig    *config;
   GimpColorTransform *transform;
+
+  guchar             *buf;
+  guint               width;
+  guint               height;
+  guint               rowstride;
+
+  GimpColorAreaType   type;
+  GimpRGB             color;
+  guint               draw_border  : 1;
+  guint               needs_render : 1;
 };
 
 #define GET_PRIVATE(obj) \
@@ -234,11 +244,13 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 static void
 gimp_color_area_init (GimpColorArea *area)
 {
-  area->buf         = NULL;
-  area->width       = 0;
-  area->height      = 0;
-  area->rowstride   = 0;
-  area->draw_border = FALSE;
+  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+
+  priv->buf         = NULL;
+  priv->width       = 0;
+  priv->height      = 0;
+  priv->rowstride   = 0;
+  priv->draw_border = FALSE;
 
   gtk_drag_dest_set (GTK_WIDGET (area),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -265,9 +277,9 @@ gimp_color_area_dispose (GObject *object)
 static void
 gimp_color_area_finalize (GObject *object)
 {
-  GimpColorArea *area = GIMP_COLOR_AREA (object);
+  GimpColorAreaPrivate *priv = GET_PRIVATE (object);
 
-  g_clear_pointer (&area->buf, g_free);
+  g_clear_pointer (&priv->buf, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -278,20 +290,20 @@ gimp_color_area_get_property (GObject    *object,
                               GValue     *value,
                               GParamSpec *pspec)
 {
-  GimpColorArea *area = GIMP_COLOR_AREA (object);
+  GimpColorAreaPrivate *priv = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_COLOR:
-      g_value_set_boxed (value, &area->color);
+      g_value_set_boxed (value, &priv->color);
       break;
 
     case PROP_TYPE:
-      g_value_set_enum (value, area->type);
+      g_value_set_enum (value, priv->type);
       break;
 
     case PROP_DRAW_BORDER:
-      g_value_set_boolean (value, area->draw_border);
+      g_value_set_boolean (value, priv->draw_border);
       break;
 
     default:
@@ -344,22 +356,22 @@ static void
 gimp_color_area_size_allocate (GtkWidget     *widget,
                                GtkAllocation *allocation)
 {
-  GimpColorArea *area = GIMP_COLOR_AREA (widget);
+  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
 
   GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (allocation->width  != area->width ||
-      allocation->height != area->height)
+  if (allocation->width  != priv->width ||
+      allocation->height != priv->height)
     {
-      area->width  = allocation->width;
-      area->height = allocation->height;
+      priv->width  = allocation->width;
+      priv->height = allocation->height;
 
-      area->rowstride = area->width * 4 + 4;
+      priv->rowstride = priv->width * 4 + 4;
 
-      g_free (area->buf);
-      area->buf = g_new (guchar, area->rowstride * area->height);
+      g_free (priv->buf);
+      priv->buf = g_new (guchar, priv->rowstride * priv->height);
 
-      area->needs_render = TRUE;
+      priv->needs_render = TRUE;
     }
 }
 
@@ -367,10 +379,12 @@ static void
 gimp_color_area_state_flags_changed (GtkWidget     *widget,
                                      GtkStateFlags  previous_state)
 {
+  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+
   if ((gtk_widget_get_state_flags (widget) & GTK_STATE_FLAG_INSENSITIVE) !=
       (previous_state & GTK_STATE_FLAG_INSENSITIVE))
     {
-      GIMP_COLOR_AREA (widget)->needs_render = TRUE;
+      priv->needs_render = TRUE;
     }
 
   if (GTK_WIDGET_CLASS (parent_class)->state_flags_changed)
@@ -383,14 +397,14 @@ gimp_color_area_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
   GimpColorArea        *area    = GIMP_COLOR_AREA (widget);
-  GimpColorAreaPrivate *priv    = GET_PRIVATE (widget);
+  GimpColorAreaPrivate *priv    = GET_PRIVATE (area);
   GtkStyleContext      *context = gtk_widget_get_style_context (widget);
   cairo_surface_t      *buffer;
 
-  if (! area->buf)
+  if (! priv->buf)
     return FALSE;
 
-  if (area->needs_render)
+  if (priv->needs_render)
     gimp_color_area_render (area);
 
   if (! priv->transform)
@@ -399,37 +413,37 @@ gimp_color_area_draw (GtkWidget *widget,
   if (priv->transform)
     {
       const Babl *format = babl_format ("cairo-RGB24");
-      guchar     *buf    = g_new (guchar, area->rowstride * area->height);
-      guchar     *src    = area->buf;
+      guchar     *buf    = g_new (guchar, priv->rowstride * priv->height);
+      guchar     *src    = priv->buf;
       guchar     *dest   = buf;
       gint        i;
 
-      for (i = 0; i < area->height; i++)
+      for (i = 0; i < priv->height; i++)
         {
           gimp_color_transform_process_pixels (priv->transform,
                                                format, src,
                                                format, dest,
-                                               area->width);
+                                               priv->width);
 
-          src  += area->rowstride;
-          dest += area->rowstride;
+          src  += priv->rowstride;
+          dest += priv->rowstride;
         }
 
       buffer = cairo_image_surface_create_for_data (buf,
                                                     CAIRO_FORMAT_RGB24,
-                                                    area->width,
-                                                    area->height,
-                                                    area->rowstride);
+                                                    priv->width,
+                                                    priv->height,
+                                                    priv->rowstride);
       cairo_surface_set_user_data (buffer, NULL,
                                    buf, (cairo_destroy_func_t) g_free);
     }
   else
     {
-      buffer = cairo_image_surface_create_for_data (area->buf,
+      buffer = cairo_image_surface_create_for_data (priv->buf,
                                                     CAIRO_FORMAT_RGB24,
-                                                    area->width,
-                                                    area->height,
-                                                    area->rowstride);
+                                                    priv->width,
+                                                    priv->height,
+                                                    priv->rowstride);
     }
 
   cairo_set_source_surface (cr, buffer, 0.0, 0.0);
@@ -437,22 +451,22 @@ gimp_color_area_draw (GtkWidget *widget,
   cairo_paint (cr);
 
   if (priv->config &&
-      (area->color.r < 0.0 || area->color.r > 1.0 ||
-       area->color.g < 0.0 || area->color.g > 1.0 ||
-       area->color.b < 0.0 || area->color.b > 1.0))
+      (priv->color.r < 0.0 || priv->color.r > 1.0 ||
+       priv->color.g < 0.0 || priv->color.g > 1.0 ||
+       priv->color.b < 0.0 || priv->color.b > 1.0))
     {
-      gint side = MIN (area->width, area->height) * 2 / 3;
+      gint side = MIN (priv->width, priv->height) * 2 / 3;
 
-      cairo_move_to (cr, area->width, 0);
-      cairo_line_to (cr, area->width - side, 0);
-      cairo_line_to (cr, area->width, side);
-      cairo_line_to (cr, area->width, 0);
+      cairo_move_to (cr, priv->width, 0);
+      cairo_line_to (cr, priv->width - side, 0);
+      cairo_line_to (cr, priv->width, side);
+      cairo_line_to (cr, priv->width, 0);
 
       gimp_cairo_set_source_rgb (cr, &priv->config->out_of_gamut_color);
       cairo_fill (cr);
     }
 
-  if (area->draw_border)
+  if (priv->draw_border)
     {
       GdkRGBA color;
 
@@ -462,7 +476,8 @@ gimp_color_area_draw (GtkWidget *widget,
                                    &color);
       gdk_cairo_set_source_rgba (cr, &color);
 
-      cairo_rectangle (cr, 0.5, 0.5, area->width - 1, area->height - 1);
+      cairo_rectangle (cr, 0.5, 0.5, priv->width - 1, priv->height - 1);
+
       cairo_stroke (cr);
     }
 
@@ -505,15 +520,19 @@ void
 gimp_color_area_set_color (GimpColorArea *area,
                            const GimpRGB *color)
 {
+  GimpColorAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgba_distance (&area->color, color) < 0.000001)
+  priv = GET_PRIVATE (area);
+
+  if (gimp_rgba_distance (&priv->color, color) < 0.000001)
     return;
 
-  area->color = *color;
+  priv->color = *color;
 
-  area->needs_render = TRUE;
+  priv->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (area));
 
   g_object_notify (G_OBJECT (area), "color");
@@ -532,10 +551,14 @@ void
 gimp_color_area_get_color (GimpColorArea *area,
                            GimpRGB       *color)
 {
+  GimpColorAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
   g_return_if_fail (color != NULL);
 
-  *color = area->color;
+  priv = GET_PRIVATE (area);
+
+  *color = priv->color;
 }
 
 /**
@@ -550,9 +573,13 @@ gimp_color_area_get_color (GimpColorArea *area,
 gboolean
 gimp_color_area_has_alpha (GimpColorArea *area)
 {
+  GimpColorAreaPrivate *priv;
+
   g_return_val_if_fail (GIMP_IS_COLOR_AREA (area), FALSE);
 
-  return area->type != GIMP_COLOR_AREA_FLAT;
+  priv = GET_PRIVATE (area);
+
+  return priv->type != GIMP_COLOR_AREA_FLAT;
 }
 
 /**
@@ -568,13 +595,17 @@ void
 gimp_color_area_set_type (GimpColorArea     *area,
                           GimpColorAreaType  type)
 {
+  GimpColorAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
-  if (area->type != type)
-    {
-      area->type = type;
+  priv = GET_PRIVATE (area);
 
-      area->needs_render = TRUE;
+  if (priv->type != type)
+    {
+      priv->type = type;
+
+      priv->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (area));
 
       g_object_notify (G_OBJECT (area), "type");
@@ -594,13 +625,17 @@ void
 gimp_color_area_set_draw_border (GimpColorArea *area,
                                  gboolean       draw_border)
 {
+  GimpColorAreaPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_AREA (area));
+
+  priv = GET_PRIVATE (area);
 
   draw_border = draw_border ? TRUE : FALSE;
 
-  if (area->draw_border != draw_border)
+  if (priv->draw_border != draw_border)
     {
-      area->draw_border = draw_border;
+      priv->draw_border = draw_border;
 
       gtk_widget_queue_draw (GTK_WIDGET (area));
 
@@ -810,27 +845,30 @@ gimp_color_area_render_buf (GtkWidget         *widget,
 static void
 gimp_color_area_render (GimpColorArea *area)
 {
-  if (! area->buf)
+  GimpColorAreaPrivate *priv = GET_PRIVATE (area);
+
+  if (! priv->buf)
     return;
 
   gimp_color_area_render_buf (GTK_WIDGET (area),
                               ! gtk_widget_is_sensitive (GTK_WIDGET (area)),
-                              area->type,
-                              area->buf,
-                              area->width, area->height, area->rowstride,
-                              &area->color);
+                              priv->type,
+                              priv->buf,
+                              priv->width, priv->height, priv->rowstride,
+                              &priv->color);
 
-  area->needs_render = FALSE;
+  priv->needs_render = FALSE;
 }
 
 static void
 gimp_color_area_drag_begin (GtkWidget      *widget,
                             GdkDragContext *context)
 {
-  GimpRGB    color;
-  GtkWidget *window;
-  GtkWidget *frame;
-  GtkWidget *color_area;
+  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+  GimpRGB               color;
+  GtkWidget            *window;
+  GtkWidget            *frame;
+  GtkWidget            *color_area;
 
   window = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DND);
@@ -844,9 +882,7 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
 
   gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &color);
 
-  color_area = gimp_color_area_new (&color,
-                                    GIMP_COLOR_AREA (widget)->type,
-                                    0);
+  color_area = gimp_color_area_new (&color, priv->type, 0);
 
   gtk_widget_set_size_request (color_area,
                                DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
@@ -909,17 +945,17 @@ gimp_color_area_drag_data_get (GtkWidget        *widget,
                                guint             info,
                                guint             time)
 {
-  GimpColorArea *area = GIMP_COLOR_AREA (widget);
-  guint16        vals[4];
+  GimpColorAreaPrivate *priv = GET_PRIVATE (widget);
+  guint16               vals[4];
 
-  vals[0] = area->color.r * 0xffff;
-  vals[1] = area->color.g * 0xffff;
-  vals[2] = area->color.b * 0xffff;
+  vals[0] = priv->color.r * 0xffff;
+  vals[1] = priv->color.g * 0xffff;
+  vals[2] = priv->color.b * 0xffff;
 
-  if (area->type == GIMP_COLOR_AREA_FLAT)
+  if (priv->type == GIMP_COLOR_AREA_FLAT)
     vals[3] = 0xffff;
   else
-    vals[3] = area->color.a * 0xffff;
+    vals[3] = priv->color.a * 0xffff;
 
   gtk_selection_data_set (selection_data,
                           gdk_atom_intern ("application/x-color", FALSE),
