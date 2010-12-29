@@ -1038,7 +1038,7 @@ view_unrealize (GtkWidget *widget)
 {
   if (busy_cursor)
     {
-      gdk_cursor_unref (busy_cursor);
+      g_object_unref (busy_cursor);
       busy_cursor = NULL;
     }
 }

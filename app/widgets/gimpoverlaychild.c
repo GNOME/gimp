@@ -185,7 +185,7 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
   gdk_offscreen_window_set_embedder (child->window,
                                      gtk_widget_get_window (widget));
 
-  gdk_cursor_unref (attributes.cursor);
+  g_object_unref (attributes.cursor);
 
   g_signal_connect (child->window, "from-embedder",
                     G_CALLBACK (gimp_overlay_child_from_embedder),

@@ -1469,7 +1469,7 @@ design_area_realize (GtkWidget *widget)
   GdkCursor  *cursor  = gdk_cursor_new_for_display (display,
                                                     cursors[ifsDesign->op]);
   gdk_window_set_cursor (gtk_widget_get_window (widget), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 }
 
 static gboolean
