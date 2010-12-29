@@ -32,6 +32,7 @@
 #include "gimppickbutton.h"
 #include "gimppickbutton-default.h"
 #include "gimppickbutton-kwin.h"
+#include "gimppickbutton-private.h"
 
 #ifdef GDK_WINDOWING_QUARTZ
 #include "gimppickbutton-quartz.h"
@@ -55,6 +56,7 @@ enum
   COLOR_PICKED,
   LAST_SIGNAL
 };
+
 
 static void       gimp_pick_button_dispose         (GObject        *object);
 
@@ -96,12 +98,18 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
   button_class->clicked = gimp_pick_button_clicked;
 
   klass->color_picked   = NULL;
+
+  g_type_class_add_private (object_class, sizeof (GimpPickButtonPrivate));
 }
 
 static void
 gimp_pick_button_init (GimpPickButton *button)
 {
   GtkWidget *image;
+
+  button->priv = G_TYPE_INSTANCE_GET_PRIVATE (button,
+                                              GIMP_TYPE_PICK_BUTTON,
+                                              GimpPickButtonPrivate);
 
   image = gtk_image_new_from_icon_name (GIMP_ICON_COLOR_PICK_FROM_SCREEN,
                                         GTK_ICON_SIZE_BUTTON);
@@ -119,16 +127,16 @@ gimp_pick_button_dispose (GObject *object)
 {
   GimpPickButton *button = GIMP_PICK_BUTTON (object);
 
-  if (button->cursor)
+  if (button->priv->cursor)
     {
-      g_object_unref (button->cursor);
-      button->cursor = NULL;
+      g_object_unref (button->priv->cursor);
+      button->priv->cursor = NULL;
     }
 
-  if (button->grab_widget)
+  if (button->priv->grab_widget)
     {
-      gtk_widget_destroy (button->grab_widget);
-      button->grab_widget = NULL;
+      gtk_widget_destroy (button->priv->grab_widget);
+      button->priv->grab_widget = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
