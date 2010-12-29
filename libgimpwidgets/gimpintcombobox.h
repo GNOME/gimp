@@ -41,20 +41,21 @@ typedef struct _GimpIntComboBoxClass  GimpIntComboBoxClass;
 
 struct _GimpIntComboBox
 {
-  GtkComboBox       parent_instance;
+  GtkComboBox parent_instance;
 
   /*< private >*/
-  gpointer          priv;
-
-  /* Padding for future expansion (should have gone to the class) */
-  void (* _gimp_reserved2) (void);
-  void (* _gimp_reserved3) (void);
-  void (* _gimp_reserved4) (void);
+  gpointer    priv;
 };
 
 struct _GimpIntComboBoxClass
 {
   GtkComboBoxClass  parent_class;
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 
