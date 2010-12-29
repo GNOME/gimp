@@ -1438,7 +1438,7 @@ main_dialog (GimpDrawable *drawable)
     cursor = gdk_cursor_new_for_display (gtk_widget_get_display (previewarea),
                                          GDK_HAND2);
     gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-    gdk_cursor_unref (cursor);
+    g_object_unref (cursor);
   }
 
   image_setup (drawable, TRUE);

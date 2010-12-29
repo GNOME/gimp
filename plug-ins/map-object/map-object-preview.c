@@ -292,13 +292,13 @@ compute_preview_image (void)
 
   cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
   gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 
   compute_preview (0, 0, width - 1, height - 1, pw, ph);
 
   cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
   gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 }
 
 gboolean
@@ -314,6 +314,9 @@ preview_expose (GtkWidget      *widget,
   ph = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
+
+  if (pw != PREVIEW_WIDTH || ph != PREVIEW_HEIGHT)
+    gdk_window_clear (gtk_widget_get_window (previewarea));
 
   cairo_set_source_surface (cr, preview_surface, startx, starty);
   cairo_rectangle (cr, startx, starty, pw, ph);

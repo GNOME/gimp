@@ -245,7 +245,7 @@ print_preview_unrealize (GtkWidget *widget)
   PrintPreview *preview = PRINT_PREVIEW (widget);
 
   if (preview->cursor)
-    gdk_cursor_unref (preview->cursor);
+    g_object_unref (preview->cursor);
 
   GTK_WIDGET_CLASS (print_preview_parent_class)->unrealize (widget);
 }
@@ -347,7 +347,7 @@ print_preview_button_press_event (GtkWidget      *widget,
           preview->dragging = TRUE;
         }
 
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
     }
 
   return FALSE;

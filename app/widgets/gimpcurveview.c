@@ -782,7 +782,7 @@ set_cursor (GimpCurveView *view,
       GdkCursor  *cursor  = gdk_cursor_new_for_display (display, new_cursor);
 
       gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (view)), cursor);
-      gdk_cursor_unref (cursor);
+      g_object_unref (cursor);
 
       view->cursor_type = new_cursor;
     }

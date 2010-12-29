@@ -964,7 +964,7 @@ build_dialog (gchar             *imagename)
   cursor = gdk_cursor_new_for_display (gtk_widget_get_display (shape_window),
                                        GDK_HAND2);
   gdk_window_set_cursor (gtk_widget_get_window (shape_window), cursor);
-  gdk_cursor_unref (cursor);
+  g_object_unref (cursor);
 
   g_signal_connect(shape_drawing_area, "size-allocate",
                    G_CALLBACK(sda_size_callback),
