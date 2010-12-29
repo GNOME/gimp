@@ -1,0 +1,69 @@
+/* GIMP theme css file */
+
+* {
+/*
+  stock["gtk-dialog-error"] =
+    {
+      { "images/stock-error-64.png", *, *, "gtk-dialog" }
+    }
+  stock["gtk-dialog-info"] =
+    {
+      { "images/stock-info-64.png", *, *, "gtk-dialog" }
+    }
+  stock["gtk-dialog-question"] =
+    {
+      { "images/stock-question-64.png", *, *, "gtk-dialog" }
+    }
+  stock["gtk-dialog-warning"] =
+    {
+      { "images/stock-warning-64.png", *, *, "gtk-dialog" }
+    }
+*/
+
+  -GtkPaned-handle-size:             6;
+  -GimpDockWindow-default-height:    300;
+  -GimpDock-font-scale:              0.8333;
+  -GimpMenuDock-minimal-width:       200;
+  -GimpDockWindow-menu-preview-size: button;
+  -GimpToolPalette-tool-icon-size:   button;
+  -GimpToolPalette-button-relief:    none;
+  -GimpDockbook-tab-border:          0;
+  -GimpDockbook-tab-icon-size:       button;
+  -GimpColorNotebook-tab-border:     0;
+  -GimpColorNotebook-tab-icon-size:  button;
+  -GimpDeviceEditor-handle-size:     12;
+  -GimpDockable-content-border:      2;
+  -GimpEditor-content-spacing:       2;
+  -GimpEditor-button-spacing:        2;
+  -GimpEditor-button-icon-size:      menu;
+  -GimpDataEditor-minimal-height:    96;
+  -GtkDialog-content-area-border:    0;
+  -GtkDialog-button-spacing:         6;
+  -GtkDialog-action-area-border:     12;
+  -GimpUnitComboBox-appears-as-list: 0;
+}
+
+GimpToolDialog {
+  -GtkDialog-action-area-border: 6;
+}
+
+GimpDockable {
+  -GimpFrame-label-bold:       0;
+  -GimpFrame-label-spacing:    2;
+  -GtkButton-focus-line-width: 1;
+  -GtkButton-focus-padding:    0;
+}
+
+GimpDisplayShell {
+  -GimpRuler-font-scale:          0.8333;
+  -GimpUnitComboBox-label-scale:  0.8333;
+  -GimpScaleComboBox-label-scale: 0.8333;
+  -GtkComboBox-arrow-size:        8;
+  -GtkButton-inner-border:        0 0 0 0;
+  -GtkButton-focus-line_width:    0;
+  -GtkButton-focus-padding:       0;
+}
+
+GimpOverlayFrame {
+  -GtkButton-focus-line-width: 1;
+}
