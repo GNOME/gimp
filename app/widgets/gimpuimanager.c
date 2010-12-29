@@ -23,7 +23,6 @@
 #include <string.h>
 
 #include <gegl.h>
-#undef GSEAL_ENABLE
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -959,7 +958,9 @@ gimp_ui_manager_item_key_press (GtkWidget     *widget,
 
   while (! help_id)
     {
-      GtkWidget *menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
+      GtkWidget *menu_item;
+
+      menu_item = gtk_menu_shell_get_selected_item (GTK_MENU_SHELL (widget));
 
       if (! menu_item && GTK_IS_MENU (widget))
         {
