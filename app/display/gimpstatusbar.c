@@ -377,33 +377,50 @@ gimp_statusbar_hbox_style_updated (GtkWidget     *widget,
 
   /*  also consider the children which can be invisible  */
 
-  gtk_widget_get_preferred_size (statusbar->cursor_label,
-                                 &child_requisition, NULL);
-  width += child_requisition.width;
-  height = MAX (height, child_requisition.height);
+  if (statusbar->cursor_label)
+    {
+      gtk_widget_get_preferred_size (statusbar->cursor_label,
+                                     &child_requisition, NULL);
+      width += child_requisition.width;
+      height = MAX (height, child_requisition.height);
+    }
 
-  gtk_widget_get_preferred_size (statusbar->unit_combo,
-                                 &child_requisition, NULL);
-  width += child_requisition.width;
-  height = MAX (height, child_requisition.height);
+  if (statusbar->unit_combo)
+    {
+      gtk_widget_get_preferred_size (statusbar->unit_combo,
+                                     &child_requisition, NULL);
+      width += child_requisition.width;
+      height = MAX (height, child_requisition.height);
+    }
 
-  gtk_widget_get_preferred_size (statusbar->scale_combo,
-                                 &child_requisition, NULL);
-  width += child_requisition.width;
-  height = MAX (height, child_requisition.height);
+  if (statusbar->scale_combo)
+    {
+      gtk_widget_get_preferred_size (statusbar->scale_combo,
+                                     &child_requisition, NULL);
+      width += child_requisition.width;
+      height = MAX (height, child_requisition.height);
+    }
 
-  gtk_widget_get_preferred_size (statusbar->progressbar,
-                                 &child_requisition, NULL);
-  height = MAX (height, child_requisition.height);
+  if (statusbar->progressbar)
+    {
+      gtk_widget_get_preferred_size (statusbar->progressbar,
+                                     &child_requisition, NULL);
+      height = MAX (height, child_requisition.height);
+    }
 
-  gtk_widget_get_preferred_size (statusbar->label,
-                                 &child_requisition, NULL);
-  requisition->height = MAX (requisition->height,
-                             child_requisition.height);
+  if (statusbar->label)
+    {
+      gtk_widget_get_preferred_size (statusbar->label,
+                                     &child_requisition, NULL);
+      height = MAX (height, child_requisition.height);
+    }
 
-  gtk_widget_get_preferred_size (statusbar->cancel_button,
-                                 &child_requisition, NULL);
-  height = MAX (height, child_requisition.height);
+  if (statusbar->cancel_button)
+    {
+      gtk_widget_get_preferred_size (statusbar->cancel_button,
+                                     &child_requisition, NULL);
+      height = MAX (height, child_requisition.height);
+    }
 
   width = MAX (requisition.width, width + 32);
 

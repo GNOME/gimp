@@ -210,28 +210,32 @@ gimp_scale_combo_box_finalize (GObject *object)
 static void
 gimp_scale_combo_box_style_updated (GtkWidget *widget)
 {
-  GtkWidget            *entry;
-  PangoContext         *context;
-  PangoFontDescription *font_desc;
-  gint                  font_size;
-  gdouble               label_scale;
+  GtkWidget *entry;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gtk_widget_style_get (widget, "label-scale", &label_scale, NULL);
-
   entry = gtk_bin_get_child (GTK_BIN (widget));
 
-  context = gtk_widget_get_pango_context (entry);
-  font_desc = pango_context_get_font_description (context);
-  font_desc = pango_font_description_copy (font_desc);
+  if (entry)
+    {
+      PangoContext         *context;
+      PangoFontDescription *font_desc;
+      gint                  font_size;
+      gdouble               scale;
 
-  font_size = pango_font_description_get_size (font_desc);
-  pango_font_description_set_size (font_desc, scale * font_size);
+      gtk_widget_style_get (widget, "label-scale", &scale, NULL);
 
-  gtk_widget_override_font (entry, font_desc);
+      context = gtk_widget_get_pango_context (entry);
+      font_desc = pango_context_get_font_description (context);
+      font_desc = pango_font_description_copy (font_desc);
 
-  pango_font_description_free (font_desc);
+      font_size = pango_font_description_get_size (font_desc);
+      pango_font_description_set_size (font_desc, scale * font_size);
+
+      gtk_widget_override_font (entry, font_desc);
+
+      pango_font_description_free (font_desc);
+    }
 }
 
 static void
