@@ -10476,7 +10476,7 @@ msgstr "Opties voor samenvoegen lagen"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:72
 msgid "_Merge"
-msgstr "_Samevoegen"
+msgstr "_Samenvoegen"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:92
 msgid "Final, Merged Layer should be:"
