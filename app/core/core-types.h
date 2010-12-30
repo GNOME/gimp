@@ -21,6 +21,8 @@
 
 #include "libgimpmodule/gimpmoduletypes.h"
 #include "libgimpthumb/gimpthumb-types.h"
+#include "libgimpmath/gimpmathtypes.h"
+#include "libgimpmath/gimpvector.h"
 
 #include "base/base-types.h"
 
@@ -174,6 +176,7 @@ typedef struct _GimpTagged          GimpTagged;      /* dummy typedef */
 /*  non-object types  */
 
 typedef struct _GimpArea            GimpArea;
+typedef struct _GimpCagePoint       GimpCagePoint;
 typedef struct _GimpCoords          GimpCoords;
 typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
@@ -201,6 +204,14 @@ typedef void     (* GimpImageMapApplyFunc) (gpointer          apply_data,
 
 /*  structs  */
 
+struct _GimpCagePoint
+{
+  GimpVector2 src_point;
+  GimpVector2 dest_point;
+  GimpVector2 edge_normal;
+  gdouble     edge_scaling_factor;
+};
+
 struct _GimpCoords
 {
   gdouble x;
@@ -212,7 +223,6 @@ struct _GimpCoords
   gdouble velocity;
   gdouble direction;
 };
-
 
 #include "gegl/gimp-gegl-types.h"
 #include "paint/paint-types.h"

@@ -221,8 +221,8 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
                   GimpVector2 v1,v2,a,b,p;
                   gdouble BA,SRT,L0,L1,A0,A1,A10,L10, Q,S,R, absa;
 
-                  v1 = config->cage_vertices[j];
-                  v2 = config->cage_vertices[(j+1)%config->n_cage_vertices];
+                  v1 = config->cage_points[j].src_point;
+                  v2 = config->cage_points[(j+1)%config->n_cage_vertices].src_point;
                   p.x = x;
                   p.y = y;
                   a.x = v2.x - v1.x;

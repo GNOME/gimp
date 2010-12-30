@@ -44,10 +44,7 @@ struct _GimpCageConfig
   gint                offset_x;
   gint                offset_y;
 
-  GimpVector2        *cage_vertices;   /* cage before deformation */
-  GimpVector2        *cage_vertices_d; /* cage after deformation  */
-  gdouble            *scaling_factor;
-  GimpVector2        *normal_d;
+  GimpCagePoint      *cage_points;
 };
 
 struct _GimpCageConfigClass
@@ -55,26 +52,24 @@ struct _GimpCageConfigClass
   GimpImageMapConfigClass  parent_class;
 };
 
-GType         gimp_cage_config_get_type               (void) G_GNUC_CONST;
+GType           gimp_cage_config_get_type               (void) G_GNUC_CONST;
 
-void          gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
-                                                       gdouble          x,
-                                                       gdouble          y);
-void          gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
-void          gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
-                                                       GimpCageMode     mode,
-                                                       gint             point_number,
-                                                       gdouble          x,
-                                                       gdouble          y);
-GeglRectangle gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc);
-void          gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
-void          gimp_cage_config_reverse_cage           (GimpCageConfig  *gcc);
-gboolean      gimp_cage_config_point_inside           (GimpCageConfig  *gcc,
-                                                       gfloat           x,
-                                                       gfloat           y);
-GimpVector2*  gimp_cage_config_get_cage_point         (GimpCageConfig  *gcc,
-                                                       GimpCageMode     mode);
-void          gimp_cage_config_commit_cage_point      (GimpCageConfig  *gcc,
-                                                       GimpCageMode     mode,
-                                                       GimpVector2     *points);
+void            gimp_cage_config_add_cage_point         (GimpCageConfig  *gcc,
+                                                         gdouble          x,
+                                                         gdouble          y);
+void            gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc);
+void            gimp_cage_config_move_cage_point        (GimpCageConfig  *gcc,
+                                                         GimpCageMode     mode,
+                                                         gint             point_number,
+                                                         gdouble          x,
+                                                         gdouble          y);
+GeglRectangle   gimp_cage_config_get_bounding_box       (GimpCageConfig  *gcc);
+void            gimp_cage_config_reverse_cage_if_needed (GimpCageConfig  *gcc);
+void            gimp_cage_config_reverse_cage           (GimpCageConfig  *gcc);
+gboolean        gimp_cage_config_point_inside           (GimpCageConfig  *gcc,
+                                                         gfloat           x,
+                                                         gfloat           y);
+GimpCagePoint*  gimp_cage_config_get_cage_points        (GimpCageConfig  *gcc);
+void            gimp_cage_config_commit_cage_points     (GimpCageConfig  *gcc,
+                                                         GimpCagePoint   *points);
 #endif /* __GIMP_CAGE_CONFIG_H__ */

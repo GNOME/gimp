@@ -56,7 +56,7 @@ struct _GimpCageTool
 
   GimpImageMap   *image_map;
 
-  GimpVector2    *cage_backup;
+  GimpCagePoint  *cage_backup;
 };
 
 struct _GimpCageToolClass
