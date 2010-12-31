@@ -685,7 +685,7 @@ load_dialog (const gchar *filename)
   gtk_table_attach_defaults (GTK_TABLE (table2), constrain, 1, 2, 0, 2);
   gtk_widget_show (constrain);
 
-  gimp_help_set_help_data (GIMP_CHAIN_BUTTON (constrain)->button,
+  gimp_help_set_help_data (gimp_chain_button_get_button (GIMP_CHAIN_BUTTON (constrain)),
                            _("Constrain aspect ratio"), NULL);
 
   gtk_widget_show (table2);
