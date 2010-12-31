@@ -49,16 +49,7 @@ typedef struct _GimpColorButtonClass  GimpColorButtonClass;
 
 struct _GimpColorButton
 {
-  GimpButton      parent_instance;
-
-  gchar          *title;
-  gboolean        continuous_update;
-
-  GtkWidget      *color_area;
-  GtkWidget      *dialog;
-
-  /*< private >*/
-  gpointer        popup_menu;
+  GimpButton  parent_instance;
 };
 
 struct _GimpColorButtonClass
@@ -72,6 +63,7 @@ struct _GimpColorButtonClass
   GType (* get_action_type) (GimpColorButton *button);
 
   /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
   void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
