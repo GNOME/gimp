@@ -41,12 +41,7 @@ typedef struct _GimpCellRendererColorClass GimpCellRendererColorClass;
 
 struct _GimpCellRendererColor
 {
-  GtkCellRenderer       parent_instance;
-
-  GimpRGB               color;
-  gboolean              opaque;
-  GtkIconSize           size;
-  gint                  border;
+  GtkCellRenderer  parent_instance;
 };
 
 struct _GimpCellRendererColorClass
