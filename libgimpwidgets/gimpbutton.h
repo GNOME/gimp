@@ -43,10 +43,7 @@ typedef struct _GimpButtonClass  GimpButtonClass;
 
 struct _GimpButton
 {
-  GtkButton        parent_instance;
-
-  /*< private >*/
-  GdkModifierType  press_state;
+  GtkButton  parent_instance;
 };
 
 struct _GimpButtonClass
