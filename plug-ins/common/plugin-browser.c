@@ -393,7 +393,7 @@ browser_search (GimpBrowser   *gimp_browser,
         }
     }
 
-  gtk_label_set_text (GTK_LABEL (gimp_browser->count_label), str);
+  gimp_browser_set_search_summary (gimp_browser, str);
   g_free (str);
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (browser->list_view));
@@ -568,7 +568,7 @@ browser_dialog_new (void)
   /* left = notebook */
 
   notebook = gtk_notebook_new ();
-  gtk_box_pack_start (GTK_BOX (GIMP_BROWSER (browser->browser)->left_vbox),
+  gtk_box_pack_start (GTK_BOX (gimp_browser_get_left_vbox (GIMP_BROWSER (browser->browser))),
                       notebook, TRUE, TRUE, 0);
 
   /* list : list in a scrolled_win */
@@ -706,7 +706,7 @@ browser_dialog_new (void)
   gtk_widget_show (scrolled_window);
   gtk_widget_show (notebook);
 
-  parent = gtk_widget_get_parent (GIMP_BROWSER (browser->browser)->right_vbox);
+  parent = gtk_widget_get_parent (gimp_browser_get_right_vbox (GIMP_BROWSER (browser->browser)));
   parent = gtk_widget_get_parent (parent);
 
   gtk_widget_set_size_request (parent, DBL_WIDTH - DBL_LIST_WIDTH, -1);
