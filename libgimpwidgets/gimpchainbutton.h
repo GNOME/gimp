@@ -45,19 +45,11 @@ G_BEGIN_DECLS
 #define GIMP_CHAIN_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
 
 
-typedef struct _GimpChainButtonClass  GimpChainButtonClass;
+typedef struct _GimpChainButtonClass GimpChainButtonClass;
 
 struct _GimpChainButton
 {
-  GtkTable           parent_instance;
-
-  GimpChainPosition  position;
-  gboolean           active;
-
-  GtkWidget         *button;
-  GtkWidget         *line1;
-  GtkWidget         *line2;
-  GtkWidget         *image;
+  GtkTable  parent_instance;
 };
 
 struct _GimpChainButtonClass
@@ -81,6 +73,8 @@ GtkWidget * gimp_chain_button_new        (GimpChainPosition  position);
 void        gimp_chain_button_set_active (GimpChainButton   *button,
                                           gboolean           active);
 gboolean    gimp_chain_button_get_active (GimpChainButton   *button);
+
+GtkWidget * gimp_chain_button_get_button (GimpChainButton   *button);
 
 
 G_END_DECLS
