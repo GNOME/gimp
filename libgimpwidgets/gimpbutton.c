@@ -47,6 +47,18 @@ enum
 };
 
 
+typedef struct _GimpButtonPrivate GimpButtonPrivate;
+
+struct _GimpButtonPrivate
+{
+  GdkModifierType  press_state;
+};
+
+#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                                      GIMP_TYPE_BUTTON, \
+                                                      GimpButtonPrivate)
+
+
 static gboolean   gimp_button_button_press (GtkWidget      *widget,
                                             GdkEventButton *event);
 static void       gimp_button_clicked      (GtkButton      *button);
@@ -62,6 +74,7 @@ static guint button_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_button_class_init (GimpButtonClass *klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
@@ -86,12 +99,16 @@ gimp_button_class_init (GimpButtonClass *klass)
   widget_class->button_press_event = gimp_button_button_press;
 
   button_class->clicked            = gimp_button_clicked;
+
+  g_type_class_add_private (object_class, sizeof (GimpButtonPrivate));
 }
 
 static void
 gimp_button_init (GimpButton *button)
 {
-  button->press_state = 0;
+  GimpButtonPrivate *private = GET_PRIVATE (button);
+
+  private->press_state = 0;
 }
 
 /**
@@ -127,15 +144,15 @@ static gboolean
 gimp_button_button_press (GtkWidget      *widget,
                           GdkEventButton *bevent)
 {
-  GimpButton *button = GIMP_BUTTON (widget);
+  GimpButtonPrivate *private = GET_PRIVATE (widget);
 
   if (bevent->button == 1)
     {
-      button->press_state = bevent->state;
+      private->press_state = bevent->state;
     }
   else
     {
-      button->press_state = 0;
+      private->press_state = 0;
     }
 
   return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
@@ -144,7 +161,9 @@ gimp_button_button_press (GtkWidget      *widget,
 static void
 gimp_button_clicked (GtkButton *button)
 {
-  if (GIMP_BUTTON (button)->press_state &
+  GimpButtonPrivate *private = GET_PRIVATE (button);
+
+  if (private->press_state &
       (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK |
        gtk_widget_get_modifier_mask (GTK_WIDGET (button),
                                      GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR) |
@@ -155,8 +174,7 @@ gimp_button_clicked (GtkButton *button)
     {
       g_signal_stop_emission_by_name (button, "clicked");
 
-      gimp_button_extended_clicked (GIMP_BUTTON (button),
-                                    GIMP_BUTTON (button)->press_state);
+      gimp_button_extended_clicked (GIMP_BUTTON (button), private->press_state);
     }
   else if (GTK_BUTTON_CLASS (parent_class)->clicked)
     {
