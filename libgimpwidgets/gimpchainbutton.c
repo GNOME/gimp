@@ -63,6 +63,25 @@ enum
   LAST_SIGNAL
 };
 
+
+typedef struct _GimpChainButtonPrivate GimpChainButtonPrivate;
+
+struct _GimpChainButtonPrivate
+{
+  GimpChainPosition  position;
+  gboolean           active;
+
+  GtkWidget         *button;
+  GtkWidget         *line1;
+  GtkWidget         *line2;
+  GtkWidget         *image;
+};
+
+#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                                      GIMP_TYPE_CHAIN_BUTTON, \
+                                                      GimpChainButtonPrivate)
+
+
 static void      gimp_chain_button_constructed      (GObject         *object);
 static void      gimp_chain_button_set_property     (GObject         *object,
                                                      guint            property_id,
@@ -129,21 +148,25 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
                                                       GIMP_CHAIN_TOP,
                                                       G_PARAM_CONSTRUCT_ONLY |
                                                       GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (object_class, sizeof (GimpChainButtonPrivate));
 }
 
 static void
 gimp_chain_button_init (GimpChainButton *button)
 {
-  button->position = GIMP_CHAIN_TOP;
-  button->active   = FALSE;
-  button->image    = gtk_image_new ();
-  button->button   = gtk_button_new ();
+  GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
-  gtk_button_set_relief (GTK_BUTTON (button->button), GTK_RELIEF_NONE);
-  gtk_container_add (GTK_CONTAINER (button->button), button->image);
-  gtk_widget_show (button->image);
+  private->position = GIMP_CHAIN_TOP;
+  private->active   = FALSE;
+  private->image    = gtk_image_new ();
+  private->button   = gtk_button_new ();
 
-  g_signal_connect (button->button, "clicked",
+  gtk_button_set_relief (GTK_BUTTON (private->button), GTK_RELIEF_NONE);
+  gtk_container_add (GTK_CONTAINER (private->button), private->image);
+  gtk_widget_show (private->image);
+
+  g_signal_connect (private->button, "clicked",
                     G_CALLBACK (gimp_chain_button_clicked_callback),
                     button);
 }
@@ -151,39 +174,40 @@ gimp_chain_button_init (GimpChainButton *button)
 static void
 gimp_chain_button_constructed (GObject *object)
 {
-  GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
+  GimpChainButton        *button  = GIMP_CHAIN_BUTTON (object);
+  GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  button->line1 = gimp_chain_line_new (button->position, 1);
-  button->line2 = gimp_chain_line_new (button->position, -1);
+  private->line1 = gimp_chain_line_new (private->position, 1);
+  private->line2 = gimp_chain_line_new (private->position, -1);
 
   gimp_chain_button_update_image (button);
 
-  if (button->position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
+  if (private->position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
       gtk_table_resize (GTK_TABLE (button), 3, 1);
-      gtk_table_attach (GTK_TABLE (button), button->button, 0, 1, 1, 2,
+      gtk_table_attach (GTK_TABLE (button), private->button, 0, 1, 1, 2,
                         GTK_SHRINK, GTK_SHRINK, 0, 0);
       gtk_table_attach_defaults (GTK_TABLE (button),
-                                 button->line1, 0, 1, 0, 1);
+                                 private->line1, 0, 1, 0, 1);
       gtk_table_attach_defaults (GTK_TABLE (button),
-                                 button->line2, 0, 1, 2, 3);
+                                 private->line2, 0, 1, 2, 3);
     }
   else
     {
       gtk_table_resize (GTK_TABLE (button), 1, 3);
-      gtk_table_attach (GTK_TABLE (button), button->button, 1, 2, 0, 1,
+      gtk_table_attach (GTK_TABLE (button), private->button, 1, 2, 0, 1,
                         GTK_SHRINK, GTK_SHRINK, 0, 0);
       gtk_table_attach_defaults (GTK_TABLE (button),
-                                 button->line1, 0, 1, 0, 1);
+                                 private->line1, 0, 1, 0, 1);
       gtk_table_attach_defaults (GTK_TABLE (button),
-                                 button->line2, 2, 3, 0, 1);
+                                 private->line2, 2, 3, 0, 1);
     }
 
-  gtk_widget_show (button->button);
-  gtk_widget_show (button->line1);
-  gtk_widget_show (button->line2);
+  gtk_widget_show (private->button);
+  gtk_widget_show (private->line1);
+  gtk_widget_show (private->line2);
 }
 
 static void
@@ -192,12 +216,12 @@ gimp_chain_button_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
+  GimpChainButtonPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_POSITION:
-      button->position = g_value_get_enum (value);
+      private->position = g_value_get_enum (value);
       break;
 
     default:
@@ -212,12 +236,12 @@ gimp_chain_button_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
+  GimpChainButtonPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_POSITION:
-      g_value_set_enum (value, button->position);
+      g_value_set_enum (value, private->position);
       break;
 
     default:
@@ -264,11 +288,15 @@ void
 gimp_chain_button_set_active (GimpChainButton  *button,
                               gboolean          active)
 {
+  GimpChainButtonPrivate *private;
+
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
 
-  if (button->active != active)
+  private = GET_PRIVATE (button);
+
+  if (private->active != active)
     {
-      button->active = active ? TRUE : FALSE;
+      private->active = active ? TRUE : FALSE;
 
       gimp_chain_button_update_image (button);
     }
@@ -285,18 +313,45 @@ gimp_chain_button_set_active (GimpChainButton  *button,
 gboolean
 gimp_chain_button_get_active (GimpChainButton *button)
 {
+  GimpChainButtonPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
 
-  return button->active;
+  private = GET_PRIVATE (button);
+
+  return private->active;
 }
+
+/**
+ * gimp_chain_button_get_button
+ * @button: A #GimpChainButton.
+ *
+ * Returns: The #GimpChainButton's button.
+ *
+ * Since: GIMP 3.0
+ */
+GtkWidget *
+gimp_chain_button_get_button (GimpChainButton *button)
+{
+  GimpChainButtonPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (button), FALSE);
+
+  private = GET_PRIVATE (button);
+
+  return private->button;
+}
+
+
+/*  private functions  */
 
 static void
 gimp_chain_button_clicked_callback (GtkWidget       *widget,
                                     GimpChainButton *button)
 {
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (button));
+  GimpChainButtonPrivate *private = GET_PRIVATE (button);
 
-  gimp_chain_button_set_active (button, ! button->active);
+  gimp_chain_button_set_active (button, ! private->active);
 
   g_signal_emit (button, gimp_chain_button_signals[TOGGLED], 0);
 }
@@ -304,11 +359,12 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
 static void
 gimp_chain_button_update_image (GimpChainButton *button)
 {
-  guint i;
+  GimpChainButtonPrivate *private = GET_PRIVATE (button);
+  guint                   i;
 
-  i = ((button->position & GIMP_CHAIN_LEFT) << 1) + (button->active ? 0 : 1);
+  i = ((private->position & GIMP_CHAIN_LEFT) << 1) + (private->active ? 0 : 1);
 
-  gtk_image_set_from_icon_name (GTK_IMAGE (button->image),
+  gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
                                 gimp_chain_icon_names[i],
                                 GTK_ICON_SIZE_BUTTON);
 }
