@@ -387,7 +387,7 @@ static void
 gimp_color_display_stack_display_changed (GimpColorDisplay      *display,
                                           GimpColorDisplayStack *stack)
 {
-  if (display->enabled)
+  if (gimp_color_display_get_enabled (display))
     gimp_color_display_stack_changed (stack);
 }
 
