@@ -41,11 +41,7 @@ typedef struct _GimpCellRendererToggleClass GimpCellRendererToggleClass;
 
 struct _GimpCellRendererToggle
 {
-  GtkCellRendererToggle       parent_instance;
-
-  gchar                      *stock_id;
-  GtkIconSize                 stock_size;
-  GdkPixbuf                  *pixbuf;
+  GtkCellRendererToggle  parent_instance;
 };
 
 struct _GimpCellRendererToggleClass
