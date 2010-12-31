@@ -62,8 +62,12 @@ typedef struct _GimpCellRendererTogglePrivate GimpCellRendererTogglePrivate;
 
 struct _GimpCellRendererTogglePrivate
 {
-  gchar    *icon_name;
-  gboolean  override_background;
+  gchar       *icon_name;
+  gchar       *stock_id;
+  GtkIconSize  stock_size;
+  gboolean     override_background;
+
+  GdkPixbuf   *pixbuf;
 };
 
 #define GET_PRIVATE(obj) \
@@ -178,8 +182,7 @@ gimp_cell_renderer_toggle_init (GimpCellRendererToggle *toggle)
 static void
 gimp_cell_renderer_toggle_finalize (GObject *object)
 {
-  GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
-  GimpCellRendererTogglePrivate *priv   = GET_PRIVATE (object);
+  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   if (priv->icon_name)
     {
@@ -187,16 +190,16 @@ gimp_cell_renderer_toggle_finalize (GObject *object)
       priv->icon_name = NULL;
     }
 
-  if (toggle->stock_id)
+  if (priv->stock_id)
     {
-      g_free (toggle->stock_id);
-      toggle->stock_id = NULL;
+      g_free (priv->stock_id);
+      priv->stock_id = NULL;
     }
 
-  if (toggle->pixbuf)
+  if (priv->pixbuf)
     {
-      g_object_unref (toggle->pixbuf);
-      toggle->pixbuf = NULL;
+      g_object_unref (priv->pixbuf);
+      priv->pixbuf = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -208,8 +211,7 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
                                         GValue     *value,
                                         GParamSpec *pspec)
 {
-  GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
-  GimpCellRendererTogglePrivate *priv   = GET_PRIVATE (object);
+  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   switch (param_id)
     {
@@ -218,11 +220,11 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
       break;
 
     case PROP_STOCK_ID:
-      g_value_set_string (value, toggle->stock_id);
+      g_value_set_string (value, priv->stock_id);
       break;
 
     case PROP_STOCK_SIZE:
-      g_value_set_int (value, toggle->stock_size);
+      g_value_set_int (value, priv->stock_size);
       break;
 
     case PROP_OVERRIDE_BACKGROUND:
@@ -241,8 +243,7 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
                                         const GValue *value,
                                         GParamSpec   *pspec)
 {
-  GimpCellRendererToggle        *toggle = GIMP_CELL_RENDERER_TOGGLE (object);
-  GimpCellRendererTogglePrivate *priv   = GET_PRIVATE (object);
+  GimpCellRendererTogglePrivate *priv = GET_PRIVATE (object);
 
   switch (param_id)
     {
@@ -253,13 +254,13 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
       break;
 
     case PROP_STOCK_ID:
-      if (toggle->stock_id)
-        g_free (toggle->stock_id);
-      toggle->stock_id = g_value_dup_string (value);
+      if (priv->stock_id)
+        g_free (priv->stock_id);
+      priv->stock_id = g_value_dup_string (value);
       break;
 
     case PROP_STOCK_SIZE:
-      toggle->stock_size = g_value_get_int (value);
+      priv->stock_size = g_value_get_int (value);
       break;
 
     case PROP_OVERRIDE_BACKGROUND:
@@ -271,10 +272,10 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
       break;
     }
 
-  if (toggle->pixbuf)
+  if (priv->pixbuf)
     {
-      g_object_unref (toggle->pixbuf);
-      toggle->pixbuf = NULL;
+      g_object_unref (priv->pixbuf);
+      priv->pixbuf = NULL;
     }
 }
 
@@ -300,7 +301,7 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   gint                           xpad;
   gint                           ypad;
 
-  if (! priv->icon_name && ! toggle->stock_id)
+  if (! priv->icon_name && ! priv->stock_id)
     {
       GTK_CELL_RENDERER_CLASS (parent_class)->get_size (cell,
                                                         widget,
@@ -315,11 +316,11 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer    *cell,
   gtk_cell_renderer_get_alignment (cell, &xalign, &yalign);
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
-  if (! toggle->pixbuf)
+  if (! priv->pixbuf)
     gimp_cell_renderer_toggle_create_pixbuf (toggle, widget);
 
-  pixbuf_width  = gdk_pixbuf_get_width  (toggle->pixbuf);
-  pixbuf_height = gdk_pixbuf_get_height (toggle->pixbuf);
+  pixbuf_width  = gdk_pixbuf_get_width  (priv->pixbuf);
+  pixbuf_height = gdk_pixbuf_get_height (priv->pixbuf);
 
   calc_width  = pixbuf_width  + (gint) xpad * 2;
   calc_height = pixbuf_height + (gint) ypad * 2;
@@ -364,7 +365,6 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
                                   const GdkRectangle   *cell_area,
                                   GtkCellRendererState  flags)
 {
-  GimpCellRendererToggle        *toggle  = GIMP_CELL_RENDERER_TOGGLE (cell);
   GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GdkRectangle                   toggle_rect;
@@ -373,7 +373,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   gint                           xpad;
   gint                           ypad;
 
-  if (! priv->icon_name && ! toggle->stock_id)
+  if (! priv->icon_name && ! priv->stock_id)
     {
       GTK_CELL_RENDERER_CLASS (parent_class)->render (cell, cr, widget,
                                                       background_area,
@@ -466,11 +466,11 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
       toggle_rect.width  -= border.left + border.right;
       toggle_rect.height -= border.top + border.bottom;
 
-      gdk_cairo_set_source_pixbuf (cr, toggle->pixbuf,
+      gdk_cairo_set_source_pixbuf (cr, priv->pixbuf,
                                    toggle_rect.x, toggle_rect.y);
       cairo_paint (cr);
 
-      g_object_get (toggle,
+      g_object_get (cell,
                     "inconsistent", &inconsistent,
                     NULL);
 
@@ -527,30 +527,30 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
 {
   GimpCellRendererTogglePrivate *priv = GET_PRIVATE (toggle);
 
-  if (toggle->pixbuf)
-    g_object_unref (toggle->pixbuf);
+  if (priv->pixbuf)
+    g_object_unref (priv->pixbuf);
 
   if (priv->icon_name)
     {
       gint width, height;
 
       if (! gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (widget),
-                                               toggle->stock_size,
+                                               priv->stock_size,
                                                &width, &height))
         {
           width  = 20;
           height = 20;
         }
 
-      toggle->pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                                 priv->icon_name,
-                                                 MIN (width, height), 0, NULL);
+      priv->pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                               priv->icon_name,
+                                               MIN (width, height), 0, NULL);
     }
   else
     {
-      toggle->pixbuf = gtk_widget_render_icon_pixbuf (widget,
-                                                      toggle->stock_id,
-                                                      toggle->stock_size);
+      priv->pixbuf = gtk_widget_render_icon_pixbuf (widget,
+                                                    priv->stock_id,
+                                                    priv->stock_size);
     }
 }
 
