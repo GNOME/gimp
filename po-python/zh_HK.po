@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-30 19:48+0800\n"
-"PO-Revision-Date: 2010-10-30 19:48+0800\n"
+"POT-Creation-Date: 2011-01-01 19:44+0800\n"
+"PO-Revision-Date: 2011-01-01 19:45+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
@@ -58,49 +58,49 @@ msgstr "--%2$s 有無效的數值「%1$s」"
 msgid "Python-Fu Color Selection"
 msgstr "顏色選擇對話盒的標題"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 #, fuzzy
 msgid "Saving as colored XHTML"
 msgstr "儲存時預設建議的檔案名稱"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 #, fuzzy
 msgid "Save as colored XHTML"
 msgstr "將聯絡人儲存為 VCar_d..."
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 #, fuzzy
 msgid "Colored XHTML"
 msgstr "XHTML 1.0 - Tags"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 #, fuzzy
 msgid "Character _source"
 msgstr "來源選項"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 #, fuzzy
 msgid "Source code"
 msgstr "C 源代碼"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
 msgstr "文字檔"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 #, fuzzy
 msgid "Entry box"
 msgstr "組合方塊項目"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 #, fuzzy
 msgid "_Write a separate CSS file"
 msgstr "無法寫入‘%s’檔案：%s"

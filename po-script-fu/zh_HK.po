@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 2.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-30 19:49+0800\n"
-"PO-Revision-Date: 2010-10-30 19:49+0800\n"
+"POT-Creation-Date: 2011-01-01 19:45+0800\n"
+"PO-Revision-Date: 2011-01-01 19:45+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
 "Language: zh_TW\n"
@@ -495,7 +495,6 @@ msgstr "在圖片周圍加上邊框"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 #, fuzzy
-#| msgid "Border size"
 msgid "Border Layer"
 msgstr "邊框大小"
 
@@ -519,14 +518,12 @@ msgstr "顏色的 Delta 數值"
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 #, fuzzy
-#| msgid "_Alien Glow"
 msgid "Alien Glow"
 msgstr "異樣發光(_A)"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 #, fuzzy
-#| msgid "_Arrow..."
 msgid "Arrow"
 msgstr "箭頭(_A)..."
 
@@ -538,7 +535,6 @@ msgstr "箭頭(_A)..."
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #, fuzzy
-#| msgid "Background color"
 msgid "Background"
 msgstr "背景顏色"
 
@@ -627,7 +623,6 @@ msgstr "水平線(_H)..."
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 #, fuzzy
-#| msgid "_Bullet..."
 msgid "Bullet"
 msgstr "小圓球(_B)..."
 
@@ -653,7 +648,6 @@ msgstr "按鈕(_U)..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
 #, fuzzy
-#| msgid "_Buttons"
 msgid "Button"
 msgstr "按鈕(_B)"
 
@@ -1041,14 +1035,12 @@ msgstr "迷彩圖案(_C)..."
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #, fuzzy
-#| msgid "Bevel width"
 msgid "Bevel Highlight"
 msgstr "斜面闊度"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
 #, fuzzy
-#| msgid "Shadow"
 msgid "Bevel Shadow"
 msgstr "陰影"
 
@@ -1064,7 +1056,6 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 #, fuzzy
-#| msgid "Create shadow"
 msgid "Cast Shadow"
 msgstr "產生陰影"
 
@@ -1074,8 +1065,9 @@ msgstr "準備雕刻的圖片"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
+#, fuzzy
 msgid "Inset"
-msgstr ""
+msgstr "相反"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
@@ -1163,7 +1155,6 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #, fuzzy
-#| msgid "C_hrome..."
 msgid "Chrome"
 msgstr "鍍鉻(_H)..."
 
@@ -1194,7 +1185,6 @@ msgstr "將白色區域鍍鉻"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
 #, fuzzy
-#| msgid "Drop shadow"
 msgid "Drop Shadow"
 msgstr "影子"
 
@@ -1207,7 +1197,6 @@ msgstr "環境映射"
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
 #, fuzzy
-#| msgid "Highlight color"
 msgid "Highlight"
 msgstr "高亮度區顏色"
 
@@ -1255,7 +1244,6 @@ msgstr "產生電路圖的隨機數來源數字"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 #, fuzzy
-#| msgid "Separate layer"
 msgid "Effect layer"
 msgstr "使用新圖層"
 
@@ -1331,7 +1319,6 @@ msgstr "僅變暗"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 #, fuzzy
-#| msgid "Stains"
 msgid "Stain"
 msgstr "污漬"
 
@@ -1946,18 +1933,16 @@ msgid "Number of lines"
 msgstr "線條數目"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
-#, fuzzy
 msgid "Offset radius"
-msgstr "模糊半徑(_B)："
+msgstr "偏移半徑"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
 msgstr "隨機程度"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
-#, fuzzy
 msgid "Sharpness (degrees)"
-msgstr "十進位經緯度"
+msgstr "銳利度(度)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "Create a rectangular brush"
@@ -2477,9 +2462,8 @@ msgid "Hole ratio"
 msgstr "壓縮率："
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
-#, fuzzy
 msgid "Inner teeth"
-msgstr "內部框線"
+msgstr "內齒"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
@@ -2492,7 +2476,7 @@ msgstr "頂端邊界（以像素計）"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
-msgstr ""
+msgstr "外齒"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"

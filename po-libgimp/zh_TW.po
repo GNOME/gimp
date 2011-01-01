@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-30 19:47+0800\n"
+"POT-Creation-Date: 2011-01-01 19:42+0800\n"
 "PO-Revision-Date: 2010-10-04 19:57+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional) <community@linuxhall.org>\n"
@@ -275,7 +275,7 @@ msgstr "沒有符合的"
 
 #: ../libgimp/gimpprocbrowserdialog.c:397
 msgid "Search term invalid or incomplete"
-msgstr ""
+msgstr "無效或不完整的搜索字詞"
 
 #: ../libgimp/gimpprocbrowserdialog.c:406
 msgid "Searching"
@@ -390,28 +390,24 @@ msgid "C_hannel"
 msgstr "色版(_H)"
 
 #: ../libgimpbase/gimpbaseenums.c:65
-#, fuzzy
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "前景色至背景色(RGB)"
 
 #: ../libgimpbase/gimpbaseenums.c:66
-#, fuzzy
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
-msgstr "前景色至背景色(HSV 逆時針)"
+msgstr "前景色至背景色(HSV)"
 
 #: ../libgimpbase/gimpbaseenums.c:67
-#, fuzzy
 msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "前景色至透明"
 
 #: ../libgimpbase/gimpbaseenums.c:68
-#, fuzzy
 msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "事件漸層效果"
+msgstr "自定義漸層"
 
 #: ../libgimpbase/gimpbaseenums.c:98
 msgctxt "bucket-fill-mode"
@@ -1194,11 +1190,11 @@ msgstr "網頁標記(_N):"
 
 #: ../libgimpwidgets/gimpfileentry.c:197
 msgid "Open a file selector to browse your folders"
-msgstr ""
+msgstr "打開一個檔案選取器來瀏覽您的資料夾 "
 
 #: ../libgimpwidgets/gimpfileentry.c:198
 msgid "Open a file selector to browse your files"
-msgstr ""
+msgstr "打開一個檔案選取器來瀏覽您的檔案"
 
 #: ../libgimpwidgets/gimpfileentry.c:358
 msgid "Select Folder"
@@ -1355,40 +1351,40 @@ msgstr "行距(_I)"
 msgid "_Resize"
 msgstr "調整尺寸(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:339
+#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
 msgstr "縮放(_S)"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:315
 #, fuzzy
 msgid "Cr_op"
 msgstr "透明度(_A)："
 
-#: ../libgimpwidgets/gimpstock.c:334
+#: ../libgimpwidgets/gimpstock.c:335
 msgid "_Transform"
 msgstr "變換(_T)"
 
-#: ../libgimpwidgets/gimpstock.c:338
+#: ../libgimpwidgets/gimpstock.c:339
 msgid "_Rotate"
 msgstr "旋轉(_R)"
 
-#: ../libgimpwidgets/gimpstock.c:340
+#: ../libgimpwidgets/gimpstock.c:341
 msgid "_Shear"
 msgstr "推移(_S)"
 
-#: ../libgimpwidgets/gimpunitmenu.c:290
+#: ../libgimpwidgets/gimpunitmenu.c:261
 msgid "More..."
 msgstr "其它..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:605
+#: ../libgimpwidgets/gimpunitmenu.c:487
 msgid "Unit Selection"
 msgstr "選擇單位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:654
+#: ../libgimpwidgets/gimpunitmenu.c:536
 msgid "Unit"
 msgstr "單位"
 
-#: ../libgimpwidgets/gimpunitmenu.c:658
+#: ../libgimpwidgets/gimpunitmenu.c:540
 msgid "Factor"
 msgstr "比例"
 
@@ -1607,7 +1603,7 @@ msgstr "黑色 joker"
 
 #: ../modules/color-selector-cmyk.c:188
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "抽出來的彩色油墨中黑色的百分比。"
 
 #: ../modules/color-selector-water.c:81
 msgid "Watercolor style color selector"
@@ -1621,12 +1617,12 @@ msgstr "水彩"
 msgid "Pressure"
 msgstr "壓力"
 
-#: ../modules/color-selector-wheel.c:74
+#: ../modules/color-selector-wheel.c:71
 #, fuzzy
 msgid "HSV color wheel"
 msgstr "色相環的位置。"
 
-#: ../modules/color-selector-wheel.c:105
+#: ../modules/color-selector-wheel.c:102
 msgid "Wheel"
 msgstr "色環"
 
