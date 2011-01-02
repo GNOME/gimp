@@ -333,11 +333,14 @@ gimp_color_dialog_help_func (const gchar *help_id,
 {
   GimpColorDialog   *dialog = GIMP_COLOR_DIALOG (help_data);
   GimpColorNotebook *notebook;
+  GimpColorSelector *current;
 
   notebook =
     GIMP_COLOR_NOTEBOOK (GIMP_COLOR_SELECTION (dialog->selection)->notebook);
 
-  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->help_id;
+  current = gimp_color_notebook_get_current_selector (notebook);
+
+  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (current)->help_id;
 
   gimp_standard_help_func (help_id, NULL);
 }

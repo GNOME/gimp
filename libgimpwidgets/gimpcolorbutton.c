@@ -1051,12 +1051,15 @@ gimp_color_button_help_func (const gchar *help_id,
 {
   GimpColorSelection *selection;
   GimpColorNotebook  *notebook;
+  GimpColorSelector  *current;
 
   selection = g_object_get_data (G_OBJECT (help_data), COLOR_SELECTION_KEY);
 
   notebook = GIMP_COLOR_NOTEBOOK (selection->notebook);
 
-  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->help_id;
+  current = gimp_color_notebook_get_current_selector (notebook);
+
+  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (current)->help_id;
 
   gimp_standard_help_func (help_id, NULL);
 }

@@ -203,7 +203,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   g_signal_connect (selection->notebook, "color-changed",
                     G_CALLBACK (gimp_color_selection_notebook_changed),
                     selection);
-  g_signal_connect (GIMP_COLOR_NOTEBOOK (selection->notebook)->notebook,
+  g_signal_connect (gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (selection->notebook)),
                     "switch-page",
                     G_CALLBACK (gimp_color_selection_switch_page),
                     selection);
@@ -552,10 +552,12 @@ gimp_color_selection_switch_page (GtkWidget          *widget,
                                   GimpColorSelection *selection)
 {
   GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selection->notebook);
+  GimpColorSelector *current;
   gboolean           sensitive;
 
-  sensitive =
-    (GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->set_channel != NULL);
+  current = gimp_color_notebook_get_current_selector (notebook);
+
+  sensitive = (GIMP_COLOR_SELECTOR_GET_CLASS (current)->set_channel != NULL);
 
   gimp_color_selector_set_toggles_sensitive
     (GIMP_COLOR_SELECTOR (selection->scales), sensitive);

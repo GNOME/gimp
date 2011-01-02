@@ -42,16 +42,14 @@ G_BEGIN_DECLS
 #define GIMP_COLOR_NOTEBOOK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_NOTEBOOK, GimpColorNotebookClass))
 
 
-typedef struct _GimpColorNotebookClass GimpColorNotebookClass;
+typedef struct _GimpColorNotebookPrivate GimpColorNotebookPrivate;
+typedef struct _GimpColorNotebookClass   GimpColorNotebookClass;
 
 struct _GimpColorNotebook
 {
-  GimpColorSelector  parent_instance;
+  GimpColorSelector         parent_instance;
 
-  GtkWidget         *notebook;
-
-  GList             *selectors;
-  GimpColorSelector *cur_page;
+  GimpColorNotebookPrivate *priv;
 };
 
 struct _GimpColorNotebookClass
@@ -66,11 +64,15 @@ struct _GimpColorNotebookClass
 };
 
 
-GType       gimp_color_notebook_get_type     (void) G_GNUC_CONST;
+GType               gimp_color_notebook_get_type             (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
-                                              GType              page_type,
-                                              gboolean           has_page);
+GtkWidget         * gimp_color_notebook_set_has_page         (GimpColorNotebook *notebook,
+                                                              GType              page_type,
+                                                              gboolean           has_page);
+
+GtkWidget         * gimp_color_notebook_get_notebook         (GimpColorNotebook *notebook);
+GList             * gimp_color_notebook_get_selectors        (GimpColorNotebook *notebook);
+GimpColorSelector * gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook);
 
 
 G_END_DECLS
