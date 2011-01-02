@@ -82,11 +82,7 @@ struct _GimpColorSelectorClass
 
   const gchar *name;
   const gchar *help_id;
-#ifdef GIMP_DISABLE_DEPRECATED
-  gpointer     deprecated_stock_id;
-#else
-  const gchar *stock_id;
-#endif
+  const gchar *icon_name;
 
   /*  virtual functions  */
   void (* set_toggles_visible)   (GimpColorSelector        *selector,
@@ -112,10 +108,9 @@ struct _GimpColorSelectorClass
   void (* set_config)            (GimpColorSelector        *selector,
                                   GimpColorConfig          *config);
 
-  /*  icon name  */
-  const gchar *icon_name;
-
   /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
 };
