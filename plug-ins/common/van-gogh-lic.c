@@ -29,8 +29,10 @@
  * This plug-in implements the Line Integral Convolution (LIC) as described in
  * Cabral et al. "Imaging vector fields using line integral convolution" in the
  * Proceedings of ACM SIGGRAPH 93. Publ. by ACM, New York, NY, USA. p. 263-270.
- * Some of the code is based on code by Steinar Haugen (thanks!), the Perlin
+ * (See http://www8.cs.umu.se/kurser/TDBD13/VT00/extra/p263-cabral.pdf)
  * noise function is practically ripped as is :)
+ *
+ * Some of the code is based on code by Steinar Haugen (thanks!), the Perlin
  */
 
 #include "config.h"
