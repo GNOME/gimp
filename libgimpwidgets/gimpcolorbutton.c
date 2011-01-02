@@ -1070,16 +1070,18 @@ static void
 gimp_color_button_help_func (const gchar *help_id,
                              gpointer     help_data)
 {
-  GimpColorButton        *button;
-  GimpColorButtonPrivate *priv = GET_PRIVATE (help_data);
-  GimpColorNotebook      *notebook;
+  GimpColorSelection *selection;
+  GimpColorNotebook  *notebook;
+  GimpColorSelector  *current;
 
   button = g_object_get_data (G_OBJECT (help_data), COLOR_BUTTON_KEY);
   priv   = GET_PRIVATE (button);
 
   notebook = GIMP_COLOR_NOTEBOOK (GIMP_COLOR_SELECTION (priv->selection)->notebook);
 
-  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->help_id;
+  current = gimp_color_notebook_get_current_selector (notebook);
+
+  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (current)->help_id;
 
   gimp_standard_help_func (help_id, NULL);
 }
