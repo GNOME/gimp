@@ -42,24 +42,12 @@ typedef struct _GimpColorScaleClass  GimpColorScaleClass;
 
 struct _GimpColorScale
 {
-  GtkScale                  parent_instance;
-
-  /*< private >*/
-  GimpColorSelectorChannel  channel;
-  GimpRGB                   rgb;
-  GimpHSV                   hsv;
-
-  guchar                   *buf;
-  guint                     width;
-  guint                     height;
-  guint                     rowstride;
-
-  gboolean                  needs_render;
+  GtkScale  parent_instance;
 };
 
 struct _GimpColorScaleClass
 {
-  GtkScaleClass             parent_class;
+  GtkScaleClass  parent_class;
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);
