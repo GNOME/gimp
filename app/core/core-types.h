@@ -210,6 +210,7 @@ struct _GimpCagePoint
   GimpVector2 dest_point;
   GimpVector2 edge_normal;
   gdouble     edge_scaling_factor;
+  gboolean    selected;
 };
 
 struct _GimpCoords

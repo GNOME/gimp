@@ -50,8 +50,7 @@ static void   gimp_cage_config_set_property           (GObject        *object,
                                                        GParamSpec     *pspec);
 
 static void   gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc);
-static void   gimp_cage_config_compute_edge_normal    (GimpCageConfig *gcc);
-
+static void   gimp_cage_config_compute_edges_normal   (GimpCageConfig *gcc);
 
 G_DEFINE_TYPE_WITH_CODE (GimpCageConfig, gimp_cage_config,
                          GIMP_TYPE_IMAGE_MAP_CONFIG,
@@ -164,16 +163,16 @@ gimp_cage_config_add_cage_point (GimpCageConfig  *gcc,
                                   gcc->max_cage_vertices);
     }
 
-  gcc->cage_points[gcc->n_cage_vertices].src_point.x = x + DELTA - gcc->offset_x;
-  gcc->cage_points[gcc->n_cage_vertices].src_point.y = y + DELTA - gcc->offset_y;
+  gcc->cage_points[gcc->n_cage_vertices].src_point.x = x + DELTA;
+  gcc->cage_points[gcc->n_cage_vertices].src_point.y = y + DELTA;
 
-  gcc->cage_points[gcc->n_cage_vertices].dest_point.x = x + DELTA - gcc->offset_x;
-  gcc->cage_points[gcc->n_cage_vertices].dest_point.y = y + DELTA - gcc->offset_y;
+  gcc->cage_points[gcc->n_cage_vertices].dest_point.x = x + DELTA;
+  gcc->cage_points[gcc->n_cage_vertices].dest_point.y = y + DELTA;
 
   gcc->n_cage_vertices++;
 
   gimp_cage_config_compute_scaling_factor (gcc);
-  gimp_cage_config_compute_edge_normal (gcc);
+  gimp_cage_config_compute_edges_normal (gcc);
 }
 
 /**
@@ -191,46 +190,129 @@ gimp_cage_config_remove_last_cage_point (GimpCageConfig  *gcc)
     gcc->n_cage_vertices--;
 
   gimp_cage_config_compute_scaling_factor (gcc);
-  gimp_cage_config_compute_edge_normal (gcc);
+  gimp_cage_config_compute_edges_normal (gcc);
 }
 
 /**
- * gimp_cage_config_move_cage_point:
+ * gimp_cage_config_get_point_coordinate:
  * @gcc: the cage config
  * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
- * @point_number: the point of the cage to move
- * @x: new x value
- * @y: new y value
+ * @point_number: the index of the point to return
  *
- * Move a point of the source or destination cage, according to the
- * cage mode provided
+ * Returns: the real position of the given point, as a GimpVector2
  */
-void
-gimp_cage_config_move_cage_point (GimpCageConfig  *gcc,
-                                  GimpCageMode     mode,
-                                  gint             point_number,
-                                  gdouble          x,
-                                  gdouble          y)
+GimpVector2
+gimp_cage_config_get_point_coordinate  (GimpCageConfig  *gcc,
+                                        GimpCageMode     mode,
+                                        gint             point_number)
 {
-  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
-  g_return_if_fail (point_number < gcc->n_cage_vertices);
-  g_return_if_fail (point_number >= 0);
+  GimpVector2 point = {0.0, 0.0};
 
-  if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+  g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), point);
+  g_return_val_if_fail (point_number < gcc->n_cage_vertices, point);
+  g_return_val_if_fail (point_number >= 0, point);
+
+  if (gcc->cage_points[point_number].selected)
     {
-      gcc->cage_points[point_number].src_point.x = x + DELTA - gcc->offset_x;
-      gcc->cage_points[point_number].src_point.y = y + DELTA - gcc->offset_y;
-      gcc->cage_points[point_number].dest_point.x = x + DELTA - gcc->offset_x;
-      gcc->cage_points[point_number].dest_point.y = y + DELTA - gcc->offset_y;
+      if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+        {
+          point.x = gcc->cage_points[point_number].src_point.x + gcc->displacement_x;
+          point.y = gcc->cage_points[point_number].src_point.y + gcc->displacement_y;
+        }
+      else
+        {
+          point.x = gcc->cage_points[point_number].dest_point.x + gcc->displacement_x;
+          point.y = gcc->cage_points[point_number].dest_point.y + gcc->displacement_y;
+        }
     }
   else
     {
-      gcc->cage_points[point_number].dest_point.x = x + DELTA - gcc->offset_x;
-      gcc->cage_points[point_number].dest_point.y = y + DELTA - gcc->offset_y;
+      if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+        {
+          point.x = gcc->cage_points[point_number].src_point.x;
+          point.y = gcc->cage_points[point_number].src_point.y;
+        }
+      else
+        {
+          point.x = gcc->cage_points[point_number].dest_point.x;
+          point.y = gcc->cage_points[point_number].dest_point.y;
+        }
     }
 
-  gimp_cage_config_compute_scaling_factor (gcc);
-  gimp_cage_config_compute_edge_normal (gcc);
+  return point;
+}
+
+/**
+ * gimp_cage_config_add_displacement:
+ * @gcc: the cage config
+ * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
+ * @point_number: the point of the cage to move
+ * @x: x displacement value
+ * @y: y displacement value
+ *
+ * Add a displacement for all slected point of the cage.
+ * This displacement need to be commited to become effective.
+ */
+void
+gimp_cage_config_add_displacement (GimpCageConfig  *gcc,
+                                   GimpCageMode     mode,
+                                   gdouble          x,
+                                   gdouble          y)
+{
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  gcc->cage_mode = mode;
+  gcc->displacement_x = x;
+  gcc->displacement_y = y;
+}
+
+/**
+ * gimp_cage_config_commit_displacement:
+ * @gcc: the cage config
+ *
+ * Apply the displacement to the cage
+ */
+void
+gimp_cage_config_commit_displacement  (GimpCageConfig *gcc)
+{
+  gint  i;
+
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  for (i = 0; i < gcc->n_cage_vertices; i++)
+    {
+      if (gcc->cage_points[i].selected)
+        {
+          if (gcc->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+            {
+              gcc->cage_points[i].src_point.x += gcc->displacement_x;
+              gcc->cage_points[i].src_point.y += gcc->displacement_y;
+              gcc->cage_points[i].dest_point.x += gcc->displacement_x;
+              gcc->cage_points[i].dest_point.y += gcc->displacement_y;
+            }
+          else
+            {
+              gcc->cage_points[i].dest_point.x += gcc->displacement_x;
+              gcc->cage_points[i].dest_point.y += gcc->displacement_y;
+            }
+        }
+    }
+  gimp_cage_config_reset_displacement (gcc);
+}
+
+/**
+ * gimp_cage_config_reset_displacement:
+ * @gcc: the cage config
+ *
+ * Set the displacement to zero.
+ */
+void
+gimp_cage_config_reset_displacement (GimpCageConfig  *gcc)
+{
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  gcc->displacement_x = 0.0;
+  gcc->displacement_y = 0.0;
 }
 
 /**
@@ -250,8 +332,17 @@ gimp_cage_config_get_bounding_box (GimpCageConfig  *gcc)
   g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), bounding_box);
   g_return_val_if_fail (gcc->n_cage_vertices >= 0, bounding_box);
 
-  bounding_box.x = gcc->cage_points[0].src_point.x;
-  bounding_box.y = gcc->cage_points[0].src_point.y;
+  if (gcc->cage_points[0].selected)
+    {
+      bounding_box.x = gcc->cage_points[0].src_point.x + gcc->displacement_x;
+      bounding_box.y = gcc->cage_points[0].src_point.y + gcc->displacement_y;
+    }
+  else
+    {
+      bounding_box.x = gcc->cage_points[0].src_point.x;
+      bounding_box.y = gcc->cage_points[0].src_point.y;
+    }
+
   bounding_box.height = 0;
   bounding_box.width = 0;
 
@@ -259,8 +350,16 @@ gimp_cage_config_get_bounding_box (GimpCageConfig  *gcc)
     {
       gdouble x,y;
 
-      x = gcc->cage_points[i].src_point.x;
-      y = gcc->cage_points[i].src_point.y;
+      if (gcc->cage_points[i].selected)
+        {
+          x = gcc->cage_points[i].src_point.x + gcc->displacement_x;
+          y = gcc->cage_points[i].src_point.y + gcc->displacement_y;
+        }
+      else
+        {
+          x = gcc->cage_points[i].src_point.x;
+          y = gcc->cage_points[i].src_point.y;
+        }
 
       if (x < bounding_box.x)
         {
@@ -300,7 +399,7 @@ void
 gimp_cage_config_reverse_cage (GimpCageConfig *gcc)
 {
   GimpCagePoint temp;
-  gint        i;
+  gint          i;
 
   g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
 
@@ -312,7 +411,7 @@ gimp_cage_config_reverse_cage (GimpCageConfig *gcc)
     }
 
   gimp_cage_config_compute_scaling_factor (gcc);
-  gimp_cage_config_compute_edge_normal (gcc);
+  gimp_cage_config_compute_edges_normal (gcc);
 }
 
 /**
@@ -323,6 +422,8 @@ gimp_cage_config_reverse_cage (GimpCageConfig *gcc)
  * topological inside in the actual 'physical' inside of the cage,
  * this function compute if the cage is clockwise or not, and reverse
  * the cage if needed.
+ *
+ * This function does not take into account an eventual displacement
  */
 void
 gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
@@ -359,50 +460,12 @@ gimp_cage_config_reverse_cage_if_needed (GimpCageConfig *gcc)
 }
 
 /**
- * gimp_cage_config_get_cage_points:
+ * gimp_cage_config_compute_scaling_factor:
  * @gcc: the cage config
  *
- * Returns: a copy of the cage's point
+ * Update Green Coordinate scaling factor for the destination cage.
+ * This function does not take into account an eventual displacement.
  */
-GimpCagePoint*
-gimp_cage_config_get_cage_points (GimpCageConfig  *gcc)
-{
-  gint            i;
-  GimpCagePoint  *points_copy;
-
-  g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), NULL);
-
-  points_copy = g_new (GimpCagePoint, gcc->n_cage_vertices);
-
-  for(i = 0; i < gcc->n_cage_vertices; i++)
-    {
-      points_copy[i] = gcc->cage_points[i];
-    }
-
-  return points_copy;
-}
-
-/**
- * gimp_cage_config_commit_cage_points:
- * @gcc: the cage config
- * @points: a GimpCagePoint array of point of the same length as the number of point in the cage
- *
- * This function update the cage's point with the array provided.
- */
-void
-gimp_cage_config_commit_cage_points (GimpCageConfig  *gcc,
-                                     GimpCagePoint   *points)
-{
-  gint          i;
-
-  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
-
-  for(i = 0; i < gcc->n_cage_vertices; i++)
-    {
-      gcc->cage_points[i] = points[i];
-    }
-}
-
 static void
 gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 {
@@ -432,8 +495,15 @@ gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 #endif
 }
 
+/**
+ * gimp_cage_config_compute_edges_normal:
+ * @gcc: the cage config
+ *
+ * Update edges normal for the destination cage.
+ * This function does not take into account an eventual displacement.
+ */
 static void
-gimp_cage_config_compute_edge_normal (GimpCageConfig *gcc)
+gimp_cage_config_compute_edges_normal (GimpCageConfig *gcc)
 {
   GimpVector2 normal;
   gint        i;
@@ -460,6 +530,7 @@ gimp_cage_config_compute_edge_normal (GimpCageConfig *gcc)
  * the regard of the topological inside of the source cage.
  *
  * Returns: TRUE if the point is inside, FALSE if not.
+ * This function does not take into account an eventual displacement.
  */
 gboolean
 gimp_cage_config_point_inside (GimpCageConfig *gcc,
@@ -488,4 +559,71 @@ gimp_cage_config_point_inside (GimpCageConfig *gcc,
     }
 
   return inside;
+}
+
+/**
+ * gimp_cage_config_select_point:
+ * @gcc: the cage config
+ * @point_number: the index of the point to select
+ *
+ * Select the given point of the cage, and deselect the others.
+ */
+void
+gimp_cage_config_select_point (GimpCageConfig  *gcc,
+                               gint             point_number)
+{
+  gint  i;
+
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+  g_return_if_fail (point_number < gcc->n_cage_vertices);
+  g_return_if_fail (point_number >= 0);
+
+  for (i = 0; i < gcc->n_cage_vertices; i++)
+    {
+      if (i == point_number)
+        {
+          gcc->cage_points[i].selected = TRUE;
+        }
+      else
+        {
+          gcc->cage_points[i].selected = FALSE;
+        }
+    }
+}
+
+/**
+ * gimp_cage_config_toggle_point_selection:
+ * @gcc: the cage config
+ * @point_number: the index of the point to toggle selection
+ *
+ * Toggle the selection of the given cage point
+ */
+void
+gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
+                                         gint             point_number)
+{
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+  g_return_if_fail (point_number < gcc->n_cage_vertices);
+  g_return_if_fail (point_number >= 0);
+
+  gcc->cage_points[point_number].selected = ! gcc->cage_points[point_number].selected;
+}
+
+/**
+ * gimp_cage_deselect_points:
+ * @gcc: the cage config
+ *
+ * Deselect all cage points.
+ */
+void
+gimp_cage_deselect_points (GimpCageConfig  *gcc)
+{
+  gint  i;
+
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  for (i = 0; i < gcc->n_cage_vertices; i++)
+    {
+      gcc->cage_points[i].selected = FALSE;
+    }
 }
