@@ -82,11 +82,7 @@ struct _GimpColorSelectorClass
 
   const gchar *name;
   const gchar *help_id;
-#ifdef GIMP_DISABLE_DEPRECATED
-  gpointer     deprecated_stock_id;
-#else
-  const gchar *stock_id;
-#endif
+  const gchar *icon_name;
 
   /*  virtual functions  */
   void (* set_toggles_visible)   (GimpColorSelector        *selector,
@@ -100,6 +96,11 @@ struct _GimpColorSelectorClass
                                   const GimpHSV            *hsv);
   void (* set_channel)           (GimpColorSelector        *selector,
                                   GimpColorSelectorChannel  channel);
+  void (* set_model_visible)     (GimpColorSelector        *selector,
+                                  GimpColorSelectorModel    model,
+                                  gboolean                  visible);
+  void (* set_config)            (GimpColorSelector        *selector,
+                                  GimpColorConfig          *config);
 
   /*  signals  */
   void (* color_changed)         (GimpColorSelector        *selector,
@@ -107,23 +108,19 @@ struct _GimpColorSelectorClass
                                   const GimpHSV            *hsv);
   void (* channel_changed)       (GimpColorSelector        *selector,
                                   GimpColorSelectorChannel  channel);
-
-  /*  another virtual function  */
-  void (* set_config)            (GimpColorSelector        *selector,
-                                  GimpColorConfig          *config);
-
-  /*  icon name  */
-  const gchar *icon_name;
-
-  /*  another virtual function  */
-  void (* set_model_visible)     (GimpColorSelector        *selector,
-                                  GimpColorSelectorModel    model,
-                                  gboolean                  visible);
-
-  /*  another signal  */
   void (* model_visible_changed) (GimpColorSelector        *selector,
                                   GimpColorSelectorModel    model,
                                   gboolean                  visible);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
+  void (* _gimp_reserved5) (void);
+  void (* _gimp_reserved6) (void);
+  void (* _gimp_reserved7) (void);
+  void (* _gimp_reserved8) (void);
 };
 
 
