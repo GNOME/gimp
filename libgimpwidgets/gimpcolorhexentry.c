@@ -58,6 +58,18 @@ enum
 };
 
 
+typedef struct _GimpColorHexEntryPrivate GimpColorHexEntryPrivate;
+
+struct _GimpColorHexEntryPrivate
+{
+  GimpRGB  color;
+};
+
+#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
+                                                       GIMP_TYPE_COLOR_HEX_ENTRY, \
+                                                       GimpColorHexEntryPrivate))
+
+
 static gboolean  gimp_color_hex_entry_events     (GtkWidget          *widget,
                                                   GdkEvent           *event);
 
@@ -77,6 +89,8 @@ static guint entry_signals[LAST_SIGNAL] = { 0 };
 static void
 gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
   entry_signals[COLOR_CHANGED] =
     g_signal_new ("color-changed",
                   G_TYPE_FROM_CLASS (klass),
@@ -87,25 +101,28 @@ gimp_color_hex_entry_class_init (GimpColorHexEntryClass *klass)
                   G_TYPE_NONE, 0);
 
   klass->color_changed = NULL;
+
+  g_type_class_add_private (object_class, sizeof (GimpColorHexEntryPrivate));
 }
 
 static void
 gimp_color_hex_entry_init (GimpColorHexEntry *entry)
 {
-  GtkEntryCompletion  *completion;
-  GtkCellRenderer     *cell;
-  GtkListStore        *store;
-  GimpRGB             *colors;
-  const gchar        **names;
-  gint                 num_colors;
-  gint                 i;
+  GimpColorHexEntryPrivate *private = GET_PRIVATE (entry);
+  GtkEntryCompletion       *completion;
+  GtkCellRenderer          *cell;
+  GtkListStore             *store;
+  GimpRGB                  *colors;
+  const gchar             **names;
+  gint                      num_colors;
+  gint                      i;
 
   /* GtkEntry's minimum size is way too large, set a reasonable one
    * for our use case
    */
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 8);
 
-  gimp_rgba_set (&entry->color, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&private->color, 0.0, 0.0, 0.0, 1.0);
 
   store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, GIMP_TYPE_RGB);
 
@@ -183,18 +200,22 @@ void
 gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
                                 const GimpRGB     *color)
 {
+  GimpColorHexEntryPrivate *private;
+
   g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
   g_return_if_fail (color != NULL);
 
-  if (gimp_rgb_distance (&entry->color, color) > 0.0)
+  private = GET_PRIVATE (entry);
+
+  if (gimp_rgb_distance (&private->color, color) > 0.0)
     {
       gchar   buffer[8];
       guchar  r, g, b;
 
-      gimp_rgb_set (&entry->color, color->r, color->g, color->b);
-      gimp_rgb_clamp (&entry->color);
+      gimp_rgb_set (&private->color, color->r, color->g, color->b);
+      gimp_rgb_clamp (&private->color);
 
-      gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+      gimp_rgb_get_uchar (&private->color, &r, &g, &b);
       g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
       gtk_entry_set_text (GTK_ENTRY (entry), buffer);
@@ -219,17 +240,22 @@ void
 gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,
                                 GimpRGB           *color)
 {
+  GimpColorHexEntryPrivate *private;
+
   g_return_if_fail (GIMP_IS_COLOR_HEX_ENTRY (entry));
   g_return_if_fail (color != NULL);
 
-  *color = entry->color;
+  private = GET_PRIVATE (entry);
+
+  *color = private->color;
 }
 
 static gboolean
 gimp_color_hex_entry_events (GtkWidget *widget,
                              GdkEvent  *event)
 {
-  GimpColorHexEntry *entry = GIMP_COLOR_HEX_ENTRY (widget);
+  GimpColorHexEntry        *entry   = GIMP_COLOR_HEX_ENTRY (widget);
+  GimpColorHexEntryPrivate *private = GET_PRIVATE (entry);
 
   switch (event->type)
     {
@@ -252,7 +278,7 @@ gimp_color_hex_entry_events (GtkWidget *widget,
 
         text = gtk_entry_get_text (GTK_ENTRY (widget));
 
-        gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
+        gimp_rgb_get_uchar (&private->color, &r, &g, &b);
         g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
         if (g_ascii_strcasecmp (buffer, text) != 0)

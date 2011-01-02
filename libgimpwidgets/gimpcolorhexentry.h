@@ -41,9 +41,7 @@ typedef struct _GimpColorHexEntryClass  GimpColorHexEntryClass;
 
 struct _GimpColorHexEntry
 {
-  GtkEntry        parent_instance;
-
-  GimpRGB         color;
+  GtkEntry  parent_instance;
 };
 
 struct _GimpColorHexEntryClass
