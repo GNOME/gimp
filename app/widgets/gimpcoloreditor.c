@@ -191,7 +191,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
                     G_CALLBACK (gimp_color_editor_color_changed),
                     editor);
 
-  notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+  notebook = gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (editor->notebook));
 
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
@@ -201,7 +201,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   group = NULL;
 
-  for (list = GIMP_COLOR_NOTEBOOK (editor->notebook)->selectors;
+  for (list = gimp_color_notebook_get_selectors (GIMP_COLOR_NOTEBOOK (editor->notebook));
        list;
        list = g_list_next (list))
     {
@@ -367,8 +367,10 @@ gimp_color_editor_set_aux_info (GimpDocked *docked,
                                 GList      *aux_info)
 {
   GimpColorEditor *editor   = GIMP_COLOR_EDITOR (docked);
-  GtkWidget       *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+  GtkWidget       *notebook;
   GList           *list;
+
+  notebook = gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (editor->notebook));
 
   parent_docked_iface->set_aux_info (docked, aux_info);
 
@@ -409,16 +411,19 @@ gimp_color_editor_get_aux_info (GimpDocked *docked)
 {
   GimpColorEditor    *editor   = GIMP_COLOR_EDITOR (docked);
   GimpColorNotebook  *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook);
+  GimpColorSelector  *current;
   GList              *aux_info;
 
   aux_info = parent_docked_iface->get_aux_info (docked);
 
-  if (notebook->cur_page)
+  current = gimp_color_notebook_get_current_selector (notebook);
+
+  if (current)
     {
       GimpSessionInfoAux *aux;
 
       aux = gimp_session_info_aux_new (AUX_INFO_CURRENT_PAGE,
-                                       G_OBJECT_TYPE_NAME (notebook->cur_page));
+                                       G_OBJECT_TYPE_NAME (current));
       aux_info = g_list_append (aux_info, aux);
     }
 
@@ -616,7 +621,7 @@ gimp_color_editor_tab_toggled (GtkWidget       *widget,
           GtkWidget *notebook;
           gint       page_num;
 
-          notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+          notebook = gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (editor->notebook));
 
           page_num = gtk_notebook_page_num (GTK_NOTEBOOK (notebook), selector);
 
