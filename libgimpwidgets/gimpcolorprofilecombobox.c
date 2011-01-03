@@ -51,15 +51,17 @@ enum
 };
 
 
-typedef struct
-{
-  GtkTreePath *last_path;
-} GimpColorProfileComboBoxPrivate;
+typedef struct _GimpColorProfileComboBoxPrivate GimpColorProfileComboBoxPrivate;
 
-#define GIMP_COLOR_PROFILE_COMBO_BOX_GET_PRIVATE(obj) \
-  G_TYPE_INSTANCE_GET_PRIVATE (obj, \
-                               GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, \
-                               GimpColorProfileComboBoxPrivate)
+struct _GimpColorProfileComboBoxPrivate
+{
+  GtkWidget   *dialog;
+  GtkTreePath *last_path;
+};
+
+#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                                      GIMP_TYPE_COLOR_PROFILE_COMBO_BOX, \
+                                                      GimpColorProfileComboBoxPrivate)
 
 
 static void  gimp_color_profile_combo_box_finalize     (GObject      *object);
@@ -157,26 +159,21 @@ gimp_color_profile_combo_box_init (GimpColorProfileComboBox *combo_box)
 static void
 gimp_color_profile_combo_box_finalize (GObject *object)
 {
-  GimpColorProfileComboBox        *combo;
-  GimpColorProfileComboBoxPrivate *priv;
+  GimpColorProfileComboBoxPrivate *private = GET_PRIVATE (object);
 
-  combo = GIMP_COLOR_PROFILE_COMBO_BOX (object);
-
-  if (combo->dialog)
+  if (private->dialog)
     {
-      if (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (combo->dialog))
-        gtk_widget_destroy (combo->dialog);
+      if (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (private->dialog))
+        gtk_widget_destroy (private->dialog);
 
-      g_object_unref (combo->dialog);
-      combo->dialog = NULL;
+      g_object_unref (private->dialog);
+      private->dialog = NULL;
     }
 
-  priv = GIMP_COLOR_PROFILE_COMBO_BOX_GET_PRIVATE (combo);
-
-  if (priv->last_path)
+  if (private->last_path)
     {
-      gtk_tree_path_free (priv->last_path);
-      priv->last_path = NULL;
+      gtk_tree_path_free (private->last_path);
+      private->last_path = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -188,22 +185,22 @@ gimp_color_profile_combo_box_set_property (GObject      *object,
                                            const GValue *value,
                                            GParamSpec   *pspec)
 {
-  GimpColorProfileComboBox *combo_box = GIMP_COLOR_PROFILE_COMBO_BOX (object);
+  GimpColorProfileComboBoxPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_DIALOG:
-      g_return_if_fail (combo_box->dialog == NULL);
-      combo_box->dialog = g_value_dup_object (value);
+      g_return_if_fail (private->dialog == NULL);
+      private->dialog = g_value_dup_object (value);
 
-      if (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (combo_box->dialog))
-        g_signal_connect (combo_box->dialog, "response",
+      if (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (private->dialog))
+        g_signal_connect (private->dialog, "response",
                           G_CALLBACK (gimp_color_profile_combo_dialog_response),
-                          combo_box);
+                          object);
       break;
 
     case PROP_MODEL:
-      gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box),
+      gtk_combo_box_set_model (GTK_COMBO_BOX (object),
                                g_value_get_object (value));
       break;
 
@@ -219,17 +216,17 @@ gimp_color_profile_combo_box_get_property (GObject    *object,
                                            GValue     *value,
                                            GParamSpec *pspec)
 {
-  GimpColorProfileComboBox *combo_box = GIMP_COLOR_PROFILE_COMBO_BOX (object);
+  GimpColorProfileComboBoxPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_DIALOG:
-      g_value_set_object (value, combo_box->dialog);
+      g_value_set_object (value, private->dialog);
       break;
 
     case PROP_MODEL:
       g_value_set_object (value,
-                          gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+                          gtk_combo_box_get_model (GTK_COMBO_BOX (object)));
       break;
 
     default:
@@ -241,11 +238,10 @@ gimp_color_profile_combo_box_get_property (GObject    *object,
 static void
 gimp_color_profile_combo_box_changed (GtkComboBox *combo)
 {
-  GimpColorProfileComboBoxPrivate *priv;
-
-  GtkTreeModel *model = gtk_combo_box_get_model (combo);
-  GtkTreeIter   iter;
-  gint          type;
+  GimpColorProfileComboBoxPrivate *priv  = GET_PRIVATE (combo);
+  GtkTreeModel                    *model = gtk_combo_box_get_model (combo);
+  GtkTreeIter                      iter;
+  gint                             type;
 
   if (! gtk_combo_box_get_active_iter (combo, &iter))
     return;
@@ -254,20 +250,17 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
                       GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
                       -1);
 
-  priv = GIMP_COLOR_PROFILE_COMBO_BOX_GET_PRIVATE (combo);
-
   switch (type)
     {
     case GIMP_COLOR_PROFILE_STORE_ITEM_DIALOG:
       {
-        GtkWidget *dialog = GIMP_COLOR_PROFILE_COMBO_BOX (combo)->dialog;
         GtkWidget *parent = gtk_widget_get_toplevel (GTK_WIDGET (combo));
 
         if (GTK_IS_WINDOW (parent))
-          gtk_window_set_transient_for (GTK_WINDOW (dialog),
+          gtk_window_set_transient_for (GTK_WINDOW (priv->dialog),
                                         GTK_WINDOW (parent));
 
-        gtk_window_present (GTK_WINDOW (dialog));
+        gtk_window_present (GTK_WINDOW (priv->dialog));
 
         if (priv->last_path &&
             gtk_tree_model_get_iter (model, &iter, priv->last_path))
