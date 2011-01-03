@@ -41,15 +41,18 @@ typedef struct _GimpEnumLabelClass  GimpEnumLabelClass;
 
 struct _GimpEnumLabel
 {
-  GtkLabel       parent_instance;
-
-  /*< private >*/
-  GEnumClass    *enum_class;
+  GtkLabel  parent_instance;
 };
 
 struct _GimpEnumLabelClass
 {
   GtkLabelClass  parent_class;
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 
