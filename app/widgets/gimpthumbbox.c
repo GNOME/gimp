@@ -54,8 +54,7 @@ static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *iface
 static void     gimp_thumb_box_dispose            (GObject           *object);
 static void     gimp_thumb_box_finalize           (GObject           *object);
 
-static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
-                                                   GtkStyle          *prev_style);
+static void     gimp_thumb_box_style_updated      (GtkWidget         *widget);
 
 static GimpProgress *
                 gimp_thumb_box_progress_start     (GimpProgress      *progress,
@@ -108,10 +107,10 @@ gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose     = gimp_thumb_box_dispose;
-  object_class->finalize    = gimp_thumb_box_finalize;
+  object_class->dispose       = gimp_thumb_box_dispose;
+  object_class->finalize      = gimp_thumb_box_finalize;
 
-  widget_class->style_set   = gimp_thumb_box_style_set;
+  widget_class->style_updated = gimp_thumb_box_style_updated;
 }
 
 static void
@@ -167,26 +166,35 @@ gimp_thumb_box_finalize (GObject *object)
 }
 
 static void
-gimp_thumb_box_style_set (GtkWidget *widget,
-                          GtkStyle  *prev_style)
+gimp_thumb_box_style_updated (GtkWidget *widget)
 {
-  GimpThumbBox *box   = GIMP_THUMB_BOX (widget);
-  GtkStyle     *style = gtk_widget_get_style (widget);
-  GtkWidget    *ebox;
+  GimpThumbBox    *box   = GIMP_THUMB_BOX (widget);
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkWidget       *ebox;
+  GdkRGBA          color;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gtk_widget_modify_bg (box->preview, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (box->preview, GTK_STATE_INSENSITIVE,
-                        &style->base[GTK_STATE_NORMAL]);
+  gtk_style_context_save (style);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
+  gtk_style_context_get_background_color (style, 0, &color);
+  gtk_style_context_restore (style);
+
+  if (box->preview)
+    {
+      gtk_widget_override_background_color (box->preview, 0, &color);
+      gtk_widget_override_background_color (box->preview,
+                                            GTK_STATE_FLAG_INSENSITIVE, &color);
+    }
 
   ebox = gtk_bin_get_child (GTK_BIN (widget));
 
-  gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                        &style->base[GTK_STATE_NORMAL]);
+  if (ebox)
+    {
+      gtk_widget_override_background_color (ebox, 0, &color);
+      gtk_widget_override_background_color (ebox,
+                                            GTK_STATE_FLAG_INSENSITIVE, &color);
+    }
 }
 
 static GimpProgress *
