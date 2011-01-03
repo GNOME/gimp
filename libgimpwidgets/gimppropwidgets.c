@@ -1778,7 +1778,7 @@ gimp_prop_memsize_entry_new (GObject     *config,
                                   uint64_spec->maximum);
 
   set_param_spec (G_OBJECT (entry),
-                  GIMP_MEMSIZE_ENTRY (entry)->spinbutton,
+                  gimp_memsize_entry_get_spinbutton (GIMP_MEMSIZE_ENTRY (entry)),
                   param_spec);
 
   g_signal_connect (entry, "value-changed",
@@ -1828,7 +1828,7 @@ gimp_prop_memsize_notify (GObject          *config,
                 param_spec->name, &value,
                 NULL);
 
-  if (entry->value != value)
+  if (gimp_memsize_entry_get_value (entry) != value)
     {
       g_signal_handlers_block_by_func (entry,
                                        gimp_prop_memsize_callback,
