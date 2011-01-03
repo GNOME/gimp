@@ -121,8 +121,7 @@ static void            gimp_dock_window_get_property              (GObject      
                                                                    guint                       property_id,
                                                                    GValue                     *value,
                                                                    GParamSpec                 *pspec);
-static void            gimp_dock_window_style_set                 (GtkWidget                  *widget,
-                                                                   GtkStyle                   *prev_style);
+static void            gimp_dock_window_style_updated             (GtkWidget                  *widget);
 static gboolean        gimp_dock_window_delete_event              (GtkWidget                  *widget,
                                                                    GdkEventAny                *event);
 static GList         * gimp_dock_window_get_docks                 (GimpDockContainer          *dock_container);
@@ -172,20 +171,21 @@ G_DEFINE_TYPE_WITH_CODE (GimpDockWindow, gimp_dock_window, GIMP_TYPE_WINDOW,
 
 #define parent_class gimp_dock_window_parent_class
 
+
 static void
 gimp_dock_window_class_init (GimpDockWindowClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_dock_window_constructed;
-  object_class->dispose      = gimp_dock_window_dispose;
-  object_class->finalize     = gimp_dock_window_finalize;
-  object_class->set_property = gimp_dock_window_set_property;
-  object_class->get_property = gimp_dock_window_get_property;
+  object_class->constructed   = gimp_dock_window_constructed;
+  object_class->dispose       = gimp_dock_window_dispose;
+  object_class->finalize      = gimp_dock_window_finalize;
+  object_class->set_property  = gimp_dock_window_set_property;
+  object_class->get_property  = gimp_dock_window_get_property;
 
-  widget_class->style_set    = gimp_dock_window_style_set;
-  widget_class->delete_event = gimp_dock_window_delete_event;
+  widget_class->style_updated = gimp_dock_window_style_updated;
+  widget_class->delete_event  = gimp_dock_window_delete_event;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
@@ -610,22 +610,14 @@ gimp_dock_window_get_property (GObject    *object,
 }
 
 static void
-gimp_dock_window_style_set (GtkWidget *widget,
-                            GtkStyle  *prev_style)
+gimp_dock_window_style_updated (GtkWidget *widget)
 {
-  GimpDockWindow *dock_window      = GIMP_DOCK_WINDOW (widget);
-  GtkStyle       *button_style;
-  GtkIconSize     menu_view_size;
-  GtkSettings    *settings;
-  gint            menu_view_width  = 18;
-  gint            menu_view_height = 18;
-  gint            focus_line_width;
-  gint            focus_padding;
-  gint            ythickness;
+  GimpDockWindow  *dock_window      = GIMP_DOCK_WINDOW (widget);
+  GtkStyleContext *button_style;
+  GtkIconSize      menu_view_size;
+  gint             default_height = DEFAULT_DOCK_HEIGHT;
 
-  gint default_height = DEFAULT_DOCK_HEIGHT;
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
                         "default-height", &default_height,
@@ -634,29 +626,42 @@ gimp_dock_window_style_set (GtkWidget *widget,
 
   gtk_window_set_default_size (GTK_WINDOW (widget), -1, default_height);
 
-  settings = gtk_widget_get_settings (dock_window->p->image_combo);
-  gtk_icon_size_lookup_for_settings (settings,
-                                     menu_view_size,
-                                     &menu_view_width,
-                                     &menu_view_height);
+  if (dock_window->p->image_combo)
+    {
+      GtkSettings *settings;
+      GtkBorder    border;
+      gint         menu_view_width  = 18;
+      gint         menu_view_height = 18;
+      gint         focus_line_width;
+      gint         focus_padding;
 
-  gtk_widget_style_get (dock_window->p->auto_button,
-                        "focus-line-width", &focus_line_width,
-                        "focus-padding",    &focus_padding,
-                        NULL);
+      settings = gtk_widget_get_settings (dock_window->p->image_combo);
+      gtk_icon_size_lookup_for_settings (settings,
+                                         menu_view_size,
+                                         &menu_view_width,
+                                         &menu_view_height);
 
-  button_style = gtk_widget_get_style (widget);
-  ythickness = button_style->ythickness;
+      gtk_widget_style_get (dock_window->p->auto_button,
+                            "focus-line-width", &focus_line_width,
+                            "focus-padding",    &focus_padding,
+                            NULL);
 
-  gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (dock_window->p->image_combo),
-                                     menu_view_height, 1);
+      button_style = gtk_widget_get_style_context (widget);
+      gtk_style_context_get_border (button_style,
+                                    gtk_widget_get_state_flags (widget),
+                                    &border);
 
-  gtk_widget_set_size_request (dock_window->p->auto_button, -1,
-                               menu_view_height +
-                               2 * (1 /* CHILD_SPACING */ +
-                                    ythickness            +
-                                    focus_padding         +
-                                    focus_line_width));
+      gimp_container_view_set_view_size (GIMP_CONTAINER_VIEW (dock_window->p->image_combo),
+                                         menu_view_height, 1);
+
+      gtk_widget_set_size_request (dock_window->p->auto_button, -1,
+                                   menu_view_height +
+                                   2 * (1 /* CHILD_SPACING */ +
+                                        border.top            +
+                                        border.bottom         +
+                                        focus_padding         +
+                                        focus_line_width));
+    }
 }
 
 /**
