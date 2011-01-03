@@ -41,18 +41,7 @@ typedef struct _GimpMemsizeEntryClass  GimpMemsizeEntryClass;
 
 struct _GimpMemsizeEntry
 {
-  GtkBox         parent_instance;
-
-  /*< private >*/
-  guint64        value;
-  guint64        lower;
-  guint64        upper;
-
-  guint          shift;
-
-  GtkAdjustment *adjustment;
-  GtkWidget     *spinbutton;
-  GtkWidget     *menu;
+  GtkBox  parent_instance;
 };
 
 struct _GimpMemsizeEntryClass
@@ -69,14 +58,16 @@ struct _GimpMemsizeEntryClass
 };
 
 
-GType       gimp_memsize_entry_get_type  (void) G_GNUC_CONST;
+GType       gimp_memsize_entry_get_type       (void) G_GNUC_CONST;
 
-GtkWidget * gimp_memsize_entry_new       (guint64           value,
-                                          guint64           lower,
-                                          guint64           upper);
-void        gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
-                                          guint64           value);
-guint64     gimp_memsize_entry_get_value (GimpMemsizeEntry *entry);
+GtkWidget * gimp_memsize_entry_new            (guint64           value,
+                                               guint64           lower,
+                                               guint64           upper);
+void        gimp_memsize_entry_set_value      (GimpMemsizeEntry *entry,
+                                               guint64           value);
+guint64     gimp_memsize_entry_get_value      (GimpMemsizeEntry *entry);
+
+GtkWidget * gimp_memsize_entry_get_spinbutton (GimpMemsizeEntry *entry);
 
 
 G_END_DECLS
