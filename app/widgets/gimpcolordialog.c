@@ -145,7 +145,7 @@ gimp_color_dialog_constructed (GObject *object)
 
   /* Color history box. */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-  gtk_box_pack_end (GTK_BOX (GIMP_COLOR_SELECTION (dialog->selection)->right_vbox),
+  gtk_box_pack_end (GTK_BOX (gimp_color_selection_get_right_vbox (GIMP_COLOR_SELECTION (dialog->selection))),
                     hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -336,7 +336,7 @@ gimp_color_dialog_help_func (const gchar *help_id,
   GimpColorSelector *current;
 
   notebook =
-    GIMP_COLOR_NOTEBOOK (GIMP_COLOR_SELECTION (dialog->selection)->notebook);
+    GIMP_COLOR_NOTEBOOK (gimp_color_selection_get_notebook (GIMP_COLOR_SELECTION (dialog->selection)));
 
   current = gimp_color_notebook_get_current_selector (notebook);
 
