@@ -1055,7 +1055,7 @@ gimp_color_button_help_func (const gchar *help_id,
 
   selection = g_object_get_data (G_OBJECT (help_data), COLOR_SELECTION_KEY);
 
-  notebook = GIMP_COLOR_NOTEBOOK (selection->notebook);
+  notebook = GIMP_COLOR_NOTEBOOK (gimp_color_selection_get_notebook (selection));
 
   current = gimp_color_notebook_get_current_selector (notebook);
 

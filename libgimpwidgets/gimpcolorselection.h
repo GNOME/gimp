@@ -43,22 +43,7 @@ typedef struct _GimpColorSelectionClass GimpColorSelectionClass;
 
 struct _GimpColorSelection
 {
-  GtkBox                    parent_instance;
-
-  gboolean                  show_alpha;
-
-  GimpHSV                   hsv;
-  GimpRGB                   rgb;
-  GimpColorSelectorChannel  channel;
-
-  GtkWidget                *left_vbox;
-  GtkWidget                *right_vbox;
-
-  GtkWidget                *notebook;
-  GtkWidget                *scales;
-
-  GtkWidget                *new_color;
-  GtkWidget                *old_color;
+  GtkBox  parent_instance;
 };
 
 struct _GimpColorSelectionClass
@@ -99,6 +84,9 @@ void        gimp_color_selection_color_changed  (GimpColorSelection *selection);
 
 void        gimp_color_selection_set_config     (GimpColorSelection *selection,
                                                  GimpColorConfig    *config);
+
+GtkWidget * gimp_color_selection_get_notebook   (GimpColorSelection *selection);
+GtkWidget * gimp_color_selection_get_right_vbox (GimpColorSelection *selection);
 
 
 G_END_DECLS

@@ -82,6 +82,31 @@ enum
 };
 
 
+typedef struct _GimpColorSelectionPrivate GimpColorSelectionPrivate;
+
+struct _GimpColorSelectionPrivate
+{
+  gboolean                  show_alpha;
+
+  GimpHSV                   hsv;
+  GimpRGB                   rgb;
+  GimpColorSelectorChannel  channel;
+
+  GtkWidget                *left_vbox;
+  GtkWidget                *right_vbox;
+
+  GtkWidget                *notebook;
+  GtkWidget                *scales;
+
+  GtkWidget                *new_color;
+  GtkWidget                *old_color;
+};
+
+#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), \
+                                                       GIMP_TYPE_COLOR_SELECTION, \
+                                                       GimpColorSelectionPrivate))
+
+
 static void   gimp_color_selection_set_property      (GObject            *object,
                                                       guint               property_id,
                                                       const GValue       *value,
@@ -145,40 +170,42 @@ gimp_color_selection_class_init (GimpColorSelectionClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  g_type_class_add_private (object_class, sizeof (GimpColorSelectionPrivate));
 }
 
 static void
 gimp_color_selection_init (GimpColorSelection *selection)
 {
-  GtkWidget    *main_hbox;
-  GtkWidget    *hbox;
-  GtkWidget    *vbox;
-  GtkWidget    *frame;
-  GtkWidget    *label;
-  GtkWidget    *entry;
-  GtkWidget    *button;
-  GtkSizeGroup *new_group;
-  GtkSizeGroup *old_group;
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+  GtkWidget                 *main_hbox;
+  GtkWidget                 *hbox;
+  GtkWidget                 *vbox;
+  GtkWidget                 *frame;
+  GtkWidget                 *label;
+  GtkWidget                 *entry;
+  GtkWidget                 *button;
+  GtkSizeGroup              *new_group;
+  GtkSizeGroup              *old_group;
 
-  selection->show_alpha = TRUE;
+  priv->show_alpha = TRUE;
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (selection),
                                   GTK_ORIENTATION_VERTICAL);
 
-  gimp_rgba_set (&selection->rgb, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
+  gimp_rgba_set (&priv->rgb, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
-  selection->channel = GIMP_COLOR_SELECTOR_HUE;
+  priv->channel = GIMP_COLOR_SELECTOR_HUE;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (selection), main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   /*  The left vbox with the notebook  */
-  selection->left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), selection->left_vbox,
+  priv->left_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_hbox), priv->left_vbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (selection->left_vbox);
+  gtk_widget_show (priv->left_vbox);
 
   if (_gimp_ensure_modules_func)
     {
@@ -186,31 +213,31 @@ gimp_color_selection_init (GimpColorSelection *selection)
       _gimp_ensure_modules_func ();
     }
 
-  selection->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
-                                                 &selection->rgb,
-                                                 &selection->hsv,
-                                                 selection->channel);
+  priv->notebook = gimp_color_selector_new (GIMP_TYPE_COLOR_NOTEBOOK,
+                                            &priv->rgb,
+                                            &priv->hsv,
+                                            priv->channel);
 
   if (_gimp_ensure_modules_func)
     g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
 
   gimp_color_selector_set_toggles_visible
-    (GIMP_COLOR_SELECTOR (selection->notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (selection->left_vbox), selection->notebook,
+    (GIMP_COLOR_SELECTOR (priv->notebook), FALSE);
+  gtk_box_pack_start (GTK_BOX (priv->left_vbox), priv->notebook,
                       TRUE, TRUE, 0);
-  gtk_widget_show (selection->notebook);
+  gtk_widget_show (priv->notebook);
 
-  g_signal_connect (selection->notebook, "color-changed",
+  g_signal_connect (priv->notebook, "color-changed",
                     G_CALLBACK (gimp_color_selection_notebook_changed),
                     selection);
-  g_signal_connect (gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (selection->notebook)),
+  g_signal_connect (gimp_color_notebook_get_notebook (GIMP_COLOR_NOTEBOOK (priv->notebook)),
                     "switch-page",
                     G_CALLBACK (gimp_color_selection_switch_page),
                     selection);
 
   /*  The hbox for the color_areas  */
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_end (GTK_BOX (selection->left_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (priv->left_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  The labels  */
@@ -246,58 +273,58 @@ gimp_color_selection_init (GimpColorSelection *selection)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  selection->new_color = gimp_color_area_new (&selection->rgb,
-                                              selection->show_alpha ?
-                                              GIMP_COLOR_AREA_SMALL_CHECKS :
-                                              GIMP_COLOR_AREA_FLAT,
-                                              GDK_BUTTON1_MASK |
-                                              GDK_BUTTON2_MASK);
-  gtk_size_group_add_widget (new_group, selection->new_color);
-  gtk_box_pack_start (GTK_BOX (vbox), selection->new_color, FALSE, FALSE, 0);
-  gtk_widget_show (selection->new_color);
+  priv->new_color = gimp_color_area_new (&priv->rgb,
+                                         priv->show_alpha ?
+                                         GIMP_COLOR_AREA_SMALL_CHECKS :
+                                         GIMP_COLOR_AREA_FLAT,
+                                         GDK_BUTTON1_MASK |
+                                         GDK_BUTTON2_MASK);
+  gtk_size_group_add_widget (new_group, priv->new_color);
+  gtk_box_pack_start (GTK_BOX (vbox), priv->new_color, FALSE, FALSE, 0);
+  gtk_widget_show (priv->new_color);
 
-  g_signal_connect (selection->new_color, "color-changed",
+  g_signal_connect (priv->new_color, "color-changed",
                     G_CALLBACK (gimp_color_selection_new_color_changed),
                     selection);
 
-  selection->old_color = gimp_color_area_new (&selection->rgb,
-                                              selection->show_alpha ?
-                                              GIMP_COLOR_AREA_SMALL_CHECKS :
-                                              GIMP_COLOR_AREA_FLAT,
-                                              GDK_BUTTON1_MASK |
-                                              GDK_BUTTON2_MASK);
-  gtk_drag_dest_unset (selection->old_color);
-  gtk_size_group_add_widget (old_group, selection->old_color);
-  gtk_box_pack_start (GTK_BOX (vbox), selection->old_color, FALSE, FALSE, 0);
-  gtk_widget_show (selection->old_color);
+  priv->old_color = gimp_color_area_new (&priv->rgb,
+                                         priv->show_alpha ?
+                                         GIMP_COLOR_AREA_SMALL_CHECKS :
+                                         GIMP_COLOR_AREA_FLAT,
+                                         GDK_BUTTON1_MASK |
+                                         GDK_BUTTON2_MASK);
+  gtk_drag_dest_unset (priv->old_color);
+  gtk_size_group_add_widget (old_group, priv->old_color);
+  gtk_box_pack_start (GTK_BOX (vbox), priv->old_color, FALSE, FALSE, 0);
+  gtk_widget_show (priv->old_color);
 
   /*  The right vbox with color scales  */
-  selection->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), selection->right_vbox,
+  priv->right_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_hbox), priv->right_vbox,
                       TRUE, TRUE, 0);
-  gtk_widget_show (selection->right_vbox);
+  gtk_widget_show (priv->right_vbox);
 
-  selection->scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES,
-                                               &selection->rgb,
-                                               &selection->hsv,
-                                               selection->channel);
+  priv->scales = gimp_color_selector_new (GIMP_TYPE_COLOR_SCALES,
+                                          &priv->rgb,
+                                          &priv->hsv,
+                                          priv->channel);
   gimp_color_selector_set_toggles_visible
-    (GIMP_COLOR_SELECTOR (selection->scales), TRUE);
-  gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (selection->scales),
-                                      selection->show_alpha);
-  gtk_box_pack_start (GTK_BOX (selection->right_vbox), selection->scales,
+    (GIMP_COLOR_SELECTOR (priv->scales), TRUE);
+  gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (priv->scales),
+                                      priv->show_alpha);
+  gtk_box_pack_start (GTK_BOX (priv->right_vbox), priv->scales,
                       TRUE, TRUE, 0);
-  gtk_widget_show (selection->scales);
+  gtk_widget_show (priv->scales);
 
-  g_signal_connect (selection->scales, "channel-changed",
+  g_signal_connect (priv->scales, "channel-changed",
                     G_CALLBACK (gimp_color_selection_channel_changed),
                     selection);
-  g_signal_connect (selection->scales, "color-changed",
+  g_signal_connect (priv->scales, "color-changed",
                     G_CALLBACK (gimp_color_selection_scales_changed),
                     selection);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (selection->right_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (priv->right_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  The color picker  */
@@ -375,23 +402,27 @@ void
 gimp_color_selection_set_show_alpha (GimpColorSelection *selection,
                                      gboolean            show_alpha)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
-  if (show_alpha != selection->show_alpha)
+  priv = GET_PRIVATE (selection);
+
+  if (show_alpha != priv->show_alpha)
     {
-      selection->show_alpha = show_alpha ? TRUE : FALSE;
+      priv->show_alpha = show_alpha ? TRUE : FALSE;
 
       gimp_color_selector_set_show_alpha
-        (GIMP_COLOR_SELECTOR (selection->notebook), selection->show_alpha);
+        (GIMP_COLOR_SELECTOR (priv->notebook), priv->show_alpha);
       gimp_color_selector_set_show_alpha
-        (GIMP_COLOR_SELECTOR (selection->scales), selection->show_alpha);
+        (GIMP_COLOR_SELECTOR (priv->scales), priv->show_alpha);
 
-      gimp_color_area_set_type (GIMP_COLOR_AREA (selection->new_color),
-                                selection->show_alpha ?
+      gimp_color_area_set_type (GIMP_COLOR_AREA (priv->new_color),
+                                priv->show_alpha ?
                                 GIMP_COLOR_AREA_SMALL_CHECKS :
                                 GIMP_COLOR_AREA_FLAT);
-      gimp_color_area_set_type (GIMP_COLOR_AREA (selection->old_color),
-                                selection->show_alpha ?
+      gimp_color_area_set_type (GIMP_COLOR_AREA (priv->old_color),
+                                priv->show_alpha ?
                                 GIMP_COLOR_AREA_SMALL_CHECKS :
                                 GIMP_COLOR_AREA_FLAT);
     }
@@ -410,7 +441,7 @@ gimp_color_selection_get_show_alpha (GimpColorSelection *selection)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), FALSE);
 
-  return selection->show_alpha;
+  return GET_PRIVATE (selection)->show_alpha;
 }
 
 /**
@@ -424,11 +455,15 @@ void
 gimp_color_selection_set_color (GimpColorSelection *selection,
                                 const GimpRGB      *color)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
-  selection->rgb = *color;
-  gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
+  priv = GET_PRIVATE (selection);
+
+  priv->rgb = *color;
+  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
   gimp_color_selection_update (selection, UPDATE_ALL);
 
@@ -449,7 +484,7 @@ gimp_color_selection_get_color (GimpColorSelection *selection,
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
-  *color = selection->rgb;
+  *color = GET_PRIVATE (selection)->rgb;
 }
 
 /**
@@ -463,10 +498,14 @@ void
 gimp_color_selection_set_old_color (GimpColorSelection *selection,
                                     const GimpRGB      *color)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (selection->old_color), color);
+  priv = GET_PRIVATE (selection);
+
+  gimp_color_area_set_color (GIMP_COLOR_AREA (priv->old_color), color);
 }
 
 /**
@@ -480,10 +519,14 @@ void
 gimp_color_selection_get_old_color (GimpColorSelection *selection,
                                     GimpRGB            *color)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (color != NULL);
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (selection->old_color), color);
+  priv = GET_PRIVATE (selection);
+
+  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color), color);
 }
 
 /**
@@ -495,11 +538,14 @@ gimp_color_selection_get_old_color (GimpColorSelection *selection,
 void
 gimp_color_selection_reset (GimpColorSelection *selection)
 {
-  GimpRGB color;
+  GimpColorSelectionPrivate *priv;
+  GimpRGB                    color;
 
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (selection->old_color), &color);
+  priv = GET_PRIVATE (selection);
+
+  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->old_color), &color);
   gimp_color_selection_set_color (selection, &color);
 }
 
@@ -530,18 +576,55 @@ void
 gimp_color_selection_set_config (GimpColorSelection *selection,
                                  GimpColorConfig    *config)
 {
+  GimpColorSelectionPrivate *priv;
+
   g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
   g_return_if_fail (config == NULL || GIMP_IS_COLOR_CONFIG (config));
 
-  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (selection->notebook),
+  priv = GET_PRIVATE (selection);
+
+  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (priv->notebook),
                                   config);
-  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (selection->scales),
+  gimp_color_selector_set_config (GIMP_COLOR_SELECTOR (priv->scales),
                                   config);
-  gimp_color_area_set_color_config (GIMP_COLOR_AREA (selection->old_color),
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (priv->old_color),
                                     config);
-  gimp_color_area_set_color_config (GIMP_COLOR_AREA (selection->new_color),
+  gimp_color_area_set_color_config (GIMP_COLOR_AREA (priv->new_color),
                                     config);
 }
+
+/**
+ * gimp_color_selection_get_notebook:
+ * @selection: A #GimpColorSelection widget.
+ *
+ * Returns: The selection's #GimpColorNotebook.
+ *
+ * Since: GIMP 3.0
+ */
+GtkWidget *
+gimp_color_selection_get_notebook (GimpColorSelection *selection)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
+
+  return GET_PRIVATE (selection)->notebook;
+}
+
+/**
+ * gimp_color_selection_get_right_vbox:
+ * @selection: A #GimpColorSelection widget.
+ *
+ * Returns: The selection's right #GtkBox which contains the color scales.
+ *
+ * Since: GIMP 3.0
+ */
+GtkWidget *
+gimp_color_selection_get_right_vbox (GimpColorSelection *selection)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_SELECTION (selection), NULL);
+
+  return GET_PRIVATE (selection)->right_vbox;
+}
+
 
 /*  private functions  */
 
@@ -551,16 +634,17 @@ gimp_color_selection_switch_page (GtkWidget          *widget,
                                   guint               page_num,
                                   GimpColorSelection *selection)
 {
-  GimpColorNotebook *notebook = GIMP_COLOR_NOTEBOOK (selection->notebook);
-  GimpColorSelector *current;
-  gboolean           sensitive;
+  GimpColorSelectionPrivate *priv     = GET_PRIVATE (selection);
+  GimpColorNotebook         *notebook = GIMP_COLOR_NOTEBOOK (priv->notebook);
+  GimpColorSelector         *current;
+  gboolean                   sensitive;
 
   current = gimp_color_notebook_get_current_selector (notebook);
 
   sensitive = (GIMP_COLOR_SELECTOR_GET_CLASS (current)->set_channel != NULL);
 
   gimp_color_selector_set_toggles_sensitive
-    (GIMP_COLOR_SELECTOR (selection->scales), sensitive);
+    (GIMP_COLOR_SELECTOR (priv->scales), sensitive);
 }
 
 static void
@@ -569,8 +653,10 @@ gimp_color_selection_notebook_changed (GimpColorSelector  *selector,
                                        const GimpHSV      *hsv,
                                        GimpColorSelection *selection)
 {
-  selection->hsv = *hsv;
-  selection->rgb = *rgb;
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+
+  priv->hsv = *hsv;
+  priv->rgb = *rgb;
 
   gimp_color_selection_update (selection,
                                UPDATE_SCALES | UPDATE_ENTRY | UPDATE_COLOR);
@@ -583,8 +669,10 @@ gimp_color_selection_scales_changed (GimpColorSelector  *selector,
                                      const GimpHSV      *hsv,
                                      GimpColorSelection *selection)
 {
-  selection->rgb = *rgb;
-  selection->hsv = *hsv;
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+
+  priv->rgb = *rgb;
+  priv->hsv = *hsv;
 
   gimp_color_selection_update (selection,
                                UPDATE_ENTRY | UPDATE_NOTEBOOK | UPDATE_COLOR);
@@ -603,9 +691,11 @@ static void
 gimp_color_selection_entry_changed (GimpColorHexEntry  *entry,
                                     GimpColorSelection *selection)
 {
-  gimp_color_hex_entry_get_color (entry, &selection->rgb);
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
-  gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
+  gimp_color_hex_entry_get_color (entry, &priv->rgb);
+
+  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
   gimp_color_selection_update (selection,
                                UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_COLOR);
@@ -617,18 +707,22 @@ gimp_color_selection_channel_changed (GimpColorSelector        *selector,
                                       GimpColorSelectorChannel  channel,
                                       GimpColorSelection       *selection)
 {
-  selection->channel = channel;
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
 
-  gimp_color_selector_set_channel (GIMP_COLOR_SELECTOR (selection->notebook),
-                                   selection->channel);
+  priv->channel = channel;
+
+  gimp_color_selector_set_channel (GIMP_COLOR_SELECTOR (priv->notebook),
+                                   priv->channel);
 }
 
 static void
 gimp_color_selection_new_color_changed (GtkWidget          *widget,
                                         GimpColorSelection *selection)
 {
-  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &selection->rgb);
-  gimp_rgb_to_hsv (&selection->rgb, &selection->hsv);
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+
+  gimp_color_area_get_color (GIMP_COLOR_AREA (widget), &priv->rgb);
+  gimp_rgb_to_hsv (&priv->rgb, &priv->hsv);
 
   gimp_color_selection_update (selection,
                                UPDATE_NOTEBOOK | UPDATE_SCALES | UPDATE_ENTRY);
@@ -639,32 +733,34 @@ static void
 gimp_color_selection_update (GimpColorSelection *selection,
                              UpdateType          update)
 {
+  GimpColorSelectionPrivate *priv = GET_PRIVATE (selection);
+
   if (update & UPDATE_NOTEBOOK)
     {
-      g_signal_handlers_block_by_func (selection->notebook,
+      g_signal_handlers_block_by_func (priv->notebook,
                                        gimp_color_selection_notebook_changed,
                                        selection);
 
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (selection->notebook),
-                                     &selection->rgb,
-                                     &selection->hsv);
+      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->notebook),
+                                     &priv->rgb,
+                                     &priv->hsv);
 
-      g_signal_handlers_unblock_by_func (selection->notebook,
+      g_signal_handlers_unblock_by_func (priv->notebook,
                                          gimp_color_selection_notebook_changed,
                                          selection);
     }
 
   if (update & UPDATE_SCALES)
     {
-      g_signal_handlers_block_by_func (selection->scales,
+      g_signal_handlers_block_by_func (priv->scales,
                                        gimp_color_selection_scales_changed,
                                        selection);
 
-      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (selection->scales),
-                                     &selection->rgb,
-                                     &selection->hsv);
+      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (priv->scales),
+                                     &priv->rgb,
+                                     &priv->hsv);
 
-      g_signal_handlers_unblock_by_func (selection->scales,
+      g_signal_handlers_unblock_by_func (priv->scales,
                                          gimp_color_selection_scales_changed,
                                          selection);
     }
@@ -679,7 +775,7 @@ gimp_color_selection_update (GimpColorSelection *selection,
                                        gimp_color_selection_entry_changed,
                                        selection);
 
-      gimp_color_hex_entry_set_color (entry, &selection->rgb);
+      gimp_color_hex_entry_set_color (entry, &priv->rgb);
 
       g_signal_handlers_unblock_by_func (entry,
                                          gimp_color_selection_entry_changed,
@@ -688,14 +784,14 @@ gimp_color_selection_update (GimpColorSelection *selection,
 
   if (update & UPDATE_COLOR)
     {
-      g_signal_handlers_block_by_func (selection->new_color,
+      g_signal_handlers_block_by_func (priv->new_color,
                                        gimp_color_selection_new_color_changed,
                                        selection);
 
-      gimp_color_area_set_color (GIMP_COLOR_AREA (selection->new_color),
-                                 &selection->rgb);
+      gimp_color_area_set_color (GIMP_COLOR_AREA (priv->new_color),
+                                 &priv->rgb);
 
-      g_signal_handlers_unblock_by_func (selection->new_color,
+      g_signal_handlers_unblock_by_func (priv->new_color,
                                          gimp_color_selection_new_color_changed,
                                          selection);
     }
