@@ -906,8 +906,8 @@ gimp_color_button_set_color_config (GimpColorButton *button,
       if (priv->config)
         g_object_ref (priv->config);
 
-      if (button->color_area)
-        gimp_color_area_set_color_config (GIMP_COLOR_AREA (button->color_area),
+      if (priv->color_area)
+        gimp_color_area_set_color_config (GIMP_COLOR_AREA (priv->color_area),
                                           priv->config);
 
       if (priv->selection)
@@ -1070,14 +1070,17 @@ static void
 gimp_color_button_help_func (const gchar *help_id,
                              gpointer     help_data)
 {
-  GimpColorSelection *selection;
-  GimpColorNotebook  *notebook;
-  GimpColorSelector  *current;
+  GimpColorButton        *button;
+  GimpColorButtonPrivate *priv;
+  GimpColorSelection     *selection;
+  GimpColorNotebook      *notebook;
+  GimpColorSelector      *current;
 
   button = g_object_get_data (G_OBJECT (help_data), COLOR_BUTTON_KEY);
   priv   = GET_PRIVATE (button);
 
-  notebook = GIMP_COLOR_NOTEBOOK (GIMP_COLOR_SELECTION (priv->selection)->notebook);
+  selection = GIMP_COLOR_SELECTION (priv->selection);
+  notebook = GIMP_COLOR_NOTEBOOK (gimp_color_selection_get_notebook (selection));
 
   current = gimp_color_notebook_get_current_selector (notebook);
 
