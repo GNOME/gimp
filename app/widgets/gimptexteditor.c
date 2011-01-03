@@ -321,7 +321,7 @@ gimp_text_editor_set_font_name (GimpTextEditor *editor,
       if (font_name)
         font_desc = pango_font_description_from_string (font_name);
 
-      gtk_widget_modify_font (editor->view, font_desc);
+      gtk_widget_override_font (editor->view, font_desc);
 
       if (font_desc)
         pango_font_description_free (font_desc);
@@ -355,7 +355,7 @@ gimp_text_editor_font_toggled (GtkToggleButton *button,
   if (gtk_toggle_button_get_active (button) && editor->font_name)
     font_desc = pango_font_description_from_string (editor->font_name);
 
-  gtk_widget_modify_font (editor->view, font_desc);
+  gtk_widget_override_font (editor->view, font_desc);
 
   if (font_desc)
     pango_font_description_free (font_desc);
