@@ -40,9 +40,7 @@ typedef struct _GimpColorProfileComboBoxClass  GimpColorProfileComboBoxClass;
 
 struct _GimpColorProfileComboBox
 {
-  GtkComboBox       parent_instance;
-
-  GtkWidget        *dialog;
+  GtkComboBox  parent_instance;
 };
 
 struct _GimpColorProfileComboBoxClass
