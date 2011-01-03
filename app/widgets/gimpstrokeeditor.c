@@ -329,22 +329,25 @@ gimp_stroke_editor_draw_button (GtkWidget *widget,
                                 cairo_t   *cr,
                                 gpointer   data)
 {
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  gint           w;
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  gint             w;
 
   gtk_widget_get_allocation (widget, &allocation);
 
   w = MIN (allocation.width, allocation.height) * 2 / 3;
 
-  gtk_paint_arrow (style, cr,
-                   gtk_widget_get_state (widget),
-                   GTK_SHADOW_IN,
-                   widget, NULL,
-                   data ? GTK_ARROW_LEFT : GTK_ARROW_RIGHT, TRUE,
-                   (allocation.width  - w) / 2,
-                   (allocation.height - w) / 2,
-                   w, w);
+  gtk_style_context_save (style);
+  gtk_style_context_set_state (style, gtk_widget_get_state_flags (widget));
+
+  gtk_render_arrow (style, cr,
+                    data ? 3 * (G_PI / 2) : 1 * (G_PI / 2),
+                    (allocation.width  - w) / 2,
+                    (allocation.height - w) / 2,
+                    w);
+
+  gtk_style_context_restore (style);
+
   return FALSE;
 }
 
