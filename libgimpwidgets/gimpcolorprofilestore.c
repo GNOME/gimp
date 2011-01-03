@@ -54,6 +54,18 @@ enum
 };
 
 
+typedef struct _GimpColorProfileStorePrivate GimpColorProfileStorePrivate;
+
+struct _GimpColorProfileStorePrivate
+{
+  gchar *history;
+};
+
+#define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
+                                                      GIMP_TYPE_COLOR_PROFILE_STORE, \
+                                                      GimpColorProfileStorePrivate)
+
+
 static void      gimp_color_profile_store_constructed    (GObject               *object);
 static void      gimp_color_profile_store_dispose        (GObject               *object);
 static void      gimp_color_profile_store_finalize       (GObject               *object);
@@ -112,6 +124,8 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
                                                         NULL,
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (object_class, sizeof (GimpColorProfileStorePrivate));
 }
 
 static void
@@ -132,8 +146,9 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
 static void
 gimp_color_profile_store_constructed (GObject *object)
 {
-  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
-  GtkTreeIter            iter;
+  GimpColorProfileStore        *store   = GIMP_COLOR_PROFILE_STORE (object);
+  GimpColorProfileStorePrivate *private = GET_PRIVATE (store);
+  GtkTreeIter                   iter;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -145,21 +160,18 @@ gimp_color_profile_store_constructed (GObject *object)
                       _("Select color profile from disk..."),
                       -1);
 
-  if (store->history)
-    {
-      gimp_color_profile_store_load (store, store->history, NULL);
-    }
+  if (private->history)
+    gimp_color_profile_store_load (store, private->history, NULL);
 }
 
 static void
 gimp_color_profile_store_dispose (GObject *object)
 {
-  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
+  GimpColorProfileStore        *store   = GIMP_COLOR_PROFILE_STORE (object);
+  GimpColorProfileStorePrivate *private = GET_PRIVATE (store);
 
-  if (store->history)
-    {
-      gimp_color_profile_store_save (store, store->history, NULL);
-    }
+  if (private->history)
+    gimp_color_profile_store_save (store, private->history, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -167,12 +179,12 @@ gimp_color_profile_store_dispose (GObject *object)
 static void
 gimp_color_profile_store_finalize (GObject *object)
 {
-  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
+  GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
 
-  if (store->history)
+  if (private->history)
     {
-      g_free (store->history);
-      store->history = NULL;
+      g_free (private->history);
+      private->history = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -184,13 +196,13 @@ gimp_color_profile_store_set_property (GObject      *object,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
+  GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_HISTORY:
-      g_return_if_fail (store->history == NULL);
-      store->history = g_value_dup_string (value);
+      g_return_if_fail (private->history == NULL);
+      private->history = g_value_dup_string (value);
       break;
 
     default:
@@ -205,12 +217,12 @@ gimp_color_profile_store_get_property (GObject    *object,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
+  GimpColorProfileStorePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_HISTORY:
-      g_value_set_string (value, store->history);
+      g_value_set_string (value, private->history);
       break;
 
     default:
