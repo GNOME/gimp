@@ -53,8 +53,7 @@ GType   gimp_view_renderer_gradient_get_type    (void) G_GNUC_CONST;
 
 void    gimp_view_renderer_gradient_set_offsets (GimpViewRendererGradient *renderer,
                                                  gdouble                   left,
-                                                 gdouble                   right,
-                                                 gboolean                  instant_update);
+                                                 gdouble                   right);
 void    gimp_view_renderer_gradient_set_reverse (GimpViewRendererGradient *renderer,
                                                  gboolean                  reverse);
 

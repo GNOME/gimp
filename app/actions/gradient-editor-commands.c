@@ -88,7 +88,7 @@ gradient_editor_left_color_cmd_callback (GtkAction *action,
                            gimp_dialog_factory_get_singleton (),
                            "gimp-gradient-editor-color-dialog",
                            &editor->control_sel_l->left_color,
-                           editor->instant_update, TRUE);
+                           TRUE, TRUE);
 
   g_signal_connect (editor->color_dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -239,7 +239,7 @@ gradient_editor_right_color_cmd_callback (GtkAction *action,
                            gimp_dialog_factory_get_singleton (),
                            "gimp-gradient-editor-color-dialog",
                            &editor->control_sel_l->right_color,
-                           editor->instant_update, TRUE);
+                           TRUE, TRUE);
 
   g_signal_connect (editor->color_dialog, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),

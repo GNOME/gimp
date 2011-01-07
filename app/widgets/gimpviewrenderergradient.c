@@ -206,8 +206,7 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
 void
 gimp_view_renderer_gradient_set_offsets (GimpViewRendererGradient *renderer,
                                          gdouble                   left,
-                                         gdouble                   right,
-                                         gboolean                  instant_update)
+                                         gdouble                   right)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER_GRADIENT (renderer));
 
@@ -220,9 +219,6 @@ gimp_view_renderer_gradient_set_offsets (GimpViewRendererGradient *renderer,
       renderer->right = right;
 
       gimp_view_renderer_invalidate (GIMP_VIEW_RENDERER (renderer));
-
-      if (instant_update)
-        gimp_view_renderer_update (GIMP_VIEW_RENDERER (renderer));
     }
 }
 

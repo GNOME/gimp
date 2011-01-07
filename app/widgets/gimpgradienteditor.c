@@ -80,7 +80,7 @@
 
 #define GRAD_VIEW_SIZE            96
 #define GRAD_CONTROL_HEIGHT       14
-#define GRAD_CURRENT_COLOR_WIDTH  64
+#define GRAD_CURRENT_COLOR_WIDTH  16
 
 #define GRAD_MOVE_TIME 150 /* ms between mouse click and detection of movement in gradient control */
 
@@ -135,8 +135,6 @@ static void   gradient_editor_control_drop_color    (GtkWidget          *widget,
                                                      const GimpRGB      *color,
                                                      gpointer            data);
 static void   gradient_editor_scrollbar_update      (GtkAdjustment      *adj,
-                                                     GimpGradientEditor *editor);
-static void   gradient_editor_instant_update_update (GtkWidget          *widget,
                                                      GimpGradientEditor *editor);
 
 static void   gradient_editor_set_hint              (GimpGradientEditor *editor,
@@ -291,7 +289,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   GtkWidget      *frame;
   GtkWidget      *vbox;
   GtkWidget      *hbox;
-  GtkWidget      *button;
+  GtkWidget      *hint_vbox;
   GimpRGB         transp;
 
   gimp_rgba_set (&transp, 0.0, 0.0, 0.0, 0.0);
@@ -380,15 +378,11 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                     editor);
 
   editor->scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (editor->scroll_data));
-  gtk_range_set_update_policy (GTK_RANGE (editor->scrollbar),
-                               GTK_UPDATE_CONTINUOUS);
   gtk_box_pack_start (GTK_BOX (editor), editor->scrollbar, FALSE, FALSE, 0);
   gtk_widget_show (editor->scrollbar);
 
-  /* Box for current color and instant update toggle */
-  editor->instant_update = TRUE;
-
-  hbox = gtk_hbox_new (FALSE, 6);
+  /* Box for current color and the hint labels */
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -407,22 +401,15 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                                GRAD_CURRENT_COLOR_WIDTH, -1);
   gtk_widget_show (editor->current_color);
 
-  /* Instant update toggle */
-  button = gtk_check_button_new_with_label (_("Instant update"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                editor->instant_update);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  /* Hint box */
+  hint_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), hint_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (hint_vbox);
 
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (gradient_editor_instant_update_update),
-                    editor);
-
-  /* Hint bar */
-  editor->hint_label1 = gradient_hint_label_add (GTK_BOX (editor));
-  editor->hint_label2 = gradient_hint_label_add (GTK_BOX (editor));
-  editor->hint_label3 = gradient_hint_label_add (GTK_BOX (editor));
-  editor->hint_label4 = gradient_hint_label_add (GTK_BOX (editor));
+  editor->hint_label1 = gradient_hint_label_add (GTK_BOX (hint_vbox));
+  editor->hint_label2 = gradient_hint_label_add (GTK_BOX (hint_vbox));
+  editor->hint_label3 = gradient_hint_label_add (GTK_BOX (hint_vbox));
+  editor->hint_label4 = gradient_hint_label_add (GTK_BOX (hint_vbox));
 
   /* Initialize other data */
   editor->left_saved_segments = NULL;
@@ -788,27 +775,10 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   gimp_view_renderer_gradient_set_offsets (renderer,
                                            gtk_adjustment_get_value (adjustment),
                                            gtk_adjustment_get_value (adjustment) +
-                                           gtk_adjustment_get_page_size (adjustment),
-                                           editor->instant_update);
-  gimp_gradient_editor_update (editor);
-}
+                                           gtk_adjustment_get_page_size (adjustment));
 
-static void
-gradient_editor_instant_update_update (GtkWidget          *widget,
-                                       GimpGradientEditor *editor)
-{
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    {
-      editor->instant_update = TRUE;
-      gtk_range_set_update_policy (GTK_RANGE (editor->scrollbar),
-                                   GTK_UPDATE_CONTINUOUS);
-    }
-  else
-    {
-      editor->instant_update = FALSE;
-      gtk_range_set_update_policy (GTK_RANGE (editor->scrollbar),
-                                   GTK_UPDATE_DELAYED);
-    }
+  gimp_view_renderer_update (GIMP_VIEW_RENDERER (renderer));
+  gimp_gradient_editor_update (editor);
 }
 
 static void
@@ -1096,9 +1066,6 @@ control_events (GtkWidget          *widget,
                   g_signal_handlers_block_by_func (gradient,
                                                    gimp_gradient_editor_gradient_dirty,
                                                    editor);
-
-                  if (! editor->instant_update)
-                    gimp_data_freeze (GIMP_DATA (gradient));
                 }
             }
         }
@@ -1146,9 +1113,6 @@ control_events (GtkWidget          *widget,
           {
             if (GIMP_DATA_EDITOR (editor)->data_editable)
               {
-                if (! editor->instant_update)
-                  gimp_data_thaw (GIMP_DATA (gradient));
-
                 g_signal_handlers_unblock_by_func (gradient,
                                                    gimp_gradient_editor_gradient_dirty,
                                                    editor);
@@ -1216,10 +1180,10 @@ control_events (GtkWidget          *widget,
       break;
 
     default:
-      break;
+      return FALSE;
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
