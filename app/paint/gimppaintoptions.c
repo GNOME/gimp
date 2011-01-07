@@ -36,55 +36,6 @@
 
 #include "gimp-intl.h"
 
-GimpCircularQueue* gimp_circular_queue_new(guint element_size, guint queue_size)
-{
-  GimpCircularQueue* queue = g_new0(GimpCircularQueue, 1);
-  queue->data = g_malloc0(element_size * queue_size);
-  if (queue->data) {
-    queue->element_size = element_size;
-    queue->queue_size = queue_size;
-  }
-  queue->start = 0;
-  queue->end = 0;
-  return queue;
-}
-
-void gimp_circular_queue_free(GimpCircularQueue* queue)
-{
-  if (queue) {
-    if (queue->data)
-      g_free(queue->data);
-    g_free(queue);
-  }
-}
-
-void gimp_circular_queue_enqueue_data(GimpCircularQueue* queue, gpointer data)
-{
-  guint index = queue->end % queue->queue_size;
-
-  if (index > queue->start && index == queue->start % queue->queue_size)
-    queue->start ++;
-    
-  index *= queue->element_size;
-  g_memmove((guchar*)queue->data + index, data, queue->element_size);
-  queue->end ++;
-}
-
-gpointer gimp_circular_queue_get_nth_offset(GimpCircularQueue* queue, guint index)
-{
-  index = (queue->start + index) % queue->queue_size;
-  index *= queue->element_size;
-  return (guchar*)queue->data + index;
-}
-
-gpointer gimp_circular_queue_get_last_offset(GimpCircularQueue* queue)
-{
-  gint index = (queue->end - 1) % queue->queue_size;
-  index *= queue->element_size;
-  return (guchar*)queue->data + index;
-}
-
-
 #define DEFAULT_BRUSH_SIZE             20.0
 #define DEFAULT_BRUSH_ASPECT_RATIO     1.0
 #define DEFAULT_BRUSH_ANGLE            0.0
@@ -110,7 +61,7 @@ gpointer gimp_circular_queue_get_last_offset(GimpCircularQueue* queue)
 #define DYNAMIC_MAX_VALUE              1.0
 #define DYNAMIC_MIN_VALUE              0.0
 
-#define DEFAULT_SMOOTHING_HISTORY      20
+#define DEFAULT_SMOOTHING_QUALITY      20
 #define DEFAULT_SMOOTHING_FACTOR       50
 
 enum
@@ -148,7 +99,7 @@ enum
   PROP_GRADIENT_VIEW_SIZE,
 
   PROP_USE_SMOOTHING,
-  PROP_SMOOTHING_HISTORY,
+  PROP_SMOOTHING_QUALITY,
   PROP_SMOOTHING_FACTOR
 };
 
@@ -298,20 +249,22 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                 GIMP_VIEW_SIZE_LARGE,
                                 GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHING_HISTORY,
-                                "smoothing-history", NULL,
-                                1,
-                                100,
-                                DEFAULT_SMOOTHING_HISTORY,
-                                GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_SMOOTHING,
                                     "use-smoothing", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
+                                "smoothing-quality", NULL,
+                                1,
+                                100,
+                                DEFAULT_SMOOTHING_QUALITY,
+                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
                                    "smoothing-factor", NULL,
-                                   0.0, 1000.0, DEFAULT_SMOOTHING_FACTOR,
+                                   3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR, /* Max velocity is set at 3.
+                                                                           * Allowing for smoothing factor to be
+                                                                           * less than velcoty results in numeric
+                                                                           * instablility */
                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -459,8 +412,8 @@ gimp_paint_options_set_property (GObject      *object,
       smoothing_options->use_smoothing = g_value_get_boolean (value);
       break;
 
-    case PROP_SMOOTHING_HISTORY:
-      smoothing_options->smoothing_history = g_value_get_int (value);
+    case PROP_SMOOTHING_QUALITY:
+      smoothing_options->smoothing_quality = g_value_get_int (value);
       break;
 
     case PROP_SMOOTHING_FACTOR:
@@ -574,13 +527,13 @@ gimp_paint_options_get_property (GObject    *object,
     case PROP_GRADIENT_VIEW_SIZE:
       g_value_set_int (value, options->gradient_view_size);
       break;
-    
+
     case PROP_USE_SMOOTHING:
       g_value_set_boolean(value, smoothing_options->use_smoothing);
       break;
 
-    case PROP_SMOOTHING_HISTORY:
-      g_value_set_int (value, smoothing_options->smoothing_history);
+    case PROP_SMOOTHING_QUALITY:
+      g_value_set_int (value, smoothing_options->smoothing_quality);
       break;
 
     case PROP_SMOOTHING_FACTOR:
@@ -748,66 +701,4 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
      return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
-}
-
-GimpCoords gimp_paint_options_get_smoothed_coords (GimpPaintOptions  *paint_options,
-                                                   const GimpCoords *original_coords,
-                                                   GimpCircularQueue *history)
-{
-  gdouble PI = 4 * atan(1);
-  GimpSmoothingOptions *smoothing_options = paint_options->smoothing_options;
-  if (smoothing_options->use_smoothing && smoothing_options->smoothing_history > 0) {
-    int i;
-    GimpCoords result = *original_coords;
-    guint length;
-    gdouble gaussian_weight = 0.0;
-    gdouble gaussian_weight2 = SQR (smoothing_options->smoothing_factor);
-    gdouble velocity_sum = 0.0;
-    gint min_index;
-    gdouble scale_sum = 0.0;
-    
-    result.x = result.y = 0.0;
-    gimp_circular_queue_enqueue(history, *original_coords);
-    length = gimp_circular_queue_length(history);
-    
-    min_index = length - MIN(length,  smoothing_options->smoothing_history);
-
-    if (gaussian_weight2 != 0.0)
-      gaussian_weight = 1 / (sqrt (2 * PI) * smoothing_options->smoothing_factor);
-      
-//    g_print("IN:%f-%f\n", original_coords->x, original_coords->y); 
-
-    for (i = (int)(length - 1); i >= min_index; i--) {
-        gdouble rate = 0;
-        GimpCoords* next_coords = &gimp_circular_queue_index(history, GimpCoords, i);
-//        g_print("%d: %f-%f\n", i,  next_coords->x, next_coords->y);
-  
-        if (gaussian_weight2 != 0) 
-          {
-            /* We use gaussian function with velocity as a window function */
-            velocity_sum += next_coords->velocity * 100;
-            rate = gaussian_weight * exp (-velocity_sum*velocity_sum / (2 * gaussian_weight2));
-            /* If i == 0 && rate == 0.0, resulting value becomes zero.
-             * To avoid this, we treat this as a special case.
-             */
-            if (i == 0 && rate == 0.0)
-              rate = 1.0;
-          }
-        else
-          {
-            rate = (i == 0) ? 1.0 : 0.0;
-          }
-        scale_sum += rate;
-        result.x += rate * next_coords->x;
-        result.y += rate * next_coords->y;    
-    }
-    if (scale_sum != 0.0)
-      {
-        result.x /= scale_sum;
-        result.y /= scale_sum;
-      }
-//      g_print("OUT:%f-%f\n", result.x, result.y); 
-    return result;
-  }
-  return *original_coords;  
 }

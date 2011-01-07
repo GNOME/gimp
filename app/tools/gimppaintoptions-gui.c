@@ -50,6 +50,8 @@
 
 #include "gimp-intl.h"
 
+
+
 static void gimp_paint_options_gui_reset_size (GtkWidget        *button,
                                                GimpPaintOptions *paint_options);
 
@@ -174,7 +176,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     frame = smoothing_options_gui (options, tool_type);
     gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
     gtk_widget_show (frame);
-    
 
   /*  the "incremental" toggle  */
   if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||
@@ -345,22 +346,21 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
 
   frame = gimp_prop_expanding_frame_new (config, "use-smoothing",
-                                         _("Apply Smoothing"),
+                                         _("Smooth stroke"),
                                          table, NULL);
 
-  gimp_prop_scale_entry_new (config, "smoothing-history",
+  gimp_prop_scale_entry_new (config, "smoothing-quality",
                              GTK_TABLE (table), 0, 0,
                              _("Quality:"),
                              1, 10, 1,
                              FALSE, 0, 100);
-                             
+
   factor = gimp_prop_scale_entry_new (config, "smoothing-factor",
                                       GTK_TABLE (table), 0, 1,
                                       _("Factor:"),
                                       1, 10, 1,
                                       FALSE, 0, 100);
   gimp_scale_entry_set_logarithmic (factor, TRUE);
-  
+
   return frame;
 }
-

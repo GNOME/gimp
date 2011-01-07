@@ -42,7 +42,6 @@ struct _GimpInk
 
   GimpBlob          *cur_blob;     /*  current blob                   */
   GimpBlob          *last_blob;    /*  blob for last cursor position  */
-  GimpCircularQueue *queue;
 };
 
 struct _GimpInkClass

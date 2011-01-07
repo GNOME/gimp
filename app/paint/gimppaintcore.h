@@ -64,8 +64,8 @@ struct _GimpPaintCore
   TempBuf     *orig_buf;         /*  the unmodified drawable pixels      */
   TempBuf     *orig_proj_buf;    /*  the unmodified projection pixels    */
   TempBuf     *canvas_buf;       /*  the buffer to paint pixels to       */
-  
-  GimpCircularQueue *smoothing_history;
+
+  GArray      *stroke_buffer;
 };
 
 struct _GimpPaintCoreClass
@@ -203,6 +203,10 @@ void      gimp_paint_core_validate_canvas_tiles     (GimpPaintCore    *core,
                                                      gint              y,
                                                      gint              w,
                                                      gint              h);
+
+GimpCoords gimp_paint_core_get_smoothed_coords      (GimpPaintCore    *core,
+                                                     GimpPaintOptions *paint_options,
+                                                     const GimpCoords *original_coords);
 
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */
