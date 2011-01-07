@@ -172,8 +172,6 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     preview);
 
   preview->hscr = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
-  gtk_range_set_update_policy (GTK_RANGE (preview->hscr),
-                               GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (GIMP_PREVIEW (preview)->table),
                     preview->hscr, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
@@ -187,8 +185,6 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     preview);
 
   preview->vscr = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
-  gtk_range_set_update_policy (GTK_RANGE (preview->vscr),
-                               GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (GIMP_PREVIEW (preview)->table),
                     preview->vscr, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
