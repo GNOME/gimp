@@ -215,7 +215,6 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
   GimpPosterizeTool *posterize_tool = GIMP_POSTERIZE_TOOL (image_map_tool);
   GtkWidget         *main_vbox;
   GtkWidget         *table;
-  GtkWidget         *slider;
   GtkObject         *data;
 
   main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
@@ -236,9 +235,6 @@ gimp_posterize_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_scale_entry_set_logarithmic (data, TRUE);
 
   posterize_tool->levels_data = GTK_ADJUSTMENT (data);
-
-  slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
   g_signal_connect (posterize_tool->levels_data, "value-changed",
                     G_CALLBACK (gimp_posterize_tool_levels_changed),
