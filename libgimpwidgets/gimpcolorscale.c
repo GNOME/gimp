@@ -88,8 +88,6 @@ gimp_color_scale_init (GimpColorScale *scale)
   GtkRange *range = GTK_RANGE (scale);
 
   gtk_range_set_slider_size_fixed (range, TRUE);
-  /* range->update_policy     = GTK_UPDATE_DELAYED; */
-
   gtk_range_set_flippable (GTK_RANGE (scale), TRUE);
 
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
