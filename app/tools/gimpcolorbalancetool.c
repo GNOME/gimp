@@ -231,7 +231,6 @@ create_levels_scale (gdouble        value,
 
   slider = gtk_hscale_new (GTK_ADJUSTMENT (adj));
   gtk_scale_set_draw_value (GTK_SCALE (slider), FALSE);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
   gtk_widget_set_size_request (slider, 100, -1);
   gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, col, col + 1);
   gtk_widget_show (slider);

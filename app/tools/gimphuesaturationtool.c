@@ -224,7 +224,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget               *vbox;
   GtkWidget               *abox;
   GtkWidget               *table;
-  GtkWidget               *slider;
   GtkWidget               *button;
   GtkWidget               *frame;
   GtkWidget               *hbox;
@@ -358,9 +357,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   g_object_unref (label_group);
   g_object_unref (spinner_group);
 
-  slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
-
   g_signal_connect (data, "value-changed",
                     G_CALLBACK (hue_saturation_overlap_changed),
                     hs_tool);
@@ -392,9 +388,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
   gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
 
-  slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
-
   g_signal_connect (data, "value-changed",
                     G_CALLBACK (hue_saturation_hue_changed),
                     hs_tool);
@@ -411,9 +404,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
   gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
 
-  slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
-
   g_signal_connect (data, "value-changed",
                     G_CALLBACK (hue_saturation_lightness_changed),
                     hs_tool);
@@ -429,9 +419,6 @@ gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gtk_size_group_add_widget (label_group, GIMP_SCALE_ENTRY_LABEL (data));
   gtk_size_group_add_widget (spinner_group, GIMP_SCALE_ENTRY_SPINBUTTON (data));
-
-  slider = GIMP_SCALE_ENTRY_SCALE (data);
-  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_CONTINUOUS);
 
   g_signal_connect (hs_tool->saturation_data, "value-changed",
                     G_CALLBACK (hue_saturation_saturation_changed),
