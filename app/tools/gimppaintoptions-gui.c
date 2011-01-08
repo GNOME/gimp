@@ -57,11 +57,10 @@ static void gimp_paint_options_gui_reset_size (GtkWidget        *button,
 
 static GtkWidget * dynamics_options_gui       (GimpPaintOptions *paint_options,
                                                GType             tool_type);
-
-static GtkWidget * jitter_options_gui    (GimpPaintOptions *paint_options,
-                                          GType             tool_type);
-static GtkWidget * smoothing_options_gui (GimpPaintOptions *paint_options,
-                                          GType             tool_type);
+static GtkWidget * jitter_options_gui         (GimpPaintOptions *paint_options,
+                                               GType             tool_type);
+static GtkWidget * smoothing_options_gui      (GimpPaintOptions *paint_options,
+                                               GType             tool_type);
 
 
 /*  public functions  */
@@ -318,6 +317,36 @@ jitter_options_gui (GimpPaintOptions *paint_options,
   return frame;
 }
 
+static GtkWidget *
+smoothing_options_gui (GimpPaintOptions *paint_options,
+                       GType             tool_type)
+{
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *scale;
+
+  vbox = gtk_vbox_new (FALSE, 2);
+
+  frame = gimp_prop_expanding_frame_new (config, "use-smoothing",
+                                         _("Smooth stroke"),
+                                         vbox, NULL);
+
+  scale = gimp_prop_spin_scale_new (config, "smoothing-quality",
+                                    _("Quality"),
+                                    1, 10, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_spin_scale_new (config, "smoothing-factor",
+                                    _("Factor"),
+                                    1, 10, 1);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  return frame;
+}
+
 static void
 gimp_paint_options_gui_reset_size (GtkWidget        *button,
                                    GimpPaintOptions *paint_options)
@@ -331,36 +360,4 @@ gimp_paint_options_gui_reset_size (GtkWidget        *button,
                                                 brush->mask->height),
                    NULL);
    }
-}
-
-static GtkWidget *
-smoothing_options_gui (GimpPaintOptions *paint_options,
-                       GType             tool_type)
-{
-  GObject   *config = G_OBJECT (paint_options);
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkObject *factor;
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-
-  frame = gimp_prop_expanding_frame_new (config, "use-smoothing",
-                                         _("Smooth stroke"),
-                                         table, NULL);
-
-  gimp_prop_scale_entry_new (config, "smoothing-quality",
-                             GTK_TABLE (table), 0, 0,
-                             _("Quality:"),
-                             1, 10, 1,
-                             FALSE, 0, 100);
-
-  factor = gimp_prop_scale_entry_new (config, "smoothing-factor",
-                                      GTK_TABLE (table), 0, 1,
-                                      _("Factor:"),
-                                      1, 10, 1,
-                                      FALSE, 0, 100);
-  gimp_scale_entry_set_logarithmic (factor, TRUE);
-
-  return frame;
 }
