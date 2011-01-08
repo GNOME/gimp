@@ -120,7 +120,8 @@ gimp_dialog_class_init (GimpDialogClass *klass)
 static void
 gimp_dialog_init (GimpDialog *dialog)
 {
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+  /* remove this once we depend on gtk 2.22 (where it defaults to FALSE) */
+  g_object_set (G_OBJECT (dialog), "has-separator", FALSE, NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_dialog_response),
