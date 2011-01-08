@@ -21,7 +21,6 @@
 
 #include "gimppaintcore.h"
 #include "gimpink-blob.h"
-#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_INK            (gimp_ink_get_type ())
@@ -40,8 +39,8 @@ struct _GimpInk
 
   GimpBlob      *start_blob;   /*  starting blob (for undo)       */
 
-  GimpBlob          *cur_blob;     /*  current blob                   */
-  GimpBlob          *last_blob;    /*  blob for last cursor position  */
+  GimpBlob      *cur_blob;     /*  current blob                   */
+  GimpBlob      *last_blob;    /*  blob for last cursor position  */
 };
 
 struct _GimpInkClass

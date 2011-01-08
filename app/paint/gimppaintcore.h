@@ -21,7 +21,6 @@
 
 #include "libgimpmath/gimpvector.h"
 #include "core/gimpobject.h"
-#include "gimppaintoptions.h" /* GimpCircularQueue */
 
 
 #define GIMP_TYPE_PAINT_CORE            (gimp_paint_core_get_type ())

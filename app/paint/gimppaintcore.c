@@ -353,14 +353,14 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   item = GIMP_ITEM (drawable);
 
-  if (core->stroke_buffer != NULL)
-   {
-     g_array_free(core->stroke_buffer, TRUE);
-     core->stroke_buffer = NULL;
-   }
+  if (core->stroke_buffer)
+    {
+      g_array_free (core->stroke_buffer, TRUE);
+      core->stroke_buffer = NULL;
+    }
 
   core->stroke_buffer = g_array_sized_new (TRUE, TRUE,
-                                           sizeof(GimpCoords),
+                                           sizeof (GimpCoords),
                                            STROKE_BUFFER_INIT_SIZE);
 
   core->cur_coords = *coords;
@@ -430,10 +430,11 @@ gimp_paint_core_finish (GimpPaintCore *core,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
 
-  if (core->stroke_buffer) {
-    g_array_free (core->stroke_buffer, TRUE);
-    core->stroke_buffer = NULL;
-  }
+  if (core->stroke_buffer)
+    {
+      g_array_free (core->stroke_buffer, TRUE);
+      core->stroke_buffer = NULL;
+    }
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -1250,39 +1251,41 @@ gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
     }
 }
 
-GimpCoords gimp_paint_core_get_smoothed_coords (GimpPaintCore    *core,
-                                                GimpPaintOptions *paint_options,
-                                                const GimpCoords *original_coords)
+GimpCoords
+gimp_paint_core_get_smoothed_coords (GimpPaintCore    *core,
+                                     GimpPaintOptions *paint_options,
+                                     const GimpCoords *original_coords)
 {
   GimpSmoothingOptions *smoothing_options = paint_options->smoothing_options;
-  GArray   *history = core->stroke_buffer;
+  GArray               *history           = core->stroke_buffer;
 
-  if (smoothing_options->use_smoothing && smoothing_options->smoothing_quality > 0)
+  if (smoothing_options->use_smoothing &&
+      smoothing_options->smoothing_quality > 0)
     {
-      int i;
-      guint length;
-      gint min_index;
-      GimpCoords result = *original_coords;
-      gdouble gaussian_weight = 0.0;
-      gdouble gaussian_weight2 = SQR (smoothing_options->smoothing_factor);
-      gdouble velocity_sum = 0.0;
-      gdouble scale_sum = 0.0;
+      gint       i;
+      guint      length;
+      gint       min_index;
+      GimpCoords result           = *original_coords;
+      gdouble    gaussian_weight  = 0.0;
+      gdouble    gaussian_weight2 = SQR (smoothing_options->smoothing_factor);
+      gdouble    velocity_sum     = 0.0;
+      gdouble    scale_sum        = 0.0;
 
       result.x = result.y = 0.0;
 
-
       g_array_append_val (history, *original_coords);
 
-      length = MIN(smoothing_options->smoothing_quality, history->len);
+      length = MIN (smoothing_options->smoothing_quality, history->len);
 
       min_index = history->len - length;
 
       if (gaussian_weight2 != 0.0)
         gaussian_weight = 1 / (sqrt (2 * G_PI) * smoothing_options->smoothing_factor);
 
-      for (i = history->len - 1; i >= min_index; i--) {
-          gdouble rate = 0.0;
-          GimpCoords* next_coords = &g_array_index (history,
+      for (i = history->len - 1; i >= min_index; i--)
+        {
+          gdouble     rate        = 0.0;
+          GimpCoords *next_coords = &g_array_index (history,
                                                     GimpCoords, i);
 
           if (gaussian_weight2 != 0.0)
@@ -1295,7 +1298,8 @@ GimpCoords gimp_paint_core_get_smoothed_coords (GimpPaintCore    *core,
           scale_sum += rate;
           result.x += rate * next_coords->x;
           result.y += rate * next_coords->y;
-      }
+        }
+
       if (scale_sum != 0.0)
         {
           result.x /= scale_sum;
@@ -1304,5 +1308,6 @@ GimpCoords gimp_paint_core_get_smoothed_coords (GimpPaintCore    *core,
 
       return result;
     }
-    return *original_coords;
+
+  return *original_coords;
 }

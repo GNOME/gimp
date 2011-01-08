@@ -36,6 +36,7 @@
 
 #include "gimp-intl.h"
 
+
 #define DEFAULT_BRUSH_SIZE             20.0
 #define DEFAULT_BRUSH_ASPECT_RATIO     1.0
 #define DEFAULT_BRUSH_ANGLE            0.0
@@ -63,6 +64,7 @@
 
 #define DEFAULT_SMOOTHING_QUALITY      20
 #define DEFAULT_SMOOTHING_FACTOR       50
+
 
 enum
 {
@@ -255,16 +257,15 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SMOOTHING_QUALITY,
                                 "smoothing-quality", NULL,
-                                1,
-                                100,
-                                DEFAULT_SMOOTHING_QUALITY,
+                                1, 100, DEFAULT_SMOOTHING_QUALITY,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SMOOTHING_FACTOR,
                                    "smoothing-factor", NULL,
-                                   3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR, /* Max velocity is set at 3.
-                                                                           * Allowing for smoothing factor to be
-                                                                           * less than velcoty results in numeric
-                                                                           * instablility */
+                                   3.0, 1000.0, DEFAULT_SMOOTHING_FACTOR,
+                                   /* Max velocity is set at 3.
+                                    * Allowing for smoothing factor to be
+                                    * less than velcoty results in numeric
+                                    * instablility */
                                    GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -298,9 +299,9 @@ gimp_paint_options_finalize (GObject *object)
 {
   GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
 
-  g_slice_free (GimpJitterOptions,   options->jitter_options);
-  g_slice_free (GimpFadeOptions,     options->fade_options);
-  g_slice_free (GimpGradientOptions, options->gradient_options);
+  g_slice_free (GimpJitterOptions,    options->jitter_options);
+  g_slice_free (GimpFadeOptions,      options->fade_options);
+  g_slice_free (GimpGradientOptions,  options->gradient_options);
   g_slice_free (GimpSmoothingOptions, options->smoothing_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -312,11 +313,11 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions    *options           = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions     *fade_options      = options->fade_options;
-  GimpJitterOptions   *jitter_options    = options->jitter_options;
-  GimpGradientOptions *gradient_options  = options->gradient_options;
-  GimpSmoothingOptions *smoothing_options= options->smoothing_options;
+  GimpPaintOptions    *options            = GIMP_PAINT_OPTIONS (object);
+  GimpFadeOptions     *fade_options       = options->fade_options;
+  GimpJitterOptions   *jitter_options     = options->jitter_options;
+  GimpGradientOptions *gradient_options   = options->gradient_options;
+  GimpSmoothingOptions *smoothing_options = options->smoothing_options;
 
   switch (property_id)
     {
@@ -436,7 +437,7 @@ gimp_paint_options_get_property (GObject    *object,
   GimpFadeOptions      *fade_options      = options->fade_options;
   GimpJitterOptions    *jitter_options    = options->jitter_options;
   GimpGradientOptions  *gradient_options  = options->gradient_options;
-  GimpSmoothingOptions *smoothing_options= options->smoothing_options;
+  GimpSmoothingOptions *smoothing_options = options->smoothing_options;
 
   switch (property_id)
     {
@@ -529,7 +530,7 @@ gimp_paint_options_get_property (GObject    *object,
       break;
 
     case PROP_USE_SMOOTHING:
-      g_value_set_boolean(value, smoothing_options->use_smoothing);
+      g_value_set_boolean (value, smoothing_options->use_smoothing);
       break;
 
     case PROP_SMOOTHING_QUALITY:

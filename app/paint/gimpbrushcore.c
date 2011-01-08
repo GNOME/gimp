@@ -521,10 +521,12 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gimp_paint_core_get_last_coords (paint_core, &last_coords);
   gimp_paint_core_get_current_coords (paint_core, &current_coords);
 
-  if (paint_core->stroke_buffer) {
-    current_coords = gimp_paint_core_get_smoothed_coords(paint_core, paint_options, &current_coords);
-    gimp_paint_core_set_current_coords (paint_core, &current_coords);
-  }
+  if (paint_core->stroke_buffer)
+    {
+      current_coords = gimp_paint_core_get_smoothed_coords (paint_core,
+                                                            paint_options, &current_coords);
+      gimp_paint_core_set_current_coords (paint_core, &current_coords);
+    }
 
   /*Zero sized brushes are unfit for interpolate,
    * so we just let paint core fail onits own
