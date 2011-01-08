@@ -276,7 +276,6 @@ exchange_dialog (GimpDrawable *drawable)
   GtkWidget    *table;
   GtkWidget    *threshold;
   GtkWidget    *colorbutton;
-  GtkWidget    *scale;
   GtkObject    *adj;
   GtkSizeGroup *group;
   gint          framenumber;
@@ -428,8 +427,6 @@ exchange_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
-      scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
-      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
       if (! framenumber)
@@ -454,8 +451,6 @@ exchange_dialog (GimpDrawable *drawable)
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
 
-          scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
-          gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
           gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
         }
 
@@ -488,8 +483,6 @@ exchange_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
-      scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
-      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
       if (! framenumber)
@@ -514,9 +507,6 @@ exchange_dialog (GimpDrawable *drawable)
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
 
-
-          scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
-          gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
           gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
         }
 
@@ -549,8 +539,6 @@ exchange_dialog (GimpDrawable *drawable)
                                 G_CALLBACK (gimp_preview_invalidate),
                                 preview);
 
-      scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
-      gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
       gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
 
       if (! framenumber)
@@ -575,8 +563,6 @@ exchange_dialog (GimpDrawable *drawable)
                                     G_CALLBACK (gimp_preview_invalidate),
                                     preview);
 
-          scale = GTK_WIDGET (GIMP_SCALE_ENTRY_SCALE (adj));
-          gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
           gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
         }
 

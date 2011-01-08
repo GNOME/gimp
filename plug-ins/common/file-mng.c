@@ -1403,7 +1403,6 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("PNG compression level:"), 0.0, 0.9,
                              scale, 1, FALSE);
@@ -1424,7 +1423,6 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("JPEG compression quality:"), 0.0, 0.9,
@@ -1441,7 +1439,6 @@ mng_save_dialog (gint32 image_id)
   gtk_widget_set_size_request (scale, SCALE_WIDTH, -1);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_widget_set_sensitive (scale, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("JPEG smoothing factor:"), 0.0, 0.9,

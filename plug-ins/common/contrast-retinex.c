@@ -276,7 +276,6 @@ retinex_dialog (GimpDrawable *drawable)
   GtkWidget *preview;
   GtkWidget *table;
   GtkWidget *combo;
-  GtkWidget *scale;
   GtkObject *adj;
   gboolean   run;
 
@@ -340,8 +339,6 @@ retinex_dialog (GimpDrawable *drawable)
                               rvals.scale,
                               MIN_GAUSSIAN_SCALE, MAX_GAUSSIAN_SCALE, 1, 1, 0,
                               TRUE, 0, 0, NULL, NULL);
-  scale = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -355,8 +352,6 @@ retinex_dialog (GimpDrawable *drawable)
                               rvals.nscales,
                               0, MAX_RETINEX_SCALES, 1, 1, 0,
                               TRUE, 0, 0, NULL, NULL);
-  scale = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -369,8 +364,6 @@ retinex_dialog (GimpDrawable *drawable)
                               _("Dy_namic:"), SCALE_WIDTH, ENTRY_WIDTH,
                               rvals.cvar, 0, 4, 0.1, 0.1, 1,
                               TRUE, 0, 0, NULL, NULL);
-  scale = GIMP_SCALE_ENTRY_SCALE (adj);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DISCONTINUOUS);
 
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_float_adjustment_update),

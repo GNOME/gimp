@@ -1404,7 +1404,6 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_widget_set_size_request (scale, 200, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 2);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), 0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -1432,7 +1431,6 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_widget_set_size_request (scale, 100, -1);
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (scale), 0);
   gtk_widget_show (scale);
 
   g_signal_connect (smoothnessData, "value-changed",
