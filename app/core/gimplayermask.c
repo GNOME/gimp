@@ -256,7 +256,10 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
 
       if (push_undo)
-        gimp_image_undo_push_layer_mask_apply (image, C_("undo-type", "Apply Layer Mask"),
+        gimp_image_undo_push_layer_mask_apply (image,
+                                               apply ?
+                                               C_("undo-type", "Enable Layer Mask") :
+                                               C_("undo-type", "Disable Layer Mask"),
                                                layer_mask);
 
       layer_mask->apply_mask = apply ? TRUE : FALSE;
@@ -317,7 +320,8 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
       GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer_mask));
 
       if (push_undo)
-        gimp_image_undo_push_layer_mask_show (image, C_("undo-type", "Show Layer Mask"),
+        gimp_image_undo_push_layer_mask_show (image,
+                                              C_("undo-type", "Show Layer Mask"),
                                               layer_mask);
 
       layer_mask->show_mask = show ? TRUE : FALSE;
