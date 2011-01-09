@@ -254,21 +254,17 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   TempBuf        *area;
   guchar          col[MAX_CHANNELS];
   PixelRegion     blob_maskPR;
-  GimpCoords      modified_coords;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  modified_coords = gimp_paint_core_get_smoothed_coords (paint_core,
-                                                         paint_options, coords);
 
   if (! ink->last_blob)
     {
       ink->last_blob = ink_pen_ellipse (options,
-                                        modified_coords.x,
-                                        modified_coords.y,
-                                        modified_coords.pressure,
-                                        modified_coords.xtilt,
-                                        modified_coords.ytilt,
+                                        coords->x,
+                                        coords->y,
+                                        coords->pressure,
+                                        coords->xtilt,
+                                        coords->ytilt,
                                         100);
 
       if (ink->start_blob)
@@ -281,12 +277,12 @@ gimp_ink_motion (GimpPaintCore    *paint_core,
   else
     {
       GimpBlob *blob = ink_pen_ellipse (options,
-                                        modified_coords.x,
-                                        modified_coords.y,
-                                        modified_coords.pressure,
-                                        modified_coords.xtilt,
-                                        modified_coords.ytilt,
-                                        modified_coords.velocity * 100);
+                                        coords->x,
+                                        coords->y,
+                                        coords->pressure,
+                                        coords->xtilt,
+                                        coords->ytilt,
+                                        coords->velocity * 100);
 
       blob_union = gimp_blob_convex_union (ink->last_blob, blob);
 

@@ -203,9 +203,5 @@ void      gimp_paint_core_validate_canvas_tiles     (GimpPaintCore    *core,
                                                      gint              w,
                                                      gint              h);
 
-GimpCoords gimp_paint_core_get_smoothed_coords      (GimpPaintCore    *core,
-                                                     GimpPaintOptions *paint_options,
-                                                     const GimpCoords *original_coords);
-
 
 #endif  /*  __GIMP_PAINT_CORE_H__  */
