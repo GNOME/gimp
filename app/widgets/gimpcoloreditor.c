@@ -65,8 +65,7 @@ static void   gimp_color_editor_get_property    (GObject           *object,
                                                  GValue            *value,
                                                  GParamSpec        *pspec);
 
-static void   gimp_color_editor_style_set       (GtkWidget         *widget,
-                                                 GtkStyle          *prev_style);
+static void   gimp_color_editor_style_updated   (GtkWidget         *widget);
 
 static void   gimp_color_editor_set_aux_info    (GimpDocked        *docked,
                                                  GList             *aux_info);
@@ -117,12 +116,12 @@ gimp_color_editor_class_init (GimpColorEditorClass* klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_color_editor_constructed;
-  object_class->dispose      = gimp_color_editor_dispose;
-  object_class->set_property = gimp_color_editor_set_property;
-  object_class->get_property = gimp_color_editor_get_property;
+  object_class->constructed   = gimp_color_editor_constructed;
+  object_class->dispose       = gimp_color_editor_dispose;
+  object_class->set_property  = gimp_color_editor_set_property;
+  object_class->get_property  = gimp_color_editor_get_property;
 
-  widget_class->style_set    = gimp_color_editor_style_set;
+  widget_class->style_updated = gimp_color_editor_style_updated;
 
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context",
@@ -499,12 +498,11 @@ gimp_color_editor_new (GimpContext *context)
 }
 
 static void
-gimp_color_editor_style_set (GtkWidget *widget,
-                             GtkStyle  *prev_style)
+gimp_color_editor_style_updated (GtkWidget *widget)
 {
   GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (editor->hbox)
     gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));

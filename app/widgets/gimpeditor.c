@@ -87,8 +87,7 @@ static void            gimp_editor_get_property        (GObject        *object,
                                                         GValue         *value,
                                                         GParamSpec     *pspec);
 
-static void            gimp_editor_style_set           (GtkWidget      *widget,
-                                                        GtkStyle       *prev_style);
+static void            gimp_editor_style_updated       (GtkWidget      *widget);
 
 static GimpUIManager * gimp_editor_get_menu            (GimpDocked     *docked,
                                                         const gchar   **ui_path,
@@ -124,12 +123,12 @@ gimp_editor_class_init (GimpEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_editor_constructed;
-  object_class->dispose      = gimp_editor_dispose;
-  object_class->set_property = gimp_editor_set_property;
-  object_class->get_property = gimp_editor_get_property;
+  object_class->constructed   = gimp_editor_constructed;
+  object_class->dispose       = gimp_editor_dispose;
+  object_class->set_property  = gimp_editor_set_property;
+  object_class->get_property  = gimp_editor_get_property;
 
-  widget_class->style_set    = gimp_editor_style_set;
+  widget_class->style_updated = gimp_editor_style_updated;
 
   g_object_class_install_property (object_class, PROP_MENU_FACTORY,
                                    g_param_spec_object ("menu-factory",
@@ -362,13 +361,12 @@ gimp_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_editor_style_set (GtkWidget *widget,
-                       GtkStyle  *prev_style)
+gimp_editor_style_updated (GtkWidget *widget)
 {
   GimpEditor    *editor = GIMP_EDITOR (widget);
   GimpGuiConfig *config = NULL;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (editor->priv->ui_manager)
     config = GIMP_GUI_CONFIG (editor->priv->ui_manager->gimp->config);

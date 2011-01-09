@@ -61,8 +61,7 @@ static void   gimp_sample_point_editor_get_property   (GObject               *ob
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 
-static void   gimp_sample_point_editor_style_set      (GtkWidget             *widget,
-                                                       GtkStyle              *prev_style);
+static void   gimp_sample_point_editor_style_updated  (GtkWidget             *widget);
 static void   gimp_sample_point_editor_set_image      (GimpImageEditor       *editor,
                                                        GimpImage             *image);
 
@@ -106,7 +105,7 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
   object_class->get_property    = gimp_sample_point_editor_get_property;
   object_class->set_property    = gimp_sample_point_editor_set_property;
 
-  widget_class->style_set       = gimp_sample_point_editor_style_set;
+  widget_class->style_updated   = gimp_sample_point_editor_style_updated;
 
   image_editor_class->set_image = gimp_sample_point_editor_set_image;
 
@@ -233,20 +232,23 @@ gimp_sample_point_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_sample_point_editor_style_set (GtkWidget *widget,
-                                    GtkStyle  *prev_style)
+gimp_sample_point_editor_style_updated (GtkWidget *widget)
 {
   GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (widget);
-  gint                   content_spacing;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gtk_widget_style_get (widget,
-                        "content-spacing", &content_spacing,
-                        NULL);
+  if (editor->table)
+    {
+      gint content_spacing;
 
-  gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
-  gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
+      gtk_widget_style_get (widget,
+                            "content-spacing", &content_spacing,
+                            NULL);
+
+      gtk_table_set_row_spacings (GTK_TABLE (editor->table), content_spacing);
+      gtk_table_set_col_spacings (GTK_TABLE (editor->table), content_spacing);
+    }
 }
 
 static void

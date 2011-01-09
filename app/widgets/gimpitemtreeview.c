@@ -105,8 +105,7 @@ static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked
 static void   gimp_item_tree_view_constructed       (GObject           *object);
 static void   gimp_item_tree_view_dispose           (GObject           *object);
 
-static void   gimp_item_tree_view_style_set         (GtkWidget         *widget,
-                                                     GtkStyle          *prev_style);
+static void   gimp_item_tree_view_style_updated     (GtkWidget         *widget);
 
 static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
                                                      GimpImage         *image);
@@ -248,7 +247,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   object_class->constructed      = gimp_item_tree_view_constructed;
   object_class->dispose          = gimp_item_tree_view_dispose;
 
-  widget_class->style_set        = gimp_item_tree_view_style_set;
+  widget_class->style_updated    = gimp_item_tree_view_style_updated;
 
   tree_view_class->drop_possible = gimp_item_tree_view_drop_possible;
   tree_view_class->drop_viewable = gimp_item_tree_view_drop_viewable;
@@ -526,8 +525,7 @@ gimp_item_tree_view_dispose (GObject *object)
 }
 
 static void
-gimp_item_tree_view_style_set (GtkWidget *widget,
-                               GtkStyle  *prev_style)
+gimp_item_tree_view_style_updated (GtkWidget *widget)
 {
   GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (widget);
   GList            *children;
@@ -607,7 +605,7 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
                 "icon-name", GIMP_ICON_LINKED,
                 NULL);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 }
 
 GtkWidget *
