@@ -61,8 +61,7 @@ static void       gimp_color_frame_set_property      (GObject        *object,
                                                       const GValue   *value,
                                                       GParamSpec     *pspec);
 
-static void       gimp_color_frame_style_set         (GtkWidget      *widget,
-                                                      GtkStyle       *prev_style);
+static void       gimp_color_frame_style_updated     (GtkWidget      *widget);
 static gboolean   gimp_color_frame_draw              (GtkWidget      *widget,
                                                       cairo_t        *cr);
 
@@ -85,13 +84,13 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose      = gimp_color_frame_dispose;
-  object_class->finalize     = gimp_color_frame_finalize;
-  object_class->get_property = gimp_color_frame_get_property;
-  object_class->set_property = gimp_color_frame_set_property;
+  object_class->dispose       = gimp_color_frame_dispose;
+  object_class->finalize      = gimp_color_frame_finalize;
+  object_class->get_property  = gimp_color_frame_get_property;
+  object_class->set_property  = gimp_color_frame_set_property;
 
-  widget_class->style_set    = gimp_color_frame_style_set;
-  widget_class->draw         = gimp_color_frame_draw;
+  widget_class->style_updated = gimp_color_frame_style_updated;
+  widget_class->draw          = gimp_color_frame_draw;
 
   g_object_class_install_property (object_class, PROP_MODE,
                                    g_param_spec_enum ("mode",
@@ -324,12 +323,11 @@ gimp_color_frame_set_property (GObject      *object,
 }
 
 static void
-gimp_color_frame_style_set (GtkWidget *widget,
-                            GtkStyle  *prev_style)
+gimp_color_frame_style_updated (GtkWidget *widget)
 {
   GimpColorFrame *frame = GIMP_COLOR_FRAME (widget);
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   g_clear_object (&frame->number_layout);
 }
