@@ -72,8 +72,8 @@ struct _GimpDockPrivate
 
 static void       gimp_dock_dispose                (GObject      *object);
 
-static void       gimp_dock_style_set              (GtkWidget    *widget,
-                                                    GtkStyle     *prev_style);
+static void       gimp_dock_style_updated          (GtkWidget    *widget);
+
 static gchar    * gimp_dock_real_get_description   (GimpDock     *dock,
                                                     gboolean      complete);
 static void       gimp_dock_real_book_added        (GimpDock     *dock,
@@ -139,7 +139,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   object_class->dispose          = gimp_dock_dispose;
 
-  widget_class->style_set        = gimp_dock_style_set;
+  widget_class->style_updated    = gimp_dock_style_updated;
 
   klass->get_description         = gimp_dock_real_get_description;
   klass->set_host_geometry_hints = NULL;
@@ -213,13 +213,12 @@ gimp_dock_dispose (GObject *object)
 }
 
 static void
-gimp_dock_style_set (GtkWidget *widget,
-                     GtkStyle  *prev_style)
+gimp_dock_style_updated (GtkWidget *widget)
 {
   GimpDock *dock       = GIMP_DOCK (widget);
   gdouble   font_scale = 1.0;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
                         "font-scale", &font_scale,
