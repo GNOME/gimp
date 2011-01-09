@@ -45,14 +45,14 @@
 
 #define DEFAULT_MINIMAL_WIDTH  200
 
+
 struct _GimpMenuDockPrivate
 {
   gint make_sizeof_greater_than_zero;
 };
 
 
-static void   gimp_menu_dock_style_set               (GtkWidget      *widget,
-                                                      GtkStyle       *prev_style);
+static void   gimp_menu_dock_style_updated (GtkWidget *widget);
 
 
 G_DEFINE_TYPE (GimpMenuDock, gimp_menu_dock, GIMP_TYPE_DOCK)
@@ -65,7 +65,7 @@ gimp_menu_dock_class_init (GimpMenuDockClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->style_set = gimp_menu_dock_style_set;
+  widget_class->style_updated = gimp_menu_dock_style_updated;
 
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("minimal-width",
@@ -84,12 +84,11 @@ gimp_menu_dock_init (GimpMenuDock *dock)
 }
 
 static void
-gimp_menu_dock_style_set (GtkWidget *widget,
-                          GtkStyle  *prev_style)
+gimp_menu_dock_style_updated (GtkWidget *widget)
 {
   gint minimal_width = -1;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
                         "minimal-width", &minimal_width,

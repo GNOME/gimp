@@ -82,8 +82,7 @@ static void  gimp_drawable_preview_set_property  (GObject         *object,
                                                   const GValue    *value,
                                                   GParamSpec      *pspec);
 
-static void  gimp_drawable_preview_style_set     (GtkWidget       *widget,
-                                                  GtkStyle        *prev_style);
+static void  gimp_drawable_preview_style_updated (GtkWidget       *widget);
 
 static void  gimp_drawable_preview_draw_original (GimpPreview     *preview);
 static void  gimp_drawable_preview_draw_thumb    (GimpPreview     *preview,
@@ -116,16 +115,16 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  object_class->constructed  = gimp_drawable_preview_constructed;
-  object_class->dispose      = gimp_drawable_preview_dispose;
-  object_class->get_property = gimp_drawable_preview_get_property;
-  object_class->set_property = gimp_drawable_preview_set_property;
+  object_class->constructed   = gimp_drawable_preview_constructed;
+  object_class->dispose       = gimp_drawable_preview_dispose;
+  object_class->get_property  = gimp_drawable_preview_get_property;
+  object_class->set_property  = gimp_drawable_preview_set_property;
 
-  widget_class->style_set    = gimp_drawable_preview_style_set;
+  widget_class->style_updated = gimp_drawable_preview_style_updated;
 
-  preview_class->draw        = gimp_drawable_preview_draw_original;
-  preview_class->draw_thumb  = gimp_drawable_preview_draw_thumb;
-  preview_class->draw_buffer = gimp_drawable_preview_draw_buffer;
+  preview_class->draw         = gimp_drawable_preview_draw_original;
+  preview_class->draw_thumb   = gimp_drawable_preview_draw_thumb;
+  preview_class->draw_buffer  = gimp_drawable_preview_draw_buffer;
 
   g_type_class_add_private (object_class, sizeof (GimpDrawablePreviewPrivate));
 
@@ -264,23 +263,25 @@ gimp_drawable_preview_set_property (GObject      *object,
 }
 
 static void
-gimp_drawable_preview_style_set (GtkWidget *widget,
-                                 GtkStyle  *prev_style)
+gimp_drawable_preview_style_updated (GtkWidget *widget)
 {
   GimpPreview *preview = GIMP_PREVIEW (widget);
-  gint         width   = preview->xmax - preview->xmin;
-  gint         height  = preview->ymax - preview->ymin;
-  gint         size;
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gtk_widget_style_get (widget,
-                        "size", &size,
-                        NULL);
+  if (preview->area)
+    {
+      gint width  = preview->xmax - preview->xmin;
+      gint height = preview->ymax - preview->ymin;
+      gint size;
 
-  gtk_widget_set_size_request (GIMP_PREVIEW (preview)->area,
-                               MIN (width, size), MIN (height, size));
+      gtk_widget_style_get (widget,
+                            "size", &size,
+                            NULL);
+
+      gtk_widget_set_size_request (GIMP_PREVIEW (preview)->area,
+                                   MIN (width, size), MIN (height, size));
+    }
 }
 
 static void

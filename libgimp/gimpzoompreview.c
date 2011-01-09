@@ -90,8 +90,7 @@ static void     gimp_zoom_preview_set_adjustments (GimpZoomPreview *preview,
 static void     gimp_zoom_preview_size_allocate   (GtkWidget       *widget,
                                                    GtkAllocation   *allocation,
                                                    GimpZoomPreview *preview);
-static void     gimp_zoom_preview_style_set       (GtkWidget       *widget,
-                                                   GtkStyle        *prev_style);
+static void     gimp_zoom_preview_style_updated   (GtkWidget       *widget);
 static gboolean gimp_zoom_preview_scroll_event    (GtkWidget       *widget,
                                                    GdkEventScroll  *event,
                                                    GimpZoomPreview *preview);
@@ -143,20 +142,20 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  object_class->constructed  = gimp_zoom_preview_constructed;
-  object_class->finalize     = gimp_zoom_preview_finalize;
-  object_class->dispose      = gimp_zoom_preview_dispose;
-  object_class->get_property = gimp_zoom_preview_get_property;
-  object_class->set_property = gimp_zoom_preview_set_property;
+  object_class->constructed   = gimp_zoom_preview_constructed;
+  object_class->finalize      = gimp_zoom_preview_finalize;
+  object_class->dispose       = gimp_zoom_preview_dispose;
+  object_class->get_property  = gimp_zoom_preview_get_property;
+  object_class->set_property  = gimp_zoom_preview_set_property;
 
-  widget_class->style_set    = gimp_zoom_preview_style_set;
+  widget_class->style_updated = gimp_zoom_preview_style_updated;
 
-  preview_class->draw        = gimp_zoom_preview_draw;
-  preview_class->draw_buffer = gimp_zoom_preview_draw_buffer;
-  preview_class->draw_thumb  = gimp_zoom_preview_draw_thumb;
-  preview_class->set_cursor  = gimp_zoom_preview_set_cursor;
-  preview_class->transform   = gimp_zoom_preview_transform;
-  preview_class->untransform = gimp_zoom_preview_untransform;
+  preview_class->draw         = gimp_zoom_preview_draw;
+  preview_class->draw_buffer  = gimp_zoom_preview_draw_buffer;
+  preview_class->draw_thumb   = gimp_zoom_preview_draw_thumb;
+  preview_class->set_cursor   = gimp_zoom_preview_set_cursor;
+  preview_class->transform    = gimp_zoom_preview_transform;
+  preview_class->untransform  = gimp_zoom_preview_untransform;
 
   g_type_class_add_private (object_class, sizeof (GimpZoomPreviewPrivate));
 
@@ -409,46 +408,48 @@ gimp_zoom_preview_size_allocate (GtkWidget       *widget,
 }
 
 static void
-gimp_zoom_preview_style_set (GtkWidget *widget,
-                             GtkStyle  *prev_style)
+gimp_zoom_preview_style_updated (GtkWidget *widget)
 {
-  GimpPreview            *preview = GIMP_PREVIEW (widget);
-  GimpZoomPreviewPrivate *priv    = GIMP_ZOOM_PREVIEW (preview)->priv;
-  gint                    size;
-  gint                    width, height;
-  gint                    x1, y1;
-  gint                    x2, y2;
+  GimpPreview *preview = GIMP_PREVIEW (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->style_set)
-    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
-  gtk_widget_style_get (widget, "size", &size, NULL);
-
-  if (_gimp_drawable_preview_get_bounds (priv->drawable_ID,
-                                         &x1, &y1, &x2, &y2))
+  if (preview->area)
     {
-      width  = x2 - x1;
-      height = y2 - y1;
-    }
-  else
-    {
-      width  = gimp_drawable_width  (priv->drawable_ID);
-      height = gimp_drawable_height (priv->drawable_ID);
-    }
+      GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview);
+      gint                    size;
+      gint                    width, height;
+      gint                    x1, y1;
+      gint                    x2, y2;
 
-  if (width > height)
-    {
-      preview->width  = MIN (width, size);
-      preview->height = (height * preview->width) / width;
-    }
-  else
-    {
-      preview->height = MIN (height, size);
-      preview->width  = (width * preview->height) / height;
-    }
+      gtk_widget_style_get (widget, "size", &size, NULL);
 
-  gtk_widget_set_size_request (preview->area,
-                               preview->width, preview->height);
+      if (_gimp_drawable_preview_get_bounds (priv->drawable_ID,
+                                             &x1, &y1, &x2, &y2))
+        {
+          width  = x2 - x1;
+          height = y2 - y1;
+        }
+      else
+        {
+          width  = gimp_drawable_width  (priv->drawable_ID);
+          height = gimp_drawable_height (priv->drawable_ID);
+        }
+
+      if (width > height)
+        {
+          preview->width  = MIN (width, size);
+          preview->height = (height * preview->width) / width;
+        }
+      else
+        {
+          preview->height = MIN (height, size);
+          preview->width  = (width * preview->height) / height;
+        }
+
+      gtk_widget_set_size_request (preview->area,
+                                   preview->width, preview->height);
+    }
 }
 
 static gboolean

@@ -70,8 +70,7 @@ static void       gimp_data_editor_get_property      (GObject        *object,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
 
-static void       gimp_data_editor_style_set         (GtkWidget      *widget,
-                                                      GtkStyle       *prev_style);
+static void       gimp_data_editor_style_updated     (GtkWidget      *widget);
 
 static void       gimp_data_editor_set_context       (GimpDocked     *docked,
                                                       GimpContext    *context);
@@ -116,14 +115,14 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructed  = gimp_data_editor_constructed;
-  object_class->dispose      = gimp_data_editor_dispose;
-  object_class->set_property = gimp_data_editor_set_property;
-  object_class->get_property = gimp_data_editor_get_property;
+  object_class->constructed   = gimp_data_editor_constructed;
+  object_class->set_property  = gimp_data_editor_set_property;
+  object_class->get_property  = gimp_data_editor_get_property;
+  object_class->dispose       = gimp_data_editor_dispose;
 
-  widget_class->style_set    = gimp_data_editor_style_set;
+  widget_class->style_updated = gimp_data_editor_style_updated;
 
-  klass->set_data            = gimp_data_editor_real_set_data;
+  klass->set_data             = gimp_data_editor_real_set_data;
 
   g_object_class_install_property (object_class, PROP_DATA_FACTORY,
                                    g_param_spec_object ("data-factory",
@@ -276,13 +275,12 @@ gimp_data_editor_get_property (GObject    *object,
 }
 
 static void
-gimp_data_editor_style_set (GtkWidget *widget,
-                            GtkStyle  *prev_style)
+gimp_data_editor_style_updated (GtkWidget *widget)
 {
   GimpDataEditor *editor = GIMP_DATA_EDITOR (widget);
   gint            minimal_height;
 
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   gtk_widget_style_get (widget,
                         "minimal-height", &minimal_height,
