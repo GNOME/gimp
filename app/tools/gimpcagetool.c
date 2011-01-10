@@ -557,8 +557,8 @@ gimp_cage_tool_button_release (GimpTool              *tool,
 
           case DEFORM_STATE_SELECTING:
               {
-                GeglRectangle area = {MIN(ct->selection_start_x, coords->x),
-                                      MIN(ct->selection_start_y, coords->y),
+                GeglRectangle area = {MIN(ct->selection_start_x, coords->x) - ct->offset_x,
+                                      MIN(ct->selection_start_y, coords->y) - ct->offset_y,
                                       abs (ct->selection_start_x - coords->x),
                                       abs (ct->selection_start_y - coords->y)};
 
