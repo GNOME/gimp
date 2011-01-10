@@ -592,6 +592,67 @@ gimp_cage_config_select_point (GimpCageConfig  *gcc,
 }
 
 /**
+ * gimp_cage_config_select_area:
+ * @gcc: the cage config
+ * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
+ * @area: the area to select
+ *
+ * Select cage's point inside the given area and deselect others
+ */
+void
+gimp_cage_config_select_area  (GimpCageConfig  *gcc,
+                               GimpCageMode     mode,
+                               GeglRectangle    area)
+{
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  gimp_cage_config_deselect_points (gcc);
+  gimp_cage_config_select_add_area (gcc, mode, area);
+}
+
+/**
+ * gimp_cage_config_select_add_area:
+ * @gcc: the cage config
+ * @mode: the actual mode of the cage, GIMP_CAGE_MODE_CAGE_CHANGE or GIMP_CAGE_MODE_DEFORM
+ * @area: the area to select
+ *
+ * Select cage's point inside the given area. Already selected point stay selected.
+ */
+void
+gimp_cage_config_select_add_area  (GimpCageConfig  *gcc,
+                                   GimpCageMode     mode,
+                                   GeglRectangle    area)
+{
+  gint  i;
+
+  g_return_if_fail (GIMP_IS_CAGE_CONFIG (gcc));
+
+  for (i = 0; i < gcc->n_cage_vertices; i++)
+    {
+      if (mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+        {
+          if (gcc->cage_points[i].src_point.x >= area.x &&
+              gcc->cage_points[i].src_point.x <= area.x + area.width &&
+              gcc->cage_points[i].src_point.y >= area.y &&
+              gcc->cage_points[i].src_point.y <= area.y + area.height)
+            {
+              gcc->cage_points[i].selected = TRUE;
+            }
+        }
+      else
+        {
+          if (gcc->cage_points[i].dest_point.x >= area.x &&
+              gcc->cage_points[i].dest_point.x <= area.x + area.width &&
+              gcc->cage_points[i].dest_point.y >= area.y &&
+              gcc->cage_points[i].dest_point.y <= area.y + area.height)
+            {
+              gcc->cage_points[i].selected = TRUE;
+            }
+        }
+    }
+}
+
+/**
  * gimp_cage_config_toggle_point_selection:
  * @gcc: the cage config
  * @point_number: the index of the point to toggle selection
@@ -616,7 +677,7 @@ gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
  * Deselect all cage points.
  */
 void
-gimp_cage_deselect_points (GimpCageConfig  *gcc)
+gimp_cage_config_deselect_points (GimpCageConfig  *gcc)
 {
   gint  i;
 

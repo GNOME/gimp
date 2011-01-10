@@ -76,8 +76,14 @@ gboolean        gimp_cage_config_point_inside           (GimpCageConfig  *gcc,
                                                          gfloat           y);
 void            gimp_cage_config_select_point           (GimpCageConfig  *gcc,
                                                          gint             point_number);
+void            gimp_cage_config_select_area            (GimpCageConfig  *gcc,
+                                                         GimpCageMode     mode,
+                                                         GeglRectangle    area);
+void            gimp_cage_config_select_add_area        (GimpCageConfig  *gcc,
+                                                         GimpCageMode     mode,
+                                                         GeglRectangle    area);
 void            gimp_cage_config_toggle_point_selection (GimpCageConfig  *gcc,
                                                          gint             point_number);
-void            gimp_cage_deselect_points               (GimpCageConfig  *gcc);
+void            gimp_cage_config_deselect_points        (GimpCageConfig  *gcc);
 
 #endif /* __GIMP_CAGE_CONFIG_H__ */

@@ -20,6 +20,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 #include <gegl.h>
 #include <gtk/gtk.h>
@@ -132,6 +133,7 @@ enum
   CAGE_STATE_CLOSING,
   DEFORM_STATE_WAIT,
   DEFORM_STATE_MOVE_HANDLE,
+  DEFORM_STATE_SELECTING
 };
 
 void
@@ -469,6 +471,13 @@ gimp_cage_tool_button_press (GimpTool            *tool,
         break;
 
       case DEFORM_STATE_WAIT:
+        if (handle == -1)
+        /* User clicked on the background, we start a rubber band selection */
+          {
+            ct->selection_start_x = coords->x;
+            ct->selection_start_y = coords->y;
+            ct->tool_state = DEFORM_STATE_SELECTING;
+          }
         if (handle >= 0)
         /* User clicked on a handle, so we move it */
           {
@@ -521,6 +530,10 @@ gimp_cage_tool_button_release (GimpTool              *tool,
             gimp_cage_tool_image_map_update (ct);
             ct->tool_state = DEFORM_STATE_WAIT;
             break;
+
+          case DEFORM_STATE_SELECTING:
+            ct->tool_state = DEFORM_STATE_WAIT;
+            break;
         }
       gimp_cage_config_reset_displacement (ct->config);
     }
@@ -541,6 +554,26 @@ gimp_cage_tool_button_release (GimpTool              *tool,
             ct->tool_state = DEFORM_STATE_WAIT;
             gimp_cage_tool_image_map_update (ct);
             break;
+
+          case DEFORM_STATE_SELECTING:
+              {
+                GeglRectangle area = {MIN(ct->selection_start_x, coords->x),
+                                      MIN(ct->selection_start_y, coords->y),
+                                      abs (ct->selection_start_x - coords->x),
+                                      abs (ct->selection_start_y - coords->y)};
+
+                if (state & GDK_SHIFT_MASK)
+                  {
+                    gimp_cage_config_select_add_area (ct->config, GIMP_CAGE_MODE_DEFORM, area);
+                  }
+                else
+                  {
+                    gimp_cage_config_select_area (ct->config, GIMP_CAGE_MODE_DEFORM, area);
+                  }
+                ct->tool_state = DEFORM_STATE_WAIT;
+              }
+            break;
+
         }
       gimp_cage_config_commit_displacement (ct->config);
     }
@@ -668,6 +701,16 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                            GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                            GIMP_HANDLE_ANCHOR_CENTER);
         }
+    }
+
+  if (ct->tool_state == DEFORM_STATE_SELECTING)
+    {
+      gimp_draw_tool_add_rectangle (draw_tool,
+                                    FALSE,
+                                    MIN(ct->selection_start_x, ct->cursor_x),
+                                    MIN(ct->selection_start_y, ct->cursor_y),
+                                    abs (ct->selection_start_x - ct->cursor_x),
+                                    abs (ct->selection_start_y - ct->cursor_y));
     }
 }
 

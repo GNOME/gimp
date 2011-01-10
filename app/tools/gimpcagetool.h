@@ -53,6 +53,9 @@ struct _GimpCageTool
   gdouble         movement_start_x; /* Where the movement started */
   gdouble         movement_start_y; /* Where the movement started */
 
+  gdouble         selection_start_x; /* Where the selection started */
+  gdouble         selection_start_y; /* Where the selection started */
+
   gint            hovering_handle; /* Handle which the cursor is above */
   gboolean        cage_complete; /* Cage closed or not */
 
