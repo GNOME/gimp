@@ -84,9 +84,9 @@ static void     gimp_histogram_view_update_bins (GimpHistogramView    *view);
 static void     gimp_histogram_view_draw_spike  (GimpHistogramView    *view,
                                                  GimpHistogramChannel  channel,
                                                  cairo_t              *cr,
-                                                 const GdkColor       *fg_color,
+                                                 const GdkRGBA        *fg_color,
                                                  cairo_operator_t      fg_operator,
-                                                 const GdkColor       *bg_color,
+                                                 const GdkRGBA        *bg_color,
                                                  gint                  x,
                                                  gint                  i,
                                                  gint                  j,
@@ -299,12 +299,50 @@ gimp_histogram_view_get_maximum (GimpHistogramView    *view,
   return max;
 }
 
+static void
+gimp_gdk_rgba_shade (const GdkRGBA *color,
+                     gdouble        factor,
+                     GdkRGBA       *shaded)
+{
+  GtkSymbolicColor *in;
+  GtkSymbolicColor *out;
+
+  in = gtk_symbolic_color_new_literal (color);
+  out = gtk_symbolic_color_new_shade (in, factor);
+
+  gtk_symbolic_color_resolve (out, NULL, shaded);
+
+  gtk_symbolic_color_unref (out);
+  gtk_symbolic_color_unref (in);
+}
+
+static void
+gimp_gdk_rgba_mix (const GdkRGBA *color1,
+                   const GdkRGBA *color2,
+                   gdouble        factor,
+                   GdkRGBA       *mixed)
+{
+  GtkSymbolicColor *in1;
+  GtkSymbolicColor *in2;
+  GtkSymbolicColor *out;
+
+  in1 = gtk_symbolic_color_new_literal (color1);
+  in2 = gtk_symbolic_color_new_literal (color2);
+  out = gtk_symbolic_color_new_mix (in1, in2, factor);
+
+  gtk_symbolic_color_resolve (out, NULL, mixed);
+
+  gtk_symbolic_color_unref (out);
+  gtk_symbolic_color_unref (in1);
+  gtk_symbolic_color_unref (in2);
+}
+
 static gboolean
 gimp_histogram_view_draw (GtkWidget *widget,
                           cairo_t   *cr)
 {
   GimpHistogramView *view  = GIMP_HISTOGRAM_VIEW (widget);
-  GtkStyle          *style = gtk_widget_get_style (widget);
+  GtkStyleContext   *style = gtk_widget_get_style_context (widget);
   GtkAllocation      allocation;
   gint               x;
   gint               x1, x2;
@@ -313,14 +351,21 @@ gimp_histogram_view_draw (GtkWidget *widget,
   gdouble            max    = 0.0;
   gdouble            bg_max = 0.0;
   gint               xstop;
-  GdkColor          *color_in;
-  GdkColor          *color_out;
-  GdkColor          *bg_color_in;
-  GdkColor          *bg_color_out;
-  GdkColor           rgb_color[3];
+  GdkRGBA            color;
+  GdkRGBA            light;
+  GdkRGBA            dark;
+  GdkRGBA            color_in;
+  GdkRGBA            color_out;
+  GdkRGBA            bg_color_in;
+  GdkRGBA            bg_color_out;
+  GdkRGBA            rgb_color[3];
+
+  gtk_style_context_save (style);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
 
   /*  Draw the background  */
-  gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+  gtk_style_context_get_background_color (style, 0, &color);
+  gdk_cairo_set_source_rgba (cr, &color);
   cairo_paint (cr);
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -334,9 +379,9 @@ gimp_histogram_view_draw (GtkWidget *widget,
   cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the outer border  */
-  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
-  cairo_rectangle (cr, border, border,
-                   width - 1, height - 1);
+  gimp_gdk_rgba_shade (&color, 0.7, &dark);
+  gdk_cairo_set_source_rgba (cr, &dark);
+  cairo_rectangle (cr, border, border, width - 1, height - 1);
   cairo_stroke (cr);
 
   if (! view->histogram && ! view->bg_histogram)
@@ -353,19 +398,32 @@ gimp_histogram_view_draw (GtkWidget *widget,
     bg_max = gimp_histogram_view_get_maximum (view, view->bg_histogram,
                                               view->channel);
 
-  color_in  = &style->text[GTK_STATE_SELECTED];
-  color_out = &style->text[GTK_STATE_NORMAL];
+  gtk_style_context_get_color (style, GTK_STATE_FLAG_SELECTED,
+                               &color_in);
+  gtk_style_context_get_color (style, 0,
+                               &color_out);
 
-  bg_color_in  = &style->mid[GTK_STATE_SELECTED];
-  bg_color_out = &style->mid[GTK_STATE_NORMAL];
+  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
+                                          &bg_color_in);
+  gtk_style_context_get_background_color (style, 0,
+                                          &bg_color_out);
+
+  gimp_gdk_rgba_shade (&bg_color_in, 1.3, &light);
+  gimp_gdk_rgba_shade (&bg_color_in, 0.7, &dark);
+  gimp_gdk_rgba_mix (&light, &dark, 0.5, &bg_color_in);
+
+  gimp_gdk_rgba_shade (&bg_color_out, 1.3, &light);
+  gimp_gdk_rgba_shade (&bg_color_out, 0.7, &dark);
+  gimp_gdk_rgba_mix (&light, &dark, 0.5, &bg_color_out);
 
   if (view->channel == GIMP_HISTOGRAM_RGB)
     {
       for (x = 0; x < 3; x++)
         {
-          rgb_color[x].red   = (x == 0 ? 0xFFFF : 0x0);
-          rgb_color[x].green = (x == 1 ? 0xFFFF : 0x0);
-          rgb_color[x].blue  = (x == 2 ? 0xFFFF : 0x0);
+          rgb_color[x].red   = (x == 0 ? 1.0 : 0.0);
+          rgb_color[x].green = (x == 1 ? 1.0 : 0.0);
+          rgb_color[x].blue  = (x == 2 ? 1.0 : 0.0);
+          rgb_color[x].alpha = 1.0;
         }
     }
 
@@ -388,7 +446,10 @@ gimp_histogram_view_draw (GtkWidget *widget,
 
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))
         {
-          gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+          gtk_style_context_get_background_color (style, 0, &color);
+          gimp_gdk_rgba_shade (&color, 0.7, &dark);
+
+          gdk_cairo_set_source_rgba (cr, &dark);
 
           cairo_move_to (cr, x + border, border);
           cairo_line_to (cr, x + border, border + height - 1);
@@ -398,7 +459,10 @@ gimp_histogram_view_draw (GtkWidget *widget,
         }
       else if (in_selection)
         {
-          gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_SELECTED]);
+          gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
+                                                  &color);
+
+          gdk_cairo_set_source_rgba (cr, &color);
 
           cairo_move_to (cr, x + border, border);
           cairo_line_to (cr, x + border, border + height - 1);
@@ -407,11 +471,12 @@ gimp_histogram_view_draw (GtkWidget *widget,
 
       if (view->channel == GIMP_HISTOGRAM_RGB)
         {
-          gint c;
+          GdkRGBA black = { 0.0, 0.0, 0.0, 1.0 };
+          gint    c;
 
           for (c = 0; c < 3; c++)
             gimp_histogram_view_draw_spike (view, GIMP_HISTOGRAM_RED + c, cr,
-                                            &style->black,
+                                            &black,
                                             CAIRO_OPERATOR_OVER,
                                             NULL,
                                             x, i, j, max, bg_max, height, border);
@@ -424,7 +489,7 @@ gimp_histogram_view_draw (GtkWidget *widget,
                                             x, i, j, max, bg_max, height, border);
 
           gimp_histogram_view_draw_spike (view, view->channel, cr,
-                                          in_selection ? color_in : color_out,
+                                          in_selection ? &color_in : &color_out,
                                           CAIRO_OPERATOR_OVER,
                                           NULL,
                                           x, i, j, max, bg_max, height, border);
@@ -432,12 +497,14 @@ gimp_histogram_view_draw (GtkWidget *widget,
       else
         {
           gimp_histogram_view_draw_spike (view, view->channel, cr,
-                                          in_selection ? color_in : color_out,
+                                          in_selection ? &color_in : &color_out,
                                           CAIRO_OPERATOR_OVER,
-                                          in_selection ? bg_color_in : bg_color_out,
+                                          in_selection ? &bg_color_in : &bg_color_out,
                                           x, i, j, max, bg_max, height, border);
         }
     }
+
+  gtk_style_context_restore (style);
 
   return FALSE;
 }
@@ -446,9 +513,9 @@ static void
 gimp_histogram_view_draw_spike (GimpHistogramView    *view,
                                 GimpHistogramChannel  channel,
                                 cairo_t              *cr,
-                                const GdkColor       *fg_color,
+                                const GdkRGBA        *fg_color,
                                 cairo_operator_t      fg_operator,
-                                const GdkColor       *bg_color,
+                                const GdkRGBA        *bg_color,
                                 gint                  x,
                                 gint                  i,
                                 gint                  j,
@@ -509,7 +576,7 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
   if (bg_color)
     {
-      gdk_cairo_set_source_color (cr, bg_color);
+      gdk_cairo_set_source_rgba (cr, bg_color);
 
       cairo_move_to (cr, x + border, height + border - 1);
       cairo_line_to (cr, x + border, height + border - bg_y - 1);
@@ -519,7 +586,7 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
 
   cairo_set_operator (cr, fg_operator);
 
-  gdk_cairo_set_source_color (cr, fg_color);
+  gdk_cairo_set_source_rgba (cr, fg_color);
 
   cairo_move_to (cr, x + border, height + border - 1);
   cairo_line_to (cr, x + border, height + border - y - 1);
