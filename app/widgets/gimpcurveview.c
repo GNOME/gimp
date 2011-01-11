@@ -333,15 +333,12 @@ gimp_curve_view_style_set (GtkWidget *widget,
 
 static void
 gimp_curve_view_draw_grid (GimpCurveView *view,
-                           GtkStyle      *style,
                            cairo_t       *cr,
                            gint           width,
                            gint           height,
                            gint           border)
 {
   gint i;
-
-  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
 
   for (i = 1; i < view->grid_rows; i++)
     {
@@ -486,10 +483,6 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  cairo_set_line_width (cr, 1.0);
-  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
-  cairo_translate (cr, 0.5, 0.5);
-
   if (gtk_widget_has_focus (widget))
     {
       gtk_paint_focus (style, window,
@@ -499,8 +492,14 @@ gimp_curve_view_expose (GtkWidget      *widget,
                        width + 4, height + 4);
     }
 
+  cairo_set_line_width (cr, 1.0);
+  cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
+  cairo_translate (cr, 0.5, 0.5);
+
   /*  Draw the grid lines  */
-  gimp_curve_view_draw_grid (view, style, cr, width, height, border);
+  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+
+  gimp_curve_view_draw_grid (view, cr, width, height, border);
 
   /*  Draw the background curves  */
   for (list = view->bg_curves; list; list = g_list_next (list))
