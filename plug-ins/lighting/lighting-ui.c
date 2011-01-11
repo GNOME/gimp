@@ -1345,6 +1345,7 @@ load_preset_response (GtkFileChooser *chooser,
   gchar          buffer3[G_ASCII_DTOSTR_BUF_SIZE];
   gchar          type_label[21];
   gchar         *endptr;
+  gchar          fmt_str[32];
 
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -1384,23 +1385,41 @@ load_preset_response (GtkFileChooser *chooser,
                   return;
                 }
 
-              fscanf (fp, " Position: %s %s %s", buffer1, buffer2, buffer3);
+              snprintf (fmt_str, sizeof (fmt_str),
+                        " Position: %%%lds %%%lds %%%lds",
+                        sizeof (buffer1) - 1,
+                        sizeof (buffer2) - 1,
+                        sizeof (buffer3) - 1);
+              fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
               source->position.x = g_ascii_strtod (buffer1, &endptr);
               source->position.y = g_ascii_strtod (buffer2, &endptr);
               source->position.z = g_ascii_strtod (buffer3, &endptr);
 
-              fscanf (fp, " Direction: %s %s %s", buffer1, buffer2, buffer3);
+              snprintf (fmt_str, sizeof (fmt_str),
+                        " Direction: %%%lds %%%lds %%%lds",
+                        sizeof (buffer1) - 1,
+                        sizeof (buffer2) - 1,
+                        sizeof (buffer3) - 1);
+              fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
               source->direction.x = g_ascii_strtod (buffer1, &endptr);
               source->direction.y = g_ascii_strtod (buffer2, &endptr);
               source->direction.z = g_ascii_strtod (buffer3, &endptr);
 
-              fscanf (fp, " Color: %s %s %s", buffer1, buffer2, buffer3);
+              snprintf (fmt_str, sizeof (fmt_str),
+                        " Color: %%%lds %%%lds %%%lds",
+                        sizeof (buffer1) - 1,
+                        sizeof (buffer2) - 1,
+                        sizeof (buffer3) - 1);
+              fscanf (fp, fmt_str, buffer1, buffer2, buffer3);
               source->color.r = g_ascii_strtod (buffer1, &endptr);
               source->color.g = g_ascii_strtod (buffer2, &endptr);
               source->color.b = g_ascii_strtod (buffer3, &endptr);
               source->color.a = 1.0;
 
-              fscanf (fp, " Intensity: %s", buffer1);
+              snprintf (fmt_str, sizeof (fmt_str),
+                        " Intensity: %%%lds",
+                        sizeof (buffer1) - 1);
+              fscanf (fp, fmt_str, buffer1);
               source->intensity = g_ascii_strtod (buffer1, &endptr);
 
             }

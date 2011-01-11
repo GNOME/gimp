@@ -164,12 +164,17 @@ gfig_read_parameter_gimp_rgb (gchar        **text,
   gchar *ptr;
   gchar *tmpstr;
   gchar *endptr;
+  gchar  fmt_str[32];
   gchar  colorstr_r[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  colorstr_g[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  colorstr_b[G_ASCII_DTOSTR_BUF_SIZE];
   gchar  colorstr_a[G_ASCII_DTOSTR_BUF_SIZE];
 
   style_entry->r = style_entry->g = style_entry->b = style_entry->a = 0.;
+
+  snprintf (fmt_str, sizeof (fmt_str), "%%%lds %%%lds %%%lds %%%lds",
+            sizeof (colorstr_r) - 1, sizeof (colorstr_g) - 1,
+            sizeof (colorstr_b) - 1, sizeof (colorstr_a) - 1);
 
   while (n < nitems)
     {
@@ -180,7 +185,8 @@ gfig_read_parameter_gimp_rgb (gchar        **text,
           ptr++;
           if (!strcmp (tmpstr, name))
             {
-              sscanf (ptr, "%s %s %s %s", colorstr_r, colorstr_g, colorstr_b, colorstr_a);
+              sscanf (ptr, fmt_str,
+                      colorstr_r, colorstr_g, colorstr_b, colorstr_a);
               style_entry->r = g_ascii_strtod (colorstr_r, &endptr);
               style_entry->g = g_ascii_strtod (colorstr_g, &endptr);
               style_entry->b = g_ascii_strtod (colorstr_b, &endptr);
