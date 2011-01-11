@@ -404,8 +404,8 @@ gimp_cage_tool_button_press (GimpTool            *tool,
       case CAGE_STATE_INIT:
         /* No handle yet, we add the first one and swith the tool to moving handle state. */
         gimp_cage_config_add_cage_point (ct->config,
-                                         ct->cursor_x - ct->offset_x,
-                                         ct->cursor_y - ct->offset_y);
+                                         coords->x - ct->offset_x,
+                                         coords->y - ct->offset_y);
         gimp_cage_config_select_point (ct->config, 0);
         ct->tool_state = CAGE_STATE_MOVE_HANDLE;
         break;
@@ -417,8 +417,8 @@ gimp_cage_tool_button_press (GimpTool            *tool,
             /* User clicked on the background, we add a new handle and move it */
               {
                 gimp_cage_config_add_cage_point (ct->config,
-                                                 ct->cursor_x - ct->offset_x,
-                                                 ct->cursor_y - ct->offset_y);
+                                                 coords->x - ct->offset_x,
+                                                 coords->y - ct->offset_y);
                 gimp_cage_config_select_point (ct->config, ct->config->n_cage_vertices - 1);
                 ct->tool_state = CAGE_STATE_MOVE_HANDLE;
               }
