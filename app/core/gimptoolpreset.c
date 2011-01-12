@@ -60,9 +60,7 @@ enum
 
 static void        gimp_tool_preset_config_iface_init (GimpConfigInterface *iface);
 
-static GObject       * gimp_tool_preset_constructor   (GType         type,
-                                                       guint         n_params,
-                                                       GObjectConstructParam *params);
+static void            gimp_tool_preset_constructed   (GObject      *object);
 static void            gimp_tool_preset_finalize      (GObject      *object);
 static void            gimp_tool_preset_set_property  (GObject      *object,
                                                        guint         property_id,
@@ -100,7 +98,7 @@ gimp_tool_preset_class_init (GimpToolPresetClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
 
-  object_class->constructor                 = gimp_tool_preset_constructor;
+  object_class->constructed                 = gimp_tool_preset_constructed;
   object_class->finalize                    = gimp_tool_preset_finalize;
   object_class->set_property                = gimp_tool_preset_set_property;
   object_class->get_property                = gimp_tool_preset_get_property;
@@ -168,21 +166,15 @@ gimp_tool_preset_init (GimpToolPreset *tool_preset)
   tool_preset->tool_options = NULL;
 }
 
-static GObject *
-gimp_tool_preset_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
+static void
+gimp_tool_preset_constructed (GObject *object)
 {
-  GObject        *object;
-  GimpToolPreset *preset;
+  GimpToolPreset *preset = GIMP_TOOL_PRESET (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  preset = GIMP_TOOL_PRESET (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (preset->gimp));
-
-  return object;
 }
 
 static void

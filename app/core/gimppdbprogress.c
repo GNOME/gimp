@@ -52,9 +52,7 @@ static void      gimp_pdb_progress_init           (GimpPdbProgress      *progres
                                                    GimpPdbProgressClass *klass);
 static void gimp_pdb_progress_progress_iface_init (GimpProgressInterface *iface);
 
-static GObject * gimp_pdb_progress_constructor    (GType               type,
-                                                   guint               n_params,
-                                                   GObjectConstructParam *params);
+static void      gimp_pdb_progress_constructed    (GObject            *object);
 static void      gimp_pdb_progress_dispose        (GObject            *object);
 static void      gimp_pdb_progress_finalize       (GObject            *object);
 static void      gimp_pdb_progress_set_property   (GObject            *object,
@@ -124,7 +122,7 @@ gimp_pdb_progress_class_init (GimpPdbProgressClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor  = gimp_pdb_progress_constructor;
+  object_class->constructed  = gimp_pdb_progress_constructed;
   object_class->dispose      = gimp_pdb_progress_dispose;
   object_class->finalize     = gimp_pdb_progress_finalize;
   object_class->set_property = gimp_pdb_progress_set_property;
@@ -169,22 +167,16 @@ gimp_pdb_progress_progress_iface_init (GimpProgressInterface *iface)
   iface->get_window = gimp_pdb_progress_progress_get_window;
 }
 
-static GObject *
-gimp_pdb_progress_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_pdb_progress_constructed (GObject *object)
 {
-  GObject         *object;
-  GimpPdbProgress *progress;
+  GimpPdbProgress *progress = GIMP_PDB_PROGRESS (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  progress = GIMP_PDB_PROGRESS (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_PDB (progress->pdb));
   g_assert (GIMP_IS_CONTEXT (progress->context));
-
-  return object;
 }
 
 static void

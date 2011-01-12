@@ -35,24 +35,22 @@ enum
 };
 
 
-static GObject * gimp_layer_undo_constructor  (GType                  type,
-                                               guint                  n_params,
-                                               GObjectConstructParam *params);
-static void      gimp_layer_undo_set_property (GObject               *object,
-                                               guint                  property_id,
-                                               const GValue          *value,
-                                               GParamSpec            *pspec);
-static void      gimp_layer_undo_get_property (GObject               *object,
-                                               guint                  property_id,
-                                               GValue                *value,
-                                               GParamSpec            *pspec);
+static void     gimp_layer_undo_constructed  (GObject             *object);
+static void     gimp_layer_undo_set_property (GObject             *object,
+                                              guint                property_id,
+                                              const GValue        *value,
+                                              GParamSpec          *pspec);
+static void     gimp_layer_undo_get_property (GObject             *object,
+                                              guint                property_id,
+                                              GValue              *value,
+                                              GParamSpec          *pspec);
 
-static gint64    gimp_layer_undo_get_memsize  (GimpObject            *object,
-                                               gint64                *gui_size);
+static gint64   gimp_layer_undo_get_memsize  (GimpObject          *object,
+                                              gint64              *gui_size);
 
-static void      gimp_layer_undo_pop          (GimpUndo              *undo,
-                                               GimpUndoMode           undo_mode,
-                                               GimpUndoAccumulator   *accum);
+static void     gimp_layer_undo_pop          (GimpUndo            *undo,
+                                              GimpUndoMode         undo_mode,
+                                              GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpLayerUndo, gimp_layer_undo, GIMP_TYPE_ITEM_UNDO)
@@ -67,7 +65,7 @@ gimp_layer_undo_class_init (GimpLayerUndoClass *klass)
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor      = gimp_layer_undo_constructor;
+  object_class->constructed      = gimp_layer_undo_constructed;
   object_class->set_property     = gimp_layer_undo_set_property;
   object_class->get_property     = gimp_layer_undo_get_property;
 
@@ -100,21 +98,13 @@ gimp_layer_undo_init (GimpLayerUndo *undo)
 {
 }
 
-static GObject *
-gimp_layer_undo_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_layer_undo_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpLayerUndo *layer_undo;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  layer_undo = GIMP_LAYER_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
-
-  return object;
 }
 
 static void

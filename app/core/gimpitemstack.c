@@ -32,14 +32,12 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_item_stack_constructor (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
+static void   gimp_item_stack_constructed (GObject       *object);
 
-static void      gimp_item_stack_add         (GimpContainer         *container,
-                                              GimpObject            *object);
-static void      gimp_item_stack_remove      (GimpContainer         *container,
-                                              GimpObject            *object);
+static void   gimp_item_stack_add         (GimpContainer *container,
+                                           GimpObject    *object);
+static void   gimp_item_stack_remove      (GimpContainer *container,
+                                           GimpObject    *object);
 
 
 G_DEFINE_TYPE (GimpItemStack, gimp_item_stack, GIMP_TYPE_LIST)
@@ -53,7 +51,7 @@ gimp_item_stack_class_init (GimpItemStackClass *klass)
   GObjectClass       *object_class    = G_OBJECT_CLASS (klass);
   GimpContainerClass *container_class = GIMP_CONTAINER_CLASS (klass);
 
-  object_class->constructor = gimp_item_stack_constructor;
+  object_class->constructed = gimp_item_stack_constructed;
 
   container_class->add      = gimp_item_stack_add;
   container_class->remove   = gimp_item_stack_remove;
@@ -64,22 +62,16 @@ gimp_item_stack_init (GimpItemStack *stack)
 {
 }
 
-static GObject *
-gimp_item_stack_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_item_stack_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpContainer *container;
+  GimpContainer *container = GIMP_CONTAINER (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  container = GIMP_CONTAINER (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (g_type_is_a (gimp_container_get_children_type (container),
                          GIMP_TYPE_ITEM));
-
-  return object;
 }
 
 static void

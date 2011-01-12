@@ -26,13 +26,11 @@
 #include "gimpgrouplayerundo.h"
 
 
-static GObject * gimp_group_layer_undo_constructor (GType                  type,
-                                                    guint                  n_params,
-                                                    GObjectConstructParam *params);
+static void   gimp_group_layer_undo_constructed (GObject             *object);
 
-static void      gimp_group_layer_undo_pop         (GimpUndo              *undo,
-                                                    GimpUndoMode           undo_mode,
-                                                    GimpUndoAccumulator   *accum);
+static void   gimp_group_layer_undo_pop         (GimpUndo            *undo,
+                                                 GimpUndoMode         undo_mode,
+                                                 GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpGroupLayerUndo, gimp_group_layer_undo, GIMP_TYPE_ITEM_UNDO)
@@ -46,7 +44,7 @@ gimp_group_layer_undo_class_init (GimpGroupLayerUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor   = gimp_group_layer_undo_constructor;
+  object_class->constructed   = gimp_group_layer_undo_constructed;
 
   undo_class->pop             = gimp_group_layer_undo_pop;
 }
@@ -56,18 +54,14 @@ gimp_group_layer_undo_init (GimpGroupLayerUndo *undo)
 {
 }
 
-static GObject *
-gimp_group_layer_undo_constructor (GType                  type,
-                                   guint                  n_params,
-                                   GObjectConstructParam *params)
+static void
+gimp_group_layer_undo_constructed (GObject *object)
 {
-  GObject            *object;
-  GimpGroupLayerUndo *group_layer_undo;
+  GimpGroupLayerUndo *group_layer_undo = GIMP_GROUP_LAYER_UNDO (object);
   GimpGroupLayer     *group;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  group_layer_undo = GIMP_GROUP_LAYER_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GROUP_LAYER (GIMP_ITEM_UNDO (object)->item));
 
@@ -86,8 +80,6 @@ gimp_group_layer_undo_constructor (GType                  type,
     default:
       g_assert_not_reached ();
     }
-
-  return object;
 }
 
 static void

@@ -38,37 +38,35 @@ enum
 
 /*  local function prototypes  */
 
-static GObject * gimp_drawable_stack_constructor      (GType              type,
-                                                       guint              n_params,
-                                                       GObjectConstructParam *params);
-static void      gimp_drawable_stack_finalize         (GObject           *object);
+static void   gimp_drawable_stack_constructed      (GObject           *object);
+static void   gimp_drawable_stack_finalize         (GObject           *object);
 
-static void      gimp_drawable_stack_add              (GimpContainer     *container,
-                                                       GimpObject        *object);
-static void      gimp_drawable_stack_remove           (GimpContainer     *container,
-                                                       GimpObject        *object);
-static void      gimp_drawable_stack_reorder          (GimpContainer     *container,
-                                                       GimpObject        *object,
-                                                       gint               new_index);
+static void   gimp_drawable_stack_add              (GimpContainer     *container,
+                                                    GimpObject        *object);
+static void   gimp_drawable_stack_remove           (GimpContainer     *container,
+                                                    GimpObject        *object);
+static void   gimp_drawable_stack_reorder          (GimpContainer     *container,
+                                                    GimpObject        *object,
+                                                    gint               new_index);
 
-static void      gimp_drawable_stack_add_node         (GimpDrawableStack *stack,
-                                                       GimpDrawable      *drawable);
-static void      gimp_drawable_stack_remove_node      (GimpDrawableStack *stack,
-                                                       GimpDrawable      *drawable);
+static void   gimp_drawable_stack_add_node         (GimpDrawableStack *stack,
+                                                    GimpDrawable      *drawable);
+static void   gimp_drawable_stack_remove_node      (GimpDrawableStack *stack,
+                                                    GimpDrawable      *drawable);
 
-static void      gimp_drawable_stack_update           (GimpDrawableStack *stack,
-                                                       gint               x,
-                                                       gint               y,
-                                                       gint               width,
-                                                       gint               height);
-static void      gimp_drawable_stack_drawable_update  (GimpItem          *item,
-                                                       gint               x,
-                                                       gint               y,
-                                                       gint               width,
-                                                       gint               height,
-                                                       GimpDrawableStack *stack);
-static void      gimp_drawable_stack_drawable_visible (GimpItem          *item,
-                                                       GimpDrawableStack *stack);
+static void   gimp_drawable_stack_update           (GimpDrawableStack *stack,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height);
+static void   gimp_drawable_stack_drawable_update  (GimpItem          *item,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height,
+                                                    GimpDrawableStack *stack);
+static void   gimp_drawable_stack_drawable_visible (GimpItem          *item,
+                                                    GimpDrawableStack *stack);
 
 
 G_DEFINE_TYPE (GimpDrawableStack, gimp_drawable_stack, GIMP_TYPE_ITEM_STACK)
@@ -97,7 +95,7 @@ gimp_drawable_stack_class_init (GimpDrawableStackClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
-  object_class->constructor = gimp_drawable_stack_constructor;
+  object_class->constructed = gimp_drawable_stack_constructed;
   object_class->finalize    = gimp_drawable_stack_finalize;
 
   container_class->add      = gimp_drawable_stack_add;
@@ -110,17 +108,13 @@ gimp_drawable_stack_init (GimpDrawableStack *stack)
 {
 }
 
-static GObject *
-gimp_drawable_stack_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_drawable_stack_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpContainer *container;
+  GimpContainer *container = GIMP_CONTAINER (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  container = GIMP_CONTAINER (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (g_type_is_a (gimp_container_get_children_type (container),
                          GIMP_TYPE_DRAWABLE));
@@ -131,8 +125,6 @@ gimp_drawable_stack_constructor (GType                  type,
   gimp_container_add_handler (container, "visibility-changed",
                               G_CALLBACK (gimp_drawable_stack_drawable_visible),
                               container);
-
-  return object;
 }
 
 static void

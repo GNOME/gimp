@@ -66,25 +66,23 @@ struct _GimpItemTreePrivate
 
 /*  local function prototypes  */
 
-static GObject * gimp_item_tree_constructor   (GType                  type,
-                                               guint                  n_params,
-                                               GObjectConstructParam *params);
-static void      gimp_item_tree_finalize      (GObject               *object);
-static void      gimp_item_tree_set_property  (GObject               *object,
-                                               guint                  property_id,
-                                               const GValue          *value,
-                                               GParamSpec            *pspec);
-static void      gimp_item_tree_get_property  (GObject               *object,
-                                               guint                  property_id,
-                                               GValue                *value,
-                                               GParamSpec            *pspec);
+static void     gimp_item_tree_constructed   (GObject      *object);
+static void     gimp_item_tree_finalize      (GObject      *object);
+static void     gimp_item_tree_set_property  (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void     gimp_item_tree_get_property  (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
 
-static gint64    gimp_item_tree_get_memsize   (GimpObject            *object,
-                                               gint64                *gui_size);
+static gint64   gimp_item_tree_get_memsize   (GimpObject   *object,
+                                              gint64       *gui_size);
 
-static void      gimp_item_tree_uniquefy_name (GimpItemTree          *tree,
-                                               GimpItem              *item,
-                                               const gchar           *new_name);
+static void     gimp_item_tree_uniquefy_name (GimpItemTree *tree,
+                                              GimpItem     *item,
+                                              const gchar  *new_name);
 
 
 G_DEFINE_TYPE (GimpItemTree, gimp_item_tree, GIMP_TYPE_OBJECT)
@@ -98,7 +96,7 @@ gimp_item_tree_class_init (GimpItemTreeClass *klass)
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
-  object_class->constructor      = gimp_item_tree_constructor;
+  object_class->constructed      = gimp_item_tree_constructed;
   object_class->finalize         = gimp_item_tree_finalize;
   object_class->set_property     = gimp_item_tree_set_property;
   object_class->get_property     = gimp_item_tree_get_property;
@@ -143,19 +141,14 @@ gimp_item_tree_init (GimpItemTree *tree)
   private->name_hash = g_hash_table_new (g_str_hash, g_str_equal);
 }
 
-static GObject *
-gimp_item_tree_constructor (GType                  type,
-                            guint                  n_params,
-                            GObjectConstructParam *params)
+static void
+gimp_item_tree_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpItemTree        *tree;
-  GimpItemTreePrivate *private;
+  GimpItemTree        *tree    = GIMP_ITEM_TREE (object);
+  GimpItemTreePrivate *private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tree    = GIMP_ITEM_TREE (object);
-  private = GIMP_ITEM_TREE_GET_PRIVATE (tree);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_IMAGE (private->image));
   g_assert (g_type_is_a (private->container_type, GIMP_TYPE_ITEM_STACK));
@@ -167,8 +160,6 @@ gimp_item_tree_constructor (GType                  type,
                                   "children-type", private->item_type,
                                   "policy",        GIMP_CONTAINER_POLICY_STRONG,
                                   NULL);
-
-  return object;
 }
 
 static void

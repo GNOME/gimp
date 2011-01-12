@@ -29,13 +29,11 @@
 #include "gimplayer-floating-sel.h"
 
 
-static GObject * gimp_floating_sel_undo_constructor (GType                  type,
-                                                     guint                  n_params,
-                                                     GObjectConstructParam *params);
+static void   gimp_floating_sel_undo_constructed (GObject             *object);
 
-static void      gimp_floating_sel_undo_pop         (GimpUndo              *undo,
-                                                     GimpUndoMode           undo_mode,
-                                                     GimpUndoAccumulator   *accum);
+static void   gimp_floating_sel_undo_pop         (GimpUndo            *undo,
+                                                  GimpUndoMode         undo_mode,
+                                                  GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpFloatingSelUndo, gimp_floating_sel_undo, GIMP_TYPE_ITEM_UNDO)
@@ -49,7 +47,7 @@ gimp_floating_sel_undo_class_init (GimpFloatingSelUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_floating_sel_undo_constructor;
+  object_class->constructed = gimp_floating_sel_undo_constructed;
 
   undo_class->pop           = gimp_floating_sel_undo_pop;
 }
@@ -59,18 +57,14 @@ gimp_floating_sel_undo_init (GimpFloatingSelUndo *undo)
 {
 }
 
-static GObject *
-gimp_floating_sel_undo_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_floating_sel_undo_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpFloatingSelUndo *floating_sel_undo;
+  GimpFloatingSelUndo *floating_sel_undo = GIMP_FLOATING_SEL_UNDO (object);
   GimpLayer           *layer;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  floating_sel_undo = GIMP_FLOATING_SEL_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_LAYER (GIMP_ITEM_UNDO (object)->item));
 
@@ -85,8 +79,6 @@ gimp_floating_sel_undo_constructor (GType                  type,
     default:
       g_assert_not_reached ();
     }
-
-  return object;
 }
 
 static void

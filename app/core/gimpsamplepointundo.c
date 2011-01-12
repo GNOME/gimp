@@ -34,23 +34,21 @@ enum
 };
 
 
-static GObject * gimp_sample_point_undo_constructor  (GType                  type,
-                                                      guint                  n_params,
-                                                      GObjectConstructParam *params);
-static void      gimp_sample_point_undo_set_property (GObject               *object,
-                                                      guint                  property_id,
-                                                      const GValue          *value,
-                                                      GParamSpec            *pspec);
-static void      gimp_sample_point_undo_get_property (GObject               *object,
-                                                      guint                  property_id,
-                                                      GValue                *value,
-                                                      GParamSpec            *pspec);
+static void   gimp_sample_point_undo_constructed  (GObject             *object);
+static void   gimp_sample_point_undo_set_property (GObject             *object,
+                                                   guint                property_id,
+                                                   const GValue        *value,
+                                                   GParamSpec          *pspec);
+static void   gimp_sample_point_undo_get_property (GObject             *object,
+                                                   guint                property_id,
+                                                   GValue              *value,
+                                                   GParamSpec          *pspec);
 
-static void      gimp_sample_point_undo_pop          (GimpUndo              *undo,
-                                                      GimpUndoMode           undo_mode,
-                                                      GimpUndoAccumulator   *accum);
-static void      gimp_sample_point_undo_free         (GimpUndo              *undo,
-                                                      GimpUndoMode           undo_mode);
+static void   gimp_sample_point_undo_pop          (GimpUndo            *undo,
+                                                   GimpUndoMode         undo_mode,
+                                                   GimpUndoAccumulator *accum);
+static void   gimp_sample_point_undo_free         (GimpUndo            *undo,
+                                                   GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpSamplePointUndo, gimp_sample_point_undo, GIMP_TYPE_UNDO)
@@ -64,7 +62,7 @@ gimp_sample_point_undo_class_init (GimpSamplePointUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor  = gimp_sample_point_undo_constructor;
+  object_class->constructed  = gimp_sample_point_undo_constructed;
   object_class->set_property = gimp_sample_point_undo_set_property;
   object_class->get_property = gimp_sample_point_undo_get_property;
 
@@ -83,24 +81,18 @@ gimp_sample_point_undo_init (GimpSamplePointUndo *undo)
 {
 }
 
-static GObject *
-gimp_sample_point_undo_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_sample_point_undo_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpSamplePointUndo *sample_point_undo;
+  GimpSamplePointUndo *sample_point_undo = GIMP_SAMPLE_POINT_UNDO (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  sample_point_undo = GIMP_SAMPLE_POINT_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (sample_point_undo->sample_point != NULL);
 
   sample_point_undo->x = sample_point_undo->sample_point->x;
   sample_point_undo->y = sample_point_undo->sample_point->y;
-
-  return object;
 }
 
 static void

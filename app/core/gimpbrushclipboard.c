@@ -47,9 +47,7 @@ enum
 
 /*  local function prototypes  */
 
-static GObject  * gimp_brush_clipboard_constructor  (GType         type,
-                                                     guint         n_params,
-                                                     GObjectConstructParam *params);
+static void       gimp_brush_clipboard_constructed  (GObject      *object);
 static void       gimp_brush_clipboard_set_property (GObject      *object,
                                                      guint         property_id,
                                                      const GValue *value,
@@ -79,7 +77,7 @@ gimp_brush_clipboard_class_init (GimpBrushClipboardClass *klass)
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
 #endif
 
-  object_class->constructor  = gimp_brush_clipboard_constructor;
+  object_class->constructed  = gimp_brush_clipboard_constructed;
   object_class->set_property = gimp_brush_clipboard_set_property;
   object_class->get_property = gimp_brush_clipboard_get_property;
 
@@ -100,17 +98,13 @@ gimp_brush_clipboard_init (GimpBrushClipboard *brush)
   brush->gimp = NULL;
 }
 
-static GObject *
-gimp_brush_clipboard_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_brush_clipboard_constructed (GObject *object)
 {
-  GObject            *object;
-  GimpBrushClipboard *brush;
+  GimpBrushClipboard *brush = GIMP_BRUSH_CLIPBOARD (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  brush = GIMP_BRUSH_CLIPBOARD (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (brush->gimp));
 
@@ -119,8 +113,6 @@ gimp_brush_clipboard_constructor (GType                  type,
                            brush, 0);
 
   gimp_brush_clipboard_buffer_changed (brush->gimp, GIMP_BRUSH (brush));
-
-  return object;
 }
 
 static void

@@ -37,26 +37,24 @@ enum
 };
 
 
-static GObject * gimp_item_prop_undo_constructor  (GType                  type,
-                                                   guint                  n_params,
-                                                   GObjectConstructParam *params);
-static void      gimp_item_prop_undo_set_property (GObject               *object,
-                                                   guint                  property_id,
-                                                   const GValue          *value,
-                                                   GParamSpec            *pspec);
-static void      gimp_item_prop_undo_get_property (GObject               *object,
-                                                   guint                  property_id,
-                                                   GValue                *value,
-                                                   GParamSpec            *pspec);
+static void     gimp_item_prop_undo_constructed  (GObject             *object);
+static void     gimp_item_prop_undo_set_property (GObject             *object,
+                                                  guint                property_id,
+                                                  const GValue        *value,
+                                                  GParamSpec          *pspec);
+static void     gimp_item_prop_undo_get_property (GObject             *object,
+                                                  guint                property_id,
+                                                  GValue              *value,
+                                                  GParamSpec          *pspec);
 
-static gint64    gimp_item_prop_undo_get_memsize  (GimpObject            *object,
-                                                   gint64                *gui_size);
+static gint64   gimp_item_prop_undo_get_memsize  (GimpObject          *object,
+                                                  gint64              *gui_size);
 
-static void      gimp_item_prop_undo_pop          (GimpUndo              *undo,
-                                                   GimpUndoMode           undo_mode,
-                                                   GimpUndoAccumulator   *accum);
-static void      gimp_item_prop_undo_free         (GimpUndo              *undo,
-                                                   GimpUndoMode           undo_mode);
+static void     gimp_item_prop_undo_pop          (GimpUndo            *undo,
+                                                  GimpUndoMode         undo_mode,
+                                                  GimpUndoAccumulator *accum);
+static void     gimp_item_prop_undo_free         (GimpUndo            *undo,
+                                                  GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpItemPropUndo, gimp_item_prop_undo, GIMP_TYPE_ITEM_UNDO)
@@ -71,7 +69,7 @@ gimp_item_prop_undo_class_init (GimpItemPropUndoClass *klass)
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor      = gimp_item_prop_undo_constructor;
+  object_class->constructed      = gimp_item_prop_undo_constructed;
   object_class->set_property     = gimp_item_prop_undo_set_property;
   object_class->get_property     = gimp_item_prop_undo_get_property;
 
@@ -93,18 +91,14 @@ gimp_item_prop_undo_init (GimpItemPropUndo *undo)
 {
 }
 
-static GObject *
-gimp_item_prop_undo_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_item_prop_undo_constructed (GObject *object)
 {
-  GObject          *object;
-  GimpItemPropUndo *item_prop_undo;
+  GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
   GimpItem         *item;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   item = GIMP_ITEM_UNDO (object)->item;
 
@@ -144,8 +138,6 @@ gimp_item_prop_undo_constructor (GType                  type,
     default:
       g_assert_not_reached ();
     }
-
-  return object;
 }
 
 static void

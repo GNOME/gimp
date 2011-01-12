@@ -47,9 +47,7 @@ enum
 
 /*  local function prototypes  */
 
-static GObject  * gimp_pattern_clipboard_constructor  (GType         type,
-                                                       guint         n_params,
-                                                       GObjectConstructParam *params);
+static void       gimp_pattern_clipboard_constructed  (GObject      *object);
 static void       gimp_pattern_clipboard_set_property (GObject      *object,
                                                        guint         property_id,
                                                        const GValue *value,
@@ -79,7 +77,7 @@ gimp_pattern_clipboard_class_init (GimpPatternClipboardClass *klass)
   GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
 #endif
 
-  object_class->constructor  = gimp_pattern_clipboard_constructor;
+  object_class->constructed  = gimp_pattern_clipboard_constructed;
   object_class->set_property = gimp_pattern_clipboard_set_property;
   object_class->get_property = gimp_pattern_clipboard_get_property;
 
@@ -100,17 +98,13 @@ gimp_pattern_clipboard_init (GimpPatternClipboard *pattern)
   pattern->gimp = NULL;
 }
 
-static GObject *
-gimp_pattern_clipboard_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_pattern_clipboard_constructed (GObject *object)
 {
-  GObject              *object;
-  GimpPatternClipboard *pattern;
+  GimpPatternClipboard *pattern = GIMP_PATTERN_CLIPBOARD (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  pattern = GIMP_PATTERN_CLIPBOARD (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (pattern->gimp));
 
@@ -119,8 +113,6 @@ gimp_pattern_clipboard_constructor (GType                  type,
                            pattern, 0);
 
   gimp_pattern_clipboard_buffer_changed (pattern->gimp, GIMP_PATTERN (pattern));
-
-  return object;
 }
 
 static void

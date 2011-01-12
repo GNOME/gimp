@@ -28,13 +28,11 @@
 #include "gimpchannelpropundo.h"
 
 
-static GObject * gimp_channel_prop_undo_constructor (GType                  type,
-                                                     guint                  n_params,
-                                                     GObjectConstructParam *params);
+static void   gimp_channel_prop_undo_constructed (GObject             *object);
 
-static void      gimp_channel_prop_undo_pop         (GimpUndo              *undo,
-                                                     GimpUndoMode           undo_mode,
-                                                     GimpUndoAccumulator   *accum);
+static void   gimp_channel_prop_undo_pop         (GimpUndo            *undo,
+                                                  GimpUndoMode         undo_mode,
+                                                  GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpChannelPropUndo, gimp_channel_prop_undo, GIMP_TYPE_ITEM_UNDO)
@@ -48,7 +46,7 @@ gimp_channel_prop_undo_class_init (GimpChannelPropUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_channel_prop_undo_constructor;
+  object_class->constructed = gimp_channel_prop_undo_constructed;
 
   undo_class->pop           = gimp_channel_prop_undo_pop;
 }
@@ -58,19 +56,15 @@ gimp_channel_prop_undo_init (GimpChannelPropUndo *undo)
 {
 }
 
-static GObject *
-gimp_channel_prop_undo_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_channel_prop_undo_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpChannelPropUndo *channel_prop_undo;
+  GimpChannelPropUndo *channel_prop_undo = GIMP_CHANNEL_PROP_UNDO (object);
   GimpImage           *image;
   GimpChannel         *channel;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  channel_prop_undo = GIMP_CHANNEL_PROP_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
 
@@ -86,8 +80,6 @@ gimp_channel_prop_undo_constructor (GType                  type,
     default:
       g_assert_not_reached ();
     }
-
-  return object;
 }
 
 static void

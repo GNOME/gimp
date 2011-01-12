@@ -34,23 +34,21 @@ enum
 };
 
 
-static GObject * gimp_guide_undo_constructor  (GType                  type,
-                                               guint                  n_params,
-                                               GObjectConstructParam *params);
-static void      gimp_guide_undo_set_property (GObject               *object,
-                                               guint                  property_id,
-                                               const GValue          *value,
-                                               GParamSpec            *pspec);
-static void      gimp_guide_undo_get_property (GObject               *object,
-                                               guint                  property_id,
-                                               GValue                *value,
-                                               GParamSpec            *pspec);
+static void   gimp_guide_undo_constructed  (GObject            *object);
+static void   gimp_guide_undo_set_property (GObject             *object,
+                                            guint                property_id,
+                                            const GValue        *value,
+                                            GParamSpec          *pspec);
+static void   gimp_guide_undo_get_property (GObject             *object,
+                                            guint                property_id,
+                                            GValue              *value,
+                                            GParamSpec          *pspec);
 
-static void      gimp_guide_undo_pop          (GimpUndo              *undo,
-                                               GimpUndoMode           undo_mode,
-                                               GimpUndoAccumulator   *accum);
-static void      gimp_guide_undo_free         (GimpUndo              *undo,
-                                               GimpUndoMode           undo_mode);
+static void   gimp_guide_undo_pop          (GimpUndo            *undo,
+                                            GimpUndoMode         undo_mode,
+                                            GimpUndoAccumulator *accum);
+static void   gimp_guide_undo_free         (GimpUndo            *undo,
+                                            GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpGuideUndo, gimp_guide_undo, GIMP_TYPE_UNDO)
@@ -64,7 +62,7 @@ gimp_guide_undo_class_init (GimpGuideUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor  = gimp_guide_undo_constructor;
+  object_class->constructed  = gimp_guide_undo_constructed;
   object_class->set_property = gimp_guide_undo_set_property;
   object_class->get_property = gimp_guide_undo_get_property;
 
@@ -83,24 +81,18 @@ gimp_guide_undo_init (GimpGuideUndo *undo)
 {
 }
 
-static GObject *
-gimp_guide_undo_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_guide_undo_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpGuideUndo *guide_undo;
+  GimpGuideUndo *guide_undo = GIMP_GUIDE_UNDO (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  guide_undo = GIMP_GUIDE_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GUIDE (guide_undo->guide));
 
   guide_undo->orientation = gimp_guide_get_orientation (guide_undo->guide);
   guide_undo->position    = gimp_guide_get_position (guide_undo->guide);
-
-  return object;
 }
 
 static void

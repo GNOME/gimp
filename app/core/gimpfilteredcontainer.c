@@ -52,10 +52,7 @@ typedef struct _MatchParams
 } MatchParams;
 
 
-static GObject * gimp_filtered_container_constructor        (GType                  type,
-                                                             guint                  n_construct_params,
-                                                             GObjectConstructParam *construct_params);
-
+static void      gimp_filtered_container_constructed        (GObject               *object);
 static void      gimp_filtered_container_dispose            (GObject               *object);
 static void      gimp_filtered_container_set_property       (GObject               *object,
                                                              guint                  property_id,
@@ -111,7 +108,7 @@ gimp_filtered_container_class_init (GimpFilteredContainerClass *klass)
   GObjectClass    *g_object_class    = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
-  g_object_class->constructor    = gimp_filtered_container_constructor;
+  g_object_class->constructed    = gimp_filtered_container_constructed;
   g_object_class->dispose        = gimp_filtered_container_dispose;
   g_object_class->set_property   = gimp_filtered_container_set_property;
   g_object_class->get_property   = gimp_filtered_container_get_property;
@@ -147,19 +144,13 @@ gimp_filtered_container_init (GimpFilteredContainer *filtered_container)
   filtered_container->tag_count      = 0;
 }
 
-static GObject*
-gimp_filtered_container_constructor (GType                   type,
-                                     guint                   n_construct_params,
-                                     GObjectConstructParam  *construct_params)
+static void
+gimp_filtered_container_constructed (GObject *object)
 {
-  GObject               *object;
-  GimpFilteredContainer *filtered_container;
+  GimpFilteredContainer *filtered_container = GIMP_FILTERED_CONTAINER (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type,
-                                                       n_construct_params,
-                                                       construct_params);
-
-  filtered_container = GIMP_FILTERED_CONTAINER (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   filtered_container->tag_ref_counts =
     g_hash_table_new ((GHashFunc) gimp_tag_get_hash,
@@ -169,8 +160,6 @@ gimp_filtered_container_constructor (GType                   type,
                           (GFunc) gimp_filtered_container_tagged_item_added,
                           filtered_container);
   gimp_filtered_container_filter (filtered_container);
-
-  return object;
 }
 
 static void

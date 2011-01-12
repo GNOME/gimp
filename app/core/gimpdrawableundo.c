@@ -42,26 +42,24 @@ enum
 };
 
 
-static GObject * gimp_drawable_undo_constructor  (GType                  type,
-                                                  guint                  n_params,
-                                                  GObjectConstructParam *params);
-static void      gimp_drawable_undo_set_property (GObject               *object,
-                                                  guint                  property_id,
-                                                  const GValue          *value,
-                                                  GParamSpec            *pspec);
-static void      gimp_drawable_undo_get_property (GObject               *object,
-                                                  guint                  property_id,
-                                                  GValue                *value,
-                                                  GParamSpec            *pspec);
+static void     gimp_drawable_undo_constructed  (GObject             *object);
+static void     gimp_drawable_undo_set_property (GObject             *object,
+                                                 guint                property_id,
+                                                 const GValue        *value,
+                                                 GParamSpec          *pspec);
+static void     gimp_drawable_undo_get_property (GObject             *object,
+                                                 guint                property_id,
+                                                 GValue              *value,
+                                                 GParamSpec          *pspec);
 
-static gint64    gimp_drawable_undo_get_memsize  (GimpObject            *object,
-                                                  gint64                *gui_size);
+static gint64   gimp_drawable_undo_get_memsize  (GimpObject          *object,
+                                                 gint64              *gui_size);
 
-static void      gimp_drawable_undo_pop          (GimpUndo              *undo,
-                                                  GimpUndoMode           undo_mode,
-                                                  GimpUndoAccumulator   *accum);
-static void      gimp_drawable_undo_free         (GimpUndo              *undo,
-                                                  GimpUndoMode           undo_mode);
+static void     gimp_drawable_undo_pop          (GimpUndo            *undo,
+                                                 GimpUndoMode         undo_mode,
+                                                 GimpUndoAccumulator *accum);
+static void     gimp_drawable_undo_free         (GimpUndo            *undo,
+                                                 GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpDrawableUndo, gimp_drawable_undo, GIMP_TYPE_ITEM_UNDO)
@@ -76,7 +74,7 @@ gimp_drawable_undo_class_init (GimpDrawableUndoClass *klass)
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor      = gimp_drawable_undo_constructor;
+  object_class->constructed      = gimp_drawable_undo_constructed;
   object_class->set_property     = gimp_drawable_undo_set_property;
   object_class->get_property     = gimp_drawable_undo_get_property;
 
@@ -127,22 +125,16 @@ gimp_drawable_undo_init (GimpDrawableUndo *undo)
 {
 }
 
-static GObject *
-gimp_drawable_undo_constructor (GType                  type,
-                                guint                  n_params,
-                                GObjectConstructParam *params)
+static void
+gimp_drawable_undo_constructed (GObject *object)
 {
-  GObject          *object;
-  GimpDrawableUndo *drawable_undo;
+  GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  drawable_undo = GIMP_DRAWABLE_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
   g_assert (drawable_undo->tiles != NULL);
-
-  return object;
 }
 
 static void

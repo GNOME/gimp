@@ -128,9 +128,7 @@ enum
 static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
 static void     gimp_projectable_iface_init      (GimpProjectableInterface  *iface);
 
-static GObject *gimp_image_constructor           (GType              type,
-                                                  guint              n_params,
-                                                  GObjectConstructParam *params);
+static void     gimp_image_constructed           (GObject           *object);
 static void     gimp_image_set_property          (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
@@ -510,7 +508,7 @@ gimp_image_class_init (GimpImageClass *klass)
                   GIMP_TYPE_UNDO_EVENT,
                   GIMP_TYPE_UNDO);
 
-  object_class->constructor           = gimp_image_constructor;
+  object_class->constructed           = gimp_image_constructed;
   object_class->set_property          = gimp_image_set_property;
   object_class->get_property          = gimp_image_get_property;
   object_class->dispose               = gimp_image_dispose;
@@ -730,20 +728,15 @@ gimp_image_init (GimpImage *image)
   private->flush_accum.preview_invalidated        = FALSE;
 }
 
-static GObject *
-gimp_image_constructor (GType                  type,
-                        guint                  n_params,
-                        GObjectConstructParam *params)
+static void
+gimp_image_constructed (GObject *object)
 {
-  GObject          *object;
-  GimpImage        *image;
-  GimpImagePrivate *private;
+  GimpImage        *image   = GIMP_IMAGE (object);
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GimpCoreConfig   *config;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  image   = GIMP_IMAGE (object);
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (image->gimp));
 
@@ -793,8 +786,6 @@ gimp_image_constructor (GType                  type,
                            image, G_CONNECT_SWAPPED);
 
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
-
-  return object;
 }
 
 static void

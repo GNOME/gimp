@@ -88,38 +88,35 @@ struct _GimpDataPrivate
         G_TYPE_INSTANCE_GET_PRIVATE (data, GIMP_TYPE_DATA, GimpDataPrivate)
 
 
-static void      gimp_data_class_init        (GimpDataClass         *klass);
-static void      gimp_data_tagged_iface_init (GimpTaggedInterface   *iface);
+static void      gimp_data_class_init        (GimpDataClass       *klass);
+static void      gimp_data_tagged_iface_init (GimpTaggedInterface *iface);
 
-static void      gimp_data_init              (GimpData              *data,
-                                              GimpDataClass         *data_class);
+static void      gimp_data_init              (GimpData            *data,
+                                              GimpDataClass       *data_class);
 
-static GObject * gimp_data_constructor       (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
+static void      gimp_data_constructed       (GObject             *object);
+static void      gimp_data_finalize          (GObject             *object);
+static void      gimp_data_set_property      (GObject             *object,
+                                              guint                property_id,
+                                              const GValue        *value,
+                                              GParamSpec          *pspec);
+static void      gimp_data_get_property      (GObject             *object,
+                                              guint                property_id,
+                                              GValue              *value,
+                                              GParamSpec          *pspec);
 
-static void      gimp_data_finalize          (GObject               *object);
-static void      gimp_data_set_property      (GObject               *object,
-                                              guint                  property_id,
-                                              const GValue          *value,
-                                              GParamSpec            *pspec);
-static void      gimp_data_get_property      (GObject               *object,
-                                              guint                  property_id,
-                                              GValue                *value,
-                                              GParamSpec            *pspec);
+static gint64    gimp_data_get_memsize       (GimpObject          *object,
+                                              gint64              *gui_size);
 
-static gint64    gimp_data_get_memsize       (GimpObject            *object,
-                                              gint64                *gui_size);
+static void      gimp_data_real_dirty        (GimpData            *data);
 
-static void      gimp_data_real_dirty        (GimpData              *data);
-
-static gboolean  gimp_data_add_tag           (GimpTagged            *tagged,
-                                              GimpTag               *tag);
-static gboolean  gimp_data_remove_tag        (GimpTagged            *tagged,
-                                              GimpTag               *tag);
-static GList *   gimp_data_get_tags          (GimpTagged            *tagged);
-static gchar *   gimp_data_get_identifier    (GimpTagged            *tagged);
-static gchar *   gimp_data_get_checksum      (GimpTagged            *tagged);
+static gboolean  gimp_data_add_tag           (GimpTagged          *tagged,
+                                              GimpTag             *tag);
+static gboolean  gimp_data_remove_tag        (GimpTagged          *tagged,
+                                              GimpTag             *tag);
+static GList *   gimp_data_get_tags          (GimpTagged          *tagged);
+static gchar *   gimp_data_get_identifier    (GimpTagged          *tagged);
+static gchar *   gimp_data_get_checksum      (GimpTagged          *tagged);
 
 
 static guint data_signals[LAST_SIGNAL] = { 0 };
@@ -181,7 +178,7 @@ gimp_data_class_init (GimpDataClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->constructor       = gimp_data_constructor;
+  object_class->constructed       = gimp_data_constructed;
   object_class->finalize          = gimp_data_finalize;
   object_class->set_property      = gimp_data_set_property;
   object_class->get_property      = gimp_data_get_property;
@@ -247,18 +244,13 @@ gimp_data_init (GimpData      *data,
   gimp_data_freeze (data);
 }
 
-static GObject *
-gimp_data_constructor (GType                  type,
-                       guint                  n_params,
-                       GObjectConstructParam *params)
+static void
+gimp_data_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_data_thaw (GIMP_DATA (object));
-
-  return object;
 }
 
 static void
