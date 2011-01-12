@@ -63,9 +63,7 @@ enum
   LAST_SIGNAL
 };
 
-static GObject * gimp_chain_button_constructor      (GType            type,
-                                                     guint            n_params,
-                                                     GObjectConstructParam *params);
+static void      gimp_chain_button_constructed      (GObject         *object);
 static void      gimp_chain_button_set_property     (GObject         *object,
                                                      guint            property_id,
                                                      const GValue    *value,
@@ -103,7 +101,7 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_chain_button_constructor;
+  object_class->constructed  = gimp_chain_button_constructed;
   object_class->set_property = gimp_chain_button_set_property;
   object_class->get_property = gimp_chain_button_get_property;
 
@@ -150,17 +148,13 @@ gimp_chain_button_init (GimpChainButton *button)
                     button);
 }
 
-static GObject *
-gimp_chain_button_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_chain_button_constructed (GObject *object)
 {
-  GObject         *object;
-  GimpChainButton *button;
+  GimpChainButton *button = GIMP_CHAIN_BUTTON (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  button = GIMP_CHAIN_BUTTON (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   button->line1 = gimp_chain_line_new (button->position, 1);
   button->line2 = gimp_chain_line_new (button->position, -1);
@@ -191,8 +185,6 @@ gimp_chain_button_constructor (GType                  type,
   gtk_widget_show (button->button);
   gtk_widget_show (button->line1);
   gtk_widget_show (button->line2);
-
-  return object;
 }
 
 static void

@@ -66,9 +66,7 @@ typedef struct
 #define GIMP_ZOOM_PREVIEW_GET_PRIVATE(obj) \
   ((GimpZoomPreviewPrivate *) ((GimpZoomPreview *) (obj))->priv)
 
-static GObject * gimp_zoom_preview_constructor (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
+static void     gimp_zoom_preview_constructed     (GObject         *object);
 static void     gimp_zoom_preview_finalize        (GObject         *object);
 static void     gimp_zoom_preview_dispose         (GObject         *object);
 static void     gimp_zoom_preview_get_property    (GObject         *object,
@@ -137,7 +135,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  object_class->constructor  = gimp_zoom_preview_constructor;
+  object_class->constructed  = gimp_zoom_preview_constructed;
   object_class->finalize     = gimp_zoom_preview_finalize;
   object_class->dispose      = gimp_zoom_preview_dispose;
   object_class->get_property = gimp_zoom_preview_get_property;
@@ -203,21 +201,19 @@ gimp_zoom_preview_init (GimpZoomPreview *preview)
                                     GTK_POLICY_ALWAYS, GTK_POLICY_ALWAYS);
 }
 
-static GObject *
-gimp_zoom_preview_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_zoom_preview_constructed (GObject *object)
 {
-  GimpZoomPreviewPrivate *priv;
-  GObject                *object;
+  GimpZoomPreviewPrivate *priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (object);
   gchar                  *data_name;
   PreviewSettings         settings;
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   data_name = g_strdup_printf ("%s-zoom-preview-%d",
                                g_get_prgname (),
                                gimp_zoom_preview_counter++);
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   if (gimp_get_data (data_name, &settings))
     {
@@ -226,8 +222,6 @@ gimp_zoom_preview_constructor (GType                  type,
 
   g_object_set_data_full (object, "gimp-zoom-preview-data-name",
                           data_name, (GDestroyNotify) g_free);
-
-  priv = GIMP_ZOOM_PREVIEW_GET_PRIVATE (object);
 
   if (! priv->model)
     {
@@ -240,8 +234,6 @@ gimp_zoom_preview_constructor (GType                  type,
     }
 
   gimp_zoom_preview_set_adjustments (GIMP_ZOOM_PREVIEW (object), 1.0, 1.0);
-
-  return object;
 }
 
 static void

@@ -48,27 +48,26 @@ enum
 };
 
 
-static GObject  * gimp_dialog_constructor  (GType            type,
-                                            guint            n_params,
-                                            GObjectConstructParam *params);
-static void       gimp_dialog_dispose      (GObject         *object);
-static void       gimp_dialog_set_property (GObject         *object,
-                                            guint            property_id,
-                                            const GValue    *value,
-                                            GParamSpec      *pspec);
-static void       gimp_dialog_get_property (GObject         *object,
-                                            guint            property_id,
-                                            GValue          *value,
-                                            GParamSpec      *pspec);
+static void       gimp_dialog_constructed  (GObject      *object);
+static void       gimp_dialog_dispose      (GObject      *object);
+static void       gimp_dialog_set_property (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec);
+static void       gimp_dialog_get_property (GObject      *object,
+                                            guint         property_id,
+                                            GValue       *value,
+                                            GParamSpec   *pspec);
 
-static void       gimp_dialog_hide         (GtkWidget       *widget);
-static gboolean   gimp_dialog_delete_event (GtkWidget       *widget,
-                                            GdkEventAny     *event);
-static void       gimp_dialog_close        (GtkDialog       *dialog);
+static void       gimp_dialog_hide         (GtkWidget    *widget);
+static gboolean   gimp_dialog_delete_event (GtkWidget    *widget,
+                                            GdkEventAny  *event);
 
-static void       gimp_dialog_help         (GObject         *dialog);
-static void       gimp_dialog_response     (GtkDialog       *dialog,
-                                            gint             response_id);
+static void       gimp_dialog_close        (GtkDialog    *dialog);
+
+static void       gimp_dialog_help         (GObject      *dialog);
+static void       gimp_dialog_response     (GtkDialog    *dialog,
+                                            gint          response_id);
 
 
 G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
@@ -85,7 +84,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
-  object_class->constructor  = gimp_dialog_constructor;
+  object_class->constructed  = gimp_dialog_constructed;
   object_class->dispose      = gimp_dialog_dispose;
   object_class->set_property = gimp_dialog_set_property;
   object_class->get_property = gimp_dialog_get_property;
@@ -128,16 +127,14 @@ gimp_dialog_init (GimpDialog *dialog)
                     NULL);
 }
 
-static GObject *
-gimp_dialog_constructor (GType                  type,
-                         guint                  n_params,
-                         GObjectConstructParam *params)
+static void
+gimp_dialog_constructed (GObject *object)
 {
-  GObject      *object;
   GimpHelpFunc  help_func;
   const gchar  *help_id;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   help_func = g_object_get_data (object, "gimp-dialog-help-func");
   help_id   = g_object_get_data (object, "gimp-dialog-help-id");
@@ -162,8 +159,6 @@ gimp_dialog_constructor (GType                  type,
 
       g_object_set_data (object, "gimp-dialog-help-button", button);
     }
-
-  return object;
 }
 
 static void

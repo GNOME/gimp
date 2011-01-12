@@ -54,12 +54,9 @@ typedef struct
 } GimpIntStorePrivate;
 
 
-static GObject * gimp_int_store_constructor (GType                  type,
-                                             guint                  n_params,
-                                             GObjectConstructParam *params);
-
 static void  gimp_int_store_tree_model_init (GtkTreeModelIface *iface);
 
+static void  gimp_int_store_constructed     (GObject           *object);
 static void  gimp_int_store_finalize        (GObject           *object);
 static void  gimp_int_store_set_property    (GObject           *object,
                                              guint              property_id,
@@ -93,7 +90,7 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_int_store_constructor;
+  object_class->constructed  = gimp_int_store_constructed;
   object_class->finalize     = gimp_int_store_finalize;
   object_class->set_property = gimp_int_store_set_property;
   object_class->get_property = gimp_int_store_get_property;
@@ -121,25 +118,28 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
 }
 
 static void
+gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
+{
+  parent_iface = g_type_interface_peek_parent (iface);
+
+  iface->row_inserted = gimp_int_store_row_inserted;
+}
+
+static void
 gimp_int_store_init (GimpIntStore *store)
 {
   store->empty_iter = NULL;
 }
 
-static GObject *
-gimp_int_store_constructor (GType                  type,
-                            guint                  n_params,
-                            GObjectConstructParam *params)
+static void
+gimp_int_store_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpIntStore        *store;
-  GimpIntStorePrivate *priv;
+  GimpIntStore        *store = GIMP_INT_STORE (object);
+  GimpIntStorePrivate *priv  = GIMP_INT_STORE_GET_PRIVATE (store);
   GType                types[GIMP_INT_STORE_NUM_COLUMNS];
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  store = GIMP_INT_STORE (object);
-  priv = GIMP_INT_STORE_GET_PRIVATE (store);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   types[GIMP_INT_STORE_VALUE]     = G_TYPE_INT;
   types[GIMP_INT_STORE_LABEL]     = G_TYPE_STRING;
@@ -152,16 +152,6 @@ gimp_int_store_constructor (GType                  type,
                                    GIMP_INT_STORE_NUM_COLUMNS, types);
 
   gimp_int_store_add_empty (store);
-
-  return object;
-}
-
-static void
-gimp_int_store_tree_model_init (GtkTreeModelIface *iface)
-{
-  parent_iface = g_type_interface_peek_parent (iface);
-
-  iface->row_inserted = gimp_int_store_row_inserted;
 }
 
 static void

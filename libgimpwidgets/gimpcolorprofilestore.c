@@ -54,9 +54,7 @@ enum
 };
 
 
-static GObject * gimp_color_profile_store_constructor    (GType                  type,
-                                                          guint                  n_params,
-                                                          GObjectConstructParam *params);
+static void      gimp_color_profile_store_constructed    (GObject               *object);
 static void      gimp_color_profile_store_dispose        (GObject               *object);
 static void      gimp_color_profile_store_finalize       (GObject               *object);
 static void      gimp_color_profile_store_set_property   (GObject               *object,
@@ -95,7 +93,7 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_color_profile_store_constructor;
+  object_class->constructed  = gimp_color_profile_store_constructed;
   object_class->dispose      = gimp_color_profile_store_dispose;
   object_class->finalize     = gimp_color_profile_store_finalize;
   object_class->set_property = gimp_color_profile_store_set_property;
@@ -131,18 +129,14 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
                                    G_N_ELEMENTS (types), types);
 }
 
-static GObject *
-gimp_color_profile_store_constructor  (GType                  type,
-                                       guint                  n_params,
-                                       GObjectConstructParam *params)
+static void
+gimp_color_profile_store_constructed (GObject *object)
 {
-  GObject               *object;
-  GimpColorProfileStore *store;
+  GimpColorProfileStore *store = GIMP_COLOR_PROFILE_STORE (object);
   GtkTreeIter            iter;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  store = GIMP_COLOR_PROFILE_STORE (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_list_store_append (GTK_LIST_STORE (store), &iter);
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,
@@ -156,8 +150,6 @@ gimp_color_profile_store_constructor  (GType                  type,
     {
       gimp_color_profile_store_load (store, store->history, NULL);
     }
-
-  return object;
 }
 
 static void

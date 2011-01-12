@@ -59,18 +59,15 @@ typedef struct
   ((GimpStringComboBoxPrivate *) ((GimpStringComboBox *) (obj))->priv)
 
 
-static GObject * gimp_string_combo_box_constructor (GType                  type,
-                                                    guint                  n_params,
-                                                    GObjectConstructParam *params);
-
-static void  gimp_string_combo_box_set_property (GObject         *object,
-                                                 guint            property_id,
-                                                 const GValue    *value,
-                                                 GParamSpec      *pspec);
-static void  gimp_string_combo_box_get_property (GObject         *object,
-                                                 guint            property_id,
-                                                 GValue          *value,
-                                                 GParamSpec      *pspec);
+static void   gimp_string_combo_box_constructed  (GObject      *object);
+static void   gimp_string_combo_box_set_property (GObject      *object,
+                                                  guint         property_id,
+                                                  const GValue *value,
+                                                  GParamSpec   *pspec);
+static void   gimp_string_combo_box_get_property (GObject      *object,
+                                                  guint         property_id,
+                                                  GValue       *value,
+                                                  GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpStringComboBox, gimp_string_combo_box, GTK_TYPE_COMBO_BOX)
@@ -83,7 +80,7 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_string_combo_box_constructor;
+  object_class->constructed  = gimp_string_combo_box_constructed;
   object_class->set_property = gimp_string_combo_box_set_property;
   object_class->get_property = gimp_string_combo_box_get_property;
 
@@ -145,18 +142,14 @@ gimp_string_combo_box_init (GimpStringComboBox *combo_box)
                                                  GimpStringComboBoxPrivate);
 }
 
-static GObject *
-gimp_string_combo_box_constructor (GType                  type,
-                                   guint                  n_params,
-                                   GObjectConstructParam *params)
+static void
+gimp_string_combo_box_constructed (GObject *object)
 {
-  GObject                   *object;
-  GimpStringComboBoxPrivate *priv;
+  GimpStringComboBoxPrivate *priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
   GtkCellRenderer           *cell;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   priv->text_renderer = cell = gtk_cell_renderer_text_new ();
 
@@ -164,8 +157,6 @@ gimp_string_combo_box_constructor (GType                  type,
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (object), cell,
                                   "text", priv->label_column,
                                   NULL);
-
-  return object;
 }
 
 static void

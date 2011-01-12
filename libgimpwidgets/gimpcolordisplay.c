@@ -62,6 +62,7 @@ enum
   LAST_SIGNAL
 };
 
+
 typedef struct
 {
   GimpColorConfig  *config;
@@ -70,9 +71,8 @@ typedef struct
 
 #define GIMP_COLOR_DISPLAY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GIMP_TYPE_COLOR_DISPLAY, GimpColorDisplayPrivate))
 
-static GObject  * gimp_color_display_constructor (GType                  type,
-                                                  guint                  n_params,
-                                                  GObjectConstructParam *params);
+
+static void       gimp_color_display_constructed (GObject       *object);
 static void       gimp_color_display_dispose      (GObject      *object);
 static void       gimp_color_display_set_property (GObject      *object,
                                                    guint         property_id,
@@ -102,7 +102,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_color_display_constructor;
+  object_class->constructed  = gimp_color_display_constructed;
   object_class->dispose      = gimp_color_display_dispose;
   object_class->set_property = gimp_color_display_set_property;
   object_class->get_property = gimp_color_display_get_property;
@@ -154,19 +154,14 @@ gimp_color_display_init (GimpColorDisplay *display)
   display->enabled = FALSE;
 }
 
-static GObject *
-gimp_color_display_constructor (GType                  type,
-                                guint                  n_params,
-                                GObjectConstructParam *params)
+static void
+gimp_color_display_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* emit an initial "changed" signal after all construct properties are set */
   gimp_color_display_changed (GIMP_COLOR_DISPLAY (object));
-
-  return object;
 }
 
 static void

@@ -54,9 +54,7 @@ typedef struct
 } PreviewSettings;
 
 
-static GObject * gimp_aspect_preview_constructor (GType                  type,
-                                                  guint                  n_params,
-                                                  GObjectConstructParam *params);
+static void  gimp_aspect_preview_constructed  (GObject         *object);
 static void  gimp_aspect_preview_dispose      (GObject         *object);
 static void  gimp_aspect_preview_get_property (GObject         *object,
                                                guint            property_id,
@@ -102,7 +100,7 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
   GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
   GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
 
-  object_class->constructor  = gimp_aspect_preview_constructor;
+  object_class->constructed  = gimp_aspect_preview_constructed;
   object_class->dispose      = gimp_aspect_preview_dispose;
   object_class->get_property = gimp_aspect_preview_get_property;
   object_class->set_property = gimp_aspect_preview_set_property;
@@ -134,20 +132,18 @@ gimp_aspect_preview_init (GimpAspectPreview *preview)
                 NULL);
 }
 
-static GObject *
-gimp_aspect_preview_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_aspect_preview_constructed (GObject *object)
 {
-  GObject         *object;
   gchar           *data_name;
   PreviewSettings  settings;
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   data_name = g_strdup_printf ("%s-aspect-preview-%d",
                                g_get_prgname (),
                                gimp_aspect_preview_counter++);
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   if (gimp_get_data (data_name, &settings))
     {
@@ -156,8 +152,6 @@ gimp_aspect_preview_constructor (GType                  type,
 
   g_object_set_data_full (object, "gimp-aspect-preview-data-name",
                           data_name, (GDestroyNotify) g_free);
-
-  return object;
 }
 
 static void
