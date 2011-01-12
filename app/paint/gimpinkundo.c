@@ -28,15 +28,13 @@
 #include "gimpinkundo.h"
 
 
-static GObject * gimp_ink_undo_constructor  (GType                  type,
-                                             guint                  n_params,
-                                             GObjectConstructParam *params);
+static void   gimp_ink_undo_constructed (GObject             *object);
 
-static void      gimp_ink_undo_pop          (GimpUndo              *undo,
-                                             GimpUndoMode           undo_mode,
-                                             GimpUndoAccumulator   *accum);
-static void      gimp_ink_undo_free         (GimpUndo              *undo,
-                                             GimpUndoMode           undo_mode);
+static void   gimp_ink_undo_pop         (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode,
+                                         GimpUndoAccumulator *accum);
+static void   gimp_ink_undo_free        (GimpUndo            *undo,
+                                         GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpInkUndo, gimp_ink_undo, GIMP_TYPE_PAINT_CORE_UNDO)
@@ -50,7 +48,7 @@ gimp_ink_undo_class_init (GimpInkUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_ink_undo_constructor;
+  object_class->constructed = gimp_ink_undo_constructed;
 
   undo_class->pop           = gimp_ink_undo_pop;
   undo_class->free          = gimp_ink_undo_free;
@@ -61,18 +59,14 @@ gimp_ink_undo_init (GimpInkUndo *undo)
 {
 }
 
-static GObject *
-gimp_ink_undo_constructor (GType                  type,
-                           guint                  n_params,
-                           GObjectConstructParam *params)
+static void
+gimp_ink_undo_constructed (GObject *object)
 {
-  GObject     *object;
-  GimpInkUndo *ink_undo;
+  GimpInkUndo *ink_undo = GIMP_INK_UNDO (object);
   GimpInk     *ink;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  ink_undo = GIMP_INK_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_INK (GIMP_PAINT_CORE_UNDO (ink_undo)->paint_core));
 
@@ -80,8 +74,6 @@ gimp_ink_undo_constructor (GType                  type,
 
   if (ink->start_blob)
     ink_undo->last_blob = gimp_blob_duplicate (ink->start_blob);
-
-  return object;
 }
 
 static void

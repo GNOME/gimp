@@ -36,24 +36,22 @@ enum
 };
 
 
-static GObject * gimp_vectors_undo_constructor  (GType                  type,
-                                                 guint                  n_params,
-                                                 GObjectConstructParam *params);
-static void      gimp_vectors_undo_set_property (GObject               *object,
-                                                 guint                  property_id,
-                                                 const GValue          *value,
-                                                 GParamSpec            *pspec);
-static void      gimp_vectors_undo_get_property (GObject               *object,
-                                                 guint                  property_id,
-                                                 GValue                *value,
-                                                 GParamSpec            *pspec);
+static void     gimp_vectors_undo_constructed  (GObject             *object);
+static void     gimp_vectors_undo_set_property (GObject             *object,
+                                                guint                property_id,
+                                                const GValue        *value,
+                                                GParamSpec          *pspec);
+static void     gimp_vectors_undo_get_property (GObject             *object,
+                                                guint                property_id,
+                                                GValue              *value,
+                                                GParamSpec          *pspec);
 
-static gint64    gimp_vectors_undo_get_memsize  (GimpObject            *object,
-                                                 gint64                *gui_size);
+static gint64   gimp_vectors_undo_get_memsize  (GimpObject          *object,
+                                                gint64              *gui_size);
 
-static void      gimp_vectors_undo_pop          (GimpUndo              *undo,
-                                                 GimpUndoMode           undo_mode,
-                                                 GimpUndoAccumulator   *accum);
+static void     gimp_vectors_undo_pop          (GimpUndo            *undo,
+                                                GimpUndoMode         undo_mode,
+                                                GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpVectorsUndo, gimp_vectors_undo, GIMP_TYPE_ITEM_UNDO)
@@ -68,7 +66,7 @@ gimp_vectors_undo_class_init (GimpVectorsUndoClass *klass)
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor      = gimp_vectors_undo_constructor;
+  object_class->constructed      = gimp_vectors_undo_constructed;
   object_class->set_property     = gimp_vectors_undo_set_property;
   object_class->get_property     = gimp_vectors_undo_get_property;
 
@@ -101,21 +99,13 @@ gimp_vectors_undo_init (GimpVectorsUndo *undo)
 {
 }
 
-static GObject *
-gimp_vectors_undo_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_vectors_undo_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpVectorsUndo *vectors_undo;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  vectors_undo = GIMP_VECTORS_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
-
-  return object;
 }
 
 static void

@@ -32,23 +32,21 @@ enum
 };
 
 
-static GObject * gimp_paint_core_undo_constructor  (GType                  type,
-                                                    guint                  n_params,
-                                                    GObjectConstructParam *params);
-static void      gimp_paint_core_undo_set_property (GObject               *object,
-                                                    guint                  property_id,
-                                                    const GValue          *value,
-                                                    GParamSpec            *pspec);
-static void      gimp_paint_core_undo_get_property (GObject               *object,
-                                                    guint                  property_id,
-                                                    GValue                *value,
-                                                    GParamSpec            *pspec);
+static void   gimp_paint_core_undo_constructed  (GObject             *object);
+static void   gimp_paint_core_undo_set_property (GObject             *object,
+                                                 guint                property_id,
+                                                 const GValue        *value,
+                                                 GParamSpec          *pspec);
+static void   gimp_paint_core_undo_get_property (GObject             *object,
+                                                 guint                property_id,
+                                                 GValue              *value,
+                                                 GParamSpec          *pspec);
 
-static void      gimp_paint_core_undo_pop          (GimpUndo              *undo,
-                                                    GimpUndoMode           undo_mode,
-                                                    GimpUndoAccumulator   *accum);
-static void      gimp_paint_core_undo_free         (GimpUndo              *undo,
-                                                    GimpUndoMode           undo_mode);
+static void   gimp_paint_core_undo_pop          (GimpUndo            *undo,
+                                                 GimpUndoMode         undo_mode,
+                                                 GimpUndoAccumulator *accum);
+static void   gimp_paint_core_undo_free         (GimpUndo            *undo,
+                                                 GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpPaintCoreUndo, gimp_paint_core_undo, GIMP_TYPE_UNDO)
@@ -62,7 +60,7 @@ gimp_paint_core_undo_class_init (GimpPaintCoreUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor  = gimp_paint_core_undo_constructor;
+  object_class->constructed  = gimp_paint_core_undo_constructed;
   object_class->set_property = gimp_paint_core_undo_set_property;
   object_class->get_property = gimp_paint_core_undo_get_property;
 
@@ -81,17 +79,13 @@ gimp_paint_core_undo_init (GimpPaintCoreUndo *undo)
 {
 }
 
-static GObject *
-gimp_paint_core_undo_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_paint_core_undo_constructed (GObject *object)
 {
-  GObject           *object;
-  GimpPaintCoreUndo *paint_core_undo;
+  GimpPaintCoreUndo *paint_core_undo = GIMP_PAINT_CORE_UNDO (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  paint_core_undo = GIMP_PAINT_CORE_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_PAINT_CORE (paint_core_undo->paint_core));
 
@@ -99,8 +93,6 @@ gimp_paint_core_undo_constructor (GType                  type,
 
   g_object_add_weak_pointer (G_OBJECT (paint_core_undo->paint_core),
                              (gpointer) &paint_core_undo->paint_core);
-
-  return object;
 }
 
 static void

@@ -27,13 +27,11 @@
 #include "gimpvectorspropundo.h"
 
 
-static GObject * gimp_vectors_prop_undo_constructor (GType                  type,
-                                                     guint                  n_params,
-                                                     GObjectConstructParam *params);
+static void   gimp_vectors_prop_undo_constructed (GObject             *object);
 
-static void      gimp_vectors_prop_undo_pop         (GimpUndo              *undo,
-                                                     GimpUndoMode           undo_mode,
-                                                     GimpUndoAccumulator   *accum);
+static void   gimp_vectors_prop_undo_pop         (GimpUndo            *undo,
+                                                  GimpUndoMode         undo_mode,
+                                                  GimpUndoAccumulator *accum);
 
 
 G_DEFINE_TYPE (GimpVectorsPropUndo, gimp_vectors_prop_undo, GIMP_TYPE_ITEM_UNDO)
@@ -47,7 +45,7 @@ gimp_vectors_prop_undo_class_init (GimpVectorsPropUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_vectors_prop_undo_constructor;
+  object_class->constructed = gimp_vectors_prop_undo_constructed;
 
   undo_class->pop           = gimp_vectors_prop_undo_pop;
 }
@@ -57,19 +55,14 @@ gimp_vectors_prop_undo_init (GimpVectorsPropUndo *undo)
 {
 }
 
-static GObject *
-gimp_vectors_prop_undo_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_vectors_prop_undo_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpVectorsPropUndo *vectors_prop_undo;
-  GimpImage           *image;
-  GimpVectors         *vectors;
+  GimpImage   *image;
+  GimpVectors *vectors;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  vectors_prop_undo = GIMP_VECTORS_PROP_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
 
@@ -81,8 +74,6 @@ gimp_vectors_prop_undo_constructor (GType                  type,
     default:
       g_assert_not_reached ();
     }
-
-  return object;
 }
 
 static void

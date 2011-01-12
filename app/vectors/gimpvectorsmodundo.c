@@ -25,18 +25,16 @@
 #include "gimpvectorsmodundo.h"
 
 
-static GObject * gimp_vectors_mod_undo_constructor (GType                  type,
-                                                    guint                  n_params,
-                                                    GObjectConstructParam *params);
+static void     gimp_vectors_mod_undo_constructed (GObject             *object);
 
-static gint64    gimp_vectors_mod_undo_get_memsize (GimpObject            *object,
-                                                    gint64                *gui_size);
+static gint64   gimp_vectors_mod_undo_get_memsize (GimpObject          *object,
+                                                   gint64              *gui_size);
 
-static void      gimp_vectors_mod_undo_pop         (GimpUndo              *undo,
-                                                    GimpUndoMode           undo_mode,
-                                                    GimpUndoAccumulator   *accum);
-static void      gimp_vectors_mod_undo_free        (GimpUndo              *undo,
-                                                    GimpUndoMode           undo_mode);
+static void     gimp_vectors_mod_undo_pop         (GimpUndo            *undo,
+                                                   GimpUndoMode         undo_mode,
+                                                   GimpUndoAccumulator *accum);
+static void     gimp_vectors_mod_undo_free        (GimpUndo            *undo,
+                                                   GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpVectorsModUndo, gimp_vectors_mod_undo, GIMP_TYPE_ITEM_UNDO)
@@ -51,7 +49,7 @@ gimp_vectors_mod_undo_class_init (GimpVectorsModUndoClass *klass)
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor      = gimp_vectors_mod_undo_constructor;
+  object_class->constructed      = gimp_vectors_mod_undo_constructed;
 
   gimp_object_class->get_memsize = gimp_vectors_mod_undo_get_memsize;
 
@@ -64,18 +62,14 @@ gimp_vectors_mod_undo_init (GimpVectorsModUndo *undo)
 {
 }
 
-static GObject *
-gimp_vectors_mod_undo_constructor (GType                  type,
-                                   guint                  n_params,
-                                   GObjectConstructParam *params)
+static void
+gimp_vectors_mod_undo_constructed (GObject *object)
 {
-  GObject            *object;
-  GimpVectorsModUndo *vectors_mod_undo;
+  GimpVectorsModUndo *vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (object);
   GimpVectors        *vectors;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  vectors_mod_undo = GIMP_VECTORS_MOD_UNDO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_VECTORS (GIMP_ITEM_UNDO (object)->item));
 
@@ -84,8 +78,6 @@ gimp_vectors_mod_undo_constructor (GType                  type,
   vectors_mod_undo->vectors =
     GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
                                        G_TYPE_FROM_INSTANCE (vectors)));
-
-  return object;
 }
 
 static gint64
