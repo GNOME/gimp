@@ -51,9 +51,7 @@
 #include "gimp-intl.h"
 
 
-static GObject * gimp_paint_tool_constructor (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
+static void   gimp_paint_tool_constructed    (GObject               *object);
 static void   gimp_paint_tool_finalize       (GObject               *object);
 
 static void   gimp_paint_tool_control        (GimpTool              *tool,
@@ -110,7 +108,7 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor  = gimp_paint_tool_constructor;
+  object_class->constructed  = gimp_paint_tool_constructed;
   object_class->finalize     = gimp_paint_tool_finalize;
 
   tool_class->control        = gimp_paint_tool_control;
@@ -147,22 +145,16 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   paint_tool->core        = NULL;
 }
 
-static GObject *
-gimp_paint_tool_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_paint_tool_constructed (GObject *object)
 {
-  GObject          *object;
-  GimpTool         *tool;
+  GimpTool         *tool       = GIMP_TOOL (object);
+  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (object);
+  GimpPaintOptions *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpPaintInfo    *paint_info;
-  GimpPaintTool    *paint_tool;
-  GimpPaintOptions *options;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tool       = GIMP_TOOL (object);
-  paint_tool = GIMP_PAINT_TOOL (object);
-  options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
   g_assert (GIMP_IS_PAINT_INFO (tool->tool_info->paint_info));
@@ -180,8 +172,6 @@ gimp_paint_tool_constructor (GType                  type,
                            tool, 0);
 
   gimp_paint_tool_hard_notify (options, NULL, tool);
-
-  return object;
 }
 
 static void

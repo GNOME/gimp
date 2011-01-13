@@ -76,9 +76,7 @@
 
 static void gimp_text_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
-static GObject * gimp_text_tool_constructor     (GType              type,
-                                                 guint              n_params,
-                                                 GObjectConstructParam *params);
+static void      gimp_text_tool_constructed     (GObject           *object);
 static void      gimp_text_tool_dispose         (GObject           *object);
 static void      gimp_text_tool_finalize        (GObject           *object);
 
@@ -206,7 +204,7 @@ gimp_text_tool_class_init (GimpTextToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor    = gimp_text_tool_constructor;
+  object_class->constructed    = gimp_text_tool_constructed;
   object_class->dispose        = gimp_text_tool_dispose;
   object_class->finalize       = gimp_text_tool_finalize;
   object_class->set_property   = gimp_rectangle_tool_set_property;
@@ -275,21 +273,16 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                               "context/context-font-select-set");
 }
 
-static GObject *
-gimp_text_tool_constructor (GType                  type,
-                            guint                  n_params,
-                            GObjectConstructParam *params)
+static void
+gimp_text_tool_constructed (GObject *object)
 {
-  GObject         *object;
-  GimpTextTool    *text_tool;
-  GimpTextOptions *options;
+  GimpTextTool    *text_tool = GIMP_TEXT_TOOL (object);
+  GimpTextOptions *options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_rectangle_tool_constructor (object);
-
-  text_tool = GIMP_TEXT_TOOL (object);
-  options   = GIMP_TEXT_TOOL_GET_OPTIONS (text_tool);
 
   text_tool->proxy = g_object_new (GIMP_TYPE_TEXT, NULL);
 
@@ -302,8 +295,6 @@ gimp_text_tool_constructor (GType                  type,
   g_object_set (options,
                 "highlight", FALSE,
                 NULL);
-
-  return object;
 }
 
 static void

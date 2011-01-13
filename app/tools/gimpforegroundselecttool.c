@@ -61,9 +61,7 @@ typedef struct
 } FgSelectStroke;
 
 
-static GObject * gimp_foreground_select_tool_constructor (GType             type,
-                                                          guint             n_params,
-                                                          GObjectConstructParam *params);
+static void   gimp_foreground_select_tool_constructed    (GObject          *object);
 static void   gimp_foreground_select_tool_finalize       (GObject          *object);
 
 static void   gimp_foreground_select_tool_control        (GimpTool         *tool,
@@ -160,7 +158,7 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
   free_select_tool_class = GIMP_FREE_SELECT_TOOL_CLASS (klass);
 
-  object_class->constructor      = gimp_foreground_select_tool_constructor;
+  object_class->constructed      = gimp_foreground_select_tool_constructed;
   object_class->finalize         = gimp_foreground_select_tool_finalize;
 
   tool_class->control            = gimp_foreground_select_tool_control;
@@ -199,23 +197,17 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
   fg_select->mask    = NULL;
 }
 
-static GObject *
-gimp_foreground_select_tool_constructor (GType                  type,
-                                         guint                  n_params,
-                                         GObjectConstructParam *params)
+static void
+gimp_foreground_select_tool_constructed (GObject *object)
 {
-  GObject         *object;
-  GimpToolOptions *options;
+  GimpToolOptions *options = GIMP_TOOL_GET_OPTIONS (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  options = GIMP_TOOL_GET_OPTIONS (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_signal_connect_object (options, "notify",
                            G_CALLBACK (gimp_foreground_select_options_notify),
                            object, 0);
-
-  return object;
 }
 
 static void

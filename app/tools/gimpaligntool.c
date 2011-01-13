@@ -55,14 +55,12 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_align_tool_constructor (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
+static void     gimp_align_tool_constructed  (GObject               *object);
+static void     gimp_align_tool_finalize     (GObject               *object);
+
 static gboolean gimp_align_tool_initialize   (GimpTool              *tool,
                                               GimpDisplay           *display,
                                               GError               **error);
-static void   gimp_align_tool_finalize       (GObject               *object);
-
 static void   gimp_align_tool_control        (GimpTool              *tool,
                                               GimpToolAction         action,
                                               GimpDisplay           *display);
@@ -148,7 +146,7 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   object_class->finalize     = gimp_align_tool_finalize;
-  object_class->constructor  = gimp_align_tool_constructor;
+  object_class->constructed  = gimp_align_tool_constructed;
 
   tool_class->initialize     = gimp_align_tool_initialize;
   tool_class->control        = gimp_align_tool_control;
@@ -182,22 +180,16 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_MOVE);
 }
 
-static GObject *
-gimp_align_tool_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_align_tool_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpTool      *tool;
-  GimpAlignTool *align_tool;
+  GimpTool      *tool       = GIMP_TOOL (object);
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (object);
+  GObject       *options    = G_OBJECT (gimp_tool_get_options (tool));
   GtkContainer  *container;
-  GObject       *options;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tool       = GIMP_TOOL (object);
-  align_tool = GIMP_ALIGN_TOOL (object);
-  options    = G_OBJECT (gimp_tool_get_options (tool));
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   /* This line of code is evil because it relies on that the 'options'
    * object is fully constructed before we get here, which is not
@@ -211,8 +203,6 @@ gimp_align_tool_constructor (GType                  type,
       gtk_container_add (container, align_tool->controls);
       gtk_widget_show (align_tool->controls);
     }
-
-  return object;
 }
 
 static void

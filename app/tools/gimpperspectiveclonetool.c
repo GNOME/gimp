@@ -46,13 +46,11 @@
 #include "gimp-intl.h"
 
 
-static GObject *     gimp_perspective_clone_tool_constructor   (GType                type,
-                                                                guint                n_params,
-                                                                GObjectConstructParam *params);
+static void          gimp_perspective_clone_tool_constructed   (GObject          *object);
 
-static gboolean      gimp_perspective_clone_tool_initialize    (GimpTool    *tool,
-                                                                GimpDisplay *display,
-                                                                GError     **error);
+static gboolean      gimp_perspective_clone_tool_initialize    (GimpTool         *tool,
+                                                                GimpDisplay      *display,
+                                                                GError          **error);
 
 static gboolean      gimp_perspective_clone_tool_has_display   (GimpTool         *tool,
                                                                 GimpDisplay      *display);
@@ -137,7 +135,7 @@ gimp_perspective_clone_tool_class_init (GimpPerspectiveCloneToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor  = gimp_perspective_clone_tool_constructor;
+  object_class->constructed  = gimp_perspective_clone_tool_constructed;
 
   tool_class->initialize     = gimp_perspective_clone_tool_initialize;
   tool_class->has_display    = gimp_perspective_clone_tool_has_display;
@@ -180,21 +178,17 @@ gimp_perspective_clone_tool_init (GimpPerspectiveCloneTool *clone_tool)
 #endif
 }
 
-static GObject *
-gimp_perspective_clone_tool_constructor (GType                  type,
-                                         guint                  n_params,
-                                         GObjectConstructParam *params)
+static void
+gimp_perspective_clone_tool_constructed (GObject *object)
 {
-  GObject                     *object;
-  GimpTool                    *tool;
-  GimpPerspectiveCloneTool    *clone_tool;
+  GimpTool                    *tool       = GIMP_TOOL (object);
+  GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (object);
   GimpPerspectiveCloneOptions *options;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  tool       = GIMP_TOOL (object);
-  clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (object);
-  options    = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
   g_signal_connect_object (options,
                            "notify::clone-mode",
@@ -202,8 +196,6 @@ gimp_perspective_clone_tool_constructor (GType                  type,
                            clone_tool, 0);
 
   gimp_perspective_clone_tool_mode_notify (options, NULL, clone_tool);
-
-  return object;
 }
 
 static gboolean

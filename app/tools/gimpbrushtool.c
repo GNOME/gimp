@@ -43,42 +43,40 @@
 #include "gimptoolcontrol.h"
 
 
-static GObject * gimp_brush_tool_constructor (GType                type,
-                                              guint                n_params,
-                                              GObjectConstructParam *params);
+static void   gimp_brush_tool_constructed     (GObject           *object);
 
-static void   gimp_brush_tool_motion         (GimpTool            *tool,
-                                              const GimpCoords    *coords,
-                                              guint32              time,
-                                              GdkModifierType      state,
-                                              GimpDisplay         *display);
-static void   gimp_brush_tool_oper_update    (GimpTool            *tool,
-                                              const GimpCoords    *coords,
-                                              GdkModifierType      state,
-                                              gboolean             proximity,
-                                              GimpDisplay         *display);
-static void   gimp_brush_tool_cursor_update  (GimpTool            *tool,
-                                              const GimpCoords    *coords,
-                                              GdkModifierType      state,
-                                              GimpDisplay         *display);
-static void   gimp_brush_tool_options_notify (GimpTool            *tool,
-                                              GimpToolOptions     *options,
-                                              const GParamSpec    *pspec);
+static void   gimp_brush_tool_motion          (GimpTool          *tool,
+                                               const GimpCoords  *coords,
+                                               guint32            time,
+                                               GdkModifierType    state,
+                                               GimpDisplay       *display);
+static void   gimp_brush_tool_oper_update     (GimpTool          *tool,
+                                               const GimpCoords  *coords,
+                                               GdkModifierType    state,
+                                               gboolean           proximity,
+                                               GimpDisplay       *display);
+static void   gimp_brush_tool_cursor_update   (GimpTool          *tool,
+                                               const GimpCoords  *coords,
+                                               GdkModifierType    state,
+                                               GimpDisplay       *display);
+static void   gimp_brush_tool_options_notify  (GimpTool          *tool,
+                                               GimpToolOptions   *options,
+                                               const GParamSpec  *pspec);
 
-static void   gimp_brush_tool_draw           (GimpDrawTool        *draw_tool);
+static void   gimp_brush_tool_draw            (GimpDrawTool      *draw_tool);
 
-static void   gimp_brush_tool_brush_changed     (GimpContext         *context,
-                                                 GimpBrush           *brush,
-                                                 GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_set_brush         (GimpBrushCore       *brush_core,
-                                                 GimpBrush           *brush,
-                                                 GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_set_brush_after   (GimpBrushCore       *brush_core,
-                                                 GimpBrush           *brush,
-                                                 GimpBrushTool       *brush_tool);
-static void   gimp_brush_tool_notify_brush      (GimpDisplayConfig   *config,
-                                                 GParamSpec          *pspec,
-                                                 GimpBrushTool       *brush_tool);
+static void   gimp_brush_tool_brush_changed   (GimpContext       *context,
+                                               GimpBrush         *brush,
+                                               GimpBrushTool     *brush_tool);
+static void   gimp_brush_tool_set_brush       (GimpBrushCore     *brush_core,
+                                               GimpBrush         *brush,
+                                               GimpBrushTool     *brush_tool);
+static void   gimp_brush_tool_set_brush_after (GimpBrushCore     *brush_core,
+                                               GimpBrush         *brush,
+                                               GimpBrushTool     *brush_tool);
+static void   gimp_brush_tool_notify_brush    (GimpDisplayConfig *config,
+                                               GParamSpec        *pspec,
+                                               GimpBrushTool     *brush_tool);
 
 
 G_DEFINE_TYPE (GimpBrushTool, gimp_brush_tool, GIMP_TYPE_PAINT_TOOL)
@@ -93,14 +91,14 @@ gimp_brush_tool_class_init (GimpBrushToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor = gimp_brush_tool_constructor;
+  object_class->constructed  = gimp_brush_tool_constructed;
 
   tool_class->motion         = gimp_brush_tool_motion;
   tool_class->oper_update    = gimp_brush_tool_oper_update;
   tool_class->cursor_update  = gimp_brush_tool_cursor_update;
   tool_class->options_notify = gimp_brush_tool_options_notify;
 
-  draw_tool_class->draw     = gimp_brush_tool_draw;
+  draw_tool_class->draw      = gimp_brush_tool_draw;
 }
 
 static void
@@ -123,22 +121,16 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
   brush_tool->brush_y     = 0.0;
 }
 
-static GObject *
-gimp_brush_tool_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_brush_tool_constructed (GObject *object)
 {
-  GObject           *object;
-  GimpTool          *tool;
-  GimpPaintTool     *paint_tool;
-  GimpBrushTool     *brush_tool;
+  GimpTool          *tool       = GIMP_TOOL (object);
+  GimpPaintTool     *paint_tool = GIMP_PAINT_TOOL (object);
+  GimpBrushTool     *brush_tool = GIMP_BRUSH_TOOL (object);
   GimpDisplayConfig *display_config;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tool       = GIMP_TOOL (object);
-  paint_tool = GIMP_PAINT_TOOL (object);
-  brush_tool = GIMP_BRUSH_TOOL (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_BRUSH_CORE (paint_tool->core));
 
@@ -164,8 +156,6 @@ gimp_brush_tool_constructor (GType                  type,
   g_signal_connect_after (paint_tool->core, "set-brush",
                           G_CALLBACK (gimp_brush_tool_set_brush_after),
                           brush_tool);
-
-  return object;
 }
 
 static void

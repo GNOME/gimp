@@ -32,23 +32,21 @@ enum
 };
 
 
-static GObject * gimp_foreground_select_tool_undo_constructor  (GType                  type,
-                                                                guint                  n_params,
-                                                                GObjectConstructParam *params);
-static void      gimp_foreground_select_tool_undo_set_property (GObject               *object,
-                                                                guint                  property_id,
-                                                                const GValue          *value,
-                                                                GParamSpec            *pspec);
-static void      gimp_foreground_select_tool_undo_get_property (GObject               *object,
-                                                                guint                  property_id,
-                                                                GValue                *value,
-                                                                GParamSpec            *pspec);
+static void   gimp_foreground_select_tool_undo_constructed  (GObject             *object);
+static void   gimp_foreground_select_tool_undo_set_property (GObject             *object,
+                                                             guint                property_id,
+                                                             const GValue        *value,
+                                                             GParamSpec          *pspec);
+static void   gimp_foreground_select_tool_undo_get_property (GObject             *object,
+                                                             guint                property_id,
+                                                             GValue              *value,
+                                                             GParamSpec          *pspec);
 
-static void      gimp_foreground_select_tool_undo_pop          (GimpUndo              *undo,
-                                                                GimpUndoMode           undo_mode,
-                                                                GimpUndoAccumulator   *accum);
-static void      gimp_foreground_select_tool_undo_free         (GimpUndo              *undo,
-                                                                GimpUndoMode           undo_mode);
+static void   gimp_foreground_select_tool_undo_pop          (GimpUndo            *undo,
+                                                             GimpUndoMode         undo_mode,
+                                                             GimpUndoAccumulator *accum);
+static void   gimp_foreground_select_tool_undo_free         (GimpUndo            *undo,
+                                                             GimpUndoMode         undo_mode);
 
 
 G_DEFINE_TYPE (GimpForegroundSelectToolUndo, gimp_foreground_select_tool_undo,
@@ -63,7 +61,7 @@ gimp_foreground_select_tool_undo_class_init (GimpForegroundSelectToolUndoClass *
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor  = gimp_foreground_select_tool_undo_constructor;
+  object_class->constructed  = gimp_foreground_select_tool_undo_constructed;
   object_class->set_property = gimp_foreground_select_tool_undo_set_property;
   object_class->get_property = gimp_foreground_select_tool_undo_get_property;
 
@@ -83,16 +81,14 @@ gimp_foreground_select_tool_undo_init (GimpForegroundSelectToolUndo *undo)
 {
 }
 
-static GObject *
-gimp_foreground_select_tool_undo_constructor (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params)
+static void
+gimp_foreground_select_tool_undo_constructed (GObject *object)
 {
-  GObject                      *object;
   GimpForegroundSelectToolUndo *foreground_select_tool_undo;
   GimpForegroundSelectTool     *foreground_select_tool;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   foreground_select_tool_undo = GIMP_FOREGROUND_SELECT_TOOL_UNDO (object);
 
@@ -102,8 +98,6 @@ gimp_foreground_select_tool_undo_constructor (GType                  type,
 
   g_object_add_weak_pointer (G_OBJECT (foreground_select_tool_undo->foreground_select_tool),
                              (gpointer) &foreground_select_tool_undo->foreground_select_tool);
-
-  return object;
 }
 
 static void

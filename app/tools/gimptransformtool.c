@@ -70,9 +70,7 @@
 #define MIN_HANDLE_SIZE 6
 
 
-static GObject * gimp_transform_tool_constructor            (GType                  type,
-                                                             guint                  n_params,
-                                                             GObjectConstructParam *params);
+static void      gimp_transform_tool_constructed            (GObject               *object);
 static void      gimp_transform_tool_finalize               (GObject               *object);
 
 static gboolean  gimp_transform_tool_initialize             (GimpTool              *tool,
@@ -161,7 +159,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor       = gimp_transform_tool_constructor;
+  object_class->constructed       = gimp_transform_tool_constructed;
   object_class->finalize          = gimp_transform_tool_finalize;
 
   tool_class->initialize          = gimp_transform_tool_initialize;
@@ -238,29 +236,21 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
   tr_tool->dialog           = NULL;
 }
 
-static GObject *
-gimp_transform_tool_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_transform_tool_constructed (GObject *object)
 {
-  GObject              *object;
-  GimpTool             *tool;
-  GimpTransformTool    *tr_tool;
-  GimpTransformOptions *options;
+  GimpTool             *tool    = GIMP_TOOL (object);
+  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (object);
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tool    = GIMP_TOOL (object);
-  tr_tool = GIMP_TRANSFORM_TOOL (object);
-  options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (tr_tool->use_grid)
     {
       tr_tool->type      = options->type;
       tr_tool->direction = options->direction;
     }
-
-  return object;
 }
 
 static void

@@ -81,9 +81,8 @@ typedef struct GimpRectangleSelectToolPrivate
 
 static void     gimp_rectangle_select_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface);
 
-static GObject *gimp_rectangle_select_tool_constructor    (GType                  type,
-                                                           guint                  n_params,
-                                                           GObjectConstructParam *params);
+static void     gimp_rectangle_select_tool_constructed    (GObject               *object);
+
 static void     gimp_rectangle_select_tool_control        (GimpTool              *tool,
                                                            GimpToolAction         action,
                                                            GimpDisplay           *display);
@@ -183,7 +182,7 @@ gimp_rectangle_select_tool_class_init (GimpRectangleSelectToolClass *klass)
 
   g_type_class_add_private (klass, sizeof (GimpRectangleSelectToolPrivate));
 
-  object_class->constructor       = gimp_rectangle_select_tool_constructor;
+  object_class->constructed       = gimp_rectangle_select_tool_constructed;
   object_class->set_property      = gimp_rectangle_tool_set_property;
   object_class->get_property      = gimp_rectangle_tool_get_property;
 
@@ -241,17 +240,15 @@ gimp_rectangle_select_tool_init (GimpRectangleSelectTool *rect_sel_tool)
   priv->press_y = 0.0;
 }
 
-static GObject *
-gimp_rectangle_select_tool_constructor (GType                  type,
-                                        guint                  n_params,
-                                        GObjectConstructParam *params)
+static void
+gimp_rectangle_select_tool_constructed (GObject *object)
 {
-  GObject                         *object;
-  GimpRectangleSelectTool         *rect_sel_tool;
-  GimpRectangleSelectOptions      *options;
-  GimpRectangleSelectToolPrivate  *priv;
+  GimpRectangleSelectTool        *rect_sel_tool;
+  GimpRectangleSelectOptions     *options;
+  GimpRectangleSelectToolPrivate *priv;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_rectangle_tool_constructor (object);
 
@@ -270,8 +267,6 @@ gimp_rectangle_select_tool_constructor (GType                  type,
                            object, 0);
 
   gimp_rectangle_select_tool_update_option_defaults (rect_sel_tool, FALSE);
-
-  return object;
 }
 
 static void

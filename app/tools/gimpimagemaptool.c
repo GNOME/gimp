@@ -71,9 +71,7 @@ static void      gimp_image_map_tool_base_init      (GimpImageMapToolClass *klas
 
 static void      gimp_image_map_tool_init           (GimpImageMapTool *im_tool);
 
-static GObject * gimp_image_map_tool_constructor    (GType             type,
-                                                     guint             n_params,
-                                                     GObjectConstructParam *params);
+static void      gimp_image_map_tool_constructed    (GObject          *object);
 static void      gimp_image_map_tool_finalize       (GObject          *object);
 
 static gboolean  gimp_image_map_tool_initialize     (GimpTool         *tool,
@@ -155,7 +153,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor  = gimp_image_map_tool_constructor;
+  object_class->constructed  = gimp_image_map_tool_constructed;
   object_class->finalize     = gimp_image_map_tool_finalize;
 
   tool_class->initialize     = gimp_image_map_tool_initialize;
@@ -211,25 +209,20 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
   image_map_tool->label_group    = NULL;
 }
 
-static GObject *
-gimp_image_map_tool_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_image_map_tool_constructed (GObject *object)
 {
-  GObject               *object;
-  GimpImageMapTool      *image_map_tool;
+  GimpImageMapTool      *image_map_tool = GIMP_IMAGE_MAP_TOOL (object);
   GimpImageMapToolClass *klass;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  image_map_tool = GIMP_IMAGE_MAP_TOOL (object);
-  klass          = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
+  klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 
   if (klass->get_operation)
     image_map_tool->operation = klass->get_operation (image_map_tool,
                                                       &image_map_tool->config);
-
-  return object;
 }
 
 static void
