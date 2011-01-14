@@ -31,6 +31,8 @@
 
 static void   gimp_xmp_model_text_iface_init    (GimpXmpModelWidgetInterface *iface);
 
+static void   gimp_xmp_model_text_constructed (GObject *object);
+
 static void   gimp_xmp_model_text_changed       (GtkTextBuffer               *text_buffer,
                                                  gpointer                    *user_data);
 
@@ -46,30 +48,22 @@ G_DEFINE_TYPE_WITH_CODE (GimpXmpModelText, gimp_xmp_model_text,
 #define parent_class gimp_xmp_model_text_parent_class
 
 
-static GObject *
-gimp_xmp_model_text_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
-{
-  GObject                  *obj;
-
-  obj = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  gimp_xmp_model_widget_constructor (obj);
-
-  return obj;
-}
-
 static void
 gimp_xmp_model_text_class_init (GimpXmpModelTextClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_xmp_model_text_constructor;
+  object_class->constructed  = gimp_xmp_model_text_constructed;
   object_class->set_property = gimp_xmp_model_widget_set_property;
   object_class->get_property = gimp_xmp_model_widget_get_property;
 
   gimp_xmp_model_widget_install_properties (object_class);
+}
+
+static void
+gimp_xmp_model_text_iface_init (GimpXmpModelWidgetInterface *iface)
+{
+  iface->widget_set_text = gimp_xmp_model_text_set_text;
 }
 
 static void
@@ -84,9 +78,12 @@ gimp_xmp_model_text_init (GimpXmpModelText *text)
 }
 
 static void
-gimp_xmp_model_text_iface_init (GimpXmpModelWidgetInterface *iface)
+gimp_xmp_model_text_constructed (GObject *object)
 {
-  iface->widget_set_text = gimp_xmp_model_text_set_text;
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_xmp_model_widget_constructor (object);
 }
 
 static void
@@ -94,14 +91,14 @@ gimp_xmp_model_text_changed (GtkTextBuffer *text_buffer,
                              gpointer      *user_data)
 {
   GimpXmpModelText *text = GIMP_XMP_MODEL_TEXT (user_data);
-  GtkTextIter    start;
-  GtkTextIter    end;
-  const gchar   *value;
+  GtkTextIter       start;
+  GtkTextIter       end;
+  const gchar      *value;
 
   gtk_text_buffer_get_bounds (text_buffer, &start, &end);
   value = gtk_text_buffer_get_text (text_buffer, &start, &end, FALSE);
-  gimp_xmp_model_widget_changed (GIMP_XMP_MODEL_WIDGET (text),
-                                 value);
+
+  gimp_xmp_model_widget_changed (GIMP_XMP_MODEL_WIDGET (text), value);
 }
 
 void
