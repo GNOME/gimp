@@ -42,12 +42,7 @@ enum
 };
 
 
-static void   gimp_profile_chooser_dialog_class_init     (GimpProfileChooserDialogClass *klass);
-static void   gimp_profile_chooser_dialog_init           (GimpProfileChooserDialog *dialog);
-static GObject * gimp_profile_chooser_dialog_constructor (GType                     type,
-                                                          guint                     n_params,
-                                                          GObjectConstructParam    *params);
-
+static void   gimp_profile_chooser_dialog_constructed    (GObject                  *object);
 static void   gimp_profile_chooser_dialog_dispose        (GObject                  *object);
 static void   gimp_profile_chooser_dialog_finalize       (GObject                  *object);
 static void   gimp_profile_chooser_dialog_set_property   (GObject                  *object,
@@ -77,7 +72,7 @@ gimp_profile_chooser_dialog_class_init (GimpProfileChooserDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_profile_chooser_dialog_constructor;
+  object_class->constructed  = gimp_profile_chooser_dialog_constructed;
   object_class->dispose      = gimp_profile_chooser_dialog_dispose;
   object_class->finalize     = gimp_profile_chooser_dialog_finalize;
   object_class->get_property = gimp_profile_chooser_dialog_get_property;
@@ -98,18 +93,14 @@ gimp_profile_chooser_dialog_init (GimpProfileChooserDialog *dialog)
   dialog->buffer  = gtk_text_buffer_new (NULL);
 }
 
-static GObject *
-gimp_profile_chooser_dialog_constructor (GType                  type,
-                                         guint                  n_params,
-                                         GObjectConstructParam *params)
+static void
+gimp_profile_chooser_dialog_constructed (GObject *object)
 {
-  GObject                  *object;
-  GimpProfileChooserDialog *dialog;
+  GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
   GtkFileFilter            *filter;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_window_set_role (GTK_WINDOW (dialog), "gimp-profile-chooser-dialog");
 
@@ -146,8 +137,6 @@ gimp_profile_chooser_dialog_constructor (GType                  type,
   g_signal_connect (dialog, "update-preview",
                     G_CALLBACK (gimp_profile_chooser_dialog_update_preview),
                     NULL);
-
-  return object;
 }
 
 static void

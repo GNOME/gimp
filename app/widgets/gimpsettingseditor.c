@@ -54,37 +54,35 @@ enum
 };
 
 
-static GObject * gimp_settings_editor_constructor   (GType                type,
-                                                     guint                n_params,
-                                                     GObjectConstructParam *params);
-static void      gimp_settings_editor_finalize      (GObject             *object);
-static void      gimp_settings_editor_set_property  (GObject             *object,
-                                                     guint                property_id,
-                                                     const GValue        *value,
-                                                     GParamSpec          *pspec);
-static void      gimp_settings_editor_get_property  (GObject             *object,
-                                                     guint                property_id,
-                                                     GValue              *value,
-                                                     GParamSpec          *pspec);
+static void   gimp_settings_editor_constructed    (GObject             *object);
+static void   gimp_settings_editor_finalize       (GObject             *object);
+static void   gimp_settings_editor_set_property   (GObject             *object,
+                                                   guint                property_id,
+                                                   const GValue        *value,
+                                                   GParamSpec          *pspec);
+static void   gimp_settings_editor_get_property   (GObject             *object,
+                                                   guint                property_id,
+                                                   GValue              *value,
+                                                   GParamSpec          *pspec);
 
 static gboolean
-            gimp_settings_editor_row_separator_func (GtkTreeModel        *model,
-                                                     GtkTreeIter         *iter,
-                                                     gpointer             data);
-static void gimp_settings_editor_select_item        (GimpContainerView   *view,
-                                                     GimpViewable        *viewable,
-                                                     gpointer             insert_data,
-                                                     GimpSettingsEditor  *editor);
-static void gimp_settings_editor_import_clicked     (GtkWidget           *widget,
-                                                     GimpSettingsEditor  *editor);
-static void gimp_settings_editor_export_clicked     (GtkWidget           *widget,
-                                                     GimpSettingsEditor  *editor);
-static void gimp_settings_editor_delete_clicked     (GtkWidget           *widget,
-                                                     GimpSettingsEditor  *editor);
-static void gimp_settings_editor_name_edited        (GtkCellRendererText *cell,
-                                                     const gchar         *path_str,
-                                                     const gchar         *new_name,
-                                                     GimpSettingsEditor  *editor);
+          gimp_settings_editor_row_separator_func (GtkTreeModel        *model,
+                                                   GtkTreeIter         *iter,
+                                                   gpointer             data);
+static void   gimp_settings_editor_select_item    (GimpContainerView   *view,
+                                                   GimpViewable        *viewable,
+                                                   gpointer             insert_data,
+                                                   GimpSettingsEditor  *editor);
+static void   gimp_settings_editor_import_clicked (GtkWidget           *widget,
+                                                   GimpSettingsEditor  *editor);
+static void   gimp_settings_editor_export_clicked (GtkWidget           *widget,
+                                                   GimpSettingsEditor  *editor);
+static void   gimp_settings_editor_delete_clicked (GtkWidget           *widget,
+                                                   GimpSettingsEditor  *editor);
+static void   gimp_settings_editor_name_edited    (GtkCellRendererText *cell,
+                                                   const gchar         *path_str,
+                                                   const gchar         *new_name,
+                                                   GimpSettingsEditor  *editor);
 
 
 G_DEFINE_TYPE (GimpSettingsEditor, gimp_settings_editor, GTK_TYPE_BOX)
@@ -97,7 +95,7 @@ gimp_settings_editor_class_init (GimpSettingsEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_settings_editor_constructor;
+  object_class->constructed  = gimp_settings_editor_constructed;
   object_class->finalize     = gimp_settings_editor_finalize;
   object_class->set_property = gimp_settings_editor_set_property;
   object_class->get_property = gimp_settings_editor_get_property;
@@ -133,18 +131,14 @@ gimp_settings_editor_init (GimpSettingsEditor *editor)
   gtk_box_set_spacing (GTK_BOX (editor), 6);
 }
 
-static GObject *
-gimp_settings_editor_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_settings_editor_constructed (GObject *object)
 {
-  GObject               *object;
-  GimpSettingsEditor    *editor;
+  GimpSettingsEditor    *editor = GIMP_SETTINGS_EDITOR (object);
   GimpContainerTreeView *tree_view;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_SETTINGS_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (editor->gimp));
   g_assert (GIMP_IS_CONFIG (editor->config));
@@ -199,8 +193,6 @@ gimp_settings_editor_constructor (GType                  type,
                             editor);
 
   gtk_widget_set_sensitive (editor->delete_button, FALSE);
-
-  return object;
 }
 
 static void

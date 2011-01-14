@@ -38,20 +38,18 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_tool_preset_editor_constructor (GType              type,
-                                                      guint              n_params,
-                                                      GObjectConstructParam *params);
-static void   gimp_tool_preset_editor_finalize       (GObject            *object);
+static void   gimp_tool_preset_editor_constructed  (GObject              *object);
+static void   gimp_tool_preset_editor_finalize     (GObject              *object);
 
-static void   gimp_tool_preset_editor_set_data       (GimpDataEditor     *editor,
-                                                      GimpData           *data);
+static void   gimp_tool_preset_editor_set_data     (GimpDataEditor       *editor,
+                                                    GimpData             *data);
 
-static void   gimp_tool_preset_editor_notify_model   (GimpToolPreset       *options,
-                                                      const GParamSpec     *pspec,
-                                                      GimpToolPresetEditor *editor);
-static void   gimp_tool_preset_editor_notify_data    (GimpToolPreset       *options,
-                                                      const GParamSpec     *pspec,
-                                                      GimpToolPresetEditor *editor);
+static void   gimp_tool_preset_editor_notify_model (GimpToolPreset       *options,
+                                                    const GParamSpec     *pspec,
+                                                    GimpToolPresetEditor *editor);
+static void   gimp_tool_preset_editor_notify_data  (GimpToolPreset       *options,
+                                                    const GParamSpec     *pspec,
+                                                    GimpToolPresetEditor *editor);
 
 
 
@@ -68,7 +66,7 @@ gimp_tool_preset_editor_class_init (GimpToolPresetEditorClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructor = gimp_tool_preset_editor_constructor;
+  object_class->constructed = gimp_tool_preset_editor_constructed;
   object_class->finalize    = gimp_tool_preset_editor_finalize;
 
   editor_class->set_data    = gimp_tool_preset_editor_set_data;
@@ -81,21 +79,16 @@ gimp_tool_preset_editor_init (GimpToolPresetEditor *editor)
 
 }
 
-static GObject *
-gimp_tool_preset_editor_constructor (GType                  type,
-                                     guint                  n_params,
-                                     GObjectConstructParam *params)
+static void
+gimp_tool_preset_editor_constructed (GObject *object)
 {
-  GObject              *object;
-  GimpToolPresetEditor *editor;
-  GimpDataEditor       *data_editor;
+  GimpToolPresetEditor *editor      = GIMP_TOOL_PRESET_EDITOR (object);
+  GimpDataEditor       *data_editor = GIMP_DATA_EDITOR (editor);
   GimpToolPreset       *preset;
   GtkWidget            *button;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor      = GIMP_TOOL_PRESET_EDITOR (object);
-  data_editor = GIMP_DATA_EDITOR (editor);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   preset = editor->tool_preset_model = g_object_new (GIMP_TYPE_TOOL_PRESET,
                                                      "gimp", data_editor->context->gimp,
@@ -146,8 +139,6 @@ gimp_tool_preset_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  return object;
 }
 
 static void

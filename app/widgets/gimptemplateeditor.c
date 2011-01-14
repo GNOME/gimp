@@ -49,9 +49,7 @@ enum
 };
 
 
-static GObject *gimp_template_editor_constructor (GType               type,
-                                                  guint               n_params,
-                                                  GObjectConstructParam *params);
+static void    gimp_template_editor_constructed  (GObject            *object);
 static void    gimp_template_editor_finalize     (GObject            *object);
 static void    gimp_template_editor_set_property (GObject            *object,
                                                   guint               property_id,
@@ -82,7 +80,7 @@ gimp_template_editor_class_init (GimpTemplateEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_template_editor_constructor;
+  object_class->constructed  = gimp_template_editor_constructed;
   object_class->finalize     = gimp_template_editor_finalize;
   object_class->set_property = gimp_template_editor_set_property;
   object_class->get_property = gimp_template_editor_get_property;
@@ -105,13 +103,10 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
   editor->template = NULL;
 }
 
-static GObject *
-gimp_template_editor_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_template_editor_constructed (GObject *object)
 {
-  GimpTemplateEditor *editor;
-  GObject            *object;
+  GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (object);
   GtkWidget          *aspect_box;
   GtkWidget          *frame;
   GtkWidget          *hbox;
@@ -131,9 +126,8 @@ gimp_template_editor_constructor (GType                  type,
   GList              *focus_chain = NULL;
   gchar              *text;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_TEMPLATE_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (editor->template != NULL);
 
@@ -398,8 +392,6 @@ gimp_template_editor_constructor (GType                  type,
 
   /*  call the notify callback once to get the labels set initially  */
   gimp_template_editor_template_notify (editor->template, NULL, editor);
-
-  return object;
 }
 
 static void

@@ -45,9 +45,7 @@ struct _KeyboardEvent
 };
 
 
-static GObject     * gimp_controller_keyboard_constructor     (GType           type,
-                                                               guint           n_params,
-                                                               GObjectConstructParam *params);
+static void          gimp_controller_keyboard_constructed     (GObject        *object);
 
 static gint          gimp_controller_keyboard_get_n_events    (GimpController *controller);
 static const gchar * gimp_controller_keyboard_get_event_name  (GimpController *controller,
@@ -172,7 +170,7 @@ gimp_controller_keyboard_class_init (GimpControllerKeyboardClass *klass)
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
 
-  object_class->constructor         = gimp_controller_keyboard_constructor;
+  object_class->constructed         = gimp_controller_keyboard_constructed;
 
   controller_class->name            = _("Keyboard");
   controller_class->help_id         = GIMP_HELP_CONTROLLER_KEYBOARD;
@@ -208,21 +206,16 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
     }
 }
 
-static GObject *
-gimp_controller_keyboard_constructor (GType                  type,
-                                      guint                  n_params,
-                                      GObjectConstructParam *params)
+static void
+gimp_controller_keyboard_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_object_set (object,
                 "name",  _("Keyboard Events"),
                 "state", _("Ready"),
                 NULL);
-
-  return object;
 }
 
 static gint

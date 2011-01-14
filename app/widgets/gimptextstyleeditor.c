@@ -55,9 +55,7 @@ enum
 };
 
 
-static GObject * gimp_text_style_editor_constructor      (GType                  type,
-                                                          guint                  n_params,
-                                                          GObjectConstructParam *params);
+static void      gimp_text_style_editor_constructed      (GObject               *object);
 static void      gimp_text_style_editor_dispose          (GObject               *object);
 static void      gimp_text_style_editor_finalize         (GObject               *object);
 static void      gimp_text_style_editor_set_property     (GObject               *object,
@@ -123,7 +121,7 @@ gimp_text_style_editor_class_init (GimpTextStyleEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_text_style_editor_constructor;
+  object_class->constructed  = gimp_text_style_editor_constructed;
   object_class->dispose      = gimp_text_style_editor_dispose;
   object_class->finalize     = gimp_text_style_editor_finalize;
   object_class->set_property = gimp_text_style_editor_set_property;
@@ -275,17 +273,13 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     editor);
 }
 
-static GObject *
-gimp_text_style_editor_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_text_style_editor_constructed (GObject *object)
 {
-  GObject             *object;
-  GimpTextStyleEditor *editor;
+  GimpTextStyleEditor *editor = GIMP_TEXT_STYLE_EDITOR (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_TEXT_STYLE_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (editor->gimp));
   g_assert (GIMP_IS_FONT_LIST (editor->fonts));
@@ -331,8 +325,6 @@ gimp_text_style_editor_constructor (GType                  type,
                          G_CALLBACK (gimp_text_style_editor_update),
                          editor, 0,
                          G_CONNECT_AFTER | G_CONNECT_SWAPPED);
-
-  return object;
 }
 
 static void

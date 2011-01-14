@@ -105,9 +105,7 @@
 
 static void  gimp_gradient_editor_docked_iface_init (GimpDockedInterface *face);
 
-static GObject * gimp_gradient_editor_constructor   (GType               type,
-                                                     guint               n_params,
-                                                     GObjectConstructParam *params);
+static void   gimp_gradient_editor_constructed      (GObject            *object);
 static void   gimp_gradient_editor_dispose          (GObject            *object);
 
 static void   gimp_gradient_editor_unmap            (GtkWidget          *widget);
@@ -262,7 +260,7 @@ gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
   GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructor = gimp_gradient_editor_constructor;
+  object_class->constructed = gimp_gradient_editor_constructed;
   object_class->dispose     = gimp_gradient_editor_dispose;
 
   widget_class->unmap       = gimp_gradient_editor_unmap;
@@ -433,17 +431,13 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gimp_rgba_set (&editor->saved_colors[9], 1.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
 }
 
-static GObject *
-gimp_gradient_editor_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_gradient_editor_constructed (GObject *object)
 {
-  GObject            *object;
-  GimpGradientEditor *editor;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_GRADIENT_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "gradient-editor",
                                  "gradient-editor-zoom-out", NULL);
@@ -453,8 +447,6 @@ gimp_gradient_editor_constructor (GType                  type,
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "gradient-editor",
                                  "gradient-editor-zoom-all", NULL);
-
-  return object;
 }
 
 static void

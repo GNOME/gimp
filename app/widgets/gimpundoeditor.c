@@ -51,32 +51,30 @@ enum
 
 static void   gimp_undo_editor_docked_iface_init (GimpDockedInterface *iface);
 
-static GObject * gimp_undo_editor_constructor    (GType              type,
-                                                  guint              n_params,
-                                                  GObjectConstructParam *params);
-static void      gimp_undo_editor_set_property   (GObject           *object,
-                                                  guint              property_id,
-                                                  const GValue      *value,
-                                                  GParamSpec        *pspec);
+static void   gimp_undo_editor_constructed    (GObject           *object);
+static void   gimp_undo_editor_set_property   (GObject           *object,
+                                               guint              property_id,
+                                               const GValue      *value,
+                                               GParamSpec        *pspec);
 
-static void      gimp_undo_editor_set_image      (GimpImageEditor   *editor,
-                                                  GimpImage         *image);
+static void   gimp_undo_editor_set_image      (GimpImageEditor   *editor,
+                                               GimpImage         *image);
 
-static void      gimp_undo_editor_set_context    (GimpDocked        *docked,
-                                                  GimpContext       *context);
+static void   gimp_undo_editor_set_context    (GimpDocked        *docked,
+                                               GimpContext       *context);
 
-static void      gimp_undo_editor_fill           (GimpUndoEditor    *editor);
-static void      gimp_undo_editor_clear          (GimpUndoEditor    *editor);
+static void   gimp_undo_editor_fill           (GimpUndoEditor    *editor);
+static void   gimp_undo_editor_clear          (GimpUndoEditor    *editor);
 
-static void      gimp_undo_editor_undo_event     (GimpImage         *image,
-                                                  GimpUndoEvent      event,
-                                                  GimpUndo          *undo,
-                                                  GimpUndoEditor    *editor);
+static void   gimp_undo_editor_undo_event     (GimpImage         *image,
+                                               GimpUndoEvent      event,
+                                               GimpUndo          *undo,
+                                               GimpUndoEditor    *editor);
 
-static void      gimp_undo_editor_select_item    (GimpContainerView *view,
-                                                  GimpUndo          *undo,
-                                                  gpointer           insert_data,
-                                                  GimpUndoEditor    *editor);
+static void   gimp_undo_editor_select_item    (GimpContainerView *view,
+                                               GimpUndo          *undo,
+                                               gpointer           insert_data,
+                                               GimpUndoEditor    *editor);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpUndoEditor, gimp_undo_editor,
@@ -95,7 +93,7 @@ gimp_undo_editor_class_init (GimpUndoEditorClass *klass)
   GObjectClass         *object_class       = G_OBJECT_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
-  object_class->constructor     = gimp_undo_editor_constructor;
+  object_class->constructed     = gimp_undo_editor_constructed;
   object_class->set_property    = gimp_undo_editor_set_property;
 
   image_editor_class->set_image = gimp_undo_editor_set_image;
@@ -125,17 +123,13 @@ gimp_undo_editor_init (GimpUndoEditor *undo_editor)
 {
 }
 
-static GObject *
-gimp_undo_editor_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
+static void
+gimp_undo_editor_constructed (GObject *object)
 {
-  GimpUndoEditor *undo_editor;
-  GObject        *object;
+  GimpUndoEditor *undo_editor = GIMP_UNDO_EDITOR (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  undo_editor = GIMP_UNDO_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   undo_editor->view = gimp_container_tree_view_new (NULL, NULL,
                                                     undo_editor->view_size,
@@ -159,8 +153,6 @@ gimp_undo_editor_constructor (GType                  type,
   undo_editor->clear_button =
     gimp_editor_add_action_button (GIMP_EDITOR (undo_editor), "edit",
                                    "edit-undo-clear", NULL);
-
-  return object;
 }
 
 static void

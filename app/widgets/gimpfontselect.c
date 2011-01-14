@@ -39,9 +39,7 @@
 #include "gimpfontview.h"
 
 
-static GObject     * gimp_font_select_constructor  (GType           type,
-                                                    guint           n_params,
-                                                    GObjectConstructParam *params);
+static void          gimp_font_select_constructed  (GObject        *object);
 
 static GValueArray * gimp_font_select_run_callback (GimpPdbDialog  *dialog,
                                                     GimpObject     *object,
@@ -60,7 +58,7 @@ gimp_font_select_class_init (GimpFontSelectClass *klass)
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
 
-  object_class->constructor = gimp_font_select_constructor;
+  object_class->constructed = gimp_font_select_constructed;
 
   pdb_class->run_callback   = gimp_font_select_run_callback;
 }
@@ -70,18 +68,14 @@ gimp_font_select_init (GimpFontSelect *select)
 {
 }
 
-static GObject *
-gimp_font_select_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
+static void
+gimp_font_select_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpPdbDialog *dialog;
+  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
   GtkWidget     *content_area;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  dialog = GIMP_PDB_DIALOG (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   dialog->view = gimp_font_view_new (GIMP_VIEW_TYPE_LIST,
                                      dialog->context->gimp->fonts,
@@ -98,8 +92,6 @@ gimp_font_select_constructor (GType                  type,
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   gtk_box_pack_start (GTK_BOX (content_area), dialog->view, TRUE, TRUE, 0);
   gtk_widget_show (dialog->view);
-
-  return object;
 }
 
 static GValueArray *

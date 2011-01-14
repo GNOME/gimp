@@ -52,33 +52,30 @@ enum
 };
 
 
-static GObject  * gimp_brush_select_constructor  (GType            type,
-                                                  guint            n_params,
-                                                  GObjectConstructParam *params);
-static void       gimp_brush_select_set_property (GObject         *object,
-                                                  guint            property_id,
-                                                  const GValue    *value,
-                                                  GParamSpec      *pspec);
+static void          gimp_brush_select_constructed  (GObject         *object);
+static void          gimp_brush_select_set_property (GObject         *object,
+                                                     guint            property_id,
+                                                     const GValue    *value,
+                                                     GParamSpec      *pspec);
 
-static GValueArray *
-                  gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
-                                                  GimpObject      *object,
-                                                  gboolean         closing,
-                                                  GError         **error);
+static GValueArray * gimp_brush_select_run_callback (GimpPdbDialog   *dialog,
+                                                     GimpObject      *object,
+                                                     gboolean         closing,
+                                                     GError         **error);
 
-static void   gimp_brush_select_opacity_changed  (GimpContext     *context,
-                                                  gdouble          opacity,
-                                                  GimpBrushSelect *select);
-static void   gimp_brush_select_mode_changed     (GimpContext     *context,
-                                                  GimpLayerModeEffects  paint_mode,
-                                                  GimpBrushSelect *select);
+static void       gimp_brush_select_opacity_changed (GimpContext     *context,
+                                                     gdouble          opacity,
+                                                     GimpBrushSelect *select);
+static void       gimp_brush_select_mode_changed    (GimpContext     *context,
+                                                     GimpLayerModeEffects  paint_mode,
+                                                     GimpBrushSelect *select);
 
-static void   gimp_brush_select_opacity_update   (GtkAdjustment   *adj,
-                                                  GimpBrushSelect *select);
-static void   gimp_brush_select_mode_update      (GtkWidget       *widget,
-                                                  GimpBrushSelect *select);
-static void   gimp_brush_select_spacing_update   (GtkAdjustment   *adj,
-                                                  GimpBrushSelect *select);
+static void       gimp_brush_select_opacity_update  (GtkAdjustment   *adj,
+                                                     GimpBrushSelect *select);
+static void       gimp_brush_select_mode_update     (GtkWidget       *widget,
+                                                     GimpBrushSelect *select);
+static void       gimp_brush_select_spacing_update  (GtkAdjustment   *adj,
+                                                     GimpBrushSelect *select);
 
 
 G_DEFINE_TYPE (GimpBrushSelect, gimp_brush_select, GIMP_TYPE_PDB_DIALOG)
@@ -92,7 +89,7 @@ gimp_brush_select_class_init (GimpBrushSelectClass *klass)
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
 
-  object_class->constructor  = gimp_brush_select_constructor;
+  object_class->constructed  = gimp_brush_select_constructed;
   object_class->set_property = gimp_brush_select_set_property;
 
   pdb_class->run_callback    = gimp_brush_select_run_callback;
@@ -124,22 +121,17 @@ gimp_brush_select_init (GimpBrushSelect *select)
 {
 }
 
-static GObject *
-gimp_brush_select_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_brush_select_constructed (GObject *object)
 {
-  GObject         *object;
-  GimpPdbDialog   *dialog;
-  GimpBrushSelect *select;
+  GimpPdbDialog   *dialog = GIMP_PDB_DIALOG (object);
+  GimpBrushSelect *select = GIMP_BRUSH_SELECT (object);
   GtkWidget       *content_area;
   GtkWidget       *table;
   GtkAdjustment   *spacing_adj;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  dialog = GIMP_PDB_DIALOG (object);
-  select = GIMP_BRUSH_SELECT (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_context_set_opacity    (dialog->context, select->initial_opacity);
   gimp_context_set_paint_mode (dialog->context, select->initial_mode);
@@ -209,8 +201,6 @@ gimp_brush_select_constructor (GType                  type,
                     select);
 
   gtk_widget_show (table);
-
-  return object;
 }
 
 static void

@@ -61,20 +61,18 @@ enum
 
 /*  local function prototypes  */
 
-static GObject * gimp_device_info_constructor  (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
-static void      gimp_device_info_finalize     (GObject               *object);
-static void      gimp_device_info_set_property (GObject               *object,
-                                                guint                  property_id,
-                                                const GValue          *value,
-                                                GParamSpec            *pspec);
-static void      gimp_device_info_get_property (GObject               *object,
-                                                guint                  property_id,
-                                                GValue                *value,
-                                                GParamSpec            *pspec);
+static void   gimp_device_info_constructed  (GObject        *object);
+static void   gimp_device_info_finalize     (GObject        *object);
+static void   gimp_device_info_set_property (GObject        *object,
+                                             guint           property_id,
+                                             const GValue   *value,
+                                             GParamSpec     *pspec);
+static void   gimp_device_info_get_property (GObject        *object,
+                                             guint           property_id,
+                                             GValue         *value,
+                                             GParamSpec     *pspec);
 
-static void      gimp_device_info_guess_icon   (GimpDeviceInfo        *info);
+static void   gimp_device_info_guess_icon   (GimpDeviceInfo *info);
 
 
 G_DEFINE_TYPE (GimpDeviceInfo, gimp_device_info, GIMP_TYPE_CONTEXT)
@@ -100,7 +98,7 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->constructor        = gimp_device_info_constructor;
+  object_class->constructed        = gimp_device_info_constructed;
   object_class->finalize           = gimp_device_info_finalize;
   object_class->set_property       = gimp_device_info_set_property;
   object_class->get_property       = gimp_device_info_get_property;
@@ -175,25 +173,19 @@ gimp_device_info_init (GimpDeviceInfo *info)
                     NULL);
 }
 
-static GObject *
-gimp_device_info_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
+static void
+gimp_device_info_constructed (GObject *object)
 {
-  GObject        *object;
-  GimpDeviceInfo *info;
+  GimpDeviceInfo *info = GIMP_DEVICE_INFO (object);
   Gimp           *gimp;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  info = GIMP_DEVICE_INFO (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert ((info->device == NULL         && info->display == NULL) ||
             (GDK_IS_DEVICE (info->device) && GDK_IS_DISPLAY (info->display)));
 
   gimp = GIMP_CONTEXT (object)->gimp;
-
-  g_assert (GIMP_IS_GIMP (gimp));
 
   if (info->device)
     {
@@ -238,8 +230,6 @@ gimp_device_info_constructor (GType                  type,
   g_signal_connect (object, "gradient-changed",
                     G_CALLBACK (gimp_device_info_changed),
                     NULL);
-
-  return object;
 }
 
 static void

@@ -46,19 +46,17 @@ struct _GimpTranslationStore
 };
 
 
-static GObject * gimp_translation_store_constructor (GType                  type,
-                                                     guint                  n_params,
-                                                     GObjectConstructParam *params);
+static void   gimp_translation_store_constructed (GObject              *object);
 
-static void      gimp_translation_store_add         (GimpLanguageStore *store,
-                                                     const gchar       *lang,
-                                                     const gchar       *code);
+static void   gimp_translation_store_add         (GimpLanguageStore    *store,
+                                                  const gchar          *lang,
+                                                  const gchar          *code);
 
-static void      gimp_translation_store_populate (GimpTranslationStore *store);
+static void   gimp_translation_store_populate    (GimpTranslationStore *store);
 
 
-G_DEFINE_TYPE (GimpTranslationStore,
-               gimp_translation_store, GIMP_TYPE_LANGUAGE_STORE)
+G_DEFINE_TYPE (GimpTranslationStore, gimp_translation_store,
+               GIMP_TYPE_LANGUAGE_STORE)
 
 #define parent_class gimp_translation_store_parent_class
 
@@ -69,7 +67,7 @@ gimp_translation_store_class_init (GimpTranslationStoreClass *klass)
   GObjectClass           *object_class = G_OBJECT_CLASS (klass);
   GimpLanguageStoreClass *store_class  = GIMP_LANGUAGE_STORE_CLASS (klass);
 
-  object_class->constructor = gimp_translation_store_constructor;
+  object_class->constructed = gimp_translation_store_constructed;
 
   store_class->add          = gimp_translation_store_add;
 }
@@ -82,17 +80,14 @@ gimp_translation_store_init (GimpTranslationStore *store)
                                       (GDestroyNotify) g_free);
 }
 
-static GObject *
-gimp_translation_store_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_translation_store_constructed (GObject *object)
 {
-  GimpTranslationStore *store;
-  GObject              *object;
+  GimpTranslationStore *store = GIMP_TRANSLATION_STORE (object);
   gchar                *label;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-  store  = GIMP_TRANSLATION_STORE (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_translation_store_populate (store);
 
@@ -108,8 +103,6 @@ gimp_translation_store_constructor (GType                  type,
   GIMP_LANGUAGE_STORE_CLASS (parent_class)->add (GIMP_LANGUAGE_STORE (store),
                                                  label, "en_US");
   g_free (label);
-
-  return object;
 }
 
 static const gchar *

@@ -45,9 +45,7 @@
 
 static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *iface);
 
-static GObject * gimp_drawable_tree_view_constructor (GType             type,
-                                                      guint             n_params,
-                                                      GObjectConstructParam *params);
+static void     gimp_drawable_tree_view_constructed (GObject           *object);
 
 static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
                                                      GimpViewable      *item,
@@ -112,7 +110,7 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructor      = gimp_drawable_tree_view_constructor;
+  object_class->constructed      = gimp_drawable_tree_view_constructed;
 
   tree_view_class->drop_possible = gimp_drawable_tree_view_drop_possible;
   tree_view_class->drop_viewable = gimp_drawable_tree_view_drop_viewable;
@@ -137,21 +135,17 @@ gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
 {
 }
 
-static GObject *
-gimp_drawable_tree_view_constructor (GType                  type,
-                                     guint                  n_params,
-                                     GObjectConstructParam *params)
+static void
+gimp_drawable_tree_view_constructed (GObject *object)
 {
-  GimpContainerTreeView *tree_view;
-  GimpItemTreeView      *item_view;
-  GObject               *object;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+  GimpItemTreeView      *item_view = GIMP_ITEM_TREE_VIEW (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  tree_view = GIMP_CONTAINER_TREE_VIEW (object);
-  item_view = GIMP_ITEM_TREE_VIEW (object);
-
-  gimp_dnd_viewable_dest_add (gimp_item_tree_view_get_new_button (item_view), GIMP_TYPE_PATTERN,
+  gimp_dnd_viewable_dest_add (gimp_item_tree_view_get_new_button (item_view),
+                              GIMP_TYPE_PATTERN,
                               gimp_drawable_tree_view_new_pattern_dropped,
                               item_view);
   gimp_dnd_color_dest_add (gimp_item_tree_view_get_new_button (item_view),
@@ -162,8 +156,6 @@ gimp_drawable_tree_view_constructor (GType                  type,
                               NULL, tree_view);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (tree_view->view), GIMP_TYPE_PATTERN,
                               NULL, tree_view);
-
-  return object;
 }
 
 

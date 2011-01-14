@@ -40,9 +40,7 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_dynamics_editor_constructor  (GType              type,
-                                                    guint              n_params,
-                                                    GObjectConstructParam *params);
+static void   gimp_dynamics_editor_constructed     (GObject            *object);
 static void   gimp_dynamics_editor_finalize        (GObject            *object);
 
 static void   gimp_dynamics_editor_set_data        (GimpDataEditor     *editor,
@@ -87,7 +85,7 @@ gimp_dynamics_editor_class_init (GimpDynamicsEditorClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructor = gimp_dynamics_editor_constructor;
+  object_class->constructed = gimp_dynamics_editor_constructed;
   object_class->finalize    = gimp_dynamics_editor_finalize;
 
   editor_class->set_data    = gimp_dynamics_editor_set_data;
@@ -160,18 +158,13 @@ gimp_dynamics_editor_init (GimpDynamicsEditor *editor)
     }
 }
 
-static GObject *
-gimp_dynamics_editor_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_dynamics_editor_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
-
-  return object;
 }
 
 static void

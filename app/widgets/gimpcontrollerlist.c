@@ -68,9 +68,8 @@ enum
 };
 
 
-static GObject * gimp_controller_list_constructor (GType               type,
-                                                   guint               n_params,
-                                                   GObjectConstructParam *params);
+static void gimp_controller_list_constructed     (GObject            *object);
+static void gimp_controller_list_finalize        (GObject            *object);
 static void gimp_controller_list_set_property    (GObject            *object,
                                                   guint               property_id,
                                                   const GValue       *value,
@@ -79,8 +78,6 @@ static void gimp_controller_list_get_property    (GObject            *object,
                                                   guint               property_id,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
-
-static void gimp_controller_list_finalize        (GObject            *object);
 
 static void gimp_controller_list_src_sel_changed (GtkTreeSelection   *sel,
                                                   GimpControllerList *list);
@@ -123,10 +120,10 @@ gimp_controller_list_class_init (GimpControllerListClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_controller_list_constructor;
+  object_class->constructed  = gimp_controller_list_constructed;
+  object_class->finalize     = gimp_controller_list_finalize;
   object_class->set_property = gimp_controller_list_set_property;
   object_class->get_property = gimp_controller_list_get_property;
-  object_class->finalize     = gimp_controller_list_finalize;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -316,17 +313,13 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->down_button, FALSE);
 }
 
-static GObject *
-gimp_controller_list_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_controller_list_constructed (GObject *object)
 {
-  GObject            *object;
-  GimpControllerList *list;
+  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  list = GIMP_CONTROLLER_LIST (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (list->gimp));
 
@@ -335,8 +328,20 @@ gimp_controller_list_constructor (GType                  type,
 
   gimp_container_view_set_context (GIMP_CONTAINER_VIEW (list->dest),
                                    gimp_get_user_context (list->gimp));
+}
 
-  return object;
+static void
+gimp_controller_list_finalize (GObject *object)
+{
+  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
+
+  if (list->gimp)
+    {
+      g_object_unref (list->gimp);
+      list->gimp = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -377,20 +382,6 @@ gimp_controller_list_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_controller_list_finalize (GObject *object)
-{
-  GimpControllerList *list = GIMP_CONTROLLER_LIST (object);
-
-  if (list->gimp)
-    {
-      g_object_unref (list->gimp);
-      list->gimp = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 

@@ -39,7 +39,6 @@
 
 
 #define GRID_EDITOR_DEFAULT_RESOLUTION   72.0
-
 #define GRID_EDITOR_COLOR_BUTTON_WIDTH   60
 #define GRID_EDITOR_COLOR_BUTTON_HEIGHT  24
 
@@ -54,18 +53,16 @@ enum
 };
 
 
-static GObject * gimp_grid_editor_constructor  (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
-static void      gimp_grid_editor_set_property (GObject               *object,
-                                                guint                  property_id,
-                                                const GValue          *value,
-                                                GParamSpec            *pspec);
-static void      gimp_grid_editor_get_property (GObject               *object,
-                                                guint                  property_id,
-                                                GValue                *value,
-                                                GParamSpec            *pspec);
-static void      gimp_grid_editor_finalize     (GObject               *object);
+static void   gimp_grid_editor_constructed  (GObject      *object);
+static void   gimp_grid_editor_finalize     (GObject      *object);
+static void   gimp_grid_editor_set_property (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void   gimp_grid_editor_get_property (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpGridEditor, gimp_grid_editor, GTK_TYPE_BOX)
@@ -78,7 +75,7 @@ gimp_grid_editor_class_init (GimpGridEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_grid_editor_constructor;
+  object_class->constructed  = gimp_grid_editor_constructed;
   object_class->set_property = gimp_grid_editor_set_property;
   object_class->get_property = gimp_grid_editor_get_property;
   object_class->finalize     = gimp_grid_editor_finalize;
@@ -119,76 +116,9 @@ gimp_grid_editor_init (GimpGridEditor *editor)
 }
 
 static void
-gimp_grid_editor_set_property (GObject      *object,
-                               guint         property_id,
-                               const GValue *value,
-                               GParamSpec   *pspec)
+gimp_grid_editor_constructed (GObject *object)
 {
   GimpGridEditor *editor = GIMP_GRID_EDITOR (object);
-
-  switch (property_id)
-    {
-    case PROP_GRID:
-      editor->grid = g_value_dup_object (value);
-      break;
-
-    case PROP_CONTEXT:
-      editor->context = g_value_dup_object (value);
-      break;
-
-    case PROP_XRESOLUTION:
-      editor->xresolution = g_value_get_double (value);
-      break;
-
-    case PROP_YRESOLUTION:
-      editor->yresolution = g_value_get_double (value);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_grid_editor_get_property (GObject    *object,
-                               guint       property_id,
-                               GValue     *value,
-                               GParamSpec *pspec)
-{
-  GimpGridEditor *editor = GIMP_GRID_EDITOR (object);
-
-  switch (property_id)
-    {
-    case PROP_GRID:
-      g_value_set_object (value, editor->grid);
-      break;
-
-    case PROP_CONTEXT:
-      g_value_set_object (value, editor->context);
-      break;
-
-    case PROP_XRESOLUTION:
-      g_value_set_double (value, editor->xresolution);
-      break;
-
-    case PROP_YRESOLUTION:
-      g_value_set_double (value, editor->yresolution);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static GObject *
-gimp_grid_editor_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
-{
-  GimpGridEditor *editor;
-  GObject        *object;
   GtkWidget      *frame;
   GtkWidget      *hbox;
   GtkWidget      *table;
@@ -196,9 +126,8 @@ gimp_grid_editor_constructor (GType                  type,
   GtkWidget      *color_button;
   GtkWidget      *sizeentry;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_GRID_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (editor->grid != NULL);
 
@@ -305,8 +234,6 @@ gimp_grid_editor_constructor (GType                  type,
   gtk_widget_show (sizeentry);
 
   gtk_widget_show (hbox);
-
-  return object;
 }
 
 static void
@@ -327,6 +254,70 @@ gimp_grid_editor_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_grid_editor_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpGridEditor *editor = GIMP_GRID_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_GRID:
+      editor->grid = g_value_dup_object (value);
+      break;
+
+    case PROP_CONTEXT:
+      editor->context = g_value_dup_object (value);
+      break;
+
+    case PROP_XRESOLUTION:
+      editor->xresolution = g_value_get_double (value);
+      break;
+
+    case PROP_YRESOLUTION:
+      editor->yresolution = g_value_get_double (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_grid_editor_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpGridEditor *editor = GIMP_GRID_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_GRID:
+      g_value_set_object (value, editor->grid);
+      break;
+
+    case PROP_CONTEXT:
+      g_value_set_object (value, editor->context);
+      break;
+
+    case PROP_XRESOLUTION:
+      g_value_set_double (value, editor->xresolution);
+      break;
+
+    case PROP_YRESOLUTION:
+      g_value_set_double (value, editor->yresolution);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GtkWidget *

@@ -56,15 +56,13 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_text_buffer_constructor (GType                  type,
-                                               guint                  n_params,
-                                               GObjectConstructParam *params);
-static void      gimp_text_buffer_dispose     (GObject               *object);
-static void      gimp_text_buffer_finalize    (GObject               *object);
+static void   gimp_text_buffer_constructed (GObject           *object);
+static void   gimp_text_buffer_dispose     (GObject           *object);
+static void   gimp_text_buffer_finalize    (GObject           *object);
 
-static void      gimp_text_buffer_mark_set    (GtkTextBuffer         *buffer,
-                                               const GtkTextIter     *location,
-                                               GtkTextMark           *mark);
+static void   gimp_text_buffer_mark_set    (GtkTextBuffer     *buffer,
+                                            const GtkTextIter *location,
+                                            GtkTextMark       *mark);
 
 
 G_DEFINE_TYPE (GimpTextBuffer, gimp_text_buffer, GTK_TYPE_TEXT_BUFFER)
@@ -78,7 +76,7 @@ gimp_text_buffer_class_init (GimpTextBufferClass *klass)
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GtkTextBufferClass *buffer_class = GTK_TEXT_BUFFER_CLASS (klass);
 
-  object_class->constructor = gimp_text_buffer_constructor;
+  object_class->constructed = gimp_text_buffer_constructed;
   object_class->dispose     = gimp_text_buffer_dispose;
   object_class->finalize    = gimp_text_buffer_finalize;
 
@@ -100,17 +98,13 @@ gimp_text_buffer_init (GimpTextBuffer *buffer)
                                                NULL, NULL);
 }
 
-static GObject *
-gimp_text_buffer_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
+static void
+gimp_text_buffer_constructed (GObject *object)
 {
-  GObject        *object;
-  GimpTextBuffer *buffer;
+  GimpTextBuffer *buffer = GIMP_TEXT_BUFFER (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  buffer = GIMP_TEXT_BUFFER (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_text_buffer_set_text (GTK_TEXT_BUFFER (buffer), "", -1);
 
@@ -133,8 +127,6 @@ gimp_text_buffer_constructor (GType                  type,
                                                           "strikethrough",
                                                           "strikethrough", TRUE,
                                                           NULL);
-
-  return object;
 }
 
 static void

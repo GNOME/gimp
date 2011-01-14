@@ -58,9 +58,8 @@ enum
 
 static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *iface);
 
-static GObject  * gimp_data_editor_constructor       (GType            type,
-                                                      guint            n_params,
-                                                      GObjectConstructParam *params);
+static void       gimp_data_editor_constructed       (GObject        *object);
+static void       gimp_data_editor_dispose           (GObject        *object);
 static void       gimp_data_editor_set_property      (GObject        *object,
                                                       guint           property_id,
                                                       const GValue   *value,
@@ -69,7 +68,6 @@ static void       gimp_data_editor_get_property      (GObject        *object,
                                                       guint           property_id,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
-static void       gimp_data_editor_dispose           (GObject        *object);
 
 static void       gimp_data_editor_style_set         (GtkWidget      *widget,
                                                       GtkStyle       *prev_style);
@@ -121,10 +119,10 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor  = gimp_data_editor_constructor;
+  object_class->constructed  = gimp_data_editor_constructed;
+  object_class->dispose      = gimp_data_editor_dispose;
   object_class->set_property = gimp_data_editor_set_property;
   object_class->get_property = gimp_data_editor_get_property;
-  object_class->dispose      = gimp_data_editor_dispose;
 
   widget_class->style_set    = gimp_data_editor_style_set;
 
@@ -160,6 +158,20 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
 }
 
 static void
+gimp_data_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_context  = gimp_data_editor_set_context;
+  iface->set_aux_info = gimp_data_editor_set_aux_info;
+  iface->get_aux_info = gimp_data_editor_get_aux_info;
+  iface->get_title    = gimp_data_editor_get_title;
+}
+
+static void
 gimp_data_editor_init (GimpDataEditor *editor)
 {
   editor->data_factory  = NULL;
@@ -185,30 +197,12 @@ gimp_data_editor_init (GimpDataEditor *editor)
 }
 
 static void
-gimp_data_editor_docked_iface_init (GimpDockedInterface *iface)
+gimp_data_editor_constructed (GObject *object)
 {
-  parent_docked_iface = g_type_interface_peek_parent (iface);
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
 
-  if (! parent_docked_iface)
-    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
-
-  iface->set_context  = gimp_data_editor_set_context;
-  iface->set_aux_info = gimp_data_editor_set_aux_info;
-  iface->get_aux_info = gimp_data_editor_get_aux_info;
-  iface->get_title    = gimp_data_editor_get_title;
-}
-
-static GObject *
-gimp_data_editor_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
-{
-  GObject        *object;
-  GimpDataEditor *editor;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_DATA_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DATA_FACTORY (editor->data_factory));
   g_assert (GIMP_IS_CONTEXT (editor->context));
@@ -230,12 +224,26 @@ gimp_data_editor_constructor (GType                  type,
                             G_CALLBACK (gimp_data_editor_revert_clicked),
                             NULL,
                             editor);
-  /*
-   * Set insensitive because revert buttons are not yet implemented.
-   */
+  /* Set insensitive because revert buttons are not yet implemented */
   gtk_widget_set_sensitive (editor->revert_button, FALSE);
+}
 
-  return object;
+static void
+gimp_data_editor_dispose (GObject *object)
+{
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+
+  if (editor->data)
+    {
+      /* Save dirty data before we clear out */
+      gimp_data_editor_save_dirty (editor);
+      gimp_data_editor_set_data (editor, NULL);
+    }
+
+  if (editor->context)
+    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -287,24 +295,6 @@ gimp_data_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_data_editor_dispose (GObject *object)
-{
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
-
-  if (editor->data)
-    {
-      /* Save dirty data before we clear out */
-      gimp_data_editor_save_dirty (editor);
-      gimp_data_editor_set_data (editor, NULL);
-    }
-
-  if (editor->context)
-    gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

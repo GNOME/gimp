@@ -74,39 +74,37 @@ struct _GimpDeviceEditorPrivate
                                      GimpDeviceEditorPrivate)
 
 
-static GObject * gimp_device_editor_constructor    (GType                  type,
-                                                    guint                  n_params,
-                                                    GObjectConstructParam *params);
-static void      gimp_device_editor_dispose        (GObject               *object);
-static void      gimp_device_editor_set_property   (GObject               *object,
-                                                    guint                  property_id,
-                                                    const GValue          *value,
-                                                    GParamSpec            *pspec);
-static void      gimp_device_editor_get_property   (GObject               *object,
-                                                    guint                  property_id,
-                                                    GValue                *value,
-                                                    GParamSpec            *pspec);
+static void   gimp_device_editor_constructed    (GObject           *object);
+static void   gimp_device_editor_dispose        (GObject           *object);
+static void   gimp_device_editor_set_property   (GObject           *object,
+                                                 guint              property_id,
+                                                 const GValue      *value,
+                                                 GParamSpec        *pspec);
+static void   gimp_device_editor_get_property   (GObject           *object,
+                                                 guint              property_id,
+                                                 GValue            *value,
+                                                 GParamSpec        *pspec);
 
-static void      gimp_device_editor_add_device     (GimpContainer         *container,
-                                                    GimpDeviceInfo        *info,
-                                                    GimpDeviceEditor      *editor);
-static void      gimp_device_editor_remove_device  (GimpContainer         *container,
-                                                    GimpDeviceInfo        *info,
-                                                    GimpDeviceEditor      *editor);
-static void      gimp_device_editor_device_changed (GimpDeviceInfo        *info,
-                                                    GimpDeviceEditor      *editor);
+static void   gimp_device_editor_add_device     (GimpContainer     *container,
+                                                 GimpDeviceInfo    *info,
+                                                 GimpDeviceEditor  *editor);
+static void   gimp_device_editor_remove_device  (GimpContainer     *container,
+                                                 GimpDeviceInfo    *info,
+                                                 GimpDeviceEditor  *editor);
+static void   gimp_device_editor_device_changed (GimpDeviceInfo    *info,
+                                                 GimpDeviceEditor  *editor);
 
-static void      gimp_device_editor_select_device  (GimpContainerView     *view,
-                                                    GimpViewable          *viewable,
-                                                    gpointer               insert_data,
-                                                    GimpDeviceEditor      *editor);
+static void   gimp_device_editor_select_device  (GimpContainerView *view,
+                                                 GimpViewable      *viewable,
+                                                 gpointer           insert_data,
+                                                 GimpDeviceEditor  *editor);
 
-static void      gimp_device_editor_switch_page    (GtkNotebook           *notebook,
-                                                    gpointer               page,
-                                                    guint                  page_num,
-                                                    GimpDeviceEditor      *editor);
-static void      gimp_device_editor_delete_clicked (GtkWidget             *button,
-                                                    GimpDeviceEditor      *editor);
+static void   gimp_device_editor_switch_page    (GtkNotebook       *notebook,
+                                                 gpointer           page,
+                                                 guint              page_num,
+                                                 GimpDeviceEditor  *editor);
+static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
+                                                 GimpDeviceEditor  *editor);
 
 
 G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_BOX)
@@ -119,7 +117,7 @@ gimp_device_editor_class_init (GimpDeviceEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_device_editor_constructor;
+  object_class->constructed  = gimp_device_editor_constructed;
   object_class->dispose      = gimp_device_editor_dispose;
   object_class->set_property = gimp_device_editor_set_property;
   object_class->get_property = gimp_device_editor_get_property;
@@ -212,21 +210,16 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
                     editor);
 }
 
-static GObject *
-gimp_device_editor_constructor (GType                   type,
-                                guint                   n_params,
-                                GObjectConstructParam  *params)
+static void
+gimp_device_editor_constructed (GObject *object)
 {
-  GObject                 *object;
-  GimpDeviceEditor        *editor;
-  GimpDeviceEditorPrivate *private;
+  GimpDeviceEditor        *editor  = GIMP_DEVICE_EDITOR (object);
+  GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
   GimpContainer           *devices;
   GList                   *list;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor  = GIMP_DEVICE_EDITOR (object);
-  private = GIMP_DEVICE_EDITOR_GET_PRIVATE (editor);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (private->gimp));
 
@@ -260,8 +253,6 @@ gimp_device_editor_constructor (GType                   type,
     {
       gimp_device_editor_add_device (devices, list->data, editor);
     }
-
-  return object;
 }
 
 static void

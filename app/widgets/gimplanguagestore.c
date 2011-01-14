@@ -30,18 +30,16 @@
 #include "gimplanguagestore-parser.h"
 
 
-static GObject * gimp_language_store_constructor (GType                  type,
-                                                  guint                  n_params,
-                                                  GObjectConstructParam *params);
+static void   gimp_language_store_constructed (GObject           *object);
 
-static void  gimp_language_store_real_add (GimpLanguageStore *store,
-                                           const gchar       *label,
-                                           const gchar       *code);
+static void   gimp_language_store_real_add    (GimpLanguageStore *store,
+                                               const gchar       *label,
+                                               const gchar       *code);
 
-static gint  gimp_language_store_sort     (GtkTreeModel      *model,
-                                           GtkTreeIter       *a,
-                                           GtkTreeIter       *b,
-                                           gpointer           userdata);
+static gint   gimp_language_store_sort        (GtkTreeModel      *model,
+                                               GtkTreeIter       *a,
+                                               GtkTreeIter       *b,
+                                               gpointer           userdata);
 
 
 G_DEFINE_TYPE (GimpLanguageStore, gimp_language_store, GTK_TYPE_LIST_STORE)
@@ -54,7 +52,7 @@ gimp_language_store_class_init (GimpLanguageStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor = gimp_language_store_constructor;
+  object_class->constructed = gimp_language_store_constructed;
 
   klass->add                = gimp_language_store_real_add;
 }
@@ -75,18 +73,13 @@ gimp_language_store_init (GimpLanguageStore *store)
                                         GTK_SORT_ASCENDING);
 }
 
-static GObject *
-gimp_language_store_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_language_store_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_language_store_parse_iso_codes (GIMP_LANGUAGE_STORE (object), NULL);
-
-  return object;
 }
 
 static void

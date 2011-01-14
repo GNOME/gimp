@@ -50,10 +50,7 @@ struct _GimpLanguageEntry
 };
 
 
-static GObject * gimp_language_entry_constructor  (GType                  type,
-                                                   guint                  n_params,
-                                                   GObjectConstructParam *params);
-
+static void      gimp_language_entry_constructed  (GObject      *object);
 static void      gimp_language_entry_finalize     (GObject      *object);
 static void      gimp_language_entry_set_property (GObject      *object,
                                                    guint         property_id,
@@ -80,7 +77,7 @@ gimp_language_entry_class_init (GimpLanguageEntryClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_language_entry_constructor;
+  object_class->constructed  = gimp_language_entry_constructed;
   object_class->finalize     = gimp_language_entry_finalize;
   object_class->set_property = gimp_language_entry_set_property;
   object_class->get_property = gimp_language_entry_get_property;
@@ -97,16 +94,13 @@ gimp_language_entry_init (GimpLanguageEntry *entry)
 {
 }
 
-static GObject *
-gimp_language_entry_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_language_entry_constructed (GObject *object)
 {
-  GimpLanguageEntry *entry;
-  GObject           *object;
+  GimpLanguageEntry *entry = GIMP_LANGUAGE_ENTRY (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-  entry  = GIMP_LANGUAGE_ENTRY (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (entry->store)
     {
@@ -130,8 +124,6 @@ gimp_language_entry_constructor (GType                  type,
                         G_CALLBACK (gimp_language_entry_language_selected),
                         entry);
     }
-
-  return object;
 }
 
 static void

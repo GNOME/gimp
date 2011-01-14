@@ -74,9 +74,7 @@ struct _GimpDeviceStatusEntry
 };
 
 
-static GObject *gimp_device_status_constructor (GType                  type,
-                                                guint                  n_params,
-                                                GObjectConstructParam *params);
+static void gimp_device_status_constructed     (GObject               *object);
 static void gimp_device_status_dispose         (GObject               *object);
 static void gimp_device_status_set_property    (GObject               *object,
                                                 guint                  property_id,
@@ -109,7 +107,7 @@ gimp_device_status_class_init (GimpDeviceStatusClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_device_status_constructor;
+  object_class->constructed  = gimp_device_status_constructed;
   object_class->dispose      = gimp_device_status_dispose;
   object_class->set_property = gimp_device_status_set_property;
 
@@ -139,19 +137,15 @@ gimp_device_status_init (GimpDeviceStatus *status)
                             status);
 }
 
-static GObject *
-gimp_device_status_constructor (GType                  type,
-                                guint                  n_params,
-                                GObjectConstructParam *params)
+static void
+gimp_device_status_constructed (GObject *object)
 {
-  GObject          *object;
-  GimpDeviceStatus *status;
+  GimpDeviceStatus *status = GIMP_DEVICE_STATUS (object);
   GimpContainer    *devices;
   GList            *list;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  status = GIMP_DEVICE_STATUS (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (status->gimp));
 
@@ -168,8 +162,6 @@ gimp_device_status_constructor (GType                  type,
                            status, 0);
 
   gimp_device_status_update (status);
-
-  return object;
 }
 
 static void

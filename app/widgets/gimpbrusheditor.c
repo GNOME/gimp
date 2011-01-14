@@ -48,9 +48,7 @@
 
 static void   gimp_brush_editor_docked_iface_init (GimpDockedInterface *face);
 
-static GObject * gimp_brush_editor_constructor (GType              type,
-                                                guint              n_params,
-                                                GObjectConstructParam *params);
+static void   gimp_brush_editor_constructed    (GObject            *object);
 
 static void   gimp_brush_editor_set_data       (GimpDataEditor     *editor,
                                                 GimpData           *data);
@@ -83,7 +81,7 @@ gimp_brush_editor_class_init (GimpBrushEditorClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructor = gimp_brush_editor_constructor;
+  object_class->constructed = gimp_brush_editor_constructed;
 
   editor_class->set_data    = gimp_brush_editor_set_data;
   editor_class->title       = _("Brush Editor");
@@ -228,18 +226,13 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
                     editor);
 }
 
-static GObject *
-gimp_brush_editor_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_brush_editor_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_docked_set_show_button_bar (GIMP_DOCKED (object), FALSE);
-
-  return object;
 }
 
 static void

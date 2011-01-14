@@ -58,24 +58,22 @@ struct _GimpContainerTreeStorePrivate
                                      GimpContainerTreeStorePrivate)
 
 
-static GObject * gimp_container_tree_store_constructor     (GType                   type,
-                                                            guint                   n_params,
-                                                            GObjectConstructParam  *params);
-static void      gimp_container_tree_store_finalize        (GObject                *object);
-static void      gimp_container_tree_store_set_property    (GObject                *object,
-                                                            guint                   property_id,
-                                                            const GValue           *value,
-                                                            GParamSpec             *pspec);
-static void      gimp_container_tree_store_get_property    (GObject                *object,
-                                                            guint                   property_id,
-                                                            GValue                 *value,
-                                                            GParamSpec             *pspec);
+static void   gimp_container_tree_store_constructed     (GObject                *object);
+static void   gimp_container_tree_store_finalize        (GObject                *object);
+static void   gimp_container_tree_store_set_property    (GObject                *object,
+                                                         guint                   property_id,
+                                                         const GValue           *value,
+                                                         GParamSpec             *pspec);
+static void   gimp_container_tree_store_get_property    (GObject                *object,
+                                                         guint                   property_id,
+                                                         GValue                 *value,
+                                                         GParamSpec             *pspec);
 
-static void      gimp_container_tree_store_set             (GimpContainerTreeStore *store,
-                                                            GtkTreeIter            *iter,
-                                                            GimpViewable           *viewable);
-static void      gimp_container_tree_store_renderer_update (GimpViewRenderer       *renderer,
-                                                            GimpContainerTreeStore *store);
+static void   gimp_container_tree_store_set             (GimpContainerTreeStore *store,
+                                                         GtkTreeIter            *iter,
+                                                         GimpViewable           *viewable);
+static void   gimp_container_tree_store_renderer_update (GimpViewRenderer       *renderer,
+                                                         GimpContainerTreeStore *store);
 
 
 G_DEFINE_TYPE (GimpContainerTreeStore, gimp_container_tree_store,
@@ -89,7 +87,7 @@ gimp_container_tree_store_class_init (GimpContainerTreeStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_container_tree_store_constructor;
+  object_class->constructed  = gimp_container_tree_store_constructed;
   object_class->finalize     = gimp_container_tree_store_finalize;
   object_class->set_property = gimp_container_tree_store_set_property;
   object_class->get_property = gimp_container_tree_store_get_property;
@@ -115,19 +113,11 @@ gimp_container_tree_store_init (GimpContainerTreeStore *store)
 {
 }
 
-static GObject *
-gimp_container_tree_store_constructor (GType                  type,
-                                       guint                  n_params,
-                                       GObjectConstructParam *params)
+static void
+gimp_container_tree_store_constructed (GObject *object)
 {
-  GimpContainerTreeStore *store;
-  GObject                *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  store = GIMP_CONTAINER_TREE_STORE (object);
-
-  return object;
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 }
 
 static void

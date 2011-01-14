@@ -60,9 +60,7 @@ enum
 };
 
 
-static GObject * gimp_settings_box_constructor   (GType              type,
-                                                  guint              n_params,
-                                                  GObjectConstructParam *params);
+static void      gimp_settings_box_constructed   (GObject           *object);
 static void      gimp_settings_box_finalize      (GObject           *object);
 static void      gimp_settings_box_set_property  (GObject           *object,
                                                   guint              property_id,
@@ -161,7 +159,7 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_STRING);
 
-  object_class->constructor  = gimp_settings_box_constructor;
+  object_class->constructed  = gimp_settings_box_constructed;
   object_class->finalize     = gimp_settings_box_finalize;
   object_class->set_property = gimp_settings_box_set_property;
   object_class->get_property = gimp_settings_box_get_property;
@@ -208,21 +206,17 @@ gimp_settings_box_init (GimpSettingsBox *box)
   gtk_box_set_spacing (GTK_BOX (box), 6);
 }
 
-static GObject *
-gimp_settings_box_constructor (GType                  type,
-                               guint                  n_params,
-                               GObjectConstructParam *params)
+static void
+gimp_settings_box_constructed (GObject *object)
 {
-  GObject         *object;
-  GimpSettingsBox *box;
+  GimpSettingsBox *box = GIMP_SETTINGS_BOX (object);
   GtkWidget       *hbox2;
   GtkWidget       *button;
   GtkWidget       *image;
   GtkWidget       *arrow;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  box = GIMP_SETTINGS_BOX (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_GIMP (box->gimp));
   g_assert (GIMP_IS_CONFIG (box->config));
@@ -305,8 +299,6 @@ gimp_settings_box_constructor (GType                  type,
                                    GTK_STOCK_EDIT,
                                    _("_Manage Settings..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
-
-  return object;
 }
 
 static void

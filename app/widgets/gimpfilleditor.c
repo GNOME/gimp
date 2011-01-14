@@ -46,18 +46,16 @@ enum
 };
 
 
-static GObject * gimp_fill_editor_constructor  (GType              type,
-                                                guint              n_params,
-                                                GObjectConstructParam *params);
-static void      gimp_fill_editor_finalize     (GObject           *object);
-static void      gimp_fill_editor_set_property (GObject           *object,
-                                                guint              property_id,
-                                                const GValue      *value,
-                                                GParamSpec        *pspec);
-static void      gimp_fill_editor_get_property (GObject           *object,
-                                                guint              property_id,
-                                                GValue            *value,
-                                                GParamSpec        *pspec);
+static void   gimp_fill_editor_constructed  (GObject      *object);
+static void   gimp_fill_editor_finalize     (GObject      *object);
+static void   gimp_fill_editor_set_property (GObject      *object,
+                                             guint         property_id,
+                                             const GValue *value,
+                                             GParamSpec   *pspec);
+static void   gimp_fill_editor_get_property (GObject      *object,
+                                             guint         property_id,
+                                             GValue       *value,
+                                             GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpFillEditor, gimp_fill_editor, GTK_TYPE_BOX)
@@ -70,7 +68,7 @@ gimp_fill_editor_class_init (GimpFillEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_fill_editor_constructor;
+  object_class->constructed  = gimp_fill_editor_constructed;
   object_class->finalize     = gimp_fill_editor_finalize;
   object_class->set_property = gimp_fill_editor_set_property;
   object_class->get_property = gimp_fill_editor_get_property;
@@ -99,19 +97,15 @@ gimp_fill_editor_init (GimpFillEditor *editor)
   gtk_box_set_spacing (GTK_BOX (editor), 6);
 }
 
-static GObject *
-gimp_fill_editor_constructor (GType                   type,
-                              guint                   n_params,
-                              GObjectConstructParam  *params)
+static void
+gimp_fill_editor_constructed (GObject *object)
 {
-  GObject        *object;
-  GimpFillEditor *editor;
+  GimpFillEditor *editor = GIMP_FILL_EDITOR (object);
   GtkWidget      *box;
   GtkWidget      *button;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_FILL_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_FILL_OPTIONS (editor->options));
 
@@ -149,8 +143,6 @@ gimp_fill_editor_constructor (GType                   type,
                                        _("_Antialiasing"));
   gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  return object;
 }
 
 static void

@@ -40,9 +40,7 @@
 #include "gimp-intl.h"
 
 
-static GObject * gimp_error_console_constructor  (GType             type,
-                                                  guint             n_params,
-                                                  GObjectConstructParam *params);
+static void      gimp_error_console_constructed  (GObject          *object);
 static void      gimp_error_console_dispose      (GObject          *object);
 
 static void      gimp_error_console_unmap        (GtkWidget        *widget);
@@ -63,7 +61,7 @@ gimp_error_console_class_init (GimpErrorConsoleClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor = gimp_error_console_constructor;
+  object_class->constructed = gimp_error_console_constructed;
   object_class->dispose     = gimp_error_console_dispose;
 
   widget_class->unmap       = gimp_error_console_unmap;
@@ -106,17 +104,13 @@ gimp_error_console_init (GimpErrorConsole *console)
   console->file_dialog = NULL;
 }
 
-static GObject *
-gimp_error_console_constructor (GType                  type,
-                                guint                  n_params,
-                                GObjectConstructParam *params)
+static void
+gimp_error_console_constructed (GObject *object)
 {
-  GObject          *object;
-  GimpErrorConsole *console;
+  GimpErrorConsole *console = GIMP_ERROR_CONSOLE (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  console = GIMP_ERROR_CONSOLE (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   console->clear_button =
     gimp_editor_add_action_button (GIMP_EDITOR (console), "error-console",
@@ -128,8 +122,6 @@ gimp_error_console_constructor (GType                  type,
                                    "error-console-save-selection",
                                    GDK_SHIFT_MASK,
                                    NULL);
-
-  return object;
 }
 
 static void

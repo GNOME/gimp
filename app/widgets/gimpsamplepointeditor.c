@@ -48,9 +48,8 @@ enum
 };
 
 
-static GObject * gimp_sample_point_editor_constructor (GType                  type,
-                                                       guint                  n_params,
-                                                       GObjectConstructParam *params);
+static void   gimp_sample_point_editor_constructed    (GObject               *object);
+static void   gimp_sample_point_editor_dispose        (GObject               *object);
 static void   gimp_sample_point_editor_set_property   (GObject               *object,
                                                        guint                  property_id,
                                                        const GValue          *value,
@@ -59,7 +58,6 @@ static void   gimp_sample_point_editor_get_property   (GObject               *ob
                                                        guint                  property_id,
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
-static void   gimp_sample_point_editor_dispose        (GObject               *object);
 
 static void   gimp_sample_point_editor_style_set      (GtkWidget             *widget,
                                                        GtkStyle              *prev_style);
@@ -101,10 +99,10 @@ gimp_sample_point_editor_class_init (GimpSamplePointEditorClass *klass)
   GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
   GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
-  object_class->constructor     = gimp_sample_point_editor_constructor;
+  object_class->constructed     = gimp_sample_point_editor_constructed;
+  object_class->dispose         = gimp_sample_point_editor_dispose;
   object_class->get_property    = gimp_sample_point_editor_get_property;
   object_class->set_property    = gimp_sample_point_editor_set_property;
-  object_class->dispose         = gimp_sample_point_editor_dispose;
 
   widget_class->style_set       = gimp_sample_point_editor_style_set;
 
@@ -167,19 +165,25 @@ gimp_sample_point_editor_init (GimpSamplePointEditor *editor)
     }
 }
 
-static GObject *
-gimp_sample_point_editor_constructor (GType                  type,
-                                      guint                  n_params,
-                                      GObjectConstructParam *params)
+static void
+gimp_sample_point_editor_constructed (GObject *object)
 {
-  GObject               *object;
-  GimpSamplePointEditor *editor;
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+}
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+static void
+gimp_sample_point_editor_dispose (GObject *object)
+{
+  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
 
-  editor = GIMP_SAMPLE_POINT_EDITOR (object);
+  if (editor->dirty_idle_id)
+    {
+      g_source_remove (editor->dirty_idle_id);
+      editor->dirty_idle_id = 0;
+    }
 
-  return object;
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -219,20 +223,6 @@ gimp_sample_point_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_sample_point_editor_dispose (GObject *object)
-{
-  GimpSamplePointEditor *editor = GIMP_SAMPLE_POINT_EDITOR (object);
-
-  if (editor->dirty_idle_id)
-    {
-      g_source_remove (editor->dirty_idle_id);
-      editor->dirty_idle_id = 0;
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

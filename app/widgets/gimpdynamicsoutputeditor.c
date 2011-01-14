@@ -91,51 +91,51 @@ struct _GimpDynamicsOutputEditorPrivate
                                      GimpDynamicsOutputEditorPrivate)
 
 
-static GObject * gimp_dynamics_output_editor_constructor  (GType                  type,
-                                                           guint                  n_params,
-                                                           GObjectConstructParam *params);
-static void      gimp_dynamics_output_editor_finalize     (GObject               *object);
-static void      gimp_dynamics_output_editor_set_property (GObject               *object,
-                                                           guint                  property_id,
-                                                           const GValue          *value,
-                                                           GParamSpec            *pspec);
-static void      gimp_dynamics_output_editor_get_property (GObject               *object,
-                                                           guint                  property_id,
-                                                           GValue                *value,
-                                                           GParamSpec            *pspec);
+static void   gimp_dynamics_output_editor_constructed    (GObject                  *object);
+static void   gimp_dynamics_output_editor_finalize       (GObject                  *object);
+static void   gimp_dynamics_output_editor_set_property   (GObject                  *object,
+                                                          guint                     property_id,
+                                                          const GValue             *value,
+                                                          GParamSpec               *pspec);
+static void   gimp_dynamics_output_editor_get_property   (GObject                  *object,
+                                                          guint                     property_id,
+                                                          GValue                   *value,
+                                                          GParamSpec               *pspec);
 
-static void     gimp_dynamics_output_editor_curve_reset   (GtkWidget                *button,
-                                                           GimpDynamicsOutputEditor *editor);
+static void   gimp_dynamics_output_editor_curve_reset    (GtkWidget                *button,
+                                                          GimpDynamicsOutputEditor *editor);
 
-static void    gimp_dynamics_output_editor_input_selected (GtkTreeSelection *selection,
-                                                           GimpDynamicsOutputEditor *editor);
+static void   gimp_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
+                                                          GimpDynamicsOutputEditor *editor);
 
-static void     gimp_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
-                                                           gchar                    *path,
-                                                           GimpDynamicsOutputEditor *editor);
+static void   gimp_dynamics_output_editor_input_toggled  (GtkCellRenderer          *cell,
+                                                          gchar                    *path,
+                                                          GimpDynamicsOutputEditor *editor);
 
-static void    gimp_dynamics_output_editor_activate_input (gint                      input,
-                                                           GimpDynamicsOutputEditor *editor);
+static void   gimp_dynamics_output_editor_activate_input (gint                      input,
+                                                          GimpDynamicsOutputEditor *editor);
 
-static void         gimp_dynamics_output_editor_use_input (gint                      input,
-                                                           gboolean                  value,
-                                                           GimpDynamicsOutputEditor *editor);
+static void   gimp_dynamics_output_editor_use_input      (gint                      input,
+                                                          gboolean                  value,
+                                                          GimpDynamicsOutputEditor *editor);
 
-static void     gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
-                                                           const GParamSpec         *pspec,
-                                                           GimpDynamicsOutputEditor *editor);
+static void   gimp_dynamics_output_editor_notify_output  (GimpDynamicsOutput       *output,
+                                                          const GParamSpec         *pspec,
+                                                          GimpDynamicsOutputEditor *editor);
+
 
 G_DEFINE_TYPE (GimpDynamicsOutputEditor, gimp_dynamics_output_editor,
                GTK_TYPE_BOX)
 
 #define parent_class gimp_dynamics_output_editor_parent_class
 
+
 static void
 gimp_dynamics_output_editor_class_init (GimpDynamicsOutputEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_dynamics_output_editor_constructor;
+  object_class->constructed  = gimp_dynamics_output_editor_constructed;
   object_class->finalize     = gimp_dynamics_output_editor_finalize;
   object_class->set_property = gimp_dynamics_output_editor_set_property;
   object_class->get_property = gimp_dynamics_output_editor_get_property;
@@ -159,12 +159,9 @@ gimp_dynamics_output_editor_init (GimpDynamicsOutputEditor *editor)
   gtk_box_set_spacing (GTK_BOX (editor), 6);
 }
 
-static GObject *
-gimp_dynamics_output_editor_constructor (GType                   type,
-                                         guint                   n_params,
-                                         GObjectConstructParam  *params)
+static void
+gimp_dynamics_output_editor_constructed (GObject *object)
 {
-  GObject                         *object;
   GimpDynamicsOutputEditor        *editor;
   GimpDynamicsOutputEditorPrivate *private;
   GtkWidget                       *view;
@@ -173,10 +170,11 @@ gimp_dynamics_output_editor_constructor (GType                   type,
   GtkTreeSelection                *tree_sel;
   GtkTreeIter                      iter = {0};
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
   editor  = GIMP_DYNAMICS_OUTPUT_EDITOR (object);
   private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (object);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_DYNAMICS_OUTPUT (private->output));
 
@@ -303,8 +301,6 @@ gimp_dynamics_output_editor_constructor (GType                   type,
    g_signal_connect (private->output, "notify",
                      G_CALLBACK (gimp_dynamics_output_editor_notify_output),
                      editor);
-
-  return object;
 }
 
 static void

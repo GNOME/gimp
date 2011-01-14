@@ -41,29 +41,27 @@ enum
 };
 
 
-static GObject * gimp_message_box_constructor   (GType                  type,
-                                                 guint                  n_params,
-                                                 GObjectConstructParam *params);
-static void      gimp_message_box_dispose       (GObject        *object);
-static void      gimp_message_box_finalize      (GObject        *object);
-static void      gimp_message_box_set_property  (GObject        *object,
-                                                 guint           property_id,
-                                                 const GValue   *value,
-                                                 GParamSpec     *pspec);
-static void      gimp_message_box_get_property  (GObject        *object,
-                                                 guint           property_id,
-                                                 GValue         *value,
-                                                 GParamSpec     *pspec);
+static void   gimp_message_box_constructed   (GObject        *object);
+static void   gimp_message_box_dispose       (GObject        *object);
+static void   gimp_message_box_finalize      (GObject        *object);
+static void   gimp_message_box_set_property  (GObject        *object,
+                                              guint           property_id,
+                                              const GValue   *value,
+                                              GParamSpec     *pspec);
+static void   gimp_message_box_get_property  (GObject        *object,
+                                              guint           property_id,
+                                              GValue         *value,
+                                              GParamSpec     *pspec);
 
-static void      gimp_message_box_forall        (GtkContainer   *container,
-                                                 gboolean        include_internals,
-                                                 GtkCallback     callback,
-                                                 gpointer        callback_data);
+static void   gimp_message_box_forall        (GtkContainer   *container,
+                                              gboolean        include_internals,
+                                              GtkCallback     callback,
+                                              gpointer        callback_data);
 
-static void      gimp_message_box_size_request  (GtkWidget      *widget,
-                                                 GtkRequisition *requisition);
-static void      gimp_message_box_size_allocate (GtkWidget      *widget,
-                                                 GtkAllocation  *allocation);
+static void   gimp_message_box_size_request  (GtkWidget      *widget,
+                                              GtkRequisition *requisition);
+static void   gimp_message_box_size_allocate (GtkWidget      *widget,
+                                              GtkAllocation  *allocation);
 
 
 G_DEFINE_TYPE (GimpMessageBox, gimp_message_box, GTK_TYPE_BOX)
@@ -78,7 +76,7 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
   GtkWidgetClass    *widget_class    = GTK_WIDGET_CLASS (klass);
   GtkContainerClass *container_class = GTK_CONTAINER_CLASS (klass);
 
-  object_class->constructor   = gimp_message_box_constructor;
+  object_class->constructed   = gimp_message_box_constructed;
   object_class->dispose       = gimp_message_box_dispose;
   object_class->finalize      = gimp_message_box_finalize;
   object_class->set_property  = gimp_message_box_set_property;
@@ -138,17 +136,13 @@ gimp_message_box_init (GimpMessageBox *box)
   box->label[2] = NULL;
 }
 
-static GObject *
-gimp_message_box_constructor (GType                  type,
-                              guint                  n_params,
-                              GObjectConstructParam *params)
+static void
+gimp_message_box_constructed (GObject *object)
 {
-  GObject        *object;
-  GimpMessageBox *box;
+  GimpMessageBox *box = GIMP_MESSAGE_BOX (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  box = GIMP_MESSAGE_BOX (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (box->stock_id)
     {
@@ -161,8 +155,6 @@ gimp_message_box_constructor (GType                  type,
       gtk_widget_set_parent (box->image, GTK_WIDGET (box));
       gtk_widget_show (box->image);
     }
-
-  return object;
 }
 
 static void

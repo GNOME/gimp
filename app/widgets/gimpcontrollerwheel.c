@@ -47,9 +47,7 @@ struct _WheelEvent
 };
 
 
-static GObject     * gimp_controller_wheel_constructor     (GType           type,
-                                                            guint           n_params,
-                                                            GObjectConstructParam *params);
+static void          gimp_controller_wheel_constructed     (GObject        *object);
 
 static gint          gimp_controller_wheel_get_n_events    (GimpController *controller);
 static const gchar * gimp_controller_wheel_get_event_name  (GimpController *controller,
@@ -174,7 +172,7 @@ gimp_controller_wheel_class_init (GimpControllerWheelClass *klass)
   GObjectClass        *object_class     = G_OBJECT_CLASS (klass);
   GimpControllerClass *controller_class = GIMP_CONTROLLER_CLASS (klass);
 
-  object_class->constructor         = gimp_controller_wheel_constructor;
+  object_class->constructed         = gimp_controller_wheel_constructed;
 
   controller_class->name            = _("Mouse Wheel");
   controller_class->help_id         = GIMP_HELP_CONTROLLER_WHEEL;
@@ -210,21 +208,16 @@ gimp_controller_wheel_init (GimpControllerWheel *wheel)
     }
 }
 
-static GObject *
-gimp_controller_wheel_constructor (GType                  type,
-                                   guint                  n_params,
-                                   GObjectConstructParam *params)
+static void
+gimp_controller_wheel_constructed (GObject *object)
 {
-  GObject *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_object_set (object,
                 "name",  _("Mouse Wheel Events"),
                 "state", _("Ready"),
                 NULL);
-
-  return object;
 }
 
 static gint

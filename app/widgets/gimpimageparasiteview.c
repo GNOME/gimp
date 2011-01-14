@@ -51,22 +51,20 @@ enum
 };
 
 
-static GObject * gimp_image_parasite_view_constructor  (GType        type,
-                                                       guint         n_params,
-                                                       GObjectConstructParam *params);
-static void      gimp_image_parasite_view_set_property (GObject     *object,
-                                                       guint         property_id,
-                                                       const GValue *value,
-                                                       GParamSpec   *pspec);
-static void      gimp_image_parasite_view_get_property (GObject     *object,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec);
-static void      gimp_image_parasite_view_finalize    (GObject      *object);
+static void   gimp_image_parasite_view_constructed  (GObject     *object);
+static void   gimp_image_parasite_view_finalize     (GObject     *object);
+static void   gimp_image_parasite_view_set_property (GObject     *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec);
+static void   gimp_image_parasite_view_get_property (GObject     *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec);
 
-static void      gimp_image_parasite_view_parasite_changed (GimpImageParasiteView *view,
-                                                            const gchar          *name);
-static void      gimp_image_parasite_view_update           (GimpImageParasiteView *view);
+static void   gimp_image_parasite_view_parasite_changed (GimpImageParasiteView *view,
+                                                         const gchar          *name);
+static void   gimp_image_parasite_view_update           (GimpImageParasiteView *view);
 
 
 G_DEFINE_TYPE (GimpImageParasiteView, gimp_image_parasite_view, GTK_TYPE_BOX)
@@ -90,10 +88,10 @@ gimp_image_parasite_view_class_init (GimpImageParasiteViewClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->constructor  = gimp_image_parasite_view_constructor;
+  object_class->constructed  = gimp_image_parasite_view_constructed;
+  object_class->finalize     = gimp_image_parasite_view_finalize;
   object_class->set_property = gimp_image_parasite_view_set_property;
   object_class->get_property = gimp_image_parasite_view_get_property;
-  object_class->finalize     = gimp_image_parasite_view_finalize;
 
   klass->update              = NULL;
 
@@ -116,6 +114,44 @@ gimp_image_parasite_view_init (GimpImageParasiteView *view)
                                   GTK_ORIENTATION_VERTICAL);
 
   view->parasite = NULL;
+}
+
+static void
+gimp_image_parasite_view_constructed (GObject *object)
+{
+  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (view->parasite != NULL);
+  g_assert (view->image != NULL);
+
+  g_signal_connect_object (view->image, "parasite-attached",
+                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
+                           G_OBJECT (view),
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (view->image, "parasite-detached",
+                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
+                           G_OBJECT (view),
+                           G_CONNECT_SWAPPED);
+
+  gimp_image_parasite_view_update (view);
+}
+
+static void
+gimp_image_parasite_view_finalize (GObject *object)
+{
+  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
+
+  if (view->parasite)
+    {
+      g_free (view->parasite);
+      view->parasite = NULL;
+
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -160,50 +196,6 @@ gimp_image_parasite_view_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static GObject *
-gimp_image_parasite_view_constructor (GType                  type,
-                                     guint                  n_params,
-                                     GObjectConstructParam *params)
-{
-  GimpImageParasiteView *view;
-  GObject              *object;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  view = GIMP_IMAGE_PARASITE_VIEW (object);
-
-  g_assert (view->parasite != NULL);
-  g_assert (view->image != NULL);
-
-  g_signal_connect_object (view->image, "parasite-attached",
-                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
-                           G_OBJECT (view),
-                           G_CONNECT_SWAPPED);
-  g_signal_connect_object (view->image, "parasite-detached",
-                           G_CALLBACK (gimp_image_parasite_view_parasite_changed),
-                           G_OBJECT (view),
-                           G_CONNECT_SWAPPED);
-
-  gimp_image_parasite_view_update (view);
-
-  return object;
-}
-
-static void
-gimp_image_parasite_view_finalize (GObject *object)
-{
-  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (object);
-
-  if (view->parasite)
-    {
-      g_free (view->parasite);
-      view->parasite = NULL;
-
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GtkWidget *

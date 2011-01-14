@@ -54,34 +54,32 @@ enum
 };
 
 
-static void        gimp_editor_docked_iface_init (GimpDockedInterface *iface);
+static void         gimp_editor_docked_iface_init (GimpDockedInterface *iface);
 
-static GObject   * gimp_editor_constructor       (GType            type,
-                                                  guint            n_params,
-                                                  GObjectConstructParam *params);
-static void        gimp_editor_dispose           (GObject         *object);
-static void        gimp_editor_set_property      (GObject         *object,
-                                                  guint            property_id,
-                                                  const GValue    *value,
-                                                  GParamSpec      *pspec);
-static void        gimp_editor_get_property      (GObject         *object,
-                                                  guint            property_id,
-                                                  GValue          *value,
-                                                  GParamSpec      *pspec);
+static void            gimp_editor_constructed         (GObject        *object);
+static void            gimp_editor_dispose             (GObject        *object);
+static void            gimp_editor_set_property        (GObject        *object,
+                                                        guint           property_id,
+                                                        const GValue   *value,
+                                                        GParamSpec     *pspec);
+static void            gimp_editor_get_property        (GObject        *object,
+                                                        guint           property_id,
+                                                        GValue         *value,
+                                                        GParamSpec     *pspec);
 
-static void        gimp_editor_style_set         (GtkWidget       *widget,
-                                                  GtkStyle        *prev_style);
+static void            gimp_editor_style_set           (GtkWidget      *widget,
+                                                        GtkStyle       *prev_style);
 
-static GimpUIManager * gimp_editor_get_menu        (GimpDocked      *docked,
-                                                    const gchar    **ui_path,
-                                                    gpointer        *popup_data);
-static gboolean    gimp_editor_has_button_bar      (GimpDocked      *docked);
-static void        gimp_editor_set_show_button_bar (GimpDocked      *docked,
-                                                    gboolean         show);
-static gboolean    gimp_editor_get_show_button_bar (GimpDocked      *docked);
+static GimpUIManager * gimp_editor_get_menu            (GimpDocked     *docked,
+                                                        const gchar   **ui_path,
+                                                        gpointer       *popup_data);
+static gboolean        gimp_editor_has_button_bar      (GimpDocked     *docked);
+static void            gimp_editor_set_show_button_bar (GimpDocked     *docked,
+                                                        gboolean        show);
+static gboolean        gimp_editor_get_show_button_bar (GimpDocked     *docked);
 
-static GtkIconSize gimp_editor_ensure_button_box   (GimpEditor      *editor,
-                                                    GtkReliefStyle  *button_relief);
+static GtkIconSize     gimp_editor_ensure_button_box   (GimpEditor     *editor,
+                                                        GtkReliefStyle *button_relief);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpEditor, gimp_editor, GTK_TYPE_BOX,
@@ -97,7 +95,7 @@ gimp_editor_class_init (GimpEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor  = gimp_editor_constructor;
+  object_class->constructed  = gimp_editor_constructed;
   object_class->dispose      = gimp_editor_dispose;
   object_class->set_property = gimp_editor_set_property;
   object_class->get_property = gimp_editor_get_property;
@@ -176,6 +174,15 @@ gimp_editor_class_init (GimpEditorClass *klass)
 }
 
 static void
+gimp_editor_docked_iface_init (GimpDockedInterface *iface)
+{
+  iface->get_menu            = gimp_editor_get_menu;
+  iface->has_button_bar      = gimp_editor_has_button_bar;
+  iface->set_show_button_bar = gimp_editor_set_show_button_bar;
+  iface->get_show_button_bar = gimp_editor_get_show_button_bar;
+}
+
+static void
 gimp_editor_init (GimpEditor *editor)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
@@ -201,25 +208,12 @@ gimp_editor_init (GimpEditor *editor)
 }
 
 static void
-gimp_editor_docked_iface_init (GimpDockedInterface *iface)
+gimp_editor_constructed (GObject *object)
 {
-  iface->get_menu            = gimp_editor_get_menu;
-  iface->has_button_bar      = gimp_editor_has_button_bar;
-  iface->set_show_button_bar = gimp_editor_set_show_button_bar;
-  iface->get_show_button_bar = gimp_editor_get_show_button_bar;
-}
+  GimpEditor *editor = GIMP_EDITOR (object);
 
-static GObject *
-gimp_editor_constructor (GType                  type,
-                         guint                  n_params,
-                         GObjectConstructParam *params)
-{
-  GObject    *object;
-  GimpEditor *editor;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (! editor->popup_data)
     editor->popup_data = editor;
@@ -232,8 +226,6 @@ gimp_editor_constructor (GType                  type,
                                        editor->popup_data,
                                        FALSE);
     }
-
-  return object;
 }
 
 static void

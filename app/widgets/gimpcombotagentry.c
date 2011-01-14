@@ -38,9 +38,7 @@
 #include "gimpcombotagentry.h"
 
 
-static GObject* gimp_combo_tag_entry_constructor       (GType                  type,
-                                                        guint                  n_params,
-                                                        GObjectConstructParam *params);
+static void     gimp_combo_tag_entry_constructed       (GObject                *object);
 static void     gimp_combo_tag_entry_dispose           (GObject                *object);
 
 static gboolean gimp_combo_tag_entry_expose            (GtkWidget              *widget,
@@ -72,7 +70,7 @@ gimp_combo_tag_entry_class_init (GimpComboTagEntryClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor  = gimp_combo_tag_entry_constructor;
+  object_class->constructed  = gimp_combo_tag_entry_constructed;
   object_class->dispose      = gimp_combo_tag_entry_dispose;
 
   widget_class->expose_event = gimp_combo_tag_entry_expose;
@@ -100,26 +98,18 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
                     NULL);
 }
 
-static GObject *
-gimp_combo_tag_entry_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_combo_tag_entry_constructed (GObject *object)
 {
-  GObject           *object;
-  GimpComboTagEntry *entry;
+  GimpComboTagEntry *entry = GIMP_COMBO_TAG_ENTRY (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type,
-                                                       n_params,
-                                                       params);
-
-  entry = GIMP_COMBO_TAG_ENTRY (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_signal_connect_object (GIMP_TAG_ENTRY (entry)->container,
                            "tag-count-changed",
                            G_CALLBACK (gimp_combo_tag_entry_tag_count_changed),
                            entry, 0);
-
-  return object;
 }
 
 static void

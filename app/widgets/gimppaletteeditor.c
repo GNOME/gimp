@@ -61,9 +61,7 @@
 
 static void   gimp_palette_editor_docked_iface_init (GimpDockedInterface *face);
 
-static GObject * gimp_palette_editor_constructor   (GType              type,
-                                                    guint              n_params,
-                                                    GObjectConstructParam *params);
+static void   gimp_palette_editor_constructed      (GObject           *object);
 static void   gimp_palette_editor_dispose          (GObject           *object);
 
 static void   gimp_palette_editor_unmap            (GtkWidget         *widget);
@@ -136,7 +134,7 @@ gimp_palette_editor_class_init (GimpPaletteEditorClass *klass)
   GtkWidgetClass      *widget_class = GTK_WIDGET_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
-  object_class->constructor = gimp_palette_editor_constructor;
+  object_class->constructed = gimp_palette_editor_constructed;
   object_class->dispose     = gimp_palette_editor_dispose;
 
   widget_class->unmap       = gimp_palette_editor_unmap;
@@ -247,17 +245,13 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                     editor);
 }
 
-static GObject *
-gimp_palette_editor_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_palette_editor_constructed (GObject *object)
 {
-  GObject           *object;
-  GimpPaletteEditor *editor;
+  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_PALETTE_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
                                  "palette-editor-edit-color", NULL);
@@ -279,8 +273,6 @@ gimp_palette_editor_constructor (GType                  type,
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "palette-editor",
                                  "palette-editor-zoom-all", NULL);
-
-  return object;
 }
 
 static void

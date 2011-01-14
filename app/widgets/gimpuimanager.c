@@ -59,9 +59,7 @@ enum
 };
 
 
-static GObject *  gimp_ui_manager_constructor         (GType           type,
-                                                       guint           n_params,
-                                                       GObjectConstructParam *params);
+static void       gimp_ui_manager_constructed         (GObject        *object);
 static void       gimp_ui_manager_dispose             (GObject        *object);
 static void       gimp_ui_manager_finalize            (GObject        *object);
 static void       gimp_ui_manager_set_property        (GObject        *object,
@@ -128,7 +126,7 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
   GObjectClass      *object_class  = G_OBJECT_CLASS (klass);
   GtkUIManagerClass *manager_class = GTK_UI_MANAGER_CLASS (klass);
 
-  object_class->constructor    = gimp_ui_manager_constructor;
+  object_class->constructed    = gimp_ui_manager_constructed;
   object_class->dispose        = gimp_ui_manager_dispose;
   object_class->finalize       = gimp_ui_manager_finalize;
   object_class->set_property   = gimp_ui_manager_set_property;
@@ -195,17 +193,13 @@ gimp_ui_manager_init (GimpUIManager *manager)
   manager->gimp = NULL;
 }
 
-static GObject *
-gimp_ui_manager_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_ui_manager_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpUIManager *manager;
+  GimpUIManager *manager = GIMP_UI_MANAGER (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  manager = GIMP_UI_MANAGER (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   if (manager->name)
     {
@@ -221,8 +215,6 @@ gimp_ui_manager_constructor (GType                  type,
       g_hash_table_replace (manager_class->managers,
                             g_strdup (manager->name), list);
     }
-
-  return object;
 }
 
 static void

@@ -66,24 +66,21 @@ struct _GimpSizeBoxPrivate
 };
 
 
-static GObject * gimp_size_box_constructor   (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
+static void   gimp_size_box_constructed       (GObject         *object);
+static void   gimp_size_box_dispose           (GObject         *object);
+static void   gimp_size_box_set_property      (GObject         *object,
+                                               guint            property_id,
+                                               const GValue    *value,
+                                               GParamSpec      *pspec);
+static void   gimp_size_box_get_property      (GObject         *object,
+                                               guint            property_id,
+                                               GValue          *value,
+                                               GParamSpec      *pspec);
 
-static void      gimp_size_box_dispose           (GObject         *object);
-static void      gimp_size_box_set_property      (GObject         *object,
-                                                  guint            property_id,
-                                                  const GValue    *value,
-                                                  GParamSpec      *pspec);
-static void      gimp_size_box_get_property      (GObject         *object,
-                                                  guint            property_id,
-                                                  GValue          *value,
-                                                  GParamSpec      *pspec);
-
-static void      gimp_size_box_update_size       (GimpSizeBox     *box);
-static void      gimp_size_box_update_resolution (GimpSizeBox     *box);
-static void      gimp_size_box_chain_toggled     (GimpChainButton *button,
-                                                  GimpSizeBox     *box);
+static void   gimp_size_box_update_size       (GimpSizeBox     *box);
+static void   gimp_size_box_update_resolution (GimpSizeBox     *box);
+static void   gimp_size_box_chain_toggled     (GimpChainButton *button,
+                                               GimpSizeBox     *box);
 
 
 G_DEFINE_TYPE (GimpSizeBox, gimp_size_box, GTK_TYPE_BOX)
@@ -96,7 +93,7 @@ gimp_size_box_class_init (GimpSizeBoxClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_size_box_constructor;
+  object_class->constructed  = gimp_size_box_constructed;
   object_class->dispose      = gimp_size_box_dispose;
   object_class->set_property = gimp_size_box_set_property;
   object_class->get_property = gimp_size_box_get_property;
@@ -170,14 +167,11 @@ gimp_size_box_init (GimpSizeBox *box)
   box->size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 }
 
-static GObject *
-gimp_size_box_constructor (GType                  type,
-                           guint                  n_params,
-                           GObjectConstructParam *params)
+static void
+gimp_size_box_constructed (GObject *object)
 {
-  GObject            *object;
-  GimpSizeBox        *box;
-  GimpSizeBoxPrivate *priv;
+  GimpSizeBox        *box  = GIMP_SIZE_BOX (object);
+  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
   GtkWidget          *vbox;
   GtkWidget          *entry;
   GtkWidget          *hbox;
@@ -185,10 +179,8 @@ gimp_size_box_constructor (GType                  type,
   GList              *children;
   GList              *list;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  box = GIMP_SIZE_BOX (object);
-  priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
@@ -298,8 +290,6 @@ gimp_size_box_constructor (GType                  type,
 
   gimp_size_box_update_size (box);
   gimp_size_box_update_resolution (box);
-
-  return object;
 }
 
 static void

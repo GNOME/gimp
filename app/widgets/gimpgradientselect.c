@@ -45,9 +45,7 @@ enum
 };
 
 
-static GObject     * gimp_gradient_select_constructor  (GType           type,
-                                                        guint           n_params,
-                                                        GObjectConstructParam *params);
+static void          gimp_gradient_select_constructed  (GObject        *object);
 static void          gimp_gradient_select_set_property (GObject        *object,
                                                         guint           property_id,
                                                         const GValue   *value,
@@ -71,7 +69,7 @@ gimp_gradient_select_class_init (GimpGradientSelectClass *klass)
   GObjectClass       *object_class = G_OBJECT_CLASS (klass);
   GimpPdbDialogClass *pdb_class    = GIMP_PDB_DIALOG_CLASS (klass);
 
-  object_class->constructor  = gimp_gradient_select_constructor;
+  object_class->constructed  = gimp_gradient_select_constructed;
   object_class->set_property = gimp_gradient_select_set_property;
 
   pdb_class->run_callback    = gimp_gradient_select_run_callback;
@@ -88,18 +86,14 @@ gimp_gradient_select_init (GimpGradientSelect *select)
 {
 }
 
-static GObject *
-gimp_gradient_select_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_gradient_select_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpPdbDialog *dialog;
+  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
   GtkWidget     *content_area;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  dialog = GIMP_PDB_DIALOG (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   dialog->view =
     gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
@@ -119,8 +113,25 @@ gimp_gradient_select_constructor (GType                  type,
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   gtk_box_pack_start (GTK_BOX (content_area), dialog->view, TRUE, TRUE, 0);
   gtk_widget_show (dialog->view);
+}
 
-  return object;
+static void
+gimp_gradient_select_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec)
+{
+  GimpGradientSelect *select = GIMP_GRADIENT_SELECT (object);
+
+  switch (property_id)
+    {
+    case PROP_SAMPLE_SIZE:
+      select->sample_size = g_value_get_int (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static GValueArray *
@@ -178,23 +189,4 @@ gimp_gradient_select_run_callback (GimpPdbDialog  *dialog,
   gimp_array_free (array);
 
   return return_vals;
-}
-
-static void
-gimp_gradient_select_set_property (GObject      *object,
-                                   guint         property_id,
-                                   const GValue *value,
-                                   GParamSpec   *pspec)
-{
-  GimpGradientSelect *select = GIMP_GRADIENT_SELECT (object);
-
-  switch (property_id)
-    {
-    case PROP_SAMPLE_SIZE:
-      select->sample_size = g_value_get_int (value);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }

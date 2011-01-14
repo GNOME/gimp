@@ -73,9 +73,7 @@ struct _GimpToolOptionsEditorPrivate
 
 
 static void        gimp_tool_options_editor_docked_iface_init (GimpDockedInterface   *iface);
-static GObject   * gimp_tool_options_editor_constructor       (GType                  type,
-                                                               guint                  n_params,
-                                                               GObjectConstructParam *params);
+static void        gimp_tool_options_editor_constructed       (GObject               *object);
 static void        gimp_tool_options_editor_dispose           (GObject               *object);
 static void        gimp_tool_options_editor_set_property      (GObject               *object,
                                                                guint                  property_id,
@@ -125,7 +123,7 @@ gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_tool_options_editor_constructor;
+  object_class->constructed  = gimp_tool_options_editor_constructed;
   object_class->dispose      = gimp_tool_options_editor_dispose;
   object_class->set_property = gimp_tool_options_editor_set_property;
   object_class->get_property = gimp_tool_options_editor_get_property;
@@ -138,6 +136,14 @@ gimp_tool_options_editor_class_init (GimpToolOptionsEditorClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   g_type_class_add_private (klass, sizeof (GimpToolOptionsEditorPrivate));
+}
+
+static void
+gimp_tool_options_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+{
+  docked_iface->get_preview     = gimp_tool_options_editor_get_preview;
+  docked_iface->get_title       = gimp_tool_options_editor_get_title;
+  docked_iface->get_prefer_icon = gimp_tool_options_editor_get_prefer_icon;
 }
 
 static void
@@ -194,25 +200,13 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
 }
 
 static void
-gimp_tool_options_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+gimp_tool_options_editor_constructed (GObject *object)
 {
-  docked_iface->get_preview     = gimp_tool_options_editor_get_preview;
-  docked_iface->get_title       = gimp_tool_options_editor_get_title;
-  docked_iface->get_prefer_icon = gimp_tool_options_editor_get_prefer_icon;
-}
+  GimpToolOptionsEditor *editor = GIMP_TOOL_OPTIONS_EDITOR (object);
+  GimpContext           *user_context;
 
-static GObject *
-gimp_tool_options_editor_constructor (GType                  type,
-                                      guint                  n_params,
-                                      GObjectConstructParam *params)
-{
-  GObject               *object       = NULL;
-  GimpToolOptionsEditor *editor       = NULL;
-  GimpContext           *user_context = NULL;
-
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_TOOL_OPTIONS_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   editor->p->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_SAVE,
@@ -255,8 +249,6 @@ gimp_tool_options_editor_constructor (GType                  type,
   gimp_tool_options_editor_tool_changed (user_context,
                                          gimp_context_get_tool (user_context),
                                          editor);
-
-  return object;
 }
 
 static void

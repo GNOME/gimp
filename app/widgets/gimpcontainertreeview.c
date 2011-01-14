@@ -46,11 +46,9 @@
 
 static void          gimp_container_tree_view_view_iface_init   (GimpContainerViewInterface  *iface);
 
-static GObject *     gimp_container_tree_view_constructor       (GType                        type,
-                                                                 guint                        n_params,
-                                                                 GObjectConstructParam       *params);
-
+static void          gimp_container_tree_view_constructed       (GObject                     *object);
 static void          gimp_container_tree_view_finalize          (GObject                     *object);
+
 static void          gimp_container_tree_view_unmap             (GtkWidget                   *widget);
 static gboolean      gimp_container_tree_view_popup_menu        (GtkWidget                   *widget);
 
@@ -123,7 +121,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor = gimp_container_tree_view_constructor;
+  object_class->constructed = gimp_container_tree_view_constructed;
   object_class->finalize    = gimp_container_tree_view_finalize;
 
   widget_class->unmap       = gimp_container_tree_view_unmap;
@@ -181,21 +179,15 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 }
 
-static GObject *
-gimp_container_tree_view_constructor (GType                  type,
-                                      guint                  n_params,
-                                      GObjectConstructParam *params)
+static void
+gimp_container_tree_view_constructed (GObject *object)
 {
-  GimpContainerTreeView *tree_view;
-  GimpContainerView     *view;
-  GimpContainerBox      *box;
-  GObject               *object;
+  GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+  GimpContainerView     *view      = GIMP_CONTAINER_VIEW (object);
+  GimpContainerBox      *box       = GIMP_CONTAINER_BOX (object);
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (object);
-  view      = GIMP_CONTAINER_VIEW (object);
-  box       = GIMP_CONTAINER_BOX (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   tree_view->model = gimp_container_tree_store_new (view,
                                                     tree_view->n_model_columns,
@@ -275,8 +267,6 @@ gimp_container_tree_view_constructor (GType                  type,
   g_signal_connect (tree_view->view, "query-tooltip",
                     G_CALLBACK (gimp_container_tree_view_tooltip),
                     tree_view);
-
-  return object;
 }
 
 static void

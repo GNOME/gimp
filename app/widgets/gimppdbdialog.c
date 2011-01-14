@@ -52,28 +52,26 @@ enum
 };
 
 
-static void      gimp_pdb_dialog_class_init     (GimpPdbDialogClass *klass);
-static void      gimp_pdb_dialog_init           (GimpPdbDialog      *dialog,
-                                                 GimpPdbDialogClass *klass);
+static void   gimp_pdb_dialog_class_init      (GimpPdbDialogClass *klass);
+static void   gimp_pdb_dialog_init            (GimpPdbDialog      *dialog,
+                                               GimpPdbDialogClass *klass);
 
-static GObject * gimp_pdb_dialog_constructor    (GType               type,
-                                                 guint               n_params,
-                                                 GObjectConstructParam *params);
-static void      gimp_pdb_dialog_dispose        (GObject            *object);
-static void      gimp_pdb_dialog_set_property   (GObject            *object,
-                                                 guint               property_id,
-                                                 const GValue       *value,
-                                                 GParamSpec         *pspec);
+static void   gimp_pdb_dialog_constructed     (GObject            *object);
+static void   gimp_pdb_dialog_dispose         (GObject            *object);
+static void   gimp_pdb_dialog_set_property    (GObject            *object,
+                                               guint               property_id,
+                                               const GValue       *value,
+                                               GParamSpec         *pspec);
 
-static void      gimp_pdb_dialog_response       (GtkDialog          *dialog,
-                                                 gint                response_id);
+static void   gimp_pdb_dialog_response        (GtkDialog          *dialog,
+                                               gint                response_id);
 
-static void     gimp_pdb_dialog_context_changed (GimpContext        *context,
-                                                 GimpObject         *object,
-                                                 GimpPdbDialog      *dialog);
-static void     gimp_pdb_dialog_plug_in_closed  (GimpPlugInManager  *manager,
-                                                 GimpPlugIn         *plug_in,
-                                                 GimpPdbDialog      *dialog);
+static void   gimp_pdb_dialog_context_changed (GimpContext        *context,
+                                               GimpObject         *object,
+                                               GimpPdbDialog      *dialog);
+static void   gimp_pdb_dialog_plug_in_closed  (GimpPlugInManager  *manager,
+                                               GimpPlugIn         *plug_in,
+                                               GimpPdbDialog      *dialog);
 
 
 static GimpDialogClass *parent_class = NULL;
@@ -116,7 +114,7 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->constructor  = gimp_pdb_dialog_constructor;
+  object_class->constructed  = gimp_pdb_dialog_constructed;
   object_class->dispose      = gimp_pdb_dialog_dispose;
   object_class->set_property = gimp_pdb_dialog_set_property;
   object_class->set_property = gimp_pdb_dialog_set_property;
@@ -176,25 +174,21 @@ gimp_pdb_dialog_init (GimpPdbDialog      *dialog,
                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 }
 
-static GObject *
-gimp_pdb_dialog_constructor (GType                  type,
-                             guint                  n_params,
-                             GObjectConstructParam *params)
+static void
+gimp_pdb_dialog_constructed (GObject *object)
 {
-  GObject       *object;
-  GimpPdbDialog *dialog;
+  GimpPdbDialog *dialog = GIMP_PDB_DIALOG (object);
   const gchar   *signal_name;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  dialog = GIMP_PDB_DIALOG (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_PDB (dialog->pdb));
   g_assert (GIMP_IS_CONTEXT (dialog->caller_context));
   g_assert (g_type_is_a (dialog->select_type, GIMP_TYPE_OBJECT));
 
   dialog->context = gimp_context_new (dialog->caller_context->gimp,
-                                      g_type_name (type),
+                                      G_OBJECT_TYPE_NAME (object),
                                       NULL);
 
   gimp_context_set_by_type (dialog->context, dialog->select_type,
@@ -211,8 +205,6 @@ gimp_pdb_dialog_constructor (GType                  type,
                            "plug-in-closed",
                            G_CALLBACK (gimp_pdb_dialog_plug_in_closed),
                            dialog, 0);
-
-  return object;
 }
 
 static void

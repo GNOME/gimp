@@ -65,65 +65,63 @@ struct _PopupTagData
 };
 
 
-static GObject* gimp_tag_popup_constructor             (GType                  type,
-                                                        guint                  n_construct_params,
-                                                        GObjectConstructParam *construct_params);
-static void     gimp_tag_popup_dispose                 (GObject           *object);
-static void     gimp_tag_popup_set_property            (GObject           *object,
-                                                        guint              property_id,
-                                                        const GValue      *value,
-                                                        GParamSpec        *pspec);
-static void     gimp_tag_popup_get_property            (GObject           *object,
-                                                        guint              property_id,
-                                                        GValue            *value,
-                                                        GParamSpec        *pspec);
+static void     gimp_tag_popup_constructed             (GObject        *object);
+static void     gimp_tag_popup_dispose                 (GObject        *object);
+static void     gimp_tag_popup_set_property            (GObject        *object,
+                                                        guint           property_id,
+                                                        const GValue   *value,
+                                                        GParamSpec     *pspec);
+static void     gimp_tag_popup_get_property            (GObject        *object,
+                                                        guint           property_id,
+                                                        GValue         *value,
+                                                        GParamSpec     *pspec);
 
-static gboolean gimp_tag_popup_border_expose           (GtkWidget          *widget,
-                                                        GdkEventExpose     *event,
-                                                        GimpTagPopup       *popup);
-static gboolean gimp_tag_popup_list_expose             (GtkWidget          *widget,
-                                                        GdkEventExpose     *event,
-                                                        GimpTagPopup       *popup);
-static gboolean gimp_tag_popup_border_event            (GtkWidget          *widget,
-                                                        GdkEvent           *event);
-static gboolean gimp_tag_popup_list_event              (GtkWidget          *widget,
-                                                        GdkEvent           *event,
-                                                        GimpTagPopup       *popup);
-static gboolean gimp_tag_popup_is_in_tag               (PopupTagData       *tag_data,
-                                                        gint                x,
-                                                        gint                y);
-static void     gimp_tag_popup_queue_draw_tag          (GimpTagPopup       *widget,
-                                                        PopupTagData       *tag_data);
-static void     gimp_tag_popup_toggle_tag              (GimpTagPopup       *popup,
-                                                        PopupTagData       *tag_data);
-static void     gimp_tag_popup_check_can_toggle        (GimpTagged         *tagged,
-                                                        GimpTagPopup       *popup);
-static gint     gimp_tag_popup_layout_tags             (GimpTagPopup       *popup,
-                                                        gint                width);
-static gboolean gimp_tag_popup_scroll_timeout          (gpointer            data);
-static void     gimp_tag_popup_remove_scroll_timeout   (GimpTagPopup       *popup);
-static gboolean gimp_tag_popup_scroll_timeout_initial  (gpointer            data);
-static void     gimp_tag_popup_start_scrolling         (GimpTagPopup       *popup);
-static void     gimp_tag_popup_stop_scrolling          (GimpTagPopup       *popup);
-static void     gimp_tag_popup_scroll_by               (GimpTagPopup       *popup,
-                                                        gint                step);
-static void     gimp_tag_popup_handle_scrolling        (GimpTagPopup       *popup,
-                                                        gint                x,
-                                                        gint                y,
-                                                        gboolean            enter,
-                                                        gboolean            motion);
+static gboolean gimp_tag_popup_border_expose           (GtkWidget      *widget,
+                                                        GdkEventExpose *event,
+                                                        GimpTagPopup   *popup);
+static gboolean gimp_tag_popup_list_expose             (GtkWidget      *widget,
+                                                        GdkEventExpose *event,
+                                                        GimpTagPopup   *popup);
+static gboolean gimp_tag_popup_border_event            (GtkWidget      *widget,
+                                                        GdkEvent       *event);
+static gboolean gimp_tag_popup_list_event              (GtkWidget      *widget,
+                                                        GdkEvent       *event,
+                                                        GimpTagPopup   *popup);
+static gboolean gimp_tag_popup_is_in_tag               (PopupTagData   *tag_data,
+                                                        gint            x,
+                                                        gint            y);
+static void     gimp_tag_popup_queue_draw_tag          (GimpTagPopup   *widget,
+                                                        PopupTagData   *tag_data);
+static void     gimp_tag_popup_toggle_tag              (GimpTagPopup   *popup,
+                                                        PopupTagData   *tag_data);
+static void     gimp_tag_popup_check_can_toggle        (GimpTagged     *tagged,
+                                                        GimpTagPopup   *popup);
+static gint     gimp_tag_popup_layout_tags             (GimpTagPopup   *popup,
+                                                        gint            width);
+static gboolean gimp_tag_popup_scroll_timeout          (gpointer        data);
+static void     gimp_tag_popup_remove_scroll_timeout   (GimpTagPopup   *popup);
+static gboolean gimp_tag_popup_scroll_timeout_initial  (gpointer        data);
+static void     gimp_tag_popup_start_scrolling         (GimpTagPopup   *popup);
+static void     gimp_tag_popup_stop_scrolling          (GimpTagPopup   *popup);
+static void     gimp_tag_popup_scroll_by               (GimpTagPopup   *popup,
+                                                        gint            step);
+static void     gimp_tag_popup_handle_scrolling        (GimpTagPopup   *popup,
+                                                        gint            x,
+                                                        gint            y,
+                                                        gboolean        enter,
+                                                        gboolean        motion);
 
-static gboolean gimp_tag_popup_button_scroll           (GimpTagPopup       *popup,
-                                                        GdkEventButton     *event);
+static gboolean gimp_tag_popup_button_scroll           (GimpTagPopup   *popup,
+                                                        GdkEventButton *event);
 
-static void     get_arrows_visible_area                (GimpTagPopup       *combo_entry,
-                                                        GdkRectangle       *border,
-                                                        GdkRectangle       *upper,
-                                                        GdkRectangle       *lower,
-                                                        gint               *arrow_space);
-static void     get_arrows_sensitive_area              (GimpTagPopup       *popup,
-                                                        GdkRectangle       *upper,
-                                                        GdkRectangle       *lower);
+static void     get_arrows_visible_area                (GimpTagPopup   *combo_entry,
+                                                        GdkRectangle   *border,
+                                                        GdkRectangle   *upper,
+                                                        GdkRectangle   *lower,
+                                                        gint           *arrow_space);
+static void     get_arrows_sensitive_area              (GimpTagPopup   *popup,
+                                                        GdkRectangle   *upper,
+                                                        GdkRectangle   *lower);
 
 
 G_DEFINE_TYPE (GimpTagPopup, gimp_tag_popup, GTK_TYPE_WINDOW);
@@ -136,7 +134,7 @@ gimp_tag_popup_class_init (GimpTagPopupClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_tag_popup_constructor;
+  object_class->constructed  = gimp_tag_popup_constructed;
   object_class->dispose      = gimp_tag_popup_dispose;
   object_class->set_property = gimp_tag_popup_set_property;
   object_class->get_property = gimp_tag_popup_get_property;
@@ -194,13 +192,10 @@ gimp_tag_popup_init (GimpTagPopup *popup)
                     popup);
 }
 
-static GObject *
-gimp_tag_popup_constructor (GType                  type,
-                            guint                  n_construct_params,
-                            GObjectConstructParam *construct_params)
+static void
+gimp_tag_popup_constructed (GObject *object)
 {
-  GObject               *object;
-  GimpTagPopup          *popup;
+  GimpTagPopup          *popup = GIMP_TAG_POPUP (object);
   GimpFilteredContainer *container;
   GtkWidget             *entry;
   GtkAllocation          entry_allocation;
@@ -223,10 +218,8 @@ gimp_tag_popup_constructor (GType                  type,
   GdkRectangle           popup_rects[2]; /* variants of popup placement */
   GdkRectangle           popup_rect; /* best popup rect in screen coordinates */
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type,
-                                                       n_construct_params,
-                                                       construct_params);
-  popup = GIMP_TAG_POPUP (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   entry = GTK_WIDGET (popup->combo_entry);
 
@@ -367,8 +360,6 @@ gimp_tag_popup_constructor (GType                  type,
 
   gtk_window_move (GTK_WINDOW (popup), popup_rect.x, popup_rect.y);
   gtk_window_resize (GTK_WINDOW (popup), popup_rect.width, popup_rect.height);
-
-  return object;
 }
 
 static void

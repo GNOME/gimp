@@ -42,9 +42,7 @@ enum
 };
 
 
-static GObject * gimp_stroke_editor_constructor  (GType              type,
-                                                  guint              n_params,
-                                                  GObjectConstructParam *params);
+static void      gimp_stroke_editor_constructed  (GObject           *object);
 static void      gimp_stroke_editor_set_property (GObject           *object,
                                                   guint              property_id,
                                                   const GValue      *value,
@@ -53,6 +51,7 @@ static void      gimp_stroke_editor_get_property (GObject           *object,
                                                   guint              property_id,
                                                   GValue            *value,
                                                   GParamSpec        *pspec);
+
 static gboolean  gimp_stroke_editor_paint_button (GtkWidget         *widget,
                                                   GdkEventExpose    *event,
                                                   gpointer           data);
@@ -73,7 +72,7 @@ gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructor  = gimp_stroke_editor_constructor;
+  object_class->constructed  = gimp_stroke_editor_constructed;
   object_class->set_property = gimp_stroke_editor_set_property;
   object_class->get_property = gimp_stroke_editor_get_property;
 
@@ -98,65 +97,10 @@ gimp_stroke_editor_init (GimpStrokeEditor *editor)
 }
 
 static void
-gimp_stroke_editor_set_property (GObject      *object,
-                                 guint         property_id,
-                                 const GValue *value,
-                                 GParamSpec   *pspec)
+gimp_stroke_editor_constructed (GObject *object)
 {
-  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
-  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
-
-  switch (property_id)
-    {
-    case PROP_OPTIONS:
-      if (fill_editor->options)
-        g_object_unref (fill_editor->options);
-      fill_editor->options = g_value_dup_object (value);
-      break;
-
-    case PROP_RESOLUTION:
-      editor->resolution = g_value_get_double (value);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_stroke_editor_get_property (GObject    *object,
-                                 guint       property_id,
-                                 GValue     *value,
-                                 GParamSpec *pspec)
-{
-  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
-  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
-
-  switch (property_id)
-    {
-    case PROP_OPTIONS:
-      g_value_set_object (value, fill_editor->options);
-      break;
-
-    case PROP_RESOLUTION:
-      g_value_set_double (value, editor->resolution);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static GObject *
-gimp_stroke_editor_constructor (GType                   type,
-                                guint                   n_params,
-                                GObjectConstructParam  *params)
-{
-  GObject           *object;
-  GimpFillEditor    *fill_editor;
-  GimpStrokeEditor  *editor;
+  GimpFillEditor    *fill_editor = GIMP_FILL_EDITOR (object);
+  GimpStrokeEditor  *editor      = GIMP_STROKE_EDITOR (object);
   GimpStrokeOptions *options;
   GimpEnumStore     *store;
   GEnumValue        *value;
@@ -171,10 +115,8 @@ gimp_stroke_editor_constructor (GType                   type,
   GtkCellRenderer   *cell;
   gint               row = 0;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  fill_editor = GIMP_FILL_EDITOR (object);
-  editor      = GIMP_STROKE_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_STROKE_OPTIONS (fill_editor->options));
 
@@ -314,8 +256,58 @@ gimp_stroke_editor_constructor (GType                   type,
   g_signal_connect_object (options, "dash-info-changed",
                            G_CALLBACK (gimp_int_combo_box_set_active),
                            box, G_CONNECT_SWAPPED);
+}
 
-  return object;
+static void
+gimp_stroke_editor_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
+  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_OPTIONS:
+      if (fill_editor->options)
+        g_object_unref (fill_editor->options);
+      fill_editor->options = g_value_dup_object (value);
+      break;
+
+    case PROP_RESOLUTION:
+      editor->resolution = g_value_get_double (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_stroke_editor_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpFillEditor   *fill_editor = GIMP_FILL_EDITOR (object);
+  GimpStrokeEditor *editor      = GIMP_STROKE_EDITOR (object);
+
+  switch (property_id)
+    {
+    case PROP_OPTIONS:
+      g_value_set_object (value, fill_editor->options);
+      break;
+
+    case PROP_RESOLUTION:
+      g_value_set_double (value, editor->resolution);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GtkWidget *

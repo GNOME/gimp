@@ -82,10 +82,10 @@ struct _GimpLayerTreeViewPriv
 
 
 static void       gimp_layer_tree_view_view_iface_init            (GimpContainerViewInterface *iface);
-static GObject *  gimp_layer_tree_view_constructor                (GType                       type,
-                                                                   guint                       n_params,
-                                                                   GObjectConstructParam      *params);
+
+static void       gimp_layer_tree_view_constructed                (GObject                    *object);
 static void       gimp_layer_tree_view_finalize                   (GObject                    *object);
+
 static void       gimp_layer_tree_view_set_container              (GimpContainerView          *view,
                                                                    GimpContainer              *container);
 static void       gimp_layer_tree_view_set_context                (GimpContainerView          *view,
@@ -186,7 +186,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
-  object_class->constructor = gimp_layer_tree_view_constructor;
+  object_class->constructed = gimp_layer_tree_view_constructed;
   object_class->finalize    = gimp_layer_tree_view_finalize;
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
@@ -330,20 +330,15 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   pango_attr_list_insert (view->priv->bold_attrs, attr);
 }
 
-static GObject *
-gimp_layer_tree_view_constructor (GType                  type,
-                                  guint                  n_params,
-                                  GObjectConstructParam *params)
+static void
+gimp_layer_tree_view_constructed (GObject *object)
 {
-  GimpContainerTreeView *tree_view;
-  GimpLayerTreeView     *layer_view;
+  GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (object);
+  GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (object);
   GtkWidget             *button;
-  GObject               *object;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  tree_view  = GIMP_CONTAINER_TREE_VIEW (object);
-  layer_view = GIMP_LAYER_TREE_VIEW (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   layer_view->priv->mask_cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_column_pack_start (tree_view->main_column,
@@ -393,8 +388,6 @@ gimp_layer_tree_view_constructor (GType                  type,
                                   GIMP_TYPE_LAYER);
   gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (layer_view)->button_box),
                          button, 6);
-
-  return object;
 }
 
 static void

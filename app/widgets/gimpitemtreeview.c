@@ -97,9 +97,7 @@ struct _GimpItemTreeViewPriv
 static void   gimp_item_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
 static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
 
-static GObject * gimp_item_tree_view_constructor    (GType              type,
-                                                     guint              n_params,
-                                                     GObjectConstructParam *params);
+static void   gimp_item_tree_view_constructed       (GObject           *object);
 static void   gimp_item_tree_view_dispose           (GObject           *object);
 
 static void   gimp_item_tree_view_style_set         (GtkWidget         *widget,
@@ -236,7 +234,7 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_OBJECT);
 
-  object_class->constructor      = gimp_item_tree_view_constructor;
+  object_class->constructed      = gimp_item_tree_view_constructed;
   object_class->dispose          = gimp_item_tree_view_dispose;
 
   widget_class->style_set        = gimp_item_tree_view_style_set;
@@ -318,27 +316,20 @@ gimp_item_tree_view_init (GimpItemTreeView *view)
   view->priv->image  = NULL;
 }
 
-static GObject *
-gimp_item_tree_view_constructor (GType                  type,
-                                 guint                  n_params,
-                                 GObjectConstructParam *params)
+static void
+gimp_item_tree_view_constructed (GObject *object)
 {
-  GimpItemTreeViewClass *item_view_class;
-  GimpEditor            *editor;
-  GimpContainerTreeView *tree_view;
-  GimpItemTreeView      *item_view;
-  GObject               *object;
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (object);
+  GimpEditor            *editor          = GIMP_EDITOR (object);
+  GimpContainerTreeView *tree_view       = GIMP_CONTAINER_TREE_VIEW (object);
+  GimpItemTreeView      *item_view       = GIMP_ITEM_TREE_VIEW (object);
   GtkTreeViewColumn     *column;
   GtkWidget             *hbox;
   GtkWidget             *image;
   GtkIconSize            icon_size;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor          = GIMP_EDITOR (object);
-  tree_view       = GIMP_CONTAINER_TREE_VIEW (object);
-  item_view       = GIMP_ITEM_TREE_VIEW (object);
-  item_view_class = GIMP_ITEM_TREE_VIEW_GET_CLASS (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_container_tree_view_connect_name_edited (tree_view,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),
@@ -480,8 +471,6 @@ gimp_item_tree_view_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_content_toggle),
                      image);
   gtk_widget_show (image);
-
-  return object;
 }
 
 static void

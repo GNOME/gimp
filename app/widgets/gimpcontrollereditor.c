@@ -62,9 +62,8 @@ enum
 };
 
 
-static GObject * gimp_controller_editor_constructor (GType               type,
-                                                     guint               n_params,
-                                                     GObjectConstructParam *params);
+static void gimp_controller_editor_constructed    (GObject              *object);
+static void gimp_controller_editor_finalize       (GObject              *object);
 static void gimp_controller_editor_set_property   (GObject              *object,
                                                    guint                 property_id,
                                                    const GValue         *value,
@@ -74,7 +73,6 @@ static void gimp_controller_editor_get_property   (GObject              *object,
                                                    GValue               *value,
                                                    GParamSpec           *pspec);
 
-static void gimp_controller_editor_finalize       (GObject              *object);
 
 static void gimp_controller_editor_unmap          (GtkWidget            *widget);
 
@@ -118,10 +116,10 @@ gimp_controller_editor_class_init (GimpControllerEditorClass *klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->constructor  = gimp_controller_editor_constructor;
+  object_class->constructed  = gimp_controller_editor_constructed;
+  object_class->finalize     = gimp_controller_editor_finalize;
   object_class->set_property = gimp_controller_editor_set_property;
   object_class->get_property = gimp_controller_editor_get_property;
-  object_class->finalize     = gimp_controller_editor_finalize;
 
   widget_class->unmap        = gimp_controller_editor_unmap;
 
@@ -150,13 +148,10 @@ gimp_controller_editor_init (GimpControllerEditor *editor)
   editor->info = NULL;
 }
 
-static GObject *
-gimp_controller_editor_constructor (GType                  type,
-                                    guint                  n_params,
-                                    GObjectConstructParam *params)
+static void
+gimp_controller_editor_constructed (GObject *object)
 {
-  GObject              *object;
-  GimpControllerEditor *editor;
+  GimpControllerEditor *editor = GIMP_CONTROLLER_EDITOR (object);
   GimpControllerInfo   *info;
   GimpController       *controller;
   GimpControllerClass  *controller_class;
@@ -178,9 +173,8 @@ gimp_controller_editor_constructor (GType                  type,
   gint                  row;
   gint                  i;
 
-  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
-
-  editor = GIMP_CONTROLLER_EDITOR (object);
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CONTROLLER_INFO (editor->info));
 
@@ -394,8 +388,31 @@ gimp_controller_editor_constructor (GType                  type,
 
   gtk_widget_set_sensitive (editor->edit_button,   FALSE);
   gtk_widget_set_sensitive (editor->delete_button, FALSE);
+}
 
-  return object;
+static void
+gimp_controller_editor_finalize (GObject *object)
+{
+  GimpControllerEditor *editor = GIMP_CONTROLLER_EDITOR (object);
+
+  if (editor->info)
+    {
+      gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
+
+      g_object_unref (editor->info);
+      editor->info = NULL;
+    }
+
+  if (editor->context)
+    {
+      g_object_unref (editor->context);
+      editor->context = NULL;
+    }
+
+  if (editor->edit_dialog)
+    gtk_widget_destroy (editor->edit_dialog);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -444,31 +461,6 @@ gimp_controller_editor_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_controller_editor_finalize (GObject *object)
-{
-  GimpControllerEditor *editor = GIMP_CONTROLLER_EDITOR (object);
-
-  if (editor->info)
-    {
-      gimp_controller_info_set_event_snooper (editor->info, NULL, NULL);
-
-      g_object_unref (editor->info);
-      editor->info = NULL;
-    }
-
-  if (editor->context)
-    {
-      g_object_unref (editor->context);
-      editor->context = NULL;
-    }
-
-  if (editor->edit_dialog)
-    gtk_widget_destroy (editor->edit_dialog);
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
