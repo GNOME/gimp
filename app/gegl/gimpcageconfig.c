@@ -71,10 +71,16 @@ print_cage (GimpCageConfig *gcc)
 
   for (i = 0; i < gcc->n_cage_vertices; i++)
     {
-      printf("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f\n", gcc->cage_vertices[i].x, gcc->cage_vertices[i].y, gcc->cage_vertices_d[i].x,  gcc->cage_vertices_d[i].y, gcc->scaling_factor[i], gcc->normal_d[i].x, gcc->normal_d[i].y);
+      printf("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f\n",
+             gcc->cage_points[i].src_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_x:0),
+             gcc->cage_points[i].src_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_y:0),
+             gcc->cage_points[i].dest_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_x:0),
+             gcc->cage_points[i].dest_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_y:0),
+             gcc->cage_points[i].edge_scaling_factor,
+             gcc->cage_points[i].edge_normal.x,
+             gcc->cage_points[i].edge_normal.y);
     }
   printf("bounding box: x: %d  y: %d  width: %d  height: %d\n", bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height);
-  printf("offsets: (%d, %d)", gcc->offset_x, gcc->offset_y);
   printf("done\n");
 }
 #endif
@@ -264,6 +270,10 @@ gimp_cage_config_add_displacement (GimpCageConfig  *gcc,
   gcc->cage_mode = mode;
   gcc->displacement_x = x;
   gcc->displacement_y = y;
+
+  #ifdef DEBUG_CAGE
+    print_cage (gcc);
+  #endif
 }
 
 /**
@@ -297,6 +307,8 @@ gimp_cage_config_commit_displacement  (GimpCageConfig *gcc)
             }
         }
     }
+  gimp_cage_config_compute_scaling_factor (gcc);
+  gimp_cage_config_compute_edges_normal (gcc);
   gimp_cage_config_reset_displacement (gcc);
 }
 
@@ -489,10 +501,6 @@ gimp_cage_config_compute_scaling_factor (GimpCageConfig *gcc)
 
       gcc->cage_points[i].edge_scaling_factor = length_d / length;
     }
-
-#ifdef DEBUG_CAGE
-  print_cage (gcc);
-#endif
 }
 
 /**
