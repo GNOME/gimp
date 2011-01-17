@@ -1,5 +1,9 @@
-# translation of gimp-python.HEAD.pl.po to Polish
-# Copyright (C) 2001-2008 Free Software Foundation, Inc.
+# translation of gimp-python-pl.po to polski
+# GNOME PL Team <translators@gnomepl.org>, 1999-2005.
+# Artur Polaczyński <artie@kmfms.com>, 1999,2000.
+# Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
+# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
+# Copyright (C) 2001-2011 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnomepl.org
 # (:pserver:anonymous@cvs.gnomepl.org:/home/cvs, puste hasło)
@@ -7,24 +11,19 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
 # translators@gnomepl.org
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# GNOME PL Team <translators@gnomepl.org>, 1999-2005.
-# Artur Polaczyński <artie@kmfms.com>, 1999,2000.
-# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2008.
-# Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python.HEAD.pl\n"
+"Project-Id-Version: gimp-python-pl\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-09 12:18+0100\n"
-"PO-Revision-Date: 2008-03-06 09:56+0100\n"
+"PO-Revision-Date: 2011-01-17 14:46+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
+"Language-Team: polski <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Poedit-Language: Polish\n"
 "X-Poedit-Country: POLAND\n"
 "X-Poedit-Bookmarks: -1,-1,21,-1,-1,-1,-1,-1,-1,-1\n"
@@ -288,7 +287,7 @@ msgstr "Odstęp pomiędzy elementami tablicy"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
-msgstr ""
+msgstr "Javascript dla onmouseover  oraz clicked"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
@@ -323,3 +322,4 @@ msgstr "Przesunięcie X cienia"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Przesunięcie Y cienia"
+
