@@ -109,6 +109,9 @@ TempBuf   * gimp_brush_transform_pixmap (GimpBrush        *brush,
                                          gdouble           angle,
                                          gdouble           hardness);
 
+gdouble     gimp_brush_clamp_scale      (GimpBrush        *brush,
+                                         gdouble           scale);
+
 TempBuf   * gimp_brush_get_mask         (const GimpBrush  *brush);
 TempBuf   * gimp_brush_get_pixmap       (const GimpBrush  *brush);
 

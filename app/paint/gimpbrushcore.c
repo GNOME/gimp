@@ -110,8 +110,6 @@ static TempBuf * gimp_brush_core_solidify_mask     (GimpBrushCore    *core,
                                                     TempBuf          *brush_mask,
                                                     gdouble           x,
                                                     gdouble           y);
-static gdouble   gimp_brush_core_clamp_brush_scale (GimpBrushCore    *core,
-                                                    gdouble           scale);
 static TempBuf * gimp_brush_core_transform_mask    (GimpBrushCore    *core,
                                                     GimpBrush        *brush);
 static TempBuf * gimp_brush_core_transform_pixmap  (GimpBrushCore    *core,
@@ -839,7 +837,7 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
                                                coords);
     }
 
-  core->scale = gimp_brush_core_clamp_brush_scale (core, core->scale);
+  core->scale = gimp_brush_clamp_scale (core->main_brush, core->scale);
 
   gimp_brush_transform_size (core->brush,
                              core->scale, core->aspect_ratio, core->angle,
@@ -957,7 +955,7 @@ gimp_brush_core_create_boundary (GimpBrushCore    *core,
 
   if (scale > 0.0)
     {
-      scale = gimp_brush_core_clamp_brush_scale (core, scale);
+      scale = gimp_brush_clamp_scale (core->main_brush, scale);
 
       /* Generated brushes are a bit special */
       if (GIMP_IS_BRUSH_GENERATED (core->main_brush))
@@ -1071,7 +1069,7 @@ gimp_brush_core_get_transform (GimpBrushCore *core,
 
   if ((scale > 0.0) && (aspect_ratio > 0.0))
     {
-      scale = gimp_brush_core_clamp_brush_scale (core, scale);
+      scale = gimp_brush_clamp_scale (core->main_brush, scale);
 
       gimp_brush_transform_matrix (height, width,
                                    scale, aspect_ratio, angle, matrix);
@@ -1531,16 +1529,6 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
     }
 
   return dest;
-}
-
-static gdouble
-gimp_brush_core_clamp_brush_scale (GimpBrushCore *core,
-                                   gdouble        scale)
-{
-  TempBuf *mask = core->main_brush->mask;
-
-  /* ensure that the final brush mask remains >= 0.5 pixel along both axes */
-  return MAX (0.5 / (gfloat) MIN (mask->width, mask->height), scale);
 }
 
 static TempBuf *
