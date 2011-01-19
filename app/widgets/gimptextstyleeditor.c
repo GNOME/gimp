@@ -966,7 +966,7 @@ gimp_text_style_editor_update_idle (GimpTextStyleEditor *editor)
       else
         gimp_text_style_editor_set_kerning (editor, kerning_tag);
     }
-  else
+  else /* no selection */
     {
       GtkTextIter  cursor;
       GSList      *tags;
