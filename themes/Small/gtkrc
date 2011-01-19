@@ -54,6 +54,7 @@ style "gimp-default-style"
   GimpDockbook::tab-icon-size       = menu
   GimpColorNotebook::tab-border     = 0
   GimpColorNotebook::tab-icon-size  = menu
+  GimpDeviceEditor::handle-size     = 12
   GimpDockable::content-border      = 1
   GimpEditor::content-spacing       = 1
   GimpEditor::button-spacing        = 1

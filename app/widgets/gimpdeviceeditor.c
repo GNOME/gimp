@@ -107,7 +107,7 @@ static void   gimp_device_editor_delete_clicked (GtkWidget         *button,
                                                  GimpDeviceEditor  *editor);
 
 
-G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GimpDeviceEditor, gimp_device_editor, GTK_TYPE_PANED)
 
 #define parent_class gimp_device_editor_parent_class
 
@@ -145,15 +145,13 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_orientable_set_orientation (GTK_ORIENTABLE (editor),
                                   GTK_ORIENTATION_HORIZONTAL);
 
-  gtk_box_set_spacing (GTK_BOX (editor), 12);
-
   gtk_icon_size_lookup_for_settings (gtk_widget_get_settings (GTK_WIDGET (editor)),
                                      GTK_ICON_SIZE_BUTTON,
                                      &icon_width, &icon_height);
 
   private->treeview = gimp_container_tree_view_new (NULL, NULL, icon_height, 0);
   gtk_widget_set_size_request (private->treeview, 200, -1);
-  gtk_box_pack_start (GTK_BOX (editor), private->treeview, FALSE, FALSE, 0);
+  gtk_paned_pack1 (GTK_PANED (editor), private->treeview, FALSE, TRUE);
   gtk_widget_show (private->treeview);
 
   g_signal_connect_object (private->treeview, "select-item",
@@ -172,7 +170,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
   gtk_widget_set_sensitive (private->delete_button, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (editor), vbox, TRUE, TRUE, 0);
+  gtk_paned_pack2 (GTK_PANED (editor), vbox, TRUE, TRUE);
   gtk_widget_show (vbox);
 
   ebox = gtk_event_box_new ();
