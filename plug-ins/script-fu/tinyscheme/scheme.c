@@ -3783,14 +3783,7 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
      case OP_STRINGP:     /* string? */
           s_retbool(is_string(car(sc->args)));
      case OP_INTEGERP:     /* integer? */
-          x = car(sc->args);
-          if (!is_number(x))
-               s_retbool(0);
-          if (is_real(x)) {
-               double r = rvalue(x);
-               s_retbool(r == round_per_R5RS(r));
-          }
-          s_retbool(is_integer(x));
+          s_retbool(is_integer(car(sc->args)));
      case OP_REALP:     /* real? */
           s_retbool(is_number(car(sc->args))); /* All numbers are real */
      case OP_CHARP:     /* char? */
@@ -4273,7 +4266,8 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                { s_return(sc,sc->EOF_OBJ); }
           else if (sc->tok == TOK_RPAREN) {
                gunichar c = inchar(sc);
-               if (c != '\n') backchar(sc,c);
+               if (c != '\n')
+                 backchar(sc,c);
                sc->nesting_stack[sc->file_i]--;
                s_return(sc,reverse_in_place(sc, sc->NIL, sc->args));
           } else if (sc->tok == TOK_DOT) {
