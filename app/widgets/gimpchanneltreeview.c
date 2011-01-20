@@ -151,7 +151,6 @@ gimp_channel_tree_view_init (GimpChannelTreeView *view)
 static void
 gimp_channel_tree_view_constructed (GObject *object)
 {
-  GimpEditor            *editor    = GIMP_EDITOR (object);
   GimpChannelTreeView   *view      = GIMP_CHANNEL_TREE_VIEW (object);
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
 
