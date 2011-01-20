@@ -303,11 +303,13 @@ EXPORTS
 	gimp_radio_group_new2
 	gimp_radio_group_set_active
 	gimp_random_seed_new
+	gimp_ruler_add_track_widget
 	gimp_ruler_get_position
 	gimp_ruler_get_range
 	gimp_ruler_get_type
 	gimp_ruler_get_unit
 	gimp_ruler_new
+	gimp_ruler_remove_track_widget
 	gimp_ruler_set_position
 	gimp_ruler_set_range
 	gimp_ruler_set_unit

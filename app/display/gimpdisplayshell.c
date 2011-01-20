@@ -516,9 +516,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_widget_set_events (GTK_WIDGET (shell->hrule),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  g_signal_connect_swapped (shell->canvas, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (shell->hrule)->motion_notify_event),
-                            shell->hrule);
+  gimp_ruler_add_track_widget (GIMP_RULER (shell->hrule), shell->canvas);
   g_signal_connect (shell->hrule, "button-press-event",
                     G_CALLBACK (gimp_display_shell_hruler_button_press),
                     shell);
@@ -530,9 +528,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_widget_set_events (GTK_WIDGET (shell->vrule),
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  g_signal_connect_swapped (shell->canvas, "motion-notify-event",
-                            G_CALLBACK (GTK_WIDGET_GET_CLASS (shell->vrule)->motion_notify_event),
-                            shell->vrule);
+  gimp_ruler_add_track_widget (GIMP_RULER (shell->vrule), shell->canvas);
   g_signal_connect (shell->vrule, "button-press-event",
                     G_CALLBACK (gimp_display_shell_vruler_button_press),
                     shell);
