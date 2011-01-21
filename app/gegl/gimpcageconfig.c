@@ -71,16 +71,18 @@ print_cage (GimpCageConfig *gcc)
 
   for (i = 0; i < gcc->n_cage_vertices; i++)
     {
-      printf("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f\n",
+      printf("cgx: %.0f    cgy: %.0f    cvdx: %.0f    cvdy: %.0f  sf: %.2f  normx: %.2f  normy: %.2f %s\n",
              gcc->cage_points[i].src_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_x:0),
              gcc->cage_points[i].src_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_CAGE_CHANGE)?gcc->displacement_y:0),
              gcc->cage_points[i].dest_point.x + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_x:0),
              gcc->cage_points[i].dest_point.y + ((gcc->cage_mode==GIMP_CAGE_MODE_DEFORM)?gcc->displacement_y:0),
              gcc->cage_points[i].edge_scaling_factor,
              gcc->cage_points[i].edge_normal.x,
-             gcc->cage_points[i].edge_normal.y);
+             gcc->cage_points[i].edge_normal.y,
+             ((gcc->cage_points[i].selected) ? "S" : "NS"));
     }
   printf("bounding box: x: %d  y: %d  width: %d  height: %d\n", bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height);
+  printf("disp x: %f  disp y: %f\n", gcc->displacement_x, gcc->displacement_y);
   printf("done\n");
 }
 #endif
@@ -331,9 +333,9 @@ gimp_cage_config_reset_displacement (GimpCageConfig  *gcc)
  * gimp_cage_config_get_bounding_box:
  * @gcc: the cage config
  *
- * Compute the bounding box of the destination cage
+ * Compute the bounding box of the source cage
  *
- * Returns: the bounding box of the destination cage, as a GeglRectangle
+ * Returns: the bounding box of the source cage, as a GeglRectangle
  */
 GeglRectangle
 gimp_cage_config_get_bounding_box (GimpCageConfig  *gcc)
