@@ -1,4 +1,4 @@
-# translation of gimp-plug-ins.master.po to Español
+# translation of gimp-plug-ins.master.es.po to
 # Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -15,13 +15,13 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.master\n"
+"Project-Id-Version: gimp-plug-ins.master.es\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2011-01-19 20:35+0000\n"
-"PO-Revision-Date: 2011-01-20 20:17+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-01-20 19:44+0000\n"
+"PO-Revision-Date: 2011-01-20 20:52+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3645,8 +3645,7 @@ msgstr ""
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr ""
-"El componente de imagen %d de la imagen «%s» no tiene un «hstep» y un "
-"«vstep»."
+"El componente de imagen %d de la imagen «%s» no tiene un «hstep» y un «vstep»."
 
 #: ../plug-ins/common/file-jp2-load.c:346
 #, c-format
@@ -3940,7 +3939,7 @@ msgstr "Ocurrió un error al guardar «%s». No se pudo guardar la imagen."
 #: ../plug-ins/common/file-png.c:1818
 #, c-format
 msgid "Error loading UI file '%s': %s"
-msgstr "Ocurrió un error al cargar el archivo de UI «%s»: %s"
+msgstr "Ocurrió un error al cargar el archivo de IU «%s»: %s"
 
 #: ../plug-ins/common/file-pnm.c:247
 msgid "PNM Image"
@@ -8919,8 +8918,8 @@ msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
 "plug-in does not support that, using normal mode instead."
 msgstr ""
-"No se puede guardar la capa con el modo «%s». Bien el formato del archivo "
-"PSD o bien el complemento de guardado no lo soportan, se utilizará el modo "
+"No se puede guardar la capa con el modo «%s». Bien el formato del archivo PSD "
+"o bien el complemento de guardado no lo soportan, se utilizará el modo "
 "normal en su lugar."
 
 #: ../plug-ins/file-psd/psd-save.c:633
@@ -9045,8 +9044,8 @@ msgstr "Descargando «%s» de datos de imagen"
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgstr ""
-"La apertura de «%s» para lectura ha producido el código de respuesta de "
-"HTTP: %d"
+"La apertura de «%s» para lectura ha producido el código de respuesta de HTTP: "
+"%d"
 
 #: ../plug-ins/file-uri/uri-backend-wget.c:161
 #: ../plug-ins/file-uri/uri-backend-wget.c:181
@@ -10047,8 +10046,8 @@ msgstr ""
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: "
-"«%s»"
+"Erro al intentar abrir el archivo temporal «%s» para la carga de parásitos: «%"
+"s»"
 
 # //R ¿Drawables?
 #: ../plug-ins/gimpressionist/brush.c:246
@@ -10169,8 +10168,7 @@ msgstr "Convertible en mosaico"
 
 #: ../plug-ins/gimpressionist/general.c:216
 msgid "Selects if the resulting image should be seamlessly tileable"
-msgstr ""
-"Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
+msgstr "Selecciona si la imagen resultante debería ser enlosable «sin costuras»"
 
 #: ../plug-ins/gimpressionist/general.c:221
 msgid "Drop shadow"
