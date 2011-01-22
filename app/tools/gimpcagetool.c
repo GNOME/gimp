@@ -131,6 +131,7 @@ enum
   CAGE_STATE_INIT,
   CAGE_STATE_WAIT,
   CAGE_STATE_MOVE_HANDLE,
+  CAGE_STATE_SELECTING,
   CAGE_STATE_CLOSING,
   DEFORM_STATE_WAIT,
   DEFORM_STATE_MOVE_HANDLE,
@@ -535,6 +536,13 @@ gimp_cage_tool_button_press (GimpTool            *tool,
           }
         else /* Cage already closed */
           {
+            if (handle == -1)
+            /* User clicked on the background, we start a rubber band selection */
+              {
+                ct->selection_start_x = coords->x;
+                ct->selection_start_y = coords->y;
+                ct->tool_state = CAGE_STATE_SELECTING;
+              }
             if (handle >= 0)
             /* User clicked on a handle, so we move it */
               {
@@ -613,6 +621,10 @@ gimp_cage_tool_button_release (GimpTool              *tool,
             ct->tool_state = CAGE_STATE_WAIT;
             break;
 
+          case CAGE_STATE_SELECTING:
+            ct->tool_state = CAGE_STATE_WAIT;
+            break;
+
           case DEFORM_STATE_MOVE_HANDLE:
             gimp_cage_tool_image_map_update (ct);
             ct->tool_state = DEFORM_STATE_WAIT;
@@ -639,6 +651,25 @@ gimp_cage_tool_button_release (GimpTool              *tool,
             ct->dirty_coef = TRUE;
             ct->tool_state = CAGE_STATE_WAIT;
             gimp_cage_config_commit_displacement (ct->config);
+            break;
+
+          case CAGE_STATE_SELECTING:
+              {
+                GeglRectangle area = {MIN(ct->selection_start_x, coords->x) - ct->offset_x,
+                                      MIN(ct->selection_start_y, coords->y) - ct->offset_y,
+                                      abs (ct->selection_start_x - coords->x),
+                                      abs (ct->selection_start_y - coords->y)};
+
+                if (state & GDK_SHIFT_MASK)
+                  {
+                    gimp_cage_config_select_add_area (ct->config, GIMP_CAGE_MODE_CAGE_CHANGE, area);
+                  }
+                else
+                  {
+                    gimp_cage_config_select_area (ct->config, GIMP_CAGE_MODE_CAGE_CHANGE, area);
+                  }
+                ct->tool_state = CAGE_STATE_WAIT;
+              }
             break;
 
           case DEFORM_STATE_MOVE_HANDLE:
@@ -793,7 +824,7 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
         }
     }
 
-  if (ct->tool_state == DEFORM_STATE_SELECTING)
+  if (ct->tool_state == DEFORM_STATE_SELECTING || ct->tool_state == CAGE_STATE_SELECTING)
     {
       gimp_draw_tool_add_rectangle (draw_tool,
                                     FALSE,
