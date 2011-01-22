@@ -189,25 +189,23 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
           break;
 
         case PIPE_SELECT_ANGULAR:
-          angle = atan2 (current_coords->y - last_coords->y,
-                         current_coords->x - last_coords->x);
+          angle = current_coords->direction;
           /* Offset angle to be compatible with PSP tubes */
-          angle += G_PI_2;
+          angle = (1.0 - angle) * G_PI_2;
           /* Map it to the [0..2*G_PI) interval */
           if (angle < 0)
             angle += 2.0 * G_PI;
           else if (angle > 2.0 * G_PI)
             angle -= 2.0 * G_PI;
-          ix = (gint) RINT (angle / (2.0 * G_PI) * pipe->rank[i]) % pipe->rank[i];
+
+          ix = (gint) RINT ((1.0 - current_coords->direction + 0.25) * pipe->rank[i]) % pipe->rank[i];
           break;
 
         case PIPE_SELECT_VELOCITY:
-          velocity = sqrt (SQR (current_coords->x - last_coords->x) +
-                           SQR (current_coords->y - last_coords->y));
+          velocity = current_coords->velocity;
 
-          /* I don't know how much velocity is enough velocity. I will assume 0  to
-           brush' saved spacing (converted to pixels) to be 'enough' velocity */
-          ix = ROUND ((1.0 - MIN (1.0, velocity / (spacing))) * pipe->rank[i]);
+          /* Max velocity is 3.0, picking stamp as a ratio*/
+          ix = ROUND ((3.0 / velocity) * pipe->rank[i]);
           break;
 
         case PIPE_SELECT_RANDOM:
