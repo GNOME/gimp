@@ -398,8 +398,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
             g_object_unref (sink_operation);
           }
 
-          if (gegl_node_get_pad (image_map->operation, "input") &&
-              gegl_node_get_pad (image_map->operation, "output"))
+          if (gegl_node_has_pad (image_map->operation, "input") &&
+              gegl_node_has_pad (image_map->operation, "output"))
             {
               /*  if there are input and output pads we probably have a
                *  filter OP, connect it on both ends.
@@ -410,7 +410,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                    image_map->output,
                                    NULL);
             }
-          else if (gegl_node_get_pad (image_map->operation, "output"))
+          else if (gegl_node_has_pad (image_map->operation, "output"))
             {
               /*  if there is only an output pad we probably have a
                *  source OP, blend its result on top of the original
