@@ -140,6 +140,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   klass->stock_id        = GIMP_STOCK_DISPLAY_FILTER;
 
   klass->clone           = NULL;
+  klass->convert_surface = NULL;
   klass->convert         = NULL;
   klass->load_state      = NULL;
   klass->save_state      = NULL;
@@ -334,6 +335,46 @@ gimp_color_display_clone (GimpColorDisplay *display)
   return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
 }
 
+/**
+ * gimp_color_display_convert_surface:
+ * @display: a #GimpColorDisplay
+ * @surface: a #cairo_image_surface_t of type ARGB32
+ *
+ * Converts all pixels in @surface.
+ *
+ * Since: GIMP 2.8
+ **/
+void
+gimp_color_display_convert_surface (GimpColorDisplay *display,
+                                    cairo_surface_t  *surface)
+{
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+  g_return_if_fail (surface != NULL);
+  g_return_if_fail (cairo_surface_get_type (surface) ==
+                    CAIRO_SURFACE_TYPE_IMAGE);
+
+  if (display->enabled &&
+      GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert_surface)
+    {
+      cairo_surface_flush (surface);
+      GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert_surface (display, surface);
+      cairo_surface_mark_dirty (surface);
+    }
+}
+
+/**
+ * gimp_color_display_convert:
+ * @display: a #GimpColorDisplay
+ * @buf: the pixel buffer to convert
+ * @width: the width of the buffer
+ * @height: the height of the buffer
+ * @bpp: the number of bytes per pixel
+ * @bpl: the buffer's rowstride
+ *
+ * Converts all pixels in @buf.
+ *
+ * Deprecated: GIMP 2.8: Use gimp_color_display_convert_surface() instead.
+ **/
 void
 gimp_color_display_convert (GimpColorDisplay *display,
                             guchar            *buf,
@@ -344,6 +385,8 @@ gimp_color_display_convert (GimpColorDisplay *display,
 {
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
+  /*  implementing the convert method is deprecated
+   */
   if (display->enabled && GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert)
     GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert (display, buf,
                                                      width, height,

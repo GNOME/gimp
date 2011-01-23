@@ -56,6 +56,7 @@ struct _GimpColorDisplayClass
   /*  implementing the GimpColorDisplay::clone method is deprecated       */
   GimpColorDisplay * (* clone)           (GimpColorDisplay *display);
 
+  /*  implementing the GimpColorDisplay::convert method is deprecated     */
   void               (* convert)         (GimpColorDisplay *display,
                                           guchar           *buf,
                                           gint              width,
@@ -80,8 +81,10 @@ struct _GimpColorDisplayClass
 
   const gchar  *stock_id;
 
+  void               (* convert_surface) (GimpColorDisplay *display,
+                                          cairo_surface_t  *surface);
+
   /* Padding for future expansion */
-  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
 };
@@ -95,12 +98,16 @@ GimpColorDisplay * gimp_color_display_new         (GType             display_typ
 
 GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
 
+void           gimp_color_display_convert_surface (GimpColorDisplay *display,
+                                                   cairo_surface_t  *surface);
+#ifndef GIMP_DISABLE_DEPRECATED
 void           gimp_color_display_convert         (GimpColorDisplay *display,
                                                    guchar           *buf,
                                                    gint              width,
                                                    gint              height,
                                                    gint              bpp,
                                                    gint              bpl);
+#endif
 void           gimp_color_display_load_state      (GimpColorDisplay *display,
                                                    GimpParasite     *state);
 GimpParasite * gimp_color_display_save_state      (GimpColorDisplay *display);

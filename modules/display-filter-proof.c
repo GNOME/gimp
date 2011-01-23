@@ -38,7 +38,7 @@
 #define CDISPLAY_IS_PROOF_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CDISPLAY_TYPE_PROOF))
 
 
-typedef struct _CdisplayProof CdisplayProof;
+typedef struct _CdisplayProof      CdisplayProof;
 typedef struct _CdisplayProofClass CdisplayProofClass;
 
 struct _CdisplayProof
@@ -67,27 +67,23 @@ enum
 };
 
 
-GType              cdisplay_proof_get_type     (void);
+GType              cdisplay_proof_get_type        (void);
 
-static void        cdisplay_proof_finalize     (GObject          *object);
-static void        cdisplay_proof_get_property (GObject          *object,
-                                                guint             property_id,
-                                                GValue           *value,
-                                                GParamSpec       *pspec);
-static void        cdisplay_proof_set_property (GObject          *object,
-                                                guint             property_id,
-                                                const GValue     *value,
-                                                GParamSpec       *pspec);
+static void        cdisplay_proof_finalize        (GObject          *object);
+static void        cdisplay_proof_get_property    (GObject          *object,
+                                                   guint             property_id,
+                                                   GValue           *value,
+                                                   GParamSpec       *pspec);
+static void        cdisplay_proof_set_property    (GObject          *object,
+                                                   guint             property_id,
+                                                   const GValue     *value,
+                                                   GParamSpec       *pspec);
 
 
-static void        cdisplay_proof_convert      (GimpColorDisplay *display,
-                                                guchar           *buf,
-                                                gint              width,
-                                                gint              height,
-                                                gint              bpp,
-                                                gint              bpl);
-static GtkWidget * cdisplay_proof_configure    (GimpColorDisplay *display);
-static void        cdisplay_proof_changed      (GimpColorDisplay *display);
+static void        cdisplay_proof_convert_surface (GimpColorDisplay *display,
+                                                   cairo_surface_t  *surface);
+static GtkWidget * cdisplay_proof_configure       (GimpColorDisplay *display);
+static void        cdisplay_proof_changed         (GimpColorDisplay *display);
 
 
 static const GimpModuleInfo cdisplay_proof_info =
@@ -123,9 +119,9 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
-  object_class->finalize     = cdisplay_proof_finalize;
-  object_class->get_property = cdisplay_proof_get_property;
-  object_class->set_property = cdisplay_proof_set_property;
+  object_class->finalize         = cdisplay_proof_finalize;
+  object_class->get_property     = cdisplay_proof_get_property;
+  object_class->set_property     = cdisplay_proof_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTENT,
                                  "intent", NULL,
@@ -141,13 +137,13 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
                                  GIMP_CONFIG_PATH_FILE, NULL,
                                  0);
 
-  display_class->name        = _("Color Proof");
-  display_class->help_id     = "gimp-colordisplay-proof";
-  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_PROOF;
+  display_class->name            = _("Color Proof");
+  display_class->help_id         = "gimp-colordisplay-proof";
+  display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_PROOF;
 
-  display_class->convert     = cdisplay_proof_convert;
-  display_class->configure   = cdisplay_proof_configure;
-  display_class->changed     = cdisplay_proof_changed;
+  display_class->convert_surface = cdisplay_proof_convert_surface;
+  display_class->configure       = cdisplay_proof_configure;
+  display_class->changed         = cdisplay_proof_changed;
 
   cmsErrorAction (LCMS_ERROR_IGNORE);
 }
@@ -238,24 +234,55 @@ cdisplay_proof_set_property (GObject      *object,
 }
 
 static void
-cdisplay_proof_convert (GimpColorDisplay *display,
-                        guchar           *buf,
-                        gint              width,
-                        gint              height,
-                        gint              bpp,
-                        gint              bpl)
+cdisplay_proof_convert_surface (GimpColorDisplay *display,
+                                cairo_surface_t  *surface)
 {
-  CdisplayProof *proof = CDISPLAY_PROOF (display);
-  gint           y;
+  CdisplayProof  *proof  = CDISPLAY_PROOF (display);
+  gint            width  = cairo_image_surface_get_width (surface);
+  gint            height = cairo_image_surface_get_height (surface);
+  gint            stride = cairo_image_surface_get_stride (surface);
+  guchar         *buf    = cairo_image_surface_get_data (surface);
+  cairo_format_t  fmt    = cairo_image_surface_get_format (surface);
+  guchar         *rowbuf;
+  gint            x, y;
+  guchar          r, g, b, a;
 
-  if (bpp != 3)
+  if (fmt != CAIRO_FORMAT_ARGB32)
     return;
 
   if (! proof->transform)
     return;
 
-  for (y = 0; y < height; y++, buf += bpl)
-    cmsDoTransform (proof->transform, buf, buf, width);
+  rowbuf = g_malloc (stride);
+
+  for (y = 0; y < height; y++, buf += stride)
+    {
+      /* Switch buf from ARGB premul to ARGB non-premul, since lcms ignores the
+       * alpha channel.  The macro takes care of byte order.
+       */
+      for (x = 0; x < width; x++)
+        {
+          GIMP_CAIRO_ARGB32_GET_PIXEL (buf + 4*x, r, g, b, a);
+          rowbuf[4*x+0] = a;
+          rowbuf[4*x+1] = r;
+          rowbuf[4*x+2] = g;
+          rowbuf[4*x+3] = b;
+        }
+
+      cmsDoTransform (proof->transform, rowbuf, rowbuf, width);
+
+      /* And back to ARGB premul */
+      for (x = 0; x < width; x++)
+        {
+          a = rowbuf[4*x+0];
+          r = rowbuf[4*x+1];
+          g = rowbuf[4*x+2];
+          b = rowbuf[4*x+3];
+          GIMP_CAIRO_ARGB32_SET_PIXEL (buf + 4*x, r, g, b, a);
+        }
+    }
+
+  g_free (rowbuf);
 }
 
 static void
@@ -442,9 +469,8 @@ cdisplay_proof_changed (GimpColorDisplay *display)
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgbProfile,
-                                                     TYPE_RGB_8,
-                                                     rgbProfile, TYPE_RGB_8,
+      proof->transform = cmsCreateProofingTransform (rgbProfile, TYPE_ARGB_8,
+                                                     rgbProfile, TYPE_ARGB_8,
                                                      proofProfile,
                                                      proof->intent,
                                                      proof->intent,

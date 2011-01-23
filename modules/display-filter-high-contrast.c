@@ -61,26 +61,22 @@ enum
 };
 
 
-GType              cdisplay_contrast_get_type     (void);
+GType              cdisplay_contrast_get_type        (void);
 
-static void        cdisplay_contrast_set_property (GObject          *object,
-                                                   guint             property_id,
-                                                   const GValue     *value,
-                                                   GParamSpec       *pspec);
-static void        cdisplay_contrast_get_property (GObject          *object,
-                                                   guint             property_id,
-                                                   GValue           *value,
-                                                   GParamSpec       *pspec);
+static void        cdisplay_contrast_set_property    (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void        cdisplay_contrast_get_property    (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
 
-static void        cdisplay_contrast_convert      (GimpColorDisplay *display,
-                                                   guchar           *buf,
-                                                   gint              w,
-                                                   gint              h,
-                                                   gint              bpp,
-                                                   gint              bpl);
-static GtkWidget * cdisplay_contrast_configure    (GimpColorDisplay *display);
-static void        cdisplay_contrast_set_contrast (CdisplayContrast *contrast,
-                                                   gdouble           value);
+static void        cdisplay_contrast_convert_surface (GimpColorDisplay *display,
+                                                      cairo_surface_t  *surface);
+static GtkWidget * cdisplay_contrast_configure       (GimpColorDisplay *display);
+static void        cdisplay_contrast_set_contrast    (CdisplayContrast *contrast,
+                                                      gdouble           value);
 
 
 static const GimpModuleInfo cdisplay_contrast_info =
@@ -117,20 +113,20 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   GObjectClass          *object_class  = G_OBJECT_CLASS (klass);
   GimpColorDisplayClass *display_class = GIMP_COLOR_DISPLAY_CLASS (klass);
 
-  object_class->get_property = cdisplay_contrast_get_property;
-  object_class->set_property = cdisplay_contrast_set_property;
+  object_class->get_property     = cdisplay_contrast_get_property;
+  object_class->set_property     = cdisplay_contrast_set_property;
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
                                    "contrast", NULL,
                                    0.01, 10.0, DEFAULT_CONTRAST,
                                    0);
 
-  display_class->name        = _("Contrast");
-  display_class->help_id     = "gimp-colordisplay-contrast";
-  display_class->stock_id    = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
+  display_class->name            = _("Contrast");
+  display_class->help_id         = "gimp-colordisplay-contrast";
+  display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_CONTRAST;
 
-  display_class->convert     = cdisplay_contrast_convert;
-  display_class->configure   = cdisplay_contrast_configure;
+  display_class->convert_surface = cdisplay_contrast_convert_surface;
+  display_class->configure       = cdisplay_contrast_configure;
 }
 
 static void
@@ -182,15 +178,20 @@ cdisplay_contrast_set_property (GObject      *object,
 }
 
 static void
-cdisplay_contrast_convert (GimpColorDisplay *display,
-                           guchar           *buf,
-                           gint              width,
-                           gint              height,
-                           gint              bpp,
-                           gint              bpl)
+cdisplay_contrast_convert_surface (GimpColorDisplay *display,
+                                   cairo_surface_t  *surface)
 {
   CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
-  gint              i, j     = height;
+  gint              width    = cairo_image_surface_get_width (surface);
+  gint              height   = cairo_image_surface_get_height (surface);
+  gint              stride   = cairo_image_surface_get_stride (surface);
+  guchar           *buf      = cairo_image_surface_get_data (surface);
+  cairo_format_t    fmt      = cairo_image_surface_get_format (surface);
+  gint              i, j, skip;
+  gint              r, g, b, a;
+
+  if (fmt != CAIRO_FORMAT_ARGB32)
+    return;
 
   /* You will not be using the entire buffer most of the time.
    * Hence, the simplistic code for this is as follows:
@@ -203,18 +204,22 @@ cdisplay_contrast_convert (GimpColorDisplay *display,
    *   }
    */
 
-  width *= bpp;
-  bpl -= width;
+  j = height;
+  skip = stride - 4 * width;
 
   while (j--)
     {
       i = width;
       while (i--)
         {
-          *buf = contrast->lookup[*buf];
-          buf++;
+          GIMP_CAIRO_ARGB32_GET_PIXEL (buf, r, g, b, a);
+          r = contrast->lookup[r];
+          g = contrast->lookup[g];
+          b = contrast->lookup[b];
+          GIMP_CAIRO_ARGB32_SET_PIXEL (buf, r, g, b, a);
+          buf += 4;
         }
-      buf += bpl;
+      buf += skip;
     }
 }
 
