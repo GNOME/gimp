@@ -169,7 +169,7 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
 {
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i, brushix, ix;
-  gdouble        angle, velocity, spacing;
+  gdouble        velocity, spacing;
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
@@ -189,15 +189,9 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
           break;
 
         case PIPE_SELECT_ANGULAR:
-          angle = current_coords->direction;
-          /* Offset angle to be compatible with PSP tubes */
-          angle = (1.0 - angle) * G_PI_2;
-          /* Map it to the [0..2*G_PI) interval */
-          if (angle < 0)
-            angle += 2.0 * G_PI;
-          else if (angle > 2.0 * G_PI)
-            angle -= 2.0 * G_PI;
-
+          /* Coords angle is already nomalized,
+           * offset by 90 degrees is still needed
+           * because hoses were made PS compatible*/
           ix = (gint) RINT ((1.0 - current_coords->direction + 0.25) * pipe->rank[i]) % pipe->rank[i];
           break;
 
