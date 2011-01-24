@@ -51,19 +51,19 @@ image_select_color_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   GimpDrawable *drawable;
   GimpRGB color;
   gint32 threshold;
-  gint32 operation;
   gboolean sample_merged;
   gboolean select_transparent;
   gint32 select_criterion;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  drawable = gimp_value_get_drawable (&args->values[1], gimp);
-  gimp_value_get_rgb (&args->values[2], &color);
-  threshold = g_value_get_int (&args->values[3]);
-  operation = g_value_get_enum (&args->values[4]);
+  operation = g_value_get_enum (&args->values[1]);
+  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+  gimp_value_get_rgb (&args->values[3], &color);
+  threshold = g_value_get_int (&args->values[4]);
   sample_merged = g_value_get_boolean (&args->values[5]);
   select_transparent = g_value_get_boolean (&args->values[6]);
   select_criterion = g_value_get_enum (&args->values[7]);
@@ -105,18 +105,18 @@ image_select_ellipse_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   gdouble x;
   gdouble y;
   gdouble width;
   gdouble height;
-  gint32 operation;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
+  operation = g_value_get_enum (&args->values[1]);
+  x = g_value_get_double (&args->values[2]);
+  y = g_value_get_double (&args->values[3]);
+  width = g_value_get_double (&args->values[4]);
+  height = g_value_get_double (&args->values[5]);
 
   if (success)
     {
@@ -147,14 +147,14 @@ image_select_polygon_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   gint32 num_segs;
   const gdouble *segs;
-  gint32 operation;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  num_segs = g_value_get_int (&args->values[1]);
-  segs = gimp_value_get_floatarray (&args->values[2]);
-  operation = g_value_get_enum (&args->values[3]);
+  operation = g_value_get_enum (&args->values[1]);
+  num_segs = g_value_get_int (&args->values[2]);
+  segs = gimp_value_get_floatarray (&args->values[3]);
 
   if (success)
     {
@@ -186,21 +186,21 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
   gint32 threshold;
-  gint32 operation;
   gboolean sample_merged;
   gboolean select_transparent;
   gint32 select_criterion;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  drawable = gimp_value_get_drawable (&args->values[1], gimp);
-  x = g_value_get_double (&args->values[2]);
-  y = g_value_get_double (&args->values[3]);
-  threshold = g_value_get_int (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
+  operation = g_value_get_enum (&args->values[1]);
+  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+  x = g_value_get_double (&args->values[3]);
+  y = g_value_get_double (&args->values[4]);
+  threshold = g_value_get_int (&args->values[5]);
   sample_merged = g_value_get_boolean (&args->values[6]);
   select_transparent = g_value_get_boolean (&args->values[7]);
   select_criterion = g_value_get_enum (&args->values[8]);
@@ -243,18 +243,18 @@ image_select_rectangle_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   gdouble x;
   gdouble y;
   gdouble width;
   gdouble height;
-  gint32 operation;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
+  operation = g_value_get_enum (&args->values[1]);
+  x = g_value_get_double (&args->values[2]);
+  y = g_value_get_double (&args->values[3]);
+  width = g_value_get_double (&args->values[4]);
+  height = g_value_get_double (&args->values[5]);
 
   if (success)
     {
@@ -284,22 +284,22 @@ image_select_round_rectangle_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   gdouble x;
   gdouble y;
   gdouble width;
   gdouble height;
   gdouble corner_radius_x;
   gdouble corner_radius_y;
-  gint32 operation;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  corner_radius_x = g_value_get_double (&args->values[5]);
-  corner_radius_y = g_value_get_double (&args->values[6]);
-  operation = g_value_get_enum (&args->values[7]);
+  operation = g_value_get_enum (&args->values[1]);
+  x = g_value_get_double (&args->values[2]);
+  y = g_value_get_double (&args->values[3]);
+  width = g_value_get_double (&args->values[4]);
+  height = g_value_get_double (&args->values[5]);
+  corner_radius_x = g_value_get_double (&args->values[6]);
+  corner_radius_y = g_value_get_double (&args->values[7]);
 
   if (success)
     {
@@ -332,12 +332,12 @@ image_select_item_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpItem *item;
   gint32 operation;
+  GimpItem *item;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  item = gimp_value_get_item (&args->values[1], gimp);
-  operation = g_value_get_enum (&args->values[2]);
+  operation = g_value_get_enum (&args->values[1]);
+  item = gimp_value_get_item (&args->values[2], gimp);
 
   if (success)
     {
@@ -385,6 +385,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
@@ -403,13 +410,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                       "Threshold in intensity levels",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-merged",
                                                      "sample merged",
@@ -453,6 +453,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "x coordinate of upper-left corner of ellipse bounding box",
@@ -476,13 +483,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "The height of the ellipse",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -507,6 +507,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-segs",
                                                       "num segs",
                                                       "Number of points (count 1 coordinate as two points)",
@@ -517,13 +524,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                             "segs",
                                                             "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
                                                             GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -549,6 +549,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
                                                             "The affected drawable",
@@ -572,13 +579,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                       "Threshold in intensity levels",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("sample-merged",
                                                      "sample merged",
@@ -622,6 +622,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
                                                     "x coordinate of upper-left corner of rectangle",
@@ -645,13 +652,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "The height of the rectangle",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -675,6 +675,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          "The image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -711,13 +718,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "The corner radius in Y direction",
                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -742,18 +742,18 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The item to render to the selection",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The desired operation with current selection",
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to render to the selection",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

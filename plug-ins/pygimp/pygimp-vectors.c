@@ -635,7 +635,7 @@ vectors_to_selection(PyGimpVectors *self, PyObject *args, PyObject *kwargs)
     gimp_context_set_antialias(antialias);
     gimp_context_set_feather(feather);
     gimp_context_set_feather_radius(feather_radius_x, feather_radius_y);
-    gimp_image_select_item(gimp_item_get_image(self->ID), self->ID, operation);
+    gimp_image_select_item(gimp_item_get_image(self->ID), operation, self->ID);
     gimp_context_pop();
 
     Py_INCREF(Py_None);

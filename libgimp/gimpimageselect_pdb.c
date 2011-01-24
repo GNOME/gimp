@@ -37,10 +37,10 @@
 /**
  * gimp_image_select_color:
  * @image_ID: The affected image.
+ * @operation: The selection operation.
  * @drawable_ID: The affected drawable.
  * @color: The color to select.
  * @threshold: Threshold in intensity levels.
- * @operation: The selection operation.
  * @sample_merged: Use the composite image, not the drawable.
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
@@ -66,10 +66,10 @@
  **/
 gboolean
 gimp_image_select_color (gint32               image_ID,
+                         GimpChannelOps       operation,
                          gint32               drawable_ID,
                          const GimpRGB       *color,
                          gint                 threshold,
-                         GimpChannelOps       operation,
                          gboolean             sample_merged,
                          gboolean             select_transparent,
                          GimpSelectCriterion  select_criterion)
@@ -81,10 +81,10 @@ gimp_image_select_color (gint32               image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-color",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_COLOR, color,
                                     GIMP_PDB_INT32, threshold,
-                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, sample_merged,
                                     GIMP_PDB_INT32, select_transparent,
                                     GIMP_PDB_INT32, select_criterion,
@@ -100,11 +100,11 @@ gimp_image_select_color (gint32               image_ID,
 /**
  * gimp_image_select_ellipse:
  * @image_ID: The image.
+ * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of ellipse bounding box.
  * @y: y coordinate of upper-left corner of ellipse bounding box.
  * @width: The width of the ellipse.
  * @height: The height of the ellipse.
- * @operation: The selection operation.
  *
  * Create an elliptical selection over the specified image.
  *
@@ -118,11 +118,11 @@ gimp_image_select_color (gint32               image_ID,
  **/
 gboolean
 gimp_image_select_ellipse (gint32         image_ID,
+                           GimpChannelOps operation,
                            gdouble        x,
                            gdouble        y,
                            gdouble        width,
-                           gdouble        height,
-                           GimpChannelOps operation)
+                           gdouble        height)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -131,11 +131,11 @@ gimp_image_select_ellipse (gint32         image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-ellipse",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_FLOAT, x,
                                     GIMP_PDB_FLOAT, y,
                                     GIMP_PDB_FLOAT, width,
                                     GIMP_PDB_FLOAT, height,
-                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -148,9 +148,9 @@ gimp_image_select_ellipse (gint32         image_ID,
 /**
  * gimp_image_select_polygon:
  * @image_ID: The image.
+ * @operation: The selection operation.
  * @num_segs: Number of points (count 1 coordinate as two points).
  * @segs: Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
- * @operation: The selection operation.
  *
  * Create a polygonal selection over the specified image.
  *
@@ -169,9 +169,9 @@ gimp_image_select_ellipse (gint32         image_ID,
  **/
 gboolean
 gimp_image_select_polygon (gint32          image_ID,
+                           GimpChannelOps  operation,
                            gint            num_segs,
-                           const gdouble  *segs,
-                           GimpChannelOps  operation)
+                           const gdouble  *segs)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -180,9 +180,9 @@ gimp_image_select_polygon (gint32          image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-polygon",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, num_segs,
                                     GIMP_PDB_FLOATARRAY, segs,
-                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -195,11 +195,11 @@ gimp_image_select_polygon (gint32          image_ID,
 /**
  * gimp_image_select_fuzzy:
  * @image_ID: The affected image.
+ * @operation: The selection operation.
  * @drawable_ID: The affected drawable.
  * @x: x coordinate of initial seed fill point: (image coordinates).
  * @y: y coordinate of initial seed fill point: (image coordinates).
  * @threshold: Threshold in intensity levels.
- * @operation: The selection operation.
  * @sample_merged: Use the composite image, not the drawable.
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
@@ -230,11 +230,11 @@ gimp_image_select_polygon (gint32          image_ID,
  **/
 gboolean
 gimp_image_select_fuzzy (gint32              image_ID,
+                         GimpChannelOps      operation,
                          gint32              drawable_ID,
                          gdouble             x,
                          gdouble             y,
                          gint                threshold,
-                         GimpChannelOps      operation,
                          gboolean            sample_merged,
                          gboolean            select_transparent,
                          GimpSelectCriterion select_criterion)
@@ -246,11 +246,11 @@ gimp_image_select_fuzzy (gint32              image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-fuzzy",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_FLOAT, x,
                                     GIMP_PDB_FLOAT, y,
                                     GIMP_PDB_INT32, threshold,
-                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_INT32, sample_merged,
                                     GIMP_PDB_INT32, select_transparent,
                                     GIMP_PDB_INT32, select_criterion,
@@ -266,11 +266,11 @@ gimp_image_select_fuzzy (gint32              image_ID,
 /**
  * gimp_image_select_rectangle:
  * @image_ID: The image.
+ * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @width: The width of the rectangle.
  * @height: The height of the rectangle.
- * @operation: The selection operation.
  *
  * Create a rectangular selection over the specified image;
  *
@@ -284,11 +284,11 @@ gimp_image_select_fuzzy (gint32              image_ID,
  **/
 gboolean
 gimp_image_select_rectangle (gint32         image_ID,
+                             GimpChannelOps operation,
                              gdouble        x,
                              gdouble        y,
                              gdouble        width,
-                             gdouble        height,
-                             GimpChannelOps operation)
+                             gdouble        height)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -297,11 +297,11 @@ gimp_image_select_rectangle (gint32         image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-rectangle",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_FLOAT, x,
                                     GIMP_PDB_FLOAT, y,
                                     GIMP_PDB_FLOAT, width,
                                     GIMP_PDB_FLOAT, height,
-                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -314,13 +314,13 @@ gimp_image_select_rectangle (gint32         image_ID,
 /**
  * gimp_image_select_round_rectangle:
  * @image_ID: The image.
+ * @operation: The selection operation.
  * @x: x coordinate of upper-left corner of rectangle.
  * @y: y coordinate of upper-left corner of rectangle.
  * @width: The width of the rectangle.
  * @height: The height of the rectangle.
  * @corner_radius_x: The corner radius in X direction.
  * @corner_radius_y: The corner radius in Y direction.
- * @operation: The selection operation.
  *
  * Create a rectangular selection with round corners over the specified
  * image;
@@ -336,13 +336,13 @@ gimp_image_select_rectangle (gint32         image_ID,
  **/
 gboolean
 gimp_image_select_round_rectangle (gint32         image_ID,
+                                   GimpChannelOps operation,
                                    gdouble        x,
                                    gdouble        y,
                                    gdouble        width,
                                    gdouble        height,
                                    gdouble        corner_radius_x,
-                                   gdouble        corner_radius_y,
-                                   GimpChannelOps operation)
+                                   gdouble        corner_radius_y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -351,13 +351,13 @@ gimp_image_select_round_rectangle (gint32         image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-round-rectangle",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_FLOAT, x,
                                     GIMP_PDB_FLOAT, y,
                                     GIMP_PDB_FLOAT, width,
                                     GIMP_PDB_FLOAT, height,
                                     GIMP_PDB_FLOAT, corner_radius_x,
                                     GIMP_PDB_FLOAT, corner_radius_y,
-                                    GIMP_PDB_INT32, operation,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -370,8 +370,8 @@ gimp_image_select_round_rectangle (gint32         image_ID,
 /**
  * gimp_image_select_item:
  * @image_ID: The image.
- * @item_ID: The item to render to the selection.
  * @operation: The desired operation with current selection.
+ * @item_ID: The item to render to the selection.
  *
  * Transforms the specified item into a selection
  *
@@ -386,8 +386,8 @@ gimp_image_select_round_rectangle (gint32         image_ID,
  **/
 gboolean
 gimp_image_select_item (gint32         image_ID,
-                        gint32         item_ID,
-                        GimpChannelOps operation)
+                        GimpChannelOps operation,
+                        gint32         item_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -396,8 +396,8 @@ gimp_image_select_item (gint32         image_ID,
   return_vals = gimp_run_procedure ("gimp-image-select-item",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_ITEM, item_ID,
                                     GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_ITEM, item_ID,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

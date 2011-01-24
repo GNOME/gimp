@@ -41,14 +41,14 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The affected image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'color', type => 'color',
 	  desc => 'The color to select' },
 	{ name => 'threshold', type => '0 <= int32 <= 255',
 	  desc => 'Threshold in intensity levels' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' },
 	{ name => 'sample_merged', type => 'boolean',
 	  desc => 'Use the composite image, not the drawable' },
         { name => 'select_transparent', type => 'boolean',
@@ -103,6 +103,8 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
 	{ name => 'x', type => 'float',
 	  desc => 'x coordinate of upper-left corner of ellipse bounding box' },
 	{ name => 'y', type => 'float',
@@ -110,9 +112,7 @@ HELP
 	{ name => 'width', type => '0 < float',
 	  desc => 'The width of the ellipse' },
 	{ name => 'height', type => '0 < float',
-	  desc => 'The height of the ellipse' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' }
+	  desc => 'The height of the ellipse' }
     );
 
     %invoke = (
@@ -154,14 +154,14 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
         { name => 'segs', type => 'floatarray',
           desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
                    pn.x, pn.y}',
           array => { type => '2 <= int32',
                      desc => 'Number of points (count 1 coordinate as two
-                              points)' } },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' }
+                              points)' } }
     );
 
     %invoke = (
@@ -215,6 +215,8 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The affected image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'x', type => 'float',
@@ -225,8 +227,6 @@ HELP
 	  	   coordinates)' },
 	{ name => 'threshold', type => '0 <= int32 <= 255',
 	  desc => 'Threshold in intensity levels' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' },
 	{ name => 'sample_merged', type => 'boolean',
 	  desc => 'Use the composite image, not the drawable' },
 	{ name => 'select_transparent', type => 'boolean',
@@ -282,6 +282,8 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
 	{ name => 'x', type => 'float',
 	  desc => 'x coordinate of upper-left corner of rectangle' },
 	{ name => 'y', type => 'float',
@@ -289,9 +291,7 @@ HELP
 	{ name => 'width', type => '0 < float',
 	  desc => 'The width of the rectangle' },
 	{ name => 'height', type => '0 < float',
-	  desc => 'The height of the rectangle' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' }
+	  desc => 'The height of the rectangle' }
     );
 
     %invoke = (
@@ -328,6 +328,8 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
 	{ name => 'x', type => 'float',
 	  desc => 'x coordinate of upper-left corner of rectangle' },
 	{ name => 'y', type => 'float',
@@ -339,9 +341,7 @@ HELP
         { name => 'corner_radius_x', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
           desc => 'The corner radius in X direction' },
         { name => 'corner_radius_y', type => '0 < float < GIMP_MAX_IMAGE_SIZE',
-          desc => 'The corner radius in Y direction' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' }
+          desc => 'The corner radius in Y direction' }
     );
 
     %invoke = (
@@ -381,10 +381,10 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-        { name => 'item', type => 'item',
-          desc => 'The item to render to the selection' },
         { name => 'operation', type => 'enum GimpChannelOps',
-          desc => 'The desired operation with current selection' }
+          desc => 'The desired operation with current selection' },
+        { name => 'item', type => 'item',
+          desc => 'The item to render to the selection' }
     );
 
     %invoke = (
