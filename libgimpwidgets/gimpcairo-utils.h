@@ -105,10 +105,10 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
     const guint tr = (a) * (r) + 0x80;             \
     const guint tg = (a) * (g) + 0x80;             \
     const guint tb = (a) * (b) + 0x80;             \
-    d[0] = (((tb) >> 8) + (tb)) >> 8;              \
-    d[1] = (((tg) >> 8) + (tg)) >> 8;              \
-    d[2] = (((tr) >> 8) + (tr)) >> 8;              \
-    d[3] = (a);                                    \
+    (d)[0] = (((tb) >> 8) + (tb)) >> 8;            \
+    (d)[1] = (((tg) >> 8) + (tg)) >> 8;            \
+    (d)[2] = (((tr) >> 8) + (tr)) >> 8;            \
+    (d)[3] = (a);                                  \
   } G_STMT_END
 #else
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
@@ -116,10 +116,10 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
     const guint tr = (a) * (r) + 0x80;             \
     const guint tg = (a) * (g) + 0x80;             \
     const guint tb = (a) * (b) + 0x80;             \
-    d[0] = (a);                                    \
-    d[1] = (((tr) >> 8) + (tr)) >> 8;              \
-    d[2] = (((tg) >> 8) + (tg)) >> 8;              \
-    d[3] = (((tb) >> 8) + (tb)) >> 8;              \
+    (d)[0] = (a);                                  \
+    (d)[1] = (((tr) >> 8) + (tr)) >> 8;            \
+    (d)[2] = (((tg) >> 8) + (tg)) >> 8;            \
+    (d)[3] = (((tb) >> 8) + (tb)) >> 8;            \
   } G_STMT_END
 #endif
 
@@ -138,10 +138,10 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_ARGB32_GET_PIXEL(s, r, g, b, a) \
   G_STMT_START {                                   \
-    const guint tb = s[0];                         \
-    const guint tg = s[1];                         \
-    const guint tr = s[2];                         \
-    const guint ta = s[3];                         \
+    const guint tb = (s)[0];                       \
+    const guint tg = (s)[1];                       \
+    const guint tr = (s)[2];                       \
+    const guint ta = (s)[3];                       \
     (r) = (tr << 8) / (ta + 1);                    \
     (g) = (tg << 8) / (ta + 1);                    \
     (b) = (tb << 8) / (ta + 1);                    \
@@ -150,10 +150,10 @@ cairo_surface_t * gimp_cairo_surface_create_from_pixbuf (GdkPixbuf     *pixbuf);
 #else
 #define GIMP_CAIRO_ARGB32_GET_PIXEL(s, r, g, b, a) \
   G_STMT_START {                                   \
-    const guint ta = s[0];                         \
-    const guint tr = s[1];                         \
-    const guint tg = s[2];                         \
-    const guint tb = s[3];                         \
+    const guint ta = (s)[0];                       \
+    const guint tr = (s)[1];                       \
+    const guint tg = (s)[2];                       \
+    const guint tb = (s)[3];                       \
     (r) = (tr << 8) / (ta + 1);                    \
     (g) = (tg << 8) / (ta + 1);                    \
     (b) = (tb << 8) / (ta + 1);                    \
