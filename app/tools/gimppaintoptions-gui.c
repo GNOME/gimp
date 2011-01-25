@@ -409,7 +409,7 @@ gimp_paint_options_gui_reset_aspect_ratio (GtkWidget        *button,
 {
 
    g_object_set (paint_options,
-                 "brush-aspect-ratio", 1.0,
+                 "brush-aspect-ratio", 0.0,
                  NULL);
 }
 

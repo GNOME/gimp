@@ -586,18 +586,19 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
                                        gdouble             fade_point)
 {
   gdouble total   = 0.0;
-  gdouble result  = 1.0;
   gint    factors = 0;
+  gdouble sign    = 1.0;
+  gdouble result  = 1.0;
 
   if (output->use_pressure)
     {
-      total += 2 * gimp_curve_map_value (output->pressure_curve, coords->pressure);
+      total += gimp_curve_map_value (output->pressure_curve, coords->pressure);
       factors++;
     }
 
   if (output->use_velocity)
     {
-      total +=  2 * gimp_curve_map_value (output->velocity_curve, coords->velocity);
+      total += gimp_curve_map_value (output->velocity_curve, coords->velocity);
       factors++;
     }
 
@@ -605,26 +606,24 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
     {
       gdouble direction = gimp_curve_map_value (output->direction_curve, coords->direction);
 
-      direction = fmod (1 + direction, 0.5) / 0.25;
+      if (((direction > 0.875) && (direction < 0.0)) ||
+          ((direction > 0.0) && (direction < 0.125)) ||
+          ((direction > 0.375) && (direction < 0.625)))
+        sign = -1.0;
 
-      if ((coords->direction > 0.0) && (coords->direction < 0.5))
-        direction = 1 / direction;
-
-      total += direction;
+      total += 1.0;
       factors++;
     }
 
   if (output->use_tilt)
     {
-      gdouble tilt_value =  MIN ((1 - fabs (coords->xtilt)) /
-                                 (1 - fabs (coords->ytilt)), 20);
+      gdouble tilt_value =  MAX (fabs (coords->xtilt), fabs (coords->ytilt));
 
-      if (tilt_value <= 1.0)
-        tilt_value = gimp_curve_map_value (output->tilt_curve,
-                                           tilt_value);
-      else
-        tilt_value = (1 - gimp_curve_map_value (output->tilt_curve,
-                                                (1.0 - (tilt_value - 1.0) / 19.0))) * 19.0 + 1.0 ;
+      tilt_value = gimp_curve_map_value (output->tilt_curve,
+                                         tilt_value);
+
+      if (fabs (coords->xtilt) > fabs (coords->ytilt))
+        sign = -1.0;
 
       total += tilt_value;
 
@@ -633,19 +632,22 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
 
   if (output->use_wheel)
     {
-      total += 2 * gimp_curve_map_value (output->wheel_curve, coords->wheel);
+      gdouble wheel = gimp_curve_map_value (output->wheel_curve, coords->wheel);
+
+      if (((wheel > 0.875) && (wheel < 0.0)) ||
+          ((wheel > 0.0) && (wheel < 0.125)) ||
+          ((wheel > 0.375) && (wheel < 0.625)))
+        sign = -1.0;
+
+      total += 1.0;
       factors++;
+
     }
 
   if (output->use_random)
     {
       gdouble random = gimp_curve_map_value (output->random_curve,
                                              g_random_double_range (0.0, 1.0));
-
-      if (random <= 0.5)
-        random = 1 / (random / 0.5 * (2.0 - 1.0) + 1.0);
-      else
-        random = (random - 0.5) / (1.0 - 0.5) * (2.0 - 1.0) + 1.0;
 
       total += random;
       factors++;
@@ -661,11 +663,12 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
   if (factors > 0)
     result = total / factors;
 
+
 #if 0
-  g_printerr ("Dynamics queried(aspect). Result: %f, factors: %d, total: %f\n",
-              result, factors, total);
+  g_printerr ("Dynamics queried(aspect). Result: %f, factors: %d, total: %f sign: %f\n",
+              result, factors, total, sign);
 #endif
-  result = CLAMP (result, 0.05, 20.0);
+  result = CLAMP (result * sign, -1.0, 1.0);
 
   return result;
 }

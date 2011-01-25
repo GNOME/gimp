@@ -652,18 +652,18 @@ gimp_brush_transform_matrix (gdouble      width,
 {
   const gdouble center_x = width  / 2;
   const gdouble center_y = height / 2;
-  gdouble scale_x;
-  gdouble scale_y;
+  gdouble scale_x = scale;
+  gdouble scale_y = scale;
 
-  if (aspect_ratio < 1.0)
+  if (aspect_ratio < 0.0)
     {
-        scale_x = scale * aspect_ratio;
+        scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
         scale_y = scale;
     }
-  else
+  else if (aspect_ratio > 0.0)
     {
       scale_x = scale;
-      scale_y = scale / aspect_ratio;
+      scale_y = scale * (1.0 - (aspect_ratio  / 20.0));
     }
 
   gimp_matrix3_identity (matrix);
