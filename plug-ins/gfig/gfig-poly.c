@@ -243,12 +243,14 @@ d_paint_poly (GfigObject *obj)
     }
 
 
-  gimp_free_select (gfig_context->image_id,
-                    i, line_pnts,
-                    selopt.type,
-                    selopt.antia,
-                    selopt.feather,
-                    selopt.feather_radius);
+  gimp_context_push ();
+  gimp_context_set_antialias (selopt.antia);
+  gimp_context_set_feather (selopt.feather);
+  gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
+  gimp_image_select_polygon (gfig_context->image_id,
+                             selopt.type,
+                             i, line_pnts);
+  gimp_context_pop ();
 
   paint_layer_fill (min_max[0], min_max[1], min_max[2], min_max[3]);
 

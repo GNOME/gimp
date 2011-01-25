@@ -23,6 +23,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_SELECTION_TOOLS_PDB_H__
+#include "gimpselectiontools_pdb.h"
 
 
 /**
@@ -184,17 +187,7 @@ gimp_by_color_select_full (gint32               drawable_ID,
  * @feather: Feather option for selections.
  * @feather_radius: Radius for feather operation.
  *
- * Create an elliptical selection over the specified image.
- *
- * This tool creates an elliptical selection over the specified image.
- * The elliptical region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. If antialiasing
- * is turned on, the edges of the elliptical region will contain
- * intermediate values which give the appearance of a sharper, less
- * pixelized edge. This should be set as TRUE most of the time. If the
- * feather option is enabled, the resulting selection is blurred before
- * combining. The blur is a gaussian blur with the specified feather
- * radius.
+ * Deprecated: Use gimp_image_select_ellipse() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -243,19 +236,7 @@ gimp_ellipse_select (gint32         image_ID,
  * @feather: Feather option for selections.
  * @feather_radius: Radius for feather operation.
  *
- * Create a polygonal selection over the specified image.
- *
- * This tool creates a polygonal selection over the specified image.
- * The polygonal region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. The polygon is
- * specified through an array of floating point numbers and its length.
- * The length of array must be 2n, where n is the number of points.
- * Each point is defined by 2 floating point values which correspond to
- * the x and y coordinates. If the final point does not connect to the
- * starting point, a connecting segment is automatically added. If the
- * feather option is enabled, the resulting selection is blurred before
- * combining. The blur is a gaussian blur with the specified feather
- * radius.
+ * Deprecated: Use gimp_image_select_polygon() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -454,14 +435,7 @@ gimp_fuzzy_select_full (gint32              drawable_ID,
  * @feather: Feather option for selections.
  * @feather_radius: Radius for feather operation.
  *
- * Create a rectangular selection over the specified image;
- *
- * This tool creates a rectangular selection over the specified image.
- * The rectangular region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. If the feather
- * option is enabled, the resulting selection is blurred before
- * combining. The blur is a gaussian blur with the specified feather
- * radius.
+ * Deprecated: Use gimp_image_select_rectangle() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -513,15 +487,7 @@ gimp_rect_select (gint32         image_ID,
  * @feather_radius_x: Radius for feather operation in X direction.
  * @feather_radius_y: Radius for feather operation in Y direction.
  *
- * Create a rectangular selection with round corners over the specified
- * image;
- *
- * This tool creates a rectangular selection with round corners over
- * the specified image. The rectangular region can be either added to,
- * subtracted from, or replace the contents of the previous selection
- * mask. If the feather option is enabled, the resulting selection is
- * blurred before combining. The blur is a gaussian blur with the
- * specified feather radius.
+ * Deprecated: Use gimp_image_select_round_rectangle() instead.
  *
  * Returns: TRUE on success.
  *

@@ -600,12 +600,12 @@ register_selection_tools_procs (GimpPDB *pdb)
                                "gimp-ellipse-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-ellipse-select",
-                                     "Create an elliptical selection over the specified image.",
-                                     "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask. If antialiasing is turned on, the edges of the elliptical region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-select-ellipse' instead.",
+                                     "Deprecated: Use 'gimp-image-select-ellipse' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-select-ellipse");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -672,12 +672,12 @@ register_selection_tools_procs (GimpPDB *pdb)
                                "gimp-free-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-free-select",
-                                     "Create a polygonal selection over the specified image.",
-                                     "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-select-polygon' instead.",
+                                     "Deprecated: Use 'gimp-image-select-polygon' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-select-polygon");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -896,12 +896,12 @@ register_selection_tools_procs (GimpPDB *pdb)
                                "gimp-rect-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-rect-select",
-                                     "Create a rectangular selection over the specified image;",
-                                     "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-image-select-rectangle' instead.",
+                                     "Deprecated: Use 'gimp-image-select-rectangle' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-image-select-rectangle");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",
@@ -962,12 +962,12 @@ register_selection_tools_procs (GimpPDB *pdb)
                                "gimp-round-rect-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-round-rect-select",
-                                     "Create a rectangular selection with round corners over the specified image;",
-                                     "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. If the feather option is enabled, the resulting selection is blurred before combining. The blur is a gaussian blur with the specified feather radius.",
+                                     "Deprecated: Use 'gimp-image-select-round-rectangle' instead.",
+                                     "Deprecated: Use 'gimp-image-select-round-rectangle' instead.",
                                      "Martin Nordholts",
                                      "Martin Nordholts",
                                      "2006",
-                                     NULL);
+                                     "gimp-image-select-round-rectangle");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_image_id ("image",
                                                          "image",

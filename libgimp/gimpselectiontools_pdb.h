@@ -47,6 +47,7 @@ gboolean gimp_by_color_select_full (gint32               drawable_ID,
                                     gboolean             sample_merged,
                                     gboolean             select_transparent,
                                     GimpSelectCriterion  select_criterion);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_ellipse_select       (gint32               image_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -63,6 +64,7 @@ gboolean gimp_free_select          (gint32               image_ID,
                                     gboolean             antialias,
                                     gboolean             feather,
                                     gdouble              feather_radius);
+#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_fuzzy_select         (gint32               drawable_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -84,6 +86,7 @@ gboolean gimp_fuzzy_select_full    (gint32               drawable_ID,
                                     gboolean             sample_merged,
                                     gboolean             select_transparent,
                                     GimpSelectCriterion  select_criterion);
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_rect_select          (gint32               image_ID,
                                     gdouble              x,
                                     gdouble              y,
@@ -104,6 +107,7 @@ gboolean gimp_round_rect_select    (gint32               image_ID,
                                     gboolean             feather,
                                     gdouble              feather_radius_x,
                                     gdouble              feather_radius_y);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

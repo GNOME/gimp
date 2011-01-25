@@ -154,20 +154,7 @@ CODE
 
 
 sub ellipse_select {
-    $blurb = 'Create an elliptical selection over the specified image.';
-
-    $help = <<'HELP';
-This tool creates an elliptical selection over the specified image. The
-elliptical region can be either added to, subtracted from, or replace the
-contents of the previous selection mask. If antialiasing is turned on, the
-edges of the elliptical region will contain intermediate values which give the
-appearance of a sharper, less pixelized edge. This should be set as TRUE most
-of the time. If the feather option is enabled, the resulting selection is
-blurred before combining. The blur is a gaussian blur with the specified
-feather radius.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-select-ellipse');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -209,21 +196,7 @@ CODE
 
 
 sub free_select {
-    $blurb = 'Create a polygonal selection over the specified image.';
-
-    $help = <<'HELP';
-This tool creates a polygonal selection over the specified image. The polygonal
-region can be either added to, subtracted from, or replace the contents of the
-previous selection mask. The polygon is specified through an array of floating
-point numbers and its length. The length of array must be 2n, where n is the
-number of points. Each point is defined by 2 floating point values which
-correspond to the x and y coordinates. If the final point does not connect to
-the starting point, a connecting segment is automatically added. If the feather
-option is enabled, the resulting selection is blurred before combining. The
-blur is a gaussian blur with the specified feather radius.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-select-polygon');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -418,17 +391,7 @@ CODE
 
 
 sub rect_select {
-    $blurb = 'Create a rectangular selection over the specified image;';
-
-    $help = <<'HELP';
-This tool creates a rectangular selection over the specified image. The
-rectangular region can be either added to, subtracted from, or replace the
-contents of the previous selection mask. If the feather option is enabled, the
-resulting selection is blurred before combining. The blur is a gaussian blur
-with the specified feather radius.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-image-select-rectangle');
 
     @inargs = (
 	{ name => 'image', type => 'image',
@@ -467,16 +430,7 @@ CODE
 
 
 sub round_rect_select {
-    $blurb = 'Create a rectangular selection with round corners over the specified image;';
-
-    $help = <<'HELP';
-This tool creates a rectangular selection with round corners over the
-specified image. The rectangular region can be either added to,
-subtracted from, or replace the contents of the previous selection
-mask. If the feather option is enabled, the resulting selection is
-blurred before combining. The blur is a gaussian blur with the
-specified feather radius.
-HELP
+    &std_pdb_deprecated ('gimp-image-select-round-rectangle');
 
     &martin_pdb_misc("2006","2.4");
 
