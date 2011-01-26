@@ -388,6 +388,15 @@ run (const gchar      *name,
               g_values.lvl_in_gamma  = param[10].data.d_float;
               g_values.lvl_out_min   = param[11].data.d_int32;
               g_values.lvl_out_max   = param[12].data.d_int32;
+              if (main_colorize (MC_GET_SAMPLE_COLORS) >= 0)
+                {
+                  main_colorize (MC_DST_REMAP);
+                  status = GIMP_PDB_SUCCESS;
+                }
+              else 
+                {
+                  status = GIMP_PDB_EXECUTION_ERROR;
+                }
             }
           else
             {
