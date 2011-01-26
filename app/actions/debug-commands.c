@@ -357,8 +357,7 @@ debug_show_image_graph (GimpImage *source_image)
                                  tile_manager_height (tiles),
                                  GIMP_RGB,
                                  FALSE);
-  gimp_object_set_name (GIMP_OBJECT (new_image),
-                        new_name);
+  gimp_image_set_uri (new_image, new_name);
   layer = gimp_layer_new_from_tiles (tiles,
                                      new_image,
                                      GIMP_RGBA_IMAGE,

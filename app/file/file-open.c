@@ -212,7 +212,7 @@ file_open_image (Gimp                *gimp,
           gimp_image_set_imported_uri (image, uri);
 
           /* We shall treat this file as an Untitled file */
-          gimp_object_set_name (GIMP_OBJECT (image), NULL);
+          gimp_image_set_uri (image, NULL);
         }
     }
 
@@ -593,7 +593,7 @@ file_open_sanitize_image (GimpImage *image,
                           gboolean   as_new)
 {
   if (as_new)
-    gimp_object_set_name (GIMP_OBJECT (image), NULL);
+    gimp_image_set_uri (image, NULL);
 
   /* clear all undo steps */
   gimp_image_undo_free (image);
