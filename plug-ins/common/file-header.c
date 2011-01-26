@@ -163,7 +163,7 @@ save_image (const gchar *filename,
   const gchar   *newline   = "\"\n\t\"";
   gchar          buf[4];
   guchar        *d         = NULL;
-  guchar        *data;
+  guchar        *data      = NULL;
   guchar        *cmap;
   gint           colors;
 
