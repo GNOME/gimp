@@ -2548,7 +2548,7 @@ image_get_uri_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      uri = g_strdup (gimp_object_get_name (image));
+      uri = g_strdup (gimp_image_get_uri (image));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

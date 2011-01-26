@@ -451,7 +451,7 @@ file_utils_save_thumbnail (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  image_uri = gimp_object_get_name (image);
+  image_uri = gimp_image_get_uri (image);
 
   if (image_uri)
     {

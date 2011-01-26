@@ -226,7 +226,7 @@ file_save_cmd_callback (GtkAction *action,
   if (! gimp_image_get_active_drawable (image))
     return;
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   switch (save_mode)
     {
@@ -359,7 +359,7 @@ file_revert_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   if (! uri)
     {
@@ -497,7 +497,7 @@ file_open_dialog_show (Gimp        *gimp,
   if (dialog)
     {
       if (! uri && image)
-        uri = gimp_object_get_name (image);
+        uri = gimp_image_get_uri (image);
 
       if (! uri)
         uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY);
@@ -662,7 +662,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      uri = gimp_object_get_name (old_image);
+      uri = gimp_image_get_uri (old_image);
 
       if (! uri)
         uri = g_object_get_data (G_OBJECT (old_image),

@@ -148,7 +148,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   title = g_strdup_printf (_("Close %s"), gimp_image_get_display_name (image));
 

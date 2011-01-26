@@ -1532,9 +1532,25 @@ gimp_image_get_uri_or_untitled (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   return uri ? uri : _("Untitled");
+}
+
+/**
+ * gimp_image_get_uri:
+ * @image: A #GimpImage.
+ *
+ * Get the URI of the XCF image, or NULL if there is no URI.
+ *
+ * Returns: The URI, or NULL.
+ **/
+const gchar *
+gimp_image_get_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_object_get_name (image);
 }
 
 void
@@ -1563,7 +1579,7 @@ gimp_image_get_filename (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   if (! uri)
     return NULL;

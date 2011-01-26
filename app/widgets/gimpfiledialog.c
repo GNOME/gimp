@@ -523,7 +523,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = gimp_object_get_name (image);
+        dir_uri = gimp_image_get_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (image),
@@ -555,7 +555,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                       GIMP_FILE_SAVE_A_COPY_URI_KEY);
 
       if (! name_uri)
-        name_uri = gimp_object_get_name (image);
+        name_uri = gimp_image_get_uri (image);
 
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),
@@ -574,7 +574,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   1. Type of last Save
        *   2. .xcf (which we don't explicitly append)
        */
-      ext_uri = gimp_object_get_name (image);
+      ext_uri = gimp_image_get_uri (image);
 
       if (! ext_uri)
         ext_uri = "file:///we/only/care/about/extension.xcf";
@@ -604,7 +604,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! dir_uri)
-        dir_uri = gimp_object_get_name (image);
+        dir_uri = gimp_image_get_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (gimp),
@@ -630,7 +630,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                     GIMP_FILE_EXPORT_URI_KEY);
 
       if (! name_uri)
-        name_uri = gimp_object_get_name (image);
+        name_uri = gimp_image_get_uri (image);
 
       if (! name_uri)
         name_uri = g_object_get_data (G_OBJECT (image),

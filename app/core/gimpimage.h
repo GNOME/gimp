@@ -172,7 +172,8 @@ GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
 
 void            gimp_image_set_uri               (GimpImage          *image,
                                                   const gchar        *uri);
-const gchar   * gimp_image_get_uri_or_untitled               (const GimpImage    *image);
+const gchar   * gimp_image_get_uri               (const GimpImage    *image);
+const gchar   * gimp_image_get_uri_or_untitled   (const GimpImage    *image);
 
 void            gimp_image_set_filename          (GimpImage          *image,
                                                   const gchar        *filename);
