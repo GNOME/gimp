@@ -29,7 +29,6 @@
 /* Data keys for GimpImage */
 #define GIMP_FILE_EXPORT_URI_KEY        "gimp-file-export-uri"
 #define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
-#define GIMP_FILE_EXPORT_TO_URI_KEY     "gimp-file-export-to-uri"
 #define GIMP_FILE_IMPORT_SOURCE_URI_KEY "gimp-file-import-source-uri"
 
 

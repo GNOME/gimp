@@ -499,7 +499,7 @@ gimp_display_shell_format_filename (gchar       *buf,
     {
       gboolean is_exported;
       is_exported = (g_object_get_data (G_OBJECT (image),
-                                        GIMP_FILE_EXPORT_TO_URI_KEY) != NULL);
+                                        GIMP_FILE_EXPORT_URI_KEY) != NULL);
       if (is_exported)
         export_status = _(" (exported)");
       else if (is_imported)

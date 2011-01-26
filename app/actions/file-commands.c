@@ -289,7 +289,7 @@ file_save_cmd_callback (GtkAction *action,
         GimpPlugInProcedure *export_proc;
 
         uri = g_object_get_data (G_OBJECT (image),
-                                 GIMP_FILE_EXPORT_TO_URI_KEY);
+                                 GIMP_FILE_EXPORT_URI_KEY);
 
         if (!uri)
           {

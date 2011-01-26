@@ -231,11 +231,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
               g_object_set_data_full (G_OBJECT (dialog->image),
                                       GIMP_FILE_EXPORT_URI_KEY,
                                       g_strdup (uri), (GDestroyNotify) g_free);
-
-              /* Update 'Export to' to the last exported URI */
-              g_object_set_data_full (G_OBJECT (dialog->image),
-                                      GIMP_FILE_EXPORT_TO_URI_KEY,
-                                      g_strdup (uri), (GDestroyNotify) g_free);
             }
 
           g_object_set_data_full (G_OBJECT (dialog->image->gimp),
