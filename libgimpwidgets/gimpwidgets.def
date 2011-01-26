@@ -44,6 +44,7 @@ EXPORTS
 	gimp_color_display_configure
 	gimp_color_display_configure_reset
 	gimp_color_display_convert
+	gimp_color_display_convert_surface
 	gimp_color_display_get_config
 	gimp_color_display_get_enabled
 	gimp_color_display_get_managed
@@ -56,6 +57,7 @@ EXPORTS
 	gimp_color_display_stack_changed
 	gimp_color_display_stack_clone
 	gimp_color_display_stack_convert
+	gimp_color_display_stack_convert_surface
 	gimp_color_display_stack_get_type
 	gimp_color_display_stack_new
 	gimp_color_display_stack_remove
