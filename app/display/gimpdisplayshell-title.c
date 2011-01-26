@@ -470,12 +470,11 @@ gimp_display_shell_format_filename (gchar       *buf,
   gboolean     is_imported   = FALSE;
   gint         incr          = 0;
 
-  source = g_object_get_data (G_OBJECT (image),
-                              GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+  source = gimp_image_get_imported_uri (image);
 
   /* Note that as soon as the image is saved, it is not considered
-   * imported any longer (GIMP_FILE_IMPORT_SOURCE_URI_KEY is set to
-   * NULL)
+   * imported any longer (gimp_image_set_imported_uri (image, NULL) is
+   * called)
    */
   is_imported = (source != NULL);
 
@@ -498,8 +497,7 @@ gimp_display_shell_format_filename (gchar       *buf,
   if (! gimp_image_is_export_dirty (image))
     {
       gboolean is_exported;
-      is_exported = (g_object_get_data (G_OBJECT (image),
-                                        GIMP_FILE_EXPORT_URI_KEY) != NULL);
+      is_exported = (gimp_image_get_exported_uri (image) != NULL);
       if (is_exported)
         export_status = _(" (exported)");
       else if (is_imported)

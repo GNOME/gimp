@@ -288,14 +288,10 @@ file_save_cmd_callback (GtkAction *action,
         const gchar         *uri;
         GimpPlugInProcedure *export_proc;
 
-        uri = g_object_get_data (G_OBJECT (image),
-                                 GIMP_FILE_EXPORT_URI_KEY);
+        uri = gimp_image_get_exported_uri (image);
 
         if (!uri)
-          {
-            uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-          }
+          uri = gimp_image_get_imported_uri (image);
 
         if (uri)
           {
@@ -363,8 +359,7 @@ file_revert_cmd_callback (GtkAction *action,
 
   if (! uri)
     {
-      uri    = g_object_get_data (G_OBJECT (image),
-                                  GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+      uri    = gimp_image_get_imported_uri (image);
       source = uri;
     }
 
@@ -665,8 +660,7 @@ file_revert_confirm_response (GtkWidget   *dialog,
       uri = gimp_image_get_uri (old_image);
 
       if (! uri)
-        uri = g_object_get_data (G_OBJECT (old_image),
-                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        uri = gimp_image_get_imported_uri (old_image);
 
       new_image = file_open_image (gimp, gimp_get_user_context (gimp),
                                    GIMP_PROGRESS (display),

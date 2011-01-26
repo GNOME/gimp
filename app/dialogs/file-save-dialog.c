@@ -197,11 +197,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
            * places
            */
           if (dialog->save_a_copy)
-            {
-              g_object_set_data_full (G_OBJECT (dialog->image),
-                                      GIMP_FILE_SAVE_A_COPY_URI_KEY,
-                                      g_strdup (uri), (GDestroyNotify) g_free);
-            }
+            gimp_image_set_save_a_copy_uri (dialog->image, uri);
 
           if (! dialog->export)
             {
@@ -213,9 +209,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                * save as that the user is not interested in being able
                * to quickly export back to the original any longer
                */
-              g_object_set_data (G_OBJECT (dialog->image),
-                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY,
-                                 NULL);
+              gimp_image_set_imported_uri (dialog->image, NULL);
             }
           else
             {
@@ -228,9 +222,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
                * happens implicitly when saving since the GimpObject name
                * of a GimpImage is the last-save URI
                */
-              g_object_set_data_full (G_OBJECT (dialog->image),
-                                      GIMP_FILE_EXPORT_URI_KEY,
-                                      g_strdup (uri), (GDestroyNotify) g_free);
+              gimp_image_set_exported_uri (dialog->image, uri);
             }
 
           g_object_set_data_full (G_OBJECT (dialog->image->gimp),

@@ -519,8 +519,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_SAVE_A_COPY_URI_KEY);
+        dir_uri = gimp_image_get_save_a_copy_uri (image);
 
       if (! dir_uri)
         dir_uri = gimp_image_get_uri (image);
@@ -530,8 +529,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                      "gimp-image-source-uri");
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        dir_uri = gimp_image_get_imported_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (gimp),
@@ -551,19 +549,16 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_SAVE_A_COPY_URI_KEY);
+        name_uri = gimp_image_get_save_a_copy_uri (image);
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_EXPORT_URI_KEY);
+        name_uri = gimp_image_get_exported_uri (image);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        name_uri = gimp_image_get_imported_uri (image);
 
       if (! name_uri)
         name_uri = gimp_image_get_string_untitled ();
@@ -592,16 +587,14 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   6. The OS 'Documents' path
        */
 
-      dir_uri = g_object_get_data (G_OBJECT (image),
-                                   GIMP_FILE_EXPORT_URI_KEY);
+      dir_uri = gimp_image_get_exported_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (image),
                                      "gimp-image-source-uri");
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        dir_uri = gimp_image_get_imported_uri (image);
 
       if (! dir_uri)
         dir_uri = gimp_image_get_uri (image);
@@ -626,15 +619,13 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. 'Untitled'
        */
 
-      name_uri = g_object_get_data (G_OBJECT (image),
-                                    GIMP_FILE_EXPORT_URI_KEY);
+      name_uri = gimp_image_get_exported_uri (image);
 
       if (! name_uri)
         name_uri = gimp_image_get_uri (image);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        name_uri = gimp_image_get_imported_uri (image);
 
       if (! name_uri)
         name_uri = gimp_image_get_string_untitled ();
@@ -646,8 +637,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. Type of latest Export of any document
        *   2. .png
        */
-      ext_uri = g_object_get_data (G_OBJECT (image),
-                                   GIMP_FILE_EXPORT_URI_KEY);
+      ext_uri = gimp_image_get_exported_uri (image);
 
       if (! ext_uri)
         ext_uri = g_object_get_data (G_OBJECT (gimp),

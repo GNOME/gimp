@@ -260,10 +260,8 @@ file_actions_update (GimpActionGroup *group,
   if (image)
     {
       drawable  = gimp_image_get_active_drawable (image);
-      source    = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-      export    = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_EXPORT_URI_KEY);
+      source    = gimp_image_get_imported_uri (image);
+      export    = gimp_image_get_exported_uri (image);
     }
 
   show_overwrite =

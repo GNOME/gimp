@@ -209,8 +209,7 @@ file_open_image (Gimp                *gimp,
       if (file_open_file_proc_is_import (file_proc))
         {
           /* Remember the import source */
-          g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
-                                  g_strdup (uri), (GDestroyNotify) g_free);
+          gimp_image_set_imported_uri (image, uri);
 
           /* We shall treat this file as an Untitled file */
           gimp_object_set_name (GIMP_OBJECT (image), NULL);

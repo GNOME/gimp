@@ -78,6 +78,11 @@
 #define TRC(x)
 #endif
 
+/* Data keys for GimpImage */
+#define GIMP_FILE_EXPORT_URI_KEY        "gimp-file-export-uri"
+#define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
+#define GIMP_FILE_IMPORT_SOURCE_URI_KEY "gimp-file-import-source-uri"
+
 
 enum
 {
@@ -1582,6 +1587,108 @@ gimp_image_set_filename (GimpImage   *image,
     {
       gimp_image_set_uri (image, NULL);
     }
+}
+
+/**
+ * gimp_image_get_imported_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The URI of the imported image, or NULL if the image has
+ * been saved as XCF after it was imported.
+ **/
+const gchar *
+gimp_image_get_imported_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return g_object_get_data (G_OBJECT (image),
+                            GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+}
+
+/**
+ * gimp_image_get_exported_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The URI of the image last exported from this XCF file, or
+ * NULL if the image has never been exported.
+ **/
+const gchar *
+gimp_image_get_exported_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return g_object_get_data (G_OBJECT (image),
+                            GIMP_FILE_EXPORT_URI_KEY);
+}
+
+/**
+ * gimp_image_get_save_a_copy_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The URI of the last copy that was saved of this XCF file.
+ **/
+const gchar *
+gimp_image_get_save_a_copy_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return g_object_get_data (G_OBJECT (image),
+                            GIMP_FILE_SAVE_A_COPY_URI_KEY);
+}
+
+/**
+ * gimp_image_set_imported_uri:
+ * @image: A #GimpImage.
+ * @uri:
+ *
+ * Sets the URI this file was imported from.
+ **/
+void
+gimp_image_set_imported_uri (GimpImage   *image,
+                             const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
+                          g_strdup (uri), (GDestroyNotify) g_free);
+}
+
+/**
+ * gimp_image_set_exported_uri:
+ * @image: A #GimpImage.
+ * @uri:
+ *
+ * Sets the URI this file was last exported to. Note that saving as
+ * XCF is not "exporting".
+ **/
+void
+gimp_image_set_exported_uri (GimpImage   *image,
+                             const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set_data_full (G_OBJECT (image),
+                          GIMP_FILE_EXPORT_URI_KEY,
+                          g_strdup (uri), (GDestroyNotify) g_free);
+}
+
+/**
+ * gimp_image_set_save_a_copy_uri:
+ * @image: A #GimpImage.
+ * @uri:
+ *
+ * Set the URI to the last copy this XCF file was saved to through the
+ * "save a copy" action.
+ **/
+void
+gimp_image_set_save_a_copy_uri (GimpImage   *image,
+                                const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set_data_full (G_OBJECT (image),
+                          GIMP_FILE_SAVE_A_COPY_URI_KEY,
+                          g_strdup (uri), (GDestroyNotify) g_free);
 }
 
 gchar *
