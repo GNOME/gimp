@@ -1,4 +1,4 @@
-# translation of gimp-plugins-pl.po to polski
+# translation of gimp-plugin.po to polski
 # Copyright (C) 2001-2011 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnomepl.org
@@ -19,10 +19,10 @@
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plugins-pl\n"
+"Project-Id-Version: gimp-plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-12-22 12:58+0100\n"
-"PO-Revision-Date: 2011-01-17 14:37+0100\n"
+"PO-Revision-Date: 2011-01-21 15:15+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: polski <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
@@ -1305,7 +1305,7 @@ msgstr "Z_mień kanał czerwony"
 
 #: ../plug-ins/common/AlienMap2.c:140
 msgid "_Modify hue channel"
-msgstr "Zm_ień odcień"
+msgstr "Zm_ień barwę"
 
 #: ../plug-ins/common/AlienMap2.c:141
 msgid "Mo_dify green channel"
@@ -1329,23 +1329,23 @@ msgstr "_Częstość czerwonego:"
 
 #: ../plug-ins/common/AlienMap2.c:147
 msgid "Hue _frequency:"
-msgstr "_Częstość odcienia:"
+msgstr "_Częstość barwy:"
 
 #: ../plug-ins/common/AlienMap2.c:148
 msgid "Green fr_equency:"
-msgstr "Częstość zielonego:"
+msgstr "Częstość zie_lonego:"
 
 #: ../plug-ins/common/AlienMap2.c:148
 msgid "Saturation fr_equency:"
-msgstr "Częstość nasycenia:"
+msgstr "Częstość nasyc_enia:"
 
 #: ../plug-ins/common/AlienMap2.c:149
 msgid "Blue freq_uency:"
-msgstr "Częstość niebieskiego:"
+msgstr "Częstość _niebieskiego:"
 
 #: ../plug-ins/common/AlienMap2.c:149
 msgid "Luminosity freq_uency:"
-msgstr "Częstość luminancji:"
+msgstr "C_zęstość luminancji:"
 
 #: ../plug-ins/common/AlienMap2.c:151
 msgid "Red _phaseshift:"
@@ -1353,7 +1353,7 @@ msgstr "_Przesunięcie fazowe czerwonego:"
 
 #: ../plug-ins/common/AlienMap2.c:151
 msgid "Hue _phaseshift:"
-msgstr "P_rzesunięcie fazowe odcienia:"
+msgstr "P_rzesunięcie fazowe barwy:"
 
 #: ../plug-ins/common/AlienMap2.c:152
 msgid "Green ph_aseshift:"
@@ -1619,7 +1619,7 @@ msgstr "Losowo z ziarna (współdzielone)"
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
-msgstr "Odcień"
+msgstr "Barwa"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
 #: ../plug-ins/common/decompose.c:153
@@ -1664,7 +1664,7 @@ msgstr "Ziarno losowości"
 #: ../plug-ins/common/CML_explorer.c:1295 ../plug-ins/common/fp.c:697
 #: ../plug-ins/common/lic.c:672
 msgid "_Hue"
-msgstr "O_dcień"
+msgstr "B_arwa"
 
 #: ../plug-ins/common/CML_explorer.c:1299
 msgid "Sat_uration"
@@ -2272,18 +2272,18 @@ msgstr "_Procent czarnego:"
 
 #: ../plug-ins/common/ccanalyze.c:113
 msgid "Colorcube A_nalysis..."
-msgstr "Analiza sześcienna kolorów..."
+msgstr "A_naliza sześcienna kolorów..."
 
 #: ../plug-ins/common/ccanalyze.c:202 ../plug-ins/common/ccanalyze.c:360
 msgid "Colorcube Analysis"
-msgstr "Analiza sześcianu kolorów"
+msgstr "Analiza sześcienna kolorów"
 
 #. output results
 #: ../plug-ins/common/ccanalyze.c:388
 #: ../plug-ins/imagemap/imap_cmd_guides.c:233
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr "Rozmiar Obrazu: %d x %d"
+msgstr "Rozmiar obrazu: %d x %d"
 
 #: ../plug-ins/common/ccanalyze.c:391
 msgid "No colors"
@@ -2414,7 +2414,7 @@ msgstr "_Koloryzacja..."
 
 #: ../plug-ins/common/colorify.c:169
 msgid "Colorifying"
-msgstr "Koloryzacja"
+msgstr "Koloryzowanie"
 
 #: ../plug-ins/common/colorify.c:255
 msgid "Colorify"
@@ -2449,7 +2449,7 @@ msgstr "Z:"
 
 #: ../plug-ins/common/colortoalpha.c:415
 msgid "Color to Alpha Color Picker"
-msgstr "Wybór koloru"
+msgstr "Wybór koloru na alfa"
 
 #: ../plug-ins/common/colortoalpha.c:430
 msgid "to alpha"
@@ -2476,7 +2476,7 @@ msgstr "HSV"
 
 #: ../plug-ins/common/compose.c:207
 msgid "_Hue:"
-msgstr "_Odcień:"
+msgstr "_Barwa:"
 
 #: ../plug-ins/common/compose.c:208 ../plug-ins/common/scatter_hsv.c:413
 msgid "_Saturation:"
@@ -2974,7 +2974,7 @@ msgstr "alfa"
 
 #: ../plug-ins/common/decompose.c:148 ../plug-ins/common/decompose.c:152
 msgid "hue"
-msgstr "odcień"
+msgstr "barwa"
 
 #: ../plug-ins/common/decompose.c:149 ../plug-ins/common/decompose.c:153
 msgid "saturation"
@@ -3708,7 +3708,7 @@ msgstr "Oryginał:"
 
 #: ../plug-ins/common/fp.c:574
 msgid "Hue Variations"
-msgstr "Wariacje odcienia"
+msgstr "Wariacje barwy"
 
 #: ../plug-ins/common/fp.c:628
 msgid "Roughness"
@@ -4884,7 +4884,7 @@ msgstr "Środek rozmycia"
 
 #: ../plug-ins/common/mblur.c:999
 msgid "Blur _outward"
-msgstr ""
+msgstr "Rozmycie zewnęrzne"
 
 #: ../plug-ins/common/mblur.c:1012
 msgid "Blur Parameters"
@@ -5294,7 +5294,7 @@ msgstr "_Promyki:"
 
 #: ../plug-ins/common/nova.c:391
 msgid "R_andom hue:"
-msgstr "_Losowy odcień:"
+msgstr "_Losowa barwa:"
 
 #: ../plug-ins/common/nova.c:443
 msgid "Center of SuperNova"
@@ -6685,11 +6685,11 @@ msgstr "Ustawia krycie iskier"
 
 #: ../plug-ins/common/sparkle.c:468
 msgid "_Random hue:"
-msgstr "_Losowy odcień:"
+msgstr "_Losowa barwa:"
 
 #: ../plug-ins/common/sparkle.c:471
 msgid "Adjust the Value how much the Hue should be changed randomly"
-msgstr "Ustawia, jak bardzo losowo będzie zmieniał się odcień"
+msgstr "Ustawia, jak bardzo będzie zmieniała się barwa"
 
 #: ../plug-ins/common/sparkle.c:482
 msgid "Rando_m saturation:"
@@ -8687,7 +8687,7 @@ msgstr "O_brót:"
 
 #: ../plug-ins/gflare/gflare.c:2713
 msgid "_Hue rotation:"
-msgstr "Obrót o_dcienia:"
+msgstr "Obrót _barwy:"
 
 #: ../plug-ins/gflare/gflare.c:2725
 msgid "Vector _angle:"
@@ -8823,7 +8823,7 @@ msgstr "Obrót:"
 #: ../plug-ins/gflare/gflare.c:3548 ../plug-ins/gflare/gflare.c:3654
 #: ../plug-ins/gflare/gflare.c:3791
 msgid "Hue rotation:"
-msgstr "Obrót odcienia:"
+msgstr "Obrót barwy:"
 
 #: ../plug-ins/gflare/gflare.c:3562
 msgid "G_low"
@@ -9137,7 +9137,7 @@ msgstr "Kierunek podąża za \"pływającym\" deseniem"
 
 #: ../plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
-msgstr "Kierunek rysowania jest wyznaczany przez odcień obszaru"
+msgstr "Kierunek rysowania jest wyznaczany przez barwę obszaru"
 
 #: ../plug-ins/gimpressionist/orientation.c:166
 #: ../plug-ins/gimpressionist/size.c:169
@@ -9429,7 +9429,7 @@ msgstr "Rozmiar pociągnięcia jest określany przez kierunek wektora od środka
 
 #: ../plug-ins/gimpressionist/size.c:166
 msgid "The hue of the region determines the size of the stroke"
-msgstr "Rozmiar pociągnięcia jest określany przez odcień obszaru"
+msgstr "Rozmiar pociągnięcia jest określany przez barwę obszaru"
 
 #: ../plug-ins/gimpressionist/size.c:170
 msgid "The brush-size that matches the original image the closest is selected"
@@ -9592,7 +9592,7 @@ msgstr "Fraktal IFS: Obiekt"
 
 #: ../plug-ins/ifscompose/ifscompose.c:657
 msgid "Scale hue by:"
-msgstr "Skalowanie odcienia:"
+msgstr "Skalowanie barwy:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:672
 msgid "Scale value by:"
@@ -10639,7 +10639,7 @@ msgstr "Brak wymaganego atrybutu rdf:about w <%s>"
 #: ../plug-ins/metadata/xmp-parse.c:823
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
-msgstr ""
+msgstr "Zagnieżdżone elementy (<%s>) nie są dozwolone dla tej treści"
 
 #: ../plug-ins/metadata/xmp-parse.c:945
 #, c-format
@@ -10661,7 +10661,7 @@ msgstr "Paczka XMP musi kończyć sie <?xpacket begin=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1099
 msgid "XMP cannot contain XML comments or processing instructions"
-msgstr ""
+msgstr "XMP nie może zawierać komentarzy oraz instrukcji przetwarzania XML"
 
 #: ../plug-ins/pagecurl/pagecurl.c:221
 msgid "_Pagecurl..."
@@ -10794,9 +10794,9 @@ msgid ""
 "brighter print, while smaller values will produce a generally darker print. "
 "Black and white will remain the same, unlike with the brightness adjustment."
 msgstr ""
-"Ustawia wartość współczynnika gamma na wydruku. Zwiększając tę wartość można "
-"uzyskać ogólnie rozjaśniony wydruk, zwiększając otrzymamy ciemniejszy. Kolor "
-"czarny i biały pozostaną niezmienione - w odróżnieniu od reg. jasności."
+"Ustawia wartość współczynnika gamma dla wydruku. Zwiększając tą wartość można "
+"uzyskać ogólnie rozjaśniony wydruk, zmniejszając otrzymamy ciemniejszy. Kolor "
+"czarny i biały pozostaną niezmienione - w odróżnieniu od regulacji jasności."
 
 #: ../plug-ins/print/gimp_color_window.c:432
 msgid "Dither algorithm:"
@@ -10812,7 +10812,7 @@ msgid ""
 "Hybrid Floyd-Steinberg generally produces inferior output."
 msgstr ""
 "Ustala używany algorytm symulacji kolorów.\n"
-"Hybrydowy adaptywny zazwyczaj zapewnia najlepszą jakość.\n"
+"Hybrydowy adaptacyjny zapewnia zazwyczaj najlepszą jakość.\n"
 "Uporządkowany jest szybszy i w przypadku fotografii daje niemal taką samą "
 "jakość.\n"
 "Szybki oraz Bardzo szybki to algorytmy wyraźnie szybsze i sprawdzające się "
@@ -10883,7 +10883,7 @@ msgstr "Poziome"
 
 #: ../plug-ins/print/gimp_main_window.c:495
 msgid "Upside down"
-msgstr "Odwrócone pionowe"
+msgstr "Odwrócone"
 
 #: ../plug-ins/print/gimp_main_window.c:496
 msgid "Seascape"
@@ -11380,7 +11380,7 @@ msgstr "Kontekst"
 #. Gray: Circle: Spinbutton 1
 #: ../plug-ins/rcm/rcm_dialog.c:467
 msgid "Hue:"
-msgstr "Odcień:"
+msgstr "Barwa:"
 
 #. * Gray: Operation-Mode *
 #: ../plug-ins/rcm/rcm_dialog.c:514
@@ -11552,8 +11552,9 @@ msgstr "wget niespodziewanie zakończyło pracę na URI \"%s\""
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(opóźnienie %d sekunda)"
+msgstr[1] "(opóźnienie %d sekundy)"
+msgstr[2] "(opóźnienie %d sekund)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:204
