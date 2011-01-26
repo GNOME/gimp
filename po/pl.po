@@ -10361,17 +10361,17 @@ msgstr[2] "Jeśli obraz nie zostanie zapisany, zmiany z %d ostatnich godzin zost
 #, c-format
 msgid "If you don't save the image, changes from the last hour and %d minute will be lost."
 msgid_plural "If you don't save the image, changes from the last hour and %d minutes will be lost."
-msgstr[0] "Jeśli obraz nie zostanie zapisany,  zmiany z ostatniej godziny i %d minuty zostaną utracone."
-msgstr[1] "Jeśli obraz nie zostanie zapisany,  zmiany z ostatniej godziny i %d minut zostaną utracone."
-msgstr[2] "Jeśli obraz nie zostanie zapisany,  zmiany z ostatniej godziny i %d minut zostaną utracone."
+msgstr[0] "Jeśli obraz nie zostanie zapisany, zmiany z ostatniej godziny i %d minuty zostaną utracone."
+msgstr[1] "Jeśli obraz nie zostanie zapisany, zmiany z ostatniej godziny i %d minut zostaną utracone."
+msgstr[2] "Jeśli obraz nie zostanie zapisany, zmiany z ostatniej godziny i %d minut zostaną utracone."
 
 #: ../app/display/gimpdisplayshell-close.c:275
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "Jeśli obraz nie zostanie zapisany,  zmiany z ostatniej minuty zostaną utracone."
-msgstr[1] "Jeśli obraz nie zostanie zapisany,  zmiany z ostatnich %d minut zostaną utracone."
-msgstr[2] "Jeśli obraz nie zostanie zapisany,  zmiany z ostatnich %d minut zostaną utracone."
+msgstr[0] "Jeśli obraz nie zostanie zapisany, zmiany z ostatniej minuty zostaną utracone."
+msgstr[1] "Jeśli obraz nie zostanie zapisany, zmiany z ostatnich %d minut zostaną utracone."
+msgstr[2] "Jeśli obraz nie zostanie zapisany, zmiany z ostatnich %d minut zostaną utracone."
 
 #: ../app/display/gimpdisplayshell-dnd.c:232
 #: ../app/display/gimpdisplayshell-dnd.c:602
@@ -11602,7 +11602,7 @@ msgstr "%s ustawia nowe źródło klonowania"
 
 #: ../app/tools/gimpclonetool.c:89
 msgid "Click to set a new clone source"
-msgstr "Kliknij, aby ustawić nowe źródło klonowania."
+msgstr "Kliknij, aby ustawić nowe źródło klonowania"
 
 #: ../app/tools/gimpclonetool.c:108
 #: ../app/tools/gimpperspectiveclonetool.c:958
@@ -11883,7 +11883,7 @@ msgstr "_Kadruj"
 
 #: ../app/tools/gimpcroptool.c:271
 msgid "Click or press Enter to crop"
-msgstr "Kliknij lub niciśnij Enter, aby wykadrować"
+msgstr "Kliknij lub naciśnij Enter, aby wykadrować"
 
 #: ../app/tools/gimpcroptool.c:328
 msgid "There is no active layer to crop."
