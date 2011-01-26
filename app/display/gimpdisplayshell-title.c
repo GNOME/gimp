@@ -221,7 +221,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
             case 'F': /* full filename */
               {
                 gchar       *filename;
-                const gchar *uri = gimp_image_get_uri (image);
+                const gchar *uri = gimp_image_get_uri_or_untitled (image);
 
                 filename = file_utils_uri_display_name (uri);
 

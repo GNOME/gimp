@@ -566,7 +566,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                       GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! name_uri)
-        name_uri = gimp_image_get_uri (image); /* Untitled */
+        name_uri = gimp_image_get_uri_or_untitled (image);
 
 
       /* Priority of default type/extension for Save:
@@ -637,7 +637,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                       GIMP_FILE_IMPORT_SOURCE_URI_KEY);
 
       if (! name_uri)
-        name_uri = gimp_image_get_uri (image); /* Untitled */
+        name_uri = gimp_image_get_uri_or_untitled (image);
 
 
       /* Priority of default type/extension for Export:

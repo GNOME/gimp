@@ -283,7 +283,7 @@ windows_actions_image_notify (GimpDisplay      *display,
         gchar       *escaped;
         gchar       *title;
 
-        uri = gimp_image_get_uri (image);
+        uri = gimp_image_get_uri_or_untitled (image);
 
         filename = file_utils_uri_display_name (uri);
         basename = file_utils_uri_display_basename (uri);

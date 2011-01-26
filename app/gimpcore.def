@@ -302,7 +302,7 @@ EXPORTS
 	gimp_image_get_quick_mask_color
 	gimp_image_get_quick_mask_state
 	gimp_image_get_type
-	gimp_image_get_uri
+	gimp_image_get_uri_or_untitled
 	gimp_image_get_vectors
 	gimp_image_get_vectors_index
 	gimp_image_get_width

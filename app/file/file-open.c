@@ -415,7 +415,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
           /*  can only create a thumbnail if the passed uri and the
            *  resulting image's uri match.
            */
-          if (strcmp (uri, gimp_image_get_uri (image)) == 0)
+          if (strcmp (uri, gimp_image_get_uri_or_untitled (image)) == 0)
             {
               /*  no need to save a thumbnail if there's a good one already  */
               if (! gimp_imagefile_check_thumbnail (imagefile))

@@ -413,7 +413,7 @@ file_revert_cmd_callback (GtkAction *action,
       if (! source)
         basename = file_utils_uri_display_basename (uri);
       else
-        basename = g_strdup (gimp_image_get_uri (image));
+        basename = g_strdup (gimp_image_get_uri_or_untitled (image));
 
       filename = file_utils_uri_display_name (uri);
 

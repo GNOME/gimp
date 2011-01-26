@@ -1150,7 +1150,7 @@ gimp_image_get_description (GimpViewable  *viewable,
 
   if (tooltip)
     {
-      *tooltip = file_utils_uri_display_name (gimp_image_get_uri (image));
+      *tooltip = file_utils_uri_display_name (gimp_image_get_uri_or_untitled (image));
     }
 
   return g_strdup_printf ("%s-%d",
@@ -1517,8 +1517,16 @@ gimp_image_take_uri (GimpImage *image,
   gimp_object_take_name (GIMP_OBJECT (image), uri);
 }
 
+/**
+ * gimp_image_get_uri_or_untitled:
+ * @image: A #GimpImage.
+ *
+ * Get the URI of the XCF image, or "Untitled" if there is no URI.
+ *
+ * Returns: The URI, or "Untitled".
+ **/
 const gchar *
-gimp_image_get_uri (const GimpImage *image)
+gimp_image_get_uri_or_untitled (const GimpImage *image)
 {
   const gchar *uri;
 
@@ -1574,7 +1582,7 @@ gimp_image_get_display_name (GimpImage *image)
 
   if (! private->display_name)
     {
-      const gchar *uri = gimp_image_get_uri (image);
+      const gchar *uri = gimp_image_get_uri_or_untitled (image);
 
       private->display_name = file_utils_uri_display_basename (uri);
     }
