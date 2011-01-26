@@ -1518,6 +1518,18 @@ gimp_image_take_uri (GimpImage *image,
 }
 
 /**
+ * gimp_image_get_untitled_string:
+ *
+ * Returns: The (translated) "Untitled" string for newly created
+ * images.
+ **/
+const gchar *
+gimp_image_get_string_untitled (void)
+{
+  return _("Untitled");
+}
+
+/**
  * gimp_image_get_uri_or_untitled:
  * @image: A #GimpImage.
  *
@@ -1534,7 +1546,7 @@ gimp_image_get_uri_or_untitled (const GimpImage *image)
 
   uri = gimp_image_get_uri (image);
 
-  return uri ? uri : _("Untitled");
+  return uri ? uri : gimp_image_get_string_untitled ();
 }
 
 /**

@@ -473,5 +473,7 @@ gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
 
 void            gimp_image_invalidate_previews   (GimpImage          *image);
 
+const gchar   * gimp_image_get_string_untitled   (void);
+
 
 #endif /* __GIMP_IMAGE_H__ */
