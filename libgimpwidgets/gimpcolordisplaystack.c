@@ -314,7 +314,7 @@ gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
 
 /**
  * gimp_color_display_stack_convert:
- * @display: a #GimpColorDisplayStack
+ * @stack: a #GimpColorDisplayStack
  * @buf: the pixel buffer to convert
  * @width: the width of the buffer
  * @height: the height of the buffer
