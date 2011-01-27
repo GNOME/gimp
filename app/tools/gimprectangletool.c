@@ -872,8 +872,6 @@ gimp_rectangle_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_RESUME:
-      gimp_rectangle_tool_update_highlight (rect_tool);
-
       /* When highlightning is on, the shell gets paused/unpaused which means we
        * will get here, but we only want to recalculate handle sizes when the
        * zoom has changed.
