@@ -22,6 +22,12 @@ GIMP was originally written by:
     <xsl:apply-templates select="dc:creator" />
     <xsl:text>
 
+The current maintainers are:
+
+</xsl:text>
+    <xsl:apply-templates select="dc:maintainer" />
+    <xsl:text>
+
 The following people have contributed code to GIMP:
 
 </xsl:text>
@@ -48,6 +54,11 @@ The following people have helped to document GIMP:
   </xsl:template>
 
   <xsl:template match="dc:creator">
+    <xsl:text> </xsl:text><xsl:apply-templates /><xsl:text>
+</xsl:text>
+  </xsl:template>
+
+  <xsl:template match="dc:maintainer">
     <xsl:text> </xsl:text><xsl:apply-templates /><xsl:text>
 </xsl:text>
   </xsl:template>

@@ -6,6 +6,12 @@ GIMP was originally written by:
  Peter Mattis
 
 
+The current maintainers are:
+
+ Sven Neumann
+ Michael Natterer
+
+
 The following people have contributed code to GIMP:
 
  Lauri Alanko
@@ -167,10 +173,8 @@ The following people have contributed code to GIMP:
  Yukihiro Nakai
  Shuji Narazaki
  Felix Natter
- Michael Natterer
  David Neary
  David Necas
- Sven Neumann
  Andreas Neustifter
  Stephen Robert Norris
  Tim Newsome
