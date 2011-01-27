@@ -231,6 +231,11 @@ gimp_blob_diamond (gdouble xc,
  *             (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT;
  *
  * which would change the limit from the image to the ellipse size
+ *
+ * Update: this change was done, and now there apparently is a limit
+ * on the ellipse size. I'm too lazy to fully understand what's going
+ * on here and simply leave this comment here for
+ * documentation. --Mitch
  */
 
 static gboolean trig_initialized = FALSE;
@@ -258,6 +263,7 @@ gimp_blob_ellipse (gdouble xc,
   gint      xc_shift, yc_shift;
   gint      xp_shift, yp_shift;
   gint      xq_shift, yq_shift;
+  gint      xc_base, yc_base;
 
   if (! trig_initialized)
     {
@@ -283,6 +289,9 @@ gimp_blob_ellipse (gdouble xc,
   result = gimp_blob_new (miny, maxy - miny + 1);
   present = g_new0 (EdgeType, result->height);
 
+  xc_base = floor (xc);
+  yc_base = floor (yc);
+
   /* Figure out a step that will draw most of the points */
 
   r1 = sqrt (xp * xp + yp * yp);
@@ -295,8 +304,8 @@ gimp_blob_ellipse (gdouble xc,
 
   /* Fill in the edge points */
 
-  xc_shift = 0.5 + xc * (1 << TOTAL_SHIFT);
-  yc_shift = 0.5 + yc * (1 << TOTAL_SHIFT);
+  xc_shift = 0.5 + (xc - xc_base) * (1 << TOTAL_SHIFT);
+  yc_shift = 0.5 + (yc - yc_base) * (1 << TOTAL_SHIFT);
   xp_shift = 0.5 + xp * (1 << ELLIPSE_SHIFT);
   yp_shift = 0.5 + yp * (1 << ELLIPSE_SHIFT);
   xq_shift = 0.5 + xq * (1 << ELLIPSE_SHIFT);
@@ -307,10 +316,11 @@ gimp_blob_ellipse (gdouble xc,
       gint s = trig_table[i];
       gint c = trig_table[(TABLE_SIZE + TABLE_SIZE / 4 - i) % TABLE_SIZE];
 
-      gint x = (xc_shift + c * xp_shift + s * xq_shift +
-                (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT;
-      gint y = ((yc_shift + c * yp_shift + s * yq_shift +
-                (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT) - result->y;
+      gint x = ((xc_shift + c * xp_shift + s * xq_shift +
+                 (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT) + xc_base;
+      gint y = (((yc_shift + c * yp_shift + s * yq_shift +
+                 (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT)) + yc_base
+                  - result->y;
 
       gint dydi = c * yq_shift  - s * yp_shift;
 
