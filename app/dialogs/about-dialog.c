@@ -41,8 +41,11 @@
 #include "gimp-intl.h"
 
 
-/* The first authors are the creators, don't shuffle them */
-#define START_INDEX (G_N_ELEMENTS (creators) - 1 /*NULL*/)
+/* The first authors are the creators and maintainers, don't shuffle
+ * them
+ */
+#define START_INDEX (G_N_ELEMENTS (creators)    - 1 /*NULL*/ + \
+                     G_N_ELEMENTS (maintainers) - 1 /*NULL*/)
 
 
 typedef struct

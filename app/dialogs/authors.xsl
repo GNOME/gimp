@@ -26,10 +26,20 @@ static const gchar * const creators[] =
 </xsl:text>
 
 <xsl:text>
+static const gchar * const maintainers[] =
+{
+</xsl:text>
+  <xsl:apply-templates select="dc:maintainer" />
+<xsl:text>  NULL
+};
+</xsl:text>
+
+<xsl:text>
 static const gchar * const authors[] =
 {
 </xsl:text>
   <xsl:apply-templates select="dc:creator" />
+  <xsl:apply-templates select="dc:maintainer" />
   <xsl:call-template name="recent-contributor">
     <xsl:with-param name="role" select="'author'"/>
   </xsl:call-template>
@@ -61,6 +71,8 @@ static const gchar * const documenters[] =
   </xsl:template>
 
   <xsl:template match="dc:creator">  "<xsl:apply-templates />",
+</xsl:template>
+  <xsl:template match="dc:maintainer">  "<xsl:apply-templates />",
 </xsl:template>
   <xsl:template match="dc:contributor">  "<xsl:apply-templates />",
 </xsl:template>
