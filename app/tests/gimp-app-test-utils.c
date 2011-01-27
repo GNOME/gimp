@@ -27,10 +27,13 @@
 #include "display/gimpimagewindow.h"
 
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpdialogfactory.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+
+#include "tests.h"
 
 #include "gimp-app-test-utils.h"
 
@@ -197,3 +200,59 @@ gimp_test_utils_get_ui_manager (Gimp *gimp)
 
   return ui_manager;
 }
+
+/**
+ * gimp_test_utils_create_image_from_dalog:
+ * @gimp:
+ *
+ * Creates a new image using the "New image" dialog, and then returns
+ * the #GimpImage created.
+ *
+ * Returns: The created #GimpImage.
+ **/
+GimpImage *
+gimp_test_utils_create_image_from_dalog (Gimp *gimp)
+{
+  GimpImage     *image            = NULL;
+  GtkWidget     *new_image_dialog = NULL;
+  guint          n_initial_images = g_list_length (gimp_get_image_iter (gimp));
+  guint          n_images         = -1;
+  gint           tries_left       = 100;
+  GimpUIManager *ui_manager       = gimp_test_utils_get_ui_manager (gimp);
+
+  /* Bring up the new image dialog */
+  gimp_ui_manager_activate_action (ui_manager,
+                                   "image",
+                                   "image-new");
+  gimp_test_run_mainloop_until_idle ();
+
+  /* Get the GtkWindow of the dialog */
+  new_image_dialog =
+    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
+                                      gdk_screen_get_default (),
+                                      "gimp-image-new-dialog",
+                                      -1 /*view_size*/);
+
+  /* Press the focused widget, it should be the Ok button. It will
+   * take a while for the image to be created to loop for a while
+   */
+  gtk_widget_activate (gtk_window_get_focus (GTK_WINDOW (new_image_dialog)));
+  do
+    {
+      g_usleep (20 * 1000);
+      gimp_test_run_mainloop_until_idle ();
+      n_images = g_list_length (gimp_get_image_iter (gimp));
+    }
+  while (tries_left-- &&
+         n_images != n_initial_images + 1);
+
+  /* Make sure there now is one image more than initially */
+  g_assert_cmpint (n_images,
+                   ==,
+                   n_initial_images + 1);
+
+  image = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
+
+  return image;
+}
+

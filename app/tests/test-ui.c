@@ -229,52 +229,13 @@ static void
 create_new_image_via_dialog (GimpTestFixture *fixture,
                              gconstpointer    data)
 {
-  Gimp              *gimp             = GIMP (data);
-  GimpDisplay       *display          = GIMP_DISPLAY (gimp_get_empty_display (gimp));
-  GimpDisplayShell  *shell            = gimp_display_get_shell (display);
-  GtkWidget         *toplevel         = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-  GimpImageWindow   *image_window     = GIMP_IMAGE_WINDOW (toplevel);
-  GimpUIManager     *ui_manager       = gimp_image_window_get_ui_manager (image_window);
-  GtkWidget         *new_image_dialog = NULL;
-  guint              n_initial_images = g_list_length (gimp_get_image_iter (gimp));
-  guint              n_images         = -1;
-  gint               tries_left       = 100;
-  GimpImage         *image;
-  GimpLayer         *layer;
+  Gimp      *gimp = GIMP (data);
+  GimpImage *image;
+  GimpLayer *layer;
 
-  /* Bring up the new image dialog */
-  gimp_ui_manager_activate_action (ui_manager,
-                                   "image",
-                                   "image-new");
-  gimp_test_run_mainloop_until_idle ();
-
-  /* Get the GtkWindow of the dialog */
-  new_image_dialog =
-    gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
-                                      gtk_widget_get_screen (GTK_WIDGET (shell)),
-                                      "gimp-image-new-dialog",
-                                      -1 /*view_size*/);
-
-  /* Press the focused widget, it should be the Ok button. It will
-   * take a while for the image to be created to loop for a while
-   */
-  gtk_widget_activate (gtk_window_get_focus (GTK_WINDOW (new_image_dialog)));
-  do
-    {
-      g_usleep (20 * 1000);
-      gimp_test_run_mainloop_until_idle ();
-      n_images = g_list_length (gimp_get_image_iter (gimp));
-    }
-  while (tries_left-- &&
-         n_images != n_initial_images + 1);
-
-  /* Make sure there now is one image more than initially */
-  g_assert_cmpint (n_images,
-                   ==,
-                   n_initial_images + 1);
+  image = gimp_test_utils_create_image_from_dalog (gimp);
 
   /* Add a layer to the image to make it more useful in later tests */
-  image = GIMP_IMAGE (gimp_get_image_iter (gimp)->data);
   layer = gimp_layer_new (image,
                           gimp_image_get_width (image),
                           gimp_image_get_height (image),
