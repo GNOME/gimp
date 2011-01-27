@@ -770,6 +770,51 @@ context_set_feather_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+context_get_sample_merged_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  GValueArray *return_vals;
+  gboolean sample_merged = FALSE;
+
+  g_object_get (context,
+                "sample-merged", &sample_merged,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (&return_vals->values[1], sample_merged);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_merged_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  gboolean sample_merged;
+
+  sample_merged = g_value_get_boolean (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-merged", sample_merged,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 context_get_interpolation_invoker (GimpProcedure      *procedure,
                                    Gimp               *gimp,
                                    GimpContext        *context,
@@ -1675,6 +1720,52 @@ register_context_procs (GimpPDB *pdb)
                                                     "The vertical feather radius",
                                                     0, 1000, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-merged
+   */
+  procedure = gimp_procedure_new (context_get_sample_merged_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-merged");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-merged",
+                                     "Get the sample merged setting.",
+                                     "This procedure returns the sample merged setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("sample-merged",
+                                                         "sample merged",
+                                                         "The sample merged setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-merged
+   */
+  procedure = gimp_procedure_new (context_set_sample_merged_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-merged");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-merged",
+                                     "Set the sample merged setting.",
+                                     "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers). This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-fuzzy'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-merged",
+                                                     "sample merged",
+                                                     "The sample merged setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

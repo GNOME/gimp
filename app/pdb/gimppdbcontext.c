@@ -41,6 +41,7 @@ enum
   PROP_FEATHER,
   PROP_FEATHER_RADIUS_X,
   PROP_FEATHER_RADIUS_Y,
+  PROP_SAMPLE_MERGED,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
   PROP_TRANSFORM_RESIZE,
@@ -93,6 +94,11 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                    "feather-radius-y", NULL,
                                    0.0, 1000.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                                    "sample-merged", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
                                  "interpolation", NULL,
@@ -169,6 +175,10 @@ gimp_pdb_context_set_property (GObject      *object,
       options->feather_radius_y = g_value_get_double (value);
       break;
 
+    case PROP_SAMPLE_MERGED:
+      options->sample_merged = g_value_get_boolean (value);
+      break;
+
     case PROP_INTERPOLATION:
       options->interpolation = g_value_get_enum (value);
       break;
@@ -215,6 +225,10 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_FEATHER_RADIUS_Y:
       g_value_set_double (value, options->feather_radius_y);
+      break;
+
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, options->sample_merged);
       break;
 
     case PROP_INTERPOLATION:

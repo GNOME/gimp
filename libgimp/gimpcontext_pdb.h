@@ -62,6 +62,8 @@ gboolean               gimp_context_get_feather_radius      (gdouble            
                                                              gdouble                  *feather_radius_y);
 gboolean               gimp_context_set_feather_radius      (gdouble                   feather_radius_x,
                                                              gdouble                   feather_radius_y);
+gboolean               gimp_context_get_sample_merged       (void);
+gboolean               gimp_context_set_sample_merged       (gboolean                  sample_merged);
 GimpInterpolationType  gimp_context_get_interpolation       (void);
 gboolean               gimp_context_set_interpolation       (GimpInterpolationType     interpolation);
 GimpTransformDirection gimp_context_get_transform_direction (void);

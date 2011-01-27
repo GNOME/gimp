@@ -1076,6 +1076,74 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
 }
 
 /**
+ * gimp_context_get_sample_merged:
+ *
+ * Get the sample merged setting.
+ *
+ * This procedure returns the sample merged setting.
+ *
+ * Returns: The sample merged setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_sample_merged (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean sample_merged = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-merged",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_merged = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_merged;
+}
+
+/**
+ * gimp_context_set_sample_merged:
+ * @sample_merged: The sample merged setting.
+ *
+ * Set the sample merged setting.
+ *
+ * This procedure modifies the sample merged setting. If an operation
+ * depends on the colors of the pixels present in a drawable, like when
+ * doing a seed fill, this setting controls whether the pixel data from
+ * the specified drawable is used ('sample-merged' is FALSE), or the
+ * pixel data from the composite image ('sample-merged' is TRUE. This
+ * is equivalent to sampling for colors after merging all visible
+ * layers). This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_fuzzy().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_merged (gboolean sample_merged)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-merged",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_interpolation:
  *
  * Get the interpolation type.

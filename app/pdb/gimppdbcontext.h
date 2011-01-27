@@ -43,6 +43,7 @@ struct _GimpPDBContext
   gboolean                feather;
   gdouble                 feather_radius_x;
   gdouble                 feather_radius_y;
+  gboolean                sample_merged;
 
   GimpInterpolationType   interpolation;
   GimpTransformDirection  transform_direction;
