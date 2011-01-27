@@ -41,6 +41,10 @@
 #include "gimp-intl.h"
 
 
+/* The first authors are the creators, don't shuffle them */
+#define START_INDEX (G_N_ELEMENTS (creators) - 1 /*NULL*/)
+
+
 typedef struct
 {
   GtkWidget   *dialog;
@@ -242,9 +246,6 @@ about_dialog_reshuffle (GimpAboutDialog *dialog)
   for (i = 0; i < dialog->n_authors; i++)
     dialog->shuffle[i] = i;
 
-  /* here we rely on the authors array having Peter and Spencer first */
-#define START_INDEX 2
-
   for (i = START_INDEX; i < dialog->n_authors; i++)
     {
       gint j = g_rand_int_range (gr, START_INDEX, dialog->n_authors);
@@ -258,8 +259,6 @@ about_dialog_reshuffle (GimpAboutDialog *dialog)
           dialog->shuffle[i] = t;
         }
     }
-
-#undef START_INDEX
 
   g_rand_free (gr);
 }

@@ -17,6 +17,15 @@
 <xsl:text>
 /* NOTE: This file is auto-generated from authors.xml, do not edit it. */
 
+static const gchar * const creators[] =
+{
+</xsl:text>
+  <xsl:apply-templates select="dc:creator" />
+<xsl:text>  NULL
+};
+</xsl:text>
+
+<xsl:text>
 static const gchar * const authors[] =
 {
 </xsl:text>
