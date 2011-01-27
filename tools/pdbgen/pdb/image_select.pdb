@@ -33,7 +33,8 @@ alpha.
 
 This prodecure is affected by the following context setters:
 gimp_context_set_antialias(), gimp_context_set_feather(),
-gimp_context_set_feather_radius(), gimp_context_set_sample_merged().
+gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
+gimp_context_set_sample_criterion().
 
 In the case of a merged sampling, the supplied drawable is ignored.
 HELP
@@ -54,11 +55,7 @@ HELP
         { name => 'select_transparent', type => 'boolean',
           desc => "Whether to consider transparent pixels for selection.
                    If TRUE, transparency is considered as a unique selectable
-                   color." },
-        { name => 'select_criterion', type => 'enum GimpSelectCriterion',
-          desc => "The criterion used to determine color similarity.
-                   SELECT_CRITERION_COMPOSITE is the standard choice.
-		   " },
+                   color." }
     );
 
     %invoke = (
@@ -74,7 +71,7 @@ HELP
                                     &color,
                                     threshold,
                                     select_transparent,
-                                    select_criterion,
+                                    pdb_context->sample_criterion,
                                     operation,
                                     pdb_context->antialias,
                                     pdb_context->feather,
@@ -213,7 +210,8 @@ seed fill boundary.
 
 This prodecure is affected by the following context setters:
 gimp_context_set_antialias(), gimp_context_set_feather(),
-gimp_context_set_feather_radius(), gimp_context_set_sample_merged().
+gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
+gimp_context_set_sample_criterion().
 
 In the case of a merged sampling, the supplied drawable is ignored.
 If the sample is merged, the specified coordinates are relative to the
@@ -240,11 +238,7 @@ HELP
 	{ name => 'select_transparent', type => 'boolean',
           desc => "Whether to consider transparent pixels for selection.
                    If TRUE, transparency is considered as a unique selectable
-                   color." },
-        { name => 'select_criterion', type => 'enum GimpSelectCriterion',
-          desc => "The criterion used to determine color similarity.
-                   SELECT_CRITERION_COMPOSITE is the standard choice.
-		   " },
+                   color." }
     );
 
     %invoke = (
@@ -262,7 +256,7 @@ HELP
                                  x, y,
                                  threshold,
                                  select_transparent,
-                                 select_criterion,
+                                 pdb_context->sample_criterion,
                                  operation,
                                  pdb_context->antialias,
                                  pdb_context->feather,

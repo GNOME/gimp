@@ -42,7 +42,6 @@
  * @color: The color to select.
  * @threshold: Threshold in intensity levels.
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
- * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
  *
  * Create a selection by selecting all pixels (in the specified
  * drawable) with the same (or similar) color to that specified.
@@ -56,21 +55,21 @@
  * also have minimum alpha. This prodecure is affected by the following
  * context setters: gimp_context_set_antialias(),
  * gimp_context_set_feather(), gimp_context_set_feather_radius(),
- * gimp_context_set_sample_merged(). In the case of a merged sampling,
- * the supplied drawable is ignored.
+ * gimp_context_set_sample_merged(),
+ * gimp_context_set_sample_criterion(). In the case of a merged
+ * sampling, the supplied drawable is ignored.
  *
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
  **/
 gboolean
-gimp_image_select_color (gint32               image_ID,
-                         GimpChannelOps       operation,
-                         gint32               drawable_ID,
-                         const GimpRGB       *color,
-                         gint                 threshold,
-                         gboolean             select_transparent,
-                         GimpSelectCriterion  select_criterion)
+gimp_image_select_color (gint32          image_ID,
+                         GimpChannelOps  operation,
+                         gint32          drawable_ID,
+                         const GimpRGB  *color,
+                         gint            threshold,
+                         gboolean        select_transparent)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -84,7 +83,6 @@ gimp_image_select_color (gint32               image_ID,
                                     GIMP_PDB_COLOR, color,
                                     GIMP_PDB_INT32, threshold,
                                     GIMP_PDB_INT32, select_transparent,
-                                    GIMP_PDB_INT32, select_criterion,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -204,7 +202,6 @@ gimp_image_select_polygon (gint32          image_ID,
  * @y: y coordinate of initial seed fill point: (image coordinates).
  * @threshold: Threshold in intensity levels.
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
- * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
  *
  * Create a fuzzy selection starting at the specified coordinates on
  * the specified drawable.
@@ -221,24 +218,24 @@ gimp_image_select_polygon (gint32          image_ID,
  * pixels along the seed fill boundary. This prodecure is affected by
  * the following context setters: gimp_context_set_antialias(),
  * gimp_context_set_feather(), gimp_context_set_feather_radius(),
- * gimp_context_set_sample_merged(). In the case of a merged sampling,
- * the supplied drawable is ignored. If the sample is merged, the
- * specified coordinates are relative to the image origin; otherwise,
- * they are relative to the drawable's origin.
+ * gimp_context_set_sample_merged(),
+ * gimp_context_set_sample_criterion(). In the case of a merged
+ * sampling, the supplied drawable is ignored. If the sample is merged,
+ * the specified coordinates are relative to the image origin;
+ * otherwise, they are relative to the drawable's origin.
  *
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.8
  **/
 gboolean
-gimp_image_select_fuzzy (gint32              image_ID,
-                         GimpChannelOps      operation,
-                         gint32              drawable_ID,
-                         gdouble             x,
-                         gdouble             y,
-                         gint                threshold,
-                         gboolean            select_transparent,
-                         GimpSelectCriterion select_criterion)
+gimp_image_select_fuzzy (gint32         image_ID,
+                         GimpChannelOps operation,
+                         gint32         drawable_ID,
+                         gdouble        x,
+                         gdouble        y,
+                         gint           threshold,
+                         gboolean       select_transparent)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -253,7 +250,6 @@ gimp_image_select_fuzzy (gint32              image_ID,
                                     GIMP_PDB_FLOAT, y,
                                     GIMP_PDB_INT32, threshold,
                                     GIMP_PDB_INT32, select_transparent,
-                                    GIMP_PDB_INT32, select_criterion,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

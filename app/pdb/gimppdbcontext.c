@@ -42,6 +42,7 @@ enum
   PROP_FEATHER_RADIUS_X,
   PROP_FEATHER_RADIUS_Y,
   PROP_SAMPLE_MERGED,
+  PROP_SAMPLE_CRITERION,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
   PROP_TRANSFORM_RESIZE,
@@ -99,6 +100,12 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                     "sample-merged", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
+                                 "sample-crterion", NULL,
+                                 GIMP_TYPE_SELECT_CRITERION,
+                                 GIMP_SELECT_CRITERION_COMPOSITE,
+                                 GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
                                  "interpolation", NULL,
@@ -179,6 +186,10 @@ gimp_pdb_context_set_property (GObject      *object,
       options->sample_merged = g_value_get_boolean (value);
       break;
 
+    case PROP_SAMPLE_CRITERION:
+      options->sample_criterion = g_value_get_enum (value);
+      break;
+
     case PROP_INTERPOLATION:
       options->interpolation = g_value_get_enum (value);
       break;
@@ -229,6 +240,10 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, options->sample_merged);
+      break;
+
+    case PROP_SAMPLE_CRITERION:
+      g_value_set_enum (value, options->sample_criterion);
       break;
 
     case PROP_INTERPOLATION:

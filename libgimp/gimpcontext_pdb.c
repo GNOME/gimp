@@ -1144,6 +1144,72 @@ gimp_context_set_sample_merged (gboolean sample_merged)
 }
 
 /**
+ * gimp_context_get_sample_criterion:
+ *
+ * Get the sample criterion setting.
+ *
+ * This procedure returns the sample criterion setting.
+ *
+ * Returns: The sample criterion setting.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpSelectCriterion
+gimp_context_get_sample_criterion (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpSelectCriterion sample_criterion = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-criterion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_criterion = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_criterion;
+}
+
+/**
+ * gimp_context_set_sample_criterion:
+ * @sample_criterion: The sample criterion setting.
+ *
+ * Set the sample merged setting.
+ *
+ * This procedure modifies the sample criterion setting. If an
+ * operation depends on the colors of the pixels present in a drawable,
+ * like when doing a seed fill, this setting controls how color
+ * similarity is determined. SELECT_CRITERION_COMPOSITE is the default
+ * value. This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_fuzzy().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-criterion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_criterion,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_interpolation:
  *
  * Get the interpolation type.

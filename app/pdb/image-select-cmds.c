@@ -56,7 +56,6 @@ image_select_color_invoker (GimpProcedure      *procedure,
   GimpRGB color;
   gint32 threshold;
   gboolean select_transparent;
-  gint32 select_criterion;
 
   image = gimp_value_get_image (&args->values[0], gimp);
   operation = g_value_get_enum (&args->values[1]);
@@ -64,7 +63,6 @@ image_select_color_invoker (GimpProcedure      *procedure,
   gimp_value_get_rgb (&args->values[3], &color);
   threshold = g_value_get_int (&args->values[4]);
   select_transparent = g_value_get_boolean (&args->values[5]);
-  select_criterion = g_value_get_enum (&args->values[6]);
 
   if (success)
     {
@@ -78,7 +76,7 @@ image_select_color_invoker (GimpProcedure      *procedure,
                                         &color,
                                         threshold,
                                         select_transparent,
-                                        select_criterion,
+                                        pdb_context->sample_criterion,
                                         operation,
                                         pdb_context->antialias,
                                         pdb_context->feather,
@@ -190,7 +188,6 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
   gdouble y;
   gint32 threshold;
   gboolean select_transparent;
-  gint32 select_criterion;
 
   image = gimp_value_get_image (&args->values[0], gimp);
   operation = g_value_get_enum (&args->values[1]);
@@ -199,7 +196,6 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
   y = g_value_get_double (&args->values[4]);
   threshold = g_value_get_int (&args->values[5]);
   select_transparent = g_value_get_boolean (&args->values[6]);
-  select_criterion = g_value_get_enum (&args->values[7]);
 
   if (success)
     {
@@ -215,7 +211,7 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
                                      x, y,
                                      threshold,
                                      select_transparent,
-                                     select_criterion,
+                                     pdb_context->sample_criterion,
                                      operation,
                                      pdb_context->antialias,
                                      pdb_context->feather,
@@ -370,7 +366,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-color",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged'. In the case of a merged sampling, the supplied drawable is ignored.",
+                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion'. In the case of a merged sampling, the supplied drawable is ignored.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -413,13 +409,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                      "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("select-criterion",
-                                                  "select criterion",
-                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
-                                                  GIMP_TYPE_SELECT_CRITERION,
-                                                  GIMP_SELECT_CRITERION_COMPOSITE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -527,8 +516,8 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-fuzzy",
                                      "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
-                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged'. In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to"
-  "the drawable's origin.",
+                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion'. In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image"
+  "origin; otherwise, they are relative to the drawable's origin.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -576,13 +565,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                      "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("select-criterion",
-                                                  "select criterion",
-                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
-                                                  GIMP_TYPE_SELECT_CRITERION,
-                                                  GIMP_SELECT_CRITERION_COMPOSITE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

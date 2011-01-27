@@ -82,6 +82,8 @@ EXPORTS
 	gimp_context_get_paint_mode
 	gimp_context_get_palette
 	gimp_context_get_pattern
+	gimp_context_get_sample_criterion
+	gimp_context_get_sample_merged
 	gimp_context_get_transform_direction
 	gimp_context_get_transform_recursion
 	gimp_context_get_transform_resize
@@ -103,6 +105,8 @@ EXPORTS
 	gimp_context_set_paint_mode
 	gimp_context_set_palette
 	gimp_context_set_pattern
+	gimp_context_set_sample_criterion
+	gimp_context_set_sample_merged
 	gimp_context_set_transform_direction
 	gimp_context_set_transform_recursion
 	gimp_context_set_transform_resize
