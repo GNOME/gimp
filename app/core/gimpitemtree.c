@@ -617,7 +617,8 @@ gimp_item_tree_rename_item (GimpItemTree *tree,
   if (strcmp (new_name, gimp_object_get_name (item)))
     {
       if (push_undo)
-        gimp_image_undo_push_item_rename (item->image, undo_desc, item);
+        gimp_image_undo_push_item_rename (gimp_item_get_image (item),
+                                          undo_desc, item);
 
       gimp_item_tree_uniquefy_name (tree, item, new_name);
     }
