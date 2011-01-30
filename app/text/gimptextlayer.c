@@ -539,13 +539,16 @@ gimp_item_is_text_layer (GimpItem *item)
 static void
 gimp_text_layer_text_changed (GimpTextLayer *layer)
 {
-  /*   If the text layer was created from a parasite, it's time to
-   *   remove that parasite now.
+  /*  If the text layer was created from a parasite, it's time to
+   *  remove that parasite now.
    */
   if (layer->text_parasite)
     {
-      gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
-                                 layer->text_parasite);
+      /*  Don't push an undo because the parasite only exists temporarily
+       *  while the text layer is loaded from XCF.
+       */
+      gimp_item_parasite_detach (GIMP_ITEM (layer), layer->text_parasite,
+                                 FALSE);
       layer->text_parasite = NULL;
     }
 

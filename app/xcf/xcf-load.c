@@ -816,7 +816,7 @@ xcf_load_layer_props (XcfInfo    *info,
             while (info->cp - base < prop_size)
               {
                 p = xcf_load_parasite (info);
-                gimp_item_parasite_attach (GIMP_ITEM (*layer), p);
+                gimp_item_parasite_attach (GIMP_ITEM (*layer), p, FALSE);
                 gimp_parasite_free (p);
               }
 
@@ -1001,7 +1001,7 @@ xcf_load_channel_props (XcfInfo      *info,
             while ((info->cp - base) < prop_size)
               {
                 p = xcf_load_parasite (info);
-                gimp_item_parasite_attach (GIMP_ITEM (*channel), p);
+                gimp_item_parasite_attach (GIMP_ITEM (*channel), p, FALSE);
                 gimp_parasite_free (p);
               }
 
@@ -1859,7 +1859,7 @@ xcf_load_vector (XcfInfo   *info,
       if (! parasite)
         return FALSE;
 
-      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
+      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, FALSE);
       gimp_parasite_free (parasite);
     }
 

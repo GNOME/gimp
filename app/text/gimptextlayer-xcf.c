@@ -121,7 +121,10 @@ gimp_text_layer_xcf_save_prepare (GimpTextLayer *layer)
     {
       GimpParasite *parasite = gimp_text_to_parasite (text);
 
-      gimp_parasite_list_add (GIMP_ITEM (layer)->parasites, parasite);
+      /*  Don't push an undo because the parasite only exists temporarily
+       *  while the text layer is saved to XCF.
+       */
+      gimp_item_parasite_attach (GIMP_ITEM (layer), parasite, FALSE);
     }
 }
 

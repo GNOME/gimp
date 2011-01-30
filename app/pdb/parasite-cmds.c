@@ -301,7 +301,7 @@ item_parasite_attach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_parasite_attach (item, parasite);
+      gimp_item_parasite_attach (item, parasite, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -325,7 +325,7 @@ item_parasite_detach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_parasite_detach (item, name);
+      gimp_item_parasite_detach (item, name, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -417,7 +417,7 @@ drawable_parasite_attach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
+      gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -441,7 +441,7 @@ drawable_parasite_detach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
+      gimp_item_parasite_detach (GIMP_ITEM (drawable), name, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -533,7 +533,7 @@ vectors_parasite_attach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
+      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -557,7 +557,7 @@ vectors_parasite_detach_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      gimp_item_parasite_detach (GIMP_ITEM (vectors), name);
+      gimp_item_parasite_detach (GIMP_ITEM (vectors), name, TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

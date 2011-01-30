@@ -290,9 +290,11 @@ void            gimp_item_replace_item       (GimpItem           *item,
                                               GimpItem           *replace);
 
 void            gimp_item_parasite_attach    (GimpItem           *item,
-                                              const GimpParasite *parasite);
+                                              const GimpParasite *parasite,
+                                              gboolean            push_undo);
 void            gimp_item_parasite_detach    (GimpItem           *item,
-                                              const gchar        *name);
+                                              const gchar        *name,
+                                              gboolean            push_undo);
 const GimpParasite * gimp_item_parasite_find (const GimpItem     *item,
                                               const gchar        *name);
 gchar        ** gimp_item_parasite_list      (const GimpItem     *item,

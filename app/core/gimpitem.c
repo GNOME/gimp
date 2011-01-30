@@ -1596,7 +1596,8 @@ gimp_item_replace_item (GimpItem *item,
 
 void
 gimp_item_parasite_attach (GimpItem           *item,
-                           const GimpParasite *parasite)
+                           const GimpParasite *parasite,
+                           gboolean            push_undo)
 {
   GimpParasite  copy;
 
@@ -1608,7 +1609,10 @@ gimp_item_parasite_attach (GimpItem           *item,
    */
   copy = *parasite;
 
-  if (gimp_item_is_attached (item))
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
     {
       /*  only set the dirty bit manually if we can be saved and the new
        *  parasite differs from the current one and we aren't undoable
@@ -1655,7 +1659,8 @@ gimp_item_parasite_attach (GimpItem           *item,
 
 void
 gimp_item_parasite_detach (GimpItem    *item,
-                           const gchar *name)
+                           const gchar *name,
+                           gboolean     push_undo)
 {
   const GimpParasite *parasite;
 
@@ -1667,17 +1672,23 @@ gimp_item_parasite_detach (GimpItem    *item,
   if (! parasite)
     return;
 
-  if (gimp_parasite_is_undoable (parasite))
+  if (! gimp_item_is_attached (item))
+    push_undo = FALSE;
+
+  if (push_undo)
     {
-      gimp_image_undo_push_item_parasite_remove (item->image,
-                                                 C_("undo-type", "Remove Parasite from Item"),
-                                                 item,
-                                                 gimp_parasite_name (parasite));
-    }
-  else if (gimp_parasite_is_persistent (parasite))
-    {
-      gimp_image_undo_push_cantundo (item->image,
-                                     C_("undo-type", "Remove Parasite from Item"));
+      if (gimp_parasite_is_undoable (parasite))
+        {
+          gimp_image_undo_push_item_parasite_remove (item->image,
+                                                     C_("undo-type", "Remove Parasite from Item"),
+                                                     item,
+                                                     gimp_parasite_name (parasite));
+        }
+      else if (gimp_parasite_is_persistent (parasite))
+        {
+          gimp_image_undo_push_cantundo (item->image,
+                                         C_("undo-type", "Remove Parasite from Item"));
+        }
     }
 
   gimp_parasite_list_remove (item->parasites, name);

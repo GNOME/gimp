@@ -275,7 +275,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_attach (item, parasite);
+  gimp_item_parasite_attach (item, parasite, TRUE);
 }
 CODE
     );
@@ -300,7 +300,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_detach (item, name);
+  gimp_item_parasite_detach (item, name, TRUE);
 }
 CODE
     );
@@ -375,7 +375,7 @@ sub drawable_parasite_attach {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite);
+  gimp_item_parasite_attach (GIMP_ITEM (drawable), parasite, TRUE);
 }
 CODE
     );
@@ -395,7 +395,7 @@ sub drawable_parasite_detach {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_detach (GIMP_ITEM (drawable), name);
+  gimp_item_parasite_detach (GIMP_ITEM (drawable), name, TRUE);
 }
 CODE
     );
@@ -468,7 +468,7 @@ sub vectors_parasite_attach {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
+  gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, TRUE);
 }
 CODE
     );
@@ -488,7 +488,7 @@ sub vectors_parasite_detach {
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_detach (GIMP_ITEM (vectors), name);
+  gimp_item_parasite_detach (GIMP_ITEM (vectors), name, TRUE);
 }
 CODE
     );
