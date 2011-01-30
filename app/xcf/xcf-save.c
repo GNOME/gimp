@@ -455,9 +455,8 @@ xcf_save_layer_props (XcfInfo    *info,
                       GimpLayer  *layer,
                       GError    **error)
 {
-  GimpParasite *parasite = NULL;
-  gint          offset_x;
-  gint          offset_y;
+  gint offset_x;
+  gint offset_y;
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     xcf_check_error (xcf_save_prop (info, image, PROP_GROUP_ITEM, error));
@@ -540,13 +539,6 @@ xcf_save_layer_props (XcfInfo    *info,
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
                                       GIMP_ITEM (layer)->parasites));
-    }
-
-  if (parasite)
-    {
-      gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
-                                 gimp_parasite_name (parasite));
-      gimp_parasite_free (parasite);
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
