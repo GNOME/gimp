@@ -68,6 +68,43 @@ enum
 };
 
 
+typedef struct _GimpItemPrivate GimpItemPrivate;
+
+struct _GimpItemPrivate
+{
+
+  gint              ID;                 /*  provides a unique ID     */
+  guint32           tattoo;             /*  provides a permanent ID  */
+
+  GimpImage        *image;              /*  item owner               */
+
+#if 0
+  GimpParasiteList *parasites;          /*  Plug-in parasite data    */
+#endif
+
+#if 0
+  gint              width, height;      /*  size in pixels           */
+#endif
+  gint              offset_x, offset_y; /*  pixel offset in image    */
+
+  guint             visible      : 1;   /*  control visibility       */
+  guint             linked       : 1;   /*  control linkage          */
+  guint             lock_content : 1;   /*  content editability      */
+
+#if 0
+  guint             removed : 1;        /*  removed from the image?  */
+#endif
+
+  GeglNode         *node;               /*  the GEGL node to plug
+                                            into the graph           */
+  GeglNode         *offset_node;        /*  the offset as a node     */
+};
+
+#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
+                                                       GIMP_TYPE_ITEM, \
+                                                       GimpItemPrivate)
+
+
 /*  local function prototypes  */
 
 static void       gimp_item_set_property            (GObject        *object,
@@ -246,27 +283,31 @@ gimp_item_class_init (GimpItemClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
+
+  g_type_class_add_private (klass, sizeof (GimpItemPrivate));
 }
 
 static void
 gimp_item_init (GimpItem *item)
 {
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
   g_object_force_floating (G_OBJECT (item));
 
-  item->ID           = 0;
-  item->tattoo       = 0;
-  item->image        = NULL;
-  item->parasites    = gimp_parasite_list_new ();
-  item->width        = 0;
-  item->height       = 0;
-  item->offset_x     = 0;
-  item->offset_y     = 0;
-  item->visible      = TRUE;
-  item->linked       = FALSE;
-  item->lock_content = FALSE;
-  item->removed      = FALSE;
-  item->node         = NULL;
-  item->offset_node  = NULL;
+  private->ID           = 0;
+  private->tattoo       = 0;
+  private->image        = NULL;
+  item->parasites       = gimp_parasite_list_new ();
+  item->width           = 0;
+  item->height          = 0;
+  private->offset_x     = 0;
+  private->offset_y     = 0;
+  private->visible      = TRUE;
+  private->linked       = FALSE;
+  private->lock_content = FALSE;
+  item->removed         = FALSE;
+  private->node         = NULL;
+  private->offset_node  = NULL;
 }
 
 static void
@@ -289,12 +330,13 @@ gimp_item_get_property (GObject    *object,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpItem *item = GIMP_ITEM (object);
+  GimpItem        *item    = GIMP_ITEM (object);
+  GimpItemPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_ID:
-      g_value_set_int (value, item->ID);
+      g_value_set_int (value, private->ID);
       break;
     case PROP_WIDTH:
       g_value_set_int (value, item->width);
@@ -303,19 +345,19 @@ gimp_item_get_property (GObject    *object,
       g_value_set_int (value, item->height);
       break;
     case PROP_OFFSET_X:
-      g_value_set_int (value, item->offset_x);
+      g_value_set_int (value, private->offset_x);
       break;
     case PROP_OFFSET_Y:
-      g_value_set_int (value, item->offset_y);
+      g_value_set_int (value, private->offset_y);
       break;
     case PROP_VISIBLE:
-      g_value_set_boolean (value, item->visible);
+      g_value_set_boolean (value, private->visible);
       break;
     case PROP_LINKED:
-      g_value_set_boolean (value, item->linked);
+      g_value_set_boolean (value, private->linked);
       break;
     case PROP_LOCK_CONTENT:
-      g_value_set_boolean (value, item->lock_content);
+      g_value_set_boolean (value, private->lock_content);
       break;
 
     default:
@@ -327,19 +369,20 @@ gimp_item_get_property (GObject    *object,
 static void
 gimp_item_finalize (GObject *object)
 {
-  GimpItem *item = GIMP_ITEM (object);
+  GimpItem        *item    = GIMP_ITEM (object);
+  GimpItemPrivate *private = GET_PRIVATE (object);
 
-  if (item->node)
+  if (private->node)
     {
-      g_object_unref (item->node);
-      item->node = NULL;
+      g_object_unref (private->node);
+      private->node = NULL;
     }
 
-  if (item->image && item->image->gimp)
+  if (private->image && private->image->gimp)
     {
-      g_hash_table_remove (item->image->gimp->item_table,
-                           GINT_TO_POINTER (item->ID));
-      item->image = NULL;
+      g_hash_table_remove (private->image->gimp->item_table,
+                           GINT_TO_POINTER (private->ID));
+      private->image = NULL;
     }
 
   if (item->parasites)
@@ -367,7 +410,9 @@ gimp_item_get_memsize (GimpObject *object,
 static void
 gimp_item_real_visibility_changed (GimpItem *item)
 {
-  if (! item->node)
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
+  if (! private->node)
     return;
 
   if (gimp_item_get_visible (item))
@@ -376,8 +421,8 @@ gimp_item_real_visibility_changed (GimpItem *item)
     }
   else
     {
-      GeglNode *input  = gegl_node_get_input_proxy  (item->node, "input");
-      GeglNode *output = gegl_node_get_output_proxy (item->node, "output");
+      GeglNode *input  = gegl_node_get_input_proxy  (private->node, "input");
+      GeglNode *output = gegl_node_get_output_proxy (private->node, "output");
 
       gegl_node_connect_to (input,  "output",
                             output, "input");
@@ -392,18 +437,22 @@ gimp_item_real_is_content_locked (const GimpItem *item)
   if (parent && gimp_item_is_content_locked (parent))
     return TRUE;
 
-  return item->lock_content;
+  return GET_PRIVATE (item)->lock_content;
 }
 
 static GimpItem *
 gimp_item_real_duplicate (GimpItem *item,
                           GType     new_type)
 {
-  GimpItem *new_item;
-  gchar    *new_name;
+  GimpItemPrivate *private;
+  GimpItem        *new_item;
+  gchar           *new_name;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (item->image), NULL);
+
+  private = GET_PRIVATE (item);
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (private->image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
   /*  formulate the new name  */
@@ -438,7 +487,7 @@ gimp_item_real_duplicate (GimpItem *item,
   new_item = g_object_new (new_type, NULL);
 
   gimp_item_configure (new_item, gimp_item_get_image (item),
-                       item->offset_x, item->offset_y,
+                       private->offset_x, private->offset_y,
                        gimp_item_get_width  (item),
                        gimp_item_get_height (item),
                        new_name);
@@ -486,9 +535,11 @@ gimp_item_real_translate (GimpItem *item,
                           gint      offset_y,
                           gboolean  push_undo)
 {
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
   gimp_item_set_offset (item,
-                        item->offset_x + offset_x,
-                        item->offset_y + offset_y);
+                        private->offset_x + offset_x,
+                        private->offset_y + offset_y);
 }
 
 static void
@@ -523,6 +574,8 @@ gimp_item_real_resize (GimpItem    *item,
                        gint         offset_x,
                        gint         offset_y)
 {
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
   if (item->width != new_width)
     {
       item->width = new_width;
@@ -536,25 +589,29 @@ gimp_item_real_resize (GimpItem    *item,
     }
 
   gimp_item_set_offset (item,
-                        item->offset_x - offset_x,
-                        item->offset_y - offset_y);
+                        private->offset_x - offset_x,
+                        private->offset_y - offset_y);
 }
 
 static GeglNode *
 gimp_item_real_get_node (GimpItem *item)
 {
-  item->node = gegl_node_new ();
+  GimpItemPrivate *private = GET_PRIVATE (item);
 
-  return item->node;
+  private->node = gegl_node_new ();
+
+  return private->node;
 }
 
 static void
 gimp_item_sync_offset_node (GimpItem *item)
 {
-  if (item->offset_node)
-    gegl_node_set (item->offset_node,
-                   "x", (gdouble) item->offset_x,
-                   "y", (gdouble) item->offset_y,
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
+  if (private->offset_node)
+    gegl_node_set (private->offset_node,
+                   "x", (gdouble) private->offset_x,
+                   "y", (gdouble) private->offset_y,
                    NULL);
 }
 
@@ -620,25 +677,29 @@ gimp_item_configure (GimpItem    *item,
                      gint         height,
                      const gchar *name)
 {
+  GimpItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
+  private = GET_PRIVATE (item);
+
   g_object_freeze_notify (G_OBJECT (item));
 
-  if (item->ID == 0)
+  if (private->ID == 0)
     {
       do
         {
-          item->ID = image->gimp->next_item_ID++;
+          private->ID = image->gimp->next_item_ID++;
 
           if (image->gimp->next_item_ID == G_MAXINT)
             image->gimp->next_item_ID = 1;
         }
       while (g_hash_table_lookup (image->gimp->item_table,
-                                  GINT_TO_POINTER (item->ID)));
+                                  GINT_TO_POINTER (private->ID)));
 
       g_hash_table_insert (image->gimp->item_table,
-                           GINT_TO_POINTER (item->ID),
+                           GINT_TO_POINTER (private->ID),
                            item);
 
       gimp_item_set_image (item, image);
@@ -800,8 +861,13 @@ GimpItem *
 gimp_item_duplicate (GimpItem *item,
                      GType     new_type)
 {
+  GimpItemPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (item->image), NULL);
+
+  private = GET_PRIVATE (item);
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (private->image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
   return GIMP_ITEM_GET_CLASS (item)->duplicate (item, new_type);
@@ -823,7 +889,7 @@ gimp_item_convert (GimpItem  *item,
   GimpItem *new_item;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (item->image), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (GET_PRIVATE (item)->image), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
@@ -941,10 +1007,14 @@ gimp_item_get_offset (const GimpItem *item,
                       gint           *offset_x,
                       gint           *offset_y)
 {
+  GimpItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (offset_x) *offset_x = item->offset_x;
-  if (offset_y) *offset_y = item->offset_y;
+  private = GET_PRIVATE (item);
+
+  if (offset_x) *offset_x = private->offset_x;
+  if (offset_y) *offset_y = private->offset_y;
 }
 
 void
@@ -952,19 +1022,23 @@ gimp_item_set_offset (GimpItem *item,
                       gint      offset_x,
                       gint      offset_y)
 {
+  GimpItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
+
+  private = GET_PRIVATE (item);
 
   g_object_freeze_notify (G_OBJECT (item));
 
-  if (item->offset_x != offset_x)
+  if (private->offset_x != offset_x)
     {
-      item->offset_x = offset_x;
+      private->offset_x = offset_x;
       g_object_notify (G_OBJECT (item), "offset-x");
     }
 
-  if (item->offset_y != offset_y)
+  if (private->offset_y != offset_y)
     {
-      item->offset_y = offset_y;
+      private->offset_y = offset_y;
       g_object_notify (G_OBJECT (item), "offset-y");
     }
 
@@ -978,7 +1052,7 @@ gimp_item_get_offset_x (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
 
-  return item->offset_x;
+  return GET_PRIVATE (item)->offset_x;
 }
 
 gint
@@ -986,7 +1060,7 @@ gimp_item_get_offset_y (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
 
-  return item->offset_y;
+  return GET_PRIVATE (item)->offset_y;
 }
 
 /**
@@ -1134,11 +1208,14 @@ gimp_item_scale_by_factors (GimpItem              *item,
                             GimpInterpolationType  interpolation,
                             GimpProgress          *progress)
 {
-  gint new_width, new_height;
-  gint new_offset_x, new_offset_y;
+  GimpItemPrivate *private;
+  gint             new_width, new_height;
+  gint             new_offset_x, new_offset_y;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+
+  private = GET_PRIVATE (item);
 
   if (w_factor == 0.0 || h_factor == 0.0)
     {
@@ -1146,8 +1223,8 @@ gimp_item_scale_by_factors (GimpItem              *item,
       return FALSE;
     }
 
-  new_offset_x = ROUND (w_factor * (gdouble) item->offset_x);
-  new_offset_y = ROUND (h_factor * (gdouble) item->offset_y);
+  new_offset_x = ROUND (w_factor * (gdouble) private->offset_x);
+  new_offset_y = ROUND (h_factor * (gdouble) private->offset_y);
   new_width    = ROUND (w_factor * (gdouble) gimp_item_get_width  (item));
   new_height   = ROUND (h_factor * (gdouble) gimp_item_get_height (item));
 
@@ -1177,7 +1254,7 @@ gimp_item_scale_by_factors (GimpItem              *item,
  * transforms from new width and height. If local_origin is
  * #TRUE, the fixed point of the scaling transform coincides
  * with the item's center point.  Otherwise, the fixed
- * point is taken to be [-item->offset_x, -item->offset_y].
+ * point is taken to be [-GimpItem::offset_x, -GimpItem::->offset_y].
  *
  * Since this function derives scale factors from new and
  * current item dimensions, these factors will vary from
@@ -1199,10 +1276,13 @@ gimp_item_scale_by_origin (GimpItem              *item,
                            GimpProgress          *progress,
                            gboolean               local_origin)
 {
-  gint new_offset_x, new_offset_y;
+  GimpItemPrivate *private;
+  gint             new_offset_x, new_offset_y;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  private = GET_PRIVATE (item);
 
   if (new_width == 0 || new_height == 0)
     {
@@ -1212,19 +1292,19 @@ gimp_item_scale_by_origin (GimpItem              *item,
 
   if (local_origin)
     {
-      new_offset_x = (item->offset_x +
+      new_offset_x = (private->offset_x +
                       ((gimp_item_get_width  (item) - new_width)  / 2.0));
-      new_offset_y = (item->offset_y +
+      new_offset_y = (private->offset_y +
                       ((gimp_item_get_height (item) - new_height) / 2.0));
     }
   else
     {
       new_offset_x = (gint) (((gdouble) new_width *
-                              (gdouble) item->offset_x /
+                              (gdouble) private->offset_x /
                               (gdouble) gimp_item_get_width (item)));
 
       new_offset_y = (gint) (((gdouble) new_height *
-                              (gdouble) item->offset_y /
+                              (gdouble) private->offset_y /
                               (gdouble) gimp_item_get_height (item)));
     }
 
@@ -1432,10 +1512,14 @@ gimp_item_to_selection (GimpItem       *item,
 GeglNode *
 gimp_item_get_node (GimpItem *item)
 {
+  GimpItemPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  if (item->node)
-    return item->node;
+  private = GET_PRIVATE (item);
+
+  if (private->node)
+    return private->node;
 
   return GIMP_ITEM_GET_CLASS (item)->get_node (item);
 }
@@ -1445,27 +1529,31 @@ gimp_item_peek_node (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  return item->node;
+  return GET_PRIVATE (item)->node;
 }
 
 GeglNode *
 gimp_item_get_offset_node (GimpItem *item)
 {
+  GimpItemPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  if (! item->offset_node)
+  private = GET_PRIVATE (item);
+
+  if (! private->offset_node)
     {
       GeglNode *node = gimp_item_get_node (item);
 
-      item->offset_node =
+      private->offset_node =
         gegl_node_new_child (node,
                              "operation", "gegl:translate",
-                             "x",         (gdouble) item->offset_x,
-                             "y",         (gdouble) item->offset_y,
+                             "x",         (gdouble) private->offset_x,
+                             "y",         (gdouble) private->offset_y,
                              NULL);
     }
 
-  return item->offset_node;
+  return private->offset_node;
 }
 
 gint
@@ -1473,7 +1561,7 @@ gimp_item_get_ID (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
-  return item->ID;
+  return GET_PRIVATE (item)->ID;
 }
 
 GimpItem *
@@ -1494,7 +1582,7 @@ gimp_item_get_tattoo (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), 0);
 
-  return item->tattoo;
+  return GET_PRIVATE (item)->tattoo;
 }
 
 void
@@ -1503,7 +1591,7 @@ gimp_item_set_tattoo (GimpItem   *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  item->tattoo = tattoo;
+  GET_PRIVATE (item)->tattoo = tattoo;
 }
 
 GimpImage *
@@ -1511,24 +1599,28 @@ gimp_item_get_image (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  return item->image;
+  return GET_PRIVATE (item)->image;
 }
 
 void
 gimp_item_set_image (GimpItem  *item,
                      GimpImage *image)
 {
+  GimpItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (! gimp_item_is_attached (item));
   g_return_if_fail (! gimp_item_is_removed (item));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (item->tattoo == 0 || item->image != image)
+  private = GET_PRIVATE (item);
+
+  if (private->tattoo == 0 || private->image != image)
     {
-      item->tattoo = gimp_image_get_new_tattoo (image);
+      private->tattoo = gimp_image_get_new_tattoo (image);
     }
 
-  item->image = image;
+  private->image = image;
 }
 
 /**
@@ -1555,17 +1647,20 @@ void
 gimp_item_replace_item (GimpItem *item,
                         GimpItem *replace)
 {
-  gint offset_x;
-  gint offset_y;
+  GimpItemPrivate *private;
+  gint             offset_x;
+  gint             offset_y;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (! gimp_item_is_attached (item));
   g_return_if_fail (! gimp_item_is_removed (item));
   g_return_if_fail (GIMP_IS_ITEM (replace));
 
+  private = GET_PRIVATE (item);
+
   gimp_object_set_name (GIMP_OBJECT (item), gimp_object_get_name (replace));
 
-  item->ID = gimp_item_get_ID (replace);
+  private->ID = gimp_item_get_ID (replace);
   g_hash_table_replace (gimp_item_get_image (item)->gimp->item_table,
                         GINT_TO_POINTER (gimp_item_get_ID (item)),
                         item);
@@ -1574,7 +1669,7 @@ gimp_item_replace_item (GimpItem *item,
    * the one implicitly set when setting the image
    */
   gimp_item_set_image (item, gimp_item_get_image (replace));
-  replace->image  = NULL;
+  GET_PRIVATE (replace)->image  = NULL;
 
   gimp_item_set_tattoo (item, gimp_item_get_tattoo (replace));
   gimp_item_set_tattoo (replace, 0);
@@ -1599,10 +1694,13 @@ gimp_item_parasite_attach (GimpItem           *item,
                            const GimpParasite *parasite,
                            gboolean            push_undo)
 {
-  GimpParasite  copy;
+  GimpItemPrivate *private;
+  GimpParasite     copy;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (parasite != NULL);
+
+  private = GET_PRIVATE (item);
 
   /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
@@ -1620,18 +1718,18 @@ gimp_item_parasite_attach (GimpItem           *item,
       if (gimp_parasite_is_undoable (&copy))
         {
           /* do a group in case we have attach_parent set */
-          gimp_image_undo_group_start (item->image,
+          gimp_image_undo_group_start (private->image,
                                        GIMP_UNDO_GROUP_PARASITE_ATTACH,
                                        C_("undo-type", "Attach Parasite"));
 
-          gimp_image_undo_push_item_parasite (item->image, NULL, item, &copy);
+          gimp_image_undo_push_item_parasite (private->image, NULL, item, &copy);
         }
       else if (gimp_parasite_is_persistent (&copy) &&
                ! gimp_parasite_compare (&copy,
                                         gimp_item_parasite_find
                                         (item, gimp_parasite_name (&copy))))
         {
-          gimp_image_undo_push_cantundo (item->image,
+          gimp_image_undo_push_cantundo (private->image,
                                          C_("undo-type", "Attach Parasite to Item"));
         }
     }
@@ -1641,19 +1739,19 @@ gimp_item_parasite_attach (GimpItem           *item,
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
       gimp_parasite_shift_parent (&copy);
-      gimp_image_parasite_attach (item->image, &copy);
+      gimp_image_parasite_attach (private->image, &copy);
     }
   else if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_GRANDPARENT))
     {
       gimp_parasite_shift_parent (&copy);
       gimp_parasite_shift_parent (&copy);
-      gimp_parasite_attach (item->image->gimp, &copy);
+      gimp_parasite_attach (private->image->gimp, &copy);
     }
 
   if (gimp_item_is_attached (item) &&
       gimp_parasite_is_undoable (&copy))
     {
-      gimp_image_undo_group_end (item->image);
+      gimp_image_undo_group_end (private->image);
     }
 }
 
@@ -1662,10 +1760,13 @@ gimp_item_parasite_detach (GimpItem    *item,
                            const gchar *name,
                            gboolean     push_undo)
 {
+  GimpItemPrivate    *private;
   const GimpParasite *parasite;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (name != NULL);
+
+  private = GET_PRIVATE (item);
 
   parasite = gimp_parasite_list_find (item->parasites, name);
 
@@ -1679,14 +1780,14 @@ gimp_item_parasite_detach (GimpItem    *item,
     {
       if (gimp_parasite_is_undoable (parasite))
         {
-          gimp_image_undo_push_item_parasite_remove (item->image,
+          gimp_image_undo_push_item_parasite_remove (private->image,
                                                      C_("undo-type", "Remove Parasite from Item"),
                                                      item,
                                                      gimp_parasite_name (parasite));
         }
       else if (gimp_parasite_is_persistent (parasite))
         {
-          gimp_image_undo_push_cantundo (item->image,
+          gimp_image_undo_push_cantundo (private->image,
                                          C_("undo-type", "Remove Parasite from Item"));
         }
     }
@@ -1751,7 +1852,7 @@ gimp_item_set_visible (GimpItem *item,
             gimp_image_undo_push_item_visibility (image, NULL, item);
         }
 
-      item->visible = visible;
+      GET_PRIVATE (item)->visible = visible;
 
       g_signal_emit (item, gimp_item_signals[VISIBILITY_CHANGED], 0);
 
@@ -1764,7 +1865,7 @@ gimp_item_get_visible (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return item->visible;
+  return GET_PRIVATE (item)->visible;
 }
 
 void
@@ -1786,7 +1887,7 @@ gimp_item_set_linked (GimpItem *item,
             gimp_image_undo_push_item_linked (image, NULL, item);
         }
 
-      item->linked = linked;
+      GET_PRIVATE (item)->linked = linked;
 
       g_signal_emit (item, gimp_item_signals[LINKED_CHANGED], 0);
 
@@ -1799,7 +1900,7 @@ gimp_item_get_linked (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return item->linked;
+  return GET_PRIVATE (item)->linked;
 }
 
 void
@@ -1824,7 +1925,7 @@ gimp_item_set_lock_content (GimpItem *item,
 #endif
         }
 
-      item->lock_content = lock_content;
+      GET_PRIVATE (item)->lock_content = lock_content;
 
       g_signal_emit (item, gimp_item_signals[LOCK_CONTENT_CHANGED], 0);
 
@@ -1837,7 +1938,7 @@ gimp_item_get_lock_content (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return item->lock_content;
+  return GET_PRIVATE (item)->lock_content;
 }
 
 gboolean
@@ -1966,7 +2067,11 @@ gboolean
 gimp_item_is_in_set (GimpItem    *item,
                      GimpItemSet  set)
 {
+  GimpItemPrivate *private;
+
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  private = GET_PRIVATE (item);
 
   switch (set)
     {
@@ -1977,8 +2082,8 @@ gimp_item_is_in_set (GimpItem    *item,
       return TRUE;
 
     case GIMP_ITEM_SET_IMAGE_SIZED:
-      return (gimp_item_get_width  (item) == gimp_image_get_width  (item->image) &&
-              gimp_item_get_height (item) == gimp_image_get_height (item->image));
+      return (gimp_item_get_width  (item) == gimp_image_get_width  (private->image) &&
+              gimp_item_get_height (item) == gimp_image_get_height (private->image));
 
     case GIMP_ITEM_SET_VISIBLE:
       return gimp_item_get_visible (item);

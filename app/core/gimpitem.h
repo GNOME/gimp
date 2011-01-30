@@ -36,25 +36,11 @@ struct _GimpItem
 {
   GimpViewable      parent_instance;
 
-  gint              ID;                 /*  provides a unique ID     */
-  guint32           tattoo;             /*  provides a permanent ID  */
-
-  GimpImage        *image;              /*  item owner               */
-
   GimpParasiteList *parasites;          /*  Plug-in parasite data    */
 
   gint              width, height;      /*  size in pixels           */
-  gint              offset_x, offset_y; /*  pixel offset in image    */
-
-  guint             visible      : 1;   /*  control visibility       */
-  guint             linked       : 1;   /*  control linkage          */
-  guint             lock_content : 1;   /*  content editability      */
 
   guint             removed : 1;        /*  removed from the image?  */
-
-  GeglNode         *node;               /*  the GEGL node to plug
-                                            into the graph           */
-  GeglNode         *offset_node;        /*  the offset as a node     */
 };
 
 struct _GimpItemClass
