@@ -1520,18 +1520,78 @@ gimp_item_set_image (GimpItem  *item,
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (! gimp_item_is_attached (item));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (! gimp_item_is_removed (item));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (image == NULL)
-    {
-      item->tattoo = 0;
-    }
-  else if (item->tattoo == 0 || item->image != image)
+  if (item->tattoo == 0 || item->image != image)
     {
       item->tattoo = gimp_image_get_new_tattoo (image);
     }
 
   item->image = image;
+}
+
+/**
+ * gimp_item_replace_item:
+ * @item: a newly allocated #GimpItem
+ * @replace: the #GimpItem to be replaced by @item
+ *
+ * This function shouly only be called right after @item has been
+ * newly allocated.
+ *
+ * Replaces @replace by @item, as far as possible within the #GimpItem
+ * class. The new @item takes over @replace's ID, tattoo, offset, size
+ * etc. and all these properties are set to %NULL on @replace.
+ *
+ * This function *only* exists to allow subclasses to do evil hacks
+ * like in XCF text layer loading. Don't ever use this function if you
+ * are not sure.
+ *
+ * After this function returns, @replace has become completely
+ * unusable, should only be used to steal everything it has (like its
+ * drawable properties if it's a drawable), and then be destroyed.
+ **/
+void
+gimp_item_replace_item (GimpItem *item,
+                        GimpItem *replace)
+{
+  gint offset_x;
+  gint offset_y;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (! gimp_item_is_attached (item));
+  g_return_if_fail (! gimp_item_is_removed (item));
+  g_return_if_fail (GIMP_IS_ITEM (replace));
+
+  gimp_object_set_name (GIMP_OBJECT (item), gimp_object_get_name (replace));
+
+  item->ID = gimp_item_get_ID (replace);
+  g_hash_table_replace (gimp_item_get_image (item)->gimp->item_table,
+                        GINT_TO_POINTER (gimp_item_get_ID (item)),
+                        item);
+
+  /* Set image before tatoo so that the explicitly set tatoo overrides
+   * the one implicitly set when setting the image
+   */
+  gimp_item_set_image (item, gimp_item_get_image (replace));
+  replace->image  = NULL;
+
+  gimp_item_set_tattoo (item, gimp_item_get_tattoo (replace));
+  gimp_item_set_tattoo (replace, 0);
+
+  item->parasites = replace->parasites;
+  replace->parasites = NULL;
+
+  gimp_item_get_offset (replace, &offset_x, &offset_y);
+  gimp_item_set_offset (item, offset_x, offset_y);
+
+  gimp_item_set_size (item,
+                      gimp_item_get_width  (replace),
+                      gimp_item_get_height (replace));
+
+  gimp_item_set_visible      (item, gimp_item_get_visible (replace), FALSE);
+  gimp_item_set_linked       (item, gimp_item_get_linked (replace), FALSE);
+  gimp_item_set_lock_content (item, gimp_item_get_lock_content (replace), FALSE);
 }
 
 void

@@ -175,48 +175,16 @@ gimp_text_layer_from_layer (GimpLayer *layer,
                             GimpText  *text)
 {
   GimpTextLayer *text_layer;
-  GimpItem      *item;
   GimpDrawable  *drawable;
-  gint           offset_x;
-  gint           offset_y;
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
   text_layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
 
-  item     = GIMP_ITEM (text_layer);
+  gimp_item_replace_item (GIMP_ITEM (text_layer), GIMP_ITEM (layer));
+
   drawable = GIMP_DRAWABLE (text_layer);
-
-  gimp_object_set_name (GIMP_OBJECT (text_layer),
-                        gimp_object_get_name (layer));
-
-  item->ID = gimp_item_get_ID (GIMP_ITEM (layer));
-
-  /* Set image before tatoo so that the explicitly set tatoo overrides
-   * the one implicitly set when setting the image
-   */
-  gimp_item_set_image (item, gimp_item_get_image (GIMP_ITEM (layer)));
-  gimp_item_set_tattoo (item, gimp_item_get_tattoo (GIMP_ITEM (layer)));
-
-  gimp_item_set_image (GIMP_ITEM (layer), NULL);
-  g_hash_table_replace (gimp_item_get_image (item)->gimp->item_table,
-                        GINT_TO_POINTER (gimp_item_get_ID (item)),
-                        item);
-
-  item->parasites = GIMP_ITEM (layer)->parasites;
-  GIMP_ITEM (layer)->parasites = NULL;
-
-  gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
-  gimp_item_set_offset (item, offset_x, offset_y);
-
-  gimp_item_set_size (item,
-                      gimp_item_get_width  (GIMP_ITEM (layer)),
-                      gimp_item_get_height (GIMP_ITEM (layer)));
-
-  gimp_item_set_visible      (item, gimp_item_get_visible (GIMP_ITEM (layer)), FALSE);
-  gimp_item_set_linked       (item, gimp_item_get_linked (GIMP_ITEM (layer)), FALSE);
-  gimp_item_set_lock_content (item, gimp_item_get_lock_content (GIMP_ITEM (layer)), FALSE);
 
   drawable->private->tiles = gimp_drawable_get_tiles (GIMP_DRAWABLE (layer));
   GIMP_DRAWABLE (layer)->private->tiles = NULL;

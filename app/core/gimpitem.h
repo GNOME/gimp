@@ -286,6 +286,9 @@ GimpImage     * gimp_item_get_image          (const GimpItem     *item);
 void            gimp_item_set_image          (GimpItem           *item,
                                               GimpImage          *image);
 
+void            gimp_item_replace_item       (GimpItem           *item,
+                                              GimpItem           *replace);
+
 void            gimp_item_parasite_attach    (GimpItem           *item,
                                               const GimpParasite *parasite);
 void            gimp_item_parasite_detach    (GimpItem           *item,
