@@ -1460,6 +1460,10 @@ gimp_layer_add_mask (GimpLayer      *layer,
 
   g_object_notify (G_OBJECT (layer), "mask");
 
+  /*  if the mask came from the undo stack, reset its "removed" state  */
+  if (gimp_item_is_removed (GIMP_ITEM (mask)))
+    GIMP_ITEM (mask)->removed = FALSE;
+
   return layer->mask;
 }
 

@@ -3471,6 +3471,15 @@ gimp_image_add_layer (GimpImage *image,
   if (old_has_alpha != gimp_image_has_alpha (image))
     private->flush_accum.alpha_changed = TRUE;
 
+  if (gimp_layer_get_mask (layer))
+    {
+      GimpLayerMask *mask = gimp_layer_get_mask (layer);
+
+      /*  if the layer came from the undo stack, reset the mask's "removed" state  */
+      if (gimp_item_is_removed (GIMP_ITEM (mask)))
+        GIMP_ITEM (mask)->removed = FALSE;
+    }
+
   return TRUE;
 }
 

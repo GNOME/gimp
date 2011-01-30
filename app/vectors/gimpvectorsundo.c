@@ -209,7 +209,5 @@ gimp_vectors_undo_pop (GimpUndo            *undo,
       gimp_image_add_vectors (undo->image, vectors,
                               vectors_undo->prev_parent,
                               vectors_undo->prev_position, FALSE);
-
-      GIMP_ITEM (vectors)->removed = FALSE;
     }
 }

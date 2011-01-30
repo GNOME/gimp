@@ -446,6 +446,10 @@ gimp_item_tree_add_item (GimpItemTree *tree,
                               GIMP_VIEWABLE (parent));
 
   gimp_container_insert (container, GIMP_OBJECT (item), position);
+
+  /*  if the item came from the undo stack, reset its "removed" state  */
+  if (gimp_item_is_removed (item))
+    item->removed = FALSE;
 }
 
 GimpItem *
