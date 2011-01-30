@@ -1454,10 +1454,6 @@ save_image (const gchar  *filename,
 
         g_free (profile_name);
       }
-    else if (! pngvals.gama)
-      {
-        png_set_sRGB (pp, info, 0);
-      }
   }
 #endif
 
