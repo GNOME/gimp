@@ -3475,9 +3475,11 @@ gimp_image_add_layer (GimpImage *image,
     {
       GimpLayerMask *mask = gimp_layer_get_mask (layer);
 
-      /*  if the layer came from the undo stack, reset the mask's "removed" state  */
+      /*  if the layer came from the undo stack,
+       *  reset the mask's "removed" state
+       */
       if (gimp_item_is_removed (GIMP_ITEM (mask)))
-        GIMP_ITEM (mask)->removed = FALSE;
+        gimp_item_unset_removed (GIMP_ITEM (mask));
     }
 
   return TRUE;

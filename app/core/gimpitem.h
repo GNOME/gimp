@@ -39,8 +39,6 @@ struct _GimpItem
   GimpParasiteList *parasites;          /*  Plug-in parasite data    */
 
   gint              width, height;      /*  size in pixels           */
-
-  guint             removed : 1;        /*  removed from the image?  */
 };
 
 struct _GimpItemClass
@@ -142,6 +140,7 @@ GType           gimp_item_get_type           (void) G_GNUC_CONST;
 
 void            gimp_item_removed            (GimpItem           *item);
 gboolean        gimp_item_is_removed         (const GimpItem     *item);
+void            gimp_item_unset_removed      (GimpItem           *item);
 
 gboolean        gimp_item_is_attached        (const GimpItem     *item);
 

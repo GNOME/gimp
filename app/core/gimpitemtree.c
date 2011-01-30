@@ -449,7 +449,7 @@ gimp_item_tree_add_item (GimpItemTree *tree,
 
   /*  if the item came from the undo stack, reset its "removed" state  */
   if (gimp_item_is_removed (item))
-    item->removed = FALSE;
+    gimp_item_unset_removed (item);
 }
 
 GimpItem *

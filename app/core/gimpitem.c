@@ -91,9 +91,7 @@ struct _GimpItemPrivate
   guint             linked       : 1;   /*  control linkage          */
   guint             lock_content : 1;   /*  content editability      */
 
-#if 0
   guint             removed : 1;        /*  removed from the image?  */
-#endif
 
   GeglNode         *node;               /*  the GEGL node to plug
                                             into the graph           */
@@ -305,7 +303,7 @@ gimp_item_init (GimpItem *item)
   private->visible      = TRUE;
   private->linked       = FALSE;
   private->lock_content = FALSE;
-  item->removed         = FALSE;
+  private->removed      = FALSE;
   private->node         = NULL;
   private->offset_node  = NULL;
 }
@@ -629,7 +627,7 @@ gimp_item_removed (GimpItem *item)
 
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  item->removed = TRUE;
+  GET_PRIVATE (item)->removed = TRUE;
 
   children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
 
@@ -650,7 +648,25 @@ gimp_item_is_removed (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return item->removed;
+  return GET_PRIVATE (item)->removed;
+}
+
+/**
+ * gimp_item_unset_removed:
+ * @item: a #GimpItem which was on the undo stack
+ *
+ * Unsets an item's "removed" state. This function is called when an
+ * item was on the undo stack and is added back to its parent
+ * container during and undo or redo. It must never be called from
+ * anywhere else.
+ **/
+void
+gimp_item_unset_removed (GimpItem *item)
+{
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_is_removed (item));
+
+  GET_PRIVATE (item)->removed = FALSE;
 }
 
 /**
