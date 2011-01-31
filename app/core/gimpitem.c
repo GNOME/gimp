@@ -78,9 +78,7 @@ struct _GimpItemPrivate
 
   GimpImage        *image;              /*  item owner               */
 
-#if 0
   GimpParasiteList *parasites;          /*  Plug-in parasite data    */
-#endif
 
 #if 0
   gint              width, height;      /*  size in pixels           */
@@ -295,7 +293,7 @@ gimp_item_init (GimpItem *item)
   private->ID           = 0;
   private->tattoo       = 0;
   private->image        = NULL;
-  item->parasites       = gimp_parasite_list_new ();
+  private->parasites    = gimp_parasite_list_new ();
   item->width           = 0;
   item->height          = 0;
   private->offset_x     = 0;
@@ -367,7 +365,6 @@ gimp_item_get_property (GObject    *object,
 static void
 gimp_item_finalize (GObject *object)
 {
-  GimpItem        *item    = GIMP_ITEM (object);
   GimpItemPrivate *private = GET_PRIVATE (object);
 
   if (private->node)
@@ -383,10 +380,10 @@ gimp_item_finalize (GObject *object)
       private->image = NULL;
     }
 
-  if (item->parasites)
+  if (private->parasites)
     {
-      g_object_unref (item->parasites);
-      item->parasites = NULL;
+      g_object_unref (private->parasites);
+      private->parasites = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -396,10 +393,11 @@ static gint64
 gimp_item_get_memsize (GimpObject *object,
                        gint64     *gui_size)
 {
-  GimpItem *item    = GIMP_ITEM (object);
-  gint64    memsize = 0;
+  GimpItemPrivate *private = GET_PRIVATE (object);
+  gint64           memsize = 0;
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (item->parasites), gui_size);
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (private->parasites),
+                                      gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -492,8 +490,8 @@ gimp_item_real_duplicate (GimpItem *item,
 
   g_free (new_name);
 
-  g_object_unref (new_item->parasites);
-  new_item->parasites = gimp_parasite_list_copy (item->parasites);
+  g_object_unref (GET_PRIVATE (new_item)->parasites);
+  GET_PRIVATE (new_item)->parasites = gimp_parasite_list_copy (private->parasites);
 
   gimp_item_set_visible (new_item, gimp_item_get_visible (item), FALSE);
   gimp_item_set_linked  (new_item, gimp_item_get_linked (item),  FALSE);
@@ -1690,8 +1688,8 @@ gimp_item_replace_item (GimpItem *item,
   gimp_item_set_tattoo (item, gimp_item_get_tattoo (replace));
   gimp_item_set_tattoo (replace, 0);
 
-  item->parasites = replace->parasites;
-  replace->parasites = NULL;
+  private->parasites = GET_PRIVATE (replace)->parasites;
+  GET_PRIVATE (replace)->parasites = NULL;
 
   gimp_item_get_offset (replace, &offset_x, &offset_y);
   gimp_item_set_offset (item, offset_x, offset_y);
@@ -1703,6 +1701,52 @@ gimp_item_replace_item (GimpItem *item,
   gimp_item_set_visible      (item, gimp_item_get_visible (replace), FALSE);
   gimp_item_set_linked       (item, gimp_item_get_linked (replace), FALSE);
   gimp_item_set_lock_content (item, gimp_item_get_lock_content (replace), FALSE);
+}
+
+/**
+ * gimp_item_set_parasites:
+ * @item: a #GimpItem
+ * @parasites: a #GimpParasiteList
+ *
+ * Set an @item's #GimpParasiteList. It's usually never needed to
+ * fiddle with an item's parasite list directly. This function exists
+ * for special purposes only, like when creating items from unusual
+ * sources.
+ **/
+void
+gimp_item_set_parasites (GimpItem         *item,
+                         GimpParasiteList *parasites)
+{
+  GimpItemPrivate *private;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (GIMP_IS_PARASITE_LIST (parasites));
+
+  private = GET_PRIVATE (item);
+
+  if (parasites != private->parasites)
+    {
+      g_object_unref (private->parasites);
+      private->parasites = g_object_ref (parasites);
+    }
+}
+
+/**
+ * gimp_item_get_parasites:
+ * @item: a #GimpItem
+ *
+ * Get an @item's #GimpParasiteList. It's usually never needed to
+ * fiddle with an item's parasite list directly. This function exists
+ * for special purposes only, like when saving an item to XCF.
+ *
+ * Return value: The @item's #GimpParasiteList.
+ **/
+GimpParasiteList *
+gimp_item_get_parasites (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+
+  return GET_PRIVATE (item)->parasites;
 }
 
 void
@@ -1750,7 +1794,7 @@ gimp_item_parasite_attach (GimpItem           *item,
         }
     }
 
-  gimp_parasite_list_add (item->parasites, &copy);
+  gimp_parasite_list_add (private->parasites, &copy);
 
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
@@ -1784,7 +1828,7 @@ gimp_item_parasite_detach (GimpItem    *item,
 
   private = GET_PRIVATE (item);
 
-  parasite = gimp_parasite_list_find (item->parasites, name);
+  parasite = gimp_parasite_list_find (private->parasites, name);
 
   if (! parasite)
     return;
@@ -1808,7 +1852,7 @@ gimp_item_parasite_detach (GimpItem    *item,
         }
     }
 
-  gimp_parasite_list_remove (item->parasites, name);
+  gimp_parasite_list_remove (private->parasites, name);
 }
 
 const GimpParasite *
@@ -1817,7 +1861,7 @@ gimp_item_parasite_find (const GimpItem *item,
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
 
-  return gimp_parasite_list_find (item->parasites, name);
+  return gimp_parasite_list_find (GET_PRIVATE (item)->parasites, name);
 }
 
 static void
@@ -1832,17 +1876,20 @@ gchar **
 gimp_item_parasite_list (const GimpItem *item,
                          gint           *count)
 {
-  gchar **list;
-  gchar **cur;
+  GimpItemPrivate  *private;
+  gchar           **list;
+  gchar           **cur;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (count != NULL, NULL);
 
-  *count = gimp_parasite_list_length (item->parasites);
+  private = GET_PRIVATE (item);
+
+  *count = gimp_parasite_list_length (private->parasites);
 
   cur = list = g_new (gchar *, *count);
 
-  gimp_parasite_list_foreach (item->parasites,
+  gimp_parasite_list_foreach (private->parasites,
                               (GHFunc) gimp_item_parasite_list_foreach_func,
                               &cur);
 

@@ -36,8 +36,6 @@ struct _GimpItem
 {
   GimpViewable      parent_instance;
 
-  GimpParasiteList *parasites;          /*  Plug-in parasite data    */
-
   gint              width, height;      /*  size in pixels           */
 };
 
@@ -273,6 +271,10 @@ void            gimp_item_set_image          (GimpItem           *item,
 
 void            gimp_item_replace_item       (GimpItem           *item,
                                               GimpItem           *replace);
+
+void               gimp_item_set_parasites   (GimpItem           *item,
+                                              GimpParasiteList   *parasites);
+GimpParasiteList * gimp_item_get_parasites   (const GimpItem     *item);
 
 void            gimp_item_parasite_attach    (GimpItem           *item,
                                               const GimpParasite *parasite,

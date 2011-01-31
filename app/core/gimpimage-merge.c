@@ -390,19 +390,20 @@ gimp_image_merge_layers (GimpImage     *image,
                          GimpMergeType  merge_type,
                          const gchar   *undo_desc)
 {
-  GList           *list;
-  GSList          *reverse_list = NULL;
-  PixelRegion      src1PR, src2PR, maskPR;
-  PixelRegion     *mask;
-  GimpLayer       *merge_layer;
-  GimpLayer       *layer;
-  GimpLayer       *bottom_layer;
-  gint             count;
-  gint             x1, y1, x2, y2;
-  gint             off_x, off_y;
-  gint             position;
-  gchar           *name;
-  GimpLayer       *parent;
+  GList            *list;
+  GSList           *reverse_list = NULL;
+  PixelRegion       src1PR, src2PR, maskPR;
+  PixelRegion      *mask;
+  GimpLayer        *merge_layer;
+  GimpLayer        *layer;
+  GimpLayer        *bottom_layer;
+  GimpParasiteList *parasites;
+  gint              count;
+  gint              x1, y1, x2, y2;
+  gint              off_x, off_y;
+  gint              position;
+  gchar            *name;
+  GimpLayer        *parent;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -570,9 +571,10 @@ gimp_image_merge_layers (GimpImage     *image,
   gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
                         gimp_item_get_tattoo (GIMP_ITEM (bottom_layer)));
 
-  g_object_unref (GIMP_ITEM (merge_layer)->parasites);
-  GIMP_ITEM (merge_layer)->parasites =
-    gimp_parasite_list_copy (GIMP_ITEM (bottom_layer)->parasites);
+  parasites = gimp_item_get_parasites (GIMP_ITEM (bottom_layer));
+  parasites = gimp_parasite_list_copy (parasites);
+  gimp_item_set_parasites (GIMP_ITEM (merge_layer), parasites);
+  g_object_unref (parasites);
 
   while (reverse_list)
     {

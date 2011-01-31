@@ -455,8 +455,9 @@ xcf_save_layer_props (XcfInfo    *info,
                       GimpLayer  *layer,
                       GError    **error)
 {
-  gint offset_x;
-  gint offset_y;
+  GimpParasiteList *parasites;
+  gint              offset_x;
+  gint              offset_y;
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     xcf_check_error (xcf_save_prop (info, image, PROP_GROUP_ITEM, error));
@@ -535,10 +536,12 @@ xcf_save_layer_props (XcfInfo    *info,
                                         flags));
     }
 
-  if (gimp_parasite_list_length (GIMP_ITEM (layer)->parasites) > 0)
+  parasites = gimp_item_get_parasites (GIMP_ITEM (layer));
+
+  if (gimp_parasite_list_length (parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
-                                      GIMP_ITEM (layer)->parasites));
+                                      parasites));
     }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
@@ -552,7 +555,8 @@ xcf_save_channel_props (XcfInfo      *info,
                         GimpChannel  *channel,
                         GError      **error)
 {
-  guchar col[3];
+  GimpParasiteList *parasites;
+  guchar            col[3];
 
   if (channel == gimp_image_get_active_channel (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));
@@ -577,9 +581,13 @@ xcf_save_channel_props (XcfInfo      *info,
   xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
                                   gimp_item_get_tattoo (GIMP_ITEM (channel))));
 
-  if (gimp_parasite_list_length (GIMP_ITEM (channel)->parasites) > 0)
-    xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
-                     GIMP_ITEM (channel)->parasites));
+  parasites = gimp_item_get_parasites (GIMP_ITEM (channel));
+
+  if (gimp_parasite_list_length (parasites) > 0)
+    {
+      xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
+                                      parasites));
+    }
 
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
 
@@ -1798,12 +1806,11 @@ xcf_save_vectors (XcfInfo    *info,
        * then each stroke
        */
 
-      parasites = GIMP_ITEM (vectors)->parasites;
-
       name          = gimp_object_get_name (vectors);
       visible       = gimp_item_get_visible (GIMP_ITEM (vectors));
       linked        = gimp_item_get_linked (GIMP_ITEM (vectors));
       tattoo        = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+      parasites     = gimp_item_get_parasites (GIMP_ITEM (vectors));
       num_parasites = gimp_parasite_list_persistent_length (parasites);
       num_strokes   = g_list_length (vectors->strokes);
 
