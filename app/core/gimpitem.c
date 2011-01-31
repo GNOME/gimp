@@ -1688,6 +1688,7 @@ gimp_item_replace_item (GimpItem *item,
   gimp_item_set_tattoo (item, gimp_item_get_tattoo (replace));
   gimp_item_set_tattoo (replace, 0);
 
+  g_object_unref (private->parasites);
   private->parasites = GET_PRIVATE (replace)->parasites;
   GET_PRIVATE (replace)->parasites = NULL;
 
