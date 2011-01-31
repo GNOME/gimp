@@ -1674,6 +1674,10 @@ gimp_item_replace_item (GimpItem *item,
 
   gimp_object_set_name (GIMP_OBJECT (item), gimp_object_get_name (replace));
 
+  if (private->ID)
+    g_hash_table_remove (gimp_item_get_image (item)->gimp->item_table,
+                         GINT_TO_POINTER (gimp_item_get_ID (item)));
+
   private->ID = gimp_item_get_ID (replace);
   g_hash_table_replace (gimp_item_get_image (item)->gimp->item_table,
                         GINT_TO_POINTER (gimp_item_get_ID (item)),
