@@ -1050,7 +1050,7 @@ gimp_brush_core_get_transform (GimpBrushCore *core,
       angle = angle + base_angle / 360;
 
       if (aspect_ratio == 0.0)
-        aspect_ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
+        aspect_ratio = (gimp_brush_generated_get_aspect_ratio (generated_brush) - 1) / 19.0 * 20.0;
     }
 
   height = core->brush_bound_width;

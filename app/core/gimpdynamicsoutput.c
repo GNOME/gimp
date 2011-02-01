@@ -622,9 +622,6 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
       tilt_value = gimp_curve_map_value (output->tilt_curve,
                                          tilt_value);
 
-      if (fabs (coords->xtilt) > fabs (coords->ytilt))
-        sign = -1.0;
-
       total += tilt_value;
 
       factors++;
