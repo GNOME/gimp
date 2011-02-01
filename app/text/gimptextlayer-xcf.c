@@ -183,7 +183,9 @@ gimp_text_layer_from_layer (GimpLayer *layer,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
 
-  text_layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
+  text_layer = g_object_new (GIMP_TYPE_TEXT_LAYER,
+                             "image", gimp_item_get_image (GIMP_ITEM (layer)),
+                             NULL);
 
   gimp_item_replace_item (GIMP_ITEM (text_layer), GIMP_ITEM (layer));
 
