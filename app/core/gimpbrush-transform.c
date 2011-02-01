@@ -657,8 +657,8 @@ gimp_brush_transform_matrix (gdouble      width,
 
   if (aspect_ratio < 0.0)
     {
-        scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
-        scale_y = scale;
+      scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
+      scale_y = scale;
     }
   else if (aspect_ratio > 0.0)
     {

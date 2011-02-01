@@ -1058,14 +1058,15 @@ gimp_brush_core_get_transform (GimpBrushCore *core,
 
   if (aspect_ratio < 0.0)
     {
-      scale_x = scale / fabs (aspect_ratio);
+      scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
       scale_y = scale;
     }
-  else  if (aspect_ratio > 0.0)
+  else if (aspect_ratio > 0.0)
     {
       scale_x = scale;
-      scale_y = scale / aspect_ratio;
+      scale_y = scale * (1.0 - (aspect_ratio  / 20.0));
     }
+
 
   if (scale > 0.0)
     {
