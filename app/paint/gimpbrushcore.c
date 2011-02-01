@@ -953,7 +953,7 @@ gimp_brush_core_create_boundary (GimpBrushCore    *core,
           MAX (core->main_brush->mask->width,
                core->main_brush->mask->height);
 
-  if ((scale > 0.0) && (paint_options->brush_aspect_ratio != 0.0))
+  if (scale > 0.0)
     {
       scale = gimp_brush_clamp_scale (core->main_brush, scale);
 
