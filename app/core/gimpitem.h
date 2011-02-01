@@ -136,6 +136,14 @@ struct _GimpItemClass
 
 GType           gimp_item_get_type           (void) G_GNUC_CONST;
 
+GimpItem      * gimp_item_new                (GType               type,
+                                              GimpImage          *image,
+                                              const gchar        *name,
+                                              gint                offset_x,
+                                              gint                offset_y,
+                                              gint                width,
+                                              gint                height);
+
 void            gimp_item_removed            (GimpItem           *item);
 gboolean        gimp_item_is_removed         (const GimpItem     *item);
 void            gimp_item_unset_removed      (GimpItem           *item);
@@ -150,12 +158,6 @@ GList         * gimp_item_get_container_iter (GimpItem           *item);
 gint            gimp_item_get_index          (GimpItem           *item);
 GList         * gimp_item_get_path           (GimpItem           *item);
 
-void            gimp_item_configure          (GimpItem           *item,
-                                              gint                offset_x,
-                                              gint                offset_y,
-                                              gint                width,
-                                              gint                height,
-                                              const gchar        *name);
 GimpItem      * gimp_item_duplicate          (GimpItem           *item,
                                               GType               new_type);
 GimpItem      * gimp_item_convert            (GimpItem           *item,

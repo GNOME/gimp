@@ -382,6 +382,7 @@ gimp_text_layer_new (GimpImage *image,
                      GimpText  *text)
 {
   GimpTextLayer *layer;
+  GimpImageType  type;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -389,14 +390,12 @@ gimp_text_layer_new (GimpImage *image,
   if (! text->text && ! text->markup)
     return NULL;
 
-  layer = g_object_new (GIMP_TYPE_TEXT_LAYER,
-                        "image", image,
-                        NULL);
+  type = gimp_image_base_type_with_alpha (image);
 
-  gimp_drawable_configure (GIMP_DRAWABLE (layer),
-                           0, 0, 1, 1,
-                           gimp_image_base_type_with_alpha (image),
-                           NULL);
+  layer = GIMP_TEXT_LAYER (gimp_drawable_new (GIMP_TYPE_TEXT_LAYER,
+                                              image, NULL,
+                                              0, 0, 1, 1,
+                                              type));
 
   gimp_text_layer_set_text (layer, text);
 

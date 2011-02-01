@@ -1116,14 +1116,10 @@ gimp_layer_new (GimpImage            *image,
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  layer = g_object_new (GIMP_TYPE_LAYER,
-                        "image", image,
-                        NULL);
-
-  gimp_drawable_configure (GIMP_DRAWABLE (layer),
-                           0, 0, width, height,
-                           type,
-                           name);
+  layer = GIMP_LAYER (gimp_drawable_new (GIMP_TYPE_LAYER,
+                                         image, name,
+                                         0, 0, width, height,
+                                         type));
 
   opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
 

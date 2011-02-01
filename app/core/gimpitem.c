@@ -509,15 +509,11 @@ gimp_item_real_duplicate (GimpItem *item,
       }
   }
 
-  new_item = g_object_new (new_type,
-                           "image", gimp_item_get_image (item),
-                           NULL);
-
-  gimp_item_configure (new_item,
-                       private->offset_x, private->offset_y,
-                       gimp_item_get_width  (item),
-                       gimp_item_get_height (item),
-                       new_name);
+  new_item = gimp_item_new (new_type,
+                            gimp_item_get_image (item), new_name,
+                            private->offset_x, private->offset_y,
+                            gimp_item_get_width  (item),
+                            gimp_item_get_height (item));
 
   g_free (new_name);
 
@@ -642,6 +638,56 @@ gimp_item_sync_offset_node (GimpItem *item)
                    NULL);
 }
 
+
+/*  public functions  */
+
+/**
+ * gimp_item_new:
+ * @type:     The new item's type.
+ * @image:    The new item's #GimpImage.
+ * @name:     The name to assign the item.
+ * @offset_x: The X offset to assign the item.
+ * @offset_y: The Y offset to assign the item.
+ * @width:    The width to assign the item.
+ * @height:   The height to assign the item.
+ *
+ * Return value: The newly created item.
+ */
+GimpItem *
+gimp_item_new (GType        type,
+               GimpImage   *image,
+               const gchar *name,
+               gint         offset_x,
+               gint         offset_y,
+               gint         width,
+               gint         height)
+{
+  GimpItem        *item;
+  GimpItemPrivate *private;
+
+  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_ITEM), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
+
+  item = g_object_new (type,
+                       "image", image,
+                       NULL);
+
+  private = GET_PRIVATE (item);
+
+  item->width  = width;
+  item->height = height;
+  gimp_item_set_offset (item, offset_x, offset_y);
+
+  if (name && strlen (name))
+    gimp_object_set_name (GIMP_OBJECT (item), name);
+  else
+    gimp_object_set_static_name (GIMP_OBJECT (item),
+                                 GIMP_ITEM_GET_CLASS (item)->default_name);
+
+  return item;
+}
+
 /**
  * gimp_item_remove:
  * @item: the #GimpItem to remove.
@@ -696,56 +742,6 @@ gimp_item_unset_removed (GimpItem *item)
   g_return_if_fail (gimp_item_is_removed (item));
 
   GET_PRIVATE (item)->removed = FALSE;
-}
-
-/**
- * gimp_item_configure:
- * @item:     The #GimpItem to configure.
- * @offset_x: The X offset to assign the item.
- * @offset_y: The Y offset to assign the item.
- * @width:    The width to assign the item.
- * @height:   The height to assign the item.
- * @name:     The name to assign the item.
- *
- * This function is used to configure a new item.
- */
-void
-gimp_item_configure (GimpItem    *item,
-                     gint         offset_x,
-                     gint         offset_y,
-                     gint         width,
-                     gint         height,
-                     const gchar *name)
-{
-  GimpItemPrivate *private;
-
-  g_return_if_fail (GIMP_IS_ITEM (item));
-
-  private = GET_PRIVATE (item);
-
-  g_object_freeze_notify (G_OBJECT (item));
-
-  if (item->width != width)
-    {
-      item->width = width;
-      g_object_notify (G_OBJECT (item), "width");
-    }
-
-  if (item->height != height)
-    {
-      item->height = height;
-      g_object_notify (G_OBJECT (item), "height");
-    }
-
-  gimp_item_set_offset (item, offset_x, offset_y);
-
-  if (name && strlen (name))
-    gimp_object_set_name (GIMP_OBJECT (item), name);
-  else
-    gimp_object_set_static_name (GIMP_OBJECT (item),
-                                 GIMP_ITEM_GET_CLASS (item)->default_name);
-
-  g_object_thaw_notify (G_OBJECT (item));
 }
 
 /**

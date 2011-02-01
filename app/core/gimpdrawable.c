@@ -1177,6 +1177,35 @@ gimp_drawable_fs_update (GimpLayer    *fs,
 
 /*  public functions  */
 
+GimpDrawable *
+gimp_drawable_new (GType          type,
+                   GimpImage     *image,
+                   const gchar   *name,
+                   gint           offset_x,
+                   gint           offset_y,
+                   gint           width,
+                   gint           height,
+                   GimpImageType  image_type)
+{
+  GimpDrawable *drawable;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_DRAWABLE), NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
+
+  drawable = GIMP_DRAWABLE (gimp_item_new (type,
+                                           image, name,
+                                           offset_x, offset_y,
+                                           width, height));
+
+  drawable->type  = image_type;
+  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (image_type);
+
+  drawable->private->tiles = tile_manager_new (width, height, drawable->bytes);
+
+  return drawable;
+}
+
 gint64
 gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
                                 gint                width,
@@ -1186,39 +1215,6 @@ gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
 
   return GIMP_DRAWABLE_GET_CLASS (drawable)->estimate_memsize (drawable,
                                                                width, height);
-}
-
-void
-gimp_drawable_configure (GimpDrawable  *drawable,
-                         gint           offset_x,
-                         gint           offset_y,
-                         gint           width,
-                         gint           height,
-                         GimpImageType  type,
-                         const gchar   *name)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (width > 0 && height > 0);
-
-  gimp_item_configure (GIMP_ITEM (drawable),
-                       offset_x, offset_y, width, height, name);
-
-  drawable->type  = type;
-  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (type);
-
-  if (drawable->private->tiles)
-    tile_manager_unref (drawable->private->tiles);
-
-  drawable->private->tiles = tile_manager_new (width, height, drawable->bytes);
-
-  /*  preview variables  */
-  drawable->private->preview_cache = NULL;
-  drawable->private->preview_valid = FALSE;
-
-  if (drawable->private->tile_source_node)
-    gegl_node_set (drawable->private->tile_source_node,
-                   "tile-manager", gimp_drawable_get_tiles (drawable),
-                   NULL);
 }
 
 void
