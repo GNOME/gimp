@@ -410,6 +410,7 @@ gimp_drawable_duplicate (GimpItem *item,
     {
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
+      GimpImageType  image_type   = gimp_drawable_type (drawable);
       PixelRegion    srcPR;
       PixelRegion    destPR;
       gint           offset_x;
@@ -417,13 +418,16 @@ gimp_drawable_duplicate (GimpItem *item,
 
       gimp_item_get_offset (item, &offset_x, &offset_y);
 
-      gimp_drawable_configure (new_drawable,
-                               offset_x,
-                               offset_y,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               gimp_drawable_type (drawable),
-                               gimp_object_get_name (new_drawable));
+      new_drawable->type  = image_type;
+      new_drawable->bytes = GIMP_IMAGE_TYPE_BYTES (image_type);
+
+      if (new_drawable->private->tiles)
+        tile_manager_unref (new_drawable->private->tiles);
+
+      new_drawable->private->tiles =
+        tile_manager_new (gimp_item_get_width  (new_item),
+                          gimp_item_get_height (new_item),
+                          new_drawable->bytes);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
