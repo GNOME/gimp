@@ -418,7 +418,6 @@ gimp_drawable_duplicate (GimpItem *item,
       gimp_item_get_offset (item, &offset_x, &offset_y);
 
       gimp_drawable_configure (new_drawable,
-                               gimp_item_get_image (item),
                                offset_x,
                                offset_y,
                                gimp_item_get_width  (item),
@@ -1187,7 +1186,6 @@ gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
 
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
-                         GimpImage     *image,
                          gint           offset_x,
                          gint           offset_y,
                          gint           width,
@@ -1196,10 +1194,9 @@ gimp_drawable_configure (GimpDrawable  *drawable,
                          const gchar   *name)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (width > 0 && height > 0);
 
-  gimp_item_configure (GIMP_ITEM (drawable), image,
+  gimp_item_configure (GIMP_ITEM (drawable),
                        offset_x, offset_y, width, height, name);
 
   drawable->type  = type;

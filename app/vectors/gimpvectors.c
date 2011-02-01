@@ -641,9 +641,11 @@ gimp_vectors_new (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  vectors = g_object_new (GIMP_TYPE_VECTORS, NULL);
+  vectors = g_object_new (GIMP_TYPE_VECTORS,
+                          "image", image,
+                          NULL);
 
-  gimp_item_configure (GIMP_ITEM (vectors), image,
+  gimp_item_configure (GIMP_ITEM (vectors),
                        0, 0,
                        gimp_image_get_width  (image),
                        gimp_image_get_height (image),

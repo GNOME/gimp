@@ -389,10 +389,11 @@ gimp_text_layer_new (GimpImage *image,
   if (! text->text && ! text->markup)
     return NULL;
 
-  layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
+  layer = g_object_new (GIMP_TYPE_TEXT_LAYER,
+                        "image", image,
+                        NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
-                           image,
                            0, 0, 1, 1,
                            gimp_image_base_type_with_alpha (image),
                            NULL);

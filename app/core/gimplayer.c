@@ -1116,10 +1116,11 @@ gimp_layer_new (GimpImage            *image,
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  layer = g_object_new (GIMP_TYPE_LAYER, NULL);
+  layer = g_object_new (GIMP_TYPE_LAYER,
+                        "image", image,
+                        NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
-                           image,
                            0, 0, width, height,
                            type,
                            name);

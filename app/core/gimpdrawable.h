@@ -124,7 +124,6 @@ gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
                                                   gint                height);
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
-                                                  GimpImage          *image,
                                                   gint                offset_x,
                                                   gint                offset_y,
                                                   gint                width,

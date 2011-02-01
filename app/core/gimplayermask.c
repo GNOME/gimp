@@ -194,10 +194,11 @@ gimp_layer_mask_new (GimpImage     *image,
 {
   GimpLayerMask *layer_mask;
 
-  layer_mask = g_object_new (GIMP_TYPE_LAYER_MASK, NULL);
+  layer_mask = g_object_new (GIMP_TYPE_LAYER_MASK,
+                             "image", image,
+                             NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer_mask),
-                           image,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
 

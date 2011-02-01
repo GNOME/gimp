@@ -57,6 +57,7 @@ enum
 enum
 {
   PROP_0,
+  PROP_IMAGE,
   PROP_ID,
   PROP_WIDTH,
   PROP_HEIGHT,
@@ -103,6 +104,8 @@ struct _GimpItemPrivate
 
 /*  local function prototypes  */
 
+static void       gimp_item_constructed             (GObject        *object);
+static void       gimp_item_finalize                (GObject        *object);
 static void       gimp_item_set_property            (GObject        *object,
                                                      guint           property_id,
                                                      const GValue   *value,
@@ -111,7 +114,6 @@ static void       gimp_item_get_property            (GObject        *object,
                                                      guint           property_id,
                                                      GValue         *value,
                                                      GParamSpec     *pspec);
-static void       gimp_item_finalize                (GObject        *object);
 
 static gint64     gimp_item_get_memsize             (GimpObject     *object,
                                                      gint64         *gui_size);
@@ -198,9 +200,10 @@ gimp_item_class_init (GimpItemClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  object_class->constructed        = gimp_item_constructed;
+  object_class->finalize           = gimp_item_finalize;
   object_class->set_property       = gimp_item_set_property;
   object_class->get_property       = gimp_item_get_property;
-  object_class->finalize           = gimp_item_finalize;
 
   gimp_object_class->get_memsize   = gimp_item_get_memsize;
 
@@ -237,6 +240,11 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->rotate_desc               = NULL;
   klass->transform_desc            = NULL;
 
+  g_object_class_install_property (object_class, PROP_IMAGE,
+                                   g_param_spec_object ("image", NULL, NULL,
+                                                        GIMP_TYPE_IMAGE,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ID,
                                    g_param_spec_int ("id", NULL, NULL,
                                                      0, G_MAXINT, 0,
@@ -307,13 +315,58 @@ gimp_item_init (GimpItem *item)
 }
 
 static void
+gimp_item_constructed (GObject *object)
+{
+  GimpItemPrivate *private = GET_PRIVATE (object);
+
+  if (G_OBJECT_CLASS (parent_class)->constructed)
+    G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  g_assert (GIMP_IS_IMAGE (private->image));
+  g_assert (private->ID != 0);
+}
+
+static void
+gimp_item_finalize (GObject *object)
+{
+  GimpItemPrivate *private = GET_PRIVATE (object);
+
+  if (private->node)
+    {
+      g_object_unref (private->node);
+      private->node = NULL;
+    }
+
+  if (private->image && private->image->gimp)
+    {
+      g_hash_table_remove (private->image->gimp->item_table,
+                           GINT_TO_POINTER (private->ID));
+      private->image = NULL;
+    }
+
+  if (private->parasites)
+    {
+      g_object_unref (private->parasites);
+      private->parasites = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_item_set_property (GObject      *object,
                         guint         property_id,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
+  GimpItem *item = GIMP_ITEM (object);
+
   switch (property_id)
     {
+    case PROP_IMAGE:
+      gimp_item_set_image (item, g_value_get_object (value));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -331,6 +384,9 @@ gimp_item_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_IMAGE:
+      g_value_set_object (value, private->image);
+      break;
     case PROP_ID:
       g_value_set_int (value, private->ID);
       break;
@@ -360,33 +416,6 @@ gimp_item_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_item_finalize (GObject *object)
-{
-  GimpItemPrivate *private = GET_PRIVATE (object);
-
-  if (private->node)
-    {
-      g_object_unref (private->node);
-      private->node = NULL;
-    }
-
-  if (private->image && private->image->gimp)
-    {
-      g_hash_table_remove (private->image->gimp->item_table,
-                           GINT_TO_POINTER (private->ID));
-      private->image = NULL;
-    }
-
-  if (private->parasites)
-    {
-      g_object_unref (private->parasites);
-      private->parasites = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static gint64
@@ -480,9 +509,11 @@ gimp_item_real_duplicate (GimpItem *item,
       }
   }
 
-  new_item = g_object_new (new_type, NULL);
+  new_item = g_object_new (new_type,
+                           "image", gimp_item_get_image (item),
+                           NULL);
 
-  gimp_item_configure (new_item, gimp_item_get_image (item),
+  gimp_item_configure (new_item,
                        private->offset_x, private->offset_y,
                        gimp_item_get_width  (item),
                        gimp_item_get_height (item),
@@ -670,21 +701,16 @@ gimp_item_unset_removed (GimpItem *item)
 /**
  * gimp_item_configure:
  * @item:     The #GimpItem to configure.
- * @image:    The #GimpImage to which the item belongs.
  * @offset_x: The X offset to assign the item.
  * @offset_y: The Y offset to assign the item.
  * @width:    The width to assign the item.
  * @height:   The height to assign the item.
  * @name:     The name to assign the item.
  *
- * This function is used to configure a new item.  First, if the item
- * does not already have an ID, it is assigned the next available
- * one, and then inserted into the Item Hash Table.  Next, it is
- * given basic item properties as specified by the arguments.
+ * This function is used to configure a new item.
  */
 void
 gimp_item_configure (GimpItem    *item,
-                     GimpImage   *image,
                      gint         offset_x,
                      gint         offset_y,
                      gint         width,
@@ -694,32 +720,10 @@ gimp_item_configure (GimpItem    *item,
   GimpItemPrivate *private;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
 
   private = GET_PRIVATE (item);
 
   g_object_freeze_notify (G_OBJECT (item));
-
-  if (private->ID == 0)
-    {
-      do
-        {
-          private->ID = image->gimp->next_item_ID++;
-
-          if (image->gimp->next_item_ID == G_MAXINT)
-            image->gimp->next_item_ID = 1;
-        }
-      while (g_hash_table_lookup (image->gimp->item_table,
-                                  GINT_TO_POINTER (private->ID)));
-
-      g_hash_table_insert (image->gimp->item_table,
-                           GINT_TO_POINTER (private->ID),
-                           item);
-
-      gimp_item_set_image (item, image);
-
-      g_object_notify (G_OBJECT (item), "id");
-    }
 
   if (item->width != width)
     {
@@ -1629,12 +1633,39 @@ gimp_item_set_image (GimpItem  *item,
 
   private = GET_PRIVATE (item);
 
+  if (image == private->image)
+    return;
+
+  g_object_freeze_notify (G_OBJECT (item));
+
+  if (private->ID == 0)
+    {
+      do
+        {
+          private->ID = image->gimp->next_item_ID++;
+
+          if (image->gimp->next_item_ID == G_MAXINT)
+            image->gimp->next_item_ID = 1;
+        }
+      while (g_hash_table_lookup (image->gimp->item_table,
+                                  GINT_TO_POINTER (private->ID)));
+
+      g_hash_table_insert (image->gimp->item_table,
+                           GINT_TO_POINTER (private->ID),
+                           item);
+
+      g_object_notify (G_OBJECT (item), "id");
+    }
+
   if (private->tattoo == 0 || private->image != image)
     {
       private->tattoo = gimp_image_get_new_tattoo (image);
     }
 
   private->image = image;
+  g_object_notify (G_OBJECT (item), "image");
+
+  g_object_thaw_notify (G_OBJECT (item));
 }
 
 /**

@@ -828,10 +828,11 @@ gimp_group_layer_new (GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  group = g_object_new (GIMP_TYPE_GROUP_LAYER, NULL);
+  group = g_object_new (GIMP_TYPE_GROUP_LAYER,
+                        "image", image,
+                        NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (group),
-                           image,
                            0, 0, 1, 1,
                            gimp_image_base_type_with_alpha (image),
                            NULL);

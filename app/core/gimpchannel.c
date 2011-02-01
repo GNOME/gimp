@@ -1630,10 +1630,11 @@ gimp_channel_new (GimpImage     *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  channel = g_object_new (GIMP_TYPE_CHANNEL, NULL);
+  channel = g_object_new (GIMP_TYPE_CHANNEL,
+                          "image", image,
+                          NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (channel),
-                           image,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
 

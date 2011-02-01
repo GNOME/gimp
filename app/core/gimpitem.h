@@ -151,7 +151,6 @@ gint            gimp_item_get_index          (GimpItem           *item);
 GList         * gimp_item_get_path           (GimpItem           *item);
 
 void            gimp_item_configure          (GimpItem           *item,
-                                              GimpImage          *image,
                                               gint                offset_x,
                                               gint                offset_y,
                                               gint                width,
