@@ -79,6 +79,8 @@ static void          gimp_dynamics_output_notify (GObject          *output,
                                                   const GParamSpec *pspec,
                                                   GimpDynamics     *dynamics);
 
+static GimpData *    gimp_dynamics_duplicate     (GimpData *data);
+
 
 G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
                GIMP_TYPE_DATA)
@@ -99,6 +101,7 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
 
   data_class->save                          = gimp_dynamics_save;
   data_class->get_extension                 = gimp_dynamics_get_extension;
+  data_class->duplicate                     = gimp_dynamics_duplicate;
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
                                    "name", NULL,
@@ -510,4 +513,19 @@ gimp_dynamics_output_notify (GObject          *output,
                              GimpDynamics     *dynamics)
 {
   g_object_notify (G_OBJECT (dynamics), gimp_object_get_name (output));
+}
+
+static GimpData *
+gimp_dynamics_duplicate (GimpData *data)
+{
+
+  GimpData *dest;
+
+  dest = gimp_dynamics_new (NULL, gimp_object_get_name (GIMP_DYNAMICS(data)));
+
+  gimp_config_copy (GIMP_CONFIG (data),
+                    GIMP_CONFIG (dest),
+                    GIMP_CONFIG_PARAM_SERIALIZE);
+
+  return GIMP_DATA(dest);
 }

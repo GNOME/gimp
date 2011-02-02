@@ -85,7 +85,5 @@ gimp_dynamics_factory_view_new (GimpViewType      view_type,
 
   editor = GIMP_CONTAINER_EDITOR (factory_view);
 
-  gtk_widget_hide (gimp_data_factory_view_get_duplicate_button (GIMP_DATA_FACTORY_VIEW (factory_view)));
-
   return GTK_WIDGET (factory_view);
 }
