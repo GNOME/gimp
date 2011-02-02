@@ -97,6 +97,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
                                                  gchar             **tooltip);
 
 static void       gimp_layer_removed            (GimpItem           *item);
+static void       gimp_layer_unset_removed      (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
 static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
@@ -249,6 +250,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class->get_description     = gimp_layer_get_description;
 
   item_class->removed                 = gimp_layer_removed;
+  item_class->unset_removed           = gimp_layer_unset_removed;
   item_class->is_attached             = gimp_layer_is_attached;
   item_class->get_tree                = gimp_layer_get_tree;
   item_class->duplicate               = gimp_layer_duplicate;
@@ -491,6 +493,18 @@ gimp_layer_removed (GimpItem *item)
 
   if (GIMP_ITEM_CLASS (parent_class)->removed)
     GIMP_ITEM_CLASS (parent_class)->removed (item);
+}
+
+static void
+gimp_layer_unset_removed (GimpItem *item)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+
+  if (layer->mask)
+    gimp_item_unset_removed (GIMP_ITEM (layer->mask));
+
+  if (GIMP_ITEM_CLASS (parent_class)->unset_removed)
+    GIMP_ITEM_CLASS (parent_class)->unset_removed (item);
 }
 
 static gboolean

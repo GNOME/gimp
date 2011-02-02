@@ -50,6 +50,7 @@ struct _GimpItemClass
   void            (* lock_content_changed) (GimpItem             *item);
 
   /*  virtual functions  */
+  void            (* unset_removed)      (GimpItem               *item);
   gboolean        (* is_attached)        (const GimpItem         *item);
   gboolean        (* is_content_locked)  (const GimpItem         *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);

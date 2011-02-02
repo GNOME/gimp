@@ -215,6 +215,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->linked_changed            = NULL;
   klass->lock_content_changed      = NULL;
 
+  klass->unset_removed             = NULL;
   klass->is_attached               = NULL;
   klass->is_content_locked         = gimp_item_real_is_content_locked;
   klass->get_tree                  = NULL;
@@ -738,10 +739,20 @@ gimp_item_is_removed (const GimpItem *item)
 void
 gimp_item_unset_removed (GimpItem *item)
 {
+  GimpContainer *children;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_removed (item));
 
   GET_PRIVATE (item)->removed = FALSE;
+
+  children = gimp_viewable_get_children (GIMP_VIEWABLE (item));
+
+  if (children)
+    gimp_container_foreach (children, (GFunc) gimp_item_unset_removed, NULL);
+
+  if (GIMP_ITEM_GET_CLASS (item)->unset_removed)
+    GIMP_ITEM_GET_CLASS (item)->unset_removed (item);
 }
 
 /**
