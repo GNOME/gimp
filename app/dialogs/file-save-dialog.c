@@ -194,36 +194,21 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        FALSE))
         {
           /* Save was successful, now store the URI in a couple of
-           * places
+           * places that depend on it being the user that made a
+           * save. Lower-level URI management is handled in
+           * file_save()
            */
           if (dialog->save_a_copy)
             gimp_image_set_save_a_copy_uri (dialog->image, uri);
 
           if (! dialog->export)
-            {
-              g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                      GIMP_FILE_SAVE_LAST_URI_KEY,
-                                      g_strdup (uri), (GDestroyNotify) g_free);
-
-              /* Forget the import source when we save. We interpret a
-               * save as that the user is not interested in being able
-               * to quickly export back to the original any longer
-               */
-              gimp_image_set_imported_uri (dialog->image, NULL);
-            }
+            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                    GIMP_FILE_SAVE_LAST_URI_KEY,
+                                    g_strdup (uri), (GDestroyNotify) g_free);
           else
-            {
-              g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                      GIMP_FILE_EXPORT_LAST_URI_KEY,
-                                      g_strdup (uri), (GDestroyNotify) g_free);
-
-              /* Remeber the last entered Export URI for the image. We
-               * only need to do this explicitly when exporting. It
-               * happens implicitly when saving since the GimpObject name
-               * of a GimpImage is the last-save URI
-               */
-              gimp_image_set_exported_uri (dialog->image, uri);
-            }
+            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                    GIMP_FILE_EXPORT_LAST_URI_KEY,
+                                    g_strdup (uri), (GDestroyNotify) g_free);
 
           /*  make sure the menus are updated with the keys we've just set  */
           gimp_image_flush (dialog->image);

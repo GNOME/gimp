@@ -160,10 +160,23 @@ file_save (Gimp                *gimp,
           gimp_image_set_uri (image, uri);
           gimp_image_set_save_proc (image, file_proc);
 
+          /* Forget the import source when we save. We interpret a
+           * save as that the user is not interested in being able
+           * to quickly export back to the original any longer
+           */
+          gimp_image_set_imported_uri (image, NULL);
+
           gimp_image_clean_all (image);
         }
       else if (export)
         {
+          /* Remeber the last entered Export URI for the image. We
+           * only need to do this explicitly when exporting. It
+           * happens implicitly when saving since the GimpObject name
+           * of a GimpImage is the last-save URI
+           */
+          gimp_image_set_exported_uri (image, uri);
+
           gimp_image_export_clean_all (image);
         }
 
