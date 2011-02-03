@@ -674,7 +674,7 @@ view_use_gegl_cmd_callback (GtkAction *action,
       GimpLayer *layer = list->data;
 
       if (GIMP_IS_GROUP_LAYER (layer))
-        GIMP_GROUP_LAYER (layer)->projection->use_gegl = active;
+        gimp_group_layer_get_projection (GIMP_GROUP_LAYER (layer))->use_gegl = active;
     }
 
   g_list_free (layers);
