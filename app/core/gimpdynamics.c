@@ -70,6 +70,7 @@ static void
                                                   GParamSpec  **pspecs);
 
 static const gchar * gimp_dynamics_get_extension (GimpData     *data);
+static GimpData *    gimp_dynamics_duplicate     (GimpData     *data);
 
 static GimpDynamicsOutput *
                      gimp_dynamics_create_output (GimpDynamics           *dynamics,
@@ -79,7 +80,6 @@ static void          gimp_dynamics_output_notify (GObject          *output,
                                                   const GParamSpec *pspec,
                                                   GimpDynamics     *dynamics);
 
-static GimpData *    gimp_dynamics_duplicate     (GimpData *data);
 
 
 G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
@@ -398,6 +398,17 @@ gimp_dynamics_get_extension (GimpData *data)
   return GIMP_DYNAMICS_FILE_EXTENSION;
 }
 
+static GimpData *
+gimp_dynamics_duplicate (GimpData *data)
+{
+  GimpData *dest = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+
+  gimp_config_copy (GIMP_CONFIG (data),
+                    GIMP_CONFIG (dest), 0);
+
+  return GIMP_DATA (dest);
+}
+
 
 /*  public functions  */
 
@@ -442,7 +453,6 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
     case GIMP_DYNAMICS_OUTPUT_OPACITY:
       return dynamics->opacity_output;
       break;
-
 
     case GIMP_DYNAMICS_OUTPUT_FORCE:
       return dynamics->force_output;
@@ -513,19 +523,4 @@ gimp_dynamics_output_notify (GObject          *output,
                              GimpDynamics     *dynamics)
 {
   g_object_notify (G_OBJECT (dynamics), gimp_object_get_name (output));
-}
-
-static GimpData *
-gimp_dynamics_duplicate (GimpData *data)
-{
-
-  GimpData *dest;
-
-  dest = gimp_dynamics_new (NULL, gimp_object_get_name (GIMP_DYNAMICS(data)));
-
-  gimp_config_copy (GIMP_CONFIG (data),
-                    GIMP_CONFIG (dest),
-                    GIMP_CONFIG_PARAM_SERIALIZE);
-
-  return GIMP_DATA(dest);
 }
