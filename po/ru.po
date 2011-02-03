@@ -5,14 +5,14 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006, 2007, 2009.
-# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010.
+# Александр Прокудин <alexandre.prokoudine@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-23 02:25+0400\n"
-"PO-Revision-Date: 2010-10-23 02:26+0400\n"
+"POT-Creation-Date: 2011-02-04 00:34+0300\n"
+"PO-Revision-Date: 2011-02-04 00:34+0300\n"
 "Last-Translator: Александр Прокудин <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -9123,9 +9123,8 @@ msgstr ""
 "Рухнуло расширение: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Умершее расширение может испортить внутреннее состояние GIMP.\n"
-"Возможно, для обеспечения безопасности стоит сохранить\n"
-"изображения и перезапустить GIMP."
+"Умершее расширение может испортить внутреннее состояние GIMP. Возможно, для "
+"обеспечения безопасности стоит сохранить изображения и перезапустить GIMP."
 
 #: ../app/plug-in/gimppluginmanager-call.c:173
 #: ../app/plug-in/gimppluginmanager-call.c:223
