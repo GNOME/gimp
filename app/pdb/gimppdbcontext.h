@@ -46,6 +46,7 @@ struct _GimpPDBContext
   gboolean                sample_merged;
   GimpSelectCriterion     sample_criterion;
   gdouble                 sample_threshold;
+  gboolean                sample_transparent;
 
   GimpInterpolationType   interpolation;
   GimpTransformDirection  transform_direction;

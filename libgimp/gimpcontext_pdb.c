@@ -1340,6 +1340,73 @@ gimp_context_set_sample_threshold_int (gint sample_threshold)
 }
 
 /**
+ * gimp_context_get_sample_transparent:
+ *
+ * Get the sample transparent setting.
+ *
+ * This procedure returns the sample transparent setting.
+ *
+ * Returns: The sample transparent setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_sample_transparent (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean sample_transparent = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-transparent",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_transparent = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_transparent;
+}
+
+/**
+ * gimp_context_set_sample_transparent:
+ * @sample_transparent: The sample transparent setting.
+ *
+ * Set the sample transparent setting.
+ *
+ * This procedure modifies the sample transparent setting. If an
+ * operation depends on the colors of the pixels present in a drawable,
+ * like when doing a seed fill, this setting controls whether
+ * transparency is considered to be a unique selectable color. When
+ * this setting is TRUE, transparent areas can be selected or filled.
+ * This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_fuzzy().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_transparent (gboolean sample_transparent)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-transparent",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_transparent,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_interpolation:
  *
  * Get the interpolation type.

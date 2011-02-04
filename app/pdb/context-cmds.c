@@ -954,6 +954,51 @@ context_set_sample_threshold_int_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+context_get_sample_transparent_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  GValueArray *return_vals;
+  gboolean sample_transparent = FALSE;
+
+  g_object_get (context,
+                "sample-transparent", &sample_transparent,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (&return_vals->values[1], sample_transparent);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_transparent_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  gboolean success = TRUE;
+  gboolean sample_transparent;
+
+  sample_transparent = g_value_get_boolean (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-transparent", sample_transparent,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 context_get_interpolation_invoker (GimpProcedure      *procedure,
                                    Gimp               *gimp,
                                    GimpContext        *context,
@@ -2045,6 +2090,52 @@ register_context_procs (GimpPDB *pdb)
                                                       "The sample threshold setting",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-transparent
+   */
+  procedure = gimp_procedure_new (context_get_sample_transparent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-transparent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-transparent",
+                                     "Get the sample transparent setting.",
+                                     "This procedure returns the sample transparent setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("sample-transparent",
+                                                         "sample transparent",
+                                                         "The sample transparent setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-transparent
+   */
+  procedure = gimp_procedure_new (context_set_sample_transparent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-transparent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-transparent",
+                                     "Set the sample transparent setting.",
+                                     "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled. This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-fuzzy'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-transparent",
+                                                     "sample transparent",
+                                                     "The sample transparent setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

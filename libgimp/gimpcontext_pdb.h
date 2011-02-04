@@ -70,6 +70,8 @@ gdouble                gimp_context_get_sample_threshold     (void);
 gboolean               gimp_context_set_sample_threshold     (gdouble                   sample_threshold);
 gint                   gimp_context_get_sample_threshold_int (void);
 gboolean               gimp_context_set_sample_threshold_int (gint                      sample_threshold);
+gboolean               gimp_context_get_sample_transparent   (void);
+gboolean               gimp_context_set_sample_transparent   (gboolean                  sample_transparent);
 GimpInterpolationType  gimp_context_get_interpolation        (void);
 gboolean               gimp_context_set_interpolation        (GimpInterpolationType     interpolation);
 GimpTransformDirection gimp_context_get_transform_direction  (void);
