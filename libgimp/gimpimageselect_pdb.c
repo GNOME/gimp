@@ -214,7 +214,8 @@ gimp_image_select_polygon (gint32          image_ID,
  * setters: gimp_context_set_antialias(), gimp_context_set_feather(),
  * gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
  * gimp_context_set_sample_criterion(),
- * gimp_context_set_sample_threshold(). In the case of a merged
+ * gimp_context_set_sample_threshold(),
+ * gimp_context_set_sample_transparent(). In the case of a merged
  * sampling, the supplied drawable is ignored. If the sample is merged,
  * the specified coordinates are relative to the image origin;
  * otherwise, they are relative to the drawable's origin.
