@@ -40,7 +40,6 @@
  * @operation: The selection operation.
  * @drawable_ID: The affected drawable.
  * @color: The color to select.
- * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  *
  * Create a selection by selecting all pixels (in the specified
  * drawable) with the same (or similar) color to that specified.
@@ -56,7 +55,8 @@
  * gimp_context_set_feather(), gimp_context_set_feather_radius(),
  * gimp_context_set_sample_merged(),
  * gimp_context_set_sample_criterion(),
- * gimp_context_set_sample_threshold(). In the case of a merged
+ * gimp_context_set_sample_threshold(),
+ * gimp_context_set_sample_transparent(). In the case of a merged
  * sampling, the supplied drawable is ignored.
  *
  * Returns: TRUE on success.
@@ -67,8 +67,7 @@ gboolean
 gimp_image_select_color (gint32          image_ID,
                          GimpChannelOps  operation,
                          gint32          drawable_ID,
-                         const GimpRGB  *color,
-                         gboolean        select_transparent)
+                         const GimpRGB  *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -80,7 +79,6 @@ gimp_image_select_color (gint32          image_ID,
                                     GIMP_PDB_INT32, operation,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_COLOR, color,
-                                    GIMP_PDB_INT32, select_transparent,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -198,7 +196,6 @@ gimp_image_select_polygon (gint32          image_ID,
  * @drawable_ID: The affected drawable.
  * @x: x coordinate of initial seed fill point: (image coordinates).
  * @y: y coordinate of initial seed fill point: (image coordinates).
- * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  *
  * Create a fuzzy selection starting at the specified coordinates on
  * the specified drawable.
@@ -231,8 +228,7 @@ gimp_image_select_fuzzy (gint32         image_ID,
                          GimpChannelOps operation,
                          gint32         drawable_ID,
                          gdouble        x,
-                         gdouble        y,
-                         gboolean       select_transparent)
+                         gdouble        y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -245,7 +241,6 @@ gimp_image_select_fuzzy (gint32         image_ID,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_FLOAT, x,
                                     GIMP_PDB_FLOAT, y,
-                                    GIMP_PDB_INT32, select_transparent,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

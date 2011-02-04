@@ -54,13 +54,11 @@ image_select_color_invoker (GimpProcedure      *procedure,
   gint32 operation;
   GimpDrawable *drawable;
   GimpRGB color;
-  gboolean select_transparent;
 
   image = gimp_value_get_image (&args->values[0], gimp);
   operation = g_value_get_enum (&args->values[1]);
   drawable = gimp_value_get_drawable (&args->values[2], gimp);
   gimp_value_get_rgb (&args->values[3], &color);
-  select_transparent = g_value_get_boolean (&args->values[4]);
 
   if (success)
     {
@@ -73,7 +71,7 @@ image_select_color_invoker (GimpProcedure      *procedure,
                                         pdb_context->sample_merged,
                                         &color,
                                         (gint) (pdb_context->sample_threshold * 255.99),
-                                        select_transparent,
+                                        pdb_context->sample_transparent,
                                         pdb_context->sample_criterion,
                                         operation,
                                         pdb_context->antialias,
@@ -184,14 +182,12 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
-  gboolean select_transparent;
 
   image = gimp_value_get_image (&args->values[0], gimp);
   operation = g_value_get_enum (&args->values[1]);
   drawable = gimp_value_get_drawable (&args->values[2], gimp);
   x = g_value_get_double (&args->values[3]);
   y = g_value_get_double (&args->values[4]);
-  select_transparent = g_value_get_boolean (&args->values[5]);
 
   if (success)
     {
@@ -206,7 +202,7 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
                                      pdb_context->sample_merged,
                                      x, y,
                                      (gint) (pdb_context->sample_threshold * 255.99),
-                                     select_transparent,
+                                     pdb_context->sample_transparent,
                                      pdb_context->sample_criterion,
                                      operation,
                                      pdb_context->antialias,
@@ -362,7 +358,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-color",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold'. In the case of a merged sampling, the supplied drawable is ignored.",
+                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'. In the case of a merged sampling, the supplied drawable is ignored.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -393,12 +389,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("select-transparent",
-                                                     "select transparent",
-                                                     "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -543,12 +533,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "y coordinate of initial seed fill point: (image coordinates)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("select-transparent",
-                                                     "select transparent",
-                                                     "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

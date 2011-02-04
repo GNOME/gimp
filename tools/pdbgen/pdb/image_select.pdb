@@ -34,7 +34,8 @@ must also have minimum alpha.
 This prodecure is affected by the following context setters:
 gimp_context_set_antialias(), gimp_context_set_feather(),
 gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
-gimp_context_set_sample_criterion(), gimp_context_set_sample_threshold().
+gimp_context_set_sample_criterion(), gimp_context_set_sample_threshold(),
+gimp_context_set_sample_transparent().
 
 In the case of a merged sampling, the supplied drawable is ignored.
 HELP
@@ -49,11 +50,7 @@ HELP
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The affected drawable' },
 	{ name => 'color', type => 'color',
-	  desc => 'The color to select' },
-        { name => 'select_transparent', type => 'boolean',
-          desc => "Whether to consider transparent pixels for selection.
-                   If TRUE, transparency is considered as a unique selectable
-                   color." }
+	  desc => 'The color to select' }
     );
 
     %invoke = (
@@ -68,7 +65,7 @@ HELP
                                     pdb_context->sample_merged,
                                     &color,
                                     (gint) (pdb_context->sample_threshold * 255.99),
-                                    select_transparent,
+                                    pdb_context->sample_transparent,
                                     pdb_context->sample_criterion,
                                     operation,
                                     pdb_context->antialias,
@@ -209,7 +206,8 @@ at pixels along the seed fill boundary.
 This prodecure is affected by the following context setters:
 gimp_context_set_antialias(), gimp_context_set_feather(),
 gimp_context_set_feather_radius(), gimp_context_set_sample_merged(),
-gimp_context_set_sample_criterion(), gimp_context_set_sample_threshold().
+gimp_context_set_sample_criterion(), gimp_context_set_sample_threshold(),
+gimp_context_set_sample_transparent().
 
 In the case of a merged sampling, the supplied drawable is ignored.
 If the sample is merged, the specified coordinates are relative to the
@@ -230,11 +228,7 @@ HELP
 	  	   coordinates)' },
 	{ name => 'y', type => 'float',
 	  desc => 'y coordinate of initial seed fill point: (image
-	  	   coordinates)' },
-	{ name => 'select_transparent', type => 'boolean',
-          desc => "Whether to consider transparent pixels for selection.
-                   If TRUE, transparency is considered as a unique selectable
-                   color." }
+	  	   coordinates)' }
     );
 
     %invoke = (
@@ -251,7 +245,7 @@ HELP
                                  pdb_context->sample_merged,
                                  x, y,
                                  (gint) (pdb_context->sample_threshold * 255.99),
-                                 select_transparent,
+                                 pdb_context->sample_transparent,
                                  pdb_context->sample_criterion,
                                  operation,
                                  pdb_context->antialias,

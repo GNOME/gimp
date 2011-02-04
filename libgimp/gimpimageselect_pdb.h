@@ -31,8 +31,7 @@ G_BEGIN_DECLS
 gboolean gimp_image_select_color           (gint32          image_ID,
                                             GimpChannelOps  operation,
                                             gint32          drawable_ID,
-                                            const GimpRGB  *color,
-                                            gboolean        select_transparent);
+                                            const GimpRGB  *color);
 gboolean gimp_image_select_ellipse         (gint32          image_ID,
                                             GimpChannelOps  operation,
                                             gdouble         x,
@@ -47,8 +46,7 @@ gboolean gimp_image_select_fuzzy           (gint32          image_ID,
                                             GimpChannelOps  operation,
                                             gint32          drawable_ID,
                                             gdouble         x,
-                                            gdouble         y,
-                                            gboolean        select_transparent);
+                                            gdouble         y);
 gboolean gimp_image_select_rectangle       (gint32          image_ID,
                                             GimpChannelOps  operation,
                                             gdouble         x,
