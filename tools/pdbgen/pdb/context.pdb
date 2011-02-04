@@ -955,7 +955,7 @@ CODE
 }
 
 sub context_set_sample_criterion {
-    $blurb = 'Set the sample merged setting.';
+    $blurb = 'Set the sample criterion setting.';
 
     $help = <<'HELP';
 This procedure modifies the sample criterion setting. If an operation
@@ -978,6 +978,120 @@ HELP
 {
   g_object_set (context,
                 "sample-criterion", sample_criterion,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_threshold {
+    $blurb = 'Get the sample threshold setting.';
+
+    $help = <<'HELP';
+This procedure returns the sample threshold setting.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_threshold', type => '0.0 <= float <= 1.0',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "sample-threshold", &sample_threshold,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_sample_threshold {
+    $blurb = 'Set the sample threshold setting.';
+
+    $help = <<'HELP';
+
+This procedure modifies the sample threshold setting. If an operation
+depends on the colors of the pixels present in a drawable, like when
+doing a seed fill, this setting controls what is "sufficiently close"
+to be considered a similar color. If the sample threshold has not been
+set explicitly, the default threshold set in gimprc will be used.
+This setting affects the following procedures: gimp_image_select_color(),
+gimp_image_select_fuzzy().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_threshold', type => '0.0 <= float <= 1.0',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-threshold", sample_threshold,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_threshold_int {
+    $blurb = 'Get the sample threshold setting as an integer value.';
+
+    $help = <<'HELP';
+This procedure returns the sample threshold setting as an integer value.
+See gimp_context_get_sample_threshold().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_threshold', type => '0 <= int32 <= 255',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gdouble threshold;
+
+  g_object_get (context,
+                "sample-threshold", &threshold,
+                NULL);
+
+  sample_threshold = (gint) (threshold * 255.99);
+}
+CODE
+    );
+}
+
+sub context_set_sample_threshold_int {
+    $blurb = 'Set the sample threshold setting as an integer value.';
+
+    $help = <<'HELP';
+
+This procedure modifies the sample threshold setting as an integer value.
+See gimp_context_set_sample_threshold().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_threshold', type => '0 <= int32 <= 255',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-threshold", (gdouble) sample_threshold / 255.0,
                 NULL);
 }
 CODE
@@ -1228,6 +1342,8 @@ CODE
             context_get_feather_radius context_set_feather_radius
             context_get_sample_merged context_set_sample_merged
             context_get_sample_criterion context_set_sample_criterion
+            context_get_sample_threshold context_set_sample_threshold
+            context_get_sample_threshold_int context_set_sample_threshold_int
             context_get_interpolation context_set_interpolation
             context_get_transform_direction context_set_transform_direction
             context_get_transform_resize context_set_transform_resize
