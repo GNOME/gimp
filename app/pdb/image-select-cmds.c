@@ -54,15 +54,13 @@ image_select_color_invoker (GimpProcedure      *procedure,
   gint32 operation;
   GimpDrawable *drawable;
   GimpRGB color;
-  gint32 threshold;
   gboolean select_transparent;
 
   image = gimp_value_get_image (&args->values[0], gimp);
   operation = g_value_get_enum (&args->values[1]);
   drawable = gimp_value_get_drawable (&args->values[2], gimp);
   gimp_value_get_rgb (&args->values[3], &color);
-  threshold = g_value_get_int (&args->values[4]);
-  select_transparent = g_value_get_boolean (&args->values[5]);
+  select_transparent = g_value_get_boolean (&args->values[4]);
 
   if (success)
     {
@@ -74,7 +72,7 @@ image_select_color_invoker (GimpProcedure      *procedure,
           gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
                                         pdb_context->sample_merged,
                                         &color,
-                                        threshold,
+                                        (gint) (pdb_context->sample_threshold * 255.99),
                                         select_transparent,
                                         pdb_context->sample_criterion,
                                         operation,
@@ -186,7 +184,6 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
   GimpDrawable *drawable;
   gdouble x;
   gdouble y;
-  gint32 threshold;
   gboolean select_transparent;
 
   image = gimp_value_get_image (&args->values[0], gimp);
@@ -194,8 +191,7 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
   drawable = gimp_value_get_drawable (&args->values[2], gimp);
   x = g_value_get_double (&args->values[3]);
   y = g_value_get_double (&args->values[4]);
-  threshold = g_value_get_int (&args->values[5]);
-  select_transparent = g_value_get_boolean (&args->values[6]);
+  select_transparent = g_value_get_boolean (&args->values[5]);
 
   if (success)
     {
@@ -209,7 +205,7 @@ image_select_fuzzy_invoker (GimpProcedure      *procedure,
                                      drawable,
                                      pdb_context->sample_merged,
                                      x, y,
-                                     threshold,
+                                     (gint) (pdb_context->sample_threshold * 255.99),
                                      select_transparent,
                                      pdb_context->sample_criterion,
                                      operation,
@@ -366,7 +362,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-color",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion'. In the case of a merged sampling, the supplied drawable is ignored.",
+                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold'. In the case of a merged sampling, the supplied drawable is ignored.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -397,12 +393,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Threshold in intensity levels",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("select-transparent",
                                                      "select transparent",
@@ -516,8 +506,8 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-fuzzy",
                                      "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
-                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion'. In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image"
-  "origin; otherwise, they are relative to the drawable's origin.",
+                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the current context settings. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold and criterion context settings). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold'. In the case of a merged sampling, the supplied drawable is ignored. If the"
+  "sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -553,12 +543,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "y coordinate of initial seed fill point: (image coordinates)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Threshold in intensity levels",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("select-transparent",
                                                      "select transparent",
