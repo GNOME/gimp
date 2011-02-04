@@ -43,7 +43,6 @@
 enum
 {
   PROP_0,
-  PROP_DEFAULT_THRESHOLD,
   PROP_MOVE_TOOL_CHANGES_ACTIVE,
   PROP_IMAGE_MAP_TOOL_MAX_RECENT,
   PROP_TRUST_DIRTY_FLAG,
@@ -112,10 +111,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   object_class->set_property = gimp_gui_config_set_property;
   object_class->get_property = gimp_gui_config_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
-                                "default-threshold", DEFAULT_THRESHOLD_BLURB,
-                                0, 255, 15,
-                                GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MOVE_TOOL_CHANGES_ACTIVE,
                                     "move-tool-changes-active",
                                     MOVE_TOOL_CHANGES_ACTIVE_BLURB,
@@ -332,9 +327,6 @@ gimp_gui_config_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_DEFAULT_THRESHOLD:
-      gui_config->default_threshold = g_value_get_int (value);
-      break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       gui_config->move_tool_changes_active = g_value_get_boolean (value);
       break;
@@ -456,9 +448,6 @@ gimp_gui_config_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_DEFAULT_THRESHOLD:
-      g_value_set_int (value, gui_config->default_threshold);
-      break;
     case PROP_MOVE_TOOL_CHANGES_ACTIVE:
       g_value_set_boolean (value, gui_config->move_tool_changes_active);
       break;

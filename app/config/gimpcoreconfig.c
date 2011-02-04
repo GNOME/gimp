@@ -52,6 +52,7 @@ enum
   PROP_0,
   PROP_LANGUAGE,
   PROP_INTERPOLATION_TYPE,
+  PROP_DEFAULT_THRESHOLD,
   PROP_PLUG_IN_PATH,
   PROP_MODULE_PATH,
   PROP_INTERPRETER_PATH,
@@ -151,6 +152,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_CUBIC,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
+                                "default-threshold", DEFAULT_THRESHOLD_BLURB,
+                                0, 255, 15,
+                                GIMP_PARAM_STATIC_STRINGS);
 
   path = gimp_config_build_plug_in_path ("plug-ins");
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
@@ -533,6 +538,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_INTERPOLATION_TYPE:
       core_config->interpolation_type = g_value_get_enum (value);
       break;
+    case PROP_DEFAULT_THRESHOLD:
+      core_config->default_threshold = g_value_get_int (value);
+      break;
     case PROP_PLUG_IN_PATH:
       g_free (core_config->plug_in_path);
       core_config->plug_in_path = g_value_dup_string (value);
@@ -730,6 +738,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_INTERPOLATION_TYPE:
       g_value_set_enum (value, core_config->interpolation_type);
+      break;
+    case PROP_DEFAULT_THRESHOLD:
+      g_value_set_int (value, core_config->default_threshold);
       break;
     case PROP_PLUG_IN_PATH:
       g_value_set_string (value, core_config->plug_in_path);

@@ -37,7 +37,6 @@ struct _GimpGuiConfig
 {
   GimpDisplayConfig    parent_instance;
 
-  gint                 default_threshold;
   gboolean             move_tool_changes_active;
   gint                 image_map_tool_max_recent;
   gboolean             trust_dirty_flag;
