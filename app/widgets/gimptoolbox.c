@@ -191,13 +191,9 @@ gimp_toolbox_init (GimpToolbox *toolbox)
 static void
 gimp_toolbox_constructed (GObject *object)
 {
-  GimpToolbox      *toolbox = GIMP_TOOLBOX (object);
-  GimpGuiConfig    *config;
-  GtkWidget        *main_vbox;
-  GdkDisplay       *display;
-  GdkDeviceManager *manager;
-  GList            *devices;
-  GList            *list;
+  GimpToolbox   *toolbox = GIMP_TOOLBOX (object);
+  GimpGuiConfig *config;
+  GtkWidget     *main_vbox;
 
   g_assert (GIMP_IS_CONTEXT (toolbox->p->context));
 
@@ -263,29 +259,8 @@ gimp_toolbox_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (toolbox->p->area_box);
 
-  /* We need to know when the current device changes, so we can update
-   * the correct tool - to do this we connect to motion events.
-   * We can't just use EXTENSION_EVENTS_CURSOR though, since that
-   * would get us extension events for the mouse pointer, and our
-   * device would change to that and not change back. So we check
-   * manually that all devices have a cursor, before establishing the check.
-   */
-  display = gtk_widget_get_display (GTK_WIDGET (toolbox));
-  manager = gdk_display_get_device_manager (display);
-
-  devices = gdk_device_manager_list_devices (manager, GDK_DEVICE_TYPE_MASTER);
-
-  for (list = devices; list; list = g_list_next (list))
-    if (! gdk_device_get_has_cursor (list->data))
-      break;
-
-  g_list_free (devices);
-
-  if (! list)  /* all devices have cursor */
-    {
-      gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
-      gimp_devices_add_widget (toolbox->p->context->gimp, GTK_WIDGET (toolbox));
-    }
+  gtk_widget_add_events (GTK_WIDGET (toolbox), GDK_POINTER_MOTION_MASK);
+  gimp_devices_add_widget (toolbox->p->context->gimp, GTK_WIDGET (toolbox));
 
   toolbox->p->color_area = toolbox_create_color_area (toolbox,
                                                       toolbox->p->context);
