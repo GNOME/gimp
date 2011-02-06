@@ -202,29 +202,7 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
 
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
-  if (! gtk_cell_renderer_get_sensitive (cell))
-    {
-      state = GTK_STATE_INSENSITIVE;
-    }
-  else if ((flags & GTK_CELL_RENDERER_SELECTED) == GTK_CELL_RENDERER_SELECTED)
-    {
-      if (gtk_widget_has_focus (widget))
-        state = GTK_STATE_SELECTED;
-      else
-        state = GTK_STATE_ACTIVE;
-    }
-  else if ((flags & GTK_CELL_RENDERER_PRELIT) == GTK_CELL_RENDERER_PRELIT &&
-           gtk_widget_get_state (widget) == GTK_STATE_PRELIGHT)
-    {
-      state = GTK_STATE_PRELIGHT;
-    }
-  else
-    {
-      if (gtk_widget_is_sensitive (widget))
-        state = GTK_STATE_NORMAL;
-      else
-        state = GTK_STATE_INSENSITIVE;
-    }
+  state = gtk_cell_renderer_get_state (cell, widget, flags);
 
   y = cell_area->y + (cell_area->height - DASHES_HEIGHT) / 2;
   width = cell_area->width - 2 * xpad;

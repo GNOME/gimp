@@ -368,7 +368,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   GimpCellRendererTogglePrivate *priv    = GET_PRIVATE (cell);
   GtkStyleContext               *context = gtk_widget_get_style_context (widget);
   GdkRectangle                   toggle_rect;
-  GtkStateType                   state   = 0;
+  GtkStateFlags                  state;
   gboolean                       active;
   gint                           xpad;
   gint                           ypad;
@@ -429,28 +429,20 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   if (toggle_rect.width <= 0 || toggle_rect.height <= 0)
     return;
 
+  state = gtk_cell_renderer_get_state (cell, widget, flags);
+
   active =
     gtk_cell_renderer_toggle_get_active (GTK_CELL_RENDERER_TOGGLE (cell));
 
   if (active)
     state |= GTK_STATE_FLAG_ACTIVE;
 
-  if ((flags & GTK_CELL_RENDERER_SELECTED) == GTK_CELL_RENDERER_SELECTED)
-    {
-      state |= GTK_STATE_FLAG_SELECTED;
-
-      if (gtk_widget_has_focus (widget))
-        state |= GTK_STATE_FLAG_FOCUSED;
-    }
-  else
-    {
-      if (! gtk_cell_renderer_toggle_get_activatable (GTK_CELL_RENDERER_TOGGLE (cell)))
-        state |= GTK_STATE_FLAG_INSENSITIVE;
-    }
+  if (! gtk_cell_renderer_toggle_get_activatable (GTK_CELL_RENDERER_TOGGLE (cell)))
+    state |= GTK_STATE_FLAG_INSENSITIVE;
 
   gtk_style_context_set_state (context, state);
 
-  if (flags & GTK_CELL_RENDERER_PRELIT)
+  if (state & GTK_STATE_FLAG_PRELIGHT)
     gtk_render_frame (context, cr,
                       toggle_rect.x,     toggle_rect.y,
                       toggle_rect.width, toggle_rect.height);

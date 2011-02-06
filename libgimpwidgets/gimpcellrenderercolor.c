@@ -273,7 +273,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
   if (rect.width > 2 && rect.height > 2)
     {
       GtkStyleContext *context = gtk_widget_get_style_context (widget);
-      GtkStateFlags    state   = 0;
+      GtkStateFlags    state;
       GdkRGBA          color;
 
       cairo_rectangle (cr,
@@ -309,16 +309,7 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
                        rect.x + 0.5, rect.y + 0.5,
                        rect.width - 1, rect.height - 1);
 
-      if (! gtk_cell_renderer_get_sensitive (cell) ||
-          ! gtk_widget_is_sensitive (widget))
-        {
-          state |= GTK_STATE_FLAG_INSENSITIVE;
-        }
-
-      if (flags & GTK_CELL_RENDERER_SELECTED)
-        {
-          state |= GTK_STATE_FLAG_SELECTED;
-        }
+      state = gtk_cell_renderer_get_state (cell, widget, flags);
 
       cairo_set_line_width (cr, 1);
       gtk_style_context_get_color (context, state, &color);
