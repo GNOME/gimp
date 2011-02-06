@@ -126,16 +126,20 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                     GdkWindow      *window,
                                     GimpCoords     *coords)
 {
-  gdouble axes[GDK_AXIS_LAST] = { 0, };
+  GdkDevice *device = info->device;
+  gdouble    axes[GDK_AXIS_LAST] = { 0, };
+
+  if (gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_SLAVE)
+    device = gdk_device_get_associated_device (device);
 
   *coords = default_coords;
 
-  gdk_device_get_state (info->device, window, axes, NULL);
+  gdk_device_get_state (device, window, axes, NULL);
 
-  gdk_device_get_axis (info->device, axes, GDK_AXIS_X, &coords->x);
-  gdk_device_get_axis (info->device, axes, GDK_AXIS_Y, &coords->y);
+  gdk_device_get_axis (device, axes, GDK_AXIS_X, &coords->x);
+  gdk_device_get_axis (device, axes, GDK_AXIS_Y, &coords->y);
 
-  if (gdk_device_get_axis (info->device,
+  if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_PRESSURE, &coords->pressure))
     {
       coords->pressure = gimp_device_info_map_axis (info,
@@ -143,7 +147,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                                     coords->pressure);
     }
 
-  if (gdk_device_get_axis (info->device,
+  if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_XTILT, &coords->xtilt))
     {
       coords->xtilt = gimp_device_info_map_axis (info,
@@ -151,7 +155,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                                  coords->xtilt);
     }
 
-  if (gdk_device_get_axis (info->device,
+  if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_YTILT, &coords->ytilt))
     {
       coords->ytilt = gimp_device_info_map_axis (info,
@@ -159,7 +163,7 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
                                                  coords->ytilt);
     }
 
-  if (gdk_device_get_axis (info->device,
+  if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_WHEEL, &coords->wheel))
     {
       coords->wheel = gimp_device_info_map_axis (info,
@@ -258,5 +262,29 @@ gimp_device_info_get_device_state (GimpDeviceInfo  *info,
                                    GdkWindow       *window,
                                    GdkModifierType *state)
 {
-  gdk_device_get_state (info->device, window, NULL, state);
+  GdkDevice *device = info->device;
+
+  switch (gdk_device_get_device_type (device))
+    {
+    case GDK_DEVICE_TYPE_SLAVE:
+      device = gdk_device_get_associated_device (device);
+      break;
+
+    case GDK_DEVICE_TYPE_FLOATING:
+      {
+        GdkDisplay       *display = gdk_device_get_display (device);
+        GdkDeviceManager *manager = gdk_display_get_device_manager (display);
+
+        device = gdk_device_manager_get_client_pointer (manager);
+      }
+      break;
+
+    default:
+      break;
+    }
+
+  if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
+    device = gdk_device_get_associated_device (device);
+
+  gdk_device_get_state (device, window, NULL, state);
 }
