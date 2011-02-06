@@ -472,11 +472,12 @@ gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
                                      mevent->x, mevent->y,
                                      &widget_x, &widget_y);
 
-  gtk_widget_translate_coordinates (widget, GTK_WIDGET (ruler),
-                                    widget_x, widget_y,
-                                    &ruler_x, &ruler_y);
-
-  gimp_ruler_update_position (ruler, ruler_x, ruler_y);
+  if (gtk_widget_translate_coordinates (widget, GTK_WIDGET (ruler),
+                                        widget_x, widget_y,
+                                        &ruler_x, &ruler_y))
+    {
+      gimp_ruler_update_position (ruler, ruler_x, ruler_y);
+    }
 
   return FALSE;
 }
