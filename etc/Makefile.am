@@ -5,7 +5,6 @@ gimpsysconf_DATA = \
 	gimprc		\
 	gtkrc		\
 	menurc		\
-	ps-menurc	\
 	sessionrc	\
 	templaterc	\
 	unitrc
