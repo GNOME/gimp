@@ -194,8 +194,8 @@ gimp_overlay_child_realize (GimpOverlayBox   *box,
                     G_CALLBACK (gimp_overlay_child_to_embedder),
                     child);
 
-  gtk_style_set_background (gtk_widget_get_style (widget),
-                            child->window, GTK_STATE_NORMAL);
+  gtk_style_context_set_background (gtk_widget_get_style_context (widget),
+                                    child->window);
   gdk_window_show (child->window);
 }
 
@@ -401,11 +401,14 @@ gimp_overlay_child_draw (GimpOverlayBox   *box,
   if (gtk_cairo_should_draw_window (cr, child->window))
     {
       if (! gtk_widget_get_app_paintable (child->widget))
-        gtk_paint_flat_box (gtk_widget_get_style (child->widget),
-                            cr,
-                            GTK_STATE_NORMAL, GTK_SHADOW_NONE,
-                            widget, NULL,
-                            0, 0, -1, -1);
+        {
+          GtkStyleContext *style = gtk_widget_get_style_context (child->widget);
+
+          gtk_render_background (style, cr,
+                                 0, 0,
+                                 gtk_widget_get_allocated_width (child->widget),
+                                 gtk_widget_get_allocated_height (child->widget));
+        }
 
       gtk_container_propagate_draw (GTK_CONTAINER (widget),
                                     child->widget,
