@@ -419,6 +419,8 @@ file_open_with_proc_and_display (Gimp                *gimp,
           gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
           gimp_image_undo_free (image);
           gimp_image_clean_all (image);
+
+          g_free (basename);
         }
 
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
