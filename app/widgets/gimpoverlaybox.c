@@ -169,7 +169,6 @@ gimp_overlay_box_realize (GtkWidget *widget)
                     G_CALLBACK (gimp_overlay_box_pick_embedded_child),
                     widget);
 
-  gtk_widget_style_attach (widget);
   gtk_style_context_set_background (gtk_widget_get_style_context (widget),
                                     gtk_widget_get_window (widget));
 
