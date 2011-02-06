@@ -271,22 +271,28 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
                                       gint               index)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GtkTreeIter  *iter;
 
-  iter = gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (model),
-                                                viewable,
-                                                parent_insert_data,
-                                                index);
-
-  if (gtk_tree_model_iter_n_children (model, NULL) == 1)
+  if (model)
     {
-      /*  GimpContainerViews don't select items by default  */
-      gtk_combo_box_set_active (GTK_COMBO_BOX (view), -1);
+      GtkTreeIter *iter;
 
-      gtk_widget_set_sensitive (GTK_WIDGET (view), TRUE);
+      iter = gimp_container_tree_store_insert_item (GIMP_CONTAINER_TREE_STORE (model),
+                                                    viewable,
+                                                    parent_insert_data,
+                                                    index);
+
+      if (gtk_tree_model_iter_n_children (model, NULL) == 1)
+        {
+          /*  GimpContainerViews don't select items by default  */
+          gtk_combo_box_set_active (GTK_COMBO_BOX (view), -1);
+
+          gtk_widget_set_sensitive (GTK_WIDGET (view), TRUE);
+        }
+
+      return iter;
     }
 
-  return iter;
+  return NULL;
 }
 
 static void
@@ -295,15 +301,19 @@ gimp_container_combo_box_remove_item (GimpContainerView *view,
                                       gpointer           insert_data)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GtkTreeIter  *iter  = insert_data;
 
-  gimp_container_tree_store_remove_item (GIMP_CONTAINER_TREE_STORE (model),
-                                         viewable,
-                                         iter);
-
-  if (iter && gtk_tree_model_iter_n_children (model, NULL) == 0)
+  if (model)
     {
-      gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
+      GtkTreeIter *iter = insert_data;
+
+      gimp_container_tree_store_remove_item (GIMP_CONTAINER_TREE_STORE (model),
+                                             viewable,
+                                             iter);
+
+      if (iter && gtk_tree_model_iter_n_children (model, NULL) == 0)
+        {
+          gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
+        }
     }
 }
 
@@ -315,10 +325,11 @@ gimp_container_combo_box_reorder_item (GimpContainerView *view,
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
-  gimp_container_tree_store_reorder_item (GIMP_CONTAINER_TREE_STORE (model),
-                                          viewable,
-                                          new_index,
-                                          insert_data);
+  if (model)
+    gimp_container_tree_store_reorder_item (GIMP_CONTAINER_TREE_STORE (model),
+                                            viewable,
+                                            new_index,
+                                            insert_data);
 }
 
 static void
@@ -328,9 +339,10 @@ gimp_container_combo_box_rename_item (GimpContainerView *view,
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
-  gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
-                                         viewable,
-                                         insert_data);
+  if (model)
+    gimp_container_tree_store_rename_item (GIMP_CONTAINER_TREE_STORE (model),
+                                           viewable,
+                                           insert_data);
 }
 
 static gboolean
@@ -339,24 +351,28 @@ gimp_container_combo_box_select_item (GimpContainerView *view,
                                       gpointer           insert_data)
 {
   GtkComboBox *combo_box = GTK_COMBO_BOX (view);
-  GtkTreeIter *iter      = insert_data;
 
-  g_signal_handlers_block_by_func (combo_box,
-                                   gimp_container_combo_box_changed,
-                                   view);
-
-  if (iter)
+  if (gtk_combo_box_get_model (GTK_COMBO_BOX (view)))
     {
-      gtk_combo_box_set_active_iter (combo_box, iter);
-    }
-  else
-    {
-      gtk_combo_box_set_active (combo_box, -1);
-    }
+      GtkTreeIter *iter = insert_data;
 
-  g_signal_handlers_unblock_by_func (combo_box,
-                                     gimp_container_combo_box_changed,
-                                     view);
+     g_signal_handlers_block_by_func (combo_box,
+                                       gimp_container_combo_box_changed,
+                                       view);
+
+      if (iter)
+        {
+          gtk_combo_box_set_active_iter (combo_box, iter);
+        }
+      else
+        {
+          gtk_combo_box_set_active (combo_box, -1);
+        }
+
+      g_signal_handlers_unblock_by_func (combo_box,
+                                         gimp_container_combo_box_changed,
+                                         view);
+    }
 
   return TRUE;
 }
@@ -366,7 +382,8 @@ gimp_container_combo_box_clear_items (GimpContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
-  gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
+  if (model)
+    gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
 
   gtk_widget_set_sensitive (GTK_WIDGET (view), FALSE);
 
@@ -378,7 +395,8 @@ gimp_container_combo_box_set_view_size (GimpContainerView *view)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
 
-  gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
+  if (model)
+    gimp_container_tree_store_set_view_size (GIMP_CONTAINER_TREE_STORE (model));
 }
 
 static void
