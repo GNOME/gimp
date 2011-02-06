@@ -141,7 +141,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  window = (gint32) gimp_get_display_window (gimp, display);
+  window = (gint32) gimp_get_display_window_id (gimp, display);
 }
 CODE
     );

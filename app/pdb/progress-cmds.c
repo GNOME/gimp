@@ -190,7 +190,7 @@ progress_get_window_handle_invoker (GimpProcedure      *procedure,
   if (plug_in && plug_in->open)
     {
       if (! gimp->no_interface)
-        window = gimp_plug_in_progress_get_window (plug_in);
+        window = gimp_plug_in_progress_get_window_id (plug_in);
     }
   else
     success = FALSE;

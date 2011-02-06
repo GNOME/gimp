@@ -160,10 +160,10 @@ progress_error_dialog (GimpProgress *progress)
         }
       else
         {
-          guint32 window = gimp_progress_get_window (progress);
+          guint32 window_id = gimp_progress_get_window_id (progress);
 
-          if (window)
-            gimp_window_set_transient_for (GTK_WINDOW (dialog), window);
+          if (window_id)
+            gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
         }
     }
 

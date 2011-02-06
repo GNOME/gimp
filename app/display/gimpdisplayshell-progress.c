@@ -98,12 +98,12 @@ gimp_display_shell_progress_pulse (GimpProgress *progress)
 }
 
 static guint32
-gimp_display_shell_progress_get_window (GimpProgress *progress)
+gimp_display_shell_progress_get_window_id (GimpProgress *progress)
 {
   GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
   if (GTK_IS_WINDOW (toplevel))
-    return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
+    return gimp_window_get_native_id (GTK_WINDOW (toplevel));
 
   return 0;
 }
@@ -147,13 +147,13 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 void
 gimp_display_shell_progress_iface_init (GimpProgressInterface *iface)
 {
-  iface->start      = gimp_display_shell_progress_start;
-  iface->end        = gimp_display_shell_progress_end;
-  iface->is_active  = gimp_display_shell_progress_is_active;
-  iface->set_text   = gimp_display_shell_progress_set_text;
-  iface->set_value  = gimp_display_shell_progress_set_value;
-  iface->get_value  = gimp_display_shell_progress_get_value;
-  iface->pulse      = gimp_display_shell_progress_pulse;
-  iface->get_window = gimp_display_shell_progress_get_window;
-  iface->message    = gimp_display_shell_progress_message;
+  iface->start         = gimp_display_shell_progress_start;
+  iface->end           = gimp_display_shell_progress_end;
+  iface->is_active     = gimp_display_shell_progress_is_active;
+  iface->set_text      = gimp_display_shell_progress_set_text;
+  iface->set_value     = gimp_display_shell_progress_set_value;
+  iface->get_value     = gimp_display_shell_progress_get_value;
+  iface->pulse         = gimp_display_shell_progress_pulse;
+  iface->get_window_id = gimp_display_shell_progress_get_window_id;
+  iface->message       = gimp_display_shell_progress_message;
 }

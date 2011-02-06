@@ -822,17 +822,17 @@ gimp_window_set_hint (GtkWindow      *window,
 }
 
 /**
- * gimp_window_get_native:
+ * gimp_window_get_native_id:
  * @window: a #GtkWindow
  *
  * This function is used to pass a window handle to plug-ins so that
  * they can set their dialog windows transient to the parent window.
  *
- * Return value: a native window handle of the window's #GdkWindow or 0
+ * Return value: a native window ID of the window's #GdkWindow or 0
  *               if the window isn't realized yet
  */
-GdkNativeWindow
-gimp_window_get_native (GtkWindow *window)
+guint32
+gimp_window_get_native_id (GtkWindow *window)
 {
   g_return_val_if_fail (GTK_IS_WINDOW (window), 0);
 
@@ -840,12 +840,12 @@ gimp_window_get_native (GtkWindow *window)
 #ifdef __GNUC__
 #warning gimp_window_get_native() unimplementable for the target windowing system
 #endif
-  return (GdkNativeWindow)0;
+  return 0;
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
   if (window && gtk_widget_get_realized (GTK_WIDGET (window)))
-    return (GdkNativeWindow) GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
+    return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
@@ -853,7 +853,7 @@ gimp_window_get_native (GtkWindow *window)
     return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
-  return (GdkNativeWindow) 0;
+  return 0;
 }
 
 static void

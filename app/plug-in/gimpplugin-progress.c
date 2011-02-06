@@ -224,7 +224,7 @@ gimp_plug_in_progress_pulse (GimpPlugIn *plug_in)
 }
 
 guint32
-gimp_plug_in_progress_get_window (GimpPlugIn *plug_in)
+gimp_plug_in_progress_get_window_id (GimpPlugIn *plug_in)
 {
   GimpPlugInProcFrame *proc_frame;
 
@@ -233,7 +233,7 @@ gimp_plug_in_progress_get_window (GimpPlugIn *plug_in)
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
   if (proc_frame->progress)
-    return gimp_progress_get_window (proc_frame->progress);
+    return gimp_progress_get_window_id (proc_frame->progress);
 
   return 0;
 }
