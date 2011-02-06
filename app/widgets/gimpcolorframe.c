@@ -121,6 +121,12 @@ gimp_color_frame_class_init (GimpColorFrameClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READWRITE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("number-color",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -317,21 +323,31 @@ gimp_color_frame_draw (GtkWidget *widget,
 
   if (frame->has_number)
     {
-      GtkStyle      *style = gtk_widget_get_style (widget);
       GtkAllocation  allocation;
       GtkAllocation  menu_allocation;
       GtkAllocation  color_area_allocation;
       GtkAllocation  coords_box_allocation;
+      GdkRGBA       *color;
       gchar          buf[8];
       gint           w, h;
       gdouble        scale;
+
+      cairo_save (cr);
 
       gtk_widget_get_allocation (widget, &allocation);
       gtk_widget_get_allocation (frame->menu, &menu_allocation);
       gtk_widget_get_allocation (frame->color_area, &color_area_allocation);
       gtk_widget_get_allocation (frame->coords_box, &coords_box_allocation);
 
-      gdk_cairo_set_source_color (cr, &style->light[GTK_STATE_NORMAL]);
+      gtk_widget_style_get (widget,
+                            "number-color", &color,
+                            NULL);
+
+      if (color)
+        {
+          gdk_cairo_set_source_rgba (cr, color);
+          gdk_rgba_free (color);
+        }
 
       g_snprintf (buf, sizeof (buf), "%d", frame->number);
 
@@ -356,6 +372,8 @@ gimp_color_frame_draw (GtkWidget *widget,
                       color_area_allocation.height / 2.0 +
                       coords_box_allocation.height / 2.0) / scale - h / 2.0);
       pango_cairo_show_layout (cr, frame->number_layout);
+
+      cairo_restore (cr);
     }
 
   return GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
