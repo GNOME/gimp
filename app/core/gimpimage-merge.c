@@ -661,6 +661,9 @@ gimp_image_merge_layers (GimpImage     *image,
 
   g_slist_free (reverse_list);
 
+  gimp_object_take_name (GIMP_OBJECT (merge_layer), name);
+  gimp_item_set_visible (GIMP_ITEM (merge_layer), TRUE, FALSE);
+
   /*  if the type is flatten, remove all the remaining layers  */
   if (merge_type == GIMP_FLATTEN_IMAGE)
     {
@@ -685,13 +688,6 @@ gimp_image_merge_layers (GimpImage     *image,
                             position + 1,
                             TRUE);
     }
-
-  /* set the name after the original layers have been removed so we
-   * don't end up with #2 appended to the name
-   */
-  gimp_object_take_name (GIMP_OBJECT (merge_layer), name);
-
-  gimp_item_set_visible (GIMP_ITEM (merge_layer), TRUE, TRUE);
 
   /*  End the merge undo group  */
   gimp_image_undo_group_end (image);
