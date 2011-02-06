@@ -273,36 +273,24 @@ gimp_devices_check_change (Gimp     *gimp,
 
   g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
-  switch (event->type)
-    {
-    case GDK_MOTION_NOTIFY:
-      device = ((GdkEventMotion *) event)->device;
-      break;
+  device = gdk_event_get_source_device (event);
 
-    case GDK_BUTTON_PRESS:
-    case GDK_2BUTTON_PRESS:
-    case GDK_3BUTTON_PRESS:
-    case GDK_BUTTON_RELEASE:
-      device = ((GdkEventButton *) event)->device;
-      break;
-
-    case GDK_PROXIMITY_IN:
-    case GDK_PROXIMITY_OUT:
-      device = ((GdkEventProximity *) event)->device;
-      break;
-
-    case GDK_SCROLL:
-      device = ((GdkEventScroll *) event)->device;
-      break;
-
-    default:
-      device = gimp_device_manager_get_current_device (manager)->device;
-      break;
-    }
+  if (! device)
+    device = gimp_device_manager_get_current_device (manager)->device;
 
   device_info = gimp_device_info_get_by_device (device);
 
-  if (device_info != gimp_device_manager_get_current_device (manager))
+  if (! device_info)
+    {
+      device = gdk_event_get_device (event);
+
+      if (! device)
+        device = gimp_device_manager_get_current_device (manager)->device;
+
+      device_info = gimp_device_info_get_by_device (device);
+    }
+
+  if (device_info && device_info != gimp_device_manager_get_current_device (manager))
     {
       gimp_device_manager_set_current_device (manager, device_info);
       return TRUE;
