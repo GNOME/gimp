@@ -402,6 +402,25 @@ file_open_with_proc_and_display (Gimp                *gimp,
 
   if (image)
     {
+      /* If the file was imported we want to set the layer name to the
+       * file name. For now, assume that multi-layered imported images
+       * have named the layers already, so only rename the layer of
+       * single-layered imported files. Note that this will also
+       * rename already named layers from e.g. single-layered PSD
+       * files. To solve this properly, we would need new file plug-in
+       * API.
+       */
+      if (file_open_file_proc_is_import (file_proc) &&
+          gimp_image_get_n_layers (image) == 1)
+        {
+          GimpObject *layer    = gimp_image_get_layer_iter (image)->data;
+          gchar      *basename = file_utils_uri_display_basename (uri);
+
+          gimp_item_rename (GIMP_ITEM (layer), basename, NULL);
+          gimp_image_undo_free (image);
+          gimp_image_clean_all (image);
+        }
+
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
       if (! as_new)
@@ -422,23 +441,6 @@ file_open_with_proc_and_display (Gimp                *gimp,
                   gimp_imagefile_save_thumbnail (imagefile, mime_type, image);
                 }
             }
-        }
-
-      /* If the file was imported we want to set the layer name to the
-       * file name. For now, assume that multi-layered imported images
-       * have named the layers already, so only rename the layer of
-       * single-layered imported files. Note that this will also
-       * rename already named layers from e.g. single-layered PSD
-       * files. To solve this properly, we would need new file plug-in
-       * API.
-       */
-      if (file_open_file_proc_is_import (file_proc) &&
-          gimp_image_get_n_layers (image) == 1)
-        {
-          GimpObject *layer    = gimp_image_get_layer_iter (image)->data;
-          gchar      *basename = file_utils_uri_display_basename (uri);
-
-          gimp_object_take_name (layer, basename);
         }
 
       /*  the display owns the image now  */
