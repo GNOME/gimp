@@ -467,13 +467,13 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.26.0 or newer])
-if $PKG_CONFIG --atleast-version=2.26.0 glib-2.0; then
-  have_glib_2_26=yes
+AC_MSG_CHECKING([if GLib is version 2.28.0 or newer])
+if $PKG_CONFIG --atleast-version=2.28.0 glib-2.0; then
+  have_glib_2_28=yes
 else
-  have_glib_2_26=no
+  have_glib_2_28=no
 fi
-AC_MSG_RESULT($have_glib_2_26)
+AC_MSG_RESULT($have_glib_2_28)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -492,13 +492,15 @@ AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.),
   gthread)
 
-AC_MSG_CHECKING([if GTK+ is version 2.24.0 or newer])
-if $PKG_CONFIG --atleast-version=2.24.0 gtk+-2.0; then
-  have_gtk_2_24=yes
+# GTK+ 2.26.0 will never be released, we keep the check around anyway
+# because we will need it again after the switch to GTK+ 3.x
+AC_MSG_CHECKING([if GTK+ is version 2.26.0 or newer (bogus placeholder check)])
+if $PKG_CONFIG --atleast-version=2.26.0 gtk+-2.0; then
+  have_gtk_2_26=yes
 else
-  have_gtk_2_24=no
+  have_gtk_2_26=no
 fi
-AC_MSG_RESULT($have_gtk_2_24)
+AC_MSG_RESULT($have_gtk_2_26)
 
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 
@@ -1916,19 +1918,19 @@ AC_SUBST(MIME_TYPES)
 
 CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEAL_ENABLE"
 
-# Make sure not to disable deprecated APIs for unreleased version, we
-# must build without problems with future releases of libraries and
-# disabling deprecated API risks breaking the build
+# Make sure not to disable deprecated APIs for unreleased versions.
+# We must build without problems with future releases of libraries
+# and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_26" != "xyes"; then
+if test "x$have_glib_2_30" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_gtk_2_24" != "xyes"; then
+if test "x$have_gtk_2_26" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DGDK_PIXBUF_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
 fi
 
-if test "x$have_pango_1_30" != "xyes"; then
+if test "x$have_pango_1_32" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DPANGO_DISABLE_DEPRECATED"
 fi
 
