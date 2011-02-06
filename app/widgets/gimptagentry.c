@@ -1287,15 +1287,16 @@ static gboolean
 gimp_tag_entry_draw (GtkWidget *widget,
                      cairo_t   *cr)
 {
-  GimpTagEntry   *tag_entry = GIMP_TAG_ENTRY (widget);
-  GdkRectangle    text_area;
-  PangoLayout    *layout;
-  PangoAttrList  *attr_list;
-  PangoAttribute *attribute;
-  gint            layout_width;
-  gint            layout_height;
-  gint            offset;
-  const char     *display_text;
+  GimpTagEntry    *tag_entry = GIMP_TAG_ENTRY (widget);
+  GtkStyleContext *style     = gtk_widget_get_style_context (widget);
+  GdkRectangle     text_area;
+  PangoLayout     *layout;
+  PangoAttrList   *attr_list;
+  PangoAttribute  *attribute;
+  gint             layout_width;
+  gint             layout_height;
+  gint             offset;
+  const char      *display_text;
 
   if (! GIMP_TAG_ENTRY (widget)->description_shown)
     return FALSE;
@@ -1323,17 +1324,18 @@ gimp_tag_entry_draw (GtkWidget *widget,
   pango_layout_get_pixel_size (layout, &layout_width, &layout_height);
   offset = (text_area.height - layout_height) / 2;
 
-  gtk_paint_layout (gtk_widget_get_style (widget),
-                    cr,
-                    GTK_STATE_INSENSITIVE,
-                    TRUE,
-                    widget,
-                    NULL,
-                    (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
-                    text_area.width - layout_width - offset :
-                    text_area.x + offset,
-                    text_area.y + offset,
-                    layout);
+  gtk_style_context_save (style);
+
+  gtk_style_context_set_state (style, GTK_STATE_FLAG_INSENSITIVE);
+
+  gtk_render_layout (style, cr,
+                     (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL) ?
+                     text_area.width - layout_width - offset :
+                     text_area.x + offset,
+                     text_area.y + offset,
+                     layout);
+
+  gtk_style_context_restore (style);
 
   g_object_unref (layout);
 
