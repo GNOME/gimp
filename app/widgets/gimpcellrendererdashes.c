@@ -194,8 +194,9 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
                                   GtkCellRendererState  flags)
 {
   GimpCellRendererDashes *dashes = GIMP_CELL_RENDERER_DASHES (cell);
-  GtkStyle               *style  = gtk_widget_get_style (widget);
+  GtkStyleContext        *style  = gtk_widget_get_style_context (widget);
   GtkStateType            state;
+  GdkRGBA                 color;
   gint                    xpad, ypad;
   gint                    width;
   gint                    x, y;
@@ -219,7 +220,9 @@ gimp_cell_renderer_dashes_render (GtkCellRenderer      *cell,
         }
     }
 
-  gdk_cairo_set_source_color (cr, &style->text[state]);
+  gtk_style_context_get_color (style, state, &color);
+  gdk_cairo_set_source_rgba (cr, &color);
+
   cairo_fill (cr);
 }
 
