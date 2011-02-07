@@ -68,6 +68,10 @@ GimpColorFrame {
   -GimpColorFrame-number-color: lighter (@bg_color);
 }
 
+GimpHistogramView {
+  -GimpHistogramView-grid-color: darker (@bg_color);
+}
+
 GimpOverlayFrame {
   -GtkButton-focus-line-width: 1;
 }
