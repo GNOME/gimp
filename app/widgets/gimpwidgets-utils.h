@@ -77,6 +77,9 @@ void              gimp_rgb_get_gdk_color           (const GimpRGB        *rgb,
                                                     GdkColor             *gdk_color);
 void              gimp_rgb_set_gdk_color           (GimpRGB              *rgb,
                                                     const GdkColor       *gdk_color);
+gboolean          gimp_get_style_color             (GtkWidget            *widget,
+                                                    const gchar          *property_name,
+                                                    GdkRGBA              *color);
 void              gimp_window_set_hint             (GtkWindow            *window,
                                                     GimpWindowHint        hint);
 guint32           gimp_window_get_native_id        (GtkWindow            *window);
