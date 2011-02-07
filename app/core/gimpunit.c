@@ -18,6 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains the definition of the size unit objects. The
+ * factor of the units is relative to inches (which have a factor of 1).
+ */
+
 #include "config.h"
 
 #include <glib-object.h>

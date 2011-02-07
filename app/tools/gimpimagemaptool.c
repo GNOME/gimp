@@ -15,6 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains a base class for tools that implement on canvas
+ * preview for non destructive editing. The processing of the pixels can
+ * be done either by a gegl op or by a C function (apply_func).
+ *
+ * For the core side of this, please see /app/core/gimpimagemap.c.
+ */
+
 #include "config.h"
 
 #include <string.h>

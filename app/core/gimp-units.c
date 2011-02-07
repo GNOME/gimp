@@ -18,6 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains functions to load & save the file containing the
+ * user-defined size units, when the application starts/finished.
+ */
+
 #include "config.h"
 
 #include <glib-object.h>

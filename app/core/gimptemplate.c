@@ -18,6 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains the definition of the image template objects.
+ */
+
 #include "config.h"
 
 #include <gegl.h>
