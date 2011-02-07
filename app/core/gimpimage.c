@@ -3857,6 +3857,8 @@ gimp_image_remove_channel (GimpImage   *image,
                                          gimp_item_get_index (GIMP_ITEM (channel)),
                                          active_channel);
 
+  g_object_ref (channel);
+
   new_active =
     GIMP_CHANNEL (gimp_item_tree_remove_item (private->channels,
                                               GIMP_ITEM (channel),
@@ -3869,6 +3871,8 @@ gimp_image_remove_channel (GimpImage   *image,
       else
         gimp_image_unset_active_channel (image);
     }
+
+  g_object_unref (channel);
 
   if (undo_group)
     gimp_image_undo_group_end (image);
@@ -3935,6 +3939,8 @@ gimp_image_remove_vectors (GimpImage   *image,
                                          gimp_item_get_index (GIMP_ITEM (vectors)),
                                          active_vectors);
 
+  g_object_ref (vectors);
+
   new_active =
     GIMP_VECTORS (gimp_item_tree_remove_item (private->vectors,
                                               GIMP_ITEM (vectors),
@@ -3942,6 +3948,8 @@ gimp_image_remove_vectors (GimpImage   *image,
 
   if (vectors == active_vectors)
     gimp_image_set_active_vectors (image, new_active);
+
+  g_object_unref (vectors);
 }
 
 gboolean
