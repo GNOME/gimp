@@ -1,56 +1,118 @@
 Change Log
 ----------
 
+Version 1.40
+    Bugs fixed:
+        #1964950 - Stop core dumps due to bad syntax in LET (and variants)
+        #2826594 - allow reverse to work on empty list (Tony Garnock-Jones)
+        Potential problem of arglist to foreign calls being wrongly GC'ed.
+        Fixed bug that read could loop forever (tehom).
+
+    API changes:
+        Exposed is_list and list_length.
+        Added scheme_register_foreign_func_list and declarations for it (tehom)
+        Defined *compile-hook* (tehom)
+
+    Other changes:
+        Updated is_list and list_length to handle circular lists.
+        Nested calling thru C has been made now safer (tehom)
+        Peter Michaux cleaned up port_rep_from_file
+        Added unwind-protect (tehom)
+        Some cleanups to in/outport and Eval_Cycle by Peter Michaux
+        Report error line number (Mostly by Sanel Zukan, back-compatibility by Tehom)
+
+    Contributors:
+        Kevin Cozens, Dimitrios Souflis, Tom Breton, Peter Michaux, Sanel Zukan,
+        and Tony Garnock-Jones.
+
+Version 1.39
+    Bugs fixed:
+        Fix for the load bug
+        Fixed parsing of octal coded characters. Fixes bug #1818018.
+        Added tests for when mk_vector is out of memory. Can't rely on sc->sink.
+        Fix for bug #1794369
+        Finished feature-request 1599947: scheme_apply0 etc return values.
+        Partly provided feature-request 1599947: Expose list_length, eqv, etc
+        Provided feature-request 1599945, Scheme->C->Scheme calling.
+        Fix for bug 1593861 (behavior of is_integer)
+        Fix for bug 1589711
+        Error checking of binding spec syntax in LET and LETREC. The bad syntax
+        was causing a segmentation fault in Linux. Complete fixes for bug #1817986.
+        Error checking of binding spec syntax in LET*
+        Bad syntax was causing core dump in Linux.
+        Fix for nasty gc bug
+
+    R5RS changes:
+        R5RS requires numbers to be of equal value AND of the same type (ie. both
+        exact or inexact) in order to return #t from eqv?. R5RS compliance fix.
+        String output ports now conform to SRFI-6
+
+    Other changes:
+        Drew Yao fixed buffer overflow problems in mk_sharp_const.
+        put OP_T0LVL in charge of reacting to EOF
+        file_push checks array bounds (patch from Ray Lehtiniemi)
+        Changed to always use snprintf (Patch due to Ramiro bsd1628)
+        Updated usage information using text from the Manual.txt file.
+
 Version 1.38
     Interim release until the rewrite, mostly incorporating modifications
     from Kevin Cozens. Small addition for Cygwin in the makefile, and
     modifications by Andrew Guenther for Apple platforms.
+
 Version 1.37
     Joe Buehler submitted reserve_cells.
+
 Version 1.36
     Joe Buehler fixed a patch in the allocator.
-    Alexander Shendi moved the comment handling in the scanner, which 
+    Alexander Shendi moved the comment handling in the scanner, which
     fixed an obscure bug for which Mike E had provided a patch as well.
     Kevin Cozens has submitted some fixes and modifications which have
     not been incorporated yet in their entirety.
+
 Version 1.35
-    Todd Showalter discovered that the number of free cells reported 
+    Todd Showalter discovered that the number of free cells reported
     after GC was incorrect, which could also cause unnecessary allocations.
+
 Version 1.34
     Long missing version. Lots of bugfixes have accumulated in my email, so
     I had to start using them. In this version, Keenan Pepper has submitted
-    a bugfix for the string comparison library procedure, Wouter Boeke 
+    a bugfix for the string comparison library procedure, Wouter Boeke
     modified some code that was casting to the wrong type and crashed on
     some machines, "SheppardCo" submitted a replacement "modulo" code and
     Scott Fenton submitted lots of corrections that shut up some compiler
     warnings. Brian Maher submitted instructions on how to build on OS-X.
     I have to dig deeper into my mailbox and find earlier emails, too.
+
 Version 1.33
     Charles Hayden fixed a nasty GC bug of the new stack frame, while in
-    the process of porting TinyScheme to C++. He also submitted other 
+    the process of porting TinyScheme to C++. He also submitted other
     changes, and other people also had comments or requests, but the GC
-    bug was so important that this version is put through the door to 
+    bug was so important that this version is put through the door to
     correct it.
+
 Version 1.32
     Stephen Gildea put some quality time on TinyScheme again, and made
-    a whole lot of changes to the interpreter that made it noticeably 
+    a whole lot of changes to the interpreter that made it noticeably
     faster.
+
 Version 1.31
     Patches to the hastily-done version 1.30. Stephen Gildea fixed
     some things done wrongly, and Richard Russo fixed the makefile
     for building on Windows. Property lists (heritage from MiniScheme)
     are now optional and have dissappeared from the interface. They
     should be considered as deprecated.
+
 Version 1.30
     After many months, I followed Preston Bannister's advice of
     using macros and a single source text to keep the enums and the
     dispatch table in sync, and I used his contributed "opdefines.h".
     Timothy Downs contributed a helpful function, "scheme_call".
-    Stephen Gildea contributed new versions of the makefile and 
+    Stephen Gildea contributed new versions of the makefile and
     practically all other sources. He created a built-in STRING-APPEND,
     and fixed a lot of other bugs.
     Ruhi Bloodworth reported fixes necessary for OS X and a small
     bug in dynload.c.
+
 Version 1.29
     The previous version contained a lot of corrections, but there
     were a lot more that still wait on a sheet of paper lost in a
@@ -60,40 +122,47 @@ Version 1.29
     output, that this version fixes. I hope other people will take
     the time to resend their contributions, if they didn't make it
     to v.1.28.
+
 Version 1.28
     Many people have contacted me with bugfixes or remarks in
-    the three months I was inactive. A lot of them spotted that 
+    the three months I was inactive. A lot of them spotted that
     scheme_deinit crashed while reporting gc results. They suggested
     that sc->outport be set to NIL in scheme_deinit, which I did.
     Dennis Taylor remarked that OP_VALUEPRINT reset sc->value instead
-    of preserving it. He submitted a modification which I adopted 
+    of preserving it. He submitted a modification which I adopted
     partially. David Hovemeyer sent me many little changes, that you
-    will find in version 1.28, and Partice Stoessel modified the 
+    will find in version 1.28, and Partice Stoessel modified the
     float reader to conform to R5RS.
+
 Version 1.27
     Version 1.27 is the successor of 1.25. Bug fixes only, but I had to
     release them so that everybody can profit. 'Backchar' tried to write
     back to the string, which obviously didn't work for const strings.
     'Substring' didn't check for crossed start and end indices. Defines
     changed to restore the ability to compile under MSVC.
+
 Version 1.26
     Version 1.26 was never released. I changed a lot of things, in fact
     too much, even the garbage collector, and hell broke loose. I'll
     try a more gradual approach next time.
+
 Version 1.25
     Types have been homogenized to be able to accomodate a different
     representation. Plus, promises are no longer closures. Unfortunately,
     I discovered that continuations and force/delay do not pass the SCM
     test (and never did)... However, on the bright side, what little
-    modifications I did had a large impact on the footprint: 
+    modifications I did had a large impact on the footprint:
     USE_NO_FEATURES now produces an object file of 63960 bytes on Linux!
+
 Version 1.24
     SCM tests now pass again after change in atom2str.
+
 Version 1.23
     Finally I managed to mess it up with my version control. Version
     1.22 actually lacked some of the things I have been fixing in the
     meantime. This should be considered as a complete replacement for
     1.22.
+
 Version 1.22
     The new ports had a bug in LOAD. MK_CLOSURE is introduced.
     Shawn Wagner inquired about string->number and number->string.
@@ -102,30 +171,34 @@ Version 1.22
     (it didn't quote them). Unfortunately, minimum build is now
     slightly larger than 64k... I postpone action because Jason's idea
     might solve it elegantly.
+
 Version 1.21
     Jason Felice submitted a radically different datatype representation
     which he had implemented. While discussing its pros and cons, it
     became apparent that the current implementation of ports suffered
     from a grave fault: ports were not garbage-collected. I changed the
     ports to be heap-allocated, which enabled the use of string ports
-    for loading. Jason also fixed errors in the garbage collection of 
+    for loading. Jason also fixed errors in the garbage collection of
     vectors. USE_VERBATIM is gone. "ssp_compiler.c" has a better solution
     on HTML generation. A bug involving backslash notation in strings
     has been fixed. '-c' flag now executes next argument as a stream of
     Scheme commands. Foreign functions are now also heap allocated,
     and scheme_define is used to define everything.
+
 Version 1.20
     Tracing has been added. The toplevel loop has been slightly
     rearranged. Backquote reading for vector templates has been
     sanitized. Symbol interning is now correct. Arithmetic functions
     have been corrected. APPLY, MAP, FOR-EACH, numeric comparison
     functions fixed. String reader/writer understands \xAA notation.
+
 Version 1.19
     Carriage Return now delimits identifiers. DOS-formatted Scheme files
     can be used by Unix. Random number generator added to library.
     Fixed some glitches of the new type-checking scheme. Fixed erroneous
     (append '() 'a) behavior. Will continue with r4rstest.scm to
     fix errors.
+
 Version 1.18
     The FFI has been extended. USE_VERBOSE_GC has gone. Anyone wanting
     the same functionality can put (gcverbose #t) in init.scm.
@@ -134,9 +207,11 @@ Version 1.18
     mk_counted_string paves the way for full support of binary strings.
     As much as possible of the type-checking chores were delegated
     to the inner loop, thus reducing the code size to less than 4200 loc!
+
 Version 1.17
     Dynamically-loaded extensions are more fully integrated.
     TinyScheme is now distributed under the BSD open-source license.
+
 Version 1.16
     Dynamically-loaded extensions introduced (USE_DL).
     Santeri Paavolainen found a race condition: When a cons is executed,
@@ -146,22 +221,27 @@ Version 1.16
     Fortunately, such a case was rare in the code, although it is
     a pitfall in new code and code in foreign functions. Currently, only
     one such case remains, when COLON_HOOK is defined.
+
 Version 1.15
     David Gould also contributed some changes that speed up operation.
     Kirk Zurell fixed HASPROP.
     The Garbage Collection didn't collect all the garbage...fixed.
+
 Version 1.14
     Unfortunately, after Andre fixed the GC it became obvious that the
     algorithm was too slow... Fortunately, David Gould found a way to
     speed it up.
+
 Version 1.13
     Silly bug involving division by zero resolved by Roland Kaufman.
     Macintoch support from Shmulik Regev.
     Float parser bug fixed by Alexander Shendi.
     GC bug from Andru Luvisi.
+
 Version 1.12
     Cis* incorrectly called isalpha() instead of isascii()
     Added USE_CHAR_CLASSIFIERS, USE_STRING_PORTS.
+
 Version 1.11
     BSDI defines isnumber... changed all similar functions to is_*
     EXPT now has correct definition. Added FLOOR,CEILING,TRUNCATE
@@ -169,39 +249,47 @@ Version 1.11
     have values 1 or 0, and can be set as compiler defines (proposed
     by Andy Ganor *months* ago). 'prompt' and 'InitFile' can now be
     defined during compilation, too.
+
 Version 1.10
     Another bug when file ends with comment!
     Added DEFINE-MACRO in init.scm, courtesy of Andy Gaynor.
+
 Version 1.09
     Removed bug when READ met EOF. lcm.
+
 Version 1.08
     quotient,remainder and modulo. gcd.
+
 Version 1.07
     '=>' in cond now exists
     list? now checks for circularity
     some reader bugs removed
     Reader is more consistent wrt vectors
     Quote and Quasiquote work with vectors
+
 Version 1.06
     #! is now skipped
     generic-assoc bug removed
     strings are now managed differently, hack.txt is removed
     various delicate points fixed
+
 Version 1.05
     Support for scripts, *args*, "-1" option.
     Various R5RS procedures.
     *sharp-hook*
     Handles unmatched parentheses.
     New architecture for procedures.
+
 Version 1.04
     Added missing T_ATOM bits...
     Added vectors
     Free-list is sorted by address, since vectors need consecutive cells.
     (quit <exitcode>) for use with scripts
+
 Version 1.03 (26 Aug 1998):
     Extended .h with useful functions for FFI
     Library: with-input-* etc.
     Finished R5RS I/O, added string ports.
+
 Version 1.02 (25 Aug 1998):
     First part of R5RS I/O.
-

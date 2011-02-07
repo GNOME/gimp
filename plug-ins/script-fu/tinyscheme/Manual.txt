@@ -1,12 +1,12 @@
 
 
-                       TinySCHEME Version 1.38
+                       TinySCHEME Version 1.40
 
                     "Safe if used as prescribed"
                     -- Philip K. Dick, "Ubik"
 
 This software is open source, covered by a BSD-style license.
-Please read accompanying file COPYING.                                   
+Please read accompanying file COPYING.
 -------------------------------------------------------------------------------
 
      This Scheme interpreter is based on MiniSCHEME version 0.85k4
@@ -31,7 +31,7 @@ Please read accompanying file COPYING.
      coexist in the same program, without any interference between them.
      Programmatically, foreign functions in C can be added and values
      can be defined in the Scheme environment. Being a quite small program,
-     it is easy to comprehend, get to grips with, and use. 
+     it is easy to comprehend, get to grips with, and use.
 
      Known bugs
      ----------
@@ -47,7 +47,7 @@ Please read accompanying file COPYING.
 
      Maybe (a subset of) SLIB will work with TinySCHEME...
 
-     Decent debugging facilities are missing. Only tracing is supported 
+     Decent debugging facilities are missing. Only tracing is supported
      natively.
 
 
@@ -158,7 +158,7 @@ Please read accompanying file COPYING.
      14	     #\so              31       #\us
      15	     #\si
      16	     #\dle             127      #\del 		
-     
+
      Numeric literals support #x #o #b and #d. Flonums are currently read only
      in decimal notation. Full grammar will be supported soon.
 
@@ -180,7 +180,7 @@ Please read accompanying file COPYING.
      Also open-input-output-file, set-input-port, set-output-port (not R5RS)
      Library: call-with-input-file, call-with-output-file,
      with-input-from-file, with-output-from-file and
-     with-input-output-from-to-files, close-port and input-output-port? 
+     with-input-output-from-to-files, close-port and input-output-port?
      (not R5RS).
      String Ports: open-input-string, open-output-string, get-output-string,
      open-input-output-string. Strings can be used with I/O routines.
@@ -227,8 +227,11 @@ Please read accompanying file COPYING.
 
           Dynamically-loaded extensions
      (load-extension <filename without extension>)
-     Loads a DLL declaring foreign procedures.          
-     
+     Loads a DLL declaring foreign procedures. On Unix/Linux, one can make use
+     of the ld.so.conf file or the LD_RUN_PATH system variable in order to place
+     the library in a directory other than the current one. Please refer to the
+     appropriate 'man' page.
+
           Esoteric procedures
      (oblist)
      Returns the oblist, an immutable list of all the symbols.
@@ -253,23 +256,23 @@ Please read accompanying file COPYING.
      Makes a new closure in the given environment.
 
           Obsolete procedures
-     (print-width <object>)          
-     
+     (print-width <object>)
+
      Programmer's Reference
      ----------------------
 
      The interpreter state is initialized with "scheme_init".
      Custom memory allocation routines can be installed with an alternate
-     initialization function: "scheme_init_custom_alloc". 
+     initialization function: "scheme_init_custom_alloc".
      Files can be loaded with "scheme_load_file". Strings containing Scheme
-     code can be loaded with "scheme_load_string". It is a good idea to 
+     code can be loaded with "scheme_load_string". It is a good idea to
      "scheme_load" init.scm before anything else.
 
      External data for keeping external state (of use to foreign functions)
      can be installed with "scheme_set_external_data".
-     Foreign functions are installed with "assign_foreign". Additional 
-     definitions can be added to the interpreter state, with "scheme_define" 
-     (this is the way HTTP header data and HTML form data are passed to the 
+     Foreign functions are installed with "assign_foreign". Additional
+     definitions can be added to the interpreter state, with "scheme_define"
+     (this is the way HTTP header data and HTML form data are passed to the
      Scheme script in the Altera SQL Server). If you wish to define the
      foreign function in a specific environment (to enhance modularity),
      use "assign_foreign_env".
@@ -292,7 +295,7 @@ Please read accompanying file COPYING.
      established standard, this library is supposed to be installed in
      a directory mirroring its name under the TinyScheme location.
 
-     
+
      Foreign Functions
      -----------------
 
@@ -309,13 +312,13 @@ Please read accompanying file COPYING.
            return sc->NIL;
           }
 
-   Foreign functions are now defined as closures: 
+   Foreign functions are now defined as closures:
 
-   sc->interface->scheme_define( 
-        sc, 
-        sc->global_env, 
-        sc->interface->mk_symbol(sc,"square"), 
-        sc->interface->mk_foreign_func(sc, square)); 
+   sc->interface->scheme_define(
+        sc,
+        sc->global_env,
+        sc->interface->mk_symbol(sc,"square"),
+        sc->interface->mk_foreign_func(sc, square));
 
 
      Foreign functions can use the external data in the "scheme" struct
@@ -330,8 +333,8 @@ Please read accompanying file COPYING.
      Standalone
      ----------
 
-     Usage: tinyscheme -? 
-     or:    tinyscheme [<file1> <file2> ...] 
+     Usage: tinyscheme -?
+     or:    tinyscheme [<file1> <file2> ...]
      followed by
 	       -1 <file> [<arg1> <arg2> ...]
 	       -c <Scheme commands> [<arg1> <arg2> ...]
