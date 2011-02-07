@@ -37,6 +37,7 @@
 
 #include "gimpclipboard.h"
 #include "gimpcurveview.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
@@ -492,22 +493,30 @@ static gboolean
 gimp_curve_view_draw (GtkWidget *widget,
                       cairo_t   *cr)
 {
-  GimpCurveView *view  = GIMP_CURVE_VIEW (widget);
-  GtkStyle      *style = gtk_widget_get_style (widget);
-  GtkAllocation  allocation;
-  GList         *list;
-  gint           border;
-  gint           width;
-  gint           height;
-  gint           layout_x;
-  gint           layout_y;
-  gdouble        x, y;
-  gint           i;
+  GimpCurveView   *view  = GIMP_CURVE_VIEW (widget);
+  GtkStyleContext *style = gtk_widget_get_style_context (widget);
+  GtkAllocation    allocation;
+  GdkRGBA          grid_color;
+  GdkRGBA          fg_color;
+  GdkRGBA          bg_color;
+  GList           *list;
+  gint             border;
+  gint             width;
+  gint             height;
+  gint             layout_x;
+  gint             layout_y;
+  gdouble          x, y;
+  gint             i;
 
+  cairo_save (cr);
   GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
+  cairo_restore (cr);
 
   if (! view->curve)
     return FALSE;
+
+  gtk_style_context_save (style);
+  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
 
   gtk_widget_get_allocation (widget, &allocation);
 
@@ -517,19 +526,21 @@ gimp_curve_view_draw (GtkWidget *widget,
 
   if (gtk_widget_has_focus (widget))
     {
-      gtk_paint_focus (style, cr,
-                       gtk_widget_get_state (widget),
-                       widget, NULL,
-                       border - 2, border - 2,
-                       width + 4, height + 4);
+      gtk_render_focus (style, cr,
+                        border - 2, border - 2,
+                        width + 4, height + 4);
     }
 
   cairo_set_line_width (cr, 1.0);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
   cairo_translate (cr, 0.5, 0.5);
 
+  gtk_style_context_get_color (style, 0, &fg_color);
+  gtk_style_context_get_background_color (style, 0, &bg_color);
+  gimp_get_style_color (widget, "grid-color", &grid_color);
+
   /*  Draw the grid lines  */
-  gdk_cairo_set_source_color (cr, &style->dark[GTK_STATE_NORMAL]);
+  gdk_cairo_set_source_rgba (cr, &grid_color);
 
   gimp_curve_view_draw_grid (view, cr, width, height, border);
 
@@ -547,7 +558,6 @@ gimp_curve_view_draw (GtkWidget *widget,
                      width - border - layout_x,
                      height - border - layout_y);
 
-      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
       pango_cairo_show_layout (cr, view->layout);
     }
 
@@ -566,7 +576,6 @@ gimp_curve_view_draw (GtkWidget *widget,
                      2 * border + layout_x);
       cairo_rotate (cr, - G_PI / 2);
 
-      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
       pango_cairo_show_layout (cr, view->layout);
 
       cairo_restore (cr);
@@ -589,9 +598,9 @@ gimp_curve_view_draw (GtkWidget *widget,
       else
         {
           cairo_set_source_rgba (cr,
-                                 style->text[GTK_STATE_NORMAL].red / 65535.0,
-                                 style->text[GTK_STATE_NORMAL].green / 65535.0,
-                                 style->text[GTK_STATE_NORMAL].blue / 65535.0,
+                                 fg_color.red,
+                                 fg_color.green,
+                                 fg_color.blue,
                                  0.5);
         }
 
@@ -603,7 +612,7 @@ gimp_curve_view_draw (GtkWidget *widget,
   if (view->curve_color)
     gimp_cairo_set_source_rgb (cr, view->curve_color);
   else
-    gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+    gdk_cairo_set_source_rgba (cr, &fg_color);
 
   gimp_curve_view_draw_curve (view, cr, view->curve,
                               width, height, border);
@@ -611,8 +620,6 @@ gimp_curve_view_draw (GtkWidget *widget,
   /*  Draw the points  */
   if (gimp_curve_get_curve_type (view->curve) == GIMP_CURVE_SMOOTH)
     {
-      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
-
       /*  Draw the unselected points  */
       for (i = 0; i < view->curve->n_points; i++)
         {
@@ -636,8 +643,6 @@ gimp_curve_view_draw (GtkWidget *widget,
   if (view->xpos >= 0.0)
     {
       gchar buf[32];
-
-      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
       /* draw the color line */
       cairo_move_to (cr,
@@ -751,7 +756,6 @@ gimp_curve_view_draw (GtkWidget *widget,
 
       cairo_push_group (cr);
 
-      gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
       cairo_rectangle (cr, x + 0.5, y + 0.5, w, h);
       cairo_fill_preserve (cr);
 
@@ -759,13 +763,16 @@ gimp_curve_view_draw (GtkWidget *widget,
       cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
       cairo_stroke (cr);
 
-      gdk_cairo_set_source_color (cr, &style->base[GTK_STATE_NORMAL]);
+      gdk_cairo_set_source_rgba (cr, &bg_color);
+
       cairo_move_to (cr, x, y);
       pango_cairo_show_layout (cr, view->cursor_layout);
 
       cairo_pop_group_to_source (cr);
       cairo_paint_with_alpha (cr, 0.6);
     }
+
+  gtk_style_context_restore (style);
 
   return FALSE;
 }
