@@ -887,6 +887,38 @@ gimp_rgb_set_gdk_color (GimpRGB        *rgb,
   gimp_rgb_set_uchar (rgb, r, g, b);
 }
 
+gboolean
+gimp_get_style_color (GtkWidget   *widget,
+                      const gchar *property_name,
+                      GdkRGBA     *color)
+{
+  GdkRGBA *c = NULL;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+  g_return_val_if_fail (property_name != NULL, FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
+
+  gtk_widget_style_get (widget,
+                        property_name, &c,
+                        NULL);
+
+  if (c)
+    {
+      *color = *c;
+      gdk_rgba_free (c);
+
+      return TRUE;
+    }
+
+  /* return ugly magenta to indicate that something is wrong */
+  color->red   = 1.0;
+  color->green = 1.0;
+  color->blue  = 0.0;
+  color->alpha = 1.0;
+
+  return FALSE;
+}
+
 void
 gimp_window_set_hint (GtkWindow      *window,
                       GimpWindowHint  hint)
