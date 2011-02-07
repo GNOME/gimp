@@ -915,7 +915,24 @@ gimp_data_duplicate (GimpData *data)
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
   if (GIMP_DATA_GET_CLASS (data)->duplicate)
-    return GIMP_DATA_GET_CLASS (data)->duplicate (data);
+    {
+      GimpData        *new     = GIMP_DATA_GET_CLASS (data)->duplicate (data);
+      GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (new);
+
+      g_object_set (new,
+                    "name",      NULL,
+                    "writable",  GIMP_DATA_GET_CLASS (new)->save != NULL,
+                    "deletable", TRUE,
+                    NULL);
+
+      if (private->filename)
+        {
+          g_free (private->filename);
+          private->filename = NULL;
+        }
+
+      return new;
+    }
 
   return NULL;
 }
