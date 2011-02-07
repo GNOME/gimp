@@ -1432,13 +1432,19 @@ static int file_push(scheme *sc, const char *fname) {
     sc->load_stack[sc->file_i].rep.stdio.closeit=1;
     sc->nesting_stack[sc->file_i]=0;
     sc->loadport->_object._port=sc->load_stack+sc->file_i;
+
+#if SHOW_ERROR_LINE
+    sc->load_stack[sc->file_i].rep.stdio.curr_line = 0;
+    if(fname)
+      sc->load_stack[sc->file_i].rep.stdio.filename = store_string(sc, strlen(fname), fname, 0);
+#endif
+
   }
   return fin!=0;
 }
 
 static void file_pop(scheme *sc) {
- if(sc->file_i != 0)
-   {
+ if(sc->file_i != 0) {
      sc->nesting=sc->nesting_stack[sc->file_i];
      port_close(sc,sc->loadport,port_input);
      sc->file_i--;
@@ -1468,6 +1474,13 @@ static port *port_rep_from_filename(scheme *sc, const char *fn, int prop) {
   }
   pt=port_rep_from_file(sc,f,prop);
   pt->rep.stdio.closeit=1;
+
+#if SHOW_ERROR_LINE
+  if(fn)
+    pt->rep.stdio.filename = store_string(sc, strlen(fn), fn, 0);
+
+  pt->rep.stdio.curr_line = 0;
+#endif
   return pt;
 }
 
@@ -1561,6 +1574,15 @@ static void port_close(scheme *sc, pointer p, int flag) {
   pt->kind&=~flag;
   if((pt->kind & (port_input|port_output))==0) {
     if(pt->kind&port_file) {
+
+#if SHOW_ERROR_LINE
+      /* Cleanup is here so (close-*-port) functions could work too */
+      pt->rep.stdio.curr_line = 0;
+
+      if(pt->rep.stdio.filename)
+        sc->free(pt->rep.stdio.filename);
+#endif
+
       fclose(pt->rep.stdio.file);
     }
     pt->kind=port_free;
@@ -1918,9 +1940,19 @@ static INLINE int is_one_of(char *s, gunichar c) {
 /* skip white characters */
 static INLINE int skipspace(scheme *sc) {
      gunichar c;
-     do
-       { c=inchar(sc); }
-     while (g_unichar_isspace(c));
+     int curr_line = 0;
+     do {
+         c=inchar(sc);
+#if SHOW_ERROR_LINE
+         if(c=='\n')
+           curr_line++;
+#endif
+     } while (g_unichar_isspace(c));
+
+/* record it */
+#if SHOW_ERROR_LINE
+     sc->load_stack[sc->file_i].rep.stdio.curr_line += curr_line;
+#endif
 
      if(c!=EOF) {
           backchar(sc,c);
@@ -1956,6 +1988,12 @@ static int token(scheme *sc) {
      case ';':
           while ((c=inchar(sc)) != '\n' && c!=EOF)
             ;
+
+#if SHOW_ERROR_LINE
+           if(c == '\n')
+             sc->load_stack[sc->file_i].rep.stdio.curr_line++;
+#endif
+
        if(c == EOF)
          { return (TOK_EOF); }
        else
@@ -1983,6 +2021,12 @@ static int token(scheme *sc) {
           } else if(c == '!') {
                while ((c=inchar(sc)) != '\n' && c!=EOF)
                    ;
+
+#if SHOW_ERROR_LINE
+           if(c == '\n')
+             sc->load_stack[sc->file_i].rep.stdio.curr_line++;
+#endif
+
            if(c == EOF)
              { return (TOK_EOF); }
            else
@@ -2416,6 +2460,28 @@ static INLINE pointer slot_value_in_env(pointer slot)
 
 
 static pointer _Error_1(scheme *sc, const char *s, pointer a) {
+#if SHOW_ERROR_LINE
+     const char *str = s;
+     char sbuf[STRBUFFSIZE];
+
+     /* make sure error is not in REPL */
+     if(sc->load_stack[sc->file_i].rep.stdio.file != stdin) {
+       int ln = sc->load_stack[sc->file_i].rep.stdio.curr_line;
+       const char *fname = sc->load_stack[sc->file_i].rep.stdio.filename;
+
+       /* should never happen */
+       if(!fname) fname = "<unknown>";
+
+       /* we started from 0 */
+       ln++;
+       snprintf(sbuf, STRBUFFSIZE, "(%s : %i) %s", fname, ln, s);
+
+       str = (const char*)sbuf;
+     }
+#else
+     const char *str = s;
+#endif
+
 #if USE_ERROR_HOOK
      pointer x;
      pointer hdl=sc->ERROR_HOOK;
@@ -2427,7 +2493,7 @@ static pointer _Error_1(scheme *sc, const char *s, pointer a) {
          } else {
                sc->code = sc->NIL;
          }
-         sc->code = cons(sc, mk_string(sc, (s)), sc->code);
+         sc->code = cons(sc, mk_string(sc, str), sc->code);
          setimmutable(car(sc->code));
          sc->code = cons(sc, slot_value_in_env(x), sc->code);
          sc->op = (int)OP_EVAL;
@@ -2440,7 +2506,7 @@ static pointer _Error_1(scheme *sc, const char *s, pointer a) {
     } else {
           sc->args = sc->NIL;
     }
-    sc->args = cons(sc, mk_string(sc, (s)), sc->args);
+    sc->args = cons(sc, mk_string(sc, str), sc->args);
     setimmutable(car(sc->args));
     sc->op = (int)OP_ERR0;
     return sc->T;
@@ -4268,6 +4334,10 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                gunichar c = inchar(sc);
                if (c != '\n')
                  backchar(sc,c);
+#if SHOW_ERROR_LINE
+               else
+                  sc->load_stack[sc->file_i].rep.stdio.curr_line++;
+#endif
                sc->nesting_stack[sc->file_i]--;
                s_return(sc,reverse_in_place(sc, sc->NIL, sc->args));
           } else if (sc->tok == TOK_DOT) {
@@ -4883,6 +4953,10 @@ void scheme_set_external_data(scheme *sc, void *p) {
 void scheme_deinit(scheme *sc) {
   int i;
 
+#if SHOW_ERROR_LINE
+  char *fname;
+#endif
+
   sc->oblist=sc->NIL;
   sc->global_env=sc->NIL;
   dump_stack_free(sc);
@@ -4909,9 +4983,20 @@ void scheme_deinit(scheme *sc) {
   for(i=0; i<=sc->last_cell_seg; i++) {
     sc->free(sc->alloc_seg[i]);
   }
+
+#if SHOW_ERROR_LINE
+  fname = sc->load_stack[i].rep.stdio.filename;
+
+  for(i=0; i<sc->file_i; i++) {
+    if(fname)
+      sc->free(fname);
+  }
+#endif
 }
 
-void scheme_load_file(scheme *sc, FILE *fin) {
+void scheme_load_file(scheme *sc, FILE *fin)
+{ scheme_load_named_file(sc,fin,0); }
+void scheme_load_named_file(scheme *sc, FILE *fin, const char *filename) {
   dump_stack_reset(sc);
   sc->envir = sc->global_env;
   sc->file_i=0;
@@ -4922,6 +5007,13 @@ void scheme_load_file(scheme *sc, FILE *fin) {
   if(fin==stdin) {
     sc->interactive_repl=1;
   }
+
+#if SHOW_ERROR_LINE
+  sc->load_stack[0].rep.stdio.curr_line = 0;
+  if(fin!=stdin && filename)
+    sc->load_stack[0].rep.stdio.filename = store_string(sc, strlen(filename), filename, 0);
+#endif
+
   sc->inport=sc->loadport;
   sc->args = mk_integer(sc,sc->file_i);
   Eval_Cycle(sc, OP_T0LVL);
@@ -5120,7 +5212,7 @@ int main(int argc, char **argv) {
       fprintf(stderr,"Could not open file %s\n",file_name);
     } else {
       if(isfile) {
-        scheme_load_file(&sc,fin);
+        scheme_load_named_file(&sc,fin,file_name);
       } else {
         scheme_load_string(&sc,file_name);
       }
@@ -5136,7 +5228,7 @@ int main(int argc, char **argv) {
     file_name=*argv++;
   } while(file_name!=0);
   if(argc==1) {
-    scheme_load_file(&sc,stdin);
+    scheme_load_named_file(&sc,stdin,0);
   }
   retcode=sc.retcode;
   scheme_deinit(&sc);
