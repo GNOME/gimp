@@ -30,6 +30,7 @@
 #include "core/gimpmarshal.h"
 
 #include "gimphistogramview.h"
+#include "gimpwidgets-utils.h"
 
 
 #define MIN_WIDTH  64
@@ -162,16 +163,34 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                                                      1, 64, 5,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("grid-color",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
 }
 
 static void
 gimp_histogram_view_init (GimpHistogramView *view)
 {
+  GtkCssProvider *css;
+
   view->histogram    = NULL;
   view->bg_histogram = NULL;
   view->n_bins       = 256;
   view->start        = 0;
   view->end          = 255;
+
+  css = gtk_css_provider_new ();
+  gtk_css_provider_load_from_data (css,
+                                   "GimpHistogramView {\n"
+                                   "  -GimpHistogramView-grid-color: darker (@bg_color);\n"
+                                   "}\n", -1, NULL);
+  gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (view)),
+                                  GTK_STYLE_PROVIDER (css),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (css);
 }
 
 static void
@@ -351,6 +370,7 @@ gimp_histogram_view_draw (GtkWidget *widget,
   gdouble            max    = 0.0;
   gdouble            bg_max = 0.0;
   gint               xstop;
+  GdkRGBA            grid_color;
   GdkRGBA            color;
   GdkRGBA            light;
   GdkRGBA            dark;
@@ -379,8 +399,8 @@ gimp_histogram_view_draw (GtkWidget *widget,
   cairo_translate (cr, 0.5, 0.5);
 
   /*  Draw the outer border  */
-  gimp_gdk_rgba_shade (&color, 0.7, &dark);
-  gdk_cairo_set_source_rgba (cr, &dark);
+  gimp_get_style_color (widget, "grid-color", &grid_color);
+  gdk_cairo_set_source_rgba (cr, &grid_color);
   cairo_rectangle (cr, border, border, width - 1, height - 1);
   cairo_stroke (cr);
 
@@ -446,10 +466,7 @@ gimp_histogram_view_draw (GtkWidget *widget,
 
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))
         {
-          gtk_style_context_get_background_color (style, 0, &color);
-          gimp_gdk_rgba_shade (&color, 0.7, &dark);
-
-          gdk_cairo_set_source_rgba (cr, &dark);
+          gdk_cairo_set_source_rgba (cr, &grid_color);
 
           cairo_move_to (cr, x + border, border);
           cairo_line_to (cr, x + border, border + height - 1);
