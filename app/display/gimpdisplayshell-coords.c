@@ -85,7 +85,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   gdouble  dir_delta_y = 0.0;
   gdouble  distance    = 1.0;
   gboolean event_fill  = (inertia_factor > 0);
-  gdouble  delta_pressure = 0.0;
 
   /* Smoothing causes problems with cursor tracking
    * when zoomed above screen resolution so we need to supress it.
@@ -98,8 +97,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
   delta_time = (shell->last_motion_delta_time * (1 - SMOOTH_FACTOR)
                 +  (time - shell->last_motion_time) * SMOOTH_FACTOR);
-
-  delta_pressure = coords->pressure - shell->last_coords.pressure;
 
   if (shell->last_motion_time == 0)
     {
@@ -125,9 +122,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
       if (fabs (delta_x) < filter && fabs (delta_y) < filter)
         return FALSE;
-
-      delta_time = (shell->last_motion_delta_time * (1 - SMOOTH_FACTOR)
-                    +  (time - shell->last_motion_time) * SMOOTH_FACTOR);
 
       distance = dist = sqrt (SQR (delta_x) + SQR (delta_y));
 
@@ -216,79 +210,22 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
       coords->direction = coords->direction - floor (coords->direction);
 
-#ifdef USE_MOTION_INERTIA
-      /* High speed -> less smooth*/
-      inertia_factor *= (1 - coords->velocity);
 
-      if (inertia_factor > 0 && distance > 0)
+      /* do event fill for devices that do not provide enough events*/
+      if (distance >= EVENT_FILL_PRECISION &&
+          event_fill                       &&
+          shell->event_history->len >= 2)
         {
-          /* Apply smoothing to X and Y. */
-
-          /* This tells how far from the pointer can stray from the line */
-          gdouble max_deviation = SQR (20 * inertia_factor);
-          gdouble cur_deviation = max_deviation;
-          gdouble sin_avg;
-          gdouble sin_old;
-          gdouble sin_new;
-          gdouble cos_avg;
-          gdouble cos_old;
-          gdouble cos_new;
-          gdouble new_x;
-          gdouble new_y;
-
-          sin_new = delta_x / distance;
-          sin_old = shell->last_motion_delta_x / shell->last_motion_distance;
-          sin_avg = sin (asin (sin_old) * inertia_factor +
-                         asin (sin_new) * (1 - inertia_factor));
-
-          cos_new = delta_y / distance;
-          cos_old = shell->last_motion_delta_y / shell->last_motion_distance;
-          cos_avg = cos (acos (cos_old) * inertia_factor +
-                         acos (cos_new) * (1 - inertia_factor));
-
-          delta_x = sin_avg * distance;
-          delta_y = cos_avg * distance;
-
-          new_x = (shell->last_coords.x - delta_x) * 0.5 + coords->x * 0.5;
-          new_y = (shell->last_coords.y - delta_y) * 0.5 + coords->y * 0.5;
-
-          cur_deviation = SQR (coords->x - new_x) + SQR (coords->y - new_y);
-
-          while (cur_deviation >= max_deviation)
+          if (shell->event_delay)
             {
-              new_x = new_x * 0.8 + coords->x * 0.2;
-              new_y = new_y * 0.8 + coords->y * 0.2;
-
-              cur_deviation = (SQR (coords->x - new_x) +
-                               SQR (coords->y - new_y));
+              gimp_display_shell_interpolate_stroke (shell,
+                                                     coords);
             }
-
-          coords->x = new_x;
-          coords->y = new_y;
-
-          delta_x = shell->last_coords.x - coords->x;
-          delta_y = shell->last_coords.y - coords->y;
-
-          /* Recalculate distance */
-          distance = sqrt (SQR (delta_x) + SQR (delta_y));
-        }
-#endif
-
-        /* do event fill for devices that do not provide enough events*/
-        if (distance >= EVENT_FILL_PRECISION &&
-            event_fill                       &&
-            shell->event_history->len >= 2)
-          {
-            if (shell->event_delay)
-              {
-                gimp_display_shell_interpolate_stroke (shell,
-                                                       coords);
-              }
-            else
-              {
-                shell->event_delay = TRUE;
-                gimp_display_shell_push_event_history (shell, coords);
-              }
+          else
+            {
+              shell->event_delay = TRUE;
+              gimp_display_shell_push_event_history (shell, coords);
+            }
           }
         else
           {
