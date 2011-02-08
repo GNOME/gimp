@@ -515,9 +515,6 @@ gimp_curve_view_draw (GtkWidget *widget,
   if (! view->curve)
     return FALSE;
 
-  gtk_style_context_save (style);
-  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
-
   gtk_widget_get_allocation (widget, &allocation);
 
   border = GIMP_HISTOGRAM_VIEW (view)->border_width;
@@ -771,8 +768,6 @@ gimp_curve_view_draw (GtkWidget *widget,
       cairo_pop_group_to_source (cr);
       cairo_paint_with_alpha (cr, 0.6);
     }
-
-  gtk_style_context_restore (style);
 
   return FALSE;
 }

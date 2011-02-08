@@ -169,12 +169,33 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
                                                                NULL, NULL,
                                                                GDK_TYPE_RGBA,
                                                                GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("fg-color",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("fg-color-selected",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("bg-color",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_boxed ("bg-color-selected",
+                                                               NULL, NULL,
+                                                               GDK_TYPE_RGBA,
+                                                               GIMP_PARAM_READABLE));
 }
 
 static void
 gimp_histogram_view_init (GimpHistogramView *view)
 {
   GtkCssProvider *css;
+  const gchar    *str;
 
   view->histogram    = NULL;
   view->bg_histogram = NULL;
@@ -182,11 +203,23 @@ gimp_histogram_view_init (GimpHistogramView *view)
   view->start        = 0;
   view->end          = 255;
 
+  str =
+    "GimpHistogramView {\n"
+    "  color: @text_color;\n"
+    "  background-color: @base_color;\n"
+    "  -GimpHistogramView-grid-color: darker (@bg_color);\n"
+    "  -GimpHistogramView-fg-color: @fg_color;\n"
+    "  -GimpHistogramView-fg-color-selected: @selected_fg_color;\n"
+    "  -GimpHistogramView-bg-color: mix (lighter (@bg_color), darker (@bg_color), 0.5);\n"
+    "  -GimpHistogramView-bg-color-selected: mix (lighter (@selected_bg_color), darker (@selected_bg_color), 0.5);\n"
+    "}\n"
+    "\n"
+    "GimpHistogramView:selected {\n"
+    "  background-color: @selected_bg_color;\n"
+    "}\n";
+
   css = gtk_css_provider_new ();
-  gtk_css_provider_load_from_data (css,
-                                   "GimpHistogramView {\n"
-                                   "  -GimpHistogramView-grid-color: darker (@bg_color);\n"
-                                   "}\n", -1, NULL);
+  gtk_css_provider_load_from_data (css, str, -1, NULL);
   gtk_style_context_add_provider (gtk_widget_get_style_context (GTK_WIDGET (view)),
                                   GTK_STYLE_PROVIDER (css),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -318,44 +351,6 @@ gimp_histogram_view_get_maximum (GimpHistogramView    *view,
   return max;
 }
 
-static void
-gimp_gdk_rgba_shade (const GdkRGBA *color,
-                     gdouble        factor,
-                     GdkRGBA       *shaded)
-{
-  GtkSymbolicColor *in;
-  GtkSymbolicColor *out;
-
-  in = gtk_symbolic_color_new_literal (color);
-  out = gtk_symbolic_color_new_shade (in, factor);
-
-  gtk_symbolic_color_resolve (out, NULL, shaded);
-
-  gtk_symbolic_color_unref (out);
-  gtk_symbolic_color_unref (in);
-}
-
-static void
-gimp_gdk_rgba_mix (const GdkRGBA *color1,
-                   const GdkRGBA *color2,
-                   gdouble        factor,
-                   GdkRGBA       *mixed)
-{
-  GtkSymbolicColor *in1;
-  GtkSymbolicColor *in2;
-  GtkSymbolicColor *out;
-
-  in1 = gtk_symbolic_color_new_literal (color1);
-  in2 = gtk_symbolic_color_new_literal (color2);
-  out = gtk_symbolic_color_new_mix (in1, in2, factor);
-
-  gtk_symbolic_color_resolve (out, NULL, mixed);
-
-  gtk_symbolic_color_unref (out);
-  gtk_symbolic_color_unref (in1);
-  gtk_symbolic_color_unref (in2);
-}
-
 static gboolean
 gimp_histogram_view_draw (GtkWidget *widget,
                           cairo_t   *cr)
@@ -372,16 +367,11 @@ gimp_histogram_view_draw (GtkWidget *widget,
   gint               xstop;
   GdkRGBA            grid_color;
   GdkRGBA            color;
-  GdkRGBA            light;
-  GdkRGBA            dark;
   GdkRGBA            color_in;
   GdkRGBA            color_out;
   GdkRGBA            bg_color_in;
   GdkRGBA            bg_color_out;
   GdkRGBA            rgb_color[3];
-
-  gtk_style_context_save (style);
-  gtk_style_context_add_class (style, GTK_STYLE_CLASS_ENTRY);
 
   /*  Draw the background  */
   gtk_style_context_get_background_color (style, 0, &color);
@@ -418,23 +408,10 @@ gimp_histogram_view_draw (GtkWidget *widget,
     bg_max = gimp_histogram_view_get_maximum (view, view->bg_histogram,
                                               view->channel);
 
-  gtk_style_context_get_color (style, GTK_STATE_FLAG_SELECTED,
-                               &color_in);
-  gtk_style_context_get_color (style, 0,
-                               &color_out);
-
-  gtk_style_context_get_background_color (style, GTK_STATE_FLAG_SELECTED,
-                                          &bg_color_in);
-  gtk_style_context_get_background_color (style, 0,
-                                          &bg_color_out);
-
-  gimp_gdk_rgba_shade (&bg_color_in, 1.3, &light);
-  gimp_gdk_rgba_shade (&bg_color_in, 0.7, &dark);
-  gimp_gdk_rgba_mix (&light, &dark, 0.5, &bg_color_in);
-
-  gimp_gdk_rgba_shade (&bg_color_out, 1.3, &light);
-  gimp_gdk_rgba_shade (&bg_color_out, 0.7, &dark);
-  gimp_gdk_rgba_mix (&light, &dark, 0.5, &bg_color_out);
+  gimp_get_style_color (widget, "fg-color-selected", &color_in);
+  gimp_get_style_color (widget, "fg-color",          &color_out);
+  gimp_get_style_color (widget, "bg-color-selected", &bg_color_in);
+  gimp_get_style_color (widget, "bg-color",          &bg_color_out);
 
   if (view->channel == GIMP_HISTOGRAM_RGB)
     {
@@ -520,8 +497,6 @@ gimp_histogram_view_draw (GtkWidget *widget,
                                           x, i, j, max, bg_max, height, border);
         }
     }
-
-  gtk_style_context_restore (style);
 
   return FALSE;
 }
