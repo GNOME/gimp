@@ -646,6 +646,31 @@
       <xi:include href="xml/gimpdisplayshell-transform.xml" />
     </chapter>
 
+    <chapter id="app-canvas-items">
+      <title>GimpCanvasItem Objects</title>
+      <xi:include href="xml/gimpcanvasitem.xml" />
+      <xi:include href="xml/gimpcanvasitem-utils.xml" />
+      <xi:include href="xml/gimpcanvasarc.xml" />
+      <xi:include href="xml/gimpcanvasboundary.xml" />
+      <xi:include href="xml/gimpcanvascorner.xml" />
+      <xi:include href="xml/gimpcanvascursor.xml" />
+      <xi:include href="xml/gimpcanvasgrid.xml" />
+      <xi:include href="xml/gimpcanvasgroup.xml" />
+      <xi:include href="xml/gimpcanvasguide.xml" />
+      <xi:include href="xml/gimpcanvashandle.xml" />
+      <xi:include href="xml/gimpcanvaslayerboundary.xml" />
+      <xi:include href="xml/gimpcanvasline.xml" />
+      <xi:include href="xml/gimpcanvaspassepartout.xml" />
+      <xi:include href="xml/gimpcanvaspath.xml" />
+      <xi:include href="xml/gimpcanvaspen.xml" />
+      <xi:include href="xml/gimpcanvaspolygon.xml" />
+      <xi:include href="xml/gimpcanvasprogress.xml" />
+      <xi:include href="xml/gimpcanvasproxygroup.xml" />
+      <xi:include href="xml/gimpcanvasrectangle.xml" />
+      <xi:include href="xml/gimpcanvassamplepoint.xml" />
+      <xi:include href="xml/gimpcanvastextcursor.xml" />
+    </chapter>
+
     <chapter id="app-display-utils">
       <title>Misc. Widgets &amp; Utilities</title>
       <xi:include href="xml/gimpnavigationeditor.xml" />
@@ -762,6 +787,8 @@
       <xi:include href="xml/gimprotatetool.xml" />
       <xi:include href="xml/gimpscaletool.xml" />
       <xi:include href="xml/gimpsheartool.xml" />
+      <xi:include href="xml/gimpcagetool.xml" />
+      <xi:include href="xml/gimpcageoptions.xml" />
     </chapter>
 
     <chapter id="app-tools-misc">
@@ -982,6 +1009,7 @@
       <xi:include href="xml/gimpstrokeeditor.xml" />
       <xi:include href="xml/gimptemplateeditor.xml" />
       <xi:include href="xml/gimpthumbbox.xml" />
+      <xi:include href="xml/gimptoolpalette.xml" />
     </chapter>
 
     <chapter id="app-widgets-views">
