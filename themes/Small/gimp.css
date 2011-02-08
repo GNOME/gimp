@@ -20,58 +20,70 @@
     }
 */
 
-  -GtkPaned-handle-size:             5;
-  -GimpDockWindow-default-height:    240;
-  -GimpDock-font-scale:              0.8333;
-  -GimpMenuDock-minimal-width:       200;
-  -GimpDockWindow-menu-preview-size: small-toolbar;
-  -GimpToolPalette-tool-icon-size:   menu;
-  -GimpToolPalette-button-relief:    none;
-  -GimpDockbook-tab-border:          0;
-  -GimpDockbook-tab-icon-size:       menu;
-  -GimpColorNotebook-tab-border:     0;
-  -GimpColorNotebook-tab-icon-size:  menu;
-  -GimpDeviceEditor-handle-size:     12;
-  -GimpDockable-content-border:      1;
-  -GimpEditor-content-spacing:       1;
-  -GimpEditor-button-spacing:        1;
-  -GimpEditor-button-icon-size:      menu;
-  -GimpDataEditor-minimal-height:    64;
-  -GtkDialog-content-area-border:    0;
-  -GtkDialog-button-spacing:         6;
-  -GtkDialog-action-area-border:     12;
-  -GimpUnitComboBox-appears-as-list: 0;
+    -GtkPaned-handle-size:             5;
+    -GimpDockWindow-default-height:    240;
+    -GimpDock-font-scale:              0.8333;
+    -GimpMenuDock-minimal-width:       200;
+    -GimpDockWindow-menu-preview-size: small-toolbar;
+    -GimpToolPalette-tool-icon-size:   menu;
+    -GimpToolPalette-button-relief:    none;
+    -GimpDockbook-tab-border:          0;
+    -GimpDockbook-tab-icon-size:       menu;
+    -GimpColorNotebook-tab-border:     0;
+    -GimpColorNotebook-tab-icon-size:  menu;
+    -GimpDeviceEditor-handle-size:     12;
+    -GimpDockable-content-border:      1;
+    -GimpEditor-content-spacing:       1;
+    -GimpEditor-button-spacing:        1;
+    -GimpEditor-button-icon-size:      menu;
+    -GimpDataEditor-minimal-height:    64;
+    -GtkDialog-content-area-border:    0;
+    -GtkDialog-button-spacing:         6;
+    -GtkDialog-action-area-border:     12;
+    -GimpUnitComboBox-appears-as-list: 0;
 }
 
 GimpToolDialog {
-  -GtkDialog-action-area-border: 6;
+    -GtkDialog-action-area-border: 6;
 }
 
 GimpDockable {
-  -GimpFrame-label-bold:       0;
-  -GimpFrame-label-spacing:    0;
-  -GtkButton-focus-line-width: 1;
-  -GtkButton-focus-padding:    0;
+    -GimpFrame-label-bold:       0;
+    -GimpFrame-label-spacing:    0;
+    -GtkButton-focus-line-width: 1;
+    -GtkButton-focus-padding:    0;
 }
 
 GimpDisplayShell {
-  -GimpRuler-font-scale:          0.6444;
-  -GimpUnitComboBox-label-scale:  0.8333;
-  -GimpScaleComboBox-label-scale: 0.8333;
-  -GtkComboBox-arrow-size:        8;
-  -GtkButton-inner-border:        0 0 0 0;
-  -GtkButton-focus-line_width:    0;
-  -GtkButton-focus-padding:       0;
+    -GimpRuler-font-scale:          0.6444;
+    -GimpUnitComboBox-label-scale:  0.8333;
+    -GimpScaleComboBox-label-scale: 0.8333;
+    -GtkComboBox-arrow-size:        8;
+    -GtkButton-inner-border:        0 0 0 0;
+    -GtkButton-focus-line_width:    0;
+    -GtkButton-focus-padding:       0;
 }
 
 GimpColorFrame {
-  -GimpColorFrame-number-color: lighter (@bg_color);
+    -GimpColorFrame-number-color: lighter (@bg_color);
 }
 
 GimpHistogramView {
-  -GimpHistogramView-grid-color: darker (@bg_color);
+    color: @text_color;
+    background-color: @base_color;
+    -GimpHistogramView-grid-color: darker (@bg_color);
+    -GimpHistogramView-fg-color: @fg_color;
+    -GimpHistogramView-fg-color-selected: @selected_fg_color;
+    -GimpHistogramView-bg-color: mix (lighter (@bg_color),
+				      darker (@bg_color), 0.5);
+    -GimpHistogramView-bg-color-selected: mix (lighter (@selected_bg_color),
+					       darker (@selected_bg_color), 0.5);
+}
+
+GimpHistogramView:selected {
+    background-color: @selected_bg_color;
 }
 
 GimpOverlayFrame {
-  -GtkButton-focus-line-width: 1;
+    -GtkButton-focus-line-width: 1;
 }
