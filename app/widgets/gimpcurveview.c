@@ -244,12 +244,8 @@ gimp_curve_view_dispose (GObject *object)
 
   gimp_curve_view_set_curve (view, NULL);
 
-  while (view->bg_curves)
-    {
-      BGCurve *bg = view->bg_curves->data;
-
-      gimp_curve_view_remove_background (view, bg->curve);
-    }
+  if (view->bg_curves)
+    gimp_curve_view_remove_all_backgrounds (view);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -1134,16 +1130,28 @@ gimp_curve_view_add_background (GimpCurveView *view,
                                 GimpCurve     *curve,
                                 const GimpRGB *color)
 {
+  GList   *list;
   BGCurve *bg;
 
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
   g_return_if_fail (GIMP_IS_CURVE (curve));
   g_return_if_fail (color != NULL);
 
+  for (list = view->bg_curves; list; list = g_list_next (list))
+    {
+      bg = list->data;
+
+      g_return_if_fail (curve != bg->curve);
+    }
+
   bg = g_slice_new0 (BGCurve);
 
   bg->curve = g_object_ref (curve);
   bg->color = *color;
+
+  g_signal_connect (bg->curve, "dirty",
+                    G_CALLBACK (gimp_curve_view_curve_dirty),
+                    view);
 
   view->bg_curves = g_list_append (view->bg_curves, bg);
 
@@ -1165,6 +1173,9 @@ gimp_curve_view_remove_background (GimpCurveView *view,
 
       if (bg->curve == curve)
         {
+          g_signal_handlers_disconnect_by_func (bg->curve,
+                                                gimp_curve_view_curve_dirty,
+                                                view);
           g_object_unref (bg->curve);
 
           view->bg_curves = g_list_remove (view->bg_curves, bg);
@@ -1176,6 +1187,9 @@ gimp_curve_view_remove_background (GimpCurveView *view,
           break;
         }
     }
+
+  if (! list)
+    g_return_if_reached ();
 }
 
 void
@@ -1187,6 +1201,9 @@ gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
     {
       BGCurve *bg = view->bg_curves->data;
 
+      g_signal_handlers_disconnect_by_func (bg->curve,
+                                            gimp_curve_view_curve_dirty,
+                                            view);
       g_object_unref (bg->curve);
 
       view->bg_curves = g_list_remove (view->bg_curves, bg);
