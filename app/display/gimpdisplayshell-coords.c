@@ -101,12 +101,6 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
   delta_pressure = coords->pressure - shell->last_coords.pressure;
 
-  /* Try to detect a pen lift */
-  if ((delta_time < 50) && (fabs(delta_pressure) > 0.04) && (delta_pressure < 0.0))
-    {
-      return FALSE;
-    }
-
   if (shell->last_motion_time == 0)
     {
       /* First pair is invalid to do any velocity calculation,
@@ -306,14 +300,15 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
             gimp_display_shell_push_event_history (shell, coords);
           }
 
-#ifdef VERBOSE
-      g_printerr ("DIST: %f, DT:%f, Vel:%f, Press:%f,smooth_dd:%f, sf %f\n",
+#ifdef EVENT_VERBOSE
+      g_printerr ("DIST: %f, DT:%f, Vel:%f, Press:%f,smooth_dd:%f, POS: (%f, %f)\n",
                   distance,
                   delta_time,
                   shell->last_coords.velocity,
                   coords->pressure,
                   distance - dist,
-                  inertia_factor);
+                  coords->x,
+                  coords->y);
 #endif
     }
 
