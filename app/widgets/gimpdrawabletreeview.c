@@ -217,10 +217,7 @@ gimp_drawable_tree_view_drop_possible (GimpContainerTreeView   *tree_view,
 
           if (return_drop_pos)
             {
-              if (drop_pos == GTK_TREE_VIEW_DROP_BEFORE)
-                *return_drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_BEFORE;
-              else
-                *return_drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_AFTER;
+              *return_drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_AFTER;
             }
         }
 
