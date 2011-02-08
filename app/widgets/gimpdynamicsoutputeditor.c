@@ -54,17 +54,24 @@ enum
   INPUT_N_COLUMNS
 };
 
-enum
+
+struct
 {
-  INPUT_PRESSURE,
-  INPUT_VELOCITY,
-  INPUT_DIRECTION,
-  INPUT_TILT,
-  INPUT_WHEEL,
-  INPUT_RANDOM,
-  INPUT_FADE,
-  N_INPUTS
+  const gchar *use_property;
+  const gchar *curve_property;
+  const gchar *label;
+}
+inputs[] =
+{
+  { "use-pressure",  "pressure-curve",  N_("Pressure")  },
+  { "use-velocity",  "velocity-curve",  N_("Velocity")  },
+  { "use-direction", "direction-curve", N_("Direction") },
+  { "use-tilt",      "tilt-curve",      N_("Tilt")      },
+  { "use-wheel",     "wheel-curve",     N_("Wheel")     },
+  { "use-random",    "random-curve",    N_("Random")    },
+  { "use-fade",      "fade-curve",      N_("Fade")      }
 };
+
 
 typedef struct _GimpDynamicsOutputEditorPrivate GimpDynamicsOutputEditorPrivate;
 
@@ -72,20 +79,16 @@ struct _GimpDynamicsOutputEditorPrivate
 {
   GimpDynamicsOutput *output;
 
-  GtkWidget      *vbox;
+  GtkListStore       *input_list;
+  GtkTreeIter         input_iters[G_N_ELEMENTS (inputs)];
 
-  GtkWidget      *notebook;
+  GtkWidget          *curve_view;
+  GtkWidget          *input_view;
 
-  GtkWidget      *curve_view;
-
-  GtkListStore   *input_list;
-
-  GtkWidget      *input_view;
-
-  GimpCurve      *active_curve;
+  GimpCurve          *active_curve;
 };
 
-#define GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE(editor) \
+#define GET_PRIVATE(editor) \
         G_TYPE_INSTANCE_GET_PRIVATE (editor, \
                                      GIMP_TYPE_DYNAMICS_OUTPUT_EDITOR, \
                                      GimpDynamicsOutputEditorPrivate)
@@ -112,12 +115,8 @@ static void   gimp_dynamics_output_editor_input_toggled  (GtkCellRenderer       
                                                           gchar                    *path,
                                                           GimpDynamicsOutputEditor *editor);
 
-static void   gimp_dynamics_output_editor_activate_input (gint                      input,
-                                                          GimpDynamicsOutputEditor *editor);
-
-static void   gimp_dynamics_output_editor_use_input      (GimpDynamicsOutputEditor *editor,
-                                                          gint                      input,
-                                                          gboolean                  value);
+static void   gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
+                                                          gint                      input);
 
 static void   gimp_dynamics_output_editor_notify_output  (GimpDynamicsOutput       *output,
                                                           const GParamSpec         *pspec,
@@ -147,7 +146,8 @@ gimp_dynamics_output_editor_class_init (GimpDynamicsOutputEditorClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_type_class_add_private (object_class, sizeof (GimpDynamicsOutputEditorPrivate));
+  g_type_class_add_private (object_class,
+                            sizeof (GimpDynamicsOutputEditorPrivate));
 }
 
 static void
@@ -168,10 +168,10 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   GtkWidget                       *button;
   GtkCellRenderer                 *cell;
   GtkTreeSelection                *tree_sel;
-  GtkTreeIter                      iter = {0};
+  gint                             i;
 
   editor  = GIMP_DYNAMICS_OUTPUT_EDITOR (object);
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (object);
+  private = GET_PRIVATE (object);
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -188,7 +188,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (editor), private->curve_view, TRUE, TRUE, 0);
   gtk_widget_show (private->curve_view);
 
-  gimp_dynamics_output_editor_activate_input (INPUT_PRESSURE, editor);
+  gimp_dynamics_output_editor_activate_input (editor, 0);
 
   button = gtk_button_new_with_mnemonic (_("_Reset Curve"));
   gtk_box_pack_start (GTK_BOX (editor), button, FALSE, FALSE, 0);
@@ -203,54 +203,21 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                             G_TYPE_BOOLEAN,
                                             G_TYPE_STRING);
 
-  gtk_list_store_insert_with_values (private->input_list,
-                                     &iter, INPUT_PRESSURE,
-                                     INPUT_COLUMN_INDEX,     INPUT_PRESSURE,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_pressure,
-                                     INPUT_COLUMN_NAME,      _("Pressure"),
-                                     -1);
+  for (i = 0; i < G_N_ELEMENTS (inputs); i++)
+    {
+      gboolean use_input;
 
-  gtk_list_store_insert_with_values (private->input_list,
-                                     NULL, INPUT_VELOCITY,
-                                     INPUT_COLUMN_INDEX,     INPUT_VELOCITY,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_velocity,
-                                     INPUT_COLUMN_NAME,      _("Velocity"),
-                                     -1);
+      g_object_get (private->output,
+                    inputs[i].use_property, &use_input,
+                    NULL);
 
-  gtk_list_store_insert_with_values (private->input_list,
-                                     NULL, INPUT_DIRECTION,
-                                     INPUT_COLUMN_INDEX,     INPUT_DIRECTION,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_direction,
-                                     INPUT_COLUMN_NAME,      _("Direction"),
-                                     -1);
-
-  gtk_list_store_insert_with_values (private->input_list,
-                                     NULL, INPUT_TILT,
-                                     INPUT_COLUMN_INDEX,     INPUT_TILT,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_tilt,
-                                     INPUT_COLUMN_NAME,      _("Tilt"),
-                                     -1);
-
-  gtk_list_store_insert_with_values (private->input_list,
-                                     NULL, INPUT_WHEEL,
-                                     INPUT_COLUMN_INDEX,     INPUT_WHEEL,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_wheel,
-                                     INPUT_COLUMN_NAME,      _("Wheel"),
-                                     -1);
-
-  gtk_list_store_insert_with_values (private->input_list,
-                                     NULL, INPUT_RANDOM,
-                                     INPUT_COLUMN_INDEX,     INPUT_RANDOM,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_random,
-                                     INPUT_COLUMN_NAME,      _("Random"),
-                                     -1);
-
-  gtk_list_store_insert_with_values (private->input_list,
-                                     NULL, INPUT_FADE,
-                                     INPUT_COLUMN_INDEX,     INPUT_FADE,
-                                     INPUT_COLUMN_USE_INPUT, private->output->use_fade,
-                                     INPUT_COLUMN_NAME,      _("Fade"),
-                                     -1);
+      gtk_list_store_insert_with_values (private->input_list,
+                                         &private->input_iters[i], -1,
+                                         INPUT_COLUMN_INDEX,     i,
+                                         INPUT_COLUMN_USE_INPUT, use_input,
+                                         INPUT_COLUMN_NAME,      gettext (inputs[i].label),
+                                         -1);
+    }
 
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (private->input_list));
   g_object_unref (private->input_list);
@@ -288,7 +255,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (tree_sel, GTK_SELECTION_BROWSE);
 
-  gtk_tree_selection_select_iter (tree_sel, &iter);
+  gtk_tree_selection_select_iter (tree_sel, &private->input_iters[0]);
 
   g_signal_connect (G_OBJECT (tree_sel), "changed",
                     G_CALLBACK (gimp_dynamics_output_editor_input_selected),
@@ -302,9 +269,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
 static void
 gimp_dynamics_output_editor_finalize (GObject *object)
 {
-  GimpDynamicsOutputEditorPrivate *private;
-
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (object);
+  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
   if (private->output)
     {
@@ -321,9 +286,7 @@ gimp_dynamics_output_editor_set_property (GObject      *object,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpDynamicsOutputEditorPrivate *private;
-
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (object);
+  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -343,9 +306,7 @@ gimp_dynamics_output_editor_get_property (GObject    *object,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpDynamicsOutputEditorPrivate *private;
-
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (object);
+  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
@@ -364,9 +325,7 @@ static void
 gimp_dynamics_output_editor_curve_reset (GtkWidget                *button,
                                          GimpDynamicsOutputEditor *editor)
 {
-  GimpDynamicsOutputEditorPrivate *private;
-
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
+  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
 
   if (private->active_curve)
     gimp_curve_reset (private->active_curve, TRUE);
@@ -376,10 +335,10 @@ static void
 gimp_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
                                             GimpDynamicsOutputEditor *editor)
 {
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
 
-  if (gtk_tree_selection_get_selected(selection, &model, &iter))
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
     {
       gint input;
 
@@ -387,7 +346,7 @@ gimp_dynamics_output_editor_input_selected (GtkTreeSelection         *selection,
                           INPUT_COLUMN_INDEX, &input,
                           -1);
 
-      gimp_dynamics_output_editor_activate_input (input, editor);
+      gimp_dynamics_output_editor_activate_input (editor, input);
     }
 }
 
@@ -396,182 +355,65 @@ gimp_dynamics_output_editor_input_toggled (GtkCellRenderer          *cell,
                                            gchar                    *path,
                                            GimpDynamicsOutputEditor *editor)
 {
-  GimpDynamicsOutputEditorPrivate *private;
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
-  gint              input;
-  gboolean          use;
+  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
+  GtkTreeModel                    *model;
+  GtkTreeIter                      iter;
 
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
-
-  model = GTK_TREE_MODEL(private->input_list);
+  model = GTK_TREE_MODEL (private->input_list);
 
   if (gtk_tree_model_get_iter_from_string (model, &iter, path))
     {
+      gint     input;
+      gboolean use;
+
       gtk_tree_model_get (model, &iter,
                           INPUT_COLUMN_INDEX,     &input,
                           INPUT_COLUMN_USE_INPUT, &use,
                           -1);
-      use = !use;
 
-      gimp_dynamics_output_editor_use_input (editor, input, use);
+      g_object_set (private->output,
+                    inputs[input].use_property, ! use,
+                    NULL);
     }
 }
 
 static void
-gimp_dynamics_output_editor_activate_input (gint                      input,
-                                            GimpDynamicsOutputEditor *editor)
+gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
+                                            gint                      input)
 {
-  GimpDynamicsOutputEditorPrivate *private;
+  GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
   GimpRGB                          bg_color;
-
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
+  gint                             i;
 
   gimp_rgb_set (&bg_color, 0.5, 0.5, 0.5);
 
+  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view), NULL);
   gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (private->curve_view));
 
-  if (input == INPUT_PRESSURE)
+  for (i = 0; i < G_N_ELEMENTS (inputs); i++)
     {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->pressure_curve);
-      private->active_curve = private->output->pressure_curve;
-    }
-  else if (private->output->use_pressure)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->pressure_curve,
-                                      &bg_color);
-    }
+      gboolean   use_input;
+      GimpCurve *input_curve;
 
-  if (input == INPUT_VELOCITY)
-    {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->velocity_curve);
-      private->active_curve = private->output->velocity_curve;
-    }
-  else if (private->output->use_velocity)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->velocity_curve,
-                                      &bg_color);
-    }
+      g_object_get (private->output,
+                    inputs[i].use_property,   &use_input,
+                    inputs[i].curve_property, &input_curve,
+                    NULL);
 
-  if (input == INPUT_DIRECTION)
-    {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->direction_curve);
-      private->active_curve = private->output->direction_curve;
-    }
-  else if (private->output->use_direction)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->direction_curve,
-                                      &bg_color);
-    }
+      if (input == i)
+        {
+          gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
+                                     input_curve);
+          private->active_curve = input_curve;
+        }
+      else if (use_input)
+        {
+          gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                          input_curve,
+                                          &bg_color);
+        }
 
-  if (input == INPUT_TILT)
-    {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->tilt_curve);
-      private->active_curve = private->output->tilt_curve;
-    }
-  else if (private->output->use_tilt)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->tilt_curve,
-                                      &bg_color);
-    }
-
-  if (input == INPUT_WHEEL)
-    {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->wheel_curve);
-      private->active_curve = private->output->wheel_curve;
-    }
-  else if (private->output->use_wheel)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->wheel_curve,
-                                      &bg_color);
-    }
-
-  if (input == INPUT_RANDOM)
-    {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->random_curve);
-      private->active_curve = private->output->random_curve;
-    }
-  else if (private->output->use_random)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->random_curve,
-                                      &bg_color);
-    }
-
-  if (input == INPUT_FADE)
-    {
-      gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                 private->output->fade_curve);
-      private->active_curve = private->output->fade_curve;
-    }
-  else if (private->output->use_fade)
-    {
-      gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
-                                      private->output->fade_curve,
-                                      &bg_color);
-    }
-}
-
-static void
-gimp_dynamics_output_editor_use_input (GimpDynamicsOutputEditor *editor,
-                                       gint                      input,
-                                       gboolean                  value)
-{
-  GimpDynamicsOutputEditorPrivate *private;
-
-  private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
-
-  if (input == INPUT_PRESSURE)
-    {
-      private->output->use_pressure = value;
-      g_object_notify (G_OBJECT (private->output), "use-pressure");
-    }
-
-  if (input == INPUT_VELOCITY)
-    {
-      private->output->use_velocity = value;
-      g_object_notify (G_OBJECT (private->output), "use-velocity");
-    }
-
-  if (input == INPUT_DIRECTION)
-    {
-      private->output->use_direction = value;
-      g_object_notify (G_OBJECT (private->output), "use-direction");
-    }
-
-  if (input == INPUT_TILT)
-    {
-      private->output->use_tilt = value;
-      g_object_notify (G_OBJECT (private->output), "use-tilt");
-    }
-
-  if (input == INPUT_WHEEL)
-    {
-      private->output->use_wheel = value;
-      g_object_notify (G_OBJECT (private->output), "use-wheel");
-    }
-
-  if (input == INPUT_RANDOM)
-    {
-      private->output->use_random = value;
-      g_object_notify (G_OBJECT (private->output), "use-random");
-    }
-
-  if (input == INPUT_FADE)
-    {
-      private->output->use_fade = value;
-      g_object_notify (G_OBJECT (private->output), "use-fade");
+      g_object_unref (input_curve);
     }
 }
 
@@ -580,81 +422,51 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
                                            const GParamSpec         *pspec,
                                            GimpDynamicsOutputEditor *editor)
 {
-  if (! strcmp (pspec->name, "use-pressure")  ||
-      ! strcmp (pspec->name, "use-velocity")  ||
-      ! strcmp (pspec->name, "use-direction") ||
-      ! strcmp (pspec->name, "use-tilt")      ||
-      ! strcmp (pspec->name, "use-wheel")     ||
-      ! strcmp (pspec->name, "use-random")    ||
-      ! strcmp (pspec->name, "use-fade"))
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (inputs); i++)
     {
-      GimpDynamicsOutputEditorPrivate *private;
-      GtkTreeModel                    *model;
-      GtkTreeSelection                *sel;
-      GtkTreeIter                      iter;
-      GtkTreeView                     *view;
-      gboolean                         iter_valid;
-      gboolean                         value;
-
-      private = GIMP_DYNAMICS_OUTPUT_EDITOR_GET_PRIVATE (editor);
-
-      view  = GTK_TREE_VIEW (private->input_view);
-      model = GTK_TREE_MODEL (gtk_tree_view_get_model (view));
-      sel   = gtk_tree_view_get_selection (view);
-
-      for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-           iter_valid;
-           iter_valid = gtk_tree_model_iter_next (model, &iter))
+      if (! strcmp (pspec->name, inputs[i].use_property))
         {
-          gint input;
+          GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
+          GtkTreeSelection                *sel;
+          gboolean                         use_input;
+          GimpCurve                       *input_curve;
 
-          gtk_tree_model_get (GTK_TREE_MODEL(model), &iter,
-                              INPUT_COLUMN_INDEX, &input,
+          sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (private->input_view));
+
+          g_object_get (output,
+                        pspec->name,              &use_input,
+                        inputs[i].curve_property, &input_curve,
+                        NULL);
+
+          gtk_list_store_set (private->input_list, &private->input_iters[i],
+                              INPUT_COLUMN_USE_INPUT, use_input,
                               -1);
 
-          switch (input)
+          if (! gtk_tree_selection_iter_is_selected (sel,
+                                                     &private->input_iters[i]))
             {
-            case INPUT_PRESSURE:
-              value = output->use_pressure;
-              break;
-            case INPUT_VELOCITY:
-              value = output->use_velocity;
-              break;
-            case INPUT_DIRECTION:
-              value = output->use_direction;
-              break;
-            case INPUT_TILT:
-              value = output->use_tilt;
-              break;
-            case INPUT_WHEEL:
-              value = output->use_wheel;
-              break;
-            case INPUT_RANDOM:
-              value = output->use_random;
-              break;
-            case INPUT_FADE:
-              value = output->use_fade;
-              break;
+              if (use_input)
+                {
+                  GimpRGB bg_color;
 
-            default:
-              g_warn_if_reached ();
-              return;
+                  gimp_rgb_set (&bg_color, 0.5, 0.5, 0.5);
+
+                  gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
+                                                  input_curve,
+                                                  &bg_color);
+                }
+              else
+                {
+                  gimp_curve_view_remove_background (GIMP_CURVE_VIEW (private->curve_view),
+                                                     input_curve);
+                }
+
+              g_object_unref (input_curve);
             }
 
-          gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                              INPUT_COLUMN_USE_INPUT, value,
-                              -1);
-
-          if (gtk_tree_selection_iter_is_selected (sel, &iter))
-            {
-              gint input;
-
-              gtk_tree_model_get (model, &iter,
-                                  INPUT_COLUMN_INDEX, &input,
-                                  -1);
-
-              gimp_dynamics_output_editor_activate_input (input, editor);
-            }
+          break;
         }
     }
 }
