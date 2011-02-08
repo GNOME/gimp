@@ -129,9 +129,12 @@ themes_init (Gimp *gimp)
 
   themes_style_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
 
+  /*  Use GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1 so theme files
+   *  override default styles provided by widgets themselves.
+   */
   gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
                                              themes_style_provider,
-                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION + 1);
 
   g_object_unref (themes_style_provider);
 
