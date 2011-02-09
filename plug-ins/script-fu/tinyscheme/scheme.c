@@ -2460,8 +2460,13 @@ static INLINE pointer slot_value_in_env(pointer slot)
 
 
 static pointer _Error_1(scheme *sc, const char *s, pointer a) {
-#if SHOW_ERROR_LINE
      const char *str = s;
+#if USE_ERROR_HOOK
+     pointer x;
+     pointer hdl=sc->ERROR_HOOK;
+#endif
+
+#if SHOW_ERROR_LINE
      char sbuf[STRBUFFSIZE];
 
      /* make sure error is not in REPL */
@@ -2478,14 +2483,9 @@ static pointer _Error_1(scheme *sc, const char *s, pointer a) {
 
        str = (const char*)sbuf;
      }
-#else
-     const char *str = s;
 #endif
 
 #if USE_ERROR_HOOK
-     pointer x;
-     pointer hdl=sc->ERROR_HOOK;
-
      x=find_slot_in_env(sc,sc->envir,hdl,1);
     if (x != sc->NIL) {
          if(a!=0) {
