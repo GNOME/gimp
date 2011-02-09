@@ -35,6 +35,3 @@
 
 # Tons of deprecation warnings, hopefully we never have to fix these...
 :    .*file-.*: warning: .* is deprecated \(declared at .*/png.h:.*\)$
-
-# Don't care about some warnings that come from upstream tinyscheme code
-:    .*plug-ins/script-fu/tinyscheme/scheme.c:.*: warning: ISO C90 forbids mixed declarations and code$
