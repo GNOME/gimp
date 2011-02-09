@@ -51,25 +51,27 @@ enum
   INPUT_COLUMN_INDEX,
   INPUT_COLUMN_USE_INPUT,
   INPUT_COLUMN_NAME,
+  INPUT_COLUMN_COLOR,
   INPUT_N_COLUMNS
 };
 
 
 struct
 {
-  const gchar *use_property;
-  const gchar *curve_property;
-  const gchar *label;
+  const gchar   *use_property;
+  const gchar   *curve_property;
+  const gchar   *label;
+  const GimpRGB  color;
 }
 inputs[] =
 {
-  { "use-pressure",  "pressure-curve",  N_("Pressure")  },
-  { "use-velocity",  "velocity-curve",  N_("Velocity")  },
-  { "use-direction", "direction-curve", N_("Direction") },
-  { "use-tilt",      "tilt-curve",      N_("Tilt")      },
-  { "use-wheel",     "wheel-curve",     N_("Wheel")     },
-  { "use-random",    "random-curve",    N_("Random")    },
-  { "use-fade",      "fade-curve",      N_("Fade")      }
+  { "use-pressure",  "pressure-curve",  N_("Pressure"),  { 0.5, 0.0, 0.0, 1.0 } },
+  { "use-velocity",  "velocity-curve",  N_("Velocity"),  { 0.0, 0.5, 0.0, 1.0 } },
+  { "use-direction", "direction-curve", N_("Direction"), { 0.0, 0.0, 0.5, 1.0 } },
+  { "use-tilt",      "tilt-curve",      N_("Tilt"),      { 0.5, 0.5, 0.0, 1.0 } },
+  { "use-wheel",     "wheel-curve",     N_("Wheel"),     { 0.5, 0.0, 0.5, 1.0 } },
+  { "use-random",    "random-curve",    N_("Random"),    { 0.0, 0.5, 0.5, 1.0 } },
+  { "use-fade",      "fade-curve",      N_("Fade"),      { 0.5, 0.5, 0.5, 1.0 } }
 };
 
 
@@ -201,7 +203,8 @@ gimp_dynamics_output_editor_constructed (GObject *object)
   private->input_list = gtk_list_store_new (INPUT_N_COLUMNS,
                                             G_TYPE_INT,
                                             G_TYPE_BOOLEAN,
-                                            G_TYPE_STRING);
+                                            G_TYPE_STRING,
+                                            GIMP_TYPE_RGB);
 
   for (i = 0; i < G_N_ELEMENTS (inputs); i++)
     {
@@ -216,6 +219,7 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                          INPUT_COLUMN_INDEX,     i,
                                          INPUT_COLUMN_USE_INPUT, use_input,
                                          INPUT_COLUMN_NAME,      gettext (inputs[i].label),
+                                         INPUT_COLUMN_COLOR,     &inputs[i].color,
                                          -1);
     }
 
@@ -245,6 +249,12 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                                -1, NULL,
                                                gtk_cell_renderer_text_new (),
                                                "text", INPUT_COLUMN_NAME,
+                                               NULL);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
+                                               -1, NULL,
+                                               gimp_cell_renderer_color_new (),
+                                               "color", INPUT_COLUMN_COLOR,
                                                NULL);
 
   gtk_box_pack_start (GTK_BOX (editor), view, FALSE, FALSE, 0);
@@ -382,10 +392,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
                                             gint                      input)
 {
   GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
-  GimpRGB                          bg_color;
   gint                             i;
-
-  gimp_rgb_set (&bg_color, 0.5, 0.5, 0.5);
 
   gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view), NULL);
   gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (private->curve_view));
@@ -410,7 +417,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
         {
           gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
                                           input_curve,
-                                          &bg_color);
+                                          &inputs[i].color);
         }
 
       g_object_unref (input_curve);
@@ -449,13 +456,9 @@ gimp_dynamics_output_editor_notify_output (GimpDynamicsOutput       *output,
             {
               if (use_input)
                 {
-                  GimpRGB bg_color;
-
-                  gimp_rgb_set (&bg_color, 0.5, 0.5, 0.5);
-
                   gimp_curve_view_add_background (GIMP_CURVE_VIEW (private->curve_view),
                                                   input_curve,
-                                                  &bg_color);
+                                                  &inputs[i].color);
                 }
               else
                 {
