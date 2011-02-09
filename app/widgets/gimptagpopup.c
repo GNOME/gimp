@@ -790,8 +790,8 @@ gimp_tag_popup_list_draw (GtkWidget    *widget,
 
       if (tag_data->state == GTK_STATE_SELECTED)
         {
-          gdk_cairo_set_source_color (cr,
-                                      &popup->combo_entry->selected_item_color);
+          gdk_cairo_set_source_rgba (cr,
+                                     &popup->combo_entry->selected_item_color);
 
           cairo_rectangle (cr,
                            tag_data->bounds.x - 1,

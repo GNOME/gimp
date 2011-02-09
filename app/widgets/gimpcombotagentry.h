@@ -41,7 +41,7 @@ struct _GimpComboTagEntry
   PangoAttrList  *normal_item_attr;
   PangoAttrList  *selected_item_attr;
   PangoAttrList  *insensitive_item_attr;
-  GdkColor        selected_item_color;
+  GdkRGBA         selected_item_color;
 };
 
 struct _GimpComboTagEntryClass
