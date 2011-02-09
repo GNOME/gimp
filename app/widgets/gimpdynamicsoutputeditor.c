@@ -65,13 +65,13 @@ struct
 }
 inputs[] =
 {
-  { "use-pressure",  "pressure-curve",  N_("Pressure"),  { 0.5, 0.0, 0.0, 1.0 } },
-  { "use-velocity",  "velocity-curve",  N_("Velocity"),  { 0.0, 0.5, 0.0, 1.0 } },
-  { "use-direction", "direction-curve", N_("Direction"), { 0.0, 0.0, 0.5, 1.0 } },
-  { "use-tilt",      "tilt-curve",      N_("Tilt"),      { 0.5, 0.5, 0.0, 1.0 } },
-  { "use-wheel",     "wheel-curve",     N_("Wheel"),     { 0.5, 0.0, 0.5, 1.0 } },
-  { "use-random",    "random-curve",    N_("Random"),    { 0.0, 0.5, 0.5, 1.0 } },
-  { "use-fade",      "fade-curve",      N_("Fade"),      { 0.5, 0.5, 0.5, 1.0 } }
+  { "use-pressure",  "pressure-curve",  N_("Pressure"),  { 1.0, 0.0, 0.0, 1.0 } },
+  { "use-velocity",  "velocity-curve",  N_("Velocity"),  { 0.0, 1.0, 0.0, 1.0 } },
+  { "use-direction", "direction-curve", N_("Direction"), { 0.0, 0.0, 1.0, 1.0 } },
+  { "use-tilt",      "tilt-curve",      N_("Tilt"),      { 1.0, 1.0, 0.0, 1.0 } },
+  { "use-wheel",     "wheel-curve",     N_("Wheel"),     { 1.0, 0.0, 1.0, 1.0 } },
+  { "use-random",    "random-curve",    N_("Random"),    { 0.0, 1.0, 1.0, 1.0 } },
+  { "use-fade",      "fade-curve",      N_("Fade"),      { 0.2, 0.2, 0.2, 1.0 } }
 };
 
 
@@ -241,6 +241,12 @@ gimp_dynamics_output_editor_constructed (GObject *object)
 
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
                                                -1, NULL,
+                                               gimp_cell_renderer_color_new (),
+                                               "color", INPUT_COLUMN_COLOR,
+                                               NULL);
+
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
+                                               -1, NULL,
                                                cell,
                                                "active", INPUT_COLUMN_USE_INPUT,
                                                NULL);
@@ -249,12 +255,6 @@ gimp_dynamics_output_editor_constructed (GObject *object)
                                                -1, NULL,
                                                gtk_cell_renderer_text_new (),
                                                "text", INPUT_COLUMN_NAME,
-                                               NULL);
-
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view),
-                                               -1, NULL,
-                                               gimp_cell_renderer_color_new (),
-                                               "color", INPUT_COLUMN_COLOR,
                                                NULL);
 
   gtk_box_pack_start (GTK_BOX (editor), view, FALSE, FALSE, 0);
