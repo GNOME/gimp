@@ -17,6 +17,8 @@
 
 #include <string.h>
 
+#include <glib/gstdio.h>
+
 #include <gegl.h>
 
 #include <gtk/gtk.h>
@@ -323,7 +325,6 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
 
   /* Load from file */
   loaded_image = gimp_test_load_image (image->gimp, uri);
-  g_free (uri);
 
   /* Assert on the loaded file. If success, it means that there is no
    * significant information loss when we wrote the image to a file
@@ -333,6 +334,9 @@ gimp_write_and_read_file (gboolean with_unusual_stuff,
                          with_unusual_stuff,
                          compat_paths,
                          use_gimp_2_8_features);
+
+  g_unlink (uri);
+  g_free (uri);
 }
 
 /**

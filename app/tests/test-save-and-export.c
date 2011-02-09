@@ -19,6 +19,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -246,6 +247,8 @@ saved_imported_file_uris (GimpTestFixture *fixture,
   g_assert_cmpstr (gimp_image_get_uri (image), ==, save_uri);
   g_assert (gimp_image_get_imported_uri (image) == NULL);
   g_assert (gimp_image_get_exported_uri (image) == NULL);
+
+  g_unlink (save_filename);
 }
 
 /**
@@ -285,6 +288,8 @@ exported_file_uris (GimpTestFixture *fixture,
   g_assert (gimp_image_get_uri (image) == NULL);
   g_assert (gimp_image_get_imported_uri (image) == NULL);
   g_assert_cmpstr (gimp_image_get_exported_uri (image), ==, save_uri);
+
+  g_unlink (save_filename);
 }
 
 int main(int argc, char **argv)
