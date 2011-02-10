@@ -68,7 +68,7 @@ inputs[] =
   { "use-pressure",  "pressure-curve",  N_("Pressure"),  { 1.0, 0.0, 0.0, 1.0 } },
   { "use-velocity",  "velocity-curve",  N_("Velocity"),  { 0.0, 1.0, 0.0, 1.0 } },
   { "use-direction", "direction-curve", N_("Direction"), { 0.0, 0.0, 1.0, 1.0 } },
-  { "use-tilt",      "tilt-curve",      N_("Tilt"),      { 1.0, 1.0, 0.0, 1.0 } },
+  { "use-tilt",      "tilt-curve",      N_("Tilt"),      { 1.0, 0.5, 0.0, 1.0 } },
   { "use-wheel",     "wheel-curve",     N_("Wheel"),     { 1.0, 0.0, 1.0, 1.0 } },
   { "use-random",    "random-curve",    N_("Random"),    { 0.0, 1.0, 1.0, 1.0 } },
   { "use-fade",      "fade-curve",      N_("Fade"),      { 0.2, 0.2, 0.2, 1.0 } }
@@ -394,7 +394,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
   GimpDynamicsOutputEditorPrivate *private = GET_PRIVATE (editor);
   gint                             i;
 
-  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view), NULL);
+  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view), NULL, NULL);
   gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (private->curve_view));
 
   for (i = 0; i < G_N_ELEMENTS (inputs); i++)
@@ -410,7 +410,7 @@ gimp_dynamics_output_editor_activate_input (GimpDynamicsOutputEditor *editor,
       if (input == i)
         {
           gimp_curve_view_set_curve (GIMP_CURVE_VIEW (private->curve_view),
-                                     input_curve);
+                                     input_curve, &inputs[i].color);
           private->active_curve = input_curve;
         }
       else if (use_input)

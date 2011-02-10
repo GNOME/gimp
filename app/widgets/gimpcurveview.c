@@ -24,6 +24,7 @@
 
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -242,7 +243,7 @@ gimp_curve_view_dispose (GObject *object)
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (object);
 
-  gimp_curve_view_set_curve (view, NULL);
+  gimp_curve_view_set_curve (view, NULL, NULL);
 
   if (view->bg_curves)
     gimp_curve_view_remove_all_backgrounds (view);
@@ -513,7 +514,10 @@ gimp_curve_view_expose (GtkWidget      *widget,
     }
 
   /*  Draw the curve  */
-  gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+  if (view->curve_color)
+    gimp_cairo_set_source_rgb (cr, view->curve_color);
+  else
+    gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
   gimp_curve_view_draw_curve (view, cr, view->curve,
                               width, height, border);
@@ -1088,7 +1092,8 @@ gimp_curve_view_curve_dirty (GimpCurve     *curve,
 
 void
 gimp_curve_view_set_curve (GimpCurveView *view,
-                           GimpCurve     *curve)
+                           GimpCurve     *curve,
+                           const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
   g_return_if_fail (curve == NULL || GIMP_IS_CURVE (curve));
@@ -1113,6 +1118,14 @@ gimp_curve_view_set_curve (GimpCurveView *view,
                         G_CALLBACK (gimp_curve_view_curve_dirty),
                         view);
     }
+
+  if (view->curve_color)
+    g_free (view->curve_color);
+
+  if (color)
+    view->curve_color = g_memdup (color, sizeof (GimpRGB));
+  else
+    view->curve_color = NULL;
 
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
