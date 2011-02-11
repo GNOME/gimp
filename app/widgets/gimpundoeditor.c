@@ -432,7 +432,8 @@ gimp_undo_editor_select_item (GimpContainerView *view,
        */
       while (top_undo_item != NULL)
         {
-          gimp_image_undo (image);
+          if (! gimp_image_undo (image))
+            break;
 
           top_undo_item = gimp_undo_stack_peek (undo_stack);
         }
@@ -444,7 +445,8 @@ gimp_undo_editor_select_item (GimpContainerView *view,
        */
       while (top_undo_item != undo)
         {
-          gimp_image_undo (image);
+          if(! gimp_image_undo (image))
+            break;
 
           top_undo_item = gimp_undo_stack_peek (undo_stack);
         }
@@ -456,7 +458,8 @@ gimp_undo_editor_select_item (GimpContainerView *view,
        */
       while (top_undo_item != undo)
         {
-          gimp_image_redo (image);
+          if (! gimp_image_redo (image))
+            break;
 
           top_undo_item = gimp_undo_stack_peek (undo_stack);
         }
