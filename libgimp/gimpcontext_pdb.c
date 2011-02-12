@@ -907,7 +907,9 @@ gimp_context_get_antialias (void)
  * values which give the appearance of a sharper, less pixelized edge.
  * This should be set as TRUE most of the time unless a binary-only
  * selection is wanted. This settings affects the following procedures:
- * The entire gimp-image-select-foo group of procedures.
+ * gimp_image_select_color(), gimp_image_select_ellipse(),
+ * gimp_image_select_polygon(), gimp_image_select_fuzzy(),
+ * gimp_image_select_round_rectangle(), gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -971,9 +973,11 @@ gimp_context_get_feather (void)
  * This procedure modifies the feather setting. If the feather option
  * is enabled, selections will be blurred before combining. The blur is
  * a gaussian blur; its radii can be controlled using
- * gimp_context_set_feather_radius(). This settings affects the
- * following procedures: The entire gimp-image-select-foo group of
- * procedures.
+ * gimp_context_set_feather_radius(). This setting affects the
+ * following procedures: gimp_image_select_color(),
+ * gimp_image_select_ellipse(), gimp_image_select_polygon(),
+ * gimp_image_select_fuzzy(), gimp_image_select_rectangle(),
+ * gimp_image_select_round_rectangle(), gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -1046,9 +1050,9 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  *
  * Set the feather radius setting.
  *
- * This procedure modifies the feather radius setting. This settings
- * affects the following procedures: The entire gimp-image-select-foo
- * group of procedures.
+ * This procedure modifies the feather radius setting. This setting
+ * affects the all procedures that are affected by
+ * gimp_context_set_feather().
  *
  * Returns: TRUE on success.
  *
@@ -1446,9 +1450,13 @@ gimp_context_get_interpolation (void)
  *
  * Set the interpolation type.
  *
- * This procedure modifies the interpolation setting. It affects the
- * following procedures: all transform procedures which can produce
- * sub-pixel results, gimp_image_scale(), gimp_layer_scale().
+ * This procedure modifies the interpolation setting. This setting
+ * affects affects the following procedures:
+ * gimp_item_transform_flip(), gimp_item_transform_perspective(),
+ * gimp_item_transform_rotate(), gimp_item_transform_scale(),
+ * gimp_item_transform_shear(), gimp_item_transform_2d(),
+ * gimp_item_transform_matrix(), gimp_image_scale(),
+ * gimp_layer_scale().
  *
  * Returns: TRUE on success.
  *
@@ -1511,7 +1519,12 @@ gimp_context_get_transform_direction (void)
  *
  * Set the transform direction.
  *
- * This procedure modifies the transform direction setting.
+ * This procedure modifies the transform direction setting. This
+ * setting affects affects the following procedures:
+ * gimp_item_transform_flip(), gimp_item_transform_perspective(),
+ * gimp_item_transform_rotate(), gimp_item_transform_scale(),
+ * gimp_item_transform_shear(), gimp_item_transform_2d(),
+ * gimp_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
@@ -1577,7 +1590,13 @@ gimp_context_get_transform_resize (void)
  * This procedure modifies the transform resize setting. When
  * transforming pixels, if the result of a transform operation has a
  * different size than the original area, this setting determines how
- * the resulting area is sized.
+ * the resulting area is sized. This setting affects affects the
+ * following procedures: gimp_item_transform_flip(),
+ * gimp_item_transform_flip_simple(),
+ * gimp_item_transform_perspective(), gimp_item_transform_rotate(),
+ * gimp_item_transform_rotate_simple(), gimp_item_transform_scale(),
+ * gimp_item_transform_shear(), gimp_item_transform_2d(),
+ * gimp_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
@@ -1641,7 +1660,11 @@ gimp_context_get_transform_recursion (void)
  * This procedure modifies the transform supersampling recursion level
  * setting. Whether or not a transformation does supersampling is
  * determined by the interplolation type. The recursion level defaults
- * to 3, which is a nice default value.
+ * to 3, which is a nice default value. This setting affects affects
+ * the following procedures: gimp_item_transform_flip(),
+ * gimp_item_transform_perspective(), gimp_item_transform_rotate(),
+ * gimp_item_transform_scale(), gimp_item_transform_shear(),
+ * gimp_item_transform_2d(), gimp_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
