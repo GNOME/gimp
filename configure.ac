@@ -1824,8 +1824,18 @@ AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
 # Check for xvfb-run
 ####################
 
-AC_PATH_PROG(XVFB_RUN, xvfb-run, no)
-AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$XVFB_RUN" != "xno")
+AC_ARG_WITH(xvfb-run,  [  --without-xvfb-run      Do not use xvfb-run for UI-dependent automatic tests])
+
+have_xvfb_run="no (disabled)"
+if test "x$with_xvfb_run" != "xno"; then
+  AC_PATH_PROG(XVFB_RUN, xvfb-run, no)
+  if test "x$XVFB_RUN" != "xno"; then
+    have_xvfb_run="yes"
+  else
+    have_xvfb_run="no (not found)"
+  fi
+fi
+AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" == "xyes")
 
 
 ######################################
@@ -2259,4 +2269,7 @@ Optional Modules:
   DirectInput (Win32): $have_dx_dinput
   Color Correction:    $have_lcms
   Soft Proof:          $have_lcms
+
+Tests:
+  Use xvfb-run         $have_xvfb_run
 ]);
