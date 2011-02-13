@@ -137,6 +137,228 @@ gimp_image_set_cmap (gint32        image_ID,
 }
 
 /**
+ * gimp_image_get_layer_position:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ *
+ * Deprecated: Use gimp_image_get_item_position() instead.
+ *
+ * Returns: The position of the layer in the layer stack.
+ *
+ * Since: GIMP 2.4
+ **/
+gint
+gimp_image_get_layer_position (gint32 image_ID,
+                               gint32 layer_ID)
+{
+  return gimp_image_get_item_position (image_ID, layer_ID);
+}
+
+/**
+ * gimp_image_raise_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer to raise.
+ *
+ * Deprecated: Use gimp_image_raise_item() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_raise_layer (gint32 image_ID,
+                        gint32 layer_ID)
+{
+  return gimp_image_raise_item (image_ID, layer_ID);
+}
+
+/**
+ * gimp_image_lower_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer to lower.
+ *
+ * Deprecated: Use gimp_image_lower_item() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_lower_layer (gint32 image_ID,
+                        gint32 layer_ID)
+{
+  return gimp_image_lower_item (image_ID, layer_ID);
+}
+
+/**
+ * gimp_image_raise_layer_to_top:
+ * @image_ID: The image.
+ * @layer_ID: The layer to raise to top.
+ *
+ * Deprecated: Use gimp_image_raise_item_to_top() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_raise_layer_to_top (gint32 image_ID,
+                               gint32 layer_ID)
+{
+  return gimp_image_raise_item_to_top (image_ID, layer_ID);
+}
+
+/**
+ * gimp_image_lower_layer_to_bottom:
+ * @image_ID: The image.
+ * @layer_ID: The layer to lower to bottom.
+ *
+ * Deprecated: Use gimp_image_lower_item_to_bottom() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_lower_layer_to_bottom (gint32 image_ID,
+                                  gint32 layer_ID)
+{
+  return gimp_image_lower_item_to_bottom (image_ID, layer_ID);
+}
+
+/**
+ * gimp_image_get_channel_position:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ *
+ * Deprecated: Use gimp_image_get_item_position() instead.
+ *
+ * Returns: The position of the channel in the channel stack.
+ *
+ * Since: GIMP 2.4
+ **/
+gint
+gimp_image_get_channel_position (gint32 image_ID,
+                                 gint32 channel_ID)
+{
+  return gimp_image_get_item_position (image_ID, channel_ID);
+}
+
+/**
+ * gimp_image_raise_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel to raise.
+ *
+ * Deprecated: Use gimp_image_raise_item() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_raise_channel (gint32 image_ID,
+                          gint32 channel_ID)
+{
+  return gimp_image_raise_item (image_ID, channel_ID);
+}
+
+/**
+ * gimp_image_lower_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel to lower.
+ *
+ * Deprecated: Use gimp_image_lower_item() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_lower_channel (gint32 image_ID,
+                          gint32 channel_ID)
+{
+  return gimp_image_lower_item (image_ID, channel_ID);
+}
+
+/**
+ * gimp_image_get_vectors_position:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object.
+ *
+ * Deprecated: Use gimp_image_get_item_position() instead.
+ *
+ * Returns: The position of the vectors object in the vectors stack.
+ *
+ * Since: GIMP 2.4
+ **/
+gint
+gimp_image_get_vectors_position (gint32 image_ID,
+                                 gint32 vectors_ID)
+{
+  return gimp_image_get_item_position (image_ID, vectors_ID);
+}
+
+/**
+ * gimp_image_raise_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to raise.
+ *
+ * Deprecated: Use gimp_image_raise_item() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_image_raise_vectors (gint32 image_ID,
+                          gint32 vectors_ID)
+{
+  return gimp_image_raise_item (image_ID, vectors_ID);
+}
+
+/**
+ * gimp_image_lower_vectors:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to lower.
+ *
+ * Deprecated: Use gimp_image_lower_item() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_image_lower_vectors (gint32 image_ID,
+                          gint32 vectors_ID)
+{
+  return gimp_image_lower_item (image_ID, vectors_ID);
+}
+
+/**
+ * gimp_image_raise_vectors_to_top:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to raise to top.
+ *
+ * Deprecated: Use gimp_image_raise_item_to_top() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_image_raise_vectors_to_top (gint32 image_ID,
+                                 gint32 vectors_ID)
+{
+  return gimp_image_raise_item_to_top (image_ID, vectors_ID);
+}
+
+/**
+ * gimp_image_lower_vectors_to_bottom:
+ * @image_ID: The image.
+ * @vectors_ID: The vectors object to lower to bottom.
+ *
+ * Deprecated: Use gimp_image_lower_item_to_bottom() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_image_lower_vectors_to_bottom (gint32 image_ID,
+                                    gint32 vectors_ID)
+{
+  return gimp_image_lower_item_to_bottom (image_ID, vectors_ID);
+}
+
+/**
  * gimp_image_attach_new_parasite:
  * @image_ID: the ID of the image to attach the #GimpParasite to.
  * @name: the name of the #GimpParasite to create and attach.
