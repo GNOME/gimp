@@ -360,14 +360,15 @@ compute_preview_image (void)
   clear_light_marker ();
 }
 
-void
-draw_preview_image (void)
+gboolean
+preview_expose (GtkWidget      *widget,
+                GdkEventExpose *eevent)
 {
   gint startx, starty, pw, ph;
   GdkColor  color;
   cairo_t *cr;
 
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
+  cr = gdk_cairo_create (eevent->window);
 
   color.red   = 0xFFFF;
   color.green = 0xFFFF;
@@ -388,4 +389,6 @@ draw_preview_image (void)
   draw_lights (startx, starty, pw, ph);
 
   cairo_destroy (cr);
+
+  return FALSE;
 }

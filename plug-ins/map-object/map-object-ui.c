@@ -299,10 +299,6 @@ preview_events (GtkWidget *area,
 
   switch (event->type)
     {
-      case GDK_EXPOSE:
-        draw_preview_image ();
-        break;
-
       case GDK_ENTER_NOTIFY:
         break;
 
@@ -1317,6 +1313,10 @@ main_dialog (GimpDrawable *drawable)
 
   g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
+                    previewarea);
+
+  g_signal_connect (previewarea, "expose-event",
+                    G_CALLBACK (preview_expose),
                     previewarea);
 
   hbox = gtk_hbox_new (FALSE, 6);

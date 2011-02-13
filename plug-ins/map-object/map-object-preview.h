@@ -13,11 +13,12 @@ extern gint       lightx,lighty;
 /* Externally visible functions */
 /* ============================ */
 
-void compute_preview_image  (void);
-void draw_preview_image     (void);
-gint check_light_hit        (gint xpos,
-			     gint ypos);
-void update_light           (gint xpos,
-			     gint ypos);
+void     compute_preview_image  (void);
+gboolean preview_expose         (GtkWidget      *widget,
+                                 GdkEventExpose *eevent);
+gint     check_light_hit        (gint            xpos,
+                                 gint            ypos);
+void     update_light           (gint            xpos,
+                                 gint            ypos);
 
 #endif  /* __MAPOBJECT_PREVIEW_H__ */
