@@ -322,7 +322,7 @@ update_light (gint xpos,
 
   gimp_vector_2d_to_3d (startx, starty, pw, ph, xpos, ypos,
 			&mapvals.viewpoint, &mapvals.lightsource.position);
-  draw_lights (startx, starty,pw, ph);
+  draw_lights (startx, starty, pw, ph);
 }
 
 /******************************************************************/

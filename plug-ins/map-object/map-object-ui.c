@@ -99,7 +99,7 @@ update_light_pos_entries (void)
                                    gimp_double_adjustment_update,
                                    &mapvals.lightsource.position.y);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (yadj),
-			    mapvals.lightsource.position.x);
+			    mapvals.lightsource.position.y);
   g_signal_handlers_unblock_by_func (yadj,
                                      gimp_double_adjustment_update,
                                      &mapvals.lightsource.position.y);
