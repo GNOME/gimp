@@ -80,7 +80,9 @@ double_adjustment_update (GtkAdjustment *adjustment,
   gimp_double_adjustment_update (adjustment, data);
 
   if (mapvals.livepreview)
-    draw_preview_image (TRUE);
+    compute_preview_image ();
+
+  gtk_widget_queue_draw (previewarea);
 }
 
 static void
@@ -124,7 +126,8 @@ toggle_update (GtkWidget *widget,
 {
   gimp_toggle_button_update (widget, data);
 
-  draw_preview_image (TRUE);
+  compute_preview_image ();
+  gtk_widget_queue_draw (previewarea);
 }
 
 /*****************************************/
@@ -154,7 +157,9 @@ lightmenu_callback (GtkWidget *widget,
     }
 
   if (mapvals.livepreview)
-    draw_preview_image (TRUE);
+    compute_preview_image ();
+
+  gtk_widget_queue_draw (previewarea);
 }
 
 /***************************************/
@@ -170,7 +175,9 @@ mapmenu_callback (GtkWidget *widget,
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
-  draw_preview_image (TRUE);
+  compute_preview_image ();
+
+  gtk_widget_queue_draw (previewarea);
 
   children = gtk_container_get_children (GTK_CONTAINER (options_note_book));
   n_children = g_list_length (children);
@@ -234,7 +241,9 @@ static void
 preview_callback (GtkWidget *widget,
 		  gpointer   data)
 {
-  draw_preview_image (TRUE);
+  compute_preview_image ();
+
+  gtk_widget_queue_draw (previewarea);
 }
 
 static void
@@ -242,7 +251,9 @@ zoomed_callback (GimpZoomModel *model)
 {
   mapvals.zoom = gimp_zoom_model_get_factor (model);
 
-  draw_preview_image (TRUE);
+  compute_preview_image ();
+
+  gtk_widget_queue_draw (previewarea);
 }
 
 /**********************************************/
@@ -289,7 +300,7 @@ preview_events (GtkWidget *area,
   switch (event->type)
     {
       case GDK_EXPOSE:
-        draw_preview_image (FALSE);
+        draw_preview_image ();
         break;
 
       case GDK_ENTER_NOTIFY:
@@ -315,7 +326,9 @@ preview_events (GtkWidget *area,
       case GDK_BUTTON_RELEASE:
         if (light_hit == TRUE)
 	  {
-	    draw_preview_image (TRUE);
+            compute_preview_image ();
+
+	    gtk_widget_queue_draw (previewarea);
 	  }
         else
           {
@@ -1360,7 +1373,8 @@ main_dialog (GimpDrawable *drawable)
   }
 
   image_setup (drawable, TRUE);
-  draw_preview_image (TRUE);
+
+  compute_preview_image ();
 
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;

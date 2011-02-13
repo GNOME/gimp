@@ -32,8 +32,14 @@ static BackBuffer backbuf = { 0, 0, 0, 0, NULL };
 /* Protos */
 /* ====== */
 
-static void draw_light_marker       (gint        xpos,
-				     gint        ypos);
+static void compute_preview         (gint x,
+                                     gint y,
+                                     gint w,
+                                     gint h,
+                                     gint pw,
+                                     gint ph);
+static void draw_light_marker       (gint xpos,
+				     gint ypos);
 static void clear_light_marker      (void);
 
 /**************************************************************/
@@ -41,7 +47,7 @@ static void clear_light_marker      (void);
 /* dimensions (w,h), placing the result in preview_RGB_data.  */
 /**************************************************************/
 
-void
+static void
 compute_preview (gint x,
 		 gint y,
 		 gint w,
@@ -330,7 +336,32 @@ update_light (gint xpos,
 /******************************************************************/
 
 void
-draw_preview_image (gint docompute)
+compute_preview_image (void)
+{
+  GdkDisplay *display = gtk_widget_get_display (previewarea);
+  GdkCursor  *cursor;
+  gint       startx, starty, pw, ph;
+
+  pw = PREVIEW_WIDTH * mapvals.zoom;
+  ph = PREVIEW_HEIGHT * mapvals.zoom;
+  startx = (PREVIEW_WIDTH - pw) / 2;
+  starty = (PREVIEW_HEIGHT - ph) / 2;
+
+  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+  gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
+  gdk_cursor_unref (cursor);
+
+  compute_preview (0, 0, width - 1, height - 1, pw, ph);
+
+  cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+  gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
+  gdk_cursor_unref (cursor);
+
+  clear_light_marker ();
+}
+
+void
+draw_preview_image (void)
 {
   gint startx, starty, pw, ph;
   GdkColor  color;
@@ -347,27 +378,6 @@ draw_preview_image (gint docompute)
   ph = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
-
-  if (docompute == TRUE)
-    {
-      GdkDisplay *display = gtk_widget_get_display (previewarea);
-      GdkCursor  *cursor;
-
-      cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
-      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-      gdk_cursor_unref (cursor);
-
-      compute_preview (0, 0, width - 1, height - 1, pw, ph);
-
-      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
-      gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
-      gdk_cursor_unref (cursor);
-
-      clear_light_marker ();
-    }
-
-  if (pw != PREVIEW_WIDTH || ph != PREVIEW_HEIGHT)
-    gdk_window_clear (gtk_widget_get_window (previewarea));
 
   cairo_set_source_surface (cr, preview_surface, startx, starty);
   cairo_rectangle (cr, startx, starty, pw, ph);

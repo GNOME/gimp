@@ -13,13 +13,8 @@ extern gint       lightx,lighty;
 /* Externally visible functions */
 /* ============================ */
 
-void compute_preview        (gint x,
-			     gint y,
-			     gint w,
-			     gint h,
-			     gint pw,
-			     gint ph);
-void draw_preview_image     (gint docompute);
+void compute_preview_image  (void);
+void draw_preview_image     (void);
 gint check_light_hit        (gint xpos,
 			     gint ypos);
 void update_light           (gint xpos,
