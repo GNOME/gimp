@@ -17,17 +17,9 @@
 #include "map-object-preview.h"
 
 
-typedef struct
-{
-  gint x, y, w, h;
-  cairo_surface_t *image;
-} BackBuffer;
-
 gdouble mat[3][4];
 
 gint       lightx, lighty;
-
-static BackBuffer backbuf = { 0, 0, 0, 0, NULL };
 
 /* Protos */
 /* ====== */
@@ -181,7 +173,7 @@ draw_light_marker (gint xpos,
 		   gint ypos)
 {
   GdkColor  color;
-  cairo_t *cr, *cr_p;
+  cairo_t *cr;
   gint pw, ph, startx, starty;
 
   if (mapvals.lightsource.type != POINT_LIGHT)
@@ -203,40 +195,6 @@ draw_light_marker (gint xpos,
 
   lightx = xpos;
   lighty = ypos;
-
-  /* Save background */
-  /* =============== */
-
-  backbuf.x = lightx - 7;
-  backbuf.y = lighty - 7;
-  backbuf.w = 14;
-  backbuf.h = 14;
-
-  /* X doesn't like images that's outside a window, make sure */
-  /* we get the backbuffer image from within the boundaries   */
-  /* ======================================================== */
-
-  if (backbuf.x < startx)
-    backbuf.x = startx;
-  else if ((backbuf.x + backbuf.w) > startx + pw)
-    backbuf.w = MAX(startx + pw - backbuf.x, 0);
-  if (backbuf.y < starty)
-    backbuf.y = starty;
-  else if ((backbuf.y + backbuf.h) > starty + ph)
-    backbuf.h = MAX(starty + ph - backbuf.y, 0);
-
-  if (backbuf.image)
-    cairo_surface_destroy (backbuf.image);
-
-  backbuf.image = cairo_surface_create_similar (preview_surface,
-                                                CAIRO_CONTENT_COLOR,
-                                                PREVIEW_WIDTH, PREVIEW_HEIGHT);
-  cr_p = cairo_create (backbuf.image);
-  cairo_rectangle (cr_p, backbuf.x, backbuf.y, backbuf.w, backbuf.h);
-  cairo_clip (cr_p);
-  cairo_set_source_surface (cr_p, preview_surface, startx, starty);
-  cairo_paint (cr_p);
-  cairo_destroy (cr_p);
 
   cairo_arc (cr, lightx, lighty, 7, 0, 2 * M_PI);
   cairo_fill (cr);
@@ -287,9 +245,9 @@ update_light (gint xpos,
   gtk_widget_queue_draw (previewarea);
 }
 
-/******************************************************************/
-/* Draw preview image. if DoCompute is TRUE then recompute image. */
-/******************************************************************/
+/**************************/
+/* Compute preview image. */
+/**************************/
 
 void
 compute_preview_image (void)
