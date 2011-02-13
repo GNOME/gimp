@@ -166,7 +166,7 @@
 
 (script-fu-register "script-fu-selection-round"
   ""
-  "Round the corners of the current selection (deprecated, use Rounded Rectangle)"
+  "This procedure is deprecated! Use 'script-fu-selection-rounded-rectangle' instead."
   "Sven Neumann"              ; authors
   "Sven Neumann"              ; copyright
   "1998/02/06"
