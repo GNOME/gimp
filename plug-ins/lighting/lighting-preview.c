@@ -390,11 +390,6 @@ draw_handles (void)
         }
 
       color.red   = 0x0;
-      color.green = 0x0;
-      color.blue  = 0x0;
-      gdk_cairo_set_source_color (cr, &color);
-
-      color.red   = 0x0;
       color.green = 0x4000;
       color.blue  = 0xFFFF;
       gdk_cairo_set_source_color (cr, &color);
