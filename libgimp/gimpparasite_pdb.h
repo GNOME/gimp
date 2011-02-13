@@ -28,40 +28,20 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpParasite* gimp_parasite_find            (const gchar          *name);
-gboolean      gimp_parasite_attach          (const GimpParasite   *parasite);
-gboolean      gimp_parasite_detach          (const gchar          *name);
-gboolean      gimp_parasite_list            (gint                 *num_parasites,
-                                             gchar              ***parasites);
-GimpParasite* gimp_image_parasite_find      (gint32                image_ID,
-                                             const gchar          *name);
-gboolean      gimp_image_parasite_attach    (gint32                image_ID,
-                                             const GimpParasite   *parasite);
-gboolean      gimp_image_parasite_detach    (gint32                image_ID,
-                                             const gchar          *name);
-gboolean      gimp_image_parasite_list      (gint32                image_ID,
-                                             gint                 *num_parasites,
-                                             gchar              ***parasites);
-#ifndef GIMP_DISABLE_DEPRECATED
-GimpParasite* gimp_drawable_parasite_find   (gint32                drawable_ID,
-                                             const gchar          *name);
-gboolean      gimp_drawable_parasite_attach (gint32                drawable_ID,
-                                             const GimpParasite   *parasite);
-gboolean      gimp_drawable_parasite_detach (gint32                drawable_ID,
-                                             const gchar          *name);
-gboolean      gimp_drawable_parasite_list   (gint32                drawable_ID,
-                                             gint                 *num_parasites,
-                                             gchar              ***parasites);
-GimpParasite* gimp_vectors_parasite_find    (gint32                vectors_ID,
-                                             const gchar          *name);
-gboolean      gimp_vectors_parasite_attach  (gint32                vectors_ID,
-                                             const GimpParasite   *parasite);
-gboolean      gimp_vectors_parasite_detach  (gint32                vectors_ID,
-                                             const gchar          *name);
-gboolean      gimp_vectors_parasite_list    (gint32                vectors_ID,
-                                             gint                 *num_parasites,
-                                             gchar              ***parasites);
-#endif /* GIMP_DISABLE_DEPRECATED */
+GimpParasite* gimp_parasite_find         (const gchar          *name);
+gboolean      gimp_parasite_attach       (const GimpParasite   *parasite);
+gboolean      gimp_parasite_detach       (const gchar          *name);
+gboolean      gimp_parasite_list         (gint                 *num_parasites,
+                                          gchar              ***parasites);
+GimpParasite* gimp_image_parasite_find   (gint32                image_ID,
+                                          const gchar          *name);
+gboolean      gimp_image_parasite_attach (gint32                image_ID,
+                                          const GimpParasite   *parasite);
+gboolean      gimp_image_parasite_detach (gint32                image_ID,
+                                          const gchar          *name);
+gboolean      gimp_image_parasite_list   (gint32                image_ID,
+                                          gint                 *num_parasites,
+                                          gchar              ***parasites);
 
 
 G_END_DECLS

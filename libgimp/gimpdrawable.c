@@ -544,6 +544,72 @@ gimp_drawable_set_tattoo (gint32 drawable_ID,
 }
 
 /**
+ * gimp_drawable_parasite_find:
+ * @drawable_ID: The drawable.
+ * @name: The name of the parasite to find.
+ *
+ * Deprecated: Use gimp_item_find_parasite() instead.
+ *
+ * Returns: The found parasite.
+ **/
+GimpParasite *
+gimp_drawable_parasite_find (gint32       drawable_ID,
+                             const gchar *name)
+{
+  return gimp_item_find_parasite (drawable_ID, name);
+}
+
+/**
+ * gimp_drawable_parasite_attach:
+ * @drawable_ID: The drawable.
+ * @parasite: The parasite to attach to a drawable.
+ *
+ * Deprecated: Use gimp_item_attach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_parasite_attach (gint32              drawable_ID,
+                               const GimpParasite *parasite)
+{
+  return gimp_item_attach_parasite (drawable_ID, parasite);
+}
+
+/**
+ * gimp_drawable_parasite_detach:
+ * @drawable_ID: The drawable.
+ * @name: The name of the parasite to detach from a drawable.
+ *
+ * Deprecated: Use gimp_item_detach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_parasite_detach (gint32       drawable_ID,
+                               const gchar *name)
+{
+  return gimp_item_detach_parasite (drawable_ID, name);
+}
+
+/**
+ * gimp_drawable_parasite_list:
+ * @drawable_ID: The drawable.
+ * @num_parasites: The number of attached parasites.
+ * @parasites: The names of currently attached parasites.
+ *
+ * Deprecated: Use gimp_item_list_parasites() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_drawable_parasite_list (gint32    drawable_ID,
+                             gint     *num_parasites,
+                             gchar  ***parasites)
+{
+  return gimp_item_list_parasites (drawable_ID, num_parasites, parasites);
+}
+
+/**
  * gimp_drawable_attach_new_parasite:
  * @drawable_ID: the ID of the #GimpDrawable to attach the #GimpParasite to.
  * @name: the name of the #GimpParasite to create and attach.
