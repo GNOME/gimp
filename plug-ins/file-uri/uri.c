@@ -99,7 +99,10 @@ query (void)
 
   GError *error = NULL;
 
-  if (! uri_backend_init (PLUG_IN_BINARY, FALSE, 0, &error))
+  if (! uri_backend_init (PLUG_IN_BINARY,
+                          FALSE,
+                          GIMP_RUN_NONINTERACTIVE,
+                          &error))
     {
       g_message ("%s", error->message);
       g_clear_error (&error);
