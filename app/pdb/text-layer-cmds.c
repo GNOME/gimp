@@ -1102,7 +1102,8 @@ text_layer_resize_invoker (GimpProcedure      *procedure,
     {
       if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
         {
-          gdouble  xres, yres;
+          GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
+          gdouble   xres, yres;
 
           gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
                                      &xres, &yres);
@@ -1111,10 +1112,10 @@ text_layer_resize_invoker (GimpProcedure      *procedure,
                                _("Set text layer attribute"),
                                "box-mode",   GIMP_TEXT_BOX_FIXED,
                                "box-width",  gimp_pixels_to_units (width,
-                                                                   GIMP_UNIT_PIXEL,
+                                                                   text->unit,
                                                                    xres),
                                "box-height", gimp_pixels_to_units (height,
-                                                                   GIMP_UNIT_PIXEL,
+                                                                   text->unit,
                                                                    yres),
                                NULL);
         }
