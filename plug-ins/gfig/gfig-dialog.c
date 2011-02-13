@@ -225,7 +225,7 @@ gfig_dialog (void)
    */
   gfig_list = NULL;
   undo_level = -1;
-  parasite = gimp_item_parasite_find (gfig_context->drawable_id, "gfig");
+  parasite = gimp_item_find_parasite (gfig_context->drawable_id, "gfig");
   gfig_context->enable_repaint = FALSE;
 
   /* debug */

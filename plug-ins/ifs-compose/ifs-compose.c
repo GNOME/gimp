@@ -384,7 +384,7 @@ run (const gchar      *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_item_parasite_find (drawable->drawable_id,
+      parasite = gimp_item_find_parasite (drawable->drawable_id,
                                           PLUG_IN_PARASITE);
       if (parasite)
         {
@@ -472,7 +472,7 @@ run (const gchar      *name,
                                         GIMP_PARASITE_PERSISTENT |
                                         GIMP_PARASITE_UNDOABLE,
                                         strlen (str) + 1, str);
-          gimp_item_parasite_attach (drawable->drawable_id, parasite);
+          gimp_item_attach_parasite (drawable->drawable_id, parasite);
           gimp_parasite_free (parasite);
 
           g_free (str);

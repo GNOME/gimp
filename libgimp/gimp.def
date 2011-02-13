@@ -448,7 +448,10 @@ EXPORTS
 	gimp_install_procedure
 	gimp_install_temp_proc
 	gimp_invert
+	gimp_item_attach_parasite
 	gimp_item_delete
+	gimp_item_detach_parasite
+	gimp_item_find_parasite
 	gimp_item_get_children
 	gimp_item_get_image
 	gimp_item_get_linked
@@ -466,10 +469,7 @@ EXPORTS
 	gimp_item_is_text_layer
 	gimp_item_is_valid
 	gimp_item_is_vectors
-	gimp_item_parasite_attach
-	gimp_item_parasite_detach
-	gimp_item_parasite_find
-	gimp_item_parasite_list
+	gimp_item_list_parasites
 	gimp_item_set_linked
 	gimp_item_set_lock_content
 	gimp_item_set_name

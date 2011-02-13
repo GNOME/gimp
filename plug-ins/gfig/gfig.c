@@ -730,7 +730,7 @@ gfig_save_as_parasite (void)
 
   g_string_free (string, TRUE);
 
-  if (!gimp_item_parasite_attach (gfig_context->drawable_id, parasite))
+  if (!gimp_item_attach_parasite (gfig_context->drawable_id, parasite))
     {
       g_message (_("Error trying to save figure as a parasite: "
                    "can't attach parasite to drawable."));
@@ -750,7 +750,7 @@ gfig_load_from_parasite (void)
   GimpParasite *parasite;
   GFigObj      *gfig;
 
-  parasite = gimp_item_parasite_find (gfig_context->drawable_id, "gfig");
+  parasite = gimp_item_find_parasite (gfig_context->drawable_id, "gfig");
   if (! parasite)
     return NULL;
 

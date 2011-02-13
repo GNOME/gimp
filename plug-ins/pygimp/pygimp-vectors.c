@@ -650,7 +650,7 @@ vectors_parasite_find(PyGimpVectors *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
         return NULL;
 
-    return pygimp_parasite_new(gimp_item_parasite_find(self->ID, name));
+    return pygimp_parasite_new(gimp_item_find_parasite(self->ID, name));
 }
 
 static PyObject *
@@ -662,7 +662,7 @@ vectors_parasite_attach(PyGimpVectors *self, PyObject *args)
                           &parasite))
         return NULL;
 
-    if (!gimp_item_parasite_attach(self->ID, parasite->para)) {
+    if (!gimp_item_attach_parasite(self->ID, parasite->para)) {
         PyErr_Format(pygimp_error,
                      "could not attach parasite '%s' to vectors (ID %d)",
                      parasite->para->name, self->ID);
@@ -681,7 +681,7 @@ vectors_parasite_detach(PyGimpVectors *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
         return NULL;
 
-    if (!gimp_item_parasite_detach(self->ID, name)) {
+    if (!gimp_item_detach_parasite(self->ID, name)) {
         PyErr_Format(pygimp_error,
                      "could not detach parasite '%s' from vectors (ID %d)",
                      name, self->ID);
@@ -698,7 +698,7 @@ vectors_parasite_list(PyGimpVectors *self)
     gint num_parasites;
     gchar **parasites;
 
-    if (gimp_item_parasite_list(self->ID, &num_parasites, &parasites)) {
+    if (gimp_item_list_parasites(self->ID, &num_parasites, &parasites)) {
         PyObject *ret;
         gint i;
 
