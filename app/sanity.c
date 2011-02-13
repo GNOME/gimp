@@ -354,7 +354,7 @@ sanity_check_gegl (void)
 
 #define GEGL_REQUIRED_MAJOR 0
 #define GEGL_REQUIRED_MINOR 1
-#define GEGL_REQUIRED_MICRO 4
+#define GEGL_REQUIRED_MICRO 6
 
   gegl_get_version (&gegl_major_version,
                     &gegl_minor_version,
