@@ -81,127 +81,23 @@ CODE
 }
 
 
-sub image_select_ellipse {
-    $blurb = 'Create an elliptical selection over the specified image.';
-
-    $help = <<'HELP';
-This tool creates an elliptical selection over the specified
-image. The elliptical region can be either added to, subtracted from,
-or replace the contents of the previous selection mask.
-
-This prodecure is affected by the following context setters:
-gimp_context_set_antialias(), gimp_context_set_feather(),
-gimp_context_set_feather_radius().
-HELP
-
-    &mitch_pdb_misc('2010', '2.8');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' },
-	{ name => 'x', type => 'float',
-	  desc => 'x coordinate of upper-left corner of ellipse bounding box' },
-	{ name => 'y', type => 'float',
-	  desc => 'y coordinate of upper-left corner of ellipse bounding box' },
-	{ name => 'width', type => '0 < float',
-	  desc => 'The width of the ellipse' },
-	{ name => 'height', type => '0 < float',
-	  desc => 'The height of the ellipse' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-
-  gimp_channel_select_ellipse (gimp_image_get_mask (image),
-                               (gint) x, (gint) y,
-                               (gint) width, (gint) height,
-                               operation,
-                               pdb_context->antialias,
-                               pdb_context->feather,
-                               pdb_context->feather_radius_x,
-                               pdb_context->feather_radius_y,
-                               TRUE);
-}
-CODE
-    );
-}
-
-
-sub image_select_polygon {
-    $blurb = 'Create a polygonal selection over the specified image.';
-
-    $help = <<'HELP';
-This tool creates a polygonal selection over the specified image. The
-polygonal region can be either added to, subtracted from, or replace
-the contents of the previous selection mask. The polygon is specified
-through an array of floating point numbers and its length. The length
-of array must be 2n, where n is the number of points. Each point is
-defined by 2 floating point values which correspond to the x and y
-coordinates. If the final point does not connect to the starting
-point, a connecting segment is automatically added.
-
-This prodecure is affected by the following context setters:
-gimp_context_set_antialias(), gimp_context_set_feather(),
-gimp_context_set_feather_radius().
-HELP
-
-    &mitch_pdb_misc('2010', '2.8');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'operation', type => 'enum GimpChannelOps',
-	  desc => 'The selection operation' },
-        { name => 'segs', type => 'floatarray',
-          desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
-                   pn.x, pn.y}',
-          array => { type => '2 <= int32',
-                     desc => 'Number of points (count 1 coordinate as two
-                              points)' } }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-
-  gimp_channel_select_polygon (gimp_image_get_mask (image),
-                               _("Free Select"),
-                               num_segs / 2,
-                               (GimpVector2 *) segs,
-                               operation,
-                               pdb_context->antialias,
-                               pdb_context->feather,
-                               pdb_context->feather_radius_x,
-                               pdb_context->feather_radius_y,
-                               TRUE);
-}
-CODE
-    );
-}
-
-
-sub image_select_fuzzy {
+sub image_select_contiguous_color {
     $blurb = <<'BLURB';
-Create a fuzzy selection starting at the specified coordinates on the specified
-drawable.
+Create a selection by selecting all pixels around specified coordinates
+with the same (or similar) color to that at the coordinates.
 BLURB
 
     $help = <<'HELP';
-This tool creates a fuzzy selection over the specified image. A fuzzy
-selection is determined by a seed fill under the constraints of the
-current context settings.  Essentially, the color at the specified
-coordinates (in the drawable) is measured and the selection expands
-outwards from that point to any adjacent pixels which are not
-significantly different (as determined by the threshold and criterion
-context settings). This process continues until no more expansion is
-possible. If antialiasing is turned on, the final selection mask will
-contain intermediate values based on close misses to the threshold bar
-at pixels along the seed fill boundary.
+This tool creates a contiguous selection over the specified image. A
+contiguous color selection is determined by a seed fill under the
+constraints of the current context settings.  Essentially, the color
+at the specified coordinates (in the drawable) is measured and the
+selection expands outwards from that point to any adjacent pixels
+which are not significantly different (as determined by the threshold
+and criterion context settings). This process continues until no more
+expansion is possible. If antialiasing is turned on, the final
+selection mask will contain intermediate values based on close misses
+to the threshold bar at pixels along the seed fill boundary.
 
 This prodecure is affected by the following context setters:
 gimp_context_set_antialias(), gimp_context_set_feather(),
@@ -366,6 +262,110 @@ CODE
 }
 
 
+sub image_select_ellipse {
+    $blurb = 'Create an elliptical selection over the specified image.';
+
+    $help = <<'HELP';
+This tool creates an elliptical selection over the specified
+image. The elliptical region can be either added to, subtracted from,
+or replace the contents of the previous selection mask.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_antialias(), gimp_context_set_feather(),
+gimp_context_set_feather_radius().
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
+	{ name => 'x', type => 'float',
+	  desc => 'x coordinate of upper-left corner of ellipse bounding box' },
+	{ name => 'y', type => 'float',
+	  desc => 'y coordinate of upper-left corner of ellipse bounding box' },
+	{ name => 'width', type => '0 < float',
+	  desc => 'The width of the ellipse' },
+	{ name => 'height', type => '0 < float',
+	  desc => 'The height of the ellipse' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  gimp_channel_select_ellipse (gimp_image_get_mask (image),
+                               (gint) x, (gint) y,
+                               (gint) width, (gint) height,
+                               operation,
+                               pdb_context->antialias,
+                               pdb_context->feather,
+                               pdb_context->feather_radius_x,
+                               pdb_context->feather_radius_y,
+                               TRUE);
+}
+CODE
+    );
+}
+
+
+sub image_select_polygon {
+    $blurb = 'Create a polygonal selection over the specified image.';
+
+    $help = <<'HELP';
+This tool creates a polygonal selection over the specified image. The
+polygonal region can be either added to, subtracted from, or replace
+the contents of the previous selection mask. The polygon is specified
+through an array of floating point numbers and its length. The length
+of array must be 2n, where n is the number of points. Each point is
+defined by 2 floating point values which correspond to the x and y
+coordinates. If the final point does not connect to the starting
+point, a connecting segment is automatically added.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_antialias(), gimp_context_set_feather(),
+gimp_context_set_feather_radius().
+HELP
+
+    &mitch_pdb_misc('2010', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'operation', type => 'enum GimpChannelOps',
+	  desc => 'The selection operation' },
+        { name => 'segs', type => 'floatarray',
+          desc => 'Array of points: { p1.x, p1.y, p2.x, p2.y, ...,
+                   pn.x, pn.y}',
+          array => { type => '2 <= int32',
+                     desc => 'Number of points (count 1 coordinate as two
+                              points)' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+  gimp_channel_select_polygon (gimp_image_get_mask (image),
+                               _("Free Select"),
+                               num_segs / 2,
+                               (GimpVector2 *) segs,
+                               operation,
+                               pdb_context->antialias,
+                               pdb_context->feather,
+                               pdb_context->feather_radius_x,
+                               pdb_context->feather_radius_y,
+                               TRUE);
+}
+CODE
+    );
+}
+
+
 sub image_select_item {
     $blurb = 'Transforms the specified item into a selection';
 
@@ -420,11 +420,11 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(image_select_color
+            image_select_contiguous_color
+            image_select_rectangle
+            image_select_round_rectangle
             image_select_ellipse
             image_select_polygon
-	    image_select_fuzzy
-	    image_select_rectangle
-            image_select_round_rectangle
             image_select_item);
 
 %exports = (app => [@procs], lib => [@procs]);

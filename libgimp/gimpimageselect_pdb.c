@@ -89,121 +89,21 @@ gimp_image_select_color (gint32          image_ID,
 }
 
 /**
- * gimp_image_select_ellipse:
- * @image_ID: The image.
- * @operation: The selection operation.
- * @x: x coordinate of upper-left corner of ellipse bounding box.
- * @y: y coordinate of upper-left corner of ellipse bounding box.
- * @width: The width of the ellipse.
- * @height: The height of the ellipse.
- *
- * Create an elliptical selection over the specified image.
- *
- * This tool creates an elliptical selection over the specified image.
- * The elliptical region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. This prodecure
- * is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius().
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.8
- **/
-gboolean
-gimp_image_select_ellipse (gint32         image_ID,
-                           GimpChannelOps operation,
-                           gdouble        x,
-                           gdouble        y,
-                           gdouble        width,
-                           gdouble        height)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-select-ellipse",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, operation,
-                                    GIMP_PDB_FLOAT, x,
-                                    GIMP_PDB_FLOAT, y,
-                                    GIMP_PDB_FLOAT, width,
-                                    GIMP_PDB_FLOAT, height,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_select_polygon:
- * @image_ID: The image.
- * @operation: The selection operation.
- * @num_segs: Number of points (count 1 coordinate as two points).
- * @segs: Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
- *
- * Create a polygonal selection over the specified image.
- *
- * This tool creates a polygonal selection over the specified image.
- * The polygonal region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. The polygon is
- * specified through an array of floating point numbers and its length.
- * The length of array must be 2n, where n is the number of points.
- * Each point is defined by 2 floating point values which correspond to
- * the x and y coordinates. If the final point does not connect to the
- * starting point, a connecting segment is automatically added. This
- * prodecure is affected by the following context setters:
- * gimp_context_set_antialias(), gimp_context_set_feather(),
- * gimp_context_set_feather_radius().
- *
- * Returns: TRUE on success.
- *
- * Since: GIMP 2.8
- **/
-gboolean
-gimp_image_select_polygon (gint32          image_ID,
-                           GimpChannelOps  operation,
-                           gint            num_segs,
-                           const gdouble  *segs)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp-image-select-polygon",
-                                    &nreturn_vals,
-                                    GIMP_PDB_IMAGE, image_ID,
-                                    GIMP_PDB_INT32, operation,
-                                    GIMP_PDB_INT32, num_segs,
-                                    GIMP_PDB_FLOATARRAY, segs,
-                                    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_image_select_fuzzy:
+ * gimp_image_select_contiguous_color:
  * @image_ID: The affected image.
  * @operation: The selection operation.
  * @drawable_ID: The affected drawable.
  * @x: x coordinate of initial seed fill point: (image coordinates).
  * @y: y coordinate of initial seed fill point: (image coordinates).
  *
- * Create a fuzzy selection starting at the specified coordinates on
- * the specified drawable.
+ * Create a selection by selecting all pixels around specified
+ * coordinates with the same (or similar) color to that at the
+ * coordinates.
  *
- * This tool creates a fuzzy selection over the specified image. A
- * fuzzy selection is determined by a seed fill under the constraints
- * of the current context settings. Essentially, the color at the
- * specified coordinates (in the drawable) is measured and the
+ * This tool creates a contiguous selection over the specified image. A
+ * contiguous color selection is determined by a seed fill under the
+ * constraints of the current context settings. Essentially, the color
+ * at the specified coordinates (in the drawable) is measured and the
  * selection expands outwards from that point to any adjacent pixels
  * which are not significantly different (as determined by the
  * threshold and criterion context settings). This process continues
@@ -225,17 +125,17 @@ gimp_image_select_polygon (gint32          image_ID,
  * Since: GIMP 2.8
  **/
 gboolean
-gimp_image_select_fuzzy (gint32         image_ID,
-                         GimpChannelOps operation,
-                         gint32         drawable_ID,
-                         gdouble        x,
-                         gdouble        y)
+gimp_image_select_contiguous_color (gint32         image_ID,
+                                    GimpChannelOps operation,
+                                    gint32         drawable_ID,
+                                    gdouble        x,
+                                    gdouble        y)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp-image-select-fuzzy",
+  return_vals = gimp_run_procedure ("gimp-image-select-contiguous-color",
                                     &nreturn_vals,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_INT32, operation,
@@ -350,6 +250,107 @@ gimp_image_select_round_rectangle (gint32         image_ID,
                                     GIMP_PDB_FLOAT, height,
                                     GIMP_PDB_FLOAT, corner_radius_x,
                                     GIMP_PDB_FLOAT, corner_radius_y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_select_ellipse:
+ * @image_ID: The image.
+ * @operation: The selection operation.
+ * @x: x coordinate of upper-left corner of ellipse bounding box.
+ * @y: y coordinate of upper-left corner of ellipse bounding box.
+ * @width: The width of the ellipse.
+ * @height: The height of the ellipse.
+ *
+ * Create an elliptical selection over the specified image.
+ *
+ * This tool creates an elliptical selection over the specified image.
+ * The elliptical region can be either added to, subtracted from, or
+ * replace the contents of the previous selection mask. This prodecure
+ * is affected by the following context setters:
+ * gimp_context_set_antialias(), gimp_context_set_feather(),
+ * gimp_context_set_feather_radius().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_image_select_ellipse (gint32         image_ID,
+                           GimpChannelOps operation,
+                           gdouble        x,
+                           gdouble        y,
+                           gdouble        width,
+                           gdouble        height)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-select-ellipse",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_FLOAT, x,
+                                    GIMP_PDB_FLOAT, y,
+                                    GIMP_PDB_FLOAT, width,
+                                    GIMP_PDB_FLOAT, height,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_select_polygon:
+ * @image_ID: The image.
+ * @operation: The selection operation.
+ * @num_segs: Number of points (count 1 coordinate as two points).
+ * @segs: Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
+ *
+ * Create a polygonal selection over the specified image.
+ *
+ * This tool creates a polygonal selection over the specified image.
+ * The polygonal region can be either added to, subtracted from, or
+ * replace the contents of the previous selection mask. The polygon is
+ * specified through an array of floating point numbers and its length.
+ * The length of array must be 2n, where n is the number of points.
+ * Each point is defined by 2 floating point values which correspond to
+ * the x and y coordinates. If the final point does not connect to the
+ * starting point, a connecting segment is automatically added. This
+ * prodecure is affected by the following context setters:
+ * gimp_context_set_antialias(), gimp_context_set_feather(),
+ * gimp_context_set_feather_radius().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_image_select_polygon (gint32          image_ID,
+                           GimpChannelOps  operation,
+                           gint            num_segs,
+                           const gdouble  *segs)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-select-polygon",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_INT32, operation,
+                                    GIMP_PDB_INT32, num_segs,
+                                    GIMP_PDB_FLOATARRAY, segs,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

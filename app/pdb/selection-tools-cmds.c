@@ -731,12 +731,12 @@ register_selection_tools_procs (GimpPDB *pdb)
                                "gimp-fuzzy-select");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fuzzy-select",
-                                     "Deprecated: Use 'gimp-image-select-fuzzy' instead.",
-                                     "Deprecated: Use 'gimp-image-select-fuzzy' instead.",
+                                     "Deprecated: Use 'gimp-image-select-contiguous-color' instead.",
+                                     "Deprecated: Use 'gimp-image-select-contiguous-color' instead.",
                                      "",
                                      "",
                                      "",
-                                     "gimp-image-select-fuzzy");
+                                     "gimp-image-select-contiguous-color");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -803,12 +803,12 @@ register_selection_tools_procs (GimpPDB *pdb)
                                "gimp-fuzzy-select-full");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-fuzzy-select-full",
-                                     "Deprecated: Use 'gimp-image-select-fuzzy' instead.",
-                                     "Deprecated: Use 'gimp-image-select-fuzzy' instead.",
+                                     "Deprecated: Use 'gimp-image-select-contiguous-color' instead.",
+                                     "Deprecated: Use 'gimp-image-select-contiguous-color' instead.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2006",
-                                     "gimp-image-select-fuzzy");
+                                     "gimp-image-select-contiguous-color");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",

@@ -418,8 +418,8 @@ EXPORTS
 	gimp_image_scale
 	gimp_image_scale_full
 	gimp_image_select_color
+	gimp_image_select_contiguous_color
 	gimp_image_select_ellipse
-	gimp_image_select_fuzzy
 	gimp_image_select_item
 	gimp_image_select_polygon
 	gimp_image_select_rectangle

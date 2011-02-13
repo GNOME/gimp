@@ -199,7 +199,7 @@ CODE
 
 
 sub fuzzy_select {
-    &std_pdb_deprecated ('gimp-image-select-fuzzy');
+    &std_pdb_deprecated ('gimp-image-select-contiguous-color');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -248,7 +248,7 @@ CODE
 
 
 sub fuzzy_select_full {
-    &std_pdb_deprecated ('gimp-image-select-fuzzy');
+    &std_pdb_deprecated ('gimp-image-select-contiguous-color');
     &david_pdb_misc("2006","2.4");
 
     @inargs = (

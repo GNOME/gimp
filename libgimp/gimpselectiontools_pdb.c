@@ -252,7 +252,7 @@ gimp_free_select (gint32          image_ID,
  * @feather_radius: Radius for feather operation.
  * @sample_merged: Use the composite image, not the drawable.
  *
- * Deprecated: Use gimp_image_select_fuzzy() instead.
+ * Deprecated: Use gimp_image_select_contiguous_color() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -306,7 +306,7 @@ gimp_fuzzy_select (gint32         drawable_ID,
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
  *
- * Deprecated: Use gimp_image_select_fuzzy() instead.
+ * Deprecated: Use gimp_image_select_contiguous_color() instead.
  *
  * Returns: TRUE on success.
  *

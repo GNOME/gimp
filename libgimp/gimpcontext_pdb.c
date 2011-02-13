@@ -907,9 +907,9 @@ gimp_context_get_antialias (void)
  * values which give the appearance of a sharper, less pixelized edge.
  * This should be set as TRUE most of the time unless a binary-only
  * selection is wanted. This settings affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_ellipse(),
- * gimp_image_select_polygon(), gimp_image_select_fuzzy(),
- * gimp_image_select_round_rectangle(), gimp_image_select_item().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
+ * gimp_image_select_polygon(), gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -975,9 +975,9 @@ gimp_context_get_feather (void)
  * a gaussian blur; its radii can be controlled using
  * gimp_context_set_feather_radius(). This setting affects the
  * following procedures: gimp_image_select_color(),
- * gimp_image_select_ellipse(), gimp_image_select_polygon(),
- * gimp_image_select_fuzzy(), gimp_image_select_rectangle(),
- * gimp_image_select_round_rectangle(), gimp_image_select_item().
+ * gimp_image_select_contiguous_color(), gimp_image_select_rectangle(),
+ * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
+ * gimp_image_select_polygon(), gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -1122,7 +1122,7 @@ gimp_context_get_sample_merged (void)
  * pixel data from the composite image ('sample-merged' is TRUE. This
  * is equivalent to sampling for colors after merging all visible
  * layers). This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_fuzzy().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
  *
@@ -1188,7 +1188,7 @@ gimp_context_get_sample_criterion (void)
  * like when doing a seed fill, this setting controls how color
  * similarity is determined. SELECT_CRITERION_COMPOSITE is the default
  * value. This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_fuzzy().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
  *
@@ -1255,7 +1255,8 @@ gimp_context_get_sample_threshold (void)
  * \"sufficiently close\" to be considered a similar color. If the
  * sample threshold has not been set explicitly, the default threshold
  * set in gimprc will be used. This setting affects the following
- * procedures: gimp_image_select_color(), gimp_image_select_fuzzy().
+ * procedures: gimp_image_select_color(),
+ * gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
  *
@@ -1385,7 +1386,7 @@ gimp_context_get_sample_transparent (void)
  * transparency is considered to be a unique selectable color. When
  * this setting is TRUE, transparent areas can be selected or filled.
  * This setting affects the following procedures:
- * gimp_image_select_color(), gimp_image_select_fuzzy().
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
  *
  * Returns: TRUE on success.
  *
