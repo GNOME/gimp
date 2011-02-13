@@ -960,7 +960,7 @@ gimp_vectors_bezier_stroke_new_ellipse (gint32  vectors_ID,
  * @feather_radius_x: Feather radius x.
  * @feather_radius_y: Feather radius y.
  *
- * Deprecated: Use gimp_item_to_selection() instead.
+ * Deprecated: Use gimp_image_select_item() instead.
  *
  * Returns: TRUE on success.
  *

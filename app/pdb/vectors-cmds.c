@@ -2231,12 +2231,12 @@ register_vectors_procs (GimpPDB *pdb)
                                "gimp-vectors-to-selection");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-vectors-to-selection",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
-                                     "Deprecated: Use 'gimp-item-to-selection' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
+                                     "Deprecated: Use 'gimp-image-select-item' instead.",
                                      "Simon Budig",
                                      "Simon Budig",
                                      "2006",
-                                     "gimp-item-to-selection");
+                                     "gimp-image-select-item");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_vectors_id ("vectors",
                                                            "vectors",
