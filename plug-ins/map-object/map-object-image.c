@@ -32,7 +32,9 @@ GimpPixelRgn box_regions[6];
 GimpDrawable *cylinder_drawables[2];
 GimpPixelRgn cylinder_regions[2];
 
-guchar   *preview_rgb_data = NULL;
+guchar          *preview_rgb_data = NULL;
+gint             preview_rgb_stride;
+cairo_surface_t *preview_surface = NULL;
 
 glong   maxcounter,old_depth,max_depth;
 gint    imgtype,width,height,in_channels,out_channels;
@@ -389,7 +391,14 @@ image_setup (GimpDrawable *drawable,
 
   if (interactive == TRUE)
     {
-      preview_rgb_data = g_new0 (guchar, PREVIEW_HEIGHT * PREVIEW_WIDTH * 3);
+      preview_rgb_stride = cairo_format_stride_for_width (CAIRO_FORMAT_RGB24,
+                                                          PREVIEW_WIDTH);
+      preview_rgb_data = g_new0 (guchar, preview_rgb_stride * PREVIEW_HEIGHT);
+      preview_surface = cairo_image_surface_create_for_data (preview_rgb_data,
+                                                             CAIRO_FORMAT_RGB24,
+                                                             PREVIEW_WIDTH,
+                                                             PREVIEW_HEIGHT,
+                                                             preview_rgb_stride);
     }
 
   return TRUE;

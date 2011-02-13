@@ -80,7 +80,7 @@ set_default_settings (void)
   mapvals.create_new_image       = FALSE;
   mapvals.transparent_background = FALSE;
   mapvals.tiled                  = FALSE;
-  mapvals.showgrid               = FALSE;
+  mapvals.livepreview            = TRUE;
 
   mapvals.lightsource.intensity = 1.0;
   gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);

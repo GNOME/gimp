@@ -4,7 +4,6 @@
 /* Externally visible variables */
 /* ============================ */
 
-extern GdkGC     *gc;
 extern GtkWidget *previewarea;
 
 /* Externally visible functions */

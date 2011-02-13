@@ -18,7 +18,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-GdkGC         *gc          = NULL;
 GtkWidget     *previewarea = NULL;
 
 static GtkWidget   *appwin            = NULL;
@@ -47,9 +46,6 @@ static void double_adjustment_update   (GtkAdjustment *adjustment,
 					gpointer       data);
 
 static void toggle_update              (GtkWidget     *widget,
-					gpointer       data);
-
-static void togglegrid_update          (GtkWidget     *widget,
 					gpointer       data);
 
 static void lightmenu_callback         (GtkWidget     *widget,
@@ -83,8 +79,8 @@ double_adjustment_update (GtkAdjustment *adjustment,
 {
   gimp_double_adjustment_update (adjustment, data);
 
-  if (mapvals.showgrid)
-    draw_preview_wireframe ();
+  if (mapvals.livepreview)
+    draw_preview_image (TRUE);
 }
 
 static void
@@ -129,42 +125,6 @@ toggle_update (GtkWidget *widget,
   gimp_toggle_button_update (widget, data);
 
   draw_preview_image (TRUE);
-  linetab[0].x1 = -1;
-}
-
-/***************************/
-/* Show grid toggle update */
-/***************************/
-
-static void
-togglegrid_update (GtkWidget *widget,
-		   gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  if (mapvals.showgrid && linetab[0].x1 == -1)
-    {
-      draw_preview_wireframe ();
-    }
-  else if (!mapvals.showgrid && linetab[0].x1 != -1)
-    {
-      GdkColor  color;
-
-      color.red   = 0x0;
-      color.green = 0x0;
-      color.blue  = 0x0;
-      gdk_gc_set_rgb_bg_color (gc, &color);
-
-      color.red   = 0xFFFF;
-      color.green = 0xFFFF;
-      color.blue  = 0xFFFF;
-      gdk_gc_set_rgb_fg_color (gc, &color);
-
-      gdk_gc_set_function (gc, GDK_INVERT);
-
-      clear_wireframe ();
-      linetab[0].x1 = -1;
-    }
 }
 
 /*****************************************/
@@ -192,6 +152,9 @@ lightmenu_callback (GtkWidget *widget,
       gtk_widget_hide (pointlightwid);
       gtk_widget_hide (dirlightwid);
     }
+
+  if (mapvals.livepreview)
+    draw_preview_image (TRUE);
 }
 
 /***************************************/
@@ -208,30 +171,6 @@ mapmenu_callback (GtkWidget *widget,
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   draw_preview_image (TRUE);
-
-  if (mapvals.showgrid && linetab[0].x1 == -1)
-    {
-      draw_preview_wireframe ();
-    }
-  else if (!mapvals.showgrid && linetab[0].x1 != -1)
-    {
-      GdkColor  color;
-
-      color.red   = 0x0;
-      color.green = 0x0;
-      color.blue  = 0x0;
-      gdk_gc_set_rgb_bg_color (gc, &color);
-
-      color.red   = 0xFFFF;
-      color.green = 0xFFFF;
-      color.blue  = 0xFFFF;
-      gdk_gc_set_rgb_fg_color (gc, &color);
-
-      gdk_gc_set_function (gc, GDK_INVERT);
-
-      clear_wireframe ();
-      linetab[0].x1 = -1;
-    }
 
   children = gtk_container_get_children (GTK_CONTAINER (options_note_book));
   n_children = g_list_length (children);
@@ -296,16 +235,12 @@ preview_callback (GtkWidget *widget,
 		  gpointer   data)
 {
   draw_preview_image (TRUE);
-  linetab[0].x1 = -1;
 }
 
 static void
 zoomed_callback (GimpZoomModel *model)
 {
   mapvals.zoom = gimp_zoom_model_get_factor (model);
-
-  if (linetab[0].x1 != -1)
-    clear_wireframe ();
 
   draw_preview_image (TRUE);
 }
@@ -354,21 +289,7 @@ preview_events (GtkWidget *area,
   switch (event->type)
     {
       case GDK_EXPOSE:
-
-        /* Is this the first exposure? */
-        /* =========================== */
-
-        if (!gc)
-          {
-            gc = gdk_gc_new (gtk_widget_get_window (area));
-            draw_preview_image (TRUE);
-          }
-        else
-          {
-            draw_preview_image (FALSE);
-            if (mapvals.showgrid == 1 && linetab[0].x1 != -1)
-              draw_preview_wireframe ();
-          }
+        draw_preview_image (FALSE);
         break;
 
       case GDK_ENTER_NOTIFY:
@@ -413,8 +334,12 @@ preview_events (GtkWidget *area,
           {
             if (light_hit == TRUE)
               {
+                gint live = mapvals.livepreview;
+
+                mapvals.livepreview = FALSE;
                 update_light (event->motion.x, event->motion.y);
                 update_light_pos_entries ();
+                mapvals.livepreview = live;
               }
             else
               {
@@ -576,7 +501,7 @@ create_options_page (void)
 			      _("Antialiasing quality. Higher is better, "
 			       "but slower"), NULL);
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.maxdepth);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.pixeltreshold,
@@ -586,7 +511,7 @@ create_options_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.pixeltreshold);
 
   gimp_help_set_help_data (spinbutton,
@@ -676,7 +601,7 @@ create_light_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (xadj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.lightsource.position.x);
 
   gimp_help_set_help_data (spinbutton,
@@ -690,7 +615,7 @@ create_light_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (yadj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.lightsource.position.y);
 
   gimp_help_set_help_data (spinbutton,
@@ -704,7 +629,7 @@ create_light_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (zadj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.lightsource.position.z);
 
   gimp_help_set_help_data (spinbutton,
@@ -730,7 +655,7 @@ create_light_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.lightsource.direction.x);
 
   gimp_help_set_help_data (spinbutton,
@@ -743,7 +668,7 @@ create_light_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.lightsource.direction.y);
 
   gimp_help_set_help_data (spinbutton,
@@ -756,7 +681,7 @@ create_light_page (void)
 			     spinbutton, 1, TRUE);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.lightsource.direction.z);
 
   gimp_help_set_help_data (spinbutton,
@@ -817,7 +742,7 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.material.ambient_int);
 
   gimp_help_set_help_data (spinbutton,
@@ -846,7 +771,7 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.material.diffuse_int);
 
   gimp_help_set_help_data (spinbutton,
@@ -889,7 +814,7 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.material.diffuse_ref);
 
   gimp_help_set_help_data (spinbutton,
@@ -918,7 +843,7 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.material.specular_ref);
 
   gimp_help_set_help_data (spinbutton,
@@ -947,7 +872,7 @@ create_material_page (void)
   gtk_widget_show (spinbutton);
 
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
+                    G_CALLBACK (double_adjustment_update),
                     &mapvals.material.highlight);
 
   gimp_help_set_help_data (spinbutton,
@@ -1412,20 +1337,16 @@ main_dialog (GimpDrawable *drawable)
                     G_CALLBACK (zoomed_callback),
                     NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Show preview _wireframe"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.showgrid);
+  toggle = gtk_check_button_new_with_mnemonic (_("Update previe_w live"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.livepreview);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (togglegrid_update),
-                    &mapvals.showgrid);
+                    G_CALLBACK (toggle_update),
+                    &mapvals.livepreview);
 
   create_main_notebook (main_hbox);
-
-  /* Endmarkers for line table */
-
-  linetab[0].x1 = -1;
 
   gtk_widget_show (appwin);
 
@@ -1439,12 +1360,16 @@ main_dialog (GimpDrawable *drawable)
   }
 
   image_setup (drawable, TRUE);
+  draw_preview_image (TRUE);
 
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;
 
   gtk_widget_destroy (appwin);
-  g_free (preview_rgb_data);
+  if (preview_rgb_data)
+    g_free (preview_rgb_data);
+  if (preview_surface)
+    cairo_surface_destroy (preview_surface);
 
   return run;
 }

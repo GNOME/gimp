@@ -13,7 +13,9 @@ extern GimpPixelRgn  box_regions[6];
 extern GimpDrawable *cylinder_drawables[2];
 extern GimpPixelRgn  cylinder_regions[2];
 
-extern guchar   *preview_rgb_data;
+extern guchar          *preview_rgb_data;
+extern gint             preview_rgb_stride;
+extern cairo_surface_t *preview_surface;
 
 extern glong   maxcounter, old_depth, max_depth;
 extern gint    imgtype, width,height, in_channels, out_channels;

@@ -63,7 +63,7 @@ typedef struct
   gint create_new_image;
   gint transparent_background;
   gint tiled;
-  gint showgrid;
+  gint livepreview;
   gint showcaps;
 
   gdouble zoom;
