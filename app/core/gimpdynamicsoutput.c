@@ -606,8 +606,8 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
     {
       gdouble direction = gimp_curve_map_value (output->direction_curve, coords->direction);
 
-      if (((direction > 0.875) && (direction < 0.0)) ||
-          ((direction > 0.0) && (direction < 0.125)) ||
+      if (((direction > 0.875) && (direction <= 1.0)) ||
+          ((direction > 0.0) && (direction < 0.125))  ||
           ((direction > 0.375) && (direction < 0.625)))
         sign = -1.0;
 
@@ -631,8 +631,8 @@ gimp_dynamics_output_get_aspect_value (GimpDynamicsOutput *output,
     {
       gdouble wheel = gimp_curve_map_value (output->wheel_curve, coords->wheel);
 
-      if (((wheel > 0.875) && (wheel < 0.0)) ||
-          ((wheel > 0.0) && (wheel < 0.125)) ||
+      if (((wheel > 0.875) && (wheel <= 1.0)) ||
+          ((wheel > 0.0) && (wheel < 0.125))  ||
           ((wheel > 0.375) && (wheel < 0.625)))
         sign = -1.0;
 
