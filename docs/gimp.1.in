@@ -199,7 +199,7 @@ associated to that device.
 settings. Options such as widget color and fonts sizes can be set
 here.
 
-@gimpsysconfdir@/gtkrc - sytem wide default set of GIMP-specific GTK+
+@gimpsysconfdir@/gtkrc - system wide default set of GIMP-specific GTK+
 config settings.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
@@ -332,7 +332,7 @@ tutorials, data sets, mailing list archives, and more.
 There is also a GIMP User Manual available at http://docs.gimp.org/
 that goes into much more detail about the interactive use of GIMP.
 
-The latest version of GIMP and the GTK+ libs is always available at
+The latest versions of GIMP and the GTK+ libs are always available at
 ftp://ftp.gimp.org/.
 
 
