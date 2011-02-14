@@ -26,6 +26,7 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpitemstack.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
@@ -43,6 +44,7 @@ image_merge_layers_dialog_new (GimpImage     *image,
                                GimpContext   *context,
                                GtkWidget     *parent,
                                GimpMergeType  merge_type,
+                               gboolean       merge_active_group,
                                gboolean       discard_invisible)
 {
   ImageMergeLayersDialog *dialog;
@@ -55,9 +57,11 @@ image_merge_layers_dialog_new (GimpImage     *image,
 
   dialog = g_slice_new0 (ImageMergeLayersDialog);
 
-  dialog->image      = image;
-  dialog->context    = context;
-  dialog->merge_type = GIMP_EXPAND_AS_NECESSARY;
+  dialog->image              = image;
+  dialog->context            = context;
+  dialog->merge_type         = GIMP_EXPAND_AS_NECESSARY;
+  dialog->merge_active_group = merge_active_group;
+  dialog->discard_invisible  = discard_invisible;
 
   dialog->dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image), context,
@@ -106,6 +110,19 @@ image_merge_layers_dialog_new (GimpImage     *image,
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  button = gtk_check_button_new_with_mnemonic (_("Merge within active _group only"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                dialog->merge_active_group);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &dialog->merge_active_group);
+
+  if (gimp_item_stack_is_flat (GIMP_ITEM_STACK (gimp_image_get_layers (image))))
+    gtk_widget_set_sensitive (button, FALSE);
 
   button = gtk_check_button_new_with_mnemonic (_("_Discard invisible layers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),

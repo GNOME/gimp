@@ -63,9 +63,9 @@ GimpLayer *
 gimp_image_merge_visible_layers (GimpImage     *image,
                                  GimpContext   *context,
                                  GimpMergeType  merge_type,
+                                 gboolean       merge_active_group,
                                  gboolean       discard_invisible)
 {
-  GimpLayer     *active_layer;
   GimpContainer *container;
   GList         *list;
   GSList        *merge_list     = NULL;
@@ -74,25 +74,32 @@ gimp_image_merge_visible_layers (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  active_layer = gimp_image_get_active_layer (image);
-
-  /*  if the active layer is the floating selection, get the underlying
-   *  drawable, but only if it is a layer
-   */
-  if (active_layer && gimp_layer_is_floating_sel (active_layer))
+  if (merge_active_group)
     {
-      GimpDrawable *fs_drawable;
+      GimpLayer *active_layer = gimp_image_get_active_layer (image);
 
-      fs_drawable = gimp_layer_get_floating_sel_drawable (active_layer);
+      /*  if the active layer is the floating selection, get the
+       *  underlying drawable, but only if it is a layer
+       */
+      if (active_layer && gimp_layer_is_floating_sel (active_layer))
+        {
+          GimpDrawable *fs_drawable;
 
-      if (GIMP_IS_LAYER (fs_drawable))
-        active_layer = GIMP_LAYER (fs_drawable);
+          fs_drawable = gimp_layer_get_floating_sel_drawable (active_layer);
+
+          if (GIMP_IS_LAYER (fs_drawable))
+            active_layer = GIMP_LAYER (fs_drawable);
+        }
+
+      if (active_layer)
+        container = gimp_item_get_container (GIMP_ITEM (active_layer));
+      else
+        container = gimp_image_get_layers (image);
     }
-
-  if (active_layer)
-    container = gimp_item_get_container (GIMP_ITEM (active_layer));
   else
-    container = gimp_image_get_layers (image);
+    {
+      container = gimp_image_get_layers (image);
+    }
 
   for (list = gimp_item_stack_get_item_iter (GIMP_ITEM_STACK (container));
        list;

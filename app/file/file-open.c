@@ -500,7 +500,8 @@ file_open_layers (Gimp                *gimp,
           g_list_free (layers);
 
           layer = gimp_image_merge_visible_layers (new_image, context,
-                                                   GIMP_CLIP_TO_IMAGE, FALSE);
+                                                   GIMP_CLIP_TO_IMAGE,
+                                                   FALSE, FALSE);
 
           layers = g_list_prepend (NULL, layer);
         }
