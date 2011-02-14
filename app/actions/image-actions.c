@@ -278,8 +278,8 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-scale",               image);
   SET_SENSITIVE ("image-crop",                image && sel);
   SET_SENSITIVE ("image-duplicate",           image);
-  SET_SENSITIVE ("image-merge-layers",        image && !fs && !aux && lp);
-  SET_SENSITIVE ("image-flatten",             image && !fs && !aux && lp);
+  SET_SENSITIVE ("image-merge-layers",        image && !aux && lp);
+  SET_SENSITIVE ("image-flatten",             image && !aux && lp);
   SET_SENSITIVE ("image-configure-grid",      image);
   SET_SENSITIVE ("image-properties",          image);
 
