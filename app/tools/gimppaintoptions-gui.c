@@ -213,9 +213,13 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (frame);
     }
 
-  frame = smoothing_options_gui (options, tool_type);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  /*  the "smooth stroke" options  */
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL))
+    {
+      frame = smoothing_options_gui (options, tool_type);
+      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+    }
 
   /*  the "incremental" toggle  */
   if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||
