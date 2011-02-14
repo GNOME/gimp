@@ -3692,7 +3692,9 @@ gimp_image_remove_layer (GimpImage *image,
        */
       floating_sel_activate_drawable (layer);
     }
-  else if (layer == active_layer)
+  else if (layer == active_layer ||
+           gimp_viewable_is_ancestor (GIMP_VIEWABLE (layer),
+                                      GIMP_VIEWABLE (active_layer)))
     {
       gimp_image_set_active_layer (image, new_active);
     }
@@ -3864,7 +3866,9 @@ gimp_image_remove_channel (GimpImage   *image,
                                               GIMP_ITEM (channel),
                                               GIMP_ITEM (new_active)));
 
-  if (channel == active_channel)
+  if (channel == active_channel ||
+      gimp_viewable_is_ancestor (GIMP_VIEWABLE (channel),
+                                 GIMP_VIEWABLE (active_channel)))
     {
       if (new_active)
         gimp_image_set_active_channel (image, new_active);
@@ -3946,8 +3950,12 @@ gimp_image_remove_vectors (GimpImage   *image,
                                               GIMP_ITEM (vectors),
                                               GIMP_ITEM (new_active)));
 
-  if (vectors == active_vectors)
-    gimp_image_set_active_vectors (image, new_active);
+  if (vectors == active_vectors ||
+      gimp_viewable_is_ancestor (GIMP_VIEWABLE (vectors),
+                                 GIMP_VIEWABLE (active_vectors)))
+    {
+      gimp_image_set_active_vectors (image, new_active);
+    }
 
   g_object_unref (vectors);
 }
