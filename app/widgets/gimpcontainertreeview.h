@@ -58,6 +58,12 @@ struct _GimpContainerTreeViewClass
 {
   GimpContainerBoxClass  parent_class;
 
+  /* signals */
+
+  void     (* edit_name)      (GimpContainerTreeView   *tree_view);
+
+  /* virtual functions */
+
   gboolean (* drop_possible)  (GimpContainerTreeView   *tree_view,
                                GimpDndType              src_type,
                                GimpViewable            *src_viewable,
