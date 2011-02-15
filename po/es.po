@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2011-02-14 09:39+0000\n"
-"PO-Revision-Date: 2011-02-13 02:02+0100\n"
+"POT-Creation-Date: 2011-02-14 22:29+0000\n"
+"PO-Revision-Date: 2011-02-15 18:00+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1543,7 +1543,7 @@ msgstr "Ver como _lista"
 #: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
-msgstr "Ver como re_jilla"
+msgstr "Ver como reji_lla"
 
 #: ../app/actions/documents-actions.c:41
 msgctxt "documents-action"
@@ -3001,7 +3001,7 @@ msgstr "_Transformar"
 #: ../app/actions/image-actions.c:58
 msgctxt "image-action"
 msgid "_Guides"
-msgstr "Líneas _guía"
+msgstr "Líneas g_uía"
 
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
@@ -3161,7 +3161,7 @@ msgstr "Convierte la imagen al espacio de colores RGB"
 #: ../app/actions/image-actions.c:147
 msgctxt "image-convert-action"
 msgid "_Grayscale"
-msgstr "Escala de _grises"
+msgstr "Escala de gr_ises"
 
 #: ../app/actions/image-actions.c:148
 msgctxt "image-convert-action"
@@ -3492,7 +3492,7 @@ msgstr "Anclar la capa flotante"
 #: ../app/actions/layers-actions.c:150
 msgctxt "layers-action"
 msgid "Merge Do_wn"
-msgstr "Combinar hacia aba_jo"
+msgstr "Combinar hacia abaj_o"
 
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
@@ -4400,7 +4400,7 @@ msgstr "Contraer la selección"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "A_grandar [Grow]…"
+msgstr "Agran_dar [Grow]…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -5328,7 +5328,7 @@ msgstr "Dibuja un borde alrededor de la capa activa"
 #: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Guides"
-msgstr "Mostrar _guías"
+msgstr "Mostrar g_uías"
 
 #: ../app/actions/view-actions.c:155
 msgctxt "view-action"
@@ -5368,7 +5368,7 @@ msgstr "Las operaciones de las herramientas se ajustan a las líneas guía"
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "Ajustar a la re_jilla"
+msgstr "Ajustar a la rej_illa"
 
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
@@ -9194,7 +9194,7 @@ msgstr "Recortada hasta la capa más baja"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:114
 msgid "Merge within active _group only"
-msgstr ""
+msgstr "Mezclar solamente dentro del grupo acti_vo"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
@@ -9581,7 +9581,7 @@ msgstr "Mostrar el _límite de la capa"
 
 #: ../app/dialogs/preferences-dialog.c:1290
 msgid "Show _guides"
-msgstr "Mostrar las _guías"
+msgstr "Mostra_r las guías"
 
 #: ../app/dialogs/preferences-dialog.c:1293
 msgid "Show gri_d"
@@ -9801,7 +9801,7 @@ msgstr "Ajuste a la rejilla y la guía"
 
 #: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Snap distance:"
-msgstr "Distancia del a_juste:"
+msgstr "Distancia del ajus_te:"
 
 #: ../app/dialogs/preferences-dialog.c:1903
 msgid "Default _interpolation:"
