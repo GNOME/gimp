@@ -989,8 +989,6 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     PyObject *py_orientation, *py_channel;
     GtkOrientation orientation;
     GimpColorSelectorChannel channel;
-    GimpColorScale *scale;
-    GtkRange *range;
 
     static char *kwlist[] = { "orientation", "channel", NULL };
 
@@ -1008,15 +1006,14 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
                            (gint*)&channel))
         return -1;
 
-    if (pygobject_construct(self, NULL))
+    if (pygobject_construct(self,
+                            "orientation", orientation,
+                            "channel",     channel,
+                            NULL));
         return -1;
 
-    scale = GIMP_COLOR_SCALE(self->obj);
-    scale->channel = channel;
-
-    range = GTK_RANGE(scale);
-    gtk_orientable_set_orientation (GTK_ORIENTABLE (range), orientation);
-    gtk_range_set_flippable (range, orientation == GTK_ORIENTATION_HORIZONTAL);
+    gtk_range_set_flippable (GTK_RANGE (self->obj),
+                             orientation == GTK_ORIENTATION_HORIZONTAL);
     
     return 0;
 }
