@@ -1025,9 +1025,8 @@ static int
 _wrap_gimp_enum_label_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *py_enum_type = NULL;
-    gint value;
     GType enum_type;
-    GimpEnumLabel *label;
+    gint value;
 
     static char *kwlist[] = { "enum_type", "value", NULL };
 
@@ -1040,14 +1039,11 @@ _wrap_gimp_enum_label_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     if ((enum_type = pyg_type_from_object(py_enum_type)) == 0)
         return -1;
 
-    if (pygobject_construct(self, NULL))
+    if (pygobject_construct(self,
+                            "enum-type",  enum_type,
+                            "enum-value", value,
+                            NULL))
         return -1;
-
-    label = GIMP_ENUM_LABEL(self->obj);
-
-    label->enum_class = g_type_class_ref(enum_type);
-
-    gimp_enum_label_set_value (label, value);
 
     return 0; 
 }
