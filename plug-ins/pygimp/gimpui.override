@@ -969,14 +969,14 @@ _wrap_gimp_color_button_new(PyGObject *self, PyObject *args, PyObject *kwargs)
        return -1;
 
     if (pygobject_construct(self,
-                            "title", title,
-                            "type", type,
-                            "color", color,
+                            "title",       title,
+                            "type",        type,
+                            "color",       color,
+                            "area-width",  width,
+			    "area-height", height,
                             NULL))
         return -1;
 
-    gtk_widget_set_size_request(GIMP_COLOR_BUTTON(self->obj)->color_area,
-                                width, height);
     return 0;
 }
 %%
