@@ -44,7 +44,22 @@
  **/
 
 
+enum
+{
+  PROP_0,
+  PROP_CHANNEL
+};
+
+
 static void     gimp_color_scale_finalize       (GObject         *object);
+static void     gimp_color_scale_get_property   (GObject         *object,
+                                                 guint            property_id,
+                                                 GValue          *value,
+                                                 GParamSpec      *pspec);
+static void     gimp_color_scale_set_property   (GObject         *object,
+                                                 guint            property_id,
+                                                 const GValue    *value,
+                                                 GParamSpec      *pspec);
 
 static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
                                                  GtkAllocation   *allocation);
@@ -74,12 +89,28 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize             = gimp_color_scale_finalize;
+  object_class->get_property         = gimp_color_scale_get_property;
+  object_class->set_property         = gimp_color_scale_set_property;
 
   widget_class->size_allocate        = gimp_color_scale_size_allocate;
   widget_class->state_changed        = gimp_color_scale_state_changed;
   widget_class->button_press_event   = gimp_color_scale_button_press;
   widget_class->button_release_event = gimp_color_scale_button_release;
   widget_class->expose_event         = gimp_color_scale_expose;
+
+  /**
+   * GimpColorScale:channel:
+   *
+   * The channel which is edited by the color scale.
+   *
+   * Since: GIMP 2.8
+   */
+  g_object_class_install_property (object_class, PROP_CHANNEL,
+                                   g_param_spec_enum ("channel", NULL, NULL,
+                                                      GIMP_TYPE_COLOR_SELECTOR_CHANNEL,
+                                                      GIMP_COLOR_SELECTOR_VALUE,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -117,6 +148,46 @@ gimp_color_scale_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_color_scale_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+
+  switch (property_id)
+    {
+    case PROP_CHANNEL:
+      g_value_set_enum (value, scale->channel);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_color_scale_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpColorScale *scale = GIMP_COLOR_SCALE (object);
+
+  switch (property_id)
+    {
+    case PROP_CHANNEL:
+      gimp_color_scale_set_channel (scale, g_value_get_enum (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -442,9 +513,8 @@ gimp_color_scale_new (GtkOrientation            orientation,
 {
   GimpColorScale *scale = g_object_new (GIMP_TYPE_COLOR_SCALE,
                                         "orientation", orientation,
+                                        "channel",     channel,
                                         NULL);
-
-  scale->channel = channel;
 
   gtk_range_set_flippable (GTK_RANGE (scale),
                            orientation == GTK_ORIENTATION_HORIZONTAL);
@@ -471,6 +541,8 @@ gimp_color_scale_set_channel (GimpColorScale           *scale,
 
       scale->needs_render = TRUE;
       gtk_widget_queue_draw (GTK_WIDGET (scale));
+
+      g_object_notify (G_OBJECT (scale), "channel");
     }
 }
 
