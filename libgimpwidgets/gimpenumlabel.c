@@ -39,7 +39,23 @@
  **/
 
 
-static void   gimp_enum_label_finalize (GObject *object);
+enum
+{
+  PROP_0,
+  PROP_ENUM_TYPE,
+  PROP_ENUM_VALUE
+};
+
+
+static void   gimp_enum_label_finalize     (GObject      *object);
+static void   gimp_enum_label_get_property (GObject      *object,
+                                            guint         property_id,
+                                            GValue       *value,
+                                            GParamSpec   *pspec);
+static void   gimp_enum_label_set_property (GObject      *object,
+                                            guint         property_id,
+                                            const GValue *value,
+                                            GParamSpec   *pspec);
 
 
 G_DEFINE_TYPE (GimpEnumLabel, gimp_enum_label, GTK_TYPE_LABEL)
@@ -52,7 +68,35 @@ gimp_enum_label_class_init (GimpEnumLabelClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_enum_label_finalize;
+  object_class->finalize     = gimp_enum_label_finalize;
+  object_class->get_property = gimp_enum_label_get_property;
+  object_class->set_property = gimp_enum_label_set_property;
+
+  /**
+   * GimpEnumLabel:enum-type:
+   *
+   * The #GType of the enum.
+   *
+   * Since: GIMP 2.8
+   **/
+  g_object_class_install_property (object_class, PROP_ENUM_TYPE,
+                                   g_param_spec_gtype ("enum-type", NULL, NULL,
+                                                       G_TYPE_NONE,
+                                                       GIMP_PARAM_READWRITE |
+                                                       G_PARAM_CONSTRUCT_ONLY));
+
+  /**
+   * GimpEnumLabel:enum-value:
+   *
+   * The value to display.
+   *
+   * Since: GIMP 2.8
+   **/
+  g_object_class_install_property (object_class, PROP_ENUM_VALUE,
+                                   g_param_spec_int ("enum-value", NULL, NULL,
+                                                     G_MININT, G_MAXINT, 0,
+                                                     GIMP_PARAM_WRITABLE |
+                                                     G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -71,6 +115,53 @@ gimp_enum_label_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gimp_enum_label_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
+
+  switch (property_id)
+    {
+    case PROP_ENUM_TYPE:
+      if (label->enum_class)
+        g_value_set_gtype (value, G_TYPE_FROM_CLASS (label->enum_class));
+      else
+        g_value_set_gtype (value, G_TYPE_NONE);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_enum_label_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpEnumLabel *label = GIMP_ENUM_LABEL (object);
+
+  switch (property_id)
+    {
+    case PROP_ENUM_TYPE:
+      label->enum_class = g_type_class_ref (g_value_get_gtype (value));
+      break;
+
+    case PROP_ENUM_VALUE:
+      gimp_enum_label_set_value (label, g_value_get_int (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
 /**
  * gimp_enum_label_new:
  * @enum_type: the #GType of an enum.
@@ -84,17 +175,12 @@ GtkWidget *
 gimp_enum_label_new (GType enum_type,
                      gint  value)
 {
-  GimpEnumLabel *label;
-
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
 
-  label = g_object_new (GIMP_TYPE_ENUM_LABEL, NULL);
-
-  label->enum_class = g_type_class_ref (enum_type);
-
-  gimp_enum_label_set_value (label, value);
-
-  return GTK_WIDGET (label);
+  return g_object_new (GIMP_TYPE_ENUM_LABEL,
+                       "enum-type",  enum_type,
+                       "enum-value", value,
+                       NULL);
 }
 
 /**
