@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2011-02-11 20:16+0000\n"
-"PO-Revision-Date: 2011-02-12 13:23+0100\n"
+"POT-Creation-Date: 2011-02-14 22:29+0000\n"
+"PO-Revision-Date: 2011-02-15 18:00+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -529,12 +529,12 @@ msgstr "Copiar al portapapeles la localización del pincel"
 #: ../app/actions/brushes-actions.c:70
 msgctxt "brushes-action"
 msgid "_Delete Brush"
-msgstr "_Borrar pincel"
+msgstr "_Eliminar pincel"
 
 #: ../app/actions/brushes-actions.c:71
 msgctxt "brushes-action"
 msgid "Delete this brush"
-msgstr "Borrar este pincel"
+msgstr "Eliminar este pincel"
 
 #: ../app/actions/brushes-actions.c:76
 msgctxt "brushes-action"
@@ -594,7 +594,7 @@ msgstr "Pegar el búfer seleccionado como imagen nueva"
 #: ../app/actions/buffers-actions.c:63
 msgctxt "buffers-action"
 msgid "_Delete Buffer"
-msgstr "_Borrar búfer"
+msgstr "_Eliminar búfer"
 
 #: ../app/actions/buffers-actions.c:64
 msgctxt "buffers-action"
@@ -649,12 +649,12 @@ msgstr "Crear una copia de este canal y añadirlo a la imagen"
 #: ../app/actions/channels-actions.c:73
 msgctxt "channels-action"
 msgid "_Delete Channel"
-msgstr "_Borrar canal"
+msgstr "_Eliminar canal"
 
 #: ../app/actions/channels-actions.c:74
 msgctxt "channels-action"
 msgid "Delete this channel"
-msgstr "Borrar este canal"
+msgstr "Eliminar este canal"
 
 #: ../app/actions/channels-actions.c:79
 msgctxt "channels-action"
@@ -998,19 +998,19 @@ msgstr "Sin nombre"
 
 #: ../app/actions/data-commands.c:238
 msgid "Delete Object"
-msgstr "Borrar objeto"
+msgstr "Eliminar objeto"
 
 #: ../app/actions/data-commands.c:261
 #, c-format
 msgid "Delete '%s'?"
-msgstr "¿Borrar «%s»?"
+msgstr "¿Eliminar «%s»?"
 
 #: ../app/actions/data-commands.c:264
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr ""
-"¿Está seguro de que quiere eliminar «%s» de la lista y borrarlo del disco?"
+"¿Está seguro de que quiere eliminar «%s» de la lista y eliminarlo del disco?"
 
 #: ../app/actions/dialogs-actions.c:44
 msgctxt "windows-action"
@@ -1543,7 +1543,7 @@ msgstr "Ver como _lista"
 #: ../app/actions/dockable-actions.c:148
 msgctxt "dockable-action"
 msgid "View as _Grid"
-msgstr "Ver como re_jilla"
+msgstr "Ver como reji_lla"
 
 #: ../app/actions/documents-actions.c:41
 msgctxt "documents-action"
@@ -1603,7 +1603,7 @@ msgstr "Elimina la entrada seleccionada"
 #: ../app/actions/documents-actions.c:75
 msgctxt "documents-action"
 msgid "_Clear History"
-msgstr "_Borrar el histórico"
+msgstr "_Limpiar el histórico"
 
 #: ../app/actions/documents-actions.c:76
 msgctxt "documents-action"
@@ -1936,7 +1936,7 @@ msgstr "_Vaciar historial de deshacer"
 #: ../app/actions/edit-actions.c:98
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
-msgstr "Borrar todas las operaciones del historial de deshacer"
+msgstr "Eliminar todas las operaciones del historial de deshacer"
 
 #: ../app/actions/edit-actions.c:103
 msgctxt "edit-action"
@@ -2744,7 +2744,7 @@ msgstr "Partir segmento _uniformemente…"
 
 #: ../app/actions/gradient-editor-actions.c:789
 msgid "_Delete Segment"
-msgstr "B_orrar segmento"
+msgstr "Elimi_nar segmento"
 
 #: ../app/actions/gradient-editor-actions.c:791
 msgid "Re-_center Segment's Midpoint"
@@ -2780,7 +2780,7 @@ msgstr "Partir segmentos _uniformemente…"
 
 #: ../app/actions/gradient-editor-actions.c:811
 msgid "_Delete Selection"
-msgstr "Bo_rrar selección"
+msgstr "Elimi_nar selección"
 
 #: ../app/actions/gradient-editor-actions.c:813
 msgid "Re-_center Midpoints in Selection"
@@ -2926,7 +2926,7 @@ msgstr "Guardar degradado como POV-Ray"
 #: ../app/actions/gradients-actions.c:71
 msgctxt "gradients-action"
 msgid "_Delete Gradient"
-msgstr "_Borrar degradado"
+msgstr "_Eliminar degradado"
 
 #: ../app/actions/gradients-actions.c:72
 msgctxt "gradients-action"
@@ -3001,7 +3001,7 @@ msgstr "_Transformar"
 #: ../app/actions/image-actions.c:58
 msgctxt "image-action"
 msgid "_Guides"
-msgstr "Líneas _guía"
+msgstr "Líneas g_uía"
 
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
@@ -3161,7 +3161,7 @@ msgstr "Convierte la imagen al espacio de colores RGB"
 #: ../app/actions/image-actions.c:147
 msgctxt "image-convert-action"
 msgid "_Grayscale"
-msgstr "Escala de _grises"
+msgstr "Escala de gr_ises"
 
 #: ../app/actions/image-actions.c:148
 msgctxt "image-convert-action"
@@ -3228,27 +3228,27 @@ msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Rota la imagen 90 grados a la izquierda"
 
-#: ../app/actions/image-commands.c:236
+#: ../app/actions/image-commands.c:237
 msgid "Set Image Canvas Size"
 msgstr "Establece el tamaño del lienzo de la imagen"
 
-#: ../app/actions/image-commands.c:265 ../app/actions/image-commands.c:289
-#: ../app/actions/image-commands.c:581
+#: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
+#: ../app/actions/image-commands.c:583
 msgid "Resizing"
 msgstr "Redimensionando"
 
-#: ../app/actions/image-commands.c:316
+#: ../app/actions/image-commands.c:317
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: ../app/actions/image-commands.c:378
+#: ../app/actions/image-commands.c:379
 #: ../app/pdb/drawable-transform-cmds.c:153
 #: ../app/pdb/drawable-transform-cmds.c:230
 #: ../app/pdb/item-transform-cmds.c:158
 msgid "Flipping"
 msgstr "Volteando"
 
-#: ../app/actions/image-commands.c:402
+#: ../app/actions/image-commands.c:403
 #: ../app/pdb/drawable-transform-cmds.c:547
 #: ../app/pdb/drawable-transform-cmds.c:628 ../app/pdb/image-cmds.c:536
 #: ../app/pdb/item-transform-cmds.c:423 ../app/pdb/transform-tools-cmds.c:224
@@ -3256,20 +3256,20 @@ msgstr "Volteando"
 msgid "Rotating"
 msgstr "Rotando"
 
-#: ../app/actions/image-commands.c:428 ../app/actions/layers-commands.c:691
+#: ../app/actions/image-commands.c:429 ../app/actions/layers-commands.c:691
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
-#: ../app/actions/image-commands.c:628
+#: ../app/actions/image-commands.c:630
 msgid "Change Print Size"
 msgstr "Cambiar el tamaño de la impresión"
 
-#: ../app/actions/image-commands.c:669
+#: ../app/actions/image-commands.c:671
 msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: ../app/actions/image-commands.c:680 ../app/actions/layers-commands.c:1145
+#: ../app/actions/image-commands.c:682 ../app/actions/layers-commands.c:1145
 #: ../app/dialogs/preferences-dialog.c:1899
 #: ../app/pdb/drawable-transform-cmds.c:708
 #: ../app/pdb/drawable-transform-cmds.c:786 ../app/pdb/image-cmds.c:408
@@ -3307,12 +3307,12 @@ msgstr "Crear una nueva vista para esta imagen"
 #: ../app/actions/images-actions.c:59
 msgctxt "images-action"
 msgid "_Delete Image"
-msgstr "B_orrar imagen"
+msgstr "Elimi_nar imagen"
 
 #: ../app/actions/images-actions.c:60
 msgctxt "images-action"
 msgid "Delete this image"
-msgstr "Borrar esta imagen"
+msgstr "Eliminar esta imagen"
 
 #: ../app/actions/layers-actions.c:49
 msgctxt "layers-action"
@@ -3432,7 +3432,7 @@ msgstr "Crear un duplicado de la capa y la añade a la imagen"
 #: ../app/actions/layers-actions.c:114
 msgctxt "layers-action"
 msgid "_Delete Layer"
-msgstr "_Borrar la capa"
+msgstr "_Eliminar la capa"
 
 #: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
@@ -3492,7 +3492,7 @@ msgstr "Anclar la capa flotante"
 #: ../app/actions/layers-actions.c:150
 msgctxt "layers-action"
 msgid "Merge Do_wn"
-msgstr "Combinar hacia aba_jo"
+msgstr "Combinar hacia abaj_o"
 
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
@@ -3680,7 +3680,7 @@ msgstr "Aplicar el efecto de la máscara de capa y quitarla"
 #: ../app/actions/layers-actions.c:275
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
-msgstr "Borrar másca_ra de capa"
+msgstr "Eliminar másca_ra de capa"
 
 #: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
@@ -3884,7 +3884,7 @@ msgstr "Edita esta entrada"
 #: ../app/actions/palette-editor-actions.c:53
 msgctxt "palette-editor-action"
 msgid "_Delete Color"
-msgstr "_Borrar color"
+msgstr "_Eliminar color"
 
 #: ../app/actions/palette-editor-actions.c:54
 msgctxt "palette-editor-action"
@@ -3994,12 +3994,12 @@ msgstr "Copiar al portapapeles la localización del archivo de la paleta"
 #: ../app/actions/palettes-actions.c:77
 msgctxt "palettes-action"
 msgid "_Delete Palette"
-msgstr "B_orrar paleta"
+msgstr "Elimi_nar paleta"
 
 #: ../app/actions/palettes-actions.c:78
 msgctxt "palettes-action"
 msgid "Delete this palette"
-msgstr "Borrar esta paleta"
+msgstr "Eliminar esta paleta"
 
 #: ../app/actions/palettes-actions.c:83
 msgctxt "palettes-action"
@@ -4077,12 +4077,12 @@ msgstr "Copiar al portapapeles la localización del archivo de patrón"
 #: ../app/actions/patterns-actions.c:70
 msgctxt "patterns-action"
 msgid "_Delete Pattern"
-msgstr "_Borrar patrón"
+msgstr "_Eliminar patrón"
 
 #: ../app/actions/patterns-actions.c:71
 msgctxt "patterns-action"
 msgid "Delete this pattern"
-msgstr "Borrar este patrón"
+msgstr "Eliminar este patrón"
 
 #: ../app/actions/patterns-actions.c:76
 msgctxt "patterns-action"
@@ -4400,7 +4400,7 @@ msgstr "Contraer la selección"
 #: ../app/actions/select-actions.c:93
 msgctxt "select-action"
 msgid "_Grow..."
-msgstr "A_grandar [Grow]…"
+msgstr "Agran_dar [Grow]…"
 
 #: ../app/actions/select-actions.c:94
 msgctxt "select-action"
@@ -4552,12 +4552,12 @@ msgstr "Editar esta plantilla"
 #: ../app/actions/templates-actions.c:69
 msgctxt "templates-action"
 msgid "_Delete Template"
-msgstr "B_orrar la plantilla"
+msgstr "_Eliminar la plantilla"
 
 #: ../app/actions/templates-actions.c:70
 msgctxt "templates-action"
 msgid "Delete this template"
-msgstr "Borrar esta plantilla"
+msgstr "Eliminar esta plantilla"
 
 #: ../app/actions/templates-commands.c:111
 msgid "New Template"
@@ -4574,13 +4574,13 @@ msgstr "Editar plantilla"
 
 #: ../app/actions/templates-commands.c:212
 msgid "Delete Template"
-msgstr "Borrar la plantilla"
+msgstr "Eliminar la plantilla"
 
 #: ../app/actions/templates-commands.c:238
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "¿Está seguro de que quiere borrar «%s» de la lista y del disco?"
+msgstr "¿Está seguro de que quiere eliminar «%s» de la lista y del disco?"
 
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
@@ -4670,7 +4670,7 @@ msgstr "_Pegar"
 #: ../app/actions/text-tool-actions.c:73
 msgctxt "text-tool-action"
 msgid "_Delete"
-msgstr "B_orrar"
+msgstr "_Eliminar"
 
 #: ../app/actions/text-tool-actions.c:78
 msgctxt "text-tool-action"
@@ -4740,7 +4740,7 @@ msgstr "Re_nombrar las opciones guardadas"
 #: ../app/actions/tool-options-actions.c:71
 msgctxt "tool-options-action"
 msgid "_Delete Saved Options"
-msgstr "_Borrar las opciones guardadas"
+msgstr "_Eliminar las opciones guardadas"
 
 #: ../app/actions/tool-options-actions.c:75
 msgctxt "tool-options-action"
@@ -4974,12 +4974,12 @@ msgstr "Duplicar esta ruta"
 #: ../app/actions/vectors-actions.c:77
 msgctxt "vectors-action"
 msgid "_Delete Path"
-msgstr "B_orrar ruta"
+msgstr "_Eliminar ruta"
 
 #: ../app/actions/vectors-actions.c:78
 msgctxt "vectors-action"
 msgid "Delete this path"
-msgstr "Borrar esta ruta"
+msgstr "Eliminar esta ruta"
 
 #: ../app/actions/vectors-actions.c:83
 msgctxt "vectors-action"
@@ -5328,7 +5328,7 @@ msgstr "Dibuja un borde alrededor de la capa activa"
 #: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Guides"
-msgstr "Mostrar _guías"
+msgstr "Mostrar g_uías"
 
 #: ../app/actions/view-actions.c:155
 msgctxt "view-action"
@@ -5368,7 +5368,7 @@ msgstr "Las operaciones de las herramientas se ajustan a las líneas guía"
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "Ajustar a la re_jilla"
+msgstr "Ajustar a la rej_illa"
 
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
@@ -7188,7 +7188,7 @@ msgstr "Modificación de la capa de texto"
 #: ../app/core/core-enums.c:897
 msgctxt "undo-type"
 msgid "Delete layer mask"
-msgstr "Borrar máscara de capa"
+msgstr "Eliminar máscara de capa"
 
 #: ../app/core/core-enums.c:899
 msgctxt "undo-type"
@@ -7218,7 +7218,7 @@ msgstr "Nueva ruta"
 #: ../app/core/core-enums.c:904
 msgctxt "undo-type"
 msgid "Delete path"
-msgstr "Borrar ruta"
+msgstr "Eliminar ruta"
 
 #: ../app/core/core-enums.c:905
 msgctxt "undo-type"
@@ -7843,7 +7843,7 @@ msgstr "Modo de pintura"
 #: ../app/core/gimpdata.c:671 ../app/core/gimptoolpresets.c:277
 #, c-format
 msgid "Could not delete '%s': %s"
-msgstr "No se ha podido borrar «%s»: %s"
+msgstr "No se ha podido eliminar «%s»: %s"
 
 #: ../app/core/gimpdatafactory.c:427 ../app/core/gimpdatafactory.c:456
 #: ../app/core/gimpdatafactory.c:622 ../app/core/gimpdatafactory.c:644
@@ -8263,44 +8263,44 @@ msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Transformar elementos"
 
-#: ../app/core/gimpimage-merge.c:108 ../app/core/gimpimage-merge.c:122
+#: ../app/core/gimpimage-merge.c:131
 msgctxt "undo-type"
 msgid "Merge Visible Layers"
 msgstr "Combinar las capas visibles"
 
-#: ../app/core/gimpimage-merge.c:176
+#: ../app/core/gimpimage-merge.c:177
 msgctxt "undo-type"
 msgid "Flatten Image"
 msgstr "Aplanar la imagen"
 
-#: ../app/core/gimpimage-merge.c:225
+#: ../app/core/gimpimage-merge.c:247
 msgid "Cannot merge down to a layer group."
 msgstr "No se puede hacer una combinación a un grupo de capas."
 
-#: ../app/core/gimpimage-merge.c:232
+#: ../app/core/gimpimage-merge.c:254
 msgid "The layer to merge down to is locked."
 msgstr "La capa a la que se pretende combinar está bloqueada."
 
-#: ../app/core/gimpimage-merge.c:244
+#: ../app/core/gimpimage-merge.c:266
 msgid "There is no visible layer to merge down to."
 msgstr "No hay ninguna capa visible a la que hacer la combinación."
 
-#: ../app/core/gimpimage-merge.c:255
+#: ../app/core/gimpimage-merge.c:276
 msgctxt "undo-type"
 msgid "Merge Down"
 msgstr "Combinar hacia abajo"
 
-#: ../app/core/gimpimage-merge.c:277
+#: ../app/core/gimpimage-merge.c:304
 msgctxt "undo-type"
 msgid "Merge Layer Group"
 msgstr "Combinar el grupo de capas"
 
-#: ../app/core/gimpimage-merge.c:330
+#: ../app/core/gimpimage-merge.c:357
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
 msgstr "Combinar las rutas visibles"
 
-#: ../app/core/gimpimage-merge.c:366
+#: ../app/core/gimpimage-merge.c:393
 msgid "Not enough visible paths for a merge. There must be at least two."
 msgstr ""
 "No hay suficientes capas visibles para hacer una combinación. Deben haber "
@@ -8380,22 +8380,22 @@ msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: ../app/core/gimpimage.c:3805
+#: ../app/core/gimpimage.c:3807
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: ../app/core/gimpimage.c:3843 ../app/core/gimpimage.c:3855
+#: ../app/core/gimpimage.c:3845 ../app/core/gimpimage.c:3857
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Eliminar un canal"
 
-#: ../app/core/gimpimage.c:3906
+#: ../app/core/gimpimage.c:3910
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: ../app/core/gimpimage.c:3937
+#: ../app/core/gimpimage.c:3941
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Eliminar una ruta"
@@ -8592,7 +8592,7 @@ msgstr "Aplicar máscara de capa"
 #: ../app/core/gimplayer.c:1729
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
-msgstr "Borrar máscara de capa"
+msgstr "Eliminar máscara de capa"
 
 #: ../app/core/gimplayer.c:1848
 msgctxt "undo-type"
@@ -9164,35 +9164,39 @@ msgstr "Configurar la rejilla de la imagen"
 msgid "Grid"
 msgstr "Rejilla"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:64
+#: ../app/dialogs/image-merge-layers-dialog.c:68
 msgid "Merge Layers"
 msgstr "Combinar capas"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:66
+#: ../app/dialogs/image-merge-layers-dialog.c:70
 msgid "Layers Merge Options"
 msgstr "Opciones de combinación de capas"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:72
+#: ../app/dialogs/image-merge-layers-dialog.c:76
 msgid "_Merge"
 msgstr "Co_mbinar"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:92
+#: ../app/dialogs/image-merge-layers-dialog.c:96
 msgid "Final, Merged Layer should be:"
 msgstr "La capa final combinada debería ser:"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:96
+#: ../app/dialogs/image-merge-layers-dialog.c:100
 msgid "Expanded as necessary"
 msgstr "Expandida lo necesario"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:99
+#: ../app/dialogs/image-merge-layers-dialog.c:103
 msgid "Clipped to image"
 msgstr "Recortada según la imagen"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:102
+#: ../app/dialogs/image-merge-layers-dialog.c:106
 msgid "Clipped to bottom layer"
 msgstr "Recortada hasta la capa más baja"
 
-#: ../app/dialogs/image-merge-layers-dialog.c:110
+#: ../app/dialogs/image-merge-layers-dialog.c:114
+msgid "Merge within active _group only"
+msgstr "Mezclar solamente dentro del grupo acti_vo"
+
+#: ../app/dialogs/image-merge-layers-dialog.c:127
 msgid "_Discard invisible layers"
 msgstr "_Descartar las capas invisibles"
 
@@ -9577,7 +9581,7 @@ msgstr "Mostrar el _límite de la capa"
 
 #: ../app/dialogs/preferences-dialog.c:1290
 msgid "Show _guides"
-msgstr "Mostrar las _guías"
+msgstr "Mostra_r las guías"
 
 #: ../app/dialogs/preferences-dialog.c:1293
 msgid "Show gri_d"
@@ -9797,7 +9801,7 @@ msgstr "Ajuste a la rejilla y la guía"
 
 #: ../app/dialogs/preferences-dialog.c:1895
 msgid "_Snap distance:"
-msgstr "Distancia del a_juste:"
+msgstr "Distancia del ajus_te:"
 
 #: ../app/dialogs/preferences-dialog.c:1903
 msgid "Default _interpolation:"
@@ -10390,7 +10394,7 @@ msgstr "_Vertical:"
 msgid "Image Size"
 msgstr "Tamaño de la imagen"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:377
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:381
 msgid "Quality"
 msgstr "Calidad"
 
@@ -10643,7 +10647,7 @@ msgstr "Soltar la capa nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:275
 msgid "Drop New Path"
-msgstr "Borrar la ruta nueva"
+msgstr "Descartar la ruta nueva"
 
 #: ../app/display/gimpdisplayshell-dnd.c:347
 #: ../app/display/gimpdisplayshell-dnd.c:442 ../app/tools/gimpblendtool.c:171
@@ -10754,16 +10758,16 @@ msgstr ""
 msgid "%s plug-In could not open image"
 msgstr "El complemento %s no ha podido abrir la imagen"
 
-#: ../app/file/file-open.c:521
+#: ../app/file/file-open.c:522
 msgid "Image doesn't contain any layers"
 msgstr "La imagen no contiene ninguna capa"
 
-#: ../app/file/file-open.c:574
+#: ../app/file/file-open.c:575
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "La apertura de «%s» ha fallado: %s"
 
-#: ../app/file/file-open.c:681
+#: ../app/file/file-open.c:682
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11275,14 +11279,14 @@ msgstr ""
 "El procedimiento «%s» se ha llamado con un valor «%s» para el argumento «%s» (#%"
 "d, tipo %s). Este valor está fuera de los límites."
 
-#: ../app/pdb/image-cmds.c:2650
+#: ../app/pdb/image-cmds.c:2273
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "La resolución de la Imagen se sale de los límites; usando la resolución "
 "predeterminada en su lugar."
 
-#: ../app/pdb/image-select-cmds.c:156 ../app/pdb/selection-tools-cmds.c:217
+#: ../app/pdb/image-select-cmds.c:295 ../app/pdb/selection-tools-cmds.c:217
 #: ../app/tools/gimpfreeselecttool.c:198
 msgid "Free Select"
 msgstr "Selección libre"
@@ -11302,8 +11306,8 @@ msgstr "No se ha podido crear la capa de texto"
 #: ../app/pdb/text-layer-cmds.c:640 ../app/pdb/text-layer-cmds.c:712
 #: ../app/pdb/text-layer-cmds.c:784 ../app/pdb/text-layer-cmds.c:854
 #: ../app/pdb/text-layer-cmds.c:926 ../app/pdb/text-layer-cmds.c:998
-#: ../app/pdb/text-layer-cmds.c:1070 ../app/pdb/text-layer-cmds.c:1106
-#: ../app/pdb/text-layer-cmds.c:1185
+#: ../app/pdb/text-layer-cmds.c:1070 ../app/pdb/text-layer-cmds.c:1112
+#: ../app/pdb/text-layer-cmds.c:1196
 msgid "Set text layer attribute"
 msgstr "Establecer el atributo de la capa de texto"
 
@@ -11696,7 +11700,7 @@ msgstr "Distribuir las partes inferiores de los objetivos"
 msgid "Offset:"
 msgstr "Desplazamiento:"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:331
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:335
 msgid "Gradient"
 msgstr "Degradado"
 
@@ -11704,7 +11708,7 @@ msgstr "Degradado"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../app/tools/gimpblendoptions.c:237 ../app/tools/gimppaintoptions-gui.c:315
+#: ../app/tools/gimpblendoptions.c:237 ../app/tools/gimppaintoptions-gui.c:319
 msgid "Repeat:"
 msgstr "Repetir:"
 
@@ -13041,54 +13045,54 @@ msgstr "Proporción de aspecto"
 
 #: ../app/tools/gimppaintoptions-gui.c:174
 msgid "Reset aspect ratio to brush's native"
-msgstr "Reiniciar relación de aspecto a la nativa del pincel"
+msgstr "Reiniciar la proporción de aspecto a la nativa del pincel"
 
 #: ../app/tools/gimppaintoptions-gui.c:198
 msgid "Reset angle to zero"
 msgstr "Restablecer el ángulo a cero"
 
-#: ../app/tools/gimppaintoptions-gui.c:228
+#: ../app/tools/gimppaintoptions-gui.c:232
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../app/tools/gimppaintoptions-gui.c:244
+#: ../app/tools/gimppaintoptions-gui.c:248
 msgid "Hard edge"
 msgstr "Bordes duros"
 
-#: ../app/tools/gimppaintoptions-gui.c:273
+#: ../app/tools/gimppaintoptions-gui.c:277
 msgid "Dynamics Options"
 msgstr "Opciones de dinámica"
 
-#: ../app/tools/gimppaintoptions-gui.c:279
+#: ../app/tools/gimppaintoptions-gui.c:283
 msgid "Fade Options"
 msgstr "Opciones de desvanecimiento"
 
-#: ../app/tools/gimppaintoptions-gui.c:293
+#: ../app/tools/gimppaintoptions-gui.c:297
 msgid "Fade length"
 msgstr "Longitud de desvanecimiento"
 
-#: ../app/tools/gimppaintoptions-gui.c:319
+#: ../app/tools/gimppaintoptions-gui.c:323
 #: ../app/widgets/gimpviewablebox.c:288
 msgid "Reverse"
 msgstr "Invertido"
 
-#: ../app/tools/gimppaintoptions-gui.c:326
+#: ../app/tools/gimppaintoptions-gui.c:330
 msgid "Color Options"
 msgstr "Opciones de color"
 
-#: ../app/tools/gimppaintoptions-gui.c:351
+#: ../app/tools/gimppaintoptions-gui.c:355
 msgid "Amount"
 msgstr "Cantidad"
 
-#: ../app/tools/gimppaintoptions-gui.c:355
+#: ../app/tools/gimppaintoptions-gui.c:359
 msgid "Apply Jitter"
 msgstr "Aplicar «jitter»"
 
-#: ../app/tools/gimppaintoptions-gui.c:373
+#: ../app/tools/gimppaintoptions-gui.c:377
 msgid "Smooth stroke"
 msgstr "Trazado suave"
 
-#: ../app/tools/gimppaintoptions-gui.c:383
+#: ../app/tools/gimppaintoptions-gui.c:387
 msgid "Factor"
 msgstr "Factor"
 
@@ -13672,11 +13676,11 @@ msgstr "Convertir el borde"
 
 #: ../app/tools/gimpvectortool.c:598
 msgid "Delete Anchor"
-msgstr "Borrar el ancla"
+msgstr "Eliminar el ancla"
 
 #: ../app/tools/gimpvectortool.c:621
 msgid "Delete Segment"
-msgstr "Borrar el segmento"
+msgstr "Eliminar el segmento"
 
 #: ../app/tools/gimpvectortool.c:840
 msgid "Move Anchors"
@@ -13737,7 +13741,7 @@ msgstr "Pulsar-arrastrar para insertar un ancla en la ruta"
 
 #: ../app/tools/gimpvectortool.c:1292
 msgid "Click to delete this anchor"
-msgstr "Pulse para borrar este ancla"
+msgstr "Pulse para eliminar este ancla"
 
 #: ../app/tools/gimpvectortool.c:1296
 msgid "Click to connect this anchor with the selected endpoint"
@@ -13753,7 +13757,7 @@ msgstr "Pulse para convertir este nodo en angular"
 
 #: ../app/tools/gimpvectortool.c:1805
 msgid "Delete Anchors"
-msgstr "Borrar anclas"
+msgstr "Eliminar anclas"
 
 #: ../app/tools/gimpvectortool.c:1976
 msgid "There is no active layer or channel to stroke to"
@@ -14396,7 +14400,7 @@ msgid ""
 "removing it."
 msgstr ""
 "La eliminación de este controlador de la lista de controladores activos "
-"borrará permanentemente todas las asignaciones de eventos que haya "
+"eliminará permanentemente todas las asignaciones de eventos que haya "
 "configurado.\n"
 "\n"
 "Al seleccionar «Desactivar el controlador» se desactivará el controlador sin "
@@ -14482,7 +14486,7 @@ msgstr "Eliminar los ajustes del dispositivo"
 #: ../app/widgets/gimpdeviceeditor.c:520
 #, c-format
 msgid "Delete \"%s\"?"
-msgstr "¿Borrar «%s»?"
+msgstr "¿Eliminar «%s»?"
 
 #: ../app/widgets/gimpdeviceeditor.c:523
 msgid ""
@@ -15078,7 +15082,7 @@ msgstr "Exportar los ajustes seleccionados a un archivo"
 
 #: ../app/widgets/gimpsettingseditor.c:189
 msgid "Delete the selected settings"
-msgstr "Borrar los ajustes seleccionados"
+msgstr "Eliminar los ajustes seleccionados"
 
 #: ../app/widgets/gimpsizebox.c:453
 #, c-format
@@ -15202,7 +15206,7 @@ msgstr "Cambiar el color del texto seleccionado"
 
 #: ../app/widgets/gimptextstyleeditor.c:233
 msgid "Clear style of selected text"
-msgstr "Borrar el estilo del texto seleccionad"
+msgstr "Borrar el estilo del texto seleccionado"
 
 #: ../app/widgets/gimptextstyleeditor.c:253
 msgid "Change kerning of selected text"
@@ -15326,7 +15330,7 @@ msgstr "Recuperar opciones desde…"
 
 #: ../app/widgets/gimptooloptionseditor.c:229
 msgid "Delete saved options..."
-msgstr "Borrar las opciones guardadas…"
+msgstr "Eliminar las opciones guardadas…"
 
 #: ../app/widgets/gimptooloptionseditor.c:583
 #, c-format
@@ -15355,7 +15359,7 @@ msgid "Apply stored pattern"
 msgstr "Aplicar el patrón almacenado"
 
 #: ../app/widgets/gimptoolpreseteditor.c:132
-msgid "Apply stored pallete"
+msgid "Apply stored palette"
 msgstr "Aplicar la paleta almacenada"
 
 #: ../app/widgets/gimptoolpreseteditor.c:138
