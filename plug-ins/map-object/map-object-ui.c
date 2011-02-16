@@ -1375,8 +1375,8 @@ main_dialog (GimpDrawable *drawable)
                     G_CALLBACK (preview_events),
                     previewarea);
 
-  g_signal_connect (previewarea, "expose-event",
-                    G_CALLBACK (preview_expose),
+  g_signal_connect (previewarea, "draw",
+                    G_CALLBACK (preview_draw),
                     previewarea);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
