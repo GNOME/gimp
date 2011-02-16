@@ -302,21 +302,15 @@ compute_preview_image (void)
 }
 
 gboolean
-preview_expose (GtkWidget      *widget,
-                GdkEventExpose *eevent)
+preview_draw (GtkWidget *widget,
+              cairo_t   *cr)
 {
   gint startx, starty, pw, ph;
-  cairo_t *cr;
-
-  cr = gdk_cairo_create (eevent->window);
 
   pw = PREVIEW_WIDTH * mapvals.zoom;
   ph = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
-
-  if (pw != PREVIEW_WIDTH || ph != PREVIEW_HEIGHT)
-    gdk_window_clear (gtk_widget_get_window (previewarea));
 
   cairo_set_source_surface (cr, preview_surface, startx, starty);
   cairo_rectangle (cr, startx, starty, pw, ph);
@@ -331,8 +325,6 @@ preview_expose (GtkWidget      *widget,
 
   cairo_reset_clip (cr);
   draw_lights (cr, startx, starty, pw, ph);
-
-  cairo_destroy (cr);
 
   return FALSE;
 }
