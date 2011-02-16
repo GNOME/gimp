@@ -865,6 +865,33 @@ gimp_window_transient_realized (GtkWidget *window,
 }
 
 /* similar to what we have in libgimp/gimpui.c */
+static GdkWindow *
+gimp_get_foreign_window (guint32 window)
+{
+#if GTK_CHECK_VERSION (2, 24, 0)
+
+#ifdef GDK_WINDOWING_X11
+  return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
+                                                 window);
+#endif
+
+#ifdef GDK_WINDOWING_WIN32
+  return gdk_win32_window_foreign_new_for_display (gdk_display_get_default (),
+                                                   window);
+#endif
+
+#else /* ! GTK_CHECK_VERSION (2, 24, 0) */
+
+#ifndef GDK_NATIVE_WINDOW_POINTER
+  return gdk_window_foreign_new_for_display (gdk_display_get_default (),
+                                             window);
+#endif
+
+#endif /* GTK_CHECK_VERSION (2, 24, 0) */
+
+  return NULL;
+}
+
 void
 gimp_window_set_transient_for (GtkWindow *window,
                                guint32    parent_ID)
@@ -879,9 +906,7 @@ gimp_window_set_transient_for (GtkWindow *window,
 #ifndef GDK_WINDOWING_WIN32
   GdkWindow *parent;
 
-  parent = gdk_window_foreign_new_for_display (gdk_display_get_default (),
-                                               parent_ID);
-
+  parent = gimp_get_foreign_window (parent_ID);
   if (! parent)
     return;
 
