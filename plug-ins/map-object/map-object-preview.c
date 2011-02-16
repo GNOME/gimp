@@ -40,7 +40,6 @@ static void compute_preview         (gint x,
                                      gint ph);
 static void draw_light_marker       (gint xpos,
 				     gint ypos);
-static void clear_light_marker      (void);
 
 /**************************************************************/
 /* Computes a preview of the rectangle starting at (x,y) with */
@@ -246,50 +245,6 @@ draw_light_marker (gint xpos,
 }
 
 static void
-clear_light_marker (void)
-{
-  /* Restore background if it has been saved */
-  /* ======================================= */
-
-  gint pw, ph, startx, starty;
-
-  if (backbuf.image != NULL)
-    {
-      cairo_t *cr;
-
-      cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
-
-      cairo_rectangle (cr, backbuf.x, backbuf.y, backbuf.w, backbuf.h);
-      cairo_clip (cr);
-      cairo_set_source_surface (cr, backbuf.image, 0.0, 0.0);
-      cairo_paint (cr);
-
-      cairo_destroy (cr);
-
-      cairo_surface_destroy (backbuf.image);
-      backbuf.image = NULL;
-    }
-
-  pw = PREVIEW_WIDTH * mapvals.zoom;
-  ph = PREVIEW_HEIGHT * mapvals.zoom;
-
-  if (pw != PREVIEW_WIDTH || ph != PREVIEW_HEIGHT)
-    {
-      startx = (PREVIEW_WIDTH - pw) / 2;
-      starty = (PREVIEW_HEIGHT - ph) / 2;
-
-      gdk_window_clear_area (gtk_widget_get_window (previewarea),
-                             0, 0, startx, PREVIEW_HEIGHT);
-      gdk_window_clear_area (gtk_widget_get_window (previewarea),
-                             startx, 0, pw, starty);
-      gdk_window_clear_area (gtk_widget_get_window (previewarea),
-                             pw + startx, 0, startx, PREVIEW_HEIGHT);
-      gdk_window_clear_area (gtk_widget_get_window (previewarea),
-                             startx, ph + starty, pw, starty);
-    }
-}
-
-static void
 draw_lights (gint startx,
 	     gint starty,
 	     gint pw,
@@ -297,8 +252,6 @@ draw_lights (gint startx,
 {
   gdouble dxpos, dypos;
   gint    xpos, ypos;
-
-  clear_light_marker ();
 
   gimp_vector_3d_to_2d (startx, starty, pw, ph,
 			&dxpos, &dypos, &mapvals.viewpoint,
@@ -308,7 +261,9 @@ draw_lights (gint startx,
 
   if (xpos >= 0 && xpos <= PREVIEW_WIDTH &&
       ypos >= 0 && ypos <= PREVIEW_HEIGHT)
-    draw_light_marker (xpos, ypos);
+    {
+      draw_light_marker (xpos, ypos);
+    }
 }
 
 /*************************************************/
@@ -328,7 +283,8 @@ update_light (gint xpos,
 
   gimp_vector_2d_to_3d (startx, starty, pw, ph, xpos, ypos,
 			&mapvals.viewpoint, &mapvals.lightsource.position);
-  draw_lights (startx, starty, pw, ph);
+
+  gtk_widget_queue_draw (previewarea);
 }
 
 /******************************************************************/
@@ -356,8 +312,6 @@ compute_preview_image (void)
   cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
   gdk_window_set_cursor(gtk_widget_get_window (previewarea), cursor);
   gdk_cursor_unref (cursor);
-
-  clear_light_marker ();
 }
 
 gboolean
