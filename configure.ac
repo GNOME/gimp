@@ -1294,11 +1294,12 @@ fi
 ################################
 
 # Check if building for GTK+-X11
-gdk_target=`$PKG_CONFIG --variable=target gtk+-3.0`
+GTK_CHECK_BACKEND([x11], [gtk_required_version],
+                  [have_gtk_x11=yes], [have_gtk_x11=no])
 
-have_libxmu="no (building for $gdk_target)"
+have_libxmu="no (building for `pkg-config --variable=targets gtk+-3.0`)"
 
-if test "$gdk_target" = x11; then
+if test "x$have_gtk_x11" = "xyes"; then
 
    # doc-shooter is X11 specific
    DOC_SHOOTER=doc-shooter
@@ -1567,7 +1568,7 @@ gimp_save_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS $X_CFLAGS"
 gimp_save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS $X_LIBS"
-if test "$gdk_target" = x11; then
+if test "x$have_gtk_x11" = "xyes"; then
   lib_X11=-lX11
 fi
 have_libxpm=no
