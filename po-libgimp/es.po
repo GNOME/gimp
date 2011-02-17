@@ -1,20 +1,20 @@
 # translation of gimp-libgimp.gimp-2-6.po to Español
 # Spanish translation for gimp-libgimp 1.3.X.
-# Copyright © 1998-2000,2003, 2006, 2007, 2008 Free Software Foundation, Inc.
+# Copyright © 1998-2000,2003, 2006, 2007, 2008, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 #
 # Francisco Javier Fernandez <serrador@cvs.gnome.org>, 2003, 2004, 2006.
 # Pablo G. del Campo <pablodc@par001001-703>, 2003, 2004.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007, 2008, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-03-17 11:31+0000\n"
-"PO-Revision-Date: 2008-12-30 19:55+0100\n"
+"POT-Creation-Date: 2011-02-15 20:39+0000\n"
+"PO-Revision-Date: 2011-02-17 10:40+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,22 +25,22 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1045
+#: ../libgimp/gimp.c:1068
 msgid "success"
 msgstr "correcto"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1049
+#: ../libgimp/gimp.c:1072
 msgid "execution error"
 msgstr "error de ejecución"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1053
+#: ../libgimp/gimp.c:1076
 msgid "calling error"
 msgstr "error de llamada"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1057
+#: ../libgimp/gimp.c:1080
 msgid "cancelled"
 msgstr "cancelado"
 
@@ -761,8 +761,8 @@ msgstr "Relleno"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/display-filter-lcms.c:183
-#: ../modules/color-selector-cmyk-lcms.c:407
-#: ../modules/color-selector-cmyk-lcms.c:413
+#: ../modules/color-selector-cmyk-lcms.c:422
+#: ../modules/color-selector-cmyk-lcms.c:428
 msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 inválida)"
 
@@ -1343,7 +1343,7 @@ msgstr ""
 
 #: ../modules/display-filter-color-blind.c:261
 msgid "Color Deficient Vision"
-msgstr "Color de visión deficiente"
+msgstr "Visión deficiente del color"
 
 #: ../modules/display-filter-color-blind.c:483
 msgid "Color _deficiency type:"
@@ -1503,11 +1503,11 @@ msgstr "El porcentaje de negro que se extraerá de las tintas coloreadas."
 msgid "CMYK color selector (using color profile)"
 msgstr "Selector de color CMYK (utilizando perfil de color)"
 
-#: ../modules/color-selector-cmyk-lcms.c:395
+#: ../modules/color-selector-cmyk-lcms.c:410
 msgid "Profile: (none)"
 msgstr "Perfil: (ninguno)"
 
-#: ../modules/color-selector-cmyk-lcms.c:416
+#: ../modules/color-selector-cmyk-lcms.c:431
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
