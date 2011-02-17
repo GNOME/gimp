@@ -1,5 +1,5 @@
 # translation of gimp-plug-ins.gimp-2-6.po to Español
-# Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2010 Free Software Foundation, Inc.
+# Copyright © 1998-2000,2003, 2006, 2007, 2008, 2009, 2010, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>, 2000-2002.
@@ -9,14 +9,14 @@
 # Pablo del Campo <pablodc@par001001-703>, 2004.
 # Alonso Lara <keko@khor-ha.net>, 2005.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2010.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2009, 2010, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2010-07-19 11:54+0000\n"
-"PO-Revision-Date: 2010-07-20 10:13+0200\n"
+"POT-Creation-Date: 2011-02-15 20:39+0000\n"
+"PO-Revision-Date: 2011-02-17 10:58+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgid "To:"
 msgstr "A:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:419
-#: ../plug-ins/common/file-ps.c:3231 ../plug-ins/imagemap/imap_menu.c:214
+#: ../plug-ins/common/file-ps.c:3233 ../plug-ins/imagemap/imap_menu.c:214
 msgid "Gray"
 msgstr "Gris"
 
@@ -297,8 +297,8 @@ msgstr "Alinear capas visibles"
 
 #. if and how to center the image on the page
 #: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
-#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3247
-#: ../plug-ins/common/file-ps.c:3259 ../plug-ins/common/file-psp.c:661
+#: ../plug-ins/common/cml-explorer.c:166 ../plug-ins/common/file-ps.c:3249
+#: ../plug-ins/common/file-ps.c:3261 ../plug-ins/common/file-psp.c:661
 #: ../plug-ins/file-fits/fits.c:1045
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:999
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1040
@@ -652,7 +652,7 @@ msgstr "Desenfoque gaussiano selectivo"
 
 #: ../plug-ins/common/blur-gauss-selective.c:211
 #: ../plug-ins/common/blur-gauss.c:448 ../plug-ins/common/cartoon.c:232
-#: ../plug-ins/common/edge-dog.c:267 ../plug-ins/common/edge-neon.c:228
+#: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
 #: ../plug-ins/file-sgi/sgi.c:556 ../plug-ins/file-xjt/xjt.c:1701
@@ -894,7 +894,7 @@ msgstr "_Azimut:"
 msgid "_Elevation:"
 msgstr "_Elevación:"
 
-#: ../plug-ins/common/bump-map.c:930 ../plug-ins/common/file-ps.c:3398
+#: ../plug-ins/common/bump-map.c:930 ../plug-ins/common/file-ps.c:3400
 msgid "_X offset:"
 msgstr "Desplazamiento _X:"
 
@@ -906,7 +906,7 @@ msgstr ""
 "El desplazamiento puede ajustarse arrastrando la vista preliminar usando el "
 "botón central del ratón."
 
-#: ../plug-ins/common/bump-map.c:944 ../plug-ins/common/file-ps.c:3407
+#: ../plug-ins/common/bump-map.c:944 ../plug-ins/common/file-ps.c:3409
 msgid "_Y offset:"
 msgstr "Desplazamiento _Y:"
 
@@ -1023,7 +1023,7 @@ msgstr "Cargar la configuración del mezclador de canales"
 #: ../plug-ins/common/file-pcx.c:361 ../plug-ins/common/file-pdf.c:541
 #: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:721
 #: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1036
-#: ../plug-ins/common/file-ps.c:3048 ../plug-ins/common/file-psp.c:1751
+#: ../plug-ins/common/file-ps.c:3050 ../plug-ins/common/file-psp.c:1751
 #: ../plug-ins/common/file-raw.c:251 ../plug-ins/common/file-raw.c:668
 #: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
 #: ../plug-ins/common/file-svg.c:731 ../plug-ins/common/file-tga.c:442
@@ -1966,7 +1966,7 @@ msgid "Stretch brightness values to cover the full range"
 msgstr "Ampliar los valores de brillo para que cubran todo el rango"
 
 #: ../plug-ins/common/contrast-normalize.c:92
-#: ../plug-ins/common/edge-dog.c:359
+#: ../plug-ins/common/edge-dog.c:361
 msgid "_Normalize"
 msgstr "_Normalizar"
 
@@ -2212,7 +2212,7 @@ msgstr "Doblar la imagen usando dos curvas de control"
 msgid "_Curve Bend..."
 msgstr "Doblar según _curva…"
 
-#: ../plug-ins/common/curve-bend.c:677 ../plug-ins/common/edge-dog.c:176
+#: ../plug-ins/common/curve-bend.c:677 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Sólo puede funcionar en capas (pero fue llamada en un canal o una máscara)."
@@ -2669,7 +2669,7 @@ msgid "Destripe"
 msgstr "Anti-bandas"
 
 #: ../plug-ins/common/destripe.c:473 ../plug-ins/common/file-html-table.c:595
-#: ../plug-ins/common/file-ps.c:3171 ../plug-ins/common/file-ps.c:3380
+#: ../plug-ins/common/file-ps.c:3173 ../plug-ins/common/file-ps.c:3382
 #: ../plug-ins/common/file-raw.c:1058 ../plug-ins/common/smooth-palette.c:436
 #: ../plug-ins/common/tile-paper.c:302 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
@@ -2800,31 +2800,31 @@ msgstr "Mancha_r"
 msgid "_Black"
 msgstr "_Negro"
 
-#: ../plug-ins/common/edge-dog.c:133
+#: ../plug-ins/common/edge-dog.c:135
 msgid "Edge detection with control of edge thickness"
 msgstr "Detección de bordes con control del grosor del borde"
 
-#: ../plug-ins/common/edge-dog.c:140
+#: ../plug-ins/common/edge-dog.c:142
 msgid "_Difference of Gaussians..."
 msgstr "_Diferencia de Gaussianas…"
 
-#: ../plug-ins/common/edge-dog.c:243 ../plug-ins/common/edge-dog.c:300
+#: ../plug-ins/common/edge-dog.c:245 ../plug-ins/common/edge-dog.c:302
 msgid "DoG Edge Detect"
 msgstr "Detección de bordes DoG"
 
-#: ../plug-ins/common/edge-dog.c:329
+#: ../plug-ins/common/edge-dog.c:331
 msgid "Smoothing Parameters"
 msgstr "Parámetros de suavizado"
 
-#: ../plug-ins/common/edge-dog.c:343
+#: ../plug-ins/common/edge-dog.c:345
 msgid "_Radius 1:"
 msgstr "_Radio 1:"
 
-#: ../plug-ins/common/edge-dog.c:347
+#: ../plug-ins/common/edge-dog.c:349
 msgid "R_adius 2:"
 msgstr "R_adio 2:"
 
-#: ../plug-ins/common/edge-dog.c:370 ../plug-ins/gimpressionist/paper.c:167
+#: ../plug-ins/common/edge-dog.c:372 ../plug-ins/gimpressionist/paper.c:167
 msgid "_Invert"
 msgstr "_Invertir"
 
@@ -2984,7 +2984,7 @@ msgid "Engrave"
 msgstr "Grabado"
 
 #: ../plug-ins/common/engrave.c:244 ../plug-ins/common/file-html-table.c:611
-#: ../plug-ins/common/file-ps.c:3181 ../plug-ins/common/file-ps.c:3389
+#: ../plug-ins/common/file-ps.c:3183 ../plug-ins/common/file-ps.c:3391
 #: ../plug-ins/common/file-raw.c:1071 ../plug-ins/common/film.c:1003
 #: ../plug-ins/common/smooth-palette.c:441 ../plug-ins/common/tile-paper.c:313
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
@@ -3784,7 +3784,7 @@ msgstr "%s-páginas"
 msgid "Import from PDF"
 msgstr "Importar desde PDF"
 
-#: ../plug-ins/common/file-pdf.c:813 ../plug-ins/common/file-ps.c:3100
+#: ../plug-ins/common/file-pdf.c:813 ../plug-ins/common/file-ps.c:3102
 #: ../plug-ins/common/file-tiff-load.c:483
 msgid "_Import"
 msgstr "_Importar"
@@ -3991,7 +3991,7 @@ msgstr "No se ha podido interpretar el archivo de PostScript «%s»"
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Guardar como PostScript no funciona con imágenes con canales alfa"
 
-#: ../plug-ins/common/file-ps.c:1730 ../plug-ins/common/file-ps.c:1763
+#: ../plug-ins/common/file-ps.c:1730 ../plug-ins/common/file-ps.c:1765
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
@@ -4004,108 +4004,108 @@ msgstr ""
 "GIMP de su ubicación.\n"
 "(%s)"
 
-#: ../plug-ins/common/file-ps.c:1930 ../plug-ins/common/file-tiff-load.c:999
+#: ../plug-ins/common/file-ps.c:1932 ../plug-ins/common/file-tiff-load.c:999
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../plug-ins/common/file-ps.c:2600 ../plug-ins/common/file-ps.c:2733
-#: ../plug-ins/common/file-ps.c:2885 ../plug-ins/common/file-ps.c:3011
+#: ../plug-ins/common/file-ps.c:2602 ../plug-ins/common/file-ps.c:2735
+#: ../plug-ins/common/file-ps.c:2887 ../plug-ins/common/file-ps.c:3013
 #: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1612
 #: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:974
 msgid "Write error occurred"
 msgstr "Ocurrió un error de escritura"
 
-#: ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-ps.c:3097
 msgid "Import from PostScript"
 msgstr "Importar PostScript de"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3138
+#: ../plug-ins/common/file-ps.c:3140
 msgid "Rendering"
 msgstr "Renderizado"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3154 ../plug-ins/common/file-svg.c:929
+#: ../plug-ins/common/file-ps.c:3156 ../plug-ins/common/file-svg.c:929
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Resolución:"
 
-#: ../plug-ins/common/file-ps.c:3193
+#: ../plug-ins/common/file-ps.c:3195
 msgid "Pages:"
 msgstr "Páginas:"
 
-#: ../plug-ins/common/file-ps.c:3200
+#: ../plug-ins/common/file-ps.c:3202
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Páginas a cargar (ej: 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3204 ../plug-ins/common/sphere-designer.c:2643
+#: ../plug-ins/common/file-ps.c:3206 ../plug-ins/common/sphere-designer.c:2643
 msgid "Layers"
 msgstr "Capas"
 
-#: ../plug-ins/common/file-ps.c:3206
+#: ../plug-ins/common/file-ps.c:3208
 msgid "Images"
 msgstr "Imágenes"
 
-#: ../plug-ins/common/file-ps.c:3209
+#: ../plug-ins/common/file-ps.c:3211
 msgid "Open as"
 msgstr "Abrir como"
 
 # //R ¿Está bien traducido?
-#: ../plug-ins/common/file-ps.c:3213
+#: ../plug-ins/common/file-ps.c:3215
 msgid "Try Bounding Box"
 msgstr "Intentar con cajas de contorno"
 
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3226
+#: ../plug-ins/common/file-ps.c:3228
 msgid "Coloring"
 msgstr "Coloreado"
 
-#: ../plug-ins/common/file-ps.c:3230
+#: ../plug-ins/common/file-ps.c:3232
 msgid "B/W"
 msgstr "B/N"
 
-#: ../plug-ins/common/file-ps.c:3232 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3234 ../plug-ins/common/file-xpm.c:479
 #: ../plug-ins/gimpressionist/color.c:66
 #: ../plug-ins/gimpressionist/general.c:170
 #: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Color"
 msgstr "Color"
 
-#: ../plug-ins/common/file-ps.c:3233 ../plug-ins/file-fits/fits.c:1033
+#: ../plug-ins/common/file-ps.c:3235 ../plug-ins/file-fits/fits.c:1033
 msgid "Automatic"
 msgstr "Automático"
 
-#: ../plug-ins/common/file-ps.c:3243
+#: ../plug-ins/common/file-ps.c:3245
 msgid "Text antialiasing"
 msgstr "Suavizado de texto"
 
-#: ../plug-ins/common/file-ps.c:3248 ../plug-ins/common/file-ps.c:3260
+#: ../plug-ins/common/file-ps.c:3250 ../plug-ins/common/file-ps.c:3262
 msgid "Weak"
 msgstr "Débil"
 
-#: ../plug-ins/common/file-ps.c:3249 ../plug-ins/common/file-ps.c:3261
+#: ../plug-ins/common/file-ps.c:3251 ../plug-ins/common/file-ps.c:3263
 msgid "Strong"
 msgstr "Fuerte"
 
-#: ../plug-ins/common/file-ps.c:3255
+#: ../plug-ins/common/file-ps.c:3257
 msgid "Graphic antialiasing"
 msgstr "Suavizado de gráficos"
 
-#: ../plug-ins/common/file-ps.c:3333
+#: ../plug-ins/common/file-ps.c:3335
 msgid "Save as PostScript"
 msgstr "Guardar como PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3364
+#: ../plug-ins/common/file-ps.c:3366
 msgid "Image Size"
 msgstr "Tamaño de imagen"
 
-#: ../plug-ins/common/file-ps.c:3413
+#: ../plug-ins/common/file-ps.c:3415
 msgid "_Keep aspect ratio"
 msgstr "_Mantener proporción"
 
-#: ../plug-ins/common/file-ps.c:3419
+#: ../plug-ins/common/file-ps.c:3421
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4114,42 +4114,42 @@ msgstr ""
 "el tamaño dado sin cambiar la proporción."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3429
+#: ../plug-ins/common/file-ps.c:3431
 msgid "Unit"
 msgstr "Unidad"
 
-#: ../plug-ins/common/file-ps.c:3433
+#: ../plug-ins/common/file-ps.c:3435
 msgid "_Inch"
 msgstr "P_ulgada"
 
-#: ../plug-ins/common/file-ps.c:3434
+#: ../plug-ins/common/file-ps.c:3436
 msgid "_Millimeter"
 msgstr "_Milímetro"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3445
+#: ../plug-ins/common/file-ps.c:3447
 #: ../plug-ins/map-object/map-object-ui.c:1035
 msgid "Rotation"
 msgstr "Rotación"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3460
+#: ../plug-ins/common/file-ps.c:3462
 msgid "Output"
 msgstr "Salida"
 
-#: ../plug-ins/common/file-ps.c:3466
+#: ../plug-ins/common/file-ps.c:3468
 msgid "_PostScript level 2"
 msgstr "_PostScript nivel 2"
 
-#: ../plug-ins/common/file-ps.c:3475
+#: ../plug-ins/common/file-ps.c:3477
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _encapsulado"
 
-#: ../plug-ins/common/file-ps.c:3484
+#: ../plug-ins/common/file-ps.c:3486
 msgid "P_review"
 msgstr "Vista p_revia"
 
-#: ../plug-ins/common/file-ps.c:3505
+#: ../plug-ins/common/file-ps.c:3507
 msgid "Preview _size:"
 msgstr "Tamaño de la vi_sta previa:"
 
@@ -6227,7 +6227,7 @@ msgstr "Simplificar la imagen en una matriz de cuadrados de color liso"
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
-msgstr "_Pixelizar…"
+msgstr "_Pixelar…"
 
 #: ../plug-ins/common/pixelize.c:273
 msgid "Pixelizing"
@@ -6536,77 +6536,77 @@ msgstr "Colorear imagen usando una imagen de muestra como guía"
 msgid "_Sample Colorize..."
 msgstr "_Colorear desde muestra…"
 
-#: ../plug-ins/common/sample-colorize.c:1318
+#: ../plug-ins/common/sample-colorize.c:1327
 msgid "Sample Colorize"
 msgstr "Colorear desde muestra"
 
-#: ../plug-ins/common/sample-colorize.c:1323
+#: ../plug-ins/common/sample-colorize.c:1332
 msgid "Get _Sample Colors"
 msgstr "Obtener colores de _muestra"
 
 #. layer combo_box (Dst)
-#: ../plug-ins/common/sample-colorize.c:1352
+#: ../plug-ins/common/sample-colorize.c:1361
 msgid "Destination:"
 msgstr "Destino:"
 
 #. layer combo_box (Sample)
-#: ../plug-ins/common/sample-colorize.c:1368
+#: ../plug-ins/common/sample-colorize.c:1377
 msgid "Sample:"
 msgstr "Muestra:"
 
-#: ../plug-ins/common/sample-colorize.c:1378
+#: ../plug-ins/common/sample-colorize.c:1387
 msgid "From reverse gradient"
 msgstr "Desde degradado invertido"
 
-#: ../plug-ins/common/sample-colorize.c:1383
+#: ../plug-ins/common/sample-colorize.c:1392
 msgid "From gradient"
 msgstr "Desde degradado"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1404
-#: ../plug-ins/common/sample-colorize.c:1431
+#: ../plug-ins/common/sample-colorize.c:1413
+#: ../plug-ins/common/sample-colorize.c:1440
 msgid "Show selection"
 msgstr "Mostrar selección"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1415
-#: ../plug-ins/common/sample-colorize.c:1442
+#: ../plug-ins/common/sample-colorize.c:1424
+#: ../plug-ins/common/sample-colorize.c:1451
 msgid "Show color"
 msgstr "Mostrar color"
 
-#: ../plug-ins/common/sample-colorize.c:1555
+#: ../plug-ins/common/sample-colorize.c:1564
 msgid "Input levels:"
 msgstr "Niveles de entrada:"
 
-#: ../plug-ins/common/sample-colorize.c:1605
+#: ../plug-ins/common/sample-colorize.c:1614
 msgid "Output levels:"
 msgstr "Niveles de salida:"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1645
+#: ../plug-ins/common/sample-colorize.c:1654
 msgid "Hold intensity"
 msgstr "Mantener intensidad"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1656
+#: ../plug-ins/common/sample-colorize.c:1665
 msgid "Original intensity"
 msgstr "Intensidad original"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1674
+#: ../plug-ins/common/sample-colorize.c:1683
 msgid "Use subcolors"
 msgstr "Usar sub-colores"
 
 #. check button
-#: ../plug-ins/common/sample-colorize.c:1685
+#: ../plug-ins/common/sample-colorize.c:1694
 msgid "Smooth samples"
 msgstr "Suavizar las muestras"
 
-#: ../plug-ins/common/sample-colorize.c:2657
+#: ../plug-ins/common/sample-colorize.c:2666
 msgid "Sample analyze"
 msgstr "Análisis de muestra"
 
-#: ../plug-ins/common/sample-colorize.c:3035
+#: ../plug-ins/common/sample-colorize.c:3044
 msgid "Remap colorized"
 msgstr "Volver a mapear el colorizado"
 
