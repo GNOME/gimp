@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
 "POT-Creation-Date: 2011-02-15 20:39+0000\n"
-"PO-Revision-Date: 2011-02-17 10:58+0100\n"
+"PO-Revision-Date: 2011-02-17 16:33+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6231,7 +6231,7 @@ msgstr "_Pixelar…"
 
 #: ../plug-ins/common/pixelize.c:273
 msgid "Pixelizing"
-msgstr "Pixelizando"
+msgstr "Pixelando"
 
 #: ../plug-ins/common/pixelize.c:316
 msgid "Pixelize"
