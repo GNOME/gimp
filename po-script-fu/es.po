@@ -1,11 +1,11 @@
 # translation of gimp-script-fu.gimp-2-6.po to Español
 # Spanish translation for gimp-script-fu.
-# Copyright © 1998-2000,2003, 2006, 2007, 2008 Free Software Foundation, Inc.
+# Copyright © 1998-2000,2003, 2006, 2007, 2008, 2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007, 2008, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
 msgid ""
@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&component=general\n"
-"POT-Creation-Date: 2009-01-18 16:25+0000\n"
-"PO-Revision-Date: 2008-12-30 19:33+0100\n"
+"POT-Creation-Date: 2011-02-15 20:40+0000\n"
+"PO-Revision-Date: 2011-02-17 11:03+0100\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2117,7 +2117,7 @@ msgstr "Tamaño del píxel"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
-msgstr "Pixelizar"
+msgstr "Pixelar"
 
 # Cuidado porque esto no es «Voraz» sino que se refiere a una película de Swartzenegger llamada «Predator», «El depredador». FVD
 #: ../plug-ins/script-fu/scripts/predator.scm.h:7
