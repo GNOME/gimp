@@ -69,6 +69,7 @@
 #include "gimpdisplayshell-coords.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-draw.h"
+#include "gimpdisplayshell-grab.h"
 #include "gimpdisplayshell-layer-select.h"
 #include "gimpdisplayshell-preview.h"
 #include "gimpdisplayshell-scale.h"
@@ -496,12 +497,14 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell)
 
 static void
 gimp_display_shell_space_pressed (GimpDisplayShell *shell,
-                                  GdkModifierType   state,
-                                  guint32           time)
+                                  GdkEvent         *event)
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
   if (shell->space_pressed)
+    return;
+
+  if (! gimp_display_shell_keyboard_grab (shell, event))
     return;
 
   switch (shell->display->config->space_bar_action)
@@ -513,22 +516,26 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
       {
         GimpCoords coords;
 
+        if (! gimp_display_shell_pointer_grab (shell, event,
+                                               GDK_POINTER_MOTION_MASK |
+                                               GDK_POINTER_MOTION_HINT_MASK))
+          {
+            gimp_display_shell_keyboard_ungrab (shell, event);
+            return;
+          }
+
         gimp_device_info_get_device_coords (gimp_devices_get_current (gimp),
                                             gtk_widget_get_window (shell->canvas),
                                             &coords);
 
         gimp_display_shell_start_scrolling (shell, coords.x, coords.y);
-
-        gdk_pointer_grab (gtk_widget_get_window (shell->canvas), FALSE,
-                          GDK_POINTER_MOTION_MASK |
-                          GDK_POINTER_MOTION_HINT_MASK,
-                          NULL, NULL, time);
       }
       break;
 
     case GIMP_SPACE_BAR_ACTION_MOVE:
       {
-        GimpTool *active_tool = tool_manager_get_active (gimp);
+        GimpTool        *active_tool = tool_manager_get_active (gimp);
+        GdkModifierType  state;
 
         if (! active_tool || GIMP_IS_MOVE_TOOL (active_tool))
           return;
@@ -539,21 +546,20 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
         gimp_context_set_tool (gimp_get_user_context (gimp),
                                gimp_get_tool_info (gimp, "gimp-move-tool"));
 
+        gdk_event_get_state (event, &state);
+
         tool_manager_focus_display_active (gimp, shell->display);
         tool_manager_modifier_state_active (gimp, state, shell->display);
       }
       break;
     }
 
-  gdk_keyboard_grab (gtk_widget_get_window (shell->canvas), FALSE, time);
-
   shell->space_pressed = TRUE;
 }
 
 static void
 gimp_display_shell_space_released (GimpDisplayShell *shell,
-                                   GdkModifierType   state,
-                                   guint32           time)
+                                   GdkEvent         *event)
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
@@ -567,21 +573,27 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
     case GIMP_SPACE_BAR_ACTION_PAN:
       gimp_display_shell_stop_scrolling (shell);
-      gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas), time);
+      gimp_display_shell_pointer_ungrab (shell, event);
       break;
 
     case GIMP_SPACE_BAR_ACTION_MOVE:
-      gimp_context_set_tool (gimp_get_user_context (gimp),
-                             gimp_get_tool_info (gimp,
-                                                 shell->space_shaded_tool));
-      shell->space_shaded_tool = NULL;
+      {
+        GdkModifierType state;
 
-      tool_manager_focus_display_active (gimp, shell->display);
-      tool_manager_modifier_state_active (gimp, state, shell->display);
+        gimp_context_set_tool (gimp_get_user_context (gimp),
+                               gimp_get_tool_info (gimp,
+                                                   shell->space_shaded_tool));
+        shell->space_shaded_tool = NULL;
+
+        gdk_event_get_state (event, &state);
+
+        tool_manager_focus_display_active (gimp, shell->display);
+        tool_manager_modifier_state_active (gimp, state, shell->display);
+      }
       break;
     }
 
-  gdk_display_keyboard_ungrab (gtk_widget_get_display (shell->canvas), time);
+  gimp_display_shell_keyboard_ungrab (shell, event);
 
   shell->space_pressed         = FALSE;
   shell->space_release_pending = FALSE;
@@ -946,11 +958,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   }
               }
 
-            gdk_pointer_grab (gtk_widget_get_window (canvas),
-                              FALSE, event_mask, NULL, NULL, time);
+            if (! gimp_display_shell_pointer_grab (shell, event, event_mask))
+              return TRUE;
 
             if (! shell->space_pressed && ! shell->space_release_pending)
-              gdk_keyboard_grab (gtk_widget_get_window (canvas), FALSE, time);
+              if (! gimp_display_shell_keyboard_grab (shell, event))
+                {
+                  gimp_display_shell_pointer_ungrab (shell, event);
+                  return TRUE;
+                }
 
             if (active_tool &&
                 (! gimp_image_is_empty (image) ||
@@ -1128,9 +1144,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             state &= ~GDK_BUTTON1_MASK;
 
             if (! shell->space_pressed && ! shell->space_release_pending)
-              gdk_display_keyboard_ungrab (gdk_display, time);
+              gimp_display_shell_keyboard_ungrab (shell, event);
 
-            gdk_display_pointer_ungrab (gdk_display, time);
+            gimp_display_shell_pointer_ungrab (shell, event);
 
             gtk_grab_add (canvas);
 
@@ -1159,7 +1175,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             gtk_grab_remove (canvas);
 
             if (shell->space_release_pending)
-              gimp_display_shell_space_released (shell, state, time);
+              gimp_display_shell_space_released (shell, event);
             break;
 
           case 2:
@@ -1590,7 +1606,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
               case GDK_space:
               case GDK_KP_Space:
-                gimp_display_shell_space_pressed (shell, state, time);
+                gimp_display_shell_space_pressed (shell, event);
                 return_val = TRUE;
                 break;
 
@@ -1694,7 +1710,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
               case GDK_space:
               case GDK_KP_Space:
-                gimp_display_shell_space_released (shell, state, time);
+                gimp_display_shell_space_released (shell, event);
                 return_val = TRUE;
                 break;
 
@@ -1845,8 +1861,6 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 
       if (active_tool)
         {
-          GdkGrabStatus status;
-
           if (! gtk_widget_has_focus (shell->canvas))
             {
               gimp_display_shell_update_focus (shell, NULL, event->state);
@@ -1860,18 +1874,14 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
                                 gdk_event_get_time ((GdkEvent *) event));
             }
 
-          status = gdk_pointer_grab (gtk_widget_get_window (shell->canvas), FALSE,
-                                     GDK_POINTER_MOTION_HINT_MASK |
-                                     GDK_BUTTON1_MOTION_MASK |
-                                     GDK_BUTTON_RELEASE_MASK,
-                                     NULL, NULL, event->time);
-
-          if (status == GDK_GRAB_SUCCESS)
+          if (gimp_display_shell_pointer_grab (shell,
+                                               (GdkEvent *) event,
+                                               GDK_POINTER_MOTION_HINT_MASK |
+                                               GDK_BUTTON1_MOTION_MASK |
+                                               GDK_BUTTON_RELEASE_MASK))
             {
-              status = gdk_keyboard_grab (gtk_widget_get_window (shell->canvas),
-                                          FALSE, event->time);
-
-              if (status == GDK_GRAB_SUCCESS)
+              if (gimp_display_shell_keyboard_grab (shell,
+                                                    (GdkEvent *) event))
                 {
                   if (sample_point)
                     gimp_color_tool_start_sample_point (active_tool, display);
@@ -1884,17 +1894,9 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
                 }
               else
                 {
-                  g_printerr ("%s: gdk_keyboard_grab failed with status %d\n",
-                              G_STRFUNC, status);
-
-                  gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas),
-                                              event->time);
+                  gimp_display_shell_pointer_ungrab (shell,
+                                                     (GdkEvent *) event);
                 }
-            }
-          else
-            {
-              g_printerr ("%s: gdk_pointer_grab failed with status %d\n",
-                          G_STRFUNC, status);
             }
         }
     }

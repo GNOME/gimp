@@ -89,6 +89,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-draw.h			\
 	gimpdisplayshell-expose.c		\
 	gimpdisplayshell-expose.h		\
+	gimpdisplayshell-grab.c			\
+	gimpdisplayshell-grab.h			\
 	gimpdisplayshell-handlers.c		\
 	gimpdisplayshell-handlers.h		\
 	gimpdisplayshell-filter.c		\
