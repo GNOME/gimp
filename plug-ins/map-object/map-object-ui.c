@@ -89,30 +89,30 @@ static void
 update_light_pos_entries (void)
 {
   g_signal_handlers_block_by_func (xadj,
-                                   gimp_double_adjustment_update,
+                                   double_adjustment_update,
                                    &mapvals.lightsource.position.x);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (xadj),
 			    mapvals.lightsource.position.x);
   g_signal_handlers_unblock_by_func (xadj,
-                                     gimp_double_adjustment_update,
+                                     double_adjustment_update,
                                      &mapvals.lightsource.position.x);
 
   g_signal_handlers_block_by_func (yadj,
-                                   gimp_double_adjustment_update,
+                                   double_adjustment_update,
                                    &mapvals.lightsource.position.y);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (yadj),
 			    mapvals.lightsource.position.y);
   g_signal_handlers_unblock_by_func (yadj,
-                                     gimp_double_adjustment_update,
+                                     double_adjustment_update,
                                      &mapvals.lightsource.position.y);
 
   g_signal_handlers_block_by_func (zadj,
-                                   gimp_double_adjustment_update,
+                                   double_adjustment_update,
                                    &mapvals.lightsource.position.z);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (zadj),
 			    mapvals.lightsource.position.z);
   g_signal_handlers_unblock_by_func (zadj,
-                                     gimp_double_adjustment_update,
+                                     double_adjustment_update,
                                      &mapvals.lightsource.position.z);
 }
 
@@ -157,9 +157,10 @@ lightmenu_callback (GtkWidget *widget,
     }
 
   if (mapvals.livepreview)
-    compute_preview_image ();
-
-  gtk_widget_queue_draw (previewarea);
+    {
+      compute_preview_image ();
+      gtk_widget_queue_draw (previewarea);
+    }
 }
 
 /***************************************/
@@ -523,7 +524,7 @@ create_options_page (void)
 			      _("Antialiasing quality. Higher is better, "
 			       "but slower"), NULL);
   g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (double_adjustment_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &mapvals.maxdepth);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.pixeltreshold,
@@ -1363,7 +1364,16 @@ main_dialog (GimpDrawable *drawable)
                     G_CALLBACK (zoomed_callback),
                     NULL);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Update previe_w live"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Show _wireframe"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.showgrid);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (toggle_update),
+                    &mapvals.showgrid);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("Update preview _live"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), mapvals.livepreview);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);

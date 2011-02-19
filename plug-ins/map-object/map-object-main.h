@@ -65,6 +65,7 @@ typedef struct
   gint transparent_background;
   gint tiled;
   gint livepreview;
+  gint showgrid;
   gint showcaps;
 
   gdouble zoom;
