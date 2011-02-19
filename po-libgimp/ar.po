@@ -1,123 +1,123 @@
 # translation of gimp-libgimp.HEAD.po to Arabic
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008, 2010.
+# Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007, 2008, 2010, 2011.
 # Anas Husseini <anas_h_34@hotmail.com>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-17 12:11+0200\n"
-"PO-Revision-Date: 2010-01-17 12:11+0300\n"
+"POT-Creation-Date: 2011-02-19 18:17+0200\n"
+"PO-Revision-Date: 2011-02-19 18:18+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Virtaal 0.5.1\n"
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.6.1\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1044
+#: ../libgimp/gimp.c:1080
 msgid "success"
 msgstr "نجاح"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1048
+#: ../libgimp/gimp.c:1084
 msgid "execution error"
 msgstr "خطأ في التنفيذ"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1052
+#: ../libgimp/gimp.c:1088
 msgid "calling error"
 msgstr "خطأ في الاستدعاء"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1056
+#: ../libgimp/gimp.c:1092
 msgid "cancelled"
 msgstr "أُلغِيَ"
 
-#: ../libgimp/gimpbrushselectbutton.c:169
+#: ../libgimp/gimpbrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "اختيار الفرشاة"
 
-#: ../libgimp/gimpbrushselectbutton.c:918
-#: ../libgimp/gimppatternselectbutton.c:716
+#: ../libgimp/gimpbrushselectbutton.c:927
+#: ../libgimp/gimppatternselectbutton.c:725
 msgid "_Browse..."
 msgstr "_تصفّح..."
 
-#: ../libgimp/gimpexport.c:223 ../libgimp/gimpexport.c:259
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:279
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "الملحقة %s لا يمكنها التعامل مع الطبقات"
 
-#: ../libgimp/gimpexport.c:224 ../libgimp/gimpexport.c:233
-#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:244 ../libgimp/gimpexport.c:253
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:280
 msgid "Merge Visible Layers"
 msgstr "ادمج الطبقات المرئية"
 
-#: ../libgimp/gimpexport.c:232
+#: ../libgimp/gimpexport.c:252
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "الملحقة %s لا يمكناه التعامل مع إزاحات أو أحجام أو تعتيم الطبقات"
 
-#: ../libgimp/gimpexport.c:241 ../libgimp/gimpexport.c:250
+#: ../libgimp/gimpexport.c:261 ../libgimp/gimpexport.c:270
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "الملحقة %s يمكنها فقط التعامل مع الطبقات كإطارات رسوم متحركة"
 
-#: ../libgimp/gimpexport.c:242 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:262 ../libgimp/gimpexport.c:271
 msgid "Save as Animation"
 msgstr "احفظ كرسوم متحركة"
 
-#: ../libgimp/gimpexport.c:251 ../libgimp/gimpexport.c:260
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
+#: ../libgimp/gimpexport.c:289
 msgid "Flatten Image"
 msgstr "سطّح الصورة"
 
-#: ../libgimp/gimpexport.c:268
+#: ../libgimp/gimpexport.c:288
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "الملحقة %s لا يمكنها التعامل مع الشفافية"
 
-#: ../libgimp/gimpexport.c:277
+#: ../libgimp/gimpexport.c:297
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "الملحقة %s لا يمكنها التعامل مع أقنعة الطبقات"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:298
 msgid "Apply Layer Masks"
 msgstr "طبِّق أقنعة الطبقة"
 
-#: ../libgimp/gimpexport.c:286
+#: ../libgimp/gimpexport.c:306
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "الملحقة %s يمكنها التعامل فقط مع صور ح‌خ‌ز"
 
-#: ../libgimp/gimpexport.c:287 ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:307 ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:354
 msgid "Convert to RGB"
 msgstr "حوِّل إلى ح‌خ‌ز"
 
-#: ../libgimp/gimpexport.c:295
+#: ../libgimp/gimpexport.c:315
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "الملحقة %s يمكنها التعامل فقط مع الصور الرمادية التدرج"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:325
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:345
+#: ../libgimp/gimpexport.c:366
 msgid "Convert to Grayscale"
 msgstr "حوِّل إلى تدرج رمادي"
 
-#: ../libgimp/gimpexport.c:304
+#: ../libgimp/gimpexport.c:324
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "الملحقة %s يمكنها فقط التعامل مع الصور المفهرسة"
 
-#: ../libgimp/gimpexport.c:305 ../libgimp/gimpexport.c:334
-#: ../libgimp/gimpexport.c:344
+#: ../libgimp/gimpexport.c:325 ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:364
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -125,12 +125,12 @@ msgstr ""
 "حوِّل إلى صورة مفهرسة باستخدام الإعدادات الافتراضية\n"
 "(قم بذلك يدويًا لجعل النتيجة متناغمة)"
 
-#: ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:334
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "الملحقة %s يمكنها فقط التعامل مع صور نقطية (bmp) مفهرسة ذات لونين"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:335
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -138,52 +138,52 @@ msgstr ""
 "حوِّل إلى صورة مفهرسة باستخدام إعدادات الصورة النقطية الافتراضية\n"
 "(قم بذلك يدويًا لجعل النتيجة متناغمة)"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:344
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "الملحقة %s يمكنها فقط التعامل مع صور ح‌خ‌ز أو صور التدرج الرمادي"
 
-#: ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:353
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "الملحقة %s يمكنها التعامل فقط مع صور ح‌خ‌ز أو الصور المفهرسة"
 
-#: ../libgimp/gimpexport.c:343
+#: ../libgimp/gimpexport.c:363
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "الملحقة %s يمكنها التعامل فقط مع صور التدرج الرمادي أو الصور المفهرسة"
 
-#: ../libgimp/gimpexport.c:354
+#: ../libgimp/gimpexport.c:374
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "الملحقة %s تتطلب قناة ألفا"
 
-#: ../libgimp/gimpexport.c:355
+#: ../libgimp/gimpexport.c:375
 msgid "Add Alpha Channel"
 msgstr "أضِف قناة ألفا"
 
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:430
 msgid "Confirm Save"
 msgstr "أكّد الحفظ"
 
-#: ../libgimp/gimpexport.c:416
+#: ../libgimp/gimpexport.c:436
 msgid "Confirm"
 msgstr "أكّد"
 
-#: ../libgimp/gimpexport.c:492
+#: ../libgimp/gimpexport.c:512
 msgid "Export File"
 msgstr "صدّر ملف"
 
-#: ../libgimp/gimpexport.c:496
+#: ../libgimp/gimpexport.c:516
 msgid "_Ignore"
 msgstr "تجا_هل"
 
-#: ../libgimp/gimpexport.c:498 ../libgimp/gimpexport.c:969
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:989
 msgid "_Export"
 msgstr "صدّ_ر"
 
 #. the headline
-#: ../libgimp/gimpexport.c:528
+#: ../libgimp/gimpexport.c:548
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -191,11 +191,11 @@ msgid ""
 msgstr "صورتك ينبغي أن تصدّر قبل أن يتم حفظها كـ %s للأسباب التالية:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:602
+#: ../libgimp/gimpexport.c:622
 msgid "The export conversion won't modify your original image."
 msgstr "تحويل الصورة المصدرة لن يعدل صورتك الأصلية."
 
-#: ../libgimp/gimpexport.c:705
+#: ../libgimp/gimpexport.c:725
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -204,7 +204,7 @@ msgstr ""
 "أنت على وشك حفظ قناع شبكة كـ %s.\n"
 "هذا لن يؤدي إلى حفظ الطبقات المرئية."
 
-#: ../libgimp/gimpexport.c:711
+#: ../libgimp/gimpexport.c:731
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -213,105 +213,105 @@ msgstr ""
 "أنت على وشك حفظ قناة (تحديد محفوظ) كـ %s.\n"
 "هذا لن يؤدي إلى حفظ الطبقات المرئية."
 
-#: ../libgimp/gimpexport.c:960
+#: ../libgimp/gimpexport.c:980
 msgid "Export Image as "
 msgstr "صدّر الصورة باسم"
 
-#: ../libgimp/gimpfontselectbutton.c:129
+#: ../libgimp/gimpfontselectbutton.c:138
 msgid "Font Selection"
 msgstr "اختيار الخط"
 
-#: ../libgimp/gimpfontselectbutton.c:144
+#: ../libgimp/gimpfontselectbutton.c:153
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientselectbutton.c:147
+#: ../libgimp/gimpgradientselectbutton.c:156
 msgid "Gradient Selection"
 msgstr "تحديد التدرج"
 
-#: ../libgimp/gimpmenu.c:449 ../libgimpwidgets/gimpintstore.c:238
+#: ../libgimp/gimpmenu.c:459 ../libgimpwidgets/gimpintstore.c:238
 msgid "(Empty)"
 msgstr "(فارغ)"
 
-#: ../libgimp/gimppaletteselectbutton.c:129
+#: ../libgimp/gimppaletteselectbutton.c:138
 msgid "Palette Selection"
 msgstr "اختيار لوح الألوان"
 
-#: ../libgimp/gimppatternselectbutton.c:155
+#: ../libgimp/gimppatternselectbutton.c:164
 msgid "Pattern Selection"
 msgstr "اختيار النمط"
 
-#: ../libgimp/gimpprocbrowserdialog.c:140
+#: ../libgimp/gimpprocbrowserdialog.c:149
 msgid "by name"
 msgstr "حسب الاسم"
 
-#: ../libgimp/gimpprocbrowserdialog.c:141
+#: ../libgimp/gimpprocbrowserdialog.c:150
 msgid "by description"
 msgstr "حسب الوصف"
 
-#: ../libgimp/gimpprocbrowserdialog.c:142
+#: ../libgimp/gimpprocbrowserdialog.c:151
 msgid "by help"
 msgstr "حسب المساعدة"
 
-#: ../libgimp/gimpprocbrowserdialog.c:143
+#: ../libgimp/gimpprocbrowserdialog.c:152
 msgid "by author"
 msgstr "حسب المؤلف"
 
-#: ../libgimp/gimpprocbrowserdialog.c:144
+#: ../libgimp/gimpprocbrowserdialog.c:153
 msgid "by copyright"
 msgstr "حسب حقوق النشر"
 
-#: ../libgimp/gimpprocbrowserdialog.c:145
+#: ../libgimp/gimpprocbrowserdialog.c:154
 msgid "by date"
 msgstr "حسب التاريخ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:146
+#: ../libgimp/gimpprocbrowserdialog.c:155
 msgid "by type"
 msgstr "حسب النوع"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:385
-#: ../libgimp/gimpprocbrowserdialog.c:536 ../libgimpwidgets/gimpbrowser.c:130
+#: ../libgimp/gimpprocbrowserdialog.c:394
+#: ../libgimp/gimpprocbrowserdialog.c:545 ../libgimpwidgets/gimpbrowser.c:139
 msgid "No matches"
 msgstr "لا توجد تطابقات"
 
-#: ../libgimp/gimpprocbrowserdialog.c:388
+#: ../libgimp/gimpprocbrowserdialog.c:397
 msgid "Search term invalid or incomplete"
 msgstr "عبارة البحث ناقصة أو غير سليمة"
 
-#: ../libgimp/gimpprocbrowserdialog.c:397
+#: ../libgimp/gimpprocbrowserdialog.c:406
 msgid "Searching"
 msgstr "البحث"
 
-#: ../libgimp/gimpprocbrowserdialog.c:408
+#: ../libgimp/gimpprocbrowserdialog.c:417
 msgid "Searching by name"
 msgstr "البحث حسب الاسم"
 
-#: ../libgimp/gimpprocbrowserdialog.c:429
+#: ../libgimp/gimpprocbrowserdialog.c:438
 msgid "Searching by description"
 msgstr "البحث حسب الوصف"
 
-#: ../libgimp/gimpprocbrowserdialog.c:436
+#: ../libgimp/gimpprocbrowserdialog.c:445
 msgid "Searching by help"
 msgstr "البحث حسب المساعدة"
 
-#: ../libgimp/gimpprocbrowserdialog.c:443
+#: ../libgimp/gimpprocbrowserdialog.c:452
 msgid "Searching by author"
 msgstr "البحث حسب المؤلف"
 
-#: ../libgimp/gimpprocbrowserdialog.c:450
+#: ../libgimp/gimpprocbrowserdialog.c:459
 msgid "Searching by copyright"
 msgstr "البحث حسب حقوق النشر"
 
-#: ../libgimp/gimpprocbrowserdialog.c:457
+#: ../libgimp/gimpprocbrowserdialog.c:466
 msgid "Searching by date"
 msgstr "البحث حسب التاريخ"
 
-#: ../libgimp/gimpprocbrowserdialog.c:464
+#: ../libgimp/gimpprocbrowserdialog.c:473
 msgid "Searching by type"
 msgstr "البحث حسب النوع"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: ../libgimp/gimpprocbrowserdialog.c:483
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
@@ -322,11 +322,11 @@ msgstr[3] "%Id إجراءات"
 msgstr[4] "%Id إجراء"
 msgstr[5] "%Id إجراء"
 
-#: ../libgimp/gimpprocbrowserdialog.c:483
+#: ../libgimp/gimpprocbrowserdialog.c:492
 msgid "No matches for your query"
 msgstr "لا يوجد نتائج تطابق استعلامك"
 
-#: ../libgimp/gimpprocbrowserdialog.c:487
+#: ../libgimp/gimpprocbrowserdialog.c:496
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
@@ -337,27 +337,27 @@ msgstr[3] "%Id إجراءات تطابق استعلامك"
 msgstr[4] "%Id إجراءا تطابق استعلامك"
 msgstr[5] "%Id إجراء تطابق استعلامك"
 
-#: ../libgimp/gimpprocview.c:162
+#: ../libgimp/gimpprocview.c:172
 msgid "Parameters"
 msgstr "المعاملات"
 
-#: ../libgimp/gimpprocview.c:175
+#: ../libgimp/gimpprocview.c:185
 msgid "Return Values"
 msgstr "القيم الإرجاعية"
 
-#: ../libgimp/gimpprocview.c:188
+#: ../libgimp/gimpprocview.c:198
 msgid "Additional Information"
 msgstr "بيانات إضافية"
 
-#: ../libgimp/gimpprocview.c:228
+#: ../libgimp/gimpprocview.c:238
 msgid "Author:"
 msgstr "المؤلف:"
 
-#: ../libgimp/gimpprocview.c:240
+#: ../libgimp/gimpprocview.c:250
 msgid "Date:"
 msgstr "التاريخ:"
 
-#: ../libgimp/gimpprocview.c:252
+#: ../libgimp/gimpprocview.c:262
 msgid "Copyright:"
 msgstr "حقوق النشر:"
 
@@ -890,22 +890,29 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "مملوء"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
 #: ../modules/color-selector-cmyk-lcms.c:424
 #: ../modules/color-selector-cmyk-lcms.c:430
-#: ../modules/display-filter-lcms.c:182
+#: ../modules/display-filter-lcms.c:178
 msgid "(invalid UTF-8 string)"
 msgstr "(غير صحيحة UTF-8 سلسة )"
 
-#: ../libgimpconfig/gimpcolorconfig.c:41
+#. *
+#. * SECTION: gimpcolorconfig
+#. * @title: GimpColorConfig
+#. * @short_description: Color management settings.
+#. *
+#. * Color management settings.
+#. *
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "Mode of operation for color management."
 msgstr "نمط العمليات لإدارة الألوان."
 
-#: ../libgimpconfig/gimpcolorconfig.c:43
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile of your (primary) monitor."
 msgstr "ملف الألوان لشاشتك (الأولية)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:45
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -914,35 +921,35 @@ msgstr ""
 "عند تفعيلها، سيحاول جِمب استخدام ملف الألوان من نظام النوافذ. سيُستخدم ملف "
 "الشاشة المعد كملف احتياطي فقط."
 
-#: ../libgimpconfig/gimpcolorconfig.c:49
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid "The default RGB working space color profile."
 msgstr "ملف ألوان مساحة عمل ح‌خ‌ز الافتراضي."
 
-#: ../libgimpconfig/gimpcolorconfig.c:51
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "ملف ألوان CMYK يقوم بالتحويل بين ح‌خ‌ز و CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:53
+#: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "ملف الألوان يقوم بطباعة صفحة تجريبية."
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "Sets how colors are mapped for your display."
 msgstr "تحديد عدد الألوان الموجودة في خريطة عرضك."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:66
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr "تحديد عدد الألوان التي يجب تحويلها من مساحة عمل ح‌خ‌ز إلى جهاز الطابعة."
 
-#: ../libgimpconfig/gimpcolorconfig.c:60
+#: ../libgimpconfig/gimpcolorconfig.c:69
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libgimpconfig/gimpcolorconfig.c:72
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
 
@@ -981,64 +988,64 @@ msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "توزيع الألوان المطلق"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:105
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "قيمة %s ليست نص UTF-8 صالح"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:435
+#: ../libgimpconfig/gimpconfig-deserialize.c:444
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "المتوقع أن تكون القيمة المنطقية لـ %s هي 'نعم' أو 'لا'، ولكن ما تم تلقيه هو "
 "'%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:509
+#: ../libgimpconfig/gimpconfig-deserialize.c:518
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "قيمة '%s' غير مقبولة من أجل %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:524
+#: ../libgimpconfig/gimpconfig-deserialize.c:533
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "قيمة '%ld' غير مقبولة من أجل %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:593
+#: ../libgimpconfig/gimpconfig-deserialize.c:602
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "يجري تحليل المعطيات '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:473
-#: ../libgimpconfig/gimpconfig-iface.c:486 ../libgimpconfig/gimpscanner.c:497
-#: ../libgimpconfig/gimpscanner.c:578
-#: ../libgimpwidgets/gimpcolorprofilestore.c:655
+#: ../libgimpconfig/gimpconfig-iface.c:482
+#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:506
+#: ../libgimpconfig/gimpscanner.c:587
+#: ../libgimpwidgets/gimpcolorprofilestore.c:656
 msgid "fatal parse error"
 msgstr "خطأ تحليل فادح"
 
-#: ../libgimpconfig/gimpconfig-path.c:378
+#: ../libgimpconfig/gimpconfig-path.c:387
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "لم يمكن توسيع ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:77
-#: ../libgimpconfig/gimpconfigwriter.c:718
+#: ../libgimpconfig/gimpconfigwriter.c:87
+#: ../libgimpconfig/gimpconfigwriter.c:728
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "خطأ أثناء الكتابة في '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:145
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "لم يمكن إنشاء ملف مؤقت لـ '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:158
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "تعذر فتح '%s' للكتابة: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:679
-#: ../libgimpconfig/gimpconfigwriter.c:699
+#: ../libgimpconfig/gimpconfigwriter.c:689
+#: ../libgimpconfig/gimpconfigwriter.c:709
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1047,7 +1054,7 @@ msgstr ""
 "خطأ أثناء كتابة الملف المؤقت لـ '%s': %s\n"
 "الملف الأصلي لم يجر عليه أي تعديل."
 
-#: ../libgimpconfig/gimpconfigwriter.c:707
+#: ../libgimpconfig/gimpconfigwriter.c:717
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -1056,45 +1063,45 @@ msgstr ""
 "خطأ أثناء كتابة الملف المؤقت لـ '%s': %s\n"
 "لم يتم إنشاء أي ملف."
 
-#: ../libgimpconfig/gimpconfigwriter.c:731
+#: ../libgimpconfig/gimpconfigwriter.c:741
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "لم يمكن إنشاء '%s': %s"
 
-#: ../libgimpconfig/gimpscanner.c:254
+#: ../libgimpconfig/gimpscanner.c:263
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "نص UTF-8 غير مقبول"
 
-#: ../libgimpconfig/gimpscanner.c:605
+#: ../libgimpconfig/gimpscanner.c:614
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "خطأ أثناء تحليل '%s' في السطر %Id: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:432
+#: ../libgimpmodule/gimpmodule.c:163 ../libgimpmodule/gimpmodule.c:181
+#: ../libgimpmodule/gimpmodule.c:290 ../libgimpmodule/gimpmodule.c:317
+#: ../libgimpmodule/gimpmodule.c:443
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "خطأ عند تحميل الوحدة '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:385
 msgid "Module error"
 msgstr "خطأ وحدة"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:386
 msgid "Loaded"
 msgstr "محمل"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:387
 msgid "Load failed"
 msgstr "فشل التحميل"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:388
 msgid "Not loaded"
 msgstr "غير محمل"
 
-#: ../libgimpthumb/gimpthumb-utils.c:122
+#: ../libgimpthumb/gimpthumb-utils.c:131
 #, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
@@ -1103,63 +1110,63 @@ msgstr ""
 "لم يمكن تعيين مجلد منزل صالح.\n"
 "الصور المصغرة سيتم تخزينها في مجلد الملفات المؤقتة (%s) بدلًا عن ذلك."
 
-#: ../libgimpthumb/gimpthumb-utils.c:246 ../libgimpthumb/gimpthumb-utils.c:314
+#: ../libgimpthumb/gimpthumb-utils.c:255 ../libgimpthumb/gimpthumb-utils.c:323
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "فشل إنشاء ملف الصور المصغرة '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:497
+#: ../libgimpthumb/gimpthumbnail.c:508
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "مجلد الصور المصغرة لا يحتوي أي صورة::بطاقة URI"
 
-#: ../libgimpthumb/gimpthumbnail.c:893
+#: ../libgimpthumb/gimpthumbnail.c:904
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "لم يمكن إنشاء صورة مصغرة لـ %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:103
+#: ../libgimpwidgets/gimpbrowser.c:112
 msgid "_Search:"
 msgstr "ا_بحث:"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:117
+#: ../libgimpwidgets/gimpcolorbutton.c:134
 msgid "_Foreground Color"
 msgstr "اللون الأ_مامي"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:121
+#: ../libgimpwidgets/gimpcolorbutton.c:138
 msgid "_Background Color"
 msgstr "اللون ال_خلفي"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:125
+#: ../libgimpwidgets/gimpcolorbutton.c:142
 msgid "Blac_k"
 msgstr "أ_سود"
 
-#: ../libgimpwidgets/gimpcolorbutton.c:129
+#: ../libgimpwidgets/gimpcolorbutton.c:146
 msgid "_White"
 msgstr "أبي_ض"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:143
+#: ../libgimpwidgets/gimpcolorprofilestore.c:146
 msgid "Select color profile from disk..."
 msgstr "اختر مواصفات اللون من القرص..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:279
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgctxt "profile"
 msgid "None"
 msgstr "لا شيء"
 
-#: ../libgimpwidgets/gimpcolorscales.c:97
+#: ../libgimpwidgets/gimpcolorscales.c:108
 msgid "Scales"
 msgstr "المقاييس"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:217
 msgid "Current:"
 msgstr "الحالي:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:231
+#: ../libgimpwidgets/gimpcolorselection.c:226
 msgid "Old:"
 msgstr "القديم:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:285
+#: ../libgimpwidgets/gimpcolorselection.c:311
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -1167,76 +1174,76 @@ msgstr ""
 "طريقة كتابة أرقام الألوان الست عشرية هي نفسها كما في HTML و CSS. هذا الإدخال "
 "يقبل أيضًا أسماء ألوان CSS."
 
-#: ../libgimpwidgets/gimpcolorselection.c:291
+#: ../libgimpwidgets/gimpcolorselection.c:317
 msgid "HTML _notation:"
 msgstr "_طريقة تدوين HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:173
+#: ../libgimpwidgets/gimpfileentry.c:197
 msgid "Open a file selector to browse your folders"
 msgstr "افتح نافذة تصفح المجلدات"
 
-#: ../libgimpwidgets/gimpfileentry.c:174
+#: ../libgimpwidgets/gimpfileentry.c:198
 msgid "Open a file selector to browse your files"
 msgstr "افتح نافذة تصفح الملفات"
 
-#: ../libgimpwidgets/gimpfileentry.c:334
+#: ../libgimpwidgets/gimpfileentry.c:358
 msgid "Select Folder"
 msgstr "اختر مجلدا"
 
-#: ../libgimpwidgets/gimpfileentry.c:336
+#: ../libgimpwidgets/gimpfileentry.c:360
 msgid "Select File"
 msgstr "اختر ملفا"
 
-#: ../libgimpwidgets/gimphelpui.c:419
+#: ../libgimpwidgets/gimphelpui.c:430
 msgid "Press F1 for more help"
 msgstr "انقر F1 للمزيد من المساعدة"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:217
 msgid "Kilobytes"
 msgstr "كيلوبايت"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:206
+#: ../libgimpwidgets/gimpmemsizeentry.c:218
 msgid "Megabytes"
 msgstr "ميجابايت"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:207
+#: ../libgimpwidgets/gimpmemsizeentry.c:219
 msgid "Gigabytes"
 msgstr "جيجابايت"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:268
-#: ../libgimpwidgets/gimppageselector.c:1165
+#: ../libgimpwidgets/gimppageselector.c:278
+#: ../libgimpwidgets/gimppageselector.c:1176
 msgid "Nothing selected"
 msgstr "لم يتم اختيار شيء"
 
-#: ../libgimpwidgets/gimppageselector.c:286
+#: ../libgimpwidgets/gimppageselector.c:296
 msgid "Select _All"
 msgstr "اخت_ر الكل"
 
-#: ../libgimpwidgets/gimppageselector.c:306
+#: ../libgimpwidgets/gimppageselector.c:316
 msgid "Select _range:"
 msgstr "اختر م_جال:"
 
-#: ../libgimpwidgets/gimppageselector.c:318
+#: ../libgimpwidgets/gimppageselector.c:328
 msgid "Open _pages as"
 msgstr "افتح ال_صفحات كـ"
 
-#: ../libgimpwidgets/gimppageselector.c:419
+#: ../libgimpwidgets/gimppageselector.c:429
 msgid "Page 000"
 msgstr "الصفحة 000"
 
-#: ../libgimpwidgets/gimppageselector.c:507
-#: ../libgimpwidgets/gimppageselector.c:743
+#: ../libgimpwidgets/gimppageselector.c:517
+#: ../libgimpwidgets/gimppageselector.c:754
 #, c-format
 msgid "Page %d"
 msgstr "الصفحة %Id"
 
-#: ../libgimpwidgets/gimppageselector.c:1170
+#: ../libgimpwidgets/gimppageselector.c:1181
 msgid "One page selected"
 msgstr "تم اختيار صفحة واحدة"
 
-#: ../libgimpwidgets/gimppageselector.c:1177
-#: ../libgimpwidgets/gimppageselector.c:1181
+#: ../libgimpwidgets/gimppageselector.c:1188
+#: ../libgimpwidgets/gimppageselector.c:1192
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1247,15 +1254,15 @@ msgstr[3] "%Id صفحة مختارة"
 msgstr[4] "%Id صفحة مختارة"
 msgstr[5] "%Id صفحة مختارة"
 
-#: ../libgimpwidgets/gimppatheditor.c:213
+#: ../libgimpwidgets/gimppatheditor.c:234
 msgid "Writable"
 msgstr "قابل للكتابة"
 
-#: ../libgimpwidgets/gimppatheditor.c:222
+#: ../libgimpwidgets/gimppatheditor.c:243
 msgid "Folder"
 msgstr "المجلد"
 
-#: ../libgimpwidgets/gimppickbutton.c:106
+#: ../libgimpwidgets/gimppickbutton.c:127
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1263,19 +1270,19 @@ msgstr ""
 "انقر على القطارة، ثم انقر على أي لون في أي مكان من شاشتك لاختيار هذا اللون."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:278
+#: ../libgimpwidgets/gimppreview.c:287
 msgid "_Preview"
 msgstr "_عاين"
 
-#: ../libgimpwidgets/gimppreviewarea.c:93
+#: ../libgimpwidgets/gimppreviewarea.c:103
 msgid "Check Size"
 msgstr "حجم المربعات"
 
-#: ../libgimpwidgets/gimppreviewarea.c:100
+#: ../libgimpwidgets/gimppreviewarea.c:110
 msgid "Check Style"
 msgstr "نمط المربعات"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1859
+#: ../libgimpwidgets/gimppropwidgets.c:1875
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1286,95 +1293,95 @@ msgstr[3] "حقل إدخال النص هذا محدود بـ %Id حروف."
 msgstr[4] "حقل إدخال النص هذا محدود بـ %Id حرفا."
 msgstr[5] "حقل إدخال النص هذا محدود بـ %Id حرف."
 
-#: ../libgimpwidgets/gimpstock.c:111
+#: ../libgimpwidgets/gimpstock.c:127
 msgid "Anchor"
 msgstr "مرساة"
 
-#: ../libgimpwidgets/gimpstock.c:112
+#: ../libgimpwidgets/gimpstock.c:128
 msgid "C_enter"
 msgstr "المر_كز"
 
-#: ../libgimpwidgets/gimpstock.c:113
+#: ../libgimpwidgets/gimpstock.c:129
 msgid "_Duplicate"
 msgstr "ضا_عِف"
 
-#: ../libgimpwidgets/gimpstock.c:114
+#: ../libgimpwidgets/gimpstock.c:130
 msgid "_Edit"
 msgstr "_حرِّر"
 
-#: ../libgimpwidgets/gimpstock.c:115
+#: ../libgimpwidgets/gimpstock.c:131
 msgid "Linked"
 msgstr "موصول"
 
-#: ../libgimpwidgets/gimpstock.c:116
+#: ../libgimpwidgets/gimpstock.c:132
 msgid "Paste as New"
 msgstr "الصق كجديد"
 
-#: ../libgimpwidgets/gimpstock.c:117
+#: ../libgimpwidgets/gimpstock.c:133
 msgid "Paste Into"
 msgstr "الصق في"
 
-#: ../libgimpwidgets/gimpstock.c:118
+#: ../libgimpwidgets/gimpstock.c:134
 msgid "_Reset"
 msgstr "أعِد ضب_ط"
 
-#: ../libgimpwidgets/gimpstock.c:119
+#: ../libgimpwidgets/gimpstock.c:135
 msgid "Visible"
 msgstr "مرئي"
 
-#: ../libgimpwidgets/gimpstock.c:155 ../libgimpwidgets/gimpstock.c:159
+#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
 msgid "_Stroke"
 msgstr "_جرة القلم"
 
-#: ../libgimpwidgets/gimpstock.c:171
+#: ../libgimpwidgets/gimpstock.c:187
 msgid "L_etter Spacing"
 msgstr "تباعد الحر_وف"
 
-#: ../libgimpwidgets/gimpstock.c:172
+#: ../libgimpwidgets/gimpstock.c:188
 msgid "L_ine Spacing"
 msgstr "تباعد الأ_سطر"
 
-#: ../libgimpwidgets/gimpstock.c:188
+#: ../libgimpwidgets/gimpstock.c:204
 msgid "_Resize"
 msgstr "غيِّر الحج_م"
 
-#: ../libgimpwidgets/gimpstock.c:189 ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
 msgid "_Scale"
 msgstr "_حجّم"
 
-#: ../libgimpwidgets/gimpstock.c:295
+#: ../libgimpwidgets/gimpstock.c:315
 msgid "Cr_op"
 msgstr "ا_قتطع"
 
-#: ../libgimpwidgets/gimpstock.c:314
+#: ../libgimpwidgets/gimpstock.c:335
 msgid "_Transform"
 msgstr "حوِّ_ل"
 
-#: ../libgimpwidgets/gimpstock.c:318
+#: ../libgimpwidgets/gimpstock.c:339
 msgid "_Rotate"
 msgstr "_دوِّر"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:341
 msgid "_Shear"
 msgstr "قُ_ص"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:261
 msgid "More..."
 msgstr "المزيد..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:582
+#: ../libgimpwidgets/gimpunitmenu.c:487
 msgid "Unit Selection"
 msgstr "اختيار الوحدة"
 
-#: ../libgimpwidgets/gimpunitmenu.c:631
+#: ../libgimpwidgets/gimpunitmenu.c:536
 msgid "Unit"
 msgstr "الوحدة"
 
-#: ../libgimpwidgets/gimpunitmenu.c:635
+#: ../libgimpwidgets/gimpunitmenu.c:540
 msgid "Factor"
 msgstr "العامل"
 
-#: ../libgimpwidgets/gimpwidgets.c:510
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1382,17 +1389,32 @@ msgstr ""
 "استخدم هذه القيمة لبذرة مولد الأرقام العشوائية - هذا سيسمح لك بتكرار عملية "
 "\"عشوائية\" معطاة"
 
-#: ../libgimpwidgets/gimpwidgets.c:514
+#: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
 msgstr "بذرة _جديدة"
 
-#: ../libgimpwidgets/gimpwidgets.c:527
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "بذر مولد ارقام عشوائية برقم عشوائي مولد"
 
-#: ../libgimpwidgets/gimpwidgets.c:531
+#: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
 msgstr "ع_شوائي"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:49
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "مُعطَّلة"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:50
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "الشاشة"
+
+#: ../libgimpwidgets/gimpwidgets-private.c:51
+msgctxt "input-mode"
+msgid "Window"
+msgstr "النافذة"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
 msgctxt "aspect-type"
@@ -1578,11 +1600,11 @@ msgstr "لون مائي"
 msgid "Pressure"
 msgstr "الضغط"
 
-#: ../modules/color-selector-wheel.c:74
+#: ../modules/color-selector-wheel.c:71
 msgid "HSV color wheel"
 msgstr "عجلة ألوان HSV"
 
-#: ../modules/color-selector-wheel.c:105
+#: ../modules/color-selector-wheel.c:102
 msgid "Wheel"
 msgstr "عجلة"
 
@@ -1699,16 +1721,16 @@ msgstr "عرض POV %Id Y"
 msgid "POV %d Return"
 msgstr "عائد POV %Id"
 
-#: ../modules/controller-dx-dinput.c:1083
+#: ../modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "أحداث DirectInput"
 
-#: ../modules/controller-dx-dinput.c:1094
+#: ../modules/controller-dx-dinput.c:1093
 #: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
 msgid "No device configured"
 msgstr "لم يُعدّ أي جهاز"
 
-#: ../modules/controller-dx-dinput.c:1119
+#: ../modules/controller-dx-dinput.c:1118
 #: ../modules/controller-linux-input.c:587
 msgid "Device not available"
 msgstr "الجهاز غير متاح"
@@ -1940,105 +1962,105 @@ msgstr "دوترانوبيا (فقدان الشعور باللون الأخضر)
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "تريتانوبيا (فقدان الشعور باللون الأزرق)"
 
-#: ../modules/display-filter-color-blind.c:197
+#: ../modules/display-filter-color-blind.c:193
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "مرشّح محاكاة عجز الألوان (خزارزمية بريتيل-فيينو-مولون)"
 
-#: ../modules/display-filter-color-blind.c:260
+#: ../modules/display-filter-color-blind.c:256
 msgid "Color Deficient Vision"
 msgstr "عجز رؤية الألوان"
 
-#: ../modules/display-filter-color-blind.c:482
+#: ../modules/display-filter-color-blind.c:485
 msgid "Color _deficiency type:"
 msgstr "نوع عج_ز الألوان:"
 
-#: ../modules/display-filter-gamma.c:89
+#: ../modules/display-filter-gamma.c:85
 msgid "Gamma color display filter"
 msgstr "مرشّح عرض ألوان جاما"
 
-#: ../modules/display-filter-gamma.c:128
+#: ../modules/display-filter-gamma.c:124
 msgid "Gamma"
 msgstr "جاما"
 
-#: ../modules/display-filter-gamma.c:231
+#: ../modules/display-filter-gamma.c:236
 msgid "_Gamma:"
 msgstr "_جاما:"
 
-#: ../modules/display-filter-high-contrast.c:89
+#: ../modules/display-filter-high-contrast.c:85
 msgid "High Contrast color display filter"
 msgstr "مرشّح عرض ألوان التباين العالي"
 
-#: ../modules/display-filter-high-contrast.c:128
+#: ../modules/display-filter-high-contrast.c:124
 msgid "Contrast"
 msgstr "التباين"
 
-#: ../modules/display-filter-high-contrast.c:231
+#: ../modules/display-filter-high-contrast.c:236
 msgid "Contrast c_ycles:"
 msgstr "_دورات التباين:"
 
-#: ../modules/display-filter-lcms.c:101
+#: ../modules/display-filter-lcms.c:97
 msgid "Color management display filter using ICC color profiles"
 msgstr "مرشّح عرض إدارة الألوان باستخدام ملفات ألوان ICC"
 
-#: ../modules/display-filter-lcms.c:133
+#: ../modules/display-filter-lcms.c:129
 msgid "Color Management"
 msgstr "إدارة الألوان"
 
-#: ../modules/display-filter-lcms.c:190
+#: ../modules/display-filter-lcms.c:186
 msgid "None"
 msgstr "لا شيء"
 
-#: ../modules/display-filter-lcms.c:211
+#: ../modules/display-filter-lcms.c:207
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "هذا المرشّح يتلقى إعداداته من قسم إدارة الألوان في جدول التفضيلات."
 
-#: ../modules/display-filter-lcms.c:225
+#: ../modules/display-filter-lcms.c:221
 msgid "Mode of operation:"
 msgstr "نمط العملية:"
 
-#: ../modules/display-filter-lcms.c:232
+#: ../modules/display-filter-lcms.c:228
 msgid "Image profile:"
 msgstr "مواصفات الصورة:"
 
-#: ../modules/display-filter-lcms.c:240
+#: ../modules/display-filter-lcms.c:236
 msgid "Monitor profile:"
 msgstr "ملف المراقبة:"
 
-#: ../modules/display-filter-lcms.c:248
+#: ../modules/display-filter-lcms.c:244
 msgid "Print simulation profile:"
 msgstr "طباعة ملف المحاكاة:"
 
-#: ../modules/display-filter-proof.c:96
+#: ../modules/display-filter-proof.c:92
 msgid "Color proof filter using ICC color profile"
 msgstr "مرشّح إثبات الألوان باستخدام ملف ألوان ICC"
 
-#: ../modules/display-filter-proof.c:144
+#: ../modules/display-filter-proof.c:140
 msgid "Color Proof"
 msgstr "إثبات الألوان"
 
-#: ../modules/display-filter-proof.c:310
+#: ../modules/display-filter-proof.c:337
 msgid "Choose an ICC Color Profile"
 msgstr "اختر ملف ألوان ICC"
 
-#: ../modules/display-filter-proof.c:337
+#: ../modules/display-filter-proof.c:364
 msgid "All files (*.*)"
 msgstr "كل الملفات (*.*)"
 
-#: ../modules/display-filter-proof.c:342
+#: ../modules/display-filter-proof.c:369
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "لاحة ألوان ICC ‏(‪*.icc‬،‏ ‪*.icm‬)"
 
-#: ../modules/display-filter-proof.c:400
+#: ../modules/display-filter-proof.c:427
 msgid "_Profile:"
 msgstr "ال_ملف:"
 
-#: ../modules/display-filter-proof.c:406
+#: ../modules/display-filter-proof.c:433
 msgid "_Intent:"
 msgstr "ال_عزم على:"
 
-#: ../modules/display-filter-proof.c:411
+#: ../modules/display-filter-proof.c:438
 msgid "_Black Point Compensation"
 msgstr "تعويض النق_طة السوداء"
 
