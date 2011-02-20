@@ -624,8 +624,8 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
                                   gboolean          update_software_cursor)
 {
   GimpDisplay *display = shell->display;
-  Gimp        *gimp  = gimp_display_get_gimp (display);
-  GimpImage   *image = gimp_display_get_image (display);
+  Gimp        *gimp    = gimp_display_get_gimp (display);
+  GimpImage   *image   = gimp_display_get_image (display);
   GimpTool    *active_tool;
 
   if (! shell->display->config->cursor_updating)
@@ -675,6 +675,61 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
                                                  (gint) display_coords->y,
                                                  image_coords->x,
                                                  image_coords->y);
+    }
+}
+
+static void
+gimp_display_shell_get_event_coords (GimpDisplayShell *shell,
+                                     GdkEvent         *event,
+                                     GimpCoords       *display_coords,
+                                     GdkModifierType  *state,
+                                     guint32          *time)
+{
+  Gimp *gimp = gimp_display_get_gimp (shell->display);
+
+  gimp_device_info_get_event_coords (gimp_devices_get_current (gimp),
+                                     gtk_widget_get_window (shell->canvas),
+                                     event,
+                                     display_coords);
+
+  gimp_device_info_get_event_state (gimp_devices_get_current (gimp),
+                                    gtk_widget_get_window (shell->canvas),
+                                    event,
+                                    state);
+
+  *time = gdk_event_get_time (event);
+}
+
+static void
+gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
+                                             const GimpCoords *display_coords,
+                                             GimpCoords       *image_coords,
+                                             gboolean         *update_software_cursor)
+{
+  Gimp     *gimp = gimp_display_get_gimp (shell->display);
+  GimpTool *active_tool;
+
+  /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
+  gimp_display_shell_untransform_coordinate (shell,
+                                             display_coords,
+                                             image_coords);
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (active_tool && gimp_tool_control_get_snap_to (active_tool->control))
+    {
+      gint x, y, width, height;
+
+      gimp_tool_control_get_snap_offsets (active_tool->control,
+                                          &x, &y, &width, &height);
+
+      if (gimp_display_shell_snap_coords (shell,
+                                          image_coords,
+                                          x, y, width, height))
+        {
+          if (update_software_cursor)
+            *update_software_cursor = TRUE;
+        }
     }
 }
 
@@ -729,7 +784,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GimpImage       *image;
   Gimp            *gimp;
   GdkDisplay      *gdk_display;
-  GimpTool        *active_tool;
   GimpCoords       display_coords;
   GimpCoords       image_coords;
   GdkModifierType  state;
@@ -779,37 +833,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       device_changed = TRUE;
     }
 
-  gimp_device_info_get_event_coords (gimp_devices_get_current (gimp),
-                                     gtk_widget_get_window (canvas),
-                                     event,
-                                     &display_coords);
-  gimp_device_info_get_event_state (gimp_devices_get_current (gimp),
-                                    gtk_widget_get_window (canvas),
-                                    event,
-                                    &state);
-  time = gdk_event_get_time (event);
-
-  /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-  gimp_display_shell_untransform_coordinate (shell,
-                                             &display_coords,
-                                             &image_coords);
-
-  active_tool = tool_manager_get_active (gimp);
-
-  if (active_tool && gimp_tool_control_get_snap_to (active_tool->control))
-    {
-      gint x, y, width, height;
-
-      gimp_tool_control_get_snap_offsets (active_tool->control,
-                                          &x, &y, &width, &height);
-
-      if (gimp_display_shell_snap_coords (shell,
-                                          &image_coords,
-                                          x, y, width, height))
-        {
-          update_sw_cursor = TRUE;
-        }
-    }
+  gimp_display_shell_get_event_coords (shell, event,
+                                       &display_coords,
+                                       &state, &time);
+  gimp_display_shell_untransform_event_coords (shell,
+                                               &display_coords, &image_coords,
+                                               &update_sw_cursor);
 
   /*  If the device (and maybe the tool) has changed, update the new
    *  tool's state
@@ -927,6 +956,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
         GdkEventMask    event_mask;
+        GimpTool       *active_tool;
 
         /*  focus the widget if it isn't; if the toplevel window
          *  already has focus, this will generate a FOCUS_IN on the
@@ -1104,6 +1134,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_2BUTTON_PRESS:
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
+        GimpTool       *active_tool;
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): 2BUTTON_PRESS (%d @ %0.0f:%0.0f)",
                   display, bevent->button, bevent->x, bevent->y);
@@ -1132,6 +1163,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_3BUTTON_PRESS:
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
+        GimpTool       *active_tool;
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): 3BUTTON_PRESS (%d @ %0.0f:%0.0f)",
                   display, bevent->button, bevent->x, bevent->y);
@@ -1160,6 +1192,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_BUTTON_RELEASE:
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
+        GimpTool       *active_tool;
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_RELEASE (%d @ %0.0f:%0.0f)",
                   display, bevent->button, bevent->x, bevent->y);
@@ -1308,28 +1341,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             gtk_adjustment_set_value (adj, value);
           }
 
-        /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-        gimp_display_shell_untransform_coordinate (shell,
-                                                   &display_coords,
-                                                   &image_coords);
-
-        active_tool = tool_manager_get_active (gimp);
-
-        if (active_tool &&
-            gimp_tool_control_get_snap_to (active_tool->control))
-          {
-            gint x, y, width, height;
-
-            gimp_tool_control_get_snap_offsets (active_tool->control,
-                                                &x, &y, &width, &height);
-
-            if (gimp_display_shell_snap_coords (shell,
-                                                &image_coords,
-                                                x, y, width, height))
-              {
-                update_sw_cursor = TRUE;
-              }
-          }
+        gimp_display_shell_untransform_event_coords (shell,
+                                                     &display_coords,
+                                                     &image_coords,
+                                                     &update_sw_cursor);
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
@@ -1344,6 +1359,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventMotion *mevent            = (GdkEventMotion *) event;
         GdkEvent       *compressed_motion = NULL;
+        GimpTool       *active_tool;
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): MOTION_NOTIFY (%0.0f:%0.0f %d)",
                   display, mevent->x, mevent->y, mevent->time);
@@ -1359,37 +1375,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
              GIMP_MOTION_MODE_COMPRESS))
           {
             compressed_motion = gimp_display_shell_compress_motion (shell);
-          }
 
-        if (compressed_motion && ! shell->scrolling)
-          {
-            GimpDeviceInfo *device = gimp_devices_get_current (gimp);
-
-            gimp_device_info_get_event_coords (device,
-                                               gtk_widget_get_window (canvas),
-                                               compressed_motion,
-                                               &display_coords);
-            gimp_device_info_get_event_state (device,
-                                              gtk_widget_get_window (canvas),
-                                              compressed_motion,
-                                              &state);
-            time = gdk_event_get_time (event);
-
-            /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-            gimp_display_shell_untransform_coordinate (shell,
-                                                       &display_coords,
-                                                       &image_coords);
-
-            if (gimp_tool_control_get_snap_to (active_tool->control))
+            if (compressed_motion && ! shell->scrolling)
               {
-                gint x, y, width, height;
-
-                gimp_tool_control_get_snap_offsets (active_tool->control,
-                                                    &x, &y, &width, &height);
-
-                gimp_display_shell_snap_coords (shell,
-                                                &image_coords,
-                                                x, y, width, height);
+                gimp_display_shell_get_event_coords (shell,
+                                                     compressed_motion,
+                                                     &display_coords,
+                                                     &state, &time);
+                gimp_display_shell_untransform_event_coords (shell,
+                                                             &display_coords,
+                                                             &image_coords,
+                                                             NULL);
               }
           }
 
@@ -1472,24 +1468,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                           history_events[i],
                                                           &display_coords);
 
-                        /*  GimpCoords passed to tools are ALWAYS in
-                         *  image coordinates
-                         */
-                        gimp_display_shell_untransform_coordinate (shell,
-                                                                   &display_coords,
-                                                                   &image_coords);
-
-                        if (gimp_tool_control_get_snap_to (active_tool->control))
-                          {
-                            gint x, y, width, height;
-
-                            gimp_tool_control_get_snap_offsets (active_tool->control,
-                                                                &x, &y, &width, &height);
-
-                            gimp_display_shell_snap_coords (shell,
-                                                            &image_coords,
-                                                            x, y, width, height);
-                          }
+                        gimp_display_shell_untransform_event_coords (shell,
+                                                                     &display_coords,
+                                                                     &image_coords,
+                                                                     NULL);
 
                         /* Early removal of useless events saves CPU time.
                          */
@@ -1503,7 +1485,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                          history_events[i]->time);
                           }
 
-                         shell->last_read_motion_time = history_events[i]->time;
+                        shell->last_read_motion_time = history_events[i]->time;
                       }
 
                     tool_manager_control_active (gimp, GIMP_TOOL_ACTION_RESUME,
@@ -1565,11 +1547,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_KEY_PRESS:
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
+        GimpTool    *active_tool;
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): KEY_PRESS (%d, %s)",
                   display, kevent->keyval,
                   gdk_keyval_name (kevent->keyval) ?
                   gdk_keyval_name (kevent->keyval) : "<none>");
+
+        active_tool = tool_manager_get_active (gimp);
 
         if (state & GDK_BUTTON1_MASK)
           {
@@ -1693,11 +1678,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     case GDK_KEY_RELEASE:
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
+        GimpTool    *active_tool;
 
         GIMP_LOG (TOOL_EVENTS, "event (display %p): KEY_RELEASE (%d, %s)",
                   display, kevent->keyval,
                   gdk_keyval_name (kevent->keyval) ?
                   gdk_keyval_name (kevent->keyval) : "<none>");
+
+        active_tool = tool_manager_get_active (gimp);
 
         if (state & GDK_BUTTON1_MASK)
           {
