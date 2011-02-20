@@ -138,7 +138,8 @@ static void
 lightmenu_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &mapvals.lightsource.type);
 
   if (mapvals.lightsource.type == POINT_LIGHT)
     {
@@ -171,66 +172,62 @@ static void
 mapmenu_callback (GtkWidget *widget,
 		  gpointer   data)
 {
-  GList *children;
-  gint   n_children;
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &mapvals.maptype);
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
-
-  compute_preview_image ();
-
-  gtk_widget_queue_draw (previewarea);
-
-  children = gtk_container_get_children (GTK_CONTAINER (options_note_book));
-  n_children = g_list_length (children);
-  g_list_free (children);
+  if (mapvals.livepreview)
+    {
+      compute_preview_image ();
+      gtk_widget_queue_draw (previewarea);
+    }
 
   if (mapvals.maptype == MAP_BOX)
     {
-      if (cylinder_page != NULL)
+      if (cylinder_page && gtk_widget_get_parent (GTK_WIDGET (cylinder_page)) ==
+          GTK_WIDGET (options_note_book))
         {
-          gtk_notebook_remove_page (options_note_book, n_children - 1);
-          cylinder_page = NULL;
+          gtk_container_remove (GTK_CONTAINER (options_note_book), cylinder_page);
         }
 
-      if (box_page == NULL)
+      if (!box_page)
         {
           box_page = create_box_page ();
-          gtk_notebook_append_page (options_note_book,
-				    box_page,
-				    gtk_label_new_with_mnemonic (_("_Box")));
+          g_object_ref (box_page);
         }
+      gtk_notebook_append_page (options_note_book,
+                                box_page,
+                                gtk_label_new_with_mnemonic (_("_Box")));
     }
   else if (mapvals.maptype == MAP_CYLINDER)
     {
-      if (box_page != NULL)
+      if (box_page && gtk_widget_get_parent (GTK_WIDGET (box_page)) ==
+          GTK_WIDGET (options_note_book))
         {
-          gtk_notebook_remove_page (options_note_book, n_children - 1);
-          box_page = NULL;
+          gtk_container_remove (GTK_CONTAINER (options_note_book), box_page);
         }
 
-      if (cylinder_page == NULL)
+      if (!cylinder_page)
 	{
 	  cylinder_page = create_cylinder_page ();
-	  gtk_notebook_append_page (options_note_book,
-				    cylinder_page,
-				    gtk_label_new_with_mnemonic (_("C_ylinder")));
+          g_object_ref (cylinder_page);
 	}
+      gtk_notebook_append_page (options_note_book,
+                                cylinder_page,
+                                gtk_label_new_with_mnemonic (_("C_ylinder")));
     }
   else
     {
-      if (box_page != NULL)
+      if (box_page && gtk_widget_get_parent (GTK_WIDGET (box_page)) ==
+          GTK_WIDGET (options_note_book))
         {
-          gtk_notebook_remove_page (options_note_book, n_children - 1);
-          n_children--;
+          gtk_container_remove (GTK_CONTAINER (options_note_book), box_page);
         }
 
-      if (cylinder_page != NULL)
+      if (cylinder_page && gtk_widget_get_parent (GTK_WIDGET (cylinder_page)) ==
+          GTK_WIDGET (options_note_book))
         {
-          gtk_notebook_remove_page (options_note_book, n_children - 1);
+          gtk_container_remove (GTK_CONTAINER (options_note_book), cylinder_page);
         }
-
-      box_page = NULL;
-      cylinder_page = NULL;
     }
 }
 
@@ -1249,12 +1246,14 @@ create_main_notebook (GtkWidget *container)
   if (mapvals.maptype == MAP_BOX)
     {
       box_page = create_box_page ();
+      g_object_ref (box_page);
       gtk_notebook_append_page (options_note_book, box_page,
 				gtk_label_new_with_mnemonic (_("_Box")));
     }
   else if (mapvals.maptype == MAP_CYLINDER)
     {
       cylinder_page = create_cylinder_page ();
+      g_object_ref (cylinder_page);
       gtk_notebook_append_page (options_note_book, cylinder_page,
 				gtk_label_new_with_mnemonic (_("C_ylinder")));
     }
@@ -1407,6 +1406,10 @@ main_dialog (GimpDrawable *drawable)
     g_free (preview_rgb_data);
   if (preview_surface)
     cairo_surface_destroy (preview_surface);
+  if (box_page)
+    g_object_unref (box_page);
+  if (cylinder_page)
+    g_object_unref (cylinder_page);
 
   return run;
 }

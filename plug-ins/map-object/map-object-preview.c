@@ -304,15 +304,9 @@ preview_expose (GtkWidget      *widget,
                 GdkEventExpose *eevent)
 {
   gint startx, starty, pw, ph;
-  GdkColor  color;
   cairo_t *cr;
 
   cr = gdk_cairo_create (eevent->window);
-
-  color.red   = 0xFFFF;
-  color.green = 0xFFFF;
-  color.blue  = 0xFFFF;
-  gdk_cairo_set_source_color (cr, &color);
 
   pw = PREVIEW_WIDTH * mapvals.zoom;
   ph = PREVIEW_HEIGHT * mapvals.zoom;
