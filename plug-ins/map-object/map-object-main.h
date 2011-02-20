@@ -61,6 +61,7 @@ typedef struct
 
   gint antialiasing;
   gint create_new_image;
+  gint create_new_layer;
   gint transparent_background;
   gint tiled;
   gint livepreview;

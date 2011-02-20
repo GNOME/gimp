@@ -37,7 +37,7 @@ gint             preview_rgb_stride;
 cairo_surface_t *preview_surface = NULL;
 
 glong   maxcounter,old_depth,max_depth;
-gint    imgtype,width,height,in_channels,out_channels;
+gint    imgtype,width,height,in_channels,out_channels,image_id;
 GimpRGB  background;
 gdouble oldtreshold;
 

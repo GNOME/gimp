@@ -78,6 +78,7 @@ set_default_settings (void)
 
   mapvals.antialiasing           = TRUE;
   mapvals.create_new_image       = FALSE;
+  mapvals.create_new_layer       = FALSE;
   mapvals.transparent_background = FALSE;
   mapvals.tiled                  = FALSE;
   mapvals.livepreview            = TRUE;
@@ -228,6 +229,7 @@ run (const gchar      *name,
   /* Get the specified drawable */
   /* ========================== */
 
+  image_id = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
@@ -255,7 +257,7 @@ run (const gchar      *name,
         break;
 
       case GIMP_RUN_NONINTERACTIVE:
-        if (nparams != 49)
+        if (nparams != 50)
 	  {
 	    status = GIMP_PDB_CALLING_ERROR;
 	  }
@@ -293,6 +295,7 @@ run (const gchar      *name,
             mapvals.antialiasing            = (gint) param[32].data.d_int32;
             mapvals.tiled                   = (gint) param[33].data.d_int32;
             mapvals.create_new_image        = (gint) param[34].data.d_int32;
+            mapvals.create_new_layer        = (gint) param[34].data.d_int32;
             mapvals.transparent_background  = (gint) param[35].data.d_int32;
             mapvals.radius                  = param[36].data.d_float;
             mapvals.cylinder_radius         = param[36].data.d_float;
@@ -302,10 +305,10 @@ run (const gchar      *name,
             mapvals.cylinder_length         = param[40].data.d_float;
 
             for (i = 0; i < 6; i++)
-              mapvals.boxmap_id[i] = param[41+i].data.d_drawable;
+              mapvals.boxmap_id[i] = param[42+i].data.d_drawable;
 
             for (i = 0; i < 2; i++)
-              mapvals.cylindermap_id[i] = param[47+i].data.d_drawable;
+              mapvals.cylindermap_id[i] = param[48+i].data.d_drawable;
 
             check_drawables (drawable);
             image_setup (drawable, FALSE);

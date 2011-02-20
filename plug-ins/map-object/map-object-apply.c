@@ -231,37 +231,27 @@ compute_image (void)
 
   init_compute ();
 
-  if (mapvals.create_new_image == TRUE ||
-      (mapvals.transparent_background == TRUE &&
-       input_drawable->bpp != 4))
+  if (mapvals.create_new_image == TRUE)
     {
-      /* Create a new image */
-      /* ================== */
-
       new_image_id = gimp_image_new (width, height, GIMP_RGB);
+    }
+  else
+    {
+      new_image_id = image_id;
+    }
 
-      if (mapvals.transparent_background == TRUE)
-        {
-          /* Add a layer with an alpha channel */
-          /* ================================= */
+  if (mapvals.create_new_image ||
+      mapvals.create_new_layer ||
+      (mapvals.transparent_background &&
+       output_drawable->bpp != 4))
+    {
 
-          new_layer_id = gimp_layer_new (new_image_id, "Background",
-					 width, height,
-					 GIMP_RGBA_IMAGE,
-					 100.0,
-					 GIMP_NORMAL_MODE);
-        }
-      else
-        {
-          /* Create a "normal" layer */
-          /* ======================= */
-
-          new_layer_id = gimp_layer_new (new_image_id, "Background",
-					 width, height,
-					 GIMP_RGB_IMAGE,
-					 100.0,
-					 GIMP_NORMAL_MODE);
-        }
+      new_layer_id = gimp_layer_new (new_image_id, "Background",
+                                     width, height,
+                                     mapvals.transparent_background ? GIMP_RGBA_IMAGE
+                                                                    : GIMP_RGB_IMAGE,
+                                     100.0,
+                                     GIMP_NORMAL_MODE);
 
       gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
       output_drawable = gimp_drawable_get (new_layer_id);
@@ -323,7 +313,7 @@ compute_image (void)
   gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
   gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
 
-  if (new_image_id != -1)
+  if (new_image_id != image_id)
     {
       gimp_display_new (new_image_id);
       gimp_displays_flush ();

@@ -474,6 +474,19 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
 			   _("Create a new image when applying filter"), NULL);
 
+  toggle = gtk_check_button_new_with_label (_("Create new layer"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				mapvals.create_new_layer);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &mapvals.create_new_layer);
+
+  gimp_help_set_help_data (toggle,
+			   _("Create a new layer when applying filter"), NULL);
+
   /* Antialiasing options */
 
   frame = gimp_frame_new (NULL);
