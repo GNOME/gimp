@@ -20,15 +20,7 @@
 
 #define LIGHT_SYMBOL_SIZE 8
 
-typedef struct
-{
-  gint      x, y, w, h;
-  cairo_surface_t *image;
-} BackBuffer;
-
 static gint handle_xpos = 0, handle_ypos = 0;
-
-static BackBuffer backbuf = { 0, 0, 0, 0, NULL };
 
 /* g_free()'ed on exit */
 gdouble *xpostab = NULL;
@@ -312,83 +304,6 @@ draw_handles (void)
 
       cairo_set_line_width (cr, 1.0);
 
-      /* Restore background if it has been saved */
-      /* ======================================= */
-
-      if (backbuf.image != NULL)
-        {
-          cairo_rectangle (cr, backbuf.x, backbuf.y, backbuf.w, backbuf.h);
-          cairo_clip (cr);
-          cairo_set_source_surface (cr, backbuf.image, 0.0, 0.0);
-          cairo_paint (cr);
-
-          cairo_surface_destroy (backbuf.image);
-          cairo_reset_clip (cr);
-          cairo_rectangle (cr, 0, 0, PREVIEW_WIDTH, PREVIEW_HEIGHT);
-          cairo_clip (cr);
-          backbuf.image = NULL;
-        }
-
-      /* calculate backbuffer */
-      switch (mapvals.lightsource[k].type)
-        {
-        case POINT_LIGHT:
-          backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2 - 1;
-          backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2 - 1;
-          backbuf.w = LIGHT_SYMBOL_SIZE + 2;
-          backbuf.h = LIGHT_SYMBOL_SIZE + 2;
-          break;
-        case DIRECTIONAL_LIGHT:
-          if (delta_x <= 0)
-            backbuf.x = handle_xpos;
-          else
-            backbuf.x = startx + pw/2;
-          if (delta_y <= 0)
-            backbuf.y = handle_ypos;
-          else
-            backbuf.y = starty + ph/2;
-          backbuf.x -= LIGHT_SYMBOL_SIZE/2 + 1;
-          backbuf.y -= LIGHT_SYMBOL_SIZE/2 + 1;
-          backbuf.w = fabs(delta_x) + LIGHT_SYMBOL_SIZE + 2;
-          backbuf.h = fabs(delta_y) + LIGHT_SYMBOL_SIZE + 2;
-          break;
-        case SPOT_LIGHT:
-          backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2 - 1;
-          backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2 - 1;
-          backbuf.w = LIGHT_SYMBOL_SIZE + 2;
-          backbuf.h = LIGHT_SYMBOL_SIZE + 2;
-          break;
-        case NO_LIGHT:
-          break;
-        }
-
-      /* Save background */
-      /* =============== */
-      if ((backbuf.x + backbuf.w >= 0) &&
-          (backbuf.x <= PREVIEW_WIDTH) &&
-          (backbuf.y + backbuf.h >= 0) && (backbuf.y <= PREVIEW_HEIGHT))
-        {
-          cairo_t *cr;
-
-          backbuf.image = cairo_surface_create_similar (preview_surface,
-                                                        CAIRO_CONTENT_COLOR,
-                                                        PREVIEW_WIDTH,
-                                                        PREVIEW_HEIGHT);
-          cr = cairo_create (backbuf.image);
-          /* clip coordinates to preview widget sizes */
-          if ((backbuf.x + backbuf.w) > PREVIEW_WIDTH)
-            backbuf.w = (PREVIEW_WIDTH - backbuf.x);
-
-          if ((backbuf.y + backbuf.h) > PREVIEW_HEIGHT)
-            backbuf.h = (PREVIEW_HEIGHT - backbuf.y);
-
-          cairo_rectangle (cr, backbuf.x, backbuf.y, backbuf.w, backbuf.h);
-          cairo_clip (cr);
-          cairo_set_source_surface (cr, preview_surface, 0.0, 0.0);
-          cairo_paint (cr);
-          cairo_destroy (cr);
-        }
-
       color.red   = 0x0;
       color.green = 0x4000;
       color.blue  = 0xFFFF;
@@ -463,52 +378,26 @@ update_light (gint xpos, gint ypos)
 /******************************************************************/
 
 void
-draw_preview_image (gboolean recompute)
+preview_compute (void)
 {
-  gint      startx, starty, pw, ph;
-  cairo_t  *cr;
+  GdkDisplay *display = gtk_widget_get_display (previewarea);
+  GdkCursor  *cursor;
+  gint        startx, starty, pw, ph;
 
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
-  if (recompute)
-    {
-      GdkDisplay *display = gtk_widget_get_display (previewarea);
-      GdkCursor  *cursor;
+  cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
 
-      cursor = gdk_cursor_new_for_display (display, GDK_WATCH);
+  gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
+  gdk_cursor_unref (cursor);
 
-      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-      gdk_cursor_unref (cursor);
-
-      compute_preview (startx, starty, pw, ph);
-      cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
-      gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
-      gdk_cursor_unref (cursor);
-      gdk_flush ();
-
-      /* if we recompute, clear backbuf, so we don't
-       * restore the wrong bitmap */
-      if (backbuf.image != NULL)
-        {
-          cairo_surface_destroy (backbuf.image);
-          backbuf.image = NULL;
-        }
-    }
-
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
-
-  cairo_set_source_surface (cr, preview_surface, 0.0, 0.0);
-
-  cairo_paint (cr);
-
-  cairo_destroy (cr);
-
-  /* draw symbols if enabled in UI */
-  if (mapvals.interactive_preview)
-    {
-      draw_handles ();
-    }
+  compute_preview (startx, starty, pw, ph);
+  cursor = gdk_cursor_new_for_display (display, GDK_HAND2);
+  gdk_window_set_cursor (gtk_widget_get_window (previewarea), cursor);
+  gdk_cursor_unref (cursor);
+  gdk_flush ();
 }
+
 
 /******************************/
 /* Preview area event handler */
@@ -520,10 +409,6 @@ preview_events (GtkWidget *area,
 {
   switch (event->type)
     {
-    case GDK_EXPOSE:
-
-      draw_preview_image (FALSE);
-      break;
     case GDK_ENTER_NOTIFY:
       break;
     case GDK_LEAVE_NOTIFY:
@@ -540,7 +425,7 @@ preview_events (GtkWidget *area,
           light_hit == TRUE &&
           mapvals.interactive_preview == TRUE )
         {
-          draw_handles();
+          gtk_widget_queue_draw (previewarea);
           interactive_preview_callback(NULL);
           update_light (event->motion.x, event->motion.y);
         }
@@ -548,6 +433,29 @@ preview_events (GtkWidget *area,
     default:
       break;
     }
+
+  return FALSE;
+}
+
+gboolean
+preview_expose (GtkWidget *area,
+                GdkEventExpose *eevent)
+{
+  cairo_t *cr;
+
+  cr = gdk_cairo_create (eevent->window);
+
+  cairo_set_source_surface (cr, preview_surface, 0.0, 0.0);
+
+  cairo_paint (cr);
+
+  /* draw symbols if enabled in UI */
+  if (mapvals.interactive_preview)
+    {
+      draw_handles ();
+    }
+
+  cairo_destroy (cr);
 
   return FALSE;
 }
@@ -565,7 +473,7 @@ interactive_preview_callback (GtkWidget *widget)
 }
 
 static gboolean
-interactive_preview_timer_callback ( gpointer data )
+interactive_preview_timer_callback (gpointer data)
 {
   gint k = mapvals.light_selected;
 
@@ -586,7 +494,9 @@ interactive_preview_timer_callback ( gpointer data )
 
   mapvals.update_enabled = TRUE;
 
-  draw_preview_image (TRUE);
+  preview_compute ();
+
+  gtk_widget_queue_draw (previewarea);
 
   preview_update_timer = 0;
 

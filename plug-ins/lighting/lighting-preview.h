@@ -26,10 +26,12 @@ extern gdouble    *xpostab, *ypostab;
 
 /* Externally visible functions */
 
-void     draw_preview_image           (gboolean   recompute);
+void     preview_compute              (void);
 void     interactive_preview_callback (GtkWidget *widget);
 gboolean preview_events               (GtkWidget *area,
                                        GdkEvent  *event);
+gboolean preview_expose               (GtkWidget *area,
+                                       GdkEventExpose *eevent);
 void     update_light                 (gint       xpos,
                                        gint       ypos);
 

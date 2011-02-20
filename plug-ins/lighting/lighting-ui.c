@@ -101,7 +101,8 @@ toggle_update (GtkWidget *widget,
 {
   gimp_toggle_button_update (widget, data);
 
-  draw_preview_image (TRUE);
+  preview_compute ();
+  gtk_widget_queue_draw (previewarea);
 }
 
 
@@ -111,7 +112,8 @@ distance_update (GtkAdjustment *adj,
 {
   mapvals.viewpoint.z = gtk_adjustment_get_value (adj);
 
-  draw_preview_image (TRUE);
+  preview_compute ();
+  gtk_widget_queue_draw (previewarea);
 }
 
 
@@ -197,7 +199,8 @@ mapmenu2_callback (GtkWidget *widget,
 {
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
-  draw_preview_image (TRUE);
+  preview_compute ();
+  gtk_widget_queue_draw (previewarea);
 }
 
 /******************************************/
@@ -207,7 +210,8 @@ mapmenu2_callback (GtkWidget *widget,
 static void
 preview_callback (GtkWidget *widget)
 {
-  draw_preview_image (TRUE);
+  preview_compute ();
+  gtk_widget_queue_draw (previewarea);
 }
 
 
@@ -1062,6 +1066,9 @@ main_dialog (GimpDrawable *drawable)
   g_signal_connect (previewarea, "event",
                     G_CALLBACK (preview_events),
                     previewarea);
+  g_signal_connect (previewarea, "expose-event",
+                    G_CALLBACK (preview_expose),
+                    previewarea);
   gtk_container_add (GTK_CONTAINER (frame), previewarea);
   gtk_widget_show (previewarea);
 
@@ -1111,7 +1118,7 @@ main_dialog (GimpDrawable *drawable)
 
   image_setup (drawable, TRUE);
 
-  draw_preview_image (TRUE);
+  preview_compute ();
 
   if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;
