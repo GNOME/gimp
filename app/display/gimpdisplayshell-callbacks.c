@@ -601,7 +601,7 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
 
 static void
 gimp_display_shell_update_focus (GimpDisplayShell *shell,
-                                 GimpCoords       *image_coords,
+                                 const GimpCoords *image_coords,
                                  GdkModifierType   state)
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
@@ -614,6 +614,68 @@ gimp_display_shell_update_focus (GimpDisplayShell *shell,
                                      image_coords, state,
                                      shell->proximity,
                                      shell->display);
+}
+
+static void
+gimp_display_shell_update_cursor (GimpDisplayShell *shell,
+                                  const GimpCoords *display_coords,
+                                  const GimpCoords *image_coords,
+                                  GdkModifierType   state,
+                                  gboolean          update_software_cursor)
+{
+  GimpDisplay *display = shell->display;
+  Gimp        *gimp  = gimp_display_get_gimp (display);
+  GimpImage   *image = gimp_display_get_image (display);
+  GimpTool    *active_tool;
+
+  if (! shell->display->config->cursor_updating)
+    return;
+
+  active_tool = tool_manager_get_active (gimp);
+
+  if (active_tool)
+    {
+      if ((! gimp_image_is_empty (image) ||
+           gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
+          ! (state & (GDK_BUTTON1_MASK |
+                      GDK_BUTTON2_MASK |
+                      GDK_BUTTON3_MASK)))
+        {
+          tool_manager_cursor_update_active (gimp,
+                                             image_coords, state,
+                                             display);
+        }
+      else if (gimp_image_is_empty (image) &&
+               ! gimp_tool_control_get_handle_empty_image (active_tool->control))
+        {
+          gimp_display_shell_set_cursor (shell,
+                                         GIMP_CURSOR_MOUSE,
+                                         gimp_tool_control_get_tool_cursor (active_tool->control),
+                                         GIMP_CURSOR_MODIFIER_BAD);
+        }
+    }
+  else
+    {
+      gimp_display_shell_set_cursor (shell,
+                                     GIMP_CURSOR_MOUSE,
+                                     GIMP_TOOL_CURSOR_NONE,
+                                     GIMP_CURSOR_MODIFIER_BAD);
+    }
+
+  if (update_software_cursor)
+    {
+      GimpCursorPrecision precision = GIMP_CURSOR_PRECISION_PIXEL_CENTER;
+
+      if (active_tool)
+        precision = gimp_tool_control_get_precision (active_tool->control);
+
+      gimp_display_shell_update_software_cursor (shell,
+                                                 precision,
+                                                 (gint) display_coords->x,
+                                                 (gint) display_coords->y,
+                                                 image_coords->x,
+                                                 image_coords->y);
+    }
 }
 
 static gboolean
@@ -889,37 +951,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
              *  preventing it from doing the same.
              */
             gimp_display_shell_update_focus (shell, &image_coords, state);
-
-            active_tool = tool_manager_get_active (gimp);
-
-            if (active_tool)
-              {
-                if ((! gimp_image_is_empty (image) ||
-                     gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
-                    (bevent->button == 1 ||
-                     bevent->button == 2 ||
-                     bevent->button == 3))
-                  {
-                    tool_manager_cursor_update_active (gimp,
-                                                       &image_coords, state,
-                                                       display);
-                  }
-                else if (gimp_image_is_empty (image) &&
-                         ! gimp_tool_control_get_handle_empty_image (active_tool->control))
-                  {
-                    gimp_display_shell_set_cursor (shell,
-                                                   GIMP_CURSOR_MOUSE,
-                                                   gimp_tool_control_get_tool_cursor (active_tool->control),
-                                                   GIMP_CURSOR_MODIFIER_BAD);
-                  }
-              }
-            else
-              {
-                gimp_display_shell_set_cursor (shell,
-                                               GIMP_CURSOR_MOUSE,
-                                               GIMP_TOOL_CURSOR_NONE,
-                                               GIMP_CURSOR_MODIFIER_BAD);
-              }
+            gimp_display_shell_update_cursor (shell, &display_coords,
+                                              &image_coords, state, FALSE);
 
             shell->button_press_before_focus = TRUE;
 
@@ -1752,58 +1785,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (gimp->busy)
     return return_val;
 
-  /*  cursor update support  */
-
-  if (shell->display->config->cursor_updating)
-    {
-      active_tool = tool_manager_get_active (gimp);
-
-      if (active_tool)
-        {
-          if ((! gimp_image_is_empty (image) ||
-               gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
-              ! (state & (GDK_BUTTON1_MASK |
-                          GDK_BUTTON2_MASK |
-                          GDK_BUTTON3_MASK)))
-            {
-              tool_manager_cursor_update_active (gimp,
-                                                 &image_coords, state,
-                                                 display);
-            }
-          else if (gimp_image_is_empty (image) &&
-                   ! gimp_tool_control_get_handle_empty_image (active_tool->control))
-            {
-              gimp_display_shell_set_cursor (shell,
-                                             GIMP_CURSOR_MOUSE,
-                                             gimp_tool_control_get_tool_cursor (active_tool->control),
-                                             GIMP_CURSOR_MODIFIER_BAD);
-            }
-        }
-      else
-        {
-          gimp_display_shell_set_cursor (shell,
-                                         GIMP_CURSOR_MOUSE,
-                                         GIMP_TOOL_CURSOR_NONE,
-                                         GIMP_CURSOR_MODIFIER_BAD);
-        }
-    }
-
-  if (update_sw_cursor)
-    {
-      GimpCursorPrecision precision = GIMP_CURSOR_PRECISION_PIXEL_CENTER;
-
-      active_tool = tool_manager_get_active (gimp);
-
-      if (active_tool)
-        precision = gimp_tool_control_get_precision (active_tool->control);
-
-      gimp_display_shell_update_software_cursor (shell,
-                                                 precision,
-                                                 (gint) display_coords.x,
-                                                 (gint) display_coords.y,
-                                                 image_coords.x,
-                                                 image_coords.y);
-    }
+  /*  cursor update   */
+  gimp_display_shell_update_cursor (shell, &display_coords, &image_coords,
+                                    state, update_sw_cursor);
 
   return return_val;
 }
