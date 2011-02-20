@@ -35,14 +35,18 @@ static GimpRGB
 phong_shade (GimpVector3 *pos,
 	     GimpVector3 *viewpoint,
 	     GimpVector3 *normal,
-	     GimpVector3 *light,
-	     GimpRGB      *diff_col,
-	     GimpRGB      *spec_col,
-	     gint         type)
+	     GimpRGB     *diff_col,
+	     GimpRGB     *spec_col,
+	     LightType    type)
 {
   GimpRGB       ambientcolor, diffusecolor, specularcolor;
   gdouble      NL, RV, dist;
   GimpVector3  L, NN, V, N;
+  GimpVector3  *light;
+
+  light = mapvals.lightsource.type == DIRECTIONAL_LIGHT
+    ? &mapvals.lightsource.direction
+    : &mapvals.lightsource.position,
 
   /* Compute ambient intensity */
   /* ========================= */
@@ -210,7 +214,6 @@ get_ray_color_plane (GimpVector3 *pos)
           color = phong_shade (&spos,
 			       &mapvals.viewpoint,
 			       &mapvals.normal,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
@@ -367,7 +370,6 @@ get_ray_color_sphere (GimpVector3 *pos)
           color = phong_shade (&spos1,
 			       &mapvals.viewpoint,
 			       &normal,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
@@ -387,7 +389,6 @@ get_ray_color_sphere (GimpVector3 *pos)
           color2 = phong_shade (&spos2,
 				&mapvals.viewpoint,
 				&normal,
-				&mapvals.lightsource.position,
 				&color2,
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
@@ -410,7 +411,6 @@ get_ray_color_sphere (GimpVector3 *pos)
           color = phong_shade (&spos1,
 			       &mapvals.viewpoint,
 			       &normal,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
@@ -920,7 +920,6 @@ get_ray_color_box (GimpVector3 *pos)
           color = phong_shade (&face_intersect[0].s,
 			       &mapvals.viewpoint,
 			       &face_intersect[0].n,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
@@ -939,7 +938,6 @@ get_ray_color_box (GimpVector3 *pos)
           color2 = phong_shade (&face_intersect[1].s,
 				&mapvals.viewpoint,
 				&face_intersect[1].n,
-				&mapvals.lightsource.position,
 				&color2,
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
@@ -963,7 +961,6 @@ get_ray_color_box (GimpVector3 *pos)
 	  color = phong_shade (&face_intersect[0].s,
 			       &mapvals.viewpoint,
 			       &face_intersect[0].n,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
@@ -1199,7 +1196,6 @@ get_ray_color_cylinder (GimpVector3 *pos)
           color = phong_shade (&face_intersect[0].s,
 			       &mapvals.viewpoint,
 			       &face_intersect[0].n,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
@@ -1218,7 +1214,6 @@ get_ray_color_cylinder (GimpVector3 *pos)
           color2 = phong_shade (&face_intersect[1].s,
 				&mapvals.viewpoint,
 				&face_intersect[1].n,
-				&mapvals.lightsource.position,
 				&color2,
 				&mapvals.lightsource.color,
 				mapvals.lightsource.type);
@@ -1242,7 +1237,6 @@ get_ray_color_cylinder (GimpVector3 *pos)
 	  color = phong_shade (&face_intersect[0].s,
 			       &mapvals.viewpoint,
 			       &face_intersect[0].n,
-			       &mapvals.lightsource.position,
 			       &color,
 			       &mapvals.lightsource.color,
 			       mapvals.lightsource.type);
