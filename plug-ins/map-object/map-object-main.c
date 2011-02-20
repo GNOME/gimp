@@ -108,12 +108,9 @@ check_drawables (GimpDrawable *drawable)
 
   for (i = 0; i < 6; i++)
     {
-      if (mapvals.boxmap_id[i] == -1)
-        mapvals.boxmap_id[i] = drawable->drawable_id;
-      else if (mapvals.boxmap_id[i] != -1 &&
-	       gimp_item_get_image (mapvals.boxmap_id[i]) == -1)
-        mapvals.boxmap_id[i] = drawable->drawable_id;
-      else if (gimp_drawable_is_gray (mapvals.boxmap_id[i]))
+      if (mapvals.boxmap_id[i] == -1 ||
+	  !gimp_item_is_valid (mapvals.boxmap_id[i]) ||
+          gimp_drawable_is_gray (mapvals.boxmap_id[i]))
         mapvals.boxmap_id[i] = drawable->drawable_id;
     }
 
@@ -122,12 +119,9 @@ check_drawables (GimpDrawable *drawable)
 
   for (i = 0; i < 2; i++)
     {
-      if (mapvals.cylindermap_id[i] == -1)
-        mapvals.cylindermap_id[i] = drawable->drawable_id;
-      else if (mapvals.cylindermap_id[i]!=-1 &&
-               gimp_item_get_image (mapvals.cylindermap_id[i]) == -1)
-        mapvals.cylindermap_id[i] = drawable->drawable_id;
-      else if (gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
+      if (mapvals.cylindermap_id[i] == -1 ||
+          !gimp_item_is_valid (mapvals.cylindermap_id[i]) ||
+          gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
         mapvals.cylindermap_id[i] = drawable->drawable_id;
     }
 }
