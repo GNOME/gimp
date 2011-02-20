@@ -111,7 +111,8 @@ static void       gimp_display_shell_canvas_expose_image      (GimpDisplayShell 
 static void       gimp_display_shell_canvas_expose_drop_zone  (GimpDisplayShell *shell,
                                                                GdkEventExpose   *eevent,
                                                                cairo_t          *cr);
-static void       gimp_display_shell_process_tool_event_queue (GimpDisplayShell *shell,
+static gboolean   gimp_display_shell_flush_event_queue        (GimpDisplayShell *shell);
+static void       gimp_display_shell_process_event_queue      (GimpDisplayShell *shell,
                                                                GdkModifierType   state,
                                                                guint32           time);
 
@@ -1219,7 +1220,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 if (gimp_tool_control_is_active (active_tool->control))
                   {
-
                     if (shell->event_queue->len > 0)
                       gimp_display_shell_flush_event_queue (shell);
 
@@ -1477,9 +1477,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                            active_tool->max_coord_smooth,
                                                            history_events[i]->time))
                           {
-                            gimp_display_shell_process_tool_event_queue (shell,
-                                                                         state,
-                                                                         history_events[i]->time);
+                            gimp_display_shell_process_event_queue (shell,
+                                                                    state,
+                                                                    history_events[i]->time);
                           }
 
                         shell->last_read_motion_time = history_events[i]->time;
@@ -1499,9 +1499,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                        active_tool->max_coord_smooth,
                                                        time))
                       {
-                        gimp_display_shell_process_tool_event_queue (shell,
-                                                                     state,
-                                                                     time);
+                        gimp_display_shell_process_event_queue (shell,
+                                                                state,
+                                                                time);
                       }
 
                     shell->last_read_motion_time = time;
@@ -1991,9 +1991,9 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 
        gimp_display_shell_push_event_history (shell, &last_coords);
 
-       gimp_display_shell_process_tool_event_queue (shell,
-                                                    shell->last_active_state,
-                                                    shell->last_read_motion_time);
+       gimp_display_shell_process_event_queue (shell,
+                                               shell->last_active_state,
+                                               shell->last_read_motion_time);
     }
 
   /* Return false so a potential timeout calling it gets removed */
@@ -2004,9 +2004,9 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 /*  private functions  */
 
 static void
-gimp_display_shell_process_tool_event_queue (GimpDisplayShell *shell,
-                                             GdkModifierType   state,
-                                             guint32           time)
+gimp_display_shell_process_event_queue (GimpDisplayShell *shell,
+                                        GdkModifierType   state,
+                                        guint32           time)
 {
   gint             i;
   gint             keep = 0;

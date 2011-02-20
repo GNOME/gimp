@@ -59,7 +59,5 @@ gboolean   gimp_display_shell_nav_button_press        (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
                                                        GimpDisplayShell *shell);
 
-gboolean   gimp_display_shell_flush_event_queue       (GimpDisplayShell *shell);
-
 
 #endif /* __GIMP_DISPLAY_SHELL_CALLBACKS_H__ */
