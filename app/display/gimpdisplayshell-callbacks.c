@@ -783,7 +783,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GimpDisplay     *display;
   GimpImage       *image;
   Gimp            *gimp;
-  GdkDisplay      *gdk_display;
   GimpCoords       display_coords;
   GimpCoords       image_coords;
   GdkModifierType  state;
@@ -820,11 +819,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   image   = gimp_display_get_image (display);
 
   if (! image)
-    {
-      return gimp_display_shell_canvas_no_image_events (canvas, event, shell);
-    }
-
-  gdk_display = gtk_widget_get_display (canvas);
+    return gimp_display_shell_canvas_no_image_events (canvas, event, shell);
 
   /*  Find out what device the event occurred upon  */
   if (! gimp->busy && gimp_devices_check_change (gimp, event))
@@ -1010,6 +1005,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  (gimp_tool_control_get_motion_mode (active_tool->control) !=
                   GIMP_MOTION_MODE_EXACT)))
               {
+                GdkDisplay *gdk_display = gtk_widget_get_display (canvas);
+
                 /*  don't request motion hins for XInput devices because
                  *  the wacom driver is known to report crappy hints
                  *  (#6901) --mitch
