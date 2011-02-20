@@ -146,7 +146,7 @@
 
   (if (= from-selection TRUE)
       (begin
-        (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
         (gimp-edit-clear shadow-layer)
         (gimp-image-remove-channel image active-selection)))
 

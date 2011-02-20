@@ -77,7 +77,7 @@
 
     (set! mask-fat (car (gimp-channel-copy mask)))
     (gimp-image-insert-channel img mask-fat -1 0)
-    (gimp-item-to-selection mask-fat CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE mask-fat)
     (gimp-context-set-brush (carve-brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke mask-fat)
@@ -89,10 +89,10 @@
     (plug-in-emboss RUN-NONINTERACTIVE img mask-emboss 315.0 45.0 7 TRUE)
 
     (gimp-context-set-background '(180 180 180))
-    (gimp-item-to-selection mask-fat CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE mask-fat)
     (gimp-selection-invert img)
     (gimp-edit-fill mask-emboss BACKGROUND-FILL)
-    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-edit-fill mask-emboss BACKGROUND-FILL)
     (gimp-selection-none img)
 
@@ -123,7 +123,7 @@
 
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask cast-shadow-layer csl-mask)
-    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill csl-mask BACKGROUND-FILL)
 
@@ -132,7 +132,7 @@
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask inset-layer il-mask)
-    (gimp-item-to-selection mask CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE mask)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill il-mask BACKGROUND-FILL)
     (gimp-selection-none img)

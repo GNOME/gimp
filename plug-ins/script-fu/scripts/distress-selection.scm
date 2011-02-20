@@ -81,7 +81,7 @@
   (gimp-layer-scale theLayer theWidth theHeight TRUE)
   (plug-in-threshold-alpha RUN-NONINTERACTIVE theImage theLayer inThreshold)
   (plug-in-gauss-iir RUN-NONINTERACTIVE theImage theLayer 1 TRUE TRUE)
-  (gimp-item-to-selection theLayer CHANNEL-OP-REPLACE)
+  (gimp-image-select-item inImage CHANNEL-OP-REPLACE theLayer)
   (gimp-image-remove-layer theImage theLayer)
   (if (and (= (car (gimp-item-is-channel inDrawable)) TRUE)
            (= (car (gimp-item-is-layer-mask inDrawable)) FALSE))

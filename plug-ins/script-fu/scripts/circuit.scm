@@ -58,7 +58,7 @@
 
     (if (= (car (gimp-selection-is-empty image)) TRUE)
         (begin
-          (gimp-item-to-selection drawable CHANNEL-OP-REPLACE)
+          (gimp-image-select-item image CHANNEL-OP-REPLACE drawable)
           (set! active-selection (car (gimp-selection-save image)))
           (set! from-selection FALSE))
         (begin
@@ -85,7 +85,7 @@
           (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
           (gimp-selection-none image)
           (gimp-edit-clear effect-layer)
-          (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+          (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
           (gimp-edit-copy drawable)
 
           (let ((floating-sel (car (gimp-edit-paste effect-layer FALSE))))
@@ -101,7 +101,7 @@
         (gimp-context-set-foreground '(14 14 14))
     )
 
-    (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (plug-in-maze RUN-NONINTERACTIVE image active-layer 5 5 TRUE 0 seed 57 1)
     (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
     (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 1 0)
