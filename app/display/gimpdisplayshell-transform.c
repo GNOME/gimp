@@ -46,7 +46,7 @@
  **/
 void
 gimp_display_shell_transform_coordinate (const GimpDisplayShell *shell,
-                                         GimpCoords             *image_coords,
+                                         const GimpCoords       *image_coords,
                                          GimpCoords             *display_coords)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -73,7 +73,7 @@ gimp_display_shell_transform_coordinate (const GimpDisplayShell *shell,
  **/
 void
 gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
-                                           GimpCoords             *display_coords,
+                                           const GimpCoords       *display_coords,
                                            GimpCoords             *image_coords)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));

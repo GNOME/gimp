@@ -20,10 +20,10 @@
 
 
 void  gimp_display_shell_transform_coordinate   (const GimpDisplayShell *shell,
-                                                 GimpCoords             *image_coords,
+                                                 const GimpCoords       *image_coords,
                                                  GimpCoords             *display_coords);
 void  gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
-                                                 GimpCoords             *display_coords,
+                                                 const GimpCoords       *display_coords,
                                                  GimpCoords             *image_coords);
 
 void  gimp_display_shell_transform_xy           (const GimpDisplayShell *shell,
