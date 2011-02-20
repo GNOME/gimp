@@ -787,7 +787,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           return TRUE;
 
         shell->proximity = FALSE;
-        gimp_display_shell_clear_cursor (shell);
+        gimp_display_shell_clear_software_cursor (shell);
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
@@ -809,7 +809,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       GIMP_LOG (TOOL_EVENTS, "event (display %p): PROXIMITY_OUT", display);
 
       shell->proximity = FALSE;
-      gimp_display_shell_clear_cursor (shell);
+      gimp_display_shell_clear_software_cursor (shell);
 
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
@@ -1797,12 +1797,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       if (active_tool)
         precision = gimp_tool_control_get_precision (active_tool->control);
 
-      gimp_display_shell_update_cursor (shell,
-                                        precision,
-                                        (gint) display_coords.x,
-                                        (gint) display_coords.y,
-                                        image_coords.x,
-                                        image_coords.y);
+      gimp_display_shell_update_software_cursor (shell,
+                                                 precision,
+                                                 (gint) display_coords.x,
+                                                 (gint) display_coords.y,
+                                                 image_coords.x,
+                                                 image_coords.y);
     }
 
   return return_val;

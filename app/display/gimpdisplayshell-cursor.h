@@ -19,22 +19,29 @@
 #define __GIMP_DISPLAY_SHELL_CURSOR_H__
 
 
-void   gimp_display_shell_set_cursor            (GimpDisplayShell    *shell,
-                                                 GimpCursorType       cursor_type,
-                                                 GimpToolCursorType   tool_cursor,
-                                                 GimpCursorModifier   modifier);
-void   gimp_display_shell_unset_cursor          (GimpDisplayShell    *shell);
-void   gimp_display_shell_set_override_cursor   (GimpDisplayShell    *shell,
-                                                 GimpCursorType       cursor_type);
-void   gimp_display_shell_unset_override_cursor (GimpDisplayShell    *shell);
+/*  functions dealing with the normal windowing system cursor  */
 
-void   gimp_display_shell_update_cursor         (GimpDisplayShell    *shell,
-                                                 GimpCursorPrecision  precision,
-                                                 gint                 display_x,
-                                                 gint                 display_y,
-                                                 gdouble              image_x,
-                                                 gdouble              image_y);
-void   gimp_display_shell_clear_cursor          (GimpDisplayShell    *shell);
+void   gimp_display_shell_set_cursor             (GimpDisplayShell    *shell,
+                                                  GimpCursorType       cursor_type,
+                                                  GimpToolCursorType   tool_cursor,
+                                                  GimpCursorModifier   modifier);
+void   gimp_display_shell_unset_cursor           (GimpDisplayShell    *shell);
+void   gimp_display_shell_set_override_cursor    (GimpDisplayShell    *shell,
+                                                  GimpCursorType       cursor_type);
+void   gimp_display_shell_unset_override_cursor  (GimpDisplayShell    *shell);
+
+
+/*  functions dealing with the software cursor that is drawn to the
+ *  canvas by GIMP
+ */
+
+void   gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
+                                                  GimpCursorPrecision  precision,
+                                                  gint                 display_x,
+                                                  gint                 display_y,
+                                                  gdouble              image_x,
+                                                  gdouble              image_y);
+void   gimp_display_shell_clear_software_cursor  (GimpDisplayShell    *shell);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_CURSOR_H__ */

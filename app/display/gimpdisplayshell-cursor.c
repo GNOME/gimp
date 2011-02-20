@@ -117,12 +117,12 @@ gimp_display_shell_unset_override_cursor (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
-                                  GimpCursorPrecision  precision,
-                                  gint                 display_x,
-                                  gint                 display_y,
-                                  gdouble              image_x,
-                                  gdouble              image_y)
+gimp_display_shell_update_software_cursor (GimpDisplayShell    *shell,
+                                           GimpCursorPrecision  precision,
+                                           gint                 display_x,
+                                           gint                 display_y,
+                                           gdouble              image_x,
+                                           gdouble              image_y)
 {
   GimpStatusbar   *statusbar;
   GimpSessionInfo *session_info;
@@ -184,7 +184,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell    *shell,
 }
 
 void
-gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
+gimp_display_shell_clear_software_cursor (GimpDisplayShell *shell)
 {
   GimpStatusbar     *statusbar;
   GimpSessionInfo   *session_info;
