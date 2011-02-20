@@ -223,15 +223,16 @@ void
 compute_image (void)
 {
   gint         xcount, ycount;
-  GimpRGB       color;
+  GimpRGB      color;
   glong        progress_counter = 0;
   GimpVector3  p;
   gint32       new_image_id = -1;
   gint32       new_layer_id = -1;
+  gboolean     insert_layer = FALSE;
 
   init_compute ();
 
-  if (mapvals.create_new_image == TRUE)
+  if (mapvals.create_new_image)
     {
       new_image_id = gimp_image_new (width, height, GIMP_RGB);
     }
@@ -247,15 +248,18 @@ compute_image (void)
       (mapvals.transparent_background &&
        output_drawable->bpp != 4))
     {
+      gchar *layername[] = {_("Map to plane"), _("Map to sphere"), _("Map to box"),
+                            _("Map to cylinder"), _("Background")};
 
-      new_layer_id = gimp_layer_new (new_image_id, "Background",
+      new_layer_id = gimp_layer_new (new_image_id, layername[mapvals.create_new_image ? 4 :
+                                                             mapvals.maptype],
                                      width, height,
                                      mapvals.transparent_background ? GIMP_RGBA_IMAGE
                                                                     : GIMP_RGB_IMAGE,
                                      100.0,
                                      GIMP_NORMAL_MODE);
 
-      gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
+      insert_layer = TRUE;
       output_drawable = gimp_drawable_get (new_layer_id);
     }
 
@@ -312,6 +316,8 @@ compute_image (void)
   /* ================= */
 
   gimp_drawable_flush (output_drawable);
+  if (insert_layer)
+    gimp_image_insert_layer (new_image_id, new_layer_id, -1, 0);
   gimp_drawable_merge_shadow (output_drawable->drawable_id, TRUE);
   gimp_drawable_update (output_drawable->drawable_id, 0, 0, width, height);
 
