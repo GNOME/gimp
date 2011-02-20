@@ -18,11 +18,6 @@ extern gint       lightx,lighty;
 void     compute_preview_image  (void);
 gboolean preview_expose         (GtkWidget      *widget,
                                  GdkEventExpose *eevent);
-void     draw_wireframe         (gint startx,
-                                 gint starty,
-                                 gint pw,
-                                 gint ph);
-void     draw_preview_wireframe (void);
 gint     check_light_hit        (gint            xpos,
                                  gint            ypos);
 void     update_light           (gint            xpos,

@@ -29,7 +29,8 @@ static void compute_preview         (gint x,
                                      gint h,
                                      gint pw,
                                      gint ph);
-static void draw_light_marker       (gint xpos,
+static void draw_light_marker       (cairo_t *cr,
+                                     gint xpos,
 				     gint ypos);
 static void draw_line               (cairo_t    *cr,
 				     gint        startx,
@@ -42,20 +43,29 @@ static void draw_line               (cairo_t    *cr,
 				     gdouble     cy2,
 				     GimpVector3 a,
 				     GimpVector3 b);
-
-static void draw_wireframe_plane    (gint        startx,
+static void draw_wireframe          (cairo_t *cr,
+                                     gint startx,
+                                     gint starty,
+                                     gint pw,
+                                     gint ph);
+static void draw_preview_wireframe  (cairo_t *cr);
+static void draw_wireframe_plane    (cairo_t *cr,
+                                     gint        startx,
 				     gint        starty,
 				     gint        pw,
 				     gint        ph);
-static void draw_wireframe_sphere   (gint        startx,
+static void draw_wireframe_sphere   (cairo_t *cr,
+                                     gint        startx,
 				     gint        starty,
 				     gint        pw,
 				     gint        ph);
-static void draw_wireframe_box      (gint        startx,
+static void draw_wireframe_box      (cairo_t *cr,
+                                     gint        startx,
 				     gint        starty,
 				     gint        pw,
 				     gint        ph);
-static void draw_wireframe_cylinder (gint        startx,
+static void draw_wireframe_cylinder (cairo_t *cr,
+                                     gint        startx,
 				     gint        starty,
 				     gint        pw,
 				     gint        ph);
@@ -196,11 +206,11 @@ check_light_hit (gint xpos,
 /****************************************/
 
 static void
-draw_light_marker (gint xpos,
+draw_light_marker (cairo_t *cr,
+                   gint xpos,
 		   gint ypos)
 {
   GdkColor  color;
-  cairo_t *cr;
   gint pw, ph, startx, starty;
 
   if (mapvals.lightsource.type != POINT_LIGHT)
@@ -210,8 +220,6 @@ draw_light_marker (gint xpos,
   ph = PREVIEW_HEIGHT * mapvals.zoom;
   startx = (PREVIEW_WIDTH - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
 
   cairo_set_line_width (cr, 1.0);
 
@@ -225,12 +233,11 @@ draw_light_marker (gint xpos,
 
   cairo_arc (cr, lightx, lighty, 7, 0, 2 * M_PI);
   cairo_fill (cr);
-
-  cairo_destroy (cr);
 }
 
 static void
-draw_lights (gint startx,
+draw_lights (cairo_t *cr,
+             gint startx,
 	     gint starty,
 	     gint pw,
 	     gint ph)
@@ -247,7 +254,7 @@ draw_lights (gint startx,
   if (xpos >= 0 && xpos <= PREVIEW_WIDTH &&
       ypos >= 0 && ypos <= PREVIEW_HEIGHT)
     {
-      draw_light_marker (xpos, ypos);
+      draw_light_marker (cr, xpos, ypos);
     }
 }
 
@@ -319,9 +326,13 @@ preview_expose (GtkWidget      *widget,
 
   cairo_paint (cr);
 
+  cairo_reset_clip (cr);
+
   if (mapvals.showgrid)
-    draw_preview_wireframe ();
-  draw_lights (startx, starty, pw, ph);
+    draw_preview_wireframe (cr);
+
+  cairo_reset_clip (cr);
+  draw_lights (cr, startx, starty, pw, ph);
 
   cairo_destroy (cr);
 
@@ -333,7 +344,7 @@ preview_expose (GtkWidget      *widget,
 /**************************/
 
 void
-draw_preview_wireframe (void)
+draw_preview_wireframe (cairo_t *cr)
 {
   gint      startx, starty, pw, ph;
 
@@ -342,7 +353,7 @@ draw_preview_wireframe (void)
   startx = (PREVIEW_WIDTH  - pw) / 2;
   starty = (PREVIEW_HEIGHT - ph) / 2;
 
-  draw_wireframe (startx, starty, pw, ph);
+  draw_wireframe (cr, startx, starty, pw, ph);
 }
 
 /****************************/
@@ -350,30 +361,33 @@ draw_preview_wireframe (void)
 /****************************/
 
 void
-draw_wireframe (gint startx,
+draw_wireframe (cairo_t *cr,
+                gint startx,
 		gint starty,
 		gint pw,
 		gint ph)
 {
+  cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   switch (mapvals.maptype)
     {
     case MAP_PLANE:
-      draw_wireframe_plane (startx, starty, pw, ph);
+      draw_wireframe_plane (cr, startx, starty, pw, ph);
       break;
     case MAP_SPHERE:
-      draw_wireframe_sphere (startx, starty, pw, ph);
+      draw_wireframe_sphere (cr, startx, starty, pw, ph);
       break;
     case MAP_BOX:
-      draw_wireframe_box (startx, starty, pw, ph);
+      draw_wireframe_box (cr, startx, starty, pw, ph);
       break;
     case MAP_CYLINDER:
-      draw_wireframe_cylinder (startx, starty, pw, ph);
+      draw_wireframe_cylinder (cr, startx, starty, pw, ph);
       break;
     }
 }
 
 static void
-draw_wireframe_plane (gint startx,
+draw_wireframe_plane (cairo_t *cr,
+                      gint startx,
 		      gint starty,
 		      gint pw,
 		      gint ph)
@@ -381,9 +395,6 @@ draw_wireframe_plane (gint startx,
   GimpVector3 v1, v2, a, b, c, d, dir1, dir2;
   gint        cnt;
   gdouble     x1, y1, x2, y2, cx1, cy1, cx2, cy2, fac;
-  cairo_t    *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
 
   cairo_rectangle (cr, startx, starty, pw, ph);
   cairo_clip (cr);
@@ -454,12 +465,11 @@ draw_wireframe_plane (gint startx,
   cairo_set_line_width (cr, 1.0);
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 }
 
 static void
-draw_wireframe_sphere (gint startx,
+draw_wireframe_sphere (cairo_t *cr,
+                       gint startx,
 		       gint starty,
 		       gint pw,
 		       gint ph)
@@ -467,9 +477,6 @@ draw_wireframe_sphere (gint startx,
   GimpVector3 p[2 * (WIRESIZE + 5)];
   gint        cnt, cnt2;
   gdouble     x1, y1, x2, y2, twopifac, cx1, cy1, cx2, cy2;
-  cairo_t    *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
 
   cairo_rectangle (cr, startx, starty, pw, ph);
   cairo_clip (cr);
@@ -577,8 +584,6 @@ draw_wireframe_sphere (gint startx,
   cairo_set_line_width (cr, 1.0);
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 }
 
 static void
@@ -606,7 +611,8 @@ draw_line (cairo_t    *cr,
 }
 
 static void
-draw_wireframe_box (gint startx,
+draw_wireframe_box (cairo_t *cr,
+                    gint startx,
 		    gint starty,
 		    gint pw,
 		    gint ph)
@@ -614,9 +620,6 @@ draw_wireframe_box (gint startx,
   GimpVector3 p[8], tmp, scale;
   gint        i;
   gdouble     cx1, cy1, cx2, cy2;
-  cairo_t    *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
 
   cairo_rectangle (cr, startx, starty, pw, ph);
   cairo_clip (cr);
@@ -676,12 +679,11 @@ draw_wireframe_box (gint startx,
   cairo_set_line_width (cr, 1.0);
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 }
 
 static void
-draw_wireframe_cylinder (gint startx,
+draw_wireframe_cylinder (cairo_t *cr,
+                         gint startx,
 			 gint starty,
 			 gint pw,
 			 gint ph)
@@ -690,9 +692,6 @@ draw_wireframe_cylinder (gint startx,
   gint        i;
   gdouble     cx1, cy1, cx2, cy2;
   gfloat      m[16], l, angle;
-  cairo_t    *cr;
-
-  cr = gdk_cairo_create (gtk_widget_get_window (previewarea));
 
   cairo_rectangle (cr, startx, starty, pw, ph);
   cairo_clip (cr);
@@ -758,6 +757,4 @@ draw_wireframe_cylinder (gint startx,
   cairo_set_line_width (cr, 1.0);
   cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
   cairo_stroke (cr);
-
-  cairo_destroy (cr);
 }
