@@ -31,18 +31,18 @@ static void compute_preview         (gint x,
                                      gint ph);
 static void draw_light_marker       (cairo_t *cr,
                                      gint xpos,
-				     gint ypos);
+                                     gint ypos);
 static void draw_line               (cairo_t    *cr,
-				     gint        startx,
-				     gint        starty,
-				     gint        pw,
-				     gint        ph,
-				     gdouble     cx1,
-				     gdouble     cy1,
-				     gdouble     cx2,
-				     gdouble     cy2,
-				     GimpVector3 a,
-				     GimpVector3 b);
+                                     gint        startx,
+                                     gint        starty,
+                                     gint        pw,
+                                     gint        ph,
+                                     gdouble     cx1,
+                                     gdouble     cy1,
+                                     gdouble     cx2,
+                                     gdouble     cy2,
+                                     GimpVector3 a,
+                                     GimpVector3 b);
 static void draw_wireframe          (cairo_t *cr,
                                      gint startx,
                                      gint starty,
@@ -51,24 +51,24 @@ static void draw_wireframe          (cairo_t *cr,
 static void draw_preview_wireframe  (cairo_t *cr);
 static void draw_wireframe_plane    (cairo_t *cr,
                                      gint        startx,
-				     gint        starty,
-				     gint        pw,
-				     gint        ph);
+                                     gint        starty,
+                                     gint        pw,
+                                     gint        ph);
 static void draw_wireframe_sphere   (cairo_t *cr,
                                      gint        startx,
-				     gint        starty,
-				     gint        pw,
-				     gint        ph);
+                                     gint        starty,
+                                     gint        pw,
+                                     gint        ph);
 static void draw_wireframe_box      (cairo_t *cr,
                                      gint        startx,
-				     gint        starty,
-				     gint        pw,
-				     gint        ph);
+                                     gint        starty,
+                                     gint        pw,
+                                     gint        ph);
 static void draw_wireframe_cylinder (cairo_t *cr,
                                      gint        startx,
-				     gint        starty,
-				     gint        pw,
-				     gint        ph);
+                                     gint        starty,
+                                     gint        pw,
+                                     gint        ph);
 
 /**************************************************************/
 /* Computes a preview of the rectangle starting at (x,y) with */
@@ -77,11 +77,11 @@ static void draw_wireframe_cylinder (cairo_t *cr,
 
 static void
 compute_preview (gint x,
-		 gint y,
-		 gint w,
-		 gint h,
-		 gint pw,
-		 gint ph)
+                 gint y,
+                 gint w,
+                 gint h,
+                 gint pw,
+                 gint ph)
 {
   gdouble      xpostab[PREVIEW_WIDTH];
   gdouble      ypostab[PREVIEW_HEIGHT];
@@ -125,9 +125,9 @@ compute_preview (gint x,
     }
 
   gimp_rgba_set (&lightcheck,
-		 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0);
+                 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0);
   gimp_rgba_set (&darkcheck,
-		 GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0);
+                 GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0);
   gimp_vector3_set (&p2, -1.0, -1.0, 0.0);
 
   cairo_surface_flush (preview_surface);
@@ -152,22 +152,22 @@ compute_preview (gint x,
               if (f1)
                 {
                   if (color.a == 0.0)
-		    color = lightcheck;
+                    color = lightcheck;
                   else
-		    gimp_rgb_composite (&color, &lightcheck,
-					GIMP_RGB_COMPOSITE_BEHIND);
+                    gimp_rgb_composite (&color, &lightcheck,
+                                        GIMP_RGB_COMPOSITE_BEHIND);
                  }
               else
                 {
                   if (color.a == 0.0)
-		    color = darkcheck;
+                    color = darkcheck;
                   else
-		    gimp_rgb_composite (&color, &darkcheck,
-					GIMP_RGB_COMPOSITE_BEHIND);
+                    gimp_rgb_composite (&color, &darkcheck,
+                                        GIMP_RGB_COMPOSITE_BEHIND);
                 }
             }
 
-	  gimp_rgb_get_uchar (&color, &r, &g, &b);
+          gimp_rgb_get_uchar (&color, &r, &g, &b);
           GIMP_CAIRO_RGB24_SET_PIXEL((preview_rgb_data + index), r, g, b);
           index += 4;
         }
@@ -182,7 +182,7 @@ compute_preview (gint x,
 
 gint
 check_light_hit (gint xpos,
-		 gint ypos)
+                 gint ypos)
 {
   gdouble dx, dy, r;
 
@@ -208,7 +208,7 @@ check_light_hit (gint xpos,
 static void
 draw_light_marker (cairo_t *cr,
                    gint xpos,
-		   gint ypos)
+                   gint ypos)
 {
   GdkColor  color;
   gint pw, ph, startx, starty;
@@ -238,16 +238,16 @@ draw_light_marker (cairo_t *cr,
 static void
 draw_lights (cairo_t *cr,
              gint startx,
-	     gint starty,
-	     gint pw,
-	     gint ph)
+             gint starty,
+             gint pw,
+             gint ph)
 {
   gdouble dxpos, dypos;
   gint    xpos, ypos;
 
   gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			&dxpos, &dypos, &mapvals.viewpoint,
-			&mapvals.lightsource.position);
+                        &dxpos, &dypos, &mapvals.viewpoint,
+                        &mapvals.lightsource.position);
   xpos = RINT (dxpos);
   ypos = RINT (dypos);
 
@@ -264,7 +264,7 @@ draw_lights (cairo_t *cr,
 
 void
 update_light (gint xpos,
-	      gint ypos)
+              gint ypos)
 {
   gint    startx, starty, pw, ph;
 
@@ -274,7 +274,7 @@ update_light (gint xpos,
   starty = (PREVIEW_HEIGHT - ph) / 2;
 
   gimp_vector_2d_to_3d (startx, starty, pw, ph, xpos, ypos,
-			&mapvals.viewpoint, &mapvals.lightsource.position);
+                        &mapvals.viewpoint, &mapvals.lightsource.position);
 
   gtk_widget_queue_draw (previewarea);
 }
@@ -363,9 +363,9 @@ draw_preview_wireframe (cairo_t *cr)
 void
 draw_wireframe (cairo_t *cr,
                 gint startx,
-		gint starty,
-		gint pw,
-		gint ph)
+                gint starty,
+                gint pw,
+                gint ph)
 {
   cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
   switch (mapvals.maptype)
@@ -388,9 +388,9 @@ draw_wireframe (cairo_t *cr,
 static void
 draw_wireframe_plane (cairo_t *cr,
                       gint startx,
-		      gint starty,
-		      gint pw,
-		      gint ph)
+                      gint starty,
+                      gint pw,
+                      gint ph)
 {
   GimpVector3 v1, v2, a, b, c, d, dir1, dir2;
   gint        cnt;
@@ -406,14 +406,14 @@ draw_wireframe_plane (cairo_t *cr,
   gimp_vector3_set (&v2, 0.0, 0.5, 0.0);
 
   gimp_vector3_rotate (&v1,
-		       gimp_deg_to_rad (mapvals.alpha),
-		       gimp_deg_to_rad (mapvals.beta),
-		       gimp_deg_to_rad (mapvals.gamma));
+                       gimp_deg_to_rad (mapvals.alpha),
+                       gimp_deg_to_rad (mapvals.beta),
+                       gimp_deg_to_rad (mapvals.gamma));
 
   gimp_vector3_rotate (&v2,
-		       gimp_deg_to_rad (mapvals.alpha),
-		       gimp_deg_to_rad (mapvals.beta),
-		       gimp_deg_to_rad (mapvals.gamma));
+                       gimp_deg_to_rad (mapvals.alpha),
+                       gimp_deg_to_rad (mapvals.beta),
+                       gimp_deg_to_rad (mapvals.gamma));
 
   dir1 = v1; gimp_vector3_normalize (&dir1);
   dir2 = v2; gimp_vector3_normalize (&dir2);
@@ -439,17 +439,17 @@ draw_wireframe_plane (cairo_t *cr,
   for (cnt = 0; cnt <= WIRESIZE; cnt++)
     {
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			    &x1, &y1, &mapvals.viewpoint, &a);
+                            &x1, &y1, &mapvals.viewpoint, &a);
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			    &x2, &y2, &mapvals.viewpoint, &b);
+                            &x2, &y2, &mapvals.viewpoint, &b);
 
       cairo_move_to (cr, RINT (x1), RINT (y1));
       cairo_line_to (cr, RINT (x2), RINT (y2));
 
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			    &x1, &y1, &mapvals.viewpoint, &c);
+                            &x1, &y1, &mapvals.viewpoint, &c);
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			    &x2, &y2, &mapvals.viewpoint, &d);
+                            &x2, &y2, &mapvals.viewpoint, &d);
 
       cairo_move_to (cr, RINT (x1), RINT (y1));
       cairo_line_to (cr, RINT (x2), RINT (y2));
@@ -470,9 +470,9 @@ draw_wireframe_plane (cairo_t *cr,
 static void
 draw_wireframe_sphere (cairo_t *cr,
                        gint startx,
-		       gint starty,
-		       gint pw,
-		       gint ph)
+                       gint starty,
+                       gint pw,
+                       gint ph)
 {
   GimpVector3 p[2 * (WIRESIZE + 5)];
   gint        cnt, cnt2;
@@ -492,9 +492,9 @@ draw_wireframe_sphere (cairo_t *cr,
       p[cnt].y = 0.0;
       p[cnt].z = mapvals.radius * sin ((gdouble) cnt * twopifac);
       gimp_vector3_rotate (&p[cnt],
-			   gimp_deg_to_rad (mapvals.alpha),
-			   gimp_deg_to_rad (mapvals.beta),
-			   gimp_deg_to_rad (mapvals.gamma));
+                           gimp_deg_to_rad (mapvals.alpha),
+                           gimp_deg_to_rad (mapvals.beta),
+                           gimp_deg_to_rad (mapvals.gamma));
       gimp_vector3_add (&p[cnt], &p[cnt], &mapvals.position);
     }
 
@@ -506,9 +506,9 @@ draw_wireframe_sphere (cairo_t *cr,
       p[cnt].y = mapvals.radius * sin ((gdouble) (cnt-(WIRESIZE+1))*twopifac);
       p[cnt].z = 0.0;
       gimp_vector3_rotate (&p[cnt],
-			   gimp_deg_to_rad (mapvals.alpha),
-			   gimp_deg_to_rad (mapvals.beta),
-			   gimp_deg_to_rad (mapvals.gamma));
+                           gimp_deg_to_rad (mapvals.alpha),
+                           gimp_deg_to_rad (mapvals.beta),
+                           gimp_deg_to_rad (mapvals.gamma));
       gimp_vector3_add (&p[cnt], &p[cnt], &mapvals.position);
     }
 
@@ -521,16 +521,16 @@ draw_wireframe_sphere (cairo_t *cr,
 
   gimp_vector3_set (&p[cnt], 0.0, -0.35, 0.0);
   gimp_vector3_rotate (&p[cnt],
-		       gimp_deg_to_rad (mapvals.alpha),
-		       gimp_deg_to_rad (mapvals.beta),
-		       gimp_deg_to_rad (mapvals.gamma));
+                       gimp_deg_to_rad (mapvals.alpha),
+                       gimp_deg_to_rad (mapvals.beta),
+                       gimp_deg_to_rad (mapvals.gamma));
   p[cnt+1] = mapvals.position;
 
   gimp_vector3_set (&p[cnt+2], 0.0, 0.0, -0.35);
   gimp_vector3_rotate (&p[cnt+2],
-		       gimp_deg_to_rad (mapvals.alpha),
-		       gimp_deg_to_rad (mapvals.beta),
-		       gimp_deg_to_rad (mapvals.gamma));
+                       gimp_deg_to_rad (mapvals.alpha),
+                       gimp_deg_to_rad (mapvals.beta),
+                       gimp_deg_to_rad (mapvals.gamma));
   p[cnt+3] = mapvals.position;
 
   p[cnt + 4] = p[cnt];
@@ -554,9 +554,9 @@ draw_wireframe_sphere (cairo_t *cr,
       if (p[cnt].z > mapvals.position.z && p[cnt + 1].z > mapvals.position.z)
         {
           gimp_vector_3d_to_2d (startx, starty, pw, ph,
-				&x1, &y1, &mapvals.viewpoint, &p[cnt]);
+                                &x1, &y1, &mapvals.viewpoint, &p[cnt]);
           gimp_vector_3d_to_2d (startx, starty, pw, ph,
-				&x2, &y2, &mapvals.viewpoint, &p[cnt + 1]);
+                                &x2, &y2, &mapvals.viewpoint, &p[cnt + 1]);
 
           cairo_move_to (cr, (gint) (x1 + 0.5), (gint) (y1 + 0.5));
           cairo_line_to (cr, (gint) (x2 + 0.5), (gint) (y2 + 0.5));
@@ -569,9 +569,9 @@ draw_wireframe_sphere (cairo_t *cr,
   for (cnt = 0; cnt < 3; cnt++)
     {
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			    &x1, &y1, &mapvals.viewpoint, &p[cnt2]);
+                            &x1, &y1, &mapvals.viewpoint, &p[cnt2]);
       gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			    &x2, &y2, &mapvals.viewpoint, &p[cnt2 + 1]);
+                            &x2, &y2, &mapvals.viewpoint, &p[cnt2 + 1]);
 
       cairo_move_to (cr, RINT (x1), RINT (y1));
       cairo_line_to (cr, RINT (x2), RINT (y2));
@@ -588,23 +588,23 @@ draw_wireframe_sphere (cairo_t *cr,
 
 static void
 draw_line (cairo_t    *cr,
-	   gint        startx,
-	   gint        starty,
-	   gint        pw,
-	   gint        ph,
-	   gdouble     cx1,
-	   gdouble     cy1,
-	   gdouble     cx2,
-	   gdouble     cy2,
-	   GimpVector3 a,
-	   GimpVector3 b)
+           gint        startx,
+           gint        starty,
+           gint        pw,
+           gint        ph,
+           gdouble     cx1,
+           gdouble     cy1,
+           gdouble     cx2,
+           gdouble     cy2,
+           GimpVector3 a,
+           GimpVector3 b)
 {
   gdouble x1, y1, x2, y2;
 
   gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			&x1, &y1, &mapvals.viewpoint, &a);
+                        &x1, &y1, &mapvals.viewpoint, &a);
   gimp_vector_3d_to_2d (startx, starty, pw, ph,
-			&x2, &y2, &mapvals.viewpoint, &b);
+                        &x2, &y2, &mapvals.viewpoint, &b);
 
   cairo_move_to (cr, RINT (x1), RINT (y1));
   cairo_line_to (cr, RINT (x2), RINT (y2));
@@ -613,9 +613,9 @@ draw_line (cairo_t    *cr,
 static void
 draw_wireframe_box (cairo_t *cr,
                     gint startx,
-		    gint starty,
-		    gint pw,
-		    gint ph)
+                    gint starty,
+                    gint pw,
+                    gint ph)
 {
   GimpVector3 p[8], tmp, scale;
   gint        i;
@@ -684,9 +684,9 @@ draw_wireframe_box (cairo_t *cr,
 static void
 draw_wireframe_cylinder (cairo_t *cr,
                          gint startx,
-			 gint starty,
-			 gint pw,
-			 gint ph)
+                         gint starty,
+                         gint pw,
+                         gint ph)
 {
   GimpVector3 p[2*8], a, axis, scale;
   gint        i;

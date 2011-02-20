@@ -111,7 +111,7 @@ check_drawables (GimpDrawable *drawable)
   for (i = 0; i < 6; i++)
     {
       if (mapvals.boxmap_id[i] == -1 ||
-	  !gimp_item_is_valid (mapvals.boxmap_id[i]) ||
+          !gimp_item_is_valid (mapvals.boxmap_id[i]) ||
           gimp_drawable_is_gray (mapvals.boxmap_id[i]))
         mapvals.boxmap_id[i] = drawable->drawable_id;
     }
@@ -185,16 +185,16 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Map the image to an object (plane, sphere, box or cylinder)"),
-			  "No help yet",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Version 1.2.0, July 16 1998",
-			  N_("Map _Object..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Map the image to an object (plane, sphere, box or cylinder)"),
+                          "No help yet",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Version 1.2.0, July 16 1998",
+                          N_("Map _Object..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
@@ -243,11 +243,11 @@ run (const gchar      *name,
         gimp_get_data ("plug_in_map_object", &mapvals);
         check_drawables (drawable);
         if (main_dialog (drawable))
-	  {
-	    compute_image ();
+          {
+            compute_image ();
 
-	    gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (MapObjectValues));
-	  }
+            gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (MapObjectValues));
+          }
         break;
 
       case GIMP_RUN_WITH_LAST_VALS:
@@ -259,9 +259,9 @@ run (const gchar      *name,
 
       case GIMP_RUN_NONINTERACTIVE:
         if (nparams != 50)
-	  {
-	    status = GIMP_PDB_CALLING_ERROR;
-	  }
+          {
+            status = GIMP_PDB_CALLING_ERROR;
+          }
         else
           {
             mapvals.maptype                 = (MapType) param[3].data.d_int32;
@@ -281,7 +281,7 @@ run (const gchar      *name,
             mapvals.beta                    = param[17].data.d_float;
             mapvals.gamma                   = param[18].data.d_float;
             mapvals.lightsource.type        = (LightType) param[19].data.d_int32;
-	    mapvals.lightsource.color       = param[20].data.d_color;
+            mapvals.lightsource.color       = param[20].data.d_color;
             mapvals.lightsource.position.x  = param[21].data.d_float;
             mapvals.lightsource.position.y  = param[22].data.d_float;
             mapvals.lightsource.position.z  = param[23].data.d_float;

@@ -96,7 +96,7 @@ ArcBall_Init (void)
 
 void
 ArcBall_Place (HVect  Center,
-	       double Radius)
+               double Radius)
 {
   center = Center;
   radius = Radius;
@@ -134,10 +134,10 @@ ArcBall_Update (void)
   if (dragging)
     {
       if (axisSet!=NoAxes)
-	{
-	  vFrom = ConstrainToAxis(vFrom, set[axisIndex]);
-	  vTo = ConstrainToAxis(vTo, set[axisIndex]);
-	}
+        {
+          vFrom = ConstrainToAxis(vFrom, set[axisIndex]);
+          vTo = ConstrainToAxis(vTo, set[axisIndex]);
+        }
       qDrag = Qt_FromBallPoints(vFrom, vTo);
       qNow = Qt_Mul(qDrag, qDown);
     }
@@ -163,8 +163,8 @@ ArcBall_Value (HMatrix m_Now)
 
 void
 ArcBall_Values (double *alpha,
-		double *beta,
-		double *gamma)
+                double *beta,
+                double *gamma)
 {
   if ((*beta=asin(-mNow[0][2]))!=0.0)
     {
@@ -211,7 +211,7 @@ ArcBall_EndDrag (void)
 
 static Quat
 Qt_Mul (Quat qL,
-	Quat qR)
+        Quat qR)
 {
   Quat qq;
   qq.w = qL.w*qR.w - qL.x*qR.x - qL.y*qR.y - qL.z*qR.z;
@@ -229,14 +229,14 @@ Qt_Mul (Quat qL,
 
 static void
 Qt_ToMatrix (Quat    q,
-	     HMatrix out)
+             HMatrix out)
 {
   double Nq = q.x*q.x + q.y*q.y + q.z*q.z + q.w*q.w;
   double s = (Nq > 0.0) ? (2.0 / Nq) : 0.0;
-  double xs = q.x*s,	      ys = q.y*s,	  zs = q.z*s;
-  double wx = q.w*xs,	      wy = q.w*ys,	  wz = q.w*zs;
-  double xx = q.x*xs,	      xy = q.x*ys,	  xz = q.x*zs;
-  double yy = q.y*ys,	      yz = q.y*zs,	  zz = q.z*zs;
+  double xs = q.x*s,              ys = q.y*s,          zs = q.z*s;
+  double wx = q.w*xs,              wy = q.w*ys,          wz = q.w*zs;
+  double xx = q.x*xs,              xy = q.x*ys,          xz = q.x*zs;
+  double yy = q.y*ys,              yz = q.y*zs,          zz = q.z*zs;
   out[X][X] = 1.0 - (yy + zz); out[Y][X] = xy + wz; out[Z][X] = xz - wy;
   out[X][Y] = xy - wz; out[Y][Y] = 1.0 - (xx + zz); out[Z][Y] = yz + wx;
   out[X][Z] = xz + wy; out[Y][Z] = yz - wx; out[Z][Z] = 1.0 - (xx + yy);
@@ -295,7 +295,7 @@ V3_Unit (HVect v)
 
 static HVect
 V3_Scale (HVect v,
-	  double s)
+          double s)
 {
   HVect u;
   u.x = s*v.x; u.y = s*v.y; u.z = s*v.z; u.w = v.w;
@@ -318,7 +318,7 @@ V3_Negate (HVect v)
 /*
 static HVect
 V3_Add (HVect v1,
-	HVect v2)
+        HVect v2)
 {
   static HVect v = {0, 0, 0, 0};
   v.x = v1.x+v2.x; v.y = v1.y+v2.y; v.z = v1.z+v2.z;
@@ -330,7 +330,7 @@ V3_Add (HVect v1,
 
 static HVect
 V3_Sub (HVect v1,
-	HVect v2)
+        HVect v2)
 {
   static HVect v = {0, 0, 0, 0};
   v.x = v1.x-v2.x; v.y = v1.y-v2.y; v.z = v1.z-v2.z;
@@ -342,7 +342,7 @@ V3_Sub (HVect v1,
 /*
 static HVect
 V3_Bisect (HVect v0,
-	   HVect v1)
+           HVect v1)
 {
   HVect v = {0, 0, 0, 0};
   double Nv;
@@ -360,7 +360,7 @@ V3_Bisect (HVect v0,
 
 static double
 V3_Dot (HVect v1,
-	HVect v2)
+        HVect v2)
 {
   return (v1.x*v2.x + v1.y*v2.y + v1.z*v2.z);
 }
@@ -371,7 +371,7 @@ V3_Dot (HVect v1,
 /*
 static HVect
 V3_Cross (HVect v1,
-	  HVect v2)
+          HVect v2)
 {
   static HVect v = {0, 0, 0, 0};
   v.x = v1.y*v2.z-v1.z*v2.y;
@@ -383,16 +383,16 @@ V3_Cross (HVect v1,
 
 void
 ArcBall_CopyMat (HMatrix inm,
-		 HMatrix outm)
+                 HMatrix outm)
 {
   int x=0,y=0;
 
   for (x=0;x<4;x++)
     {
       for (y=0;y<4;y++)
-	{
-	  outm[y][x]=inm[y][x];
-	}
+        {
+          outm[y][x]=inm[y][x];
+        }
     }
 }
 
@@ -405,8 +405,8 @@ ArcBall_CopyMat (HMatrix inm,
 
 static HVect
 MouseOnSphere (HVect  mouse,
-	       HVect  ballCenter,
-	       double ballRadius)
+               HVect  ballCenter,
+               double ballRadius)
 {
   HVect ballMouse;
   register double mag;
@@ -430,7 +430,7 @@ MouseOnSphere (HVect  mouse,
 
 static Quat
 Qt_FromBallPoints (HVect from,
-		   HVect to)
+                   HVect to)
 {
   Quat qu;
   qu.x = from.y*to.z - from.z*to.y;
@@ -445,8 +445,8 @@ Qt_FromBallPoints (HVect from,
 
 static void
 Qt_ToBallPoints (Quat   q,
-		 HVect *arcFrom,
-		 HVect *arcTo)
+                 HVect *arcFrom,
+                 HVect *arcTo)
 {
   double s;
 
@@ -464,7 +464,7 @@ Qt_ToBallPoints (Quat   q,
 
 static HVect
 ConstrainToAxis (HVect loose,
-		 HVect axis)
+                 HVect axis)
 {
   HVect onPlane;
   register double norm;
@@ -489,8 +489,8 @@ ConstrainToAxis (HVect loose,
 
 static int
 NearestConstraintAxis (HVect  loose,
-		       HVect *axes,
-		       int    nAxes)
+                       HVect *axes,
+                       int    nAxes)
 {
   HVect onPlane;
   register double max, dot;
@@ -502,9 +502,9 @@ NearestConstraintAxis (HVect  loose,
       onPlane = ConstrainToAxis(loose, axes[i]);
       dot = V3_Dot(onPlane, loose);
       if (dot>max)
-	{
-	  max = dot; nearest = i;
-	}
+        {
+          max = dot; nearest = i;
+        }
     }
   return (nearest);
 }

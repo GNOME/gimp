@@ -43,13 +43,13 @@ init_compute (void)
         gimp_vector3_set (&mapvals.secondaxis, 0.0, 1.0,  0.0);
 
         gimp_vector3_rotate (&mapvals.firstaxis,
-			     gimp_deg_to_rad (mapvals.alpha),
-			     gimp_deg_to_rad (mapvals.beta),
-			     gimp_deg_to_rad (mapvals.gamma));
+                             gimp_deg_to_rad (mapvals.alpha),
+                             gimp_deg_to_rad (mapvals.beta),
+                             gimp_deg_to_rad (mapvals.gamma));
         gimp_vector3_rotate (&mapvals.secondaxis,
-			     gimp_deg_to_rad (mapvals.alpha),
-			     gimp_deg_to_rad (mapvals.beta),
-			     gimp_deg_to_rad (mapvals.gamma));
+                             gimp_deg_to_rad (mapvals.alpha),
+                             gimp_deg_to_rad (mapvals.beta),
+                             gimp_deg_to_rad (mapvals.gamma));
 
         /* Compute the 2D bounding box of the sphere spanned by the axis */
         /* ============================================================= */
@@ -70,16 +70,16 @@ init_compute (void)
         gimp_vector3_set (&mapvals.normal,     0.0, 0.0, 1.0);
 
         gimp_vector3_rotate (&mapvals.firstaxis,
-			     gimp_deg_to_rad (mapvals.alpha),
-			     gimp_deg_to_rad (mapvals.beta),
-			     gimp_deg_to_rad (mapvals.gamma));
+                             gimp_deg_to_rad (mapvals.alpha),
+                             gimp_deg_to_rad (mapvals.beta),
+                             gimp_deg_to_rad (mapvals.gamma));
         gimp_vector3_rotate (&mapvals.secondaxis,
-			     gimp_deg_to_rad (mapvals.alpha),
-			     gimp_deg_to_rad (mapvals.beta),
-			     gimp_deg_to_rad (mapvals.gamma));
+                             gimp_deg_to_rad (mapvals.alpha),
+                             gimp_deg_to_rad (mapvals.beta),
+                             gimp_deg_to_rad (mapvals.gamma));
 
         mapvals.normal = gimp_vector3_cross_product (&mapvals.firstaxis,
-						     &mapvals.secondaxis);
+                                                     &mapvals.secondaxis);
 
         if (mapvals.normal.z < 0.0)
           gimp_vector3_mul (&mapvals.normal, -1.0);
@@ -133,12 +133,12 @@ init_compute (void)
 
         for (i = 0; i < 6; i++)
           {
-	    box_drawables[i] = gimp_drawable_get (mapvals.boxmap_id[i]);
+            box_drawables[i] = gimp_drawable_get (mapvals.boxmap_id[i]);
 
-	    gimp_pixel_rgn_init (&box_regions[i], box_drawables[i],
+            gimp_pixel_rgn_init (&box_regions[i], box_drawables[i],
                                  0, 0,
                                  box_drawables[i]->width,
-				 box_drawables[i]->height,
+                                 box_drawables[i]->height,
                                  FALSE, FALSE);
           }
 
@@ -174,13 +174,13 @@ init_compute (void)
 
         for (i = 0; i < 2; i++)
           {
-	    cylinder_drawables[i] =
-	      gimp_drawable_get (mapvals.cylindermap_id[i]);
+            cylinder_drawables[i] =
+              gimp_drawable_get (mapvals.cylindermap_id[i]);
 
-	    gimp_pixel_rgn_init (&cylinder_regions[i], cylinder_drawables[i],
+            gimp_pixel_rgn_init (&cylinder_regions[i], cylinder_drawables[i],
                                  0, 0,
                                  cylinder_drawables[i]->width,
-				 cylinder_drawables[i]->height,
+                                 cylinder_drawables[i]->height,
                                  FALSE, FALSE);
           }
 
@@ -192,9 +192,9 @@ init_compute (void)
 
 static void
 render (gdouble   x,
-	gdouble   y,
-	GimpRGB  *col,
-	gpointer  data)
+        gdouble   y,
+        GimpRGB  *col,
+        gpointer  data)
 {
   GimpVector3 pos;
 
@@ -207,9 +207,9 @@ render (gdouble   x,
 
 static void
 show_progress (gint     min,
-	       gint     max,
-	       gint     curr,
-	       gpointer data)
+               gint     max,
+               gint     curr,
+               gpointer data)
 {
   gimp_progress_update ((gdouble) curr / (gdouble) max);
 }
@@ -264,7 +264,7 @@ compute_image (void)
     }
 
   gimp_pixel_rgn_init (&dest_region, output_drawable,
-		       0, 0, width, height, TRUE, TRUE);
+                       0, 0, width, height, TRUE, TRUE);
 
   switch (mapvals.maptype)
     {
@@ -294,22 +294,22 @@ compute_image (void)
 
               if ((progress_counter++ % width) == 0)
                 gimp_progress_update ((gdouble) progress_counter /
-				      (gdouble) maxcounter);
+                                      (gdouble) maxcounter);
             }
         }
     }
   else
     {
       gimp_adaptive_supersample_area (0, 0,
-				      width - 1, height - 1,
-				      max_depth,
-				      mapvals.pixeltreshold,
-				      render,
-				      NULL,
-				      poke,
-				      NULL,
-				      show_progress,
-				      NULL);
+                                      width - 1, height - 1,
+                                      max_depth,
+                                      mapvals.pixeltreshold,
+                                      render,
+                                      NULL,
+                                      poke,
+                                      NULL,
+                                      show_progress,
+                                      NULL);
     }
 
   /* Update the region */

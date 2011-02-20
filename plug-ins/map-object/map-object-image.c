@@ -78,8 +78,8 @@ peek (gint x,
 
 static GimpRGB
 peek_box_image (gint image,
-		gint x,
-		gint y)
+                gint x,
+                gint y)
 {
   static guchar data[4];
 
@@ -108,8 +108,8 @@ peek_box_image (gint image,
 
 static GimpRGB
 peek_cylinder_image (gint image,
-		     gint x,
-		     gint y)
+                     gint x,
+                     gint y)
 {
   static guchar data[4];
 
@@ -151,7 +151,7 @@ poke (gint      x,
 
 gint
 checkbounds (gint x,
-	     gint y)
+             gint y)
 {
   if (x < border_x1 || y < border_y1 || x >= border_x2 || y >= border_y2)
     return FALSE;
@@ -161,8 +161,8 @@ checkbounds (gint x,
 
 static gint
 checkbounds_box_image (gint image,
-		       gint x,
-		       gint y)
+                       gint x,
+                       gint y)
 {
   gint w, h;
 
@@ -177,8 +177,8 @@ checkbounds_box_image (gint image,
 
 static gint
 checkbounds_cylinder_image (gint image,
-			    gint x,
-			    gint y)
+                            gint x,
+                            gint y)
 {
   gint w, h;
 
@@ -193,7 +193,7 @@ checkbounds_cylinder_image (gint image,
 
 GimpVector3
 int_to_pos (gint x,
-	    gint y)
+            gint y)
 {
   GimpVector3 pos;
 
@@ -206,9 +206,9 @@ int_to_pos (gint x,
 
 void
 pos_to_int (gdouble  x,
-	    gdouble  y,
-	    gint    *scr_x,
-	    gint    *scr_y)
+            gdouble  y,
+            gint    *scr_x,
+            gint    *scr_y)
 {
   *scr_x = (gint) ((x * (gdouble) width));
   *scr_y = (gint) ((y * (gdouble) height));
@@ -221,8 +221,8 @@ pos_to_int (gdouble  x,
 
 GimpRGB
 get_image_color (gdouble  u,
-		 gdouble  v,
-		 gint    *inside)
+                 gdouble  v,
+                 gint    *inside)
 {
   gint    x1, y1, x2, y2;
   GimpRGB p[4];
@@ -279,8 +279,8 @@ get_image_color (gdouble  u,
 
 GimpRGB
 get_box_image_color (gint    image,
-		     gdouble u,
-		     gdouble v)
+                     gdouble u,
+                     gdouble v)
 {
   gint    w, h;
   gint    x1, y1, x2, y2;
@@ -311,8 +311,8 @@ get_box_image_color (gint    image,
 
 GimpRGB
 get_cylinder_image_color (gint    image,
-			  gdouble u,
-			  gdouble v)
+                          gdouble u,
+                          gdouble v)
 {
   gint    w, h;
   gint    x1, y1, x2, y2;
@@ -347,13 +347,13 @@ get_cylinder_image_color (gint    image,
 
 gint
 image_setup (GimpDrawable *drawable,
-	     gint       interactive)
+             gint       interactive)
 {
   /* Set the tile cache size */
   /* ======================= */
 
   gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width() - 1) /
-			  gimp_tile_width ());
+                          gimp_tile_width ());
 
   /* Get some useful info on the input drawable */
   /* ========================================== */
@@ -362,13 +362,13 @@ image_setup (GimpDrawable *drawable,
   output_drawable = drawable;
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &border_x1, &border_y1, &border_x2, &border_y2);
+                             &border_x1, &border_y1, &border_x2, &border_y2);
 
   width  = input_drawable->width;
   height = input_drawable->height;
 
   gimp_pixel_rgn_init (&source_region, input_drawable,
-		       0, 0, width, height, FALSE, FALSE);
+                       0, 0, width, height, FALSE, FALSE);
 
   maxcounter = (glong) width * (glong) height;
 
