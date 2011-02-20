@@ -59,6 +59,8 @@ void
 gimp_display_shell_pointer_ungrab (GimpDisplayShell *shell,
                                    GdkEvent         *event)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (event != NULL);
   g_return_if_fail (shell->pointer_grabbed == TRUE);
 
   gdk_display_pointer_ungrab (gtk_widget_get_display (shell->canvas),
