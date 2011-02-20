@@ -240,6 +240,8 @@ compute_image (void)
       new_image_id = image_id;
     }
 
+  gimp_image_undo_group_start (new_image_id);
+
   if (mapvals.create_new_image ||
       mapvals.create_new_layer ||
       (mapvals.transparent_background &&
@@ -319,4 +321,6 @@ compute_image (void)
       gimp_displays_flush ();
       gimp_drawable_detach (output_drawable);
     }
+
+  gimp_image_undo_group_end (new_image_id);
 }
