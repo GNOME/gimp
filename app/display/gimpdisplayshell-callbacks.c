@@ -710,9 +710,9 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
   GimpTool *active_tool;
 
   /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
-  gimp_display_shell_untransform_coordinate (shell,
-                                             display_coords,
-                                             image_coords);
+  gimp_display_shell_untransform_coords (shell,
+                                         display_coords,
+                                         image_coords);
 
   active_tool = tool_manager_get_active (gimp);
 

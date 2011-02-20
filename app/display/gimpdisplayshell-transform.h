@@ -19,48 +19,48 @@
 #define __GIMP_DISPLAY_SHELL_TRANSFORM_H__
 
 
-void  gimp_display_shell_transform_coordinate   (const GimpDisplayShell *shell,
-                                                 const GimpCoords       *image_coords,
-                                                 GimpCoords             *display_coords);
-void  gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
-                                                 const GimpCoords       *display_coords,
-                                                 GimpCoords             *image_coords);
+void  gimp_display_shell_transform_coords     (const GimpDisplayShell *shell,
+                                               const GimpCoords       *image_coords,
+                                               GimpCoords             *display_coords);
+void  gimp_display_shell_untransform_coords   (const GimpDisplayShell *shell,
+                                               const GimpCoords       *display_coords,
+                                               GimpCoords             *image_coords);
 
-void  gimp_display_shell_transform_xy           (const GimpDisplayShell *shell,
-                                                 gdouble                 x,
-                                                 gdouble                 y,
-                                                 gint                   *nx,
-                                                 gint                   *ny);
-void  gimp_display_shell_untransform_xy         (const GimpDisplayShell *shell,
-                                                 gint                    x,
-                                                 gint                    y,
-                                                 gint                   *nx,
-                                                 gint                   *ny,
-                                                 gboolean                round);
+void  gimp_display_shell_transform_xy         (const GimpDisplayShell *shell,
+                                               gdouble                 x,
+                                               gdouble                 y,
+                                               gint                   *nx,
+                                               gint                   *ny);
+void  gimp_display_shell_untransform_xy       (const GimpDisplayShell *shell,
+                                               gint                    x,
+                                               gint                    y,
+                                               gint                   *nx,
+                                               gint                   *ny,
+                                               gboolean                round);
 
-void  gimp_display_shell_transform_xy_f         (const GimpDisplayShell *shell,
-                                                 gdouble                 x,
-                                                 gdouble                 y,
-                                                 gdouble                *nx,
-                                                 gdouble                *ny);
-void  gimp_display_shell_untransform_xy_f       (const GimpDisplayShell *shell,
-                                                 gdouble                 x,
-                                                 gdouble                 y,
-                                                 gdouble                *nx,
-                                                 gdouble                *ny);
+void  gimp_display_shell_transform_xy_f       (const GimpDisplayShell *shell,
+                                               gdouble                 x,
+                                               gdouble                 y,
+                                               gdouble                *nx,
+                                               gdouble                *ny);
+void  gimp_display_shell_untransform_xy_f     (const GimpDisplayShell *shell,
+                                               gdouble                 x,
+                                               gdouble                 y,
+                                               gdouble                *nx,
+                                               gdouble                *ny);
 
-void  gimp_display_shell_transform_segments     (const GimpDisplayShell *shell,
-                                                 const BoundSeg         *src_segs,
-                                                 GimpSegment            *dest_segs,
-                                                 gint                    n_segs,
-                                                 gdouble                 offset_x,
-                                                 gdouble                 offset_y);
+void  gimp_display_shell_transform_segments   (const GimpDisplayShell *shell,
+                                               const BoundSeg         *src_segs,
+                                               GimpSegment            *dest_segs,
+                                               gint                    n_segs,
+                                               gdouble                 offset_x,
+                                               gdouble                 offset_y);
 
-void  gimp_display_shell_untransform_viewport   (const GimpDisplayShell *shell,
-                                                 gint                   *x,
-                                                 gint                   *y,
-                                                 gint                   *width,
-                                                 gint                   *height);
+void  gimp_display_shell_untransform_viewport (const GimpDisplayShell *shell,
+                                               gint                   *x,
+                                               gint                   *y,
+                                               gint                   *width,
+                                               gint                   *height);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_TRANSFORM_H__ */

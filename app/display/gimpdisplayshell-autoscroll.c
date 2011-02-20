@@ -150,9 +150,9 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
                                  scroll_amount_x,
                                  scroll_amount_y);
 
-      gimp_display_shell_untransform_coordinate (shell,
-                                                 &device_coords,
-                                                 &image_coords);
+      gimp_display_shell_untransform_coords (shell,
+                                             &device_coords,
+                                             &image_coords);
 
       if (gimp_tool_control_get_snap_to (active_tool->control))
         {

@@ -36,7 +36,7 @@
 
 
 /**
- * gimp_display_shell_transform_coordinate:
+ * gimp_display_shell_transform_coords:
  * @shell:          a #GimpDisplayShell
  * @image_coords:   image coordinates
  * @display_coords: returns the corresponding display coordinates
@@ -45,9 +45,9 @@
  * objects can be rendered at the correct points on the display.
  **/
 void
-gimp_display_shell_transform_coordinate (const GimpDisplayShell *shell,
-                                         const GimpCoords       *image_coords,
-                                         GimpCoords             *display_coords)
+gimp_display_shell_transform_coords (const GimpDisplayShell *shell,
+                                     const GimpCoords       *image_coords,
+                                     GimpCoords             *display_coords)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (image_coords != NULL);
@@ -63,7 +63,7 @@ gimp_display_shell_transform_coordinate (const GimpDisplayShell *shell,
 }
 
 /**
- * gimp_display_shell_untransform_coordinate:
+ * gimp_display_shell_untransform_coords:
  * @shell:          a #GimpDisplayShell
  * @display_coords: display coordinates
  * @image_coords:   returns the corresponding image coordinates
@@ -72,9 +72,9 @@ gimp_display_shell_transform_coordinate (const GimpDisplayShell *shell,
  * points on the display can be mapped to points in the image.
  **/
 void
-gimp_display_shell_untransform_coordinate (const GimpDisplayShell *shell,
-                                           const GimpCoords       *display_coords,
-                                           GimpCoords             *image_coords)
+gimp_display_shell_untransform_coords (const GimpDisplayShell *shell,
+                                       const GimpCoords       *display_coords,
+                                       GimpCoords             *image_coords)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (display_coords != NULL);
