@@ -91,8 +91,9 @@ G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
 static void
 gimp_dynamics_class_init (GimpDynamicsClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpDataClass     *data_class     = GIMP_DATA_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   object_class->finalize                    = gimp_dynamics_finalize;
   object_class->set_property                = gimp_dynamics_set_property;
@@ -102,6 +103,9 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   data_class->save                          = gimp_dynamics_save;
   data_class->get_extension                 = gimp_dynamics_get_extension;
   data_class->duplicate                     = gimp_dynamics_duplicate;
+
+
+  viewable_class->default_stock_id = "gimp-dynamics";
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
                                    "name", NULL,
