@@ -109,8 +109,8 @@ taglist_set(TagList_t *tlist, const gchar *name, const gchar *value)
    for (p = tlist->list; p; p = p->next) {
       tag = (Tag_t*) p->data;
       if (!g_ascii_strcasecmp(tag->name, name)) {
-	 g_strreplace(&tag->value, value);
-	 return;
+         g_strreplace(&tag->value, value);
+         return;
       }
    }
    /* Tag not found, add a new tag */

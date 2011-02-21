@@ -1085,28 +1085,28 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
 
    switch (event->keyval) {
    case GDK_Left:
-	  if (ctrl)
+          if (ctrl)
          move_sash_selected_objects(-1, 0, shift);
       else
          move_selected_objects(-1, 0, shift);
       handled = TRUE;
       break;
    case GDK_Right:
-	  if (ctrl)
+          if (ctrl)
          move_sash_selected_objects(1, 0, shift);
       else
          move_selected_objects(1, 0, shift);
       handled = TRUE;
       break;
    case GDK_Up:
-	  if (ctrl)
+          if (ctrl)
          move_sash_selected_objects(0, -1, shift);
       else
          move_selected_objects(0, -1, shift);
       handled = TRUE;
       break;
    case GDK_Down:
-	  if (ctrl)
+          if (ctrl)
          move_sash_selected_objects(0, 1, shift);
       else
          move_selected_objects(0, 1, shift);

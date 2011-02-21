@@ -32,10 +32,10 @@ static CmdExecuteValue_t move_selected_command_execute(Command_t *parent);
 static void move_selected_command_undo(Command_t *parent);
 
 static CommandClass_t move_selected_command_class = {
-   NULL,			/* move_selected_command_destruct */
+   NULL,                        /* move_selected_command_destruct */
    move_selected_command_execute,
    move_selected_command_undo,
-   NULL				/* move_selected_command_redo */
+   NULL                         /* move_selected_command_redo */
 };
 
 typedef struct {
@@ -53,7 +53,7 @@ move_selected_command_new(ObjectList_t *list, gint dx, gint dy)
    command->dx = dx;
    command->dy = dy;
    return command_init(&command->parent, _("Move Selected Objects"),
-		       &move_selected_command_class);
+                       &move_selected_command_class);
 }
 
 static CmdExecuteValue_t

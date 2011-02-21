@@ -40,7 +40,7 @@ static ObjectList_t *_paste_buffer;
 
 static gpointer
 object_list_callback_add(ObjectListCallback_t *list,
-			 ObjectListCallbackFunc_t func, gpointer data)
+                         ObjectListCallbackFunc_t func, gpointer data)
 {
    ObjectListCB_t *cb = g_new(ObjectListCB_t, 1);
    cb->func = func;
@@ -67,49 +67,49 @@ object_list_callback_call(ObjectListCallback_t *list, Object_t *obj)
 
 gpointer
 object_list_add_changed_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-			   gpointer data)
+                           gpointer data)
 {
    return object_list_callback_add(&list->changed_cb, func, data);
 }
 
 gpointer
 object_list_add_update_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-			  gpointer data)
+                          gpointer data)
 {
    return object_list_callback_add(&list->update_cb, func, data);
 }
 
 gpointer
 object_list_add_add_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-		       gpointer data)
+                       gpointer data)
 {
    return object_list_callback_add(&list->add_cb, func, data);
 }
 
 gpointer
 object_list_add_remove_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-			  gpointer data)
+                          gpointer data)
 {
    return object_list_callback_add(&list->remove_cb, func, data);
 }
 
 gpointer
 object_list_add_select_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-			  gpointer data)
+                          gpointer data)
 {
    return object_list_callback_add(&list->select_cb, func, data);
 }
 
 gpointer
 object_list_add_move_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-			gpointer data)
+                        gpointer data)
 {
    return object_list_callback_add(&list->move_cb, func, data);
 }
 
 gpointer
 object_list_add_geometry_cb(ObjectList_t *list, ObjectListCallbackFunc_t func,
-			    gpointer data)
+                            gpointer data)
 {
    return object_list_callback_add(&list->geometry_cb, func, data);
 }
@@ -408,9 +408,9 @@ do_object_locked_dialog(void)
       default_dialog_hide_cancel_button(dialog);
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_label(
-	 dialog,
-	 "\n  You cannot delete the selected object  \n"
-	 "since it is currently being edited.\n");
+         dialog,
+         "\n  You cannot delete the selected object  \n"
+         "since it is currently being edited.\n");
    }
    default_dialog_show(dialog);
 }
@@ -423,7 +423,7 @@ object_factory_create_object(ObjectFactory_t *factory, gint x, gint y)
 
 static gboolean
 button_motion(GtkWidget *widget, GdkEventMotion *event,
-	      ObjectFactory_t *factory)
+              ObjectFactory_t *factory)
 {
    gint x = get_real_coord((gint) event->x);
    gint y = get_real_coord((gint) event->y);
@@ -452,45 +452,45 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 
    if (obj) {
       if (event->button == 1) {
-	 if (!factory->finish || factory->finish(obj, x, y)) {
-	    g_signal_handlers_disconnect_by_func(widget,
+         if (!factory->finish || factory->finish(obj, x, y)) {
+            g_signal_handlers_disconnect_by_func(widget,
                                                  button_motion,
                                                  factory);
-	    if (object_is_valid(obj)) {
-	       Command_t *command = create_command_new(get_shapes(), obj);
-	       command_execute(command);
-	       if (preferences->prompt_for_area_info)
-		  object_edit(obj, FALSE);
-	    } else {
+            if (object_is_valid(obj)) {
+               Command_t *command = create_command_new(get_shapes(), obj);
+               command_execute(command);
+               if (preferences->prompt_for_area_info)
+                  object_edit(obj, FALSE);
+            } else {
               object_draw(obj, gtk_widget_get_window (widget));
               object_unref(obj);
-	    }
-	    gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
-	    obj = NULL;
-	    main_clear_dimension();
-	 }
+            }
+            gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
+            obj = NULL;
+            main_clear_dimension();
+         }
       } else if (event->button == 3) {
            object_draw(obj, gtk_widget_get_window (widget));
-	 if (!factory->cancel || factory->cancel(event, obj)) {
-	    g_signal_handlers_disconnect_by_func(widget,
+         if (!factory->cancel || factory->cancel(event, obj)) {
+            g_signal_handlers_disconnect_by_func(widget,
                                                  button_motion,
                                                  factory);
-	    object_unref(obj);
-	    gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
-	    obj = NULL;
-	    main_clear_dimension();
-	 } else {
+            object_unref(obj);
+            gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
+            obj = NULL;
+            main_clear_dimension();
+         } else {
            object_draw(obj, gtk_widget_get_window (widget));
-	 }
+         }
       }
    } else {
       if (event->button == 1) {
-	 factory = ((ObjectFactory_t*(*)(guint)) data)(event->state);
-	 obj = object_factory_create_object(factory, x, y);
+         factory = ((ObjectFactory_t*(*)(guint)) data)(event->state);
+         obj = object_factory_create_object(factory, x, y);
 
-	 gdk_gc_set_function(preferences->normal_gc, GDK_XOR);
+         gdk_gc_set_function(preferences->normal_gc, GDK_XOR);
 
-	 g_signal_connect(widget, "motion-notify-event",
+         g_signal_connect(widget, "motion-notify-event",
                           G_CALLBACK(button_motion), factory);
       }
    }
@@ -596,7 +596,7 @@ object_list_draw_selected(ObjectList_t *list, GdkWindow *window)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected)
-	 object_draw(obj, window);
+         object_draw(obj, window);
    }
 }
 
@@ -608,25 +608,25 @@ object_list_find(ObjectList_t *list, gint x, gint y)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->class->point_is_on(obj, x, y))
-	 found = obj;
+         found = obj;
    }
    return found;
 }
 
 Object_t*
 object_list_near_sash(ObjectList_t *list, gint x, gint y,
-		      MoveSashFunc_t *sash_func)
+                      MoveSashFunc_t *sash_func)
 {
    Object_t *found = NULL;
    GList *p;
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected) {
-	 MoveSashFunc_t func = obj->class->near_sash(obj, x, y);
-	 if (func) {
-	    found = obj;
-	    *sash_func = func;
-	 }
+         MoveSashFunc_t func = obj->class->near_sash(obj, x, y);
+         if (func) {
+            found = obj;
+            *sash_func = func;
+         }
       }
    }
    return found;
@@ -672,13 +672,13 @@ object_list_cut(ObjectList_t *list)
       Object_t *obj = (Object_t*) p->data;
       q = p->next;
       if (obj->selected) {
-	 if (obj->locked) {
-	    do_object_locked_dialog();
-	 } else {
-	    object_list_append(_paste_buffer, obj);
-	    object_list_remove_link(list, p);
-	    count++;
-	 }
+         if (obj->locked) {
+            do_object_locked_dialog();
+         } else {
+            object_list_append(_paste_buffer, obj);
+            object_list_remove_link(list, p);
+            count++;
+         }
       }
    }
    object_list_set_changed(list, (count) ? TRUE : FALSE);
@@ -694,7 +694,7 @@ object_list_copy_to_paste_buffer(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected)
-	 object_list_append(_paste_buffer, object_clone(obj));
+         object_list_append(_paste_buffer, object_clone(obj));
    }
 }
 
@@ -712,12 +712,12 @@ object_list_delete_selected(ObjectList_t *list)
       Object_t *obj = (Object_t*) p->data;
       q = p->next;
       if (obj->selected) {
-	 if (obj->locked) {
-	    do_object_locked_dialog();
-	 } else {
-	    object_list_remove_link(list, p);
-	    object_unref(obj);
-	 }
+         if (obj->locked) {
+            do_object_locked_dialog();
+         } else {
+            object_list_remove_link(list, p);
+            object_unref(obj);
+         }
       }
    }
 }
@@ -729,8 +729,8 @@ object_list_edit_selected(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected) {
-	 object_edit(obj, TRUE);
-	 break;
+         object_edit(obj, TRUE);
+         break;
       }
    }
 }
@@ -743,8 +743,8 @@ object_list_select_all(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (!obj->selected) {
-	 object_select(obj);
-	 count++;
+         object_select(obj);
+         count++;
       }
    }
    return count;
@@ -757,15 +757,15 @@ object_list_select_next(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected) {
-	 object_unselect(obj);
-	 p = (p->next) ? p->next : list->list;
-	 object_select((Object_t*) p->data);
-	 for (p = p->next; p; p = p->next) {
-	    obj = (Object_t*) p->data;
-	    if (obj->selected)
-	       object_unselect(obj);
-	 }
-	 break;
+         object_unselect(obj);
+         p = (p->next) ? p->next : list->list;
+         object_select((Object_t*) p->data);
+         for (p = p->next; p; p = p->next) {
+            obj = (Object_t*) p->data;
+            if (obj->selected)
+               object_unselect(obj);
+         }
+         break;
       }
    }
 }
@@ -776,21 +776,21 @@ void object_list_select_prev(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected) {
-	 GList *q = (p->prev) ? p->prev : g_list_last(list->list);
-	 for (; p; p = p->next) {
-	    obj = (Object_t*) p->data;
-	    if (obj->selected)
-	       object_unselect(obj);
-	 }
-	 object_select((Object_t*) q->data);
-	 break;
+         GList *q = (p->prev) ? p->prev : g_list_last(list->list);
+         for (; p; p = p->next) {
+            obj = (Object_t*) p->data;
+            if (obj->selected)
+               object_unselect(obj);
+         }
+         object_select((Object_t*) q->data);
+         break;
       }
    }
 }
 
 gint
 object_list_select_region(ObjectList_t *list, gint x, gint y, gint width,
-			  gint height)
+                          gint height)
 {
    GList *p;
    gint count = 0;
@@ -800,9 +800,9 @@ object_list_select_region(ObjectList_t *list, gint x, gint y, gint width,
 
       object_get_dimensions(obj, &obj_x, &obj_y, &obj_width, &obj_height);
       if (obj_x >= x && obj_x + obj_width <= x + width &&
-	  obj_y >= y && obj_y + obj_height <= y + height) {
-	 object_select(obj);
-	 count++;
+          obj_y >= y && obj_y + obj_height <= y + height) {
+         object_select(obj);
+         count++;
       }
    }
    return count;
@@ -816,8 +816,8 @@ object_list_deselect_all(ObjectList_t *list, Object_t *exception)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected && obj != exception) {
-	 object_unselect(obj);
-	 count++;
+         object_unselect(obj);
+         count++;
       }
    }
    return count;
@@ -831,7 +831,7 @@ object_list_nr_selected(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected)
-	 count++;
+         count++;
    }
    return count;
 }
@@ -873,7 +873,7 @@ object_list_move_selected(ObjectList_t *list, gint dx, gint dy)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected)
-	 object_move(obj, dx, dy);
+         object_move(obj, dx, dy);
    }
 }
 
@@ -899,7 +899,7 @@ object_list_move_selected_up(ObjectList_t *list)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected && p->prev)
-	 object_list_swap_prev(list, p);
+         object_list_swap_prev(list, p);
    }
 }
 
@@ -911,7 +911,7 @@ object_list_move_selected_down(ObjectList_t *list)
    for (p = g_list_last(list->list); p; p = p->prev) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected && p->next)
-	 object_list_swap_next(list, p);
+         object_list_swap_next(list, p);
    }
 }
 
@@ -925,8 +925,8 @@ object_list_move_to_front(ObjectList_t *list)
       Object_t *obj = (Object_t*) p->data;
       q = p->next;
       if (obj->selected) {
-	 object_list_remove_link(list, p);
-	 object_list_append(list, obj);
+         object_list_remove_link(list, p);
+         object_list_append(list, obj);
       }
    }
 }
@@ -941,8 +941,8 @@ object_list_send_to_back(ObjectList_t *list)
       Object_t *obj = (Object_t*) p->data;
       q = p->next;
       if (obj->selected) {
-	 object_list_remove_link(list, p);
-	 object_list_prepend(list, obj);
+         object_list_remove_link(list, p);
+         object_list_prepend(list, obj);
       }
    }
 }
@@ -954,14 +954,14 @@ object_list_move_sash_selected(ObjectList_t *list, gint dx, gint dy)
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected)
-	 object_move_sash(obj, dx, dy);
+         object_move_sash(obj, dx, dy);
    }
 }
 
 static void
 write_xml_attrib(const gchar *attrib, const gchar *value,
-		 const gchar *default_text, gpointer param,
-		 OutputFunc_t output)
+                 const gchar *default_text, gpointer param,
+                 OutputFunc_t output)
 {
    if (*value) {
       gchar *escaped_value = g_markup_escape_text(value, -1);
@@ -1012,7 +1012,7 @@ object_list_write_ncsa(ObjectList_t *list, gpointer param, OutputFunc_t output)
       Object_t *obj = (Object_t*) p->data;
 
       if (*obj->comment)
-	 output(param, "# %s\n", obj->comment);
+         output(param, "# %s\n", obj->comment);
       obj->class->write_ncsa(obj, param, output);
       output(param, "\n");
    }

@@ -48,30 +48,30 @@ static void rectangle_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC* gc);
 static MoveSashFunc_t rectangle_near_sash(Object_t *obj, gint x, gint y);
 static gboolean rectangle_point_is_on(Object_t *obj, gint x, gint y);
 static void rectangle_get_dimensions(Object_t *obj, gint *x, gint *y,
-				     gint *width, gint *height);
+                                     gint *width, gint *height);
 static void rectangle_resize(Object_t *obj, gint percentage_x,
-			     gint percentage_y);
+                             gint percentage_y);
 static void rectangle_move(Object_t *obj, gint dx, gint dy);
 static gpointer rectangle_create_info_widget(GtkWidget *frame);
 static void rectangle_fill_info_tab(Object_t *obj, gpointer data);
 static void rectangle_set_initial_focus(Object_t *obj, gpointer data);
 static void rectangle_update(Object_t *obj, gpointer data);
 static void rectangle_write_csim(Object_t *obj, gpointer param,
-				 OutputFunc_t output);
+                                 OutputFunc_t output);
 static void rectangle_write_cern(Object_t *obj, gpointer param,
-				 OutputFunc_t output);
+                                 OutputFunc_t output);
 static void rectangle_write_ncsa(Object_t *obj, gpointer param,
-				 OutputFunc_t output);
+                                 OutputFunc_t output);
 static const gchar* rectangle_get_stock_icon_name(void);
 
 static ObjectClass_t rectangle_class = {
    N_("_Rectangle"),
-   NULL,			/* info_dialog */
-   NULL,			/* icon */
-   NULL,			/* mask */
+   NULL,                        /* info_dialog */
+   NULL,                        /* icon */
+   NULL,                        /* mask */
 
    rectangle_is_valid,
-   NULL,			/* rectangle_destruct */
+   NULL,                        /* rectangle_destruct */
    rectangle_clone,
    rectangle_assign,
    rectangle_normalize,
@@ -83,7 +83,7 @@ static ObjectClass_t rectangle_class = {
    rectangle_resize,
    rectangle_move,
    rectangle_create_info_widget,
-   rectangle_fill_info_tab,	/* rectangle_update_info_widget */
+   rectangle_fill_info_tab,     /* rectangle_update_info_widget */
    rectangle_fill_info_tab,
    rectangle_set_initial_focus,
    rectangle_update,
@@ -107,7 +107,7 @@ create_rectangle(gint x, gint y, gint width, gint height)
 
 static void
 draw_any_rectangle(GdkWindow *window, GdkGC *gc, gint x, gint y, gint w,
-		   gint h)
+                   gint h)
 {
    if (w < 0) {
       x += w;
@@ -170,7 +170,7 @@ rectangle_draw(Object_t *obj, GdkWindow *window, GdkGC *gc)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    draw_any_rectangle(window, gc, rectangle->x, rectangle->y,
-		      rectangle->width, rectangle->height);
+                      rectangle->width, rectangle->height);
 }
 
 static void
@@ -182,12 +182,12 @@ rectangle_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC *gc)
    draw_sash(window, gc, rectangle->x + rectangle->width, rectangle->y);
    draw_sash(window, gc, rectangle->x, rectangle->y + rectangle->height / 2);
    draw_sash(window, gc, rectangle->x + rectangle->width,
-	     rectangle->y + rectangle->height / 2);
+             rectangle->y + rectangle->height / 2);
    draw_sash(window, gc, rectangle->x, rectangle->y + rectangle->height);
    draw_sash(window, gc, rectangle->x + rectangle->width / 2,
-	     rectangle->y + rectangle->height);
+             rectangle->y + rectangle->height);
    draw_sash(window, gc, rectangle->x + rectangle->width,
-	     rectangle->y + rectangle->height);
+             rectangle->y + rectangle->height);
 }
 
 static void
@@ -267,18 +267,18 @@ rectangle_near_sash(Object_t *obj, gint x, gint y)
    else if (near_sash(rectangle->x + rectangle->width, rectangle->y, x, y))
       return MoveUpperRightSash;
    else if (near_sash(rectangle->x, rectangle->y + rectangle->height / 2,
-		      x, y))
+                      x, y))
       return MoveLeftSash;
    else if (near_sash(rectangle->x + rectangle->width,
-		      rectangle->y + rectangle->height / 2, x, y))
+                      rectangle->y + rectangle->height / 2, x, y))
       return MoveRightSash;
    else if (near_sash(rectangle->x, rectangle->y + rectangle->height, x, y))
       return MoveLowerLeftSash;
    else if (near_sash(rectangle->x + rectangle->width / 2,
-		      rectangle->y + rectangle->height, x, y))
+                      rectangle->y + rectangle->height, x, y))
       return MoveLowerSash;
    else if (near_sash(rectangle->x + rectangle->width,
-		      rectangle->y + rectangle->height, x, y))
+                      rectangle->y + rectangle->height, x, y))
       return MoveLowerRightSash;
    return NULL;
 }
@@ -293,7 +293,7 @@ rectangle_point_is_on(Object_t *obj, gint x, gint y)
 
 static void
 rectangle_get_dimensions(Object_t *obj, gint *x, gint *y,
-			 gint *width, gint *height)
+                         gint *width, gint *height)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    *x = rectangle->x;
@@ -387,30 +387,30 @@ rectangle_create_info_widget(GtkWidget *frame)
 
    label = create_label_in_table(table, 0, 0, _("Upper left _x:"));
    props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0,
-					  max_width - 1);
+                                          max_width - 1);
    g_signal_connect(props->x, "value-changed",
-		    G_CALLBACK(x_changed_cb), (gpointer) props);
+                    G_CALLBACK(x_changed_cb), (gpointer) props);
    create_label_in_table(table, 0, 3, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("Upper left _y:"));
    props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0,
-					  max_height - 1);
+                                          max_height - 1);
    g_signal_connect(props->y, "value-changed",
-		    G_CALLBACK(y_changed_cb), (gpointer) props);
+                    G_CALLBACK(y_changed_cb), (gpointer) props);
    create_label_in_table(table, 1, 3, _("pixels"));
 
    label = create_label_in_table(table, 2, 0, _("_Width:"));
    props->width = create_spin_button_in_table(table, label, 2, 1, 1, 1,
-					      max_width);
+                                              max_width);
    g_signal_connect(props->width, "value-changed",
-		    G_CALLBACK(width_changed_cb), (gpointer) props);
+                    G_CALLBACK(width_changed_cb), (gpointer) props);
    create_label_in_table(table, 2, 3, _("pixels"));
 
    label = create_label_in_table(table, 3, 0, _("_Height:"));
    props->height = create_spin_button_in_table(table, label, 3, 1, 1, 1,
-					       max_height);
+                                               max_height);
    g_signal_connect(props->height, "value-changed",
-		    G_CALLBACK(height_changed_cb), (gpointer) props);
+                    G_CALLBACK(height_changed_cb), (gpointer) props);
    create_label_in_table(table, 3, 3, _("pixels"));
 
    chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
@@ -432,7 +432,7 @@ rectangle_fill_info_tab(Object_t *obj, gpointer data)
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->y), rectangle->y);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->width), rectangle->width);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->height),
-			     rectangle->height);
+                             rectangle->height);
 }
 
 static void
@@ -461,7 +461,7 @@ rectangle_write_csim(Object_t *obj, gpointer param, OutputFunc_t output)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    output(param, "\"rect\" coords=\"%d,%d,%d,%d\"", rectangle->x, rectangle->y,
-	  rectangle->x + rectangle->width, rectangle->y + rectangle->height);
+          rectangle->x + rectangle->width, rectangle->y + rectangle->height);
 }
 
 static void
@@ -469,7 +469,7 @@ rectangle_write_cern(Object_t *obj, gpointer param, OutputFunc_t output)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    output(param, "rect (%d,%d) (%d,%d)", rectangle->x, rectangle->y,
-	  rectangle->x + rectangle->width, rectangle->y + rectangle->height);
+          rectangle->x + rectangle->width, rectangle->y + rectangle->height);
 }
 
 static void
@@ -477,8 +477,8 @@ rectangle_write_ncsa(Object_t *obj, gpointer param, OutputFunc_t output)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    output(param, "rect %s %d,%d %d,%d", obj->url,
-	  rectangle->x, rectangle->y,
-	  rectangle->x + rectangle->width, rectangle->y + rectangle->height);
+          rectangle->x, rectangle->y,
+          rectangle->x + rectangle->width, rectangle->y + rectangle->height);
 }
 
 static const gchar*
@@ -518,18 +518,18 @@ rectangle_factory_set_xy(Object_t *obj, guint state, gint x, gint y)
       gint width = abs(rectangle->width);
       gint height = abs(rectangle->height);
       if (width < height)
-	 rectangle->height = (rectangle->height < 0) ? -width : width;
+         rectangle->height = (rectangle->height < 0) ? -width : width;
       else
-	 rectangle->width = (rectangle->width < 0) ? -height : height;
+         rectangle->width = (rectangle->width < 0) ? -height : height;
    }
 
    main_set_dimension(rectangle->width, rectangle->height);
 }
 
 static ObjectFactory_t rectangle_factory = {
-   NULL,			/* Object pointer */
+   NULL,                        /* Object pointer */
    rectangle_factory_finish,
-   NULL,			/* Cancel func */
+   NULL,                        /* Cancel func */
    rectangle_factory_create_object,
    rectangle_factory_set_xy
 };

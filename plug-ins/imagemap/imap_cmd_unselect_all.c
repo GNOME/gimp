@@ -36,8 +36,8 @@ static CmdExecuteValue_t unselect_all_command_execute(Command_t *command);
 static CommandClass_t unselect_all_command_class = {
    unselect_all_command_destruct,
    unselect_all_command_execute,
-   NULL,			/* unselect_all_command_undo */
-   NULL				/* unselect_all_command_redo */
+   NULL,                        /* unselect_all_command_undo */
+   NULL                         /* unselect_all_command_redo */
 };
 
 typedef struct {
@@ -53,7 +53,7 @@ unselect_all_command_new(ObjectList_t *list, Object_t *exception)
    command->list = list;
    command->exception = (exception) ? object_ref(exception) : exception;
    return command_init(&command->parent, _("Unselect All"),
-		       &unselect_all_command_class);
+                       &unselect_all_command_class);
 }
 
 static void
@@ -79,7 +79,7 @@ unselect_all_command_execute(Command_t *parent)
    CmdExecuteValue_t rvalue;
 
    id = object_list_add_select_cb(command->list, select_one_object,
-				  command);
+                                  command);
    if (object_list_deselect_all(command->list, command->exception)) {
       rvalue = CMD_APPEND;
    } else {

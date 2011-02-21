@@ -75,12 +75,12 @@ do_source_dialog(void)
 
       swin = gtk_scrolled_window_new(NULL, NULL);
       gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin),
-					  GTK_SHADOW_IN);
+                                          GTK_SHADOW_IN);
       gtk_widget_set_size_request(swin, 400, 300);
       gtk_box_pack_start(GTK_BOX(dialog->vbox), swin, TRUE, TRUE, 0);
       gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin),
-				     GTK_POLICY_AUTOMATIC,
-				     GTK_POLICY_AUTOMATIC);
+                                     GTK_POLICY_AUTOMATIC,
+                                     GTK_POLICY_AUTOMATIC);
       gtk_widget_show(swin);
       gtk_container_add(GTK_CONTAINER(swin), text);
    }

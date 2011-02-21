@@ -39,11 +39,11 @@ object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
 #ifdef _TEMP_
    gtk_widget_set_sensitive(popup->up, (position > 1) ? TRUE : FALSE);
    gtk_widget_set_sensitive(popup->down,
-			    (position < g_list_length(obj->list->list))
-			    ? TRUE : FALSE);
+                            (position < g_list_length(obj->list->list))
+                            ? TRUE : FALSE);
 #endif
    gtk_menu_popup(GTK_MENU(popup->menu), NULL, NULL, NULL, NULL,
-		  event->button, event->time);
+                  event->button, event->time);
 }
 
 void

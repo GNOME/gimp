@@ -36,7 +36,7 @@ static CommandClass_t object_move_command_class = {
    object_move_command_destruct,
    object_move_command_execute,
    object_move_command_undo,
-   NULL				/* object_move_command_redo */
+   NULL                         /* object_move_command_redo */
 };
 
 typedef struct {
@@ -54,7 +54,7 @@ object_move_command_new(Object_t *obj, gint dx, gint dy)
    command->dx = dx;
    command->dy = dy;
    return command_init(&command->parent, _("Move"),
-		       &object_move_command_class);
+                       &object_move_command_class);
 }
 
 static void

@@ -31,10 +31,10 @@
 static CmdExecuteValue_t cut_object_command_execute(Command_t *parent);
 
 static CommandClass_t cut_object_command_class = {
-   NULL,			/* cut_object_command_destruct */
+   NULL,                        /* cut_object_command_destruct */
    cut_object_command_execute,
-   NULL,			/* cut_object_command_undo */
-   NULL				/* cut_object_command_redo */
+   NULL,                        /* cut_object_command_undo */
+   NULL                         /* cut_object_command_redo */
 };
 
 typedef struct {
@@ -48,7 +48,7 @@ cut_object_command_new(Object_t *obj)
    Command_t *parent;
 
    parent = command_init(&command->parent, _("Cut"),
-			 &cut_object_command_class);
+                         &cut_object_command_class);
    command_add_subcommand(parent, copy_object_command_new(obj));
    command_add_subcommand(parent, delete_command_new(obj->list, obj));
 

@@ -32,10 +32,10 @@ static CmdExecuteValue_t copy_command_execute(Command_t *parent);
 static void copy_command_undo(Command_t *parent);
 
 static CommandClass_t copy_command_class = {
-   NULL,			/* copy_command_destruct */
+   NULL,                        /* copy_command_destruct */
    copy_command_execute,
    copy_command_undo,
-   NULL				/* copy_command_redo */
+   NULL                         /* copy_command_redo */
 };
 
 typedef struct {
@@ -58,7 +58,7 @@ copy_command_execute(Command_t *parent)
 {
    CopyCommand_t *command = (CopyCommand_t*) parent;
    command->paste_buffer = object_list_copy(command->paste_buffer,
-					    get_paste_buffer());
+                                            get_paste_buffer());
    object_list_copy_to_paste_buffer(command->list);
    return CMD_APPEND;
 }

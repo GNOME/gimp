@@ -176,7 +176,7 @@ do_file_error_dialog (const char *error,
       gimp_filename_to_utf8 (filename));
 
    g_signal_connect_swapped (dialog, "response",
-			     G_CALLBACK (gtk_widget_destroy),
-			     dialog);
+                             G_CALLBACK (gtk_widget_destroy),
+                             dialog);
    gtk_dialog_run (GTK_DIALOG (dialog));
 }

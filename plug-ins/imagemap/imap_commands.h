@@ -37,13 +37,13 @@ Command_t *delete_command_new(ObjectList_t *list, Object_t *obj);
 Command_t *delete_point_command_new(Object_t *obj, GdkPoint *point);
 Command_t *edit_object_command_new(Object_t *obj);
 Command_t *gimp_guides_command_new(ObjectList_t *list,
-				   GimpDrawable *_drawable);
+                                   GimpDrawable *_drawable);
 Command_t *guides_command_new(ObjectList_t *list);
 Command_t *insert_point_command_new(Object_t *obj, gint x, gint y, gint edge);
 Command_t *move_down_command_new(ObjectList_t *list);
 Command_t *move_command_new(Preview_t *preview, Object_t *obj, gint x, gint y);
 Command_t *move_sash_command_new(GtkWidget *widget, Object_t *obj,
-				 gint x, gint y, MoveSashFunc_t sash_func);
+                                 gint x, gint y, MoveSashFunc_t sash_func);
 Command_t *move_selected_command_new(ObjectList_t *list, gint dx, gint dy);
 Command_t *move_to_front_command_new(ObjectList_t *list);
 Command_t *move_up_command_new(ObjectList_t *list);
@@ -56,7 +56,7 @@ Command_t *select_command_new(Object_t *obj);
 Command_t *select_next_command_new(ObjectList_t *list);
 Command_t *select_prev_command_new(ObjectList_t *list);
 Command_t *select_region_command_new(GtkWidget *widget, ObjectList_t *list,
-				     gint x, gint y);
+                                     gint x, gint y);
 Command_t *send_to_back_command_new(ObjectList_t *list);
 Command_t *unselect_all_command_new(ObjectList_t *list, Object_t *exception);
 Command_t *unselect_command_new(Object_t *obj);

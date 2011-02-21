@@ -59,7 +59,7 @@ dialog_response (GtkWidget       *widget,
 
 void
 default_dialog_set_ok_cb(DefaultDialog_t *dialog, void (*ok_cb)(gpointer),
-			 gpointer ok_cb_data)
+                         gpointer ok_cb_data)
 {
    dialog->ok_cb = ok_cb;
    dialog->ok_cb_data = ok_cb_data;
@@ -67,8 +67,8 @@ default_dialog_set_ok_cb(DefaultDialog_t *dialog, void (*ok_cb)(gpointer),
 
 void
 default_dialog_set_apply_cb(DefaultDialog_t *dialog,
-			    void (*apply_cb)(gpointer),
-			    gpointer apply_cb_data)
+                            void (*apply_cb)(gpointer),
+                            gpointer apply_cb_data)
 {
    dialog->apply_cb = apply_cb;
    dialog->apply_cb_data = apply_cb_data;
@@ -76,8 +76,8 @@ default_dialog_set_apply_cb(DefaultDialog_t *dialog,
 
 void
 default_dialog_set_cancel_cb(DefaultDialog_t *dialog,
-			     void (*cancel_cb)(gpointer),
-			     gpointer cancel_cb_data)
+                             void (*cancel_cb)(gpointer),
+                             gpointer cancel_cb_data)
 {
    dialog->cancel_cb = cancel_cb;
    dialog->cancel_cb_data = cancel_cb_data;
@@ -116,7 +116,7 @@ make_default_dialog (const gchar *title)
                      G_CALLBACK (dialog_response),
                      data);
    g_signal_connect (data->dialog, "destroy",
-		     G_CALLBACK (gtk_widget_destroyed),
+                     G_CALLBACK (gtk_widget_destroyed),
                      &data->dialog);
 
    data->vbox = gtk_vbox_new (FALSE, 12);

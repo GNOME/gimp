@@ -37,8 +37,8 @@ static CmdExecuteValue_t move_command_execute(Command_t *parent);
 static CommandClass_t move_command_class = {
    move_command_destruct,
    move_command_execute,
-   NULL,			/* move_command_undo */
-   NULL				/* move_command_redo */
+   NULL,                        /* move_command_undo */
+   NULL                         /* move_command_redo */
 };
 
 typedef struct {
@@ -58,7 +58,7 @@ typedef struct {
    gint image_width;
    gint image_height;
 
-   GdkCursorType cursor;	/* Remember previous cursor */
+   GdkCursorType cursor;        /* Remember previous cursor */
    gboolean moved_first_time;
 } MoveCommand_t;
 
@@ -73,7 +73,7 @@ move_command_new(Preview_t *preview, Object_t *obj, gint x, gint y)
    command->start_x = x;
    command->start_y = y;
    object_get_dimensions(obj, &command->obj_x, &command->obj_y,
-			 &command->obj_width, &command->obj_height);
+                         &command->obj_width, &command->obj_height);
    command->obj_start_x = command->obj_x;
    command->obj_start_y = command->obj_y;
 
@@ -149,7 +149,7 @@ button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    command->obj_y -= command->obj_start_y;
    if (command->obj_x || command->obj_y)
       command_list_add(object_move_command_new(command->obj, command->obj_x,
-					       command->obj_y));
+                                               command->obj_y));
 
    /*   preview_thaw(); */
 }

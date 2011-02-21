@@ -34,19 +34,19 @@ static CmdExecuteValue_t insert_point_command_execute(Command_t *parent);
 static void insert_point_command_undo(Command_t *parent);
 
 static CommandClass_t insert_point_command_class = {
-   NULL,			/* insert_point_command_destruct */
+   NULL,                        /* insert_point_command_destruct */
    insert_point_command_execute,
    insert_point_command_undo,
-   NULL				/* insert_point_command_redo */
+   NULL                         /* insert_point_command_redo */
 };
 
 typedef struct {
-   Command_t 	parent;
+   Command_t    parent;
    Polygon_t   *polygon;
-   gint		x;
-   gint		y;
-   gint		edge;
-   gint		position;
+   gint         x;
+   gint         y;
+   gint         edge;
+   gint         position;
 } InsertPointCommand_t;
 
 Command_t*
@@ -59,7 +59,7 @@ insert_point_command_new(Object_t *obj, gint x, gint y, gint edge)
    command->y = y;
    command->edge = edge;
    return command_init(&command->parent, _("Insert Point"),
-		       &insert_point_command_class);
+                       &insert_point_command_class);
 }
 
 static CmdExecuteValue_t
@@ -75,7 +75,7 @@ insert_point_command_execute(Command_t *parent)
       command->position = command->edge - 1;
    } else {
       polygon->points = g_list_insert(polygon->points, (gpointer) point,
-				      command->edge);
+                                      command->edge);
       command->position = command->edge;
    }
    redraw_preview();
@@ -92,5 +92,5 @@ insert_point_command_undo(Command_t *parent)
 
    g_free(p->data);
    polygon->points = g_list_remove_link(polygon->points, p);
-   redraw_preview();		/* Fix me! */
+   redraw_preview();            /* Fix me! */
 }

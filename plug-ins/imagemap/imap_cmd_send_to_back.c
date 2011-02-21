@@ -31,10 +31,10 @@
 static CmdExecuteValue_t send_to_back_command_execute(Command_t *parent);
 
 static CommandClass_t send_to_back_command_class = {
-   NULL,			/* send_to_back_command_destruct, */
+   NULL,                        /* send_to_back_command_destruct, */
    send_to_back_command_execute,
-   NULL, 			/* send_to_back_command_undo */
-   NULL				/* send_to_back_command_redo */
+   NULL,                        /* send_to_back_command_undo */
+   NULL                         /* send_to_back_command_redo */
 };
 
 typedef struct {
@@ -48,7 +48,7 @@ send_to_back_command_new(ObjectList_t *list)
    SendToBackCommand_t *command = g_new(SendToBackCommand_t, 1);
    command->list = list;
    return command_init(&command->parent, _("Send To Back"),
-		       &send_to_back_command_class);
+                       &send_to_back_command_class);
 }
 
 static void
@@ -56,7 +56,7 @@ remove_one_object(Object_t *obj, gpointer data)
 {
    SendToBackCommand_t *command = (SendToBackCommand_t*) data;
    command_add_subcommand(&command->parent,
-			  delete_command_new(command->list, obj));
+                          delete_command_new(command->list, obj));
 }
 
 static void
@@ -64,7 +64,7 @@ add_one_object(Object_t *obj, gpointer data)
 {
    SendToBackCommand_t *command = (SendToBackCommand_t*) data;
    command_add_subcommand(&command->parent,
-			  create_command_new(command->list, obj));
+                          create_command_new(command->list, obj));
 }
 
 static CmdExecuteValue_t

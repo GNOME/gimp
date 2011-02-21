@@ -36,7 +36,7 @@ static CommandClass_t unselect_command_class = {
    unselect_command_destruct,
    unselect_command_execute,
    unselect_command_undo,
-   NULL				/* unselect_command_redo */
+   NULL                         /* unselect_command_redo */
 };
 
 typedef struct {
@@ -50,7 +50,7 @@ unselect_command_new(Object_t *obj)
    UnselectCommand_t *command = g_new(UnselectCommand_t, 1);
    command->obj = object_ref(obj);
    return command_init(&command->parent, _("Unselect"),
-		       &unselect_command_class);
+                       &unselect_command_class);
 }
 
 static void

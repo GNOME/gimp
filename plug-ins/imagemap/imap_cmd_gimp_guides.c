@@ -38,18 +38,18 @@
 #include "libgimp/stdplugins-intl.h"
 
 typedef struct {
-   DefaultDialog_t 	*dialog;
+   DefaultDialog_t      *dialog;
 
-   ObjectList_t		*list;
-   GimpDrawable		*drawable;
+   ObjectList_t         *list;
+   GimpDrawable         *drawable;
 
-   GtkWidget		*alternate;
-   GtkWidget		*all;
-   GtkWidget		*left_border;
-   GtkWidget		*right_border;
-   GtkWidget		*upper_border;
-   GtkWidget		*lower_border;
-   GtkWidget		*url;
+   GtkWidget            *alternate;
+   GtkWidget            *all;
+   GtkWidget            *left_border;
+   GtkWidget            *right_border;
+   GtkWidget            *upper_border;
+   GtkWidget            *lower_border;
+   GtkWidget            *url;
 } GimpGuidesDialog_t;
 
 static gint
@@ -80,7 +80,7 @@ gimp_guides_ok_cb(gpointer data)
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->right_border)))
       vguides = g_slist_append(vguides,
-			       GINT_TO_POINTER(gimp_image_width(image_ID)));
+                               GINT_TO_POINTER(gimp_image_width(image_ID)));
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->upper_border)))
       hguides = g_slist_append(NULL, GINT_TO_POINTER(0));
@@ -89,7 +89,7 @@ gimp_guides_ok_cb(gpointer data)
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->lower_border)))
       hguides = g_slist_append(hguides,
-			       GINT_TO_POINTER(gimp_image_height(image_ID)));
+                               GINT_TO_POINTER(gimp_image_height(image_ID)));
 
    url = gtk_entry_get_text(GTK_ENTRY(param->url));
 
@@ -101,12 +101,12 @@ gimp_guides_ok_cb(gpointer data)
       gint position = gimp_image_get_guide_position(image_ID, guide_num);
 
       if (gimp_image_get_guide_orientation(image_ID, guide_num)
-	  == GIMP_ORIENTATION_HORIZONTAL) {
-	 hguides = g_slist_insert_sorted(hguides, GINT_TO_POINTER(position),
-					 guide_sort_func);
-      } else {			/* GIMP_ORIENTATION_VERTICAL */
-	 vguides = g_slist_insert_sorted(vguides, GINT_TO_POINTER(position),
-					 guide_sort_func);
+          == GIMP_ORIENTATION_HORIZONTAL) {
+         hguides = g_slist_insert_sorted(hguides, GINT_TO_POINTER(position),
+                                         guide_sort_func);
+      } else {                  /* GIMP_ORIENTATION_VERTICAL */
+         vguides = g_slist_insert_sorted(vguides, GINT_TO_POINTER(position),
+                                         guide_sort_func);
       }
       guide_num = gimp_image_find_next_guide(image_ID, guide_num);
    }
@@ -116,18 +116,18 @@ gimp_guides_ok_cb(gpointer data)
    subcommand_start(_("Use Gimp Guides"));
 
    for (hg = hguides; hg && hg->next;
-	hg = (all) ? hg->next : hg->next->next) {
+        hg = (all) ? hg->next : hg->next->next) {
       gint y = GPOINTER_TO_INT(hg->data);
       gint height = GPOINTER_TO_INT(hg->next->data) - y;
       for (vg = vguides; vg && vg->next;
-	   vg = (all) ? vg->next : vg->next->next) {
-	 gint x = GPOINTER_TO_INT(vg->data);
-	 gint width = GPOINTER_TO_INT(vg->next->data) - x;
-	 Object_t *obj = create_rectangle(x, y, width, height);
-	 Command_t *command = create_command_new(param->list, obj);
+           vg = (all) ? vg->next : vg->next->next) {
+         gint x = GPOINTER_TO_INT(vg->data);
+         gint width = GPOINTER_TO_INT(vg->next->data) - x;
+         Object_t *obj = create_rectangle(x, y, width, height);
+         Command_t *command = create_command_new(param->list, obj);
 
-	 object_set_url(obj, url);
-	 command_execute(command);
+         object_set_url(obj, url);
+         command_execute(command);
       }
    }
 
@@ -208,7 +208,7 @@ make_gimp_guides_dialog(void)
 
 static void
 init_gimp_guides_dialog(GimpGuidesDialog_t *dialog, ObjectList_t *list,
-			GimpDrawable *drawable)
+                        GimpDrawable *drawable)
 {
    dialog->list = list;
    dialog->drawable = drawable;
@@ -229,10 +229,10 @@ do_create_gimp_guides_dialog(ObjectList_t *list, GimpDrawable *drawable)
 static CmdExecuteValue_t gimp_guides_command_execute(Command_t *parent);
 
 static CommandClass_t gimp_guides_command_class = {
-   NULL,			/* guides_command_destruct */
+   NULL,                        /* guides_command_destruct */
    gimp_guides_command_execute,
-   NULL,			/* guides_command_undo */
-   NULL				/* guides_command_redo */
+   NULL,                        /* guides_command_undo */
+   NULL                         /* guides_command_redo */
 };
 
 typedef struct {
@@ -248,7 +248,7 @@ gimp_guides_command_new(ObjectList_t *list, GimpDrawable *drawable)
    command->list = list;
    command->drawable = drawable;
    return command_init(&command->parent, _("Use Gimp Guides"),
-		       &gimp_guides_command_class);
+                       &gimp_guides_command_class);
 }
 
 static CmdExecuteValue_t

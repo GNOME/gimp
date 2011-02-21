@@ -44,7 +44,7 @@ typedef struct {
   GtkWidget *zoom_in;
   GtkWidget *zoom_out;
 
-  gint	      nr_off_mru_items;
+  gint        nr_off_mru_items;
 } Menu_t;
 
 GtkWidget *menu_get_widget(const gchar *path);

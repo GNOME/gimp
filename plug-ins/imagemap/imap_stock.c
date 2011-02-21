@@ -32,13 +32,13 @@ static GtkIconFactory *imap_icon_factory = NULL;
 
 static GtkStockItem imap_stock_items[] =
 {
-  { IMAP_STOCK_CIRCLE,		NULL, 0, 0, NULL },
-  { IMAP_STOCK_COORD,  	 	NULL, 0, 0, NULL },
+  { IMAP_STOCK_CIRCLE,          NULL, 0, 0, NULL },
+  { IMAP_STOCK_COORD,           NULL, 0, 0, NULL },
   { IMAP_STOCK_DIMENSION,       NULL, 0, 0, NULL },
-  { IMAP_STOCK_JAVA, 		NULL, 0, 0, NULL },
-  { IMAP_STOCK_POLYGON,       	NULL, 0, 0, NULL },
-  { IMAP_STOCK_RECTANGLE,	NULL, 0, 0, NULL },
-  { IMAP_STOCK_TO_BACK,    	NULL, 0, 0, NULL },
+  { IMAP_STOCK_JAVA,            NULL, 0, 0, NULL },
+  { IMAP_STOCK_POLYGON,         NULL, 0, 0, NULL },
+  { IMAP_STOCK_RECTANGLE,       NULL, 0, 0, NULL },
+  { IMAP_STOCK_TO_BACK,         NULL, 0, 0, NULL },
   { IMAP_STOCK_TO_FRONT,        NULL, 0, 0, NULL }
   };
 

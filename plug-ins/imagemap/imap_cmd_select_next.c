@@ -31,10 +31,10 @@
 static CmdExecuteValue_t select_next_command_execute(Command_t *parent);
 
 static CommandClass_t select_next_command_class = {
-   NULL,			/* select_next_command_destruct */
+   NULL,                        /* select_next_command_destruct */
    select_next_command_execute,
-   NULL,			/* select_next_command_undo */
-   NULL				/* select_next_command_redo */
+   NULL,                        /* select_next_command_undo */
+   NULL                         /* select_next_command_redo */
 };
 
 typedef struct {
@@ -48,7 +48,7 @@ select_next_command_new(ObjectList_t *list)
    SelectNextCommand_t *command = g_new(SelectNextCommand_t, 1);
    command->list = list;
    return command_init(&command->parent, _("Select Next"),
-		       &select_next_command_class);
+                       &select_next_command_class);
 }
 
 static void

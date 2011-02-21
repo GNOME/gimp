@@ -31,10 +31,10 @@
 static CmdExecuteValue_t select_all_command_execute(Command_t *parent);
 
 static CommandClass_t select_all_command_class = {
-   NULL,			/* select_all_command_destruct, */
+   NULL,                        /* select_all_command_destruct, */
    select_all_command_execute,
-   NULL, 			/* select_all_command_undo */
-   NULL				/* select_all_command_redo */
+   NULL,                        /* select_all_command_undo */
+   NULL                         /* select_all_command_redo */
 };
 
 typedef struct {
@@ -48,7 +48,7 @@ select_all_command_new(ObjectList_t *list)
    SelectAllCommand_t *command = g_new(SelectAllCommand_t, 1);
    command->list = list;
    return command_init(&command->parent, _("Select All"),
-		       &select_all_command_class);
+                       &select_all_command_class);
 }
 
 static void

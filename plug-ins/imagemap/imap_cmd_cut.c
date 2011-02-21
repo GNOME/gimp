@@ -36,11 +36,11 @@ static CommandClass_t cut_command_class = {
    cut_command_destruct,
    cut_command_execute,
    cut_command_undo,
-   NULL				/* cut_command_redo */
+   NULL                         /* cut_command_redo */
 };
 
 typedef struct {
-   Command_t 	 parent;
+   Command_t     parent;
    ObjectList_t *list;
    ObjectList_t *paste_buffer;
 } CutCommand_t;
@@ -66,7 +66,7 @@ remove_one_object(Object_t *obj, gpointer data)
 {
    CutCommand_t *command = (CutCommand_t*) data;
    command_add_subcommand(&command->parent,
-			  delete_command_new(command->list, obj));
+                          delete_command_new(command->list, obj));
 }
 
 static CmdExecuteValue_t
@@ -76,7 +76,7 @@ cut_command_execute(Command_t *parent)
    gpointer id;
 
    command->paste_buffer = object_list_copy(command->paste_buffer,
-					    get_paste_buffer());
+                                            get_paste_buffer());
    id = object_list_add_remove_cb(command->list, remove_one_object, command);
    object_list_cut(command->list);
    object_list_remove_remove_cb(command->list, id);

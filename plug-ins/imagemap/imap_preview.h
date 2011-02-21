@@ -27,12 +27,12 @@
 
 typedef struct {
    GimpDrawable *drawable;
-   GtkWidget	*window;
-   GtkWidget	*preview;
-   GtkWidget	*hruler;
-   GtkWidget	*vruler;
-   gint		width;
-   gint		height;
+   GtkWidget    *window;
+   GtkWidget    *preview;
+   GtkWidget    *hruler;
+   GtkWidget    *vruler;
+   gint         width;
+   gint         height;
    gint         widget_width;
    gint         widget_height;
    GimpPixelRgn src_rgn;
@@ -53,6 +53,6 @@ gint preview_get_height(GtkWidget *preview);
 
 void preview_zoom(Preview_t *preview, gint zoom_factor);
 GdkCursorType preview_set_cursor(Preview_t *preview,
-				 GdkCursorType cursor_type);
+                                 GdkCursorType cursor_type);
 
 #endif /* _IMAP_PREVIEW_H */

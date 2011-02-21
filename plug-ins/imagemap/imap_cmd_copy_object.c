@@ -36,12 +36,12 @@ static CommandClass_t copy_object_command_class = {
    copy_object_command_destruct,
    copy_object_command_execute,
    copy_object_command_undo,
-   NULL				/* copy_object_command_redo */
+   NULL                         /* copy_object_command_redo */
 };
 
 typedef struct {
    Command_t parent;
-   Object_t	*obj;
+   Object_t     *obj;
    ObjectList_t *paste_buffer;
 } CopyObjectCommand_t;
 
@@ -52,7 +52,7 @@ copy_object_command_new(Object_t *obj)
    command->obj = object_ref(obj);
    command->paste_buffer = NULL;
    return command_init(&command->parent, _("Copy"),
-		       &copy_object_command_class);
+                       &copy_object_command_class);
 }
 
 static void
@@ -69,7 +69,7 @@ copy_object_command_execute(Command_t *parent)
    ObjectList_t *paste_buffer = get_paste_buffer();
 
    command->paste_buffer = object_list_copy(command->paste_buffer,
-					    paste_buffer);
+                                            paste_buffer);
    clear_paste_buffer();
    object_list_append(paste_buffer, object_clone(command->obj));
 

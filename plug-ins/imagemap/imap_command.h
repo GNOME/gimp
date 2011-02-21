@@ -43,8 +43,8 @@ struct CommandClass_t {
 struct Command_t {
    CommandClass_t      *class;
    CommandList_t       *sub_commands;
-   const gchar	       *name;
-   gboolean 		locked;
+   const gchar         *name;
+   gboolean             locked;
 };
 
 
@@ -65,8 +65,8 @@ struct CommandList_t {
    CommandList_t *parent;
    gint undo_levels;
    GList *list;
-   GList *undo;			/* Pointer to current undo command */
-   GList *redo;			/* Pointer to current redo command */
+   GList *undo;                 /* Pointer to current undo command */
+   GList *redo;                 /* Pointer to current redo command */
    CommandListCallback_t update_cb;
 };
 
@@ -84,7 +84,7 @@ Command_t *command_list_get_redo_command(void);
 
 Command_t *command_new(void (*func)(void));
 Command_t *command_init(Command_t *command, const gchar *name,
-			CommandClass_t *class);
+                        CommandClass_t *class);
 void command_execute(Command_t *command);
 void command_undo(Command_t *command);
 void command_redo(Command_t *command);

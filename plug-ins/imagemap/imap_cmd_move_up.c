@@ -31,10 +31,10 @@
 static CmdExecuteValue_t move_up_command_execute(Command_t *parent);
 
 static CommandClass_t move_up_command_class = {
-   NULL,			/* move_up_command_destruct */
+   NULL,                        /* move_up_command_destruct */
    move_up_command_execute,
-   NULL,			/* move_up_command_undo */
-   NULL				/* move_up_command_redo */
+   NULL,                        /* move_up_command_undo */
+   NULL                         /* move_up_command_redo */
 };
 
 typedef struct {
@@ -59,7 +59,7 @@ move_up_one_object(Object_t *obj, gpointer data)
 
    if (command->add) {
       command_add_subcommand(&command->parent,
-			     object_up_command_new(command->list, obj));
+                             object_up_command_new(command->list, obj));
       command->add = FALSE;
    }
    else {

@@ -59,7 +59,7 @@ static GList*
 mru_find_link(MRU_t *mru, const gchar *filename)
 {
    return g_list_find_custom(mru->list, (gpointer) filename,
-			     (GCompareFunc) strcmp);
+                             (GCompareFunc) strcmp);
 }
 
 void
@@ -82,7 +82,7 @@ mru_set_first(MRU_t *mru, const gchar *filename)
    GList *link = mru_find_link(mru, filename);
    if (link)
       mru->list = g_list_prepend(g_list_remove_link(mru->list, link),
-				 link->data);
+                                 link->data);
    else
       mru_add(mru, filename);
 }

@@ -42,34 +42,34 @@
 #include "libgimp/stdplugins-intl.h"
 
 typedef struct {
-   DefaultDialog_t 	*dialog;
-   GtkWidget		*notebook;
-   GtkWidget		*ncsa;
-   GtkWidget		*cern;
-   GtkWidget		*csim;
-   GtkWidget		*prompt_for_area_info;
-   GtkWidget		*require_default_url;
-   GtkWidget		*show_area_handle;
-   GtkWidget		*keep_circles_round;
-   GtkWidget		*show_url_tip;
-   GtkWidget		*use_doublesized;
+   DefaultDialog_t      *dialog;
+   GtkWidget            *notebook;
+   GtkWidget            *ncsa;
+   GtkWidget            *cern;
+   GtkWidget            *csim;
+   GtkWidget            *prompt_for_area_info;
+   GtkWidget            *require_default_url;
+   GtkWidget            *show_area_handle;
+   GtkWidget            *keep_circles_round;
+   GtkWidget            *show_url_tip;
+   GtkWidget            *use_doublesized;
 
-   GtkWidget		*undo_levels;
-   GtkWidget		*mru_size;
+   GtkWidget            *undo_levels;
+   GtkWidget            *mru_size;
 
-   GtkWidget		*normal_fg;
-   GtkWidget		*normal_bg;
-   GtkWidget		*selected_fg;
-   GtkWidget		*selected_bg;
+   GtkWidget            *normal_fg;
+   GtkWidget            *normal_bg;
+   GtkWidget            *selected_fg;
+   GtkWidget            *selected_bg;
 
-   GtkWidget		*threshold;
-   GtkWidget		*auto_convert;
+   GtkWidget            *threshold;
+   GtkWidget            *auto_convert;
 
-   PreferencesData_t	*old_data;
+   PreferencesData_t    *old_data;
 } PreferencesDialog_t;
 
 static void get_button_colors (PreferencesDialog_t *dialog,
-			       ColorSelData_t *colors);
+                               ColorSelData_t *colors);
 
 static gint
 parse_map_type(void)
@@ -117,7 +117,7 @@ parse_line(PreferencesData_t *data, char *line)
    char *token;
    ColorSelData_t *colors = &data->colors;
 
-   line++;			/* Skip '(' */
+   line++;                      /* Skip '(' */
    token = strtok(line, " ");
 
    if (!strcmp(token, "default-map-type")) {
@@ -137,11 +137,11 @@ parse_line(PreferencesData_t *data, char *line)
    } else if (!strcmp(token, "mru-size")) {
       data->mru_size = parse_int();
       if (data->mru_size < 1)
-	data->mru_size = 1;
+        data->mru_size = 1;
    } else if (!strcmp(token, "undo-levels")) {
       data->undo_levels = parse_int();
       if (data->undo_levels < 1)
-	data->undo_levels = 1;
+        data->undo_levels = 1;
    } else if (!strcmp(token, "normal-fg-color")) {
       parse_color(&colors->normal_fg);
    } else if (!strcmp(token, "normal-bg-color")) {
@@ -170,9 +170,9 @@ preferences_load(PreferencesData_t *data)
    g_free(filename);
    if (in) {
       while (fgets(buf, sizeof(buf), in)) {
-	 if (*buf != '\n' && *buf != '#') {
-	    parse_line(data, buf);
-	 }
+         if (*buf != '\n' && *buf != '#') {
+            parse_line(data, buf);
+         }
       }
       fclose(in);
       return TRUE;
@@ -193,40 +193,40 @@ preferences_save(PreferencesData_t *data)
    if (out) {
       fprintf(out, "# Image map plug-in resource file\n\n");
       if (data->default_map_type == NCSA)
-	 fprintf(out, "(default-map-type ncsa)\n");
+         fprintf(out, "(default-map-type ncsa)\n");
       else if (data->default_map_type == CERN)
-	 fprintf(out, "(default-map-type cern)\n");
+         fprintf(out, "(default-map-type cern)\n");
       else
-	 fprintf(out, "(default-map-type csim)\n");
+         fprintf(out, "(default-map-type csim)\n");
 
       fprintf(out, "(prompt-for-area-info %s)\n",
-	      (data->prompt_for_area_info) ? "yes" : "no");
+              (data->prompt_for_area_info) ? "yes" : "no");
       fprintf(out, "(require-default-url %s)\n",
-	      (data->require_default_url) ? "yes" : "no");
+              (data->require_default_url) ? "yes" : "no");
       fprintf(out, "(show-area-handle %s)\n",
-	      (data->show_area_handle) ? "yes" : "no");
+              (data->show_area_handle) ? "yes" : "no");
       fprintf(out, "(keep-circles-round %s)\n",
-	      (data->keep_circles_round) ? "yes" : "no");
+              (data->keep_circles_round) ? "yes" : "no");
       fprintf(out, "(show-url-tip %s)\n",
-	      (data->show_url_tip) ? "yes" : "no");
+              (data->show_url_tip) ? "yes" : "no");
       fprintf(out, "(use-doublesized %s)\n",
-	      (data->use_doublesized) ? "yes" : "no");
+              (data->use_doublesized) ? "yes" : "no");
 
       fprintf(out, "(undo-levels %d)\n", data->undo_levels);
       fprintf(out, "(mru-size %d)\n", data->mru_size);
 
       fprintf(out, "(normal-fg-color %d %d %d)\n",
-	      colors->normal_fg.red, colors->normal_fg.green,
-	      colors->normal_fg.blue);
+              colors->normal_fg.red, colors->normal_fg.green,
+              colors->normal_fg.blue);
       fprintf(out, "(normal-bg-color %d %d %d)\n",
-	      colors->normal_bg.red, colors->normal_bg.green,
-	      colors->normal_bg.blue);
+              colors->normal_bg.red, colors->normal_bg.green,
+              colors->normal_bg.blue);
       fprintf(out, "(selected-fg-color %d %d %d)\n",
-	      colors->selected_fg.red, colors->selected_fg.green,
-	      colors->selected_fg.blue);
+              colors->selected_fg.red, colors->selected_fg.green,
+              colors->selected_fg.blue);
       fprintf(out, "(selected-bg-color %d %d %d)\n",
-	      colors->selected_bg.red, colors->selected_bg.green,
-	      colors->selected_bg.blue);
+              colors->selected_bg.red, colors->selected_bg.green,
+              colors->selected_bg.blue);
 
       mru_write(get_mru(), out);
 
@@ -338,7 +338,7 @@ create_tab(GtkWidget *notebook, const gchar *label, gint rows, gint cols)
    gtk_widget_show(table);
 
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox,
-			    gtk_label_new_with_mnemonic(label));
+                            gtk_label_new_with_mnemonic(label));
 
    return table;
 }
@@ -380,7 +380,7 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
       create_check_button_in_table(table, 5, 0, _("Show area URL _tip"));
    data->use_doublesized =
       create_check_button_in_table(table, 6, 0,
-				   _("_Use double-sized grab handles"));
+                                   _("_Use double-sized grab handles"));
    gtk_widget_show(frame);
 }
 
@@ -391,25 +391,25 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *label;
 
    label = create_label_in_table(table, 0, 0,
-				 _("Number of _undo levels (1 - 99):"));
+                                 _("Number of _undo levels (1 - 99):"));
    data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1,
-						   99);
+                                                   99);
 
    label = create_label_in_table(table, 1, 0,
-				 _("Number of M_RU entries (1 - 16):"));
+                                 _("Number of M_RU entries (1 - 16):"));
    data->mru_size = create_spin_button_in_table(table, label, 1, 1, 1, 1, 16);
 }
 
 static GtkWidget*
 create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
-		   gint col)
+                   gint col)
 {
    GimpRGB color = {0.0, 0.0, 0.0, 1.0};
    GtkWidget *area = gimp_color_button_new (_("Select Color"), 16, 8, &color,
-					    GIMP_COLOR_AREA_FLAT);
+                                            GIMP_COLOR_AREA_FLAT);
    gimp_color_button_set_update (GIMP_COLOR_BUTTON (area), TRUE);
    gtk_table_attach_defaults (GTK_TABLE (table), area, col, col + 1, row,
-			      row + 1);
+                              row + 1);
    gtk_widget_show (area);
 
    return area;
@@ -437,7 +437,7 @@ create_contiguous_regions_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *label;
 
    label = create_label_in_table(table, 0, 0,
-				 _("_Threshold:"));
+                                 _("_Threshold:"));
    data->auto_convert =
       create_check_button_in_table(table, 1, 0, _("_Automatically convert"));
 }
@@ -491,20 +491,20 @@ do_preferences_dialog(void)
       GTK_TOGGLE_BUTTON(dialog->prompt_for_area_info),
       old_data->prompt_for_area_info);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->require_default_url),
-				old_data->require_default_url);
+                                old_data->require_default_url);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->show_area_handle),
-				old_data->show_area_handle);
+                                old_data->show_area_handle);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->keep_circles_round),
-				old_data->keep_circles_round);
+                                old_data->keep_circles_round);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->show_url_tip),
-				old_data->show_url_tip);
+                                old_data->show_url_tip);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->use_doublesized),
-				old_data->use_doublesized);
+                                old_data->use_doublesized);
 
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->undo_levels),
-			     old_data->undo_levels);
+                             old_data->undo_levels);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->mru_size),
-			     old_data->mru_size);
+                             old_data->mru_size);
 
    set_button_colors(dialog, &old_data->colors);
 

@@ -127,7 +127,7 @@ grid_assign_value(GtkWidget *widget, gpointer data, gint *value)
    GridDialog_t *dialog = (GridDialog_t*) data;
    if (dialog->enable_preview) {
       *value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
-      redraw_preview();		/* Fix me! */
+      redraw_preview();         /* Fix me! */
    }
 }
 
@@ -138,7 +138,7 @@ width_changed_cb(GtkWidget *widget, gpointer data)
 
    grid_assign_value(widget, data, &grid_width);
    if (gimp_chain_button_get_active(
-	  GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
+          GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->height), value);
    }
@@ -151,7 +151,7 @@ height_changed_cb(GtkWidget *widget, gpointer data)
 
    grid_assign_value(widget, data, &grid_height);
    if (gimp_chain_button_get_active(
-	  GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
+          GIMP_CHAIN_BUTTON(dialog->chain_width_height))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->width), value);
    }
@@ -164,7 +164,7 @@ left_changed_cb(GtkWidget *widget, gpointer data)
 
    grid_assign_value(widget, data, &grid_left);
    if (gimp_chain_button_get_active(
-	  GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
+          GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->top), value);
    }
@@ -177,7 +177,7 @@ top_changed_cb(GtkWidget *widget, gpointer data)
 
    grid_assign_value(widget, data, &grid_top);
    if (gimp_chain_button_get_active(
-	  GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
+          GIMP_CHAIN_BUTTON(dialog->chain_left_top))) {
       gint value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->left), value);
    }
@@ -286,7 +286,7 @@ create_grid_settings_dialog(void)
    gtk_widget_show(chain_button);
 
    data->preview = create_check_button_in_table(main_table, 3, 0,
-						_("_Preview"));
+                                                _("_Preview"));
    g_signal_connect(data->preview, "toggled",
                     G_CALLBACK (toggle_preview_cb), (gpointer) data);
    gtk_widget_show(data->preview);
@@ -343,8 +343,8 @@ draw_crosses(GdkWindow *window, GdkGC* gc, gint width, gint height)
 
    for (x = grid_left; x < width; x += grid_width) {
       for (y = grid_top; y < height; y += grid_height) {
-	 draw_line(window, gc, x - 3, y, x + 3, y);
-	 draw_line(window, gc, x, y - 3, x, y + 3);
+         draw_line(window, gc, x - 3, y, x + 3, y);
+         draw_line(window, gc, x, y - 3, x, y + 3);
       }
    }
 }

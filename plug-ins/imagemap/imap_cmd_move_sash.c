@@ -40,19 +40,19 @@ static CommandClass_t move_sash_command_class = {
 };
 
 typedef struct {
-   Command_t 	parent;
+   Command_t    parent;
    GtkWidget   *widget;
    Object_t    *obj;
-   gint 	x;
-   gint 	y;
-   gint		image_width;
-   gint		image_height;
+   gint         x;
+   gint         y;
+   gint         image_width;
+   gint         image_height;
    MoveSashFunc_t sash_func;
 } MoveSashCommand_t;
 
 Command_t*
 move_sash_command_new(GtkWidget *widget, Object_t *obj,
-		      gint x, gint y, MoveSashFunc_t sash_func)
+                      gint x, gint y, MoveSashFunc_t sash_func)
 {
    MoveSashCommand_t *command = g_new(MoveSashCommand_t, 1);
    Command_t *parent;
@@ -66,7 +66,7 @@ move_sash_command_new(GtkWidget *widget, Object_t *obj,
    command->sash_func = sash_func;
 
    parent = command_init(&command->parent, _("Move Sash"),
-			 &move_sash_command_class);
+                         &move_sash_command_class);
    command_add_subcommand(parent, edit_object_command_new(obj));
 
    return parent;

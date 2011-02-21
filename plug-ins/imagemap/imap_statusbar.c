@@ -33,8 +33,8 @@
 StatusBar_t*
 make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
 {
-   StatusBar_t 	*statusbar = g_new(StatusBar_t, 1);
-   GtkWidget 	*hbox, *iconw;
+   StatusBar_t  *statusbar = g_new(StatusBar_t, 1);
+   GtkWidget    *hbox, *iconw;
 
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_box_pack_start(GTK_BOX(main_vbox), hbox, FALSE, FALSE, 0);
@@ -48,7 +48,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
 
    /* (x, y) coordinate */
    iconw = gtk_image_new_from_stock(IMAP_STOCK_COORD,
-				    GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                    GTK_ICON_SIZE_SMALL_TOOLBAR);
 
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
@@ -62,7 +62,7 @@ make_statusbar(GtkWidget *main_vbox, GtkWidget *window)
 
    /* Dimension info */
    iconw = gtk_image_new_from_stock(IMAP_STOCK_DIMENSION,
-				    GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                    GTK_ICON_SIZE_SMALL_TOOLBAR);
    gtk_box_pack_start(GTK_BOX(hbox), iconw, FALSE, FALSE, 10);
    gtk_widget_show(iconw);
 
@@ -98,8 +98,8 @@ statusbar_set_status(StatusBar_t *statusbar, const gchar *format, ...)
 
    statusbar_clear_status(statusbar);
    statusbar->message_id =
-			gtk_statusbar_push(GTK_STATUSBAR(statusbar->status),
-					   statusbar->status_id, scratch);
+                        gtk_statusbar_push(GTK_STATUSBAR(statusbar->status),
+                                           statusbar->status_id, scratch);
 }
 
 void
@@ -107,8 +107,8 @@ statusbar_clear_status(StatusBar_t *statusbar)
 {
    if (statusbar->message_id)
       gtk_statusbar_remove(GTK_STATUSBAR(statusbar->status),
-			   statusbar->status_id,
-			   statusbar->message_id);
+                           statusbar->status_id,
+                           statusbar->message_id);
 }
 
 void
@@ -147,5 +147,5 @@ statusbar_set_zoom(StatusBar_t *statusbar, gint factor)
 
    sprintf(scratch, "1:%d", factor);
    gtk_statusbar_push(GTK_STATUSBAR(statusbar->zoom), statusbar->zoom_id,
-		      scratch);
+                      scratch);
 }

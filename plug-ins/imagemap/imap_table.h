@@ -24,16 +24,16 @@
 #define _IMAP_TABLE_H
 
 GtkWidget *create_spin_button_in_table(GtkWidget *table, GtkWidget *label,
-				       int row, int col,
-				       int value, int min, int max);
+                                       int row, int col,
+                                       int value, int min, int max);
 GtkWidget *create_check_button_in_table(GtkWidget *table, int row, int col,
-					const char *text);
+                                        const char *text);
 GtkWidget *create_radio_button_in_table(GtkWidget *table, GSList *group,
-					int row, int col, const char *text);
+                                        int row, int col, const char *text);
 GtkWidget *create_label_in_table(GtkWidget *table, int row, int col,
-				 const char *text);
+                                 const char *text);
 GtkWidget *create_entry_in_table(GtkWidget *table, GtkWidget *label, int row,
-				 int col);
+                                 int col);
 
 #endif /* _IMAP_TABLE_H */
 

@@ -90,17 +90,17 @@ button_press_cb(GtkWidget *widget, GdkEventButton *event, Selection_t *data)
       data->doubleclick = FALSE;
 
       if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW (widget),
-					 (gint) event->x, (gint) event->y,
-					 &path, NULL, NULL, NULL)) {
-	GtkTreeIter iter;
+                                         (gint) event->x, (gint) event->y,
+                                         &path, NULL, NULL, NULL)) {
+        GtkTreeIter iter;
 
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (data->store), &iter,
-				     path)) {
-	  Object_t *obj;
-	  gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
-	  object_edit (obj, TRUE);
-	}
-	gtk_tree_path_free (path);
+        if (gtk_tree_model_get_iter (GTK_TREE_MODEL (data->store), &iter,
+                                     path)) {
+          Object_t *obj;
+          gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
+          object_edit (obj, TRUE);
+        }
+        gtk_tree_path_free (path);
       }
     } else {
       data->doubleclick = TRUE;
@@ -123,7 +123,7 @@ selection_set_selected(Selection_t *selection, gint row)
   GtkTreeIter iter;
 
   if (gtk_tree_model_iter_nth_child (GTK_TREE_MODEL (selection->store), &iter,
-				     NULL, row)) {
+                                     NULL, row)) {
     Object_t *obj;
 
     gtk_tree_model_get (GTK_TREE_MODEL(selection->store), &iter, 0, &obj, -1);
@@ -156,20 +156,20 @@ object_added_cb(Object_t *obj, gpointer data)
 
 static gboolean
 selection_find_object(Selection_t *selection, Object_t *lookup,
-		      GtkTreeIter *iter)
+                      GtkTreeIter *iter)
 {
   if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (selection->store),
-				     iter)) {
+                                     iter)) {
     do {
       Object_t *obj;
 
       gtk_tree_model_get (GTK_TREE_MODEL(selection->store), iter, 0,
-			  &obj, -1);
+                          &obj, -1);
       if (obj == lookup)
-	return TRUE;
+        return TRUE;
 
     } while (gtk_tree_model_iter_next (GTK_TREE_MODEL (selection->store),
-				       iter));
+                                       iter));
   }
   return FALSE;
 }
@@ -185,7 +185,7 @@ object_updated_cb(Object_t *obj, gpointer data)
 
     path = gtk_tree_model_get_path (GTK_TREE_MODEL (selection->store), &iter);
     gtk_tree_model_row_changed (GTK_TREE_MODEL (selection->store), path,
-				&iter);
+                                &iter);
   }
 }
 
@@ -231,7 +231,7 @@ selection_get_object (GtkTreeModel *tree_model, GtkTreeIter *iter)
 
 static void
 handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
-	    GtkSelectionData *data, guint info, guint time)
+            GtkSelectionData *data, guint info, guint time)
 {
   gboolean success = FALSE;
 
@@ -266,7 +266,7 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 
 static void
 render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell,
-	      GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
+              GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
   g_object_set(cell, "stock-id", object_get_stock_icon_name(obj), NULL);
@@ -274,7 +274,7 @@ render_image (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 
 static void
 render_nr (GtkTreeViewColumn *column, GtkCellRenderer *cell,
-	   GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
+           GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
   gchar *scratch;
@@ -286,7 +286,7 @@ render_nr (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 
 static void
 render_url (GtkTreeViewColumn *column, GtkCellRenderer *cell,
-	    GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
+            GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
   g_object_set (cell, "text", obj->url, NULL);
@@ -294,7 +294,7 @@ render_url (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 
 static void
 render_target (GtkTreeViewColumn *column, GtkCellRenderer *cell,
-	       GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
+               GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
   g_object_set (cell, "text", obj->target, NULL);
@@ -302,7 +302,7 @@ render_target (GtkTreeViewColumn *column, GtkCellRenderer *cell,
 
 static void
 render_comment (GtkTreeViewColumn *column, GtkCellRenderer *cell,
-		GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
+                GtkTreeModel *tree_model, GtkTreeIter *iter, gpointer data)
 {
   Object_t *obj = selection_get_object (tree_model, iter);
   g_object_set (cell, "text", obj->comment, NULL);
@@ -348,10 +348,10 @@ make_selection(ObjectList_t *object_list)
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (N_("#"),
-						     renderer,
-						     NULL);
+                                                     renderer,
+                                                     NULL);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
-					   render_nr, data, NULL);
+                                           render_nr, data, NULL);
   gtk_tree_view_column_set_min_width (column, 16);
   gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_column_set_alignment (column, 0.5);
@@ -363,12 +363,12 @@ make_selection(ObjectList_t *object_list)
   renderer = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start(column, renderer, FALSE);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
-					   render_image, data, NULL);
+                                           render_image, data, NULL);
 
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_cell_data_func (column, renderer, render_url, data,
-					   NULL);
+                                           NULL);
   gtk_tree_view_column_set_min_width (column, 80);
   gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_column_set_alignment (column, 0.5);
@@ -377,9 +377,9 @@ make_selection(ObjectList_t *object_list)
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("ALT Text"), renderer,
-						     NULL);
+                                                     NULL);
   gtk_tree_view_column_set_cell_data_func (column, renderer, render_comment,
-					   data, NULL);
+                                           data, NULL);
   gtk_tree_view_column_set_min_width (column, 64);
   gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_column_set_alignment (column, 0.5);
@@ -387,9 +387,9 @@ make_selection(ObjectList_t *object_list)
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Target"), renderer,
-						     NULL);
+                                                     NULL);
   gtk_tree_view_column_set_cell_data_func (column, renderer,
-					   render_target, data, NULL);
+                                           render_target, data, NULL);
   gtk_tree_view_column_set_min_width (column, 64);
   gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_column_set_alignment (column, 0.5);
@@ -407,15 +407,15 @@ make_selection(ObjectList_t *object_list)
 
   /* Drop support */
   gtk_drag_dest_set (list, GTK_DEST_DEFAULT_ALL, target_table, 2,
-		     GDK_ACTION_COPY);
+                     GDK_ACTION_COPY);
   g_signal_connect (list, "drag-data-received", G_CALLBACK(handle_drop), NULL);
 
   /* For handling doubleclick */
 
   g_signal_connect (list, "button-press-event",
-		    G_CALLBACK(button_press_cb), data);
+                    G_CALLBACK(button_press_cb), data);
   g_signal_connect (list, "button-release-event",
-		    G_CALLBACK(button_release_cb), data);
+                    G_CALLBACK(button_release_cb), data);
 
   /* Callbacks we are interested in */
   data->selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));

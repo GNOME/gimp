@@ -29,7 +29,7 @@
 
 typedef struct {
    GList       *list;
-   gint       	max_size;
+   gint         max_size;
 } MRU_t;
 
 MRU_t* mru_create(void);

@@ -31,10 +31,10 @@
 static CmdExecuteValue_t paste_command_execute(Command_t *parent);
 
 static CommandClass_t paste_command_class = {
-   NULL,			/* paste_command_destruct, */
+   NULL,                        /* paste_command_destruct, */
    paste_command_execute,
-   NULL,			/* paste_command_undo */
-   NULL				/* paste_command_redo */
+   NULL,                        /* paste_command_undo */
+   NULL                         /* paste_command_redo */
 };
 
 typedef struct {
@@ -55,7 +55,7 @@ paste_one_object(Object_t *obj, gpointer data)
 {
    PasteCommand_t *command = (PasteCommand_t*) data;
    command_add_subcommand(&command->parent,
-			  create_command_new(command->list, obj));
+                          create_command_new(command->list, obj));
 }
 
 static CmdExecuteValue_t
