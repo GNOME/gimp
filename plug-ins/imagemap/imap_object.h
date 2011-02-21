@@ -61,8 +61,8 @@ struct ObjectClass_t {
    Object_t* (*clone)(Object_t *obj);
    void (*assign)(Object_t *obj, Object_t *des);
    void (*normalize)(Object_t *obj);
-   void (*draw)(Object_t *obj, GdkWindow *window, GdkGC* gc);
-   void (*draw_sashes)(Object_t *obj, GdkWindow *window, GdkGC* gc);
+   void (*draw)(Object_t *obj, cairo_t *cr);
+   void (*draw_sashes)(Object_t *obj, cairo_t *cr);
    MoveSashFunc_t (*near_sash)(Object_t *obj, gint x, gint y);
    gboolean (*point_is_on)(Object_t *obj, gint x, gint y);
    void (*get_dimensions)(Object_t *obj, gint *x, gint *y, gint *width,
@@ -87,7 +87,7 @@ void object_unref(Object_t *obj);
 Object_t* object_init(Object_t *obj, ObjectClass_t *class);
 Object_t* object_clone(Object_t *obj);
 Object_t* object_assign(Object_t *src, Object_t *des);
-void object_draw(Object_t *obj, GdkWindow *window);
+void object_draw(Object_t *obj, cairo_t *cr);
 void object_edit(Object_t *obj, gboolean add);
 void object_select(Object_t *obj);
 void object_unselect(Object_t *obj);
@@ -171,8 +171,8 @@ void object_list_insert(ObjectList_t *list, gint position, Object_t *object);
 void object_list_remove(ObjectList_t *list, Object_t *object);
 void object_list_remove_link(ObjectList_t *list, GList *link);
 void object_list_update(ObjectList_t *list, Object_t *object);
-void object_list_draw(ObjectList_t *list, GdkWindow *window);
-void object_list_draw_selected(ObjectList_t *list, GdkWindow *window);
+void object_list_draw(ObjectList_t *list, cairo_t *cr);
+void object_list_draw_selected(ObjectList_t *list, cairo_t *cr);
 Object_t *object_list_find(ObjectList_t *list, gint x, gint y);
 Object_t *object_list_near_sash(ObjectList_t *list, gint x, gint y,
                                 MoveSashFunc_t *sash_func);

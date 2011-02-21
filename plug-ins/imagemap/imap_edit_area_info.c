@@ -394,7 +394,7 @@ edit_area_apply_cb(gpointer data)
    update_shape(obj);
 
    if (object_was_changed(param))
-      redraw_preview();
+      preview_redraw();
 }
 
 static void
@@ -429,7 +429,7 @@ edit_area_cancel_cb(gpointer data)
    object_unref(dialog->clone);
 
    if (changed)
-      redraw_preview();
+      preview_redraw();
 }
 
 static void

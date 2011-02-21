@@ -43,8 +43,8 @@ static gboolean rectangle_is_valid(Object_t *obj);
 static Object_t *rectangle_clone(Object_t *obj);
 static void rectangle_assign(Object_t *obj, Object_t *des);
 static void rectangle_normalize(Object_t *obj);
-static void rectangle_draw(Object_t *obj, GdkWindow *window, GdkGC* gc);
-static void rectangle_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC* gc);
+static void rectangle_draw(Object_t *obj, cairo_t *cr);
+static void rectangle_draw_sashes(Object_t *obj, cairo_t *cr);
 static MoveSashFunc_t rectangle_near_sash(Object_t *obj, gint x, gint y);
 static gboolean rectangle_point_is_on(Object_t *obj, gint x, gint y);
 static void rectangle_get_dimensions(Object_t *obj, gint *x, gint *y,
@@ -106,8 +106,7 @@ create_rectangle(gint x, gint y, gint width, gint height)
 }
 
 static void
-draw_any_rectangle(GdkWindow *window, GdkGC *gc, gint x, gint y, gint w,
-                   gint h)
+draw_any_rectangle(cairo_t *cr, gint x, gint y, gint w, gint h)
 {
    if (w < 0) {
       x += w;
@@ -117,7 +116,7 @@ draw_any_rectangle(GdkWindow *window, GdkGC *gc, gint x, gint y, gint w,
       y += h;
       h = -h;
    }
-   draw_rectangle(window, gc, FALSE, x, y, w, h);
+   draw_rectangle(cr, FALSE, x, y, w, h);
 }
 
 static gboolean
@@ -166,27 +165,27 @@ rectangle_normalize(Object_t *obj)
 }
 
 static void
-rectangle_draw(Object_t *obj, GdkWindow *window, GdkGC *gc)
+rectangle_draw(Object_t *obj, cairo_t *cr)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
-   draw_any_rectangle(window, gc, rectangle->x, rectangle->y,
+   draw_any_rectangle(cr, rectangle->x, rectangle->y,
                       rectangle->width, rectangle->height);
 }
 
 static void
-rectangle_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC *gc)
+rectangle_draw_sashes(Object_t *obj, cairo_t *cr)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
-   draw_sash(window, gc, rectangle->x, rectangle->y);
-   draw_sash(window, gc, rectangle->x + rectangle->width / 2, rectangle->y);
-   draw_sash(window, gc, rectangle->x + rectangle->width, rectangle->y);
-   draw_sash(window, gc, rectangle->x, rectangle->y + rectangle->height / 2);
-   draw_sash(window, gc, rectangle->x + rectangle->width,
+   draw_sash(cr, rectangle->x, rectangle->y);
+   draw_sash(cr, rectangle->x + rectangle->width / 2, rectangle->y);
+   draw_sash(cr, rectangle->x + rectangle->width, rectangle->y);
+   draw_sash(cr, rectangle->x, rectangle->y + rectangle->height / 2);
+   draw_sash(cr, rectangle->x + rectangle->width,
              rectangle->y + rectangle->height / 2);
-   draw_sash(window, gc, rectangle->x, rectangle->y + rectangle->height);
-   draw_sash(window, gc, rectangle->x + rectangle->width / 2,
+   draw_sash(cr, rectangle->x, rectangle->y + rectangle->height);
+   draw_sash(cr, rectangle->x + rectangle->width / 2,
              rectangle->y + rectangle->height);
-   draw_sash(window, gc, rectangle->x + rectangle->width,
+   draw_sash(cr, rectangle->x + rectangle->width,
              rectangle->y + rectangle->height);
 }
 

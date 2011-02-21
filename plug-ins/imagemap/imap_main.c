@@ -204,8 +204,8 @@ get_preferences(void)
 static void
 init_preferences(void)
 {
-  GdkColormap *colormap = gdk_drawable_get_colormap(gtk_widget_get_window (_dlg));
-  ColorSelData_t *colors = &_preferences.colors;
+   GdkColormap *colormap = gdk_drawable_get_colormap(gtk_widget_get_window (_dlg));
+   ColorSelData_t *colors = &_preferences.colors;
 
    colors->normal_fg.red = 0;
    colors->normal_fg.green = 0xFFFF;
@@ -223,26 +223,20 @@ init_preferences(void)
    colors->selected_bg.green = 0;
    colors->selected_bg.blue = 0xFFFF;
 
+   colors->interactive_fg.red = 0xFFFF;
+   colors->interactive_fg.green = 0;
+   colors->interactive_fg.blue = 0xFFFF;
+
+   colors->interactive_bg.red = 0xFFFF;
+   colors->interactive_bg.green = 0xFFFF;
+   colors->interactive_bg.blue = 0;
+
    preferences_load(&_preferences);
 
    gdk_colormap_alloc_color(colormap, &colors->normal_fg, FALSE, TRUE);
    gdk_colormap_alloc_color(colormap, &colors->normal_bg, FALSE, TRUE);
    gdk_colormap_alloc_color(colormap, &colors->selected_fg, FALSE, TRUE);
    gdk_colormap_alloc_color(colormap, &colors->selected_bg, FALSE, TRUE);
-
-   _preferences.normal_gc = gdk_gc_new(gtk_widget_get_window (_preview->preview));
-   _preferences.selected_gc = gdk_gc_new(gtk_widget_get_window (_preview->preview));
-
-   gdk_gc_set_line_attributes(_preferences.normal_gc, 1, GDK_LINE_DOUBLE_DASH,
-                              GDK_CAP_BUTT, GDK_JOIN_BEVEL);
-   gdk_gc_set_line_attributes(_preferences.selected_gc, 1,
-                              GDK_LINE_DOUBLE_DASH, GDK_CAP_BUTT,
-                              GDK_JOIN_BEVEL);
-
-   gdk_gc_set_foreground(_preferences.normal_gc, &colors->normal_fg);
-   gdk_gc_set_background(_preferences.normal_gc, &colors->normal_bg);
-   gdk_gc_set_foreground(_preferences.selected_gc, &colors->selected_fg);
-   gdk_gc_set_background(_preferences.selected_gc, &colors->selected_bg);
 
    mru_set_size(_mru, _preferences.mru_size);
    command_list_set_undo_level(_preferences.undo_levels);
@@ -309,76 +303,44 @@ get_real_coord(gint coord)
 }
 
 void
-draw_line(GdkWindow *window, GdkGC *gc, gint x1, gint y1, gint x2, gint y2)
+draw_line(cairo_t *cr, gint x1, gint y1, gint x2, gint y2)
 {
-   gdk_draw_line(window, gc, ZOOMED(x1), ZOOMED(y1), ZOOMED(x2), ZOOMED(y2));
+   cairo_move_to (cr, ZOOMED (x1) + .5, ZOOMED (y1) + .5);
+   cairo_line_to (cr, ZOOMED (x2) + .5, ZOOMED (y2) + .5);
+   cairo_stroke (cr);
 }
 
 void
-draw_rectangle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
+draw_rectangle(cairo_t *cr, gboolean filled, gint x, gint y,
                gint width, gint height)
 {
-   gdk_draw_rectangle(window, gc, filled, ZOOMED(x), ZOOMED(y),
-                      ZOOMED(width), ZOOMED(height));
+   cairo_rectangle (cr, ZOOMED (x) + (filled ? 0. : .5),
+                        ZOOMED (y) + (filled ? 0. : .5),
+                    ZOOMED (width), ZOOMED (height));
+   if (filled)
+      cairo_fill (cr);
+   else
+      cairo_stroke (cr);
 }
 
 void
-draw_arc(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
-         gint width, gint height, gint angle1, gint angle2)
+draw_circle(cairo_t *cr, gint x, gint y, gint r)
 {
-   gdk_draw_arc(window, gc, filled, ZOOMED(x), ZOOMED(y),
-                ZOOMED(width), ZOOMED(height), angle1, angle2);
+   cairo_arc (cr, ZOOMED (x), ZOOMED (y), ZOOMED (r), 0., 2 * M_PI);
+   cairo_stroke (cr);
 }
 
 void
-draw_circle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y, gint r)
+draw_polygon(cairo_t *cr, GList *list)
 {
-   draw_arc(window, gc, filled, x - r, y - r, 2 * r, 2 * r, 0, 360 * 64);
-}
-
-void
-draw_polygon(GdkWindow *window, GdkGC *gc, GList *list)
-{
-   gint       npoints = g_list_length(list);
-   GdkPoint  *points = g_new(GdkPoint, npoints);
-   GdkPoint  *des = points;
    GList     *p;
 
-   for (p = list; p; p = p->next, des++) {
+   for (p = list; p; p = p->next) {
       GdkPoint *src = (GdkPoint*) p->data;
-      des->x = ZOOMED(src->x);
-      des->y = ZOOMED(src->y);
+      cairo_line_to (cr, ZOOMED (src->x) + .5, ZOOMED (src->y) + .5);
    }
-   gdk_draw_polygon(window, gc, FALSE, points, npoints);
-   g_free(points);
-}
-
-static gboolean _preview_redraw_blocked = FALSE;
-static gboolean _pending_redraw = FALSE;
-
-void
-preview_freeze(void)
-{
-   _preview_redraw_blocked = TRUE;
-}
-
-void
-preview_thaw(void)
-{
-   _preview_redraw_blocked = FALSE;
-   if (_pending_redraw) {
-      _pending_redraw = FALSE;
-      redraw_preview();
-   }
-}
-
-void
-redraw_preview(void)
-{
-   if (_preview_redraw_blocked)
-      _pending_redraw = TRUE;
-   else
-      preview_redraw(_preview);
+   cairo_close_path (cr);
+   cairo_stroke (cr);
 }
 
 void
@@ -387,6 +349,12 @@ set_preview_color (GtkRadioAction *action, GtkRadioAction *current,
 {
   _map_info.show_gray = (gtk_radio_action_get_current_value (current) == 1);
    set_zoom(_zoom_factor);
+}
+
+void
+preview_redraw(void)
+{
+  gtk_widget_queue_draw(_preview->preview);
 }
 
 void
@@ -625,10 +593,9 @@ do_zoom_out(void)
 }
 
 void
-draw_shapes(GtkWidget *preview)
+draw_shapes(cairo_t *cr)
 {
-  if (!_preview_redraw_blocked)
-    object_list_draw(_shapes, gtk_widget_get_window (preview));
+   object_list_draw(_shapes, cr);
 }
 
 static void
@@ -685,7 +652,7 @@ close_current(void)
    clear_map_info();
    main_set_title(NULL);
    set_all_sensitivities();
-   redraw_preview();
+   preview_redraw();
    object_list_clear_changed(_shapes);
    command_list_remove_all();
 }
@@ -719,21 +686,19 @@ do_quit(void)
 void
 do_undo(void)
 {
-   preview_freeze();
    selection_freeze(_selection);
    last_command_undo();
    selection_thaw(_selection);
-   preview_thaw();
+   preview_redraw();
 }
 
 void
 do_redo(void)
 {
-   preview_freeze();
    selection_freeze(_selection);
    last_command_redo();
    selection_thaw(_selection);
-   preview_thaw();
+   preview_redraw();
 }
 
 void
@@ -900,7 +865,7 @@ do_image_size_changed_dialog(void)
        object_list_resize(_shapes, per_x, per_y);
      }
 
-   preview_thaw();
+   preview_redraw();
    gtk_widget_destroy (dialog);
 }
 
@@ -917,7 +882,6 @@ really_load(gpointer data)
       _map_info.map_format = CSIM;
       if (_image_width != _map_info.old_image_width ||
           _image_height != _map_info.old_image_height) {
-         preview_freeze();
          do_image_size_changed_dialog();
       }
    } else if (load_ncsa(filename)) {
@@ -936,7 +900,7 @@ really_load(gpointer data)
    selection_thaw(_selection);
    main_set_title(filename);
    object_list_clear_changed(_shapes);
-   redraw_preview();
+   preview_redraw();
 }
 
 void
@@ -1027,13 +991,9 @@ move_sash_selected_objects(gint dx, gint dy, gboolean fast)
       dy *= 5;
    }
 
-   gdk_gc_set_function(_preferences.normal_gc, GDK_XOR);
-   gdk_gc_set_function(_preferences.selected_gc, GDK_XOR);
-   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
    object_list_move_sash_selected(_shapes, dx, dy);
-   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
-   gdk_gc_set_function(_preferences.normal_gc, GDK_COPY);
-   gdk_gc_set_function(_preferences.selected_gc, GDK_COPY);
+
+   preview_redraw ();
 }
 
 static void
@@ -1046,13 +1006,9 @@ move_selected_objects(gint dx, gint dy, gboolean fast)
    _dx += dx;
    _dy += dy;
 
-   gdk_gc_set_function(_preferences.normal_gc, GDK_XOR);
-   gdk_gc_set_function(_preferences.selected_gc, GDK_XOR);
-   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
    object_list_move_selected(_shapes, dx, dy);
-   object_list_draw_selected(_shapes, gtk_widget_get_window (_preview->preview));
-   gdk_gc_set_function(_preferences.normal_gc, GDK_COPY);
-   gdk_gc_set_function(_preferences.selected_gc, GDK_COPY);
+
+   preview_redraw ();
 }
 
 static gboolean
@@ -1067,7 +1023,7 @@ key_timeout_cb(gpointer data)
       _dx = _dy = 0;
       break;
    }
-   preview_thaw();
+   preview_redraw();
    return FALSE;
 }
 
@@ -1079,34 +1035,34 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
    gboolean ctrl = event->state & GDK_CONTROL_MASK;
    Command_t *command;
 
-   preview_freeze();
    if (_timeout)
       g_source_remove(_timeout);
+   _timeout = 0;
 
    switch (event->keyval) {
    case GDK_Left:
-          if (ctrl)
+      if (ctrl)
          move_sash_selected_objects(-1, 0, shift);
       else
          move_selected_objects(-1, 0, shift);
       handled = TRUE;
       break;
    case GDK_Right:
-          if (ctrl)
+      if (ctrl)
          move_sash_selected_objects(1, 0, shift);
       else
          move_selected_objects(1, 0, shift);
       handled = TRUE;
       break;
    case GDK_Up:
-          if (ctrl)
+      if (ctrl)
          move_sash_selected_objects(0, -1, shift);
       else
          move_selected_objects(0, -1, shift);
       handled = TRUE;
       break;
    case GDK_Down:
-          if (ctrl)
+      if (ctrl)
          move_sash_selected_objects(0, 1, shift);
       else
          move_selected_objects(0, 1, shift);
@@ -1138,13 +1094,13 @@ key_release_cb(GtkWidget *widget, GdkEventKey *event)
 static void
 geometry_changed(Object_t *obj, gpointer data)
 {
-   redraw_preview();
+   preview_redraw();
 }
 
 static void
 data_changed(Object_t *obj, gpointer data)
 {
-   redraw_preview();
+   preview_redraw();
    set_all_sensitivities();
 }
 
@@ -1310,10 +1266,14 @@ dialog(GimpDrawable *drawable)
    gtk_box_pack_start(GTK_BOX(hbox), tools, FALSE, FALSE, 0);
 
    _preview = make_preview(drawable);
-   add_preview_motion_event(_preview, G_CALLBACK (preview_move));
-   add_enter_notify_event(_preview, G_CALLBACK (preview_enter));
-   add_leave_notify_event(_preview, G_CALLBACK (preview_leave));
-   add_preview_button_press_event(_preview, G_CALLBACK (button_press));
+   g_signal_connect(_preview->preview, "motion-notify-event",
+                    G_CALLBACK(preview_move), NULL);
+   g_signal_connect(_preview->preview, "enter-notify-event",
+                    G_CALLBACK(preview_enter), NULL);
+   g_signal_connect(_preview->preview, "leave-notify-event",
+                    G_CALLBACK(preview_leave), NULL);
+   g_signal_connect(_preview->preview, "button-press-event",
+                    G_CALLBACK(button_press), NULL);
    gtk_container_add(GTK_CONTAINER(hbox), _preview->window);
 
    object_list_add_geometry_cb(_shapes, geometry_changed, NULL);

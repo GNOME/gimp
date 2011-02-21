@@ -39,8 +39,8 @@
 static gboolean circle_is_valid(Object_t *obj);
 static Object_t *circle_clone(Object_t *obj);
 static void circle_assign(Object_t *obj, Object_t *des);
-static void circle_draw(Object_t* obj, GdkWindow *window, GdkGC* gc);
-static void circle_draw_sashes(Object_t* obj, GdkWindow *window, GdkGC* gc);
+static void circle_draw(Object_t* obj, cairo_t *cr);
+static void circle_draw_sashes(Object_t* obj, cairo_t *cr);
 static MoveSashFunc_t circle_near_sash(Object_t *obj, gint x, gint y);
 static gboolean circle_point_is_on(Object_t *obj, gint x, gint y);
 static void circle_get_dimensions(Object_t *obj, gint *x, gint *y,
@@ -128,20 +128,20 @@ circle_assign(Object_t *obj, Object_t *des)
 }
 
 static void
-circle_draw(Object_t *obj, GdkWindow *window, GdkGC *gc)
+circle_draw(Object_t *obj, cairo_t *cr)
 {
    Circle_t *circle = ObjectToCircle(obj);
-   draw_circle(window, gc, FALSE, circle->x, circle->y, circle->r);
+   draw_circle(cr, circle->x, circle->y, circle->r);
 }
 
 static void
-circle_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC *gc)
+circle_draw_sashes(Object_t *obj, cairo_t *cr)
 {
    Circle_t *circle = ObjectToCircle(obj);
-   draw_sash(window, gc, circle->x - circle->r, circle->y - circle->r);
-   draw_sash(window, gc, circle->x + circle->r, circle->y - circle->r);
-   draw_sash(window, gc, circle->x - circle->r, circle->y + circle->r);
-   draw_sash(window, gc, circle->x + circle->r, circle->y + circle->r);
+   draw_sash(cr, circle->x - circle->r, circle->y - circle->r);
+   draw_sash(cr, circle->x + circle->r, circle->y - circle->r);
+   draw_sash(cr, circle->x - circle->r, circle->y + circle->r);
+   draw_sash(cr, circle->x + circle->r, circle->y + circle->r);
 }
 
 static gint sash_x;

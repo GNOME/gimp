@@ -60,7 +60,6 @@ typedef struct {
 } GridDialog_t;
 
 
-static GdkGC *grid_gc;
 static gboolean grid_snap = FALSE;
 static gint grid_width = 15;
 static gint grid_height = 15;
@@ -88,7 +87,7 @@ grid_settings_ok_cb(gpointer data)
       grid_snap = new_snap;
       menu_check_grid(grid_snap);
    }
-   redraw_preview();
+   preview_redraw();
 }
 
 static void
@@ -109,7 +108,7 @@ type_toggled_cb(GtkWidget *widget, gpointer data)
    if (gtk_widget_get_state (widget) & GTK_STATE_SELECTED)
      {
        grid_type = GPOINTER_TO_INT (data);
-       redraw_preview();
+       preview_redraw();
      }
 }
 
@@ -118,7 +117,7 @@ toggle_preview_cb(GtkWidget *widget, GridDialog_t *param)
 {
    param->enable_preview =
       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-   redraw_preview();
+   preview_redraw();
 }
 
 static void
@@ -127,7 +126,7 @@ grid_assign_value(GtkWidget *widget, gpointer data, gint *value)
    GridDialog_t *dialog = (GridDialog_t*) data;
    if (dialog->enable_preview) {
       *value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
-      redraw_preview();         /* Fix me! */
+      preview_redraw();         /* Fix me! */
    }
 }
 
@@ -326,56 +325,47 @@ do_grid_settings_dialog(void)
 }
 
 static void
-draw_lines(GdkWindow *window, GdkGC* gc, gint width, gint height)
+draw_lines(cairo_t *cr, gint width, gint height)
 {
    gint x, y;
+   gdouble dash = 4.;
 
-   for (x = grid_left; x < width; x += grid_width)
-      draw_line(window, grid_gc, x, 1, x, height);
-   for (y = grid_top; y < height; y += grid_height)
-      draw_line(window, grid_gc, 1, y, width, y);
+   cairo_set_dash (cr, &dash, 1, 0.);
+   for (x = grid_left % grid_width; x < width; x += grid_width)
+      draw_line(cr, x, 1, x, height);
+   for (y = grid_top % grid_height; y < height; y += grid_height)
+      draw_line(cr, 1, y, width, y);
 }
 
 static void
-draw_crosses(GdkWindow *window, GdkGC* gc, gint width, gint height)
+draw_crosses(cairo_t *cr, gint width, gint height)
 {
    gint x, y;
+   gdouble dash[4] = { 7., grid_height - 7., 7., grid_width - 7. };
 
-   for (x = grid_left; x < width; x += grid_width) {
-      for (y = grid_top; y < height; y += grid_height) {
-         draw_line(window, gc, x - 3, y, x + 3, y);
-         draw_line(window, gc, x, y - 3, x, y + 3);
-      }
-   }
+   cairo_set_dash (cr, dash, 2, 4.5 - grid_top);
+   for (x = grid_left % grid_width; x < width; x += grid_width)
+      draw_line(cr, x, 1, x, height);
+   cairo_set_dash (cr, dash+2, 2, 4.5 - grid_left);
+   for (y = grid_top % grid_height; y < height; y += grid_height)
+      draw_line(cr, 1, y, width, y);
 }
 
 void
-draw_grid(GtkWidget *preview)
+draw_grid(cairo_t *cr, gint width, gint height)
 {
   if (grid_snap && grid_type != GRID_HIDDEN)
     {
-      gint width = preview_get_width(preview);
-      gint height = preview_get_height(preview);
-
-      if (!grid_gc)
-        {
-          grid_gc = gdk_gc_new(gtk_widget_get_window (preview));
-
-          gdk_gc_set_line_attributes(grid_gc, 1, GDK_LINE_ON_OFF_DASH,
-                                     GDK_CAP_BUTT, GDK_JOIN_BEVEL);
-        }
-
+      cairo_save (cr);
       if (grid_type == GRID_LINES)
         {
-          draw_lines(gtk_widget_get_window (preview), grid_gc, width, height);
+          draw_lines(cr, width, height);
         }
       else
         {
-          GtkStyle *style = gtk_widget_get_style (preview);
-
-          draw_crosses(gtk_widget_get_window (preview), style->black_gc, width,
-                       height);
+          draw_crosses(cr, width, height);
         }
+      cairo_restore (cr);
     }
 }
 
@@ -383,7 +373,7 @@ void
 toggle_grid(void)
 {
    grid_snap = !grid_snap;
-   redraw_preview();
+   preview_redraw();
 }
 
 static gint

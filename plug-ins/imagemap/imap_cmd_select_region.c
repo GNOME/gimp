@@ -83,13 +83,14 @@ select_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) data;
    Object_t *obj = command->obj;
    Rectangle_t *rectangle = ObjectToRectangle(obj);
+
    gint x = get_real_coord((gint) event->x);
    gint y = get_real_coord((gint) event->y);
 
-   object_draw(obj, gtk_widget_get_window (widget));
    rectangle->width = x - rectangle->x;
    rectangle->height = y - rectangle->y;
-   object_draw(obj, gtk_widget_get_window (widget));
+
+   preview_redraw ();
 }
 
 static void
@@ -106,9 +107,7 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    g_signal_handlers_disconnect_by_func(widget,
                                         select_release, data);
 
-   object_draw(obj, gtk_widget_get_window (widget));
    object_normalize(obj);
-   gdk_gc_set_function(get_preferences()->normal_gc, GDK_COPY);
 
    id = object_list_add_select_cb(command->list, select_one_object, command);
    count = object_list_select_region(command->list, rectangle->x, rectangle->y,
@@ -121,7 +120,9 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
       if (command->unselect_command->sub_commands)
          command_list_add(&command->parent);
    }
-   object_unref(obj);
+   preview_unset_tmp_obj (command->obj);
+
+   preview_redraw ();
 }
 
 static CmdExecuteValue_t
@@ -130,12 +131,12 @@ select_region_command_execute(Command_t *parent)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
+   preview_set_tmp_obj (command->obj);
+
    g_signal_connect(command->widget, "button-release-event",
                     G_CALLBACK (select_release), command);
    g_signal_connect(command->widget, "motion-notify-event",
                     G_CALLBACK (select_motion), command);
-
-   gdk_gc_set_function(get_preferences()->normal_gc, GDK_XOR);
 
    return CMD_IGNORE;
 }

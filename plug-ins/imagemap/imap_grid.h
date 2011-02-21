@@ -24,7 +24,7 @@
 #define _IMAP_GRID_H
 
 void do_grid_settings_dialog (void);
-void draw_grid (GtkWidget *preview);
+void draw_grid (cairo_t *cr, gint width, gint height);
 void toggle_grid (void);
 void round_to_grid (gint *x, gint *y);
 

@@ -44,8 +44,8 @@ static gboolean polygon_is_valid(Object_t *obj);
 static void polygon_destruct(Object_t *obj);
 static Object_t *polygon_clone(Object_t *obj);
 static void polygon_assign(Object_t *obj, Object_t *des);
-static void polygon_draw(Object_t* obj, GdkWindow *window, GdkGC* gc);
-static void polygon_draw_sashes(Object_t* obj, GdkWindow *window, GdkGC* gc);
+static void polygon_draw(Object_t* obj, cairo_t *cr);
+static void polygon_draw_sashes(Object_t* obj, cairo_t *cr);
 static MoveSashFunc_t polygon_near_sash(Object_t *obj, gint x, gint y);
 static gboolean polygon_point_is_on(Object_t *obj, gint x, gint y);
 static void polygon_get_dimensions(Object_t *obj, gint *x, gint *y,
@@ -156,20 +156,20 @@ polygon_assign(Object_t *obj, Object_t *des)
 }
 
 static void
-polygon_draw(Object_t *obj, GdkWindow *window, GdkGC *gc)
+polygon_draw(Object_t *obj, cairo_t *cr)
 {
    Polygon_t *polygon = ObjectToPolygon(obj);
-   draw_polygon(window, gc, polygon->points);
+   draw_polygon(cr, polygon->points);
 }
 
 static void
-polygon_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC *gc)
+polygon_draw_sashes(Object_t *obj, cairo_t *cr)
 {
    Polygon_t *polygon = ObjectToPolygon(obj);
    GList     *p;
    for (p = polygon->points; p; p = p->next) {
       GdkPoint *point = (GdkPoint*) p->data;
-      draw_sash(window, gc, point->x, point->y);
+      draw_sash(cr, point->x, point->y);
    }
 }
 

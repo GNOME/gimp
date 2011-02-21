@@ -41,12 +41,10 @@ typedef struct {
 } Preview_t;
 
 Preview_t *make_preview(GimpDrawable *drawable);
-void preview_redraw(Preview_t *preview);
+void preview_redraw(void);
 
-void add_preview_motion_event(Preview_t *preview, GCallback func);
-void add_enter_notify_event(Preview_t *preview, GCallback func);
-void add_leave_notify_event(Preview_t *preview, GCallback func);
-void add_preview_button_press_event(Preview_t *preview, GCallback func);
+void preview_unset_tmp_obj (Object_t *obj);
+void preview_set_tmp_obj (Object_t *obj);
 
 gint preview_get_width(GtkWidget *preview);
 gint preview_get_height(GtkWidget *preview);

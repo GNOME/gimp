@@ -26,6 +26,7 @@
 #include "imap_mru.h"
 #include "imap_object.h"
 #include "imap_preferences.h"
+#include "imap_preview.h"
 
 #define PLUG_IN_PROC   "plug-in-imagemap"
 #define PLUG_IN_BINARY "imagemap"
@@ -65,15 +66,13 @@ void main_toolbar_set_grid(gboolean active);
 
 void set_zoom(gint zoom_factor);
 gint get_real_coord(gint coord);
-void draw_line(GdkWindow *window, GdkGC *gc, gint x1, gint y1, gint x2,
+void draw_line(cairo_t *cr, gint x1, gint y1, gint x2,
                gint y2);
-void draw_rectangle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
+void draw_rectangle(cairo_t *cr, gboolean filled, gint x, gint y,
                     gint width, gint height);
-void draw_arc(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
-              gint width, gint height, gint angle1, gint angle2);
-void draw_circle(GdkWindow *window, GdkGC *gc, gint filled, gint x, gint y,
+void draw_circle(cairo_t *cr, gint x, gint y,
                  gint r);
-void draw_polygon(GdkWindow *window, GdkGC *gc, GList *list);
+void draw_polygon(cairo_t *cr, GList *list);
 
 const char *get_filename(void);
 
@@ -84,11 +83,7 @@ void select_shape(GtkWidget *widget, GdkEventButton *event);
 void edit_shape(gint x, gint y);
 
 void do_popup_menu(GdkEventButton *event);
-void draw_shapes(GtkWidget *preview);
-
-void redraw_preview(void);
-void preview_freeze(void);
-void preview_thaw(void);
+void draw_shapes(cairo_t *cr);
 
 void show_url(void);
 void hide_url(void);

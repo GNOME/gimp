@@ -57,6 +57,8 @@
 #define OPAQUE     255
 #endif
 
+static Object_t *_tmp_obj;
+
 static Preview_t*
 preview_user_data(GtkWidget *preview)
 {
@@ -293,51 +295,42 @@ arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
 static gboolean
 preview_expose(GtkWidget *widget, GdkEventExpose *event)
 {
-   draw_grid(widget);
-   draw_shapes(widget);
+   cairo_t *cr;
+   gint width = preview_get_width (widget);
+   gint height = preview_get_height (widget);
+
+   cr = gdk_cairo_create (event->window);
+   gdk_cairo_region (cr, event->region);
+   cairo_clip (cr);
+   cairo_set_line_width (cr, 1.);
+   draw_grid (cr, width, height);
+   
+   draw_shapes (cr);
+
+   if (_tmp_obj)
+   {
+      /* this is a bit of a hack */
+      gdouble dash = 4.;
+      _tmp_obj->selected |= 4;
+      cairo_set_source_rgb (cr, 1., 0., 1.);
+      cairo_set_dash (cr, &dash, 1, dash);
+      object_draw (_tmp_obj, cr);
+   }
+
+   cairo_destroy (cr);
    return FALSE;
 }
 
 void
-add_preview_motion_event(Preview_t *preview, GCallback func)
+preview_set_tmp_obj (Object_t *obj)
 {
-   g_return_if_fail (func != NULL);
-
-   g_signal_connect(preview->preview, "motion-notify-event",
-                    func, NULL);
+   _tmp_obj = obj;
 }
 
 void
-add_enter_notify_event(Preview_t *preview, GCallback func)
+preview_unset_tmp_obj (Object_t *obj)
 {
-   g_return_if_fail (func != NULL);
-
-   g_signal_connect(preview->preview, "enter-notify-event",
-                    func, NULL);
-}
-
-void
-add_leave_notify_event(Preview_t *preview, GCallback func)
-{
-   g_return_if_fail (func != NULL);
-
-   g_signal_connect(preview->preview, "leave-notify-event",
-                    func, NULL);
-}
-
-void
-add_preview_button_press_event(Preview_t *preview, GCallback func)
-{
-   g_return_if_fail (func != NULL);
-
-   g_signal_connect(preview->preview, "button-press-event",
-                    func, NULL);
-}
-
-void
-preview_redraw(Preview_t *preview)
-{
-  gtk_widget_queue_draw(preview->preview);
+   if (_tmp_obj == obj) _tmp_obj = NULL;
 }
 
 void
@@ -349,7 +342,7 @@ preview_zoom(Preview_t *preview, gint zoom_factor)
                                 preview->widget_height);
    gtk_widget_queue_resize(preview->window);
    render_preview(preview, &preview->src_rgn);
-   preview_redraw(preview);
+   preview_redraw();
 }
 
 GdkCursorType

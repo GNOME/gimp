@@ -248,14 +248,35 @@ object_assign(Object_t *obj, Object_t *des)
 }
 
 void
-object_draw(Object_t *obj, GdkWindow *window)
+object_draw(Object_t *obj, cairo_t *cr)
 {
    PreferencesData_t *preferences = get_preferences();
-   GdkGC *gc = (obj->selected) ? preferences->selected_gc
-      : preferences->normal_gc;
-   obj->class->draw(obj, window, gc);
+   ColorSelData_t *colors = &preferences->colors;
+   GdkColor *fg, *bg;
+   gdouble dash = 4.;
+
+   if (obj->selected & 4) {
+      fg = &colors->interactive_fg;
+      bg = &colors->interactive_bg;
+      obj->selected &= ~4;
+   } else if (obj->selected) {
+      fg = &colors->selected_fg;
+      bg = &colors->selected_bg;
+   } else {
+      fg = &colors->normal_fg;
+      bg = &colors->normal_bg;
+   }
+   
+   cairo_save (cr);
+   gdk_cairo_set_source_color (cr, bg);
+   obj->class->draw(obj, cr);
+   gdk_cairo_set_source_color (cr, fg);
+   cairo_set_dash (cr, &dash, 1, 0.);
+   obj->class->draw(obj, cr);
+
    if (obj->selected && preferences->show_area_handle)
-      obj->class->draw_sashes(obj, window, gc);
+      obj->class->draw_sashes(obj, cr);
+   cairo_restore (cr);
 }
 
 void
@@ -430,9 +451,9 @@ button_motion(GtkWidget *widget, GdkEventMotion *event,
 
    round_to_grid(&x, &y);
 
-   object_draw(factory->obj, gtk_widget_get_window (widget));
    factory->set_xy(factory->obj, event->state, x, y);
-   object_draw(factory->obj, gtk_widget_get_window (widget));
+
+   preview_redraw ();
 
    return FALSE;
 }
@@ -462,33 +483,31 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
                if (preferences->prompt_for_area_info)
                   object_edit(obj, FALSE);
             } else {
-              object_draw(obj, gtk_widget_get_window (widget));
-              object_unref(obj);
+               object_unref(obj);
             }
-            gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
+            preview_unset_tmp_obj (obj);
+            preview_redraw ();
             obj = NULL;
             main_clear_dimension();
          }
       } else if (event->button == 3) {
-           object_draw(obj, gtk_widget_get_window (widget));
          if (!factory->cancel || factory->cancel(event, obj)) {
             g_signal_handlers_disconnect_by_func(widget,
                                                  button_motion,
                                                  factory);
             object_unref(obj);
-            gdk_gc_set_function(preferences->normal_gc, GDK_COPY);
+            preview_unset_tmp_obj (obj);
+            preview_redraw ();
             obj = NULL;
             main_clear_dimension();
-         } else {
-           object_draw(obj, gtk_widget_get_window (widget));
          }
+         return TRUE;
       }
    } else {
       if (event->button == 1) {
          factory = ((ObjectFactory_t*(*)(guint)) data)(event->state);
          obj = object_factory_create_object(factory, x, y);
-
-         gdk_gc_set_function(preferences->normal_gc, GDK_XOR);
+         preview_set_tmp_obj (obj);
 
          g_signal_connect(widget, "motion-notify-event",
                           G_CALLBACK(button_motion), factory);
@@ -582,21 +601,21 @@ object_list_update(ObjectList_t *list, Object_t *object)
 }
 
 void
-object_list_draw(ObjectList_t *list, GdkWindow *window)
+object_list_draw(ObjectList_t *list, cairo_t *cr)
 {
    GList *p;
    for (p = list->list; p; p = p->next)
-      object_draw((Object_t*) p->data, window);
+      object_draw((Object_t*) p->data, cr);
 }
 
 void
-object_list_draw_selected(ObjectList_t *list, GdkWindow *window)
+object_list_draw_selected(ObjectList_t *list, cairo_t *cr)
 {
    GList *p;
    for (p = list->list; p; p = p->next) {
       Object_t *obj = (Object_t*) p->data;
       if (obj->selected)
-         object_draw(obj, window);
+         object_draw(obj, cr);
    }
 }
 

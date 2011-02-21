@@ -38,9 +38,9 @@ set_sash_size(gboolean double_size)
 }
 
 void
-draw_sash(GdkWindow *window, GdkGC *gc, gint x, gint y)
+draw_sash(cairo_t *cr, gint x, gint y)
 {
-   draw_rectangle(window, gc, TRUE, x - _sash_size / 2, y - _sash_size / 2,
+   draw_rectangle(cr, TRUE, x - _sash_size / 2, y - _sash_size / 2,
                   _sash_size, _sash_size);
 }
 

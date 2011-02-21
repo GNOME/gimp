@@ -30,6 +30,8 @@ typedef struct {
    GdkColor normal_bg;
    GdkColor selected_fg;
    GdkColor selected_bg;
+   GdkColor interactive_bg;
+   GdkColor interactive_fg;
 } ColorSelData_t;
 
 typedef struct {
@@ -45,8 +47,6 @@ typedef struct {
    gint                 undo_levels;
    gint                 mru_size;
    ColorSelData_t       colors;
-   GdkGC               *normal_gc;
-   GdkGC               *selected_gc;
 } PreferencesData_t;
 
 void do_preferences_dialog(void);

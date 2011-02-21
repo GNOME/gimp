@@ -132,7 +132,7 @@ gimp_guides_ok_cb(gpointer data)
    }
 
    subcommand_end();
-   redraw_preview();
+   preview_redraw();
 }
 
 static GimpGuidesDialog_t*

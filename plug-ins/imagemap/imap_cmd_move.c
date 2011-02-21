@@ -103,8 +103,6 @@ button_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    if (command->moved_first_time) {
       command->moved_first_time = FALSE;
       command->cursor = preview_set_cursor(command->preview, GDK_FLEUR);
-      gdk_gc_set_function(command->preferences->normal_gc, GDK_XOR);
-      gdk_gc_set_function(command->preferences->selected_gc, GDK_XOR);
       hide_url();
    }
 
@@ -118,14 +116,15 @@ button_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
       dy = command->image_height - command->obj_height - command->obj_y;
 
    if (dx || dy) {
+
       command->start_x = get_real_coord((gint) event->x);
       command->start_y = get_real_coord((gint) event->y);
       command->obj_x += dx;
       command->obj_y += dy;
 
-      object_draw(obj, gtk_widget_get_window (widget));
       object_move(obj, dx, dy);
-      object_draw(obj, gtk_widget_get_window (widget));
+
+      preview_redraw ();
    }
 }
 
@@ -141,8 +140,6 @@ button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
 
    if (!command->moved_first_time) {
       preview_set_cursor(command->preview, command->cursor);
-      gdk_gc_set_function(command->preferences->normal_gc, GDK_COPY);
-      gdk_gc_set_function(command->preferences->selected_gc, GDK_COPY);
       show_url();
    }
    command->obj_x -= command->obj_start_x;

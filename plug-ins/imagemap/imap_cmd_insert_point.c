@@ -78,7 +78,7 @@ insert_point_command_execute(Command_t *parent)
                                       command->edge);
       command->position = command->edge;
    }
-   redraw_preview();
+   preview_redraw();
 
    return CMD_APPEND;
 }
@@ -92,5 +92,5 @@ insert_point_command_undo(Command_t *parent)
 
    g_free(p->data);
    polygon->points = g_list_remove_link(polygon->points, p);
-   redraw_preview();            /* Fix me! */
+   preview_redraw();            /* Fix me! */
 }

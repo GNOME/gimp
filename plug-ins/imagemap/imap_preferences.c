@@ -61,6 +61,8 @@ typedef struct {
    GtkWidget            *normal_bg;
    GtkWidget            *selected_fg;
    GtkWidget            *selected_bg;
+   GtkWidget            *interactive_fg;
+   GtkWidget            *interactive_bg;
 
    GtkWidget            *threshold;
    GtkWidget            *auto_convert;
@@ -150,6 +152,10 @@ parse_line(PreferencesData_t *data, char *line)
       parse_color(&colors->selected_fg);
    } else if (!strcmp(token, "selected-bg-color")) {
       parse_color(&colors->selected_bg);
+   } else if (!strcmp(token, "interactive-fg-color")) {
+      parse_color(&colors->interactive_fg);
+   } else if (!strcmp(token, "interactive-bg-color")) {
+      parse_color(&colors->interactive_bg);
    } else if (!strcmp(token, "mru-entry")) {
       parse_mru_entry();
    } else {
@@ -227,6 +233,12 @@ preferences_save(PreferencesData_t *data)
       fprintf(out, "(selected-bg-color %d %d %d)\n",
               colors->selected_bg.red, colors->selected_bg.green,
               colors->selected_bg.blue);
+      fprintf(out, "(interactive-fg-color %d %d %d)\n",
+              colors->interactive_fg.red, colors->interactive_fg.green,
+              colors->interactive_fg.blue);
+      fprintf(out, "(interactive-bg-color %d %d %d)\n",
+              colors->interactive_bg.red, colors->interactive_bg.green,
+              colors->interactive_bg.blue);
 
       mru_write(get_mru(), out);
 
@@ -275,13 +287,8 @@ preferences_ok_cb(gpointer data)
 
    get_button_colors (param, colors);
 
-   gdk_gc_set_foreground(old_data->normal_gc, &colors->normal_fg);
-   gdk_gc_set_background(old_data->normal_gc, &colors->normal_bg);
-   gdk_gc_set_foreground(old_data->selected_gc, &colors->selected_fg);
-   gdk_gc_set_background(old_data->selected_gc, &colors->selected_bg);
-
    set_sash_size(old_data->use_doublesized);
-   redraw_preview();
+   preview_redraw();
 }
 
 static void
@@ -301,6 +308,8 @@ get_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
   get_button_color (dialog->normal_bg, &colors->normal_bg);
   get_button_color (dialog->selected_fg, &colors->selected_fg);
   get_button_color (dialog->selected_bg, &colors->selected_bg);
+  get_button_color (dialog->interactive_fg, &colors->interactive_fg);
+  get_button_color (dialog->interactive_bg, &colors->interactive_bg);
 }
 
 static void
@@ -319,6 +328,8 @@ set_button_colors(PreferencesDialog_t *dialog, ColorSelData_t *colors)
   set_button_color (dialog->normal_bg, &colors->normal_bg);
   set_button_color (dialog->selected_fg, &colors->selected_fg);
   set_button_color (dialog->selected_bg, &colors->selected_bg);
+  set_button_color (dialog->interactive_fg, &colors->interactive_fg);
+  set_button_color (dialog->interactive_bg, &colors->interactive_bg);
 }
 
 static GtkWidget*
@@ -418,7 +429,7 @@ create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row,
 static void
 create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 {
-   GtkWidget *table = create_tab(notebook, _("Colors"), 2, 3);
+   GtkWidget *table = create_tab(notebook, _("Colors"), 3, 3);
 
    create_label_in_table(table, 0, 0, _("Normal:"));
    data->normal_fg = create_color_field(data, table, 0, 1);
@@ -427,6 +438,10 @@ create_colors_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    create_label_in_table(table, 1, 0, _("Selected:"));
    data->selected_fg = create_color_field(data, table, 1, 1);
    data->selected_bg = create_color_field(data, table, 1, 2);
+
+   create_label_in_table(table, 2, 0, _("Interaction:"));
+   data->interactive_fg = create_color_field(data, table, 2, 1);
+   data->interactive_bg = create_color_field(data, table, 2, 2);
 }
 
 #ifdef _NOT_READY_YET_
