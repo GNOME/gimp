@@ -1970,9 +1970,11 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
 }
 
 
+/*  private functions  */
+
 /* Event delay timeout handler & generic event flusher */
 
-gboolean
+static gboolean
 gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
 {
   GimpTool *active_tool = tool_manager_get_active (shell->display->gimp);
@@ -1999,9 +2001,6 @@ gimp_display_shell_flush_event_queue (GimpDisplayShell *shell)
   /* Return false so a potential timeout calling it gets removed */
   return FALSE;
 }
-
-
-/*  private functions  */
 
 static void
 gimp_display_shell_process_event_queue (GimpDisplayShell *shell,

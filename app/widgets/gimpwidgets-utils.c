@@ -1132,17 +1132,14 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window =
-    gimp_dialog_factory_dialog_new (factory,
-                                    screen,
-                                    NULL /*ui_manager*/,
-                                    (toolbox ?
-                                     "gimp-toolbox-window" :
-                                     "gimp-dock-window"),
-                                    -1 /*view_size*/,
-                                    FALSE /*present*/);
+  dock_window = gimp_dialog_factory_dialog_new (factory, screen,
+                                                NULL /*ui_manager*/,
+                                                (toolbox ?
+                                                 "gimp-toolbox-window" :
+                                                 "gimp-dock-window"),
+                                                -1 /*view_size*/,
+                                                FALSE /*present*/);
 
-  /* Create the dock */
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
@@ -1152,13 +1149,11 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
                                                 "gimp-dock"),
                                                -1 /*view_size*/,
                                                FALSE /*present*/);
+
   if (dock)
-    {
-      /* Put the dock in the dock window */
-      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
-                                 GIMP_DOCK (dock),
-                                 -1);
-    }
+    gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
+                               GIMP_DOCK (dock),
+                               -1);
 
   return dock;
 }

@@ -29,14 +29,12 @@
 #include "core/gimpcoords.h"
 #include "core/gimpcoords-interpolate.h"
 
+
 /* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
-#define VELOCITY_UNIT 3.0
-
+#define VELOCITY_UNIT        3.0
 #define EVENT_FILL_PRECISION 6.0
-
-#define DIRECTION_RADIUS  (1.5 / MAX (shell->scale_x, shell->scale_y))
-
-#define SMOOTH_FACTOR 0.3
+#define DIRECTION_RADIUS     (1.5 / MAX (shell->scale_x, shell->scale_y))
+#define SMOOTH_FACTOR        0.3
 
 
 static void gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
@@ -55,20 +53,20 @@ static const GimpCoords default_coords = GIMP_COORDS_DEFAULT_VALUES;
  * @inertia_factor:
  * @time:
  *
- * This function evaluates the event to decide if the change is
- * big enough to need handling and returns FALSE, if change is less
- * than set filter level taking a whole lot of load off any draw tools
- * that have no use for these events anyway. If the event is
- * seen fit at first look, it is evaluated for speed and smoothed.
- * Due to lousy time resolution of events pretty strong smoothing is
- * applied to timestamps for sensible speed result. This function is
- * also ideal for other event adjustment like pressure curve or
- * calculating other derived dynamics factors like angular velocity
- * calculation from tilt values, to allow for even more dynamic
- * brushes. Calculated distance to last event is stored in GimpCoords
- * because its a sideproduct of velocity calculation and is currently
- * calculated in each tool. If they were to use this distance, more
- * resouces on recalculating the same value would be saved.
+ * This function evaluates the event to decide if the change is big
+ * enough to need handling and returns FALSE, if change is less than
+ * set filter level taking a whole lot of load off any draw tools that
+ * have no use for these events anyway. If the event is seen fit at
+ * first look, it is evaluated for speed and smoothed.  Due to lousy
+ * time resolution of events pretty strong smoothing is applied to
+ * timestamps for sensible speed result. This function is also ideal
+ * for other event adjustment like pressure curve or calculating other
+ * derived dynamics factors like angular velocity calculation from
+ * tilt values, to allow for even more dynamic brushes. Calculated
+ * distance to last event is stored in GimpCoords because its a
+ * sideproduct of velocity calculation and is currently calculated in
+ * each tool. If they were to use this distance, more resouces on
+ * recalculating the same value would be saved.
  *
  * Return value:
  **/
@@ -86,22 +84,21 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
   gdouble  distance    = 1.0;
   gboolean event_fill  = (inertia_factor > 0);
 
-  /* Smoothing causes problems with cursor tracking
-   * when zoomed above screen resolution so we need to supress it.
+  /*  Smoothing causes problems with cursor tracking when zoomed above
+   *  screen resolution so we need to supress it.
    */
   if (shell->scale_x > 1.0 || shell->scale_y > 1.0)
     {
       inertia_factor = 0.0;
     }
 
-
-  delta_time = (shell->last_motion_delta_time * (1 - SMOOTH_FACTOR)
-                +  (time - shell->last_motion_time) * SMOOTH_FACTOR);
+  delta_time = (shell->last_motion_delta_time * (1 - SMOOTH_FACTOR) +
+                (time - shell->last_motion_time) * SMOOTH_FACTOR);
 
   if (shell->last_motion_time == 0)
     {
-      /* First pair is invalid to do any velocity calculation,
-       * so we apply a constant value.
+      /*  First pair is invalid to do any velocity calculation, so we
+       *  apply a constant value.
        */
       coords->velocity = 1.0;
     }
@@ -115,8 +112,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
       delta_x = last_dir_event.x - coords->x;
       delta_y = last_dir_event.y - coords->y;
 
-      /* Events with distances less than the screen resolution are not
-       * worth handling.
+      /*  Events with distances less than the screen resolution are
+       *  not worth handling.
        */
       filter = MIN (1 / shell->scale_x, 1 / shell->scale_y) / 2.0;
 
@@ -125,8 +122,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
       distance = dist = sqrt (SQR (delta_x) + SQR (delta_y));
 
-      /* If even smoothed time resolution does not allow to guess for speed,
-       * use last velocity.
+      /*  If even smoothed time resolution does not allow to guess for
+       *  speed, use last velocity.
        */
       if (delta_time == 0)
         {
@@ -134,8 +131,8 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         }
       else
         {
-          /* We need to calculate the velocity in screen coordinates
-           * for human interaction
+          /*  We need to calculate the velocity in screen coordinates
+           *  for human interaction
            */
           gdouble screen_distance = (distance *
                                      MIN (shell->scale_x, shell->scale_y));
@@ -166,10 +163,10 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
           while (((fabs (dir_delta_x) < DIRECTION_RADIUS) ||
                   (fabs (dir_delta_y) < DIRECTION_RADIUS)) &&
-                  (x >= 0))
+                 (x >= 0))
             {
               last_dir_event = g_array_index (shell->event_history,
-                                                        GimpCoords, x);
+                                              GimpCoords, x);
 
               dir_delta_x = last_dir_event.x - coords->x;
               dir_delta_y = last_dir_event.y - coords->y;
@@ -210,16 +207,14 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
 
       coords->direction = coords->direction - floor (coords->direction);
 
-
-      /* do event fill for devices that do not provide enough events*/
+      /* do event fill for devices that do not provide enough events */
       if (distance >= EVENT_FILL_PRECISION &&
           event_fill                       &&
           shell->event_history->len >= 2)
         {
           if (shell->event_delay)
             {
-              gimp_display_shell_interpolate_stroke (shell,
-                                                     coords);
+              gimp_display_shell_interpolate_stroke (shell, coords);
             }
           else
             {
@@ -230,9 +225,7 @@ gimp_display_shell_eval_event (GimpDisplayShell *shell,
         else
           {
             if (shell->event_delay)
-              {
-                shell->event_delay = FALSE;
-              }
+              shell->event_delay = FALSE;
 
             gimp_display_shell_push_event_history (shell, coords);
           }
@@ -267,10 +260,10 @@ void
 gimp_display_shell_push_event_history (GimpDisplayShell *shell,
                                        GimpCoords       *coords)
 {
-   if (shell->event_history->len == 4)
-     g_array_remove_index (shell->event_history, 0);
+  if (shell->event_history->len == 4)
+    g_array_remove_index (shell->event_history, 0);
 
-   g_array_append_val (shell->event_history, *coords);
+  g_array_append_val (shell->event_history, *coords);
 }
 
 static void
@@ -281,7 +274,8 @@ gimp_display_shell_interpolate_stroke (GimpDisplayShell *shell,
   gint    i = shell->event_history->len - 1;
 
   /* Note that there must be exactly one event in buffer or bad things
-   * can happen. This should never get called under other circumstances.
+   * can happen. This should never get called under other
+   * circumstances.
    */
   ret_coords = g_array_new (FALSE, FALSE, sizeof (GimpCoords));
 
