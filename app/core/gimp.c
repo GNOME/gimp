@@ -72,7 +72,6 @@
 #include "gimppattern-load.h"
 #include "gimppattern.h"
 #include "gimppatternclipboard.h"
-#include "gimpprogress.h"
 #include "gimptagcache.h"
 #include "gimptemplate.h"
 #include "gimptoolinfo.h"
