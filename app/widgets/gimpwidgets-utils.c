@@ -1183,50 +1183,11 @@ gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
 void
 gimp_widget_flush_expose (GtkWidget *widget)
 {
-  GList *event_list = NULL;
-
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (! gtk_widget_is_drawable (widget))
     return;
 
   gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
-
-  while (gdk_events_pending ())
-    {
-      GdkEvent *event = gdk_event_get ();
-
-      if (! event)
-        break;
-
-      if (gtk_get_event_widget (event) == widget &&
-          event->any.type == GDK_EXPOSE)
-        {
-          if (gtk_widget_get_double_buffered (widget))
-            {
-              gdk_window_begin_paint_region (event->any.window,
-                                             event->expose.region);
-              gtk_widget_send_expose (widget, event);
-              gdk_window_end_paint (event->any.window);
-            }
-          else
-            {
-              gdk_window_flush (event->any.window);
-              gtk_widget_send_expose (widget, event);
-            }
-
-          gdk_event_free (event);
-        }
-      else
-        {
-          event_list = g_list_prepend (event_list, event);
-        }
-    }
-
-  event_list = g_list_reverse (event_list);
-
-  g_list_foreach (event_list, (GFunc) gdk_event_put, NULL);
-  g_list_foreach (event_list, (GFunc) gdk_event_free, NULL);
-
-  g_list_free (event_list);
+  gdk_flush ();
 }
