@@ -31,12 +31,13 @@
 
 static void move_sash_command_destruct(Command_t *command);
 static CmdExecuteValue_t move_sash_command_execute(Command_t *command);
+static void move_sash_command_redo(Command_t *command);
 
 static CommandClass_t move_sash_command_class = {
    move_sash_command_destruct,
    move_sash_command_execute,
    NULL /*undo*/,
-   NULL /*redo*/
+   move_sash_command_redo
 };
 
 typedef struct {
@@ -141,4 +142,9 @@ move_sash_command_execute(Command_t *parent)
    preview_set_tmp_obj(command->obj);
 
    return CMD_APPEND;
+}
+
+static void move_sash_command_redo(Command_t *command)
+{
+   /* do nothing, but avoid running execute again which will break event handling */
 }
