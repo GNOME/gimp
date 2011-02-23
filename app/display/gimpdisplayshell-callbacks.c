@@ -48,16 +48,16 @@
 
 /*  local function prototypes  */
 
-static void       gimp_display_shell_vscrollbar_update        (GtkAdjustment    *adjustment,
+static void       gimp_display_shell_vadjustment_changed      (GtkAdjustment    *adjustment,
                                                                GimpDisplayShell *shell);
-static void       gimp_display_shell_hscrollbar_update        (GtkAdjustment    *adjustment,
+static void       gimp_display_shell_hadjustment_changed      (GtkAdjustment    *adjustment,
                                                                GimpDisplayShell *shell);
-static gboolean   gimp_display_shell_vscrollbar_update_range  (GtkRange         *range,
+static gboolean   gimp_display_shell_vscrollbar_change_value  (GtkRange         *range,
                                                                GtkScrollType     scroll,
                                                                gdouble           value,
                                                                GimpDisplayShell *shell);
 
-static gboolean   gimp_display_shell_hscrollbar_update_range  (GtkRange         *range,
+static gboolean   gimp_display_shell_hscrollbar_change_value  (GtkRange         *range,
                                                                GtkScrollType     scroll,
                                                                gdouble           value,
                                                                GimpDisplayShell *shell);
@@ -94,18 +94,18 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
 
   /*  set up the scrollbar observers  */
   g_signal_connect (shell->hsbdata, "value-changed",
-                    G_CALLBACK (gimp_display_shell_hscrollbar_update),
+                    G_CALLBACK (gimp_display_shell_hadjustment_changed),
                     shell);
   g_signal_connect (shell->vsbdata, "value-changed",
-                    G_CALLBACK (gimp_display_shell_vscrollbar_update),
+                    G_CALLBACK (gimp_display_shell_vadjustment_changed),
                     shell);
 
   g_signal_connect (shell->hsb, "change-value",
-                    G_CALLBACK (gimp_display_shell_hscrollbar_update_range),
+                    G_CALLBACK (gimp_display_shell_hscrollbar_change_value),
                     shell);
 
   g_signal_connect (shell->vsb, "change-value",
-                    G_CALLBACK (gimp_display_shell_vscrollbar_update_range),
+                    G_CALLBACK (gimp_display_shell_vscrollbar_change_value),
                     shell);
 
   /*  allow shrinking  */
@@ -361,9 +361,9 @@ gimp_display_shell_quick_mask_toggled (GtkWidget        *widget,
 }
 
 gboolean
-gimp_display_shell_nav_button_press (GtkWidget        *widget,
-                                     GdkEventButton   *bevent,
-                                     GimpDisplayShell *shell)
+gimp_display_shell_navigation_button_press (GtkWidget        *widget,
+                                            GdkEventButton   *bevent,
+                                            GimpDisplayShell *shell)
 {
   if (! gimp_display_get_image (shell->display))
     return TRUE;
@@ -380,11 +380,11 @@ gimp_display_shell_nav_button_press (GtkWidget        *widget,
 /*  private functions  */
 
 static void
-gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
-                                      GimpDisplayShell *shell)
+gimp_display_shell_vadjustment_changed (GtkAdjustment    *adjustment,
+                                        GimpDisplayShell *shell)
 {
-  /* If we are panning with mouse, scrollbars are to be ignored
-   * or they will cause jitter in motion
+  /*  If we are panning with mouse, scrollbars are to be ignored or
+   *  they will cause jitter in motion
    */
   if (! shell->scrolling)
     gimp_display_shell_scroll (shell,
@@ -394,11 +394,11 @@ gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
 }
 
 static void
-gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
-                                      GimpDisplayShell *shell)
+gimp_display_shell_hadjustment_changed (GtkAdjustment    *adjustment,
+                                        GimpDisplayShell *shell)
 {
-  /* If we are panning with mouse, scrollbars are to be ignored
-   * or they will cause jitter in motion
+  /* If we are panning with mouse, scrollbars are to be ignored or
+   * they will cause jitter in motion
    */
   if (! shell->scrolling)
     gimp_display_shell_scroll (shell,
@@ -408,7 +408,7 @@ gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
 }
 
 static gboolean
-gimp_display_shell_hscrollbar_update_range (GtkRange         *range,
+gimp_display_shell_hscrollbar_change_value (GtkRange         *range,
                                             GtkScrollType     scroll,
                                             gdouble           value,
                                             GimpDisplayShell *shell)
@@ -431,7 +431,7 @@ gimp_display_shell_hscrollbar_update_range (GtkRange         *range,
 }
 
 static gboolean
-gimp_display_shell_vscrollbar_update_range (GtkRange         *range,
+gimp_display_shell_vscrollbar_change_value (GtkRange         *range,
                                             GtkScrollType     scroll,
                                             gdouble           value,
                                             GimpDisplayShell *shell)

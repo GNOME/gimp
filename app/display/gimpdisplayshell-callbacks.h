@@ -41,7 +41,7 @@ gboolean   gimp_display_shell_quick_mask_button_press (GtkWidget        *widget,
 void       gimp_display_shell_quick_mask_toggled      (GtkWidget        *widget,
                                                        GimpDisplayShell *shell);
 
-gboolean   gimp_display_shell_nav_button_press        (GtkWidget        *widget,
+gboolean   gimp_display_shell_navigation_button_press (GtkWidget        *widget,
                                                        GdkEventButton   *bevent,
                                                        GimpDisplayShell *shell);
 

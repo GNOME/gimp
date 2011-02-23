@@ -653,7 +653,7 @@ gimp_display_shell_constructed (GObject *object)
   gtk_widget_show (gtk_image);
 
   g_signal_connect (shell->nav_ebox, "button-press-event",
-                    G_CALLBACK (gimp_display_shell_nav_button_press),
+                    G_CALLBACK (gimp_display_shell_navigation_button_press),
                     shell);
 
   gimp_help_set_help_data (shell->nav_ebox,
