@@ -149,20 +149,20 @@ gimp_display_shell_events (GtkWidget        *widget,
          */
         if (kevent->state & GDK_BUTTON1_MASK)
           {
-            if (kevent->keyval == GDK_Shift_L   ||
-                kevent->keyval == GDK_Shift_R   ||
-                kevent->keyval == GDK_Control_L ||
-                kevent->keyval == GDK_Control_R ||
-                kevent->keyval == GDK_Alt_L     ||
-                kevent->keyval == GDK_Alt_R)
+            if (kevent->keyval == GDK_KEY_Shift_L   ||
+                kevent->keyval == GDK_KEY_Shift_R   ||
+                kevent->keyval == GDK_KEY_Control_L ||
+                kevent->keyval == GDK_KEY_Control_R ||
+                kevent->keyval == GDK_KEY_Alt_L     ||
+                kevent->keyval == GDK_KEY_Alt_R)
               {
                 break;
               }
 
             if (event->type == GDK_KEY_PRESS)
               {
-                if ((kevent->keyval == GDK_space ||
-                     kevent->keyval == GDK_KP_Space) && shell->space_release_pending)
+                if ((kevent->keyval == GDK_KEY_space ||
+                     kevent->keyval == GDK_KEY_KP_Space) && shell->space_release_pending)
                   {
                     shell->space_pressed         = TRUE;
                     shell->space_release_pending = FALSE;
@@ -170,8 +170,8 @@ gimp_display_shell_events (GtkWidget        *widget,
               }
             else
               {
-                if ((kevent->keyval == GDK_space ||
-                     kevent->keyval == GDK_KP_Space) && shell->space_pressed)
+                if ((kevent->keyval == GDK_KEY_space ||
+                     kevent->keyval == GDK_KEY_KP_Space) && shell->space_pressed)
                   {
                     shell->space_pressed         = FALSE;
                     shell->space_release_pending = TRUE;
@@ -183,20 +183,20 @@ gimp_display_shell_events (GtkWidget        *widget,
 
         switch (kevent->keyval)
           {
-          case GDK_Left:      case GDK_Right:
-          case GDK_Up:        case GDK_Down:
-          case GDK_space:
-          case GDK_KP_Space:
-          case GDK_Tab:
-          case GDK_ISO_Left_Tab:
-          case GDK_Alt_L:     case GDK_Alt_R:
-          case GDK_Shift_L:   case GDK_Shift_R:
-          case GDK_Control_L: case GDK_Control_R:
-          case GDK_Return:
-          case GDK_KP_Enter:
-          case GDK_ISO_Enter:
-          case GDK_BackSpace:
-          case GDK_Escape:
+          case GDK_KEY_Left:      case GDK_KEY_Right:
+          case GDK_KEY_Up:        case GDK_KEY_Down:
+          case GDK_KEY_space:
+          case GDK_KEY_KP_Space:
+          case GDK_KEY_Tab:
+          case GDK_KEY_ISO_Left_Tab:
+          case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
+          case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
+          case GDK_KEY_Control_L: case GDK_KEY_Control_R:
+          case GDK_KEY_Return:
+          case GDK_KEY_KP_Enter:
+          case GDK_KEY_ISO_Enter:
+          case GDK_KEY_BackSpace:
+          case GDK_KEY_Escape:
             break;
 
           default:
@@ -760,8 +760,8 @@ gimp_display_shell_canvas_no_image_events (GtkWidget        *canvas,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
 
-        if (kevent->keyval == GDK_Tab ||
-            kevent->keyval == GDK_ISO_Left_Tab)
+        if (kevent->keyval == GDK_KEY_Tab ||
+            kevent->keyval == GDK_KEY_ISO_Left_Tab)
           {
             gimp_display_shell_toggle_hide_docks (shell);
             return TRUE;
@@ -1557,9 +1557,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             switch (kevent->keyval)
               {
-              case GDK_Alt_L:     case GDK_Alt_R:
-              case GDK_Shift_L:   case GDK_Shift_R:
-              case GDK_Control_L: case GDK_Control_R:
+              case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
+              case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
+              case GDK_KEY_Control_L: case GDK_KEY_Control_R:
                 {
                   GdkModifierType key;
 
@@ -1595,15 +1595,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             switch (kevent->keyval)
               {
-              case GDK_Return:
-              case GDK_KP_Enter:
-              case GDK_ISO_Enter:
-              case GDK_BackSpace:
-              case GDK_Escape:
-              case GDK_Left:
-              case GDK_Right:
-              case GDK_Up:
-              case GDK_Down:
+              case GDK_KEY_Return:
+              case GDK_KEY_KP_Enter:
+              case GDK_KEY_ISO_Enter:
+              case GDK_KEY_BackSpace:
+              case GDK_KEY_Escape:
+              case GDK_KEY_Left:
+              case GDK_KEY_Right:
+              case GDK_KEY_Up:
+              case GDK_KEY_Down:
                 if (gimp_image_is_empty (image) ||
                     ! tool_manager_key_press_active (gimp,
                                                      kevent,
@@ -1619,19 +1619,19 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 return_val = TRUE;
                 break;
 
-              case GDK_space:
-              case GDK_KP_Space:
+              case GDK_KEY_space:
+              case GDK_KEY_KP_Space:
                 gimp_display_shell_space_pressed (shell, event);
                 return_val = TRUE;
                 break;
 
-              case GDK_Tab:
-              case GDK_ISO_Left_Tab:
+              case GDK_KEY_Tab:
+              case GDK_KEY_ISO_Left_Tab:
                 if (state & GDK_CONTROL_MASK)
                   {
                     if (! gimp_image_is_empty (image))
                       {
-                        if (kevent->keyval == GDK_Tab)
+                        if (kevent->keyval == GDK_KEY_Tab)
                           gimp_display_shell_layer_select_init (shell,
                                                                 1, kevent->time);
                         else
@@ -1648,9 +1648,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 break;
 
                 /*  Update the state based on modifiers being pressed  */
-              case GDK_Alt_L:     case GDK_Alt_R:
-              case GDK_Shift_L:   case GDK_Shift_R:
-              case GDK_Control_L: case GDK_Control_R:
+              case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
+              case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
+              case GDK_KEY_Control_L: case GDK_KEY_Control_R:
                 {
                   GdkModifierType key;
 
@@ -1688,9 +1688,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             switch (kevent->keyval)
               {
-              case GDK_Alt_L:     case GDK_Alt_R:
-              case GDK_Shift_L:   case GDK_Shift_R:
-              case GDK_Control_L: case GDK_Control_R:
+              case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
+              case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
+              case GDK_KEY_Control_L: case GDK_KEY_Control_R:
                 {
                   GdkModifierType key;
 
@@ -1726,16 +1726,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             switch (kevent->keyval)
               {
-              case GDK_space:
-              case GDK_KP_Space:
+              case GDK_KEY_space:
+              case GDK_KEY_KP_Space:
                 gimp_display_shell_space_released (shell, event);
                 return_val = TRUE;
                 break;
 
                 /*  Update the state based on modifiers being pressed  */
-              case GDK_Alt_L:     case GDK_Alt_R:
-              case GDK_Shift_L:   case GDK_Shift_R:
-              case GDK_Control_L: case GDK_Control_R:
+              case GDK_KEY_Alt_L:     case GDK_KEY_Alt_R:
+              case GDK_KEY_Shift_L:   case GDK_KEY_Shift_R:
+              case GDK_KEY_Control_L: case GDK_KEY_Control_R:
                 {
                   GdkModifierType key;
 
@@ -2151,14 +2151,14 @@ gimp_display_shell_key_to_state (gint key)
 {
   switch (key)
     {
-    case GDK_Alt_L:
-    case GDK_Alt_R:
+    case GDK_KEY_Alt_L:
+    case GDK_KEY_Alt_R:
       return GDK_MOD1_MASK;
-    case GDK_Shift_L:
-    case GDK_Shift_R:
+    case GDK_KEY_Shift_L:
+    case GDK_KEY_Shift_R:
       return GDK_SHIFT_MASK;
-    case GDK_Control_L:
-    case GDK_Control_R:
+    case GDK_KEY_Control_L:
+    case GDK_KEY_Control_R:
       return GDK_CONTROL_MASK;
     default:
       return 0;
