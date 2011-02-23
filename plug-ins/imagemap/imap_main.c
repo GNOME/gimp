@@ -385,7 +385,7 @@ arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
          edit_shape((gint) event->x, (gint) event->y);
       else
          select_shape(widget, event);
-   } else {
+   } else if (!(event->state & GDK_BUTTON1_MASK) && event->button == 3) {
       do_popup_menu(event);
    }
    return FALSE;
