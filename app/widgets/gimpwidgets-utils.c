@@ -837,56 +837,6 @@ gimp_get_monitor_resolution (GdkScreen *screen,
   *yres = ROUND (y);
 }
 
-
-/**
- * gimp_rgb_get_gdk_color:
- * @rgb: the source color as #GimpRGB
- * @gdk_color: pointer to a #GdkColor
- *
- * Initializes @gdk_color from a #GimpRGB. This function does not
- * allocate the color for you. Depending on how you want to use it,
- * you may have to call gdk_colormap_alloc_color().
- **/
-void
-gimp_rgb_get_gdk_color (const GimpRGB *rgb,
-                        GdkColor      *gdk_color)
-{
-  guchar r, g, b;
-
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (gdk_color != NULL);
-
-  gimp_rgb_get_uchar (rgb, &r, &g, &b);
-
-  gdk_color->red   = (r << 8) | r;
-  gdk_color->green = (g << 8) | g;
-  gdk_color->blue  = (b << 8) | b;
-}
-
-/**
- * gimp_rgb_set_gdk_color:
- * @rgb: a #GimpRGB that is to be set
- * @gdk_color: pointer to the source #GdkColor
- *
- * Initializes @rgb from a #GdkColor. This function does not touch
- * the alpha value of @rgb.
- **/
-void
-gimp_rgb_set_gdk_color (GimpRGB        *rgb,
-                        const GdkColor *gdk_color)
-{
-  guchar r, g, b;
-
-  g_return_if_fail (rgb != NULL);
-  g_return_if_fail (gdk_color != NULL);
-
-  r = gdk_color->red   >> 8;
-  g = gdk_color->green >> 8;
-  b = gdk_color->blue  >> 8;
-
-  gimp_rgb_set_uchar (rgb, r, g, b);
-}
-
 gboolean
 gimp_get_style_color (GtkWidget   *widget,
                       const gchar *property_name,

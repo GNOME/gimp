@@ -28,7 +28,6 @@
 #include "widgets-types.h"
 
 #include "gimptexttag.h"
-#include "gimpwidgets-utils.h"
 
 
 gint
@@ -86,12 +85,17 @@ gimp_text_tag_get_color (GtkTextTag *tag,
                          GimpRGB    *color)
 {
   GdkColor *gdk_color;
+  guchar    r, g, b;
 
   g_object_get (tag,
                 GIMP_TEXT_PROP_NAME_COLOR, &gdk_color,
                 NULL);
 
-  gimp_rgb_set_gdk_color (color, gdk_color);
+  r = gdk_color->red   >> 8;
+  g = gdk_color->green >> 8;
+  b = gdk_color->blue  >> 8;
+
+  gimp_rgb_set_uchar (color, r, g, b);
 
   gdk_color_free (gdk_color);
 }
@@ -101,12 +105,17 @@ gimp_text_tag_get_bg_color (GtkTextTag *tag,
                             GimpRGB    *color)
 {
   GdkColor *gdk_color;
+  guchar    r, g, b;
 
   g_object_get (tag,
                 GIMP_TEXT_PROP_NAME_BG_COLOR, &gdk_color,
                 NULL);
 
-  gimp_rgb_set_gdk_color (color, gdk_color);
+  r = gdk_color->red   >> 8;
+  g = gdk_color->green >> 8;
+  b = gdk_color->blue  >> 8;
+
+  gimp_rgb_set_uchar (color, r, g, b);
 
   gdk_color_free (gdk_color);
 }
