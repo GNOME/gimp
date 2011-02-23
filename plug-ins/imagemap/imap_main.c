@@ -611,7 +611,7 @@ clear_map_info(void)
    g_strreplace(&_map_info.default_url, "");
    g_strreplace(&_map_info.description, "");
 
-   _map_info.map_format = CSIM;
+   _map_info.map_format = _preferences.default_map_type;
    _map_info.show_gray = FALSE;
 }
 
@@ -1292,12 +1292,13 @@ dialog(GimpDrawable *drawable)
    _statusbar = make_statusbar(main_vbox, dlg);
    statusbar_set_zoom(_statusbar, 1);
 
-   clear_map_info();
-
    gtk_widget_show(dlg);
 
    _mru = mru_create();
    init_preferences();
+
+   clear_map_info();
+
    if (!mru_empty(_mru))
       menu_build_mru_items(_mru);
 
