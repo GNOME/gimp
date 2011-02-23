@@ -71,6 +71,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
+#include "gimpdisplayshell-tool-events.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpimagewindow.h"
 #include "gimpstatusbar.h"

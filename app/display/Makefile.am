@@ -121,6 +121,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-style.h		\
 	gimpdisplayshell-title.c		\
 	gimpdisplayshell-title.h		\
+	gimpdisplayshell-tool-events.c		\
+	gimpdisplayshell-tool-events.h		\
 	gimpdisplayshell-transform.c		\
 	gimpdisplayshell-transform.h		\
 	gimpimagewindow.c			\
