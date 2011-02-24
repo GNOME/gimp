@@ -92,5 +92,7 @@ void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_o
 
 void              gimp_widget_flush_expose         (GtkWidget            *widget);
 
+const gchar     * gimp_print_event                 (const GdkEvent       *event);
+
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

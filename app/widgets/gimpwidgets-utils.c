@@ -1186,3 +1186,106 @@ gimp_widget_flush_expose (GtkWidget *widget)
   gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
   gdk_flush ();
 }
+
+static gboolean
+gimp_print_event_free (gpointer data)
+{
+  g_free (data);
+
+  return FALSE;
+}
+
+const gchar *
+gimp_print_event (const GdkEvent *event)
+{
+  gchar *str;
+
+  switch (event->type)
+    {
+    case GDK_ENTER_NOTIFY:
+      str = g_strdup ("ENTER_NOTIFY");
+      break;
+
+    case GDK_LEAVE_NOTIFY:
+      str = g_strdup ("LEAVE_NOTIFY");
+      break;
+
+    case GDK_PROXIMITY_IN:
+      str = g_strdup ("PROXIMITY_IN");
+      break;
+
+    case GDK_PROXIMITY_OUT:
+      str = g_strdup ("PROXIMITY_OUT");
+      break;
+
+    case GDK_FOCUS_CHANGE:
+      if (event->focus_change.in)
+        str = g_strdup ("FOCUS_IN");
+      else
+        str = g_strdup ("FOCUS_OUT");
+      break;
+
+    case GDK_BUTTON_PRESS:
+      str = g_strdup_printf ("BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_2BUTTON_PRESS:
+      str = g_strdup_printf ("2BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_3BUTTON_PRESS:
+      str = g_strdup_printf ("3BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_BUTTON_RELEASE:
+      str = g_strdup_printf ("BUTTON_RELEASE (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_SCROLL:
+      str = g_strdup_printf ("SCROLL (%d)",
+                             event->scroll.direction);
+      break;
+
+    case GDK_MOTION_NOTIFY:
+      str = g_strdup_printf ("MOTION_NOTIFY (%0.0f:%0.0f %d)",
+                             event->motion.x,
+                             event->motion.y,
+                             event->motion.time);
+      break;
+
+    case GDK_KEY_PRESS:
+      str = g_strdup_printf ("KEY_PRESS (%d, %s)",
+                             event->key.keyval,
+                             gdk_keyval_name (event->key.keyval) ?
+                             gdk_keyval_name (event->key.keyval) : "<none>");
+      break;
+
+    case GDK_KEY_RELEASE:
+      str = g_strdup_printf ("KEY_RELEASE (%d, %s)",
+                             event->key.keyval,
+                             gdk_keyval_name (event->key.keyval) ?
+                             gdk_keyval_name (event->key.keyval) : "<none>");
+      break;
+
+    default:
+      str = g_strdup_printf ("UNHANDLED (type %d)",
+                             event->type);
+      break;
+    }
+
+  g_idle_add (gimp_print_event_free, str);
+
+  return str;
+}

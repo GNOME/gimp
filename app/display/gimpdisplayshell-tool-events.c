@@ -333,13 +333,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       gimp_display_shell_update_focus (shell, &image_coords, state);
     }
 
+  GIMP_LOG (TOOL_EVENTS, "event (display %p): %s",
+            display, gimp_print_event (event));
+
   switch (event->type)
     {
     case GDK_ENTER_NOTIFY:
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
-
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): ENTER_NOTIFY", display);
 
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
@@ -357,8 +358,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): LEAVE_NOTIFY", display);
-
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
@@ -373,8 +372,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_IN:
-      GIMP_LOG (TOOL_EVENTS, "event (display %p): PROXIMITY_IN", display);
-
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
                                        shell->proximity,
@@ -382,8 +379,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_OUT:
-      GIMP_LOG (TOOL_EVENTS, "event (display %p): PROXIMITY_OUT", display);
-
       shell->proximity = FALSE;
       gimp_display_shell_clear_software_cursor (shell);
 
@@ -399,8 +394,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (fevent->in)
           {
-            GIMP_LOG (TOOL_EVENTS, "event (display %p): FOCUS_IN", display);
-
             if (G_UNLIKELY (! gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_IN but canvas has no focus", G_STRFUNC);
 
@@ -416,8 +409,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else
           {
-            GIMP_LOG (TOOL_EVENTS, "event (display %p): FOCUS_OUT", display);
-
             if (G_LIKELY (gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
 
@@ -450,9 +441,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
          */
         if (! gtk_widget_has_focus (canvas))
           gtk_widget_grab_focus (canvas);
-
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_PRESS (%d @ %0.0f:%0.0f)",
-                  display, bevent->button, bevent->x, bevent->y);
 
         /*  if the toplevel window didn't have focus, the above
          *  gtk_widget_grab_focus() didn't set the canvas' HAS_FOCUS
@@ -623,9 +611,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventButton *bevent = (GdkEventButton *) event;
         GimpTool       *active_tool;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): 2BUTTON_PRESS (%d @ %0.0f:%0.0f)",
-                  display, bevent->button, bevent->x, bevent->y);
-
         if (gimp->busy)
           return TRUE;
 
@@ -652,9 +637,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventButton *bevent = (GdkEventButton *) event;
         GimpTool       *active_tool;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): 3BUTTON_PRESS (%d @ %0.0f:%0.0f)",
-                  display, bevent->button, bevent->x, bevent->y);
-
         if (gimp->busy)
           return TRUE;
 
@@ -680,9 +662,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
         GimpTool       *active_tool;
-
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): BUTTON_RELEASE (%d @ %0.0f:%0.0f)",
-                  display, bevent->button, bevent->x, bevent->y);
 
         gimp_display_shell_autoscroll_stop (shell);
 
@@ -752,9 +731,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventScroll     *sevent = (GdkEventScroll *) event;
         GdkScrollDirection  direction;
         GimpController     *wheel;
-
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): SCROLL (%d)",
-                  display, sevent->direction);
 
         wheel = gimp_controllers_get_wheel (gimp);
 
@@ -846,9 +822,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventMotion *mevent            = (GdkEventMotion *) event;
         GdkEvent       *compressed_motion = NULL;
         GimpTool       *active_tool;
-
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): MOTION_NOTIFY (%0.0f:%0.0f %d)",
-                  display, mevent->x, mevent->y, mevent->time);
 
         if (gimp->busy)
           return TRUE;
@@ -1035,11 +1008,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventKey *kevent = (GdkEventKey *) event;
         GimpTool    *active_tool;
 
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): KEY_PRESS (%d, %s)",
-                  display, kevent->keyval,
-                  gdk_keyval_name (kevent->keyval) ?
-                  gdk_keyval_name (kevent->keyval) : "<none>");
-
         active_tool = tool_manager_get_active (gimp);
 
         if (state & GDK_BUTTON1_MASK)
@@ -1165,11 +1133,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventKey *kevent = (GdkEventKey *) event;
         GimpTool    *active_tool;
-
-        GIMP_LOG (TOOL_EVENTS, "event (display %p): KEY_RELEASE (%d, %s)",
-                  display, kevent->keyval,
-                  gdk_keyval_name (kevent->keyval) ?
-                  gdk_keyval_name (kevent->keyval) : "<none>");
 
         active_tool = tool_manager_get_active (gimp);
 
