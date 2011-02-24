@@ -37,6 +37,7 @@
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "tools/gimpimagemaptool.h"
 #include "tools/gimpmovetool.h"
