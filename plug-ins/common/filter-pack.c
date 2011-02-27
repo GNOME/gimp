@@ -189,6 +189,9 @@ static GtkWidget *    fp_create_show              (void);
 static GtkWidget *    fp_create_msnls             (GtkWidget     *parent);
 static GtkWidget *    fp_create_pixels_select_by  (void);
 static void           update_range_labels         (void);
+static gboolean       fp_range_draw               (GtkWidget     *widget,
+                                                   cairo_t       *cr,
+                                                   FPValues      *current);
 static gboolean       fp_range_change_events      (GtkWidget     *widget,
                                                    GdkEvent      *event,
                                                    FPValues      *current);
@@ -1372,6 +1375,9 @@ fp_advanced_dialog (GtkWidget *parent)
   gtk_widget_show (AW.aliasing_graph);
   gtk_widget_set_events (AW.aliasing_graph, RANGE_ADJUST_MASK);
 
+  g_signal_connect (AW.aliasing_graph, "draw",
+                    G_CALLBACK (fp_range_draw),
+                    &fpvals);
   g_signal_connect (AW.aliasing_graph, "event",
                     G_CALLBACK (fp_range_change_events),
                     &fpvals);
@@ -1442,11 +1448,12 @@ fp_advanced_dialog (GtkWidget *parent)
 }
 
 static void
-slider_erase (GdkWindow *window,
+slider_erase (GtkWidget *widget,
               int        xpos)
 {
-  gdk_window_clear_area (window, MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, 0,
-                         RANGE_HEIGHT, RANGE_HEIGHT);
+  gtk_widget_queue_draw_area (widget,
+                              MARGIN + xpos - (RANGE_HEIGHT - 1) / 2, 0,
+                              RANGE_HEIGHT, RANGE_HEIGHT);
 }
 
 static void
@@ -1467,11 +1474,12 @@ draw_slider (cairo_t  *cr,
   cairo_stroke (cr);
 }
 
-static void
-draw_it (GtkWidget *widget)
+static gboolean
+fp_range_draw (GtkWidget *widget,
+               cairo_t   *cr,
+               FPValues  *current)
 {
   GtkStyle *style = gtk_widget_get_style (AW.aliasing_graph);
-  cairo_t  *cr    = gdk_cairo_create (gtk_widget_get_window (AW.aliasing_graph));
 
   cairo_translate (cr, 0.5, 0.5);
   cairo_set_line_width (cr, 1.0);
@@ -1491,13 +1499,13 @@ draw_it (GtkWidget *widget)
                &style->dark[GTK_STATE_SELECTED],
                fpvals.offset);
 
-  cairo_destroy (cr);
+  return FALSE;
 }
 
 static gboolean
 fp_range_change_events (GtkWidget *widget,
                         GdkEvent  *event,
-                        FPValues *current)
+                        FPValues  *current)
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
@@ -1507,10 +1515,6 @@ fp_range_change_events (GtkWidget *widget,
 
   switch (event->type)
     {
-    case GDK_EXPOSE:
-      draw_it (NULL);
-      break;
-
     case GDK_BUTTON_PRESS:
       bevent= (GdkEventButton *) event;
 
@@ -1529,11 +1533,11 @@ fp_range_change_events (GtkWidget *widget,
           else
             new = &fpvals.offset;
 
-          slider_erase (gtk_widget_get_window (AW.aliasing_graph), *new);
+          slider_erase (AW.aliasing_graph, *new);
           *new = bevent->x;
         }
 
-      draw_it (NULL);
+      gtk_widget_queue_draw (widget);
 
       fp_range_preview_spill (AW.range_preview, fpvals.value_by);
       update_range_labels ();
@@ -1550,9 +1554,9 @@ fp_range_change_events (GtkWidget *widget,
 
       if (x >= 0 && x < 256)
         {
-          slider_erase (gtk_widget_get_window (AW.aliasing_graph), *new);
+          slider_erase (AW.aliasing_graph, *new);
           *new = x;
-          draw_it (NULL);
+          gtk_widget_queue_draw (widget);
           fp_range_preview_spill (AW.range_preview, fpvals.value_by);
           update_range_labels ();
           fp_create_smoothness_graph (AW.aliasing_preview);
