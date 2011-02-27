@@ -66,6 +66,9 @@
 static GdkModifierType
                   gimp_display_shell_key_to_state             (gint              key);
 
+static void       gimp_display_shell_proximity_in             (GimpDisplayShell *shell);
+static void       gimp_display_shell_proximity_out            (GimpDisplayShell *shell);
+
 static void       gimp_display_shell_check_device_cursor      (GimpDisplayShell *shell);
 
 static void       gimp_display_shell_start_scrolling          (GimpDisplayShell *shell,
@@ -348,6 +351,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         update_sw_cursor = TRUE;
 
+        /*  proximity_in() is called in MOTION_NOTIFY  */
+
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
                                          shell->proximity,
@@ -362,8 +367,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
-        shell->proximity = FALSE;
-        gimp_display_shell_clear_software_cursor (shell);
+        gimp_display_shell_proximity_out (shell);
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
@@ -373,6 +377,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_IN:
+      /*  proximity_in() is called in MOTION_NOTIFY  */
+
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
                                        shell->proximity,
@@ -380,8 +386,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_OUT:
-      shell->proximity = FALSE;
-      gimp_display_shell_clear_software_cursor (shell);
+      gimp_display_shell_proximity_out (shell);
 
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
@@ -854,11 +859,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         update_sw_cursor = TRUE;
 
+        /*  call proximity_in() here because the pointer might already
+         *  be in proximity when the canvas starts to receive events,
+         *  like when a new image has been created into an empty
+         *  display
+         */
         if (! shell->proximity)
-          {
-            shell->proximity = TRUE;
-            gimp_display_shell_check_device_cursor (shell);
-          }
+          gimp_display_shell_proximity_in (shell);
 
         if (shell->scrolling)
           {
@@ -1362,6 +1369,22 @@ gimp_display_shell_key_to_state (gint key)
     default:
       return 0;
     }
+}
+
+static void
+gimp_display_shell_proximity_in (GimpDisplayShell *shell)
+{
+  shell->proximity = TRUE;
+
+  gimp_display_shell_check_device_cursor (shell);
+}
+
+static void
+gimp_display_shell_proximity_out (GimpDisplayShell *shell)
+{
+  shell->proximity = FALSE;
+
+  gimp_display_shell_clear_software_cursor (shell);
 }
 
 static void
