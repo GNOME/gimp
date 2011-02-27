@@ -1185,7 +1185,8 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
 
   if (priv->n_points == 0 ||
       (gimp_free_select_tool_is_point_grabbed (fst) &&
-       ! hovering_first_point))
+       ! hovering_first_point) ||
+      ! proximity)
     {
       priv->show_pending_point = FALSE;
     }
