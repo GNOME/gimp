@@ -1359,15 +1359,18 @@ const gchar *
 gimp_print_event (const GdkEvent *event)
 {
   gchar *str;
+  gchar *tmp;
 
   switch (event->type)
     {
     case GDK_ENTER_NOTIFY:
-      str = g_strdup ("ENTER_NOTIFY");
+      str = g_strdup_printf ("ENTER_NOTIFY (mode %d)",
+                             event->crossing.mode);
       break;
 
     case GDK_LEAVE_NOTIFY:
-      str = g_strdup ("LEAVE_NOTIFY");
+      str = g_strdup_printf ("LEAVE_NOTIFY (mode %d)",
+                             event->crossing.mode);
       break;
 
     case GDK_PROXIMITY_IN:
@@ -1444,6 +1447,13 @@ gimp_print_event (const GdkEvent *event)
                              event->type);
       break;
     }
+
+  tmp = g_strdup_printf ("%s (device '%s', source device '%s')",
+                         str,
+                         gdk_device_get_name (gdk_event_get_device (event)),
+                         gdk_device_get_name (gdk_event_get_source_device (event)));
+  g_free (str);
+  str = tmp;
 
   g_idle_add (gimp_print_event_free, str);
 
