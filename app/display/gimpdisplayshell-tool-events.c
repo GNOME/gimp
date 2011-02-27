@@ -312,6 +312,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   if (! image)
     return gimp_display_shell_canvas_no_image_events (canvas, event, shell);
 
+  GIMP_LOG (TOOL_EVENTS, "event (display %p): %s",
+            display, gimp_print_event (event));
+
   /*  Find out what device the event occurred upon  */
   if (! gimp->busy && gimp_devices_check_change (gimp, event))
     {
@@ -333,9 +336,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
     {
       gimp_display_shell_update_focus (shell, &image_coords, state);
     }
-
-  GIMP_LOG (TOOL_EVENTS, "event (display %p): %s",
-            display, gimp_print_event (event));
 
   switch (event->type)
     {
@@ -410,7 +410,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else
           {
-            if (G_LIKELY (gtk_widget_has_focus (canvas)))
+            if (G_UNLIKELY (gtk_widget_has_focus (canvas)))
               g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
 
             /*  reset it here to be prepared for the next
