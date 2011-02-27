@@ -1112,10 +1112,10 @@ text_layer_resize_invoker (GimpProcedure      *procedure,
                                _("Set text layer attribute"),
                                "box-mode",   GIMP_TEXT_BOX_FIXED,
                                "box-width",  gimp_pixels_to_units (width,
-                                                                   text->unit,
+                                                                   text->box_unit,
                                                                    xres),
                                "box-height", gimp_pixels_to_units (height,
-                                                                   text->unit,
+                                                                   text->box_unit,
                                                                    yres),
                                NULL);
         }
