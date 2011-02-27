@@ -132,12 +132,26 @@ gimp_device_info_get_device_coords (GimpDeviceInfo *info,
   if (gdk_device_get_device_type (device) == GDK_DEVICE_TYPE_SLAVE)
     device = gdk_device_get_associated_device (device);
 
+  if (gdk_device_get_source (device) == GDK_SOURCE_KEYBOARD)
+    device = gdk_device_get_associated_device (device);
+
   *coords = default_coords;
 
   gdk_device_get_state (device, window, axes, NULL);
 
+#if 0
   gdk_device_get_axis (device, axes, GDK_AXIS_X, &coords->x);
   gdk_device_get_axis (device, axes, GDK_AXIS_Y, &coords->y);
+#else
+  {
+    gint x, y;
+
+    gdk_window_get_device_position (window, device, &x, &y, NULL);
+
+    coords->x = x;
+    coords->y = y;
+  }
+#endif
 
   if (gdk_device_get_axis (device,
                            axes, GDK_AXIS_PRESSURE, &coords->pressure))
