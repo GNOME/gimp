@@ -79,6 +79,9 @@ static GdkModifierType
 static void       gimp_display_shell_proximity_in             (GimpDisplayShell  *shell);
 static void       gimp_display_shell_proximity_out            (GimpDisplayShell  *shell);
 
+static gboolean   gimp_display_shell_check_device             (GimpDisplayShell  *shell,
+                                                               GdkEvent          *event,
+                                                               gboolean          *device_changed);
 static void       gimp_display_shell_check_device_cursor      (GimpDisplayShell  *shell);
 
 static void       gimp_display_shell_start_scrolling          (GimpDisplayShell  *shell,
@@ -351,25 +354,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
   GIMP_LOG (TOOL_EVENTS, "event (display %p): %s",
             display, gimp_print_event (event));
 
-  /* See bug 771444 */
-  if (shell->pointer_grabbed &&
-      event->type == GDK_MOTION_NOTIFY)
-    {
-      GimpDeviceManager *manager = gimp_devices_get_manager (gimp);
-      GimpDeviceInfo    *info;
-
-      info = gimp_device_manager_get_current_device (manager);
-
-      if (info->device != event->motion.device)
-        return FALSE;
-    }
-
-  /*  Find out what device the event occurred upon  */
-  if (! gimp->busy && gimp_devices_check_change (gimp, event))
-    {
-      gimp_display_shell_check_device_cursor (shell);
-      device_changed = TRUE;
-    }
+  if (gimp_display_shell_check_device (shell, event, &device_changed))
+    return TRUE;
 
   gimp_display_shell_get_event_coords (shell, event,
                                        &display_coords,
@@ -397,7 +383,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           return TRUE;
 
         /*  ignore enter notify while we have a grab  */
-        if (shell->pointer_grabbed)
+        if (shell->grab_pointer)
           return TRUE;
 
         gimp_display_shell_proximity_in (shell);
@@ -418,7 +404,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           return TRUE;
 
         /*  ignore leave notify while we have a grab  */
-        if (shell->pointer_grabbed)
+        if (shell->grab_pointer)
           return TRUE;
 
         gimp_display_shell_proximity_out (shell);
@@ -458,7 +444,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               g_warning ("%s: FOCUS_IN but canvas has no focus", G_STRFUNC);
 
             /*  ignore focus changes while we have a grab  */
-            if (shell->pointer_grabbed)
+            if (shell->grab_pointer)
               return TRUE;
 
             /*   press modifier keys when the canvas gets the focus  */
@@ -471,7 +457,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               g_warning ("%s: FOCUS_OUT but canvas has focus", G_STRFUNC);
 
             /*  ignore focus changes while we have a grab  */
-            if (shell->pointer_grabbed)
+            if (shell->grab_pointer)
               return TRUE;
 
             /*  release modifier keys when the canvas loses the focus  */
@@ -487,7 +473,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkModifierType  button_state;
 
         /*  ignore new mouse events  */
-        if (gimp->busy || shell->scrolling || shell->pointer_grabbed)
+        if (gimp->busy || shell->scrolling || shell->grab_pointer)
           return TRUE;
 
         button_state = gimp_display_shell_button_to_state (bevent->button);
@@ -550,13 +536,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 1)
           {
-            if (! gimp_display_shell_pointer_grab (shell, NULL, 0))
+            if (! gimp_display_shell_pointer_grab (shell, event,
+                                                   GDK_POINTER_MOTION_MASK |
+                                                   GDK_BUTTON_RELEASE_MASK))
               return TRUE;
 
             if (! shell->space_pressed && ! shell->space_release_pending)
               if (! gimp_display_shell_keyboard_grab (shell, event))
                 {
-                  gimp_display_shell_pointer_ungrab (shell, NULL);
+                  gimp_display_shell_pointer_ungrab (shell, event);
                   return TRUE;
                 }
 
@@ -585,7 +573,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 2)
           {
-            gimp_display_shell_start_scrolling (shell, NULL, state,
+            gimp_display_shell_start_scrolling (shell, event, state,
                                                 bevent->x, bevent->y);
           }
 
@@ -663,7 +651,11 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (bevent->button == 1)
           {
-            if (! shell->pointer_grabbed || shell->scrolling)
+            /*  If we don't have a grab, this is a release paired with
+             *  a button press we intentionally ignored because we had
+             *  a grab on another device at the time of the press
+             */
+            if (! shell->grab_pointer || shell->scrolling)
               return TRUE;
 
             if (! shell->space_pressed && ! shell->space_release_pending)
@@ -694,7 +686,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               gimp_display_shell_update_focus (shell, FALSE,
                                                &image_coords, 0);
 
-            gimp_display_shell_pointer_ungrab (shell, NULL);
+            gimp_display_shell_pointer_ungrab (shell, event);
 
             if (shell->space_release_pending)
               gimp_display_shell_space_released (shell, event, &image_coords);
@@ -702,7 +694,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         else if (bevent->button == 2)
           {
             if (shell->scrolling)
-              gimp_display_shell_stop_scrolling (shell, NULL);
+              gimp_display_shell_stop_scrolling (shell, event);
           }
         else if (bevent->button == 3)
           {
@@ -713,7 +705,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             GdkEventButton *bevent = (GdkEventButton *) event;
             GimpController *mouse  = gimp_controllers_get_mouse (gimp);
 
-            if (!(shell->scrolling || shell->pointer_grabbed) &&
+            if (!(shell->scrolling || shell->grab_pointer) &&
                 mouse && gimp_controller_mouse_button (GIMP_CONTROLLER_MOUSE (mouse),
                                                        bevent))
               {
@@ -1353,10 +1345,11 @@ gimp_display_shell_ruler_button_press (GtkWidget           *widget,
           gimp_display_shell_update_focus (shell, TRUE,
                                            NULL, event->state);
 
-          if (gimp_display_shell_pointer_grab (shell, NULL, 0))
+          if (gimp_display_shell_pointer_grab (shell, (GdkEvent *) event,
+                                               GDK_POINTER_MOTION_MASK |
+                                               GDK_BUTTON_RELEASE_MASK))
             {
-              if (gimp_display_shell_keyboard_grab (shell,
-                                                    (GdkEvent *) event))
+              if (gimp_display_shell_keyboard_grab (shell, (GdkEvent *) event))
                 {
                   if (event->state & gimp_get_toggle_behavior_mask ())
                     {
@@ -1372,7 +1365,7 @@ gimp_display_shell_ruler_button_press (GtkWidget           *widget,
                 }
               else
                 {
-                  gimp_display_shell_pointer_ungrab (shell, NULL);
+                  gimp_display_shell_pointer_ungrab (shell, (GdkEvent *) event);
                 }
             }
         }
@@ -1467,6 +1460,61 @@ gimp_display_shell_proximity_out (GimpDisplayShell *shell)
     }
 }
 
+static gboolean
+gimp_display_shell_check_device (GimpDisplayShell *shell,
+                                 GdkEvent         *event,
+                                 gboolean         *device_changed)
+{
+  Gimp      *gimp = gimp_display_get_gimp (shell->display);
+  GdkDevice *device;
+  GdkDevice *grab_device;
+
+  /*  Find out what device the event occurred upon  */
+  device = gimp_devices_get_from_event (gimp, event, &grab_device);
+
+  if (device)
+    {
+      /*  While we have a grab, ignore all events from all other devices
+       *  of the same type
+       */
+      if (event->type == GDK_KEY_PRESS   ||
+          event->type == GDK_KEY_RELEASE ||
+          event->type == GDK_FOCUS_CHANGE)
+        {
+          if ((shell->grab_keyboard && (shell->grab_keyboard != grab_device)) ||
+              (shell->grab_keyboard_source && (shell->grab_keyboard_source != device)))
+            {
+              GIMP_LOG (TOOL_EVENTS,
+                        "ignoring key event from '%s' while waiting for event from '%s'\n",
+                        gdk_device_get_name (device),
+                        gdk_device_get_name (shell->grab_keyboard_source));
+              return TRUE;
+            }
+        }
+      else
+        {
+          if ((shell->grab_pointer && (shell->grab_pointer != grab_device)) ||
+              (shell->grab_pointer_source && (shell->grab_pointer_source != device)))
+            {
+              GIMP_LOG (TOOL_EVENTS,
+                        "ignoring pointer event from '%s' while waiting for event from '%s'\n",
+                        gdk_device_get_name (device),
+                        gdk_device_get_name (shell->grab_pointer_source));
+              return TRUE;
+            }
+        }
+
+      if (! gimp->busy && gimp_devices_check_change (gimp, device))
+        {
+          gimp_display_shell_check_device_cursor (shell);
+
+          *device_changed = TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
@@ -1489,7 +1537,9 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
 {
   g_return_if_fail (! shell->scrolling);
 
-  gimp_display_shell_pointer_grab (shell, event, GDK_POINTER_MOTION_MASK);
+  gimp_display_shell_pointer_grab (shell, event,
+                                   GDK_POINTER_MOTION_MASK |
+                                   GDK_BUTTON_RELEASE_MASK);
 
   shell->scrolling         = TRUE;
   shell->scroll_last_x     = x;
