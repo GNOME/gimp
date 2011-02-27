@@ -181,11 +181,13 @@ struct _GimpDisplayShell
   gboolean           size_allocate_from_configure_event;
 
   /*  the state of gimp_display_shell_tool_events()  */
-  gboolean           pointer_grabbed;
-  guint32            pointer_grab_time;
+  GdkDevice         *grab_pointer;
+  GdkDevice         *grab_pointer_source;
+  guint32            grab_pointer_time;
 
-  gboolean           keyboard_grabbed;
-  guint32            keyboard_grab_time;
+  GdkDevice         *grab_keyboard;
+  GdkDevice         *grab_keyboard_source;
+  guint32            grab_keyboard_time;
 
   /* Two states are possible when the shell is grabbed: it can be
    * grabbed with space (or space+button1 which is the same state),
