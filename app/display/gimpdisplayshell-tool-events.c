@@ -349,9 +349,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
+        gimp_display_shell_proximity_in (shell);
         update_sw_cursor = TRUE;
-
-        /*  proximity_in() is called in MOTION_NOTIFY  */
 
         tool_manager_oper_update_active (gimp,
                                          &image_coords, state,
@@ -377,7 +376,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_IN:
-      /*  proximity_in() is called in MOTION_NOTIFY  */
+      gimp_display_shell_proximity_in (shell);
 
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
@@ -857,15 +856,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         /* Ask for more motion events in case the event was a hint */
         gdk_event_request_motions (mevent);
 
-        update_sw_cursor = TRUE;
-
         /*  call proximity_in() here because the pointer might already
          *  be in proximity when the canvas starts to receive events,
          *  like when a new image has been created into an empty
          *  display
          */
-        if (! shell->proximity)
-          gimp_display_shell_proximity_in (shell);
+        gimp_display_shell_proximity_in (shell);
+        update_sw_cursor = TRUE;
 
         if (shell->scrolling)
           {
@@ -1374,17 +1371,23 @@ gimp_display_shell_key_to_state (gint key)
 static void
 gimp_display_shell_proximity_in (GimpDisplayShell *shell)
 {
-  shell->proximity = TRUE;
+  if (! shell->proximity)
+    {
+      shell->proximity = TRUE;
 
-  gimp_display_shell_check_device_cursor (shell);
+      gimp_display_shell_check_device_cursor (shell);
+    }
 }
 
 static void
 gimp_display_shell_proximity_out (GimpDisplayShell *shell)
 {
-  shell->proximity = FALSE;
+  if (shell->proximity)
+    {
+      shell->proximity = FALSE;
 
-  gimp_display_shell_clear_software_cursor (shell);
+      gimp_display_shell_clear_software_cursor (shell);
+    }
 }
 
 static void
