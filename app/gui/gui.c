@@ -120,7 +120,9 @@ static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
 static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
-static void       gui_device_change_notify      (Gimp               *gimp);
+static void       gui_device_change_notify      (GimpDeviceManager  *manager,
+                                                 const GParamSpec   *pspec,
+                                                 Gimp               *gimp);
 
 static void       gui_global_buffer_changed     (Gimp               *gimp);
 
@@ -412,7 +414,12 @@ gui_restore_callback (Gimp               *gimp,
                     G_CALLBACK (gui_global_buffer_changed),
                     NULL);
 
-  gimp_devices_init (gimp, gui_device_change_notify);
+  gimp_devices_init (gimp);
+
+  g_signal_connect (gimp_devices_get_list (gimp), "notify::current-device",
+                    G_CALLBACK (gui_device_change_notify),
+                    gimp);
+
   gimp_controllers_init (gimp);
   session_init (gimp);
 
@@ -628,6 +635,11 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_render_exit (gimp);
 
   gimp_controllers_exit (gimp);
+
+  g_signal_handlers_disconnect_by_func (gimp_devices_get_list (gimp),
+                                        gui_device_change_notify,
+                                        gimp);
+
   gimp_devices_exit (gimp);
   dialogs_exit (gimp);
 
@@ -688,7 +700,9 @@ gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
 }
 
 static void
-gui_device_change_notify (Gimp *gimp)
+gui_device_change_notify (GimpDeviceManager *manager,
+                          const GParamSpec  *pspec,
+                          Gimp              *gimp)
 {
   GimpSessionInfo *session_info;
 
