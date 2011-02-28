@@ -39,6 +39,7 @@
 
 #include "gimpdnd.h"
 #include "gimpdeviceinfo.h"
+#include "gimpdevicemanager.h"
 #include "gimpdevices.h"
 #include "gimpdevicestatus.h"
 #include "gimpdialogfactory.h"
@@ -88,6 +89,9 @@ static void gimp_device_status_device_remove   (GimpContainer         *devices,
                                                 GimpDeviceInfo        *device_info,
                                                 GimpDeviceStatus      *status);
 
+static void gimp_device_status_notify_device   (GimpDeviceManager     *manager,
+                                                const GParamSpec      *pspec,
+                                                GimpDeviceStatus      *status);
 static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_info,
                                                 GimpDeviceStatusEntry *entry);
 static void gimp_device_status_save_clicked    (GtkWidget             *button,
@@ -149,7 +153,7 @@ gimp_device_status_constructed (GObject *object)
 
   g_assert (GIMP_IS_GIMP (status->gimp));
 
-  devices = gimp_devices_get_list (status->gimp);
+  devices = GIMP_CONTAINER (gimp_devices_get_manager (status->gimp));
 
   for (list = GIMP_LIST (devices)->list; list; list = list->next)
     gimp_device_status_device_add (devices, list->data, status);
@@ -161,7 +165,11 @@ gimp_device_status_constructed (GObject *object)
                            G_CALLBACK (gimp_device_status_device_remove),
                            status, 0);
 
-  gimp_device_status_update (status);
+  g_signal_connect (devices, "notify::current-device",
+                    G_CALLBACK (gimp_device_status_notify_device),
+                    status);
+
+  gimp_device_status_notify_device (GIMP_DEVICE_MANAGER (devices), NULL, status);
 }
 
 static void
@@ -186,6 +194,10 @@ gimp_device_status_dispose (GObject *object)
 
       g_list_free (status->devices);
       status->devices = NULL;
+
+      g_signal_handlers_disconnect_by_func (gimp_devices_get_manager (status->gimp),
+                                            gimp_device_status_notify_device,
+                                            status);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -204,6 +216,7 @@ gimp_device_status_set_property (GObject      *object,
     case PROP_GIMP:
       status->gimp = g_value_get_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -389,14 +402,17 @@ gimp_device_status_new (Gimp *gimp)
                        NULL);
 }
 
-void
-gimp_device_status_update (GimpDeviceStatus *status)
+
+/*  private functions  */
+
+static void
+gimp_device_status_notify_device (GimpDeviceManager *manager,
+                                  const GParamSpec  *pspec,
+                                  GimpDeviceStatus  *status)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_DEVICE_STATUS (status));
-
-  status->current_device = gimp_devices_get_current (status->gimp);
+  status->current_device = gimp_device_manager_get_current_device (manager);
 
   for (list = status->devices; list; list = list->next)
     {
@@ -406,9 +422,6 @@ gimp_device_status_update (GimpDeviceStatus *status)
                               entry->device_info == status->current_device);
     }
 }
-
-
-/*  private functions  */
 
 static void
 gimp_device_status_update_entry (GimpDeviceInfo        *device_info,

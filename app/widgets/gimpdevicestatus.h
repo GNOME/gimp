@@ -59,8 +59,7 @@ struct _GimpDeviceStatusClass
 
 GType       gimp_device_status_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_device_status_new      (Gimp             *gimp);
-void        gimp_device_status_update   (GimpDeviceStatus *status);
+GtkWidget * gimp_device_status_new      (Gimp *gimp);
 
 
 #endif  /*  __GIMP_DEVICE_STATUS_H__  */

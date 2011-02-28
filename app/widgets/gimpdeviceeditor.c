@@ -36,6 +36,7 @@
 #include "gimpdeviceeditor.h"
 #include "gimpdeviceinfo.h"
 #include "gimpdeviceinfoeditor.h"
+#include "gimpdevicemanager.h"
 #include "gimpdevices.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
@@ -221,7 +222,7 @@ gimp_device_editor_constructed (GObject *object)
 
   g_assert (GIMP_IS_GIMP (private->gimp));
 
-  devices = gimp_devices_get_list (private->gimp);
+  devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
 
   /*  connect to "remove" before the container view does so we can get
    *  the notebook child stored in its model
@@ -257,7 +258,9 @@ static void
 gimp_device_editor_dispose (GObject *object)
 {
   GimpDeviceEditorPrivate *private = GIMP_DEVICE_EDITOR_GET_PRIVATE (object);
-  GimpContainer           *devices = gimp_devices_get_list (private->gimp);
+  GimpContainer           *devices;
+
+  devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
 
   g_signal_handlers_disconnect_by_func (devices,
                                         gimp_device_editor_add_device,
@@ -473,7 +476,7 @@ gimp_device_editor_delete_response (GtkWidget        *dialog,
         {
           GimpContainer *devices;
 
-          devices = gimp_devices_get_list (private->gimp);
+          devices = GIMP_CONTAINER (gimp_devices_get_manager (private->gimp));
 
           gimp_container_remove (devices, selected->data);
 

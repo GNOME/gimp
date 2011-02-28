@@ -55,11 +55,6 @@
 #define GIMP_DEVICE_MANAGER_DATA_KEY "gimp-device-manager"
 
 
-/*  local function prototypes  */
-
-static GimpDeviceManager * gimp_device_manager_get (Gimp *gimp);
-
-
 static gboolean devicerc_deleted = FALSE;
 
 
@@ -71,7 +66,10 @@ gimp_devices_init (Gimp *gimp)
   GimpDeviceManager *manager;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp_device_manager_get (gimp) == NULL);
+
+  manager = g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
+
+  g_return_if_fail (manager == NULL);
 
   manager = gimp_device_manager_new (gimp);
 
@@ -87,9 +85,9 @@ gimp_devices_exit (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_if_fail (manager != NULL);
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
   g_object_set_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY, NULL);
 }
@@ -99,15 +97,16 @@ gimp_devices_restore (Gimp *gimp)
 {
   GimpDeviceManager *manager;
   GimpContext       *user_context;
+  GimpDeviceInfo    *current_device;
   GList             *list;
   gchar             *filename;
   GError            *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_if_fail (manager != NULL);
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
   user_context = gimp_get_user_context (gimp);
 
@@ -140,11 +139,11 @@ gimp_devices_restore (Gimp *gimp)
 
   g_free (filename);
 
-  gimp_context_copy_properties (GIMP_CONTEXT (gimp_device_manager_get_current_device (manager)),
-                                user_context,
+  current_device = gimp_device_manager_get_current_device (manager);
+
+  gimp_context_copy_properties (GIMP_CONTEXT (current_device), user_context,
                                 GIMP_DEVICE_INFO_CONTEXT_MASK);
-  gimp_context_set_parent (GIMP_CONTEXT (gimp_device_manager_get_current_device (manager)),
-                           user_context);
+  gimp_context_set_parent (GIMP_CONTEXT (current_device), user_context);
 }
 
 void
@@ -157,9 +156,9 @@ gimp_devices_save (Gimp     *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_if_fail (manager != NULL);
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
   if (devicerc_deleted && ! always_save)
     return;
@@ -195,9 +194,9 @@ gimp_devices_clear (Gimp    *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_val_if_fail (manager != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
   filename = gimp_personal_rc_file ("devicerc");
 
@@ -218,32 +217,18 @@ gimp_devices_clear (Gimp    *gimp,
   return success;
 }
 
-GimpContainer *
-gimp_devices_get_list (Gimp *gimp)
+GimpDeviceManager *
+gimp_devices_get_manager (Gimp *gimp)
 {
   GimpDeviceManager *manager;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  manager = gimp_device_manager_get (gimp);
+  manager = g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
 
-  g_return_val_if_fail (manager != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), NULL);
 
-  return GIMP_CONTAINER (manager);
-}
-
-GimpDeviceInfo *
-gimp_devices_get_current (Gimp *gimp)
-{
-  GimpDeviceManager *manager;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_val_if_fail (manager != NULL, NULL);
-
-  return gimp_device_manager_get_current_device (manager);
+  return manager;
 }
 
 void
@@ -286,9 +271,9 @@ gimp_devices_check_change (Gimp     *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_val_if_fail (manager != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
   /* It is possible that the event was propagated from a widget that does not
      want extension events and therefore always sends core pointer events.
@@ -336,13 +321,4 @@ gimp_devices_check_change (Gimp     *gimp,
     }
 
   return FALSE;
-}
-
-
-/*  private functions  */
-
-static GimpDeviceManager *
-gimp_device_manager_get (Gimp *gimp)
-{
-  return g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
 }

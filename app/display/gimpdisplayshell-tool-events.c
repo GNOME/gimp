@@ -34,6 +34,7 @@
 #include "widgets/gimpcontrollerwheel.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdeviceinfo-coords.h"
+#include "widgets/gimpdevicemanager.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
@@ -488,13 +489,16 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                  (gimp_tool_control_get_motion_mode (active_tool->control) !=
                   GIMP_MOTION_MODE_EXACT)))
               {
-                GdkDisplay *gdk_display = gtk_widget_get_display (canvas);
+                GdkDisplay        *gdk_display = gtk_widget_get_display (canvas);
+                GimpDeviceManager *manager;
+
+                manager = gimp_devices_get_manager (gimp);
 
                 /*  don't request motion hins for XInput devices because
                  *  the wacom driver is known to report crappy hints
                  *  (#6901) --mitch
                  */
-                if (gimp_devices_get_current (gimp)->device ==
+                if (gimp_device_manager_get_current_device (manager)->device ==
                     gdk_display_get_core_pointer (gdk_display))
                   {
                     event_mask |= GDK_POINTER_MOTION_HINT_MASK;
@@ -1393,9 +1397,12 @@ gimp_display_shell_proximity_out (GimpDisplayShell *shell)
 static void
 gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 {
-  GimpDeviceInfo *current_device;
+  GimpDeviceManager *manager;
+  GimpDeviceInfo    *current_device;
 
-  current_device = gimp_devices_get_current (shell->display->gimp);
+  manager = gimp_devices_get_manager (shell->display->gimp);
+
+  current_device = gimp_device_manager_get_current_device (manager);
 
   shell->draw_cursor = ! gimp_device_info_has_cursor (current_device);
 }
@@ -1460,7 +1467,9 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 
     case GIMP_SPACE_BAR_ACTION_PAN:
       {
-        GimpCoords coords;
+        GimpDeviceManager *manager;
+        GimpDeviceInfo    *current_device;
+        GimpCoords         coords;
 
         if (! gimp_display_shell_pointer_grab (shell, event,
                                                GDK_POINTER_MOTION_MASK |
@@ -1470,7 +1479,10 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
             return;
           }
 
-        gimp_device_info_get_device_coords (gimp_devices_get_current (gimp),
+        manager = gimp_devices_get_manager (gimp);
+        current_device = gimp_device_manager_get_current_device (manager);
+
+        gimp_device_info_get_device_coords (current_device,
                                             gtk_widget_get_window (shell->canvas),
                                             &coords);
 
@@ -1631,14 +1643,19 @@ gimp_display_shell_get_event_coords (GimpDisplayShell *shell,
                                      GdkModifierType  *state,
                                      guint32          *time)
 {
-  Gimp *gimp = gimp_display_get_gimp (shell->display);
+  Gimp              *gimp = gimp_display_get_gimp (shell->display);
+  GimpDeviceManager *manager;
+  GimpDeviceInfo    *current_device;
 
-  gimp_device_info_get_event_coords (gimp_devices_get_current (gimp),
+  manager = gimp_devices_get_manager (gimp);
+  current_device = gimp_device_manager_get_current_device (manager);
+
+  gimp_device_info_get_event_coords (current_device,
                                      gtk_widget_get_window (shell->canvas),
                                      event,
                                      display_coords);
 
-  gimp_device_info_get_event_state (gimp_devices_get_current (gimp),
+  gimp_device_info_get_event_state (current_device,
                                     gtk_widget_get_window (shell->canvas),
                                     event,
                                     state);
