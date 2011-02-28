@@ -625,6 +625,9 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
   /*  sort order depends on device presence  */
   gimp_object_name_changed (GIMP_OBJECT (info));
+
+  g_object_notify (G_OBJECT (info), "device");
+  gimp_device_info_changed (info);
 }
 
 GdkInputMode
