@@ -427,9 +427,8 @@ static void
 gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
                                  GimpDeviceStatusEntry *entry)
 {
-  GdkDevice *device = gimp_device_info_get_device (device_info, NULL);
-
-  if (! device || device->mode == GDK_MODE_DISABLED)
+  if (! gimp_device_info_get_device (device_info, NULL) ||
+      gimp_device_info_get_mode (device_info) == GDK_MODE_DISABLED)
     {
       gtk_widget_hide (entry->table);
     }
