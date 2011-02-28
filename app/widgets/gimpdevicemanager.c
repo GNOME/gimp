@@ -119,8 +119,6 @@ gimp_device_manager_class_init (GimpDeviceManagerClass *klass)
 static void
 gimp_device_manager_init (GimpDeviceManager *manager)
 {
-  gimp_list_set_sort_func (GIMP_LIST (manager),
-                           (GCompareFunc) gimp_device_info_compare);
 }
 
 static void
@@ -235,6 +233,7 @@ gimp_device_manager_new (Gimp *gimp)
                        "children-type", GIMP_TYPE_DEVICE_INFO,
                        "policy",        GIMP_CONTAINER_POLICY_STRONG,
                        "unique-names",  FALSE,
+                       "sort-func",     gimp_device_info_compare,
                        NULL);
 }
 
