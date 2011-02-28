@@ -336,6 +336,7 @@ gimp_image_window_constructed (GObject *object)
 
   /* Create notebook that contains images */
   private->notebook = gtk_notebook_new ();
+  gtk_notebook_set_scrollable (GTK_NOTEBOOK (private->notebook), TRUE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (private->notebook), FALSE);
   gtk_paned_pack1 (GTK_PANED (private->right_hpane), private->notebook,
