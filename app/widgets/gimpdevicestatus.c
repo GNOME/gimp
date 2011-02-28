@@ -258,7 +258,8 @@ gimp_device_status_device_add (GimpContainer    *devices,
 
   /*  the device name  */
 
-  if (device_info->display == gdk_display_get_default ())
+  if (device_info->display == NULL ||
+      device_info->display == gdk_display_get_default ())
     name = g_strdup (gimp_object_get_name (device_info));
   else
     name = g_strdup_printf ("%s (%s)",
