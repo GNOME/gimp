@@ -1297,6 +1297,8 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
       return;
     }
 
+  gimp_tool_control_activate (tool->control);
+
   gimp_draw_tool_pause (draw_tool);
 
   gimp_free_select_tool_update_button_state (fst, state);
@@ -1358,6 +1360,8 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
 
   if (tool->display != display)
     return;
+
+  gimp_tool_control_halt (tool->control);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (fst));
 
