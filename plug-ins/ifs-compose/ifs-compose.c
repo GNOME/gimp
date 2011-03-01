@@ -384,8 +384,8 @@ run (const gchar      *name,
       /*  Possibly retrieve data; first look for a parasite -
        *  if not found, fall back to global values
        */
-      parasite = gimp_item_find_parasite (drawable->drawable_id,
-                                          PLUG_IN_PARASITE);
+      parasite = gimp_item_get_parasite (drawable->drawable_id,
+                                         PLUG_IN_PARASITE);
       if (parasite)
         {
           found_parasite = ifsvals_parse_string (gimp_parasite_data (parasite),

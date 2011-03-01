@@ -732,7 +732,7 @@ CODE
     );
 }
 
-sub item_find_parasite {
+sub item_get_parasite {
     $blurb = 'Look up a parasite in an item';
 
     $help = <<'HELP';
@@ -765,7 +765,7 @@ CODE
     );
 }
 
-sub item_list_parasites {
+sub item_get_parasite_list {
     $blurb = 'List all parasites.';
     $help  = 'Returns a list of all parasites currently attached the an item.';
 
@@ -777,7 +777,7 @@ sub item_list_parasites {
     );
 
     @outargs = (
-	{ name => 'parasites', type => 'stringarray', void_ret => 1,
+	{ name => 'parasites', type => 'stringarray',
 	  desc => 'The names of currently attached parasites',
 	  array => { desc => 'The number of attached parasites' } }
     );
@@ -819,8 +819,8 @@ CODE
             item_get_lock_content item_set_lock_content
             item_get_tattoo item_set_tattoo
 	    item_attach_parasite item_detach_parasite
-	    item_find_parasite
-	    item_list_parasites);
+	    item_get_parasite
+	    item_get_parasite_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

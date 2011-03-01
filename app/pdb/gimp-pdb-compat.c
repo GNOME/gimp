@@ -441,10 +441,10 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
     { "gimp-drawable-set-linked",           "gimp-item-set-linked"            },
     { "gimp-drawable-get-tattoo",           "gimp-item-get-tattoo"            },
     { "gimp-drawable-set-tattoo",           "gimp-item-set-tattoo"            },
-    { "gimp-drawable-parasite-find",        "gimp-item-find-parasite"         },
+    { "gimp-drawable-parasite-find",        "gimp-item-get-parasite"          },
     { "gimp-drawable-parasite-attach",      "gimp-item-attach-parasite"       },
     { "gimp-drawable-parasite-detach",      "gimp-item-detach-parasite"       },
-    { "gimp-drawable-parasite-list",        "gimp-item-list-parasites"        },
+    { "gimp-drawable-parasite-list",        "gimp-item-get-parasite-list"     },
     { "gimp-image-get-layer-position",      "gimp-image-get-item-position"    },
     { "gimp-image-raise-layer",             "gimp-image-raise-item"           },
     { "gimp-image-lower-layer",             "gimp-image-lower-item"           },
@@ -468,10 +468,10 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
     { "gimp-vectors-set-linked",            "gimp-item-set-linked"            },
     { "gimp-vectors-get-tattoo",            "gimp-item-get-tattoo"            },
     { "gimp-vectors-set-tattoo",            "gimp-item-set-tattoo"            },
-    { "gimp-vectors-parasite-find",         "gimp-item-find-parasite"         },
+    { "gimp-vectors-parasite-find",         "gimp-item-get-parasite"          },
     { "gimp-vectors-parasite-attach",       "gimp-item-attach-parasite"       },
     { "gimp-vectors-parasite-detach",       "gimp-item-detach-parasite"       },
-    { "gimp-vectors-parasite-list",         "gimp-item-list-parasites"        }
+    { "gimp-vectors-parasite-list",         "gimp-item-get-parasite-list"     }
   };
 
   g_return_if_fail (GIMP_IS_PDB (pdb));

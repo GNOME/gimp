@@ -750,7 +750,7 @@ gfig_load_from_parasite (void)
   GimpParasite *parasite;
   GFigObj      *gfig;
 
-  parasite = gimp_item_find_parasite (gfig_context->drawable_id, "gfig");
+  parasite = gimp_item_get_parasite (gfig_context->drawable_id, "gfig");
   if (! parasite)
     return NULL;
 

@@ -757,12 +757,12 @@ item_detach_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-item_find_parasite_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
+item_get_parasite_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -791,12 +791,12 @@ item_find_parasite_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-item_list_parasites_invoker (GimpProcedure      *procedure,
-                             Gimp               *gimp,
-                             GimpContext        *context,
-                             GimpProgress       *progress,
-                             const GValueArray  *args,
-                             GError            **error)
+item_get_parasite_list_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
 {
   gboolean success = TRUE;
   GValueArray *return_vals;
@@ -1555,13 +1555,13 @@ register_item_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-item-find-parasite
+   * gimp-item-get-parasite
    */
-  procedure = gimp_procedure_new (item_find_parasite_invoker);
+  procedure = gimp_procedure_new (item_get_parasite_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-find-parasite");
+                               "gimp-item-get-parasite");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-find-parasite",
+                                     "gimp-item-get-parasite",
                                      "Look up a parasite in an item",
                                      "Finds and returns the parasite that is attached to an item.",
                                      "Jay Cox",
@@ -1590,13 +1590,13 @@ register_item_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-item-list-parasites
+   * gimp-item-get-parasite-list
    */
-  procedure = gimp_procedure_new (item_list_parasites_invoker);
+  procedure = gimp_procedure_new (item_get_parasite_list_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-item-list-parasites");
+                               "gimp-item-get-parasite-list");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-item-list-parasites",
+                                     "gimp-item-get-parasite-list",
                                      "List all parasites.",
                                      "Returns a list of all parasites currently attached the an item.",
                                      "Marc Lehmann",

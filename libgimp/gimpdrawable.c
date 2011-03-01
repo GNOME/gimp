@@ -548,7 +548,7 @@ gimp_drawable_set_tattoo (gint32 drawable_ID,
  * @drawable_ID: The drawable.
  * @name: The name of the parasite to find.
  *
- * Deprecated: Use gimp_item_find_parasite() instead.
+ * Deprecated: Use gimp_item_get_parasite() instead.
  *
  * Returns: The found parasite.
  **/
@@ -556,7 +556,7 @@ GimpParasite *
 gimp_drawable_parasite_find (gint32       drawable_ID,
                              const gchar *name)
 {
-  return gimp_item_find_parasite (drawable_ID, name);
+  return gimp_item_get_parasite (drawable_ID, name);
 }
 
 /**
@@ -606,7 +606,9 @@ gimp_drawable_parasite_list (gint32    drawable_ID,
                              gint     *num_parasites,
                              gchar  ***parasites)
 {
-  return gimp_item_list_parasites (drawable_ID, num_parasites, parasites);
+  *parasites = gimp_item_get_parasite_list (drawable_ID, num_parasites);
+
+  return *parasites != NULL;
 }
 
 /**
