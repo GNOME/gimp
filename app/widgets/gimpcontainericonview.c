@@ -43,7 +43,7 @@
 
 struct _GimpContainerIconViewPriv
 {
-  gint dummy;
+  GimpViewRenderer *dnd_renderer;
 };
 
 
@@ -86,6 +86,9 @@ static void          gimp_container_icon_view_selection_changed (GtkIconView    
                                                                  GimpContainerIconView       *icon_view);
 static void          gimp_container_icon_view_item_activated    (GtkIconView                 *view,
                                                                  GtkTreePath                 *path,
+                                                                 GimpContainerIconView       *icon_view);
+static gboolean      gimp_container_icon_view_button_press      (GtkWidget                   *widget,
+                                                                 GdkEventButton              *bevent,
                                                                  GimpContainerIconView       *icon_view);
 static gboolean      gimp_container_icon_view_tooltip           (GtkWidget                   *widget,
                                                                  gint                         x,
@@ -358,6 +361,10 @@ gimp_container_icon_view_set_container (GimpContainerView *view,
 
               gtk_drag_source_unset (GTK_WIDGET (icon_view->view));
             }
+
+          g_signal_handlers_disconnect_by_func (icon_view->view,
+                                                gimp_container_icon_view_button_press,
+                                                icon_view);
         }
     }
   else if (container)
@@ -377,6 +384,10 @@ gimp_container_icon_view_set_container (GimpContainerView *view,
                                         gimp_container_icon_view_drag_pixbuf,
                                         icon_view);
         }
+
+      g_signal_connect (icon_view->view, "button-press-event",
+                        G_CALLBACK (gimp_container_icon_view_button_press),
+                        icon_view);
     }
 
   parent_view_iface->set_container (view, container);
@@ -611,6 +622,39 @@ gimp_container_icon_view_item_activated (GtkIconView           *view,
 }
 
 static gboolean
+gimp_container_icon_view_button_press (GtkWidget             *widget,
+                                       GdkEventButton        *bevent,
+                                       GimpContainerIconView *icon_view)
+{
+  GtkTreePath *path;
+
+  icon_view->priv->dnd_renderer = NULL;
+
+  path = gtk_icon_view_get_path_at_pos (GTK_ICON_VIEW (widget),
+                                        bevent->x, bevent->y);
+
+  if (path)
+    {
+      GimpViewRenderer *renderer;
+      GtkTreeIter       iter;
+
+      gtk_tree_model_get_iter (icon_view->model, &iter, path);
+
+      gtk_tree_model_get (icon_view->model, &iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      icon_view->priv->dnd_renderer = renderer;
+
+      g_object_unref (renderer);
+
+      gtk_tree_path_free (path);
+    }
+
+  return FALSE;
+}
+
+static gboolean
 gimp_container_icon_view_tooltip (GtkWidget             *widget,
                                   gint                   x,
                                   gint                   y,
@@ -664,8 +708,13 @@ gimp_container_icon_view_drag_viewable (GtkWidget    *widget,
                                         GimpContext **context,
                                         gpointer      data)
 {
+  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (data);
+
   if (context)
     *context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (data));
+
+  if (icon_view->priv->dnd_renderer)
+    return icon_view->priv->dnd_renderer->viewable;
 
   return NULL;
 }
@@ -674,7 +723,8 @@ static GdkPixbuf *
 gimp_container_icon_view_drag_pixbuf (GtkWidget *widget,
                                       gpointer   data)
 {
-  GimpViewRenderer      *renderer  = NULL; //icon_view->priv->dnd_renderer;
+  GimpContainerIconView *icon_view = GIMP_CONTAINER_ICON_VIEW (data);
+  GimpViewRenderer      *renderer  = icon_view->priv->dnd_renderer;
   gint                   width;
   gint                   height;
 
