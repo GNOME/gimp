@@ -154,7 +154,7 @@ image_new_dialog_new (GimpContext *context)
   gtk_box_pack_start (GTK_BOX (main_vbox), dialog->editor, FALSE, FALSE, 0);
   gtk_widget_show (dialog->editor);
 
-  entry = GIMP_SIZE_ENTRY (GIMP_TEMPLATE_EDITOR (dialog->editor)->size_se);
+  entry = GIMP_SIZE_ENTRY (gimp_template_editor_get_size_se (GIMP_TEMPLATE_EDITOR (dialog->editor)));
   gimp_size_entry_set_activates_default (entry, TRUE);
   gimp_size_entry_grab_focus (entry);
 

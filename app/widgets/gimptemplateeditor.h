@@ -34,22 +34,7 @@ typedef struct _GimpTemplateEditorClass GimpTemplateEditorClass;
 
 struct _GimpTemplateEditor
 {
-  GtkBox         parent_instance;
-
-  GimpTemplate  *template;
-
-  GimpContainer *stock_id_container;
-  GimpContext   *stock_id_context;
-
-  GtkWidget     *aspect_button;
-  gboolean       block_aspect;
-
-  GtkWidget     *expander;
-  GtkWidget     *size_se;
-  GtkWidget     *memsize_label;
-  GtkWidget     *pixel_label;
-  GtkWidget     *more_label;
-  GtkWidget     *resolution_se;
+  GtkBox  parent_instance;
 };
 
 struct _GimpTemplateEditorClass
@@ -58,14 +43,17 @@ struct _GimpTemplateEditorClass
 };
 
 
-GType       gimp_template_editor_get_type      (void) G_GNUC_CONST;
+GType          gimp_template_editor_get_type      (void) G_GNUC_CONST;
 
-GtkWidget * gimp_template_editor_new           (GimpTemplate       *template,
-                                                Gimp               *gimp,
-                                                gboolean            edit_template);
+GtkWidget    * gimp_template_editor_new           (GimpTemplate       *template,
+                                                   Gimp               *gimp,
+                                                   gboolean            edit_template);
 
-void        gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
-                                                gboolean            expanded);
+GimpTemplate * gimp_template_editor_get_template  (GimpTemplateEditor *editor);
+
+void           gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
+                                                   gboolean            expanded);
+GtkWidget    * gimp_template_editor_get_size_se   (GimpTemplateEditor *editor);
 
 
 #endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */
