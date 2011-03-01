@@ -108,18 +108,8 @@ gimp_view_popup_show (GtkWidget      *widget,
   popup->popup_height = popup_height;
   popup->dot_for_dot  = dot_for_dot;
   popup->button       = bevent->button;
-  popup->button_x     = bevent->x;
-  popup->button_y     = bevent->y;
-
-  if (! gtk_widget_get_has_window (widget))
-    {
-      GtkAllocation allocation;
-
-      gtk_widget_get_allocation (widget, &allocation);
-
-      popup->button_x += allocation.x;
-      popup->button_y += allocation.y;
-    }
+  popup->button_x     = bevent->x_root;
+  popup->button_y     = bevent->y_root;
 
   g_signal_connect (widget, "button-release-event",
                     G_CALLBACK (gimp_view_popup_button_release),
@@ -232,10 +222,8 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   gtk_container_add (GTK_CONTAINER (frame), view);
   gtk_widget_show (view);
 
-  gdk_window_get_origin (gtk_widget_get_window (popup->widget), &x, &y);
-
-  x += popup->button_x - (popup->popup_width  >> 1);
-  y += popup->button_y - (popup->popup_height >> 1);
+  x = popup->button_x - (popup->popup_width  / 2);
+  y = popup->button_y - (popup->popup_height / 2);
 
   monitor = gdk_screen_get_monitor_at_point (screen, x, y);
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
