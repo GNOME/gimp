@@ -224,7 +224,7 @@ gimp_canvas_path_get_extents (GimpCanvasItem   *item,
 {
   GimpCanvasPathPrivate *private = GET_PRIVATE (item);
 
-  if (private->path)
+  if (private->path && gtk_widget_get_realized (shell->canvas))
     {
       cairo_t      *cr;
       GdkRectangle  rectangle;
