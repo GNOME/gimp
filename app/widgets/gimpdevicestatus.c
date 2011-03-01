@@ -64,8 +64,6 @@ struct _GimpDeviceStatusEntry
   GimpDeviceInfo *device_info;
 
   GtkWidget      *ebox;
-  GtkWidget      *table;
-  GtkWidget      *label;
   GtkWidget      *tool;
   GtkWidget      *foreground;
   GtkWidget      *background;
@@ -231,6 +229,9 @@ gimp_device_status_device_add (GimpContainer    *devices,
   GimpContext           *context = GIMP_CONTEXT (device_info);
   GimpDeviceStatusEntry *entry;
   GClosure              *closure;
+  GtkWidget             *vbox;
+  GtkWidget             *hbox;
+  GtkWidget             *label;
   gchar                 *name;
 
   entry = g_slice_new0 (GimpDeviceStatusEntry);
@@ -249,12 +250,10 @@ gimp_device_status_device_add (GimpContainer    *devices,
                       FALSE, FALSE, 0);
   gtk_widget_show (entry->ebox);
 
-  entry->table = gtk_table_new (2, 6, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (entry->table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (entry->table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (entry->table), 4);
-  gtk_container_add (GTK_CONTAINER (entry->ebox), entry->table);
-  gtk_widget_show (entry->table);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (entry->ebox), vbox);
+  gtk_widget_show (vbox);
 
   /*  the device name  */
 
@@ -266,23 +265,28 @@ gimp_device_status_device_add (GimpContainer    *devices,
                             gimp_object_get_name (device_info),
                             gdk_display_get_name (device_info->display));
 
-  entry->label = gtk_label_new (name);
+  label = gtk_label_new (name);
   g_free (name);
 
-  gimp_label_set_attributes (GTK_LABEL (entry->label),
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_misc_set_alignment (GTK_MISC (entry->label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->label,
-                    0, 6, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry->label);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  /*  the row of properties  */
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*  the tool  */
 
   entry->tool = gimp_prop_view_new (G_OBJECT (context), "tool",
                                     context, CELL_SIZE);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->tool,
-                    0, 1, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->tool, FALSE, FALSE, 0);
   gtk_widget_show (entry->tool);
 
   /*  the foreground color  */
@@ -293,8 +297,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                                 GIMP_COLOR_AREA_FLAT);
   gtk_widget_add_events (entry->foreground,
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->foreground,
-                    1, 2, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->foreground, FALSE, FALSE, 0);
   gtk_widget_show (entry->foreground);
 
   /*  the background color  */
@@ -305,8 +308,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                                 GIMP_COLOR_AREA_FLAT);
   gtk_widget_add_events (entry->background,
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->background,
-                    2, 3, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->background, FALSE, FALSE, 0);
   gtk_widget_show (entry->background);
 
   /*  the brush  */
@@ -315,8 +317,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                      context, CELL_SIZE);
   GIMP_VIEW (entry->brush)->clickable  = TRUE;
   GIMP_VIEW (entry->brush)->show_popup = TRUE;
-  gtk_table_attach (GTK_TABLE (entry->table), entry->brush,
-                    3, 4, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->brush, FALSE, FALSE, 0);
   gtk_widget_show (entry->brush);
 
   g_signal_connect (entry->brush, "clicked",
@@ -329,8 +330,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                        context, CELL_SIZE);
   GIMP_VIEW (entry->pattern)->clickable  = TRUE;
   GIMP_VIEW (entry->pattern)->show_popup = TRUE;
-  gtk_table_attach (GTK_TABLE (entry->table), entry->pattern,
-                    4, 5, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->pattern, FALSE, FALSE, 0);
   gtk_widget_show (entry->pattern);
 
   g_signal_connect (entry->pattern, "clicked",
@@ -343,8 +343,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                         context, 2 * CELL_SIZE);
   GIMP_VIEW (entry->gradient)->clickable  = TRUE;
   GIMP_VIEW (entry->gradient)->show_popup = TRUE;
-  gtk_table_attach (GTK_TABLE (entry->table), entry->gradient,
-                    5, 6, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->gradient, FALSE, FALSE, 0);
   gtk_widget_show (entry->gradient);
 
   g_signal_connect (entry->gradient, "clicked",
