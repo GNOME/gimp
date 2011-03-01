@@ -29,12 +29,10 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimplist.h"
-#include "core/gimpcontext.h"
 #include "core/gimptemplate.h"
 
+#include "gimpiconpicker.h"
 #include "gimptemplateeditor.h"
-#include "gimpviewablebutton.h"
 
 #include "gimp-intl.h"
 
@@ -56,8 +54,7 @@ struct _GimpTemplateEditorPrivate
 {
   GimpTemplate  *template;
 
-  GimpContainer *stock_id_container;
-  GimpContext   *stock_id_context;
+  GtkWidget     *icon_picker;
 
   GtkWidget     *aspect_button;
   gboolean       block_aspect;
@@ -92,8 +89,8 @@ static void gimp_template_editor_aspect_callback (GtkWidget          *widget,
 static void gimp_template_editor_template_notify (GimpTemplate       *template,
                                                   GParamSpec         *param_spec,
                                                   GimpTemplateEditor *editor);
-static void gimp_template_editor_icon_changed    (GimpContext        *context,
-                                                  GimpTemplate       *template,
+static void gimp_template_editor_icon_changed    (GimpIconPicker     *picker,
+                                                  const GParamSpec   *pspec,
                                                   GimpTemplateEditor *editor);
 
 
@@ -433,18 +430,6 @@ gimp_template_editor_finalize (GObject *object)
       private->template = NULL;
     }
 
-  if (private->stock_id_container)
-    {
-      g_object_unref (private->stock_id_container);
-      private->stock_id_container = NULL;
-    }
-
-  if (private->stock_id_context)
-    {
-      g_object_unref (private->stock_id_context);
-      private->stock_id_context = NULL;
-    }
-
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -508,39 +493,7 @@ gimp_template_editor_new (GimpTemplate *template,
     {
       GtkWidget   *table;
       GtkWidget   *entry;
-      GtkWidget   *button;
-      GSList      *stock_list;
-      GSList      *list;
       const gchar *stock_id;
-
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (private->template));
-
-      private->stock_id_container = gimp_list_new (GIMP_TYPE_TEMPLATE, FALSE);
-      private->stock_id_context = gimp_context_new (gimp, "foo", NULL);
-
-      g_signal_connect (private->stock_id_context, "template-changed",
-                        G_CALLBACK (gimp_template_editor_icon_changed),
-                        editor);
-
-      stock_list = gtk_stock_list_ids ();
-
-      for (list = stock_list; list; list = g_slist_next (list))
-        {
-          GimpObject *object = g_object_new (GIMP_TYPE_TEMPLATE,
-                                             "name",     list->data,
-                                             "stock-id", list->data,
-                                             NULL);
-
-          gimp_container_add (private->stock_id_container, object);
-          g_object_unref (object);
-
-          if (strcmp (list->data, stock_id) == 0)
-            gimp_context_set_template (private->stock_id_context,
-                                       GIMP_TEMPLATE (object));
-        }
-
-      g_slist_foreach (stock_list, (GFunc) g_free, NULL);
-      g_slist_free (stock_list);
 
       table = gtk_table_new (2, 2, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -555,18 +508,19 @@ gimp_template_editor_new (GimpTemplate *template,
                                  _("_Name:"), 1.0, 0.5,
                                  entry, 1, FALSE);
 
-      button = gimp_viewable_button_new (private->stock_id_container,
-                                         private->stock_id_context,
-                                         GIMP_VIEW_TYPE_LIST,
-                                         GIMP_VIEW_SIZE_SMALL,
-                                         GIMP_VIEW_SIZE_SMALL, 0,
-                                         NULL, NULL, NULL, NULL);
-      gimp_viewable_button_set_view_type (GIMP_VIEWABLE_BUTTON (button),
-                                          GIMP_VIEW_TYPE_GRID);
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (private->template));
+
+      private->icon_picker = gimp_icon_picker_new (gimp);
+      gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (private->icon_picker),
+                                     stock_id);
+
+      g_signal_connect (private->icon_picker, "notify::stock-id",
+                        G_CALLBACK (gimp_template_editor_icon_changed),
+                        editor);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                  _("_Icon:"), 1.0, 0.5,
-                                 button, 1, TRUE);
+                                 private->icon_picker, 1, TRUE);
     }
 
   return GTK_WIDGET (editor);
@@ -726,29 +680,25 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   gtk_label_set_text (GTK_LABEL (private->more_label), text);
   g_free (text);
 
-  if (private->stock_id_container)
+  if (private->icon_picker)
     {
-      GimpObject  *object;
       const gchar *stock_id;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (template));
 
-      object = gimp_container_get_child_by_name (private->stock_id_container,
-                                                 stock_id);
-
-      gimp_context_set_template (private->stock_id_context,
-                                 (GimpTemplate *) object);
+      gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (private->icon_picker),
+                                     stock_id);
     }
 }
 
 static void
-gimp_template_editor_icon_changed (GimpContext        *context,
-                                   GimpTemplate       *template,
+gimp_template_editor_icon_changed (GimpIconPicker     *picker,
+                                   const GParamSpec   *pspec,
                                    GimpTemplateEditor *editor)
 {
   GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
 
   g_object_set (private->template,
-                "stock-id", gimp_object_get_name (template),
+                "stock-id", gimp_icon_picker_get_stock_id (picker),
                 NULL);
 }
