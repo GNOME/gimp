@@ -112,15 +112,7 @@
          (= remove-bg TRUE)
          (= separate-layer TRUE))
         (begin
-          (gimp-by-color-select
-           active-layer
-           '(0 0 0)
-           15
-           2
-           TRUE
-           FALSE
-           10
-           FALSE)
+          (gimp-image-select-color image CHANNEL-OP-REPLACE active-layer '(0 0 0))
           (gimp-edit-clear active-layer)))
 
     (if (= keep-selection FALSE)
