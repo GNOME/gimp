@@ -223,7 +223,7 @@ image_new_dialog_response (GtkWidget      *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      if (dialog->template->initial_size >
+      if (gimp_template_get_initial_size (dialog->template) >
           GIMP_GUI_CONFIG (dialog->context->gimp->config)->max_new_image_size)
         image_new_confirm_dialog (dialog);
       else
@@ -241,13 +241,17 @@ image_new_template_changed (GimpContext    *context,
                             GimpTemplate   *template,
                             ImageNewDialog *dialog)
 {
-  gchar *comment = NULL;
+  gchar *comment;
 
   if (!template)
     return;
 
-  if (!template->comment || !strlen (template->comment))
-    comment = g_strdup (dialog->template->comment);
+  comment = (gchar *) gimp_template_get_comment (template);
+
+  if (! comment || ! strlen (comment))
+    comment = g_strdup (gimp_template_get_comment (dialog->template));
+  else
+    comment = NULL;
 
   /*  make sure the resolution values are copied first (see bug #546924)  */
   gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template),
@@ -316,7 +320,7 @@ image_new_confirm_dialog (ImageNewDialog *data)
                     G_CALLBACK (image_new_confirm_response),
                     data);
 
-  size = g_format_size_for_display (data->template->initial_size);
+  size = g_format_size_for_display (gimp_template_get_initial_size (data->template));
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("You are trying to create an image "
                                        "with a size of %s."), size);

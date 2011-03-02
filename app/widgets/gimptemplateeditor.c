@@ -132,6 +132,7 @@ gimp_template_editor_constructed (GObject *object)
 {
   GimpTemplateEditor        *editor  = GIMP_TEMPLATE_EDITOR (object);
   GimpTemplateEditorPrivate *private = GET_PRIVATE (object);
+  GimpTemplate              *template;
   GtkWidget                 *aspect_box;
   GtkWidget                 *frame;
   GtkWidget                 *hbox;
@@ -155,6 +156,8 @@ gimp_template_editor_constructed (GObject *object)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (private->template != NULL);
+
+  template = private->template;
 
   /*  Image size frame  */
   frame = gimp_frame_new (_("Image Size"));
@@ -198,7 +201,9 @@ gimp_template_editor_constructed (GObject *object)
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
-  private->size_se = gimp_size_entry_new (0, private->template->unit,_("%p"),
+  private->size_se = gimp_size_entry_new (0,
+                                          gimp_template_get_unit (template),
+                                          _("%p"),
                                           TRUE, FALSE, FALSE, SB_WIDTH,
                                           GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
@@ -218,11 +223,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_table_attach_defaults (GTK_TABLE (private->size_se), width, 0, 1, 0, 1);
   gtk_widget_show (width);
 
-  gimp_prop_coordinates_connect (G_OBJECT (private->template),
+  gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "width", "height", "unit",
                                  private->size_se, NULL,
-                                 private->template->xresolution,
-                                 private->template->yresolution);
+                                 gimp_template_get_resolution_x (template),
+                                 gimp_template_get_resolution_y (template));
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 3, 2, 3);
@@ -326,7 +331,9 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (hbox);
 
   private->resolution_se =
-    gimp_size_entry_new (0, private->template->resolution_unit, _("pixels/%s"),
+    gimp_size_entry_new (0,
+                         gimp_template_get_resolution_unit (template),
+                         _("pixels/%s"),
                          FALSE, FALSE, FALSE, SB_WIDTH,
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
@@ -350,9 +357,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_widget_show (xres);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                  private->template->xresolution, FALSE);
+                                  gimp_template_get_resolution_x (template),
+                                  FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                  private->template->yresolution, FALSE);
+                                  gimp_template_get_resolution_y (template),
+                                  FALSE);
 
   /*  the resolution chainbutton  */
   chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
@@ -360,7 +369,7 @@ gimp_template_editor_constructed (GObject *object)
                              1, 2, 0, 2);
   gtk_widget_show (chainbutton);
 
-  gimp_prop_coordinates_connect (G_OBJECT (private->template),
+  gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "xresolution", "yresolution",
                                  "resolution-unit",
                                  private->resolution_se, chainbutton,
@@ -376,14 +385,14 @@ gimp_template_editor_constructed (GObject *object)
                                  focus_chain);
   g_list_free (focus_chain);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (private->template),
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "image-type",
                                         GIMP_RGB, GIMP_GRAY);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Color _space:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (private->template),
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
                                         GIMP_FOREGROUND_FILL,
                                         GIMP_TRANSPARENT_FILL);
@@ -401,7 +410,7 @@ gimp_template_editor_constructed (GObject *object)
                              _("Comme_nt:"), 0.0, 0.0,
                              scrolled_window, 1, FALSE);
 
-  text_buffer = gimp_prop_text_buffer_new (G_OBJECT (private->template),
+  text_buffer = gimp_prop_text_buffer_new (G_OBJECT (template),
                                            "comment", MAX_COMMENT_LENGTH);
 
   text_view = gtk_text_view_new_with_buffer (text_buffer);
@@ -411,12 +420,12 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_signal_connect_object (private->template, "notify",
+  g_signal_connect_object (template, "notify",
                            G_CALLBACK (gimp_template_editor_template_notify),
                            editor, 0);
 
   /*  call the notify callback once to get the labels set initially  */
-  gimp_template_editor_template_notify (private->template, NULL, editor);
+  gimp_template_editor_template_notify (template, NULL, editor);
 }
 
 static void
@@ -566,8 +575,10 @@ gimp_template_editor_set_pixels (GimpTemplateEditor *editor,
   gchar                     *text;
 
   text = g_strdup_printf (ngettext ("%d × %d pixel",
-                                    "%d × %d pixels", template->height),
-                          template->width, template->height);
+                                    "%d × %d pixels",
+                                    gimp_template_get_height (template)),
+                          gimp_template_get_width (template),
+                          gimp_template_get_height (template));
   gtk_label_set_text (GTK_LABEL (private->pixel_label), text);
   g_free (text);
 }
@@ -582,12 +593,12 @@ gimp_template_editor_aspect_callback (GtkWidget          *widget,
       gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
     {
       GimpTemplate *template    = private->template;
-      gint          width       = template->width;
-      gint          height      = template->height;
-      gdouble       xresolution = template->xresolution;
-      gdouble       yresolution = template->yresolution;
+      gint          width       = gimp_template_get_width (template);
+      gint          height      = gimp_template_get_height (template);
+      gdouble       xresolution = gimp_template_get_resolution_x (template);
+      gdouble       yresolution = gimp_template_get_resolution_y (template);
 
-      if (template->width == template->height)
+      if (width == height)
         {
           private->block_aspect = TRUE;
           gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (private->aspect_button),
@@ -629,6 +640,8 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   GimpAspectType             aspect;
   const gchar               *desc;
   gchar                     *text;
+  gint                       width;
+  gint                       height;
   gint                       xres;
   gint                       yres;
 
@@ -637,26 +650,31 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
       if (! strcmp (param_spec->name, "xresolution"))
         {
           gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
-                                          template->xresolution, FALSE);
+                                          gimp_template_get_resolution_x (template),
+                                          FALSE);
         }
       else if (! strcmp (param_spec->name, "yresolution"))
         {
           gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
-                                          template->yresolution, FALSE);
+                                          gimp_template_get_resolution_y (template),
+                                          FALSE);
         }
     }
 
 #ifdef ENABLE_MEMSIZE_LABEL
-  text = g_format_size_for_display (template->initial_size);
+  text = g_format_size_for_display (gimp_template_get_initial_size (template));
   gtk_label_set_text (GTK_LABEL (private->memsize_label), text);
   g_free (text);
 #endif
 
   gimp_template_editor_set_pixels (editor, template);
 
-  if (template->width > template->height)
+  width  = gimp_template_get_width (template);
+  height = gimp_template_get_height (template);
+
+  if (width > height)
     aspect = GIMP_ASPECT_LANDSCAPE;
-  else if (template->height > template->width)
+  else if (height > width)
     aspect = GIMP_ASPECT_PORTRAIT;
   else
     aspect = GIMP_ASPECT_SQUARE;
@@ -666,11 +684,12 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                                    aspect);
   private->block_aspect = FALSE;
 
-  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, template->image_type,
+  gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE,
+                       gimp_template_get_image_type (template),
                        NULL, NULL, &desc, NULL);
 
-  xres = ROUND (template->xresolution);
-  yres = ROUND (template->yresolution);
+  xres = ROUND (gimp_template_get_resolution_x (template));
+  yres = ROUND (gimp_template_get_resolution_y (template));
 
   if (xres != yres)
     text = g_strdup_printf (_("%d × %d ppi, %s"), xres, yres, desc);

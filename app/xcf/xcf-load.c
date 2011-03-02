@@ -534,11 +534,13 @@ xcf_load_image_props (XcfInfo   *info,
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
               {
+                GimpTemplate *template = image->gimp->config->default_image;
+
                 gimp_message_literal (info->gimp, G_OBJECT (info->progress),
 				      GIMP_MESSAGE_WARNING,
 				      "Warning, resolution out of range in XCF file");
-                xres = image->gimp->config->default_image->xresolution;
-                yres = image->gimp->config->default_image->yresolution;
+                xres = gimp_template_get_resolution_x (template);
+                yres = gimp_template_get_resolution_y (template);
               }
 
             gimp_image_set_resolution (image, xres, yres);

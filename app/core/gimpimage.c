@@ -739,6 +739,7 @@ gimp_image_constructed (GObject *object)
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GimpCoreConfig   *config;
+  GimpTemplate     *template;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -761,9 +762,11 @@ gimp_image_constructed (GObject *object)
                        GINT_TO_POINTER (private->ID),
                        image);
 
-  private->xresolution     = config->default_image->xresolution;
-  private->yresolution     = config->default_image->yresolution;
-  private->resolution_unit = config->default_image->resolution_unit;
+  template = config->default_image;
+
+  private->xresolution     = gimp_template_get_resolution_x (template);
+  private->yresolution     = gimp_template_get_resolution_y (template);
+  private->resolution_unit = gimp_template_get_resolution_unit (template);
 
   private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 

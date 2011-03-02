@@ -1117,7 +1117,9 @@ gimp_create_image (Gimp              *gimp,
 
   if (attach_comment)
     {
-      const gchar *comment = gimp->config->default_image->comment;
+      const gchar *comment;
+
+      comment = gimp_template_get_comment (gimp->config->default_image);
 
       if (comment)
         {

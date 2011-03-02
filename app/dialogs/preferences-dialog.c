@@ -2039,8 +2039,8 @@ prefs_dialog_new (Gimp       *gimp,
   /*  Grid  */
   editor = gimp_grid_editor_new (core_config->default_grid,
                                  gimp_get_user_context (gimp),
-                                 core_config->default_image->xresolution,
-                                 core_config->default_image->yresolution);
+                                 gimp_template_get_resolution_x (core_config->default_image),
+                                 gimp_template_get_resolution_y (core_config->default_image));
   gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 

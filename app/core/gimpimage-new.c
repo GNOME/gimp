@@ -88,45 +88,50 @@ gimp_image_new_from_template (Gimp         *gimp,
   GimpLayer     *layer;
   GimpImageType  type;
   gint           width, height;
+  const gchar   *comment;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
   image = gimp_create_image (gimp,
-                             template->width, template->height,
-                             template->image_type,
+                             gimp_template_get_width (template),
+                             gimp_template_get_height (template),
+                             gimp_template_get_image_type (template),
                              FALSE);
 
   gimp_image_undo_disable (image);
 
-  if (template->comment)
+  comment = gimp_template_get_comment (template);
+
+  if (comment)
     {
       GimpParasite *parasite;
 
       parasite = gimp_parasite_new ("gimp-comment",
                                     GIMP_PARASITE_PERSISTENT,
-                                    strlen (template->comment) + 1,
-                                    template->comment);
+                                    strlen (comment) + 1,
+                                    comment);
       gimp_image_parasite_attach (image, parasite);
       gimp_parasite_free (parasite);
     }
 
   gimp_image_set_resolution (image,
-                             template->xresolution, template->yresolution);
-  gimp_image_set_unit (image, template->resolution_unit);
+                             gimp_template_get_resolution_x (template),
+                             gimp_template_get_resolution_y (template));
+  gimp_image_set_unit (image, gimp_template_get_resolution_unit (template));
 
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
 
-  switch (template->fill_type)
+  switch (gimp_template_get_fill_type (template))
     {
     case GIMP_TRANSPARENT_FILL:
-      type = ((template->image_type == GIMP_RGB) ?
+      type = ((gimp_template_get_image_type (template) == GIMP_RGB) ?
               GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE);
       break;
     default:
-      type = ((template->image_type == GIMP_RGB) ?
+      type = ((gimp_template_get_image_type (template) == GIMP_RGB) ?
               GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE);
       break;
     }
@@ -136,14 +141,14 @@ gimp_image_new_from_template (Gimp         *gimp,
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
   gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                              context, template->fill_type);
+                              context, gimp_template_get_fill_type (template));
 
   gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 
   gimp_image_undo_enable (image);
   gimp_image_clean_all (image);
 
-  gimp_create_display (gimp, image, template->unit, 1.0);
+  gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0);
 
   g_object_unref (image);
 
