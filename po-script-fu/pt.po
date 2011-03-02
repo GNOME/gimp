@@ -12,14 +12,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-09 19:51+0000\n"
-"PO-Revision-Date: 2010-12-26 15:50+0100\n"
+"POT-Creation-Date: 2011-01-24 00:22+0000\n"
+"PO-Revision-Date: 2011-01-17 13:01+0100\n"
 "Last-Translator: Pedro Barreira <almufadado@gmail.com>\n"
-"Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"Language-Team: Português Translation Team <gnome_pt@yahoogroups.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Portuguese\n"
+"X-Poedit-Country: Portugal\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -472,7 +475,7 @@ msgstr "Adicionar uma margem biselada a uma imagem"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "Bumpmap"
-msgstr ""
+msgstr "Mapa de relevos"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
@@ -490,28 +493,27 @@ msgstr "Trabalhar na cópia"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "Add _Border..."
-msgstr "Adicionar _Margem"
+msgstr "Adicionar Re_bordo"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
-msgstr "Adicionar margem à volta de uma imagem"
+msgstr "Adiciona uma margem à volta de uma imagem, pelo exterior"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
-#, fuzzy
 msgid "Border Layer"
-msgstr "Tamanho da margem"
+msgstr "Rebordo da camada"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border X size"
-msgstr "Tamanho da Margem X"
+msgstr "Tamanho do rebordo X"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border Y size"
-msgstr "Tamanho da Margem Y"
+msgstr "Tamanho do rebordo Y"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Border color"
-msgstr "Cor da Margem"
+msgstr "Cor do rebordo"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:7
 msgid "Delta value on color"
@@ -520,15 +522,13 @@ msgstr "Valor Delta nas Cores"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#, fuzzy
 msgid "Alien Glow"
-msgstr "_Brilho Estranho"
+msgstr "Brilho Estranho"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-#, fuzzy
 msgid "Arrow"
-msgstr "_Seta..."
+msgstr "Seta"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
@@ -537,7 +537,6 @@ msgstr "_Seta..."
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
-#, fuzzy
 msgid "Background"
 msgstr "Cor de fundo"
 
@@ -604,7 +603,7 @@ msgstr "_Seta..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar"
-msgstr ""
+msgstr "Barra"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 msgid "Bar height"
@@ -621,13 +620,12 @@ msgstr "Criar um gráfico Hrule com um brilho estranho para páginas web"
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:10
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:7
 msgid "_Hrule..."
-msgstr "_Hrule..."
+msgstr "Régua _Horizontal..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
-#, fuzzy
 msgid "Bullet"
-msgstr "_Bullet..."
+msgstr "Marca de parágrafo"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 msgid "Create a bullet graphic with an eerie glow for web pages"
@@ -644,7 +642,7 @@ msgstr "Raio"
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:7
 msgid "_Bullet..."
-msgstr "_Bullet..."
+msgstr "_Marca de Parágrafo..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
@@ -652,9 +650,8 @@ msgid "B_utton..."
 msgstr "B_otão..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-#, fuzzy
 msgid "Button"
-msgstr "_Botões"
+msgstr "Botão"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 msgid "Create a button graphic with an eerie glow for web pages"
@@ -662,7 +659,7 @@ msgstr "Criar um gráfico de botão com um brilho \"estranho\" para Pág. web"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 msgid "Glow"
-msgstr ""
+msgstr "Emanação de Brilho"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 msgid "Glow radius"
@@ -709,7 +706,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
-msgstr "_Neon Alien..."
+msgstr "_Neon Alienígena..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
@@ -846,7 +843,7 @@ msgstr "Altura"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
 msgid "Rule"
-msgstr ""
+msgstr "Régua"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
@@ -1048,15 +1045,13 @@ msgstr "_Camuflagem..."
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-#, fuzzy
 msgid "Bevel Highlight"
-msgstr "Largura do Chanfro (Biselar)"
+msgstr "Realce do Chanfro"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-#, fuzzy
 msgid "Bevel Shadow"
-msgstr "Sombra"
+msgstr "Sombra Biselada"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
@@ -1065,11 +1060,10 @@ msgstr "Esculpir áreas brancas"
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
 msgid "Carved Surface"
-msgstr ""
+msgstr "Superfície Cinzelada"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#, fuzzy
 msgid "Cast Shadow"
 msgstr "Criar sombra"
 
@@ -1176,9 +1170,8 @@ msgstr ""
 "o estêncil (de tons de cinzento) especificado"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
-#, fuzzy
 msgid "Chrome"
-msgstr "C_romar..."
+msgstr "Cromar"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1206,7 +1199,6 @@ msgid "Chrome white areas"
 msgstr "Cromar áreas brancas"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#, fuzzy
 msgid "Drop Shadow"
 msgstr "Sombra projectada"
 
@@ -1218,9 +1210,8 @@ msgstr "Mapa do Ambiente"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
-#, fuzzy
 msgid "Highlight"
-msgstr "Cor do destaque"
+msgstr "Realce"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
@@ -1229,15 +1220,15 @@ msgstr "Equilíbrio dos destaques"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
 msgid "Layer 2"
-msgstr ""
+msgstr "Camada 2"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
 msgid "Layer 3"
-msgstr ""
+msgstr "Camada 3"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
 msgid "Layer1"
-msgstr ""
+msgstr "Camada 1"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
@@ -1266,9 +1257,8 @@ msgid "Circuit seed"
 msgstr "Circuitos electrónicos"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#, fuzzy
 msgid "Effect layer"
-msgstr "Camada separada"
+msgstr "Camada de Efeitos"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid ""
@@ -1343,9 +1333,8 @@ msgid "Darken only"
 msgstr "Somente escurecer"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
-#, fuzzy
 msgid "Stain"
-msgstr "Manchas"
+msgstr "Mancha"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "Stains"
@@ -2094,44 +2083,53 @@ msgid ""
 "All characters in the name are either white-spaces or characters which can "
 "not appear in filenames."
 msgstr ""
+"Todos os caracteres no nome ou são espaços ou caracteres que não podem "
+"aparecer em nomes de ficheiros."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
 msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
+"Exportar a paleta activa como folha-de-estilos CSS, com o nome do item de "
+"cor como 'class name' e a própria cor como atributo de cor"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
 msgid "Export the active palette as a PHP dictionary (name => color)"
-msgstr ""
+msgstr "Exportar a paleta activa como dicionário PHP (nome => cor)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
 msgid "Export the active palette as a Python dictionary (name: color)"
-msgstr ""
+msgstr "Exportar a paleta activa como dicionário Python (nome: cor)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
 msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-msgstr ""
+msgstr "Exportar a paleta activa como java.util.Hashtable<Expressão, Cor>"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
 msgid "Folder for the output file"
-msgstr ""
+msgstr "Pasta para o ficheiro de destino"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
 msgid "The filename you entered is not a suitable name for a file."
 msgstr ""
+"O nome do ficheiro que indicou não é um nome adequado para um ficheiro."
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
 msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
+"O nome do ficheiro a ser criado (se já existir um ficheiro com este nome "
+"será substituido)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
 msgid ""
 "Write all the colors in a palette to a text file, one hexadecimal value per "
 "line (no names)"
 msgstr ""
+"Escrever todoas as cores da palete como ficheiro de texto, um valor "
+"hexadecimal por linha (sem nomes)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -2886,79 +2884,3 @@ msgstr "Destaque Opacidade"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "Efeito _Xach..."
-
-#~ msgid "Autocrop"
-#~ msgstr "Recorte Automático"
-
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Criar uma imagem de um Cabeçalho grande, usando o Tema da Página web do "
-#~ "gimp.org"
-
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Criar uma imagem de um Cabeçalho pequeno, usando o Tema da Página web do "
-#~ "gimp.org"
-
-#~ msgid "Dark color"
-#~ msgstr "Cor escura"
-
-#~ msgid "Index image"
-#~ msgstr "Indexar imagem"
-
-#~ msgid "Number of colors"
-#~ msgstr "Número de cores"
-
-#~ msgid "Remove background"
-#~ msgstr "Remover fundo"
-
-#~ msgid "Select-by-color threshold"
-#~ msgstr "Limite da selecção-por-cor"
-
-#~ msgid "Shadow color"
-#~ msgstr "Cor da sombra"
-
-#~ msgid "_Big Header..."
-#~ msgstr "Cabeçalho _Grande..."
-
-#~ msgid "_Small Header..."
-#~ msgstr "Cabeçalho _Pequeno..."
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
-#~ "theme"
-#~ msgstr ""
-#~ "Criar uma imagem de um Cabeçalho de rótulo de botão tubular, usando o "
-#~ "tema da página web do gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Criar uma imagem de um Rótulo de botão tubular, usando o tema da página "
-#~ "web do gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Criar uma imagem de um Rótulo de botão tubular de Segundo nível, usando o "
-#~ "tema da página web do gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Criar uma imagem de um Rótulo de botão tubular de Terceiro nível, usando "
-#~ "o tema da página web do gimp.org"
-
-#~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "Rótulo de sub-botão t_ubular..."
-
-#~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "Rótulo de Sub-Sub-Botão T_ubular..."
-
-#~ msgid "_General Tube Labels..."
-#~ msgstr "Rótulos tubulares _Gerais..."
-
-#~ msgid "_Tube Button Label..."
-#~ msgstr "Rótulo de Botão _Tubular..."

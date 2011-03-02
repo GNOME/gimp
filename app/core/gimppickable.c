@@ -18,6 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains an interface for pixel objects that their color at
+ * a given position can be picked. Also included is a utility for
+ * sampling an average area (which uses the implemented picking
+ * functions).
+ */
+
 #include "config.h"
 
 #include <gegl.h>

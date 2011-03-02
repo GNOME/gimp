@@ -3602,8 +3602,9 @@ load_xjt_image (const gchar  *filename,
           if (xjt_debug) printf ("XJT-DEBUG: SELECTION loaded channel id = %d\n",
                                  (int) l_channel_id);
 
-          gimp_image_select_item (l_image_id, l_channel_id,
-                                  GIMP_CHANNEL_OP_REPLACE);
+          gimp_image_select_item (l_image_id,
+                                  GIMP_CHANNEL_OP_REPLACE,
+                                  l_channel_id);
 
           /* delete the channel after load into selection */
           gimp_drawable_delete (l_channel_id);

@@ -1,4 +1,4 @@
-;    Initialization file for TinySCHEME 1.39
+;    Initialization file for TinySCHEME 1.40
 
 ; Per R5RS, up to four deep compositions should be defined
 (define (caar x) (car (car x)))
@@ -96,7 +96,6 @@
              (abs (* (quotient aa (gcd aa bb)) bb)))))))
 
 
-
 (define (string . charlist)
      (list->string charlist))
 
@@ -130,7 +129,7 @@
 (define (string->anyatom str pred)
      (let* ((a (string->atom str)))
        (if (pred a) a
-     (error "string->xxx: not a xxx" a))))
+         (error "string->xxx: not a xxx" a))))
 
 (define (string->number str) (string->anyatom str number?))
 
@@ -200,31 +199,31 @@
   (if (null? lists)
       (cons cars cdrs)
       (let ((car1 (caar lists))
-      (cdr1 (cdar lists)))
-  (unzip1-with-cdr-iterative
-   (cdr lists)
-   (append cars (list car1))
-   (append cdrs (list cdr1))))))
+        (cdr1 (cdar lists)))
+        (unzip1-with-cdr-iterative
+          (cdr lists)
+          (append cars (list car1))
+          (append cdrs (list cdr1))))))
 
 (define (map proc . lists)
   (if (null? lists)
       (apply proc)
       (if (null? (car lists))
-    '()
-    (let* ((unz (apply unzip1-with-cdr lists))
-     (cars (car unz))
-     (cdrs (cdr unz)))
-      (cons (apply proc cars) (apply map (cons proc cdrs)))))))
+        '()
+        (let* ((unz (apply unzip1-with-cdr lists))
+               (cars (car unz))
+               (cdrs (cdr unz)))
+          (cons (apply proc cars) (apply map (cons proc cdrs)))))))
 
 (define (for-each proc . lists)
   (if (null? lists)
       (apply proc)
       (if (null? (car lists))
-    #t
-    (let* ((unz (apply unzip1-with-cdr lists))
-     (cars (car unz))
-     (cdrs (cdr unz)))
-      (apply proc cars) (apply map (cons proc cdrs))))))
+        #t
+        (let* ((unz (apply unzip1-with-cdr lists))
+               (cars (car unz))
+               (cdrs (cdr unz)))
+          (apply proc cars) (apply map (cons proc cdrs))))))
 
 (define (list-tail x k)
     (if (zero? k)
@@ -383,16 +382,16 @@
                ;;Exit the old list.  Do deeper ones last.  Don't do
                ;;any shared ones.
                (define (pop-many)
-                  (unless (eq? *active-windings* shared)
-                     (deactivate-top-winding!)
-                     (pop-many)))
+        	  (unless (eq? *active-windings* shared)
+        	     (deactivate-top-winding!)
+        	     (pop-many)))
                ;;Enter the new list.  Do deeper ones first so that the
                ;;deeper windings will already be active.  Don't do any
                ;;shared ones.
                (define (push-many new-ws)
-                  (unless (eq? new-ws shared)
-                     (push-many (cdr new-ws))
-                     (activate-winding! (car new-ws))))
+        	  (unless (eq? new-ws shared)
+        	     (push-many (cdr new-ws))
+        	     (activate-winding! (car new-ws))))
 
                ;;Do it.
                (pop-many)
@@ -403,20 +402,20 @@
          `(define call-with-current-continuation
              ;;It internally uses the built-in call/cc, so capture it.
              ,(let ((old-c/cc call-with-current-continuation))
-                 (lambda (func)
-                    ;;Use old call/cc to get the continuation.
-                    (old-c/cc
-                       (lambda (continuation)
-                          ;;Call func with not the continuation itself
-                          ;;but a procedure that adjusts the active
-                          ;;windings to what they were when we made
-                          ;;this, and only then calls the
-                          ;;continuation.
-                          (func
-                             (let ((current-ws *active-windings*))
-                                (lambda (x)
-                                   (set-active-windings! current-ws)
-                                   (continuation x)))))))))
+        	 (lambda (func)
+        	    ;;Use old call/cc to get the continuation.
+        	    (old-c/cc
+        	       (lambda (continuation)
+        		  ;;Call func with not the continuation itself
+        		  ;;but a procedure that adjusts the active
+        		  ;;windings to what they were when we made
+        		  ;;this, and only then calls the
+        		  ;;continuation.
+        		  (func
+        		     (let ((current-ws *active-windings*))
+        			(lambda (x)
+        			   (set-active-windings! current-ws)
+        			   (continuation x)))))))))
          outer-env)
       ;;We can't just say "define (dynamic-wind before thunk after)"
       ;;because the lambda it's defined to lives in this environment,
@@ -424,13 +423,13 @@
       (eval
          `(define dynamic-wind
              ,(lambda (before thunk after)
-                 ;;Make a new winding
-                 (activate-winding! (make-winding before after))
-                 (let ((result (thunk)))
-                    ;;Get rid of the new winding.
-                    (deactivate-top-winding!)
-                    ;;The return value is that of thunk.
-                    result)))
+        	 ;;Make a new winding
+        	 (activate-winding! (make-winding before after))
+        	 (let ((result (thunk)))
+        	    ;;Get rid of the new winding.
+        	    (deactivate-top-winding!)
+        	    ;;The return value is that of thunk.
+        	    result)))
          outer-env)))
 
 (define call/cc call-with-current-continuation)
@@ -578,8 +577,8 @@
   (let* ((env (if (null? envl) (current-environment) (eval (car envl))))
          (xval (eval x env)))
     (if (closure? xval)
-  (make-closure (get-closure-code xval) env)
-  xval)))
+      (make-closure (get-closure-code xval) env)
+      xval)))
 
 ; Redefine this if you install another package infrastructure
 ; Also redefine 'package'
@@ -687,15 +686,15 @@
 
 (define (cond-eval condition)
   (cond ((symbol? condition)
-   (if (member condition *features*) #t #f))
-  ((eq? condition #t) #t)
-  ((eq? condition #f) #f)
-  (else (case (car condition)
-    ((and) (cond-eval-and (cdr condition)))
-    ((or) (cond-eval-or (cdr condition)))
-    ((not) (if (not (null? (cddr condition)))
-         (error "cond-expand : 'not' takes 1 argument")
-         (not (cond-eval (cadr condition)))))
-    (else (error "cond-expand : unknown operator" (car condition)))))))
+    (if (member condition *features*) #t #f))
+    ((eq? condition #t) #t)
+    ((eq? condition #f) #f)
+    (else (case (car condition)
+            ((and) (cond-eval-and (cdr condition)))
+            ((or) (cond-eval-or (cdr condition)))
+            ((not) (if (not (null? (cddr condition)))
+                     (error "cond-expand : 'not' takes 1 argument")
+                     (not (cond-eval (cadr condition)))))
+            (else (error "cond-expand : unknown operator" (car condition)))))))
 
 (gc-verbose #f)

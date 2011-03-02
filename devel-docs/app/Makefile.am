@@ -77,8 +77,8 @@ GTKDOC_LIBS = \
 	$(top_builddir)/app/actions/libappactions.a			     \
         $(top_builddir)/app/dialogs/libappdialogs.a			     \
         $(top_builddir)/app/menus/libappmenus.a				     \
-        $(top_builddir)/app/display/libappdisplay.a			     \
         $(top_builddir)/app/tools/libapptools.a				     \
+        $(top_builddir)/app/display/libappdisplay.a			     \
         $(top_builddir)/app/widgets/libappwidgets.a			     \
 	$(top_builddir)/app/pdb/libappinternal-procs.a			     \
         $(top_builddir)/app/xcf/libappxcf.a				     \

@@ -1266,6 +1266,9 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
   GimpSmoothingOptions *smoothing_options = paint_options->smoothing_options;
   GArray               *history           = core->stroke_buffer;
 
+  if (core->stroke_buffer == NULL)
+    return; /* Paint core has not initalized yet */
+
   if (smoothing_options->use_smoothing &&
       smoothing_options->smoothing_quality > 0)
     {
@@ -1278,6 +1281,9 @@ gimp_paint_core_smooth_coords (GimpPaintCore    *core,
       gdouble    scale_sum        = 0.0;
 
       g_array_append_val (history, *coords);
+
+      if (history->len < 2)
+        return; /* Just dont bother, nothing to do */
 
       coords->x = coords->y = 0.0;
 

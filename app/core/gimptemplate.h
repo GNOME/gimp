@@ -53,23 +53,7 @@ typedef struct _GimpTemplateClass GimpTemplateClass;
 
 struct _GimpTemplate
 {
-  GimpViewable       parent_instance;
-
-  gint               width;
-  gint               height;
-  GimpUnit           unit;
-
-  gdouble            xresolution;
-  gdouble            yresolution;
-  GimpUnit           resolution_unit;
-
-  GimpImageBaseType  image_type;
-  GimpFillType       fill_type;
-
-  gchar             *comment;
-  gchar             *filename;
-
-  guint64            initial_size;
+  GimpViewable  parent_instance;
 };
 
 struct _GimpTemplateClass
@@ -78,12 +62,27 @@ struct _GimpTemplateClass
 };
 
 
-GType          gimp_template_get_type       (void) G_GNUC_CONST;
+GType               gimp_template_get_type            (void) G_GNUC_CONST;
 
-GimpTemplate * gimp_template_new            (const gchar  *name);
+GimpTemplate      * gimp_template_new                 (const gchar  *name);
 
-void           gimp_template_set_from_image (GimpTemplate *template,
-                                             GimpImage    *image);
+void                gimp_template_set_from_image      (GimpTemplate *template,
+                                                       GimpImage    *image);
+
+gint                gimp_template_get_width           (GimpTemplate *template);
+gint                gimp_template_get_height          (GimpTemplate *template);
+GimpUnit            gimp_template_get_unit            (GimpTemplate *template);
+
+gdouble             gimp_template_get_resolution_x    (GimpTemplate *template);
+gdouble             gimp_template_get_resolution_y    (GimpTemplate *template);
+GimpUnit            gimp_template_get_resolution_unit (GimpTemplate *template);
+
+GimpImageBaseType   gimp_template_get_image_type      (GimpTemplate *template);
+GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);
+
+const gchar       * gimp_template_get_comment         (GimpTemplate *template);
+
+guint64             gimp_template_get_initial_size    (GimpTemplate *template);
 
 
 #endif /* __GIMP_TEMPLATE__ */

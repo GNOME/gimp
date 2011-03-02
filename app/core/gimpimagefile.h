@@ -42,12 +42,7 @@ typedef struct _GimpImagefileClass GimpImagefileClass;
 
 struct _GimpImagefile
 {
-  GimpViewable        parent_instance;
-
-  Gimp               *gimp;
-  GimpThumbnail      *thumbnail;
-  gchar              *description;
-  gboolean            static_desc;
+  GimpViewable  parent_instance;
 };
 
 struct _GimpImagefileClass
@@ -62,6 +57,9 @@ GType           gimp_imagefile_get_type              (void) G_GNUC_CONST;
 
 GimpImagefile * gimp_imagefile_new                   (Gimp          *gimp,
                                                       const gchar   *uri);
+
+GimpThumbnail * gimp_imagefile_get_thumbnail         (GimpImagefile *imagefile);
+
 void            gimp_imagefile_set_mime_type         (GimpImagefile *imagefile,
                                                       const gchar   *mime_type);
 void            gimp_imagefile_update                (GimpImagefile *imagefile);

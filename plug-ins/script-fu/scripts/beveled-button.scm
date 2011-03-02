@@ -86,7 +86,7 @@
 
     ; Create bumpmap layer
 
-    (gimp-image-insert-layer img bumpmap -1 -1)
+    (gimp-image-insert-layer img bumpmap 0 -1)
     (gimp-context-set-foreground '(0 0 0))
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
@@ -107,7 +107,7 @@
 
     ; Create gradient layer
 
-    (gimp-image-insert-layer img gradient -1 -1)
+    (gimp-image-insert-layer img gradient 0 -1)
     (gimp-context-set-foreground ul-color)
     (gimp-context-set-background lr-color)
 

@@ -119,12 +119,12 @@
 
 ; add the background layer
   (gimp-drawable-fill bg-layer BACKGROUND-FILL)
-  (gimp-image-add-layer image bg-layer -1)
+  (gimp-image-insert-layer image bg-layer 0 -1)
 
 ; add the film layer
   (gimp-context-set-background '(0 0 0))
   (gimp-drawable-fill film-layer BACKGROUND-FILL)
-  (gimp-image-add-layer image film-layer -1)
+  (gimp-image-insert-layer image film-layer 0 -1)
 
 ; add the text
   (gimp-context-set-foreground font-color)

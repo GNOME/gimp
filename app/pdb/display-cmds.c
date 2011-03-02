@@ -136,7 +136,7 @@ display_get_window_handle_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      window = (gint32) gimp_get_display_window (gimp, display);
+      window = (gint32) gimp_get_display_window_id (gimp, display);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

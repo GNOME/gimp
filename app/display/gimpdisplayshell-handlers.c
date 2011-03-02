@@ -673,9 +673,10 @@ gimp_display_shell_sample_point_add_handler (GimpImage        *image,
 
       item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
-      g_object_set (item,
-                    "index", i,
-                    NULL);
+      if (item)
+        g_object_set (item,
+                      "index", i,
+                      NULL);
     }
 }
 
@@ -699,9 +700,10 @@ gimp_display_shell_sample_point_remove_handler (GimpImage        *image,
 
       item = gimp_canvas_proxy_group_get_item (group, sample_point);
 
-      g_object_set (item,
-                    "index", i,
-                    NULL);
+      if (item)
+        g_object_set (item,
+                      "index", i,
+                      NULL);
     }
 }
 

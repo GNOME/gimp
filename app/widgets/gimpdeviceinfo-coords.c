@@ -153,22 +153,25 @@ gimp_device_info_get_time_coords (GimpDeviceInfo *info,
   if (gdk_device_get_axis (info->device,
                            event->axes, GDK_AXIS_XTILT, &coords->xtilt))
     {
-      coords->xtilt = CLAMP (coords->xtilt, GIMP_COORDS_MIN_TILT,
-                             GIMP_COORDS_MAX_TILT);
+      coords->xtilt = gimp_device_info_map_axis (info,
+                                                 GDK_AXIS_XTILT,
+                                                 coords->xtilt);
     }
 
   if (gdk_device_get_axis (info->device,
                            event->axes, GDK_AXIS_YTILT, &coords->ytilt))
     {
-      coords->ytilt = CLAMP (coords->ytilt, GIMP_COORDS_MIN_TILT,
-                             GIMP_COORDS_MAX_TILT);
+      coords->ytilt = gimp_device_info_map_axis (info,
+                                                 GDK_AXIS_YTILT,
+                                                 coords->ytilt);
     }
 
   if (gdk_device_get_axis (info->device,
                            event->axes, GDK_AXIS_WHEEL, &coords->wheel))
     {
-      coords->wheel = CLAMP (coords->wheel, GIMP_COORDS_MIN_WHEEL,
-                             GIMP_COORDS_MAX_WHEEL);
+      coords->wheel = gimp_device_info_map_axis (info,
+                                                 GDK_AXIS_WHEEL,
+                                                 coords->wheel);
     }
 }
 

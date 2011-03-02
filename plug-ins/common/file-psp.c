@@ -1197,6 +1197,10 @@ read_channel_data (FILE       *f,
             }
           else
             fread (buf, runcount, 1, f);
+
+          /* prevent buffer overflow for bogus data */
+          runcount = MIN (runcount, endq - q);
+
           if (bytespp == 1)
             {
               memmove (q, buf, runcount);

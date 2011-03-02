@@ -33,8 +33,8 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-insert-layer img background -1 -1)
-    (gimp-image-insert-layer img bumpmap -1 -1)
+    (gimp-image-insert-layer img background 0 -1)
+    (gimp-image-insert-layer img bumpmap 0 -1)
 
     ; Create pattern layer
 

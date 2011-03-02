@@ -86,7 +86,7 @@ static void     gimp_file_dialog_progress_set_value     (GimpProgress     *progr
                                                          gdouble           percentage);
 static gdouble  gimp_file_dialog_progress_get_value     (GimpProgress     *progress);
 static void     gimp_file_dialog_progress_pulse         (GimpProgress     *progress);
-static guint32  gimp_file_dialog_progress_get_window    (GimpProgress     *progress);
+static guint32  gimp_file_dialog_progress_get_window_id (GimpProgress     *progress);
 
 static void     gimp_file_dialog_add_user_dir           (GimpFileDialog   *dialog,
                                                          GUserDirectory    directory);
@@ -155,14 +155,14 @@ gimp_file_dialog_init (GimpFileDialog *dialog)
 static void
 gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface)
 {
-  iface->start      = gimp_file_dialog_progress_start;
-  iface->end        = gimp_file_dialog_progress_end;
-  iface->is_active  = gimp_file_dialog_progress_is_active;
-  iface->set_text   = gimp_file_dialog_progress_set_text;
-  iface->set_value  = gimp_file_dialog_progress_set_value;
-  iface->get_value  = gimp_file_dialog_progress_get_value;
-  iface->pulse      = gimp_file_dialog_progress_pulse;
-  iface->get_window = gimp_file_dialog_progress_get_window;
+  iface->start         = gimp_file_dialog_progress_start;
+  iface->end           = gimp_file_dialog_progress_end;
+  iface->is_active     = gimp_file_dialog_progress_is_active;
+  iface->set_text      = gimp_file_dialog_progress_set_text;
+  iface->set_value     = gimp_file_dialog_progress_set_value;
+  iface->get_value     = gimp_file_dialog_progress_get_value;
+  iface->pulse         = gimp_file_dialog_progress_pulse;
+  iface->get_window_id = gimp_file_dialog_progress_get_window_id;
 }
 
 static void
@@ -286,11 +286,11 @@ gimp_file_dialog_progress_pulse (GimpProgress *progress)
 }
 
 static guint32
-gimp_file_dialog_progress_get_window (GimpProgress *progress)
+gimp_file_dialog_progress_get_window_id (GimpProgress *progress)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
-  return (guint32) gimp_window_get_native (GTK_WINDOW (dialog));
+  return gimp_window_get_native_id (GTK_WINDOW (dialog));
 }
 
 
@@ -519,19 +519,17 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_SAVE_A_COPY_URI_KEY);
+        dir_uri = gimp_image_get_save_a_copy_uri (image);
 
       if (! dir_uri)
-        dir_uri = gimp_object_get_name (image);
+        dir_uri = gimp_image_get_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (image),
                                      "gimp-image-source-uri");
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        dir_uri = gimp_image_get_imported_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (gimp),
@@ -551,22 +549,19 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_SAVE_A_COPY_URI_KEY);
+        name_uri = gimp_image_get_save_a_copy_uri (image);
 
       if (! name_uri)
-        name_uri = gimp_object_get_name (image);
+        name_uri = gimp_image_get_uri (image);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_EXPORT_URI_KEY);
+        name_uri = gimp_image_get_exported_uri (image);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        name_uri = gimp_image_get_imported_uri (image);
 
       if (! name_uri)
-        name_uri = gimp_image_get_uri (image); /* Untitled */
+        name_uri = gimp_image_get_string_untitled ();
 
 
       /* Priority of default type/extension for Save:
@@ -574,7 +569,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   1. Type of last Save
        *   2. .xcf (which we don't explicitly append)
        */
-      ext_uri = gimp_object_get_name (image);
+      ext_uri = gimp_image_get_uri (image);
 
       if (! ext_uri)
         ext_uri = "file:///we/only/care/about/extension.xcf";
@@ -592,19 +587,17 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   6. The OS 'Documents' path
        */
 
-      dir_uri = g_object_get_data (G_OBJECT (image),
-                                   GIMP_FILE_EXPORT_URI_KEY);
+      dir_uri = gimp_image_get_exported_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (image),
                                      "gimp-image-source-uri");
 
       if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        dir_uri = gimp_image_get_imported_uri (image);
 
       if (! dir_uri)
-        dir_uri = gimp_object_get_name (image);
+        dir_uri = gimp_image_get_uri (image);
 
       if (! dir_uri)
         dir_uri = g_object_get_data (G_OBJECT (gimp),
@@ -626,18 +619,16 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. 'Untitled'
        */
 
-      name_uri = g_object_get_data (G_OBJECT (image),
-                                    GIMP_FILE_EXPORT_URI_KEY);
+      name_uri = gimp_image_get_exported_uri (image);
 
       if (! name_uri)
-        name_uri = gimp_object_get_name (image);
+        name_uri = gimp_image_get_uri (image);
 
       if (! name_uri)
-        name_uri = g_object_get_data (G_OBJECT (image),
-                                      GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        name_uri = gimp_image_get_imported_uri (image);
 
       if (! name_uri)
-        name_uri = gimp_image_get_uri (image); /* Untitled */
+        name_uri = gimp_image_get_string_untitled ();
 
 
       /* Priority of default type/extension for Export:
@@ -646,8 +637,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. Type of latest Export of any document
        *   2. .png
        */
-      ext_uri = g_object_get_data (G_OBJECT (image),
-                                   GIMP_FILE_EXPORT_URI_KEY);
+      ext_uri = gimp_image_get_exported_uri (image);
 
       if (! ext_uri)
         ext_uri = g_object_get_data (G_OBJECT (gimp),

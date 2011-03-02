@@ -105,7 +105,7 @@
                                             100
                                             NORMAL-MODE))))
         (gimp-drawable-fill bg-layer BACKGROUND-FILL)
-        (gimp-image-add-layer image bg-layer -1)
+        (gimp-image-insert-layer image bg-layer 0 -1)
         (gimp-image-raise-layer image pic-layer)
         (if (= shadow-toggle TRUE)
             (gimp-image-lower-layer image bg-layer))))

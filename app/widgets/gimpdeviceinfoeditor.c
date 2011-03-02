@@ -448,7 +448,7 @@ gimp_device_info_editor_constructed (GObject *object)
           gtk_container_add (GTK_CONTAINER (frame), view);
           gtk_widget_show (view);
 
-          gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view), curve);
+          gimp_curve_view_set_curve (GIMP_CURVE_VIEW (view), curve, NULL);
 
           hbox = gtk_hbox_new (FALSE, 0);
           gtk_box_set_spacing (GTK_BOX (hbox), 6);

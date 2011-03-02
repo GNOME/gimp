@@ -70,6 +70,7 @@ static void
                                                   GParamSpec  **pspecs);
 
 static const gchar * gimp_dynamics_get_extension (GimpData     *data);
+static GimpData *    gimp_dynamics_duplicate     (GimpData     *data);
 
 static GimpDynamicsOutput *
                      gimp_dynamics_create_output (GimpDynamics           *dynamics,
@@ -78,6 +79,7 @@ static GimpDynamicsOutput *
 static void          gimp_dynamics_output_notify (GObject          *output,
                                                   const GParamSpec *pspec,
                                                   GimpDynamics     *dynamics);
+
 
 
 G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
@@ -89,16 +91,20 @@ G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
 static void
 gimp_dynamics_class_init (GimpDynamicsClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpDataClass *data_class   = GIMP_DATA_CLASS (klass);
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpDataClass     *data_class     = GIMP_DATA_CLASS (klass);
+  GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
   object_class->finalize                    = gimp_dynamics_finalize;
   object_class->set_property                = gimp_dynamics_set_property;
   object_class->get_property                = gimp_dynamics_get_property;
   object_class->dispatch_properties_changed = gimp_dynamics_dispatch_properties_changed;
 
+  viewable_class->default_stock_id          = "gimp-dynamics";
+
   data_class->save                          = gimp_dynamics_save;
   data_class->get_extension                 = gimp_dynamics_get_extension;
+  data_class->duplicate                     = gimp_dynamics_duplicate;
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_NAME,
                                    "name", NULL,
@@ -395,6 +401,17 @@ gimp_dynamics_get_extension (GimpData *data)
   return GIMP_DYNAMICS_FILE_EXTENSION;
 }
 
+static GimpData *
+gimp_dynamics_duplicate (GimpData *data)
+{
+  GimpData *dest = g_object_new (GIMP_TYPE_DYNAMICS, NULL);
+
+  gimp_config_copy (GIMP_CONFIG (data),
+                    GIMP_CONFIG (dest), 0);
+
+  return GIMP_DATA (dest);
+}
+
 
 /*  public functions  */
 
@@ -439,7 +456,6 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
     case GIMP_DYNAMICS_OUTPUT_OPACITY:
       return dynamics->opacity_output;
       break;
-
 
     case GIMP_DYNAMICS_OUTPUT_FORCE:
       return dynamics->force_output;

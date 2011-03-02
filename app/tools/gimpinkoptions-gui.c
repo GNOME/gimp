@@ -138,7 +138,9 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), editor);
   gtk_widget_show (editor);
 
-  gimp_config_connect (config, G_OBJECT (editor), NULL);
+  gimp_config_connect (config, G_OBJECT (editor), "blob-type");
+  gimp_config_connect (config, G_OBJECT (editor), "blob-aspect");
+  gimp_config_connect (config, G_OBJECT (editor), "blob-angle");
 
   return vbox;
 }

@@ -18,6 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains the definition of the image template objects.
+ */
+
 #include "config.h"
 
 #include <gegl.h>
@@ -51,6 +54,32 @@ enum
   PROP_COMMENT,
   PROP_FILENAME
 };
+
+
+typedef struct _GimpTemplatePrivate GimpTemplatePrivate;
+
+struct _GimpTemplatePrivate
+{
+  gint               width;
+  gint               height;
+  GimpUnit           unit;
+
+  gdouble            xresolution;
+  gdouble            yresolution;
+  GimpUnit           resolution_unit;
+
+  GimpImageBaseType  image_type;
+  GimpFillType       fill_type;
+
+  gchar             *comment;
+  gchar             *filename;
+
+  guint64            initial_size;
+};
+
+#define GET_PRIVATE(template) G_TYPE_INSTANCE_GET_PRIVATE (template, \
+                                                           GIMP_TYPE_TEMPLATE, \
+                                                           GimpTemplatePrivate)
 
 
 static void      gimp_template_finalize     (GObject      *object);
@@ -142,6 +171,8 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                    NULL,
                                    NULL,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  g_type_class_add_private (klass, sizeof (GimpTemplatePrivate));
 }
 
 static void
@@ -152,18 +183,18 @@ gimp_template_init (GimpTemplate *template)
 static void
 gimp_template_finalize (GObject *object)
 {
-  GimpTemplate *template = GIMP_TEMPLATE (object);
+  GimpTemplatePrivate *private = GET_PRIVATE (object);
 
-  if (template->comment)
+  if (private->comment)
     {
-      g_free (template->comment);
-      template->comment = NULL;
+      g_free (private->comment);
+      private->comment = NULL;
     }
 
-  if (template->filename)
+  if (private->filename)
     {
-      g_free (template->filename);
-      template->filename = NULL;
+      g_free (private->filename);
+      private->filename = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -175,43 +206,43 @@ gimp_template_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpTemplate *template = GIMP_TEMPLATE (object);
+  GimpTemplatePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_WIDTH:
-      template->width = g_value_get_int (value);
+      private->width = g_value_get_int (value);
       break;
     case PROP_HEIGHT:
-      template->height = g_value_get_int (value);
+      private->height = g_value_get_int (value);
       break;
     case PROP_UNIT:
-      template->unit = g_value_get_int (value);
+      private->unit = g_value_get_int (value);
       break;
     case PROP_XRESOLUTION:
-      template->xresolution = g_value_get_double (value);
+      private->xresolution = g_value_get_double (value);
       break;
     case PROP_YRESOLUTION:
-      template->yresolution = g_value_get_double (value);
+      private->yresolution = g_value_get_double (value);
       break;
     case PROP_RESOLUTION_UNIT:
-      template->resolution_unit = g_value_get_int (value);
+      private->resolution_unit = g_value_get_int (value);
       break;
     case PROP_IMAGE_TYPE:
-      template->image_type = g_value_get_enum (value);
+      private->image_type = g_value_get_enum (value);
       break;
     case PROP_FILL_TYPE:
-      template->fill_type = g_value_get_enum (value);
+      private->fill_type = g_value_get_enum (value);
       break;
     case PROP_COMMENT:
-      if (template->comment)
-        g_free (template->comment);
-      template->comment = g_value_dup_string (value);
+      if (private->comment)
+        g_free (private->comment);
+      private->comment = g_value_dup_string (value);
       break;
     case PROP_FILENAME:
-      if (template->filename)
-        g_free (template->filename);
-      template->filename = g_value_dup_string (value);
+      if (private->filename)
+        g_free (private->filename);
+      private->filename = g_value_dup_string (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -225,39 +256,39 @@ gimp_template_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpTemplate *template = GIMP_TEMPLATE (object);
+  GimpTemplatePrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_WIDTH:
-      g_value_set_int (value, template->width);
+      g_value_set_int (value, private->width);
       break;
     case PROP_HEIGHT:
-      g_value_set_int (value, template->height);
+      g_value_set_int (value, private->height);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, template->unit);
+      g_value_set_int (value, private->unit);
       break;
     case PROP_XRESOLUTION:
-      g_value_set_double (value, template->xresolution);
+      g_value_set_double (value, private->xresolution);
       break;
     case PROP_YRESOLUTION:
-      g_value_set_double (value, template->yresolution);
+      g_value_set_double (value, private->yresolution);
       break;
     case PROP_RESOLUTION_UNIT:
-      g_value_set_int (value, template->resolution_unit);
+      g_value_set_int (value, private->resolution_unit);
       break;
     case PROP_IMAGE_TYPE:
-      g_value_set_enum (value, template->image_type);
+      g_value_set_enum (value, private->image_type);
       break;
     case PROP_FILL_TYPE:
-      g_value_set_enum (value, template->fill_type);
+      g_value_set_enum (value, private->fill_type);
       break;
     case PROP_COMMENT:
-      g_value_set_string (value, template->comment);
+      g_value_set_string (value, private->comment);
       break;
     case PROP_FILENAME:
-      g_value_set_string (value, template->filename);
+      g_value_set_string (value, private->filename);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -269,23 +300,23 @@ static void
 gimp_template_notify (GObject    *object,
                       GParamSpec *pspec)
 {
-  GimpTemplate *template = GIMP_TEMPLATE (object);
-  gint          channels;
+  GimpTemplatePrivate *private = GET_PRIVATE (object);
+  gint                 channels;
 
   if (G_OBJECT_CLASS (parent_class)->notify)
     G_OBJECT_CLASS (parent_class)->notify (object, pspec);
 
-  channels = ((template->image_type == GIMP_RGB ? 3 : 1)     /* color      */ +
-              (template->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
-              1                                              /* selection  */);
+  channels = ((private->image_type == GIMP_RGB ? 3 : 1)     /* color      */ +
+              (private->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
+              1                                             /* selection  */);
 
-  template->initial_size = ((guint64) channels        *
-                            (guint64) template->width *
-                            (guint64) template->height);
+  private->initial_size = ((guint64) channels        *
+                           (guint64) private->width *
+                           (guint64) private->height);
 
-  template->initial_size +=
-    gimp_projection_estimate_memsize (template->image_type,
-                                      template->width, template->height);
+  private->initial_size +=
+    gimp_projection_estimate_memsize (private->image_type,
+                                      private->width, private->height);
 
   if (! strcmp (pspec->name, "stock-id"))
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
@@ -341,4 +372,84 @@ gimp_template_set_from_image (GimpTemplate *template,
 
   if (comment)
     g_free (comment);
+}
+
+gint
+gimp_template_get_width (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
+
+  return GET_PRIVATE (template)->width;
+}
+
+gint
+gimp_template_get_height (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
+
+  return GET_PRIVATE (template)->height;
+}
+
+GimpUnit
+gimp_template_get_unit (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_UNIT_INCH);
+
+  return GET_PRIVATE (template)->unit;
+}
+
+gdouble
+gimp_template_get_resolution_x (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 1.0);
+
+  return GET_PRIVATE (template)->xresolution;
+}
+
+gdouble
+gimp_template_get_resolution_y (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 1.0);
+
+  return GET_PRIVATE (template)->yresolution;
+}
+
+GimpUnit
+gimp_template_get_resolution_unit (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_UNIT_INCH);
+
+  return GET_PRIVATE (template)->resolution_unit;
+}
+
+GimpImageBaseType
+gimp_template_get_image_type (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_RGB_IMAGE);
+
+  return GET_PRIVATE (template)->image_type;
+}
+
+GimpFillType
+gimp_template_get_fill_type (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_NO_FILL);
+
+  return GET_PRIVATE (template)->fill_type;
+}
+
+const gchar *
+gimp_template_get_comment (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
+
+  return GET_PRIVATE (template)->comment;
+}
+
+guint64
+gimp_template_get_initial_size (GimpTemplate *template)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
+
+  return GET_PRIVATE (template)->initial_size;
 }

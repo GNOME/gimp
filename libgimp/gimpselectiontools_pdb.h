@@ -28,6 +28,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#ifndef GIMP_DISABLE_DEPRECATED
 gboolean gimp_by_color_select      (gint32               drawable_ID,
                                     const GimpRGB       *color,
                                     gint                 threshold,
@@ -104,6 +105,7 @@ gboolean gimp_round_rect_select    (gint32               image_ID,
                                     gboolean             feather,
                                     gdouble              feather_radius_x,
                                     gdouble              feather_radius_y);
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

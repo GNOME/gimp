@@ -31,28 +31,29 @@
 
 static void move_sash_command_destruct(Command_t *command);
 static CmdExecuteValue_t move_sash_command_execute(Command_t *command);
+static void move_sash_command_redo(Command_t *command);
 
 static CommandClass_t move_sash_command_class = {
    move_sash_command_destruct,
    move_sash_command_execute,
    NULL /*undo*/,
-   NULL /*redo*/
+   move_sash_command_redo
 };
 
 typedef struct {
-   Command_t 	parent;
+   Command_t    parent;
    GtkWidget   *widget;
    Object_t    *obj;
-   gint 	x;
-   gint 	y;
-   gint		image_width;
-   gint		image_height;
+   gint         x;
+   gint         y;
+   gint         image_width;
+   gint         image_height;
    MoveSashFunc_t sash_func;
 } MoveSashCommand_t;
 
 Command_t*
 move_sash_command_new(GtkWidget *widget, Object_t *obj,
-		      gint x, gint y, MoveSashFunc_t sash_func)
+                      gint x, gint y, MoveSashFunc_t sash_func)
 {
    MoveSashCommand_t *command = g_new(MoveSashCommand_t, 1);
    Command_t *parent;
@@ -66,7 +67,7 @@ move_sash_command_new(GtkWidget *widget, Object_t *obj,
    command->sash_func = sash_func;
 
    parent = command_init(&command->parent, _("Move Sash"),
-			 &move_sash_command_class);
+                         &move_sash_command_class);
    command_add_subcommand(parent, edit_object_command_new(obj));
 
    return parent;
@@ -105,10 +106,10 @@ sash_move(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    command->x = x;
    command->y = y;
 
-   object_draw(obj, gtk_widget_get_window (widget));
    command->sash_func(obj, dx, dy);
    object_emit_geometry_signal(obj);
-   object_draw(obj, gtk_widget_get_window (widget));
+
+   preview_redraw ();
 }
 
 static void
@@ -123,8 +124,8 @@ sash_end(GtkWidget *widget, GdkEventButton *event, gpointer data)
                                         sash_end, data);
    if (obj->class->normalize)
       object_normalize(obj);
-   gdk_gc_set_function(get_preferences()->selected_gc, GDK_COPY);
-   preview_thaw();
+   preview_unset_tmp_obj(command->obj);
+   preview_redraw();
    show_url();
 }
 
@@ -134,12 +135,16 @@ move_sash_command_execute(Command_t *parent)
    MoveSashCommand_t *command = (MoveSashCommand_t*) parent;
 
    hide_url();
-   preview_freeze();
    g_signal_connect(command->widget, "button-release-event",
                     G_CALLBACK (sash_end), command);
    g_signal_connect(command->widget, "motion-notify-event",
                     G_CALLBACK (sash_move), command);
-   gdk_gc_set_function(get_preferences()->selected_gc, GDK_XOR);
+   preview_set_tmp_obj(command->obj);
 
    return CMD_APPEND;
+}
+
+static void move_sash_command_redo(Command_t *command)
+{
+   /* do nothing, but avoid running execute again which will break event handling */
 }

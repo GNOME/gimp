@@ -35,20 +35,20 @@
 #include "libgimp/stdplugins-intl.h"
 
 typedef struct {
-   DefaultDialog_t 	*dialog;
-   GtkWidget		*image_dimensions;
-   GtkWidget		*guide_bounds;
-   GtkWidget		*width;
-   GtkWidget		*height;
-   GtkWidget		*left;
-   GtkWidget		*top;
-   GtkWidget		*horz_spacing;
-   GtkWidget		*vert_spacing;
-   GtkWidget		*no_across;
-   GtkWidget		*no_down;
-   GtkWidget		*base_url;
+   DefaultDialog_t      *dialog;
+   GtkWidget            *image_dimensions;
+   GtkWidget            *guide_bounds;
+   GtkWidget            *width;
+   GtkWidget            *height;
+   GtkWidget            *left;
+   GtkWidget            *top;
+   GtkWidget            *horz_spacing;
+   GtkWidget            *vert_spacing;
+   GtkWidget            *no_across;
+   GtkWidget            *no_down;
+   GtkWidget            *base_url;
 
-   ObjectList_t		*list;
+   ObjectList_t         *list;
 } GuidesDialog_t;
 
 static void
@@ -75,12 +75,12 @@ guides_ok_cb(gpointer data)
    for (i = 0; i < rows; i++) {
       gint x = left;
       for (j = 0; j < cols; j++) {
-	 Object_t *obj = create_rectangle(x, y, width, height);
-	 Command_t *command = create_command_new(param->list, obj);
+         Object_t *obj = create_rectangle(x, y, width, height);
+         Command_t *command = create_command_new(param->list, obj);
 
-	 object_set_url(obj, gtk_entry_get_text(GTK_ENTRY(param->base_url)));
-	 command_execute(command);
-	 x += width + hspace;
+         object_set_url(obj, gtk_entry_get_text(GTK_ENTRY(param->base_url)));
+         command_execute(command);
+         x += width + hspace;
       }
       y += height + vspace;
    }
@@ -110,7 +110,7 @@ recalc_bounds(GtkWidget *widget, gpointer data)
    bound_h = (height + vspace) * rows - vspace;
 
    bounds = g_strdup_printf (_("Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"),
-			     left, top, left + bound_w, top + bound_h, rows * cols);
+                             left, top, left + bound_w, top + bound_h, rows * cols);
    if (left + bound_w > get_image_width() ||
        top + bound_h > get_image_height())
      {
@@ -141,9 +141,9 @@ make_guides_dialog (void)
 
    hbox = gimp_hint_box_new (
       _("Guides are pre-defined rectangles covering the image. You define "
-	"them by their width, height, and spacing from each other. This "
-	"allows you to rapidly create the most common image map type - "
-	"image collection of \"thumbnails\", suitable for navigation bars."));
+        "them by their width, height, and spacing from each other. This "
+        "allows you to rapidly create the most common image map type - "
+        "image collection of \"thumbnails\", suitable for navigation bars."));
    gtk_box_pack_start (GTK_BOX (dialog->vbox), hbox, FALSE, FALSE, 0);
    gtk_widget_show (hbox);
 
@@ -189,13 +189,13 @@ make_guides_dialog (void)
 
    label = create_label_in_table(table, 2, 2, _("_No. across:"));
    data->no_across = create_spin_button_in_table(table, label, 2, 3, 0, 0,
-						 100);
+                                                 100);
    g_signal_connect (data->no_across, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
    label = create_label_in_table(table, 3, 0, _("_Vert. spacing:"));
    data->vert_spacing = create_spin_button_in_table(table, label, 3, 1, 0, 0,
-						    100);
+                                                    100);
    g_signal_connect (data->vert_spacing, "changed",
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
@@ -252,10 +252,10 @@ do_create_guides_dialog_local (ObjectList_t *list)
 static CmdExecuteValue_t guides_command_execute(Command_t *parent);
 
 static CommandClass_t guides_command_class = {
-   NULL,			/* guides_command_destruct */
+   NULL,                        /* guides_command_destruct */
    guides_command_execute,
-   NULL,			/* guides_command_undo */
-   NULL				/* guides_command_redo */
+   NULL,                        /* guides_command_undo */
+   NULL                         /* guides_command_redo */
 };
 
 typedef struct {

@@ -969,14 +969,14 @@ _wrap_gimp_color_button_new(PyGObject *self, PyObject *args, PyObject *kwargs)
        return -1;
 
     if (pygobject_construct(self,
-                            "title", title,
-                            "type", type,
-                            "color", color,
+                            "title",       title,
+                            "type",        type,
+                            "color",       color,
+                            "area-width",  width,
+			    "area-height", height,
                             NULL))
         return -1;
 
-    gtk_widget_set_size_request(GIMP_COLOR_BUTTON(self->obj)->color_area,
-                                width, height);
     return 0;
 }
 %%
@@ -989,8 +989,6 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     PyObject *py_orientation, *py_channel;
     GtkOrientation orientation;
     GimpColorSelectorChannel channel;
-    GimpColorScale *scale;
-    GtkRange *range;
 
     static char *kwlist[] = { "orientation", "channel", NULL };
 
@@ -1008,15 +1006,14 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
                            (gint*)&channel))
         return -1;
 
-    if (pygobject_construct(self, NULL))
+    if (pygobject_construct(self,
+                            "orientation", orientation,
+                            "channel",     channel,
+                            NULL));
         return -1;
 
-    scale = GIMP_COLOR_SCALE(self->obj);
-    scale->channel = channel;
-
-    range = GTK_RANGE(scale);
-    gtk_orientable_set_orientation (GTK_ORIENTABLE (range), orientation);
-    gtk_range_set_flippable (range, orientation == GTK_ORIENTATION_HORIZONTAL);
+    gtk_range_set_flippable (GTK_RANGE (self->obj),
+                             orientation == GTK_ORIENTATION_HORIZONTAL);
     
     return 0;
 }
@@ -1028,9 +1025,8 @@ static int
 _wrap_gimp_enum_label_new(PyGObject *self, PyObject *args, PyObject *kwargs)
 {
     PyObject *py_enum_type = NULL;
-    gint value;
     GType enum_type;
-    GimpEnumLabel *label;
+    gint value;
 
     static char *kwlist[] = { "enum_type", "value", NULL };
 
@@ -1043,14 +1039,11 @@ _wrap_gimp_enum_label_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     if ((enum_type = pyg_type_from_object(py_enum_type)) == 0)
         return -1;
 
-    if (pygobject_construct(self, NULL))
+    if (pygobject_construct(self,
+                            "enum-type",  enum_type,
+                            "enum-value", value,
+                            NULL))
         return -1;
-
-    label = GIMP_ENUM_LABEL(self->obj);
-
-    label->enum_class = g_type_class_ref(enum_type);
-
-    gimp_enum_label_set_value (label, value);
 
     return 0; 
 }

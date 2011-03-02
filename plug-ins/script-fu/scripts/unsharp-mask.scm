@@ -25,7 +25,7 @@
 
     (gimp-image-undo-disable new-image)
 
-    (gimp-image-add-layer new-image original-layer 0)
+    (gimp-image-insert-layer new-image original-layer 0 0)
     (gimp-floating-sel-anchor
       (car (gimp-edit-paste original-layer FALSE)))
 
@@ -36,12 +36,12 @@
     (gimp-display-new new-image)
 
     ;; make darker mask
-    (gimp-image-add-layer new-image blured-layer-for-darker -1)
+    (gimp-image-insert-layer new-image blured-layer-for-darker 0 -1)
     (plug-in-gauss-iir RUN-NONINTERACTIVE
 		       new-image blured-layer-for-darker mask-size TRUE TRUE)
     (set! blured-layer-for-lighter
           (car (gimp-layer-copy blured-layer-for-darker TRUE)))
-    (gimp-image-add-layer new-image original-layer-for-darker -1)
+    (gimp-image-insert-layer new-image original-layer-for-darker 0 -1)
     (gimp-layer-set-mode original-layer-for-darker SUBTRACT-MODE)
     (set! darker-layer
           (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))
@@ -49,8 +49,8 @@
     (gimp-item-set-visible darker-layer FALSE)
 
     ;; make lighter mask
-    (gimp-image-add-layer new-image original-layer-for-lighter -1)
-    (gimp-image-add-layer new-image blured-layer-for-lighter -1)
+    (gimp-image-insert-layer new-image original-layer-for-lighter 0 -1)
+    (gimp-image-insert-layer new-image blured-layer-for-lighter 0 -1)
     (gimp-layer-set-mode blured-layer-for-lighter SUBTRACT-MODE)
     (set! lighter-layer
           (car (gimp-image-merge-visible-layers new-image CLIP-TO-IMAGE)))

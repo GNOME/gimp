@@ -195,3 +195,79 @@ gimp_vectors_set_tattoo (gint32 vectors_ID,
 {
   return gimp_vectors_set_tattoo (vectors_ID, tattoo);
 }
+
+/**
+ * gimp_vectors_parasite_find:
+ * @vectors_ID: The vectors object.
+ * @name: The name of the parasite to find.
+ *
+ * Deprecated: Use gimp_item_get_parasite() instead.
+ *
+ * Returns: The found parasite.
+ *
+ * Since: GIMP 2.4
+ **/
+GimpParasite *
+gimp_vectors_parasite_find (gint32       vectors_ID,
+                            const gchar *name)
+{
+  return gimp_item_get_parasite (vectors_ID, name);
+}
+
+/**
+ * gimp_vectors_parasite_attach:
+ * @vectors_ID: The vectors object.
+ * @parasite: The parasite to attach to a vectors object.
+ *
+ * Deprecated: Use gimp_item_attach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_vectors_parasite_attach (gint32              vectors_ID,
+                              const GimpParasite *parasite)
+{
+  return gimp_item_attach_parasite (vectors_ID, parasite);
+}
+
+/**
+ * gimp_vectors_parasite_detach:
+ * @vectors_ID: The vectors object.
+ * @name: The name of the parasite to detach from a vectors object.
+ *
+ * Deprecated: Use gimp_item_detach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_vectors_parasite_detach (gint32       vectors_ID,
+                              const gchar *name)
+{
+  return gimp_item_detach_parasite (vectors_ID, name);
+}
+
+/**
+ * gimp_vectors_parasite_list:
+ * @vectors_ID: The vectors object.
+ * @num_parasites: The number of attached parasites.
+ * @parasites: The names of currently attached parasites.
+ *
+ * Deprecated: Use gimp_item_list_parasites() instead.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_vectors_parasite_list (gint32    vectors_ID,
+                            gint     *num_parasites,
+                            gchar  ***parasites)
+{
+  *parasites = gimp_item_get_parasite_list (vectors_ID, num_parasites);
+
+  return *parasites != NULL;
+}

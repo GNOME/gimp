@@ -1032,7 +1032,7 @@ CODE
 }
 
 sub vectors_to_selection {
-    &std_pdb_deprecated ('gimp-item-to-selection');
+    &std_pdb_deprecated ('gimp-image-select-item');
     &simon_pdb_misc('2006', '2.4');
 
     @inargs = (

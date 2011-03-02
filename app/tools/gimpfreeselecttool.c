@@ -1185,7 +1185,8 @@ gimp_free_select_tool_oper_update (GimpTool         *tool,
 
   if (priv->n_points == 0 ||
       (gimp_free_select_tool_is_point_grabbed (fst) &&
-       ! hovering_first_point))
+       ! hovering_first_point) ||
+      ! proximity)
     {
       priv->show_pending_point = FALSE;
     }
@@ -1296,6 +1297,8 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
       return;
     }
 
+  gimp_tool_control_activate (tool->control);
+
   gimp_draw_tool_pause (draw_tool);
 
   gimp_free_select_tool_update_button_state (fst, state);
@@ -1357,6 +1360,8 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
 
   if (tool->display != display)
     return;
+
+  gimp_tool_control_halt (tool->control);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (fst));
 

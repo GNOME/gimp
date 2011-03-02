@@ -82,6 +82,11 @@ EXPORTS
 	gimp_context_get_paint_mode
 	gimp_context_get_palette
 	gimp_context_get_pattern
+	gimp_context_get_sample_criterion
+	gimp_context_get_sample_merged
+	gimp_context_get_sample_threshold
+	gimp_context_get_sample_threshold_int
+	gimp_context_get_sample_transparent
 	gimp_context_get_transform_direction
 	gimp_context_get_transform_recursion
 	gimp_context_get_transform_resize
@@ -103,6 +108,11 @@ EXPORTS
 	gimp_context_set_paint_mode
 	gimp_context_set_palette
 	gimp_context_set_pattern
+	gimp_context_set_sample_criterion
+	gimp_context_set_sample_merged
+	gimp_context_set_sample_threshold
+	gimp_context_set_sample_threshold_int
+	gimp_context_set_sample_transparent
 	gimp_context_set_transform_direction
 	gimp_context_set_transform_recursion
 	gimp_context_set_transform_resize
@@ -408,8 +418,8 @@ EXPORTS
 	gimp_image_scale
 	gimp_image_scale_full
 	gimp_image_select_color
+	gimp_image_select_contiguous_color
 	gimp_image_select_ellipse
-	gimp_image_select_fuzzy
 	gimp_image_select_item
 	gimp_image_select_polygon
 	gimp_image_select_rectangle
@@ -438,7 +448,10 @@ EXPORTS
 	gimp_install_procedure
 	gimp_install_temp_proc
 	gimp_invert
+	gimp_item_attach_parasite
 	gimp_item_delete
+	gimp_item_detach_parasite
+	gimp_item_find_parasite
 	gimp_item_get_children
 	gimp_item_get_image
 	gimp_item_get_linked
@@ -456,10 +469,7 @@ EXPORTS
 	gimp_item_is_text_layer
 	gimp_item_is_valid
 	gimp_item_is_vectors
-	gimp_item_parasite_attach
-	gimp_item_parasite_detach
-	gimp_item_parasite_find
-	gimp_item_parasite_list
+	gimp_item_list_parasites
 	gimp_item_set_linked
 	gimp_item_set_lock_content
 	gimp_item_set_name

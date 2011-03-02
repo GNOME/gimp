@@ -116,8 +116,8 @@
     (gimp-image-delete back-img)
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
-    (gimp-image-add-layer img layer3 0)
-    (gimp-image-add-layer img layer2 0)
+    (gimp-image-insert-layer img layer3 0 0)
+    (gimp-image-insert-layer img layer2 0 0)
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-none img)
     (gimp-edit-fill layer2 BACKGROUND-FILL)
@@ -135,7 +135,7 @@
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
 
-    (gimp-image-add-layer img layer1 0)
+    (gimp-image-insert-layer img layer1 0 0)
     (copy-layer-crystal img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height FALSE)
@@ -164,11 +164,11 @@
 
 
 
-    (gimp-image-add-layer img bg-layer 2)
+    (gimp-image-insert-layer img bg-layer 0 2)
     (copy-layer-crystal img bg-layer tile-img tile-layer)
     (gimp-image-delete tile-img)
     (set! layer2 (car (gimp-layer-copy bg-layer TRUE)))
-    (gimp-image-add-layer img layer2 1)
+    (gimp-image-insert-layer img layer2 0 1)
 
     (plug-in-displace RUN-NONINTERACTIVE img layer2 displace displace TRUE TRUE disp-map disp-map 0)
     (set! layer-mask2 (car (gimp-layer-create-mask layer2 ADD-BLACK-MASK)))

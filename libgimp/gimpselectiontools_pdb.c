@@ -23,6 +23,9 @@
 #include "config.h"
 
 #include "gimp.h"
+#undef GIMP_DISABLE_DEPRECATED
+#undef __GIMP_SELECTION_TOOLS_PDB_H__
+#include "gimpselectiontools_pdb.h"
 
 
 /**
@@ -45,22 +48,7 @@
  * @feather_radius: Radius for feather operation.
  * @sample_merged: Use the composite image, not the drawable.
  *
- * Create a selection by selecting all pixels (in the specified
- * drawable) with the same (or similar) color to that specified.
- *
- * This tool creates a selection over the specified image. A by-color
- * selection is determined by the supplied color under the constraints
- * of the specified threshold. Essentially, all pixels (in the
- * drawable) that have color sufficiently close to the specified color
- * (as determined by the threshold value) are included in the
- * selection. The antialiasing parameter allows the final selection
- * mask to contain intermediate values based on close misses to the
- * threshold bar. Feathering can be enabled optionally and is
- * controlled with the 'feather-radius' parameter. If the
- * 'sample-merged' parameter is TRUE, the data of the composite image
- * will be used instead of that for the specified drawable. This is
- * equivalent to sampling for colors after merging all visible layers.
- * In the case of a merged sampling, the supplied drawable is ignored.
+ * Deprecated: Use gimp_image_select_color() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -111,23 +99,7 @@ gimp_by_color_select (gint32          drawable_ID,
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
  *
- * Create a selection by selecting all pixels (in the specified
- * drawable) with the same (or similar) color to that specified.
- *
- * This tool creates a selection over the specified image. A by-color
- * selection is determined by the supplied color under the constraints
- * of the specified threshold. Essentially, all pixels (in the
- * drawable) that have color sufficiently close to the specified color
- * (as determined by the threshold value) are included in the
- * selection. To select transparent regions, the color specified must
- * also have minimum alpha. The antialiasing parameter allows the final
- * selection mask to contain intermediate values based on close misses
- * to the threshold bar. Feathering can be enabled optionally and is
- * controlled with the 'feather-radius' parameter. If the
- * 'sample-merged' parameter is TRUE, the data of the composite image
- * will be used instead of that for the specified drawable. This is
- * equivalent to sampling for colors after merging all visible layers.
- * In the case of a merged sampling, the supplied drawable is ignored.
+ * Deprecated: Use gimp_image_select_color() instead.
  *
  * Returns: TRUE on success.
  *
@@ -184,17 +156,7 @@ gimp_by_color_select_full (gint32               drawable_ID,
  * @feather: Feather option for selections.
  * @feather_radius: Radius for feather operation.
  *
- * Create an elliptical selection over the specified image.
- *
- * This tool creates an elliptical selection over the specified image.
- * The elliptical region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. If antialiasing
- * is turned on, the edges of the elliptical region will contain
- * intermediate values which give the appearance of a sharper, less
- * pixelized edge. This should be set as TRUE most of the time. If the
- * feather option is enabled, the resulting selection is blurred before
- * combining. The blur is a gaussian blur with the specified feather
- * radius.
+ * Deprecated: Use gimp_image_select_ellipse() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -243,19 +205,7 @@ gimp_ellipse_select (gint32         image_ID,
  * @feather: Feather option for selections.
  * @feather_radius: Radius for feather operation.
  *
- * Create a polygonal selection over the specified image.
- *
- * This tool creates a polygonal selection over the specified image.
- * The polygonal region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. The polygon is
- * specified through an array of floating point numbers and its length.
- * The length of array must be 2n, where n is the number of points.
- * Each point is defined by 2 floating point values which correspond to
- * the x and y coordinates. If the final point does not connect to the
- * starting point, a connecting segment is automatically added. If the
- * feather option is enabled, the resulting selection is blurred before
- * combining. The blur is a gaussian blur with the specified feather
- * radius.
+ * Deprecated: Use gimp_image_select_polygon() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -302,27 +252,7 @@ gimp_free_select (gint32          image_ID,
  * @feather_radius: Radius for feather operation.
  * @sample_merged: Use the composite image, not the drawable.
  *
- * Create a fuzzy selection starting at the specified coordinates on
- * the specified drawable.
- *
- * This tool creates a fuzzy selection over the specified image. A
- * fuzzy selection is determined by a seed fill under the constraints
- * of the specified threshold. Essentially, the color at the specified
- * coordinates (in the drawable) is measured and the selection expands
- * outwards from that point to any adjacent pixels which are not
- * significantly different (as determined by the threshold value). This
- * process continues until no more expansion is possible. The
- * antialiasing parameter allows the final selection mask to contain
- * intermediate values based on close misses to the threshold bar at
- * pixels along the seed fill boundary. Feathering can be enabled
- * optionally and is controlled with the 'feather-radius' paramter. If
- * the 'sample-merged' parameter is TRUE, the data of the composite
- * image will be used instead of that for the specified drawable. This
- * is equivalent to sampling for colors after merging all visible
- * layers. In the case of a merged sampling, the supplied drawable is
- * ignored. If the sample is merged, the specified coordinates are
- * relative to the image origin; otherwise, they are relative to the
- * drawable's origin.
+ * Deprecated: Use gimp_image_select_contiguous_color() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -376,27 +306,7 @@ gimp_fuzzy_select (gint32         drawable_ID,
  * @select_transparent: Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.
  * @select_criterion: The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.
  *
- * Create a fuzzy selection starting at the specified coordinates on
- * the specified drawable.
- *
- * This tool creates a fuzzy selection over the specified image. A
- * fuzzy selection is determined by a seed fill under the constraints
- * of the specified threshold. Essentially, the color at the specified
- * coordinates (in the drawable) is measured and the selection expands
- * outwards from that point to any adjacent pixels which are not
- * significantly different (as determined by the threshold value). This
- * process continues until no more expansion is possible. The
- * antialiasing parameter allows the final selection mask to contain
- * intermediate values based on close misses to the threshold bar at
- * pixels along the seed fill boundary. Feathering can be enabled
- * optionally and is controlled with the 'feather-radius' paramter. If
- * the 'sample-merged' parameter is TRUE, the data of the composite
- * image will be used instead of that for the specified drawable. This
- * is equivalent to sampling for colors after merging all visible
- * layers. In the case of a merged sampling, the supplied drawable is
- * ignored. If the sample is merged, the specified coordinates are
- * relative to the image origin; otherwise, they are relative to the
- * drawable's origin.
+ * Deprecated: Use gimp_image_select_contiguous_color() instead.
  *
  * Returns: TRUE on success.
  *
@@ -454,14 +364,7 @@ gimp_fuzzy_select_full (gint32              drawable_ID,
  * @feather: Feather option for selections.
  * @feather_radius: Radius for feather operation.
  *
- * Create a rectangular selection over the specified image;
- *
- * This tool creates a rectangular selection over the specified image.
- * The rectangular region can be either added to, subtracted from, or
- * replace the contents of the previous selection mask. If the feather
- * option is enabled, the resulting selection is blurred before
- * combining. The blur is a gaussian blur with the specified feather
- * radius.
+ * Deprecated: Use gimp_image_select_rectangle() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -513,15 +416,7 @@ gimp_rect_select (gint32         image_ID,
  * @feather_radius_x: Radius for feather operation in X direction.
  * @feather_radius_y: Radius for feather operation in Y direction.
  *
- * Create a rectangular selection with round corners over the specified
- * image;
- *
- * This tool creates a rectangular selection with round corners over
- * the specified image. The rectangular region can be either added to,
- * subtracted from, or replace the contents of the previous selection
- * mask. If the feather option is enabled, the resulting selection is
- * blurred before combining. The blur is a gaussian blur with the
- * specified feather radius.
+ * Deprecated: Use gimp_image_select_round_rectangle() instead.
  *
  * Returns: TRUE on success.
  *

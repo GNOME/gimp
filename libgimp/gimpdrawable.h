@@ -69,30 +69,39 @@ guchar       * gimp_drawable_get_sub_thumbnail_data (gint32         drawable_ID,
                                                      gint          *bpp);
 
 #ifndef GIMP_DISABLE_DEPRECATED
-gboolean       gimp_drawable_is_valid               (gint32         drawable_ID);
-gboolean       gimp_drawable_is_layer               (gint32         drawable_ID);
-gboolean       gimp_drawable_is_text_layer          (gint32         drawable_ID);
-gboolean       gimp_drawable_is_layer_mask          (gint32         drawable_ID);
-gboolean       gimp_drawable_is_channel             (gint32         drawable_ID);
-gboolean       gimp_drawable_delete                 (gint32         drawable_ID);
-gint32         gimp_drawable_get_image              (gint32         drawable_ID);
-gchar*         gimp_drawable_get_name               (gint32         drawable_ID);
-gboolean       gimp_drawable_set_name               (gint32         drawable_ID,
-                                                     const gchar   *name);
-gboolean       gimp_drawable_get_visible            (gint32         drawable_ID);
-gboolean       gimp_drawable_set_visible            (gint32         drawable_ID,
-                                                     gboolean       visible);
-gboolean       gimp_drawable_get_linked             (gint32         drawable_ID);
-gboolean       gimp_drawable_set_linked             (gint32         drawable_ID,
-                                                     gboolean       linked);
-gint           gimp_drawable_get_tattoo             (gint32         drawable_ID);
-gboolean       gimp_drawable_set_tattoo             (gint32         drawable_ID,
-                                                     gint           tattoo);
-gboolean       gimp_drawable_attach_new_parasite    (gint32         drawable_ID,
-                                                     const gchar   *name,
-                                                     gint           flags,
-                                                     gint           size,
-                                                     gconstpointer  data);
+gboolean       gimp_drawable_is_valid               (gint32              drawable_ID);
+gboolean       gimp_drawable_is_layer               (gint32              drawable_ID);
+gboolean       gimp_drawable_is_text_layer          (gint32              drawable_ID);
+gboolean       gimp_drawable_is_layer_mask          (gint32              drawable_ID);
+gboolean       gimp_drawable_is_channel             (gint32              drawable_ID);
+gboolean       gimp_drawable_delete                 (gint32              drawable_ID);
+gint32         gimp_drawable_get_image              (gint32              drawable_ID);
+gchar*         gimp_drawable_get_name               (gint32              drawable_ID);
+gboolean       gimp_drawable_set_name               (gint32              drawable_ID,
+                                                     const gchar        *name);
+gboolean       gimp_drawable_get_visible            (gint32              drawable_ID);
+gboolean       gimp_drawable_set_visible            (gint32              drawable_ID,
+                                                     gboolean            visible);
+gboolean       gimp_drawable_get_linked             (gint32              drawable_ID);
+gboolean       gimp_drawable_set_linked             (gint32              drawable_ID,
+                                                     gboolean            linked);
+gint           gimp_drawable_get_tattoo             (gint32              drawable_ID);
+gboolean       gimp_drawable_set_tattoo             (gint32              drawable_ID,
+                                                     gint                tattoo);
+GimpParasite * gimp_drawable_parasite_find          (gint32              drawable_ID,
+                                                     const gchar        *name);
+gboolean       gimp_drawable_parasite_attach        (gint32              drawable_ID,
+                                                     const GimpParasite *parasite);
+gboolean       gimp_drawable_parasite_detach        (gint32              drawable_ID,
+                                                     const gchar        *name);
+gboolean       gimp_drawable_parasite_list          (gint32              drawable_ID,
+                                                     gint               *num_parasites,
+                                                     gchar            ***parasites);
+gboolean       gimp_drawable_attach_new_parasite    (gint32              drawable_ID,
+                                                     const gchar        *name,
+                                                     gint                flags,
+                                                     gint                size,
+                                                     gconstpointer       data);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
 G_END_DECLS

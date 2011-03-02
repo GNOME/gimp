@@ -452,7 +452,7 @@ save_dialog (void)
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.receipt);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_To:"), 0.0, 0.5,
+                             C_("email-address", "_To:"), 0.0, 0.5,
                              entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -466,7 +466,7 @@ save_dialog (void)
   gtk_entry_set_max_length (GTK_ENTRY (entry), BUFFER_SIZE - 1);
   gtk_entry_set_text (GTK_ENTRY (entry), mail_info.from);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("_From:"), 0.0, 0.5,
+                             C_("email-address", "_From:"), 0.0, 0.5,
                              entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),

@@ -33,7 +33,7 @@ static void edit_object_command_undo(Command_t *parent);
 
 static CommandClass_t edit_object_command_class = {
    edit_object_command_destruct,
-   NULL,			/* edit_object_command_execute */
+   NULL,                        /* edit_object_command_execute */
    edit_object_command_undo,
    edit_object_command_undo
 };
@@ -51,7 +51,7 @@ edit_object_command_new(Object_t *obj)
    command->obj = object_ref(obj);
    command->copy = object_clone(obj);
    return command_init(&command->parent, _("Edit Object"),
-		       &edit_object_command_class);
+                       &edit_object_command_class);
 }
 
 static void

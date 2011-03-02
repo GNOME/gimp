@@ -382,6 +382,7 @@ gimp_text_layer_new (GimpImage *image,
                      GimpText  *text)
 {
   GimpTextLayer *layer;
+  GimpImageType  type;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -389,13 +390,12 @@ gimp_text_layer_new (GimpImage *image,
   if (! text->text && ! text->markup)
     return NULL;
 
-  layer = g_object_new (GIMP_TYPE_TEXT_LAYER, NULL);
+  type = gimp_image_base_type_with_alpha (image);
 
-  gimp_drawable_configure (GIMP_DRAWABLE (layer),
-                           image,
-                           0, 0, 1, 1,
-                           gimp_image_base_type_with_alpha (image),
-                           NULL);
+  layer = GIMP_TEXT_LAYER (gimp_drawable_new (GIMP_TYPE_TEXT_LAYER,
+                                              image, NULL,
+                                              0, 0, 1, 1,
+                                              type));
 
   gimp_text_layer_set_text (layer, text);
 
@@ -539,13 +539,16 @@ gimp_item_is_text_layer (GimpItem *item)
 static void
 gimp_text_layer_text_changed (GimpTextLayer *layer)
 {
-  /*   If the text layer was created from a parasite, it's time to
-   *   remove that parasite now.
+  /*  If the text layer was created from a parasite, it's time to
+   *  remove that parasite now.
    */
   if (layer->text_parasite)
     {
-      gimp_parasite_list_remove (GIMP_ITEM (layer)->parasites,
-                                 layer->text_parasite);
+      /*  Don't push an undo because the parasite only exists temporarily
+       *  while the text layer is loaded from XCF.
+       */
+      gimp_item_parasite_detach (GIMP_ITEM (layer), layer->text_parasite,
+                                 FALSE);
       layer->text_parasite = NULL;
     }
 

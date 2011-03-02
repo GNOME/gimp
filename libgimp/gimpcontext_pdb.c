@@ -907,7 +907,9 @@ gimp_context_get_antialias (void)
  * values which give the appearance of a sharper, less pixelized edge.
  * This should be set as TRUE most of the time unless a binary-only
  * selection is wanted. This settings affects the following procedures:
- * The entire gimp-image-select-foo group of procedures.
+ * gimp_image_select_color(), gimp_image_select_contiguous_color(),
+ * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
+ * gimp_image_select_polygon(), gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -971,9 +973,11 @@ gimp_context_get_feather (void)
  * This procedure modifies the feather setting. If the feather option
  * is enabled, selections will be blurred before combining. The blur is
  * a gaussian blur; its radii can be controlled using
- * gimp_context_set_feather_radius(). This settings affects the
- * following procedures: The entire gimp-image-select-foo group of
- * procedures.
+ * gimp_context_set_feather_radius(). This setting affects the
+ * following procedures: gimp_image_select_color(),
+ * gimp_image_select_contiguous_color(), gimp_image_select_rectangle(),
+ * gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
+ * gimp_image_select_polygon(), gimp_image_select_item().
  *
  * Returns: TRUE on success.
  *
@@ -1046,9 +1050,9 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  *
  * Set the feather radius setting.
  *
- * This procedure modifies the feather radius setting. This settings
- * affects the following procedures: The entire gimp-image-select-foo
- * group of procedures.
+ * This procedure modifies the feather radius setting. This setting
+ * affects the all procedures that are affected by
+ * gimp_context_set_feather().
  *
  * Returns: TRUE on success.
  *
@@ -1066,6 +1070,338 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
                                     &nreturn_vals,
                                     GIMP_PDB_FLOAT, feather_radius_x,
                                     GIMP_PDB_FLOAT, feather_radius_y,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_sample_merged:
+ *
+ * Get the sample merged setting.
+ *
+ * This procedure returns the sample merged setting.
+ *
+ * Returns: The sample merged setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_sample_merged (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean sample_merged = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-merged",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_merged = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_merged;
+}
+
+/**
+ * gimp_context_set_sample_merged:
+ * @sample_merged: The sample merged setting.
+ *
+ * Set the sample merged setting.
+ *
+ * This procedure modifies the sample merged setting. If an operation
+ * depends on the colors of the pixels present in a drawable, like when
+ * doing a seed fill, this setting controls whether the pixel data from
+ * the specified drawable is used ('sample-merged' is FALSE), or the
+ * pixel data from the composite image ('sample-merged' is TRUE. This
+ * is equivalent to sampling for colors after merging all visible
+ * layers). This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_merged (gboolean sample_merged)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-merged",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_merged,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_sample_criterion:
+ *
+ * Get the sample criterion setting.
+ *
+ * This procedure returns the sample criterion setting.
+ *
+ * Returns: The sample criterion setting.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpSelectCriterion
+gimp_context_get_sample_criterion (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpSelectCriterion sample_criterion = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-criterion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_criterion = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_criterion;
+}
+
+/**
+ * gimp_context_set_sample_criterion:
+ * @sample_criterion: The sample criterion setting.
+ *
+ * Set the sample criterion setting.
+ *
+ * This procedure modifies the sample criterion setting. If an
+ * operation depends on the colors of the pixels present in a drawable,
+ * like when doing a seed fill, this setting controls how color
+ * similarity is determined. SELECT_CRITERION_COMPOSITE is the default
+ * value. This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-criterion",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_criterion,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_sample_threshold:
+ *
+ * Get the sample threshold setting.
+ *
+ * This procedure returns the sample threshold setting.
+ *
+ * Returns: The sample threshold setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gdouble
+gimp_context_get_sample_threshold (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble sample_threshold = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-threshold",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_threshold = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_threshold;
+}
+
+/**
+ * gimp_context_set_sample_threshold:
+ * @sample_threshold: The sample threshold setting.
+ *
+ * Set the sample threshold setting.
+ *
+ * This procedure modifies the sample threshold setting. If an
+ * operation depends on the colors of the pixels present in a drawable,
+ * like when doing a seed fill, this setting controls what is
+ * \"sufficiently close\" to be considered a similar color. If the
+ * sample threshold has not been set explicitly, the default threshold
+ * set in gimprc will be used. This setting affects the following
+ * procedures: gimp_image_select_color(),
+ * gimp_image_select_contiguous_color().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_threshold (gdouble sample_threshold)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-threshold",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, sample_threshold,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_sample_threshold_int:
+ *
+ * Get the sample threshold setting as an integer value.
+ *
+ * This procedure returns the sample threshold setting as an integer
+ * value. See gimp_context_get_sample_threshold().
+ *
+ * Returns: The sample threshold setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gint
+gimp_context_get_sample_threshold_int (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint sample_threshold = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-threshold-int",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_threshold = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_threshold;
+}
+
+/**
+ * gimp_context_set_sample_threshold_int:
+ * @sample_threshold: The sample threshold setting.
+ *
+ * Set the sample threshold setting as an integer value.
+ *
+ * This procedure modifies the sample threshold setting as an integer
+ * value. See gimp_context_set_sample_threshold().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_threshold_int (gint sample_threshold)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-threshold-int",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_threshold,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_sample_transparent:
+ *
+ * Get the sample transparent setting.
+ *
+ * This procedure returns the sample transparent setting.
+ *
+ * Returns: The sample transparent setting.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_get_sample_transparent (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean sample_transparent = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-sample-transparent",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    sample_transparent = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return sample_transparent;
+}
+
+/**
+ * gimp_context_set_sample_transparent:
+ * @sample_transparent: The sample transparent setting.
+ *
+ * Set the sample transparent setting.
+ *
+ * This procedure modifies the sample transparent setting. If an
+ * operation depends on the colors of the pixels present in a drawable,
+ * like when doing a seed fill, this setting controls whether
+ * transparency is considered to be a unique selectable color. When
+ * this setting is TRUE, transparent areas can be selected or filled.
+ * This setting affects the following procedures:
+ * gimp_image_select_color(), gimp_image_select_contiguous_color().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_context_set_sample_transparent (gboolean sample_transparent)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-sample-transparent",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, sample_transparent,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -1115,9 +1451,13 @@ gimp_context_get_interpolation (void)
  *
  * Set the interpolation type.
  *
- * This procedure modifies the interpolation setting. It affects the
- * following procedures: all transform procedures which can produce
- * sub-pixel results, gimp_image_scale(), gimp_layer_scale().
+ * This procedure modifies the interpolation setting. This setting
+ * affects affects the following procedures:
+ * gimp_item_transform_flip(), gimp_item_transform_perspective(),
+ * gimp_item_transform_rotate(), gimp_item_transform_scale(),
+ * gimp_item_transform_shear(), gimp_item_transform_2d(),
+ * gimp_item_transform_matrix(), gimp_image_scale(),
+ * gimp_layer_scale().
  *
  * Returns: TRUE on success.
  *
@@ -1180,7 +1520,12 @@ gimp_context_get_transform_direction (void)
  *
  * Set the transform direction.
  *
- * This procedure modifies the transform direction setting.
+ * This procedure modifies the transform direction setting. This
+ * setting affects affects the following procedures:
+ * gimp_item_transform_flip(), gimp_item_transform_perspective(),
+ * gimp_item_transform_rotate(), gimp_item_transform_scale(),
+ * gimp_item_transform_shear(), gimp_item_transform_2d(),
+ * gimp_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
@@ -1246,7 +1591,13 @@ gimp_context_get_transform_resize (void)
  * This procedure modifies the transform resize setting. When
  * transforming pixels, if the result of a transform operation has a
  * different size than the original area, this setting determines how
- * the resulting area is sized.
+ * the resulting area is sized. This setting affects affects the
+ * following procedures: gimp_item_transform_flip(),
+ * gimp_item_transform_flip_simple(),
+ * gimp_item_transform_perspective(), gimp_item_transform_rotate(),
+ * gimp_item_transform_rotate_simple(), gimp_item_transform_scale(),
+ * gimp_item_transform_shear(), gimp_item_transform_2d(),
+ * gimp_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *
@@ -1310,7 +1661,11 @@ gimp_context_get_transform_recursion (void)
  * This procedure modifies the transform supersampling recursion level
  * setting. Whether or not a transformation does supersampling is
  * determined by the interplolation type. The recursion level defaults
- * to 3, which is a nice default value.
+ * to 3, which is a nice default value. This setting affects affects
+ * the following procedures: gimp_item_transform_flip(),
+ * gimp_item_transform_perspective(), gimp_item_transform_rotate(),
+ * gimp_item_transform_scale(), gimp_item_transform_shear(),
+ * gimp_item_transform_2d(), gimp_item_transform_matrix().
  *
  * Returns: TRUE on success.
  *

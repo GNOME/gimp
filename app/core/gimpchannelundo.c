@@ -210,7 +210,5 @@ gimp_channel_undo_pop (GimpUndo            *undo,
       gimp_image_add_channel (undo->image, channel,
                               channel_undo->prev_parent,
                               channel_undo->prev_position, FALSE);
-
-      GIMP_ITEM (channel)->removed = FALSE;
     }
 }

@@ -97,6 +97,7 @@ static gchar    * gimp_layer_get_description    (GimpViewable       *viewable,
                                                  gchar             **tooltip);
 
 static void       gimp_layer_removed            (GimpItem           *item);
+static void       gimp_layer_unset_removed      (GimpItem           *item);
 static gboolean   gimp_layer_is_attached        (const GimpItem     *item);
 static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
@@ -249,6 +250,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class->get_description     = gimp_layer_get_description;
 
   item_class->removed                 = gimp_layer_removed;
+  item_class->unset_removed           = gimp_layer_unset_removed;
   item_class->is_attached             = gimp_layer_is_attached;
   item_class->get_tree                = gimp_layer_get_tree;
   item_class->duplicate               = gimp_layer_duplicate;
@@ -491,6 +493,18 @@ gimp_layer_removed (GimpItem *item)
 
   if (GIMP_ITEM_CLASS (parent_class)->removed)
     GIMP_ITEM_CLASS (parent_class)->removed (item);
+}
+
+static void
+gimp_layer_unset_removed (GimpItem *item)
+{
+  GimpLayer *layer = GIMP_LAYER (item);
+
+  if (layer->mask)
+    gimp_item_unset_removed (GIMP_ITEM (layer->mask));
+
+  if (GIMP_ITEM_CLASS (parent_class)->unset_removed)
+    GIMP_ITEM_CLASS (parent_class)->unset_removed (item);
 }
 
 static gboolean
@@ -1116,13 +1130,10 @@ gimp_layer_new (GimpImage            *image,
   g_return_val_if_fail (width > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  layer = g_object_new (GIMP_TYPE_LAYER, NULL);
-
-  gimp_drawable_configure (GIMP_DRAWABLE (layer),
-                           image,
-                           0, 0, width, height,
-                           type,
-                           name);
+  layer = GIMP_LAYER (gimp_drawable_new (GIMP_TYPE_LAYER,
+                                         image, name,
+                                         0, 0, width, height,
+                                         type));
 
   opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
 
@@ -1459,6 +1470,10 @@ gimp_layer_add_mask (GimpLayer      *layer,
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
 
   g_object_notify (G_OBJECT (layer), "mask");
+
+  /*  if the mask came from the undo stack, reset its "removed" state  */
+  if (gimp_item_is_removed (GIMP_ITEM (mask)))
+    gimp_item_unset_removed (GIMP_ITEM (mask));
 
   return layer->mask;
 }

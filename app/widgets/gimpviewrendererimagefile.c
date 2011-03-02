@@ -156,9 +156,10 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
                                        GtkWidget     *widget,
                                        gint           size)
 {
-  GdkScreen    *screen     = gtk_widget_get_screen (widget);
-  GtkIconTheme *icon_theme = gtk_icon_theme_get_for_screen (screen);
-  GdkPixbuf    *pixbuf     = NULL;
+  GdkScreen     *screen     = gtk_widget_get_screen (widget);
+  GtkIconTheme  *icon_theme = gtk_icon_theme_get_for_screen (screen);
+  GimpThumbnail *thumbnail  = gimp_imagefile_get_thumbnail (imagefile);
+  GdkPixbuf     *pixbuf     = NULL;
 
   if (! gimp_object_get_name (imagefile))
     return NULL;
@@ -198,9 +199,9 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
       g_object_unref (file);
     }
 
-  if (! pixbuf && imagefile->thumbnail->image_mimetype)
+  if (! pixbuf && thumbnail->image_mimetype)
     {
-      pixbuf = get_icon_for_mime_type (imagefile->thumbnail->image_mimetype,
+      pixbuf = get_icon_for_mime_type (thumbnail->image_mimetype,
                                        size);
     }
 
@@ -208,7 +209,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
     {
       const gchar *icon_name = GTK_STOCK_FILE;
 
-      if (imagefile->thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
+      if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
         icon_name = GTK_STOCK_DIRECTORY;
 
       pixbuf = gtk_icon_theme_load_icon (icon_theme,

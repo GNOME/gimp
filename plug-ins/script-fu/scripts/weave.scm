@@ -48,7 +48,7 @@
          (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
                                         "Weave tile" 100 NORMAL-MODE))))
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
@@ -171,7 +171,7 @@
          (drawable (car (gimp-layer-new img tile-size tile-size RGB-IMAGE
                                         "Mask" 100 NORMAL-MODE))))
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable 0 0)
 
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill drawable BACKGROUND-FILL)
@@ -274,7 +274,7 @@
   (let* ((drawable (car (gimp-layer-new img width height RGBA-IMAGE
                                         "Threads" 100 NORMAL-MODE)))
          (dense (/ density 100.0)))
-    (gimp-image-add-layer img drawable -1)
+    (gimp-image-insert-layer img drawable 0 -1)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill drawable BACKGROUND-FILL)
     (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)

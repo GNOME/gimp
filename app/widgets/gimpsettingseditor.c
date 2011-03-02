@@ -292,12 +292,15 @@ gimp_settings_editor_select_item (GimpContainerView  *view,
                                   gpointer            insert_data,
                                   GimpSettingsEditor *editor)
 {
+  gboolean sensitive;
+
   editor->selected_setting = G_OBJECT (viewable);
 
-  gtk_widget_set_sensitive (editor->export_button,
-                            editor->selected_setting != NULL);
-  gtk_widget_set_sensitive (editor->delete_button,
-                            editor->selected_setting != NULL);
+  sensitive = (editor->selected_setting != NULL &&
+               gimp_object_get_name (editor->selected_setting));
+
+  gtk_widget_set_sensitive (editor->export_button, sensitive);
+  gtk_widget_set_sensitive (editor->delete_button, sensitive);
 }
 
 static void
@@ -341,9 +344,8 @@ gimp_settings_editor_delete_clicked (GtkWidget          *widget,
       gimp_container_remove (editor->container,
                              GIMP_OBJECT (editor->selected_setting));
 
-      if (new)
-        gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
-                                         GIMP_VIEWABLE (new));
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
+                                       GIMP_VIEWABLE (new));
     }
 }
 

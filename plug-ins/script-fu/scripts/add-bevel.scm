@@ -89,7 +89,7 @@
       (gimp-image-undo-group-start image)
     )
 
-    (gimp-image-insert-layer image bump-layer -1 1)
+    (gimp-image-insert-layer image bump-layer 0 1)
 
     ; If the layer we're bevelling is offset from the image's origin, we
     ; have to do the same to the bumpmap
@@ -101,7 +101,7 @@
     ; Set the selection to the area we want to bevel.
     ;
     (if (= selection-exists 0)
-        (gimp-item-to-selection pic-layer CHANNEL-OP-REPLACE)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE pic-layer)
     )
 
     ; Store it for later.
@@ -151,7 +151,7 @@
     ;
     (if (= selection-exists 0)
         (gimp-selection-none image)        ; No selection to start with
-        (gimp-item-to-selection selection CHANNEL-OP-REPLACE)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE selection)
     )
     ; If they started with a selection, they can Select->Invert then
     ; Edit->Clear for a cutout.

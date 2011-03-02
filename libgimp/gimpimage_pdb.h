@@ -133,34 +133,6 @@ gboolean                 gimp_image_reorder_item             (gint32            
                                                               gint32                  item_ID,
                                                               gint32                  parent_ID,
                                                               gint                    position);
-#ifndef GIMP_DISABLE_DEPRECATED
-gint                     gimp_image_get_layer_position       (gint32                  image_ID,
-                                                              gint32                  layer_ID);
-gboolean                 gimp_image_raise_layer              (gint32                  image_ID,
-                                                              gint32                  layer_ID);
-gboolean                 gimp_image_lower_layer              (gint32                  image_ID,
-                                                              gint32                  layer_ID);
-gboolean                 gimp_image_raise_layer_to_top       (gint32                  image_ID,
-                                                              gint32                  layer_ID);
-gboolean                 gimp_image_lower_layer_to_bottom    (gint32                  image_ID,
-                                                              gint32                  layer_ID);
-gint                     gimp_image_get_channel_position     (gint32                  image_ID,
-                                                              gint32                  channel_ID);
-gboolean                 gimp_image_raise_channel            (gint32                  image_ID,
-                                                              gint32                  channel_ID);
-gboolean                 gimp_image_lower_channel            (gint32                  image_ID,
-                                                              gint32                  channel_ID);
-gint                     gimp_image_get_vectors_position     (gint32                  image_ID,
-                                                              gint32                  vectors_ID);
-gboolean                 gimp_image_raise_vectors            (gint32                  image_ID,
-                                                              gint32                  vectors_ID);
-gboolean                 gimp_image_lower_vectors            (gint32                  image_ID,
-                                                              gint32                  vectors_ID);
-gboolean                 gimp_image_raise_vectors_to_top     (gint32                  image_ID,
-                                                              gint32                  vectors_ID);
-gboolean                 gimp_image_lower_vectors_to_bottom  (gint32                  image_ID,
-                                                              gint32                  vectors_ID);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gint32                   gimp_image_flatten                  (gint32                  image_ID);
 gint32                   gimp_image_merge_visible_layers     (gint32                  image_ID,
                                                               GimpMergeType           merge_type);

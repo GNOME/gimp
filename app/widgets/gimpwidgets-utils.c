@@ -822,17 +822,17 @@ gimp_window_set_hint (GtkWindow      *window,
 }
 
 /**
- * gimp_window_get_native:
+ * gimp_window_get_native_id:
  * @window: a #GtkWindow
  *
  * This function is used to pass a window handle to plug-ins so that
  * they can set their dialog windows transient to the parent window.
  *
- * Return value: a native window handle of the window's #GdkWindow or 0
+ * Return value: a native window ID of the window's #GdkWindow or 0
  *               if the window isn't realized yet
  */
-GdkNativeWindow
-gimp_window_get_native (GtkWindow *window)
+guint32
+gimp_window_get_native_id (GtkWindow *window)
 {
   g_return_val_if_fail (GTK_IS_WINDOW (window), 0);
 
@@ -840,12 +840,12 @@ gimp_window_get_native (GtkWindow *window)
 #ifdef __GNUC__
 #warning gimp_window_get_native() unimplementable for the target windowing system
 #endif
-  return (GdkNativeWindow)0;
+  return 0;
 #endif
 
 #ifdef GDK_WINDOWING_WIN32
   if (window && gtk_widget_get_realized (GTK_WIDGET (window)))
-    return (GdkNativeWindow) GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
+    return GDK_WINDOW_HWND (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
 #ifdef GDK_WINDOWING_X11
@@ -853,7 +853,7 @@ gimp_window_get_native (GtkWindow *window)
     return GDK_WINDOW_XID (gtk_widget_get_window (GTK_WIDGET (window)));
 #endif
 
-  return (GdkNativeWindow) 0;
+  return 0;
 }
 
 static void
@@ -865,6 +865,33 @@ gimp_window_transient_realized (GtkWidget *window,
 }
 
 /* similar to what we have in libgimp/gimpui.c */
+static GdkWindow *
+gimp_get_foreign_window (guint32 window)
+{
+#if GTK_CHECK_VERSION (2, 24, 0)
+
+#ifdef GDK_WINDOWING_X11
+  return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
+                                                 window);
+#endif
+
+#ifdef GDK_WINDOWING_WIN32
+  return gdk_win32_window_foreign_new_for_display (gdk_display_get_default (),
+                                                   window);
+#endif
+
+#else /* ! GTK_CHECK_VERSION (2, 24, 0) */
+
+#ifndef GDK_NATIVE_WINDOW_POINTER
+  return gdk_window_foreign_new_for_display (gdk_display_get_default (),
+                                             window);
+#endif
+
+#endif /* GTK_CHECK_VERSION (2, 24, 0) */
+
+  return NULL;
+}
+
 void
 gimp_window_set_transient_for (GtkWindow *window,
                                guint32    parent_ID)
@@ -879,9 +906,7 @@ gimp_window_set_transient_for (GtkWindow *window,
 #ifndef GDK_WINDOWING_WIN32
   GdkWindow *parent;
 
-  parent = gdk_window_foreign_new_for_display (gdk_display_get_default (),
-                                               parent_ID);
-
+  parent = gimp_get_foreign_window (parent_ID);
   if (! parent)
     return;
 
@@ -1107,17 +1132,14 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window =
-    gimp_dialog_factory_dialog_new (factory,
-                                    screen,
-                                    NULL /*ui_manager*/,
-                                    (toolbox ?
-                                     "gimp-toolbox-window" :
-                                     "gimp-dock-window"),
-                                    -1 /*view_size*/,
-                                    FALSE /*present*/);
+  dock_window = gimp_dialog_factory_dialog_new (factory, screen,
+                                                NULL /*ui_manager*/,
+                                                (toolbox ?
+                                                 "gimp-toolbox-window" :
+                                                 "gimp-dock-window"),
+                                                -1 /*view_size*/,
+                                                FALSE /*present*/);
 
-  /* Create the dock */
   ui_manager = gimp_dock_window_get_ui_manager (GIMP_DOCK_WINDOW (dock_window));
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
@@ -1127,13 +1149,11 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
                                                 "gimp-dock"),
                                                -1 /*view_size*/,
                                                FALSE /*present*/);
+
   if (dock)
-    {
-      /* Put the dock in the dock window */
-      gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
-                                 GIMP_DOCK (dock),
-                                 -1);
-    }
+    gimp_dock_window_add_dock (GIMP_DOCK_WINDOW (dock_window),
+                               GIMP_DOCK (dock),
+                               -1);
 
   return dock;
 }
@@ -1158,50 +1178,114 @@ gimp_tools_set_tool_options_gui (GimpToolOptions   *tool_options,
 void
 gimp_widget_flush_expose (GtkWidget *widget)
 {
-  GList *event_list = NULL;
-
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (! gtk_widget_is_drawable (widget))
     return;
 
   gdk_window_process_updates (gtk_widget_get_window (widget), FALSE);
+  gdk_flush ();
+}
 
-  while (gdk_events_pending ())
+static gboolean
+gimp_print_event_free (gpointer data)
+{
+  g_free (data);
+
+  return FALSE;
+}
+
+const gchar *
+gimp_print_event (const GdkEvent *event)
+{
+  gchar *str;
+
+  switch (event->type)
     {
-      GdkEvent *event = gdk_event_get ();
+    case GDK_ENTER_NOTIFY:
+      str = g_strdup ("ENTER_NOTIFY");
+      break;
 
-      if (! event)
-        break;
+    case GDK_LEAVE_NOTIFY:
+      str = g_strdup ("LEAVE_NOTIFY");
+      break;
 
-      if (gtk_get_event_widget (event) == widget &&
-          event->any.type == GDK_EXPOSE)
-        {
-          if (gtk_widget_get_double_buffered (widget))
-            {
-              gdk_window_begin_paint_region (event->any.window,
-                                             event->expose.region);
-              gtk_widget_send_expose (widget, event);
-              gdk_window_end_paint (event->any.window);
-            }
-          else
-            {
-              gdk_window_flush (event->any.window);
-              gtk_widget_send_expose (widget, event);
-            }
+    case GDK_PROXIMITY_IN:
+      str = g_strdup ("PROXIMITY_IN");
+      break;
 
-          gdk_event_free (event);
-        }
+    case GDK_PROXIMITY_OUT:
+      str = g_strdup ("PROXIMITY_OUT");
+      break;
+
+    case GDK_FOCUS_CHANGE:
+      if (event->focus_change.in)
+        str = g_strdup ("FOCUS_IN");
       else
-        {
-          event_list = g_list_prepend (event_list, event);
-        }
+        str = g_strdup ("FOCUS_OUT");
+      break;
+
+    case GDK_BUTTON_PRESS:
+      str = g_strdup_printf ("BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_2BUTTON_PRESS:
+      str = g_strdup_printf ("2BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_3BUTTON_PRESS:
+      str = g_strdup_printf ("3BUTTON_PRESS (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_BUTTON_RELEASE:
+      str = g_strdup_printf ("BUTTON_RELEASE (%d @ %0.0f:%0.0f)",
+                             event->button.button,
+                             event->button.x,
+                             event->button.y);
+      break;
+
+    case GDK_SCROLL:
+      str = g_strdup_printf ("SCROLL (%d)",
+                             event->scroll.direction);
+      break;
+
+    case GDK_MOTION_NOTIFY:
+      str = g_strdup_printf ("MOTION_NOTIFY (%0.0f:%0.0f %d)",
+                             event->motion.x,
+                             event->motion.y,
+                             event->motion.time);
+      break;
+
+    case GDK_KEY_PRESS:
+      str = g_strdup_printf ("KEY_PRESS (%d, %s)",
+                             event->key.keyval,
+                             gdk_keyval_name (event->key.keyval) ?
+                             gdk_keyval_name (event->key.keyval) : "<none>");
+      break;
+
+    case GDK_KEY_RELEASE:
+      str = g_strdup_printf ("KEY_RELEASE (%d, %s)",
+                             event->key.keyval,
+                             gdk_keyval_name (event->key.keyval) ?
+                             gdk_keyval_name (event->key.keyval) : "<none>");
+      break;
+
+    default:
+      str = g_strdup_printf ("UNHANDLED (type %d)",
+                             event->type);
+      break;
     }
 
-  event_list = g_list_reverse (event_list);
+  g_idle_add (gimp_print_event_free, str);
 
-  g_list_foreach (event_list, (GFunc) gdk_event_put, NULL);
-  g_list_foreach (event_list, (GFunc) gdk_event_free, NULL);
-
-  g_list_free (event_list);
+  return str;
 }

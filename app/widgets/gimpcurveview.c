@@ -24,6 +24,7 @@
 
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -242,14 +243,10 @@ gimp_curve_view_dispose (GObject *object)
 {
   GimpCurveView *view = GIMP_CURVE_VIEW (object);
 
-  gimp_curve_view_set_curve (view, NULL);
+  gimp_curve_view_set_curve (view, NULL, NULL);
 
-  while (view->bg_curves)
-    {
-      BGCurve *bg = view->bg_curves->data;
-
-      gimp_curve_view_remove_background (view, bg->curve);
-    }
+  if (view->bg_curves)
+    gimp_curve_view_remove_all_backgrounds (view);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -517,7 +514,10 @@ gimp_curve_view_expose (GtkWidget      *widget,
     }
 
   /*  Draw the curve  */
-  gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
+  if (view->curve_color)
+    gimp_cairo_set_source_rgb (cr, view->curve_color);
+  else
+    gdk_cairo_set_source_color (cr, &style->text[GTK_STATE_NORMAL]);
 
   gimp_curve_view_draw_curve (view, cr, view->curve,
                               width, height, border);
@@ -1092,7 +1092,8 @@ gimp_curve_view_curve_dirty (GimpCurve     *curve,
 
 void
 gimp_curve_view_set_curve (GimpCurveView *view,
-                           GimpCurve     *curve)
+                           GimpCurve     *curve,
+                           const GimpRGB *color)
 {
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
   g_return_if_fail (curve == NULL || GIMP_IS_CURVE (curve));
@@ -1118,6 +1119,14 @@ gimp_curve_view_set_curve (GimpCurveView *view,
                         view);
     }
 
+  if (view->curve_color)
+    g_free (view->curve_color);
+
+  if (color)
+    view->curve_color = g_memdup (color, sizeof (GimpRGB));
+  else
+    view->curve_color = NULL;
+
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
@@ -1134,16 +1143,28 @@ gimp_curve_view_add_background (GimpCurveView *view,
                                 GimpCurve     *curve,
                                 const GimpRGB *color)
 {
+  GList   *list;
   BGCurve *bg;
 
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
   g_return_if_fail (GIMP_IS_CURVE (curve));
   g_return_if_fail (color != NULL);
 
+  for (list = view->bg_curves; list; list = g_list_next (list))
+    {
+      bg = list->data;
+
+      g_return_if_fail (curve != bg->curve);
+    }
+
   bg = g_slice_new0 (BGCurve);
 
   bg->curve = g_object_ref (curve);
   bg->color = *color;
+
+  g_signal_connect (bg->curve, "dirty",
+                    G_CALLBACK (gimp_curve_view_curve_dirty),
+                    view);
 
   view->bg_curves = g_list_append (view->bg_curves, bg);
 
@@ -1165,6 +1186,9 @@ gimp_curve_view_remove_background (GimpCurveView *view,
 
       if (bg->curve == curve)
         {
+          g_signal_handlers_disconnect_by_func (bg->curve,
+                                                gimp_curve_view_curve_dirty,
+                                                view);
           g_object_unref (bg->curve);
 
           view->bg_curves = g_list_remove (view->bg_curves, bg);
@@ -1176,6 +1200,9 @@ gimp_curve_view_remove_background (GimpCurveView *view,
           break;
         }
     }
+
+  if (! list)
+    g_return_if_reached ();
 }
 
 void
@@ -1187,6 +1214,9 @@ gimp_curve_view_remove_all_backgrounds (GimpCurveView *view)
     {
       BGCurve *bg = view->bg_curves->data;
 
+      g_signal_handlers_disconnect_by_func (bg->curve,
+                                            gimp_curve_view_curve_dirty,
+                                            view);
       g_object_unref (bg->curve);
 
       view->bg_curves = g_list_remove (view->bg_curves, bg);

@@ -28,6 +28,7 @@
 
 /*  input devices & controllers  */
 
+typedef struct _GimpDeviceManager            GimpDeviceManager;
 typedef struct _GimpDeviceInfo               GimpDeviceInfo;
 typedef struct _GimpControllerInfo           GimpControllerInfo;
 typedef struct _GimpControllerKeyboard       GimpControllerKeyboard;
@@ -175,6 +176,7 @@ typedef struct _GimpGridEditor               GimpGridEditor;
 typedef struct _GimpHandleBar                GimpHandleBar;
 typedef struct _GimpHistogramBox             GimpHistogramBox;
 typedef struct _GimpHistogramView            GimpHistogramView;
+typedef struct _GimpIconPicker               GimpIconPicker;
 typedef struct _GimpImageCommentEditor       GimpImageCommentEditor;
 typedef struct _GimpImageParasiteView        GimpImageParasiteView;
 typedef struct _GimpImageProfileView         GimpImageProfileView;

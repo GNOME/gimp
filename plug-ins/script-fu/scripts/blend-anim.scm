@@ -68,7 +68,7 @@
 			  ; add a copy of the lowest blend layer on top
 			  (let* ((copy (car (gimp-layer-copy
 						 (aref layer-array (- num-layers 2)) TRUE))))
-				(gimp-image-insert-layer image copy -1 0)
+				(gimp-image-insert-layer image copy 0 0)
 				(set! layers (gimp-image-get-layers image))
 				(set! num-layers (car layers))
 				(set! layer-array (cadr layers))
@@ -113,9 +113,9 @@
 				   (upper-copy (car (gimp-layer-copy upper-layer TRUE)))
 				   (lower-copy (car (gimp-layer-copy lower-layer TRUE)))
 				   (bg-copy (car (gimp-layer-copy bg-layer TRUE))))
-				  (gimp-image-insert-layer image bg-copy -1 0)
-				  (gimp-image-insert-layer image lower-copy -1 0)
-				  (gimp-image-insert-layer image upper-copy -1 0)
+				  (gimp-image-insert-layer image bg-copy 0 0)
+				  (gimp-image-insert-layer image lower-copy 0 0)
+				  (gimp-image-insert-layer image upper-copy 0 0)
 				  (gimp-item-set-visible upper-copy TRUE)
 				  (gimp-item-set-visible lower-copy TRUE)
 				  (gimp-item-set-visible bg-copy TRUE)

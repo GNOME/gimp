@@ -37,13 +37,13 @@
 typedef struct {
   DefaultDialog_t *dialog;
   BrowseWidget_t *imagename;
-  GtkWidget	*filename;
-  GtkWidget	*title;
-  GtkWidget	*author;
-  GtkWidget	*default_url;
-  GtkWidget	*ncsa;
-  GtkWidget	*cern;
-  GtkWidget	*csim;
+  GtkWidget     *filename;
+  GtkWidget     *title;
+  GtkWidget     *author;
+  GtkWidget     *default_url;
+  GtkWidget     *ncsa;
+  GtkWidget     *cern;
+  GtkWidget     *csim;
   GtkTextBuffer *description;
 } SettingsDialog_t;
 
@@ -62,10 +62,10 @@ settings_ok_cb(gpointer data)
    g_strreplace(&info->title, gtk_entry_get_text(GTK_ENTRY(param->title)));
    g_strreplace(&info->author, gtk_entry_get_text(GTK_ENTRY(param->author)));
    g_strreplace(&info->default_url,
-		gtk_entry_get_text(GTK_ENTRY(param->default_url)));
+                gtk_entry_get_text(GTK_ENTRY(param->default_url)));
    gtk_text_buffer_get_bounds(param->description, &start, &end);
    description = gtk_text_buffer_get_text(param->description, &start, &end,
-					  FALSE);
+                                          FALSE);
    g_strreplace(&info->description, description);
    g_free(description);
 
@@ -96,7 +96,7 @@ create_settings_dialog(void)
    create_label_in_table(table, 1, 0, _("Image name:"));
    data->imagename = browse_widget_new(_("Select Image File"));
    gtk_table_attach_defaults(GTK_TABLE(table), data->imagename->hbox, 1, 2,
-			     1, 2);
+                             1, 2);
 
    label = create_label_in_table(table, 2, 0, _("_Title:"));
    data->title = create_entry_in_table(table, label, 2, 1);
@@ -116,13 +116,13 @@ create_settings_dialog(void)
 
    swin = gtk_scrolled_window_new(NULL, NULL);
    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin),
-				       GTK_SHADOW_IN);
+                                       GTK_SHADOW_IN);
    gtk_table_attach(GTK_TABLE(table), swin, 1, 2, 5, 8,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
+                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin),
-				  GTK_POLICY_NEVER,
-				  GTK_POLICY_AUTOMATIC);
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_AUTOMATIC);
    gtk_widget_show(swin);
    gtk_container_add(GTK_CONTAINER(swin), view);
 
@@ -135,21 +135,21 @@ create_settings_dialog(void)
 
    data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget(NULL, "_NCSA");
    g_signal_connect(data->ncsa, "toggled",
-		    G_CALLBACK(type_toggled_cb), (gpointer) NCSA);
+                    G_CALLBACK(type_toggled_cb), (gpointer) NCSA);
    gtk_box_pack_start(GTK_BOX(hbox), data->ncsa, FALSE, FALSE, 0);
    gtk_widget_show(data->ncsa);
 
    data->cern = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->ncsa), "C_ERN");
    g_signal_connect(data->cern, "toggled",
-		    G_CALLBACK(type_toggled_cb), (gpointer) CERN);
+                    G_CALLBACK(type_toggled_cb), (gpointer) CERN);
    gtk_box_pack_start(GTK_BOX(hbox), data->cern, FALSE, FALSE, 0);
    gtk_widget_show(data->cern);
 
    data->csim = gtk_radio_button_new_with_mnemonic_from_widget(
       GTK_RADIO_BUTTON(data->cern), "C_SIM");
    g_signal_connect(data->csim, "toggled",
-		    G_CALLBACK(type_toggled_cb), (gpointer) CSIM);
+                    G_CALLBACK(type_toggled_cb), (gpointer) CSIM);
    gtk_box_pack_start(GTK_BOX(hbox), data->csim, FALSE, FALSE, 0);
    gtk_widget_show(data->csim);
 

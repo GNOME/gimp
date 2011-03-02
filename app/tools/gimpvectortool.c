@@ -35,7 +35,6 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimplist.h"
-#include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 

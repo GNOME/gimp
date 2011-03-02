@@ -404,6 +404,7 @@ gtk_widget_get_translation_to_window (GtkWidget *widget,
 
   widget_window = gtk_widget_get_window (widget);
 
+#if GTK_CHECK_VERSION (2, 22, 0)
   for (w = window;
        w && w != widget_window;
        w = gdk_window_get_effective_parent (w))
@@ -415,6 +416,15 @@ gtk_widget_get_translation_to_window (GtkWidget *widget,
       *x += px;
       *y += py;
     }
+#else
+  for (w = window; w && w != widget_window; w = gdk_window_get_parent (w))
+    {
+      int wx, wy;
+      gdk_window_get_position (w, &wx, &wy);
+      *x += wx;
+      *y += wy;
+    }
+#endif
 
   if (w == NULL)
     {
@@ -462,11 +472,12 @@ gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
                                      mevent->x, mevent->y,
                                      &widget_x, &widget_y);
 
-  gtk_widget_translate_coordinates (widget, GTK_WIDGET (ruler),
-                                    widget_x, widget_y,
-                                    &ruler_x, &ruler_y);
-
-  gimp_ruler_update_position (ruler, ruler_x, ruler_y);
+  if (gtk_widget_translate_coordinates (widget, GTK_WIDGET (ruler),
+                                        widget_x, widget_y,
+                                        &ruler_x, &ruler_y))
+    {
+      gimp_ruler_update_position (ruler, ruler_x, ruler_y);
+    }
 
   return FALSE;
 }

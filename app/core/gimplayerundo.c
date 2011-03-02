@@ -208,14 +208,5 @@ gimp_layer_undo_pop (GimpUndo            *undo,
       gimp_image_add_layer (undo->image, layer,
                             layer_undo->prev_parent,
                             layer_undo->prev_position, FALSE);
-
-      GIMP_ITEM (layer)->removed = FALSE;
-
-      if (gimp_layer_get_mask (layer))
-        {
-          GimpLayerMask *mask = gimp_layer_get_mask (layer);
-
-          GIMP_ITEM (mask)->removed = FALSE;
-        }
     }
 }

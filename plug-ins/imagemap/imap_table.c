@@ -36,7 +36,7 @@ add_widget_to_table(GtkWidget *table, int row, int col, GtkWidget *w)
 
 GtkWidget*
 create_spin_button_in_table(GtkWidget *table, GtkWidget *label,
-			    int row, int col, int value, int min, int max)
+                            int row, int col, int value, int min, int max)
 {
    GtkObject *adj = gtk_adjustment_new(value, min, max, 1, 1, 1);
    GtkWidget *button = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
@@ -48,7 +48,7 @@ create_spin_button_in_table(GtkWidget *table, GtkWidget *label,
 
 GtkWidget*
 create_check_button_in_table(GtkWidget *table, int row, int col,
-			     const char *text)
+                             const char *text)
 {
    GtkWidget *button = gtk_check_button_new_with_mnemonic(text);
    return add_widget_to_table(table, row, col, button);
@@ -56,7 +56,7 @@ create_check_button_in_table(GtkWidget *table, int row, int col,
 
 GtkWidget*
 create_radio_button_in_table(GtkWidget *table, GSList *group,
-			     int row, int col, const char *text)
+                             int row, int col, const char *text)
 {
    GtkWidget *button = gtk_radio_button_new_with_mnemonic(group, text);
    return add_widget_to_table(table, row, col, button);

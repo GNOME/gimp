@@ -111,7 +111,7 @@ def save_ora(img, drawable, filename, raw_filename):
     for lay in img.layers:
         x, y = lay.offsets
         opac = lay.opacity / 100.0 # needs to be between 0.0 and 1.0
-        add_layer(x, y, opac, lay, 'data/%s.png' % lay.name, lay.visible)
+        add_layer(x, y, opac, lay, 'data/%s.png' % lay.name.decode('utf-8'), lay.visible)
 
     # save thumbnail
     w, h = img.width, img.height
@@ -168,7 +168,13 @@ def load_ora(filename, raw_filename):
         # create temp file. Needed because gimp cannot load files from inside a zip file
         tmp = os.path.join(tempdir, 'tmp.png')
         f = open(tmp, 'wb')
-        f.write(orafile.read(path))
+        try:
+            data = orafile.read(path)
+        except KeyError:
+            # support for bad zip files (saved by old versions of this plugin)
+            data = orafile.read(path.encode('utf-8'))
+            print 'WARNING: bad OpenRaster ZIP file. There is an utf-8 encoded filename that does not have the utf-8 flag set:', repr(path)
+        f.write(data)
         f.close()
 
         # import layer, set attributes and add to image

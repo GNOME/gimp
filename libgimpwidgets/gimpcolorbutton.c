@@ -82,7 +82,9 @@ enum
   PROP_TITLE,
   PROP_COLOR,
   PROP_TYPE,
-  PROP_UPDATE
+  PROP_UPDATE,
+  PROP_AREA_WIDTH,
+  PROP_AREA_HEIGHT
 };
 
 
@@ -263,6 +265,34 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
                                                          FALSE,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT));
+
+  /**
+   * GimpColorButton:area-width:
+   *
+   * The minimum width of the button's #GimpColorArea.
+   *
+   * Since: GIMP 2.8
+   */
+  g_object_class_install_property (object_class, PROP_AREA_WIDTH,
+                                   g_param_spec_int ("area-width",
+                                                     NULL, NULL,
+                                                     1, G_MAXINT, 16,
+                                                     G_PARAM_WRITABLE |
+                                                     G_PARAM_CONSTRUCT));
+
+  /**
+   * GimpColorButton:area-height:
+   *
+   * The minimum height of the button's #GimpColorArea.
+   *
+   * Since: GIMP 2.8
+   */
+  g_object_class_install_property (object_class, PROP_AREA_HEIGHT,
+                                   g_param_spec_int ("area-height",
+                                                     NULL, NULL,
+                                                     1, G_MAXINT, 16,
+                                                     G_PARAM_WRITABLE |
+                                                     G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -412,6 +442,7 @@ gimp_color_button_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpColorButton *button = GIMP_COLOR_BUTTON (object);
+  gint             other;
 
   switch (property_id)
     {
@@ -430,6 +461,18 @@ gimp_color_button_set_property (GObject      *object,
 
     case PROP_UPDATE:
       gimp_color_button_set_update (button, g_value_get_boolean (value));
+      break;
+
+    case PROP_AREA_WIDTH:
+      gtk_widget_get_size_request (button->color_area, NULL, &other);
+      gtk_widget_set_size_request (button->color_area,
+                                   g_value_get_int (value), other);
+      break;
+
+    case PROP_AREA_HEIGHT:
+      gtk_widget_get_size_request (button->color_area, &other, NULL);
+      gtk_widget_set_size_request (button->color_area,
+                                   other, g_value_get_int (value));
       break;
 
     default:
@@ -568,19 +611,17 @@ gimp_color_button_new (const gchar       *title,
                        const GimpRGB     *color,
                        GimpColorAreaType  type)
 {
-  GimpColorButton *button;
-
   g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (width > 0, NULL);
+  g_return_val_if_fail (height > 0, NULL);
 
-  button = g_object_new (GIMP_TYPE_COLOR_BUTTON,
-                         "title", title,
-                         "type",  type,
-                         "color", color,
-                         NULL);
-
-  gtk_widget_set_size_request (GTK_WIDGET (button->color_area), width, height);
-
-  return GTK_WIDGET (button);
+  return g_object_new (GIMP_TYPE_COLOR_BUTTON,
+                       "title",       title,
+                       "type",        type,
+                       "color",       color,
+                       "area-width",  width,
+                       "area-height", height,
+                       NULL);
 }
 
 /**

@@ -32,30 +32,29 @@
 
     (gimp-context-push)
 
-    (gimp-image-insert-layer theImage baseLayer 0)
+    (gimp-image-insert-layer theImage baseLayer 0 0)
 
     (set! thickLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thick Layer" 100 NORMAL-MODE)))
-    (gimp-image-insert-layer theImage thickLayer 0)
+    (gimp-image-insert-layer theImage thickLayer 0 0)
 
     (set! thinLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thin Layer" 100 NORMAL-MODE)))
-    (gimp-image-insert-layer theImage thinLayer 0)
+    (gimp-image-insert-layer theImage thinLayer 0 0)
 
     (gimp-selection-all theImage)
     (gimp-context-set-background inColor1)
     (gimp-drawable-fill baseLayer BACKGROUND-FILL)
 
     (plug-in-solid-noise RUN-NONINTERACTIVE
-			 theImage thickLayer 1 0 (rand 65536) 1 inGrain inGrain)
+        theImage thickLayer 1 0 (rand 65536) 1 inGrain inGrain)
     (plug-in-solid-noise RUN-NONINTERACTIVE
-			 theImage thinLayer 1 0 (rand 65536) 1 inGrain inGrain)
+        theImage thinLayer 1 0 (rand 65536) 1 inGrain inGrain)
     (gimp-threshold thickLayer 127 255)
     (gimp-threshold thinLayer 145 255)
 
     (set! theBlur (- 16 inGrain))
 
     (gimp-context-set-background inColor2)
-    (gimp-by-color-select thickLayer
-			  '(0 0 0) 127 CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
+    (gimp-image-select-color theImage CHANNEL-OP-REPLACE thickLayer '(0 0 0))
     (gimp-edit-clear thickLayer)
     (gimp-selection-invert theImage)
     (gimp-edit-fill thickLayer BACKGROUND-FILL)
@@ -66,7 +65,7 @@
 
 
     (gimp-context-set-background inColor3)
-    (gimp-by-color-select thinLayer '(0 0 0) 127 CHANNEL-OP-REPLACE  TRUE FALSE 0 FALSE)
+    (gimp-image-select-color theImage CHANNEL-OP-REPLACE thinLayer '(0 0 0))
     (gimp-edit-clear thinLayer)
     (gimp-selection-invert theImage)
     (gimp-edit-fill thinLayer BACKGROUND-FILL)

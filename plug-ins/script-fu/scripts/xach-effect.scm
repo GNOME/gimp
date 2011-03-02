@@ -65,18 +65,18 @@
           (set! active-selection (car (gimp-selection-save image)))))
 
     (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 NORMAL-MODE)))
-    (gimp-image-insert-layer image hl-layer -1 -1)
+    (gimp-image-insert-layer image hl-layer 0 -1)
 
     (gimp-selection-none image)
     (gimp-edit-clear hl-layer)
-    (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
     (gimp-context-set-background hl-color)
     (gimp-edit-fill hl-layer BACKGROUND-FILL)
     (gimp-selection-translate image hl-offset-x hl-offset-y)
     (gimp-edit-fill hl-layer BACKGROUND-FILL)
     (gimp-selection-none image)
-    (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
 
     (set! mask (car (gimp-layer-create-mask hl-layer ADD-WHITE-MASK)))
     (gimp-layer-add-mask hl-layer mask)
@@ -91,16 +91,16 @@
                                             _"Shadow"
                                             ds-opacity
                                             NORMAL-MODE)))
-    (gimp-image-insert-layer image shadow-layer -1 -1)
+    (gimp-image-insert-layer image shadow-layer 0 -1)
     (gimp-selection-none image)
     (gimp-edit-clear shadow-layer)
-    (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (gimp-selection-translate image ds-offset-x ds-offset-y)
     (gimp-context-set-background ds-color)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none image)
     (plug-in-gauss-rle RUN-NONINTERACTIVE image shadow-layer ds-blur TRUE TRUE)
-    (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+    (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
     (gimp-edit-clear shadow-layer)
     (gimp-image-lower-item image shadow-layer)
 

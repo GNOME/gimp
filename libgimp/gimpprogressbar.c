@@ -176,8 +176,8 @@ gimp_progress_bar_pulse (gpointer user_data)
       gtk_main_iteration ();
 }
 
-static GdkNativeWindow
-gimp_window_get_native (GtkWindow *window)
+static guint32
+gimp_window_get_native_id (GtkWindow *window)
 {
   g_return_val_if_fail (GTK_IS_WINDOW (window), 0);
 
@@ -209,7 +209,7 @@ gimp_progress_bar_get_window (gpointer user_data)
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (bar));
 
   if (GTK_IS_WINDOW (toplevel))
-    return (guint32) gimp_window_get_native (GTK_WINDOW (toplevel));
+    return gimp_window_get_native_id (GTK_WINDOW (toplevel));
 
   return 0;
 }

@@ -737,7 +737,7 @@ gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
       *parent = gimp_viewable_get_parent (dest_viewable);
       index   = gimp_item_get_index (GIMP_ITEM (dest_viewable));
 
-      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+      if (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER)
         {
           GimpContainer *children = gimp_viewable_get_children (dest_viewable);
 
@@ -750,6 +750,10 @@ gimp_item_tree_view_get_drop_index (GimpItemTreeView         *view,
             {
               index++;
             }
+        }
+      else if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
+        {
+          index++;
         }
     }
 

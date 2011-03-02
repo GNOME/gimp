@@ -749,9 +749,9 @@ image_select_shape (gint32     image,
 
   for (i = 0; i < num_rects; i++)
     {
-      gimp_rect_select (image,
-                        rects[i].x, rects[i].y, rects[i].width, rects[i].height,
-                        GIMP_CHANNEL_OP_ADD, FALSE, 0);
+      gimp_image_select_rectangle (image, GIMP_CHANNEL_OP_ADD,
+                                   rects[i].x, rects[i].y,
+                                   rects[i].width, rects[i].height);
     }
 
   g_free (rects);

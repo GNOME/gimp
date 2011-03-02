@@ -36,15 +36,15 @@ static CommandClass_t delete_command_class = {
    delete_command_destruct,
    delete_command_execute,
    delete_command_undo,
-   NULL				/* delete_command_redo */
+   NULL                         /* delete_command_redo */
 };
 
 typedef struct {
    Command_t parent;
    ObjectList_t *list;
    Object_t     *obj;
-   gint		 position;
-   gboolean	 changed;
+   gint          position;
+   gboolean      changed;
 } DeleteCommand_t;
 
 Command_t*
@@ -54,7 +54,7 @@ delete_command_new(ObjectList_t *list, Object_t *obj)
    command->list = list;
    command->obj = object_ref(obj);
    return command_init(&command->parent, _("Delete"),
-		       &delete_command_class);
+                       &delete_command_class);
 }
 
 static void

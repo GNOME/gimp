@@ -36,25 +36,7 @@ struct _GimpItem
 {
   GimpViewable      parent_instance;
 
-  gint              ID;                 /*  provides a unique ID     */
-  guint32           tattoo;             /*  provides a permanent ID  */
-
-  GimpImage        *image;              /*  item owner               */
-
-  GimpParasiteList *parasites;          /*  Plug-in parasite data    */
-
   gint              width, height;      /*  size in pixels           */
-  gint              offset_x, offset_y; /*  pixel offset in image    */
-
-  guint             visible      : 1;   /*  control visibility       */
-  guint             linked       : 1;   /*  control linkage          */
-  guint             lock_content : 1;   /*  content editability      */
-
-  guint             removed : 1;        /*  removed from the image?  */
-
-  GeglNode         *node;               /*  the GEGL node to plug
-                                            into the graph           */
-  GeglNode         *offset_node;        /*  the offset as a node     */
 };
 
 struct _GimpItemClass
@@ -68,6 +50,7 @@ struct _GimpItemClass
   void            (* lock_content_changed) (GimpItem             *item);
 
   /*  virtual functions  */
+  void            (* unset_removed)      (GimpItem               *item);
   gboolean        (* is_attached)        (const GimpItem         *item);
   gboolean        (* is_content_locked)  (const GimpItem         *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);
@@ -154,8 +137,17 @@ struct _GimpItemClass
 
 GType           gimp_item_get_type           (void) G_GNUC_CONST;
 
+GimpItem      * gimp_item_new                (GType               type,
+                                              GimpImage          *image,
+                                              const gchar        *name,
+                                              gint                offset_x,
+                                              gint                offset_y,
+                                              gint                width,
+                                              gint                height);
+
 void            gimp_item_removed            (GimpItem           *item);
 gboolean        gimp_item_is_removed         (const GimpItem     *item);
+void            gimp_item_unset_removed      (GimpItem           *item);
 
 gboolean        gimp_item_is_attached        (const GimpItem     *item);
 
@@ -167,13 +159,6 @@ GList         * gimp_item_get_container_iter (GimpItem           *item);
 gint            gimp_item_get_index          (GimpItem           *item);
 GList         * gimp_item_get_path           (GimpItem           *item);
 
-void            gimp_item_configure          (GimpItem           *item,
-                                              GimpImage          *image,
-                                              gint                offset_x,
-                                              gint                offset_y,
-                                              gint                width,
-                                              gint                height,
-                                              const gchar        *name);
 GimpItem      * gimp_item_duplicate          (GimpItem           *item,
                                               GType               new_type);
 GimpItem      * gimp_item_convert            (GimpItem           *item,
@@ -286,10 +271,19 @@ GimpImage     * gimp_item_get_image          (const GimpItem     *item);
 void            gimp_item_set_image          (GimpItem           *item,
                                               GimpImage          *image);
 
+void            gimp_item_replace_item       (GimpItem           *item,
+                                              GimpItem           *replace);
+
+void               gimp_item_set_parasites   (GimpItem           *item,
+                                              GimpParasiteList   *parasites);
+GimpParasiteList * gimp_item_get_parasites   (const GimpItem     *item);
+
 void            gimp_item_parasite_attach    (GimpItem           *item,
-                                              const GimpParasite *parasite);
+                                              const GimpParasite *parasite,
+                                              gboolean            push_undo);
 void            gimp_item_parasite_detach    (GimpItem           *item,
-                                              const gchar        *name);
+                                              const gchar        *name,
+                                              gboolean            push_undo);
 const GimpParasite * gimp_item_parasite_find (const GimpItem     *item,
                                               const gchar        *name);
 gchar        ** gimp_item_parasite_list      (const GimpItem     *item,

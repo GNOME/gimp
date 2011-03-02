@@ -46,6 +46,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "gimpdeviceinfo.h"
+#include "gimpdevicemanager.h"
 #include "gimpdevices.h"
 
 #include "gimp-intl.h"
@@ -54,89 +55,27 @@
 #define GIMP_DEVICE_MANAGER_DATA_KEY "gimp-device-manager"
 
 
-typedef struct _GimpDeviceManager GimpDeviceManager;
-
-struct _GimpDeviceManager
-{
-  Gimp                   *gimp;
-  GimpContainer          *device_info_list;
-  GimpDeviceInfo         *current_device;
-  GimpDeviceChangeNotify  change_notify;
-  gboolean                devicerc_deleted;
-};
-
-
-/*  local function prototypes  */
-
-static GimpDeviceManager * gimp_device_manager_get  (Gimp              *gimp);
-static void                gimp_device_manager_free (GimpDeviceManager *manager);
-
-static void   gimp_devices_display_opened (GdkDisplayManager *disp_manager,
-                                           GdkDisplay        *display,
-                                           GimpDeviceManager *manager);
-static void   gimp_devices_display_closed (GdkDisplay        *display,
-                                           gboolean           is_error,
-                                           GimpDeviceManager *manager);
-
-static void   gimp_devices_device_added   (GdkDisplay        *gdk_display,
-                                           GdkDevice         *device,
-                                           GimpDeviceManager *manager);
-static void   gimp_devices_device_removed (GdkDisplay        *gdk_display,
-                                           GdkDevice         *device,
-                                           GimpDeviceManager *manager);
-
-static void   gimp_devices_select_device  (GimpDeviceManager *manager,
-                                           GimpDeviceInfo    *info);
+static gboolean devicerc_deleted = FALSE;
 
 
 /*  public functions  */
 
 void
-gimp_devices_init (Gimp                   *gimp,
-                   GimpDeviceChangeNotify  change_notify)
+gimp_devices_init (Gimp *gimp)
 {
-  GdkDisplayManager *disp_manager = gdk_display_manager_get ();
   GimpDeviceManager *manager;
-  GSList            *displays;
-  GSList            *list;
-  GdkDisplay        *gdk_display;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (gimp_device_manager_get (gimp) == NULL);
 
-  manager = g_slice_new0 (GimpDeviceManager);
+  manager = g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
+
+  g_return_if_fail (manager == NULL);
+
+  manager = gimp_device_manager_new (gimp);
 
   g_object_set_data_full (G_OBJECT (gimp),
                           GIMP_DEVICE_MANAGER_DATA_KEY, manager,
-                          (GDestroyNotify) gimp_device_manager_free);
-
-  manager->gimp             = gimp;
-  manager->device_info_list = gimp_list_new (GIMP_TYPE_DEVICE_INFO, FALSE);
-  manager->change_notify    = change_notify;
-
-  gimp_list_set_sort_func (GIMP_LIST (manager->device_info_list),
-                           (GCompareFunc) gimp_device_info_compare);
-
-  displays = gdk_display_manager_list_displays (disp_manager);
-
-  /*  present displays in the order in which they were opened  */
-  displays = g_slist_reverse (displays);
-
-  for (list = displays; list; list = g_slist_next (list))
-    {
-      gimp_devices_display_opened (disp_manager, list->data, manager);
-    }
-
-  g_slist_free (displays);
-
-  g_signal_connect (disp_manager, "display-opened",
-                    G_CALLBACK (gimp_devices_display_opened),
-                    manager);
-
-  gdk_display = gdk_display_get_default ();
-
-  manager->current_device =
-    gimp_device_info_get_by_device (gdk_display_get_core_pointer (gdk_display));
+                          (GDestroyNotify) g_object_unref);
 }
 
 void
@@ -146,13 +85,9 @@ gimp_devices_exit (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_if_fail (manager != NULL);
-
-  g_signal_handlers_disconnect_by_func (gdk_display_manager_get (),
-                                        gimp_devices_display_opened,
-                                        manager);
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
   g_object_set_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY, NULL);
 }
@@ -162,19 +97,20 @@ gimp_devices_restore (Gimp *gimp)
 {
   GimpDeviceManager *manager;
   GimpContext       *user_context;
+  GimpDeviceInfo    *current_device;
   GList             *list;
   gchar             *filename;
   GError            *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_if_fail (manager != NULL);
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
   user_context = gimp_get_user_context (gimp);
 
-  for (list = GIMP_LIST (manager->device_info_list)->list;
+  for (list = GIMP_LIST (manager)->list;
        list;
        list = g_list_next (list))
     {
@@ -189,7 +125,7 @@ gimp_devices_restore (Gimp *gimp)
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->device_info_list),
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager),
                                       filename,
                                       gimp,
                                       &error))
@@ -203,11 +139,11 @@ gimp_devices_restore (Gimp *gimp)
 
   g_free (filename);
 
-  gimp_context_copy_properties (GIMP_CONTEXT (manager->current_device),
-                                user_context,
+  current_device = gimp_device_manager_get_current_device (manager);
+
+  gimp_context_copy_properties (GIMP_CONTEXT (current_device), user_context,
                                 GIMP_DEVICE_INFO_CONTEXT_MASK);
-  gimp_context_set_parent (GIMP_CONTEXT (manager->current_device),
-                           user_context);
+  gimp_context_set_parent (GIMP_CONTEXT (current_device), user_context);
 }
 
 void
@@ -220,11 +156,11 @@ gimp_devices_save (Gimp     *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_if_fail (manager != NULL);
+  g_return_if_fail (GIMP_IS_DEVICE_MANAGER (manager));
 
-  if (manager->devicerc_deleted && ! always_save)
+  if (devicerc_deleted && ! always_save)
     return;
 
   filename = gimp_personal_rc_file ("devicerc");
@@ -232,7 +168,7 @@ gimp_devices_save (Gimp     *gimp,
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager->device_info_list),
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager),
                                        filename,
                                        "GIMP devicerc",
                                        "end of devicerc",
@@ -245,7 +181,7 @@ gimp_devices_save (Gimp     *gimp,
 
   g_free (filename);
 
-  manager->devicerc_deleted = FALSE;
+  devicerc_deleted = FALSE;
 }
 
 gboolean
@@ -258,9 +194,9 @@ gimp_devices_clear (Gimp    *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_val_if_fail (manager != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
   filename = gimp_personal_rc_file ("devicerc");
 
@@ -273,7 +209,7 @@ gimp_devices_clear (Gimp    *gimp,
     }
   else
     {
-      manager->devicerc_deleted = TRUE;
+      devicerc_deleted = TRUE;
     }
 
   g_free (filename);
@@ -281,32 +217,18 @@ gimp_devices_clear (Gimp    *gimp,
   return success;
 }
 
-GimpContainer *
-gimp_devices_get_list (Gimp *gimp)
+GimpDeviceManager *
+gimp_devices_get_manager (Gimp *gimp)
 {
   GimpDeviceManager *manager;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  manager = gimp_device_manager_get (gimp);
+  manager = g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
 
-  g_return_val_if_fail (manager != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), NULL);
 
-  return manager->device_info_list;
-}
-
-GimpDeviceInfo *
-gimp_devices_get_current (Gimp *gimp)
-{
-  GimpDeviceManager *manager;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_val_if_fail (manager != NULL, NULL);
-
-  return manager->current_device;
+  return manager;
 }
 
 void
@@ -349,9 +271,9 @@ gimp_devices_check_change (Gimp     *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
-  manager = gimp_device_manager_get (gimp);
+  manager = gimp_devices_get_manager (gimp);
 
-  g_return_val_if_fail (manager != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
   /* It is possible that the event was propagated from a widget that does not
      want extension events and therefore always sends core pointer events.
@@ -386,139 +308,17 @@ gimp_devices_check_change (Gimp     *gimp,
       break;
 
     default:
-      device = manager->current_device->device;
+      device = gimp_device_manager_get_current_device (manager)->device;
       break;
     }
 
   device_info = gimp_device_info_get_by_device (device);
 
-  if (device_info != manager->current_device)
+  if (device_info != gimp_device_manager_get_current_device (manager))
     {
-      gimp_devices_select_device (manager, device_info);
+      gimp_device_manager_set_current_device (manager, device_info);
       return TRUE;
     }
 
   return FALSE;
-}
-
-
-/*  private functions  */
-
-static GimpDeviceManager *
-gimp_device_manager_get (Gimp *gimp)
-{
-  return g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
-}
-
-static void
-gimp_device_manager_free (GimpDeviceManager *manager)
-{
-  if (manager->device_info_list)
-    g_object_unref (manager->device_info_list);
-
-  g_slice_free (GimpDeviceManager, manager);
-}
-
-static void
-gimp_devices_display_opened (GdkDisplayManager *disp_manager,
-                             GdkDisplay        *gdk_display,
-                             GimpDeviceManager *manager)
-{
-  GList *list;
-
-  /*  create device info structures for present devices */
-  for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
-    {
-      GdkDevice *device = list->data;
-
-      gimp_devices_device_added (gdk_display, device, manager);
-    }
-
-  g_signal_connect (gdk_display, "closed",
-                    G_CALLBACK (gimp_devices_display_closed),
-                    manager);
-}
-
-static void
-gimp_devices_display_closed (GdkDisplay        *gdk_display,
-                             gboolean           is_error,
-                             GimpDeviceManager *manager)
-{
-  GList *list;
-
-  for (list = gdk_display_list_devices (gdk_display); list; list = list->next)
-    {
-      GdkDevice *device = list->data;
-
-      gimp_devices_device_removed (gdk_display, device, manager);
-    }
-}
-
-static void
-gimp_devices_device_added (GdkDisplay        *gdk_display,
-                           GdkDevice         *device,
-                           GimpDeviceManager *manager)
-{
-  GimpDeviceInfo *device_info;
-
-  device_info =
-    GIMP_DEVICE_INFO (gimp_container_get_child_by_name (manager->device_info_list,
-                                                        device->name));
-
-  if (device_info)
-    {
-      gimp_device_info_set_device (device_info, device, gdk_display);
-    }
-  else
-    {
-      device_info = gimp_device_info_new (manager->gimp, device, gdk_display);
-
-      gimp_container_add (manager->device_info_list, GIMP_OBJECT (device_info));
-      g_object_unref (device_info);
-    }
-}
-
-static void
-gimp_devices_device_removed (GdkDisplay        *gdk_display,
-                             GdkDevice         *device,
-                             GimpDeviceManager *manager)
-{
-  GimpDeviceInfo *device_info;
-
-  device_info =
-    GIMP_DEVICE_INFO (gimp_container_get_child_by_name (manager->device_info_list,
-                                                        device->name));
-
-  if (device_info)
-    {
-      gimp_device_info_set_device (device_info, NULL, NULL);
-
-      if (device_info == manager->current_device)
-        {
-          device      = gdk_display_get_core_pointer (gdk_display);
-          device_info = gimp_device_info_get_by_device (device);
-
-          gimp_devices_select_device (manager, device_info);
-        }
-    }
-}
-
-static void
-gimp_devices_select_device (GimpDeviceManager *manager,
-                            GimpDeviceInfo    *info)
-{
-  GimpContext *user_context;
-
-  gimp_context_set_parent (GIMP_CONTEXT (manager->current_device), NULL);
-
-  manager->current_device = info;
-
-  user_context = gimp_get_user_context (manager->gimp);
-
-  gimp_context_copy_properties (GIMP_CONTEXT (info), user_context,
-                                GIMP_DEVICE_INFO_CONTEXT_MASK);
-  gimp_context_set_parent (GIMP_CONTEXT (info), user_context);
-
-  if (manager->change_notify)
-    manager->change_notify (manager->gimp);
 }

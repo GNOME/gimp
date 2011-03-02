@@ -71,24 +71,26 @@ GType                   gimp_color_display_stack_get_type (void) G_GNUC_CONST;
 GimpColorDisplayStack * gimp_color_display_stack_new      (void);
 GimpColorDisplayStack * gimp_color_display_stack_clone    (GimpColorDisplayStack *stack);
 
-void   gimp_color_display_stack_changed      (GimpColorDisplayStack *stack);
+void   gimp_color_display_stack_changed         (GimpColorDisplayStack *stack);
 
-void   gimp_color_display_stack_add          (GimpColorDisplayStack *stack,
-                                              GimpColorDisplay      *display);
-void   gimp_color_display_stack_remove       (GimpColorDisplayStack *stack,
-                                              GimpColorDisplay      *display);
-void   gimp_color_display_stack_reorder_up   (GimpColorDisplayStack *stack,
-                                              GimpColorDisplay      *display);
-void   gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
-                                              GimpColorDisplay      *display);
-
-void   gimp_color_display_stack_convert      (GimpColorDisplayStack *stack,
-                                              guchar                *buf,
-                                              gint                   width,
-                                              gint                   height,
-                                              gint                   bpp,
-                                              gint                   bpl);
-
+void   gimp_color_display_stack_add             (GimpColorDisplayStack *stack,
+                                                 GimpColorDisplay      *display);
+void   gimp_color_display_stack_remove          (GimpColorDisplayStack *stack,
+                                                 GimpColorDisplay      *display);
+void   gimp_color_display_stack_reorder_up      (GimpColorDisplayStack *stack,
+                                                 GimpColorDisplay      *display);
+void   gimp_color_display_stack_reorder_down    (GimpColorDisplayStack *stack,
+                                                 GimpColorDisplay      *display);
+void   gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
+                                                 cairo_surface_t       *surface);
+#ifndef GIMP_DISABLE_DEPRECATED
+void   gimp_color_display_stack_convert         (GimpColorDisplayStack *stack,
+                                                 guchar                *buf,
+                                                 gint                   width,
+                                                 gint                   height,
+                                                 gint                   bpp,
+                                                 gint                   bpl);
+#endif
 
 G_END_DECLS
 

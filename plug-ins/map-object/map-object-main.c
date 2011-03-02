@@ -78,9 +78,11 @@ set_default_settings (void)
 
   mapvals.antialiasing           = TRUE;
   mapvals.create_new_image       = FALSE;
+  mapvals.create_new_layer       = FALSE;
   mapvals.transparent_background = FALSE;
   mapvals.tiled                  = FALSE;
-  mapvals.showgrid               = FALSE;
+  mapvals.livepreview            = FALSE;
+  mapvals.showgrid               = TRUE;
 
   mapvals.lightsource.intensity = 1.0;
   gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);
@@ -108,12 +110,9 @@ check_drawables (GimpDrawable *drawable)
 
   for (i = 0; i < 6; i++)
     {
-      if (mapvals.boxmap_id[i] == -1)
-        mapvals.boxmap_id[i] = drawable->drawable_id;
-      else if (mapvals.boxmap_id[i] != -1 &&
-	       gimp_item_get_image (mapvals.boxmap_id[i]) == -1)
-        mapvals.boxmap_id[i] = drawable->drawable_id;
-      else if (gimp_drawable_is_gray (mapvals.boxmap_id[i]))
+      if (mapvals.boxmap_id[i] == -1 ||
+          !gimp_item_is_valid (mapvals.boxmap_id[i]) ||
+          gimp_drawable_is_gray (mapvals.boxmap_id[i]))
         mapvals.boxmap_id[i] = drawable->drawable_id;
     }
 
@@ -122,12 +121,9 @@ check_drawables (GimpDrawable *drawable)
 
   for (i = 0; i < 2; i++)
     {
-      if (mapvals.cylindermap_id[i] == -1)
-        mapvals.cylindermap_id[i] = drawable->drawable_id;
-      else if (mapvals.cylindermap_id[i]!=-1 &&
-               gimp_item_get_image (mapvals.cylindermap_id[i]) == -1)
-        mapvals.cylindermap_id[i] = drawable->drawable_id;
-      else if (gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
+      if (mapvals.cylindermap_id[i] == -1 ||
+          !gimp_item_is_valid (mapvals.cylindermap_id[i]) ||
+          gimp_drawable_is_gray (mapvals.cylindermap_id[i]))
         mapvals.cylindermap_id[i] = drawable->drawable_id;
     }
 }
@@ -189,16 +185,16 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Map the image to an object (plane, sphere, box or cylinder)"),
-			  "No help yet",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Tom Bech & Federico Mena Quintero",
-			  "Version 1.2.0, July 16 1998",
-			  N_("Map _Object..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Map the image to an object (plane, sphere, box or cylinder)"),
+                          "No help yet",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Tom Bech & Federico Mena Quintero",
+                          "Version 1.2.0, July 16 1998",
+                          N_("Map _Object..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
@@ -234,6 +230,7 @@ run (const gchar      *name,
   /* Get the specified drawable */
   /* ========================== */
 
+  image_id = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
@@ -246,11 +243,11 @@ run (const gchar      *name,
         gimp_get_data ("plug_in_map_object", &mapvals);
         check_drawables (drawable);
         if (main_dialog (drawable))
-	  {
-	    compute_image ();
+          {
+            compute_image ();
 
-	    gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (MapObjectValues));
-	  }
+            gimp_set_data (PLUG_IN_PROC, &mapvals, sizeof (MapObjectValues));
+          }
         break;
 
       case GIMP_RUN_WITH_LAST_VALS:
@@ -261,10 +258,10 @@ run (const gchar      *name,
         break;
 
       case GIMP_RUN_NONINTERACTIVE:
-        if (nparams != 49)
-	  {
-	    status = GIMP_PDB_CALLING_ERROR;
-	  }
+        if (nparams != 50)
+          {
+            status = GIMP_PDB_CALLING_ERROR;
+          }
         else
           {
             mapvals.maptype                 = (MapType) param[3].data.d_int32;
@@ -284,7 +281,7 @@ run (const gchar      *name,
             mapvals.beta                    = param[17].data.d_float;
             mapvals.gamma                   = param[18].data.d_float;
             mapvals.lightsource.type        = (LightType) param[19].data.d_int32;
-	    mapvals.lightsource.color       = param[20].data.d_color;
+            mapvals.lightsource.color       = param[20].data.d_color;
             mapvals.lightsource.position.x  = param[21].data.d_float;
             mapvals.lightsource.position.y  = param[22].data.d_float;
             mapvals.lightsource.position.z  = param[23].data.d_float;
@@ -299,6 +296,7 @@ run (const gchar      *name,
             mapvals.antialiasing            = (gint) param[32].data.d_int32;
             mapvals.tiled                   = (gint) param[33].data.d_int32;
             mapvals.create_new_image        = (gint) param[34].data.d_int32;
+            mapvals.create_new_layer        = (gint) param[34].data.d_int32;
             mapvals.transparent_background  = (gint) param[35].data.d_int32;
             mapvals.radius                  = param[36].data.d_float;
             mapvals.cylinder_radius         = param[36].data.d_float;
@@ -308,10 +306,10 @@ run (const gchar      *name,
             mapvals.cylinder_length         = param[40].data.d_float;
 
             for (i = 0; i < 6; i++)
-              mapvals.boxmap_id[i] = param[41+i].data.d_drawable;
+              mapvals.boxmap_id[i] = param[42+i].data.d_drawable;
 
             for (i = 0; i < 2; i++)
-              mapvals.cylindermap_id[i] = param[47+i].data.d_drawable;
+              mapvals.cylindermap_id[i] = param[48+i].data.d_drawable;
 
             check_drawables (drawable);
             image_setup (drawable, FALSE);

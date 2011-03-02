@@ -226,7 +226,7 @@ file_save_cmd_callback (GtkAction *action,
   if (! gimp_image_get_active_drawable (image))
     return;
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   switch (save_mode)
     {
@@ -288,14 +288,10 @@ file_save_cmd_callback (GtkAction *action,
         const gchar         *uri;
         GimpPlugInProcedure *export_proc;
 
-        uri = g_object_get_data (G_OBJECT (image),
-                                 GIMP_FILE_EXPORT_TO_URI_KEY);
+        uri = gimp_image_get_exported_uri (image);
 
         if (!uri)
-          {
-            uri = g_object_get_data (G_OBJECT (image),
-                                     GIMP_FILE_IMPORT_SOURCE_URI_KEY);
-          }
+          uri = gimp_image_get_imported_uri (image);
 
         if (uri)
           {
@@ -359,12 +355,11 @@ file_revert_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   if (! uri)
     {
-      uri    = g_object_get_data (G_OBJECT (image),
-                                  GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+      uri    = gimp_image_get_imported_uri (image);
       source = uri;
     }
 
@@ -413,7 +408,7 @@ file_revert_cmd_callback (GtkAction *action,
       if (! source)
         basename = file_utils_uri_display_basename (uri);
       else
-        basename = g_strdup (gimp_image_get_uri (image));
+        basename = g_strdup (gimp_image_get_uri_or_untitled (image));
 
       filename = file_utils_uri_display_name (uri);
 
@@ -497,7 +492,7 @@ file_open_dialog_show (Gimp        *gimp,
   if (dialog)
     {
       if (! uri && image)
-        uri = gimp_object_get_name (image);
+        uri = gimp_image_get_uri (image);
 
       if (! uri)
         uri = g_object_get_data (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_URI_KEY);
@@ -662,11 +657,10 @@ file_revert_confirm_response (GtkWidget   *dialog,
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      uri = gimp_object_get_name (old_image);
+      uri = gimp_image_get_uri (old_image);
 
       if (! uri)
-        uri = g_object_get_data (G_OBJECT (old_image),
-                                 GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+        uri = gimp_image_get_imported_uri (old_image);
 
       new_image = file_open_image (gimp, gimp_get_user_context (gimp),
                                    GIMP_PROGRESS (display),

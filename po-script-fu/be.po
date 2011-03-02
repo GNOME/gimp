@@ -1,11 +1,12 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.4.5\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-05 15:35+0300\n"
-"PO-Revision-Date: 2009-09-05 21:56+0300\n"
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&component=general\n"
+"POT-Creation-Date: 2010-10-16 19:02+0000\n"
+"PO-Revision-Date: 2011-01-02 18:29+0300\n"
 "Last-Translator: Hleb Valoshka <375gnu@gmail.com>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
+"Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,7 +14,7 @@ msgstr ""
 "X-Poedit-Language: Belarusian\n"
 "X-Poedit-Country: BELARUS\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Basepath: /home/globus/build/gimp-2.5.0/po-script-fu/\n"
+"X-Poedit-Basepath: /tmp/gimp-2.7.1/po-script-fu/\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
 #: ../plug-ins/script-fu/script-fu-console.c:197
@@ -103,7 +104,7 @@ msgstr "Выбар ґрадыента Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Выбар пэндзля Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:823
+#: ../plug-ins/script-fu/script-fu-interface.c:826
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Памылка падчас выкананьня %s:"
@@ -117,19 +118,19 @@ msgstr "Замала парамэтраў у выкліку 'script-fu-register'
 msgid "Error while loading %s:"
 msgstr "Памылка падчас загрузкі %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:712
+#: ../plug-ins/script-fu/script-fu-server.c:807
 msgid "Script-Fu Server Options"
 msgstr "Выборы паслужніка Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:717
+#: ../plug-ins/script-fu/script-fu-server.c:812
 msgid "_Start Server"
 msgstr "_Выканаць паслужнік"
 
-#: ../plug-ins/script-fu/script-fu-server.c:745
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "Server port:"
 msgstr "Порт паслужніка:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:751
+#: ../plug-ins/script-fu/script-fu-server.c:846
 msgid "Server logfile:"
 msgstr "Часопіс паслужніка:"
 
@@ -207,7 +208,7 @@ msgstr "_Асьвяжыць сцэнары"
 
 #: ../plug-ins/script-fu/script-fu.c:357
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
-msgstr "Немагчыма выкарыстоўваць «Абнавіць сцэнары», калі адкрыты дыялёг Script-Fu. Калі ласка, закрый усе вокны Script-Fu і паспрабуй ізноў."
+msgstr "Немагчыма выкарыстоўваць «Абнавіць сцэнары», калі адкрыты дыялёґ Script-Fu. Калі ласка, закрый усе вокны Script-Fu і паспрабуй ізноў."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -227,17 +228,17 @@ msgid "Default bumpmap settings"
 msgstr "Прадвызначаныя настаўленьні мапы паверхні"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
@@ -245,8 +246,6 @@ msgstr "Прадвызначаныя настаўленьні мапы паве�
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -266,17 +265,17 @@ msgid "Font"
 msgstr "Шрыфт"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:6
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
@@ -284,8 +283,6 @@ msgstr "Шрыфт"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -312,11 +309,11 @@ msgid "Outline the selected region (or alpha) with a pattern and add a drop shad
 msgstr "Аблямаваць вылучаную вобласьць (ці тэкст) узорам і дадаць падаючы цень"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
@@ -339,17 +336,17 @@ msgid "Shadow blur radius"
 msgstr "Радыюс размыцьця ценю"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:13
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:13
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:7
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
@@ -357,8 +354,6 @@ msgstr "Радыюс размыцьця ценю"
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -382,10 +377,10 @@ msgid "3_D Truchet..."
 msgstr "Трох_мерны трушэ…"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
@@ -396,7 +391,6 @@ msgstr "Трох_мерны трушэ…"
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:2
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
@@ -444,7 +438,7 @@ msgid "Supersample"
 msgstr "Экстрапаляцыя"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr "Гушчыня"
@@ -458,11 +452,21 @@ msgid "Add a beveled border to an image"
 msgstr "Дадаць скошаную рамку да відарыса"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "Bumpmap"
+msgstr "Мапа паверхні"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr "Пакінуць пласт паверхні"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:6
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
@@ -480,43 +484,68 @@ msgid "Add a border around an image"
 msgstr "Дадаць рамку вакол відарыса"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border Layer"
+msgstr "Пласт мяжы"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border X size"
 msgstr "Памер рамкі па X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border Y size"
 msgstr "Памер рамкі па Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Border color"
 msgstr "Колер рамкі"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:7
 msgid "Delta value on color"
 msgstr "Розьнасьць яркасьці колера"
 
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+msgid "Alien Glow"
+msgstr "Іншаплянэтнае зарава"
+
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Arrow"
+msgstr "Стрэлка"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+msgid "Background"
+msgstr "Асноведзь"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 msgid "Create an arrow graphic with an eerie glow for web pages"
 msgstr "Стварыць стрэлку са злавесным заравам для www-старонак"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Down"
 msgstr "Уніз"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
 #: ../plug-ins/script-fu/scripts/camo.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten image"
 msgstr "Сплюшчыць відарыс"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
@@ -525,66 +554,75 @@ msgstr "Сплюшчыць відарыс"
 msgid "Glow color"
 msgstr "Колер зарава"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
 msgid "Left"
 msgstr "Левы"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Orientation"
 msgstr "Арыентацыя"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Right"
 msgstr "Правы"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
 #: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
 msgstr "Памер"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:13
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:10
 msgid "Up"
 msgstr "Уверх"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:14
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:11
 msgid "_Arrow..."
 msgstr "_Стрэлка…"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar"
+msgstr "Планка"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 msgid "Bar height"
 msgstr "Вышыня планкі"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
 msgid "Bar length"
 msgstr "Даўжыня планкі"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 msgid "Create an Hrule graphic with an eerie glow for web pages"
 msgstr "Старыць лінейку са злавесным заравам для сеціўнай старонкі"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:7
 msgid "_Hrule..."
 msgstr "_Лінейка…"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Bullet"
+msgstr "Куля"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 msgid "Create a bullet graphic with an eerie glow for web pages"
 msgstr "Стварыць кулю са злавесным заравам для www-старонак"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
 msgstr "Радыюс"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:7
 msgid "_Bullet..."
 msgstr "_Куля…"
 
@@ -593,27 +631,33 @@ msgstr "_Куля…"
 msgid "B_utton..."
 msgstr "_Кнопка…"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+msgid "Button"
+msgstr "Кнопка"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
 msgid "Create a button graphic with an eerie glow for web pages"
 msgstr "Стварыць кнопку са злавесным заравам для www-старонак"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+msgid "Glow"
+msgstr "Сьвячэньне"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
 msgid "Glow radius"
 msgstr "Радыюс зарава"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Padding"
 msgstr "Запаўненьне"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:14
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:12
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:10
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -695,71 +739,85 @@ msgstr "Стварыць просты ляґатып зь ценем і асьв
 msgid "Bevel width"
 msgstr "Шырыня скосу"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
 msgid "Create a simple, beveled button graphic for webpages"
 msgstr "Стварыць простую скошаную кнопку для www-старонкі"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Gradient"
+msgstr "Ґрадыент"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
 msgid "Lower-right color"
 msgstr "Правы ніжні колер"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
 msgstr "Націснутая"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Simple _Beveled Button..."
 msgstr "_Простая скошаная кнопка"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:13
 msgid "Upper-left color"
 msgstr "Верхні левы колер"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Create a beveled pattern arrow for webpages"
 msgstr "Стварыць скошаную, запоўненую ўзорам стрэлку для сеціўнай старонкі"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
 msgid "Create a beveled pattern bullet for webpages"
 msgstr "Стварыць скошаную, запоўненую ўзорам кулю для сеціўнай старонкі"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 msgid "Diameter"
 msgstr "Дыямэтар"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:9
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent background"
 msgstr "Празрыстая асноведзь"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
 msgid "Create a beveled pattern button for webpages"
 msgstr "Стварыць скошаную, запоўненую ўзорам кнопку для сеціўнай старонкі"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
 msgid "Create a beveled pattern heading for webpages"
 msgstr "Стварыць скошаны, запоўнены ўзорам загаловак для сеціўнай старонкі"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 msgid "H_eading..."
 msgstr "_Загаловак…"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 msgid "Create a beveled pattern hrule for webpages"
 msgstr "Стварыць скошаную, запоўненую ўзорам лінейку для сеціўнай старонкі"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "Вышыня"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "Rule"
+msgstr "Правіла"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
@@ -775,18 +833,23 @@ msgid "Create intermediate layers to blend two or more layers over a background 
 msgstr "Стварыць прамежкавыя пласты, каб зьмяшаць два ці болей пластоў над асноведзьдзю"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Frame"
+msgstr "Рамка"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Intermediate frames"
 msgstr "Прамежкавыя кадры"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Looped"
 msgstr "Цыклічная"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "Max. blur radius"
 msgstr "Макс. радыюс размыцьця"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:7
 msgid "_Blend..."
 msgstr "_Ґрадыент…"
 
@@ -821,16 +884,6 @@ msgstr "КР-КА-RGB"
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
 msgstr "КР-празрысты"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/land.scm.h:3
-#: ../plug-ins/script-fu/scripts/lava.scm.h:2
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
-msgid "Gradient"
-msgstr "Ґрадыент"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
@@ -946,14 +999,39 @@ msgid "_Camouflage..."
 msgstr "_Камуфляж…"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
+msgid "Bevel Highlight"
+msgstr "Асьветленьне скосу"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Bevel Shadow"
+msgstr "Цень скосу"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
 msgstr "Выґравіраваць белыя вобласьці"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
+msgid "Carved Surface"
+msgstr "Ґравіраваная паверхня"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+msgid "Cast Shadow"
+msgstr "Кінуты цень"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:6
 msgid "Image to carve"
 msgstr "Відарыс у ґравюру"
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:11
+msgid "Inset"
+msgstr "Устаўка"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:8
 msgid "Stencil C_arve..."
 msgstr "_Выразаць па трафарэце…"
 
@@ -961,19 +1039,19 @@ msgstr "_Выразаць па трафарэце…"
 msgid "Background Image"
 msgstr "Відарыс асноведзі"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
-msgid "Carve raised text"
-msgstr "Выразаць узьняты тэкст"
-
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:3
-msgid "Carved..."
-msgstr "Выразаны…"
-
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-msgid "Create a logo with text raised above or carved in to the specified background image"
-msgstr "Стварыць ляґатып з тэкстам, узьнятым над асноведзьдзю або выразаным у ёй"
+msgid "Carve raised text"
+msgstr "Выґравіраваць узьняты тэкст"
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+msgid "Carved..."
+msgstr "Выґравіраваны…"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+msgid "Create a logo with text raised above or carved in to the specified background image"
+msgstr "Стварыць ляґатып з тэкстам, узьнятым над вызначанай асноведзьдзю або выразаным у ёй"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:12
 msgid "Padding around text"
 msgstr "Запаўненьне вакол тэкста"
 
@@ -1033,43 +1111,68 @@ msgstr "Пакінуць асноведзь"
 msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
 msgstr "Дадаць эфэкт хрому да вылучанай вобласьці (ці тэксту), ужываюцчы вызначаны (шэры) трафарэт"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+msgid "Chrome"
+msgstr "Хром"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "Вага хрому"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "Каэфіцыент хрому"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "Сьветласьць хрому"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "Насычанасьць хрому"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
 msgid "Chrome white areas"
 msgstr "Храмаваць белыя вобласьці"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+msgid "Drop Shadow"
+msgstr "Падаючы цень"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
 msgstr "Мапа асяродзьдзя"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight"
+msgstr "Падсьвечваньне"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:12
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight balance"
 msgstr "Вага асьвятленьня"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:13
+msgid "Layer 2"
+msgstr "Пласт 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:14
+msgid "Layer 3"
+msgstr "Пласт 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:15
+msgid "Layer1"
+msgstr "Пласт 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:16
 msgid "Stencil C_hrome..."
 msgstr "_Хром праз трафарэт…"
 
@@ -1094,31 +1197,35 @@ msgid "Circuit seed"
 msgstr "Лік ланцуга"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Effect layer"
+msgstr "Пласт эфэкту"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr "Запоўніць вылучаную вобласьць (ці тэкст) дарожкамі як на электрычнай плаце"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
 #: ../plug-ins/script-fu/scripts/predator.scm.h:3
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "Keep selection"
 msgstr "Пакінуць вылучэньне"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "No background (only for separate layer)"
 msgstr "Няма асноведзі (толькі для асобнага пласта)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 msgid "Oilify mask size"
 msgstr "Памер маскі алея"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
 #: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
 msgstr "Асобны пласт"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:8
 msgid "_Circuit..."
 msgstr "_Дарожкі…"
 
@@ -1162,10 +1269,14 @@ msgid "Darken only"
 msgstr "Зацямніць толькі"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stain"
+msgstr "Пляма"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "Stains"
 msgstr "Плямы"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:5
 msgid "_Coffee Stain..."
 msgstr "_Плямы ад кавы…"
 
@@ -1282,12 +1393,10 @@ msgid "Color"
 msgstr "Колер"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "Зрух па X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Зрух па Y"
 
@@ -1468,92 +1577,6 @@ msgstr "Вага ценю (%)"
 msgid "_Fuzzy Border..."
 msgstr "_Змазаная рамка…"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "Autocrop"
-msgstr "Аўтаабразаньне"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "Стварыць відарыс вялікага загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr "Стварыць відарыс малога загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-msgid "Dark color"
-msgstr "Цёмны колер"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
-msgid "Highlight color"
-msgstr "Колер асьветленьня"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
-msgid "Index image"
-msgstr "Індэксаваць відарыс"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
-msgid "Number of colors"
-msgstr "Колькасьць колераў"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-msgid "Remove background"
-msgstr "Прыбраць асноведзь"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-msgid "Select-by-color threshold"
-msgstr "Парог вылучальніка колера"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
-msgid "Shadow color"
-msgstr "Колер ценю"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
-msgid "_Big Header..."
-msgstr "_Вялікі загаловак…"
-
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
-msgid "_Small Header..."
-msgstr "_Малы загаловак…"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
-msgstr "Стварыць відарыс з загалоўкам для цыліндрычных кнопак, ужываючы тэму пляцоўкі gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі, ужываючы тэму пляцоўкі gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
-msgstr "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі другога ўзроўню, ужываючы тэму пляцоўкі gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
-msgstr "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі трэцяга ўзроўню, ужываючы тэму пляцоўкі gimp.org"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-msgid "T_ube Sub-Button Label..."
-msgstr "Ц_ыліндрычная падкнопка…"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Цы_ліндрычная падпадкнопка…"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-msgid "_General Tube Labels..."
-msgstr "_Агульныя цыліндрычныя…"
-
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-msgid "_Tube Button Label..."
-msgstr "_Цыліндрычная кнопка…"
-
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:1
 msgid "Bookmark to the GIMP web site"
 msgstr "Закладка на пляцоўку GIMP"
@@ -1564,19 +1587,19 @@ msgstr "Закладка ў кіраўніцтве карыстальніка"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:3
 msgid "Create and Use _Selections"
-msgstr "Стварэньне й выкарыстаньне вылучэньняў"
+msgstr "Як стварыць й выкарыстоўваць вылучэньне"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:4
 msgid "Create, Open and Save _Files"
-msgstr "Стварыць, адкрыць і захаваць _файлы"
+msgstr "Як стварыць, адкрыць ці захаваць _файл"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr "Рысаваньне _простых абʼектаў"
+msgstr "Як рысаваць _простыя аб'екты"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:6
 msgid "How to Use _Dialogs"
-msgstr "Як выкарыстоўваць _дыялёгі"
+msgstr "Як выкарыстоўваць _дыялёґі"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:7
 msgid "Plug-in _Registry"
@@ -1584,7 +1607,7 @@ msgstr "_Рэестар дадаткаў"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:8
 msgid "Using _Paths"
-msgstr "Выкарыстаньне _шляхоў"
+msgstr "Як выкарыстоўваць _шляхі"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm.h:9
 msgid "_Basic Concepts"
@@ -1647,6 +1670,7 @@ msgid "Pattern (text)"
 msgstr "Узор (тэкст)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:13
 msgid "Shadow"
 msgstr "Цень"
 
@@ -1902,7 +1926,7 @@ msgstr "_Прастакутны…"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr "Ператварыць вылучаную вобласьць (ці тэкст) у абʼект, падобны на нэонавы знак"
+msgstr "Ператварыць вылучаную вобласьць (ці тэкст) у аб'ект, падобны на нэонавы знак"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
@@ -1953,6 +1977,42 @@ msgstr "Сэпія"
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "_Старое фота…"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:1
+msgid "All characters in the name are either white-spaces or characters which can not appear in filenames."
+msgstr "У назьве ці адны прабелы ці знакі, якія ня могуць прысутнічаць у назвах файлаў."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:2
+msgid "Export the active palette as a CSS stylesheet with the color entry name as their class name, and the color itself as the color attribute"
+msgstr "Экспартаваць актыўную палітру як стыль CSS з назвай запісу колера ў якасьці назвы клясы й самім колерам у якасьці атрыбуту колера."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:3
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Экспартаваць актыўную палітру як слоўнік PHP (назва => колер)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:4
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Экспартаваць актыўную палітру як слоўнік Python (назва: колер)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:5
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr "Экспартаваць актыўную палітру як java.util.Hashtable<Радок, Колер>"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:6
+msgid "Folder for the output file"
+msgstr "Каталёґ для запісу выходнага файла"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:7
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Уведзеная назва файла не прыдатная быць назвай файла."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:8
+msgid "The name of the file to create (if a file with this name already exist, it will be replaced)"
+msgstr "Стварыць файл з назвай )калі файл з гэткай назвай існуе, ён будзе заменены)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm.h:9
+msgid "Write all the colors in a palette to a text file, one hexadecimal value per line (no names)"
+msgstr "Запісаць усе колеры ў палітры ў тэкставы файл, адно шаснаткавае значэньне на радок (бяз назваў)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
@@ -2293,10 +2353,6 @@ msgstr "Спосаб фарбаваньня"
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
 msgstr "Эпітрахоіда"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:8
-msgid "Frame"
-msgstr "Рамка"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Sawtooth"
@@ -2655,22 +2711,82 @@ msgstr "Колер падаючага ценю"
 msgid "Drop shadow opacity"
 msgstr "Непразрыстасьць падаючага ценю"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight X offset"
 msgstr "Зрух асьветленьня па X"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight Y offset"
 msgstr "Зрух асьветленьня па Y"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight color"
+msgstr "Колер асьветленьня"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Highlight opacity"
 msgstr "Непразрыстасьць асьветленьня"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "Эфэкт _Xach…"
 
+#~ msgid "Autocrop"
+#~ msgstr "Аўтаабразаньне"
+#~ msgid "Create an image of a large header using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Стварыць відарыс вялікага загалоўку, выкарыстоўваючы тэму пляцоўкі gimp."
+#~ "org"
+#~ msgid "Create an image of a small header using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Стварыць відарыс малога загалоўку, выкарыстоўваючы тэму пляцоўкі gimp.org"
+#~ msgid "Dark color"
+#~ msgstr "Цёмны колер"
+#~ msgid "Index image"
+#~ msgstr "Індэксаваць відарыс"
+#~ msgid "Number of colors"
+#~ msgstr "Колькасьць колераў"
+#~ msgid "Remove background"
+#~ msgstr "Прыбраць асноведзь"
+#~ msgid "Select-by-color threshold"
+#~ msgstr "Парог вылучальніка колера"
+#~ msgid "Shadow color"
+#~ msgstr "Колер ценю"
+#~ msgid "_Big Header..."
+#~ msgstr "_Вялікі загаловак…"
+#~ msgid "_Small Header..."
+#~ msgstr "_Малы загаловак…"
+#~ msgid ""
+#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
+#~ "theme"
+#~ msgstr ""
+#~ "Стварыць відарыс з загалоўкам для цыліндрычных кнопак, ужываючы тэму "
+#~ "пляцоўкі gimp.org"
+#~ msgid ""
+#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
+#~ msgstr ""
+#~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі, ужываючы тэму "
+#~ "пляцоўкі gimp.org"
+#~ msgid ""
+#~ "Create an image of a second level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr ""
+#~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі другога ўзроўню, "
+#~ "ужываючы тэму пляцоўкі gimp.org"
+#~ msgid ""
+#~ "Create an image of a third level Tube Button Label using the gimp.org "
+#~ "webpage theme"
+#~ msgstr ""
+#~ "Стварыць відарыс з тэкстам для цыліндрычнай кнопкі трэцяга ўзроўню, "
+#~ "ужываючы тэму пляцоўкі gimp.org"
+#~ msgid "T_ube Sub-Button Label..."
+#~ msgstr "Ц_ыліндрычная падкнопка…"
+#~ msgid "Tub_e Sub-Sub-Button Label..."
+#~ msgstr "Цы_ліндрычная падпадкнопка…"
+#~ msgid "_General Tube Labels..."
+#~ msgstr "_Агульныя цыліндрычныя…"
+#~ msgid "_Tube Button Label..."
+#~ msgstr "_Цыліндрычная кнопка…"
 #~ msgid "Matte"
 #~ msgstr "Матавае"
 #~ msgid "Effect size (pixels * 3)"

@@ -36,7 +36,7 @@ static CommandClass_t object_down_command_class = {
    object_down_command_destruct,
    object_down_command_execute,
    object_down_command_undo,
-   NULL				/* object_down_command_redo */
+   NULL                         /* object_down_command_redo */
 };
 
 typedef struct {
@@ -52,7 +52,7 @@ object_down_command_new(ObjectList_t *list, Object_t *obj)
    command->list = list;
    command->obj = object_ref(obj);
    return command_init(&command->parent, _("Move Down"),
-		       &object_down_command_class);
+                       &object_down_command_class);
 }
 
 static void

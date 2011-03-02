@@ -974,7 +974,7 @@ gimp_brush_core_create_boundary (GimpBrushCore    *core,
           gimp_brush_generated_set_aspect_ratio (generated_brush, 1.0);
 
           mask = gimp_brush_transform_mask (core->main_brush,
-                                            1.0, 1.0, 0.0, 1.0);
+                                            1.0, 0.0, 0.0, 1.0);
 
           gimp_brush_generated_set_aspect_ratio (generated_brush, ratio);
 
@@ -985,7 +985,7 @@ gimp_brush_core_create_boundary (GimpBrushCore    *core,
       else
         {
           mask = gimp_brush_transform_mask (core->main_brush,
-                                            1.0, 1.0, 0.0, 1.0);
+                                            1.0, 0.0, 0.0, 1.0);
         }
     }
 
@@ -1023,8 +1023,8 @@ gimp_brush_core_get_transform (GimpBrushCore *core,
   gdouble aspect_ratio;
   gdouble height;
   gdouble width;
-  gdouble scale_x;
-  gdouble scale_y;
+  gdouble scale_x = core->scale;
+  gdouble scale_y = core->scale;
 
   g_return_val_if_fail (GIMP_IS_BRUSH_CORE (core), FALSE);
   g_return_val_if_fail (matrix != 0, FALSE);
@@ -1049,25 +1049,26 @@ gimp_brush_core_get_transform (GimpBrushCore *core,
 
       angle = angle + base_angle / 360;
 
-      if (aspect_ratio == 1.0)
-        aspect_ratio = gimp_brush_generated_get_aspect_ratio (generated_brush);
+      if (aspect_ratio == 0.0)
+        aspect_ratio = (gimp_brush_generated_get_aspect_ratio (generated_brush) - 1) / 19.0 * 20.0;
     }
 
   height = core->brush_bound_width;
   width  = core->brush_bound_height;
 
-  if (aspect_ratio < 1.0)
+  if (aspect_ratio < 0.0)
     {
-      scale_x = scale * aspect_ratio;
+      scale_x = scale * (1.0 - (fabs (aspect_ratio) / 20.0));
       scale_y = scale;
     }
-  else
+  else if (aspect_ratio > 0.0)
     {
       scale_x = scale;
-      scale_y = scale / aspect_ratio;
+      scale_y = scale * (1.0 - (aspect_ratio  / 20.0));
     }
 
-  if ((scale > 0.0) && (aspect_ratio > 0.0))
+
+  if (scale > 0.0)
     {
       scale = gimp_brush_clamp_scale (core->main_brush, scale);
 
@@ -1544,7 +1545,7 @@ gimp_brush_core_transform_mask (GimpBrushCore *core,
   if ((core->scale == 1.0) &&
       (core->angle == 0.0) &&
       (core->hardness == 1.0) &&
-      (core->aspect_ratio == 1.0))
+      (core->aspect_ratio == 0.0))
     return brush->mask;
 
   gimp_brush_transform_size (brush,
@@ -1600,7 +1601,7 @@ gimp_brush_core_transform_pixmap (GimpBrushCore *core,
   if ((core->scale        == 1.0) &&
       (core->angle        == 0.0) &&
       (core->hardness     == 1.0) &&
-      (core->aspect_ratio == 1.0))
+      (core->aspect_ratio == 0.0))
     return brush->pixmap;
 
   gimp_brush_transform_size (brush,
@@ -1688,8 +1689,8 @@ gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
                                          GimpPaintOptions  *paint_options,
                                          const GimpCoords  *coords)
 {
-  GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
-  gdouble    fade_point = 1.0;
+  GimpBrushCore      *core                = GIMP_BRUSH_CORE (paint_core);
+  gdouble             fade_point          = 1.0;
 
   if (core->main_brush)
     core->scale = paint_options->brush_size /
@@ -1706,6 +1707,7 @@ gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
     {
+      gdouble dyn_aspect_ratio = 0.0;
       if (drawable)
         {
           GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -1732,11 +1734,23 @@ gimp_brush_core_eval_transform_dynamics (GimpPaintCore     *paint_core,
                                                paint_options,
                                                fade_point);
 
-      core->aspect_ratio *=
+      dyn_aspect_ratio =
         gimp_dynamics_output_get_aspect_value (core->dynamics->aspect_ratio_output,
                                                coords,
                                                paint_options,
                                                fade_point);
+
+      /* Zero aspect ratio is special cased to half of all ar range,
+       * to force dynamics to have any effect . Forcing to full results
+       * in disapearing stamp if applied to maximum.
+       */
+      if (gimp_dynamics_output_is_enabled (core->dynamics->aspect_ratio_output))
+        {
+          if (core->aspect_ratio == 0.0)
+            core->aspect_ratio = 10.0 * dyn_aspect_ratio;
+          else
+            core->aspect_ratio *= dyn_aspect_ratio;
+        }
     }
 }
 

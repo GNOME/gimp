@@ -201,7 +201,7 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable 0 0)
     (gimp-context-set-foreground sphere-color)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill drawable BACKGROUND-FILL)

@@ -89,6 +89,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-draw.h			\
 	gimpdisplayshell-expose.c		\
 	gimpdisplayshell-expose.h		\
+	gimpdisplayshell-grab.c			\
+	gimpdisplayshell-grab.h			\
 	gimpdisplayshell-handlers.c		\
 	gimpdisplayshell-handlers.h		\
 	gimpdisplayshell-filter.c		\
@@ -119,6 +121,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-style.h		\
 	gimpdisplayshell-title.c		\
 	gimpdisplayshell-title.h		\
+	gimpdisplayshell-tool-events.c		\
+	gimpdisplayshell-tool-events.h		\
 	gimpdisplayshell-transform.c		\
 	gimpdisplayshell-transform.h		\
 	gimpimagewindow.c			\

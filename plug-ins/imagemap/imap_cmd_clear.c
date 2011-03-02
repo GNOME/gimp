@@ -31,15 +31,15 @@
 static CmdExecuteValue_t clear_command_execute(Command_t *parent);
 
 static CommandClass_t clear_command_class = {
-   NULL,			/* clear_command_destruct */
+   NULL,                        /* clear_command_destruct */
    clear_command_execute,
-   NULL,			/* clear_command_undo */
-   NULL				/* clear_command_redo */
+   NULL,                        /* clear_command_undo */
+   NULL                         /* clear_command_redo */
 };
 
 typedef struct {
-   Command_t 	 parent;
-   ObjectList_t	*list;
+   Command_t     parent;
+   ObjectList_t *list;
 } ClearCommand_t;
 
 Command_t*
@@ -55,7 +55,7 @@ remove_one_object(Object_t *obj, gpointer data)
 {
    ClearCommand_t *command = (ClearCommand_t*) data;
    command_add_subcommand(&command->parent,
-			  delete_command_new(command->list, obj));
+                          delete_command_new(command->list, obj));
 }
 
 static CmdExecuteValue_t

@@ -184,6 +184,9 @@ struct _GimpDisplayShell
   gboolean           size_allocate_from_configure_event;
 
   /*  the state of gimp_display_shell_tool_events()  */
+  gboolean           pointer_grabbed;
+  gboolean           keyboard_grabbed;
+
   gboolean           space_pressed;
   gboolean           space_release_pending;
   const gchar       *space_shaded_tool;

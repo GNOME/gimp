@@ -18,6 +18,7 @@ endif
 
 TESTS = \
 	test-core		\
+	test-save-and-export	\
 	test-session-management	\
 	test-tools		\
 	test-ui			\

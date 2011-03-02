@@ -1993,6 +1993,7 @@ loadit (const gchar * fn)
   gchar    endbuf[21 * (G_ASCII_DTOSTR_BUF_SIZE + 1)];
   gchar   *end = endbuf;
   gchar    line[1024];
+  gchar    fmt_str[16];
   gint     i;
   texture *t;
   gint     majtype, type;
@@ -2017,6 +2018,8 @@ loadit (const gchar * fn)
 
   s.com.numtexture = 0;
 
+  snprintf (fmt_str, sizeof (fmt_str), "%%d %%d %%%lds", sizeof (endbuf) - 1);
+
   while (!feof (f))
     {
 
@@ -2027,7 +2030,7 @@ loadit (const gchar * fn)
       t = &s.com.texture[i];
       setdefaults (t);
 
-      if (sscanf (line, "%d %d %s", &t->majtype, &t->type, end) != 3)
+      if (sscanf (line, fmt_str, &t->majtype, &t->type, end) != 3)
         t->color1.x = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
         t->color1.y = g_ascii_strtod (end, &end);

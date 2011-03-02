@@ -798,6 +798,15 @@
   (return-type "GimpColorDisplay*")
 )
 
+(define-method convert_surface
+  (of-object "GimpColorDisplay")
+  (c-name "gimp_color_display_convert_surface")
+  (return-type "none")
+  (parameters
+    '("cairo_surface_t*" "surface")
+  )
+)
+
 (define-method convert
   (of-object "GimpColorDisplay")
   (c-name "gimp_color_display_convert")
@@ -809,6 +818,7 @@
     '("gint" "bpp")
     '("gint" "bpl")
   )
+  (deprecated "use convert_surface(cairo_surface_t*) instead")
 )
 
 (define-method load_state
@@ -934,6 +944,15 @@
   )
 )
 
+(define-method convert_surface
+  (of-object "GimpColorDisplayStack")
+  (c-name "gimp_color_display_stack_convert_surface")
+  (return-type "none")
+  (parameters
+    '("cairo_surface_t*" "surface")
+  )
+)
+
 (define-method convert
   (of-object "GimpColorDisplayStack")
   (c-name "gimp_color_display_stack_convert")
@@ -945,6 +964,7 @@
     '("gint" "bpp")
     '("gint" "bpl")
   )
+  (deprecated "use convert_surface(cairo_surface_t*) instead")
 )
 
 

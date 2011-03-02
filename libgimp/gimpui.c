@@ -20,6 +20,14 @@
 
 #include <gtk/gtk.h>
 
+#ifdef GDK_WINDOWING_WIN32
+#include <gdk/gdkwin32.h>
+#endif
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "libgimpmodule/gimpmodule.h"
 
 #include "gimp.h"
@@ -138,6 +146,33 @@ gimp_ui_init (const gchar *prog_name,
   gimp_ui_initialized = TRUE;
 }
 
+static GdkWindow *
+gimp_ui_get_foreign_window (guint32 window)
+{
+#if GTK_CHECK_VERSION (2, 24, 0)
+
+#ifdef GDK_WINDOWING_X11
+  return gdk_x11_window_foreign_new_for_display (gdk_display_get_default (),
+                                                 window);
+#endif
+
+#ifdef GDK_WINDOWING_WIN32
+  return gdk_win32_window_foreign_new_for_display (gdk_display_get_default (),
+                                                   window);
+#endif
+
+#else /* ! GTK_CHECK_VERSION (2, 24, 0) */
+
+#ifndef GDK_NATIVE_WINDOW_POINTER
+  return gdk_window_foreign_new_for_display (gdk_display_get_default (),
+                                             window);
+#endif
+
+#endif /* GTK_CHECK_VERSION (2, 24, 0) */
+
+  return NULL;
+}
+
 /**
  * gimp_ui_get_display_window:
  * @gdisp_ID: a #GimpDisplay ID.
@@ -158,16 +193,13 @@ gimp_ui_init (const gchar *prog_name,
 GdkWindow *
 gimp_ui_get_display_window (guint32 gdisp_ID)
 {
-#ifndef GDK_NATIVE_WINDOW_POINTER
-  GdkNativeWindow  window;
+  guint32 window;
 
   g_return_val_if_fail (gimp_ui_initialized, NULL);
 
   window = gimp_display_get_window_handle (gdisp_ID);
   if (window)
-    return gdk_window_foreign_new_for_display (gdk_display_get_default (),
-                                               window);
-#endif
+    return gimp_ui_get_foreign_window (window);
 
   return NULL;
 }
@@ -191,16 +223,13 @@ gimp_ui_get_display_window (guint32 gdisp_ID)
 GdkWindow *
 gimp_ui_get_progress_window (void)
 {
-#ifndef GDK_NATIVE_WINDOW_POINTER
-  GdkNativeWindow  window;
+  guint32  window;
 
   g_return_val_if_fail (gimp_ui_initialized, NULL);
 
   window = gimp_progress_get_window_handle ();
   if (window)
-    return gdk_window_foreign_new_for_display (gdk_display_get_default (),
-                                               window);
-#endif
+     return gimp_ui_get_foreign_window (window);
 
   return NULL;
 }

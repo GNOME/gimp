@@ -145,7 +145,7 @@
     (script-fu-util-image-add-layers img glow-layer bg-layer)
     (if (not (= shadow 0))
         (begin
-          (gimp-image-add-layer img shadow-layer -1)
+          (gimp-image-insert-layer img shadow-layer 0 -1)
           (gimp-edit-clear shadow-layer)))
 
     (gimp-context-set-background '(0 0 0))

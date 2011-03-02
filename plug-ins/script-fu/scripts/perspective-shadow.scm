@@ -102,7 +102,7 @@
                                             NORMAL-MODE)))
 
 
-    (gimp-image-insert-layer image shadow-layer -1 -1)
+    (gimp-image-insert-layer image shadow-layer 0 -1)
     (gimp-layer-set-offsets shadow-layer select-offset-x select-offset-y)
     (gimp-drawable-fill shadow-layer TRANSPARENT-FILL)
     (gimp-context-set-background shadow-color)
@@ -174,7 +174,7 @@
 
   (if (= from-selection TRUE)
       (begin
-        (gimp-item-to-selection active-selection CHANNEL-OP-REPLACE)
+        (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
         (gimp-edit-clear shadow-layer)
         (gimp-image-remove-channel image active-selection)))
 

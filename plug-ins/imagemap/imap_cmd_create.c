@@ -38,14 +38,14 @@ static CommandClass_t create_command_class = {
    create_command_destruct,
    create_command_execute,
    create_command_undo,
-   NULL				/* create_command_redo */
+   NULL                         /* create_command_redo */
 };
 
 typedef struct {
-   Command_t 	 parent;
+   Command_t     parent;
    ObjectList_t *list;
-   Object_t    	*obj;
-   gboolean	 changed;
+   Object_t     *obj;
+   gboolean      changed;
 } CreateCommand_t;
 
 Command_t*

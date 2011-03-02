@@ -170,9 +170,20 @@ gint            gimp_image_get_ID                (const GimpImage    *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);
 
+const gchar   * gimp_image_get_uri               (const GimpImage    *image);
+const gchar   * gimp_image_get_uri_or_untitled   (const GimpImage    *image);
+const gchar   * gimp_image_get_imported_uri      (const GimpImage    *image);
+const gchar   * gimp_image_get_exported_uri      (const GimpImage    *image);
+const gchar   * gimp_image_get_save_a_copy_uri   (const GimpImage    *image);
+
 void            gimp_image_set_uri               (GimpImage          *image,
                                                   const gchar        *uri);
-const gchar   * gimp_image_get_uri               (const GimpImage    *image);
+void            gimp_image_set_imported_uri      (GimpImage          *image,
+                                                  const gchar        *uri);
+void            gimp_image_set_exported_uri      (GimpImage          *image,
+                                                  const gchar        *uri);
+void            gimp_image_set_save_a_copy_uri   (GimpImage          *image,
+                                                  const gchar        *uri);
 
 void            gimp_image_set_filename          (GimpImage          *image,
                                                   const gchar        *filename);
@@ -471,6 +482,8 @@ gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   gboolean            selected_only);
 
 void            gimp_image_invalidate_previews   (GimpImage          *image);
+
+const gchar   * gimp_image_get_string_untitled   (void);
 
 
 #endif /* __GIMP_IMAGE_H__ */

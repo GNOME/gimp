@@ -911,125 +911,6 @@ CODE
     );
 }
 
-sub image_get_layer_position {
-    &std_pdb_deprecated('gimp-image-get-item-position');
-    &simon_pdb_misc('2006', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer' }
-    );
-
-    @outargs = (
-	{ name => 'position', type => 'int32',
-	  desc => "The position of the layer in the layer stack" }
-    );
-
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpContainer *container = gimp_image_get_layers (image);
-
-  position = gimp_container_get_child_index (container,
-                                             GIMP_OBJECT (layer));
-  if (position < 0)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_raise_layer {
-    &std_pdb_deprecated('gimp-image-raise-item');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer to raise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
-    success = gimp_image_raise_item (image, GIMP_ITEM (layer), error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_lower_layer {
-    &std_pdb_deprecated('gimp-image-lower-item');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer to lower' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
-    success = gimp_image_lower_item (image, GIMP_ITEM (layer), error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_raise_layer_to_top {
-    &std_pdb_deprecated('gimp-image-raise-item-to-top');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer to raise to top' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
-    success = gimp_image_raise_item_to_top (image, GIMP_ITEM (layer));
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_lower_layer_to_bottom {
-    &std_pdb_deprecated('gimp-image-lower-item-to-bottom');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'layer', type => 'layer',
-	  desc => 'The layer to lower to bottom' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (layer), image, FALSE, error))
-    success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (layer));
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub image_merge_visible_layers {
     $blurb = 'Merge the visible image layers into one.';
 
@@ -1061,7 +942,8 @@ HELP
 	headers => [ qw("core/gimpimage-merge.h") ],
 	code => <<'CODE'
 {
-  layer = gimp_image_merge_visible_layers (image, context, merge_type, FALSE);
+  layer = gimp_image_merge_visible_layers (image, context, merge_type,
+                                           FALSE, FALSE);
 
   if (! layer)
     success = FALSE;
@@ -1192,11 +1074,11 @@ sub image_insert_layer {
 This procedure adds the specified layer to the image at the given
 position. If the specified parent is a valid layer group (See
 gimp_item_is_group() and gimp_layer_group_new()) then the layer is
-added inside the group. If the parent is NULL, the layer is added
+added inside the group. If the parent is 0, the layer is added
 inside the main stack, outside of any group. The position argument
 specifies the location of the layer inside the stack (or the group, if
 a valid parent was supplied), starting from the top (0) and increasing.
-If the position is specified as -1 and the parent is specified as NULL,
+If the position is specified as -1 and the parent is specified as 0,
 then the layer is inserted above the active layer. The layer type must
 be compatible with the image base type.
 HELP
@@ -1319,81 +1201,6 @@ CODE
     );
 }
 
-sub image_get_channel_position {
-    &std_pdb_deprecated('gimp-image-get-item-position');
-    &simon_pdb_misc('2006', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel' }
-    );
-
-    @outargs = (
-	{ name => 'position', type => 'int32',
-	  desc => "The position of the channel in the channel stack" }
-    );
-
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpContainer *container = gimp_image_get_channels (image);
-
-  position = gimp_container_get_child_index (container,
-                                             GIMP_OBJECT (channel));
-  if (position < 0)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_raise_channel {
-    &std_pdb_deprecated('gimp-image-raise-item');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel to raise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
-    success = gimp_image_raise_item (image, GIMP_ITEM (channel), error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_lower_channel {
-    &std_pdb_deprecated('gimp-image-lower-item');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'channel', type => 'channel',
-	  desc => 'The channel to lower' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (channel), image, FALSE, error))
-    success = gimp_image_lower_item (image, GIMP_ITEM (channel), error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub image_add_channel {
     &std_pdb_deprecated ('gimp-image-insert-channel');
 
@@ -1429,7 +1236,7 @@ sub image_insert_channel {
     $help = <<'HELP';
 This procedure adds the specified channel to the image at the given
 position. Since channel groups are not currently supported, the parent
-argument must always be NULL. The position argument specifies the
+argument must always be 0. The position argument specifies the
 location of the channel inside the stack, starting from the top (0) and
 increasing. If the position is specified as -1, then the channel is
 inserted above the active channel.
@@ -1531,7 +1338,7 @@ sub image_insert_vectors {
     $help = <<'HELP';
 This procedure adds the specified vectors to the image at the given
 position. Since vectors groups are not currently supported, the parent
-argument must always be NULL. The position argument specifies the
+argument must always be 0. The position argument specifies the
 location of the vectors inside the stack, starting from the top (0) and
 increasing. If the position is specified as -1, then the vectors is
 inserted above the active vectors.
@@ -1593,129 +1400,6 @@ HELP
 {
   if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
     gimp_image_remove_vectors (image, vectors, TRUE, NULL);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_get_vectors_position {
-    &std_pdb_deprecated('gimp-image-get-item-position');
-    &simon_pdb_misc('2006', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object' }
-    );
-
-    @outargs = (
-	{ name => 'position', type => 'int32',
-	  desc => "The position of the vectors object in the vectors stack" }
-    );
-
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpContainer *container = gimp_image_get_vectors (image);
-
-  position = gimp_container_get_child_index (container,
-                                             GIMP_OBJECT (vectors));
-  if (position < 0)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_raise_vectors {
-    &std_pdb_deprecated('gimp-image-raise-item');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object to raise' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
-    success = gimp_image_raise_item (image, GIMP_ITEM (vectors), error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_lower_vectors {
-    &std_pdb_deprecated('gimp-image-lower-item');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object to lower' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
-    success = gimp_image_lower_item (image, GIMP_ITEM (vectors), error);
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_raise_vectors_to_top {
-    &std_pdb_deprecated('gimp-image-raise-item-to-top');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object to raise to top' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
-    success = gimp_image_raise_item_to_top (image, GIMP_ITEM (vectors));
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_lower_vectors_to_bottom {
-    &std_pdb_deprecated('gimp-image-lower-item-to-bottom');
-    &simon_pdb_misc('2005', '2.4');
-
-    @inargs = (
-	{ name => 'image', type => 'image',
-	  desc => 'The image' },
-	{ name => 'vectors', type => 'vectors',
-	  desc => 'The vectors object to lower to bottom' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  if (gimp_pdb_item_is_attached (GIMP_ITEM (vectors), image, FALSE, error))
-    success = gimp_image_lower_item_to_bottom (image, GIMP_ITEM (vectors));
   else
     success = FALSE;
 }
@@ -2489,7 +2173,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  uri = g_strdup (gimp_object_get_name (image));
+  uri = g_strdup (gimp_image_get_uri (image));
 }
 CODE
     );
@@ -2936,14 +2620,6 @@ CODE
             image_raise_item image_lower_item
             image_raise_item_to_top image_lower_item_to_bottom
             image_reorder_item
-	    image_get_layer_position
-            image_raise_layer image_lower_layer
-            image_raise_layer_to_top image_lower_layer_to_bottom
-	    image_get_channel_position
-            image_raise_channel image_lower_channel
-	    image_get_vectors_position
-            image_raise_vectors image_lower_vectors
-            image_raise_vectors_to_top image_lower_vectors_to_bottom
             image_flatten image_merge_visible_layers image_merge_down
             image_add_layer_mask image_remove_layer_mask
             image_get_colormap image_set_colormap
@@ -2965,7 +2641,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..55,58..86]]);
+%exports = (app => [@procs], lib => [@procs[0..42,45..73]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

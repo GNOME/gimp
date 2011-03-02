@@ -37,7 +37,7 @@ static CommandList_t *_current_command_list = &_command_list;
 
 static void
 command_list_callback_add(CommandListCallback_t *list,
-			  CommandListCallbackFunc_t func, gpointer data)
+                          CommandListCallbackFunc_t func, gpointer data)
 {
    CommandListCB_t *cb = g_new(CommandListCB_t, 1);
    cb->func = func;
@@ -133,10 +133,10 @@ subcommand_list_add(CommandList_t *list, Command_t *command)
 }
 
 static CommandClass_t parent_command_class = {
-   NULL,			/* parent_command_destruct */
-   NULL,			/* parent_command_execute */
-   NULL,			/* parent_command_undo */
-   NULL				/* parent_command_redo */
+   NULL,                        /* parent_command_destruct */
+   NULL,                        /* parent_command_execute */
+   NULL,                        /* parent_command_undo */
+   NULL                         /* parent_command_redo */
 };
 
 static Command_t*
@@ -179,22 +179,22 @@ _command_list_set_undo_level(CommandList_t *list, gint level)
       GList *p, *q;
       /* first remove data at the front */
       for (p = list->list; diff && p != list->undo; p = q, diff--) {
-	 Command_t *curr = (Command_t*) p->data;
-	 q = p->next;
-	 command_destruct(curr);
-	 list->list = g_list_remove_link(list->list, p);
+         Command_t *curr = (Command_t*) p->data;
+         q = p->next;
+         command_destruct(curr);
+         list->list = g_list_remove_link(list->list, p);
       }
 
       /* If still to long start removing redo levels at the end */
       for (p = g_list_last(list->list); diff && p != list->undo; p = q,
-	      diff--) {
-	 Command_t *curr = (Command_t*) p->data;
-	 q = p->prev;
-	 command_destruct(curr);
-	 list->list = g_list_remove_link(list->list, p);
+              diff--) {
+         Command_t *curr = (Command_t*) p->data;
+         q = p->prev;
+         command_destruct(curr);
+         list->list = g_list_remove_link(list->list, p);
       }
       command_list_callback_call(&list->update_cb,
-				 (Command_t*) list->undo->data);
+                                 (Command_t*) list->undo->data);
    }
    list->undo_levels = level;
 }
@@ -233,9 +233,9 @@ command_list_execute(CommandList_t *list)
    for (p = list->list; p; p = p->next) {
       Command_t *command = (Command_t*) p->data;
       if (command->sub_commands)
-	 command_list_execute(command->sub_commands);
+         command_list_execute(command->sub_commands);
       if (command->class->execute)
-	 (void) command->class->execute(command);
+         (void) command->class->execute(command);
    }
 }
 
@@ -246,13 +246,13 @@ command_execute(Command_t *command)
       command->locked = FALSE;
    } else {
       if (command->sub_commands)
-	 command_list_execute(command->sub_commands);
+         command_list_execute(command->sub_commands);
       if (command->class->execute) {
-	 CmdExecuteValue_t value = command->class->execute(command);
-	 if (value == CMD_APPEND)
-	    command_list_add(command);
-	 else if (value == CMD_DESTRUCT)
-	    command_destruct(command);
+         CmdExecuteValue_t value = command->class->execute(command);
+         if (value == CMD_APPEND)
+            command_list_add(command);
+         else if (value == CMD_DESTRUCT)
+            command_destruct(command);
       }
    }
 }
@@ -357,10 +357,10 @@ command_add_subcommand(Command_t *command, Command_t *sub_command)
 static CmdExecuteValue_t basic_command_execute(Command_t *command);
 
 static CommandClass_t basic_command_class = {
-   NULL,			/* basic_command_destruct */
+   NULL,                        /* basic_command_destruct */
    basic_command_execute,
    NULL,
-   NULL				/* basic_command_redo */
+   NULL                         /* basic_command_redo */
 };
 
 typedef struct {

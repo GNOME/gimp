@@ -159,6 +159,9 @@ gimp_cairo_draw_toolbox_wilber (GtkWidget *widget,
 
   factor = allocation.width / wilber_width * 0.9;
 
+  if (! gtk_widget_get_has_window (widget))
+    cairo_translate (cr, allocation.x, allocation.y);
+
   cairo_scale (cr, factor, factor);
 
   gimp_cairo_wilber (cr,
@@ -207,6 +210,9 @@ gimp_cairo_draw_drop_wilber (GtkWidget *widget,
   height = MAX (wilber_height, side);
 
   factor = MIN (width / wilber_width, height / wilber_height);
+
+  if (! gtk_widget_get_has_window (widget))
+    cairo_translate (cr, allocation.x, allocation.y);
 
   cairo_scale (cr, factor, factor);
 

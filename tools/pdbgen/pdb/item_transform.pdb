@@ -104,6 +104,9 @@ needs to be specified. The return value is the ID of the flipped
 item. If there was no selection or the item is not a drawable, this
 will be equal to the item ID supplied as input.  Otherwise, this will
 be the newly created and flipped drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
@@ -185,6 +188,10 @@ specifying two points from that line. The return value is the ID of
 the flipped item. If there was no selection or the item is not a
 drawable, this will be equal to the item ID supplied as input.
 Otherwise, this will be the newly created and flipped drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -236,6 +243,10 @@ these values, any affine transformation (rotation, scaling,
 translation) can be affected. Additionally, these values can be
 specified such that the resulting transformed item will appear to
 have been projected via a perspective transform.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -297,6 +308,9 @@ selection which is then rotated by the specified amount. The return
 value is the ID of the rotated item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and rotated drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_transform_resize().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -382,6 +396,10 @@ selection which is then rotated by the specified amount. The return
 value is the ID of the rotated item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and rotated drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -427,6 +445,10 @@ selection which is then scaled by the specified amount. The return
 value is the ID of the scaled item. If there was no selection or the
 item is not a drawable, this will be equal to the item ID supplied as
 input. Otherwise, this will be the newly created and scaled drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -478,6 +500,10 @@ input. Otherwise, this will be the newly created and sheard
 drawable. The shear type parameter indicates whether the shear will be
 applied horizontally or vertically. The magnitude can be either
 positive or negative and indicates the extent (in pixels) to shear by.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -521,6 +547,10 @@ return value is the ID of the rotated drawable. If there was no
 selection or the item is not a drawable, this will be equal to the
 item ID supplied as input. Otherwise, this will be the newly created
 and transformed drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -572,6 +602,10 @@ value is the ID of the transformed item. If there was no selection or
 the item is not a drawable, this will be equal to the item ID supplied
 as input. Otherwise, this will be the newly created and transformed
 drawable.
+
+This prodecure is affected by the following context setters:
+gimp_context_set_interpolation(), gimp_context_set_transform_direction(),
+gimp_context_set_transform_resize(), gimp_context_set_transform_recursion().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');

@@ -141,7 +141,7 @@ sub get_default_comment {
 	headers => [ qw("core/gimptemplate.h") ],
 	code => <<'CODE'
 {
-  comment = g_strdup (gimp->config->default_image->comment);
+  comment = g_strdup (gimp_template_get_comment (gimp->config->default_image));
 }
 CODE
     );

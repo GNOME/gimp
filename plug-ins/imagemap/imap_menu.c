@@ -393,19 +393,19 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
   gtk_action_group_set_translation_domain (action_group, NULL);
 
   gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries),
-				window);
+                                window);
   gtk_action_group_add_toggle_actions (action_group, toggle_entries,
-				       G_N_ELEMENTS (toggle_entries), window);
+                                       G_N_ELEMENTS (toggle_entries), window);
 
   gtk_action_group_add_radio_actions (action_group, color_entries,
-				      G_N_ELEMENTS (color_entries), 0,
-				      G_CALLBACK (set_preview_color), NULL);
+                                      G_N_ELEMENTS (color_entries), 0,
+                                      G_CALLBACK (set_preview_color), NULL);
   gtk_action_group_add_radio_actions (action_group, zoom_entries,
-				      G_N_ELEMENTS (zoom_entries), 0,
-				      G_CALLBACK (set_zoom_factor), NULL);
+                                      G_N_ELEMENTS (zoom_entries), 0,
+                                      G_CALLBACK (set_zoom_factor), NULL);
   gtk_action_group_add_radio_actions (action_group, mapping_entries,
-				      G_N_ELEMENTS (mapping_entries), 0,
-				      G_CALLBACK (set_func), window);
+                                      G_N_ELEMENTS (mapping_entries), 0,
+                                      G_CALLBACK (set_func), window);
 
   ui_manager = gtk_ui_manager_new ();
   gtk_ui_manager_insert_action_group (ui_manager, action_group, 0);
@@ -415,7 +415,7 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
 
   error = NULL;
   if (!gtk_ui_manager_add_ui_from_string (ui_manager, ui_description, -1,
-					  &error))
+                                          &error))
     {
       g_warning ("building menus failed: %s", error->message);
       g_error_free (error);
@@ -456,7 +456,7 @@ menu_build_mru_items(MRU_t *mru)
       children = gtk_container_get_children(GTK_CONTAINER(_menu.open_recent));
       p = g_list_nth(children, position);
       for (i = 0; i < _menu.nr_off_mru_items; i++, p = p->next) {
-	 gtk_widget_destroy((GtkWidget*) p->data);
+         gtk_widget_destroy((GtkWidget*) p->data);
       }
       g_list_free(children);
    }
@@ -464,11 +464,11 @@ menu_build_mru_items(MRU_t *mru)
    i = 0;
    for (p = mru->list; p; p = p->next, i++) {
       GtkWidget *item = insert_item_with_label(_menu.open_recent, position++,
-					       (gchar*) p->data,
-					       menu_mru, p->data);
+                                               (gchar*) p->data,
+                                               menu_mru, p->data);
       if (i < 9) {
-	 guchar accelerator_key = '1' + i;
-	 add_accelerator(item, accelerator_key, GDK_CONTROL_MASK);
+         guchar accelerator_key = '1' + i;
+         add_accelerator(item, accelerator_key, GDK_CONTROL_MASK);
       }
    }
    _menu.nr_off_mru_items = i;
@@ -479,14 +479,14 @@ do_main_popup_menu(GdkEventButton *event)
 {
   GtkWidget *popup = gtk_ui_manager_get_widget (ui_manager, "/PopupMenu");
   gtk_menu_popup (GTK_MENU (popup), NULL, NULL, NULL, NULL,
-		  event->button, event->time);
+                  event->button, event->time);
 }
 
 void
 menu_check_grid(gboolean check)
 {
   GtkAction *action = gtk_ui_manager_get_action (ui_manager,
-						 "/MainMenu/ToolsMenu/Grid");
+                                                 "/MainMenu/ToolsMenu/Grid");
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), check);
 }
 

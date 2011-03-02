@@ -173,7 +173,7 @@ gimp_image_duplicate_save_source_uri (GimpImage *image,
                                       GimpImage *new_image)
 {
   g_object_set_data_full (G_OBJECT (new_image), "gimp-image-source-uri",
-                          g_strdup (gimp_object_get_name (image)),
+                          g_strdup (gimp_image_get_uri (image)),
                           (GDestroyNotify) g_free);
 }
 

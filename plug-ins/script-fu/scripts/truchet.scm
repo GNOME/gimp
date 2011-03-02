@@ -57,7 +57,7 @@
           (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB-IMAGE "Jabar" 100 NORMAL-MODE)))
          )
       (gimp-image-undo-disable temp-img)
-      (gimp-image-add-layer temp-img temp-draw 0)
+      (gimp-image-insert-layer temp-img temp-draw 0 0)
       (gimp-context-set-background backcolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
 
@@ -117,9 +117,9 @@
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable tile)
 
-    (gimp-image-add-layer img layer-one 0)
-    (gimp-image-add-layer tile tiledraw1 0)
-    (gimp-image-add-layer tile tiledraw2 0)
+    (gimp-image-insert-layer img layer-one 0 0)
+    (gimp-image-insert-layer tile tiledraw1 0 0)
+    (gimp-image-insert-layer tile tiledraw2 0 0)
 
 
     ;just to look a little better

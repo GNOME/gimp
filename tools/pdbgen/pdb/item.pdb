@@ -682,6 +682,115 @@ CODE
     );
 }
 
+sub item_attach_parasite {
+    $blurb = 'Add a parasite to an item.';
+
+    $help = <<'HELP';
+This procedure attaches a parasite to an item. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach to the item' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_parasite_attach (item, parasite, TRUE);
+}
+CODE
+    );
+}
+
+sub item_detach_parasite {
+    $blurb = 'Removes a parasite from an item.';
+
+    $help = <<'HELP';
+This procedure detaches a parasite from an item. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from the item.' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_item_parasite_detach (item, name, TRUE);
+}
+CODE
+    );
+}
+
+sub item_get_parasite {
+    $blurb = 'Look up a parasite in an item';
+
+    $help = <<'HELP';
+Finds and returns the parasite that is attached to an item.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasite = gimp_parasite_copy (gimp_item_parasite_find (item, name));
+
+  if (! parasite)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub item_get_parasite_list {
+    $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all parasites currently attached the an item.';
+
+    &marc_pdb_misc('1999', '2.8');
+
+    @inargs = (
+	{ name => 'item', type => 'item',
+	  desc => 'The item' }
+    );
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray',
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_item_parasite_list (item, &num_parasites);
+}
+CODE
+    );
+}
+
 @headers = qw("core/gimplayermask.h"
               "core/gimplist.h"
               "core/gimpselection.h"
@@ -708,7 +817,10 @@ CODE
             item_get_visible item_set_visible
             item_get_linked item_set_linked
             item_get_lock_content item_set_lock_content
-            item_get_tattoo item_set_tattoo);
+            item_get_tattoo item_set_tattoo
+	    item_attach_parasite item_detach_parasite
+	    item_get_parasite
+	    item_get_parasite_list);
 
 %exports = (app => [@procs], lib => [@procs]);
 

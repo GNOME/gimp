@@ -84,8 +84,8 @@
           )
 
       (gimp-image-undo-disable temp-img)
-      (gimp-image-insert-layer temp-img temp-draw -1 0)
-      (gimp-image-insert-layer temp-img temp-draw2 -1 0)
+      (gimp-image-insert-layer temp-img temp-draw 0 0)
+      (gimp-image-insert-layer temp-img temp-draw2 0 0)
       (gimp-context-set-background backcolor)
       (gimp-edit-fill temp-draw BACKGROUND-FILL)
       (gimp-edit-fill temp-draw2 BACKGROUND-FILL)
@@ -181,9 +181,9 @@
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable tile)
 
-    (gimp-image-insert-layer img layer-one -1 0)
-    (gimp-image-insert-layer tile tiledraw1 -1 0)
-    (gimp-image-insert-layer tile tiledraw2 -1 0)
+    (gimp-image-insert-layer img layer-one 0 0)
+    (gimp-image-insert-layer tile tiledraw1 0 0)
+    (gimp-image-insert-layer tile tiledraw2 0 0)
 
     ;just to look a little better
     (gimp-selection-all img)

@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -30,6 +31,7 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcellrendererviewable.h"
@@ -42,6 +44,13 @@
 #include "gimpdnd.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"
+
+
+enum
+{
+  EDIT_NAME,
+  LAST_SIGNAL
+};
 
 
 static void          gimp_container_tree_view_view_iface_init   (GimpContainerViewInterface  *iface);
@@ -79,6 +88,8 @@ static gboolean      gimp_container_tree_view_select_item       (GimpContainerVi
 static void          gimp_container_tree_view_clear_items       (GimpContainerView           *view);
 static void          gimp_container_tree_view_set_view_size     (GimpContainerView           *view);
 
+static void          gimp_container_tree_view_real_edit_name    (GimpContainerTreeView       *tree_view);
+
 static void          gimp_container_tree_view_name_canceled     (GtkCellRendererText         *cell,
                                                                  GimpContainerTreeView       *tree_view);
 
@@ -114,12 +125,15 @@ G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
 
 static GimpContainerViewInterface *parent_view_iface = NULL;
 
+static guint tree_view_signals[LAST_SIGNAL] = { 0 };
+
 
 static void
 gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkBindingSet  *binding_set;
 
   object_class->constructed = gimp_container_tree_view_constructed;
   object_class->finalize    = gimp_container_tree_view_finalize;
@@ -127,6 +141,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   widget_class->unmap       = gimp_container_tree_view_unmap;
   widget_class->popup_menu  = gimp_container_tree_view_popup_menu;
 
+  klass->edit_name          = gimp_container_tree_view_real_edit_name;
   klass->drop_possible      = gimp_container_tree_view_real_drop_possible;
   klass->drop_viewable      = gimp_container_tree_view_real_drop_viewable;
   klass->drop_color         = NULL;
@@ -134,6 +149,20 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
   klass->drop_svg           = NULL;
   klass->drop_component     = NULL;
   klass->drop_pixbuf        = NULL;
+
+  tree_view_signals[EDIT_NAME] =
+    g_signal_new ("edit-name",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpContainerTreeViewClass, edit_name),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  binding_set = gtk_binding_set_by_class (klass);
+
+  gtk_binding_entry_add_signal (binding_set, GDK_F2, 0,
+                                "edit-name", 0);
 
   g_type_class_add_private (klass, sizeof (GimpContainerTreeViewPriv));
 }
@@ -751,6 +780,47 @@ gimp_container_tree_view_set_view_size (GimpContainerView *view)
     }
 
   gtk_tree_view_columns_autosize (tree_view->view);
+}
+
+
+/*  GimpContainerTreeView methods  */
+
+static void
+gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
+{
+  GtkTreeIter selected_iter;
+
+  if (g_list_find (tree_view->priv->editable_cells,
+                   tree_view->priv->name_cell) &&
+      gimp_container_tree_view_get_selected_single (tree_view,
+                                                    &selected_iter))
+    {
+      GimpViewRenderer *renderer;
+      const gchar      *real_name;
+      GtkTreePath      *path;
+
+      gtk_tree_model_get (tree_view->model, &selected_iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                          -1);
+
+      real_name = gimp_object_get_name (renderer->viewable);
+
+      g_object_unref (renderer);
+
+      gtk_tree_store_set (GTK_TREE_STORE (tree_view->model),
+                          &selected_iter,
+                          GIMP_CONTAINER_TREE_STORE_COLUMN_NAME, real_name,
+                          -1);
+
+      path = gtk_tree_model_get_path (tree_view->model, &selected_iter);
+
+      gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
+                                        tree_view->main_column,
+                                        tree_view->priv->name_cell,
+                                        TRUE);
+
+      gtk_tree_path_free (path);
+    }
 }
 
 

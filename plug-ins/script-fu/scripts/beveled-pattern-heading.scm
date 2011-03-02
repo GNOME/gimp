@@ -48,8 +48,8 @@
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
-    (gimp-image-insert-layer img background -1 1)
-    (gimp-image-insert-layer img bumpmap -1 1)
+    (gimp-image-insert-layer img background 0 1)
+    (gimp-image-insert-layer img bumpmap 0 1)
 
     ; Create pattern layer
 
@@ -64,12 +64,12 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(127 127 127))
-    (gimp-item-to-selection textl CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE textl)
     (gimp-selection-shrink img 1)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-context-set-background '(255 255 255))
-    (gimp-item-to-selection textl CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE textl)
     (gimp-selection-shrink img 2)
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
@@ -82,7 +82,7 @@
     ; Clean up
 
     (gimp-context-set-background '(0 0 0))
-    (gimp-item-to-selection textl CHANNEL-OP-REPLACE)
+    (gimp-image-select-item img CHANNEL-OP-REPLACE textl)
     (gimp-selection-invert img)
     (gimp-edit-clear background)
     (gimp-selection-none img)

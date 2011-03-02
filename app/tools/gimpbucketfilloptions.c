@@ -24,7 +24,7 @@
 
 #include "tools-types.h"
 
-#include "config/gimpguiconfig.h"
+#include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
@@ -204,7 +204,7 @@ gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
 
   if (pspec)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value =
-      GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
+      tool_options->tool_info->gimp->config->default_threshold;
 
   GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }

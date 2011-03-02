@@ -446,6 +446,10 @@ gimp_item_tree_add_item (GimpItemTree *tree,
                               GIMP_VIEWABLE (parent));
 
   gimp_container_insert (container, GIMP_OBJECT (item), position);
+
+  /*  if the item came from the undo stack, reset its "removed" state  */
+  if (gimp_item_is_removed (item))
+    gimp_item_unset_removed (item);
 }
 
 GimpItem *
@@ -617,7 +621,8 @@ gimp_item_tree_rename_item (GimpItemTree *tree,
   if (strcmp (new_name, gimp_object_get_name (item)))
     {
       if (push_undo)
-        gimp_image_undo_push_item_rename (item->image, undo_desc, item);
+        gimp_image_undo_push_item_rename (gimp_item_get_image (item),
+                                          undo_desc, item);
 
       gimp_item_tree_uniquefy_name (tree, item, new_name);
     }

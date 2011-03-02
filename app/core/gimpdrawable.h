@@ -119,18 +119,18 @@ struct _GimpDrawableClass
 
 GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
 
-gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
-                                                  gint                width,
-                                                  gint                height);
-
-void            gimp_drawable_configure          (GimpDrawable       *drawable,
+GimpDrawable  * gimp_drawable_new                (GType               type,
                                                   GimpImage          *image,
+                                                  const gchar        *name,
                                                   gint                offset_x,
                                                   gint                offset_y,
                                                   gint                width,
                                                   gint                height,
-                                                  GimpImageType       type,
-                                                  const gchar        *name);
+                                                  GimpImageType       image_type);
+
+gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
+                                                  gint                width,
+                                                  gint                height);
 
 void            gimp_drawable_update             (GimpDrawable       *drawable,
                                                   gint                x,

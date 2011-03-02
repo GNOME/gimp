@@ -41,6 +41,10 @@ enum
   PROP_FEATHER,
   PROP_FEATHER_RADIUS_X,
   PROP_FEATHER_RADIUS_Y,
+  PROP_SAMPLE_MERGED,
+  PROP_SAMPLE_CRITERION,
+  PROP_SAMPLE_THRESHOLD,
+  PROP_SAMPLE_TRANSPARENT,
   PROP_INTERPOLATION,
   PROP_TRANSFORM_DIRECTION,
   PROP_TRANSFORM_RESIZE,
@@ -94,6 +98,27 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                    0.0, 1000.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
+                                    "sample-merged", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SAMPLE_CRITERION,
+                                 "sample-crterion", NULL,
+                                 GIMP_TYPE_SELECT_CRITERION,
+                                 GIMP_SELECT_CRITERION_COMPOSITE,
+                                 GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SAMPLE_THRESHOLD,
+                                   "sample-threshold", NULL,
+                                   0.0, 1.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_TRANSPARENT,
+                                    "sample-transparent", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
                                  "interpolation", NULL,
                                  GIMP_TYPE_INTERPOLATION_TYPE,
@@ -127,7 +152,10 @@ static void
 gimp_pdb_context_constructed (GObject *object)
 {
   GimpInterpolationType  interpolation;
+  gint                   threshold;
   GParamSpec            *pspec;
+
+  /* get default interpolation from gimprc */
 
   interpolation = GIMP_CONTEXT (object)->gimp->config->interpolation_type;
 
@@ -138,6 +166,18 @@ gimp_pdb_context_constructed (GObject *object)
     G_PARAM_SPEC_ENUM (pspec)->default_value = interpolation;
 
   g_object_set (object, "interpolation", interpolation, NULL);
+
+  /* get default threshold from gimprc */
+
+  threshold = GIMP_CONTEXT (object)->gimp->config->default_threshold;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                        "sample-threshold");
+
+  if (pspec)
+    G_PARAM_SPEC_DOUBLE (pspec)->default_value = threshold / 255.0;
+
+  g_object_set (object, "sample-threshold", threshold / 255.0, NULL);
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -167,6 +207,22 @@ gimp_pdb_context_set_property (GObject      *object,
 
     case PROP_FEATHER_RADIUS_Y:
       options->feather_radius_y = g_value_get_double (value);
+      break;
+
+    case PROP_SAMPLE_MERGED:
+      options->sample_merged = g_value_get_boolean (value);
+      break;
+
+    case PROP_SAMPLE_CRITERION:
+      options->sample_criterion = g_value_get_enum (value);
+      break;
+
+    case PROP_SAMPLE_THRESHOLD:
+      options->sample_threshold = g_value_get_double (value);
+      break;
+
+    case PROP_SAMPLE_TRANSPARENT:
+      options->sample_transparent = g_value_get_boolean (value);
       break;
 
     case PROP_INTERPOLATION:
@@ -215,6 +271,22 @@ gimp_pdb_context_get_property (GObject    *object,
 
     case PROP_FEATHER_RADIUS_Y:
       g_value_set_double (value, options->feather_radius_y);
+      break;
+
+    case PROP_SAMPLE_MERGED:
+      g_value_set_boolean (value, options->sample_merged);
+      break;
+
+    case PROP_SAMPLE_CRITERION:
+      g_value_set_enum (value, options->sample_criterion);
+      break;
+
+    case PROP_SAMPLE_THRESHOLD:
+      g_value_set_double (value, options->sample_threshold);
+      break;
+
+    case PROP_SAMPLE_TRANSPARENT:
+      g_value_set_boolean (value, options->sample_transparent);
       break;
 
     case PROP_INTERPOLATION:

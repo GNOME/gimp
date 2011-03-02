@@ -27,6 +27,7 @@
 
 #include "gimpwidgetstypes.h"
 
+#undef GIMP_DISABLE_DEPRECATED
 #include "gimpcolordisplay.h"
 #include "gimpcolordisplaystack.h"
 #include "gimpwidgetsmarshal.h"
@@ -283,6 +284,47 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
     }
 }
 
+/**
+ * gimp_color_display_stack_convert_surface:
+ * @display: a #GimpColorDisplayStack
+ * @surface: a #cairo_image_surface_t of type ARGB32
+ *
+ * Runs all the stack's filters on all pixels in @surface.
+ *
+ * Since: GIMP 2.8
+ **/
+void
+gimp_color_display_stack_convert_surface (GimpColorDisplayStack *stack,
+                                          cairo_surface_t       *surface)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY_STACK (stack));
+  g_return_if_fail (surface != NULL);
+  g_return_if_fail (cairo_surface_get_type (surface) ==
+                    CAIRO_SURFACE_TYPE_IMAGE);
+
+  for (list = stack->filters; list; list = g_list_next (list))
+    {
+      GimpColorDisplay *display = list->data;
+
+      gimp_color_display_convert_surface (display, surface);
+    }
+}
+
+/**
+ * gimp_color_display_stack_convert:
+ * @stack: a #GimpColorDisplayStack
+ * @buf: the pixel buffer to convert
+ * @width: the width of the buffer
+ * @height: the height of the buffer
+ * @bpp: the number of bytes per pixel
+ * @bpl: the buffer's rowstride
+ *
+ * Converts all pixels in @buf.
+ *
+ * Deprecated: GIMP 2.8: Use gimp_color_display_stack_convert_surface() instead.
+ **/
 void
 gimp_color_display_stack_convert (GimpColorDisplayStack *stack,
                                   guchar                *buf,

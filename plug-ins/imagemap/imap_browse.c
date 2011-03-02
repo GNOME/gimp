@@ -66,14 +66,14 @@ browse_cb (GtkWidget      *widget,
        GtkWidget *dialog;
 
        dialog = browse->file_chooser =
-	 gtk_file_chooser_dialog_new (browse->name,
-				      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
-				      GTK_FILE_CHOOSER_ACTION_OPEN,
+         gtk_file_chooser_dialog_new (browse->name,
+                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
-				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				      GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                      GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-				      NULL);
+                                      NULL);
 
        gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                                 GTK_RESPONSE_OK,
@@ -83,8 +83,8 @@ browse_cb (GtkWidget      *widget,
        gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
        g_signal_connect (dialog, "destroy",
-			 G_CALLBACK (gtk_widget_destroyed),
-			 &dialog);
+                         G_CALLBACK (gtk_widget_destroyed),
+                         &dialog);
        g_signal_connect (dialog, "response",
                          G_CALLBACK (select_cb),
                          browse);
@@ -94,7 +94,7 @@ browse_cb (GtkWidget      *widget,
 
 static void
 handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
-	    GtkSelectionData *data, guint info, guint time)
+            GtkSelectionData *data, guint info, guint time)
 {
    gboolean success = FALSE;
 
@@ -130,9 +130,9 @@ browse_widget_new (const gchar *name)
    browse->file = gtk_entry_new ();
    gtk_box_pack_start (GTK_BOX(browse->hbox), browse->file, TRUE, TRUE, 0);
    gtk_drag_dest_set (browse->file, GTK_DEST_DEFAULT_ALL, target_table,
-		      2, GDK_ACTION_COPY);
+                      2, GDK_ACTION_COPY);
    g_signal_connect (browse->file, "drag-data-received",
-		     G_CALLBACK(handle_drop), NULL);
+                     G_CALLBACK(handle_drop), NULL);
 
    gtk_widget_show (browse->file);
 
@@ -143,7 +143,7 @@ browse_widget_new (const gchar *name)
 
    gtk_box_pack_end(GTK_BOX (browse->hbox), button, FALSE, FALSE, 0);
    g_signal_connect (button, "clicked",
-		     G_CALLBACK(browse_cb), (gpointer) browse);
+                     G_CALLBACK(browse_cb), (gpointer) browse);
    gtk_widget_show (button);
 
    return browse;
@@ -157,7 +157,7 @@ browse_widget_set_filename(BrowseWidget_t *browse, const gchar *filename)
 
 void
 browse_widget_set_filter(BrowseWidget_t *browse, BrowseFilter_t filter,
-			 gpointer data)
+                         gpointer data)
 {
    browse->filter = filter;
    browse->filter_data = data;

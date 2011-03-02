@@ -39,6 +39,7 @@
 
 #include "gimpdnd.h"
 #include "gimpdeviceinfo.h"
+#include "gimpdevicemanager.h"
 #include "gimpdevices.h"
 #include "gimpdevicestatus.h"
 #include "gimpdialogfactory.h"
@@ -62,9 +63,7 @@ struct _GimpDeviceStatusEntry
 {
   GimpDeviceInfo *device_info;
 
-  GtkWidget      *table;
-  GtkWidget      *label;
-  GtkWidget      *arrow;
+  GtkWidget      *ebox;
   GtkWidget      *tool;
   GtkWidget      *foreground;
   GtkWidget      *background;
@@ -88,6 +87,9 @@ static void gimp_device_status_device_remove   (GimpContainer         *devices,
                                                 GimpDeviceInfo        *device_info,
                                                 GimpDeviceStatus      *status);
 
+static void gimp_device_status_notify_device   (GimpDeviceManager     *manager,
+                                                const GParamSpec      *pspec,
+                                                GimpDeviceStatus      *status);
 static void gimp_device_status_update_entry    (GimpDeviceInfo        *device_info,
                                                 GimpDeviceStatusEntry *entry);
 static void gimp_device_status_save_clicked    (GtkWidget             *button,
@@ -124,8 +126,8 @@ gimp_device_status_init (GimpDeviceStatus *status)
   status->gimp           = NULL;
   status->current_device = NULL;
 
-  status->vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (status->vbox), 6);
+  status->vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (status->vbox), 2);
   gtk_box_pack_start (GTK_BOX (status), status->vbox, TRUE, TRUE, 0);
   gtk_widget_show (status->vbox);
 
@@ -149,7 +151,7 @@ gimp_device_status_constructed (GObject *object)
 
   g_assert (GIMP_IS_GIMP (status->gimp));
 
-  devices = gimp_devices_get_list (status->gimp);
+  devices = GIMP_CONTAINER (gimp_devices_get_manager (status->gimp));
 
   for (list = GIMP_LIST (devices)->list; list; list = list->next)
     gimp_device_status_device_add (devices, list->data, status);
@@ -161,7 +163,11 @@ gimp_device_status_constructed (GObject *object)
                            G_CALLBACK (gimp_device_status_device_remove),
                            status, 0);
 
-  gimp_device_status_update (status);
+  g_signal_connect (devices, "notify::current-device",
+                    G_CALLBACK (gimp_device_status_notify_device),
+                    status);
+
+  gimp_device_status_notify_device (GIMP_DEVICE_MANAGER (devices), NULL, status);
 }
 
 static void
@@ -186,6 +192,10 @@ gimp_device_status_dispose (GObject *object)
 
       g_list_free (status->devices);
       status->devices = NULL;
+
+      g_signal_handlers_disconnect_by_func (gimp_devices_get_manager (status->gimp),
+                                            gimp_device_status_notify_device,
+                                            status);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -204,6 +214,7 @@ gimp_device_status_set_property (GObject      *object,
     case PROP_GIMP:
       status->gimp = g_value_get_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -217,13 +228,11 @@ gimp_device_status_device_add (GimpContainer    *devices,
 {
   GimpContext           *context = GIMP_CONTEXT (device_info);
   GimpDeviceStatusEntry *entry;
-  GtkWidget             *hbox;
   GClosure              *closure;
+  GtkWidget             *vbox;
+  GtkWidget             *hbox;
+  GtkWidget             *label;
   gchar                 *name;
-
-  /*  only list present devices  */
-  if (! gimp_device_info_get_device (device_info, NULL))
-    return;
 
   entry = g_slice_new0 (GimpDeviceStatusEntry);
 
@@ -236,52 +245,48 @@ gimp_device_status_device_add (GimpContainer    *devices,
   g_object_watch_closure (G_OBJECT (status), closure);
   g_signal_connect_closure (device_info, "changed", closure, FALSE);
 
-  entry->table = gtk_table_new (2, 7, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (entry->table), 6);
-  gtk_box_pack_start (GTK_BOX (status->vbox), entry->table,
+  entry->ebox = gtk_event_box_new ();
+  gtk_box_pack_start (GTK_BOX (status->vbox), entry->ebox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (entry->table);
+  gtk_widget_show (entry->ebox);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (entry->ebox), vbox);
+  gtk_widget_show (vbox);
 
   /*  the device name  */
 
-  if (device_info->display == gdk_display_get_default ())
+  if (device_info->display == NULL ||
+      device_info->display == gdk_display_get_default ())
     name = g_strdup (gimp_object_get_name (device_info));
   else
     name = g_strdup_printf ("%s (%s)",
                             gimp_object_get_name (device_info),
                             gdk_display_get_name (device_info->display));
 
-  entry->label = gtk_label_new (name);
+  label = gtk_label_new (name);
   g_free (name);
 
-  gimp_label_set_attributes (GTK_LABEL (entry->label),
+  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_widget_set_size_request (entry->label, -1, CELL_SIZE);
-  gtk_misc_set_alignment (GTK_MISC (entry->label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->label,
-                    1, 7, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry->label);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  /*  the arrow  */
+  /*  the row of properties  */
 
-  entry->arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
-  gtk_widget_set_size_request (entry->arrow, CELL_SIZE, CELL_SIZE);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->arrow,
-                    0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_widget_set_size_request (hbox, CELL_SIZE, CELL_SIZE);
-  gtk_table_attach (GTK_TABLE (entry->table), hbox,
-                    0, 1, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  the tool  */
 
   entry->tool = gimp_prop_view_new (G_OBJECT (context), "tool",
                                     context, CELL_SIZE);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->tool,
-                    1, 2, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->tool, FALSE, FALSE, 0);
   gtk_widget_show (entry->tool);
 
   /*  the foreground color  */
@@ -292,8 +297,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                                 GIMP_COLOR_AREA_FLAT);
   gtk_widget_add_events (entry->foreground,
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->foreground,
-                    2, 3, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->foreground, FALSE, FALSE, 0);
   gtk_widget_show (entry->foreground);
 
   /*  the background color  */
@@ -304,8 +308,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                                 GIMP_COLOR_AREA_FLAT);
   gtk_widget_add_events (entry->background,
                          GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
-  gtk_table_attach (GTK_TABLE (entry->table), entry->background,
-                    3, 4, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->background, FALSE, FALSE, 0);
   gtk_widget_show (entry->background);
 
   /*  the brush  */
@@ -314,8 +317,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                      context, CELL_SIZE);
   GIMP_VIEW (entry->brush)->clickable  = TRUE;
   GIMP_VIEW (entry->brush)->show_popup = TRUE;
-  gtk_table_attach (GTK_TABLE (entry->table), entry->brush,
-                    4, 5, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->brush, FALSE, FALSE, 0);
   gtk_widget_show (entry->brush);
 
   g_signal_connect (entry->brush, "clicked",
@@ -328,8 +330,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                        context, CELL_SIZE);
   GIMP_VIEW (entry->pattern)->clickable  = TRUE;
   GIMP_VIEW (entry->pattern)->show_popup = TRUE;
-  gtk_table_attach (GTK_TABLE (entry->table), entry->pattern,
-                    5, 6, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->pattern, FALSE, FALSE, 0);
   gtk_widget_show (entry->pattern);
 
   g_signal_connect (entry->pattern, "clicked",
@@ -342,8 +343,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
                                         context, 2 * CELL_SIZE);
   GIMP_VIEW (entry->gradient)->clickable  = TRUE;
   GIMP_VIEW (entry->gradient)->show_popup = TRUE;
-  gtk_table_attach (GTK_TABLE (entry->table), entry->gradient,
-                    6, 7, 1, 2, 0, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), entry->gradient, FALSE, FALSE, 0);
   gtk_widget_show (entry->gradient);
 
   g_signal_connect (entry->gradient, "clicked",
@@ -389,36 +389,36 @@ gimp_device_status_new (Gimp *gimp)
                        NULL);
 }
 
-void
-gimp_device_status_update (GimpDeviceStatus *status)
+
+/*  private functions  */
+
+static void
+gimp_device_status_notify_device (GimpDeviceManager *manager,
+                                  const GParamSpec  *pspec,
+                                  GimpDeviceStatus  *status)
 {
   GList *list;
 
-  g_return_if_fail (GIMP_IS_DEVICE_STATUS (status));
-
-  status->current_device = gimp_devices_get_current (status->gimp);
+  status->current_device = gimp_device_manager_get_current_device (manager);
 
   for (list = status->devices; list; list = list->next)
     {
       GimpDeviceStatusEntry *entry = list->data;
 
-      gtk_widget_set_visible (entry->arrow,
-                              entry->device_info == status->current_device);
+      gtk_widget_set_state (entry->ebox,
+                            entry->device_info == status->current_device ?
+                            GTK_STATE_SELECTED : GTK_STATE_NORMAL);
     }
 }
-
-
-/*  private functions  */
 
 static void
 gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
                                  GimpDeviceStatusEntry *entry)
 {
-  GdkDevice *device = gimp_device_info_get_device (device_info, NULL);
-
-  if (! device || device->mode == GDK_MODE_DISABLED)
+  if (! gimp_device_info_get_device (device_info, NULL) ||
+      gimp_device_info_get_mode (device_info) == GDK_MODE_DISABLED)
     {
-      gtk_widget_hide (entry->table);
+      gtk_widget_hide (entry->ebox);
     }
   else
     {
@@ -437,7 +437,7 @@ gimp_device_status_update_entry (GimpDeviceInfo        *device_info,
       g_snprintf (buf, sizeof (buf), _("Background: %d, %d, %d"), r, g, b);
       gimp_help_set_help_data (entry->background, buf, NULL);
 
-      gtk_widget_show (entry->table);
+      gtk_widget_show (entry->ebox);
     }
 }
 

@@ -11,6 +11,9 @@
   <creator role="author" last-active="2.2">Spencer Kimball</creator>
   <creator role="author" last-active="1.0">Peter Mattis</creator>
 
+  <maintainer role="author" last-active="2.8">Sven Neumann</maintainer>
+  <maintainer role="author" last-active="2.8">Michael Natterer</maintainer>
+
   <contributor role="author" last-active="1.2">Lauri Alanko</contributor>
   <contributor role="author" last-active="2.8">Fredrik Alströmer</contributor>
   <contributor role="author" last-active="1.2">Shawn Amundson</contributor>
@@ -187,10 +190,8 @@
   <contributor role="author" last-active="1.2">Yukihiro Nakai</contributor>
   <contributor role="author" last-active="1.2">Shuji Narazaki</contributor>
   <contributor role="author" last-active="1.2">Felix Natter</contributor>
-  <contributor role="author" last-active="2.8">Michael Natterer</contributor>
   <contributor role="author" last-active="2.4">David Neary</contributor>
   <contributor role="author" last-active="2.2">David Necas</contributor>
-  <contributor role="author" last-active="2.8">Sven Neumann</contributor>
   <contributor role="author" last-active="2.8">Andreas Neustifter</contributor>
   <contributor role="artist" last-active="2.4">Andreas Nilsson</contributor>
   <contributor role="author" last-active="1.0">Stephen Robert Norris</contributor>

@@ -302,6 +302,7 @@ gimp_device_info_set_property (GObject      *object,
 
                 info->n_axes = n_device_values;
                 info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
+                memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
               }
 
             for (i = 0; i < n_device_values; i++)
@@ -335,6 +336,7 @@ gimp_device_info_set_property (GObject      *object,
 
                 info->n_keys = n_device_values;
                 info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
+                memset (info->keys, 0, info->n_keys * sizeof (GdkDeviceKey));
               }
 
             for (i = 0; i < n_device_values; i++)
@@ -605,6 +607,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
       info->n_axes = device->num_axes;
       info->axes   = g_renew (GdkAxisUse, info->axes, info->n_axes);
+      memset (info->axes, 0, info->n_axes * sizeof (GdkAxisUse));
 
       for (i = 0; i < device->num_axes; i++)
         gimp_device_info_set_axis_use (info, i,
@@ -612,6 +615,7 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
       info->n_keys = device->num_keys;
       info->keys   = g_renew (GdkDeviceKey, info->keys, info->n_keys);
+      memset (info->keys, 0, info->n_keys * sizeof (GdkDeviceKey));
 
       for (i = 0; i < MIN (info->n_keys, device->num_keys); i++)
         gimp_device_info_set_key (info, i,
@@ -621,6 +625,9 @@ gimp_device_info_set_device (GimpDeviceInfo *info,
 
   /*  sort order depends on device presence  */
   gimp_object_name_changed (GIMP_OBJECT (info));
+
+  g_object_notify (G_OBJECT (info), "device");
+  gimp_device_info_changed (info);
 }
 
 GdkInputMode

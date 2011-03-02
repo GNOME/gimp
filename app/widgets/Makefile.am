@@ -126,6 +126,8 @@ libappwidgets_a_sources = \
 	gimpdeviceinfo-coords.h		\
 	gimpdeviceinfoeditor.c		\
 	gimpdeviceinfoeditor.h		\
+	gimpdevicemanager.c		\
+	gimpdevicemanager.h		\
 	gimpdevices.c			\
 	gimpdevices.h			\
 	gimpdevicestatus.c		\
@@ -197,6 +199,8 @@ libappwidgets_a_sources = \
 	gimphistogrameditor.h		\
 	gimphistogramview.c		\
 	gimphistogramview.h		\
+	gimpiconpicker.c		\
+	gimpiconpicker.h		\
 	gimpimagecommenteditor.c	\
 	gimpimagecommenteditor.h	\
 	gimpimageeditor.c		\

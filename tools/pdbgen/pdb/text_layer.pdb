@@ -1175,10 +1175,21 @@ HELP
 {
   if (gimp_pdb_layer_is_text_layer (layer, TRUE, error))
     {
+      GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
+      gdouble   xres, yres;
+
+      gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
+                                 &xres, &yres);
+
       gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
                            _("Set text layer attribute"),
-                           "box-width",  width,
-                           "box-height", height,
+                           "box-mode",   GIMP_TEXT_BOX_FIXED,
+                           "box-width",  gimp_pixels_to_units (width,
+                                                               text->box_unit,
+                                                               xres),
+                           "box-height", gimp_pixels_to_units (height,
+                                                               text->box_unit,
+                                                               yres),
                            NULL);
     }
   else

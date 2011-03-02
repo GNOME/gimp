@@ -21,7 +21,7 @@
 
     (gimp-image-undo-disable img)
 
-    (gimp-image-add-layer img layer-one 0)
+    (gimp-image-insert-layer img layer-one 0 0)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill layer-one BACKGROUND-FILL)
     (plug-in-noisify RUN-NONINTERACTIVE img layer-one FALSE noise-level noise-level noise-level 1.0)

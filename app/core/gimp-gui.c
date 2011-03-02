@@ -40,29 +40,29 @@ gimp_gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.ungrab              = NULL;
-  gimp->gui.threads_enter       = NULL;
-  gimp->gui.threads_leave       = NULL;
-  gimp->gui.set_busy            = NULL;
-  gimp->gui.unset_busy          = NULL;
-  gimp->gui.show_message        = NULL;
-  gimp->gui.help                = NULL;
-  gimp->gui.get_program_class   = NULL;
-  gimp->gui.get_display_name    = NULL;
-  gimp->gui.get_user_time       = NULL;
-  gimp->gui.get_theme_dir       = NULL;
-  gimp->gui.display_get_by_id   = NULL;
-  gimp->gui.display_get_id      = NULL;
-  gimp->gui.display_get_window  = NULL;
-  gimp->gui.display_create      = NULL;
-  gimp->gui.display_delete      = NULL;
-  gimp->gui.displays_reconnect  = NULL;
-  gimp->gui.progress_new        = NULL;
-  gimp->gui.progress_free       = NULL;
-  gimp->gui.pdb_dialog_set      = NULL;
-  gimp->gui.pdb_dialog_close    = NULL;
-  gimp->gui.recent_list_add_uri = NULL;
-  gimp->gui.recent_list_load    = NULL;
+  gimp->gui.ungrab                = NULL;
+  gimp->gui.threads_enter         = NULL;
+  gimp->gui.threads_leave         = NULL;
+  gimp->gui.set_busy              = NULL;
+  gimp->gui.unset_busy            = NULL;
+  gimp->gui.show_message          = NULL;
+  gimp->gui.help                  = NULL;
+  gimp->gui.get_program_class     = NULL;
+  gimp->gui.get_display_name      = NULL;
+  gimp->gui.get_user_time         = NULL;
+  gimp->gui.get_theme_dir         = NULL;
+  gimp->gui.display_get_by_id     = NULL;
+  gimp->gui.display_get_id        = NULL;
+  gimp->gui.display_get_window_id = NULL;
+  gimp->gui.display_create        = NULL;
+  gimp->gui.display_delete        = NULL;
+  gimp->gui.displays_reconnect    = NULL;
+  gimp->gui.progress_new          = NULL;
+  gimp->gui.progress_free         = NULL;
+  gimp->gui.pdb_dialog_set        = NULL;
+  gimp->gui.pdb_dialog_close      = NULL;
+  gimp->gui.recent_list_add_uri   = NULL;
+  gimp->gui.recent_list_load      = NULL;
 }
 
 void
@@ -297,14 +297,14 @@ gimp_get_display_ID (Gimp       *gimp,
 }
 
 guint32
-gimp_get_display_window (Gimp       *gimp,
-                         GimpObject *display)
+gimp_get_display_window_id (Gimp       *gimp,
+                            GimpObject *display)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
   g_return_val_if_fail (GIMP_IS_OBJECT (display), -1);
 
-  if (gimp->gui.display_get_window)
-    return gimp->gui.display_get_window (display);
+  if (gimp->gui.display_get_window_id)
+    return gimp->gui.display_get_window_id (display);
 
   return -1;
 }

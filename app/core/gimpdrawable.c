@@ -410,6 +410,7 @@ gimp_drawable_duplicate (GimpItem *item,
     {
       GimpDrawable  *drawable     = GIMP_DRAWABLE (item);
       GimpDrawable  *new_drawable = GIMP_DRAWABLE (new_item);
+      GimpImageType  image_type   = gimp_drawable_type (drawable);
       PixelRegion    srcPR;
       PixelRegion    destPR;
       gint           offset_x;
@@ -417,14 +418,16 @@ gimp_drawable_duplicate (GimpItem *item,
 
       gimp_item_get_offset (item, &offset_x, &offset_y);
 
-      gimp_drawable_configure (new_drawable,
-                               gimp_item_get_image (item),
-                               offset_x,
-                               offset_y,
-                               gimp_item_get_width  (item),
-                               gimp_item_get_height (item),
-                               gimp_drawable_type (drawable),
-                               gimp_object_get_name (new_drawable));
+      new_drawable->type  = image_type;
+      new_drawable->bytes = GIMP_IMAGE_TYPE_BYTES (image_type);
+
+      if (new_drawable->private->tiles)
+        tile_manager_unref (new_drawable->private->tiles);
+
+      new_drawable->private->tiles =
+        tile_manager_new (gimp_item_get_width  (new_item),
+                          gimp_item_get_height (new_item),
+                          new_drawable->bytes);
 
       pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
                          0, 0,
@@ -1174,6 +1177,35 @@ gimp_drawable_fs_update (GimpLayer    *fs,
 
 /*  public functions  */
 
+GimpDrawable *
+gimp_drawable_new (GType          type,
+                   GimpImage     *image,
+                   const gchar   *name,
+                   gint           offset_x,
+                   gint           offset_y,
+                   gint           width,
+                   gint           height,
+                   GimpImageType  image_type)
+{
+  GimpDrawable *drawable;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_DRAWABLE), NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
+
+  drawable = GIMP_DRAWABLE (gimp_item_new (type,
+                                           image, name,
+                                           offset_x, offset_y,
+                                           width, height));
+
+  drawable->type  = image_type;
+  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (image_type);
+
+  drawable->private->tiles = tile_manager_new (width, height, drawable->bytes);
+
+  return drawable;
+}
+
 gint64
 gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
                                 gint                width,
@@ -1183,41 +1215,6 @@ gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
 
   return GIMP_DRAWABLE_GET_CLASS (drawable)->estimate_memsize (drawable,
                                                                width, height);
-}
-
-void
-gimp_drawable_configure (GimpDrawable  *drawable,
-                         GimpImage     *image,
-                         gint           offset_x,
-                         gint           offset_y,
-                         gint           width,
-                         gint           height,
-                         GimpImageType  type,
-                         const gchar   *name)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (width > 0 && height > 0);
-
-  gimp_item_configure (GIMP_ITEM (drawable), image,
-                       offset_x, offset_y, width, height, name);
-
-  drawable->type  = type;
-  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (type);
-
-  if (drawable->private->tiles)
-    tile_manager_unref (drawable->private->tiles);
-
-  drawable->private->tiles = tile_manager_new (width, height, drawable->bytes);
-
-  /*  preview variables  */
-  drawable->private->preview_cache = NULL;
-  drawable->private->preview_valid = FALSE;
-
-  if (drawable->private->tile_source_node)
-    gegl_node_set (drawable->private->tile_source_node,
-                   "tile-manager", gimp_drawable_get_tiles (drawable),
-                   NULL);
 }
 
 void

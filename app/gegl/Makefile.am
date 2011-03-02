@@ -21,6 +21,8 @@ libappgegl_a_sources = \
 	gimp-gegl.h			\
 	gimp-gegl-utils.c		\
 	gimp-gegl-utils.h		\
+	gimptilebackendtilemanager.c	\
+	gimptilebackendtilemanager.h	\
 	\
 	gimpbrightnesscontrastconfig.c	\
 	gimpbrightnesscontrastconfig.h	\

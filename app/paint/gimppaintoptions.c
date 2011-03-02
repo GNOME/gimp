@@ -38,7 +38,7 @@
 
 
 #define DEFAULT_BRUSH_SIZE             20.0
-#define DEFAULT_BRUSH_ASPECT_RATIO     1.0
+#define DEFAULT_BRUSH_ASPECT_RATIO     0.0
 #define DEFAULT_BRUSH_ANGLE            0.0
 
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
@@ -148,7 +148,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                                    "brush-aspect-ratio", _("Brush Aspect Ratio"),
-                                   0.01, 10.0, DEFAULT_BRUSH_ASPECT_RATIO,
+                                   -20.0, 20.0, DEFAULT_BRUSH_ASPECT_RATIO,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
                                    "brush-angle", _("Brush Angle"),

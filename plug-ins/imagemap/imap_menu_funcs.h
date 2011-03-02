@@ -27,13 +27,13 @@ typedef void (*MenuCallback)(GtkWidget *widget, gpointer data);
 
 void init_accel_group(GtkWidget *window);
 GtkWidget *insert_item_with_label(GtkWidget *parent, gint position,
-				  gchar *label, MenuCallback activate,
-				  gpointer data);
+                                  gchar *label, MenuCallback activate,
+                                  gpointer data);
 
 void menu_command(GtkWidget *widget, gpointer data);
 
 void add_accelerator(GtkWidget *widget, guint accelerator_key,
-		     guint8 accelerator_mods);
+                     guint8 accelerator_mods);
 
 
 #endif /* _IMAP_MENU_FUNCS_H */

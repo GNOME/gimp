@@ -35,6 +35,9 @@ gettext.install("gimp20-python", gimp.locale_directory, unicode=True)
 def pyslice(image, drawable, save_path, html_filename,
             image_basename, image_extension, separate,
             image_path, cellspacing, animate, skip_caps):
+
+    cellspacing = int (cellspacing)
+
     if animate:
         count = 0
         drw = []

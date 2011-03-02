@@ -738,8 +738,12 @@ This procedure modifies the antialias setting. If antialiasing is
 turned on, the edges of selected region will contain intermediate
 values which give the appearance of a sharper, less pixelized edge.
 This should be set as TRUE most of the time unless a binary-only
-selection is wanted. This settings affects the following procedures:
-The entire gimp-image-select-foo group of procedures.
+selection is wanted.
+
+This settings affects the following procedures:
+gimp_image_select_color(), gimp_image_select_contiguous_color(),
+gimp_image_select_round_rectangle(), gimp_image_select_ellipse(),
+gimp_image_select_polygon(), gimp_image_select_item().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -792,8 +796,13 @@ sub context_set_feather {
 This procedure modifies the feather setting. If the feather option is
 enabled, selections will be blurred before combining. The blur is a
 gaussian blur; its radii can be controlled using
-gimp_context_set_feather_radius(). This settings affects the following
-procedures: The entire gimp-image-select-foo group of procedures.
+gimp_context_set_feather_radius().
+
+This setting affects the following procedures:
+gimp_image_select_color(), gimp_image_select_contiguous_color(),
+gimp_image_select_rectangle(), gimp_image_select_round_rectangle(),
+gimp_image_select_ellipse(), gimp_image_select_polygon(),
+gimp_image_select_item().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -846,9 +855,10 @@ sub context_set_feather_radius {
     $blurb = 'Set the feather radius setting.';
 
     $help = <<'HELP';
-This procedure modifies the feather radius setting. This settings
-affects the following procedures: The entire gimp-image-select-foo
-group of procedures.
+This procedure modifies the feather radius setting.
+
+This setting affects the all procedures that are affected
+by gimp_context_set_feather().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -866,6 +876,293 @@ HELP
   g_object_set (context,
                 "feather-radius-x", feather_radius_x,
                 "feather-radius-y", feather_radius_y,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_merged {
+    $blurb = 'Get the sample merged setting.';
+
+    $help = <<'HELP';
+This procedure returns the sample merged setting.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_merged', type => 'boolean',
+          desc => 'The sample merged setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "sample-merged", &sample_merged,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_sample_merged {
+    $blurb = 'Set the sample merged setting.';
+
+    $help = <<'HELP';
+This procedure modifies the sample merged setting. If an operation
+depends on the colors of the pixels present in a drawable, like when
+doing a seed fill, this setting controls whether the pixel data from
+the specified drawable is used ('sample-merged' is FALSE), or the
+pixel data from the composite image ('sample-merged' is TRUE. This is
+equivalent to sampling for colors after merging all visible layers).
+
+This setting affects the following procedures:
+gimp_image_select_color(), gimp_image_select_contiguous_color().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_merged', type => 'boolean',
+          desc => 'The sample merged setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-merged", sample_merged,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_criterion {
+    $blurb = 'Get the sample criterion setting.';
+
+    $help = <<'HELP';
+This procedure returns the sample criterion setting.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_criterion', type => 'enum GimpSelectCriterion',
+          desc => 'The sample criterion setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "sample-criterion", &sample_criterion,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_sample_criterion {
+    $blurb = 'Set the sample criterion setting.';
+
+    $help = <<'HELP';
+This procedure modifies the sample criterion setting. If an operation
+depends on the colors of the pixels present in a drawable, like when
+doing a seed fill, this setting controls how color similarity is
+determined. SELECT_CRITERION_COMPOSITE is the default value.
+
+This setting affects the following procedures:
+gimp_image_select_color(), gimp_image_select_contiguous_color().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_criterion', type => 'enum GimpSelectCriterion',
+          desc => 'The sample criterion setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-criterion", sample_criterion,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_threshold {
+    $blurb = 'Get the sample threshold setting.';
+
+    $help = <<'HELP';
+This procedure returns the sample threshold setting.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_threshold', type => '0.0 <= float <= 1.0',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "sample-threshold", &sample_threshold,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_sample_threshold {
+    $blurb = 'Set the sample threshold setting.';
+
+    $help = <<'HELP';
+
+This procedure modifies the sample threshold setting. If an operation
+depends on the colors of the pixels present in a drawable, like when
+doing a seed fill, this setting controls what is "sufficiently close"
+to be considered a similar color. If the sample threshold has not been
+set explicitly, the default threshold set in gimprc will be used.
+
+This setting affects the following procedures:
+gimp_image_select_color(), gimp_image_select_contiguous_color().
+
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_threshold', type => '0.0 <= float <= 1.0',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-threshold", sample_threshold,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_threshold_int {
+    $blurb = 'Get the sample threshold setting as an integer value.';
+
+    $help = <<'HELP';
+This procedure returns the sample threshold setting as an integer
+value. See gimp_context_get_sample_threshold().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_threshold', type => '0 <= int32 <= 255',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gdouble threshold;
+
+  g_object_get (context,
+                "sample-threshold", &threshold,
+                NULL);
+
+  sample_threshold = (gint) (threshold * 255.99);
+}
+CODE
+    );
+}
+
+sub context_set_sample_threshold_int {
+    $blurb = 'Set the sample threshold setting as an integer value.';
+
+    $help = <<'HELP';
+This procedure modifies the sample threshold setting as an integer
+value. See gimp_context_set_sample_threshold().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_threshold', type => '0 <= int32 <= 255',
+          desc => 'The sample threshold setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-threshold", (gdouble) sample_threshold / 255.0,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_get_sample_transparent {
+    $blurb = 'Get the sample transparent setting.';
+
+    $help = <<'HELP';
+This procedure returns the sample transparent setting.
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @outargs = (
+        { name => 'sample_transparent', type => 'boolean',
+          desc => 'The sample transparent setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_get (context,
+                "sample-transparent", &sample_transparent,
+                NULL);
+}
+CODE
+    );
+}
+
+sub context_set_sample_transparent {
+    $blurb = 'Set the sample transparent setting.';
+
+    $help = <<'HELP';
+
+This procedure modifies the sample transparent setting. If an
+operation depends on the colors of the pixels present in a drawable,
+like when doing a seed fill, this setting controls whether
+transparency is considered to be a unique selectable color. When this
+setting is TRUE, transparent areas can be selected or filled.
+
+This setting affects the following procedures:
+gimp_image_select_color(), gimp_image_select_contiguous_color().
+HELP
+
+    &mitch_pdb_misc('2011', '2.8');
+
+    @inargs = (
+        { name => 'sample_transparent', type => 'boolean',
+          desc => 'The sample transparent setting' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  g_object_set (context,
+                "sample-transparent", sample_transparent,
                 NULL);
 }
 CODE
@@ -905,9 +1202,13 @@ sub context_set_interpolation {
     $blurb = 'Set the interpolation type.';
 
     $help = <<'HELP';
-This procedure modifies the interpolation setting. It affects the
-following procedures: all transform procedures which can produce
-sub-pixel results, gimp_image_scale(), gimp_layer_scale().
+This procedure modifies the interpolation setting.
+
+This setting affects affects the following procedures:
+gimp_item_transform_flip(), gimp_item_transform_perspective(),
+gimp_item_transform_rotate(), gimp_item_transform_scale(),
+gimp_item_transform_shear(), gimp_item_transform_2d(),
+gimp_item_transform_matrix(), gimp_image_scale(), gimp_layer_scale().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -960,6 +1261,12 @@ sub context_set_transform_direction {
 
     $help = <<'HELP';
 This procedure modifies the transform direction setting.
+
+This setting affects affects the following procedures:
+gimp_item_transform_flip(), gimp_item_transform_perspective(),
+gimp_item_transform_rotate(), gimp_item_transform_scale(),
+gimp_item_transform_shear(), gimp_item_transform_2d(),
+gimp_item_transform_matrix().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -1015,6 +1322,13 @@ This procedure modifies the transform resize setting. When transforming
 pixels, if the result of a transform operation  has a different size
 than the original area, this setting determines how the resulting area
 is sized.
+
+This setting affects affects the following procedures:
+gimp_item_transform_flip(), gimp_item_transform_flip_simple(),
+gimp_item_transform_perspective(), gimp_item_transform_rotate(),
+gimp_item_transform_rotate_simple(), gimp_item_transform_scale(),
+gimp_item_transform_shear(), gimp_item_transform_2d(),
+gimp_item_transform_matrix().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -1068,6 +1382,12 @@ This procedure modifies the transform supersampling recursion level
 setting. Whether or not a transformation does supersampling is
 determined by the interplolation type. The recursion level defaults
 to 3, which is a nice default value.
+
+This setting affects affects the following procedures:
+gimp_item_transform_flip(), gimp_item_transform_perspective(),
+gimp_item_transform_rotate(), gimp_item_transform_scale(),
+gimp_item_transform_shear(), gimp_item_transform_2d(),
+gimp_item_transform_matrix().
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -1114,6 +1434,11 @@ CODE
             context_get_antialias context_set_antialias
             context_get_feather context_set_feather
             context_get_feather_radius context_set_feather_radius
+            context_get_sample_merged context_set_sample_merged
+            context_get_sample_criterion context_set_sample_criterion
+            context_get_sample_threshold context_set_sample_threshold
+            context_get_sample_threshold_int context_set_sample_threshold_int
+            context_get_sample_transparent context_set_sample_transparent
             context_get_interpolation context_set_interpolation
             context_get_transform_direction context_set_transform_direction
             context_get_transform_resize context_set_transform_resize

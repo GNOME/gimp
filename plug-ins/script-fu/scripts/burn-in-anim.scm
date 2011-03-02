@@ -74,14 +74,14 @@
               (set! bl-layer-name (string-append "fr-nr"
                                                  (number->string frame-nr 10) ) )
 
-              (gimp-image-insert-layer img bl-layer -1 -2)
+              (gimp-image-insert-layer img bl-layer 0 -2)
               (gimp-item-set-name bl-layer bl-layer-name)
               (gimp-item-set-visible bl-layer TRUE)
               (gimp-layer-set-lock-alpha bl-layer TRUE)
               (gimp-layer-add-alpha bl-layer)
 
               ;--- add an alpha mask for blending and select it
-              (gimp-item-to-selection bl-layer CHANNEL-OP-REPLACE)
+              (gimp-image-select-item img CHANNEL-OP-REPLACE bl-layer)
               (set! bl-mask (car (gimp-layer-create-mask bl-layer ADD-BLACK-MASK)))
               (gimp-layer-add-mask bl-layer bl-mask)
 
@@ -148,7 +148,7 @@
                    (- (+ bl-x-off bl-width) after-glow) 0)
 
           ;--- add corona effect
-          (gimp-item-to-selection bl-layer CHANNEL-OP-REPLACE)
+          (gimp-image-select-item img CHANNEL-OP-REPLACE bl-layer)
           (gimp-selection-sharpen img)
           (gimp-selection-grow img corona-width)
           (gimp-layer-set-lock-alpha bl-layer FALSE)
@@ -164,7 +164,7 @@
 
               ;--- merge with bg layer
               (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
-              (gimp-image-insert-layer img bg-layer -1 -1)
+              (gimp-image-insert-layer img bg-layer 0 -1)
               (gimp-image-lower-item img bg-layer)
               (set! bg-layer-name (string-append "bg-"
                                                  (number->string frame-nr 10)))

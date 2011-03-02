@@ -33,25 +33,25 @@
 static CmdExecuteValue_t select_region_command_execute(Command_t *parent);
 
 static CommandClass_t select_region_command_class = {
-   NULL,			/* select_region_command_destruct, */
+   NULL,                        /* select_region_command_destruct, */
    select_region_command_execute,
-   NULL, 			/* select_region_command_undo */
-   NULL				/* select_region_command_redo */
+   NULL,                        /* select_region_command_undo */
+   NULL                         /* select_region_command_redo */
 };
 
 typedef struct {
-   Command_t	 parent;
-   GtkWidget	*widget;
+   Command_t     parent;
+   GtkWidget    *widget;
    ObjectList_t *list;
-   gint		 x;
-   gint		 y;
-   Object_t	*obj;
-   Command_t	*unselect_command;
+   gint          x;
+   gint          y;
+   Object_t     *obj;
+   Command_t    *unselect_command;
 } SelectRegionCommand_t;
 
 Command_t*
 select_region_command_new(GtkWidget *widget, ObjectList_t *list, gint x,
-			  gint y)
+                          gint y)
 {
    SelectRegionCommand_t *command = g_new(SelectRegionCommand_t, 1);
    Command_t *sub_command;
@@ -61,7 +61,7 @@ select_region_command_new(GtkWidget *widget, ObjectList_t *list, gint x,
    command->x = x;
    command->y = y;
    (void) command_init(&command->parent, _("Select Region"),
-		       &select_region_command_class);
+                       &select_region_command_class);
 
    sub_command = unselect_all_command_new(list, NULL);
    command_add_subcommand(&command->parent, sub_command);
@@ -83,13 +83,14 @@ select_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) data;
    Object_t *obj = command->obj;
    Rectangle_t *rectangle = ObjectToRectangle(obj);
+
    gint x = get_real_coord((gint) event->x);
    gint y = get_real_coord((gint) event->y);
 
-   object_draw(obj, gtk_widget_get_window (widget));
    rectangle->width = x - rectangle->x;
    rectangle->height = y - rectangle->y;
-   object_draw(obj, gtk_widget_get_window (widget));
+
+   preview_redraw ();
 }
 
 static void
@@ -106,22 +107,22 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    g_signal_handlers_disconnect_by_func(widget,
                                         select_release, data);
 
-   object_draw(obj, gtk_widget_get_window (widget));
    object_normalize(obj);
-   gdk_gc_set_function(get_preferences()->normal_gc, GDK_COPY);
 
    id = object_list_add_select_cb(command->list, select_one_object, command);
    count = object_list_select_region(command->list, rectangle->x, rectangle->y,
-				     rectangle->width, rectangle->height);
+                                     rectangle->width, rectangle->height);
    object_list_remove_select_cb(command->list, id);
 
    if (count) {
       command_list_add(&command->parent);
-   } else {			/* Nothing selected */
+   } else {                     /* Nothing selected */
       if (command->unselect_command->sub_commands)
-	 command_list_add(&command->parent);
+         command_list_add(&command->parent);
    }
-   object_unref(obj);
+   preview_unset_tmp_obj (command->obj);
+
+   preview_redraw ();
 }
 
 static CmdExecuteValue_t
@@ -130,12 +131,12 @@ select_region_command_execute(Command_t *parent)
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
+   preview_set_tmp_obj (command->obj);
+
    g_signal_connect(command->widget, "button-release-event",
                     G_CALLBACK (select_release), command);
    g_signal_connect(command->widget, "motion-notify-event",
                     G_CALLBACK (select_motion), command);
-
-   gdk_gc_set_function(get_preferences()->normal_gc, GDK_XOR);
 
    return CMD_IGNORE;
 }

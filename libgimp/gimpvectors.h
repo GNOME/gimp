@@ -27,20 +27,29 @@ G_BEGIN_DECLS
 
 
 #ifndef GIMP_DISABLE_DEPRECATED
-gboolean   gimp_vectors_is_valid    (gint32       vectors_ID);
-gint32     gimp_vectors_get_image   (gint32       vectors_ID);
-gchar    * gimp_vectors_get_name    (gint32       vectors_ID);
-gboolean   gimp_vectors_set_name    (gint32       vectors_ID,
-                                     const gchar *name);
-gboolean   gimp_vectors_get_visible (gint32       vectors_ID);
-gboolean   gimp_vectors_set_visible (gint32       vectors_ID,
-                                     gboolean     visible);
-gboolean   gimp_vectors_get_linked  (gint32       vectors_ID);
-gboolean   gimp_vectors_set_linked  (gint32       vectors_ID,
-                                     gboolean     linked);
-gint       gimp_vectors_get_tattoo  (gint32       vectors_ID);
-gboolean   gimp_vectors_set_tattoo  (gint32       vectors_ID,
-                                     gint         tattoo);
+gboolean       gimp_vectors_is_valid        (gint32              vectors_ID);
+gint32         gimp_vectors_get_image       (gint32              vectors_ID);
+gchar        * gimp_vectors_get_name        (gint32              vectors_ID);
+gboolean       gimp_vectors_set_name        (gint32              vectors_ID,
+                                             const gchar        *name);
+gboolean       gimp_vectors_get_visible     (gint32              vectors_ID);
+gboolean       gimp_vectors_set_visible     (gint32              vectors_ID,
+                                             gboolean            visible);
+gboolean       gimp_vectors_get_linked      (gint32              vectors_ID);
+gboolean       gimp_vectors_set_linked      (gint32              vectors_ID,
+                                             gboolean            linked);
+gint           gimp_vectors_get_tattoo      (gint32              vectors_ID);
+gboolean       gimp_vectors_set_tattoo      (gint32              vectors_ID,
+                                             gint                tattoo);
+GimpParasite * gimp_vectors_parasite_find   (gint32              vectors_ID,
+                                             const gchar        *name);
+gboolean       gimp_vectors_parasite_attach (gint32              vectors_ID,
+                                             const GimpParasite *parasite);
+gboolean       gimp_vectors_parasite_detach (gint32              vectors_ID,
+                                             const gchar        *name);
+gboolean       gimp_vectors_parasite_list   (gint32              vectors_ID,
+                                             gint               *num_parasites,
+                                             gchar            ***parasites);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
 G_END_DECLS

@@ -119,7 +119,7 @@ get_default_comment_invoker (GimpProcedure      *procedure,
   GValueArray *return_vals;
   gchar *comment = NULL;
 
-  comment = g_strdup (gimp->config->default_image->comment);
+  comment = g_strdup (gimp_template_get_comment (gimp->config->default_image));
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (&return_vals->values[1], comment);

@@ -229,7 +229,7 @@ drw_parasite_find(PyGimpDrawable *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
 	return NULL;
 
-    return pygimp_parasite_new(gimp_item_parasite_find(self->ID, name));
+    return pygimp_parasite_new(gimp_item_find_parasite(self->ID, name));
 }
 
 static PyObject *
@@ -241,7 +241,7 @@ drw_parasite_attach(PyGimpDrawable *self, PyObject *args)
 			  &parasite))
 	return NULL;
 
-    if (!gimp_item_parasite_attach(self->ID, parasite->para)) {
+    if (!gimp_item_attach_parasite(self->ID, parasite->para)) {
 	PyErr_Format(pygimp_error,
 		     "could not attach parasite '%s' on drawable (ID %d)",
 		     gimp_parasite_name(parasite->para), self->ID);
@@ -291,7 +291,7 @@ drw_parasite_detach(PyGimpDrawable *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:detach_parasite", &name))
 	return NULL;
 
-    if (!gimp_item_parasite_detach(self->ID, name)) {
+    if (!gimp_item_detach_parasite(self->ID, name)) {
 	PyErr_Format(pygimp_error,
 		     "could not detach parasite '%s' from drawable (ID %d)",
 		     name, self->ID);
@@ -308,7 +308,7 @@ drw_parasite_list(PyGimpDrawable *self)
     gint num_parasites;
     gchar **parasites;
 
-    if (gimp_item_parasite_list(self->ID, &num_parasites, &parasites)) {
+    if (gimp_item_list_parasites(self->ID, &num_parasites, &parasites)) {
 	PyObject *ret;
 	gint i;
 

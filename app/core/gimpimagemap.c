@@ -15,6 +15,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This file contains the code necessary for generating on canvas
+ * previews, either by connecting a function to process the pixels or
+ * by connecting a specified GEGL operation to do the processing. It
+ * keeps an undo buffer to allow direct modification of the pixel data
+ * (so that it will show up in the projection) and it will restore the
+ * source in case the mapping procedure was cancelled.
+ *
+ * To create a tool that uses this, see /tools/gimpimagemaptool.c for
+ * the interface and /tools/gimpcolorbalancetool.c for an example of
+ * using that interface.
+ *
+ * Note that when talking about on canvas preview, we are speaking
+ * about non destructive image editing where the operation is previewd
+ * before being applied.
+ */
+
 #include "config.h"
 
 #include <glib-object.h>
@@ -398,8 +414,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
             g_object_unref (sink_operation);
           }
 
-          if (gegl_node_get_pad (image_map->operation, "input") &&
-              gegl_node_get_pad (image_map->operation, "output"))
+          if (gegl_node_has_pad (image_map->operation, "input") &&
+              gegl_node_has_pad (image_map->operation, "output"))
             {
               /*  if there are input and output pads we probably have a
                *  filter OP, connect it on both ends.
@@ -410,7 +426,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                    image_map->output,
                                    NULL);
             }
-          else if (gegl_node_get_pad (image_map->operation, "output"))
+          else if (gegl_node_has_pad (image_map->operation, "output"))
             {
               /*  if there is only an output pad we probably have a
                *  source OP, blend its result on top of the original

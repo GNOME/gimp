@@ -306,13 +306,6 @@ gimp_cell_renderer_color_render (GtkCellRenderer      *cell,
       gdk_cairo_set_source_color (cr, &style->fg[state]);
       cairo_stroke_preserve (cr);
 
-      if (state == GTK_STATE_SELECTED &&
-          gimp_cairo_set_focus_line_pattern (cr, widget))
-        {
-          gdk_cairo_set_source_color (cr, &style->fg[GTK_STATE_NORMAL]);
-          cairo_stroke (cr);
-        }
-
       cairo_destroy (cr);
     }
 }

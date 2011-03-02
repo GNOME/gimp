@@ -288,10 +288,9 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
           (gimp_item_parasite_find (item, item_prop_undo->parasite_name));
 
         if (parasite)
-          gimp_parasite_list_add (item->parasites, parasite);
+          gimp_item_parasite_attach (item, parasite, FALSE);
         else
-          gimp_parasite_list_remove (item->parasites,
-                                     item_prop_undo->parasite_name);
+          gimp_item_parasite_detach (item, item_prop_undo->parasite_name, FALSE);
 
         if (parasite)
           gimp_parasite_free (parasite);

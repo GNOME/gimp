@@ -160,28 +160,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   switch (type)
     {
-      case GIMP_RGBA_IMAGE:
-        render_image_rgb_a (&info);
-        break;
-      case GIMP_GRAYA_IMAGE:
-        render_image_gray_a (&info);
-        break;
-      default:
-        g_warning ("%s: unsupported projection type (%d)", G_STRFUNC, type);
-        g_assert_not_reached ();
+    case GIMP_RGBA_IMAGE:
+      render_image_rgb_a (&info);
+      break;
+    case GIMP_GRAYA_IMAGE:
+      render_image_gray_a (&info);
+      break;
+    default:
+      g_warning ("%s: unsupported projection type (%d)", G_STRFUNC, type);
+      g_assert_not_reached ();
     }
 
-  /*  apply filters to the rendered projection  */
-#if 0
-  if (shell->filter_stack)
-    gimp_color_display_stack_convert (shell->filter_stack,
-                                      shell->render_buf,
-                                      w, h,
-                                      3,
-                                      3 * GIMP_DISPLAY_RENDER_BUF_WIDTH);
-#endif
-
   cairo_surface_mark_dirty (shell->render_surface);
+
+  /*  apply filters to the rendered projection  */
+  if (shell->filter_stack)
+    gimp_color_display_stack_convert_surface (shell->filter_stack,
+                                              shell->render_surface);
 
   if (shell->mask)
     {

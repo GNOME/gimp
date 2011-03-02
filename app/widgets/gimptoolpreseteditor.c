@@ -128,8 +128,8 @@ gimp_tool_preset_editor_constructed (GObject *object)
                       FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette"
-                                       , _("Apply stored pallete"));
+  button = gimp_prop_check_button_new (G_OBJECT (preset), "use-palette",
+                                       _("Apply stored palette"));
   gtk_box_pack_start (GTK_BOX (data_editor), button,
                       FALSE, FALSE, 0);
   gtk_widget_show (button);

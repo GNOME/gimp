@@ -115,13 +115,31 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
 
       gtk_tree_view_get_cell_area (tree_view->view, drop_path, NULL, &cell_area);
 
-      if (y >= (cell_area.y + cell_area.height / 2))
+      if (gimp_viewable_get_children (dest_viewable))
         {
-          drop_pos = GTK_TREE_VIEW_DROP_AFTER;
+          if (gtk_tree_view_row_expanded (tree_view->view, drop_path))
+            {
+              if (y >= (cell_area.y + cell_area.height / 2))
+                drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_AFTER;
+              else
+                drop_pos = GTK_TREE_VIEW_DROP_BEFORE;
+            }
+          else
+            {
+              if (y >= (cell_area.y + 2 * (cell_area.height / 3)))
+                drop_pos = GTK_TREE_VIEW_DROP_AFTER;
+              else if (y <= (cell_area.y + cell_area.height / 3))
+                drop_pos = GTK_TREE_VIEW_DROP_BEFORE;
+              else
+                drop_pos = GTK_TREE_VIEW_DROP_INTO_OR_AFTER;
+            }
         }
       else
         {
-          drop_pos = GTK_TREE_VIEW_DROP_BEFORE;
+          if (y >= (cell_area.y + cell_area.height / 2))
+            drop_pos = GTK_TREE_VIEW_DROP_AFTER;
+          else
+            drop_pos = GTK_TREE_VIEW_DROP_BEFORE;
         }
     }
 
@@ -511,8 +529,8 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
     {
       GimpViewable *parent;
 
-      /*  dropping on the lower part of a group item drops into that group  */
-      if (drop_pos == GTK_TREE_VIEW_DROP_AFTER &&
+      /*  dropping on the lower third of a group item drops into that group  */
+      if (drop_pos == GTK_TREE_VIEW_DROP_INTO_OR_AFTER &&
           gimp_viewable_get_children (dest_viewable))
         {
           parent = dest_viewable;
@@ -556,7 +574,7 @@ gimp_container_tree_view_real_drop_possible (GimpContainerTreeView   *tree_view,
           if (dest_index == (src_index + 1))
             return FALSE;
         }
-      else
+      else if (drop_pos == GTK_TREE_VIEW_DROP_AFTER)
         {
           if (dest_index == (src_index - 1))
             return FALSE;

@@ -770,6 +770,235 @@ context_set_feather_radius_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
+context_get_sample_merged_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  GValueArray *return_vals;
+  gboolean sample_merged = FALSE;
+
+  g_object_get (context,
+                "sample-merged", &sample_merged,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (&return_vals->values[1], sample_merged);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_merged_invoker (GimpProcedure      *procedure,
+                                   Gimp               *gimp,
+                                   GimpContext        *context,
+                                   GimpProgress       *progress,
+                                   const GValueArray  *args,
+                                   GError            **error)
+{
+  gboolean success = TRUE;
+  gboolean sample_merged;
+
+  sample_merged = g_value_get_boolean (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-merged", sample_merged,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_sample_criterion_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  GValueArray *return_vals;
+  gint32 sample_criterion = 0;
+
+  g_object_get (context,
+                "sample-criterion", &sample_criterion,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (&return_vals->values[1], sample_criterion);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_criterion_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  gboolean success = TRUE;
+  gint32 sample_criterion;
+
+  sample_criterion = g_value_get_enum (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-criterion", sample_criterion,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_sample_threshold_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  GValueArray *return_vals;
+  gdouble sample_threshold = 0.0;
+
+  g_object_get (context,
+                "sample-threshold", &sample_threshold,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_double (&return_vals->values[1], sample_threshold);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_threshold_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  gboolean success = TRUE;
+  gdouble sample_threshold;
+
+  sample_threshold = g_value_get_double (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-threshold", sample_threshold,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_sample_threshold_int_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
+{
+  GValueArray *return_vals;
+  gint32 sample_threshold = 0;
+
+  gdouble threshold;
+
+  g_object_get (context,
+                "sample-threshold", &threshold,
+                NULL);
+
+  sample_threshold = (gint) (threshold * 255.99);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_int (&return_vals->values[1], sample_threshold);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_threshold_int_invoker (GimpProcedure      *procedure,
+                                          Gimp               *gimp,
+                                          GimpContext        *context,
+                                          GimpProgress       *progress,
+                                          const GValueArray  *args,
+                                          GError            **error)
+{
+  gboolean success = TRUE;
+  gint32 sample_threshold;
+
+  sample_threshold = g_value_get_int (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-threshold", (gdouble) sample_threshold / 255.0,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+context_get_sample_transparent_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  GValueArray *return_vals;
+  gboolean sample_transparent = FALSE;
+
+  g_object_get (context,
+                "sample-transparent", &sample_transparent,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_boolean (&return_vals->values[1], sample_transparent);
+
+  return return_vals;
+}
+
+static GValueArray *
+context_set_sample_transparent_invoker (GimpProcedure      *procedure,
+                                        Gimp               *gimp,
+                                        GimpContext        *context,
+                                        GimpProgress       *progress,
+                                        const GValueArray  *args,
+                                        GError            **error)
+{
+  gboolean success = TRUE;
+  gboolean sample_transparent;
+
+  sample_transparent = g_value_get_boolean (&args->values[0]);
+
+  if (success)
+    {
+      g_object_set (context,
+                    "sample-transparent", sample_transparent,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
 context_get_interpolation_invoker (GimpProcedure      *procedure,
                                    Gimp               *gimp,
                                    GimpContext        *context,
@@ -1560,7 +1789,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-antialias",
                                      "Set the antialias setting.",
-                                     "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted. This settings affects the following procedures: The entire gimp-image-select-foo group of procedures.",
+                                     "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted. This settings affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1606,7 +1835,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-feather",
                                      "Set the feather setting.",
-                                     "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'. This settings affects the following procedures: The entire gimp-image-select-foo group of procedures.",
+                                     "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'. This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1658,7 +1887,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-feather-radius",
                                      "Set the feather radius setting.",
-                                     "This procedure modifies the feather radius setting. This settings affects the following procedures: The entire gimp-image-select-foo group of procedures.",
+                                     "This procedure modifies the feather radius setting. This setting affects the all procedures that are affected by 'gimp-context-set-feather'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1675,6 +1904,238 @@ register_context_procs (GimpPDB *pdb)
                                                     "The vertical feather radius",
                                                     0, 1000, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-merged
+   */
+  procedure = gimp_procedure_new (context_get_sample_merged_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-merged");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-merged",
+                                     "Get the sample merged setting.",
+                                     "This procedure returns the sample merged setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("sample-merged",
+                                                         "sample merged",
+                                                         "The sample merged setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-merged
+   */
+  procedure = gimp_procedure_new (context_set_sample_merged_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-merged");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-merged",
+                                     "Set the sample merged setting.",
+                                     "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers). This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-merged",
+                                                     "sample merged",
+                                                     "The sample merged setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-criterion
+   */
+  procedure = gimp_procedure_new (context_get_sample_criterion_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-criterion");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-criterion",
+                                     "Get the sample criterion setting.",
+                                     "This procedure returns the sample criterion setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("sample-criterion",
+                                                      "sample criterion",
+                                                      "The sample criterion setting",
+                                                      GIMP_TYPE_SELECT_CRITERION,
+                                                      GIMP_SELECT_CRITERION_COMPOSITE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-criterion
+   */
+  procedure = gimp_procedure_new (context_set_sample_criterion_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-criterion");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-criterion",
+                                     "Set the sample criterion setting.",
+                                     "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value. This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("sample-criterion",
+                                                  "sample criterion",
+                                                  "The sample criterion setting",
+                                                  GIMP_TYPE_SELECT_CRITERION,
+                                                  GIMP_SELECT_CRITERION_COMPOSITE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-threshold
+   */
+  procedure = gimp_procedure_new (context_get_sample_threshold_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-threshold");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-threshold",
+                                     "Get the sample threshold setting.",
+                                     "This procedure returns the sample threshold setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("sample-threshold",
+                                                        "sample threshold",
+                                                        "The sample threshold setting",
+                                                        0.0, 1.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-threshold
+   */
+  procedure = gimp_procedure_new (context_set_sample_threshold_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-threshold");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-threshold",
+                                     "Set the sample threshold setting.",
+                                     "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used. This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("sample-threshold",
+                                                    "sample threshold",
+                                                    "The sample threshold setting",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-threshold-int
+   */
+  procedure = gimp_procedure_new (context_get_sample_threshold_int_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-threshold-int");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-threshold-int",
+                                     "Get the sample threshold setting as an integer value.",
+                                     "This procedure returns the sample threshold setting as an integer value. See 'gimp-context-get-sample-threshold'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("sample-threshold",
+                                                          "sample threshold",
+                                                          "The sample threshold setting",
+                                                          0, 255, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-threshold-int
+   */
+  procedure = gimp_procedure_new (context_set_sample_threshold_int_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-threshold-int");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-threshold-int",
+                                     "Set the sample threshold setting as an integer value.",
+                                     "This procedure modifies the sample threshold setting as an integer value. See 'gimp-context-set-sample-threshold'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("sample-threshold",
+                                                      "sample threshold",
+                                                      "The sample threshold setting",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-sample-transparent
+   */
+  procedure = gimp_procedure_new (context_get_sample_transparent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-sample-transparent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-sample-transparent",
+                                     "Get the sample transparent setting.",
+                                     "This procedure returns the sample transparent setting.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("sample-transparent",
+                                                         "sample transparent",
+                                                         "The sample transparent setting",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-sample-transparent
+   */
+  procedure = gimp_procedure_new (context_set_sample_transparent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-sample-transparent");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-sample-transparent",
+                                     "Set the sample transparent setting.",
+                                     "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled. This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2011",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("sample-transparent",
+                                                     "sample transparent",
+                                                     "The sample transparent setting",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1711,7 +2172,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-interpolation",
                                      "Set the interpolation type.",
-                                     "This procedure modifies the interpolation setting. It affects the following procedures: all transform procedures which can produce sub-pixel results, 'gimp-image-scale', 'gimp-layer-scale'.",
+                                     "This procedure modifies the interpolation setting. This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1759,7 +2220,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-transform-direction",
                                      "Set the transform direction.",
-                                     "This procedure modifies the transform direction setting.",
+                                     "This procedure modifies the transform direction setting. This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1807,7 +2268,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-transform-resize",
                                      "Set the transform resize type.",
-                                     "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.",
+                                     "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized. This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -1854,7 +2315,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-context-set-transform-recursion",
                                      "Set the transform supersampling recursion.",
-                                     "This procedure modifies the transform supersampling recursion level setting. Whether or not a transformation does supersampling is determined by the interplolation type. The recursion level defaults to 3, which is a nice default value.",
+                                     "This procedure modifies the transform supersampling recursion level setting. Whether or not a transformation does supersampling is determined by the interplolation type. The recursion level defaults to 3, which is a nice default value. This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",

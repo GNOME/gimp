@@ -78,6 +78,11 @@
 #define TRC(x)
 #endif
 
+/* Data keys for GimpImage */
+#define GIMP_FILE_EXPORT_URI_KEY        "gimp-file-export-uri"
+#define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
+#define GIMP_FILE_IMPORT_SOURCE_URI_KEY "gimp-file-import-source-uri"
+
 
 enum
 {
@@ -734,6 +739,7 @@ gimp_image_constructed (GObject *object)
   GimpImage        *image   = GIMP_IMAGE (object);
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
   GimpCoreConfig   *config;
+  GimpTemplate     *template;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -756,9 +762,11 @@ gimp_image_constructed (GObject *object)
                        GINT_TO_POINTER (private->ID),
                        image);
 
-  private->xresolution     = config->default_image->xresolution;
-  private->yresolution     = config->default_image->yresolution;
-  private->resolution_unit = config->default_image->resolution_unit;
+  template = config->default_image;
+
+  private->xresolution     = gimp_template_get_resolution_x (template);
+  private->yresolution     = gimp_template_get_resolution_y (template);
+  private->resolution_unit = gimp_template_get_resolution_unit (template);
 
   private->grid = gimp_config_duplicate (GIMP_CONFIG (config->default_grid));
 
@@ -1150,7 +1158,7 @@ gimp_image_get_description (GimpViewable  *viewable,
 
   if (tooltip)
     {
-      *tooltip = file_utils_uri_display_name (gimp_image_get_uri (image));
+      *tooltip = file_utils_uri_display_name (gimp_image_get_uri_or_untitled (image));
     }
 
   return g_strdup_printf ("%s-%d",
@@ -1517,16 +1525,52 @@ gimp_image_take_uri (GimpImage *image,
   gimp_object_take_name (GIMP_OBJECT (image), uri);
 }
 
+/**
+ * gimp_image_get_untitled_string:
+ *
+ * Returns: The (translated) "Untitled" string for newly created
+ * images.
+ **/
 const gchar *
-gimp_image_get_uri (const GimpImage *image)
+gimp_image_get_string_untitled (void)
+{
+  return _("Untitled");
+}
+
+/**
+ * gimp_image_get_uri_or_untitled:
+ * @image: A #GimpImage.
+ *
+ * Get the URI of the XCF image, or "Untitled" if there is no URI.
+ *
+ * Returns: The URI, or "Untitled".
+ **/
+const gchar *
+gimp_image_get_uri_or_untitled (const GimpImage *image)
 {
   const gchar *uri;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
-  return uri ? uri : _("Untitled");
+  return uri ? uri : gimp_image_get_string_untitled ();
+}
+
+/**
+ * gimp_image_get_uri:
+ * @image: A #GimpImage.
+ *
+ * Get the URI of the XCF image, or NULL if there is no URI.
+ *
+ * Returns: The URI, or NULL.
+ **/
+const gchar *
+gimp_image_get_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_object_get_name (image);
 }
 
 void
@@ -1548,6 +1592,108 @@ gimp_image_set_filename (GimpImage   *image,
     }
 }
 
+/**
+ * gimp_image_get_imported_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The URI of the imported image, or NULL if the image has
+ * been saved as XCF after it was imported.
+ **/
+const gchar *
+gimp_image_get_imported_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return g_object_get_data (G_OBJECT (image),
+                            GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+}
+
+/**
+ * gimp_image_get_exported_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The URI of the image last exported from this XCF file, or
+ * NULL if the image has never been exported.
+ **/
+const gchar *
+gimp_image_get_exported_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return g_object_get_data (G_OBJECT (image),
+                            GIMP_FILE_EXPORT_URI_KEY);
+}
+
+/**
+ * gimp_image_get_save_a_copy_uri:
+ * @image: A #GimpImage.
+ *
+ * Returns: The URI of the last copy that was saved of this XCF file.
+ **/
+const gchar *
+gimp_image_get_save_a_copy_uri (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return g_object_get_data (G_OBJECT (image),
+                            GIMP_FILE_SAVE_A_COPY_URI_KEY);
+}
+
+/**
+ * gimp_image_set_imported_uri:
+ * @image: A #GimpImage.
+ * @uri:
+ *
+ * Sets the URI this file was imported from.
+ **/
+void
+gimp_image_set_imported_uri (GimpImage   *image,
+                             const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
+                          g_strdup (uri), (GDestroyNotify) g_free);
+}
+
+/**
+ * gimp_image_set_exported_uri:
+ * @image: A #GimpImage.
+ * @uri:
+ *
+ * Sets the URI this file was last exported to. Note that saving as
+ * XCF is not "exporting".
+ **/
+void
+gimp_image_set_exported_uri (GimpImage   *image,
+                             const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set_data_full (G_OBJECT (image),
+                          GIMP_FILE_EXPORT_URI_KEY,
+                          g_strdup (uri), (GDestroyNotify) g_free);
+}
+
+/**
+ * gimp_image_set_save_a_copy_uri:
+ * @image: A #GimpImage.
+ * @uri:
+ *
+ * Set the URI to the last copy this XCF file was saved to through the
+ * "save a copy" action.
+ **/
+void
+gimp_image_set_save_a_copy_uri (GimpImage   *image,
+                                const gchar *uri)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  g_object_set_data_full (G_OBJECT (image),
+                          GIMP_FILE_SAVE_A_COPY_URI_KEY,
+                          g_strdup (uri), (GDestroyNotify) g_free);
+}
+
 gchar *
 gimp_image_get_filename (const GimpImage *image)
 {
@@ -1555,7 +1701,7 @@ gimp_image_get_filename (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (image);
+  uri = gimp_image_get_uri (image);
 
   if (! uri)
     return NULL;
@@ -1574,7 +1720,7 @@ gimp_image_get_display_name (GimpImage *image)
 
   if (! private->display_name)
     {
-      const gchar *uri = gimp_image_get_uri (image);
+      const gchar *uri = gimp_image_get_uri_or_untitled (image);
 
       private->display_name = file_utils_uri_display_basename (uri);
     }
@@ -3549,7 +3695,9 @@ gimp_image_remove_layer (GimpImage *image,
        */
       floating_sel_activate_drawable (layer);
     }
-  else if (layer == active_layer)
+  else if (layer == active_layer ||
+           gimp_viewable_is_ancestor (GIMP_VIEWABLE (layer),
+                                      GIMP_VIEWABLE (active_layer)))
     {
       gimp_image_set_active_layer (image, new_active);
     }
@@ -3714,18 +3862,24 @@ gimp_image_remove_channel (GimpImage   *image,
                                          gimp_item_get_index (GIMP_ITEM (channel)),
                                          active_channel);
 
+  g_object_ref (channel);
+
   new_active =
     GIMP_CHANNEL (gimp_item_tree_remove_item (private->channels,
                                               GIMP_ITEM (channel),
                                               GIMP_ITEM (new_active)));
 
-  if (channel == active_channel)
+  if (channel == active_channel ||
+      gimp_viewable_is_ancestor (GIMP_VIEWABLE (channel),
+                                 GIMP_VIEWABLE (active_channel)))
     {
       if (new_active)
         gimp_image_set_active_channel (image, new_active);
       else
         gimp_image_unset_active_channel (image);
     }
+
+  g_object_unref (channel);
 
   if (undo_group)
     gimp_image_undo_group_end (image);
@@ -3792,13 +3946,21 @@ gimp_image_remove_vectors (GimpImage   *image,
                                          gimp_item_get_index (GIMP_ITEM (vectors)),
                                          active_vectors);
 
+  g_object_ref (vectors);
+
   new_active =
     GIMP_VECTORS (gimp_item_tree_remove_item (private->vectors,
                                               GIMP_ITEM (vectors),
                                               GIMP_ITEM (new_active)));
 
-  if (vectors == active_vectors)
-    gimp_image_set_active_vectors (image, new_active);
+  if (vectors == active_vectors ||
+      gimp_viewable_is_ancestor (GIMP_VIEWABLE (vectors),
+                                 GIMP_VIEWABLE (active_vectors)))
+    {
+      gimp_image_set_active_vectors (image, new_active);
+    }
+
+  g_object_unref (vectors);
 }
 
 gboolean

@@ -24,7 +24,7 @@
 #define _IMAP_MISC_H
 
 void set_sash_size(gboolean double_size);
-void draw_sash(GdkWindow *window, GdkGC *gc, gint x, gint y);
+void draw_sash(cairo_t *cr, gint x, gint y);
 gboolean near_sash(gint sash_x, gint sash_y, gint x, gint y);
 
 #endif /* _IMAP_MISC_H */

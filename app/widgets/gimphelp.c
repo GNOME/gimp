@@ -372,10 +372,10 @@ gimp_help_browser_error (Gimp         *gimp,
 
   if (progress)
     {
-      guint32 window = gimp_progress_get_window (progress);
+      guint32 window_id = gimp_progress_get_window_id (progress);
 
-      if (window)
-        gimp_window_set_transient_for (GTK_WINDOW (dialog), window);
+      if (window_id)
+        gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
     }
 
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
@@ -627,10 +627,10 @@ gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
 
   if (idle_help->progress)
     {
-      guint32 window = gimp_progress_get_window (idle_help->progress);
+      guint32 window_id = gimp_progress_get_window_id (idle_help->progress);
 
-      if (window)
-        gimp_window_set_transient_for (GTK_WINDOW (dialog), window);
+      if (window_id)
+        gimp_window_set_transient_for (GTK_WINDOW (dialog), window_id);
     }
 
   g_signal_connect (dialog, "response",

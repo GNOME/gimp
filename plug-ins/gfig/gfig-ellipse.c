@@ -137,13 +137,15 @@ d_paint_ellipse (GfigObject *obj)
   else
     scale_to_xy (&dpnts[0], 2);
 
-  gimp_ellipse_select (gfig_context->image_id,
-                       dpnts[0], dpnts[1],
-                       dpnts[2], dpnts[3],
-                       selopt.type,
-                       selopt.antia,
-                       selopt.feather,
-                       selopt.feather_radius);
+  gimp_context_push ();
+  gimp_context_set_antialias (selopt.antia);
+  gimp_context_set_feather (selopt.feather);
+  gimp_context_set_feather_radius (selopt.feather_radius, selopt.feather_radius);
+  gimp_image_select_ellipse (gfig_context->image_id,
+                             selopt.type,
+                             dpnts[0], dpnts[1],
+                             dpnts[2], dpnts[3]);
+  gimp_context_pop ();
 
   paint_layer_fill (top_x, top_y, top_x + bound_wx, top_y + bound_wy);
 

@@ -534,11 +534,13 @@ xcf_load_image_props (XcfInfo   *info,
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
               {
+                GimpTemplate *template = image->gimp->config->default_image;
+
                 gimp_message_literal (info->gimp, G_OBJECT (info->progress),
 				      GIMP_MESSAGE_WARNING,
 				      "Warning, resolution out of range in XCF file");
-                xres = image->gimp->config->default_image->xresolution;
-                yres = image->gimp->config->default_image->yresolution;
+                xres = gimp_template_get_resolution_x (template);
+                yres = gimp_template_get_resolution_y (template);
               }
 
             gimp_image_set_resolution (image, xres, yres);
@@ -816,7 +818,7 @@ xcf_load_layer_props (XcfInfo    *info,
             while (info->cp - base < prop_size)
               {
                 p = xcf_load_parasite (info);
-                gimp_item_parasite_attach (GIMP_ITEM (*layer), p);
+                gimp_item_parasite_attach (GIMP_ITEM (*layer), p, FALSE);
                 gimp_parasite_free (p);
               }
 
@@ -1001,7 +1003,7 @@ xcf_load_channel_props (XcfInfo      *info,
             while ((info->cp - base) < prop_size)
               {
                 p = xcf_load_parasite (info);
-                gimp_item_parasite_attach (GIMP_ITEM (*channel), p);
+                gimp_item_parasite_attach (GIMP_ITEM (*channel), p, FALSE);
                 gimp_parasite_free (p);
               }
 
@@ -1859,7 +1861,7 @@ xcf_load_vector (XcfInfo   *info,
       if (! parasite)
         return FALSE;
 
-      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite);
+      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, FALSE);
       gimp_parasite_free (parasite);
     }
 

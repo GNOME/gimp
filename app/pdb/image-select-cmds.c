@@ -51,36 +51,28 @@ image_select_color_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   GimpDrawable *drawable;
   GimpRGB color;
-  gint32 threshold;
-  gint32 operation;
-  gboolean sample_merged;
-  gboolean select_transparent;
-  gint32 select_criterion;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  drawable = gimp_value_get_drawable (&args->values[1], gimp);
-  gimp_value_get_rgb (&args->values[2], &color);
-  threshold = g_value_get_int (&args->values[3]);
-  operation = g_value_get_enum (&args->values[4]);
-  sample_merged = g_value_get_boolean (&args->values[5]);
-  select_transparent = g_value_get_boolean (&args->values[6]);
-  select_criterion = g_value_get_enum (&args->values[7]);
+  operation = g_value_get_enum (&args->values[1]);
+  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+  gimp_value_get_rgb (&args->values[3], &color);
 
   if (success)
     {
-      if (sample_merged ||
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      if (pdb_context->sample_merged ||
           gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
         {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-
           gimp_channel_select_by_color (gimp_image_get_mask (image), drawable,
-                                        sample_merged,
+                                        pdb_context->sample_merged,
                                         &color,
-                                        threshold,
-                                        select_transparent,
-                                        select_criterion,
+                                        (gint) (pdb_context->sample_threshold * 255.99),
+                                        pdb_context->sample_transparent,
+                                        pdb_context->sample_criterion,
                                         operation,
                                         pdb_context->antialias,
                                         pdb_context->feather,
@@ -89,6 +81,145 @@ image_select_color_invoker (GimpProcedure      *procedure,
         }
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_select_contiguous_color_invoker (GimpProcedure      *procedure,
+                                       Gimp               *gimp,
+                                       GimpContext        *context,
+                                       GimpProgress       *progress,
+                                       const GValueArray  *args,
+                                       GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 operation;
+  GimpDrawable *drawable;
+  gdouble x;
+  gdouble y;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  operation = g_value_get_enum (&args->values[1]);
+  drawable = gimp_value_get_drawable (&args->values[2], gimp);
+  x = g_value_get_double (&args->values[3]);
+  y = g_value_get_double (&args->values[4]);
+
+  if (success)
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      if (pdb_context->sample_merged ||
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
+        {
+
+          gimp_channel_select_fuzzy (gimp_image_get_mask (image),
+                                     drawable,
+                                     pdb_context->sample_merged,
+                                     x, y,
+                                     (gint) (pdb_context->sample_threshold * 255.99),
+                                     pdb_context->sample_transparent,
+                                     pdb_context->sample_criterion,
+                                     operation,
+                                     pdb_context->antialias,
+                                     pdb_context->feather,
+                                     pdb_context->feather_radius_x,
+                                     pdb_context->feather_radius_y);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_select_rectangle_invoker (GimpProcedure      *procedure,
+                                Gimp               *gimp,
+                                GimpContext        *context,
+                                GimpProgress       *progress,
+                                const GValueArray  *args,
+                                GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 operation;
+  gdouble x;
+  gdouble y;
+  gdouble width;
+  gdouble height;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  operation = g_value_get_enum (&args->values[1]);
+  x = g_value_get_double (&args->values[2]);
+  y = g_value_get_double (&args->values[3]);
+  width = g_value_get_double (&args->values[4]);
+  height = g_value_get_double (&args->values[5]);
+
+  if (success)
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      gimp_channel_select_rectangle (gimp_image_get_mask (image),
+                                     (gint) x, (gint) y,
+                                     (gint) width, (gint) height,
+                                     operation,
+                                     pdb_context->feather,
+                                     pdb_context->feather_radius_x,
+                                     pdb_context->feather_radius_y,
+                                     TRUE);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+image_select_round_rectangle_invoker (GimpProcedure      *procedure,
+                                      Gimp               *gimp,
+                                      GimpContext        *context,
+                                      GimpProgress       *progress,
+                                      const GValueArray  *args,
+                                      GError            **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 operation;
+  gdouble x;
+  gdouble y;
+  gdouble width;
+  gdouble height;
+  gdouble corner_radius_x;
+  gdouble corner_radius_y;
+
+  image = gimp_value_get_image (&args->values[0], gimp);
+  operation = g_value_get_enum (&args->values[1]);
+  x = g_value_get_double (&args->values[2]);
+  y = g_value_get_double (&args->values[3]);
+  width = g_value_get_double (&args->values[4]);
+  height = g_value_get_double (&args->values[5]);
+  corner_radius_x = g_value_get_double (&args->values[6]);
+  corner_radius_y = g_value_get_double (&args->values[7]);
+
+  if (success)
+    {
+      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+
+      gimp_channel_select_round_rect (gimp_image_get_mask (image),
+                                      (gint) x, (gint) y,
+                                      (gint) width, (gint) height,
+                                      corner_radius_x,
+                                      corner_radius_y,
+                                      operation,
+                                      pdb_context->antialias,
+                                      pdb_context->feather,
+                                      pdb_context->feather_radius_x,
+                                      pdb_context->feather_radius_y,
+                                      TRUE);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -105,18 +236,18 @@ image_select_ellipse_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   gdouble x;
   gdouble y;
   gdouble width;
   gdouble height;
-  gint32 operation;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
+  operation = g_value_get_enum (&args->values[1]);
+  x = g_value_get_double (&args->values[2]);
+  y = g_value_get_double (&args->values[3]);
+  width = g_value_get_double (&args->values[4]);
+  height = g_value_get_double (&args->values[5]);
 
   if (success)
     {
@@ -147,14 +278,14 @@ image_select_polygon_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
+  gint32 operation;
   gint32 num_segs;
   const gdouble *segs;
-  gint32 operation;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  num_segs = g_value_get_int (&args->values[1]);
-  segs = gimp_value_get_floatarray (&args->values[2]);
-  operation = g_value_get_enum (&args->values[3]);
+  operation = g_value_get_enum (&args->values[1]);
+  num_segs = g_value_get_int (&args->values[2]);
+  segs = gimp_value_get_floatarray (&args->values[3]);
 
   if (success)
     {
@@ -177,152 +308,6 @@ image_select_polygon_invoker (GimpProcedure      *procedure,
 }
 
 static GValueArray *
-image_select_fuzzy_invoker (GimpProcedure      *procedure,
-                            Gimp               *gimp,
-                            GimpContext        *context,
-                            GimpProgress       *progress,
-                            const GValueArray  *args,
-                            GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  GimpDrawable *drawable;
-  gdouble x;
-  gdouble y;
-  gint32 threshold;
-  gint32 operation;
-  gboolean sample_merged;
-  gboolean select_transparent;
-  gint32 select_criterion;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  drawable = gimp_value_get_drawable (&args->values[1], gimp);
-  x = g_value_get_double (&args->values[2]);
-  y = g_value_get_double (&args->values[3]);
-  threshold = g_value_get_int (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
-  sample_merged = g_value_get_boolean (&args->values[6]);
-  select_transparent = g_value_get_boolean (&args->values[7]);
-  select_criterion = g_value_get_enum (&args->values[8]);
-
-  if (success)
-    {
-      if (sample_merged ||
-          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), image, FALSE, error))
-        {
-          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-
-          gimp_channel_select_fuzzy (gimp_image_get_mask (image),
-                                     drawable,
-                                     sample_merged,
-                                     x, y,
-                                     threshold,
-                                     select_transparent,
-                                     select_criterion,
-                                     operation,
-                                     pdb_context->antialias,
-                                     pdb_context->feather,
-                                     pdb_context->feather_radius_x,
-                                     pdb_context->feather_radius_y);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
-image_select_rectangle_invoker (GimpProcedure      *procedure,
-                                Gimp               *gimp,
-                                GimpContext        *context,
-                                GimpProgress       *progress,
-                                const GValueArray  *args,
-                                GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  gdouble x;
-  gdouble y;
-  gdouble width;
-  gdouble height;
-  gint32 operation;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  operation = g_value_get_enum (&args->values[5]);
-
-  if (success)
-    {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-
-      gimp_channel_select_rectangle (gimp_image_get_mask (image),
-                                     (gint) x, (gint) y,
-                                     (gint) width, (gint) height,
-                                     operation,
-                                     pdb_context->feather,
-                                     pdb_context->feather_radius_x,
-                                     pdb_context->feather_radius_y,
-                                     TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
-image_select_round_rectangle_invoker (GimpProcedure      *procedure,
-                                      Gimp               *gimp,
-                                      GimpContext        *context,
-                                      GimpProgress       *progress,
-                                      const GValueArray  *args,
-                                      GError            **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  gdouble x;
-  gdouble y;
-  gdouble width;
-  gdouble height;
-  gdouble corner_radius_x;
-  gdouble corner_radius_y;
-  gint32 operation;
-
-  image = gimp_value_get_image (&args->values[0], gimp);
-  x = g_value_get_double (&args->values[1]);
-  y = g_value_get_double (&args->values[2]);
-  width = g_value_get_double (&args->values[3]);
-  height = g_value_get_double (&args->values[4]);
-  corner_radius_x = g_value_get_double (&args->values[5]);
-  corner_radius_y = g_value_get_double (&args->values[6]);
-  operation = g_value_get_enum (&args->values[7]);
-
-  if (success)
-    {
-      GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
-
-      gimp_channel_select_round_rect (gimp_image_get_mask (image),
-                                      (gint) x, (gint) y,
-                                      (gint) width, (gint) height,
-                                      corner_radius_x,
-                                      corner_radius_y,
-                                      operation,
-                                      pdb_context->antialias,
-                                      pdb_context->feather,
-                                      pdb_context->feather_radius_x,
-                                      pdb_context->feather_radius_y,
-                                      TRUE);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GValueArray *
 image_select_item_invoker (GimpProcedure      *procedure,
                            Gimp               *gimp,
                            GimpContext        *context,
@@ -332,12 +317,12 @@ image_select_item_invoker (GimpProcedure      *procedure,
 {
   gboolean success = TRUE;
   GimpImage *image;
-  GimpItem *item;
   gint32 operation;
+  GimpItem *item;
 
   image = gimp_value_get_image (&args->values[0], gimp);
-  item = gimp_value_get_item (&args->values[1], gimp);
-  operation = g_value_get_enum (&args->values[2]);
+  operation = g_value_get_enum (&args->values[1]);
+  item = gimp_value_get_item (&args->values[2], gimp);
 
   if (success)
     {
@@ -373,7 +358,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-color",
                                      "Create a selection by selecting all pixels (in the specified drawable) with the same (or similar) color to that specified.",
-                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the specified threshold. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold value) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. If the 'sample-merged' parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored.",
+                                     "This tool creates a selection over the specified image. A by-color selection is determined by the supplied color under the constraints of the current context settings. Essentially, all pixels (in the drawable) that have color sufficiently close to the specified color (as determined by the threshold and criterion context values) are included in the selection. To select transparent regions, the color specified must also have minimum alpha. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'. In the case of a merged sampling, the supplied drawable is ignored.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -384,6 +369,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          "The affected image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -397,147 +389,20 @@ register_image_select_procs (GimpPDB *pdb)
                                                     FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Threshold in intensity levels",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("sample-merged",
-                                                     "sample merged",
-                                                     "Use the composite image, not the drawable",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("select-transparent",
-                                                     "select transparent",
-                                                     "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("select-criterion",
-                                                  "select criterion",
-                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
-                                                  GIMP_TYPE_SELECT_CRITERION,
-                                                  GIMP_SELECT_CRITERION_COMPOSITE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
   /*
-   * gimp-image-select-ellipse
+   * gimp-image-select-contiguous-color
    */
-  procedure = gimp_procedure_new (image_select_ellipse_invoker);
+  procedure = gimp_procedure_new (image_select_contiguous_color_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-ellipse");
+                               "gimp-image-select-contiguous-color");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-select-ellipse",
-                                     "Create an elliptical selection over the specified image.",
-                                     "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("x",
-                                                    "x",
-                                                    "x coordinate of upper-left corner of ellipse bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("y",
-                                                    "y",
-                                                    "y coordinate of upper-left corner of ellipse bounding box",
-                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("width",
-                                                    "width",
-                                                    "The width of the ellipse",
-                                                    0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_double ("height",
-                                                    "height",
-                                                    "The height of the ellipse",
-                                                    0, G_MAXDOUBLE, 0,
-                                                    GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-select-polygon
-   */
-  procedure = gimp_procedure_new (image_select_polygon_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-polygon");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-select-polygon",
-                                     "Create a polygonal selection over the specified image.",
-                                     "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added.",
-                                     "Michael Natterer <mitch@gimp.org>",
-                                     "Michael Natterer",
-                                     "2010",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-segs",
-                                                      "num segs",
-                                                      "Number of points (count 1 coordinate as two points)",
-                                                      2, G_MAXINT32, 2,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_float_array ("segs",
-                                                            "segs",
-                                                            "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
-                                                            GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-select-fuzzy
-   */
-  procedure = gimp_procedure_new (image_select_fuzzy_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-select-fuzzy");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-select-fuzzy",
-                                     "Create a fuzzy selection starting at the specified coordinates on the specified drawable.",
-                                     "This tool creates a fuzzy selection over the specified image. A fuzzy selection is determined by a seed fill under the constraints of the specified threshold. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold value). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. If the 'sample-merged' parameter is TRUE, the data of the composite image will be used instead of that for the specified drawable. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise,"
-  "they are relative to the drawable's origin.",
+                                     "gimp-image-select-contiguous-color",
+                                     "Create a selection by selecting all pixels around specified coordinates with the same (or similar) color to that at the coordinates.",
+                                     "This tool creates a contiguous selection over the specified image. A contiguous color selection is determined by a seed fill under the constraints of the current context settings. Essentially, the color at the specified coordinates (in the drawable) is measured and the selection expands outwards from that point to any adjacent pixels which are not significantly different (as determined by the threshold and criterion context settings). This process continues until no more expansion is possible. If antialiasing is turned on, the final selection mask will contain intermediate values based on close misses to the threshold bar at pixels along the seed fill boundary. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius', 'gimp-context-set-sample-merged', 'gimp-context-set-sample-criterion', 'gimp-context-set-sample-threshold', 'gimp-context-set-sample-transparent'. In the case of a merged"
+  "sampling, the supplied drawable is ignored. If the sample is merged, the specified coordinates are relative to the image origin; otherwise, they are relative to the drawable's origin.",
                                      "David Gowers",
                                      "David Gowers",
                                      "2010",
@@ -548,6 +413,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          "The affected image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -566,38 +438,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "y coordinate of initial seed fill point: (image coordinates)",
                                                     -G_MAXDOUBLE, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("threshold",
-                                                      "threshold",
-                                                      "Threshold in intensity levels",
-                                                      0, 255, 0,
-                                                      GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("sample-merged",
-                                                     "sample merged",
-                                                     "Use the composite image, not the drawable",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_boolean ("select-transparent",
-                                                     "select transparent",
-                                                     "Whether to consider transparent pixels for selection. If TRUE, transparency is considered as a unique selectable color.",
-                                                     FALSE,
-                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("select-criterion",
-                                                  "select criterion",
-                                                  "The criterion used to determine color similarity. SELECT_CRITERION_COMPOSITE is the standard choice.",
-                                                  GIMP_TYPE_SELECT_CRITERION,
-                                                  GIMP_SELECT_CRITERION_COMPOSITE,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -610,7 +450,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-rectangle",
                                      "Create a rectangular selection over the specified image;",
-                                     "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.",
+                                     "This tool creates a rectangular selection over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. This prodecure is affected by the following context setters: 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -621,6 +461,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          "The image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -645,13 +492,6 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "The height of the rectangle",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_enum ("operation",
-                                                  "operation",
-                                                  "The selection operation",
-                                                  GIMP_TYPE_CHANNEL_OPS,
-                                                  GIMP_CHANNEL_OP_ADD,
-                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -664,7 +504,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-round-rectangle",
                                      "Create a rectangular selection with round corners over the specified image;",
-                                     "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.",
+                                     "This tool creates a rectangular selection with round corners over the specified image. The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
                                      "Martin Nordholts",
                                      "Martin Nordholts",
                                      "2010",
@@ -675,6 +515,13 @@ register_image_select_procs (GimpPDB *pdb)
                                                          "The image",
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("x",
                                                     "x",
@@ -711,6 +558,29 @@ register_image_select_procs (GimpPDB *pdb)
                                                     "The corner radius in Y direction",
                                                     0, GIMP_MAX_IMAGE_SIZE, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-select-ellipse
+   */
+  procedure = gimp_procedure_new (image_select_ellipse_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-select-ellipse");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-select-ellipse",
+                                     "Create an elliptical selection over the specified image.",
+                                     "This tool creates an elliptical selection over the specified image. The elliptical region can be either added to, subtracted from, or replace the contents of the previous selection mask. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
@@ -718,6 +588,71 @@ register_image_select_procs (GimpPDB *pdb)
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("x",
+                                                    "x",
+                                                    "x coordinate of upper-left corner of ellipse bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("y",
+                                                    "y",
+                                                    "y coordinate of upper-left corner of ellipse bounding box",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("width",
+                                                    "width",
+                                                    "The width of the ellipse",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("height",
+                                                    "height",
+                                                    "The height of the ellipse",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-select-polygon
+   */
+  procedure = gimp_procedure_new (image_select_polygon_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-select-polygon");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-select-polygon",
+                                     "Create a polygonal selection over the specified image.",
+                                     "This tool creates a polygonal selection over the specified image. The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask. The polygon is specified through an array of floating point numbers and its length. The length of array must be 2n, where n is the number of points. Each point is defined by 2 floating point values which correspond to the x and y coordinates. If the final point does not connect to the starting point, a connecting segment is automatically added. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2010",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("operation",
+                                                  "operation",
+                                                  "The selection operation",
+                                                  GIMP_TYPE_CHANNEL_OPS,
+                                                  GIMP_CHANNEL_OP_ADD,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("num-segs",
+                                                      "num segs",
+                                                      "Number of points (count 1 coordinate as two points)",
+                                                      2, G_MAXINT32, 2,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("segs",
+                                                            "segs",
+                                                            "Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -730,7 +665,7 @@ register_image_select_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-select-item",
                                      "Transforms the specified item into a selection",
-                                     "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape.",
+                                     "This procedure renders the item's outline into the current selection of the image the item belongs to. What exactly the item's outline is depends on the item type: for layers, it's the layer's alpha channel, for vectors the vector's shape. This prodecure is affected by the following context setters: 'gimp-context-set-antialias', 'gimp-context-set-feather', 'gimp-context-set-feather-radius'.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2010",
@@ -742,18 +677,18 @@ register_image_select_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_item_id ("item",
-                                                        "item",
-                                                        "The item to render to the selection",
-                                                        pdb->gimp, FALSE,
-                                                        GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",
                                                   "operation",
                                                   "The desired operation with current selection",
                                                   GIMP_TYPE_CHANNEL_OPS,
                                                   GIMP_CHANNEL_OP_ADD,
                                                   GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item to render to the selection",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

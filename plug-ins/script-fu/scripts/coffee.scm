@@ -36,7 +36,7 @@
                                           (if (= inDark TRUE)
                                               DARKEN-ONLY-MODE NORMAL-MODE))))
 
-      (gimp-image-insert-layer theImage theStain -1 0)
+      (gimp-image-insert-layer theImage theStain 0 0)
       (gimp-selection-all theImage)
       (gimp-edit-clear theStain)
 

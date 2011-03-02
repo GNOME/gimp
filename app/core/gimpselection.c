@@ -523,14 +523,12 @@ gimp_selection_new (GimpImage *image,
   GimpChannel *channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (width > 0 && height > 0, NULL);
 
-  channel = g_object_new (GIMP_TYPE_SELECTION, NULL);
-
-  gimp_drawable_configure (GIMP_DRAWABLE (channel),
-                           image,
-                           0, 0, width, height,
-                           GIMP_GRAY_IMAGE,
-                           NULL);
+  channel = GIMP_CHANNEL (gimp_drawable_new (GIMP_TYPE_SELECTION,
+                                             image, NULL,
+                                             0, 0, width, height,
+                                             GIMP_GRAY_IMAGE));
 
   gimp_channel_set_color (channel, &black, FALSE);
   gimp_channel_set_show_masked (channel, TRUE);

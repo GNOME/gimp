@@ -36,7 +36,7 @@ static CommandClass_t select_command_class = {
    select_command_destruct,
    select_command_execute,
    select_command_undo,
-   NULL				/* select_command_redo */
+   NULL                         /* select_command_redo */
 };
 
 typedef struct {

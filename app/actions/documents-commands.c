@@ -268,7 +268,7 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
     {
       gimp_imagefile_create_thumbnail (imagefile,
                                        context, NULL,
-                                       imagefile->gimp->config->thumbnail_size,
+                                       context->gimp->config->thumbnail_size,
                                        FALSE);
     }
 }
@@ -291,8 +291,9 @@ static void
 documents_remove_dangling_foreach (GimpImagefile *imagefile,
                                    GimpContainer *container)
 {
-  if (gimp_thumbnail_peek_image (imagefile->thumbnail) ==
-      GIMP_THUMB_STATE_NOT_FOUND)
+  GimpThumbnail *thumbnail = gimp_imagefile_get_thumbnail (imagefile);
+
+  if (gimp_thumbnail_peek_image (thumbnail) == GIMP_THUMB_STATE_NOT_FOUND)
     {
       const gchar *uri = gimp_object_get_name (imagefile);
 

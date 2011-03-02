@@ -383,24 +383,16 @@ gimp_spin_scale_button_motion (GtkWidget      *widget,
          (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
       event->window == gtk_entry_get_text_window (GTK_ENTRY (widget)))
     {
+      GdkDisplay *display = gtk_widget_get_display (widget);
+      GdkCursor  *cursor;
+
       if (gimp_spin_scale_on_number (widget, event->x, event->y))
-        {
-          GdkDisplay *display = gtk_widget_get_display (widget);
-          GdkCursor  *cursor;
-
-          cursor = gdk_cursor_new_for_display (display, GDK_XTERM);
-          gdk_window_set_cursor (event->window, cursor);
-          gdk_cursor_unref (cursor);
-        }
+        cursor = gdk_cursor_new_for_display (display, GDK_XTERM);
       else
-        {
-          GdkDisplay *display = gtk_widget_get_display (widget);
-          GdkCursor  *cursor;
+        cursor = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
 
-          cursor = gdk_cursor_new_for_display (display, GDK_LEFT_PTR);
-          gdk_window_set_cursor (event->window, cursor);
-          gdk_cursor_unref (cursor);
-        }
+      gdk_window_set_cursor (event->window, cursor);
+      gdk_cursor_unref (cursor);
     }
 
   return FALSE;

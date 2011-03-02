@@ -38,16 +38,16 @@ init_accel_group(GtkWidget *window)
 
 void
 add_accelerator(GtkWidget *widget, guint accelerator_key,
-		guint8 accelerator_mods)
+                guint8 accelerator_mods)
 {
    gtk_widget_add_accelerator(widget, "activate", accelerator_group,
-			      accelerator_key, accelerator_mods,
-			      GTK_ACCEL_VISIBLE);
+                              accelerator_key, accelerator_mods,
+                              GTK_ACCEL_VISIBLE);
 }
 
 GtkWidget*
 insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
-		       MenuCallback activate, gpointer data)
+                       MenuCallback activate, gpointer data)
 {
    GtkWidget *item = gtk_image_menu_item_new_with_mnemonic(label);
    gtk_menu_shell_insert(GTK_MENU_SHELL(parent), item, position);

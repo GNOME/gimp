@@ -25,28 +25,28 @@
 
 typedef struct
 {
-   GtkWidget	*dialog;
+   GtkWidget    *dialog;
    GtkWidget    *vbox;
-   GtkWidget	*ok;
-   GtkWidget	*apply;
-   GtkWidget	*cancel;
-   void		(*ok_cb)(gpointer);
-   gpointer	ok_cb_data;
-   void		(*apply_cb)(gpointer);
-   gpointer	apply_cb_data;
-   void		(*cancel_cb)(gpointer);
-   gpointer	cancel_cb_data;
+   GtkWidget    *ok;
+   GtkWidget    *apply;
+   GtkWidget    *cancel;
+   void         (*ok_cb)(gpointer);
+   gpointer     ok_cb_data;
+   void         (*apply_cb)(gpointer);
+   gpointer     apply_cb_data;
+   void         (*cancel_cb)(gpointer);
+   gpointer     cancel_cb_data;
 } DefaultDialog_t;
 
 DefaultDialog_t *make_default_dialog(const gchar *title);
 void default_dialog_set_ok_cb(DefaultDialog_t *dialog, void (*ok_cb)(gpointer),
-			      gpointer ok_cb_data);
+                              gpointer ok_cb_data);
 void default_dialog_set_apply_cb(DefaultDialog_t *dialog,
-				 void (*apply_cb)(gpointer),
-				 gpointer apply_cb_data);
+                                 void (*apply_cb)(gpointer),
+                                 gpointer apply_cb_data);
 void default_dialog_set_cancel_cb(DefaultDialog_t *dialog,
-				  void (*ok_cb)(gpointer),
-				  gpointer ok_cb_data);
+                                  void (*ok_cb)(gpointer),
+                                  gpointer ok_cb_data);
 void default_dialog_show(DefaultDialog_t *dialog);
 void default_dialog_hide_cancel_button(DefaultDialog_t *dialog);
 void default_dialog_hide_apply_button(DefaultDialog_t *dialog);
@@ -54,6 +54,6 @@ void default_dialog_hide_help_button(DefaultDialog_t *dialog);
 void default_dialog_set_title(DefaultDialog_t *dialog, const gchar *title);
 void default_dialog_set_label(DefaultDialog_t *dialog, const gchar *text);
 GtkWidget *default_dialog_add_table(DefaultDialog_t *dialog, gint rows,
-				    gint cols);
+                                    gint cols);
 
 #endif /* _IMAP_DEFAULT_DIALOG_H */

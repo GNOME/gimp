@@ -50,7 +50,6 @@
 #include "widgets/gimpcolorselectorpalette.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpdevices.h"
-#include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimprender.h"
@@ -120,7 +119,6 @@ static void       gui_single_window_mode_notify (GimpGuiConfig      *gui_config,
 static void       gui_tearoff_menus_notify      (GimpGuiConfig      *gui_config,
                                                  GParamSpec         *pspec,
                                                  GtkUIManager       *manager);
-static void       gui_device_change_notify      (Gimp               *gimp);
 
 static void       gui_global_buffer_changed     (Gimp               *gimp);
 
@@ -412,7 +410,7 @@ gui_restore_callback (Gimp               *gimp,
                     G_CALLBACK (gui_global_buffer_changed),
                     NULL);
 
-  gimp_devices_init (gimp, gui_device_change_notify);
+  gimp_devices_init (gimp);
   gimp_controllers_init (gimp);
   session_init (gimp);
 
@@ -685,24 +683,6 @@ gui_tearoff_menus_notify (GimpGuiConfig *gui_config,
                           GtkUIManager  *manager)
 {
   gtk_ui_manager_set_add_tearoffs (manager, gui_config->tearoff_menus);
-}
-
-static void
-gui_device_change_notify (Gimp *gimp)
-{
-  GimpSessionInfo *session_info;
-
-  session_info = gimp_dialog_factory_find_session_info (gimp_dialog_factory_get_singleton (),
-                                                        "gimp-device-status");
-
-  if (session_info && gimp_session_info_get_widget (session_info))
-    {
-      GtkWidget *device_status;
-
-      device_status = gtk_bin_get_child (GTK_BIN (gimp_session_info_get_widget (session_info)));
-
-      gimp_device_status_update (GIMP_DEVICE_STATUS (device_status));
-    }
 }
 
 static void

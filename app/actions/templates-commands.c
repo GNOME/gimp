@@ -253,8 +253,10 @@ templates_new_response (GtkWidget             *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpTemplateEditor *editor   = GIMP_TEMPLATE_EDITOR (options->editor);
-      GimpTemplate       *template = editor->template;
+      GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (options->editor);
+      GimpTemplate       *template;
+
+      template = gimp_template_editor_get_template (editor);
 
       gimp_container_add (options->gimp->templates, GIMP_OBJECT (template));
       gimp_context_set_template (gimp_get_user_context (options->gimp),
@@ -272,8 +274,11 @@ templates_edit_response (GtkWidget             *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpTemplateEditor *editor = GIMP_TEMPLATE_EDITOR (options->editor);
+      GimpTemplate       *template;
 
-      gimp_config_sync (G_OBJECT (editor->template),
+      template = gimp_template_editor_get_template (editor);
+
+      gimp_config_sync (G_OBJECT (template),
                         G_OBJECT (options->template), 0);
     }
 
