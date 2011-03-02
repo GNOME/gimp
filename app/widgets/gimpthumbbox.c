@@ -378,7 +378,8 @@ gimp_thumb_box_new (GimpContext *context)
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
                     box);
 
-  g_signal_connect (box->imagefile->thumbnail, "notify::thumb-state",
+  g_signal_connect (gimp_imagefile_get_thumbnail (box->imagefile),
+                    "notify::thumb-state",
                     G_CALLBACK (gimp_thumb_box_thumb_state_notify),
                     box);
 
@@ -547,7 +548,7 @@ static void
 gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
                                   gboolean      force)
 {
-  Gimp           *gimp     = box->imagefile->gimp;
+  Gimp           *gimp     = box->context->gimp;
   GimpProgress   *progress = GIMP_PROGRESS (box);
   GimpFileDialog *dialog   = NULL;
   GtkWidget      *toplevel;
@@ -679,7 +680,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
         return;
     }
 
-  thumb = box->imagefile->thumbnail;
+  thumb = gimp_imagefile_get_thumbnail (box->imagefile);
 
   basename = file_utils_uri_display_basename (uri);
   gtk_label_set_text (GTK_LABEL (box->filename), basename);
@@ -701,8 +702,8 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
 static gboolean
 gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 {
-  Gimp          *gimp  = box->imagefile->gimp;
-  GimpThumbnail *thumb = box->imagefile->thumbnail;
+  Gimp          *gimp  = box->context->gimp;
+  GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
   const gchar   *uri   = gimp_object_get_name (box->imagefile);
 
   box->idle_id = 0;
