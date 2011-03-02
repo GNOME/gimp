@@ -50,7 +50,7 @@
                                       100
                                       NORMAL-MODE)))
 
-  (gimp-image-insert-layer theImage theLayer -1 0)
+  (gimp-image-insert-layer theImage theLayer 0 0)
 
   (if (= FALSE (car (gimp-selection-is-empty theImage)))
       (gimp-edit-fill theLayer BACKGROUND-FILL)

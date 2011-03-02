@@ -89,7 +89,7 @@
       (gimp-image-undo-group-start image)
     )
 
-    (gimp-image-insert-layer image bump-layer -1 1)
+    (gimp-image-insert-layer image bump-layer 0 1)
 
     ; If the layer we're bevelling is offset from the image's origin, we
     ; have to do the same to the bumpmap

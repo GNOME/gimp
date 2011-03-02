@@ -62,7 +62,7 @@
 					 100 DARKEN-ONLY-MODE)))
 	    )
 
-             (gimp-image-add-layer theImage mLayer 0)
+             (gimp-image-insert-layer theImage mLayer 0 0)
              (gimp-selection-all theImage)
              (gimp-edit-clear mLayer)
              (gimp-selection-none theImage)

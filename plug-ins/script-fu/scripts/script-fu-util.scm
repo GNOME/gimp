@@ -38,7 +38,7 @@
   (while (not (null? layers))
     (let ((layer (car layers)))
       (set! layers (cdr layers))
-      (gimp-image-add-layer image layer -1)
+      (gimp-image-insert-layer image layer 0 -1)
       (gimp-image-lower-layer image layer)
     )
   )

@@ -90,15 +90,15 @@
 
     ; Create bumpmap layer
 
-    (gimp-image-insert-layer img bg-layer -1 -1)
+    (gimp-image-insert-layer img bg-layer 0 -1)
     (gimp-context-set-foreground '(0 0 0))
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
-    (gimp-image-insert-layer img glow-layer -1 -1)
+    (gimp-image-insert-layer img glow-layer 0 -1)
 
     ; Create text layer
 
-    (gimp-image-insert-layer img button-layer -1 -1)
+    (gimp-image-insert-layer img button-layer 0 -1)
     (gimp-layer-set-offsets button-layer (/ glow-radius 2) (/ glow-radius 2))
     (gimp-selection-none img)
     (gimp-rect-select img 0 0 img-width img-height CHANNEL-OP-REPLACE FALSE 0)

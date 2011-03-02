@@ -37,8 +37,8 @@
     (gimp-context-push)
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img bg-layer 1)
-    (gimp-image-add-layer img text-layer -1)
+    (gimp-image-insert-layer img bg-layer 0 1)
+    (gimp-image-insert-layer img text-layer 0 -1)
 
     (gimp-context-set-background bg-color)
     (gimp-edit-clear bg-layer)

@@ -33,7 +33,7 @@
         )
 
     (gimp-image-undo-disable img)
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable 0 0)
 
     ; Render background checkerboard
 

@@ -65,7 +65,7 @@
           (set! active-selection (car (gimp-selection-save image)))))
 
     (set! hl-layer (car (gimp-layer-new image image-width image-height type _"Highlight" 100 NORMAL-MODE)))
-    (gimp-image-insert-layer image hl-layer -1 -1)
+    (gimp-image-insert-layer image hl-layer 0 -1)
 
     (gimp-selection-none image)
     (gimp-edit-clear hl-layer)
@@ -91,7 +91,7 @@
                                             _"Shadow"
                                             ds-opacity
                                             NORMAL-MODE)))
-    (gimp-image-insert-layer image shadow-layer -1 -1)
+    (gimp-image-insert-layer image shadow-layer 0 -1)
     (gimp-selection-none image)
     (gimp-edit-clear shadow-layer)
     (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)

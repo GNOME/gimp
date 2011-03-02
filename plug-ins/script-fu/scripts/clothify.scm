@@ -19,7 +19,7 @@
 
     (gimp-image-undo-disable img)
 
-    (gimp-image-insert-layer img layer-one -1 0)
+    (gimp-image-insert-layer img layer-one 0 0)
 
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill layer-one BACKGROUND-FILL)
@@ -28,7 +28,7 @@
 
     (set! layer-two (car (gimp-layer-copy layer-one 0)))
     (gimp-layer-set-mode layer-two MULTIPLY-MODE)
-    (gimp-image-insert-layer img layer-two -1 0)
+    (gimp-image-insert-layer img layer-two 0 0)
 
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-one bx TRUE FALSE)
     (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-two by FALSE TRUE)

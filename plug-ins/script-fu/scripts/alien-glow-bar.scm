@@ -42,9 +42,9 @@
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img (+ length height) (+ height height) 0 0)
-    (gimp-image-insert-layer img bg-layer -1 1)
-    (gimp-image-insert-layer img glow-layer -1 -1)
-    (gimp-image-insert-layer img ruler-layer -1 -1)
+    (gimp-image-insert-layer img bg-layer 0 1)
+    (gimp-image-insert-layer img glow-layer 0 -1)
+    (gimp-image-insert-layer img ruler-layer 0 -1)
 
    ; (gimp-layer-set-lock-alpha ruler-layer TRUE)
     (gimp-context-set-background bg-color)

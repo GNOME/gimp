@@ -59,7 +59,7 @@
                                      " (replace)"))
           )
     (gimp-layer-set-lock-alpha waves-layer FALSE)
-    (gimp-image-add-layer image waves-layer -1)
+    (gimp-image-insert-layer image waves-layer 0 -1)
     (gimp-item-set-name waves-layer layer-name)
 
     (plug-in-waves RUN-NONINTERACTIVE

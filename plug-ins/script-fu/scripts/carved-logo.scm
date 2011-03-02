@@ -128,7 +128,7 @@
     (gimp-edit-fill csl-mask BACKGROUND-FILL)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
-    (gimp-image-insert-layer img inset-layer -1 1)
+    (gimp-image-insert-layer img inset-layer 0 1)
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask inset-layer il-mask)

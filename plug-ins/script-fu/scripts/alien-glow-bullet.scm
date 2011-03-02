@@ -48,9 +48,9 @@
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img diameter diameter 0 0)
-    (gimp-image-insert-layer img bg-layer -1 1)
-    (gimp-image-insert-layer img glow-layer -1 -1)
-    (gimp-image-insert-layer img bullet-layer -1 -1)
+    (gimp-image-insert-layer img bg-layer 0 1)
+    (gimp-image-insert-layer img glow-layer 0 -1)
+    (gimp-image-insert-layer img bullet-layer 0 -1)
 
     ; (gimp-layer-set-lock-alpha ruler-layer TRUE)
     (gimp-context-set-background bg-color)

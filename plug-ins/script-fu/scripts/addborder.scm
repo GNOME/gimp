@@ -117,7 +117,7 @@
                        xsize
                        ysize)
 
-    (gimp-image-insert-layer img layer -1 0)
+    (gimp-image-insert-layer img layer 0 0)
     (gimp-drawable-fill layer TRANSPARENT-FILL)
 
     (gimp-context-set-background (adjcolour colour dvalue))

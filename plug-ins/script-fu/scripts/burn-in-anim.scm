@@ -74,7 +74,7 @@
               (set! bl-layer-name (string-append "fr-nr"
                                                  (number->string frame-nr 10) ) )
 
-              (gimp-image-insert-layer img bl-layer -1 -2)
+              (gimp-image-insert-layer img bl-layer 0 -2)
               (gimp-item-set-name bl-layer bl-layer-name)
               (gimp-item-set-visible bl-layer TRUE)
               (gimp-layer-set-lock-alpha bl-layer TRUE)
@@ -164,7 +164,7 @@
 
               ;--- merge with bg layer
               (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
-              (gimp-image-insert-layer img bg-layer -1 -1)
+              (gimp-image-insert-layer img bg-layer 0 -1)
               (gimp-image-lower-item img bg-layer)
               (set! bg-layer-name (string-append "bg-"
                                                  (number->string frame-nr 10)))

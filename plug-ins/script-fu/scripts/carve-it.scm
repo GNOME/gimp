@@ -80,7 +80,7 @@
 
     (gimp-image-undo-disable img)
 
-    (gimp-image-insert-layer img layer1 -1 0)
+    (gimp-image-insert-layer img layer1 0 0)
 
     (gimp-selection-all img)
     (gimp-edit-clear layer1)
@@ -149,7 +149,7 @@
     (gimp-edit-fill csl-mask BACKGROUND-FILL)
 
     (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
-    (gimp-image-insert-layer img inset-layer -1 1)
+    (gimp-image-insert-layer img inset-layer 0 1)
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer ADD-BLACK-MASK)))
     (gimp-layer-add-mask inset-layer il-mask)

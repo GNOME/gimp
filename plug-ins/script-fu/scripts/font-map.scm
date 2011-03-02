@@ -93,7 +93,7 @@
           (gimp-context-set-background '(255 255 255))
           (gimp-context-set-foreground '(0 0 0))))
 
-    (gimp-image-add-layer img drawable 0)
+    (gimp-image-insert-layer img drawable 0 0)
     (gimp-edit-clear drawable)
 
     (if (= labels TRUE)
@@ -102,7 +102,7 @@
                                               (if (= colors 0)
                                                   GRAYA-IMAGE RGBA-IMAGE)
                                               "Labels" 100 NORMAL-MODE)))
-          (gimp-image-add-layer img drawable -1)))
+          (gimp-image-insert-layer img drawable 0 -1)))
           (gimp-edit-clear drawable)
 
     (while (< count num-fonts)

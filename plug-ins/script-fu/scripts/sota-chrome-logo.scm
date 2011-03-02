@@ -109,9 +109,9 @@
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
-    (gimp-image-add-layer img shadow 0)
-    (gimp-image-add-layer img layer3 0)
-    (gimp-image-add-layer img layer2 0)
+    (gimp-image-insert-layer img shadow 0 0)
+    (gimp-image-insert-layer img layer3 0 0)
+    (gimp-image-insert-layer img layer2 0 0)
     (gimp-context-set-background '(255 255 255))
     (gimp-selection-none img)
     (gimp-edit-fill layer2 BACKGROUND-FILL)
@@ -137,7 +137,7 @@
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-invert layer2)
 
-    (gimp-image-add-layer img layer1 0)
+    (gimp-image-insert-layer img layer1 0 0)
     (copy-layer-sota img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height FALSE)
@@ -155,7 +155,7 @@
     (gimp-edit-fill layer-mask BACKGROUND-FILL)
 
     (set! layer2 (car (gimp-layer-copy layer1 TRUE)))
-    (gimp-image-add-layer img layer2 0)
+    (gimp-image-insert-layer img layer2 0 0)
     (gimp-context-set-brush (brush brush-size))
     (gimp-context-set-foreground '(255 255 255))
     (gimp-edit-stroke layer-mask)

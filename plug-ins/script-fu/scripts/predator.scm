@@ -78,7 +78,7 @@
           )
 
           (gimp-layer-set-offsets effect-layer select-offset-x select-offset-y)
-          (gimp-image-add-layer image effect-layer -1)
+          (gimp-image-insert-layer image effect-layer 0 -1)
           (gimp-selection-none image)
           (gimp-edit-clear effect-layer)
 

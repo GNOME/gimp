@@ -61,7 +61,7 @@
                                         100
                                         NORMAL-MODE)))
 
-    (gimp-image-add-layer theImage theLayer 0)
+    (gimp-image-insert-layer theImage theLayer 0 0)
 
 
     (gimp-edit-clear theLayer)
@@ -97,7 +97,7 @@
     (if (= inShadow TRUE)
         (begin
           (gimp-selection-none inImage)
-          (gimp-image-add-layer theImage
+          (gimp-image-insert-layer theImage -1
                                 (car (gimp-layer-copy theLayer FALSE)) 0)
           (gimp-layer-scale theLayer
                             (- theWidth inSize) (- theHeight inSize) TRUE)
