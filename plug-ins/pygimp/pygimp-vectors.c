@@ -650,7 +650,7 @@ vectors_parasite_find(PyGimpVectors *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
         return NULL;
 
-    return pygimp_parasite_new(gimp_item_find_parasite(self->ID, name));
+    return pygimp_parasite_new(gimp_item_get_parasite(self->ID, name));
 }
 
 static PyObject *
@@ -698,7 +698,8 @@ vectors_parasite_list(PyGimpVectors *self)
     gint num_parasites;
     gchar **parasites;
 
-    if (gimp_item_list_parasites(self->ID, &num_parasites, &parasites)) {
+    parasites = gimp_item_get_parasite_list(self->ID, &num_parasites);
+    if (parasites) {
         PyObject *ret;
         gint i;
 

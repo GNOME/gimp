@@ -664,8 +664,8 @@ gimp_item_get_tattoo
 gimp_item_set_tattoo
 gimp_item_attach_parasite
 gimp_item_detach_parasite
-gimp_item_find_parasite
-gimp_item_list_parasites
+gimp_item_get_parasite
+gimp_item_get_parasite_list
 </SECTION>
 
 <SECTION>
