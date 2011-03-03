@@ -1149,9 +1149,8 @@ xcf_load_layer (XcfInfo    *info,
        * attach it so it can be added when all layers are loaded
        */
       g_object_set_data_full (G_OBJECT (layer), "gimp-layer-mask",
-                              g_object_ref (layer_mask),
+                              g_object_ref_sink (layer_mask),
                               (GDestroyNotify) g_object_unref);
-      g_object_ref_sink (layer_mask);
     }
 
   /* attach the floating selection... */
