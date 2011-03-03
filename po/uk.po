@@ -322,7 +322,7 @@ msgstr "Редактор динамікі малювання"
 
 #: ../app/actions/actions.c:157
 msgid "Edit"
-msgstr "Правка"
+msgstr "Зміни"
 
 #: ../app/actions/actions.c:160 ../app/dialogs/dialogs.c:271
 msgid "Error Console"
@@ -598,7 +598,7 @@ msgstr "Меню каналів"
 #: ../app/actions/channels-actions.c:48
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
-msgstr "_Правка ознак каналу..."
+msgstr "З_міна ознак каналу…"
 
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
@@ -608,7 +608,7 @@ msgstr "Вкажіть назву каналу, його колір та про�
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
 msgid "_New Channel..."
-msgstr "_Створити канал..."
+msgstr "_Створити канал…."
 
 #: ../app/actions/channels-actions.c:55
 msgctxt "channels-action"
@@ -732,11 +732,11 @@ msgstr "Ознаки каналу"
 
 #: ../app/actions/channels-commands.c:88
 msgid "Edit Channel Attributes"
-msgstr "Правка ознак каналу"
+msgstr "Зміна ознак каналу"
 
 #: ../app/actions/channels-commands.c:90
 msgid "Edit Channel Color"
-msgstr "Правка кольору каналу"
+msgstr "Зміна кольору каналу"
 
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
@@ -778,7 +778,7 @@ msgstr "Меню мапи кольорів"
 #: ../app/actions/colormap-actions.c:48
 msgctxt "colormap-action"
 msgid "_Edit Color..."
-msgstr "_Правка кольору..."
+msgstr "З_міна кольору…"
 
 #: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
@@ -808,11 +808,11 @@ msgstr "Додає активний колір тла"
 #: ../app/actions/colormap-commands.c:73
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Правка елементу палітри кольорів #%d"
+msgstr "Зміна елементу палітри кольорів #%d"
 
 #: ../app/actions/colormap-commands.c:80
 msgid "Edit Colormap Entry"
-msgstr "Правка елементу палітри кольорів"
+msgstr "Зміна елементу палітри кольорів"
 
 #: ../app/actions/config-actions.c:38
 msgctxt "config-action"
@@ -1078,7 +1078,7 @@ msgstr "Відкрити діалог гістограми"
 #: ../app/actions/dialogs-actions.c:92
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
-msgstr "Правка виділеної діл_янки"
+msgstr "Зміна виділеної діл_янки"
 
 #: ../app/actions/dialogs-actions.c:93
 msgctxt "dialogs-action"
@@ -1837,7 +1837,7 @@ msgstr "Оновити динаміку"
 #: ../app/actions/dynamics-actions.c:79
 msgctxt "dynamics-action"
 msgid "_Edit Dynamics..."
-msgstr "_Правка диманіки..."
+msgstr "З_міна диманіки…"
 
 #: ../app/actions/dynamics-actions.c:80
 msgctxt "dynamics-action"
@@ -1857,7 +1857,7 @@ msgstr "Змінити активну динаміку"
 #: ../app/actions/edit-actions.c:63
 msgctxt "edit-action"
 msgid "_Edit"
-msgstr "_Правка"
+msgstr "З_міни"
 
 #: ../app/actions/edit-actions.c:64
 msgctxt "edit-action"
@@ -2920,12 +2920,12 @@ msgstr "Оновити градієнти"
 #: ../app/actions/gradients-actions.c:86
 msgctxt "gradients-action"
 msgid "_Edit Gradient..."
-msgstr "_Правка градієнта..."
+msgstr "З_міна градієнта…"
 
 #: ../app/actions/gradients-actions.c:87
 msgctxt "gradients-action"
 msgid "Edit gradient"
-msgstr "Правка градієнта"
+msgstr "Зміна градієнта"
 
 #: ../app/actions/gradients-commands.c:65
 #, c-format
@@ -3281,12 +3281,12 @@ msgstr "Створити нове вікно для цього зображен�
 #: ../app/actions/images-actions.c:59
 msgctxt "images-action"
 msgid "_Delete Image"
-msgstr "_Видалити зображення"
+msgstr "_Вилучити зображення"
 
 #: ../app/actions/images-actions.c:60
 msgctxt "images-action"
 msgid "Delete this image"
-msgstr "Видалити це зображення"
+msgstr "Вилучити це зображення"
 
 #: ../app/actions/layers-actions.c:49
 msgctxt "layers-action"
@@ -3346,7 +3346,7 @@ msgstr "Використовувати текстовий інструмент �
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
-msgstr "_Правка ознак шару..."
+msgstr "З_міна ознак шару…"
 
 #: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
@@ -3356,7 +3356,7 @@ msgstr "Правка назви шару"
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:598
 msgctxt "layers-action"
 msgid "_New Layer..."
-msgstr "_Створити шар..."
+msgstr "_Створити шар…"
 
 #: ../app/actions/layers-actions.c:83
 msgctxt "layers-action"
@@ -3617,7 +3617,7 @@ msgstr "Запобігає змінам інформації про прозор
 #: ../app/actions/layers-actions.c:246
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
-msgstr "_Правка маски шару"
+msgstr "З_міна маски шару"
 
 #: ../app/actions/layers-actions.c:247
 msgctxt "layers-action"
@@ -3844,7 +3844,7 @@ msgstr "Меню редактора палітри"
 #: ../app/actions/palette-editor-actions.c:47
 msgctxt "palette-editor-action"
 msgid "_Edit Color..."
-msgstr "_Правка кольору..."
+msgstr "З_міна кольору…"
 
 #: ../app/actions/palette-editor-actions.c:48
 msgctxt "palette-editor-action"
@@ -3864,7 +3864,7 @@ msgstr "Видалення кольору з набору"
 #: ../app/actions/palette-editor-actions.c:62
 msgctxt "palette-editor-action"
 msgid "Edit Active Palette"
-msgstr "Правка активної палітри"
+msgstr "Зміна активної палітри"
 
 #: ../app/actions/palette-editor-actions.c:71
 msgctxt "palette-editor-action"
@@ -4296,12 +4296,12 @@ msgstr "Меню редактора виділення"
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
-msgstr "Виді_лення"
+msgstr "_Виділ"
 
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "_Все"
+msgstr "_Всього"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -4862,7 +4862,7 @@ msgstr "Правка активної палітри"
 #: ../app/actions/tools-actions.c:45
 msgctxt "tools-action"
 msgid "_Tools"
-msgstr "_Інструменти"
+msgstr "_Засоби"
 
 #: ../app/actions/tools-actions.c:46
 msgctxt "tools-action"
@@ -5169,7 +5169,7 @@ msgstr "Обведення за контуром"
 #: ../app/actions/view-actions.c:69
 msgctxt "view-action"
 msgid "_View"
-msgstr "_Вигляд"
+msgstr "П_ерегляд"
 
 #: ../app/actions/view-actions.c:70
 msgctxt "view-action"
@@ -5648,7 +5648,7 @@ msgstr "Перемістити це вікно на екран %s"
 #: ../app/actions/windows-actions.c:85
 msgctxt "windows-action"
 msgid "_Windows"
-msgstr "_Вікна"
+msgstr "Вік_на"
 
 #: ../app/actions/windows-actions.c:87
 msgctxt "windows-action"
@@ -9448,7 +9448,7 @@ msgstr "_Градієнт"
 
 #: ../app/dialogs/palette-import-dialog.c:225
 msgid "I_mage"
-msgstr "_Зображення"
+msgstr "_Образ"
 
 #: ../app/dialogs/palette-import-dialog.c:239
 msgid "Sample _Merged"
