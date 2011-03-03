@@ -108,8 +108,6 @@ gboolean      gimp_data_is_internal      (GimpData     *data);
 
 gint          gimp_data_compare          (GimpData     *data1,
                                           GimpData     *data2);
-gint          gimp_data_name_compare     (GimpData     *data1,
-                                          GimpData     *data2);
 
 #define GIMP_DATA_ERROR (gimp_data_error_quark ())
 
