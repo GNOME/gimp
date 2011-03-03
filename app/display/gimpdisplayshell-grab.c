@@ -23,6 +23,11 @@
 
 #include "display-types.h"
 
+#include "widgets/gimpdeviceinfo.h"
+#include "widgets/gimpdevices.h"
+#include "widgets/gimpdevicemanager.h"
+
+#include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-grab.h"
 
@@ -47,6 +52,25 @@ gimp_display_shell_pointer_grab (GimpDisplayShell *shell,
       shell->pointer_grabbed = TRUE;
 
       return TRUE;
+    }
+  else if (status == GDK_GRAB_ALREADY_GRABBED)
+    {
+      GimpDeviceManager *manager;
+      GdkDisplay        *gdk_display;
+
+      manager = gimp_devices_get_manager (shell->display->gimp);
+      gdk_display = gtk_widget_get_display (GTK_WIDGET (shell));
+
+      /*  EEK: trying to grab an extended device always returns
+       *  ALREADY_GRABBED, so simply assume the grab succeeded anyway
+       */
+      if (gimp_device_manager_get_current_device (manager)->device !=
+          gdk_display_get_core_pointer (gdk_display))
+        {
+          shell->pointer_grabbed = TRUE;
+
+          return TRUE;
+        }
     }
 
   g_printerr ("%s: gdk_pointer_grab failed with status %d\n",
