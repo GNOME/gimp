@@ -345,26 +345,30 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
                          const GimpCoords *coords)
 
 {
-  GimpPaintCore     *paint_core   = GIMP_PAINT_CORE (source_core);
-  GimpSourceOptions *options      = GIMP_SOURCE_OPTIONS (paint_options);
-  GimpDynamics      *dynamics     = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image        = gimp_item_get_image (GIMP_ITEM (drawable));
-  GimpPickable      *src_pickable = NULL;
-  PixelRegion        srcPR;
-  gint               src_offset_x;
-  gint               src_offset_y;
-  TempBuf           *paint_area;
-  gint               paint_area_offset_x;
-  gint               paint_area_offset_y;
-  gint               paint_area_width;
-  gint               paint_area_height;
-  gdouble            fade_point;
-  gdouble            opacity;
+  GimpPaintCore      *paint_core   = GIMP_PAINT_CORE (source_core);
+  GimpSourceOptions  *options      = GIMP_SOURCE_OPTIONS (paint_options);
+  GimpDynamics       *dynamics     = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpDynamicsOutput *opacity_output;
+  GimpImage          *image        = gimp_item_get_image (GIMP_ITEM (drawable));
+  GimpPickable       *src_pickable = NULL;
+  PixelRegion         srcPR;
+  gint                src_offset_x;
+  gint                src_offset_y;
+  TempBuf            *paint_area;
+  gint                paint_area_offset_x;
+  gint                paint_area_offset_y;
+  gint                paint_area_width;
+  gint                paint_area_height;
+  gdouble             fade_point;
+  gdouble             opacity;
+
+  opacity_output = gimp_dynamics_get_output (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
                                                    coords,
                                                    paint_options,
                                                    fade_point);

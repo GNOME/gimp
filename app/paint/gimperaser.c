@@ -107,23 +107,28 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     const GimpCoords *coords)
 {
-  GimpEraserOptions *options  = GIMP_ERASER_OPTIONS (paint_options);
-  GimpContext       *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage         *image;
-  gdouble            fade_point;
-  gdouble            opacity;
-  TempBuf           *area;
-  guchar             col[MAX_CHANNELS];
-  gdouble            force;
+  GimpEraserOptions  *options  = GIMP_ERASER_OPTIONS (paint_options);
+  GimpContext        *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics       *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpDynamicsOutput *opacity_output;
+  GimpDynamicsOutput *force_output;
+  GimpImage          *image;
+  gdouble             fade_point;
+  gdouble             opacity;
+  TempBuf            *area;
+  guchar              col[MAX_CHANNELS];
+  gdouble             force;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  opacity_output = gimp_dynamics_get_output (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
 
   fade_point = gimp_paint_options_get_fade (paint_options,
                                             gimp_item_get_image (GIMP_ITEM (drawable)),
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
                                                    coords,
                                                    paint_options,
                                                    fade_point);
@@ -145,10 +150,13 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_get_data (area), col,
                 area->width * area->height, area->bytes);
 
-  force = gimp_dynamics_output_get_linear_value (dynamics->force_output,
-                                                    coords,
-                                                    paint_options,
-                                                    fade_point);
+  force_output = gimp_dynamics_get_output (dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_FORCE);
+
+  force = gimp_dynamics_output_get_linear_value (force_output,
+                                                 coords,
+                                                 paint_options,
+                                                 fade_point);
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,

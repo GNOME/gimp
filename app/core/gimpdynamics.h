@@ -34,19 +34,7 @@ typedef struct _GimpDynamicsClass GimpDynamicsClass;
 
 struct _GimpDynamics
 {
-  GimpData            parent_instance;
-
-  GimpDynamicsOutput *opacity_output;
-  GimpDynamicsOutput *hardness_output;
-  GimpDynamicsOutput *force_output;
-  GimpDynamicsOutput *rate_output;
-  GimpDynamicsOutput *flow_output;
-  GimpDynamicsOutput *size_output;
-  GimpDynamicsOutput *aspect_ratio_output;
-  GimpDynamicsOutput *color_output;
-  GimpDynamicsOutput *angle_output;
-  GimpDynamicsOutput *jitter_output;
-  GimpDynamicsOutput *spacing_output;
+  GimpData  parent_instance;
 };
 
 struct _GimpDynamicsClass

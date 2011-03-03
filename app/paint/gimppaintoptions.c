@@ -661,6 +661,7 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
   GimpGradientOptions *gradient_options;
   GimpGradient        *gradient;
   GimpDynamics        *dynamics;
+  GimpDynamicsOutput  *color_output;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -672,7 +673,10 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  if (gimp_dynamics_output_is_enabled (dynamics->color_output))
+  color_output = gimp_dynamics_get_output (dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_COLOR);
+
+  if (gimp_dynamics_output_is_enabled (color_output))
     {
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
@@ -688,7 +692,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 GimpBrushApplicationMode
 gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 {
-  GimpDynamics *dynamics;
+  GimpDynamics       *dynamics;
+  GimpDynamicsOutput *force_output;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), GIMP_BRUSH_SOFT);
 
@@ -697,9 +702,11 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
+  force_output = gimp_dynamics_get_output (dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_FORCE);
 
-   if (gimp_dynamics_output_is_enabled(dynamics->force_output))
-     return GIMP_BRUSH_PRESSURE;
+  if (gimp_dynamics_output_is_enabled (force_output))
+    return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
 }

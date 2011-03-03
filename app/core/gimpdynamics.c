@@ -55,6 +55,29 @@ enum
 };
 
 
+typedef struct _GimpDynamicsPrivate GimpDynamicsPrivate;
+
+struct _GimpDynamicsPrivate
+{
+  GimpDynamicsOutput *opacity_output;
+  GimpDynamicsOutput *hardness_output;
+  GimpDynamicsOutput *force_output;
+  GimpDynamicsOutput *rate_output;
+  GimpDynamicsOutput *flow_output;
+  GimpDynamicsOutput *size_output;
+  GimpDynamicsOutput *aspect_ratio_output;
+  GimpDynamicsOutput *color_output;
+  GimpDynamicsOutput *angle_output;
+  GimpDynamicsOutput *jitter_output;
+  GimpDynamicsOutput *spacing_output;
+};
+
+#define GET_PRIVATE(output) \
+        G_TYPE_INSTANCE_GET_PRIVATE (output, \
+                                     GIMP_TYPE_DYNAMICS, \
+                                     GimpDynamicsPrivate)
+
+
 static void          gimp_dynamics_finalize      (GObject      *object);
 static void          gimp_dynamics_set_property  (GObject      *object,
                                                   guint         property_id,
@@ -79,7 +102,6 @@ static GimpDynamicsOutput *
 static void          gimp_dynamics_output_notify (GObject          *output,
                                                   const GParamSpec *pspec,
                                                   GimpDynamics     *dynamics);
-
 
 
 G_DEFINE_TYPE (GimpDynamics, gimp_dynamics,
@@ -165,64 +187,87 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
                                    "spacing-output", NULL,
                                    GIMP_TYPE_DYNAMICS_OUTPUT,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
+
+  g_type_class_add_private (klass, sizeof (GimpDynamicsPrivate));
 }
 
 static void
 gimp_dynamics_init (GimpDynamics *dynamics)
 {
-  dynamics->opacity_output      = gimp_dynamics_create_output (dynamics,
-                                                               "opacity-output",
-                                                               GIMP_DYNAMICS_OUTPUT_OPACITY);
+  GimpDynamicsPrivate *private = GET_PRIVATE (dynamics);
 
-  dynamics->force_output        = gimp_dynamics_create_output (dynamics,
-                                                               "force-output",
-                                                               GIMP_DYNAMICS_OUTPUT_FORCE);
+  private->opacity_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "opacity-output",
+                                 GIMP_DYNAMICS_OUTPUT_OPACITY);
 
-  dynamics->hardness_output     = gimp_dynamics_create_output (dynamics,
-                                                               "hardness-output",
-                                                               GIMP_DYNAMICS_OUTPUT_HARDNESS);
-  dynamics->rate_output         = gimp_dynamics_create_output (dynamics,
-                                                               "rate-output",
-                                                               GIMP_DYNAMICS_OUTPUT_RATE);
-  dynamics->flow_output         = gimp_dynamics_create_output (dynamics,
-                                                               "flow-output",
-                                                               GIMP_DYNAMICS_OUTPUT_RATE);
-  dynamics->size_output         = gimp_dynamics_create_output (dynamics,
-                                                               "size-output",
-                                                               GIMP_DYNAMICS_OUTPUT_SIZE);
-  dynamics->aspect_ratio_output = gimp_dynamics_create_output (dynamics,
-                                                               "aspect-ratio-output",
-                                                               GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
-  dynamics->color_output        = gimp_dynamics_create_output (dynamics,
-                                                               "color-output",
-                                                               GIMP_DYNAMICS_OUTPUT_COLOR);
-  dynamics->angle_output        = gimp_dynamics_create_output (dynamics,
-                                                               "angle-output",
-                                                               GIMP_DYNAMICS_OUTPUT_ANGLE);
-  dynamics->jitter_output       = gimp_dynamics_create_output (dynamics,
-                                                               "jitter-output",
-                                                               GIMP_DYNAMICS_OUTPUT_JITTER);
-  dynamics->spacing_output      = gimp_dynamics_create_output (dynamics,
-                                                               "spacing-output",
-                                                               GIMP_DYNAMICS_OUTPUT_SPACING);
+  private->force_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "force-output",
+                                 GIMP_DYNAMICS_OUTPUT_FORCE);
+
+  private->hardness_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "hardness-output",
+                                 GIMP_DYNAMICS_OUTPUT_HARDNESS);
+
+  private->rate_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "rate-output",
+                                 GIMP_DYNAMICS_OUTPUT_RATE);
+
+  private->flow_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "flow-output",
+                                 GIMP_DYNAMICS_OUTPUT_RATE);
+
+  private->size_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "size-output",
+                                 GIMP_DYNAMICS_OUTPUT_SIZE);
+
+  private->aspect_ratio_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "aspect-ratio-output",
+                                 GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
+
+  private->color_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "color-output",
+                                 GIMP_DYNAMICS_OUTPUT_COLOR);
+
+  private->angle_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "angle-output",
+                                 GIMP_DYNAMICS_OUTPUT_ANGLE);
+
+  private->jitter_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "jitter-output",
+                                 GIMP_DYNAMICS_OUTPUT_JITTER);
+
+  private->spacing_output =
+    gimp_dynamics_create_output (dynamics,
+                                 "spacing-output",
+                                 GIMP_DYNAMICS_OUTPUT_SPACING);
 }
 
 static void
 gimp_dynamics_finalize (GObject *object)
 {
-  GimpDynamics *dynamics = GIMP_DYNAMICS (object);
+  GimpDynamicsPrivate *private = GET_PRIVATE (object);
 
-  g_object_unref (dynamics->opacity_output);
-  g_object_unref (dynamics->force_output);
-  g_object_unref (dynamics->hardness_output);
-  g_object_unref (dynamics->rate_output);
-  g_object_unref (dynamics->flow_output);
-  g_object_unref (dynamics->size_output);
-  g_object_unref (dynamics->aspect_ratio_output);
-  g_object_unref (dynamics->color_output);
-  g_object_unref (dynamics->angle_output);
-  g_object_unref (dynamics->jitter_output);
-  g_object_unref (dynamics->spacing_output);
+  g_object_unref (private->opacity_output);
+  g_object_unref (private->force_output);
+  g_object_unref (private->hardness_output);
+  g_object_unref (private->rate_output);
+  g_object_unref (private->flow_output);
+  g_object_unref (private->size_output);
+  g_object_unref (private->aspect_ratio_output);
+  g_object_unref (private->color_output);
+  g_object_unref (private->angle_output);
+  g_object_unref (private->jitter_output);
+  g_object_unref (private->spacing_output);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -233,69 +278,69 @@ gimp_dynamics_set_property (GObject      *object,
                             const GValue *value,
                             GParamSpec   *pspec)
 {
-  GimpDynamics       *dynamics    = GIMP_DYNAMICS (object);
-  GimpDynamicsOutput *src_output  = NULL;
-  GimpDynamicsOutput *dest_output = NULL;
+  GimpDynamicsPrivate *private     = GET_PRIVATE (object);
+  GimpDynamicsOutput  *src_output  = NULL;
+  GimpDynamicsOutput  *dest_output = NULL;
 
   switch (property_id)
     {
     case PROP_NAME:
-      gimp_object_set_name (GIMP_OBJECT (dynamics), g_value_get_string (value));
+      gimp_object_set_name (GIMP_OBJECT (object), g_value_get_string (value));
       break;
 
     case PROP_OPACITY_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->opacity_output;
+      dest_output = private->opacity_output;
       break;
 
     case PROP_FORCE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->force_output;
+      dest_output = private->force_output;
       break;
 
     case PROP_HARDNESS_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->hardness_output;
+      dest_output = private->hardness_output;
       break;
 
     case PROP_RATE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->rate_output;
+      dest_output = private->rate_output;
       break;
 
     case PROP_FLOW_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->flow_output;
+      dest_output = private->flow_output;
       break;
 
     case PROP_SIZE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->size_output;
+      dest_output = private->size_output;
       break;
 
     case PROP_ASPECT_RATIO_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->aspect_ratio_output;
+      dest_output = private->aspect_ratio_output;
       break;
 
     case PROP_COLOR_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->color_output;
+      dest_output = private->color_output;
       break;
 
     case PROP_ANGLE_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->angle_output;
+      dest_output = private->angle_output;
       break;
 
     case PROP_JITTER_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->jitter_output;
+      dest_output = private->jitter_output;
       break;
 
     case PROP_SPACING_OUTPUT:
       src_output  = g_value_get_object (value);
-      dest_output = dynamics->spacing_output;
+      dest_output = private->spacing_output;
       break;
 
     default:
@@ -317,56 +362,56 @@ gimp_dynamics_get_property (GObject    *object,
                             GValue     *value,
                             GParamSpec *pspec)
 {
-  GimpDynamics *dynamics = GIMP_DYNAMICS (object);
+  GimpDynamicsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_NAME:
-      g_value_set_string (value, gimp_object_get_name (dynamics));
+      g_value_set_string (value, gimp_object_get_name (object));
       break;
 
     case PROP_OPACITY_OUTPUT:
-      g_value_set_object (value, dynamics->opacity_output);
+      g_value_set_object (value, private->opacity_output);
       break;
 
     case PROP_FORCE_OUTPUT:
-      g_value_set_object (value, dynamics->force_output);
+      g_value_set_object (value, private->force_output);
       break;
 
     case PROP_HARDNESS_OUTPUT:
-      g_value_set_object (value, dynamics->hardness_output);
+      g_value_set_object (value, private->hardness_output);
       break;
 
     case PROP_RATE_OUTPUT:
-      g_value_set_object (value, dynamics->rate_output);
+      g_value_set_object (value, private->rate_output);
       break;
 
     case PROP_FLOW_OUTPUT:
-      g_value_set_object (value, dynamics->flow_output);
+      g_value_set_object (value, private->flow_output);
       break;
 
     case PROP_SIZE_OUTPUT:
-      g_value_set_object (value, dynamics->size_output);
+      g_value_set_object (value, private->size_output);
       break;
 
     case PROP_ASPECT_RATIO_OUTPUT:
-      g_value_set_object (value, dynamics->aspect_ratio_output);
+      g_value_set_object (value, private->aspect_ratio_output);
       break;
 
     case PROP_COLOR_OUTPUT:
-      g_value_set_object (value, dynamics->color_output);
+      g_value_set_object (value, private->color_output);
       break;
 
     case PROP_ANGLE_OUTPUT:
-      g_value_set_object (value, dynamics->angle_output);
+      g_value_set_object (value, private->angle_output);
       break;
 
     case PROP_JITTER_OUTPUT:
-      g_value_set_object (value, dynamics->jitter_output);
+      g_value_set_object (value, private->jitter_output);
       break;
 
     case PROP_SPACING_OUTPUT:
-      g_value_set_object (value, dynamics->spacing_output);
+      g_value_set_object (value, private->spacing_output);
       break;
 
     default:
@@ -450,51 +495,56 @@ GimpDynamicsOutput *
 gimp_dynamics_get_output (GimpDynamics           *dynamics,
                           GimpDynamicsOutputType  type_id)
 {
+  GimpDynamicsPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), NULL);
+
+  private = GET_PRIVATE (dynamics);
 
   switch (type_id)
     {
     case GIMP_DYNAMICS_OUTPUT_OPACITY:
-      return dynamics->opacity_output;
+      return private->opacity_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_FORCE:
-      return dynamics->force_output;
+      return private->force_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_HARDNESS:
-      return dynamics->hardness_output;
+      return private->hardness_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_RATE:
-      return dynamics->rate_output;
+      return private->rate_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_FLOW:
-      return dynamics->flow_output;
+      return private->flow_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_SIZE:
-      return dynamics->size_output;
+      return private->size_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO:
-      return dynamics->aspect_ratio_output;
+      return private->aspect_ratio_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_COLOR:
-      return dynamics->color_output;
+      return private->color_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_ANGLE:
-      return dynamics->angle_output;
+      return private->angle_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_JITTER:
-      return dynamics->jitter_output;
+      return private->jitter_output;
       break;
 
     case GIMP_DYNAMICS_OUTPUT_SPACING:
-      return dynamics->spacing_output;
+      return private->spacing_output;
       break;
 
     default:

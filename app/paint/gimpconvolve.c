@@ -130,6 +130,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   GimpConvolveOptions *options    = GIMP_CONVOLVE_OPTIONS (paint_options);
   GimpContext         *context    = GIMP_CONTEXT (paint_options);
   GimpDynamics        *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpDynamicsOutput  *opacity_output;
+  GimpDynamicsOutput  *rate_output;
   GimpImage           *image;
   TempBuf             *area;
   PixelRegion          srcPR;
@@ -146,10 +148,13 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
+  opacity_output = gimp_dynamics_get_output (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
+
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
                                                    coords,
                                                    paint_options,
                                                    fade_point);
@@ -161,12 +166,14 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
-  rate = options->rate;
+  rate_output = gimp_dynamics_get_output (dynamics,
+                                          GIMP_DYNAMICS_OUTPUT_RATE);
 
-  rate *= gimp_dynamics_output_get_linear_value (dynamics->rate_output,
+  rate = (options->rate *
+          gimp_dynamics_output_get_linear_value (rate_output,
                                                  coords,
                                                  paint_options,
-                                                 fade_point);
+                                                 fade_point));
 
   gimp_convolve_calculate_matrix (convolve, options->type,
                                   brush_core->brush->mask->width / 2,

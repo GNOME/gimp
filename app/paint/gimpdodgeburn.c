@@ -168,27 +168,32 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                         GimpPaintOptions *paint_options,
                         const GimpCoords *coords)
 {
-  GimpDodgeBurn *dodgeburn = GIMP_DODGE_BURN (paint_core);
-  GimpContext   *context   = GIMP_CONTEXT (paint_options);
-  GimpDynamics  *dynamics  = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage     *image;
-  TempBuf       *area;
-  TempBuf       *orig;
-  PixelRegion    srcPR, destPR, tempPR;
-  guchar        *temp_data;
-  gdouble        fade_point;
-  gdouble        opacity;
-  gdouble        hardness;
+  GimpDodgeBurn      *dodgeburn = GIMP_DODGE_BURN (paint_core);
+  GimpContext        *context   = GIMP_CONTEXT (paint_options);
+  GimpDynamics       *dynamics  = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpDynamicsOutput *opacity_output;
+  GimpDynamicsOutput *hardness_output;
+  GimpImage          *image;
+  TempBuf            *area;
+  TempBuf            *orig;
+  PixelRegion         srcPR, destPR, tempPR;
+  guchar             *temp_data;
+  gdouble             fade_point;
+  gdouble             opacity;
+  gdouble             hardness;
 
   if (gimp_drawable_is_indexed (drawable))
     return;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
+  opacity_output = gimp_dynamics_get_output (dynamics,
+                                             GIMP_DYNAMICS_OUTPUT_OPACITY);
+
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  opacity = gimp_dynamics_output_get_linear_value (dynamics->opacity_output,
+  opacity = gimp_dynamics_output_get_linear_value (opacity_output,
                                                    coords,
                                                    paint_options,
                                                    fade_point);
@@ -255,7 +260,10 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   g_free (temp_data);
 
-  hardness = gimp_dynamics_output_get_linear_value (dynamics->hardness_output,
+  hardness_output = gimp_dynamics_get_output (dynamics,
+                                              GIMP_DYNAMICS_OUTPUT_HARDNESS);
+
+  hardness = gimp_dynamics_output_get_linear_value (hardness_output,
                                                     coords,
                                                     paint_options,
                                                     fade_point);
