@@ -1133,8 +1133,9 @@ save_dialog (gint32 image_ID)
   g_free (ui_file);
 
   /* Main vbox */
-  gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
-                     GTK_WIDGET (gtk_builder_get_object (builder, "main-vbox")));
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+                      GTK_WIDGET (gtk_builder_get_object (builder, "main-vbox")),
+                      TRUE, TRUE, 0);
 
   /*  regular gif parameter settings  */
   file_gif_toggle_button_init (builder, "interlace",

@@ -1287,8 +1287,8 @@ mng_save_dialog (gint32 image_id)
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
-                     main_vbox);
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+                      main_vbox, TRUE, TRUE, 0);
 
   frame = gimp_frame_new (_("MNG Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);

@@ -796,8 +796,8 @@ save_dialog (gint channels)
 
   vbox_main = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox_main), 12);
-  gtk_container_add (GTK_CONTAINER (gimp_export_dialog_get_content_area (dialog)),
-                     vbox_main);
+  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
+                      vbox_main, TRUE, TRUE, 0);
   gtk_widget_show (vbox_main);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Run-Length Encoded"));

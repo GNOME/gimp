@@ -462,8 +462,8 @@ unit_editor_dialog (void)
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_ALWAYS);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     scrolled_win);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
 
   gtk_widget_set_size_request (tv, -1, 220);

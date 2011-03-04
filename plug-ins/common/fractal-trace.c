@@ -705,8 +705,8 @@ dialog_show (void)
 
   mainbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (mainbox), 12);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                     mainbox);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      mainbox, TRUE, TRUE, 0);
   gtk_widget_show (mainbox);
 
   hbox = gtk_hbox_new (FALSE, 12);

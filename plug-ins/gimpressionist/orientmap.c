@@ -547,8 +547,8 @@ create_orientmap_dialog (GtkWidget *parent)
 
   table1 = gtk_table_new (2, 5, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table1), 6);
-  gtk_container_add (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (orient_map_window))),
-                     table1);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (orient_map_window))),
+                      table1, TRUE, TRUE, 0);
   gtk_widget_show (table1);
 
   frame = gtk_frame_new (_("Vectors"));
