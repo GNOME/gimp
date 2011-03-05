@@ -42,6 +42,24 @@ enum
 };
 
 
+typedef struct _GimpFillOptionsPrivate GimpFillOptionsPrivate;
+
+struct _GimpFillOptionsPrivate
+{
+  GimpFillStyle style;
+
+  gboolean      antialias;
+
+  GimpViewType  pattern_view_type;
+  GimpViewSize  pattern_view_size;
+};
+
+#define GET_PRIVATE(options) \
+        G_TYPE_INSTANCE_GET_PRIVATE (options, \
+                                     GIMP_TYPE_FILL_OPTIONS, \
+                                     GimpFillOptionsPrivate)
+
+
 static void   gimp_fill_options_set_property (GObject      *object,
                                               guint         property_id,
                                               const GValue *value,
@@ -90,6 +108,8 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                                                      GIMP_VIEW_SIZE_SMALL,
                                                      G_PARAM_CONSTRUCT |
                                                      GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (klass, sizeof (GimpFillOptionsPrivate));
 }
 
 static void
@@ -103,22 +123,22 @@ gimp_fill_options_set_property (GObject      *object,
                                 const GValue *value,
                                 GParamSpec   *pspec)
 {
-  GimpFillOptions *options = GIMP_FILL_OPTIONS (object);
+  GimpFillOptionsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_STYLE:
-      options->style = g_value_get_enum (value);
+      private->style = g_value_get_enum (value);
       break;
     case PROP_ANTIALIAS:
-      options->antialias = g_value_get_boolean (value);
+      private->antialias = g_value_get_boolean (value);
       break;
 
     case PROP_PATTERN_VIEW_TYPE:
-      options->pattern_view_type = g_value_get_enum (value);
+      private->pattern_view_type = g_value_get_enum (value);
       break;
     case PROP_PATTERN_VIEW_SIZE:
-      options->pattern_view_size = g_value_get_int (value);
+      private->pattern_view_size = g_value_get_int (value);
       break;
 
     default:
@@ -133,22 +153,22 @@ gimp_fill_options_get_property (GObject    *object,
                                 GValue     *value,
                                 GParamSpec *pspec)
 {
-  GimpFillOptions *options = GIMP_FILL_OPTIONS (object);
+  GimpFillOptionsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_STYLE:
-      g_value_set_enum (value, options->style);
+      g_value_set_enum (value, private->style);
       break;
     case PROP_ANTIALIAS:
-      g_value_set_boolean (value, options->antialias);
+      g_value_set_boolean (value, private->antialias);
       break;
 
     case PROP_PATTERN_VIEW_TYPE:
-      g_value_set_enum (value, options->pattern_view_type);
+      g_value_set_enum (value, private->pattern_view_type);
       break;
     case PROP_PATTERN_VIEW_SIZE:
-      g_value_set_int (value, options->pattern_view_size);
+      g_value_set_int (value, private->pattern_view_size);
       break;
 
     default:
@@ -168,4 +188,20 @@ gimp_fill_options_new (Gimp *gimp)
   return g_object_new (GIMP_TYPE_FILL_OPTIONS,
                        "gimp", gimp,
                        NULL);
+}
+
+GimpFillStyle
+gimp_fill_options_get_style (GimpFillOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), GIMP_FILL_STYLE_SOLID);
+
+  return GET_PRIVATE (options)->style;
+}
+
+gboolean
+gimp_fill_options_get_antialias (GimpFillOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
+
+  return GET_PRIVATE (options)->antialias;
 }

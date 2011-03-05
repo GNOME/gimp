@@ -86,7 +86,8 @@ gimp_drawable_fill_boundary (GimpDrawable    *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (bound_segs == NULL || n_bound_segs != 0);
-  g_return_if_fail (options->style != GIMP_FILL_STYLE_PATTERN ||
+  g_return_if_fail (gimp_fill_options_get_style (options) !=
+                    GIMP_FILL_STYLE_PATTERN ||
                     gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
 
   scan_convert = gimp_drawable_render_boundary (drawable,
@@ -116,7 +117,8 @@ gimp_drawable_stroke_boundary (GimpDrawable      *drawable,
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (bound_segs == NULL || n_bound_segs != 0);
-  g_return_if_fail (GIMP_FILL_OPTIONS (options)->style != GIMP_FILL_STYLE_PATTERN ||
+  g_return_if_fail (gimp_fill_options_get_style (GIMP_FILL_OPTIONS (options)) !=
+                    GIMP_FILL_STYLE_PATTERN ||
                     gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL);
 
   scan_convert = gimp_drawable_render_boundary (drawable,
@@ -144,7 +146,8 @@ gimp_drawable_fill_vectors (GimpDrawable     *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (options->style != GIMP_FILL_STYLE_PATTERN ||
+  g_return_val_if_fail (gimp_fill_options_get_style (options) !=
+                        GIMP_FILL_STYLE_PATTERN ||
                         gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
                         FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -176,7 +179,8 @@ gimp_drawable_stroke_vectors (GimpDrawable       *drawable,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (GIMP_FILL_OPTIONS (options)->style != GIMP_FILL_STYLE_PATTERN ||
+  g_return_val_if_fail (gimp_fill_options_get_style (GIMP_FILL_OPTIONS (options)) !=
+                        GIMP_FILL_STYLE_PATTERN ||
                         gimp_context_get_pattern (GIMP_CONTEXT (options)) != NULL,
                         FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -402,7 +406,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
   gimp_scan_convert_render (scan_convert, mask,
                             x + off_x, y + off_y,
-                            GIMP_FILL_OPTIONS (options)->antialias);
+                            gimp_fill_options_get_antialias (GIMP_FILL_OPTIONS (options)));
 
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
@@ -410,7 +414,7 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   pixel_region_init (&basePR, base, 0, 0, w, h, TRUE);
   pixel_region_init (&maskPR, mask, 0, 0, w, h, FALSE);
 
-  switch (options->style)
+  switch (gimp_fill_options_get_style (options))
     {
     case GIMP_FILL_STYLE_SOLID:
       {

@@ -37,25 +37,21 @@ typedef struct _GimpFillOptionsClass GimpFillOptionsClass;
 
 struct _GimpFillOptions
 {
-  GimpContext    parent_instance;
-
-  GimpFillStyle  style;
-
-  gboolean       antialias;
-
-  GimpViewType   pattern_view_type;
-  GimpViewSize   pattern_view_size;
+  GimpContext  parent_instance;
 };
 
 struct _GimpFillOptionsClass
 {
-  GimpContextClass parent_class;
+  GimpContextClass  parent_class;
 };
 
 
-GType             gimp_fill_options_get_type (void) G_GNUC_CONST;
+GType             gimp_fill_options_get_type      (void) G_GNUC_CONST;
 
-GimpFillOptions * gimp_fill_options_new      (Gimp *gimp);
+GimpFillOptions * gimp_fill_options_new           (Gimp *gimp);
+
+GimpFillStyle     gimp_fill_options_get_style     (GimpFillOptions *options);
+gboolean          gimp_fill_options_get_antialias (GimpFillOptions *options);
 
 
 #endif /* __GIMP_FILL_OPTIONS_H__ */
