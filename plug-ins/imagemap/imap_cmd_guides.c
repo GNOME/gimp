@@ -205,7 +205,7 @@ make_guides_dialog (void)
                      G_CALLBACK(recalc_bounds), (gpointer) data);
 
    hbox = gtk_hbox_new (FALSE, 6);
-   gtk_container_add (GTK_CONTAINER (dialog->vbox), hbox);
+   gtk_box_pack_start (GTK_BOX (dialog->vbox), hbox, TRUE, TRUE, 0);
    gtk_widget_show(hbox);
 
    label = gtk_label_new_with_mnemonic(_("Base _URL:"));
@@ -213,7 +213,7 @@ make_guides_dialog (void)
    gtk_widget_show(label);
 
    data->base_url = gtk_entry_new ();
-   gtk_container_add (GTK_CONTAINER(hbox), data->base_url);
+   gtk_box_pack_start (GTK_BOX (hbox), data->base_url, TRUE, TRUE, 0);
    gtk_widget_show(data->base_url);
 
    gtk_label_set_mnemonic_widget (GTK_LABEL (label), data->base_url);

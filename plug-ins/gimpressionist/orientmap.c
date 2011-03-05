@@ -634,7 +634,7 @@ create_orientmap_dialog (GtkWidget *parent)
   gtk_widget_show (hbox);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   frame = gimp_int_radio_group_new (TRUE, _("Type"),
@@ -647,11 +647,11 @@ create_orientmap_dialog (GtkWidget *parent)
                                     _("Vortex_3"), 3, &vector_types[3],
 
                                     NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), frame);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   orient_voronoi = tmpw = gtk_check_button_new_with_mnemonic ( _("_Voronoi"));
-  gtk_container_add (GTK_CONTAINER (vbox), tmpw);
+  gtk_box_pack_start (GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
   gtk_widget_show (tmpw);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tmpw),
                                 pcvals.orient_voronoi);
@@ -663,7 +663,7 @@ create_orientmap_dialog (GtkWidget *parent)
 
   table2 = gtk_table_new (4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
-  gtk_container_add (GTK_CONTAINER (hbox), table2);
+  gtk_box_pack_start (GTK_BOX (hbox), table2, TRUE, TRUE, 0);
   gtk_widget_show (table2);
 
   angle_adjust =

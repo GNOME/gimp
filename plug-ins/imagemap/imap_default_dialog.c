@@ -170,13 +170,13 @@ default_dialog_set_label(DefaultDialog_t *dialog, const gchar *text)
 GtkWidget*
 default_dialog_add_table(DefaultDialog_t *dialog, gint rows, gint cols)
 {
-   GtkWidget *table = gtk_table_new(rows, cols, FALSE);
+  GtkWidget *table = gtk_table_new (rows, cols, FALSE);
 
-   gtk_table_set_row_spacings(GTK_TABLE(table), 6);
-   gtk_table_set_col_spacings(GTK_TABLE(table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 
-   gtk_container_add (GTK_CONTAINER(dialog->vbox), table);
-   gtk_widget_show(table);
+  gtk_box_pack_start (GTK_BOX (dialog->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
 
-   return table;
+  return table;
 }

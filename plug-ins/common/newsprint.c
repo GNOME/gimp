@@ -1224,7 +1224,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (vbox);
 
   vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /* resolution settings  */

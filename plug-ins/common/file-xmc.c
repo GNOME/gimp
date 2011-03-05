@@ -1319,7 +1319,7 @@ save_dialog (const gint32 image_ID, GimpParamRegion *hotspotRange)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (tmpwidget), GTK_WRAP_WORD);
   g_object_unref (textbuffer);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (tmpwidget), GTK_WRAP_WORD);
-  gtk_container_add (GTK_CONTAINER (box), tmpwidget);
+  gtk_box_pack_start (GTK_BOX (box), tmpwidget, TRUE, TRUE, 0);
   gtk_widget_show (tmpwidget);
   /* tooltip */
   gimp_help_set_help_data (tmpwidget,

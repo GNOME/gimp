@@ -890,7 +890,7 @@ save_dialog (gint channels)
 
   toggle = gtk_radio_button_new_with_label (group, "A8 R8 G8 B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_container_add (GTK_CONTAINER (vbox), toggle);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),
@@ -909,7 +909,7 @@ save_dialog (gint channels)
 
   toggle = gtk_radio_button_new_with_label (group, "X8 R8 G8 B8");
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-  gtk_container_add (GTK_CONTAINER (vbox), toggle);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (format_callback),

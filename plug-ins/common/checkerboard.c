@@ -365,7 +365,7 @@ checkerboard_dialog (gint32        image_ID,
   gtk_widget_show (vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_container_add (GTK_CONTAINER (vbox), preview);
+  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
                             G_CALLBACK (do_checkerboard_pattern),

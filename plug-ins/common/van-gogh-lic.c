@@ -675,7 +675,7 @@ create_main_dialog (void)
                                     _("_Brightness"), 2, NULL,
 
                                     NULL);
-  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame = gimp_int_radio_group_new (TRUE, _("Effect Operator"),
@@ -687,7 +687,7 @@ create_main_dialog (void)
                                     _("_Gradient"),   1, NULL,
 
                                     NULL);
-  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   frame = gimp_int_radio_group_new (TRUE, _("Convolve"),
@@ -699,7 +699,7 @@ create_main_dialog (void)
                                     _("W_ith source image"), 1, NULL,
 
                                     NULL);
-  gtk_container_add (GTK_CONTAINER (hbox), frame);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* Effect image menu */

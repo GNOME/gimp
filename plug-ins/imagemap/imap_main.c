@@ -1244,9 +1244,9 @@ dialog(GimpDrawable *drawable)
                      G_CALLBACK (gtk_main_quit),
                      NULL);
 
-   main_vbox = gtk_vbox_new(FALSE, 0);
-   gtk_container_add(GTK_CONTAINER(dlg), main_vbox);
-   gtk_widget_show(main_vbox);
+   main_vbox = gtk_vbox_new (FALSE, 0);
+   gtk_container_add (GTK_CONTAINER (dlg), main_vbox);
+   gtk_widget_show (main_vbox);
 
    init_stock_icons();
 
@@ -1258,7 +1258,7 @@ dialog(GimpDrawable *drawable)
 
    /*  Dialog area  */
    hbox = gtk_hbox_new(FALSE, 1);
-   gtk_container_add(GTK_CONTAINER(main_vbox), hbox);
+   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
    gtk_widget_show(hbox);
 
    tools = make_tools(dlg);
@@ -1274,7 +1274,7 @@ dialog(GimpDrawable *drawable)
                     G_CALLBACK(preview_leave), NULL);
    g_signal_connect(_preview->preview, "button-press-event",
                     G_CALLBACK(button_press), NULL);
-   gtk_container_add(GTK_CONTAINER(hbox), _preview->window);
+   gtk_box_pack_start (GTK_BOX (hbox), _preview->window, TRUE, TRUE, 0);
 
    object_list_add_geometry_cb(_shapes, geometry_changed, NULL);
    object_list_add_update_cb(_shapes, data_changed, NULL);

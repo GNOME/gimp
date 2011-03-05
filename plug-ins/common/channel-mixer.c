@@ -665,7 +665,7 @@ cm_dialog (CmParamsType *mix,
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -673,7 +673,7 @@ cm_dialog (CmParamsType *mix,
                     mix);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
@@ -681,7 +681,7 @@ cm_dialog (CmParamsType *mix,
                     mix);
 
   button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",

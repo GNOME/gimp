@@ -1119,11 +1119,11 @@ iwarp_settings_dialog (GtkWidget *dialog,
 
                                     NULL);
 
-  gtk_container_add (GTK_CONTAINER (hbox), vbox2);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox2, TRUE, TRUE, 0);
   gtk_widget_show (vbox2);
 
   vbox3 = gtk_vbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox3);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox3, TRUE, TRUE, 0);
   gtk_widget_show (vbox3);
 
   for (i = 0; i < 3; i++)

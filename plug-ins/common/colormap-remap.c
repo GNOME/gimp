@@ -657,7 +657,7 @@ remap_dialog (gint32  image_ID,
   iconview = gtk_icon_view_new_with_model (GTK_TREE_MODEL (store));
   g_object_unref (store);
 
-  gtk_container_add (GTK_CONTAINER (vbox), iconview);
+  gtk_box_pack_start (GTK_BOX (vbox), iconview, TRUE, TRUE, 0);
 
   gtk_icon_view_set_selection_mode (GTK_ICON_VIEW (iconview),
                                     GTK_SELECTION_SINGLE);

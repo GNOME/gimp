@@ -789,7 +789,7 @@ sinus_dialog (void)
       /*if in grey scale, the colors are necessarily black and white */
       label = gtk_label_new (_("The colors are white and black."));
       gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-      gtk_container_add (GTK_CONTAINER (vbox), label);
+      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
     }
   else
@@ -915,7 +915,7 @@ sinus_dialog (void)
 
   table = gtk_table_new (1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (vbox), table);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Exponent:"), 0, 0,

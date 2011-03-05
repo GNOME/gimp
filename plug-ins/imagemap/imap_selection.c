@@ -333,13 +333,13 @@ make_selection(ObjectList_t *object_list)
   gtk_container_add(GTK_CONTAINER(frame), hbox);
   gtk_widget_show(hbox);
 
-  toolbar = make_selection_toolbar();
-  gtk_container_add(GTK_CONTAINER(hbox), toolbar);
+  toolbar = make_selection_toolbar ();
+  gtk_box_pack_start (GTK_BOX (hbox), toolbar, TRUE, TRUE, 0);
 
   /* Create selection */
-  frame = gimp_frame_new(_("Selection"));
-  gtk_container_add(GTK_CONTAINER(hbox), frame);
-  gtk_widget_show(frame);
+  frame = gimp_frame_new (_("Selection"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   data->store = gtk_list_store_new (1, G_TYPE_POINTER);
   data->list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (data->store));

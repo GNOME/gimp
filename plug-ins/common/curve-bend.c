@@ -1254,7 +1254,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
   /* Left side column */
   vbox =  gtk_vbox_new (FALSE, 12);
-  gtk_container_add (GTK_CONTAINER (main_hbox), vbox);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   /* Preview area, top of column */
@@ -1370,7 +1370,7 @@ bender_new_dialog (GimpDrawable *drawable)
 
   /*  The curves graph  */
   frame = gimp_frame_new (_("Modify Curves"));
-  gtk_container_add (GTK_CONTAINER (main_hbox), frame);
+  gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 12);

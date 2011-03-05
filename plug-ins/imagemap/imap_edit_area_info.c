@@ -179,11 +179,11 @@ append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
    gtk_widget_show(hbox);
 
    icon = gtk_image_new_from_stock (icon_name, GTK_ICON_SIZE_MENU);
-   gtk_container_add (GTK_CONTAINER (hbox), icon);
+   gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
    gtk_widget_show (icon);
 
-   label = gtk_label_new_with_mnemonic(label_name);
-   gtk_container_add (GTK_CONTAINER (hbox), label);
+   label = gtk_label_new_with_mnemonic (label_name);
+   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
    gtk_widget_show (label);
 
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, hbox);
@@ -207,7 +207,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_widget_show(frame);
 
    subtable = gtk_table_new(2, 4, FALSE);
-   gtk_container_add(GTK_CONTAINER(frame), subtable);
+   gtk_container_add (GTK_CONTAINER(frame), subtable);
    gtk_widget_show(subtable);
 
    dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0,

@@ -794,7 +794,7 @@ bumpmap_dialog (void)
   gtk_widget_show (vbox);
 
   preview = gimp_drawable_preview_new (drawable, NULL);
-  gtk_container_add (GTK_CONTAINER (hbox), preview);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
   g_signal_connect (preview, "invalidated",
@@ -813,7 +813,7 @@ bumpmap_dialog (void)
   gtk_widget_show (vbox);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   table = gtk_table_new (12, 3, FALSE);
