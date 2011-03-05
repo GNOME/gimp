@@ -343,12 +343,16 @@ gimp_widget_get_monitor (GtkWidget *widget)
 gint
 gimp_get_monitor_at_pointer (GdkScreen **screen)
 {
-  gint x, y;
+  GdkDeviceManager *device_manager;
+  GdkDevice        *device;
+  gint              x, y;
 
   g_return_val_if_fail (screen != NULL, 0);
 
-  gdk_display_get_pointer (gdk_display_get_default (),
-                           screen, &x, &y, NULL);
+  device_manager = gdk_display_get_device_manager (gdk_display_get_default ());
+  device = gdk_device_manager_get_client_pointer (device_manager);
+
+  gdk_device_get_position (device, screen, &x, &y);
 
   return gdk_screen_get_monitor_at_point (*screen, x, y);
 }
