@@ -182,7 +182,8 @@ stroke_dialog_new (GimpItem    *item,
     gtk_widget_show (stroke_editor);
 
     gtk_widget_set_sensitive (stroke_editor,
-                              options->method == GIMP_STROKE_METHOD_LIBART);
+                              gimp_stroke_options_get_method (options) ==
+                              GIMP_STROKE_METHOD_LIBART);
     g_object_set_data (G_OBJECT (libart_radio), "set_sensitive", stroke_editor);
   }
 
@@ -212,7 +213,8 @@ stroke_dialog_new (GimpItem    *item,
     gtk_widget_show (vbox);
 
     gtk_widget_set_sensitive (vbox,
-                              options->method == GIMP_STROKE_METHOD_PAINT_CORE);
+                              gimp_stroke_options_get_method (options) ==
+                              GIMP_STROKE_METHOD_PAINT_CORE);
     g_object_set_data (G_OBJECT (paint_radio), "set_sensitive", vbox);
 
     hbox = gtk_hbox_new (FALSE, 6);

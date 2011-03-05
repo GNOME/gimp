@@ -37,25 +37,7 @@ typedef struct _GimpStrokeOptionsClass GimpStrokeOptionsClass;
 
 struct _GimpStrokeOptions
 {
-  GimpFillOptions   parent_instance;
-
-  GimpStrokeMethod  method;
-
-  /*  options for medhod == LIBART  */
-  gdouble           width;
-  GimpUnit          unit;
-
-  GimpCapStyle      cap_style;
-  GimpJoinStyle     join_style;
-
-  gdouble           miter_limit;
-
-  gdouble           dash_offset;
-  GArray           *dash_info;
-
-  /*  options for method == PAINT_TOOL  */
-  GimpPaintOptions *paint_options;
-  gboolean          emulate_dynamics;
+  GimpFillOptions  parent_instance;
 };
 
 struct _GimpStrokeOptionsClass
@@ -67,19 +49,33 @@ struct _GimpStrokeOptionsClass
 };
 
 
-GType               gimp_stroke_options_get_type          (void) G_GNUC_CONST;
+GType               gimp_stroke_options_get_type             (void) G_GNUC_CONST;
 
-GimpStrokeOptions * gimp_stroke_options_new               (Gimp              *gimp,
-                                                           GimpContext       *context,
-                                                           gboolean           use_context_color);
-void                gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
-                                                           GimpDashPreset     preset,
-                                                           GArray            *pattern);
+GimpStrokeOptions * gimp_stroke_options_new                  (Gimp              *gimp,
+                                                              GimpContext       *context,
+                                                              gboolean           use_context_color);
 
-void                gimp_stroke_options_prepare           (GimpStrokeOptions *options,
-                                                           GimpContext       *context,
-                                                           gboolean           use_default_values);
-void                gimp_stroke_options_finish            (GimpStrokeOptions *options);
+GimpStrokeMethod    gimp_stroke_options_get_method           (GimpStrokeOptions *options);
+
+gdouble             gimp_stroke_options_get_width            (GimpStrokeOptions *options);
+GimpUnit            gimp_stroke_options_get_unit             (GimpStrokeOptions *options);
+GimpCapStyle        gimp_stroke_options_get_cap_style        (GimpStrokeOptions *options);
+GimpJoinStyle       gimp_stroke_options_get_join_style       (GimpStrokeOptions *options);
+gdouble             gimp_stroke_options_get_miter_limit      (GimpStrokeOptions *options);
+gdouble             gimp_stroke_options_get_dash_offset      (GimpStrokeOptions *options);
+GArray            * gimp_stroke_options_get_dash_info        (GimpStrokeOptions *options);
+
+GimpPaintOptions  * gimp_stroke_options_get_paint_options    (GimpStrokeOptions *options);
+gboolean            gimp_stroke_options_get_emulate_dynamics (GimpStrokeOptions *options);
+
+void                gimp_stroke_options_take_dash_pattern    (GimpStrokeOptions *options,
+                                                              GimpDashPreset     preset,
+                                                              GArray            *pattern);
+
+void                gimp_stroke_options_prepare              (GimpStrokeOptions *options,
+                                                              GimpContext       *context,
+                                                              gboolean           use_default_values);
+void                gimp_stroke_options_finish               (GimpStrokeOptions *options);
 
 
 #endif /* __GIMP_STROKE_OPTIONS_H__ */

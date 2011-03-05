@@ -464,6 +464,8 @@ gimp_dash_editor_shift_left (GimpDashEditor *editor)
 static void
 update_segments_from_options (GimpDashEditor *editor)
 {
+  GArray *dash_info;
+
   if (editor->stroke_options == NULL || editor->segments == NULL)
     return;
 
@@ -471,7 +473,9 @@ update_segments_from_options (GimpDashEditor *editor)
 
   gtk_widget_queue_draw (GTK_WIDGET (editor));
 
-  gimp_dash_pattern_fill_segments (editor->stroke_options->dash_info,
+  dash_info = gimp_stroke_options_get_dash_info (editor->stroke_options);
+
+  gimp_dash_pattern_fill_segments (dash_info,
                                    editor->segments, editor->n_segments);
 }
 

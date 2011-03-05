@@ -70,6 +70,35 @@ enum
 };
 
 
+typedef struct _GimpStrokeOptionsPrivate GimpStrokeOptionsPrivate;
+
+struct _GimpStrokeOptionsPrivate
+{
+  GimpStrokeMethod  method;
+
+  /*  options for medhod == LIBART  */
+  gdouble           width;
+  GimpUnit          unit;
+
+  GimpCapStyle      cap_style;
+  GimpJoinStyle     join_style;
+
+  gdouble           miter_limit;
+
+  gdouble           dash_offset;
+  GArray           *dash_info;
+
+  /*  options for method == PAINT_TOOL  */
+  GimpPaintOptions *paint_options;
+  gboolean          emulate_dynamics;
+};
+
+#define GET_PRIVATE(options) \
+        G_TYPE_INSTANCE_GET_PRIVATE (options, \
+                                     GIMP_TYPE_STROKE_OPTIONS, \
+                                     GimpStrokeOptionsPrivate)
+
+
 static void   gimp_stroke_options_config_iface_init (gpointer      iface,
                                                      gpointer      iface_data);
 
@@ -178,6 +207,8 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
                                     "emulate-brush-dynamics", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  g_type_class_add_private (klass, sizeof (GimpStrokeOptionsPrivate));
 }
 
 static void
@@ -202,12 +233,12 @@ gimp_stroke_options_init (GimpStrokeOptions *options)
 static void
 gimp_stroke_options_finalize (GObject *object)
 {
-  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (object);
+  GimpStrokeOptionsPrivate *private = GET_PRIVATE (object);
 
-  if (options->paint_options)
+  if (private->paint_options)
     {
-      g_object_unref (options->paint_options);
-      options->paint_options = NULL;
+      g_object_unref (private->paint_options);
+      private->paint_options = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -219,31 +250,32 @@ gimp_stroke_options_set_property (GObject      *object,
                                   const GValue *value,
                                   GParamSpec   *pspec)
 {
-  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (object);
+  GimpStrokeOptions        *options = GIMP_STROKE_OPTIONS (object);
+  GimpStrokeOptionsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_METHOD:
-      options->method = g_value_get_enum (value);
+      private->method = g_value_get_enum (value);
       break;
 
     case PROP_WIDTH:
-      options->width = g_value_get_double (value);
+      private->width = g_value_get_double (value);
       break;
     case PROP_UNIT:
-      options->unit = g_value_get_int (value);
+      private->unit = g_value_get_int (value);
       break;
     case PROP_CAP_STYLE:
-      options->cap_style = g_value_get_enum (value);
+      private->cap_style = g_value_get_enum (value);
       break;
     case PROP_JOIN_STYLE:
-      options->join_style = g_value_get_enum (value);
+      private->join_style = g_value_get_enum (value);
       break;
     case PROP_MITER_LIMIT:
-      options->miter_limit = g_value_get_double (value);
+      private->miter_limit = g_value_get_double (value);
       break;
     case PROP_DASH_OFFSET:
-      options->dash_offset = g_value_get_double (value);
+      private->dash_offset = g_value_get_double (value);
       break;
     case PROP_DASH_INFO:
       {
@@ -257,12 +289,12 @@ gimp_stroke_options_set_property (GObject      *object,
       break;
 
     case PROP_PAINT_OPTIONS:
-      if (options->paint_options)
-        g_object_unref (options->paint_options);
-      options->paint_options = g_value_dup_object (value);
+      if (private->paint_options)
+        g_object_unref (private->paint_options);
+      private->paint_options = g_value_dup_object (value);
       break;
     case PROP_EMULATE_DYNAMICS:
-      options->emulate_dynamics = g_value_get_boolean (value);
+      private->emulate_dynamics = g_value_get_boolean (value);
       break;
 
     default:
@@ -277,46 +309,46 @@ gimp_stroke_options_get_property (GObject    *object,
                                   GValue     *value,
                                   GParamSpec *pspec)
 {
-  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (object);
+  GimpStrokeOptionsPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_METHOD:
-      g_value_set_enum (value, options->method);
+      g_value_set_enum (value, private->method);
       break;
 
     case PROP_WIDTH:
-      g_value_set_double (value, options->width);
+      g_value_set_double (value, private->width);
       break;
     case PROP_UNIT:
-      g_value_set_int (value, options->unit);
+      g_value_set_int (value, private->unit);
       break;
     case PROP_CAP_STYLE:
-      g_value_set_enum (value, options->cap_style);
+      g_value_set_enum (value, private->cap_style);
       break;
     case PROP_JOIN_STYLE:
-      g_value_set_enum (value, options->join_style);
+      g_value_set_enum (value, private->join_style);
       break;
     case PROP_MITER_LIMIT:
-      g_value_set_double (value, options->miter_limit);
+      g_value_set_double (value, private->miter_limit);
       break;
     case PROP_DASH_OFFSET:
-      g_value_set_double (value, options->dash_offset);
+      g_value_set_double (value, private->dash_offset);
       break;
     case PROP_DASH_INFO:
       {
         GValueArray *value_array;
 
-        value_array = gimp_dash_pattern_to_value_array (options->dash_info);
+        value_array = gimp_dash_pattern_to_value_array (private->dash_info);
         g_value_take_boxed (value, value_array);
       }
       break;
 
     case PROP_PAINT_OPTIONS:
-      g_value_set_object (value, options->paint_options);
+      g_value_set_object (value, private->paint_options);
       break;
     case PROP_EMULATE_DYNAMICS:
-      g_value_set_boolean (value, options->emulate_dynamics);
+      g_value_set_boolean (value, private->emulate_dynamics);
       break;
 
     default:
@@ -328,16 +360,17 @@ gimp_stroke_options_get_property (GObject    *object,
 static GimpConfig *
 gimp_stroke_options_duplicate (GimpConfig *config)
 {
-  GimpStrokeOptions *options = GIMP_STROKE_OPTIONS (config);
-  GimpStrokeOptions *new_options;
+  GimpStrokeOptions        *options = GIMP_STROKE_OPTIONS (config);
+  GimpStrokeOptionsPrivate *private = GET_PRIVATE (options);
+  GimpStrokeOptions        *new_options;
 
   new_options = GIMP_STROKE_OPTIONS (parent_config_iface->duplicate (config));
 
-  if (options->paint_options)
+  if (private->paint_options)
     {
       GObject *paint_options;
 
-      paint_options = gimp_config_duplicate (GIMP_CONFIG (options->paint_options));
+      paint_options = gimp_config_duplicate (GIMP_CONFIG (private->paint_options));
       g_object_set (new_options, "paint-options", paint_options, NULL);
       g_object_unref (paint_options);
     }
@@ -384,6 +417,87 @@ gimp_stroke_options_new (Gimp        *gimp,
   return options;
 }
 
+GimpStrokeMethod
+gimp_stroke_options_get_method (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options),
+                        GIMP_STROKE_METHOD_LIBART);
+
+  return GET_PRIVATE (options)->method;
+}
+
+gdouble
+gimp_stroke_options_get_width (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), 1.0);
+
+  return GET_PRIVATE (options)->width;
+}
+
+GimpUnit
+gimp_stroke_options_get_unit (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), GIMP_UNIT_PIXEL);
+
+  return GET_PRIVATE (options)->unit;
+}
+
+GimpCapStyle
+gimp_stroke_options_get_cap_style (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), GIMP_CAP_BUTT);
+
+  return GET_PRIVATE (options)->cap_style;
+}
+
+GimpJoinStyle
+gimp_stroke_options_get_join_style (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), GIMP_JOIN_MITER);
+
+  return GET_PRIVATE (options)->join_style;
+}
+
+gdouble
+gimp_stroke_options_get_miter_limit (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), 1.0);
+
+  return GET_PRIVATE (options)->miter_limit;
+}
+
+gdouble
+gimp_stroke_options_get_dash_offset (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), 0.0);
+
+  return GET_PRIVATE (options)->dash_offset;
+}
+
+GArray *
+gimp_stroke_options_get_dash_info (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
+
+  return GET_PRIVATE (options)->dash_info;
+}
+
+GimpPaintOptions *
+gimp_stroke_options_get_paint_options (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
+
+  return GET_PRIVATE (options)->paint_options;
+}
+
+gboolean
+gimp_stroke_options_get_emulate_dynamics (GimpStrokeOptions *options)
+{
+  g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), FALSE);
+
+  return GET_PRIVATE (options)->emulate_dynamics;
+}
+
 /**
  * gimp_stroke_options_take_dash_pattern:
  * @options: a #GimpStrokeOptions object
@@ -400,16 +514,20 @@ gimp_stroke_options_take_dash_pattern (GimpStrokeOptions *options,
                                        GimpDashPreset     preset,
                                        GArray            *pattern)
 {
+  GimpStrokeOptionsPrivate *private;
+
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (preset == GIMP_DASH_CUSTOM || pattern == NULL);
+
+  private = GET_PRIVATE (options);
 
   if (preset != GIMP_DASH_CUSTOM)
     pattern = gimp_dash_pattern_new_from_preset (preset);
 
-  if (options->dash_info)
-    gimp_dash_pattern_free (options->dash_info);
+  if (private->dash_info)
+    gimp_dash_pattern_free (private->dash_info);
 
-  options->dash_info = pattern;
+  private->dash_info = pattern;
 
   g_object_notify (G_OBJECT (options), "dash-info");
 
@@ -422,10 +540,14 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
                              GimpContext       *context,
                              gboolean           use_default_values)
 {
+  GimpStrokeOptionsPrivate *private;
+
   g_return_if_fail (GIMP_IS_STROKE_OPTIONS (options));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  switch (options->method)
+  private = GET_PRIVATE (options);
+
+  switch (private->method)
     {
     case GIMP_STROKE_METHOD_LIBART:
       break;

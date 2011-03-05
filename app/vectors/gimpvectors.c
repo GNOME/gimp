@@ -558,7 +558,7 @@ gimp_vectors_stroke (GimpItem           *item,
       return FALSE;
     }
 
-  switch (stroke_options->method)
+  switch (gimp_stroke_options_get_method (stroke_options))
     {
     case GIMP_STROKE_METHOD_LIBART:
       retval = gimp_drawable_stroke_vectors (drawable,
@@ -568,16 +568,21 @@ gimp_vectors_stroke (GimpItem           *item,
 
     case GIMP_STROKE_METHOD_PAINT_CORE:
       {
-        GimpPaintInfo *paint_info;
-        GimpPaintCore *core;
+        GimpPaintInfo    *paint_info;
+        GimpPaintCore    *core;
+        GimpPaintOptions *paint_options;
+        gboolean          emulate_dynamics;
 
         paint_info = gimp_context_get_paint_info (GIMP_CONTEXT (stroke_options));
 
         core = g_object_new (paint_info->paint_type, NULL);
 
+        paint_options = gimp_stroke_options_get_paint_options (stroke_options);
+        emulate_dynamics = gimp_stroke_options_get_emulate_dynamics (stroke_options);
+
         retval = gimp_paint_core_stroke_vectors (core, drawable,
-                                                 stroke_options->paint_options,
-                                                 stroke_options->emulate_dynamics,
+                                                 paint_options,
+                                                 emulate_dynamics,
                                                  vectors, push_undo, error);
 
         g_object_unref (core);

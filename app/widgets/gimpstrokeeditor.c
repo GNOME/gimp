@@ -372,7 +372,8 @@ gimp_stroke_editor_combo_update (GtkTreeModel      *model,
   if (gimp_int_store_lookup_by_value (model, GIMP_DASH_CUSTOM, &iter))
     {
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          GIMP_INT_STORE_USER_DATA, options->dash_info,
+                          GIMP_INT_STORE_USER_DATA,
+                          gimp_stroke_options_get_dash_info (options),
                           -1);
     }
 }
@@ -398,7 +399,8 @@ gimp_stroke_editor_combo_fill (GimpStrokeOptions *options,
       if (value == GIMP_DASH_CUSTOM)
         {
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                              GIMP_INT_STORE_USER_DATA, options->dash_info,
+                              GIMP_INT_STORE_USER_DATA,
+                              gimp_stroke_options_get_dash_info (options),
                               -1);
 
           g_signal_connect_object (options, "notify::dash-info",

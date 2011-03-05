@@ -371,9 +371,13 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
   if (do_stroke)
     {
       GimpStrokeOptions *stroke_options = GIMP_STROKE_OPTIONS (options);
-      gdouble            width          = stroke_options->width;
+      gdouble            width;
+      GimpUnit           unit;
 
-      if (stroke_options->unit != GIMP_UNIT_PIXEL)
+      width = gimp_stroke_options_get_width (stroke_options);
+      unit  = gimp_stroke_options_get_unit (stroke_options);
+
+      if (unit != GIMP_UNIT_PIXEL)
         {
           gdouble xres;
           gdouble yres;
@@ -382,16 +386,15 @@ gimp_drawable_stroke_scan_convert (GimpDrawable    *drawable,
 
           gimp_scan_convert_set_pixel_ratio (scan_convert, yres / xres);
 
-          width = gimp_units_to_pixels (stroke_options->width,
-                                        stroke_options->unit, yres);
+          width = gimp_units_to_pixels (width, unit, yres);
         }
 
       gimp_scan_convert_stroke (scan_convert, width,
-                                stroke_options->join_style,
-                                stroke_options->cap_style,
-                                stroke_options->miter_limit,
-                                stroke_options->dash_offset,
-                                stroke_options->dash_info);
+                                gimp_stroke_options_get_join_style (stroke_options),
+                                gimp_stroke_options_get_cap_style (stroke_options),
+                                gimp_stroke_options_get_miter_limit (stroke_options),
+                                gimp_stroke_options_get_dash_offset (stroke_options),
+                                gimp_stroke_options_get_dash_info (stroke_options));
     }
 
   /* fill a 1-bpp Tilemanager with black, this will describe the shape

@@ -731,7 +731,7 @@ gimp_channel_stroke (GimpItem           *item,
 
   gimp_item_get_offset (GIMP_ITEM (channel), &offset_x, &offset_y);
 
-  switch (stroke_options->method)
+  switch (gimp_stroke_options_get_method (stroke_options))
     {
     case GIMP_STROKE_METHOD_LIBART:
       gimp_drawable_stroke_boundary (drawable,
@@ -744,16 +744,21 @@ gimp_channel_stroke (GimpItem           *item,
 
     case GIMP_STROKE_METHOD_PAINT_CORE:
       {
-        GimpPaintInfo *paint_info;
-        GimpPaintCore *core;
+        GimpPaintInfo    *paint_info;
+        GimpPaintCore    *core;
+        GimpPaintOptions *paint_options;
+        gboolean          emulate_dynamics;
 
         paint_info = gimp_context_get_paint_info (GIMP_CONTEXT (stroke_options));
 
         core = g_object_new (paint_info->paint_type, NULL);
 
+        paint_options = gimp_stroke_options_get_paint_options (stroke_options);
+        emulate_dynamics = gimp_stroke_options_get_emulate_dynamics (stroke_options);
+
         retval = gimp_paint_core_stroke_boundary (core, drawable,
-                                                  stroke_options->paint_options,
-                                                  stroke_options->emulate_dynamics,
+                                                  paint_options,
+                                                  emulate_dynamics,
                                                   segs_in, n_segs_in,
                                                   offset_x, offset_y,
                                                   push_undo, error);
