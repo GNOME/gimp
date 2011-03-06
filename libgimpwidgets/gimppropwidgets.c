@@ -556,10 +556,17 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
+#if GTK_CHECK_VERSION (2, 24, 0)
+  combo_box = gtk_combo_box_text_new ();
+
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_box), true_text);
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo_box), false_text);
+#else
   combo_box = gtk_combo_box_new_text ();
 
   gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), true_text);
   gtk_combo_box_append_text (GTK_COMBO_BOX (combo_box), false_text);
+#endif
 
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), value ? 0 : 1);
 
