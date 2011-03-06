@@ -48,6 +48,8 @@ pointer foreign_diropenstream(scheme *sc, pointer args);
 pointer foreign_dirreadentry(scheme *sc, pointer args);
 pointer foreign_dirrewind(scheme *sc, pointer args);
 pointer foreign_dirclosestream(scheme *sc, pointer args);
+
+pointer foreign_getenv(scheme *sc, pointer args);
 pointer foreign_time(scheme *sc, pointer args);
 pointer foreign_gettimeofday(scheme *sc, pointer args);
 pointer foreign_usleep(scheme *sc, pointer args);
@@ -242,6 +244,31 @@ pointer foreign_dirclosestream(scheme *sc, pointer args)
 }
 
 
+pointer foreign_getenv(scheme *sc, pointer args)
+{
+  pointer     first_arg;
+  pointer     ret;
+  char       *varname;
+  const char *value;
+
+  if (args == sc->NIL)
+    return sc->F;
+
+  first_arg = sc->vptr->pair_car(args);
+
+  if (!sc->vptr->is_string(first_arg))
+    return sc->F;
+
+  varname = sc->vptr->string_value(first_arg);
+  value = g_getenv(varname);
+  if (value == NULL)
+    ret = sc->F;
+  else
+    ret = sc->vptr->mk_string(sc,value);
+
+  return ret;
+}
+
 pointer foreign_time(scheme *sc, pointer args)
 {
   time_t now;
@@ -301,6 +328,9 @@ void init_ftx (scheme *sc)
 {
   int i;
 
+  sc->vptr->scheme_define(sc,sc->global_env,
+                               sc->vptr->mk_symbol(sc,"getenv"),
+                               sc->vptr->mk_foreign_func(sc, foreign_getenv));
   sc->vptr->scheme_define(sc, sc->global_env,
                                sc->vptr->mk_symbol(sc,"time"),
                                sc->vptr->mk_foreign_func(sc, foreign_time));
