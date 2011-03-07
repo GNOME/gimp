@@ -42,7 +42,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.1.4])
 m4_define([gegl_required_version], [0.1.6])
-m4_define([glib_required_version], [2.24.0])
+m4_define([glib_required_version], [2.28.1])
 m4_define([gtk_required_version], [2.20.0])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([cairo_required_version], [1.8.0])
@@ -467,13 +467,13 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-AC_MSG_CHECKING([if GLib is version 2.30.0 or newer])
-if $PKG_CONFIG --atleast-version=2.30.0 glib-2.0; then
-  have_glib_2_30=yes
+AC_MSG_CHECKING([if GLib is version 2.32.0 or newer])
+if $PKG_CONFIG --atleast-version=2.32.0 glib-2.0; then
+  have_glib_2_32=yes
 else
-  have_glib_2_30=no
+  have_glib_2_32=no
 fi
-AC_MSG_RESULT($have_glib_2_30)
+AC_MSG_RESULT($have_glib_2_32)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -1932,7 +1932,7 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_30" != "xyes"; then
+if test "x$have_glib_2_32" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
