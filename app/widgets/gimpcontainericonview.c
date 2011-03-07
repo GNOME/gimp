@@ -757,8 +757,7 @@ gimp_container_icon_view_get_selected_single (GimpContainerIconView  *icon_view,
       retval = FALSE;
     }
 
-  g_list_foreach (selected_items, (GFunc) gtk_tree_path_free, NULL);
-  g_list_free (selected_items);
+  g_list_free_full (selected_items, (GDestroyNotify) gtk_tree_path_free);
 
   return retval;
 }
@@ -803,8 +802,7 @@ gimp_container_icon_view_get_selected (GimpContainerView    *view,
       *items = g_list_reverse (*items);
     }
 
-  g_list_foreach (selected_items, (GFunc) gtk_tree_path_free, NULL);
-  g_list_free (selected_items);
+  g_list_free_full (selected_items, (GDestroyNotify) gtk_tree_path_free);
 
   return selected_count;
 }

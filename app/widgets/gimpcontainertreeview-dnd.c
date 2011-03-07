@@ -401,8 +401,7 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
                   tree_view_class->drop_uri_list (tree_view, uri_list,
                                                   dest_viewable, drop_pos);
 
-                  g_list_foreach (uri_list, (GFunc) g_free, NULL);
-                  g_list_free (uri_list);
+                  g_list_free_full (uri_list, (GDestroyNotify) g_free);
 
                   success = TRUE;
                 }

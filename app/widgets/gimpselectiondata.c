@@ -272,8 +272,7 @@ gimp_selection_data_get_uri_list (GtkSelectionData *selection)
       uri_list = g_list_prepend (uri_list, uri);
     }
 
-  g_list_foreach (crap_list, (GFunc) g_free, NULL);
-  g_list_free (crap_list);
+  g_list_free_full (crap_list, (GDestroyNotify) g_free);
 
   return uri_list;
 }

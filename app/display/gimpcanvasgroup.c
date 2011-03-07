@@ -122,8 +122,7 @@ gimp_canvas_group_dispose (GObject *object)
 
   if (private->items)
     {
-      g_list_foreach (private->items, (GFunc) g_object_unref, NULL);
-      g_list_free (private->items);
+      g_list_free_full (private->items, (GDestroyNotify) g_object_unref);
       private->items = NULL;
     }
 

@@ -151,9 +151,8 @@ script_fu_script_free (SFScript *script)
           break;
 
         case SF_OPTION:
-          g_slist_foreach (arg->default_value.sfa_option.list,
-                           (GFunc) g_free, NULL);
-          g_slist_free (arg->default_value.sfa_option.list);
+          g_slist_free_full (arg->default_value.sfa_option.list,
+                             (GDestroyNotify) g_free);
           break;
 
         case SF_ENUM:

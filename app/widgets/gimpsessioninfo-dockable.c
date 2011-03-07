@@ -66,8 +66,8 @@ gimp_session_info_dockable_free (GimpSessionInfoDockable *info)
 
   if (info->aux_info)
     {
-      g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
-      g_list_free (info->aux_info);
+      g_list_free_full (info->aux_info,
+                        (GDestroyNotify) gimp_session_info_aux_free);
       info->aux_info = NULL;
     }
 

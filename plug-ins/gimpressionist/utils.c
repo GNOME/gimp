@@ -160,20 +160,13 @@ parsepath (void)
   return parsepath_cached_path;
 }
 
-static void
-my_g_free (gpointer data, gpointer userdata)
-{
-  g_free (data);
-}
-
 void
 free_parsepath_cache (void)
 {
   if (parsepath_cached_path != NULL)
     return;
 
-  g_list_foreach (parsepath_cached_path, my_g_free, NULL);
-  g_list_free (parsepath_cached_path);
+  g_list_free_full (parsepath_cached_path, (GDestroyNotify) g_free);
   parsepath_cached_path = NULL;
 }
 

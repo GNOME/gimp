@@ -38,11 +38,10 @@ mru_create(void)
 }
 
 void
-mru_destruct(MRU_t *mru)
+mru_destruct (MRU_t *mru)
 {
-   g_list_foreach(mru->list, (GFunc) g_free, NULL);
-   g_list_free (mru->list);
-   g_free(mru);
+  g_list_free_full (mru->list, (GDestroyNotify) g_free);
+  g_free (mru);
 }
 
 static void

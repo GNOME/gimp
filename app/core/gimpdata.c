@@ -266,8 +266,7 @@ gimp_data_finalize (GObject *object)
 
   if (private->tags)
     {
-      g_list_foreach (private->tags, (GFunc) g_object_unref, NULL);
-      g_list_free (private->tags);
+      g_list_free_full (private->tags, (GDestroyNotify) g_object_unref);
       private->tags = NULL;
     }
 

@@ -75,9 +75,8 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
 
         command_execute (command);
 
-        g_list_foreach (selected_rows, (GFunc) gtk_tree_path_free, NULL);
-        g_list_free (selected_rows);
-  }
+        g_list_free_full (selected_rows, (GDestroyNotify) gtk_tree_path_free);
+      }
 }
 
 static gboolean

@@ -480,8 +480,7 @@ gimp_thumb_box_take_uris (GimpThumbBox *box,
 
   if (box->uris)
     {
-      g_slist_foreach (box->uris, (GFunc) g_free, NULL);
-      g_slist_free (box->uris);
+      g_slist_free_full (box->uris, (GDestroyNotify) g_free);
       box->uris = NULL;
     }
 

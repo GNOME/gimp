@@ -119,12 +119,9 @@ script_fu_find_scripts (const gchar *path)
   script_menu_list = g_list_sort (script_menu_list,
                                   (GCompareFunc) script_fu_menu_compare);
 
-  g_list_foreach (script_menu_list,
-                  (GFunc) script_fu_install_menu,
-                  NULL);
-
-  /*  Now we are done with the list of menu entries  */
-  g_list_free (script_menu_list);
+  /*  Install and nuke the list of menu entries  */
+  g_list_free_full (script_menu_list,
+                    (GDestroyNotify) script_fu_install_menu);
   script_menu_list = NULL;
 }
 

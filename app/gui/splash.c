@@ -495,8 +495,7 @@ splash_image_pick_from_dir (const gchar *dirname,
           if (be_verbose)
             g_printerr (pixbuf ? "OK\n" : "failed\n");
 
-          g_list_foreach (splashes, (GFunc) g_free, NULL);
-          g_list_free (splashes);
+          g_list_free_full (splashes, (GDestroyNotify) g_free);
         }
     }
 

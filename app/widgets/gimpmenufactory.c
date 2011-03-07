@@ -82,8 +82,7 @@ gimp_menu_factory_finalize (GObject *object)
 
       g_free (entry->identifier);
 
-      g_list_foreach (entry->action_groups, (GFunc) g_free, NULL);
-      g_list_free (entry->action_groups);
+      g_list_free_full (entry->action_groups, (GDestroyNotify) g_free);
 
       for (uis = entry->managed_uis; uis; uis = g_list_next (uis))
         {

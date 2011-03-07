@@ -913,10 +913,9 @@ free_one_obj (GfigObject *obj)
 }
 
 void
-free_all_objs (GList * objs)
+free_all_objs (GList *objs)
 {
-  g_list_foreach (objs, (GFunc)free_one_obj, NULL);
-  g_list_free (objs);
+  g_list_free_full (objs, (GDestroyNotify) free_one_obj);
 }
 
 gchar *

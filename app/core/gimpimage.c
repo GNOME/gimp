@@ -966,8 +966,7 @@ gimp_image_finalize (GObject *object)
 
   if (private->guides)
     {
-      g_list_foreach (private->guides, (GFunc) g_object_unref, NULL);
-      g_list_free (private->guides);
+      g_list_free_full (private->guides, (GDestroyNotify) g_object_unref);
       private->guides = NULL;
     }
 
@@ -979,9 +978,8 @@ gimp_image_finalize (GObject *object)
 
   if (private->sample_points)
     {
-      g_list_foreach (private->sample_points,
-                      (GFunc) gimp_sample_point_unref, NULL);
-      g_list_free (private->sample_points);
+      g_list_free_full (private->sample_points,
+                        (GDestroyNotify) gimp_sample_point_unref);
       private->sample_points = NULL;
     }
 
@@ -1138,12 +1136,10 @@ gimp_image_size_changed (GimpViewable *viewable)
   g_list_free (all_items);
 
   all_items = gimp_image_get_channel_list (image);
-  g_list_foreach (all_items, (GFunc) gimp_viewable_size_changed, NULL);
-  g_list_free (all_items);
+  g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
 
   all_items = gimp_image_get_vectors_list (image);
-  g_list_foreach (all_items, (GFunc) gimp_viewable_size_changed, NULL);
-  g_list_free (all_items);
+  g_list_free_full (all_items, (GDestroyNotify) gimp_viewable_size_changed);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
 

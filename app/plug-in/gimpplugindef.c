@@ -67,8 +67,7 @@ gimp_plug_in_def_finalize (GObject *object)
   g_free (plug_in_def->help_domain_name);
   g_free (plug_in_def->help_domain_uri);
 
-  g_slist_foreach (plug_in_def->procedures, (GFunc) g_object_unref, NULL);
-  g_slist_free (plug_in_def->procedures);
+  g_slist_free_full (plug_in_def->procedures, (GDestroyNotify) g_object_unref);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

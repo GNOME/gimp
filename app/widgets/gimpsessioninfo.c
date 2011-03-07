@@ -740,17 +740,15 @@ gimp_session_info_clear_info (GimpSessionInfo *info)
 
   if (info->p->aux_info)
     {
-      g_list_foreach (info->p->aux_info,
-                      (GFunc) gimp_session_info_aux_free, NULL);
-      g_list_free (info->p->aux_info);
+      g_list_free_full (info->p->aux_info,
+                        (GDestroyNotify) gimp_session_info_aux_free);
       info->p->aux_info = NULL;
     }
 
    if (info->p->docks)
      {
-       g_list_foreach (info->p->docks,
-                       (GFunc) gimp_session_info_dock_free, NULL);
-       g_list_free (info->p->docks);
+       g_list_free_full (info->p->docks,
+                         (GDestroyNotify) gimp_session_info_dock_free);
        info->p->docks = NULL;
      }
 }

@@ -231,8 +231,7 @@ gimp_tag_entry_dispose (GObject *object)
 
   if (entry->recent_list)
     {
-      g_list_foreach (entry->recent_list, (GFunc) g_free, NULL);
-      g_list_free (entry->recent_list);
+      g_list_free_full (entry->recent_list, (GDestroyNotify) g_free);
       entry->recent_list = NULL;
     }
 

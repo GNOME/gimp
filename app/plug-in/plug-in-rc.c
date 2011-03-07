@@ -212,8 +212,7 @@ plug_in_rc_parse (Gimp         *gimp,
                                  _("fatal parse error"), TRUE);
         }
 
-      g_slist_foreach (plug_in_defs, (GFunc) g_object_unref, NULL);
-      g_slist_free (plug_in_defs);
+      g_slist_free_full (plug_in_defs, (GDestroyNotify) g_object_unref);
       plug_in_defs = NULL;
     }
 

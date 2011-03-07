@@ -732,8 +732,7 @@ gimp_path_to_str (GList *path)
 void
 gimp_path_free (GList *path)
 {
-  g_list_foreach (path, (GFunc) g_free, NULL);
-  g_list_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_free);
 }
 
 /**

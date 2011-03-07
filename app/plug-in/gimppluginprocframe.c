@@ -106,8 +106,8 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
 
   if (proc_frame->context_stack)
     {
-      g_list_foreach (proc_frame->context_stack, (GFunc) g_object_unref, NULL);
-      g_list_free (proc_frame->context_stack);
+      g_list_free_full (proc_frame->context_stack,
+                        (GDestroyNotify) g_object_unref);
       proc_frame->context_stack = NULL;
     }
 

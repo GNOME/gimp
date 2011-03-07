@@ -1053,8 +1053,7 @@ gimp_dnd_get_uri_list_data (GtkWidget        *widget,
     {
       gimp_selection_data_set_uri_list (selection, uri_list);
 
-      g_list_foreach (uri_list, (GFunc) g_free, NULL);
-      g_list_free (uri_list);
+      g_list_free_full (uri_list, (GDestroyNotify) g_free);
     }
 }
 
@@ -1074,8 +1073,7 @@ gimp_dnd_set_uri_list_data (GtkWidget        *widget,
   (* (GimpDndDropUriListFunc) set_uri_list_func) (widget, x, y, uri_list,
                                                   set_uri_list_data);
 
-  g_list_foreach (uri_list, (GFunc) g_free, NULL);
-  g_list_free (uri_list);
+  g_list_free_full (uri_list, (GDestroyNotify) g_free);
 
   return TRUE;
 }

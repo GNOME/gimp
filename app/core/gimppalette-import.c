@@ -556,8 +556,7 @@ gimp_palette_import_from_file (GimpContext  *context,
 
       gimp_object_set_name (GIMP_OBJECT (palette), palette_name);
 
-      g_list_foreach (palette_list, (GFunc) g_object_unref, NULL);
-      g_list_free (palette_list);
+      g_list_free_full (palette_list, (GDestroyNotify) g_object_unref);
 
       return palette;
     }

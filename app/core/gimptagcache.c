@@ -157,8 +157,7 @@ gimp_tag_cache_finalize (GObject *object)
           GimpTagCacheRecord *rec = &g_array_index (cache->priv->records,
                                                     GimpTagCacheRecord, i);
 
-          g_list_foreach (rec->tags, (GFunc) g_object_unref, NULL);
-          g_list_free (rec->tags);
+          g_list_free_full (rec->tags, (GDestroyNotify) g_object_unref);
         }
 
       g_array_free (cache->priv->records, TRUE);

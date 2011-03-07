@@ -268,8 +268,7 @@ gimp_vectors_finalize (GObject *object)
 
   if (vectors->strokes)
     {
-      g_list_foreach (vectors->strokes, (GFunc) g_object_unref, NULL);
-      g_list_free (vectors->strokes);
+      g_list_free_full (vectors->strokes, (GDestroyNotify) g_object_unref);
       vectors->strokes = NULL;
     }
 
@@ -697,8 +696,7 @@ gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
 
   if (dest_vectors->strokes)
     {
-      g_list_foreach (dest_vectors->strokes, (GFunc) g_object_unref, NULL);
-      g_list_free (dest_vectors->strokes);
+      g_list_free_full (dest_vectors->strokes, (GDestroyNotify) g_object_unref);
     }
 
   dest_vectors->strokes = NULL;

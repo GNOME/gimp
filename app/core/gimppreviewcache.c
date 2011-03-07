@@ -155,9 +155,7 @@ gimp_preview_cache_invalidate (GSList **plist)
   preview_cache_print (*plist);
 #endif
 
-  g_slist_foreach (*plist, (GFunc) temp_buf_free, NULL);
-
-  g_slist_free (*plist);
+  g_slist_free_full (*plist, (GDestroyNotify) temp_buf_free);
   *plist = NULL;
 }
 

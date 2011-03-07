@@ -167,8 +167,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
     }
 
   /* we're done with the plug-in-defs */
-  g_slist_foreach (manager->plug_in_defs, (GFunc) g_object_unref, NULL);
-  g_slist_free (manager->plug_in_defs);
+  g_slist_free_full (manager->plug_in_defs, (GDestroyNotify) g_object_unref);
   manager->plug_in_defs = NULL;
 
   /* bind plug-in text domains  */

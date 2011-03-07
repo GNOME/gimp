@@ -191,9 +191,8 @@ gimp_scale_combo_box_finalize (GObject *object)
 
   if (combo_box->mru)
     {
-      g_list_foreach (combo_box->mru,
-                      (GFunc) gtk_tree_row_reference_free, NULL);
-      g_list_free (combo_box->mru);
+      g_list_free_full (combo_box->mru,
+                        (GDestroyNotify) gtk_tree_row_reference_free);
       combo_box->mru = NULL;
     }
 

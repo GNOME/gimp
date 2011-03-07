@@ -98,8 +98,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gtk_window_set_default_icon_list (icon_list);
 
-  g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
-  g_list_free (icon_list);
+  g_list_free_full (icon_list, (GDestroyNotify) g_object_unref);
 
   gimp_widgets_init_foreign_enums ();
 

@@ -1264,8 +1264,7 @@ gimp_container_tree_view_get_selected_single (GimpContainerTreeView  *tree_view,
       gtk_tree_model_get_iter (GTK_TREE_MODEL (tree_view->model), iter,
                                (GtkTreePath *) selected_rows->data);
 
-      g_list_foreach (selected_rows, (GFunc) gtk_tree_path_free, NULL);
-      g_list_free (selected_rows);
+      g_list_free_full (selected_rows, (GDestroyNotify) gtk_tree_path_free);
 
       return TRUE;
     }
@@ -1316,8 +1315,7 @@ gimp_container_tree_view_get_selected (GimpContainerView    *view,
       g_object_unref (renderer);
     }
 
-  g_list_foreach (selected_rows, (GFunc) gtk_tree_path_free, NULL);
-  g_list_free (selected_rows);
+  g_list_free_full (selected_rows, (GDestroyNotify) gtk_tree_path_free);
 
   *items = g_list_reverse (*items);
 

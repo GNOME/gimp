@@ -190,8 +190,8 @@ gimp_dialog_factory_dispose (GObject *object)
 
   if (factory->p->session_infos)
     {
-      g_list_foreach (factory->p->session_infos, (GFunc) g_object_unref, NULL);
-      g_list_free (factory->p->session_infos);
+      g_list_free_full (factory->p->session_infos,
+                        (GDestroyNotify) g_object_unref);
       factory->p->session_infos = NULL;
     }
 

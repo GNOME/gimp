@@ -145,8 +145,7 @@ lookup (const gchar *help_domain,
 
       gimp_help_progress_free (progress);
 
-      g_list_foreach (locales, (GFunc) g_free, NULL);
-      g_list_free (locales);
+      g_list_free_full (locales, (GDestroyNotify) g_free);
 
       return full_uri;
     }

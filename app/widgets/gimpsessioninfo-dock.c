@@ -69,10 +69,8 @@ gimp_session_info_dock_free (GimpSessionInfoDock *dock_info)
 
   if (dock_info->books)
     {
-      g_list_foreach (dock_info->books,
-                      (GFunc) gimp_session_info_book_free,
-                      NULL);
-      g_list_free (dock_info->books);
+      g_list_free_full (dock_info->books,
+                        (GDestroyNotify) gimp_session_info_book_free);
       dock_info->books = NULL;
     }
 

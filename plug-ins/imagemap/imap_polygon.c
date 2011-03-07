@@ -106,11 +106,10 @@ create_polygon(GList *points)
 }
 
 static void
-polygon_free_list(Polygon_t *polygon)
+polygon_free_list (Polygon_t *polygon)
 {
-   g_list_foreach(polygon->points, (GFunc) g_free, NULL);
-   g_list_free(polygon->points);
-   polygon->points = NULL;
+  g_list_free_full (polygon->points, (GDestroyNotify) g_free);
+  polygon->points = NULL;
 }
 
 static void

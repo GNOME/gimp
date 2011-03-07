@@ -393,8 +393,7 @@ ifsvals_parse (GScanner         *scanner,
 			     NULL,
 			     "using default values...",
 			     TRUE);
-      g_list_foreach (el_list, (GFunc)g_free, NULL);
-      g_list_free (el_list);
+      g_list_free_full (el_list, (GDestroyNotify) g_free);
       return FALSE;
     }
 

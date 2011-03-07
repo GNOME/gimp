@@ -152,8 +152,7 @@ gimp_icon_picker_constructed (GObject *object)
                                    GIMP_TEMPLATE (object));
     }
 
-  g_slist_foreach (stock_list, (GFunc) g_free, NULL);
-  g_slist_free (stock_list);
+  g_slist_free_full (stock_list, (GDestroyNotify) g_free);
 
   button = gimp_viewable_button_new (private->stock_id_container,
                                      private->stock_id_context,

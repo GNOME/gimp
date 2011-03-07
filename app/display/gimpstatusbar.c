@@ -282,8 +282,8 @@ gimp_statusbar_finalize (GObject *object)
       statusbar->icon = NULL;
     }
 
-  g_slist_foreach (statusbar->messages, (GFunc) gimp_statusbar_msg_free, NULL);
-  g_slist_free (statusbar->messages);
+  g_slist_free_full (statusbar->messages,
+                     (GDestroyNotify) gimp_statusbar_msg_free);
   statusbar->messages = NULL;
 
   if (statusbar->context_ids)

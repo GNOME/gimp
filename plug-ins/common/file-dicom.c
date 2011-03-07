@@ -905,13 +905,11 @@ dicom_add_element_int (GSList  *elements,
 /**
  * dicom_element_done:
  * @data: pointer to a DICOMELEMENT structure which is to be destroyed.
- * @user_data: unused.
  *
  * Destroys the DICOMELEMENT passed as @data
 **/
 static void
-dicom_element_done (gpointer data,
-                    gpointer user_data)
+dicom_element_done (gpointer data)
 {
   if (data)
     {
@@ -934,10 +932,7 @@ static void
 dicom_elements_destroy (GSList *elements)
 {
   if (elements)
-    {
-      g_slist_foreach (elements, dicom_element_done, NULL);
-      g_slist_free (elements);
-    }
+    g_slist_free_full (elements, dicom_element_done);
 }
 
 /**

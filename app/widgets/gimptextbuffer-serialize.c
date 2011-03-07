@@ -552,8 +552,7 @@ parse_info_free (ParseInfo *info)
   g_slist_free (info->tag_stack);
   g_slist_free (info->states);
 
-  g_list_foreach (info->spans, (GFunc) text_span_free, NULL);
-  g_list_free (info->spans);
+  g_list_free_full (info->spans, (GDestroyNotify) text_span_free);
 }
 
 static void

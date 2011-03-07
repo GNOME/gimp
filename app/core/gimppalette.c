@@ -125,8 +125,8 @@ gimp_palette_finalize (GObject *object)
 
   if (palette->colors)
     {
-      g_list_foreach (palette->colors, (GFunc) gimp_palette_entry_free, NULL);
-      g_list_free (palette->colors);
+      g_list_free_full (palette->colors,
+                        (GDestroyNotify) gimp_palette_entry_free);
       palette->colors = NULL;
     }
 

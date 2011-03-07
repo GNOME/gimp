@@ -125,8 +125,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_free (proc->prog);
   g_free (proc->menu_label);
 
-  g_list_foreach (proc->menu_paths, (GFunc) g_free, NULL);
-  g_list_free (proc->menu_paths);
+  g_list_free_full (proc->menu_paths, (GDestroyNotify) g_free);
 
   g_free (proc->label);
 
@@ -138,14 +137,9 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_free (proc->magics);
   g_free (proc->mime_type);
 
-  g_slist_foreach (proc->extensions_list, (GFunc) g_free, NULL);
-  g_slist_free (proc->extensions_list);
-
-  g_slist_foreach (proc->prefixes_list, (GFunc) g_free, NULL);
-  g_slist_free (proc->prefixes_list);
-
-  g_slist_foreach (proc->magics_list, (GFunc) g_free, NULL);
-  g_slist_free (proc->magics_list);
+  g_slist_free_full (proc->extensions_list, (GDestroyNotify) g_free);
+  g_slist_free_full (proc->prefixes_list, (GDestroyNotify) g_free);
+  g_slist_free_full (proc->magics_list, (GDestroyNotify) g_free);
 
   g_free (proc->thumb_loader);
 
@@ -882,10 +876,7 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
     }
 
   if (proc->extensions_list)
-    {
-      g_slist_foreach (proc->extensions_list, (GFunc) g_free, NULL);
-      g_slist_free (proc->extensions_list);
-    }
+    g_slist_free_full (proc->extensions_list, (GDestroyNotify) g_free);
 
   proc->extensions_list = extensions_parse (proc->extensions);
 
@@ -900,10 +891,7 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
     }
 
   if (proc->prefixes_list)
-    {
-      g_slist_foreach (proc->prefixes_list, (GFunc) g_free, NULL);
-      g_slist_free (proc->prefixes_list);
-    }
+    g_slist_free_full (proc->prefixes_list, (GDestroyNotify) g_free);
 
   proc->prefixes_list = extensions_parse (proc->prefixes);
 
@@ -931,10 +919,7 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
     }
 
   if (proc->magics_list)
-    {
-      g_slist_foreach (proc->magics_list, (GFunc) g_free, NULL);
-      g_slist_free (proc->magics_list);
-    }
+    g_slist_free_full (proc->magics_list, (GDestroyNotify) g_free);
 
   proc->magics_list = extensions_parse (proc->magics);
 }

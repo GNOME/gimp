@@ -464,10 +464,7 @@ gimp_pdb_entry_free (gpointer key,
                      gpointer user_data)
 {
   if (value)
-    {
-      g_list_foreach (value, (GFunc) g_object_unref, NULL);
-      g_list_free (value);
-    }
+    g_list_free_full (value, (GDestroyNotify) g_object_unref);
 }
 
 static gint64

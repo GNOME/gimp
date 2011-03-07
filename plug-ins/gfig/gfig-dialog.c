@@ -837,8 +837,7 @@ gfig_list_load_all (const gchar *path)
 static void
 gfig_list_free_all (void)
 {
-  g_list_foreach (gfig_list, (GFunc) gfig_free, NULL);
-  g_list_free (gfig_list);
+  g_list_free_full (gfig_list, (GDestroyNotify) gfig_free);
   gfig_list = NULL;
 }
 

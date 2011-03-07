@@ -988,8 +988,7 @@ gimp_page_selector_get_selected_pages (GimpPageSelector *selector,
   qsort (array, *n_selected_pages, sizeof (gint),
          gimp_page_selector_int_compare);
 
-  g_list_foreach (selected, (GFunc) gtk_tree_path_free, NULL);
-  g_list_free (selected);
+  g_list_free_full (selected, (GDestroyNotify) gtk_tree_path_free);
 
   return array;
 }
@@ -1167,8 +1166,7 @@ gimp_page_selector_selection_changed (GtkIconView      *icon_view,
 
   selected = gtk_icon_view_get_selected_items (GTK_ICON_VIEW (priv->view));
   n_selected = g_list_length (selected);
-  g_list_foreach (selected, (GFunc) gtk_tree_path_free, NULL);
-  g_list_free (selected);
+  g_list_free_full (selected, (GDestroyNotify) gtk_tree_path_free);
 
   if (n_selected == 0)
     {

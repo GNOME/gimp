@@ -1657,8 +1657,7 @@ gflares_list_load_all (void)
 static void
 gflares_list_free_all (void)
 {
-  g_list_foreach (gflares_list, (GFunc) gflare_free, NULL);
-  g_list_free (gflares_list);
+  g_list_free_full (gflares_list, (GDestroyNotify) gflare_free);
   gflares_list = NULL;
 }
 
@@ -1971,8 +1970,7 @@ calc_deinit (void)
       return;
     }
 
-  g_list_foreach (calc.sflare_list, (GFunc) g_free, NULL);
-  g_list_free (calc.sflare_list);
+  g_list_free_full (calc.sflare_list, (GDestroyNotify) g_free);
 
   g_free (calc.glow_radial);
   g_free (calc.glow_angular);

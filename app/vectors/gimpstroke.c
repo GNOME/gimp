@@ -332,8 +332,7 @@ gimp_stroke_finalize (GObject *object)
 
   if (stroke->anchors)
     {
-      g_list_foreach (stroke->anchors, (GFunc) gimp_anchor_free, NULL);
-      g_list_free (stroke->anchors);
+      g_list_free_full (stroke->anchors, (GDestroyNotify) gimp_anchor_free);
       stroke->anchors = NULL;
     }
 

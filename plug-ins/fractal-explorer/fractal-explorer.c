@@ -907,8 +907,7 @@ fractalexplorer_free_everything (fractalexplorerOBJ *fractalexplorer)
 static void
 fractalexplorer_list_free_all (void)
 {
-  g_list_foreach (fractalexplorer_list, (GFunc) fractalexplorer_free, NULL);
-  g_list_free (fractalexplorer_list);
+  g_list_free_full (fractalexplorer_list, (GDestroyNotify) fractalexplorer_free);
   fractalexplorer_list = NULL;
 }
 

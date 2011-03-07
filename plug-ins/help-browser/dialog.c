@@ -355,8 +355,8 @@ window_set_icons (GtkWidget *window)
                                                    sizes[i], NULL));
 
   gtk_window_set_icon_list (GTK_WINDOW (window), list);
-  g_list_foreach (list, (GFunc) g_object_unref, NULL);
-  g_list_free (list);
+
+  g_list_free_full (list, (GDestroyNotify) g_object_unref);
 }
 
 static void

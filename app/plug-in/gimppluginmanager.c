@@ -194,16 +194,15 @@ gimp_plug_in_manager_finalize (GObject *object)
 
   if (manager->plug_in_procedures)
     {
-      g_slist_foreach (manager->plug_in_procedures,
-                       (GFunc) g_object_unref, NULL);
-      g_slist_free (manager->plug_in_procedures);
+      g_slist_free_full (manager->plug_in_procedures,
+                         (GDestroyNotify) g_object_unref);
       manager->plug_in_procedures = NULL;
     }
 
   if (manager->plug_in_defs)
     {
-      g_slist_foreach (manager->plug_in_defs, (GFunc) g_object_unref, NULL);
-      g_slist_free (manager->plug_in_defs);
+      g_slist_free_full (manager->plug_in_defs,
+                         (GDestroyNotify) g_object_unref);
       manager->plug_in_defs = NULL;
     }
 

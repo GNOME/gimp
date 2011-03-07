@@ -96,8 +96,7 @@ gimp_file_proc_view_finalize (GObject *object)
 
   if (view->meta_extensions)
     {
-      g_list_foreach (view->meta_extensions, (GFunc) g_free, NULL);
-      g_list_free (view->meta_extensions);
+      g_list_free_full (view->meta_extensions, (GDestroyNotify) g_free);
       view->meta_extensions = NULL;
     }
 
