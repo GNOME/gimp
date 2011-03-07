@@ -1,0 +1,26 @@
+# French translation for gimp.
+# Copyright (C) 2011 Listed translators
+# This file is distributed under the same license as the gimp package.
+#
+# Julien Hardelin <jhardlinATwanadooPOINTfr>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-tags HEAD\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&component=general\n"
+"POT-Creation-Date: 2011-03-06 10:53+0000\n"
+"PO-Revision-Date: 2011-03-07 09:03+0100\n"
+"Last-Translator: Julien Hardelin <jhardlinATwanadooPOINTfr\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:1
+msgid "fuzzy"
+msgstr "Flou"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:2
+msgid "round"
+msgstr "Arrondi"
