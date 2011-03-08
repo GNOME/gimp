@@ -676,12 +676,12 @@ SECTION_DOCS
     }
 
     if (! $ENV{PDBGEN_GROUPS}) {
-        my $gimp_pdb = "$destdir/gimp_pdb.h$FILE_EXT";
-	open PFILE, "> $gimp_pdb" or die "Can't open $gimp_pdb: $!\n";
+        my $gimp_pdb_headers = "$destdir/gimp_pdb_headers.h$FILE_EXT";
+	open PFILE, "> $gimp_pdb_headers" or die "Can't open $gimp_pdb_headers: $!\n";
         print PFILE $lgpl_top;
-        print PFILE " * gimp_pdb.h\n";
+        print PFILE " * gimp_pdb_headers.h\n";
         print PFILE $lgpl_bottom;
-	my $guard = "__GIMP_PDB_H__";
+	my $guard = "__GIMP_PDB_HEADERS_H__";
 	print PFILE <<HEADER;
 #ifndef $guard
 #define $guard
@@ -701,6 +701,6 @@ HEADER
 #endif /* $guard */
 HEADER
 	close PFILE;
-	&write_file($gimp_pdb);
+	&write_file($gimp_pdb_headers);
     }
 }

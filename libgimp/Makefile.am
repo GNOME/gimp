@@ -120,7 +120,7 @@ PDB_WRAPPERS_C = \
 	gimpvectors_pdb.c
 
 PDB_WRAPPERS_H = \
-	gimp_pdb.h			\
+	gimp_pdb_headers.h		\
 	gimpbrush_pdb.h			\
 	gimpbrushes_pdb.h		\
 	gimpbrushselect_pdb.h		\

@@ -56,7 +56,7 @@
 #include <libgimp/gimptile.h>
 #include <libgimp/gimpvectors.h>
 
-#include <libgimp/gimp_pdb.h>
+#include <libgimp/gimp_pdb_headers.h>
 
 #ifdef G_OS_WIN32
 #include <stdlib.h> /* For __argc and __argv */
