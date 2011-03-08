@@ -54,6 +54,20 @@ enum
 };
 
 
+typedef struct _GimpViewablePrivate GimpViewablePrivate;
+
+struct _GimpViewablePrivate
+{
+  gchar        *stock_id;
+  gint          freeze_count;
+  GimpViewable *parent;
+};
+
+#define GET_PRIVATE(viewable) G_TYPE_INSTANCE_GET_PRIVATE (viewable, \
+                                                       GIMP_TYPE_VIEWABLE, \
+                                                       GimpViewablePrivate)
+
+
 static void    gimp_viewable_config_iface_init (GimpConfigInterface *iface);
 
 static void    gimp_viewable_finalize               (GObject        *object);
@@ -167,13 +181,13 @@ gimp_viewable_class_init (GimpViewableClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          GIMP_PARAM_READABLE));
+
+  g_type_class_add_private (klass, sizeof (GimpViewablePrivate));
 }
 
 static void
 gimp_viewable_init (GimpViewable *viewable)
 {
-  viewable->stock_id     = NULL;
-  viewable->freeze_count = 0;
 }
 
 static void
@@ -185,12 +199,12 @@ gimp_viewable_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_viewable_finalize (GObject *object)
 {
-  GimpViewable *viewable = GIMP_VIEWABLE (object);
+  GimpViewablePrivate *private = GET_PRIVATE (object);
 
-  if (viewable->stock_id)
+  if (private->stock_id)
     {
-      g_free (viewable->stock_id);
-      viewable->stock_id = NULL;
+      g_free (private->stock_id);
+      private->stock_id = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -390,15 +404,15 @@ gimp_viewable_serialize_property (GimpConfig       *config,
                                   GParamSpec       *pspec,
                                   GimpConfigWriter *writer)
 {
-  GimpViewable *viewable = GIMP_VIEWABLE (config);
+  GimpViewablePrivate *private = GET_PRIVATE (config);
 
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      if (viewable->stock_id)
+      if (private->stock_id)
         {
           gimp_config_writer_open (writer, pspec->name);
-          gimp_config_writer_string (writer, viewable->stock_id);
+          gimp_config_writer_string (writer, private->stock_id);
           gimp_config_writer_close (writer);
         }
       return TRUE;
@@ -420,9 +434,13 @@ gimp_viewable_serialize_property (GimpConfig       *config,
 void
 gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
+  GimpViewablePrivate *private;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  if (viewable->freeze_count == 0)
+  private = GET_PRIVATE (viewable);
+
+  if (private->freeze_count == 0)
     g_signal_emit (viewable, viewable_signals[INVALIDATE_PREVIEW], 0);
 }
 
@@ -1028,10 +1046,14 @@ gimp_viewable_get_description (GimpViewable  *viewable,
 const gchar *
 gimp_viewable_get_stock_id (GimpViewable *viewable)
 {
+  GimpViewablePrivate *private;
+
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
-  if (viewable->stock_id)
-    return (const gchar *) viewable->stock_id;
+  private = GET_PRIVATE (viewable);
+
+  if (private->stock_id)
+    return (const gchar *) private->stock_id;
 
   return GIMP_VIEWABLE_GET_CLASS (viewable)->default_stock_id;
 }
@@ -1049,12 +1071,15 @@ void
 gimp_viewable_set_stock_id (GimpViewable *viewable,
                             const gchar  *stock_id)
 {
-  GimpViewableClass *viewable_class;
+  GimpViewablePrivate *private;
+  GimpViewableClass   *viewable_class;
 
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  g_free (viewable->stock_id);
-  viewable->stock_id = NULL;
+  private = GET_PRIVATE (viewable);
+
+  g_free (private->stock_id);
+  private->stock_id = NULL;
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
@@ -1062,7 +1087,7 @@ gimp_viewable_set_stock_id (GimpViewable *viewable,
     {
       if (viewable_class->default_stock_id == NULL ||
           strcmp (stock_id, viewable_class->default_stock_id))
-        viewable->stock_id = g_strdup (stock_id);
+        private->stock_id = g_strdup (stock_id);
     }
 
   g_object_notify (G_OBJECT (viewable), "stock-id");
@@ -1071,23 +1096,32 @@ gimp_viewable_set_stock_id (GimpViewable *viewable,
 void
 gimp_viewable_preview_freeze (GimpViewable *viewable)
 {
+  GimpViewablePrivate *private;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  viewable->freeze_count++;
+  private = GET_PRIVATE (viewable);
 
-  if (viewable->freeze_count == 1)
+  private->freeze_count++;
+
+  if (private->freeze_count == 1)
     g_object_notify (G_OBJECT (viewable), "frozen");
 }
 
 void
 gimp_viewable_preview_thaw (GimpViewable *viewable)
 {
+  GimpViewablePrivate *private;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
-  g_return_if_fail (viewable->freeze_count > 0);
 
-  viewable->freeze_count--;
+  private = GET_PRIVATE (viewable);
 
-  if (viewable->freeze_count == 0)
+  g_return_if_fail (private->freeze_count > 0);
+
+  private->freeze_count--;
+
+  if (private->freeze_count == 0)
     {
       gimp_viewable_invalidate_preview (viewable);
       g_object_notify (G_OBJECT (viewable), "frozen");
@@ -1099,7 +1133,7 @@ gimp_viewable_preview_is_frozen (GimpViewable *viewable)
 {
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
-  return viewable->freeze_count != 0;
+  return GET_PRIVATE (viewable)->freeze_count != 0;
 }
 
 GimpViewable *
@@ -1107,7 +1141,7 @@ gimp_viewable_get_parent (GimpViewable *viewable)
 {
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
 
-  return viewable->parent;
+  return GET_PRIVATE (viewable)->parent;
 }
 
 void
@@ -1117,7 +1151,7 @@ gimp_viewable_set_parent (GimpViewable *viewable,
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
   g_return_if_fail (parent == NULL || GIMP_IS_VIEWABLE (parent));
 
-  viewable->parent = parent;
+  GET_PRIVATE (viewable)->parent = parent;
 }
 
 GimpContainer *

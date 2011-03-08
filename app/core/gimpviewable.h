@@ -47,12 +47,7 @@ typedef struct _GimpViewableClass GimpViewableClass;
 
 struct _GimpViewable
 {
-  GimpObject    parent_instance;
-
-  /*<  private  >*/
-  gchar        *stock_id;
-  gint          freeze_count;
-  GimpViewable *parent;
+  GimpObject  parent_instance;
 };
 
 struct _GimpViewableClass
