@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpsettingseditor.c
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2008-2011 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,26 @@ enum
   PROP_CONTAINER,
   PROP_FILENAME
 };
+
+
+typedef struct _GimpSettingsEditorPrivate GimpSettingsEditorPrivate;
+
+struct _GimpSettingsEditorPrivate
+{
+  Gimp          *gimp;
+  GObject       *config;
+  GimpContainer *container;
+  GObject       *selected_setting;
+
+  GtkWidget     *view;
+  GtkWidget     *import_button;
+  GtkWidget     *export_button;
+  GtkWidget     *delete_button;
+};
+
+#define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
+                                                       GIMP_TYPE_SETTINGS_EDITOR, \
+                                                       GimpSettingsEditorPrivate)
 
 
 static void   gimp_settings_editor_constructed    (GObject             *object);
@@ -120,6 +140,8 @@ gimp_settings_editor_class_init (GimpSettingsEditorClass *klass)
                                                         GIMP_TYPE_CONTAINER,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (klass, sizeof (GimpSettingsEditorPrivate));
 }
 
 static void
@@ -134,28 +156,29 @@ gimp_settings_editor_init (GimpSettingsEditor *editor)
 static void
 gimp_settings_editor_constructed (GObject *object)
 {
-  GimpSettingsEditor    *editor = GIMP_SETTINGS_EDITOR (object);
-  GimpContainerTreeView *tree_view;
+  GimpSettingsEditor        *editor  = GIMP_SETTINGS_EDITOR (object);
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
+  GimpContainerTreeView     *tree_view;
 
   if (G_OBJECT_CLASS (parent_class)->constructed)
     G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  g_assert (GIMP_IS_GIMP (editor->gimp));
-  g_assert (GIMP_IS_CONFIG (editor->config));
-  g_assert (GIMP_IS_CONTAINER (editor->container));
+  g_assert (GIMP_IS_GIMP (private->gimp));
+  g_assert (GIMP_IS_CONFIG (private->config));
+  g_assert (GIMP_IS_CONTAINER (private->container));
 
-  editor->view = gimp_container_tree_view_new (editor->container,
-                                               gimp_get_user_context (editor->gimp),
+  private->view = gimp_container_tree_view_new (private->container,
+                                                gimp_get_user_context (private->gimp),
                                                16, 0);
-  gtk_widget_set_size_request (editor->view, 200, 200);
-  gtk_box_pack_start (GTK_BOX (editor), editor->view, TRUE, TRUE, 0);
-  gtk_widget_show (editor->view);
+  gtk_widget_set_size_request (private->view, 200, 200);
+  gtk_box_pack_start (GTK_BOX (editor), private->view, TRUE, TRUE, 0);
+  gtk_widget_show (private->view);
 
-  tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (private->view);
 
   gtk_tree_view_set_row_separator_func (tree_view->view,
                                         gimp_settings_editor_row_separator_func,
-                                        editor->view, NULL);
+                                        private->view, NULL);
 
   g_signal_connect (tree_view, "select-item",
                     G_CALLBACK (gimp_settings_editor_select_item),
@@ -165,7 +188,7 @@ gimp_settings_editor_constructed (GObject *object)
                                                 G_CALLBACK (gimp_settings_editor_name_edited),
                                                 editor);
 
-  editor->import_button =
+  private->import_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
                             GTK_STOCK_OPEN,
                             _("Import settings from a file"),
@@ -174,7 +197,7 @@ gimp_settings_editor_constructed (GObject *object)
                             NULL,
                             editor);
 
-  editor->export_button =
+  private->export_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
                             GTK_STOCK_SAVE,
                             _("Export the selected settings to a file"),
@@ -183,7 +206,7 @@ gimp_settings_editor_constructed (GObject *object)
                             NULL,
                             editor);
 
-  editor->delete_button =
+  private->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (tree_view),
                             GTK_STOCK_DELETE,
                             _("Delete the selected settings"),
@@ -192,24 +215,24 @@ gimp_settings_editor_constructed (GObject *object)
                             NULL,
                             editor);
 
-  gtk_widget_set_sensitive (editor->delete_button, FALSE);
+  gtk_widget_set_sensitive (private->delete_button, FALSE);
 }
 
 static void
 gimp_settings_editor_finalize (GObject *object)
 {
-  GimpSettingsEditor *editor = GIMP_SETTINGS_EDITOR (object);
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
 
-  if (editor->config)
+  if (private->config)
     {
-      g_object_unref (editor->config);
-      editor->config = NULL;
+      g_object_unref (private->config);
+      private->config = NULL;
     }
 
-  if (editor->container)
+  if (private->container)
     {
-      g_object_unref (editor->container);
-      editor->container = NULL;
+      g_object_unref (private->container);
+      private->container = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -221,20 +244,20 @@ gimp_settings_editor_set_property (GObject      *object,
                                    const GValue *value,
                                    GParamSpec   *pspec)
 {
-  GimpSettingsEditor *editor = GIMP_SETTINGS_EDITOR (object);
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_GIMP:
-      editor->gimp = g_value_get_object (value); /* don't dup */
+      private->gimp = g_value_get_object (value); /* don't dup */
       break;
 
     case PROP_CONFIG:
-      editor->config = g_value_dup_object (value);
+      private->config = g_value_dup_object (value);
       break;
 
     case PROP_CONTAINER:
-      editor->container = g_value_dup_object (value);
+      private->container = g_value_dup_object (value);
       break;
 
    default:
@@ -249,20 +272,20 @@ gimp_settings_editor_get_property (GObject    *object,
                                    GValue     *value,
                                    GParamSpec *pspec)
 {
-  GimpSettingsEditor *editor = GIMP_SETTINGS_EDITOR (object);
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
     {
     case PROP_GIMP:
-      g_value_set_object (value, editor->gimp);
+      g_value_set_object (value, private->gimp);
       break;
 
     case PROP_CONFIG:
-      g_value_set_object (value, editor->config);
+      g_value_set_object (value, private->config);
       break;
 
     case PROP_CONTAINER:
-      g_value_set_object (value, editor->container);
+      g_value_set_object (value, private->container);
       break;
 
    default:
@@ -292,15 +315,16 @@ gimp_settings_editor_select_item (GimpContainerView  *view,
                                   gpointer            insert_data,
                                   GimpSettingsEditor *editor)
 {
-  gboolean sensitive;
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
+  gboolean                   sensitive;
 
-  editor->selected_setting = G_OBJECT (viewable);
+  private->selected_setting = G_OBJECT (viewable);
 
-  sensitive = (editor->selected_setting != NULL &&
-               gimp_object_get_name (editor->selected_setting));
+  sensitive = (private->selected_setting != NULL &&
+               gimp_object_get_name (private->selected_setting));
 
-  gtk_widget_set_sensitive (editor->export_button, sensitive);
-  gtk_widget_set_sensitive (editor->delete_button, sensitive);
+  gtk_widget_set_sensitive (private->export_button, sensitive);
+  gtk_widget_set_sensitive (private->delete_button, sensitive);
 }
 
 static void
@@ -319,21 +343,23 @@ static void
 gimp_settings_editor_delete_clicked (GtkWidget          *widget,
                                      GimpSettingsEditor *editor)
 {
-  if (editor->selected_setting)
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
+
+  if (private->selected_setting)
     {
       GimpObject *new = NULL;
       gint        index;
 
-      index = gimp_container_get_child_index (editor->container,
-                                              GIMP_OBJECT (editor->selected_setting));
+      index = gimp_container_get_child_index (private->container,
+                                              GIMP_OBJECT (private->selected_setting));
 
       if (index != -1)
         {
-          new = gimp_container_get_child_by_index (editor->container,
+          new = gimp_container_get_child_by_index (private->container,
                                                    index + 1);
 
           if (! new && index > 0)
-            new = gimp_container_get_child_by_index (editor->container,
+            new = gimp_container_get_child_by_index (private->container,
                                                      index - 1);
 
           /*  don't select the separator  */
@@ -341,10 +367,10 @@ gimp_settings_editor_delete_clicked (GtkWidget          *widget,
             new = NULL;
         }
 
-      gimp_container_remove (editor->container,
-                             GIMP_OBJECT (editor->selected_setting));
+      gimp_container_remove (private->container,
+                             GIMP_OBJECT (private->selected_setting));
 
-      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (editor->view),
+      gimp_container_view_select_item (GIMP_CONTAINER_VIEW (private->view),
                                        GIMP_VIEWABLE (new));
     }
 }
@@ -355,11 +381,12 @@ gimp_settings_editor_name_edited (GtkCellRendererText *cell,
                                   const gchar         *new_name,
                                   GimpSettingsEditor  *editor)
 {
-  GimpContainerTreeView *tree_view;
-  GtkTreePath           *path;
-  GtkTreeIter            iter;
+  GimpSettingsEditorPrivate *private = GET_PRIVATE (editor);
+  GimpContainerTreeView     *tree_view;
+  GtkTreePath               *path;
+  GtkTreeIter                iter;
 
-  tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+  tree_view = GIMP_CONTAINER_TREE_VIEW (private->view);
 
   path = gtk_tree_path_new_from_string (path_str);
 

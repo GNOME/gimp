@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpsettingseditor.h
- * Copyright (C) 2008 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2008-2011 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,17 +34,7 @@ typedef struct _GimpSettingsEditorClass GimpSettingsEditorClass;
 
 struct _GimpSettingsEditor
 {
-  GtkBox         parent_instance;
-
-  Gimp          *gimp;
-  GObject       *config;
-  GimpContainer *container;
-  GObject       *selected_setting;
-
-  GtkWidget     *view;
-  GtkWidget     *import_button;
-  GtkWidget     *export_button;
-  GtkWidget     *delete_button;
+  GtkBox  parent_instance;
 };
 
 struct _GimpSettingsEditorClass
