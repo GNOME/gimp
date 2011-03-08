@@ -89,7 +89,7 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
     {
       const gchar *stock_id = gimp_viewable_get_stock_id (renderer->viewable);
 
-      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
+      gimp_view_renderer_render_stock (renderer, widget, stock_id);
     }
 }
 

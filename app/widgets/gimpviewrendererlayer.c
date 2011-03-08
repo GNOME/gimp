@@ -80,7 +80,7 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
     }
 
   if (stock_id)
-    gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
+    gimp_view_renderer_render_stock (renderer, widget, stock_id);
   else
     GIMP_VIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
 }

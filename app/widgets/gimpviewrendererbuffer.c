@@ -102,7 +102,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
 
   if (render_buf)
     {
-      gimp_view_renderer_default_render_surface (renderer, render_buf);
+      gimp_view_renderer_render_temp_buf_simple (renderer, render_buf);
 
       temp_buf_free (render_buf);
     }
@@ -112,6 +112,6 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
 
       stock_id = gimp_viewable_get_stock_id (renderer->viewable);
 
-      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
+      gimp_view_renderer_render_stock (renderer, widget, stock_id);
     }
 }

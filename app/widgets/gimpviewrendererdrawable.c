@@ -226,9 +226,9 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             render_buf->y = (height - view_height) / 2;
         }
 
-      gimp_view_renderer_render_surface (renderer, render_buf, -1,
-                                         GIMP_VIEW_BG_CHECKS,
-                                         GIMP_VIEW_BG_CHECKS);
+      gimp_view_renderer_render_temp_buf (renderer, render_buf, -1,
+                                          GIMP_VIEW_BG_CHECKS,
+                                          GIMP_VIEW_BG_CHECKS);
 
       temp_buf_free (render_buf);
     }
@@ -238,6 +238,6 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
 
       stock_id = gimp_viewable_get_stock_id (renderer->viewable);
 
-      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
+      gimp_view_renderer_render_stock (renderer, widget, stock_id);
     }
 }

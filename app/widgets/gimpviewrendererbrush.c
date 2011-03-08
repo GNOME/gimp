@@ -109,9 +109,9 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 
   if (renderer->is_popup)
     {
-      gimp_view_renderer_render_surface (renderer, temp_buf, -1,
-                                         GIMP_VIEW_BG_WHITE,
-                                         GIMP_VIEW_BG_WHITE);
+      gimp_view_renderer_render_temp_buf (renderer, temp_buf, -1,
+                                          GIMP_VIEW_BG_WHITE,
+                                          GIMP_VIEW_BG_WHITE);
 
       temp_buf_free (temp_buf);
 
@@ -126,9 +126,9 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       return;
     }
 
-  gimp_view_renderer_render_surface (renderer, temp_buf, -1,
-                                     GIMP_VIEW_BG_WHITE,
-                                     GIMP_VIEW_BG_WHITE);
+  gimp_view_renderer_render_temp_buf (renderer, temp_buf, -1,
+                                      GIMP_VIEW_BG_WHITE,
+                                      GIMP_VIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 }
@@ -171,9 +171,9 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   if (temp_buf->height < renderer->height)
     temp_buf->y = (renderer->height - temp_buf->height) / 2;
 
-  gimp_view_renderer_render_surface (renderer, temp_buf, -1,
-                                     GIMP_VIEW_BG_WHITE,
-                                     GIMP_VIEW_BG_WHITE);
+  gimp_view_renderer_render_temp_buf (renderer, temp_buf, -1,
+                                      GIMP_VIEW_BG_WHITE,
+                                      GIMP_VIEW_BG_WHITE);
 
   temp_buf_free (temp_buf);
 

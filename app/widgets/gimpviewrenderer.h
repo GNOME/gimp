@@ -140,19 +140,18 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 
 /*  protected  */
 
-void   gimp_view_renderer_default_render_surface (GimpViewRenderer *renderer,
+void   gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
                                                   TempBuf          *temp_buf);
-void   gimp_view_renderer_default_render_stock   (GimpViewRenderer *renderer,
-                                                  GtkWidget        *widget,
-                                                  const gchar      *stock_id);
-void   gimp_view_renderer_render_surface         (GimpViewRenderer *renderer,
+void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
                                                   TempBuf          *temp_buf,
                                                   gint              channel,
                                                   GimpViewBG        inside_bg,
                                                   GimpViewBG        outside_bg);
-
 void   gimp_view_renderer_render_pixbuf          (GimpViewRenderer *renderer,
                                                   GdkPixbuf        *pixbuf);
+void   gimp_view_renderer_render_stock           (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget,
+                                                  const gchar      *stock_id);
 
 
 
