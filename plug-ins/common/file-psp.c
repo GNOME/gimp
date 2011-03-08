@@ -964,7 +964,7 @@ read_creator_block (FILE     *f,
                                             GIMP_PARASITE_PERSISTENT,
                                             strlen (comment->str) + 1,
                                             comment->str);
-      gimp_image_parasite_attach(image_ID, comment_parasite);
+      gimp_image_attach_parasite (image_ID, comment_parasite);
       gimp_parasite_free (comment_parasite);
     }
 
@@ -1657,7 +1657,7 @@ read_tube_block (FILE     *f,
   pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
                                      GIMP_PARASITE_PERSISTENT,
                                      strlen (parasite_text) + 1, parasite_text);
-  gimp_image_parasite_attach (image_ID, pipe_parasite);
+  gimp_image_attach_parasite (image_ID, pipe_parasite);
   gimp_parasite_free (pipe_parasite);
   g_free (parasite_text);
 

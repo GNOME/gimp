@@ -2496,6 +2496,115 @@ CODE
     );
 }
 
+sub image_attach_parasite {
+    $blurb = 'Add a parasite to an image.';
+
+    $help = <<'HELP';
+This procedure attaches a parasite to an image. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach to an image' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_parasite_attach (image, parasite);
+}
+CODE
+    );
+}
+
+sub image_detach_parasite {
+    $blurb = 'Removes a parasite from an image.';
+
+    $help = <<'HELP';
+This procedure detaches a parasite from an image. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach from an image.' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_image_parasite_detach (image, name);
+}
+CODE
+    );
+}
+
+sub image_get_parasite {
+    $blurb = 'Look up a parasite in an image';
+
+    $help = <<'HELP';
+Finds and returns the parasite that was previously attached to an image.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' },
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasite = gimp_parasite_copy (gimp_image_parasite_find (image, name));
+
+  if (! parasite)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub image_get_parasite_list {
+    $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all currently attached parasites.';
+
+    &marc_pdb_misc('1999', '2.8');
+
+    @inargs = (
+	{ name => 'image', type => 'image',
+	  desc => 'The image' }
+    );
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray',
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_image_parasite_list (image, &num_parasites);
+}
+CODE
+    );
+}
+
 sub image_thumbnail {
     $blurb = 'Get a thumbnail of an image.';
 
@@ -2639,9 +2748,12 @@ CODE
 	    image_get_tattoo_state image_set_tattoo_state
             image_get_layer_by_tattoo
             image_get_channel_by_tattoo
-            image_get_vectors_by_tattoo);
+            image_get_vectors_by_tattoo
+            image_attach_parasite image_detach_parasite
+            image_get_parasite
+            image_get_parasite_list);
 
-%exports = (app => [@procs], lib => [@procs[0..42,45..73]]);
+%exports = (app => [@procs], lib => [@procs[0..42,45..77]]);
 
 $desc = 'Image';
 $doc_title = 'gimpimage';

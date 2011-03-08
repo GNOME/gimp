@@ -160,7 +160,7 @@ run (const gchar      *name,
                       drawable_type == GIMP_GRAYA_IMAGE ||
                       drawable_type == GIMP_INDEXEDA_IMAGE);
 
-      parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+      parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
       if (parasite)
         {
           config.comment = g_strndup (gimp_parasite_data (parasite),
@@ -188,7 +188,7 @@ run (const gchar      *name,
             {
               if (!config.comment || !config.comment[0])
                 {
-                  gimp_image_parasite_detach (image_ID, "gimp-comment");
+                  gimp_image_attach_parasite (image_ID, "gimp-comment");
                 }
               else
                 {
@@ -196,7 +196,7 @@ run (const gchar      *name,
                                                 GIMP_PARASITE_PERSISTENT,
                                                 strlen (config.comment) + 1,
                                                 config.comment);
-                  gimp_image_parasite_attach (image_ID, parasite);
+                  gimp_image_attach_parasite (image_ID, parasite);
                   gimp_parasite_free (parasite);
                 }
             }

@@ -270,7 +270,7 @@ drw_attach_new_parasite(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 
     parasite = gimp_parasite_new (name,
                                   flags, size + 1, data);
-    success = gimp_image_parasite_attach (self->ID, parasite);
+    success = gimp_item_attach_parasite (self->ID, parasite);
     gimp_parasite_free (parasite);
 
     if (!success) {

@@ -871,7 +871,7 @@ load_image (const gchar  *filename,
       parasite = gimp_parasite_new ("gamma",
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (buf) + 1, buf);
-      gimp_image_parasite_attach (image, parasite);
+      gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
     }
 
@@ -1056,7 +1056,7 @@ load_image (const gchar  *filename,
           parasite = gimp_parasite_new ("gimp-comment",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (comment) + 1, comment);
-          gimp_image_parasite_attach (image, parasite);
+          gimp_image_attach_parasite (image, parasite);
           gimp_parasite_free (parasite);
         }
 
@@ -1083,7 +1083,7 @@ load_image (const gchar  *filename,
                                       GIMP_PARASITE_UNDOABLE,
                                       proflen, profile);
 
-        gimp_image_parasite_attach (image, parasite);
+        gimp_image_attach_parasite (image, parasite);
         gimp_parasite_free (parasite);
 
         if (profname)
@@ -1097,7 +1097,7 @@ load_image (const gchar  *filename,
                                               GIMP_PARASITE_PERSISTENT |
                                               GIMP_PARASITE_UNDOABLE,
                                               strlen (tmp), tmp);
-                gimp_image_parasite_attach (image, parasite);
+                gimp_image_attach_parasite (image, parasite);
                 gimp_parasite_free (parasite);
 
                 g_free (tmp);
@@ -1209,7 +1209,7 @@ save_image (const gchar  *filename,
       GimpParasite *parasite;
       gsize text_length = 0;
 
-      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
+      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)
         {
           gchar *comment = g_strndup (gimp_parasite_data (parasite),
@@ -1391,7 +1391,7 @@ save_image (const gchar  *filename,
       GimpParasite *parasite;
       gdouble       gamma = 1.0 / DEFAULT_GAMMA;
 
-      parasite = gimp_image_parasite_find (orig_image_ID, "gamma");
+      parasite = gimp_image_get_parasite (orig_image_ID, "gamma");
       if (parasite)
         {
           gamma = g_ascii_strtod (gimp_parasite_data (parasite), NULL);
@@ -1436,12 +1436,12 @@ save_image (const gchar  *filename,
     GimpParasite *profile_parasite;
     gchar        *profile_name = NULL;
 
-    profile_parasite = gimp_image_parasite_find (orig_image_ID, "icc-profile");
+    profile_parasite = gimp_image_get_parasite (orig_image_ID, "icc-profile");
 
     if (profile_parasite)
       {
-        GimpParasite *parasite = gimp_image_parasite_find (orig_image_ID,
-                                                           "icc-profile-name");
+        GimpParasite *parasite = gimp_image_get_parasite (orig_image_ID,
+                                                          "icc-profile-name");
         if (parasite)
           profile_name = g_convert (gimp_parasite_data (parasite),
                                     gimp_parasite_data_size (parasite),
@@ -1845,7 +1845,7 @@ save_dialog (gint32    image_ID,
                                 &pngvals.time);
 
   /* Comment toggle */
-  parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+  parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
   pg.comment =
     toggle_button_init (builder, "save-comment",
                         pngvals.comment && parasite != NULL,

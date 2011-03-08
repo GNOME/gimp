@@ -457,7 +457,7 @@ load_icc_profile (jas_image_t *jas_image,
                                 GIMP_PARASITE_PERSISTENT |
                                 GIMP_PARASITE_UNDOABLE,
                                 profile_size, jas_iccile);
-  gimp_image_parasite_attach (image_ID, parasite);
+  gimp_image_attach_parasite (image_ID, parasite);
   gimp_parasite_free (parasite);
 
   g_free (jas_iccile);

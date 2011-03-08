@@ -317,7 +317,7 @@ load_image (const gchar  *filename,
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (comment_buffer->str) + 1,
                                         comment_buffer->str);
-          gimp_image_parasite_attach (image_ID, parasite);
+          gimp_image_attach_parasite (image_ID, parasite);
           gimp_parasite_free (parasite);
 
           g_string_free (comment_buffer, TRUE);
@@ -387,7 +387,7 @@ load_image (const gchar  *filename,
                                         GIMP_PARASITE_PERSISTENT |
                                         GIMP_PARASITE_UNDOABLE,
                                         profile_size, profile);
-          gimp_image_parasite_attach (image_ID, parasite);
+          gimp_image_attach_parasite (image_ID, parasite);
           gimp_parasite_free (parasite);
         }
 

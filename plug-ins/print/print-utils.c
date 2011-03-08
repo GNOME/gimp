@@ -55,7 +55,7 @@ print_utils_key_file_load_from_parasite (gint32       image_ID,
 
   g_return_val_if_fail (parasite_name != NULL, NULL);
 
-  parasite = gimp_image_parasite_find (image_ID, parasite_name);
+  parasite = gimp_image_get_parasite (image_ID, parasite_name);
 
   if (! parasite)
     return NULL;
@@ -140,6 +140,6 @@ print_utils_key_file_save_as_parasite (GKeyFile    *key_file,
   parasite = gimp_parasite_new (parasite_name, 0, length, contents);
   g_free (contents);
 
-  gimp_image_parasite_attach (image_ID, parasite);
+  gimp_image_attach_parasite (image_ID, parasite);
   gimp_parasite_free (parasite);
 }

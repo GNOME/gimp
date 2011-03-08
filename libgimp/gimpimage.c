@@ -359,6 +359,74 @@ gimp_image_lower_vectors_to_bottom (gint32 image_ID,
 }
 
 /**
+ * gimp_image_parasite_find:
+ * @image_ID: The image.
+ * @name: The name of the parasite to find.
+ *
+ * Deprecated: Use gimp_image_get_parasite() instead.
+ *
+ * Returns: The found parasite.
+ **/
+GimpParasite *
+gimp_image_parasite_find (gint32       image_ID,
+                          const gchar *name)
+{
+  return gimp_image_get_parasite (image_ID, name);
+}
+
+/**
+ * gimp_image_parasite_attach:
+ * @image_ID: The image.
+ * @parasite: The parasite to attach to an image.
+ *
+ * Deprecated: Use gimp_image_attach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_parasite_attach (gint32              image_ID,
+                            const GimpParasite *parasite)
+{
+  return gimp_image_attach_parasite (image_ID, parasite);
+}
+
+/**
+ * gimp_image_parasite_detach:
+ * @image_ID: The image.
+ * @name: The name of the parasite to detach from an image.
+ *
+ * Deprecated: Use gimp_image_detach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_parasite_detach (gint32       image_ID,
+                            const gchar *name)
+{
+  return gimp_image_detach_parasite (image_ID, name);
+}
+
+/**
+ * gimp_image_parasite_list:
+ * @image_ID: The image.
+ * @num_parasites: The number of attached parasites.
+ * @parasites: The names of currently attached parasites.
+ *
+ * Deprecated: Use gimp_image_get_parasite_list() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_image_parasite_list (gint32    image_ID,
+                          gint     *num_parasites,
+                          gchar  ***parasites)
+{
+  *parasites = gimp_image_get_parasite_list (image_ID, num_parasites);
+
+  return *parasites != NULL;
+}
+
+/**
  * gimp_image_attach_new_parasite:
  * @image_ID: the ID of the image to attach the #GimpParasite to.
  * @name: the name of the #GimpParasite to create and attach.

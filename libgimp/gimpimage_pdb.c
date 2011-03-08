@@ -2680,3 +2680,151 @@ gimp_image_get_vectors_by_tattoo (gint32 image_ID,
 
   return vectors_ID;
 }
+
+/**
+ * gimp_image_attach_parasite:
+ * @image_ID: The image.
+ * @parasite: The parasite to attach to an image.
+ *
+ * Add a parasite to an image.
+ *
+ * This procedure attaches a parasite to an image. It has no return
+ * values.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_image_attach_parasite (gint32              image_ID,
+                            const GimpParasite *parasite)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-attach-parasite",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_PARASITE, parasite,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_detach_parasite:
+ * @image_ID: The image.
+ * @name: The name of the parasite to detach from an image.
+ *
+ * Removes a parasite from an image.
+ *
+ * This procedure detaches a parasite from an image. It has no return
+ * values.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_image_detach_parasite (gint32       image_ID,
+                            const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-detach-parasite",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_get_parasite:
+ * @image_ID: The image.
+ * @name: The name of the parasite to find.
+ *
+ * Look up a parasite in an image
+ *
+ * Finds and returns the parasite that was previously attached to an
+ * image.
+ *
+ * Returns: The found parasite.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpParasite *
+gimp_image_get_parasite (gint32       image_ID,
+                         const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpParasite *parasite = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-parasite",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return parasite;
+}
+
+/**
+ * gimp_image_get_parasite_list:
+ * @image_ID: The image.
+ * @num_parasites: The number of attached parasites.
+ *
+ * List all parasites.
+ *
+ * Returns a list of all currently attached parasites.
+ *
+ * Returns: The names of currently attached parasites.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar **
+gimp_image_get_parasite_list (gint32  image_ID,
+                              gint   *num_parasites)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar **parasites = NULL;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-parasite-list",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  *num_parasites = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_parasites = return_vals[1].data.d_int32;
+      parasites = g_new (gchar *, *num_parasites);
+      for (i = 0; i < *num_parasites; i++)
+        parasites[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return parasites;
+}

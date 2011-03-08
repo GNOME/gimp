@@ -334,8 +334,8 @@ run (const gchar      *name,
             }
 
           pipe_parasite =
-            gimp_image_parasite_find (orig_image_ID,
-                                      "gimp-brush-pipe-parameters");
+            gimp_image_get_parasite (orig_image_ID,
+                                     "gimp-brush-pipe-parameters");
           if (pipe_parasite)
             gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
                                        &gihparams);
@@ -383,8 +383,8 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_get_data (SAVE_PROC, &info);
           pipe_parasite =
-            gimp_image_parasite_find (orig_image_ID,
-                                      "gimp-brush-pipe-parameters");
+            gimp_image_get_parasite (orig_image_ID,
+                                     "gimp-brush-pipe-parameters");
           gimp_pixpipe_params_init (&gihparams);
           if (pipe_parasite)
             gimp_pixpipe_params_parse (gimp_parasite_data (pipe_parasite),
@@ -731,7 +731,7 @@ gih_load_image (const gchar  *filename,
                                              GIMP_PARASITE_PERSISTENT,
                                              strlen (paramstring) + 1,
                                              paramstring);
-          gimp_image_parasite_attach (image_ID, pipe_parasite);
+          gimp_image_attach_parasite (image_ID, pipe_parasite);
           gimp_parasite_free (pipe_parasite);
           g_free (paramstring);
         }
@@ -1285,7 +1285,7 @@ gih_save_image (const gchar  *filename,
   pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
                                      GIMP_PARASITE_PERSISTENT,
                                      strlen (parstring) + 1, parstring);
-  gimp_image_parasite_attach (orig_image_ID, pipe_parasite);
+  gimp_image_attach_parasite (orig_image_ID, pipe_parasite);
   gimp_parasite_free (pipe_parasite);
 
   g_free (parstring);

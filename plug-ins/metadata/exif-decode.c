@@ -61,7 +61,7 @@ xmp_merge_from_exifbuffer (XMPModel     *xmp_model,
                            GError       **error)
 {
    ExifData *exif_data;
-   GimpParasite *parasite = gimp_image_parasite_find (image_ID, "exif-data");
+   GimpParasite *parasite = gimp_image_get_parasite (image_ID, "exif-data");
 
    if (!parasite)
      return FALSE;

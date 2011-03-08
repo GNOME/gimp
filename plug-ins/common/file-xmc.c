@@ -1747,7 +1747,7 @@ save_image (const gchar *filename,
   /* Save the comment back to the original image */
   for (i = 0; i < 3; i++)
     {
-      gimp_image_parasite_detach (orig_image_ID, parasiteName[i]);
+      gimp_image_detach_parasite (orig_image_ID, parasiteName[i]);
 
       if (xmcparas.comments[i])
         {
@@ -1914,11 +1914,11 @@ set_comment_to_pname (const gint32  image_ID,
   g_return_val_if_fail (image_ID != -1, FALSE);
   g_return_val_if_fail (content, FALSE);
 
-  parasite = gimp_image_parasite_find (image_ID, pname);
+  parasite = gimp_image_get_parasite (image_ID, pname);
   if (! parasite)
     {
       parasite = gimp_parasite_new (pname, GIMP_PARASITE_PERSISTENT,
-                         strlen (content) + 1, content);
+                                    strlen (content) + 1, content);
     }
   else
     {
@@ -1934,7 +1934,7 @@ set_comment_to_pname (const gint32  image_ID,
 
   if (parasite)
     {
-      ret = gimp_image_parasite_attach (image_ID, parasite);
+      ret = gimp_image_attach_parasite (image_ID, parasite);
       gimp_parasite_free (parasite);
     }
 
@@ -1954,7 +1954,7 @@ get_comment_from_pname (const gint32  image_ID,
 
   g_return_val_if_fail (image_ID != -1, NULL);
 
-  parasite = gimp_image_parasite_find (image_ID, pname);
+  parasite = gimp_image_get_parasite (image_ID, pname);
   length = gimp_parasite_data_size (parasite);
 
   if (parasite)
@@ -1995,7 +1995,7 @@ set_hotspot_to_parasite (gint32 image_ID)
 
   if (parasite)
     {
-      ret = gimp_image_parasite_attach (image_ID, parasite);
+      ret = gimp_image_attach_parasite (image_ID, parasite);
       gimp_parasite_free (parasite);
     }
 
@@ -2017,7 +2017,7 @@ get_hotspot_from_parasite (gint32 image_ID)
 
   DM_XMC("function: getHotsopt\n");
 
-  parasite = gimp_image_parasite_find (image_ID, "hot-spot");
+  parasite = gimp_image_get_parasite (image_ID, "hot-spot");
   if (!parasite)  /* cannot find a parasite named "hot-spot". */
     {
       return FALSE;

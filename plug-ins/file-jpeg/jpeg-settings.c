@@ -136,7 +136,7 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
                                 parasite_size,
                                 parasite_data);
   g_free (parasite_data);
-  gimp_image_parasite_attach (image_ID, parasite);
+  gimp_image_attach_parasite (image_ID, parasite);
   gimp_parasite_free (parasite);
   return TRUE;
 }
@@ -187,7 +187,7 @@ jpeg_restore_original_settings (gint32           image_ID,
   g_return_val_if_fail (subsmp != NULL, FALSE);
   g_return_val_if_fail (num_quant_tables != NULL, FALSE);
 
-  parasite = gimp_image_parasite_find (image_ID, "jpeg-settings");
+  parasite = gimp_image_get_parasite (image_ID, "jpeg-settings");
   if (parasite)
     {
       src = gimp_parasite_data (parasite);
@@ -283,7 +283,7 @@ jpeg_restore_original_tables (gint32    image_ID,
   gint          t;
   gint          i;
 
-  parasite = gimp_image_parasite_find (image_ID, "jpeg-settings");
+  parasite = gimp_image_get_parasite (image_ID, "jpeg-settings");
   if (parasite)
     {
       src_size = gimp_parasite_data_size (parasite);
@@ -344,7 +344,7 @@ jpeg_swap_original_settings (gint32 image_ID)
   gint          i;
   gint          j;
 
-  parasite = gimp_image_parasite_find (image_ID, "jpeg-settings");
+  parasite = gimp_image_get_parasite (image_ID, "jpeg-settings");
   if (parasite)
     {
       src_size = gimp_parasite_data_size (parasite);
@@ -393,7 +393,7 @@ jpeg_swap_original_settings (gint32 image_ID)
                                             src_size,
                                             new_data);
               g_free (new_data);
-              gimp_image_parasite_attach (image_ID, parasite);
+              gimp_image_attach_parasite (image_ID, parasite);
             }
         }
       gimp_parasite_free (parasite);

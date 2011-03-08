@@ -802,7 +802,7 @@ load_image (const gchar        *filename,
                                         GIMP_PARASITE_PERSISTENT |
                                         GIMP_PARASITE_UNDOABLE,
                                         profile_size, icc_profile);
-          gimp_image_parasite_attach (image, parasite);
+          gimp_image_attach_parasite (image, parasite);
           gimp_parasite_free (parasite);
         }
 #endif
@@ -834,7 +834,7 @@ load_image (const gchar        *filename,
 
       parasite = gimp_parasite_new ("tiff-save-options", 0,
                                     sizeof (save_vals), &save_vals);
-      gimp_image_parasite_attach (image, parasite);
+      gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
 
       /* Attach a parasite containing the image description.  Pretend to
@@ -849,7 +849,7 @@ load_image (const gchar        *filename,
             parasite = gimp_parasite_new ("gimp-comment",
                                           GIMP_PARASITE_PERSISTENT,
                                           strlen (img_desc) + 1, img_desc);
-            gimp_image_parasite_attach (image, parasite);
+            gimp_image_attach_parasite (image, parasite);
             gimp_parasite_free (parasite);
           }
       }

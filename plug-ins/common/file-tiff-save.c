@@ -265,7 +265,7 @@ run (const gchar      *name,
           break;
         }
 
-      parasite = gimp_image_parasite_find (orig_image, "gimp-comment");
+      parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)
         {
           image_comment = g_strndup (gimp_parasite_data (parasite),
@@ -279,7 +279,7 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (SAVE_PROC, &tsvals);
 
-          parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
+          parasite = gimp_image_get_parasite (orig_image, "tiff-save-options");
           if (parasite)
             {
               const TiffSaveVals *pvals = gimp_parasite_data (parasite);
@@ -326,7 +326,7 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (SAVE_PROC, &tsvals);
 
-          parasite = gimp_image_parasite_find (orig_image, "tiff-save-options");
+          parasite = gimp_image_get_parasite (orig_image, "tiff-save-options");
           if (parasite)
             {
               const TiffSaveVals *pvals = gimp_parasite_data (parasite);
@@ -906,7 +906,7 @@ save_image (const gchar  *filename,
       parasite = gimp_parasite_new ("gimp-comment",
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (image_comment) + 1, image_comment);
-      gimp_image_parasite_attach (orig_image, parasite);
+      gimp_image_attach_parasite (orig_image, parasite);
       gimp_parasite_free (parasite);
     }
 
@@ -917,7 +917,7 @@ save_image (const gchar  *filename,
     uint32        profile_size;
     const guchar *icc_profile;
 
-    parasite = gimp_image_parasite_find (orig_image, "icc-profile");
+    parasite = gimp_image_get_parasite (orig_image, "icc-profile");
     if (parasite)
       {
         profile_size = gimp_parasite_data_size (parasite);

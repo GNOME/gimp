@@ -793,7 +793,7 @@ create_image (GdkPixbuf   *pixbuf,
       parasite = gimp_parasite_new ("gimp-comment", GIMP_PARASITE_PERSISTENT,
                                     strlen (comment) + 1, comment);
 
-      gimp_image_parasite_attach (image, parasite);
+      gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
 
       g_free (comment);

@@ -600,7 +600,7 @@ save_image (const gchar  *filename,
   if (jsvals.save_xmp)
     {
       /* FIXME: temporary hack until the right thing is done by a library */
-      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-metadata");
+      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-metadata");
       if (parasite)
         {
           const gchar *xmp_data;
@@ -626,7 +626,7 @@ save_image (const gchar  *filename,
     }
 
   /* Step 4.3: store the color profile if there is one */
-  parasite = gimp_image_parasite_find (orig_image_ID, "icc-profile");
+  parasite = gimp_image_get_parasite (orig_image_ID, "icc-profile");
   if (parasite)
     {
       jpeg_icc_write_profile (&cinfo,

@@ -756,7 +756,7 @@ lcms_image_get_profile (GimpColorConfig *config,
 
   g_return_val_if_fail (image != -1, NULL);
 
-  parasite = gimp_image_parasite_find (image, "icc-profile");
+  parasite = gimp_image_get_parasite (image, "icc-profile");
 
   if (parasite)
     {
@@ -838,7 +838,7 @@ lcms_image_set_profile (gint32       image,
 
       g_mapped_file_unref (file);
 
-      gimp_image_parasite_attach (image, parasite);
+      gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
     }
   else
@@ -846,10 +846,10 @@ lcms_image_set_profile (gint32       image,
       if (undo_group)
         gimp_image_undo_group_start (image);
 
-      gimp_image_parasite_detach (image, "icc-profile");
+      gimp_image_detach_parasite (image, "icc-profile");
     }
 
-  gimp_image_parasite_detach (image, "icc-profile-name");
+  gimp_image_detach_parasite (image, "icc-profile-name");
 
   if (undo_group)
     gimp_image_undo_group_end (image);

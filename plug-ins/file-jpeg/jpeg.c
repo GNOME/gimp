@@ -323,7 +323,7 @@ run (const gchar      *name,
       g_free (image_comment);
       image_comment = NULL;
 
-      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
+      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)
         {
           image_comment = g_strndup (gimp_parasite_data (parasite),
@@ -331,7 +331,7 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
         }
 
-      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-metadata");
+      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-metadata");
       if (parasite)
         {
           has_metadata = TRUE;
@@ -399,8 +399,8 @@ run (const gchar      *name,
                                           &num_quant_tables);
 
           /* load up the previously used values (if file was saved once) */
-          parasite = gimp_image_parasite_find (orig_image_ID,
-                                               "jpeg-save-options");
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "jpeg-save-options");
           if (parasite)
             {
               const JpegSaveVals *save_vals = gimp_parasite_data (parasite);
@@ -505,21 +505,21 @@ run (const gchar      *name,
            * was used to save this image.  Dump the old parasites
            * and add new ones. */
 
-          gimp_image_parasite_detach (orig_image_ID, "gimp-comment");
+          gimp_image_detach_parasite (orig_image_ID, "gimp-comment");
           if (image_comment && strlen (image_comment))
             {
               parasite = gimp_parasite_new ("gimp-comment",
                                             GIMP_PARASITE_PERSISTENT,
                                             strlen (image_comment) + 1,
                                             image_comment);
-              gimp_image_parasite_attach (orig_image_ID, parasite);
+              gimp_image_attach_parasite (orig_image_ID, parasite);
               gimp_parasite_free (parasite);
             }
-          gimp_image_parasite_detach (orig_image_ID, "jpeg-save-options");
 
+          gimp_image_detach_parasite (orig_image_ID, "jpeg-save-options");
           parasite = gimp_parasite_new ("jpeg-save-options",
-                                    0, sizeof (jsvals), &jsvals);
-          gimp_image_parasite_attach (orig_image_ID, parasite);
+                                        0, sizeof (jsvals), &jsvals);
+          gimp_image_attach_parasite (orig_image_ID, parasite);
           gimp_parasite_free (parasite);
         }
     }

@@ -63,7 +63,7 @@ void gimp_metadata_store_exif    (gint32    image_ID,
       parasite = gimp_parasite_new ("exif-data",
                                     GIMP_PARASITE_PERSISTENT,
                                     exif_buf_len, exif_buf);
-      gimp_image_parasite_attach (image_ID, parasite);
+      gimp_image_attach_parasite (image_ID, parasite);
       gimp_parasite_free (parasite);
     }
   return_vals = gimp_run_procedure ("plug-in-metadata-decode-exif",
@@ -96,8 +96,8 @@ ExifData *
 gimp_metadata_generate_exif (gint32 image_ID)
 {
   ExifData     *exif_data;
-  GimpParasite *parasite   = gimp_image_parasite_find (image_ID,
-                                                       "exif-data");
+  GimpParasite *parasite = gimp_image_get_parasite (image_ID, "exif-data");
+
   if (parasite)
     {
       exif_data = exif_data_new_from_data (gimp_parasite_data (parasite),

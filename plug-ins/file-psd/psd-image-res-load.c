@@ -446,7 +446,7 @@ load_resource_unknown (const PSDimageres  *res_a,
   IFDBG(2) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, data);
-  gimp_image_parasite_attach (image_id, parasite);
+  gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
   g_free (data);
   g_free (name);
@@ -481,7 +481,7 @@ load_resource_ps_only (const PSDimageres  *res_a,
   IFDBG(2) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, data);
-  gimp_image_parasite_attach (image_id, parasite);
+  gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
   g_free (data);
   g_free (name);
@@ -723,7 +723,7 @@ load_resource_1008 (const PSDimageres  *res_a,
   IFDBG(3) g_debug ("Caption: %s", caption);
   parasite = gimp_parasite_new (GIMP_PARASITE_COMMENT, GIMP_PARASITE_PERSISTENT,
                                 write_len, caption);
-  gimp_image_parasite_attach (image_id, parasite);
+  gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
   g_free (caption);
 
@@ -820,7 +820,7 @@ load_resource_1028 (const PSDimageres  *res_a,
       parasite = gimp_parasite_new (GIMP_PARASITE_IPTC,
                                     GIMP_PARASITE_PERSISTENT,
                                     iptc_buf_len, iptc_buf);
-      gimp_image_parasite_attach (image_id, parasite);
+      gimp_image_attach_parasite (image_id, parasite);
       gimp_parasite_free (parasite);
     }
 
@@ -835,7 +835,7 @@ load_resource_1028 (const PSDimageres  *res_a,
   IFDBG(3) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
-  gimp_image_parasite_attach (image_id, parasite);
+  gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
   g_free (name);
 
@@ -1077,7 +1077,7 @@ load_resource_1039 (const PSDimageres  *res_a,
   parasite = gimp_parasite_new (GIMP_PARASITE_ICC_PROFILE,
                                 GIMP_PARASITE_PERSISTENT,
                                 res_a->data_len, icc_profile);
-  gimp_image_parasite_attach (image_id, parasite);
+  gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
   g_free (icc_profile);
 
@@ -1300,7 +1300,7 @@ load_resource_1058 (const PSDimageres  *res_a,
       parasite = gimp_parasite_new (GIMP_PARASITE_EXIF,
                                     GIMP_PARASITE_PERSISTENT,
                                     exif_buf_len, exif_buf);
-      gimp_image_parasite_attach (image_id, parasite);
+      gimp_image_attach_parasite (image_id, parasite);
       gimp_parasite_free (parasite);
     }
   exif_data_unref (exif_data);
@@ -1314,7 +1314,7 @@ load_resource_1058 (const PSDimageres  *res_a,
   IFDBG(3) g_debug ("Parasite name: %s", name);
 
   parasite = gimp_parasite_new (name, 0, res_a->data_len, res_data);
-  gimp_image_parasite_attach (image_id, parasite);
+  gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
   g_free (name);
 

@@ -479,8 +479,8 @@ run (const gchar      *name,
 
   if (strcmp (name, RECOMPOSE_PROC) == 0)
     {
-      GimpParasite *parasite = gimp_image_parasite_find (param[1].data.d_image,
-                                                         "decompose-data");
+      GimpParasite *parasite = gimp_image_get_parasite (param[1].data.d_image,
+                                                        "decompose-data");
 
       if (! parasite)
         {

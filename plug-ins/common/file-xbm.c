@@ -375,7 +375,7 @@ run (const gchar      *name,
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           /* Get the parasites */
-          parasite = gimp_image_parasite_find (image_ID, "gimp-comment");
+          parasite = gimp_image_get_parasite (image_ID, "gimp-comment");
 
           if (parasite)
             {
@@ -388,7 +388,7 @@ run (const gchar      *name,
               gimp_parasite_free (parasite);
             }
 
-          parasite = gimp_image_parasite_find (image_ID, "hot-spot");
+          parasite = gimp_image_get_parasite (image_ID, "hot-spot");
 
           if (parasite)
             {
@@ -866,7 +866,7 @@ load_image (const gchar  *filename,
       parasite = gimp_parasite_new ("gimp-comment",
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (comment) + 1, (gpointer) comment);
-      gimp_image_parasite_attach (image_ID, parasite);
+      gimp_image_attach_parasite (image_ID, parasite);
       gimp_parasite_free (parasite);
 
       g_free (comment);
@@ -885,7 +885,7 @@ load_image (const gchar  *filename,
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (str) + 1, (gpointer) str);
       g_free (str);
-      gimp_image_parasite_attach (image_ID, parasite);
+      gimp_image_attach_parasite (image_ID, parasite);
       gimp_parasite_free (parasite);
     }
 

@@ -494,7 +494,7 @@ load_image (const gchar  *filename,
       if (comment_parasite != NULL)
         {
           if (! thumbnail)
-            gimp_image_parasite_attach (image_ID, comment_parasite);
+            gimp_image_attach_parasite (image_ID, comment_parasite);
 
           gimp_parasite_free (comment_parasite);
           comment_parasite = NULL;

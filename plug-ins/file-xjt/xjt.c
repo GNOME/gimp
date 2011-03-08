@@ -1364,12 +1364,14 @@ p_write_image_parasites(const gchar *dirname,
   gchar        **l_parasite_names = NULL;
   gint32         l_num_parasites = 0;
 
-  if (!gimp_image_parasite_list (image_id, &l_num_parasites, &l_parasite_names))
+  l_parasite_names = gimp_image_get_parasite_list (image_id, &l_num_parasites);
+
+  if (!l_parasite_names)
     return;
 
   for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
   {
-    l_parasite = gimp_image_parasite_find(image_id, l_parasite_names[l_idx]);
+    l_parasite = gimp_image_get_parasite (image_id, l_parasite_names[l_idx]);
     if(l_parasite)
     {
        if(xjt_debug) printf("p_write_image_parasites NAME:%s:\n",  l_parasite_names[l_idx]);
@@ -2559,8 +2561,8 @@ p_create_and_attach_parasite (gint32            gimp_obj_id,
    */
   if(parasite_props->parasite_type == XJT_IMAGE_PARASITE)
   {
-     if(xjt_debug) printf("XJT:   gimp_image_parasite_attach  name:%s\n", l_parasite.name);
-     gimp_image_parasite_attach(gimp_obj_id, &l_parasite);
+     if(xjt_debug) printf("XJT:   gimp_image_attach_parasite  name:%s\n", l_parasite.name);
+     gimp_image_attach_parasite(gimp_obj_id, &l_parasite);
 
   }
   else

@@ -304,7 +304,7 @@ add_parasites_to_image (gpointer data,
   GimpParasite *parasite = (GimpParasite *) data;
   gint32       *image_ID = (gint32 *) user_data;
 
-  gimp_image_parasite_attach (*image_ID, parasite);
+  gimp_image_attach_parasite (*image_ID, parasite);
   gimp_parasite_free (parasite);
 }
 
@@ -1038,7 +1038,7 @@ dicom_get_elements_list (gint32 image_ID)
   gchar        **parasites = NULL;
   gint           count = 0;
 
-  gimp_image_parasite_list (image_ID,&count,&parasites);
+  parasites = gimp_image_get_parasite_list (image_ID, &count);
 
   if (parasites && count > 0)
     {
@@ -1048,7 +1048,7 @@ dicom_get_elements_list (gint32 image_ID)
         {
           if (strncmp (parasites[i], "dcm", 3) == 0)
             {
-              parasite = gimp_image_parasite_find (image_ID, parasites[i]);
+              parasite = gimp_image_get_parasite (image_ID, parasites[i]);
 
               if (parasite)
                 {

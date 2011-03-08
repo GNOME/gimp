@@ -323,6 +323,7 @@ EXPORTS
 	gimp_image_add_layer
 	gimp_image_add_vectors
 	gimp_image_add_vguide
+	gimp_image_attach_parasite
 	gimp_image_attach_new_parasite
 	gimp_image_base_type
 	gimp_image_clean_all
@@ -333,6 +334,7 @@ EXPORTS
 	gimp_image_crop
 	gimp_image_delete
 	gimp_image_delete_guide
+	gimp_image_detach_parasite
 	gimp_image_duplicate
 	gimp_image_find_next_guide
 	gimp_image_flatten
@@ -359,6 +361,8 @@ EXPORTS
 	gimp_image_get_layer_position
 	gimp_image_get_layers
 	gimp_image_get_name
+	gimp_image_get_parasite
+	gimp_image_get_parasite_list
 	gimp_image_get_resolution
 	gimp_image_get_selection
 	gimp_image_get_tattoo_state

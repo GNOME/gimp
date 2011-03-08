@@ -459,7 +459,7 @@ run (const gchar      *name,
 
               parasite = gimp_parasite_new ("decompose-data",
                                             0, data->len + 1, data->str);
-              gimp_image_parasite_attach (image_ID_extract[j], parasite);
+              gimp_image_attach_parasite (image_ID_extract[j], parasite);
               gimp_parasite_free (parasite);
 
               if (run_mode != GIMP_RUN_NONINTERACTIVE)

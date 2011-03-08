@@ -385,7 +385,7 @@ run (const gchar      *name,
   xmp_model = xmp_model_new ();
 
   /* if there is already a metadata parasite, load it */
-  parasite = gimp_image_parasite_find (image_ID, METADATA_PARASITE);
+  parasite = gimp_image_get_parasite (image_ID, METADATA_PARASITE);
   if (parasite)
     {
       GError *error = NULL;
@@ -549,7 +549,7 @@ run (const gchar      *name,
                                     GIMP_PARASITE_PERSISTENT,
                                     buffer->len,
                                     (gpointer) buffer->str);
-      gimp_image_parasite_attach (image_ID, parasite);
+      gimp_image_attach_parasite (image_ID, parasite);
       if (! strcmp (name, ENCODE_XMP_PROC))
         {
           *nreturn_vals = 2;
