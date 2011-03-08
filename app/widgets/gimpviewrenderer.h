@@ -141,7 +141,6 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 /*  protected  */
 
 void   gimp_view_renderer_default_render_surface (GimpViewRenderer *renderer,
-                                                  GtkWidget        *widget,
                                                   TempBuf          *temp_buf);
 void   gimp_view_renderer_default_render_stock   (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,

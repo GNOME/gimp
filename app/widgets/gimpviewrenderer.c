@@ -766,7 +766,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                         renderer->height);
   if (temp_buf)
     {
-      gimp_view_renderer_default_render_surface (renderer, widget, temp_buf);
+      gimp_view_renderer_default_render_surface (renderer, temp_buf);
       return;
     }
 
@@ -790,11 +790,9 @@ gimp_view_renderer_size_changed (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_default_render_surface (GimpViewRenderer *renderer,
-                                           GtkWidget        *widget,
                                            TempBuf          *temp_buf)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
-  g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (temp_buf != NULL);
 
   if (temp_buf->width < renderer->width)

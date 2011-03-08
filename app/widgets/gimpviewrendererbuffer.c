@@ -102,7 +102,7 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
 
   if (render_buf)
     {
-      gimp_view_renderer_default_render_surface (renderer, widget, render_buf);
+      gimp_view_renderer_default_render_surface (renderer, render_buf);
 
       temp_buf_free (render_buf);
     }
