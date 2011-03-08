@@ -67,8 +67,8 @@ struct _GimpViewablePrivate
 };
 
 #define GET_PRIVATE(viewable) G_TYPE_INSTANCE_GET_PRIVATE (viewable, \
-                                                       GIMP_TYPE_VIEWABLE, \
-                                                       GimpViewablePrivate)
+                                                           GIMP_TYPE_VIEWABLE, \
+                                                           GimpViewablePrivate)
 
 
 static void    gimp_viewable_config_iface_init (GimpConfigInterface *iface);

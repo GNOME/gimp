@@ -73,7 +73,6 @@ typedef struct _GimpItemPrivate GimpItemPrivate;
 
 struct _GimpItemPrivate
 {
-
   gint              ID;                 /*  provides a unique ID     */
   guint32           tattoo;             /*  provides a permanent ID  */
 
