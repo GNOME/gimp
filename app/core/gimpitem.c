@@ -80,9 +80,7 @@ struct _GimpItemPrivate
 
   GimpParasiteList *parasites;          /*  Plug-in parasite data    */
 
-#if 0
   gint              width, height;      /*  size in pixels           */
-#endif
   gint              offset_x, offset_y; /*  pixel offset in image    */
 
   guint             visible      : 1;   /*  control visibility       */
@@ -302,8 +300,8 @@ gimp_item_init (GimpItem *item)
   private->tattoo       = 0;
   private->image        = NULL;
   private->parasites    = gimp_parasite_list_new ();
-  item->width           = 0;
-  item->height          = 0;
+  private->width        = 0;
+  private->height       = 0;
   private->offset_x     = 0;
   private->offset_y     = 0;
   private->visible      = TRUE;
@@ -379,7 +377,6 @@ gimp_item_get_property (GObject    *object,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpItem        *item    = GIMP_ITEM (object);
   GimpItemPrivate *private = GET_PRIVATE (object);
 
   switch (property_id)
@@ -391,10 +388,10 @@ gimp_item_get_property (GObject    *object,
       g_value_set_int (value, private->ID);
       break;
     case PROP_WIDTH:
-      g_value_set_int (value, item->width);
+      g_value_set_int (value, private->width);
       break;
     case PROP_HEIGHT:
-      g_value_set_int (value, item->height);
+      g_value_set_int (value, private->height);
       break;
     case PROP_OFFSET_X:
       g_value_set_int (value, private->offset_x);
@@ -574,15 +571,17 @@ gimp_item_real_scale (GimpItem              *item,
                       GimpInterpolationType  interpolation,
                       GimpProgress          *progress)
 {
-  if (item->width != new_width)
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
+  if (private->width != new_width)
     {
-      item->width = new_width;
+      private->width = new_width;
       g_object_notify (G_OBJECT (item), "width");
     }
 
-  if (item->height != new_height)
+  if (private->height != new_height)
     {
-      item->height = new_height;
+      private->height = new_height;
       g_object_notify (G_OBJECT (item), "height");
     }
 
@@ -599,15 +598,15 @@ gimp_item_real_resize (GimpItem    *item,
 {
   GimpItemPrivate *private = GET_PRIVATE (item);
 
-  if (item->width != new_width)
+  if (private->width != new_width)
     {
-      item->width = new_width;
+      private->width = new_width;
       g_object_notify (G_OBJECT (item), "width");
     }
 
-  if (item->height != new_height)
+  if (private->height != new_height)
     {
-      item->height = new_height;
+      private->height = new_height;
       g_object_notify (G_OBJECT (item), "height");
     }
 
@@ -675,8 +674,8 @@ gimp_item_new (GType        type,
 
   private = GET_PRIVATE (item);
 
-  item->width  = width;
-  item->height = height;
+  private->width  = width;
+  private->height = height;
   gimp_item_set_offset (item, offset_x, offset_y);
 
   if (name && strlen (name))
@@ -971,7 +970,7 @@ gimp_item_get_width (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
-  return item->width;
+  return GET_PRIVATE (item)->width;
 }
 
 /**
@@ -985,7 +984,7 @@ gimp_item_get_height (const GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), -1);
 
-  return item->height;
+  return GET_PRIVATE (item)->height;
 }
 
 void
@@ -993,22 +992,26 @@ gimp_item_set_size (GimpItem *item,
                     gint      width,
                     gint      height)
 {
+  GimpItemPrivate *private;
+
   g_return_if_fail (GIMP_IS_ITEM (item));
 
-  if (item->width  != width ||
-      item->height != height)
+  private = GET_PRIVATE (item);
+
+  if (private->width  != width ||
+      private->height != height)
     {
       g_object_freeze_notify (G_OBJECT (item));
 
-      if (item->width != width)
+      if (private->width != width)
         {
-          item->width = width;
+          private->width = width;
           g_object_notify (G_OBJECT (item), "width");
         }
 
-      if (item->height != height)
+      if (private->height != height)
         {
-          item->height = height;
+          private->height = height;
           g_object_notify (G_OBJECT (item), "height");
         }
 

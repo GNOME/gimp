@@ -34,9 +34,7 @@ typedef struct _GimpItemClass GimpItemClass;
 
 struct _GimpItem
 {
-  GimpViewable      parent_instance;
-
-  gint              width, height;      /*  size in pixels           */
+  GimpViewable  parent_instance;
 };
 
 struct _GimpItemClass
