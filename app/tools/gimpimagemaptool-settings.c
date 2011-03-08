@@ -65,6 +65,7 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
   GimpToolInfo          *tool_info;
   GtkWidget             *hbox;
   GtkWidget             *label;
+  GtkWidget             *settings_combo;
   gchar                 *filename;
   gchar                 *folder;
 
@@ -104,8 +105,8 @@ gimp_image_map_tool_add_settings_gui (GimpImageMapTool *image_map_tool)
   g_free (filename);
   g_free (folder);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                 GIMP_SETTINGS_BOX (image_map_tool->settings_box)->combo);
+  settings_combo = gimp_settings_box_get_combo (GIMP_SETTINGS_BOX (image_map_tool->settings_box));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), settings_combo);
 
   g_signal_connect (image_map_tool->settings_box, "import",
                     G_CALLBACK (gimp_image_map_tool_settings_import),

@@ -34,31 +34,14 @@ typedef struct _GimpSettingsBoxClass GimpSettingsBoxClass;
 
 struct _GimpSettingsBox
 {
-  GtkBox         parent_instance;
-
-  GtkWidget     *combo;
-  GtkWidget     *menu;
-  GtkWidget     *import_item;
-  GtkWidget     *export_item;
-  GtkWidget     *file_dialog;
-  GtkWidget     *editor_dialog;
-
-  Gimp          *gimp;
-  GObject       *config;
-  GimpContainer *container;
-  gchar         *filename;
-
-  gchar         *import_dialog_title;
-  gchar         *export_dialog_title;
-  gchar         *file_dialog_help_id;
-  gchar         *default_folder;
-  gchar         *last_filename;
+  GtkBox  parent_instance;
 };
 
 struct _GimpSettingsBoxClass
 {
   GtkBoxClass  parent_class;
 
+  /*  signals  */
   void (* file_dialog_setup) (GimpSettingsBox      *box,
                               GtkFileChooserDialog *dialog,
                               gboolean              export);
@@ -83,6 +66,8 @@ GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
 
 void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);
+
+GtkWidget * gimp_settings_box_get_combo   (GimpSettingsBox *box);
 
 
 #endif  /*  __GIMP_SETTINGS_BOX_H__  */
