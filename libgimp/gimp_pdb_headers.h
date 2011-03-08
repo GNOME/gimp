@@ -23,6 +23,7 @@
 #ifndef __GIMP_PDB_HEADERS_H__
 #define __GIMP_PDB_HEADERS_H__
 
+#include <libgimp/gimp_pdb.h>
 #include <libgimp/gimpbrush_pdb.h>
 #include <libgimp/gimpbrushes_pdb.h>
 #include <libgimp/gimpbrushselect_pdb.h>
@@ -52,7 +53,6 @@
 #include <libgimp/gimpitemtransform_pdb.h>
 #include <libgimp/gimplayer_pdb.h>
 #include <libgimp/gimpmessage_pdb.h>
-#include <libgimp/gimpmisc_pdb.h>
 #include <libgimp/gimppainttools_pdb.h>
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimppalettes_pdb.h>

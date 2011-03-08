@@ -68,6 +68,7 @@ INCLUDES = \
 lib_LTLIBRARIES = libgimp-2.0.la libgimpui-2.0.la
 
 PDB_WRAPPERS_C = \
+	gimp_pdb.c			\
 	gimpbrush_pdb.c			\
 	gimpbrushes_pdb.c		\
 	gimpbrushselect_pdb.c		\
@@ -97,7 +98,6 @@ PDB_WRAPPERS_C = \
 	gimpitemtransform_pdb.c		\
 	gimplayer_pdb.c			\
 	gimpmessage_pdb.c		\
-	gimpmisc_pdb.c			\
 	gimppainttools_pdb.c		\
 	gimppalette_pdb.c		\
 	gimppalettes_pdb.c		\
@@ -121,6 +121,7 @@ PDB_WRAPPERS_C = \
 
 PDB_WRAPPERS_H = \
 	gimp_pdb_headers.h		\
+	gimp_pdb.h			\
 	gimpbrush_pdb.h			\
 	gimpbrushes_pdb.h		\
 	gimpbrushselect_pdb.h		\
@@ -150,7 +151,6 @@ PDB_WRAPPERS_H = \
 	gimpitemtransform_pdb.h		\
 	gimplayer_pdb.h			\
 	gimpmessage_pdb.h		\
-	gimpmisc_pdb.h			\
 	gimppainttools_pdb.h		\
 	gimppalette_pdb.h		\
 	gimppalettes_pdb.h		\

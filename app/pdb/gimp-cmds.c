@@ -95,7 +95,7 @@ quit_invoker (GimpProcedure      *procedure,
 }
 
 void
-register_misc_procs (GimpPDB *pdb)
+register_gimp_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 

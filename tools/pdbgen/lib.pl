@@ -508,8 +508,12 @@ LGPL
     # We generate two files, a _pdb.h file with prototypes for all
     # the functions we make, and a _pdb.c file for the actual implementation
     while (my($group, $out) = each %out) {
-        my $hname = "gimp${group}pdb.h"; 
-        my $cname = "gimp${group}pdb.c"; 
+        my $hname = "${group}pdb.h"; 
+        my $cname = "${group}pdb.c";
+        if ($group ne 'gimp') {
+	    $hname = "gimp${hname}"; 
+	    $cname = "gimp${cname}";
+        }
         $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
         $cname =~ s/_//g; $cname =~ s/pdb\./_pdb./;
 	my $hfile = "$destdir/$hname$FILE_EXT";
@@ -689,7 +693,10 @@ SECTION_DOCS
 HEADER
 	my @groups;
 	foreach $group (keys %out) {
-	    my $hname = "gimp${group}pdb.h";
+	    my $hname = "${group}pdb.h";
+	    if ($group ne 'gimp') {
+		$hname = "gimp${hname}";
+	    }
 	    $hname =~ s/_//g; $hname =~ s/pdb\./_pdb./;
 	    push @groups, $hname;
 	}

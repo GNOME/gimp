@@ -18,6 +18,7 @@ pdb_sources = \
 	pdb/floating_sel.pdb		\
 	pdb/font_select.pdb		\
 	pdb/fonts.pdb			\
+	pdb/gimp.pdb			\
 	pdb/gimprc.pdb			\
 	pdb/gradient.pdb		\
 	pdb/gradient_select.pdb		\
@@ -31,7 +32,6 @@ pdb_sources = \
 	pdb/item_transform.pdb		\
 	pdb/layer.pdb			\
 	pdb/message.pdb			\
-	pdb/misc.pdb			\
 	pdb/paint_tools.pdb		\
 	pdb/palette.pdb			\
 	pdb/palette_select.pdb		\

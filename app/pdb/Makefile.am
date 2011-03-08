@@ -51,6 +51,7 @@ libappinternal_procs_a_SOURCES = \
 	floating-sel-cmds.c		\
 	font-select-cmds.c		\
 	fonts-cmds.c			\
+	gimp-cmds.c			\
 	gimprc-cmds.c			\
 	gradient-cmds.c			\
 	gradient-select-cmds.c		\
@@ -64,7 +65,6 @@ libappinternal_procs_a_SOURCES = \
 	item-transform-cmds.c		\
 	layer-cmds.c			\
 	message-cmds.c			\
-	misc-cmds.c			\
 	paint-tools-cmds.c		\
 	palette-cmds.c			\
 	palette-select-cmds.c		\

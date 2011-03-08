@@ -16,6 +16,7 @@
     floating_sel
     font_select
     fonts
+    gimp
     gimprc
     gradient
     gradient_select
@@ -29,7 +30,6 @@
     item_transform
     layer
     message
-    misc
     paint_tools
     palette
     palette_select

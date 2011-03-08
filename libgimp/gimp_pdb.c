@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpmisc_pdb.c
+ * gimp_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,8 +26,8 @@
 
 
 /**
- * SECTION: gimpmisc
- * @title: gimpmisc
+ * SECTION: gimp
+ * @title: gimp
  * @short_description: Miscellaneous procedures
  *
  * Miscellaneous procedures not fitting in any category.
