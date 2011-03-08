@@ -51,6 +51,11 @@ struct _GimpGroupLayerPrivate
   GeglNode       *graph;
   GeglNode       *offset_node;
   gint            suspend_resize;
+
+  /*  hackish temp states to make the projection/tiles stuff work  */
+  gboolean        reallocate_projection;
+  gint            reallocate_width;
+  gint            reallocate_height;
 };
 
 #define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
@@ -73,6 +78,9 @@ static void            gimp_group_layer_get_property (GObject         *object,
 static gint64          gimp_group_layer_get_memsize  (GimpObject      *object,
                                                       gint64          *gui_size);
 
+static gboolean        gimp_group_layer_get_size     (GimpViewable    *viewable,
+                                                      gint            *width,
+                                                      gint            *height);
 static GimpContainer * gimp_group_layer_get_children (GimpViewable    *viewable);
 
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
@@ -180,6 +188,7 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   gimp_object_class->get_memsize   = gimp_group_layer_get_memsize;
 
   viewable_class->default_stock_id = "gtk-directory";
+  viewable_class->get_size         = gimp_group_layer_get_size;
   viewable_class->get_children     = gimp_group_layer_get_children;
 
   item_class->duplicate            = gimp_group_layer_duplicate;
@@ -332,6 +341,25 @@ gimp_group_layer_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+static gboolean
+gimp_group_layer_get_size (GimpViewable *viewable,
+                           gint         *width,
+                           gint         *height)
+{
+  GimpGroupLayerPrivate *private = GET_PRIVATE (viewable);
+
+  if (private->reallocate_width  != 0 &&
+      private->reallocate_height != 0)
+    {
+      *width  = private->reallocate_width;
+      *height = private->reallocate_height;
+
+      return TRUE;
+    }
+
+  return GIMP_VIEWABLE_CLASS (parent_class)->get_size (viewable, width, height);
+}
+
 static GimpContainer *
 gimp_group_layer_get_children (GimpViewable *viewable)
 {
@@ -391,10 +419,8 @@ gimp_group_layer_duplicate (GimpItem *item,
                                  position++);
         }
 
-      /* FIXME: need to change the item's extents to resume_resize()
-       * will actually reallocate the projection's pyramid
-       */
-      GIMP_ITEM (new_group)->width++;
+      /*  force the projection to reallocate itself  */
+      GET_PRIVATE (new_group)->reallocate_projection = TRUE;
 
       gimp_group_layer_resume_resize (new_group, FALSE);
     }
@@ -1012,34 +1038,33 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
         }
     }
 
-  if (x      != old_x     ||
-      y      != old_y     ||
-      width  != old_width ||
+  if (private->reallocate_projection ||
+      x      != old_x                ||
+      y      != old_y                ||
+      width  != old_width            ||
       height != old_height)
     {
-      if (width  != old_width ||
+      if (private->reallocate_projection ||
+          width  != old_width            ||
           height != old_height)
         {
           TileManager *tiles;
 
-          /*  FIXME: find a better way to do this: need to set the item's
-           *  extents to the new values so the projection will create
-           *  its tiles with the right size
+          private->reallocate_projection = FALSE;
+
+          /*  temporarily change the return values of gimp_viewable_get_size()
+           *  so the projection allocates itself correctly
            */
-          item->width  = width;
-          item->height = height;
+          private->reallocate_width  = width;
+          private->reallocate_height = height;
 
           gimp_projectable_structure_changed (GIMP_PROJECTABLE (group));
 
           tiles = gimp_projection_get_tiles_at_level (private->projection,
                                                       0, NULL);
 
-          /*  FIXME: need to set the item's extents back to the old
-           *  values so gimp_drawable_set_tiles_full() will emit all
-           *  signals needed by the layer tree to update itself
-           */
-          item->width  = old_width;
-          item->height = old_height;
+          private->reallocate_width  = 0;
+          private->reallocate_height = 0;
 
           gimp_drawable_set_tiles_full (GIMP_DRAWABLE (group),
                                         FALSE, NULL,
