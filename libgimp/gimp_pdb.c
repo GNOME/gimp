@@ -92,3 +92,137 @@ gimp_getpid (void)
 
   return pid;
 }
+
+/**
+ * gimp_attach_parasite:
+ * @parasite: The parasite to attach.
+ *
+ * Add a global parasite.
+ *
+ * This procedure attaches a global parasite. It has no return values.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_attach_parasite (const GimpParasite *parasite)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-attach-parasite",
+                                    &nreturn_vals,
+                                    GIMP_PDB_PARASITE, parasite,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_detach_parasite:
+ * @name: The name of the parasite to detach.
+ *
+ * Removes a global parasite.
+ *
+ * This procedure detaches a global parasite from. It has no return
+ * values.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.8
+ **/
+gboolean
+gimp_detach_parasite (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-detach-parasite",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_get_parasite:
+ * @name: The name of the parasite to find.
+ *
+ * Look up a global parasite.
+ *
+ * Finds and returns the global parasite that was previously attached.
+ *
+ * Returns: The found parasite.
+ *
+ * Since: GIMP 2.8
+ **/
+GimpParasite *
+gimp_get_parasite (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpParasite *parasite = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-get-parasite",
+                                    &nreturn_vals,
+                                    GIMP_PDB_STRING, name,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return parasite;
+}
+
+/**
+ * gimp_get_parasite_list:
+ * @num_parasites: The number of attached parasites.
+ *
+ * List all parasites.
+ *
+ * Returns a list of all currently attached global parasites.
+ *
+ * Returns: The names of currently attached parasites.
+ *
+ * Since: GIMP 2.8
+ **/
+gchar **
+gimp_get_parasite_list (gint *num_parasites)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar **parasites = NULL;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp-get-parasite-list",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  *num_parasites = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_parasites = return_vals[1].data.d_int32;
+      parasites = g_new (gchar *, *num_parasites);
+      for (i = 0; i < *num_parasites; i++)
+        parasites[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return parasites;
+}

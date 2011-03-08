@@ -102,7 +102,6 @@ PDB_WRAPPERS_C = \
 	gimppalette_pdb.c		\
 	gimppalettes_pdb.c		\
 	gimppaletteselect_pdb.c		\
-	gimpparasite_pdb.c		\
 	gimppaths_pdb.c			\
 	gimppattern_pdb.c		\
 	gimppatterns_pdb.c		\
@@ -155,7 +154,6 @@ PDB_WRAPPERS_H = \
 	gimppalette_pdb.h		\
 	gimppalettes_pdb.h		\
 	gimppaletteselect_pdb.h		\
-	gimpparasite_pdb.h		\
 	gimppaths_pdb.h			\
 	gimppattern_pdb.h		\
 	gimppatterns_pdb.h		\

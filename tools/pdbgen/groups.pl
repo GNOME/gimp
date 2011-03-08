@@ -34,7 +34,6 @@
     palette
     palette_select
     palettes
-    parasite
     paths
     pattern
     pattern_select

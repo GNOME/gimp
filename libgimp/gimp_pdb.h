@@ -28,8 +28,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar* gimp_version (void);
-gint   gimp_getpid  (void);
+gchar*        gimp_version           (void);
+gint          gimp_getpid            (void);
+gboolean      gimp_attach_parasite   (const GimpParasite *parasite);
+gboolean      gimp_detach_parasite   (const gchar        *name);
+GimpParasite* gimp_get_parasite      (const gchar        *name);
+gchar**       gimp_get_parasite_list (gint               *num_parasites);
 
 
 G_END_DECLS

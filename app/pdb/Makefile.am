@@ -69,7 +69,6 @@ libappinternal_procs_a_SOURCES = \
 	palette-cmds.c			\
 	palette-select-cmds.c		\
 	palettes-cmds.c			\
-	parasite-cmds.c			\
 	paths-cmds.c			\
 	pattern-cmds.c			\
 	pattern-select-cmds.c		\

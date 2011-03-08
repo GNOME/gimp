@@ -69,7 +69,6 @@ internal_procs_init (GimpPDB *pdb)
   register_palette_procs (pdb);
   register_palette_select_procs (pdb);
   register_palettes_procs (pdb);
-  register_parasite_procs (pdb);
   register_paths_procs (pdb);
   register_pattern_procs (pdb);
   register_pattern_select_procs (pdb);

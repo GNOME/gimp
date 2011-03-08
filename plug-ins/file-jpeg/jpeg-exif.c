@@ -253,7 +253,7 @@ jpeg_exif_rotate_query (gint32 image_ID,
   if (orientation < 2 || orientation > 8)
     return;
 
-  parasite = gimp_parasite_find (JPEG_EXIF_ROTATE_PARASITE);
+  parasite = gimp_get_parasite (JPEG_EXIF_ROTATE_PARASITE);
 
   if (parasite)
     {
@@ -388,7 +388,7 @@ jpeg_exif_rotate_query_dialog (gint32 image_ID)
       parasite = gimp_parasite_new (JPEG_EXIF_ROTATE_PARASITE,
                                     GIMP_PARASITE_PERSISTENT,
                                     strlen (str), str);
-      gimp_parasite_attach (parasite);
+      gimp_attach_parasite (parasite);
       gimp_parasite_free (parasite);
     }
 

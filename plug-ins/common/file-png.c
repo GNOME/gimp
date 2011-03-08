@@ -1912,7 +1912,7 @@ load_defaults (void)
 {
   GimpParasite *parasite;
 
-  parasite = gimp_parasite_find (PNG_DEFAULTS_PARASITE);
+  parasite = gimp_get_parasite (PNG_DEFAULTS_PARASITE);
 
   if (parasite)
     {
@@ -1969,7 +1969,7 @@ save_defaults (void)
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (def_str), def_str);
 
-  gimp_parasite_attach (parasite);
+  gimp_attach_parasite (parasite);
 
   gimp_parasite_free (parasite);
   g_free (def_str);

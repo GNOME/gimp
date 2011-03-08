@@ -26,6 +26,7 @@
 #include "pdb-types.h"
 
 #include "base/base-utils.h"
+#include "core/gimp-parasites.h"
 #include "core/gimp.h"
 #include "core/gimpparamspecs.h"
 
@@ -92,6 +93,104 @@ quit_invoker (GimpProcedure      *procedure,
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
+}
+
+static GValueArray *
+attach_parasite_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  const GimpParasite *parasite;
+
+  parasite = g_value_get_boxed (&args->values[0]);
+
+  if (success)
+    {
+      gimp_parasite_attach (gimp, parasite);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+detach_parasite_invoker (GimpProcedure      *procedure,
+                         Gimp               *gimp,
+                         GimpContext        *context,
+                         GimpProgress       *progress,
+                         const GValueArray  *args,
+                         GError            **error)
+{
+  gboolean success = TRUE;
+  const gchar *name;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      gimp_parasite_detach (gimp, name);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GValueArray *
+get_parasite_invoker (GimpProcedure      *procedure,
+                      Gimp               *gimp,
+                      GimpContext        *context,
+                      GimpProgress       *progress,
+                      const GValueArray  *args,
+                      GError            **error)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  const gchar *name;
+  GimpParasite *parasite = NULL;
+
+  name = g_value_get_string (&args->values[0]);
+
+  if (success)
+    {
+      parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
+
+      if (! parasite)
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_boxed (&return_vals->values[1], parasite);
+
+  return return_vals;
+}
+
+static GValueArray *
+get_parasite_list_invoker (GimpProcedure      *procedure,
+                           Gimp               *gimp,
+                           GimpContext        *context,
+                           GimpProgress       *progress,
+                           const GValueArray  *args,
+                           GError            **error)
+{
+  GValueArray *return_vals;
+  gint32 num_parasites = 0;
+  gchar **parasites = NULL;
+
+  parasites = gimp_parasite_list (gimp, &num_parasites);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+
+  g_value_set_int (&return_vals->values[1], num_parasites);
+  gimp_value_take_stringarray (&return_vals->values[2], parasites, num_parasites);
+
+  return return_vals;
 }
 
 void
@@ -166,6 +265,109 @@ register_gimp_procs (GimpPDB *pdb)
                                                      "Force GIMP to quit without asking",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-attach-parasite
+   */
+  procedure = gimp_procedure_new (attach_parasite_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-attach-parasite");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-attach-parasite",
+                                     "Add a global parasite.",
+                                     "This procedure attaches a global parasite. It has no return values.",
+                                     "Jay Cox",
+                                     "Jay Cox",
+                                     "1998",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_parasite ("parasite",
+                                                         "parasite",
+                                                         "The parasite to attach",
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-detach-parasite
+   */
+  procedure = gimp_procedure_new (detach_parasite_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-detach-parasite");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-detach-parasite",
+                                     "Removes a global parasite.",
+                                     "This procedure detaches a global parasite from. It has no return values.",
+                                     "Jay Cox",
+                                     "Jay Cox",
+                                     "1998",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the parasite to detach.",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-get-parasite
+   */
+  procedure = gimp_procedure_new (get_parasite_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-parasite");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-get-parasite",
+                                     "Look up a global parasite.",
+                                     "Finds and returns the global parasite that was previously attached.",
+                                     "Jay Cox",
+                                     "Jay Cox",
+                                     "1998",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("name",
+                                                       "name",
+                                                       "The name of the parasite to find",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_parasite ("parasite",
+                                                             "parasite",
+                                                             "The found parasite",
+                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-get-parasite-list
+   */
+  procedure = gimp_procedure_new (get_parasite_list_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-get-parasite-list");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-get-parasite-list",
+                                     "List all parasites.",
+                                     "Returns a list of all currently attached global parasites.",
+                                     "Marc Lehmann",
+                                     "Marc Lehmann",
+                                     "1999",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-parasites",
+                                                          "num parasites",
+                                                          "The number of attached parasites",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string_array ("parasites",
+                                                                 "parasites",
+                                                                 "The names of currently attached parasites",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

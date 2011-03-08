@@ -1239,7 +1239,7 @@ pygimp_parasite_find(PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_find", &name))
         return NULL;
 
-    return pygimp_parasite_new(gimp_parasite_find(name));
+    return pygimp_parasite_new(gimp_get_parasite(name));
 }
 
 static PyObject *
@@ -1251,7 +1251,7 @@ pygimp_parasite_attach(PyObject *self, PyObject *args)
                           &PyGimpParasite_Type, &parasite))
         return NULL;
 
-    if (!gimp_parasite_attach(parasite->para)) {
+    if (!gimp_attach_parasite(parasite->para)) {
         PyErr_Format(pygimp_error, "could not attach parasite '%s'",
                      gimp_parasite_name(parasite->para));
         return NULL;
@@ -1274,7 +1274,7 @@ pygimp_attach_new_parasite(PyObject *self, PyObject *args)
 
     parasite = gimp_parasite_new (name, flags, size, data);
 
-    if (!gimp_parasite_attach (parasite)) {
+    if (!gimp_attach_parasite (parasite)) {
         PyErr_Format(pygimp_error, "could not attach new parasite '%s'", name);
         gimp_parasite_free (parasite);
         return NULL;
@@ -1294,7 +1294,7 @@ pygimp_parasite_detach(PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "s:parasite_detach", &name))
         return NULL;
 
-    if (!gimp_parasite_detach(name)) {
+    if (!gimp_detach_parasite(name)) {
         PyErr_Format(pygimp_error, "could not detach parasite '%s'", name);
         return NULL;
     }
@@ -1309,7 +1309,9 @@ pygimp_parasite_list(PyObject *self)
     gint num_parasites;
     gchar **parasites;
 
-    if (gimp_parasite_list(&num_parasites, &parasites)) {
+    parasites = gimp_get_parasite_list (&num_parasites);
+
+    if (parasites) {
         PyObject *ret;
         gint i;
 

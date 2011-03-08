@@ -333,10 +333,15 @@ const gchar  * gimp_get_progname        (void) G_GNUC_CONST;
 gboolean       gimp_install_cmap        (void) G_GNUC_CONST;
 gint           gimp_min_colors          (void) G_GNUC_CONST;
 
-gboolean       gimp_attach_new_parasite (const gchar    *name,
-                                         gint            flags,
-                                         gint            size,
-                                         gconstpointer   data);
+GimpParasite * gimp_parasite_find       (const gchar        *name);
+gboolean       gimp_parasite_attach     (const GimpParasite *parasite);
+gboolean       gimp_parasite_detach     (const gchar        *name);
+gboolean       gimp_parasite_list       (gint               *num_parasites,
+                                         gchar            ***parasites);
+gboolean       gimp_attach_new_parasite (const gchar        *name,
+                                         gint                flags,
+                                         gint                size,
+                                         gconstpointer       data);
 #endif /* GIMP_DISABLE_DEPRECATED */
 
 

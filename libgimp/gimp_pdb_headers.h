@@ -57,7 +57,6 @@
 #include <libgimp/gimppalette_pdb.h>
 #include <libgimp/gimppalettes_pdb.h>
 #include <libgimp/gimppaletteselect_pdb.h>
-#include <libgimp/gimpparasite_pdb.h>
 #include <libgimp/gimppaths_pdb.h>
 #include <libgimp/gimppattern_pdb.h>
 #include <libgimp/gimppatterns_pdb.h>

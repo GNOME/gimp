@@ -89,14 +89,116 @@ CODE
     );
 }
 
+sub attach_parasite {
+    $blurb = 'Add a global parasite.';
 
-@headers = qw("core/gimp.h");
+    $help = <<'HELP';
+This procedure attaches a global parasite. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The parasite to attach' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_parasite_attach (gimp, parasite);
+}
+CODE
+    );
+}
+
+sub detach_parasite {
+    $blurb = 'Removes a global parasite.';
+
+    $help = <<'HELP';
+This procedure detaches a global parasite from. It has no return values.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to detach.' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  gimp_parasite_detach (gimp, name);
+}
+CODE
+    );
+}
+
+sub get_parasite {
+    $blurb = 'Look up a global parasite.';
+
+    $help = <<'HELP';
+Finds and returns the global parasite that was previously attached.
+HELP
+
+    &jay_pdb_misc('1998', '2.8');
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the parasite to find' }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The found parasite' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasite = gimp_parasite_copy (gimp_parasite_find (gimp, name));
+
+  if (! parasite)
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub get_parasite_list {
+    $blurb = 'List all parasites.';
+    $help  = 'Returns a list of all currently attached global parasites.';
+
+    &marc_pdb_misc('1999', '2.8');
+
+    @outargs = (
+	{ name => 'parasites', type => 'stringarray',
+	  desc => 'The names of currently attached parasites',
+	  array => { desc => 'The number of attached parasites' } }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  parasites = gimp_parasite_list (gimp, &num_parasites);
+}
+CODE
+    );
+}
+
+
+@headers = qw("core/gimp.h"
+              "core/gimp-parasites.h");
 
 @procs = qw(version
             getpid
-            quit);
+            quit
+            attach_parasite detach_parasite
+            get_parasite
+            get_parasite_list);
 
-%exports = (app => [@procs], lib => [@procs[0..1]]);
+%exports = (app => [@procs], lib => [@procs[0..1,3..6]]);
 
 $desc = 'Miscellaneous';
 $doc_title = 'gimp';

@@ -1505,6 +1505,66 @@ gimp_extension_process (guint timeout)
 }
 
 /**
+ * gimp_parasite_find:
+ * @name: The name of the parasite to find.
+ *
+ * Deprecated: Use gimp_get_parasite() instead.
+ *
+ * Returns: The found parasite.
+ **/
+GimpParasite *
+gimp_parasite_find (const gchar *name)
+{
+  return gimp_get_parasite (name);
+}
+
+/**
+ * gimp_parasite_attach:
+ * @parasite: The parasite to attach.
+ *
+ * Deprecated: Use gimp_attach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_parasite_attach (const GimpParasite *parasite)
+{
+  return gimp_attach_parasite (parasite);
+}
+
+/**
+ * gimp_parasite_detach:
+ * @name: The name of the parasite to detach.
+ *
+ * Deprecated: Use gimp_detach_parasite() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_parasite_detach (const gchar *name)
+{
+  return gimp_parasite_detach (name);
+}
+
+/**
+ * gimp_parasite_list:
+ * @num_parasites: The number of attached parasites.
+ * @parasites: The names of currently attached parasites.
+ *
+ * Deprecated: Use gimp_get_parasite_list() instead.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+gimp_parasite_list (gint    *num_parasites,
+                    gchar ***parasites)
+{
+  *parasites = gimp_get_parasite_list (num_parasites);
+
+  return *parasites != NULL;
+}
+
+/**
  * gimp_attach_new_parasite:
  * @name: the name of the #GimpParasite to create and attach.
  * @flags: the flags set on the #GimpParasite.

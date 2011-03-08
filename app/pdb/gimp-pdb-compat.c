@@ -475,7 +475,11 @@ gimp_pdb_compat_procs_register (GimpPDB           *pdb,
     { "gimp-image-parasite-find",           "gimp-image-get-parasite"         },
     { "gimp-image-parasite-attach",         "gimp-image-attach-parasite"      },
     { "gimp-image-parasite-detach",         "gimp-image-detach-parasite"      },
-    { "gimp-image-parasite-list",           "gimp-image-get-parasite-list"    }
+    { "gimp-image-parasite-list",           "gimp-image-get-parasite-list"    },
+    { "gimp-parasite-find",                 "gimp-get-parasite"               },
+    { "gimp-parasite-attach",               "gimp-attach-parasite"            },
+    { "gimp-parasite-detach",               "gimp-detach-parasite"            },
+    { "gimp-parasite-list",                 "gimp-get-parasite-list"          }
   };
 
   g_return_if_fail (GIMP_IS_PDB (pdb));

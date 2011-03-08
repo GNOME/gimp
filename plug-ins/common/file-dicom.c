@@ -549,7 +549,7 @@ load_image (const gchar  *filename,
           GimpParasite *parasite;
           gchar         pname[255];
 
-          /* all elements are retrievable using gimp_parasite_list() */
+          /* all elements are retrievable using gimp_get_parasite_list() */
           g_snprintf (pname, sizeof (pname),
                       "dcm/%04x-%04x-%s", group_word, element_word, value_rep);
           if ((parasite = gimp_parasite_new (pname,

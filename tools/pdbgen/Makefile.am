@@ -36,7 +36,6 @@ pdb_sources = \
 	pdb/palette.pdb			\
 	pdb/palette_select.pdb		\
 	pdb/palettes.pdb		\
-	pdb/parasite.pdb		\
 	pdb/paths.pdb			\
 	pdb/pattern.pdb			\
 	pdb/pattern_select.pdb		\

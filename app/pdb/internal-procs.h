@@ -58,7 +58,6 @@ void   register_paint_tools_procs        (GimpPDB *pdb);
 void   register_palette_procs            (GimpPDB *pdb);
 void   register_palette_select_procs     (GimpPDB *pdb);
 void   register_palettes_procs           (GimpPDB *pdb);
-void   register_parasite_procs           (GimpPDB *pdb);
 void   register_paths_procs              (GimpPDB *pdb);
 void   register_pattern_procs            (GimpPDB *pdb);
 void   register_pattern_select_procs     (GimpPDB *pdb);
