@@ -26,7 +26,6 @@
 #include <glib-object.h>
 #include <glib/gstdio.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "base-types.h"
@@ -108,68 +107,6 @@ temp_buf_new (gint          width,
     }
 
   return temp;
-}
-
-/* This function simply renders a checkerboard with the given
-   parameters into a newly allocated RGB tempbuf */
-
-TempBuf *
-temp_buf_new_check (gint           width,
-                    gint           height,
-                    GimpCheckType  check_type,
-                    GimpCheckSize  check_size)
-{
-  TempBuf *new;
-  guchar  *data;
-  guchar   check_shift = 0;
-  guchar   check_mod   = 0;
-  guchar   check_light = 0;
-  guchar   check_dark  = 0;
-  gint     x, y;
-
-  g_return_val_if_fail (width > 0 && height > 0, NULL);
-
-  switch (check_size)
-    {
-    case GIMP_CHECK_SIZE_SMALL_CHECKS:
-      check_mod   = 0x3;
-      check_shift = 2;
-      break;
-    case GIMP_CHECK_SIZE_MEDIUM_CHECKS:
-      check_mod   = 0x7;
-      check_shift = 3;
-      break;
-    case GIMP_CHECK_SIZE_LARGE_CHECKS:
-      check_mod   = 0xf;
-      check_shift = 4;
-      break;
-    }
-
-  gimp_checks_get_shades (check_type, &check_light, &check_dark);
-
-  new = temp_buf_new (width, height, 3, 0, 0, NULL);
-  data = temp_buf_get_data (new);
-
-  for (y = 0; y < height; y++)
-    {
-      guchar check_dark = y >> check_shift;
-      guchar color      = (check_dark & 0x1) ? check_light : check_dark;
-
-      for (x = 0; x < width; x++)
-        {
-          *data++ = color;
-          *data++ = color;
-          *data++ = color;
-
-          if (((x + 1) & check_mod) == 0)
-            {
-              check_dark += 1;
-              color = (check_dark & 0x1) ? check_light : check_dark;
-            }
-        }
-    }
-
-  return new;
 }
 
 TempBuf *

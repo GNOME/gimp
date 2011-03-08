@@ -38,10 +38,6 @@ TempBuf * temp_buf_new           (gint           width,
                                   gint           x,
                                   gint           y,
                                   const guchar  *color);
-TempBuf * temp_buf_new_check     (gint           width,
-                                  gint           height,
-                                  GimpCheckType  check_type,
-                                  GimpCheckSize  check_size);
 TempBuf * temp_buf_copy          (TempBuf       *src,
                                   TempBuf       *dest);
 TempBuf * temp_buf_resize        (TempBuf       *buf,
