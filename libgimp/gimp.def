@@ -2,6 +2,7 @@ EXPORTS
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_new_parasite
+	gimp_attach_parasite
 	gimp_brightness_contrast
 	gimp_brush_application_mode_get_type
 	gimp_brush_delete
@@ -130,6 +131,7 @@ EXPORTS
 	gimp_desaturate_full
 	gimp_destroy_paramdefs
 	gimp_destroy_params
+	gimp_detach_parasite
 	gimp_display_delete
 	gimp_display_get_window_handle
 	gimp_display_is_valid
@@ -259,6 +261,8 @@ EXPORTS
 	gimp_get_default_unit
 	gimp_get_module_load_inhibit
 	gimp_get_monitor_resolution
+	gimp_get_parasite
+	gimp_get_parasite_list
 	gimp_get_path_by_tattoo
 	gimp_get_pdb_error
 	gimp_get_progname
@@ -323,8 +327,8 @@ EXPORTS
 	gimp_image_add_layer
 	gimp_image_add_vectors
 	gimp_image_add_vguide
-	gimp_image_attach_parasite
 	gimp_image_attach_new_parasite
+	gimp_image_attach_parasite
 	gimp_image_base_type
 	gimp_image_clean_all
 	gimp_image_convert_grayscale
