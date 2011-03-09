@@ -1065,28 +1065,30 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
   gint               image_origin_shell_y  = -1;
   gint               image_origin_window_x = -1;
   gint               image_origin_window_y = -1;
-  PosCorrectionData *data                  = NULL;
 
   gimp_display_shell_transform_xy (shell,
                                    0.0, 0.0,
                                    &image_origin_shell_x,
                                    &image_origin_shell_y);
-  gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
-                                    GTK_WIDGET (window),
-                                    image_origin_shell_x,
-                                    image_origin_shell_y,
-                                    &image_origin_window_x,
-                                    &image_origin_window_y);
 
-  data         = g_new0 (PosCorrectionData, 1);
-  data->window = window;
-  data->x      = image_origin_window_x;
-  data->y      = image_origin_window_y;
+  if (gtk_widget_translate_coordinates (GTK_WIDGET (shell->canvas),
+                                        GTK_WIDGET (window),
+                                        image_origin_shell_x,
+                                        image_origin_shell_y,
+                                        &image_origin_window_x,
+                                        &image_origin_window_y))
+    {
+      PosCorrectionData *data = g_new0 (PosCorrectionData, 1);
 
-  g_signal_connect_data (shell, "size-allocate",
-                         G_CALLBACK (gimp_image_window_shell_size_allocate),
-                         data, (GClosureNotify) g_free,
-                         G_CONNECT_AFTER);
+      data->window = window;
+      data->x      = image_origin_window_x;
+      data->y      = image_origin_window_y;
+
+      g_signal_connect_data (shell, "size-allocate",
+                             G_CALLBACK (gimp_image_window_shell_size_allocate),
+                             data, (GClosureNotify) g_free,
+                             G_CONNECT_AFTER);
+    }
 }
 
 
