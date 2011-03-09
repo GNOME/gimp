@@ -240,7 +240,7 @@ static const GOptionEntry main_entries[] =
     N_("Debug in case of a crash (never|query|always)"), "<mode>"
   },
   {
-    "debug-handlers", 0, G_OPTION_FLAG_NO_ARG,
+    "debug-handlers", 0, 0,
     G_OPTION_ARG_NONE, &use_debug_handler,
     N_("Enable non-fatal debugging signal handlers"), NULL
   },
