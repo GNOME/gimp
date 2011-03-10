@@ -5,6 +5,7 @@
 /Makefile
 /Makefile.in
 /POTFILES
+/POTFILES.skip
 /messages
 /missing
 /stamp-it

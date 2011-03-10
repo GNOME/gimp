@@ -2,3 +2,4 @@
 /*.mo
 /*.pot
 /.intltool-merge-cache
+/POTFILES.skip

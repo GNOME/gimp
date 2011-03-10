@@ -1,7 +1,8 @@
-app/widgets/gtkscalebutton.c
-data/tags/gimp-tags-default.xml.in
-data/tips/gimp-tips.xml.in
+app
+data/tags
+desktop
 desktop/gimp.desktop.in
+gimp-@GIMP_VERSION@
 libgimp
 libgimpbase
 libgimpconfig
@@ -10,3 +11,4 @@ libgimpthumb
 libgimpwidgets
 modules
 plug-ins
+tools

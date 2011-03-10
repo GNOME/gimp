@@ -3,5 +3,6 @@ data/tags
 data/tips
 desktop
 desktop/gimp.desktop.in
+gimp-@GIMP_VERSION@
 plug-ins
 tools
