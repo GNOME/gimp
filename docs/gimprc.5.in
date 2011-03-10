@@ -81,6 +81,15 @@ Sets the level of interpolation used for scaling and other transformations.
 Possible values are none, linear, cubic and lanczos.
 
 .TP
+(default-threshold 15)
+
+Tools such as fuzzy-select and bucket fill find regions based on a seed-fill
+algorithm.  The seed fill starts at the initially selected pixel and
+progresses in all directions until the difference of pixel intensity from the
+original is greater than a specified threshold. This value represents the
+default threshold.  This is an integer value.
+
+.TP
 (plug-in-path "${gimp_dir}/plug-ins:${gimp_plug_in_dir}/plug-ins")
 
 Sets the plug-in search path.  This is a colon-separated list of folders to
@@ -685,15 +694,6 @@ Possible values are low and high.
 
 Bugs in event history buffer are frequent so in case of cursor offset problems
 turning it off helps.  Possible values are yes and no.
-
-.TP
-(default-threshold 15)
-
-Tools such as fuzzy-select and bucket fill find regions based on a seed-fill
-algorithm.  The seed fill starts at the initially selected pixel and
-progresses in all directions until the difference of pixel intensity from the
-original is greater than a specified threshold. This value represents the
-default threshold.  This is an integer value.
 
 .TP
 (move-tool-changes-active no)

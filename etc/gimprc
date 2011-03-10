@@ -54,6 +54,14 @@
 # 
 # (interpolation-type cubic)
 
+# Tools such as fuzzy-select and bucket fill find regions based on a
+# seed-fill algorithm.  The seed fill starts at the initially selected pixel
+# and progresses in all directions until the difference of pixel intensity
+# from the original is greater than a specified threshold. This value
+# represents the default threshold.  This is an integer value.
+# 
+# (default-threshold 15)
+
 # Sets the plug-in search path.  This is a colon-separated list of folders to
 # search.
 # 
@@ -532,14 +540,6 @@
 # problems turning it off helps.  Possible values are yes and no.
 # 
 # (use-event-history no)
-
-# Tools such as fuzzy-select and bucket fill find regions based on a
-# seed-fill algorithm.  The seed fill starts at the initially selected pixel
-# and progresses in all directions until the difference of pixel intensity
-# from the original is greater than a specified threshold. This value
-# represents the default threshold.  This is an integer value.
-# 
-# (default-threshold 15)
 
 # If enabled, the move tool sets the edited layer or path as active.  This
 # used to be the default behaviour in older versions.  Possible values are
