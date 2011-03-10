@@ -5,7 +5,6 @@
 /Makefile
 /Makefile.in
 /POTFILES
-/POTFILES.skip
 /messages
 /missing
 /po2tbl.sed.in

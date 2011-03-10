@@ -1,8 +1,7 @@
 app
-data/tips
+data/tags
 desktop
 desktop/gimp.desktop.in
-gimp-@GIMP_VERSION@
 libgimp
 libgimpbase
 libgimpconfig

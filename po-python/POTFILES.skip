@@ -3,7 +3,6 @@ data/tags
 data/tips
 desktop
 desktop/gimp.desktop.in
-gimp-@GIMP_VERSION@
 libgimp
 libgimpbase
 libgimpconfig
