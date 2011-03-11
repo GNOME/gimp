@@ -4296,7 +4296,7 @@ msgstr "Меню редактора виділення"
 #: ../app/actions/select-actions.c:47
 msgctxt "select-action"
 msgid "_Select"
-msgstr "_Виділ"
+msgstr "_Вибір"
 
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
