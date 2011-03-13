@@ -21,7 +21,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 
@@ -70,21 +69,21 @@ gimp_container_view_remove_active (GimpContainerView *view)
 
   if (context && container)
     {
+      GType       children_type;
       GimpObject *active;
 
-      active = gimp_context_get_by_type (context, gimp_container_get_children_type (container));
+      children_type = gimp_container_get_children_type (container);
+
+      active = gimp_context_get_by_type (context, children_type);
 
       if (active)
         {
           GimpObject *new;
 
-          new = gimp_container_get_neighbor_of_active (container, context,
-                                                       active);
+          new = gimp_container_get_neighbor_of (container, active);
 
           if (new)
-            gimp_context_set_by_type (context,
-                                      gimp_container_get_children_type (container),
-                                      new);
+            gimp_context_set_by_type (context, children_type, new);
 
           gimp_container_remove (container, active);
         }

@@ -112,6 +112,9 @@ GimpObject * gimp_container_get_last_child     (const GimpContainer *container);
 gint         gimp_container_get_child_index    (const GimpContainer *container,
                                                 const GimpObject    *object);
 
+GimpObject * gimp_container_get_neighbor_of    (const GimpContainer *container,
+                                                const GimpObject    *object);
+
 gchar     ** gimp_container_get_name_array     (const GimpContainer *container,
                                                 gint                *length);
 

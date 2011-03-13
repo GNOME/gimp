@@ -24,7 +24,6 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
@@ -324,14 +323,22 @@ data_delete_confirm_response (GtkWidget          *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpDataFactory *factory    = gimp_data_factory_view_get_data_factory (delete_data->view);
+      GimpDataFactory *factory;
+      GimpContainer   *container;
       GimpData        *data       = delete_data->data;
-      GimpObject      *new_active;
+      GimpObject      *new_active = NULL;
       GError          *error      = NULL;
 
-      new_active = gimp_container_get_neighbor_of_active (gimp_data_factory_get_container (factory),
-                                                          delete_data->context,
-                                                          GIMP_OBJECT (data));
+      factory    = gimp_data_factory_view_get_data_factory (delete_data->view);
+      container  = gimp_data_factory_get_container (factory);
+
+      if (GIMP_OBJECT (data) ==
+          gimp_context_get_by_type (delete_data->context,
+                                    gimp_container_get_children_type (container)))
+        {
+          new_active = gimp_container_get_neighbor_of (container,
+                                                       GIMP_OBJECT (data));
+        }
 
       if (! gimp_data_factory_data_delete (factory, data, TRUE, &error))
         {

@@ -886,6 +886,32 @@ gimp_container_get_child_index (const GimpContainer *container,
                                                                 object);
 }
 
+GimpObject *
+gimp_container_get_neighbor_of (const GimpContainer *container,
+                                const GimpObject    *object)
+{
+  gint index;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_OBJECT (object), NULL);
+
+  index = gimp_container_get_child_index (container, object);
+
+  if (index != -1)
+    {
+      GimpObject *new;
+
+      new = gimp_container_get_child_by_index (container, index + 1);
+
+      if (! new && index > 0)
+        new = gimp_container_get_child_by_index (container, index - 1);
+
+      return new;
+    }
+
+  return NULL;
+}
+
 static void
 gimp_container_get_name_array_foreach_func (GimpObject   *object,
                                             gchar      ***iter)

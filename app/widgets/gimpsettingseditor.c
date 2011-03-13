@@ -347,25 +347,14 @@ gimp_settings_editor_delete_clicked (GtkWidget          *widget,
 
   if (private->selected_setting)
     {
-      GimpObject *new = NULL;
-      gint        index;
+      GimpObject *new;
 
-      index = gimp_container_get_child_index (private->container,
-                                              GIMP_OBJECT (private->selected_setting));
+      new = gimp_container_get_neighbor_of (private->container,
+                                            GIMP_OBJECT (private->selected_setting));
 
-      if (index != -1)
-        {
-          new = gimp_container_get_child_by_index (private->container,
-                                                   index + 1);
-
-          if (! new && index > 0)
-            new = gimp_container_get_child_by_index (private->container,
-                                                     index - 1);
-
-          /*  don't select the separator  */
-          if (new && ! gimp_object_get_name (new))
-            new = NULL;
-        }
+      /*  don't select the separator  */
+      if (new && ! gimp_object_get_name (new))
+        new = NULL;
 
       gimp_container_remove (private->container,
                              GIMP_OBJECT (private->selected_setting));

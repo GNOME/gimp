@@ -72,10 +72,6 @@ void         gimp_value_array_truncate             (GValueArray     *args,
 gchar      * gimp_get_temp_filename                (Gimp            *gimp,
                                                     const gchar     *extension);
 
-GimpObject * gimp_container_get_neighbor_of_active (GimpContainer   *container,
-                                                    GimpContext     *context,
-                                                    GimpObject      *active);
-
 gchar      * gimp_markup_extract_text              (const gchar     *markup);
 
 const gchar* gimp_enum_get_value_name              (GType            enum_type,
