@@ -69,7 +69,8 @@ static void      gimp_text_style_editor_get_property     (GObject               
 
 static GtkWidget * gimp_text_style_editor_create_toggle  (GimpTextStyleEditor *editor,
                                                           GtkTextTag          *tag,
-                                                          const gchar         *stock_id);
+                                                          const gchar         *stock_id,
+                                                          const gchar         *tooltip);
 
 static void      gimp_text_style_editor_clear_tags       (GtkButton           *button,
                                                           GimpTextStyleEditor *editor);
@@ -188,6 +189,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->font_entry);
 
+  gimp_help_set_help_data (editor->font_entry,
+                           _("Change font of selected text"), NULL);
+
   editor->size_adjustment =
     GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 10.0, 0.0));
   editor->size_spinbutton = gtk_spin_button_new (editor->size_adjustment,
@@ -212,6 +216,9 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor->upper_hbox), editor->color_button,
                       FALSE, FALSE, 0);
   gtk_widget_show (editor->color_button);
+
+  gimp_help_set_help_data (editor->color_button,
+                           _("Change color of selected text"), NULL);
 
   g_signal_connect (editor->color_button, "color-changed",
                     G_CALLBACK (gimp_text_style_editor_color_changed),
@@ -301,13 +308,17 @@ gimp_text_style_editor_constructed (GObject *object)
                                    editor->context);
 
   gimp_text_style_editor_create_toggle (editor, editor->buffer->bold_tag,
-                                        GTK_STOCK_BOLD);
+                                        GTK_STOCK_BOLD,
+                                        _("Bold"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->italic_tag,
-                                        GTK_STOCK_ITALIC);
+                                        GTK_STOCK_ITALIC,
+                                        _("Italic"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->underline_tag,
-                                        GTK_STOCK_UNDERLINE);
+                                        GTK_STOCK_UNDERLINE,
+                                        _("Underline"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->strikethrough_tag,
-                                        GTK_STOCK_STRIKETHROUGH);
+                                        GTK_STOCK_STRIKETHROUGH,
+                                        _("Strikethrough"));
 
   g_signal_connect_data (editor->buffer, "changed",
                          G_CALLBACK (gimp_text_style_editor_update),
@@ -499,7 +510,8 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
 static GtkWidget *
 gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
                                       GtkTextTag          *tag,
-                                      const gchar         *stock_id)
+                                      const gchar         *stock_id,
+                                      const gchar         *tooltip)
 {
   GtkWidget *toggle;
   GtkWidget *image;
@@ -508,6 +520,8 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
   gtk_widget_set_can_focus (toggle, FALSE);
   gtk_box_pack_start (GTK_BOX (editor->lower_hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle, tooltip, NULL);
 
   editor->toggles = g_list_append (editor->toggles, toggle);
   g_object_set_data (G_OBJECT (toggle), "tag", tag);
