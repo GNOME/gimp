@@ -216,12 +216,6 @@ gimp_text_tool_editor_position (GimpTextTool *text_tool)
                                        x, y,
                                        GIMP_HANDLE_ANCHOR_SOUTH_WEST, 4, 12);
 
-#if 0
-      gimp_overlay_box_set_child_angle (GIMP_OVERLAY_BOX (shell->canvas),
-                                        text_tool->style_overlay,
-                                        0.5);
-#endif
-
       if (text_tool->image)
         {
           gdouble xres, yres;
