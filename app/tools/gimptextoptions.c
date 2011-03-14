@@ -70,28 +70,30 @@ enum
 };
 
 
-static void  gimp_text_options_finalize           (GObject      *object);
-static void  gimp_text_options_set_property       (GObject      *object,
-                                                   guint         property_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
-static void  gimp_text_options_get_property       (GObject      *object,
-                                                   guint         property_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
+static void  gimp_text_options_finalize           (GObject         *object);
+static void  gimp_text_options_set_property       (GObject         *object,
+                                                   guint            property_id,
+                                                   const GValue    *value,
+                                                   GParamSpec      *pspec);
+static void  gimp_text_options_get_property       (GObject         *object,
+                                                   guint            property_id,
+                                                   GValue          *value,
+                                                   GParamSpec      *pspec);
 
-static void  gimp_text_options_notify_font        (GimpContext  *context,
-                                                   GParamSpec   *pspec,
-                                                   GimpText     *text);
-static void  gimp_text_options_notify_text_font   (GimpText     *text,
-                                                   GParamSpec   *pspec,
-                                                   GimpContext  *context);
-static void  gimp_text_options_notify_color       (GimpContext  *context,
-                                                   GParamSpec   *pspec,
-                                                   GimpText     *text);
-static void  gimp_text_options_notify_text_color  (GimpText     *text,
-                                                   GParamSpec   *pspec,
-                                                   GimpContext  *context);
+static void  gimp_text_options_reset              (GimpToolOptions *tool_options);
+
+static void  gimp_text_options_notify_font        (GimpContext     *context,
+                                                   GParamSpec      *pspec,
+                                                   GimpText        *text);
+static void  gimp_text_options_notify_text_font   (GimpText        *text,
+                                                   GParamSpec      *pspec,
+                                                   GimpContext     *context);
+static void  gimp_text_options_notify_color       (GimpContext     *context,
+                                                   GParamSpec      *pspec,
+                                                   GimpText        *text);
+static void  gimp_text_options_notify_text_color  (GimpText        *text,
+                                                   GParamSpec      *pspec,
+                                                   GimpContext     *context);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
@@ -105,11 +107,14 @@ G_DEFINE_TYPE_WITH_CODE (GimpTextOptions, gimp_text_options,
 static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass         *object_class  = G_OBJECT_CLASS (klass);
+  GimpToolOptionsClass *options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
 
   object_class->finalize     = gimp_text_options_finalize;
   object_class->set_property = gimp_text_options_set_property;
   object_class->get_property = gimp_text_options_get_property;
+
+  options_class->reset       = gimp_text_options_reset;
 
   /* The 'highlight' property is defined here because we want different
    * default values for the Crop, Text and the Rectangle Select tools.
@@ -345,6 +350,34 @@ gimp_text_options_set_property (GObject      *object,
       gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
     }
+}
+
+static void
+gimp_text_options_reset (GimpToolOptions *tool_options)
+{
+  GObject *object = G_OBJECT (tool_options);
+
+  /*  implement reset() ourselves because the default impl would
+   *  reset *all* properties, including all rectangle properties
+   *  of the text box
+   */
+
+  /* context */
+  gimp_config_reset_property (object, "font");
+  gimp_config_reset_property (object, "foreground");
+
+  /* text options */
+  gimp_config_reset_property (object, "font-size-unit");
+  gimp_config_reset_property (object, "font-size");
+  gimp_config_reset_property (object, "antialias");
+  gimp_config_reset_property (object, "hint-style");
+  gimp_config_reset_property (object, "language");
+  gimp_config_reset_property (object, "base-direction");
+  gimp_config_reset_property (object, "justify");
+  gimp_config_reset_property (object, "indent");
+  gimp_config_reset_property (object, "line-spacing");
+  gimp_config_reset_property (object, "box-mode");
+  gimp_config_reset_property (object, "use-editor");
 }
 
 static void
