@@ -40,6 +40,7 @@
 #include "widgets/gimpuimanager.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -205,8 +206,7 @@ windows_menu_image_notify (GimpDisplay      *display,
           ui_path = g_object_get_data (G_OBJECT (manager),
                                        "image-menu-ui-path");
 
-          action_name = g_strdup_printf ("windows-display-%04d",
-                                         gimp_display_get_ID (display));
+          action_name = gimp_display_get_action_name (display);
           action_path = g_strdup_printf ("%s/Windows/Images", ui_path);
 
           merge_id = gtk_ui_manager_new_merge_id (GTK_UI_MANAGER (manager));

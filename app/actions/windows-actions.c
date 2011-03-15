@@ -41,6 +41,7 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplay-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -229,8 +230,7 @@ windows_actions_display_remove (GimpContainer   *container,
                                 GimpActionGroup *group)
 {
   GtkAction *action;
-  gchar     *action_name = g_strdup_printf ("windows-display-%04d",
-                                            gimp_display_get_ID (display));
+  gchar     *action_name = gimp_display_get_action_name (display);
 
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
 
@@ -250,8 +250,7 @@ windows_actions_image_notify (GimpDisplay      *display,
   if (image)
     {
       GtkAction *action;
-      gchar     *action_name = g_strdup_printf ("windows-display-%04d",
-                                                gimp_display_get_ID (display));
+      gchar     *action_name = gimp_display_get_action_name (display);
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                             action_name);
