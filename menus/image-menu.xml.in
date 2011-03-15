@@ -306,8 +306,6 @@
       <menuitem action="view-show-scrollbars" />
       <menuitem action="view-show-statusbar" />
       <separator />
-      <menuitem action="view-use-gegl" />
-      <separator />
     </menu>
 
     <menu action="image-menu" name="Image">
