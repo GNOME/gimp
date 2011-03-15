@@ -809,8 +809,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
    *  type to the new values so the projection will create its tiles
    *  with the right depth
    */
-  drawable->type  = new_type;
-  drawable->bytes = GIMP_IMAGE_TYPE_BYTES (new_type);
+  drawable->type = new_type;
 
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (drawable));
 

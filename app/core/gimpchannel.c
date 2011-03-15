@@ -618,9 +618,11 @@ gimp_channel_scale (GimpItem              *item,
   /*  don't waste CPU cycles scaling an empty channel  */
   if (channel->bounds_known && channel->empty)
     {
-      GimpDrawable *drawable  = GIMP_DRAWABLE (item);
-      TileManager  *new_tiles = tile_manager_new (new_width, new_height,
-                                                  drawable->bytes);
+      GimpDrawable *drawable = GIMP_DRAWABLE (item);
+      TileManager  *new_tiles;
+
+      new_tiles = tile_manager_new (new_width, new_height,
+                                    gimp_drawable_bytes (drawable));
 
       gimp_drawable_set_tiles_full (drawable,
                                     gimp_item_is_attached (item), NULL,

@@ -37,7 +37,6 @@ struct _GimpDrawable
 {
   GimpItem       parent_instance;
 
-  gint           bytes;              /* bytes per pixel                */
   GimpImageType  type;               /* type of drawable               */
 
   GimpDrawablePrivate *private;

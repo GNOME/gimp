@@ -40,9 +40,13 @@ gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
 
   if (drawable->private->shadow)
     {
-      if ((gimp_item_get_width  (item) != tile_manager_width  (drawable->private->shadow)) ||
-          (gimp_item_get_height (item) != tile_manager_height (drawable->private->shadow)) ||
-          (drawable->bytes             != tile_manager_bpp    (drawable->private->shadow)))
+      gint width  = gimp_item_get_width  (item);
+      gint height = gimp_item_get_height (item);
+      gint bytes  = gimp_drawable_bytes (drawable);
+
+      if ((width  != tile_manager_width  (drawable->private->shadow)) ||
+          (height != tile_manager_height (drawable->private->shadow)) ||
+          (bytes  != tile_manager_bpp    (drawable->private->shadow)))
         {
           gimp_drawable_free_shadow_tiles (drawable);
         }
@@ -54,7 +58,7 @@ gimp_drawable_get_shadow_tiles (GimpDrawable *drawable)
 
   drawable->private->shadow = tile_manager_new (gimp_item_get_width  (item),
                                                 gimp_item_get_height (item),
-                                                drawable->bytes);
+                                                gimp_drawable_bytes (drawable));
 
   return drawable->private->shadow;
 }
